@@ -5,34 +5,67 @@ package com.zantong.mobilecttx.user.bean;
  * 消息类别返回实体对象
  */
 public class MessageType {
-    private int id;
-    private int isDeleted;
-    private int count;
+
+    /**
+     * messageName : 系统消息
+     * content : 2.5.0即将上线
+     * time : 1496198289
+     * isDeleted : 0
+     * image :
+     * title : 新版本提升
+     * flag : 0
+     * messageDetailId : 10592
+     * userId : 00017518616707335
+     */
+
+    private String messageName;
+    private String content;
+    private String time;
+    private String isDeleted;
+    private String image;
     private String title;
-    private String description;
+    private String flag;
+    private String messageDetailId;
+    private String userId;
 
-    public int getId() {
-        return id;
+    public String getMessageName() {
+        return messageName;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMessageName(String messageName) {
+        this.messageName = messageName;
     }
 
-    public int getIsDeleted() {
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getIsDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(int isDeleted) {
+    public void setIsDeleted(String isDeleted) {
         this.isDeleted = isDeleted;
     }
 
-    public int getCount() {
-        return count;
+    public String getImage() {
+        return image;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getTitle() {
@@ -43,11 +76,27 @@ public class MessageType {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getFlag() {
+        return flag;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+
+    public String getMessageDetailId() {
+        return messageDetailId;
+    }
+
+    public void setMessageDetailId(String messageDetailId) {
+        this.messageDetailId = messageDetailId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

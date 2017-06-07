@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.widght;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.home.bean.StartPicBean;
+import com.zantong.mobilecttx.utils.ImageOptions;
 
 import java.util.ArrayList;
 import java.util.List;

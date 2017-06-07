@@ -9,7 +9,7 @@ import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.home.fragment.LicenseDetailFragment;
 import com.zantong.mobilecttx.presenter.LicenseGradeAtyPresenter;
-import com.zantong.mobilecttx.user.dto.LicenseFileNumDTO;
+import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -15,8 +15,11 @@ import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.utils.LogUtils;
+import com.tencent.bugly.crashreport.CrashReport;
+import com.zantong.mobilecttx.BuildConfig;
+
+import cn.qqtheme.framework.util.LogUtils;
+
 
 /**
  * Created by Administrator on 2016/5/19.

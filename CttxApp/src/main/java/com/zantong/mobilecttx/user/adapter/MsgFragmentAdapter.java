@@ -31,7 +31,7 @@ import java.util.List;
 
 
 /**
- * Ö÷Ò³ÊÊÅäÆ÷
+ *
  */
 public class MsgFragmentAdapter extends PagerAdapter {
 	private Activity mContext;

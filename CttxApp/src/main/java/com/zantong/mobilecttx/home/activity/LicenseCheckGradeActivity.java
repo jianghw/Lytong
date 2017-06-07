@@ -13,10 +13,10 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.user.dto.LicenseFileNumDTO;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
+import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

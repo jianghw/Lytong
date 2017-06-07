@@ -11,9 +11,7 @@ import com.zantong.mobilecttx.utils.ToastUtils;
 import java.util.Arrays;
 
 /**
- * 帮助与反馈页面
  * @author Sandy
- * create at 16/6/2 下午2:16
  */
 public class HelpFragment extends BaseListFragment<String>{
 

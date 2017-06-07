@@ -12,10 +12,9 @@ import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.user.bean.MessageType;
 
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.util.DateTools;
 
 /**
  * Created by zhoujie on 2017/2/13.
@@ -23,6 +22,8 @@ import butterknife.ButterKnife;
  */
 
 public class MegAdapter extends BaseAdapter<MessageType> {
+    private Context mContext;
+
     /**
      * 布局创建
      *
@@ -32,7 +33,7 @@ public class MegAdapter extends BaseAdapter<MessageType> {
      */
     @Override
     public View createView(ViewGroup viewGroup, int i) {
-        Context mContext = viewGroup.getContext();
+        mContext = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(mContext);
         return inflater.inflate(R.layout.item_meg_push, viewGroup, false);
     }
@@ -40,21 +41,6 @@ public class MegAdapter extends BaseAdapter<MessageType> {
     @Override
     public BaseRecyclerViewHolder createViewHolder(View view, int itemType) {
         return new ViewHolder(view);
-    }
-
-    /**
-     * 子类自己实现有要求的数据添加
-     *
-     * @param itemDataTypes 数据实体类集合
-     */
-    public void append(List<MessageType> itemDataTypes) {
-        if (itemDataTypes.size() > 0) {
-            for (MessageType messageType : itemDataTypes) {
-                if (messageType.getIsDeleted() == 0)
-                    getAll().add(messageType.getId() - 1, messageType);
-            }
-            notifyDataSetChanged();
-        }
     }
 
     /**
@@ -68,12 +54,15 @@ public class MegAdapter extends BaseAdapter<MessageType> {
     public void showData(BaseRecyclerViewHolder viewHolder, int position, MessageType data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
-            holder.mTitle.setText(data.getTitle());
-            holder.mContent.setText(data.getDescription());
+            holder.mTitle.setText(data.getMessageName());
+            holder.mContent.setText(data.getTitle());
 
-            int count = data.getCount();
-            holder.mCount.setVisibility(count > 0 ? View.VISIBLE : View.INVISIBLE);
-            holder.mCount.setText(count > 99 ? count + "+" : String.valueOf(count));
+            //1 已读  0未读
+            holder.mSign.setText("1".equals(data.getFlag()) ? "已读" : "未读");
+            holder.mSign.setTextColor(mContext.getResources().getColor(
+                    "1".equals(data.getFlag()) ? R.color.gray_4a : R.color.red));
+
+            holder.mDate.setText(DateTools.displayFormatDate(data.getTime()));
         }
     }
 
@@ -81,14 +70,16 @@ public class MegAdapter extends BaseAdapter<MessageType> {
      * 自定义的ViewHolder，持有每个Item的的所有界面元素
      */
     public static class ViewHolder extends BaseRecyclerViewHolder {
-        @Bind(R.id.meg_img)
+        @Bind(R.id.msg_img)
         ImageView mImg;
-        @Bind(R.id.meg_title)
+        @Bind(R.id.msg_title)
         TextView mTitle;
-        @Bind(R.id.meg_content)
+        @Bind(R.id.msg_content)
         TextView mContent;
-        @Bind(R.id.meg_count)
-        TextView mCount;
+        @Bind(R.id.msg_sign)
+        TextView mSign;
+        @Bind(R.id.msg_date)
+        TextView mDate;
 
         public ViewHolder(View view) {
             super(view);

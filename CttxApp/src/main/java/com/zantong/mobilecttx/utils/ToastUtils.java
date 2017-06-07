@@ -4,9 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 /**
- * Toast 吐司提示工具类
  * @author Sandy
- * create at 16/6/1 下午5:54
  */
 public class ToastUtils {
 	public static Toast toast;

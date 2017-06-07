@@ -42,31 +42,33 @@ public class UiHelpers {
 	 *            宽度ID R.dimen.xx
 	 * @param height
 	 *            高度ID R.dimen.xx
-	 * @param where
+	 * @param whereType
 	 *            位置 DRAWABLE_
 	 */
 	public static void setTextViewIcon(Context context, TextView view,
-			int resId, int width, int height, int where) {
-		Resources rs = context.getResources();
+									   int resId, int width, int height, int whereType) {
+		Resources resources = context.getResources();
 		// 初始化返回按钮图片大小
-		Drawable d = rs.getDrawable(resId);
-		d.setBounds(0, 0, rs.getDimensionPixelSize(width),
-				rs.getDimensionPixelSize(height));
-		switch (where) {
-		case DRAWABLE_BOTTOM:
-			view.setCompoundDrawables(null, null, null, d);
-			break;
-		case DRAWABLE_LEFT:
-			view.setCompoundDrawables(d, null, null, null);
-			break;
-		case DRAWABLE_RIGHT:
-			view.setCompoundDrawables(null, null, d, null);
-			break;
-		case DRAWABLE_TOP:
-			view.setCompoundDrawables(null, d, null, null);
-			break;
-		default:
-			break;
+		Drawable drawable = resources.getDrawable(resId);
+		int mWidth = width == -1 ? drawable.getMinimumWidth() : resources.getDimensionPixelSize(width);
+		int mHeight = height == -1 ? drawable.getMinimumHeight() : resources.getDimensionPixelSize(height);
+
+		drawable.setBounds(0, 0, mWidth, mHeight);
+		switch (whereType) {
+			case DRAWABLE_BOTTOM:
+				view.setCompoundDrawables(null, null, null, drawable);
+				break;
+			case DRAWABLE_LEFT:
+				view.setCompoundDrawables(drawable, null, null, null);
+				break;
+			case DRAWABLE_RIGHT:
+				view.setCompoundDrawables(null, null, drawable, null);
+				break;
+			case DRAWABLE_TOP:
+				view.setCompoundDrawables(null, drawable, null, null);
+				break;
+			default:
+				break;
 		}
 	}
 	

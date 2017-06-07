@@ -1,11 +1,12 @@
 package com.zantong.mobilecttx.user.fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -115,7 +116,7 @@ public class MineFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.mine_view, container, false);
+        View view = inflater.inflate(R.layout.mine_view, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -167,25 +168,26 @@ public class MineFragment extends Fragment {
     /**
      * 未读消息数量
      */
-    private void getUnReadMsgCount(){
+    private void getUnReadMsgCount() {
         BaseDTO dto = new BaseDTO();
-        dto.setUsrId(RSAUtils.strByEncryption(this.getActivity(),PublicData.getInstance().userID,true));
+        dto.setUsrId(RSAUtils.strByEncryption(this.getActivity(), PublicData.getInstance().userID, true));
         CarApiClient.getUnReadMsgCount(this.getActivity(), dto, new CallBack<MessageCountResult>() {
             @Override
             public void onSuccess(MessageCountResult result) {
-                if (result.getResponseCode() == 2000){
+                if (result.getResponseCode() == 2000) {
                     mMegCount.setText(String.valueOf(result.getData().getCount()));
                 }
             }
         });
     }
+
     /**
      * 优惠券数量
      */
-    private void getCouponCount(){
+    private void getCouponCount() {
         final Dialog showLoading = DialogUtils.showLoading(getActivity());
         RepositoryManager repositoryManager = Injection.provideRepository(getActivity().getApplicationContext());
-        Subscription subscription = repositoryManager.usrCouponInfo(PublicData.getInstance().userID,"1")
+        Subscription subscription = repositoryManager.usrCouponInfo(PublicData.getInstance().userID, "1")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<CouponFragmentResult>() {
@@ -213,9 +215,9 @@ public class MineFragment extends Fragment {
     }
 
     private void init() {
-        if ("".equals(PublicData.getInstance().filenum)){
+        if ("".equals(PublicData.getInstance().filenum)) {
             mCardStatus.setText("未绑卡");
-        }else{
+        } else {
             mCardStatus.setText("已绑卡");
         }
         mine_manage_vechilse_notice.setText(PublicData.getInstance().mCarNum + " 辆车");
@@ -257,76 +259,76 @@ public class MineFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.common_problem, R.id.mine_order, R.id.mine_pay_order,R.id.mine_info_rl,
-            R.id.mine_tools_part1, R.id.mine_manage_vechilse, R.id.mine_share,R.id.mine_manage_weizhang_history,
+    @OnClick({R.id.common_problem, R.id.mine_order, R.id.mine_pay_order, R.id.mine_info_rl,
+            R.id.mine_tools_part1, R.id.mine_manage_vechilse, R.id.mine_share, R.id.mine_manage_weizhang_history,
             R.id.invite_red_packet, R.id.problem_feedback, R.id.about_us, R.id.mine_meg_layout, R.id.mine_ctk_layout,
             R.id.mine_youhuijian_layout, R.id.about_update})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.mine_info_rl:  //用户信息
                 if (!PublicData.getInstance().loginFlag) {
-                    Act.getInstance().lauchIntentToLogin(context, UserInfoUpdate.class);
+                    Act.getInstance().lauchIntentToLogin(getActivity(), UserInfoUpdate.class);
                 }
                 break;
             case R.id.mine_tools_part1:  //畅通卡
-                if (Tools.isStrEmpty(PublicData.getInstance().filenum)){
-                    LogUtils.i("filenum----"+PublicData.getInstance().filenum);
-                    Act.getInstance().lauchIntentToLogin(context, CardHomeActivity.class);
-                }else{
-                    Act.getInstance().lauchIntentToLogin(context, MyCardActivity.class);
+                if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {
+                    LogUtils.i("filenum----" + PublicData.getInstance().filenum);
+                    Act.getInstance().lauchIntentToLogin(getActivity(), CardHomeActivity.class);
+                } else {
+                    Act.getInstance().lauchIntentToLogin(getActivity(), MyCardActivity.class);
                 }
                 break;
             case R.id.mine_manage_vechilse:  //车辆管理
-                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(28));
-                Act.getInstance().gotoIntent(context, CarManageGroupActivity.class);
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(28));
+                Act.getInstance().gotoIntent(getActivity(), CarManageGroupActivity.class);
                 break;
             case R.id.mine_manage_weizhang_history:  //违章缴费记录
-                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(34));
-                Act.getInstance().lauchIntentToLogin(context, ViolationHistoryAcitvity.class);
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(34));
+                Act.getInstance().lauchIntentToLogin(getActivity(), ViolationHistoryAcitvity.class);
                 break;
             case R.id.mine_order:  //保险订单
-                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(29));
-                Act.getInstance().lauchIntentToLogin(context, OrderActivity.class);
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(29));
+                Act.getInstance().lauchIntentToLogin(getActivity(), OrderActivity.class);
                 break;
             case R.id.mine_pay_order:  //充值支付订单
-                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(30));
-                Act.getInstance().lauchIntentToLogin(context, OrderRechargeActivity.class);
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(30));
+                Act.getInstance().lauchIntentToLogin(getActivity(), OrderRechargeActivity.class);
 //                Act.getInstance().gotoIntent(context, OrderRechargeActivity.class);
                 break;
             case R.id.mine_share:  //分享
 
                 break;
             case R.id.common_problem:  //常见问题
-                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(32));
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(32));
                 Act.getInstance().gotoIntent(getActivity(), CommonProblemActivity.class);
                 break;
             case R.id.invite_red_packet:  //推荐领积分页面
-                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(31));
-                    Act.getInstance().lauchIntentToLogin(this.getActivity(), GetBonusActivity.class);
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(31));
+                Act.getInstance().lauchIntentToLogin(getActivity(), GetBonusActivity.class);
                 break;
             case R.id.problem_feedback:  //问题反馈
-                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(33));
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(33));
                 Act.getInstance().gotoIntent(getActivity(), ProblemFeedbackActivity.class);
                 break;
             case R.id.about_us:  //关于我们
                 Act.getInstance().gotoIntent(getActivity(), AboutActivity.class);
                 break;
             case R.id.mine_meg_layout:  //消息
-                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(24));
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(24));
                 Act.getInstance().lauchIntentToLogin(getActivity(), MegTypeActivity.class);
                 break;
             case R.id.mine_ctk_layout:  //畅通卡
-                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(25));
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(25));
                 LicenseFileNumDTO bean = SPUtils.getInstance(getActivity().getApplicationContext()).getLicenseFileNumDTO();
-                if (Tools.isStrEmpty(PublicData.getInstance().filenum)){
-                    LogUtils.i("filenum----"+PublicData.getInstance().filenum);
-                    Act.getInstance().lauchIntentToLogin(context, CardHomeActivity.class);
-                }else{
-                    Act.getInstance().lauchIntentToLogin(context, MyCardActivity.class);
+                if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {
+                    LogUtils.i("filenum----" + PublicData.getInstance().filenum);
+                    Act.getInstance().lauchIntentToLogin(getActivity(), CardHomeActivity.class);
+                } else {
+                    Act.getInstance().lauchIntentToLogin(getActivity(), MyCardActivity.class);
                 }
                 break;
             case R.id.mine_youhuijian_layout:  //优惠券
-                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(27));
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(27));
                 Act.getInstance().lauchIntentToLogin(getActivity(), CouponActivity.class);
                 break;
             case R.id.about_update://版本更新

@@ -6,12 +6,12 @@ import com.google.gson.Gson;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.interf.ILicenseGradeAtyContract;
+import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
-import rx.Subscriber;
+import cn.qqtheme.framework.util.LogUtils;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
@@ -66,20 +66,20 @@ public class LicenseGradeAtyPresenter implements ILicenseGradeAtyContract.ILicen
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<LicenseResponseBean>() {
+                .subscribe(new BaseSubscriber<LicenseResponseBean>() {
                     @Override
-                    public void onCompleted() {
+                    public void doCompleted() {
                         isRefresh = true;
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        mView.driverLicenseCheckGradeError("网络出错,请检查网络是否连接");
+                    public void doError(Throwable e) {
+                        mView.driverLicenseCheckGradeError(e.getMessage());
                         isRefresh = false;
                     }
 
                     @Override
-                    public void onNext(LicenseResponseBean responseBean) {
+                    public void doNext(LicenseResponseBean responseBean) {
                         if (responseBean != null
                                 && responseBean.getSYS_HEAD().getReturnCode().equals("000000")) {
                             mView.driverLicenseCheckGradeSucceed(responseBean);

@@ -43,10 +43,10 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("/Users/zhengyingbing/Z赞同科技/tzly.jks")
-            storePassword "123456"
-            keyAlias "jianghw"
-            keyPassword "123456"
+            storeFile file("/Users/zhengyingbing/Z赞同科技/CTTX.jks")
+            storePassword "zantong"
+            keyAlias "CTTX"
+            keyPassword "zantong"
             v2SigningEnabled false
         }
 

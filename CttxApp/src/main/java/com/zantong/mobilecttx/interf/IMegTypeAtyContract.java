@@ -1,9 +1,12 @@
 package com.zantong.mobilecttx.interf;
 
+import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import com.zantong.mobilecttx.base.dto.BaseDTO;
+import com.zantong.mobilecttx.user.bean.MessageResult;
+import com.zantong.mobilecttx.user.bean.MessageType;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
+import com.zantong.mobilecttx.user.dto.MegDTO;
 
 /**
  * Created by jianghw on 2017/4/26.
