@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="72dip"
+    android:background="@color/white">
+    <RelativeLayout
+        android:id="@+id/content_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dip"
+        android:paddingRight="16dip"
+        android:layout_centerVertical="true">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:id="@+id/query_listory_car_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="沪 NB8888"
+            style="@style/appmain_color_text_font"/>
+
+        <TextView
+            android:id="@+id/query_history_engine_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/query_listory_car_number"
+            android:text="90876543"
+            android:layout_marginTop="5dip"
+            style="@style/grayColorTextFont"/>
+
+    </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="7.1dip"
+            android:layout_height="12dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/arrow_left_big_iamge"/>
+    <TextView
+        android:id="@+id/query_history_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/arrow"
+        android:layout_marginRight="12dip"
+        android:text="2016-3-21"
+        style="@style/gray_color_time_text_font"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/line1"
+        style="@style/line_splite_gray"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

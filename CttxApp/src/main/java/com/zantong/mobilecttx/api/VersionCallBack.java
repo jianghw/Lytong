@@ -8,13 +8,13 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
+import com.zantong.mobilecttx.utils.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.HashMap;
 
-import cn.qqtheme.framework.util.LogUtils;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;

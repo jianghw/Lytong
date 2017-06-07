@@ -12,6 +12,7 @@ import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderDetailResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 import com.zantong.mobilecttx.common.activity.BrowserForPayActivity;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderDetailDTO;
 import com.zantong.mobilecttx.eventbus.DrivingCancelEvent;
@@ -91,15 +92,24 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
                             public void onClick(View v) {
 
                                 int orderPrice = 0;
-                                try{
+                                try {
                                     orderPrice = Integer.valueOf((int) (Double.valueOf(mOrderPrice) * 100));
-                                }catch (Exception e){
+                                } catch (Exception e) {
 
                                 }
                                 String payUrl = "http://139.196.183.121:8081/payment/payForWapb2cPay?orderid=" +
                                         mOrderId + "&amount=" +
                                         orderPrice + "&payType=0";
-
+                                CarApiClient.getPayOrderSn(DODetailActivity.this, payUrl, new CallBack<PayOrderResult>() {
+                                    @Override
+                                    public void onSuccess(PayOrderResult result) {
+                                        if (result.getResponseCode() == 2000) {
+                                            PublicData.getInstance().webviewTitle = "支付";
+                                            PublicData.getInstance().webviewUrl = result.getData();
+                                            Act.getInstance().lauchIntentToLogin(DODetailActivity.this, BrowserForPayActivity.class);
+                                        }
+                                    }
+                                });
                             }
                         });
             }
@@ -110,6 +120,11 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
     public void initData() {
         setTitleText("代驾订单");
         initRefreshView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getOrderDetail();
     }
 
@@ -127,16 +142,16 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
     /**
      * 获取代驾中的订单详情
      */
-    private void getOrderDetail(){
+    private void getOrderDetail() {
         DaiJiaOrderDetailDTO dto = new DaiJiaOrderDetailDTO();
-        dto.setUsrId(RSAUtils.strByEncryption(this,PublicData.getInstance().userID,true));
+        dto.setUsrId(RSAUtils.strByEncryption(this, PublicData.getInstance().userID, true));
         Intent intent = getIntent();
         mOrderId = intent.getStringExtra(Act.ACT_PARAM);
         dto.setOrderId(mOrderId);
         String time = "1488253689";
-        try{
+        try {
             time = StringUtils.getTimeToStr();
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         dto.setTime(time);
@@ -146,7 +161,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
             public void onSuccess(DaiJiaOrderDetailResult result) {
                 hideDialogLoading();
                 mDrivingOrderLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
-                if (result.getResponseCode() == 2000){
+                if (result.getResponseCode() == 2000) {
                     mDrivingOrderLayout.setVisibility(View.VISIBLE);
                     mFailedLayout.setVisibility(View.GONE);
                     String state = result.getData().getOrderStatus();
@@ -185,7 +200,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
                         mDriverLayout.setVisibility(View.GONE);
                         mClean.setVisibility(View.GONE);
                         mState.setTextColor(R.color.red);
-                    }else if (state.contains("支付完成")) {
+                    } else if (state.contains("支付完成")) {
                         mMileageLayout.setVisibility(View.VISIBLE);
                         mPriceLayout.setVisibility(View.VISIBLE);
                         mDriverLayout.setVisibility(View.VISIBLE);
@@ -194,7 +209,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
                         mDriverPhone.setText(result.getData().getDriverMobile());
                         mClean.setVisibility(View.GONE);
                         mState.setTextColor(R.color.gray_99);
-                    }else if (state.contains("已取消")) {
+                    } else if (state.contains("已取消")) {
                         mMileageLayout.setVisibility(View.GONE);
                         mPriceLayout.setVisibility(View.GONE);
                         mDriverLayout.setVisibility(View.GONE);
@@ -204,10 +219,18 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
 
                     mDate.setText(result.getData().getCreateTime());
                     mAddress.setText(result.getData().getAddress());
-                }else{
+                } else {
                     mDrivingOrderLayout.setVisibility(View.GONE);
                     mFailedLayout.setVisibility(View.VISIBLE);
                 }
+            }
+
+            @Override
+            public void onError(String errorCode, String msg) {
+                super.onError(errorCode, msg);
+                hideDialogLoading();
+                mDrivingOrderLayout.setVisibility(View.GONE);
+                mFailedLayout.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -233,7 +256,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
     /**
      * 取消订单dialog
      */
-    private void cleanOrderDialog(){
+    private void cleanOrderDialog() {
         DialogUtils.telDialog(this, "提示", "您确定取消订单吗？", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -246,21 +269,26 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
                 }
                 dto.setTime(time);
                 dto.setOrderId(mOrderId);
-                dto.setUsrId(RSAUtils.strByEncryption(DODetailActivity.this,PublicData.getInstance().userID,true));
+                dto.setUsrId(RSAUtils.strByEncryption(DODetailActivity.this, PublicData.getInstance().userID, true));
                 HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("time",time);
-                hashMap.put("orderId",mOrderId);
-                hashMap.put("usrId",PublicData.getInstance().userID);
+                hashMap.put("time", time);
+                hashMap.put("orderId", mOrderId);
+                hashMap.put("usrId", PublicData.getInstance().userID);
                 dto.setHash(HashUtils.getSignature(hashMap));
                 CarApiClient.cancelDaiJiaOrderDetail(DODetailActivity.this, dto, new CallBack<BaseResult>() {
                     @Override
                     public void onSuccess(BaseResult result) {
-                        if (result.getResponseCode() == 2000){
+                        if (result.getResponseCode() == 2000) {
                             mState.setText("已取消");
                             mState.setTextColor(R.color.gray_99);
                             mClean.setVisibility(View.GONE);
                             EventBus.getDefault().post(new DrivingCancelEvent(true));
                         }
+                    }
+
+                    @Override
+                    public void onError(String errorCode, String msg) {
+                        super.onError(errorCode, msg);
                     }
                 });
             }

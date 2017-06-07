@@ -4,42 +4,42 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+
+import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
-import com.zantong.mobilecttx.user.dto.LicenseFileNumDTO;
+import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
+import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.io.IOException;
+import java.io.StreamCorruptedException;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * SharedPreference 配置文件工具类
- *
- * @author Sandy
- *         create at 16/6/1 下午6:25
- */
 public class SPUtils {
     /**
      * 清单文件名称
      */
     public static final String SP_NAME = "cttx";
 
-    /* 车辆信息表 */
+
     public static final String CARSINFO = "carsinfo";
-    /* 是否引导扫罚单 */
+
     public static final String GUIDE_SAOFADAN = "saofadan";
-    /* 是否引导违章查询 */
+
     public static final String GUIDE_WEIZHANG = "weizhang";
-    /* 是否引导行驶证扫描 */
+
     public static final String GUIDE_XINGSHIZHENG = "xingshizheng";
-    /* 是否引导驾照扫描 */
+
     public static final String GUIDE_JIASHIZHEGN = "jiashizheng";
-    /* 是否引导申办畅卡 */
+
     public static final String GUIDE_BANKA = "shenbanchangtongka";
-    /* 是否开启违章通知 */
+
     public static final String WEIZHANG_PUSH = "weizhangpush";
-    /* 是否开启记分周期更新通知 */
+
     public static final String JIFEN_PUSH = "jifenpush";
-    /* 引导页 */
+
     public static final String IS_GUIDE = "isGuide";
-    /* 用户密码 */
+
     public static final String UESR_PWD = "user_pwd";
 
     public static final String VIOLATION = "violation";
@@ -55,6 +55,8 @@ public class SPUtils {
     public static final String OIL_CARD = "oilcard";//加油卡卡号
 
     public static final String LOGIN_INFO_BEAN = "login_info_bean";
+
+    private static List<CarInfoDTO> carsinfo = null;
 
     private Editor editor;
     private SharedPreferences sp;
@@ -81,6 +83,87 @@ public class SPUtils {
         this.editor.commit();
     }
 
+
+    /**
+     * 保存车辆信息
+     *
+     * @param carsInfo
+     */
+    public void setCarInfo(List<CarInfoDTO> carsInfo) {
+        String str = "";
+        try {
+            str = SerializableUtils.obj2Str(carsInfo);
+        } catch (IOException e) {
+            //e.printStackTrace();
+        }
+        this.editor.putString(CARSINFO, str);
+        this.editor.commit();
+    }
+
+    /**
+     * 获取车辆信息
+     *
+     * @return
+     */
+    public List<CarInfoDTO> getCarsInfo() {
+        if (carsinfo == null) {
+            carsinfo = new ArrayList<CarInfoDTO>();
+            // 获取序列化的数据
+            String str = this.sp.getString(CARSINFO, "");
+
+            try {
+                Object obj = SerializableUtils.str2Obj(str);
+                if (obj != null) {
+                    carsinfo = (List<CarInfoDTO>) obj;
+                }
+
+            } catch (StreamCorruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return carsinfo;
+    }
+
+    /**
+     * 保存车辆信息
+     *
+     * @param carsInfo
+     */
+    public void setViolation(ViolationDTO carsInfo) {
+        String str = "";
+        try {
+            str = SerializableUtils.obj2Str(carsInfo);
+        } catch (IOException e) {
+            //e.printStackTrace();
+        }
+        this.editor.putString(VIOLATION, str);
+        this.editor.commit();
+    }
+
+    /**
+     * 获取车辆信息
+     *
+     * @return
+     */
+    public ViolationDTO getViolation() {
+        ViolationDTO violationDTO = null;
+        // 获取序列化的数据
+        String str = this.sp.getString(VIOLATION, "");
+        try {
+            Object obj = SerializableUtils.str2Obj(str);
+            if (obj != null) {
+                violationDTO = (ViolationDTO) obj;
+            }
+
+        } catch (StreamCorruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return violationDTO;
+    }
 
     public void setGuideSaoFaDan(boolean isGuide) {
         this.editor.putBoolean(GUIDE_SAOFADAN, isGuide);

@@ -29,21 +29,28 @@ import android.widget.TextView;
 
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+import com.zantong.mobilecttx.card.activity.CardHomeActivity;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.bean.BaseResult;
+import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.base.bean.Result;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.user.bean.UserCarsResult;
+import com.zantong.mobilecttx.card.dto.BindCarDTO;
+import com.zantong.mobilecttx.car.dto.CarInfoDTO;
+import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
+import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.eventbus.CarInfoEvent;
 import com.zantong.mobilecttx.eventbus.GetUserEvent;
-import com.zantong.mobilecttx.interf.LoginPhoneView;
 import com.zantong.mobilecttx.presenter.LoginPhonePresenterImp;
-import com.zantong.mobilecttx.user.bean.LoginInfoBean;
-import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
+import com.zantong.mobilecttx.utils.rsa.Des3;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.AccountRememberCtrl;
 import com.zantong.mobilecttx.utils.DialogMgr;
+import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ScreenManager;
 import com.zantong.mobilecttx.utils.StateBarSetting;
@@ -52,9 +59,9 @@ import com.zantong.mobilecttx.utils.TitleSetting;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.rsa.Des3;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
+import com.zantong.mobilecttx.card.activity.ChangTongCard;
+import com.zantong.mobilecttx.interf.LoginPhoneView;
 import com.zantong.mobilecttx.widght.CustomCharKeyBoard;
 import com.zantong.mobilecttx.widght.CustomNumKeyBoard;
 
@@ -63,13 +70,13 @@ import org.greenrobot.eventbus.EventBus;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * Created by Administrator on 2016/5/5.
@@ -396,8 +403,10 @@ public class LoginActivity extends Activity implements LoginPhoneView, View.OnTo
                 mLoginPhonePresenterImp.loadView(2);
                 break;
             case R.id.text_right:
+                Act.getInstance().lauchIntent(LoginActivity.this, RegisterActivity.class);
                 break;
             case R.id.login_forget_password:
+                Act.getInstance().lauchIntent(LoginActivity.this, ResetActivity.class);
                 break;
 
             case R.id.image_delete:
@@ -429,6 +438,7 @@ public class LoginActivity extends Activity implements LoginPhoneView, View.OnTo
 
     @Override
     public void addLoginInfo(LoginInfoBean mLoginInfoBean) {
+//        Log.e("why",mLoginInfoBean.getRspInfo().getUsrid());
 
         EventBus.getDefault().post(new CarInfoEvent(true));
         Intent intent = new Intent();
@@ -444,6 +454,7 @@ public class LoginActivity extends Activity implements LoginPhoneView, View.OnTo
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            Act.getInstance().lauchIntent(LoginActivity.this, CardHomeActivity.class);
                             InputMethodManager imm = (InputMethodManager) LoginActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
                             if (imm.isActive() && LoginActivity.this.getCurrentFocus() != null) {
                                 if (LoginActivity.this.getCurrentFocus().getWindowToken() != null) {
@@ -482,8 +493,8 @@ public class LoginActivity extends Activity implements LoginPhoneView, View.OnTo
      * 交易代码
      */
     private void setJiaoYiDaiMa(String strFileNum) {
-        if (!TextUtils.isEmpty(strFileNum)) {
-            UserApiClient.setJiaoYiDaiMa(this, strFileNum, new CallBack<Result>() {
+        if(!TextUtils.isEmpty(strFileNum)){
+            UserApiClient.setJiaoYiDaiMa(this, strFileNum,new CallBack<Result>() {
                 @Override
                 public void onSuccess(Result result) {
                     if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
@@ -607,4 +618,40 @@ public class LoginActivity extends Activity implements LoginPhoneView, View.OnTo
         imm.showSoftInput(edit_phone_number, InputMethodManager.SHOW_FORCED);
     }
 
+    /**
+     * 获取车辆数
+     */
+    private void getUserCarInfo(){
+        UserCarsDTO dto = new UserCarsDTO();
+        dto.setUsrid(PublicData.getInstance().userID);
+        UserApiClient.getCarInfo(LoginActivity.this, dto, new CallBack<UserCarsResult>() {
+            @Override
+            public void onSuccess(UserCarsResult result) {
+                if (result.getRspInfo().getUserCarsInfo().size() <= 0){
+                    commitCarInfoToNewServer();
+                }
+            }
+        });
+    }
+
+    //提交新服务器
+    private void commitCarInfoToNewServer() {
+        List<CarInfoDTO> list = SPUtils.getInstance(LoginActivity.this).getCarsInfo();
+        for (CarInfoDTO info : list){
+            LogUtils.i("-----"+info.getCarnumtype());
+            BindCarDTO dto = new BindCarDTO();
+            dto.setPlateNo(info.getCarnum());
+            dto.setEngineNo(info.getEnginenum());
+            dto.setUsrnum(PublicData.getInstance().userID);
+            dto.setFileNum(PublicData.getInstance().filenum);
+            dto.setVehicleType(String.valueOf(Integer.valueOf(info.getCarnumtype()) + 1));
+            CarApiClient.commitCar(this, dto, new CallBack<BaseResult>() {
+                @Override
+                public void onSuccess(BaseResult result) {
+
+                }
+            });
+        }
+
+    }
 }

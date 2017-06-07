@@ -16,10 +16,10 @@
 
 package com.zantong.mobilecttx.zxing.client.android.result;
 
-import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.zxing.Result;
 import com.zantong.mobilecttx.zxing.client.result.ParsedResult;
 import com.zantong.mobilecttx.zxing.client.result.ResultParser;
+import com.zantong.mobilecttx.home.activity.CaptureActivity;
 
 /**
  * Manufactures Android-specific handlers based on the barcode content's type.

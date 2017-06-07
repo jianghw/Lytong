@@ -5,11 +5,10 @@ import android.content.Context;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.BasePresenter;
-import com.zantong.mobilecttx.interf.ILoginView;
 import com.zantong.mobilecttx.user.bean.LoginResult;
 import com.zantong.mobilecttx.user.dto.LoginDTO;
-
-import cn.qqtheme.framework.util.LogUtils;
+import com.zantong.mobilecttx.utils.LogUtils;
+import com.zantong.mobilecttx.interf.ILoginView;
 
 /**
  * Created by zhengyingbing on 16/6/1.

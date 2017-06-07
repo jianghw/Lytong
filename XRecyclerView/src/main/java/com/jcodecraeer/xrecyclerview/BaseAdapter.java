@@ -137,7 +137,7 @@ public abstract class BaseAdapter<ItemDataType> extends
                 swipeRightMenuView.bindMenu(swipeRightMenu, XRecyclerView.RIGHT_DIRECTION);
                 swipeRightMenuView.bindMenuItemClickListener(mSwipeMenuItemClickListener, swipeMenuLayout);
             }
-            if (leftMenuCount > 0 || rightMenuCount > 0) {
+            if (leftMenuCount > 0 ||rightMenuCount > 0) {
                 ViewGroup viewById = (ViewGroup) swipeMenuLayout.findViewById(R.id.lv_swipe_content);
                 viewById.addView(contentView);
                 contentView = swipeMenuLayout;

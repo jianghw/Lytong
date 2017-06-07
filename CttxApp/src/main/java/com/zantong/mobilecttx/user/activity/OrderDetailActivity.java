@@ -22,6 +22,7 @@ import com.zantong.mobilecttx.utils.NetUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.weizhang.activity.PayWebActivity;
 import com.zantong.mobilecttx.interf.IOrderView;
 
 import butterknife.Bind;
@@ -156,6 +157,7 @@ public class OrderDetailActivity extends BaseMvpActivity<IOrderView, OrderPresen
                             append("&clientType=").append(CLIENT_TYPE_0);             //启动类型
 
                     PublicData.getInstance().mHashMap.put("PayWebActivity", sb.toString());
+                    Act.getInstance().gotoIntent(this, PayWebActivity.class);
                 } else {
                     commitInsOrder();
                 }

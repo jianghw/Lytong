@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="@dimen/ds_200"
+        android:layout_height="@dimen/ds_200"
+        android:layout_marginTop="@dimen/ds_60"
+        android:background="@mipmap/request_succ" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ds_60"
+        android:text="您的办卡申请已成功提交"
+        android:textColor="@color/red"
+        android:textSize="@dimen/fs_50" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ds_240"
+        android:layout_marginRight="@dimen/ds_240"
+        android:layout_marginTop="@dimen/ds_20"
+        android:gravity="center"
+        android:text="我行将尽快为您核发卡片,请留意我行的领卡通知"
+        android:textColor="@color/gray_99"
+        android:textSize="@dimen/fs_45" />
+
+    <TextView
+        android:id="@+id/apply_success_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/ds_60"
+        android:layout_marginLeft="@dimen/ds_240"
+        android:layout_marginRight="@dimen/ds_240"
+        android:layout_marginTop="@dimen/ds_20"
+        android:gravity="center"
+        android:text="@string/apply_success_hint"
+        android:textColor="@color/gray_99"
+        android:textSize="@dimen/fs_45" />
+
+    <include layout="@layout/view_line1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dip"
+        android:paddingRight="@dimen/ds_60">
+
+
+        <TextView
+            style="@style/TextInfoStyle"
+            android:text="领取网点" />
+
+        <TextView
+            android:id="@+id/activity_apply_success_wangdian"
+            style="@style/EditextNormalNoStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|right"/>
+    </LinearLayout>
+
+    <include layout="@layout/view_line1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ds_100"
+        android:text="优惠活动"
+        android:textColor="@color/gray_99"
+        android:textSize="@dimen/fs_50" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_240"
+        android:layout_marginTop="@dimen/ds_60"
+        android:background="@mipmap/discount"/>
+</LinearLayout>

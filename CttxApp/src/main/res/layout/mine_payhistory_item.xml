@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ds_216"
+    android:paddingLeft="@dimen/ds_48"
+    android:paddingRight="@dimen/ds_48"
+    android:paddingTop="@dimen/ds_42"
+    android:background="@color/white">
+
+
+    <ImageView
+        android:id="@+id/payhistory_item_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/query_item_more"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"/>
+    <TextView
+        android:id="@+id/payhistory_item_tm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/payhistory_item_icon"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/ds_30"
+        android:text="2016-06-07"
+        android:textSize="@dimen/fs_42"
+        android:textColor="@color/gray_66"/>
+    <TextView
+        android:id="@+id/payhistory_item_carnum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="京 A1891"
+        android:textColor="@color/gray_33"
+        android:textSize="@dimen/fs_51" />
+    <TextView
+        android:id="@+id/payhistory_item_violationcent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/payhistory_item_carnum"
+        android:layout_marginTop="@dimen/ds_12"
+        android:text="记:2分"
+        android:textColor="@color/gray_a6"
+        android:textSize="@dimen/fs_42" />
+    <TextView
+        android:id="@+id/payhistory_item_violationamt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/payhistory_item_carnum"
+        android:layout_toRightOf="@id/payhistory_item_violationcent"
+        android:layout_marginTop="@dimen/ds_12"
+        android:layout_marginLeft="@dimen/ds_30"
+        android:text="罚:100元"
+        android:textColor="@color/gray_a6"
+        android:textSize="@dimen/fs_42" />
+
+</RelativeLayout>
+
+    <include layout="@layout/view_line1" />
+</LinearLayout>

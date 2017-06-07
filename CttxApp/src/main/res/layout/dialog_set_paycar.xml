@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/trans"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dip"
+        android:text="提示：车辆改绑成功后12小时才可进行违章缴费"
+        android:textColor="@color/red"
+        android:textSize="13sp" />
+
+    <include layout="@layout/view_line1" />
+
+    <RelativeLayout
+        android:id="@+id/dialog_paycar_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fs_144"
+        android:background="@color/civory"
+        android:paddingLeft="@dimen/fs_48"
+        android:paddingRight="@dimen/fs_48">
+
+        <TextView
+            android:id="@+id/dialog_paycar_tv1"
+            style="@style/payRecordTime"
+            android:text="NB7911" />
+
+        <TextView
+            style="@style/mine_user_vertical_font"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/fs_57"
+            android:text="点击解绑" />
+
+        <ImageView style="@style/arrowLeftStyle" />
+    </RelativeLayout>
+
+    <include layout="@layout/view_line1" />
+
+    <RelativeLayout
+        android:id="@+id/dialog_paycar_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fs_144"
+        android:background="@color/civory"
+        android:paddingLeft="@dimen/fs_48"
+        android:paddingRight="@dimen/fs_48">
+
+        <TextView
+            android:id="@+id/dialog_paycar_tv2"
+            style="@style/payRecordTime"
+            android:text="AA8182" />
+
+        <TextView
+            style="@style/mine_user_vertical_font"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/fs_57"
+            android:text="点击解绑" />
+
+        <ImageView style="@style/arrowLeftStyle" />
+    </RelativeLayout>
+    <Button
+        android:id="@+id/dialog_paycar_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="15dip"
+        android:background="@color/white"
+        android:text="取消"
+        android:textColor="#585858"
+        android:textSize="18sp" />
+</LinearLayout>

@@ -23,7 +23,7 @@ public interface IMessageService {
      * @param baseDTO
      * @return
      */
-    @POST("message/findAllMessage")
+    @POST("message/findAll")
     Observable<MessageTypeResult> messageFindAll(@Body BaseDTO baseDTO);
 
     /**

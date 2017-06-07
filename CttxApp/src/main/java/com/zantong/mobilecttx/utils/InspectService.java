@@ -6,7 +6,13 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.card.bean.OpenQueryBean;
+import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
+
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 监听日期的服务
@@ -62,6 +68,21 @@ public class InspectService extends Service {
     }
 
     private void updateCurrentTime() {
-
+        Date now = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd HH:mm:ss");
+        OpenQueryBean.RspInfoBean b = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(this.getBaseContext(), PublicData.getInstance().CarLocalFlag);
+        String currentTm = sdf.format(now).replace("/","").replace(":","").replace(" ","");
+        if (b != null) {
+            for (int i = 0; i < b.getUserCarsInfo().size(); i++) {
+//                String tm = b.getUserCarsInfo().get(i).getInspectdate().substring(4) + "095930";
+                String tm = b.getUserCarsInfo().get(i).getInspectdate().replace("-","").substring(4) + "173415";
+                LogUtils.i("date-" + tm +" : "+currentTm);
+                if ((tm).equals(currentTm)) {
+                    Intent intent = new Intent("com.zantong.mobilecttx.USER_ACTION");
+                    intent.putExtra("content", "您的车牌号为[" + b.getUserCarsInfo().get(i).getCarnum() + "]的车需要年检提醒了");
+                    sendBroadcast(intent);
+                }
+            }
+        }
     }
 }

@@ -34,10 +34,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.zxing.client.android.Intents;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.home.activity.CaptureActivity;
 
 public final class HistoryActivity extends ListActivity {
 

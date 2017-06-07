@@ -7,8 +7,8 @@ import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.home.bean.VersionBean;
 import com.zantong.mobilecttx.model.modelinterface.SimpleModel;
+import com.zantong.mobilecttx.utils.LogUtils;
 
-import cn.qqtheme.framework.util.LogUtils;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

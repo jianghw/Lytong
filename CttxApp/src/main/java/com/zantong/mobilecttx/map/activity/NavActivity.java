@@ -6,22 +6,22 @@ import android.content.pm.PackageManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
-import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.BaseActivity;
 import com.zantong.mobilecttx.map.adapter.NavAdapter;
+import com.zantong.mobilecttx.base.activity.BaseActivity;
+import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.model.AppInfo;
 import com.zantong.mobilecttx.utils.AMapUtil;
 import com.zantong.mobilecttx.utils.BaiduIntentUtil;
+import com.zantong.mobilecttx.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * 导航

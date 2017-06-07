@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by zhoujie on 2017/1/3.
  */
 
-public class CommonTwoLevelMenuBean implements Serializable {
+public class CommonTwoLevelMenuBean implements Serializable{
     private int id;
     private int imgId;
     private String context;
@@ -18,8 +18,7 @@ public class CommonTwoLevelMenuBean implements Serializable {
         this.id = id;
         this.context = context;
     }
-
-    public CommonTwoLevelMenuBean(int id, String context, int imgId) {
+    public CommonTwoLevelMenuBean(int id, String context, int imgId){
         this.id = id;
         this.context = context;
         this.imgId = imgId;

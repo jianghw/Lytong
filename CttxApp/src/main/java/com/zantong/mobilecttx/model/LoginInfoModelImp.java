@@ -7,8 +7,9 @@ import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
 import com.zantong.mobilecttx.model.modelinterface.SimpleModel;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.SmsBean;
+import com.zantong.mobilecttx.utils.LogUtils;
 
-import cn.qqtheme.framework.util.LogUtils;
+
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -64,6 +65,7 @@ public class LoginInfoModelImp implements SimpleModel {
                         Log.e("why", mLoginInfoBean+"aaa");
                         listener.onSuccess(mLoginInfoBean, index);
                     }
+
                 };
                 LogUtils.i("LModelImp msg : "+msg);
                 Subscription subscribe = APPHttpClient.getInstance().getCTTXHttpPOSTInterface().loadPost(msg)

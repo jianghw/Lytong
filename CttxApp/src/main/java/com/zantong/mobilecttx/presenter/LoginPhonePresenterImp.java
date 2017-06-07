@@ -6,11 +6,13 @@ import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
 import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
 import com.zantong.mobilecttx.model.LoginInfoModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.SmsBean;
+import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
@@ -19,13 +21,12 @@ import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-
-import cn.qqtheme.framework.util.LogUtils;
 
 
 /**
@@ -97,7 +98,6 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
                     masp.put("pushswitch", "0");
                     masp.put("pushmode", "2");
                     String token = RSAUtils.strByEncryption(mLoginActivity, PublicData.getInstance().deviceId, true);
-                    LogUtils.i("token==" + token);
                     masp.put("token", token);
                     MessageFormat.getInstance().setMessageJSONObject(masp);
                 } catch (JSONException e) {
@@ -147,6 +147,7 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
                 PublicData.getInstance().getdate = this.mLoginInfoBean.getRspInfo().getGetdate();
                 PublicData.getInstance().loginFlag = true;
                 mLoginActivity.addLoginInfo(this.mLoginInfoBean);
+                EventBus.getDefault().post(new UpdateCarInfoEvent(true));
 
 //                PrefUtils.getInstance(mLoginPhone).setFilenum(this.mLoginInfoBean.getRspInfo().getFilenum());
 //                PrefUtils.getInstance(mLoginPhone).setToken(this.mLoginInfoBean.getRspInfo().getUsrid());

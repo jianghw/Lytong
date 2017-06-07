@@ -78,7 +78,7 @@ public abstract class BaseMvpActivity<V, T extends BasePresenter<V>> extends Bas
 
         if (mBaseBack.getText().toString().equals("返回")){
             // 初始化返回按钮图片大小
-            UiHelpers.setTextViewIcon(getApplicationContext(), mBaseBack, R.mipmap.back_btn_image,
+            UiHelpers.setTextViewIcon(this, mBaseBack, R.mipmap.back_btn_image,
                     R.dimen.ds_24,
                     R.dimen.ds_51, UiHelpers.DRAWABLE_LEFT);
         }
@@ -200,7 +200,7 @@ public abstract class BaseMvpActivity<V, T extends BasePresenter<V>> extends Bas
         mBaseEnsure.setText(resid);
     }
     public void setEnsureImg(int resid) {
-        UiHelpers.setTextViewIcon(getApplicationContext(), mBaseEnsure, resid,
+        UiHelpers.setTextViewIcon(this, mBaseEnsure, resid,
                 R.dimen.ds_48,
                 R.dimen.ds_48, UiHelpers.DRAWABLE_LEFT);
     }

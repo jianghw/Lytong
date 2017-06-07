@@ -17,8 +17,6 @@
 package com.zantong.mobilecttx.zxing.client.android;
 
 import android.graphics.Bitmap;
-
-import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.zxing.BinaryBitmap;
 import com.zantong.mobilecttx.zxing.DecodeHintType;
 import com.zantong.mobilecttx.zxing.MultiFormatReader;
@@ -27,6 +25,7 @@ import com.zantong.mobilecttx.zxing.ReaderException;
 import com.zantong.mobilecttx.zxing.Result;
 import com.zantong.mobilecttx.zxing.common.HybridBinarizer;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.home.activity.CaptureActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -78,7 +77,7 @@ final class DecodeHandler extends Handler {
   private void decode(byte[] data, int width, int height) {
     long start = System.currentTimeMillis();
     Result rawResult = null;
-    PlanarYUVLuminanceSource source = new PlanarYUVLuminanceSource(null,0,0,0,0,0,0,false);
+    PlanarYUVLuminanceSource source = activity.getCameraManager().buildLuminanceSource(data, width, height);
     //竖屏设置
 //    byte[] rotatedData = new byte[data.length];
 //    for (int y = 0; y < height; y++) {
@@ -100,7 +99,7 @@ final class DecodeHandler extends Handler {
       }
     }
 
-    Handler handler = new Handler();
+    Handler handler = activity.getHandler();
     if (rawResult != null) {
       // Don't log the barcode contents for security.
       long end = System.currentTimeMillis();

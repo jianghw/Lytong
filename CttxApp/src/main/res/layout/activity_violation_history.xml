@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/context_all"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_base_color"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_150"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:gravity="center_vertical"
+            android:text="查询周期"
+            android:textSize="@dimen/fs_48"
+            android:textColor="@color/gray_66" />
+        <LinearLayout
+            android:id="@+id/activity_violation_history_layout"
+            android:layout_width="@dimen/ds_450"
+            android:layout_height="@dimen/ds_72"
+            android:background="@drawable/shape_down_btn"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginRight="@dimen/ds_30">
+            <TextView
+                android:id="@+id/activity_violation_history_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/ds_30"
+                android:textSize="@dimen/fs_42"
+                android:text="一年内"/>
+            <ImageView
+                android:layout_width="@dimen/ds_108"
+                android:layout_height="@dimen/ds_72"
+                android:background="@mipmap/icon_vio_down"/>
+    </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/view_line1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_150"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/activity_violation_history_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:layout_weight="1"
+            android:textSize="@dimen/fs_48"
+            android:text="车辆数：3辆"
+            android:textColor="@color/gray_66" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="缴费总额："
+            android:textSize="@dimen/fs_48"
+            android:textColor="@color/gray_66" />
+
+        <TextView
+            android:id="@+id/activity_violation_history_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/ds_30"
+            android:textSize="@dimen/fs_48"
+            android:text="900元"
+            android:textColor="@color/red" />
+    </LinearLayout>
+
+    <include layout="@layout/view_line1" />
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/activity_violation_history_xrecyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white" />
+
+</LinearLayout>

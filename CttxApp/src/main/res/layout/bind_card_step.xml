@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/illegal_query_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorNoticeGrayNumberFont">
+
+
+    <TextView
+        android:id="@+id/consummate_car_notice"
+        style="@style/TextSmallNoticeInfoStyleWhite"
+        android:layout_alignParentTop="true"
+        android:text="绑定畅通卡后，您可以享受全部服务" />
+
+    <RelativeLayout
+        android:id="@+id/edit_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/consummate_car_notice"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/car_number_rl"
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:background="@color/white"
+            android:paddingLeft="16dip"
+            android:paddingRight="16dip"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/TextInfoStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="畅通卡卡号" />
+
+            <EditText
+                android:id="@+id/car_number_tv"
+                style="@style/EditextNormalNoStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="32dip"
+                android:gravity="right"
+                android:hint="请输入畅通卡卡号" />
+
+
+            <ImageView
+                android:layout_width="20dip"
+                android:layout_height="16dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/photo_picture_image_selector" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line1"
+            style="@style/line_splite_gray"
+            android:layout_below="@id/car_number_rl" />
+
+        <RelativeLayout
+            android:id="@+id/engine_number_rl"
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:layout_below="@id/line1"
+            android:background="@color/white"
+            android:paddingLeft="16dip"
+            android:paddingRight="16dip">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:id="@+id/engine_number_text"
+                    style="@style/TextInfoStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="驾照档案编号" />
+
+                <ImageView
+                    android:id="@+id/engine_number_image"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="4dip"
+                    android:layout_toRightOf="@id/engine_number_text"
+                    android:padding="5dip"
+                    android:src="@drawable/illegal_query_notice_selector" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/drive_number_edit"
+                    style="@style/EditextNormalNoStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="请输入驾照档案编号"
+                    android:maxLength="12"
+                    android:singleLine="true" />
+
+                <ImageView
+                    android:id="@+id/add_ct_car_ocr_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/ds_30"
+                    android:src="@drawable/engine_notice_image_selector" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line2"
+            style="@style/line_splite_gray"
+            android:layout_below="@id/engine_number_rl" />
+
+
+        <RelativeLayout
+            android:id="@+id/ID_car_number_rl"
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:layout_below="@id/line2"
+            android:background="@color/white"
+            android:paddingLeft="16dip"
+            android:paddingRight="16dip">
+
+            <TextView
+                style="@style/TextInfoStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="身份证号" />
+
+            <EditText
+                android:id="@+id/ID_car_number_tv"
+                style="@style/EditextNormalNoStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="right"
+                android:hint="请输入身份证号" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line_1"
+            style="@style/line_splite_gray"
+            android:layout_below="@id/ID_car_number_rl" />
+
+
+        <RelativeLayout
+            android:id="@+id/phone_number_rl"
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:layout_below="@id/line_1"
+            android:background="@color/white"
+            android:paddingLeft="16dip"
+            android:paddingRight="16dip">
+
+            <TextView
+                style="@style/TextInfoStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="手机号" />
+
+            <EditText
+                android:id="@+id/phone_number_tv"
+                style="@style/EditextNormalNoStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="right"
+                android:hint="银行预留手机号码" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/line_2"
+            style="@style/line_splite_gray"
+            android:layout_below="@id/phone_number_rl" />
+
+        <RelativeLayout
+            android:id="@+id/city_info_rl"
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:layout_below="@+id/line_2"
+            android:background="@color/white"
+            android:paddingLeft="16dip"
+            android:paddingRight="16dip">
+
+            <TextView
+                style="@style/TextInfoStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="初次领证日期" />
+
+            <RelativeLayout
+                android:id="@+id/car_type_choose_rl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+
+                <ImageView
+                    android:id="@+id/arrow"
+                    android:layout_width="7.1dip"
+                    android:layout_height="12dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/arrow_left_big_iamge" />
+
+                <TextView
+                    android:id="@+id/card_get_time"
+                    style="@style/TextInfoStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="6dip"
+                    android:layout_toLeftOf="@id/arrow"
+                    android:text="2015-10-26" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/line3"
+        style="@style/line_splite_gray"
+        android:layout_below="@id/edit_content" />
+
+    <TextView
+        android:id="@+id/info_notice_text1"
+        style="@style/TextTitleSmallStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dip"
+        android:paddingLeft="16dip"
+        android:paddingRight="16dip"
+        android:text="您的信息仅用于违章查询、缴费等服务工银安盛将会严格保密，请您放心填写" />
+
+    <TextView
+        android:id="@+id/info_notice_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/info_notice_text1"
+        android:layout_centerHorizontal="true"
+        android:text="xxx将会严格保密，请您放心填写"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/next_btn"
+        style="@style/ButtonBigStyle"
+        android:layout_below="@id/info_notice_text2"
+        android:layout_marginTop="16dip"
+        android:text="下一步" />
+
+    <RelativeLayout
+        android:id="@+id/cttx_agree_rl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/next_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dip"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/text_agree_text"
+            style="@style/TextTitleSmallStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点击保存并查询，即表示您同意" />
+
+        <TextView
+            style="@style/TextTitleSmallStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/text_agree_text"
+            android:text="《用户使用协议》"
+            android:textColor="@color/userAgreeColor" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

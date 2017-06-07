@@ -3,17 +3,20 @@ package com.zantong.mobilecttx.api;
 import android.content.Context;
 
 import com.zantong.mobilecttx.BuildConfig;
-import com.zantong.mobilecttx.base.MessageFormat;
-import com.zantong.mobilecttx.base.bean.Result;
-import com.zantong.mobilecttx.base.dto.RequestDTO;
-import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.home.bean.VersionResult;
-import com.zantong.mobilecttx.home.dto.VersionDTO;
+import com.zantong.mobilecttx.base.MessageFormat;
+import com.zantong.mobilecttx.card.bean.BindCardResult;
 import com.zantong.mobilecttx.user.bean.CheckOrderResult;
 import com.zantong.mobilecttx.user.bean.LoginResult;
 import com.zantong.mobilecttx.user.bean.OrderResult;
+import com.zantong.mobilecttx.car.bean.PayCarResult;
+import com.zantong.mobilecttx.weizhang.bean.PayHistoryResult;
+import com.zantong.mobilecttx.base.bean.Result;
+import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.user.bean.VcodeResult;
+import com.zantong.mobilecttx.home.bean.VersionResult;
+import com.zantong.mobilecttx.card.dto.BindCardDTO;
+import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.user.dto.ChangePwdDTO;
 import com.zantong.mobilecttx.user.dto.CheckOrderDTO;
 import com.zantong.mobilecttx.user.dto.FeedbackDTO;
@@ -22,17 +25,24 @@ import com.zantong.mobilecttx.user.dto.JiaoYiDaiMaDTO;
 import com.zantong.mobilecttx.user.dto.LoginDTO;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
 import com.zantong.mobilecttx.user.dto.OrderDTO;
+import com.zantong.mobilecttx.weizhang.bean.ViolationResult;
+import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
+import com.zantong.mobilecttx.weizhang.dto.PayHistoryDTO;
 import com.zantong.mobilecttx.user.dto.PersonInfoDTO;
 import com.zantong.mobilecttx.user.dto.RegisterDTO;
+import com.zantong.mobilecttx.base.dto.RequestDTO;
+import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.user.dto.ShareDTO;
 import com.zantong.mobilecttx.user.dto.UpdateUserHeadImgDTO;
+import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.user.dto.VcodeDTO;
+import com.zantong.mobilecttx.home.dto.VersionDTO;
+import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.DateUtils;
+import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.Tools;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
-
-import cn.qqtheme.framework.util.LogUtils;
 
 
 /**
@@ -205,7 +215,24 @@ public class UserApiClient extends BaseApiClient {
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
 
+    public static void getPayHistory(Context context, PayHistoryDTO params, CallBack<PayHistoryResult> callback) {
+        params.setFilenum(RSAUtils.strByEncryption(context, params.getFilenum(), true));
+        AsyncCallBack<PayHistoryResult> asyncCallBack = new AsyncCallBack<PayHistoryResult>(
+                context, callback, PayHistoryResult.class);
+        RequestDTO t = new RequestDTO();
+        t.setSYS_HEAD(getBean(context, "cip.cfc.v001.01"));
+        t.setReqInfo(params);
+        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+    }
 
+    public static void getPayCars(Context context, LogoutDTO params, CallBack<PayCarResult> callback) {
+        AsyncCallBack<PayCarResult> asyncCallBack = new AsyncCallBack<PayCarResult>(
+                context, callback, PayCarResult.class);
+        RequestDTO t = new RequestDTO();
+        t.setSYS_HEAD(getBean(context, "cip.cfc.c002.01"));
+        t.setReqInfo(params);
+        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+    }
 
     /**
      * 订单查询
@@ -312,11 +339,46 @@ public class UserApiClient extends BaseApiClient {
         post(context, getDownUrl("userShare"), dto, versionCallBack);
     }
 
+    public static void addCarInfo(Context context, CarInfoDTO dto, CallBack<Result> callback) {
+        dto.setCarnum(RSAUtils.strByEncryption(context, dto.getCarnum(), true));
+        dto.setEnginenum(RSAUtils.strByEncryption(context, dto.getEnginenum(), true));
+        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
+                context, callback, Result.class);
+        RequestDTO t = new RequestDTO();
+        t.setSYS_HEAD(getBean(context, "cip.cfc.u005.01"));
+        t.setReqInfo(dto);
+        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+    }
 
-    /**
-     * @author Sandy
-     * create at 16/6/15 下午4:05
-     */
+    public static void bindCard(Context context, BindCardDTO dto, CallBack<BindCardResult> callback) {
+        AsyncCallBack<BindCardResult> asyncCallBack = new AsyncCallBack<BindCardResult>(
+                context, callback, BindCardResult.class);
+        RequestDTO t = new RequestDTO();
+        t.setSYS_HEAD(getBean(context, "cip.cfc.u004.01"));
+        t.setReqInfo(dto);
+        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+    }
+
+    public static void editCarInfo(Context context, CarInfoDTO dto, CallBack<Result> callback) {
+        dto.setCarnum(RSAUtils.strByEncryption(context, dto.getCarnum(), true));
+        dto.setEnginenum(RSAUtils.strByEncryption(context, dto.getEnginenum(), true));
+        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
+                context, callback, Result.class);
+        RequestDTO t = new RequestDTO();
+        t.setSYS_HEAD(getBean(context, "cip.cfc.c001.01"));
+        t.setReqInfo(dto);
+        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+    }
+
+    public static void getCarInfo(Context context, UserCarsDTO dto, CallBack<UserCarsResult> callback) {
+        AsyncCallBack<UserCarsResult> asyncCallBack = new AsyncCallBack<UserCarsResult>(
+                context, callback, UserCarsResult.class);
+        RequestDTO t = new RequestDTO();
+        t.setSYS_HEAD(getBean(context, "cip.cfc.c003.01"));
+        t.setReqInfo(dto);
+        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+    }
+
     public static void html(Context context, String serviceCode, String reqinfo, CallBack<Result> callback) {
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
@@ -345,13 +407,25 @@ public class UserApiClient extends BaseApiClient {
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
 
-    /**
-     *
-     *客户登陆APP后如果有发现有驾档，那么要保证至少成功调用一次本交易。否则后续缴费可能会出问题
-     * 同步银行和交管局的违章信息
-     * @author zj
-     * create at 16/10/08 下午4:05
-     */
+    public static void getViolation(Context context, ViolationDTO dto, CallBack<Result> callback) {
+        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
+                context, callback, Result.class);
+        RequestDTO t = new RequestDTO();
+        t.setSYS_HEAD(getBean(context, "cip.cfc.v002.01"));
+        t.setReqInfo(dto);
+        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+    }
+
+    public static void searchViolation(Context context, ViolationDTO dto, CallBack<ViolationResultParent> callback) {
+        AsyncCallBack<ViolationResultParent> asyncCallBack = new AsyncCallBack<ViolationResultParent>(
+                context, callback, ViolationResultParent.class);
+        RequestDTO t = new RequestDTO();
+        t.setSYS_HEAD(getBean(context, "cip.cfc.v002.01"));
+        t.setReqInfo(dto);
+        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+    }
+
+
     public static void setJiaoYiDaiMa(Context context, String strFileNum,CallBack<Result> callback) {
         JiaoYiDaiMaDTO jiaoYiDaiMaDTO = new JiaoYiDaiMaDTO();
         jiaoYiDaiMaDTO.setFilenum(RSAUtils.strByEncryption(context, strFileNum, true));

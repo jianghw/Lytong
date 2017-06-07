@@ -23,11 +23,11 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.zxing.client.android.wifi.WifiConfigManager;
 import com.zantong.mobilecttx.zxing.client.result.ParsedResult;
 import com.zantong.mobilecttx.zxing.client.result.WifiParsedResult;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.home.activity.CaptureActivity;
 
 /**
  * Handles wifi access information.

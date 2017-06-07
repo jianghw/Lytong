@@ -4,19 +4,18 @@ import com.zantong.mobilecttx.base.bean.BaseResult;
 
 /**
  * 加油充值返回实体
- *
  * @author zyb
- *         <p>
- *         <p>
- *         *  *   *  *
- *         *      *      *
- *         *             *
- *         *           *
- *         *     *
+ *
+ *
+ *    *  *   *  *
+ *  *      *      *
+ *  *             *
+ *   *           *
+ *      *     *
  *         *
- *         <p>
- *         <p>
- *         create at 17/1/11 下午5:15
+ *
+ *
+ * create at 17/1/11 下午5:15
  */
 public class RechargeResult extends BaseResult {
 
@@ -30,7 +29,7 @@ public class RechargeResult extends BaseResult {
         this.data = data;
     }
 
-    public class OrderBean {
+    public class OrderBean{
         private String orderId;
 
         public String getOrderId() {

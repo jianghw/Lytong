@@ -14,6 +14,7 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.zantong.mobilecttx.base.bean.BaseResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeOrderBean;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;
 import com.zantong.mobilecttx.eventbus.OrderCancelEvent;
@@ -131,7 +132,16 @@ public class RechargeOrderAdapter extends BaseAdapter<RechargeOrderBean> {
                                 String payUrl = "http://139.196.183.121:8081/payment/payForWapb2cPay?orderid=" +
                                         data.getOrderId() + "&amount=" +
                                         orderPrice + "&payType=0";
-
+                                CarApiClient.getPayOrderSn(mContext, payUrl, new CallBack<PayOrderResult>() {
+                                    @Override
+                                    public void onSuccess(PayOrderResult result) {
+                                        if (result.getResponseCode() == 2000){
+                                            PublicData.getInstance().webviewTitle = "支付";
+                                            PublicData.getInstance().webviewUrl = result.getData();
+                                            Act.getInstance().lauchIntentToLogin(mContext,BrowserForPayActivity.class);
+                                        }
+                                    }
+                                });
                             }
                         });
             }

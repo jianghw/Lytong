@@ -27,6 +27,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -36,13 +38,12 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.utils.TitleSetting;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import com.zantong.mobilecttx.utils.LogUtils;
+import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 import com.zantong.mobilecttx.zxing.BarcodeFormat;
 import com.zantong.mobilecttx.zxing.DecodeHintType;
 import com.zantong.mobilecttx.zxing.Result;
@@ -50,6 +51,7 @@ import com.zantong.mobilecttx.zxing.ResultMetadataType;
 import com.zantong.mobilecttx.zxing.ResultPoint;
 import com.zantong.mobilecttx.zxing.client.android.AmbientLightManager;
 import com.zantong.mobilecttx.zxing.client.android.BeepManager;
+import com.zantong.mobilecttx.zxing.client.android.CaptureActivityHandler;
 import com.zantong.mobilecttx.zxing.client.android.DecodeFormatManager;
 import com.zantong.mobilecttx.zxing.client.android.DecodeHintManager;
 import com.zantong.mobilecttx.zxing.client.android.FinishListener;
@@ -65,13 +67,17 @@ import com.zantong.mobilecttx.zxing.client.android.history.HistoryItem;
 import com.zantong.mobilecttx.zxing.client.android.history.HistoryManager;
 import com.zantong.mobilecttx.zxing.client.android.result.ResultHandler;
 import com.zantong.mobilecttx.zxing.client.android.result.ResultHandlerFactory;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.utils.StateBarSetting;
+import com.zantong.mobilecttx.utils.TitleSetting;
+import com.zantong.mobilecttx.utils.ToastUtils;
+import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.io.IOException;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Map;
-
-import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * This activity opens the camera and does the actual scanning on a background thread. It draws a
@@ -99,6 +105,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                  ResultMetadataType.POSSIBLE_COUNTRY);
 
   private CameraManager cameraManager;
+  private CaptureActivityHandler handler;
   private Result savedResultToShow;
   private ViewfinderView viewfinderView;
   private TextView statusView;
@@ -117,6 +124,20 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   private BeepManager beepManager;
   private AmbientLightManager ambientLightManager;
 
+  public ViewfinderView getViewfinderView() {
+    return viewfinderView;
+  }
+
+  public Handler getHandler() {
+    return handler;
+  }
+
+  public CameraManager getCameraManager() {
+    return cameraManager;
+  }
+
+  private RelativeLayout title;
+
   @Override
   public void onCreate(Bundle icicle) {
     super.onCreate(icicle);
@@ -124,6 +145,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     Window window = getWindow();
     window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     setContentView(R.layout.capture);
+    StateBarSetting.settingBar(this, R.color.black, Codequery.class, true);
     TitleSetting.getInstance().initTitle(this, "扫罚单", 0, "取消", null, "输入编码", R.color.black);
 
     hasSurface = false;
@@ -159,6 +181,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     resultView = findViewById(R.id.result_view);
     statusView = (TextView) findViewById(R.id.status_view);
 
+    handler = null;
     lastResult = null;
 
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -294,6 +317,10 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
   @Override
   protected void onPause() {
+    if (handler != null) {
+      handler.quitSynchronously();
+      handler = null;
+    }
     inactivityTimer.onPause();
     ambientLightManager.stop();
     beepManager.close();
@@ -389,6 +416,18 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
   private void decodeOrStoreSavedBitmap(Bitmap bitmap, Result result) {
     // Bitmap isn't used yet -- will be used soon
+    if (handler == null) {
+      savedResultToShow = result;
+    } else {
+      if (result != null) {
+        savedResultToShow = result;
+      }
+      if (savedResultToShow != null) {
+        Message message = Message.obtain(handler, R.id.decode_succeeded, savedResultToShow);
+        handler.sendMessage(message);
+      }
+      savedResultToShow = null;
+    }
   }
 
   @Override
@@ -506,6 +545,12 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
    * 使Zxing能够继续扫描
    */
   public void continuePreview() {
+    if (handler != null) {
+      Message msg = new Message();
+      msg.what = R.id.restart_preview;
+      getHandler().sendMessage(msg);
+//      handler.restartPreviewAndDecode();
+    }
   }
 
   // Put up our own UI for how to handle the decoded contents.
@@ -518,6 +563,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       ToastUtils.showShort(CaptureActivity.this, "该违章单编号不正确，请重新扫描");
     }else{
       if(displayContents.length() == 16){
+        Act.getInstance().lauchIntent(CaptureActivity.this, ViolationDetails.class);
         LogUtils.i("去查询违章");
       }else{
         continuePreview();
@@ -525,6 +571,90 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
       }
 
     }
+//    if (copyToClipboard && !resultHandler.areContentsSecure()) {
+//      ClipboardInterface.setText(displayContents, this);
+//    }
+//
+//    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//
+//    if (resultHandler.getDefaultButtonID() != null && prefs.getBoolean(PreferencesActivity.KEY_AUTO_OPEN_WEB, false)) {
+//      resultHandler.handleButtonPress(resultHandler.getDefaultButtonID());
+//      return;
+//    }
+//
+//    statusView.setVisibility(View.GONE);
+//    viewfinderView.setVisibility(View.GONE);
+//    resultView.setVisibility(View.VISIBLE);
+//
+//    ImageView barcodeImageView = (ImageView) findViewById(R.id.barcode_image_view);
+//    if (barcode == null) {
+//      barcodeImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(),
+//          R.mipmap.ic_launcher));
+//    } else {
+//      barcodeImageView.setImageBitmap(barcode);
+//    }
+//
+//    TextView formatTextView = (TextView) findViewById(R.id.format_text_view);
+//    formatTextView.setText(rawResult.getBarcodeFormat().toString());
+//
+//    TextView typeTextView = (TextView) findViewById(R.id.type_text_view);
+//    typeTextView.setText(resultHandler.getType().toString());
+//
+//    DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+//    TextView timeTextView = (TextView) findViewById(R.id.time_text_view);
+//    timeTextView.setText(formatter.format(new Date(rawResult.getTimestamp())));
+//
+//
+//    TextView metaTextView = (TextView) findViewById(R.id.meta_text_view);
+//    View metaTextViewLabel = findViewById(R.id.meta_text_view_label);
+//    metaTextView.setVisibility(View.GONE);
+//    metaTextViewLabel.setVisibility(View.GONE);
+//    Map<ResultMetadataType,Object> metadata = rawResult.getResultMetadata();
+//    if (metadata != null) {
+//      StringBuilder metadataText = new StringBuilder(20);
+//      for (Map.Entry<ResultMetadataType,Object> entry : metadata.entrySet()) {
+//        if (DISPLAYABLE_METADATA_TYPES.contains(entry.getKey())) {
+//          metadataText.append(entry.getValue()).append('\n');
+//        }
+//      }
+//      if (metadataText.length() > 0) {
+//        metadataText.setLength(metadataText.length() - 1);
+//        metaTextView.setText(metadataText);
+//        metaTextView.setVisibility(View.VISIBLE);
+//        metaTextViewLabel.setVisibility(View.VISIBLE);
+//      }
+//    }
+//
+//    TextView contentsTextView = (TextView) findViewById(R.id.contents_text_view);
+//    contentsTextView.setText(displayContents);
+//    int scaledSize = Math.max(22, 32 - displayContents.length() / 4);
+//    contentsTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, scaledSize);
+//
+//    TextView supplementTextView = (TextView) findViewById(R.id.contents_supplement_text_view);
+//    supplementTextView.setText("");
+//    supplementTextView.setOnClickListener(null);
+//    if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
+//        PreferencesActivity.KEY_SUPPLEMENTAL, true)) {
+//      SupplementalInfoRetriever.maybeInvokeRetrieval(supplementTextView,
+//                                                     resultHandler.getResult(),
+//                                                     historyManager,
+//                                                     this);
+//    }
+//
+//    int buttonCount = resultHandler.getButtonCount();
+//    ViewGroup buttonView = (ViewGroup) findViewById(R.id.result_button_view);
+//    buttonView.requestFocus();
+//    for (int x = 0; x < ResultHandler.MAX_BUTTON_COUNT; x++) {
+//      TextView button = (TextView) buttonView.getChildAt(x);
+//      if (x < buttonCount) {
+//        button.setVisibility(View.VISIBLE);
+//        button.setText(resultHandler.getButtonText(x));
+//        button.setOnClickListener(new ResultButtonListener(resultHandler, x));
+//      } else {
+//        button.setVisibility(View.GONE);
+//      }
+//    }
+
   }
 
   // Briefly show the contents of the barcode, then handle the result outside Barcode Scanner.
@@ -613,6 +743,14 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   }
 
   private void sendReplyMessage(int id, Object arg, long delayMS) {
+    if (handler != null) {
+      Message message = Message.obtain(handler, id, arg);
+      if (delayMS > 0L) {
+        handler.sendMessageDelayed(message, delayMS);
+      } else {
+        handler.sendMessage(message);
+      }
+    }
   }
 
   private void initCamera(SurfaceHolder surfaceHolder) {
@@ -626,6 +764,9 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     try {
       cameraManager.openDriver(surfaceHolder);
       // Creating the handler starts the preview, which can also throw a RuntimeException.
+      if (handler == null) {
+        handler = new CaptureActivityHandler(this, decodeFormats, decodeHints, characterSet, cameraManager);
+      }
       decodeOrStoreSavedBitmap(null, null);
     } catch (IOException ioe) {
       Log.w(TAG, ioe);
@@ -648,6 +789,10 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
   }
 
   public void restartPreviewAfterDelay(long delayMS) {
+    if (handler != null) {
+      handler.sendEmptyMessageDelayed(R.id.restart_preview, delayMS);
+    }
+    resetStatusView();
   }
 
   private void resetStatusView() {

@@ -22,62 +22,81 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
-import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.api.CallBack;
-import com.zantong.mobilecttx.api.CarApiClient;
-import com.zantong.mobilecttx.api.FileDownloadApi;
-import com.zantong.mobilecttx.api.UserApiClient;
-import com.zantong.mobilecttx.base.BaseAutoScrollUpTextView;
-import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
-import com.zantong.mobilecttx.base.bean.BaseResult;
-import com.zantong.mobilecttx.base.fragment.BaseExtraFragment;
-import com.zantong.mobilecttx.base.fragment.BaseFragment;
-import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
+import com.zantong.mobilecttx.car.fragment.AddCarFragment;
+import com.zantong.mobilecttx.car.fragment.BindCarFragment;
+import com.zantong.mobilecttx.card.activity.ApplyCardFirstActivity;
+import com.zantong.mobilecttx.card.activity.CardHomeActivity;
+import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.common.AppManager;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
-import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
-import com.zantong.mobilecttx.home.activity.GuideActivity;
-import com.zantong.mobilecttx.home.activity.LicenseCheckGradeActivity;
-import com.zantong.mobilecttx.home.activity.LicenseDetailActivity;
+import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.api.CallBack;
+import com.zantong.mobilecttx.api.CarApiClient;
+import com.zantong.mobilecttx.api.UserApiClient;
+import com.zantong.mobilecttx.base.BaseAutoScrollUpTextView;
+import com.zantong.mobilecttx.base.fragment.BaseExtraFragment;
+import com.zantong.mobilecttx.base.fragment.BaseFragment;
+import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
+import com.zantong.mobilecttx.huodong.bean.ActivityCarResult;
+import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.home.bean.HomeBean;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.HomeWeather;
-import com.zantong.mobilecttx.home.bean.VersionResult;
-import com.zantong.mobilecttx.home.dto.HomeDataDTO;
-import com.zantong.mobilecttx.home.dto.VersionDTO;
-import com.zantong.mobilecttx.huodong.activity.HundredPlanActivity;
-import com.zantong.mobilecttx.huodong.bean.ActivityCarResult;
-import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
-import com.zantong.mobilecttx.map.activity.BaiduMapActivity;
-import com.zantong.mobilecttx.user.activity.LoginActivity;
-import com.zantong.mobilecttx.user.activity.MineActivity;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
+import com.zantong.mobilecttx.user.bean.UserCarsResult;
+import com.zantong.mobilecttx.home.bean.VersionResult;
+import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
+import com.zantong.mobilecttx.car.dto.CarInfoDTO;
+import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
-import com.zantong.mobilecttx.user.dto.LicenseFileNumDTO;
+import com.zantong.mobilecttx.car.dto.UserCarsDTO;
+import com.zantong.mobilecttx.home.dto.VersionDTO;
+import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
+import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
+import com.zantong.mobilecttx.api.FileDownloadApi;
+import com.zantong.mobilecttx.utils.rsa.Des3;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.DensityUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
+import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.OnClickUtils;
 import com.zantong.mobilecttx.utils.PullToRefreshLayout;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
+import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.permission.PermissionFail;
 import com.zantong.mobilecttx.utils.permission.PermissionGen;
 import com.zantong.mobilecttx.utils.permission.PermissionSuccess;
-import com.zantong.mobilecttx.utils.rsa.Des3;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
+import com.zantong.mobilecttx.card.activity.ApplyCardSecondActivity;
+import com.zantong.mobilecttx.map.activity.BaiduMapActivity;
+import com.zantong.mobilecttx.common.activity.BrowserActivity;
+import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
+import com.zantong.mobilecttx.home.activity.GuideActivity;
+import com.zantong.mobilecttx.huodong.activity.HundredPlanActivity;
+import com.zantong.mobilecttx.user.activity.LoginActivity;
+import com.zantong.mobilecttx.user.activity.MineActivity;
+import com.zantong.mobilecttx.weizhang.activity.LicenseCheckGradeActivity;
+import com.zantong.mobilecttx.weizhang.activity.LicenseDetailActivity;
+import com.zantong.mobilecttx.weizhang.activity.QueryActivity;
+import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
+import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
+import com.zantong.mobilecttx.weizhang.activity.ViolationQueryAcitvity;
+import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobilecttx.widght.AddCarViewPager;
 import com.zantong.mobilecttx.widght.HeaderViewPager;
 import com.zantong.mobilecttx.widght.MainScrollUpAdvertisementView;
 import com.zantong.mobilecttx.widght.StarBar;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -88,13 +107,14 @@ import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.LogUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
@@ -104,6 +124,9 @@ import rx.schedulers.Schedulers;
 
 /**
  * 首页
+ *
+ * @author Sandy
+ *         create at 16/9/14 上午11:02
  */
 public class HomeFragment extends BaseExtraFragment {
 
@@ -143,9 +166,11 @@ public class HomeFragment extends BaseExtraFragment {
     private List<HomeNotice> mList;
     public boolean isCanBack = true;
 
-    ArrayList<BaseFragment> mFragmentList = new ArrayList<>();
+    ArrayList<BaseFragment> mFragmentList = new ArrayList<BaseFragment>();
 
     private static final String SHOWCASE_ID = "cttx_homefragment";
+
+
     private boolean signStatus;//获取报名状态是否成功
 
     InputStream is;
@@ -155,10 +180,6 @@ public class HomeFragment extends BaseExtraFragment {
 
     private int onClickRes = 0;
     long currentTm = -1;//當前网络时间
-
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
-    }
 
     @Override
     protected int getLayoutResId() {
@@ -234,6 +255,7 @@ public class HomeFragment extends BaseExtraFragment {
         }
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
@@ -253,7 +275,13 @@ public class HomeFragment extends BaseExtraFragment {
             public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
                 mFragmentList.clear();
                 mHeaderViewPager.setAutoPlay(false);
-                getHomeData();
+                if (PublicData.getInstance().loginFlag) {
+                    updateCarInfo(0);
+                    getHomeData();
+                } else {
+                    bendiCarInfo(0);
+                    getHomeData();
+                }
             }
 
             @Override
@@ -265,6 +293,145 @@ public class HomeFragment extends BaseExtraFragment {
 
     private void initTopView() {
         mFragmentList.clear();
+
+        if (PublicData.getInstance().loginFlag) {
+            updateCarInfo(1);
+
+        } else {
+            bendiCarInfo(1);
+        }
+    }
+
+    /**
+     * 加载本地数据
+     *
+     * @param bendi
+     */
+    private void bendiCarInfo(int bendi) {
+        mFragmentList.clear();
+        List<CarInfoDTO> list = SPUtils.getInstance(this.getActivity()).getCarsInfo();
+        PublicData.getInstance().mLocalCars = list;
+        PublicData.getInstance().mCarNum = list.size();
+        if (bendi == 1) {
+            if (list.size() > 0) {
+                for (CarInfoDTO dto : list) {
+                    mFragmentList.add(new BindCarFragment(dto.getCarnum(), dto.getCarnumtype(), dto.getEnginenum(), "--", "--", "--"));
+                }
+            }
+            if (list.size() < 3) {
+                mFragmentList.add(new AddCarFragment());
+            }
+            mAddCarViewPager.refreshData(mFragmentList);
+        } else {
+            mFragmentList.clear();
+            if (list.size() < 3) {
+                mFragmentList.add(0, new AddCarFragment());
+            }
+            if (list.size() > 0) {
+                for (CarInfoDTO dto : list) {
+                    mFragmentList.add(0, new BindCarFragment(dto.getCarnum(), dto.getCarnumtype(), dto.getEnginenum(), "--", "--", "--"));
+                }
+            }
+            mAddCarViewPager.refreshData(mFragmentList);
+        }
+    }
+
+    /**
+     * 加载网络数据
+     *
+     * @param update
+     */
+    public void updateCarInfo(final int update) {
+        mFragmentList.clear();
+        UserCarsDTO params = new UserCarsDTO();
+        params.setUsrid(PublicData.getInstance().userID);
+        UserApiClient.getCarInfo(this.getActivity(), params, new CallBack<UserCarsResult>() {
+            @Override
+            public void onSuccess(UserCarsResult result) {
+                mHomeRefreshView.refreshFinish(PullToRefreshLayout.SUCCEED);
+                if ("000000".equals(result.getSYS_HEAD().getReturnCode())) {
+                    PublicData.getInstance().mCarNum = result.getRspInfo().getUserCarsInfo().size();
+                    mFailRefresh.setVisibility(View.GONE);
+                    if (update == 1) {
+                        if (result.getRspInfo().getUserCarsInfo() != null) {
+                            if (result.getRspInfo().getUserCarsInfo().size() != 0) {
+                                PublicData.getInstance().mServerCars = listU(result.getRspInfo().getUserCarsInfo());
+                                PublicData.getInstance().mCarNum = result.getRspInfo().getUserCarsInfo().size();
+                                int len = result.getRspInfo().getUserCarsInfo().size();
+
+                                Collections.sort(result.getRspInfo().getUserCarsInfo(), new Comparator<UserCarInfoBean>() {
+
+                                    /*
+                                     * int compare(Student o1, Student o2) 返回一个基本类型的整型，
+                                     * 返回负数表示：o1 小于o2，
+                                     * 返回0 表示：o1和o2相等，
+                                     * 返回正数表示：o1大于o2。
+                                     */
+                                    public int compare(UserCarInfoBean o1, UserCarInfoBean o2) {
+
+                                        //按照学生的年龄进行升序排列
+                                        if (o1.getIspaycar().equals("0") && o2.getIspaycar().equals("1")) {
+                                            return 1;
+                                        }
+                                        return -1;
+                                    }
+                                });
+
+                                if (len > 3) {
+                                    len = 3;
+                                }
+                                PublicData.getInstance().payData.clear();
+                                for (int i = 0; i < len; i++) {
+                                    UserCarInfoBean info = result.getRspInfo().getUserCarsInfo().get(i);
+                                    mFragmentList.add(new BindCarFragment(info.getCarnum(), info.getCarnumtype(), info.getEnginenum(),
+                                            info.getUntreatcount(), StringUtils.getPriceString(info.getUntreatamt()), info.getUntreatcent()));
+                                    if (info.getIspaycar().equals("1")) {
+                                        PublicData.getInstance().payData.add(info);//保存可缴费车辆
+                                    }
+
+                                }
+                            }
+                            if (result.getRspInfo().getUserCarsInfo().size() < 3) {
+                                mFragmentList.add(new AddCarFragment());
+                            }
+                        }
+                        mAddCarViewPager.refreshData(mFragmentList);
+                    } else {
+                        mFragmentList.clear();
+                        if (result.getRspInfo().getUserCarsInfo() != null) {
+                            PublicData.getInstance().mServerCars = listU(result.getRspInfo().getUserCarsInfo());
+                            if (result.getRspInfo().getUserCarsInfo().size() < 3) {
+                                mFragmentList.add(0, new AddCarFragment());
+                            }
+                            if (result.getRspInfo().getUserCarsInfo().size() != 0) {
+                                int len = result.getRspInfo().getUserCarsInfo().size();
+                                if (len > 3) {
+                                    len = 3;
+                                }
+                                for (int i = 0; i < len; i++) {
+                                    UserCarInfoBean info = result.getRspInfo().getUserCarsInfo().get(i);
+                                    mFragmentList.add(0, new BindCarFragment(info.getCarnum(), info.getCarnumtype(), info.getEnginenum(),
+                                            info.getUntreatcount(), StringUtils.getPriceString(info.getUntreatamt()), info.getUntreatcent()));
+                                }
+                            }
+                        }
+                        mAddCarViewPager.refreshData(mFragmentList);
+                    }
+                } else {
+                    mFailRefresh.setText("加载不给力？点击重试");
+                    mFailRefresh.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onError(String errorCode, String msg) {
+                super.onError(errorCode, msg);
+                onShowContent();
+                mFailRefresh.setText("加载不给力？点击重试");
+                mFailRefresh.setVisibility(View.VISIBLE);
+                mHomeRefreshView.refreshFinish(PullToRefreshLayout.SUCCEED);
+            }
+        });
     }
 
     private List<UserCarInfoBean> listU(List<UserCarInfoBean> listUcar) {
@@ -276,6 +443,20 @@ public class HomeFragment extends BaseExtraFragment {
             listUcb.add(userCarInfoBean);
         }
         return listUcb;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDataSynEvent(UpdateCarInfoEvent event) {
+        if (event.isStatus()) {
+            updateCarInfo(0);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDataSynEvent(BenDiCarInfoEvent event) {
+        if (event.isStatus()) {
+            bendiCarInfo(0);
+        }
     }
 
     private void initScrollUp(final List<HomeNotice> mDataLists) {
@@ -303,6 +484,7 @@ public class HomeFragment extends BaseExtraFragment {
                         PublicData.getInstance().mHashMap.put("ViolationDetailsStr", mScrollUp.getList().get(position).getId());
                         PublicData.getInstance().mHashMap.put("Processste", "0");
                         PublicData.getInstance().mHashMap.put("mRes", "0");
+                        Act.getInstance().gotoIntent(HomeFragment.this.getActivity(), ViolationDetails.class);
                         clickUpdateData(PublicData.getInstance().userID, mScrollUp.getList().get(position));
                         break;
                     case 5:
@@ -325,8 +507,20 @@ public class HomeFragment extends BaseExtraFragment {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.home_lllegal_search://违章查询
+                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(2));
+                Act.getInstance().lauchIntent(this.getActivity(), ViolationQueryAcitvity.class);
                 break;
             case R.id.home_lllegal_history://开通畅通卡
+                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(3));
+                if (PublicData.getInstance().loginFlag) {
+                    if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {
+                        Act.getInstance().lauchIntentToLogin(this.getActivity(), CardHomeActivity.class);
+                    } else {
+                        Act.getInstance().lauchIntentToLogin(this.getActivity(), MyCardActivity.class);
+                    }
+                } else {
+                    Act.getInstance().gotoIntent(this.getActivity(), LoginActivity.class);
+                }
                 break;
             case R.id.home_wash://洗车
                 MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(4));
@@ -373,7 +567,12 @@ public class HomeFragment extends BaseExtraFragment {
                 Act.getInstance().gotoIntent(this.getActivity(), MineActivity.class);
                 break;
             case R.id.home_fail_refresh://老接口刷新
-
+                if (OnClickUtils.isFastDoubleClick()) {
+                    mFailRefresh.setText("刷新中...");
+                    updateCarInfo(1);
+                } else {
+                    ToastUtils.showShort(this.getActivity(), "亲，您点的太快了");
+                }
                 break;
             case R.id.home_bottom_fail_refresh://新接口刷新
                 if (OnClickUtils.isFastDoubleClick()) {
@@ -482,6 +681,8 @@ public class HomeFragment extends BaseExtraFragment {
                     listNotices.add(notice);
                 }
             }
+            LogUtils.i("meg", "===========mList=========>" + mList.size());
+            LogUtils.i("meg", "===========listNotices=========>" + listNotices.size());
             mList.clear();
             mList = listNotices;
             mScrollUp.setData(mList);
@@ -525,7 +726,6 @@ public class HomeFragment extends BaseExtraFragment {
         }
     }
 
-
     /**
      * 获取本地的通知的数据（年检，违章，加油 ）
      */
@@ -540,23 +740,27 @@ public class HomeFragment extends BaseExtraFragment {
                 listHomeNotice.addAll(listByDate("nianjian", listNianJian));
                 LogUtils.i("meg", "===========listNianJian=========>" + listNianJian.size());
             }
-
+            LogUtils.i("meg", "===========listNianJian=========>");
             if (listJiaYou != null) {
                 listHomeNotice.addAll(listByDate("youjia", listJiaYou));
+                LogUtils.i("meg", "===========listJiaYou=========>" + listJiaYou.size());
             }
-
+            LogUtils.i("meg", "===========listJiaYou=========>");
             if (PublicData.getInstance().loginFlag) {
                 List<HomeNotice> listWeiZahng = (List<HomeNotice>) UserInfoRememberCtrl
                         .readObject(getActivity(), PublicData.getInstance().userID);
                 if (listWeiZahng != null) {
                     listHomeNotice.addAll(listByDate(PublicData.getInstance().userID, listWeiZahng));
+                    LogUtils.i("meg", "===========listWeiZahng=========>" + listWeiZahng.size());
                 }
             }
+            LogUtils.i("meg", "===========listWeiZahng=========>");
         } catch (Exception e) {
             e.printStackTrace();
         }
         return listHomeNotice;
     }
+
 
     public void downloadDemo(final String url) {
         Retrofit2Utils retrofit2Utils = new Retrofit2Utils();
@@ -662,7 +866,6 @@ public class HomeFragment extends BaseExtraFragment {
                 });
     }
 
-
     /**
      * @return
      */
@@ -683,6 +886,7 @@ public class HomeFragment extends BaseExtraFragment {
         }
         return noticeList;
     }
+
 
     @Override
     public void onPause() {
@@ -827,6 +1031,7 @@ public class HomeFragment extends BaseExtraFragment {
             super.handleMessage(msg);
             Bundle data = msg.getData();
             currentTm = data.getLong("webTm");
+            LogUtils.i("currentTm---" + currentTm);
         }
     };
 

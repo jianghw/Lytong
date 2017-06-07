@@ -10,15 +10,15 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseActivity;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.interf.InterfaceForJS;
+import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.UiHelpers;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * 支付浏览器

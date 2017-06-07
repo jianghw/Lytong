@@ -3,7 +3,6 @@ package com.zantong.mobilecttx.widght;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.home.bean.StartPicBean;
-import com.zantong.mobilecttx.utils.ImageOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +41,6 @@ public class GuideHeaderViewPager extends FrameLayout {
     public GuideHeaderViewPager(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.context = context;
-
         initData();
         initUI(context);
     }
@@ -67,7 +62,8 @@ public class GuideHeaderViewPager extends FrameLayout {
      * 初始化Views等UI
      */
     private void initUI(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.widget_header_ct_viewpager, this, true);
+        LayoutInflater.from(context).inflate(R.layout.widget_header_ct_viewpager,
+                this, true);
 
         viewPager = (ViewPager) findViewById(R.id.header_viewpager_images);
         mDotsLayout = (LinearLayout) findViewById(R.id.header_viewpager_dots);

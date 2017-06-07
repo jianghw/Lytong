@@ -15,6 +15,7 @@ import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.map.activity.BaiduMapActivity;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
+import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 import com.zantong.mobilecttx.home.fragment.HomeFragment;
 
 import java.text.SimpleDateFormat;
@@ -64,7 +65,8 @@ public class MyMessageReceiver extends MessageReceiver {
                 if (entry.getKey().equals("title")) {
                     pushBean.setTitle(entry.getValue());
                 }
-                Log.i(REC_TAG, "@Get diy param : Key=" + entry.getKey() + " , Value=" + entry.getValue());
+                Log.i(REC_TAG, "@Get diy param : Key=" + entry.getKey() +
+                        " , Value=" + entry.getValue());
             }
             pushBean.setDate(Tools.getYearDate());
             pushBean.setNewMeg(true);
@@ -153,6 +155,13 @@ public class MyMessageReceiver extends MessageReceiver {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             } else if (pushBean.getType() == 4) {
+                //违章
+                saveDataOpen(context, pushBean, PublicData.getInstance().userID);
+                PublicData.getInstance().mHashMap.put("ViolationDetailsStr", pushBean.getId());
+                PublicData.getInstance().mHashMap.put("mRes", "0");
+                Intent intent = new Intent(context, ViolationDetails.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.user.bean;
 
+import com.zantong.mobilecttx.weizhang.bean.ViolationInfoBean;
 
 import java.util.List;
 

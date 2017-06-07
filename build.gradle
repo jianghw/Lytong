@@ -15,6 +15,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+//阿里云推送 用
         maven {
             url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
         }

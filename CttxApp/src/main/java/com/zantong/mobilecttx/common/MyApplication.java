@@ -15,16 +15,14 @@ import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.tencent.bugly.crashreport.CrashReport;
-import com.zantong.mobilecttx.BuildConfig;
-
-import cn.qqtheme.framework.util.LogUtils;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.utils.LogUtils;
 
 /**
  * Created by Administrator on 2016/5/19.
  */
 public class MyApplication extends MultiDexApplication {
-    public void onCreate() {
+    public void onCreate(){
         super.onCreate();
         Stetho.initializeWithDefaults(this);
         initImageLoader(this);
@@ -42,17 +40,18 @@ public class MyApplication extends MultiDexApplication {
     /**
      * 初始化加载图片工具类
      *
-     * @param context 上下文对象
+     * @param context
+     *            上下文对象
      */
     private void initImageLoader(Context context) {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                 context).threadPriority(Thread.NORM_PRIORITY - 2)
                 .denyCacheImageMultipleSizesInMemory()
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .diskCacheSize(50 * 1024 * 1024)
+                .diskCacheSize(50*1024*1024)
                 .tasksProcessingOrder(QueueProcessingType.LIFO)
                 .writeDebugLogs()
-                // Remove for release app
+                 // Remove for release app
                 .memoryCache(new LruMemoryCache(4 * 1024 * 1024))
                 .memoryCacheSize(4 * 1024 * 1024).build();
         // Initialize ImageLoader with configuration.
@@ -61,7 +60,6 @@ public class MyApplication extends MultiDexApplication {
 
     /**
      * 初始化云推送通道
-     *
      * @param applicationContext
      */
     private void initCloudChannel(Context applicationContext) {

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorNoticeGrayNumberFont">
+
+    <TextView
+        style="@style/TextSmallNoticeInfoStyleWhite"
+        android:text="不要多次修改昵称哦，搞得小伙伴们都不认识你了"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dip">
+
+
+    <EditText
+        android:id="@+id/nick_name_edit"
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        style="@style/EditextNormalNoStyle"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/fs_48"
+        android:maxLines="1"
+        android:maxLength="10"
+        android:gravity="center_vertical"
+        android:paddingRight="@dimen/fs_48"
+        android:hint="请输入昵称"/>
+    <ImageView
+        android:id="@+id/image_delete"
+        style="@style/EdittextDeleteImage"
+        android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+</LinearLayout>

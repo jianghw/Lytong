@@ -66,8 +66,12 @@ public class DODetailBeingActivity extends BaseMvpActivity<IBaseView, HelpPresen
     @Override
     public void initData() {
         initRefreshView();
-        getOrderDetail();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getOrderDetail();
     }
 
     @OnClick(R.id.order_detail_clean_being)
@@ -202,6 +206,11 @@ public class DODetailBeingActivity extends BaseMvpActivity<IBaseView, HelpPresen
                     mDate.setText(result.getData().getCreateTime());
                     mAddress.setText(result.getData().getAddress());
                 }
+            }
+
+            @Override
+            public void onError(String errorCode, String msg) {
+                super.onError(errorCode, msg);
             }
         });
     }

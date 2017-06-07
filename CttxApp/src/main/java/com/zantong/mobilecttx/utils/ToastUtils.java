@@ -4,9 +4,9 @@ import android.content.Context;
 import android.widget.Toast;
 
 /**
- * Toast åå¸æç¤ºå·¥å…·ç±»
+ * Toast ÍÂË¾ÌáÊ¾¹¤¾ßÀà
  * @author Sandy
- * create at 16/6/1 ä¸‹åˆ5:54
+ * create at 16/6/1 ÏÂÎç5:54
  */
 public class ToastUtils {
 	public static Toast toast;

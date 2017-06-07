@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextSmallNoticeInfoStyleWhite"
+            android:text="填写个人资料" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dip"
+            android:paddingRight="@dimen/ds_60">
+
+
+            <TextView
+                style="@style/TextInfoStyle"
+                android:text="驾驶证档案" />
+
+            <ImageView
+                android:id="@+id/frist_filenum_img"
+                android:layout_width="@dimen/ds_150"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:src="@drawable/illegal_query_notice_selector" />
+
+            <EditText
+                android:id="@+id/frist_filenum"
+                style="@style/EditextNormalNoStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:cursorVisible="true"
+                android:gravity="center_vertical|right"
+                android:hint="请输入驾驶证档案编号"
+                android:maxLength="12"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <include layout="@layout/view_line1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dip"
+            android:paddingRight="@dimen/ds_60">
+
+
+            <TextView
+                style="@style/TextInfoStyle"
+                android:text="姓名" />
+
+            <EditText
+                android:id="@+id/frist_name"
+                style="@style/EditextNormalNoStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:cursorVisible="true"
+                android:gravity="center_vertical|right"
+                android:hint="请输入姓名"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <include layout="@layout/view_line1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dip"
+            android:paddingRight="@dimen/ds_60">
+
+
+            <TextView
+                style="@style/TextInfoStyle"
+                android:text="姓名拼音" />
+
+            <EditText
+                android:id="@+id/frist_name_pinyin"
+                style="@style/EditextNormalNoStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:cursorVisible="true"
+                android:digits="qwertyuioplkjhgfdsazxcvbnm"
+                android:gravity="center_vertical|right"
+                android:hint="请输入姓名拼音"
+                android:maxLength="40"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <include layout="@layout/view_line1" />
+
+        <com.zantong.mobilecttx.widght.SettingItemView
+            android:id="@+id/frist_gender"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144"
+            app:titleHintS="请选择性别"
+            app:titleS="性别"
+            app:titleSC="@color/gray_25" />
+
+        <include layout="@layout/view_line1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dip"
+            android:paddingRight="@dimen/ds_60">
+
+
+            <TextView
+                style="@style/TextInfoStyle"
+                android:text="身份证号" />
+
+            <EditText
+                android:id="@+id/frist_identity_card"
+                style="@style/EditextNormalNoStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:cursorVisible="true"
+                android:gravity="center_vertical|right"
+                android:hint="请输入身份证号码"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <include layout="@layout/view_line1" />
+
+        <com.zantong.mobilecttx.widght.SettingItemView
+            android:id="@+id/frist_youxiaoqi"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144"
+            app:titleHintS="请选择证件有效期"
+            app:titleS="证件有效期"
+            app:titleSC="@color/gray_25" />
+
+        <include layout="@layout/view_line1" />
+
+        <com.zantong.mobilecttx.widght.SettingItemView
+            android:id="@+id/frist_birth_date"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144"
+            app:titleHintS="请选择出生日期"
+            app:titleS="出生日期"
+            app:titleSC="@color/gray_25" />
+
+        <include layout="@layout/view_line1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dip"
+            android:paddingRight="@dimen/ds_60">
+
+
+            <TextView
+                style="@style/TextInfoStyle"
+                android:text="国籍" />
+
+            <ImageView
+                android:id="@+id/frist_guoji_img"
+                android:layout_width="@dimen/ds_150"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:src="@drawable/illegal_query_notice_selector" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:text="中国"
+                android:textColor="@color/gray_99" />
+        </LinearLayout>
+
+        <include layout="@layout/view_line1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dip"
+            android:paddingRight="@dimen/ds_60">
+
+
+            <TextView
+                style="@style/TextInfoStyle"
+                android:text="手机号" />
+
+            <EditText
+                android:id="@+id/frist_phone"
+                style="@style/EditextNormalNoStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:cursorVisible="true"
+                android:gravity="center_vertical|right"
+                android:hint="请输入手机号码"
+                android:maxLength="11"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <include layout="@layout/view_line1" />
+
+        <com.zantong.mobilecttx.widght.SettingItemView
+            android:id="@+id/frist_hunyin_state"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144"
+            app:titleHintS="请选择婚姻状况"
+            app:titleS="婚姻状况"
+            app:titleSC="@color/gray_25" />
+
+        <include layout="@layout/view_line1" />
+
+        <com.zantong.mobilecttx.widght.SettingItemView
+            android:id="@+id/frist_jiaoyu_state"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144"
+            app:titleHintS="请选择受教育程度"
+            app:titleS="受教育程度"
+            app:titleSC="@color/gray_25" />
+
+        <include layout="@layout/view_line1" />
+
+        <com.zantong.mobilecttx.widght.SettingItemView
+            android:id="@+id/frist_zhuzhai_state"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144"
+            app:titleHintS="请选择住宅情况"
+            app:titleS="住宅情况"
+            app:titleSC="@color/gray_25" />
+
+        <include layout="@layout/view_line1" />
+
+        <com.zantong.mobilecttx.widght.SettingItemView
+            android:id="@+id/frist_zhuzhai_quyu"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144"
+            app:titleHintS="请选择住宅所在区域"
+            app:titleS="住宅所在区域"
+            app:titleSC="@color/gray_25" />
+
+        <include layout="@layout/view_line1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dip"
+            android:paddingRight="@dimen/ds_60">
+
+
+            <TextView
+                style="@style/TextInfoStyle"
+                android:text="详细地址" />
+
+            <EditText
+                android:id="@+id/frist_address"
+                style="@style/EditextNormalNoStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:cursorVisible="true"
+                android:gravity="center_vertical|right"
+                android:hint="请输入详细地址"
+                android:maxLength="80"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <include layout="@layout/view_line1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dip"
+            android:paddingRight="@dimen/ds_60">
+
+
+            <TextView
+                style="@style/TextInfoStyle"
+                android:text="固定电话(021)" />
+
+            <EditText
+                android:id="@+id/frist_zhuzhai_phone"
+                style="@style/EditextNormalNoStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:cursorVisible="true"
+                android:gravity="center_vertical|right"
+                android:hint="请输入真实有效的固定电话"
+                android:singleLine="true"
+                android:maxLength="8"
+                android:inputType="number"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/frist_next"
+            style="@style/ButtonBigStyle"
+            android:layout_marginTop="@dimen/ds_120"
+            android:layout_marginBottom="@dimen/ds_80"
+            android:text="保存并下一步" />
+    </LinearLayout>
+</ScrollView>

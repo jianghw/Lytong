@@ -11,9 +11,9 @@ import com.zantong.mobilecttx.utils.ToastUtils;
 import java.util.Arrays;
 
 /**
- * å¸®åŠ©ä¸åé¦ˆé¡µé¢
+ * °ïÖúÓë·´À¡Ò³Ãæ
  * @author Sandy
- * create at 16/6/2 ä¸‹åˆ2:16
+ * create at 16/6/2 ÏÂÎç2:16
  */
 public class HelpFragment extends BaseListFragment<String>{
 

@@ -40,7 +40,7 @@
         android:layout_margin="@dimen/ds_96"
         android:textColor="@color/red_normal"
         android:textSize="@dimen/fs_14sp"
-        android:text="è·³è¿‡"/>
+        android:text="Ìø¹ý"/>
 
 </RelativeLayout>
 

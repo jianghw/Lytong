@@ -33,7 +33,7 @@ public class DrivingOrderAdapter extends BaseAdapter<DaiJiaOrderListBean> {
 
     @Override
     public void showData(BaseRecyclerViewHolder viewHolder, int position, final DaiJiaOrderListBean data) {
-         final ViewHolder holder = (ViewHolder) viewHolder;
+        final ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
             holder.mOrderId.setText(data.getOrderId());
             holder.mDate.setText(data.getCreateTime());

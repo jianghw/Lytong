@@ -1,10 +1,10 @@
 package com.zantong.mobilecttx.api;
 
 import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.utils.LogUtils;
 
 import java.io.IOException;
 
-import cn.qqtheme.framework.util.LogUtils;
 import okhttp3.CacheControl;
 import okhttp3.Headers;
 import okhttp3.Interceptor;
@@ -36,7 +36,7 @@ public class RequestInterceptor implements Interceptor {
                 .cacheControl(cache)
                 .build();
         Response response=chain.proceed(newRequest);
-        LogUtils.jsonObject("Response=="+response.body());
+        LogUtils.i("response---"+response.body().toString());
         return response;
     }
 }

@@ -12,6 +12,7 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.bean.BaseResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeOrderBean;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeOrderDetailBean;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeOrderDetailResult;
@@ -30,22 +31,6 @@ import org.greenrobot.eventbus.EventBus;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-/**
- * 充值订单详情
- *
- * @author zyb
- *         <p>
- *         <p>
- *         *  *   *  *
- *         *      *      *
- *         *             *
- *         *           *
- *         *     *
- *         *
- *         <p>
- *         <p>
- *         create at 17/1/6 上午10:13
- */
 public class OrderRechargeDetailActivity extends BaseMvpActivity<IOrderView, OrderPresenter> {
 
     public static final String RECHARGE_ORDER_ITEM = "rechargeorderItem";
@@ -189,6 +174,16 @@ public class OrderRechargeDetailActivity extends BaseMvpActivity<IOrderView, Ord
                                 String payUrl = "http://139.196.183.121:8081/payment/payForWapb2cPay?orderid=" +
                                         mOrderBean.getOrderId() + "&amount=" +
                                         orderPrice + "&payType=0";
+                                CarApiClient.getPayOrderSn(OrderRechargeDetailActivity.this, payUrl, new CallBack<PayOrderResult>() {
+                                    @Override
+                                    public void onSuccess(PayOrderResult result) {
+                                        if (result.getResponseCode() == 2000) {
+                                            PublicData.getInstance().webviewTitle = "支付";
+                                            PublicData.getInstance().webviewUrl = result.getData();
+                                            Act.getInstance().lauchIntentToLogin(OrderRechargeDetailActivity.this, BrowserForPayActivity.class);
+                                        }
+                                    }
+                                });
 
                             }
                         });

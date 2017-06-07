@@ -2,10 +2,6 @@ package com.zantong.mobilecttx.utils;
 
 import java.util.LinkedList;
 
-/**
- * 作者：王海洋
- * 时间：2016/6/17 17:44
- */
 public class VehicleTypeTools {
     public static String  switchVehicleType(String number){
         String vehicleName = null;

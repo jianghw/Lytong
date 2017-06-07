@@ -7,6 +7,7 @@ import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
+import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.NetUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -25,7 +26,6 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import cn.qqtheme.framework.util.LogUtils;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.FormBody;
@@ -37,11 +37,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 
 
-/**
- * 网络请求基类
- * @author Sandy
- * create at 16/6/1 下午5:46
- */
 public class BaseApiClient {
 
     public static final MediaType JSON = MediaType
@@ -117,13 +112,6 @@ public class BaseApiClient {
 
 
 
-    /**
-     * get请求
-     *
-     * @param context       上下文对象
-     * @param url           请求地址
-     * @param asyncCallBack 异步线程回调
-     */
     public static <T> void get(Context context, String url,
                                AsyncCallBack<T> asyncCallBack) {
 //        PrefUtils pf = PrefUtils.getInstance(context);
@@ -135,14 +123,6 @@ public class BaseApiClient {
         enqueue(context, request, asyncCallBack);
     }
 
-    /**
-     * post请求
-     *
-     * @param context       上下文对象
-     * @param url           请求地址
-     * @param jsonParams    传输的数据
-     * @param asyncCallBack 异步回调函数
-     */
     public static <T> void post(Context context, String url, Object jsonParams,
                                 AsyncCallBack<T> asyncCallBack) {
         FormBody.Builder builder = new FormBody.Builder();
@@ -160,14 +140,6 @@ public class BaseApiClient {
         enqueue(context, request, asyncCallBack);
     }
 
-    /**
-     * htmlpost请求
-     *
-     * @param context       上下文对象
-     * @param url           请求地址
-     * @param jsonParams    传输的数据
-     * @param asyncCallBack 异步回调函数
-     */
     public static <T> void htmlpost(Context context, String url, String jsonParams,
                                 AsyncCallBack<T> asyncCallBack) {
         FormBody.Builder builder = new FormBody.Builder();
@@ -185,14 +157,6 @@ public class BaseApiClient {
         enqueue(context, request, asyncCallBack);
     }
 
-    /**
-     * 上传图片post
-     *
-     * @param context       上下文对象
-     * @param url           请求地址
-     * @param base64File    base64格式的文件字符串
-     * @param asyncCallBack 回调函数
-     */
     public static <T> void post(Context context, String url, String base64File,
                                 AsyncCallBack<T> asyncCallBack) {
         FormBody.Builder builder = new FormBody.Builder();
@@ -203,13 +167,6 @@ public class BaseApiClient {
         enqueue(context, request, asyncCallBack);
     }
 
-    /**
-     * 请求执行
-     *
-     * @param context       上下文对象
-     * @param request       请求对象
-     * @param asyncCallback 回调函数
-     */
     public static <T> void enqueue(final Context context, Request request,
                                    AsyncCallBack<T> asyncCallback) {
         if (context == null) {
@@ -245,14 +202,6 @@ public class BaseApiClient {
         }
     }
 
-    /**
-     * post请求
-     *
-     * @param context       上下文对象
-     * @param url           请求地址
-     * @param jsonParams    传输的数据
-     * @param versionCallBack 异步回调函数
-     */
     public static <T> void post(Context context, String url, Object jsonParams,
                                 VersionCallBack<T> versionCallBack) {
         FormBody.Builder builder = new FormBody.Builder();
@@ -266,13 +215,6 @@ public class BaseApiClient {
         enqueue(context, request, versionCallBack);
     }
 
-    /**
-     * 请求获取版本号
-     *
-     * @param context       上下文对象
-     * @param request       请求对象
-     * @param versionCallback 回调函数
-     */
     public static <T> void enqueue(final Context context, Request request,
                                    VersionCallBack<T> versionCallback) {
         if (context == null) {
@@ -291,11 +233,6 @@ public class BaseApiClient {
         }
     }
 
-    /**
-     * 根据tag取消网络请求
-     *
-     * @param tag 网络请求标记
-     */
     public static void cancelCall(Object tag) {
 //        client.dispatcher().cancelAll();
     }
@@ -309,30 +246,15 @@ public class BaseApiClient {
         return BuildConfig.APP_DOWNLOD + relativeUrl;
     }
 
-    /**
-     * post请求
-     *
-     * @param context       上下文对象
-     * @param url           请求地址
-     * @param jsonParams    传输的数据
-     * @param baseCallBack 异步回调函数
-     */
     public static <T> void post(Context context, String url, Object jsonParams,
                                 BaseCallBack<T> baseCallBack) {
         String data = baseCallBack.getGson().toJson(jsonParams);
-
+        LogUtils.i("requestData:"+data);
         Request request = new Request.Builder().tag(baseCallBack.getTag())
                 .url(url).post(RequestBody.create(JSON, data)).build();
         enqueue(context, request, baseCallBack);
     }
 
-    /**
-     * get请求
-     *
-     * @param context       上下文对象
-     * @param url           请求地址
-     * @param baseCallBack 异步线程回调
-     */
     public static <T> void get(Context context, String url,
                                BaseCallBack<T> baseCallBack) {
         Request request = new Request.Builder().tag(baseCallBack.getTag())
@@ -340,13 +262,6 @@ public class BaseApiClient {
         enqueue(context, request, baseCallBack);
     }
 
-    /**
-     * 请求执行
-     *
-     * @param context       上下文对象
-     * @param request       请求对象
-     * @param baseCallBack 回调函数
-     */
     public static <T> void enqueue(final Context context, Request request,
                                    BaseCallBack<T> baseCallBack) {
         if (context == null) {
@@ -380,14 +295,6 @@ public class BaseApiClient {
 
     }
 
-    /**
-     * post请求  上传行驶证、驾驶证照片
-     *
-     * @param context       上下文对象
-     * @param url           请求地址
-     * @param file    传输的数据
-     * @param baseCallBack 异步回调函数
-     */
     public static <T> void post(Context context, String url, File file,
                                 OcrCallBack<T> baseCallBack) {
 
@@ -401,13 +308,6 @@ public class BaseApiClient {
     }
 
 
-    /**
-     * 请求执行
-     *
-     * @param context       上下文对象
-     * @param request       请求对象
-     * @param baseCallBack 回调函数
-     */
     public static <T> void enqueue(final Context context, Request request,
                                    OcrCallBack<T> baseCallBack) {
         if (context == null) {

@@ -7,10 +7,10 @@ import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.interf.ILicenseGradeAtyContract;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
-import com.zantong.mobilecttx.user.bean.LicenseResponseBean;
-import com.zantong.mobilecttx.user.dto.LicenseFileNumDTO;
+import com.zantong.mobilecttx.utils.LogUtils;
+import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
+import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
-import cn.qqtheme.framework.util.LogUtils;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

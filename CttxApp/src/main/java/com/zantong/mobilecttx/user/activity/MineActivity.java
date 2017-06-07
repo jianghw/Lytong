@@ -56,6 +56,7 @@ public class MineActivity extends BaseMvpActivity<IBaseView,HelpPresenter> imple
     protected void baseGoEnsure() {
         super.baseGoEnsure();
         MobclickAgent.onEvent(this, Config.getUMengID(26));
+        Act.getInstance().lauchIntentToLogin(this, SettingActivity.class);
     }
 
     @Override

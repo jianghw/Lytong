@@ -2,8 +2,8 @@ package com.zantong.mobilecttx.interf;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import com.zantong.mobilecttx.user.bean.LicenseResponseBean;
-import com.zantong.mobilecttx.user.dto.LicenseFileNumDTO;
+import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
+import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 /**
  * Created by jianghw on 2017/4/26.

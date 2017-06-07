@@ -5,10 +5,11 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
-import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.daijia.bean.DistrictModel;
 import com.zantong.mobilecttx.map.bean.NetLocationBean;
+import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.dialog.WheelView.OnSelectListener;
 
 import java.util.ArrayList;
@@ -16,8 +17,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * container 3 wheelView implement timePicker

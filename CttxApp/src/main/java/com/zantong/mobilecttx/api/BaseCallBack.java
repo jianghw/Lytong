@@ -6,16 +6,16 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
+import com.zantong.mobilecttx.utils.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 
-import cn.qqtheme.framework.util.LogUtils;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -52,7 +52,7 @@ public class BaseCallBack<T> implements Callback {
                 if (!TextUtils.isEmpty(reader)) {
                     T t = gson.fromJson(reader, clazz);
                     BaseResult result = (BaseResult) t;
-
+                    LogUtils.i("returncode===" + result.getResponseCode());
                     sendErrorMsg(context, tag, result);
                     callback.sendSuccessMessage(t);
                 } else {
@@ -97,7 +97,7 @@ public class BaseCallBack<T> implements Callback {
             String returnStatus = String.valueOf(result.getResponseCode());
             try {
                 status = returnStatus;
-
+                LogUtils.i("ErrorMsgCode:"+status);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -123,7 +123,7 @@ public class BaseCallBack<T> implements Callback {
         String msg = ex.getMessage();
         LogUtils.i("failed msg:" + msg);
         if("Canceled".equals(msg)){
-
+            LogUtils.i("msg:" + msg);
             EventBus.getDefault()
                     .post(new ErrorEvent(Config.ERROR_IO, Config.ERROR_IO_MSG, tag,
                             context));

@@ -18,23 +18,25 @@ import android.widget.LinearLayout;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
+import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
-import com.zantong.mobilecttx.base.bean.BaseResult;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
-import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
-import com.zantong.mobilecttx.huodong.activity.HundredPlanActivity;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResult;
+import com.zantong.mobilecttx.base.bean.BaseResult;
+import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
-import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.ImageOptions;
+import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.common.activity.BrowserActivity;
+import com.zantong.mobilecttx.home.activity.CustomCordovaActivity;
+import com.zantong.mobilecttx.huodong.activity.HundredPlanActivity;
+import com.zantong.mobilecttx.user.activity.LoginActivity;
 
 import java.net.URL;
 import java.net.URLConnection;
@@ -42,8 +44,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.qqtheme.framework.util.LogUtils;
 
 public class HeaderViewPager extends FrameLayout {
 
@@ -89,11 +89,11 @@ public class HeaderViewPager extends FrameLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        int x = (int) ev.getRawX();
-        int y = (int) ev.getRawY();
+        int x = (int)ev.getRawX();
+        int y = (int)ev.getRawY();
         int dealtX = 0;
         int dealtY = 0;
-        switch (ev.getAction()) {
+        switch (ev.getAction()){
             case MotionEvent.ACTION_DOWN:
                 dealtX = 0;
                 dealtY = 0;
@@ -117,7 +117,6 @@ public class HeaderViewPager extends FrameLayout {
         }
         return super.dispatchTouchEvent(ev);
     }
-
     Thread change = new Thread(new Runnable() {
 
         @Override
@@ -222,11 +221,9 @@ public class HeaderViewPager extends FrameLayout {
 //		imageViewsList.clear();
 //		dotViewsList.clear();
     }
-
     public void close() {
         change.interrupt();
     }
-
     private void createDots() {
         if (mAdapter.getCount() > 1) {
             mDotsLayout.removeAllViews();
@@ -289,7 +286,7 @@ public class HeaderViewPager extends FrameLayout {
                     PublicData.getInstance().isCheckLogin = false;
 
                     if (PublicData.getInstance().webviewUrl.contains("discount") || PublicData.getInstance().webviewUrl.contains("happysend")) {
-//                        Act.getInstance().gotoIntent(context, CustomCordovaActivity.class);
+                        Act.getInstance().gotoIntent(context, CustomCordovaActivity.class);
                     } else if (PublicData.getInstance().webviewUrl.contains("localActivity")) {
                         if (PublicData.getInstance().loginFlag) {
                             getSignStatus();
@@ -365,9 +362,9 @@ public class HeaderViewPager extends FrameLayout {
                     e.printStackTrace();
                 }
 
-                if (currentTm == -1) {
-                    ToastUtils.showShort(context, "拉取网络时间失败");
-                    return;
+                if (currentTm == -1){
+                    ToastUtils.showShort(context,"拉取网络时间失败");
+                    return ;
                 }
 
                 if (result.getResponseCode() == 2000 && !TextUtils.isEmpty(result.getData().getPlateNo())) {
@@ -384,7 +381,7 @@ public class HeaderViewPager extends FrameLayout {
                         Act.getInstance().lauchIntentToLogin(context, BrowserActivity.class);
                     }
 
-                } else if (result.getResponseCode() == 4000) {
+                }else if (result.getResponseCode() == 4000) {
                     SPUtils.getInstance(context).setSignStatus(false);
                     if (currentTm < endTm) {//4.17号之前
                         MobclickAgent.onEvent(context, Config.getUMengID(19));

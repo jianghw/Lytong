@@ -17,21 +17,6 @@ import java.util.List;
 
 import butterknife.Bind;
 
-/**
- * 充值订单
- * @author zyb
- *
- *
- *    *  *   *  *
- *  *      *      *
- *  *             *
- *   *           *
- *      *     *
- *         *
- *
- *
- * create at 17/1/6 上午10:13
- */
 public class OrderRechargeActivity extends BaseMvpActivity<IOrderView,OrderPresenter> implements View.OnClickListener, IOrderView {
 
     @Bind(R.id.common_tab)

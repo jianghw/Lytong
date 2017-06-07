@@ -12,8 +12,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import cn.qqtheme.framework.util.LogUtils;
-
 /**
  * Created by zhengyingbing on 16/6/8.
  */

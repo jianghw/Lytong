@@ -215,7 +215,7 @@ public abstract class BaseAutoScrollUpTextView<T> extends ListView implements
         mAutoScrollAdapter.notifyDataSetChanged();
     }
 
-    public List<T> getList() {
+    public List<T> getList(){
         return mDataList;
     }
 

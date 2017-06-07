@@ -108,7 +108,7 @@ public class MegSecondLevelFragment extends BaseListFragment<Meg>
     /**
      * 和布局文件对应
      *
-     * @return，
+     * @return
      */
     @Override
     protected int resetDeleteItemHeight() {

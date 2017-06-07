@@ -13,6 +13,7 @@ import com.zantong.mobilecttx.user.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
+import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 
 import rx.Observable;
 

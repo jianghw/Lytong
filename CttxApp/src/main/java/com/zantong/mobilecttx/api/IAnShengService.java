@@ -1,7 +1,6 @@
 package com.zantong.mobilecttx.api;
 
-
-import com.zantong.mobilecttx.user.bean.LicenseResponseBean;
+import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

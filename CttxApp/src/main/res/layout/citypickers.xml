@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/dialog_bg_white_shape">
+    
+    <com.zantong.mobilecttx.utils.dialog.CityPicker
+        android:id="@+id/citypicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        />
+    <RelativeLayout 
+        android:id="@+id/line"
+        android:layout_below="@id/citypicker"
+        style="@style/bottom_line2"></RelativeLayout>
+    <Button 
+        android:id="@+id/btn_choose"
+        android:layout_below="@id/line"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:layout_centerHorizontal="true"
+        style="@style/black_word"
+        android:gravity="center"
+        android:background="@drawable/sure_canlse_selector"
+        android:text="确认"/>
+
+</RelativeLayout>

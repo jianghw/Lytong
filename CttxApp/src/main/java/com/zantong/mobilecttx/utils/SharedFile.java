@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * æè¿°ï¼šæ‰‹æœºå·ç å­˜å‚¨File
+ * ÃèÊö£ºÊÖ»úºÅÂë´æ´¢File
  * 
  * @author liuxm
  */

@@ -27,67 +27,61 @@ public class Tools {
     public static final String SUCCESS = "1";
     public static final String FAILURE = "0";
 
-    public static boolean isStrEmpty(String str) {
-        if ((str != null) && (str.trim().length() > 0) && (!"null".equals(str)) && (!"[]".equals(str))) {
+    public static  boolean isStrEmpty(String str){
+        if((str != null) && (str.trim().length() > 0)&&(!"null".equals(str))&&(!"[]".equals(str))){
             return false;
-        } else {
+        }else{
             return true;
         }
 
     }
 
-    public static String getYearDate() {
+    public static String getYearDate(){
         SimpleDateFormat yearDate = new SimpleDateFormat("yyyyMMdd");
         String str = yearDate.format(new Date());
         return str;
     }
-
-    public static String getYearDateFormat(String format) {
+    public static String getYearDateFormat(String format){
         SimpleDateFormat yearDate = new SimpleDateFormat(format);
         String str = yearDate.format(new Date());
         return str;
     }
-
-    public static String getTimeDate() {
+    public static String getTimeDate(){
         SimpleDateFormat timeDate = new SimpleDateFormat("hhmmss");
         String str = timeDate.format(new Date());
         return str;
     }
-
-    public static String getYearDate(Date date) {
+    public static String getYearDate(Date date){
         SimpleDateFormat yearDate = new SimpleDateFormat("yyyy-MM-dd");
         String str = yearDate.format(date);
         return str;
     }
-
-    public static String getTimeDate(Date time) {
+    public static String getTimeDate(Date time){
         SimpleDateFormat timeDate = new SimpleDateFormat("hh-mm");
         String str = timeDate.format(time);
         return str;
     }
-
-    public static String getTimeDateS() {
+    public static String getTimeDateS(){
         SimpleDateFormat timeDate = new SimpleDateFormat("hhmmssSSS");
         String str = timeDate.format(new Date());
         return str;
     }
 
-    public static String getIMEI(Context mCotnext) {
+    public static String getIMEI(Context mCotnext){
         String imei = "00000000";
-        TelephonyManager telephonyManager = (TelephonyManager) mCotnext.getSystemService(Context.TELEPHONY_SERVICE);
-        try {
-            imei = telephonyManager.getDeviceId();
-        } catch (Exception e) {
+        TelephonyManager telephonyManager= (TelephonyManager) mCotnext.getSystemService(Context.TELEPHONY_SERVICE);
+        try{
+            imei =telephonyManager.getDeviceId();
+        }catch (Exception e){
             e.printStackTrace();
         }
         return imei;
     }
 
-    /**
-     * 判断是否包含SIM卡
-     *
-     * @return 状态
-     */
+    /** 判断是否包含SIM卡
+    *
+    * @return 状态
+    */
     public static boolean hasSimCard(Context context) {
         TelephonyManager telMgr = (TelephonyManager)
                 context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -133,10 +127,9 @@ public class Tools {
 
     /**
      * 版本比较
-     *
      * @param localVersion 本地版本
-     * @param netVersion   网络获取版本
-     * @return -1表示需要更新
+     * @param netVersion  网络获取版本
+     * @return  -1表示需要更新
      */
     public static int compareVersion(String localVersion, String netVersion) {
         if (localVersion.equals(netVersion)) {
@@ -170,22 +163,23 @@ public class Tools {
     }
 
     /**
-     * 功能：获取程序版本名
      *
+     * 功能：获取程序版本名
      * @param ctx
      * @return verName 版本名称
      */
-    public static String getVerName(Context ctx) {
+    public static String getVerName(Context ctx){
         return String.valueOf(getPi(ctx).versionName);
     }
 
-    private static PackageInfo getPi(Context ctx) {
+    public static PackageInfo getPi(Context ctx){
         PackageManager pm = ctx.getPackageManager();
         PackageInfo pi = null;
         try {
             pi = pm.getPackageInfo(ctx.getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
+            return null;
         }//getPackageName表示获取当前ctx所在的包的名称，0表示获取版本信息
         return pi;
     }
@@ -193,7 +187,7 @@ public class Tools {
 
     /**
      * 安装apk
-     */
+     * */
     public static void installApk(Context context, String filename) {
         File file = new File(filename);
         Intent intent = new Intent();
@@ -217,7 +211,6 @@ public class Tools {
 
     /**
      * 获得包名
-     *
      * @return
      */
     private static String getAppInfo(Context context) {
@@ -233,9 +226,9 @@ public class Tools {
         return null;
     }
 
-    public static String getProvinceStr(int primaryCode) {
+    public static String getProvinceStr(int primaryCode){
         String provinceStr = "沪";
-        switch (primaryCode) {
+        switch (primaryCode){
             case 101:
                 provinceStr = "京";
                 break;

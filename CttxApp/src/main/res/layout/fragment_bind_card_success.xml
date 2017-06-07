@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorNoticeGrayNumberFont"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/bind_card_success_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/ds_84"
+        android:layout_marginTop="@dimen/ds_72"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/request_succ" />
+
+        <TextView
+            style="@style/redColorTextFont"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/ds_45"
+            android:text="绑定成功" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/TextTitleSmallStyle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_108"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/ds_48"
+        android:text="本卡已绑定车辆" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_1"
+        android:background="@color/gray_c9"/>
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/bind_card_succ_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/bind_card_success_empty"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:gravity="center"
+        android:textSize="@dimen/fs_42"
+        android:text="本卡暂无已绑定车辆，您可以为任意两辆车缴费" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_1"
+        android:background="@color/gray_99"/>
+    <TextView
+        android:id="@+id/bind_card_success_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/ds_30"
+        android:textSize="@dimen/fs_36"
+        android:textColor="@color/gray_99"
+        android:minHeight="@dimen/ds_108"
+        android:paddingLeft="@dimen/ds_48" />
+
+    <TextView
+        android:id="@+id/bind_card_success_carmanager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ds_30"
+        android:padding="@dimen/ds_30"
+        android:text="进入车辆管理"
+        android:textColor="@color/color_blue_light" />
+
+    <TextView
+        android:id="@+id/bind_card_success_finish"
+        android:layout_marginTop="@dimen/ds_30"
+        style="@style/ButtonBigStyle"
+        android:gravity="center"
+        android:text="完成" />
+</LinearLayout>

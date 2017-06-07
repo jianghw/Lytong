@@ -13,8 +13,6 @@ import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import cn.qqtheme.framework.util.LogUtils;
-
 /**
  * 监听日期的服务
  * Created by zhengyingbing on 16/6/23.

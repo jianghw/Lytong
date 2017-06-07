@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseActivity;
@@ -25,11 +27,11 @@ import butterknife.ButterKnife;
 
 /**
  * Fragment基类
- *
  * @author Sandy
- *         create at 16/6/2 下午2:14
+ * create at 16/6/2 下午2:14
  */
-public abstract class BaseFragment extends Fragment implements OnClickListener, IBaseFragment {
+public abstract class BaseFragment extends Fragment implements
+        OnClickListener, IBaseFragment {
     protected boolean isPrepared = false;
 
     /**
@@ -48,7 +50,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
      * 加载成功,无数据
      */
     public static final int LOADING_SUCCESS_NULL = 4;
-
+    
     /**
      * 加载中布局，加载失败布局，加载成功显示数据布局
      */
@@ -166,8 +168,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
         super.onResume();
 //        onShowLoading();
 //        MobclickAgent.onPageStart("start" + this.getClass().getName()); // 统计页面
-    }
-
+    }    
     @Override
     public void onPause() {
         super.onPause();
@@ -185,6 +186,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
      * @return
      */
     protected abstract int getLayoutResId();
+
 
 
     /**
@@ -210,7 +212,6 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
     public void onShowFailed() {
         showView(LOADING_FAILED);
     }
-
     /**
      * 显示加载失败布局
      */
@@ -241,6 +242,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
         mBaseContent = view.findViewById(R.id.base_loading_content);
         mLoadingFailedRefresh = (View) view.findViewById(R.id.base_loading_failed_refresh);
         mLoadingFailedRefresh.setOnClickListener(new OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 onForceRefresh();
@@ -259,24 +261,22 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         initData();
     }
-
     /**
      * Toast提示信息
-     *
      * @param message
      */
-    public void showMsg(String message) {
+    public void showMsg(String message){
         ToastUtils.showShort(getActivity(), message);
     }
 
     /**
      * Toast提示信息
-     *
      * @param resId
      */
-    public void showMsg(int resId) {
+    public void showMsg(int resId){
         ToastUtils.showShort(getActivity(), resId);
     }
 }

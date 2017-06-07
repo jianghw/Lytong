@@ -16,32 +16,32 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.umeng.analytics.MobclickAgent;
+import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.chongzhi.activity.ChooseAddressActivity;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.daijia.bean.DJTokenResult;
 import com.zantong.mobilecttx.daijia.bean.DaiJiaCreateResult;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaCreateDTO;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
-import com.zantong.mobilecttx.user.activity.DODetailBeingActivity;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.HashUtils;
+import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.OnClickUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
+import com.zantong.mobilecttx.user.activity.DODetailBeingActivity;
+import com.zantong.mobilecttx.chongzhi.activity.ChooseAddressActivity;
 
 import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * 代驾首页
@@ -244,7 +244,6 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         @Override
         public void onReceiveLocation(BDLocation location) {
             if (location == null) {
-                LogUtils.i("location_failed");
                 return;
             } else {
                 Log.i("drivingactivity", "坐标:" + location.getLatitude() + "和" + location.getLongitude() +

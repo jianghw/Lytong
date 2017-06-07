@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/consummate_car_notice"
+            style="@style/TextSmallNoticeInfoStyleWhite"
+            android:textColor="@color/red"
+            android:layout_alignParentTop="true"
+            android:text="该版本暂只支持上海本地的驾照" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144"
+            android:background="@color/color_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/ds_60"
+            android:paddingRight="@dimen/ds_60">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="档案编号"
+                android:textSize="@dimen/ds_48" />
+
+            <ImageView
+                android:id="@+id/bind_jia_zhao_file_num_img"
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="4dip"
+                android:padding="5dip"
+                android:src="@drawable/illegal_query_notice_selector" />
+
+            <EditText
+                android:id="@+id/bind_jia_zhao_file_num"
+                style="@style/EditextNormalNoStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/trans"
+                android:cursorVisible="true"
+                android:gravity="center_vertical|right"/>
+            <ImageView
+                android:id="@+id/bind_jia_zhao_file_camera"
+                android:layout_width="@dimen/ds_60"
+                android:layout_height="@dimen/ds_60"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="4dip"
+                android:src="@mipmap/icon_blue_camera" />
+        </LinearLayout>
+
+        <include layout="@layout/view_line1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144"
+            android:background="@color/color_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/ds_60"
+            android:paddingRight="@dimen/ds_60">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="身份证号码"
+                android:textSize="@dimen/ds_48" />
+            <ImageView
+                android:id="@+id/bind_jia_zhao_idcard_img"
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="4dip"
+                android:padding="5dip"
+                android:src="@drawable/illegal_query_notice_selector" />
+            <EditText
+                android:id="@+id/bind_jia_zhao_licenseno"
+                style="@style/EditextNormalNoStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/trans"
+                android:cursorVisible="true"
+                android:gravity="center_vertical|right"/>
+        </LinearLayout>
+
+        <include layout="@layout/view_line1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144"
+            android:background="@color/color_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/ds_60"
+            android:paddingRight="@dimen/ds_60">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="预留手机号"
+                android:textSize="@dimen/ds_48" />
+            <ImageView
+                android:id="@+id/bind_jia_zhao_phone_img"
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="4dip"
+                android:padding="5dip"
+                android:src="@drawable/illegal_query_notice_selector" />
+
+            <EditText
+                android:id="@+id/bind_jia_zhao_phone"
+                style="@style/EditextNormalNoStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/trans"
+                android:cursorVisible="true"
+                android:gravity="center_vertical|right"/>
+        </LinearLayout>
+
+        <include layout="@layout/view_line1" />
+
+        <LinearLayout
+            android:id="@+id/bind_jia_zhao_frist_date_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144"
+            android:visibility="gone"
+            android:background="@color/color_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/ds_60"
+            android:paddingRight="@dimen/ds_60">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="初次领证日期"
+                android:textSize="@dimen/ds_48" />
+
+            <TextView
+                android:id="@+id/bind_jia_zhao_frist_date_text"
+                style="@style/consum_gray_color_text_vertical_font"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="请选择初次领证日期" />
+
+            <ImageView
+                style="@style/arrowLeftStyle"
+                android:layout_marginLeft="@dimen/ds_30" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/activity_bind_jia_zhao_agreement"
+            style="@style/TextTitleSmallStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ds_60"
+            android:padding="@dimen/ds_30"
+            android:layout_gravity="center"
+            android:textColor="@color/color_blue_light"
+            android:text="《用户隐私保密协议》" />
+
+        <Button
+            android:id="@+id/bind_jia_zhao_commit"
+            style="@style/ButtonBigStyle"
+            android:layout_marginBottom="@dimen/ds_50"
+            android:layout_marginTop="@dimen/ds_30"
+            android:text="马上绑定" />
+
+        <TextView
+            android:id="@+id/bind_jia_zhao_apply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="立即去办卡"
+            android:textColor="@color/common_blue"
+            android:textSize="@dimen/ds_48" />
+    </LinearLayout>
+</ScrollView>

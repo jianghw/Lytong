@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 输入邀请码 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackGray"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/ds_72"
+    android:paddingBottom="@dimen/ds_84">
+    <ImageView
+        android:id="@+id/request_succ_img"
+        android:layout_width="@dimen/ds_204"
+        android:layout_height="@dimen/ds_204"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/request_succ"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/ds_45"
+        android:layout_below="@id/request_succ_img"
+        android:text="绑定成功"/>
+</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:paddingLeft="@dimen/ds_48"
+        android:paddingRight="@dimen/ds_48">
+
+        <TextView
+            style="@style/EditextNormalStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="邀请人"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/invite_person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="Sandy"/>
+    </RelativeLayout>
+    <include layout="@layout/view_line1"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:paddingLeft="@dimen/ds_48"
+        android:paddingRight="@dimen/ds_48">
+
+        <TextView
+            style="@style/EditextNormalStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="邀请时间"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/invite_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="2016-06-03"/>
+    </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

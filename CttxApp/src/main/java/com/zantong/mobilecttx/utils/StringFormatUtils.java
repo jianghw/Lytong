@@ -7,23 +7,6 @@ import android.text.TextUtils;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 
-/**
- * 
- * @author zyb
- *
- * ZhengYingBing LOVE ZhengLinLin FOREVER 
- *
- *    *  *   *  *
- *  *      *      *
- *  *             *  猜猜我是怎么做到的 
- *   *           *
- *      *     *
- *         * 
- *
- *    是不是很厉害 
- *
- * create at 16/12/29 下午1:46
- */
 public class StringFormatUtils {
     private SpannableStringBuilder spBuilder;
     private String wholeStr, highlightStr;

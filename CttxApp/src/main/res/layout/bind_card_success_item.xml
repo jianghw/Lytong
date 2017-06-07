@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/illegal_query_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorNoticeGrayNumberFont">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="72dip"
+            android:paddingLeft="@dimen/ds_48">
+            <TextView
+                android:id="@+id/car_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="沪 89A64L "
+                android:layout_marginTop="@dimen/ds_42"
+                style="@style/appmain_color_text_font"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/grayColorTextFont"
+                android:layout_marginTop="5.5dip"
+                android:layout_below="@id/car_number"
+                android:text="发动机号：90876523"
+                android:id="@+id/engine_number" />
+        </RelativeLayout>
+        <TextView
+            style="@style/line_splite_gray"/>
+    </LinearLayout>
+
+</RelativeLayout>

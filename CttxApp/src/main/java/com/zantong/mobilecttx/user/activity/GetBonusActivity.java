@@ -16,29 +16,40 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.umeng.analytics.MobclickAgent;
+import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.CommonProblemDetailActivity;
-import com.zantong.mobilecttx.common.bean.CommonProblem;
+import com.zantong.mobilecttx.common.activity.BrowserActivity;
+import com.zantong.mobilecttx.home.fragment.HomeFragment;
+import com.zantong.mobilecttx.huodong.activity.HundredPlanActivity;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResult;
 import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
-import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.user.bean.BonusResult;
+import com.zantong.mobilecttx.common.bean.CommonProblem;
+import com.zantong.mobilecttx.common.activity.CommonProblemDetailActivity;
 import com.zantong.mobilecttx.user.dto.BonusDTO;
-import com.zantong.mobilecttx.utils.DialogMgr;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import com.zantong.mobilecttx.presenter.HelpPresenter;
+import com.zantong.mobilecttx.utils.DateUtils;
+import com.zantong.mobilecttx.utils.SPUtils;
+import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
+import com.zantong.mobilecttx.utils.DialogMgr;
+import com.zantong.mobilecttx.utils.LogUtils;
+import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 import com.zantong.mobilecttx.zxing.EncodingUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * 分享领红包

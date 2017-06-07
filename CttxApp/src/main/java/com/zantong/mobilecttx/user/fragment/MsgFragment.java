@@ -22,9 +22,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * 鎴戠殑娑堟伅椤甸潰
+ * 我的消息页面
  * @author Sandy
- * create at 16/6/6 涓嬪崍4:08
+ * create at 16/6/6 下午4:08
  */
 @SuppressLint("ValidFragment")
 public class MsgFragment extends BaseExtraFragment implements View.OnClickListener{

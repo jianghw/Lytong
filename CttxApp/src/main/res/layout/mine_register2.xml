@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackGray"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/ds_30">
+
+        <EditText
+            android:id="@+id/register_pwd"
+            style="@style/EditextNormalStyle"
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:layout_below="@id/underline"
+            android:hint="请输入6-20位密码(字母与数字组合)"
+            android:inputType="textPassword"
+            android:imeOptions="actionNone"
+            android:maxLength="20"
+            android:paddingLeft="16dip"
+            android:paddingRight="16dip"
+            android:singleLine="true" />
+
+
+        <include layout="@layout/view_line1" />
+
+        <EditText
+            android:id="@+id/register_repwd"
+            style="@style/EditextNormalStyle"
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:layout_below="@id/underline"
+            android:hint="请再输入一遍"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:imeOptions="actionSend"
+            android:paddingLeft="16dip"
+            android:paddingRight="16dip"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/register_commit_btn"
+            style="@style/ButtonBigStyle"
+            android:layout_below="@id/underline1"
+            android:layout_marginTop="@dimen/ds_150"
+            android:enabled="false"
+            android:text="下一步"
+            android:textColor="@color/next_btn_selector" />
+
+    </LinearLayout>
+
+    <com.zantong.mobilecttx.widght.CustomNumKeyBoard
+        android:id="@+id/mine_register_numkeyboard"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:visibility="gone" />
+    <com.zantong.mobilecttx.widght.CustomCharKeyBoard
+        android:id="@+id/mine_register_charkeyboard"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:visibility="gone" />
+
+</FrameLayout>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <include
+        layout="@layout/cttx_title"/>
+
+    <WebView
+        android:id="@+id/webview_about"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" />
+
+    <ProgressBar
+        style="@style/CommonWebViewProgressBarStyle"
+        android:layout_width="match_parent"
+        android:max="100"
+        android:id="@+id/myProgressBar"
+        android:layout_height="@dimen/ds_13" />
+    <!--<ScrollView-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:orientation="vertical"-->
+        <!--android:scrollbars="none" >-->
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:orientation="vertical"-->
+            <!--android:paddingTop="2dp" >-->
+
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/rl1"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content" >-->
+
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/rl2"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="@color/white" >-->
+
+                    <!---->
+
+                <!--</RelativeLayout>-->
+            <!--</RelativeLayout>-->
+        <!--</RelativeLayout>-->
+    <!--</ScrollView>-->
+</LinearLayout>

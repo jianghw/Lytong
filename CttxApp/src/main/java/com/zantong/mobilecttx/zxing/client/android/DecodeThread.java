@@ -16,10 +16,10 @@
 
 package com.zantong.mobilecttx.zxing.client.android;
 
-import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.zxing.BarcodeFormat;
 import com.zantong.mobilecttx.zxing.DecodeHintType;
 import com.zantong.mobilecttx.zxing.ResultPointCallback;
+import com.zantong.mobilecttx.home.activity.CaptureActivity;
 
 import android.content.SharedPreferences;
 import android.os.Handler;

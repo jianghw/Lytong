@@ -6,7 +6,6 @@ import android.webkit.CookieSyncManager;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.zantong.mobilecttx.BuildConfig;
-import com.zantong.mobilecttx.interf.CTTXHttpPOSTInterface;
 
 import java.util.concurrent.TimeUnit;
 
@@ -27,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class APPHttpClient {
 
-    private CTTXHttpPOSTInterface cttxHttpPOSTInterface;
+    private  CTTXHttpPOSTInterface cttxHttpPOSTInterface;
 
     private static APPHttpClient instance;
     private APPHttpClient (){}

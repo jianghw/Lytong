@@ -7,21 +7,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-/**
- * 
- * @author zyb
- *
- *  
- *    *  *   *  *     
- *  *      *      *   
- *  *             *   
- *   *           *    
- *      *     *       
- *         *          
- * 
- *
- * create at 17/1/9 下午2:28
- */
 public class TabListAdapter extends FragmentStatePagerAdapter {
 
     private String[] titles;

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <include layout="@layout/view_line30"/>
+    <LinearLayout
+        android:id="@+id/item_violation_history_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/ds_180"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/ds_30"
+        android:paddingRight="@dimen/ds_30"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_violation_history_plate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AA7890"
+                android:textColor="@color/gray_33"
+                android:textSize="@dimen/fs_48" />
+
+            <TextView
+                android:id="@+id/item_violation_history_engine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="发动机号：46789"
+                android:textSize="@dimen/fs_42"
+                android:textColor="@color/gray_a6" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="缴费金额："
+            android:textColor="@color/gray_66"
+            android:textSize="@dimen/fs_42" />
+
+        <TextView
+            android:id="@+id/item_violation_history_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="600元"
+            android:textColor="@color/red"
+            android:textSize="@dimen/fs_42" />
+
+        <ImageView
+            android:id="@+id/mine_msg_item_more"
+            android:layout_width="@dimen/ds_21"
+            android:layout_height="@dimen/ds_36"
+            android:layout_marginLeft="@dimen/ds_36"
+            android:background="@mipmap/query_item_more" />
+    </LinearLayout>
+    <include layout="@layout/view_line1"/>
+
+</LinearLayout>

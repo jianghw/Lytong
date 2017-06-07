@@ -25,22 +25,44 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class DrivingFragment extends BaseListFragment<DaiJiaOrderListBean> {
 
+    private boolean isFrist;
+
     @Override
     protected void getData() {
         super.getData();
+        mCurrentPage = 1;
+        initDaiJiaOrderData();
+    }
+
+    private void initDaiJiaOrderData() {
         DaiJiaOrderListDTO dto = new DaiJiaOrderListDTO();
-        dto.setUsrId(RSAUtils.strByEncryption(this.getActivity(),PublicData.getInstance().userID,true));
+        dto.setUsrId(RSAUtils.strByEncryption(this.getActivity(), PublicData.getInstance().userID, true));
         onShowLoading();
         CarApiClient.getDaiJiaOrderList(this.getActivity(), dto, new CallBack<DaiJiaOrderListResult>() {
             @Override
             public void onSuccess(DaiJiaOrderListResult result) {
                 onShowContent();
-                if (result.getResponseCode() == 2000){
+                if (result.getResponseCode() == 2000) {
                     setDataResult(result.getData());
                 }
             }
-        });
 
+            @Override
+            public void onError(String errorCode, String msg) {
+                super.onError(errorCode, msg);
+                onShowFailed();
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isFrist) {
+            mCurrentPage = 1;
+            initDaiJiaOrderData();
+        }
+        isFrist = true;
     }
 
     @Override
@@ -49,13 +71,13 @@ public class DrivingFragment extends BaseListFragment<DaiJiaOrderListBean> {
 
     @Override
     protected void onRefreshData() {
-        getData();
+        initDaiJiaOrderData();
     }
 
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
         DaiJiaOrderListBean item = (DaiJiaOrderListBean) data;
-        Act.getInstance().gotoIntent(this.getActivity(), DODetailActivity.class,item.getOrderId());
+        Act.getInstance().gotoIntent(this.getActivity(), DODetailActivity.class, item.getOrderId());
     }
 
     @Override
@@ -71,7 +93,7 @@ public class DrivingFragment extends BaseListFragment<DaiJiaOrderListBean> {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSynEvent(DrivingCancelEvent event) {
-        getData();
+        initDaiJiaOrderData();
     }
 
 

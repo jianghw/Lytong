@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_violation_history_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/ds_120"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/item_violation_history_tm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/ds_120"
+            android:text="2017-05-05"
+            android:textColor="@color/gray_99"
+            android:textSize="@dimen/fs_36" />
+
+        <TextView
+            android:id="@+id/item_violation_history_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="600元"
+            android:textColor="@color/gray_33"
+            android:textSize="@dimen/fs_36" />
+
+        <ImageView
+            android:id="@+id/mine_msg_item_more"
+            android:layout_width="@dimen/ds_21"
+            android:layout_height="@dimen/ds_36"
+            android:layout_marginLeft="@dimen/ds_90"
+            android:layout_marginRight="@dimen/ds_30"
+            android:background="@mipmap/query_item_more" />
+    </LinearLayout>
+
+    <include layout="@layout/view_line1" />
+</LinearLayout>

@@ -30,6 +30,9 @@ import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.user.activity.SettingActivity;
+import com.zantong.mobilecttx.car.activity.CarManageActivity;
+import com.zantong.mobilecttx.weizhang.activity.QueryActivity;
 import com.zantong.mobilecttx.widght.DanceWageTimer;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 
@@ -123,6 +126,8 @@ public class HundredPlanActivity extends BaseMvpActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.hundred_plan_addcar:
+                Act.getInstance().gotoIntent(this, CarManageActivity.class);
+                finish();
                 break;
             case R.id.hundred_plan_selcar:
                 DialogUtils.createCarsDialog(this, mSelCar);
@@ -155,11 +160,13 @@ public class HundredPlanActivity extends BaseMvpActivity {
                 });
                 break;
             case R.id.hundred_plan_push_btn:
+                Act.getInstance().gotoIntent(this, SettingActivity.class);
                 break;
             case R.id.hundred_plan_rules:
                 Act.getInstance().gotoIntent(this, HundredAgreementActivity.class);
                 break;
             case R.id.hundred_plan_query_violation:
+                Act.getInstance().gotoIntent(this, QueryActivity.class);
                 break;
         }
     }

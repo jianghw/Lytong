@@ -18,6 +18,7 @@ import com.zantong.mobilecttx.eventbus.ExitAppEvent;
 import com.zantong.mobilecttx.interf.IBaseActivity;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.InspectService;
+import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
 import com.zantong.mobilecttx.utils.ToastUtils;
 
@@ -26,7 +27,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
-import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * 基类
