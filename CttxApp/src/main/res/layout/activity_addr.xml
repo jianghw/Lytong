@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_base_color"
+    android:orientation="vertical">
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ds_96"
+    android:background="@color/colorNoticeGrayNumberFont"
+    android:gravity="center_vertical"
+    android:paddingLeft="@dimen/ds_15"
+    android:text="当前选择城市"/>
+    <LinearLayout
+        android:id="@+id/activity_addr_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/ds_60">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上海" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_96"
+        android:gravity="center"
+        android:paddingLeft="@dimen/ds_15"
+        android:text="其他城市暂未开放,敬请期待"/>
+
+</LinearLayout>

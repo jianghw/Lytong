@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/item_common__list_text"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:paddingLeft="@dimen/ds_30"
+        android:gravity="center_vertical"
+        android:text="工银安盛人寿百万保驾两全保险"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/gray_33"
+        android:textSize="@dimen/fs_51" />
+
+    <include layout="@layout/view_line1" />
+</LinearLayout>

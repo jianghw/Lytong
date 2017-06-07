@@ -1,0 +1,17 @@
+<resources>
+
+    <string name="mine_help_str1">为什么绑定不上畅通卡?</string>
+    <string name="mine_help_str2">可缴费车辆可以修改么?</string>
+    <string name="mine_help_str3">如何处理违章缴费出错?</string>
+    <string name="mine_help_str4">积分提醒怎么处理?</string>
+
+
+    <string name="mine_tm1">1周内</string>
+    <string name="mine_tm2">2周内</string>
+    <string name="mine_tm3">1个月内</string>
+    <string name="mine_tm4">6个月内</string>
+    <string name="mine_tm5">1年内</string>
+    <string name="no_data">没有找到符合条件的数据</string>
+    <string name="version_name">version</string>
+    <string name="can_not_find_version_name">暂无版本信息</string>
+</resources>

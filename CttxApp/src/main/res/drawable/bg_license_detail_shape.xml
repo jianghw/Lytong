@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- 填充的颜色：这里设置背景透明 -->
+    <solid android:color="@color/white" />
+    <!-- 边框的颜色 ：不能和窗口背景色一样-->
+    <stroke
+        android:width="1dp"
+        android:color="@color/line_blue" />
+    <!-- android:radius 弧形的半径 -->
+    <corners android:radius="@dimen/ds_12" />
+
+    <padding
+        android:bottom="@dimen/ds_96"
+        android:left="@dimen/ds_48"
+        android:right="@dimen/ds_48"
+        android:top="@dimen/ds_96" />
+</shape>
+
+

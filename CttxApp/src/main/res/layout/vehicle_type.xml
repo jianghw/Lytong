@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/cttx_title"/>
+    <com.zantong.mobilecttx.utils.PullToRefreshLayout
+        android:id="@+id/view_pullrefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title">
+        <com.zantong.mobilecttx.utils.PullableRecyclerView
+            android:id="@+id/view_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.zantong.mobilecttx.utils.PullableRecyclerView>
+
+    </com.zantong.mobilecttx.utils.PullToRefreshLayout>
+</RelativeLayout>

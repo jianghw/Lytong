@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/item_gas_station_name"
+        android:layout_width="@dimen/ds_600"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ds_40"
+        android:layout_marginRight="@dimen/ds_40"
+        android:layout_marginTop="@dimen/ds_30"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="中国很腻害的加油站"
+        android:textColor="@color/black"
+        android:textSize="@dimen/fs_45" />
+
+    <TextView
+        android:id="@+id/item_gas_station_ninetwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/ds_40"
+        android:layout_marginTop="@dimen/ds_34"
+        android:text="92# 优惠0.3元/升"
+        android:textColor="@color/red"
+        android:textSize="@dimen/fs_40" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="92#"
+        android:layout_marginRight="@dimen/ds_9"
+        android:layout_alignTop="@id/item_gas_station_ninetwo"
+        android:layout_toLeftOf="@id/item_gas_station_ninetwo"/>
+
+    <TextView
+        android:id="@+id/item_gas_station_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_gas_station_name"
+        android:layout_marginLeft="@dimen/ds_40"
+        android:layout_marginTop="@dimen/ds_30"
+        android:text="距您 829m"
+        android:textColor="@color/gray_66"
+        android:textSize="@dimen/fs_40" />
+
+    <TextView
+        android:id="@+id/item_gas_station_ninefive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/item_gas_station_ninetwo"
+        android:layout_marginRight="@dimen/ds_40"
+        android:layout_marginTop="@dimen/ds_34"
+        android:text="95# 无优惠"
+        android:textColor="@color/gray_66"
+        android:textSize="@dimen/fs_40" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="95#"
+        android:layout_marginRight="@dimen/ds_9"
+        android:layout_alignTop="@id/item_gas_station_ninefive"
+        android:layout_toLeftOf="@id/item_gas_station_ninefive"/>
+<View
+    style="@style/KeyLineH"
+    android:layout_below="@+id/item_gas_station_distance"
+    android:layout_marginTop="@dimen/ds_40"/>
+</RelativeLayout>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/payRecordTimePopBack" >
+
+    <LinearLayout
+        android:id="@+id/ll_popup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorTranFontRedBack"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/item_popupwindows_notice_ll"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:visibility="gone"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/item_popupwindows_notice"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:textColor="@color/red"
+                android:textSize="13sp"
+                android:paddingLeft="15dip"
+                android:text="提示：车辆改绑成功后12小时才可进行违章缴费" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/line_bg"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorGray"
+            android:visibility="visible"/>
+
+        <LinearLayout
+            android:id="@+id/item_popupwindows_camera_ll"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/item_popupwindows_camera"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@color/white"
+                android:textColor="@color/red"
+                android:paddingLeft="15dip"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:text="拍照" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginLeft="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/colorGray" />
+
+        <LinearLayout
+            android:id="@+id/item_popupwindows_Photo_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/item_popupwindows_Photo"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@color/white"
+                android:textColor="@color/red"
+                android:paddingLeft="15dip"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:text="从相册中选取" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/item_popupwindows_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="15dip"
+            android:background="@color/white"
+            android:textColor="#585858"
+            android:textSize="18sp"
+            android:text="取消" />
+    </LinearLayout>
+
+</RelativeLayout>

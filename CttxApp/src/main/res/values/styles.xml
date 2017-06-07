@@ -1,0 +1,533 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="TopBar">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@color/appmain</item>
+    </style>
+
+    <!--<style name="TopBarButton">-->
+        <!--<item name="android:layout_width">wrap_content</item>-->
+        <!--<item name="android:layout_height">wrap_content</item>-->
+        <!--<item name="android:src">@drawable/title_back_selctor</item>-->
+        <!--<item name="android:layout_centerVertical">true</item>-->
+        <!--<item name="android:textColor">@color/white</item>-->
+        <!--<item name="android:background">@color/trans</item>-->
+    <!--</style>-->
+
+    <style name="TopBarTexttitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/civory</item>
+    </style>
+    <style name="TopBarText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/civory</item>
+    </style>
+    <style name="EditextNormalStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@color/civory</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">35dip</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="EditextNormalNoStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorOpenBindCarFont</item>
+        <item name="android:textColorHint">@color/mineGray</item>
+        <item name="android:background">@null</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="EdittextInfoStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@null</item>
+        <item name="android:gravity">right</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="EdittextDeleteImage">
+        <item name="android:layout_width">23dip</item>
+        <item name="android:layout_height">23dip</item>
+        <item name="android:padding">4dip</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginRight">12dip</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:src">@drawable/delete_selector</item>
+    </style>
+
+    <style name="TextInfoStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/fs_42</item>
+        <item name="android:textColor">@color/gray_99</item>
+
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="TextInfoStyleNoVertical">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorAddCarGrayNumberFont</item>
+    </style>
+    <style name="TextInfoPayRecordTimeStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/payRecordTime</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="TextInfoLeftStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorAddCarGrayNumberFont</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">53.5dip</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:gravity">right</item>
+    </style>
+    <style name="TextInfoRightStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorAddCarGrayNumberFont</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginLeft">53.5dip</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:gravity">right</item>
+    </style>
+    <style name="TextInfoRightStyleNoVertical">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorAddCarGrayNumberFont</item>
+        <item name="android:layout_marginLeft">53.5dip</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:gravity">right</item>
+    </style>
+    <style name="TextTitleStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/colorOpenBindCarFont</item>
+    </style>
+    <style name="TextTitleSmallStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/colorGrayFontSmmall</item>
+    </style>
+    <style name="TextSmallInfoStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="TextSmallInfoStyleBlue">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/colorQueryOtherCar</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <style name="TextSmallInfoNoTypeStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="KeyLineV">
+        <item name="android:layout_width">0.5dip</item>
+        <item name="android:layout_height">52dip</item>
+        <item name="android:background">@color/light_gray</item>
+    </style>
+    <style name="KeyLineH">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dip</item>
+        <item name="android:background">@color/light_gray</item>
+    </style>
+    <style name="TextKeyWordTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/font_black</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+    <style name="LinerKeyWorkStyle">
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_height">52dip</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="TextKeyWordSmallTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">11.5sp</item>
+        <item name="android:textColor">@color/colorGrayFontSmmall</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">4.5dip</item>
+    </style>
+    <style name="TextOpenTitleFont">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorOpenFont</item>
+    </style>
+    <style name="TextSmallInfoStyleWhite">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/civory</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <!-- 界面上的提示text -->
+    <style name="TextSmallNoticeInfoStyleWhite">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/ds_90</item>
+        <item name="android:background">@color/common_base_color</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/fs_36</item>
+        <item name="android:textColor">@color/colorGrayFontSmmall</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="UnderlineStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dip</item>
+        <item name="android:background">@color/black</item>
+    </style>
+
+    <style name="ButtonBigStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">@drawable/next_btn_shape_selector</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:textColor">@color/violation_details_state_btn_selector</item>
+    </style>
+
+    <style name="ButtonCodeStyle">
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/civory</item>
+        <item name="android:background">@drawable/code_number_selector</item>
+    </style>
+    <style name="BlackHomeTitleSizi">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColorHint">@color/hintColor</item>
+    </style>
+
+    <style name="text_slidingTabTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/selector_slide_title</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/selector_slide_title</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="black_word">
+        <item name="android:textColor">@color/gray_33</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColorHint">@color/hintColor</item>
+    </style>
+    <style name="white_title_word">
+        <item name="android:textColor">@color/civory</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColorHint">@color/hintColor</item>
+    </style>
+    <style name="white_word">
+        <item name="android:textColor">@color/colorTranFontGray</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColorHint">@color/hintColor</item>
+    </style>
+
+    <style name="appblack_word">
+        <item name="android:textColor">@color/gray_33</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColorHint">@color/hintColor</item>
+    </style>
+
+    <style name="bottom_line2">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/dialogLine</item>
+    </style>
+
+    <style name="appGray_word">
+        <item name="android:textColor">@color/dialogLine</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColorHint">@color/hintColor</item>
+    </style>
+    <style name="open_no_bind_notice">
+        <item name="android:textColor">@color/civory</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColorHint">@color/civory</item>
+    </style>
+
+    <style name="open_three_title_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorOpenBindCarFont</item>
+    </style>
+    <style name="payRecordTime">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorOpenBindCarFont</item>
+    </style>
+    <style name="setPayCar">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/mineGray</item>
+    </style>
+    <style name="open_three_number_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/colorQueryNumberFont</item>
+    </style>
+
+    <style name="vertical_bottom_line2">
+        <item name="android:layout_width">0.5dp</item>
+        <item name="android:layout_height">45dip</item>
+        <item name="android:background">@color/dialogLine</item>
+    </style>
+    
+    <style name="appmain_color_text_font">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/colorOpenBindCarFont</item>
+    </style>
+    <!-- 查看车辆里面的车牌号字体 -->
+    <style name="view_vehicles_color_text_font">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textColor">@color/appmain</item>
+    </style>
+    <style name="gray_color_text_font">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textColor">@color/colorGrayFontSmmall</item>
+    </style>
+    <style name="gray_color_text_vertical_font">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/colorGrayFontSmmall</item>
+    </style>
+    <!-- 我的个人信息页昵称 -->
+    <style name="mine_user_vertical_font">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/colorGrayFontSmmall</item>
+    </style>
+    <style name="mine_user_font">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorGrayFontSmmall</item>
+    </style>
+    <style name="mine_gray_color_text_vertical_font">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/gray_66</item>
+    </style>
+    <style name="consum_gray_color_text_vertical_font" parent="mine_gray_color_text_vertical_font">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="gray_color_time_text_font">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/colorAddCarGrayNumberFont</item>
+    </style>
+    <style name="mine_invitation_code_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorAddCarGrayNumberFont</item>
+    </style>
+    <style name="grayColorTextFont">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorGrayFontSmmall</item>
+    </style>
+    <style name="redColorTextFont">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/colorTranFontRed</item>
+    </style>
+
+    <style name="line_splite_gray">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/colorGray</item>
+        <item name="android:layout_marginLeft">15dip</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+    <style name="line_splite_dashed">
+        <item name="android:layerType">software</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dip</item>
+        <item name="android:background">@drawable/dashed_line</item>
+        <item name="android:layout_marginRight">16dip</item>
+        <item name="android:layout_marginLeft">16dip</item>
+    </style>
+    <style name="pay_type_choose_style">
+        <item name="android:layout_width">12dip</item>
+        <item name="android:layout_height">9dip</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginRight">16dip</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:src">@mipmap/pay_type_choose_image</item>
+    </style>
+
+    <style name="left_right_popwin_anim_style">
+        <item name="android:windowEnterAnimation">@anim/right_to_left</item>
+        <item name="android:windowExitAnimation">@anim/left_to_right</item>
+    </style>
+    <style name="down_up_popwin_anim_style">
+        <item name="android:windowEnterAnimation">@anim/down_to_up</item>
+        <item name="android:windowExitAnimation">@anim/up_to_hide</item>
+    </style>
+
+    <style name="ResultButton" parent="@android:style/Widget.Holo.Button.Borderless.Small">
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="ShareButton" parent="@android:style/Widget.Holo.Button.Borderless.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="mineItemHead" >
+        <item name="android:layout_width">@dimen/ds_60</item>
+        <item name="android:layout_height">@dimen/ds_60</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_marginLeft">17dip</item>
+    </style>
+    <style name="mineItemArrow" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginRight">16dip</item>
+    </style>
+    <style name="arrowLeftStyle" >
+        <item name="android:layout_width">7.1dip</item>
+        <item name="android:layout_height">12dip</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:src">@mipmap/arrow_left_big_iamge</item>
+    </style>
+    <style name="itemRelaStyle" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dip</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
+        <item name="android:background">@color/civory</item>
+    </style>
+
+
+    <!-- 带有遮罩层的Dialog Loading效果 -->
+    <style name="CommonLoadingShadeDialog">
+        <item name="android:windowBackground">@color/trans</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+
+    <style name="WheelView" >
+        <item name="lineColor">@color/gray_33</item>
+        <item name="lineHeight">0.5dp</item>
+        <item name="normalTextColor">@color/hintColor</item>
+        <item name="selectedTextColor">@color/gray_33</item>
+    </style>
+
+    <style name="PopupWindowAnimation">
+        <item name="android:windowEnterAnimation">@anim/popshow_anim</item>
+        <item name="android:windowExitAnimation">@anim/pophidden_anim</item>
+    </style>
+    <style name="LoadingRefreshStyle">
+        <item name="android:animation">@anim/rotating_anim</item>
+    </style>
+
+    <style  name="Theme.SpalshActivity" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 是否允许有标题栏 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 提示背景图片 -->
+        <item name="android:windowBackground">@color/trans</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 是否允许背景灰暗 -->
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <!-- webview中的进度条 -->
+    <style name="CommonWebViewProgressBarStyle" parent="@android:style/Widget.SeekBar">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@android:drawable/progress_horizontal</item>
+        <item name="android:indeterminateDrawable">@android:drawable/progress_horizontal</item>
+        <item name="android:minHeight">8dip</item>
+        <item name="android:maxHeight">20dip</item>
+    </style>
+    <!-- webview中的进度条 -->
+    <style name="CustomKeyboardStyle">
+        <item name="android:textSize">@dimen/fs_66</item>
+        <item name="android:textColor">@color/gray_33</item>
+    </style>
+</resources>

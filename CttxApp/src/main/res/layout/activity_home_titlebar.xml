@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ds_144"
+    android:background="@color/red"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/home_addr"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_30"
+        android:paddingRight="@dimen/ds_30">
+
+        <TextView
+            android:id="@+id/home_addr_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@drawable/common_text_selecter"
+            android:maxLength="3"
+            android:maxLines="1"
+            android:text="上海"
+            android:textSize="@dimen/fs_48" />
+
+        <ImageView
+            android:layout_width="@dimen/ds_40"
+            android:layout_height="@dimen/ds_24"
+            android:layout_marginLeft="@dimen/ds_18"
+            android:background="@drawable/common_addr_icon_selecter" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="畅通车友会"
+        android:textColor="@color/white"
+        android:textSize="@dimen/fs_54" />
+
+    <LinearLayout
+        android:id="@+id/home_sweep"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_30"
+        android:paddingRight="@dimen/ds_30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="扫罚单"
+            android:textSize="@dimen/fs_48"
+            android:textColor="@drawable/common_text_selecter"/>
+        <ImageView
+            android:layout_width="@dimen/ds_48"
+            android:layout_height="@dimen/ds_48"
+            android:layout_marginLeft="@dimen/ds_18"
+            android:background="@drawable/common_sweep_icon_selecter" />
+
+    </LinearLayout>
+
+</RelativeLayout>

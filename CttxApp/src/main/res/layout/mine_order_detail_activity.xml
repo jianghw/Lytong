@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/ds_48"
+        android:paddingRight="@dimen/ds_48">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/ds_42"
+            android:paddingBottom="@dimen/ds_42">
+
+            <TextView
+                android:id="@+id/baoxian_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="保险名称"
+                android:textColor="@color/gray_33"
+                android:textSize="@dimen/fs_48" />
+
+            <TextView
+                android:id="@+id/order_detail_insname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:layout_toRightOf="@id/baoxian_name"
+                android:layout_alignTop="@id/baoxian_name"
+                android:layout_marginLeft="@dimen/ds_30"
+                android:maxLines="2"
+                android:text="工银安盛人寿e+安行境内旅游保障（关怀款）"
+                android:textColor="@color/gray_a6"
+                android:textSize="@dimen/fs_48" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_line2" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="保单号"
+                android:textColor="@color/gray_33"
+                android:textSize="@dimen/fs_48" />
+
+            <TextView
+                android:id="@+id/order_detail_appnum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="1823"
+                android:textColor="@color/gray_a6"
+                android:textSize="@dimen/fs_48" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_line2" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="投保人"
+                android:textColor="@color/gray_33"
+                android:textSize="@dimen/fs_48" />
+
+            <TextView
+                android:id="@+id/order_detail_appuser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="1823"
+                android:textColor="@color/gray_a6"
+                android:textSize="@dimen/fs_48" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_line2" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="被保险人"
+                android:textColor="@color/gray_33"
+                android:textSize="@dimen/fs_48" />
+
+            <TextView
+                android:id="@+id/order_detail_insuser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="1823"
+                android:textColor="@color/gray_a6"
+                android:textSize="@dimen/fs_48" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_line2" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="保险期间"
+                android:textColor="@color/gray_33"
+                android:textSize="@dimen/fs_48" />
+
+            <TextView
+                android:id="@+id/order_detail_instm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="1823"
+                android:textColor="@color/gray_a6"
+                android:textSize="@dimen/fs_48" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_line2" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="保额"
+                android:textColor="@color/gray_33"
+                android:textSize="@dimen/fs_48" />
+
+            <TextView
+                android:id="@+id/order_detail_insdamt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="1823"
+                android:textColor="@color/gray_a6"
+                android:textSize="@dimen/fs_48" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_line2" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="保费"
+                android:textColor="@color/gray_33"
+                android:textSize="@dimen/fs_48" />
+
+            <TextView
+                android:id="@+id/order_detail_insprem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="1823"
+                android:textColor="@color/gray_a6"
+                android:textSize="@dimen/fs_48" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_line2" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="订单状态"
+                android:textColor="@color/gray_33"
+                android:textSize="@dimen/fs_48" />
+
+            <TextView
+                android:id="@+id/order_detail_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="1823"
+                android:textColor="@color/gray_a6"
+                android:textSize="@dimen/fs_48" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/view_line2" />
+
+        <LinearLayout
+            android:id="@+id/order_detail_signstate_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_180">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="签单状态"
+                    android:textColor="@color/gray_33"
+                    android:textSize="@dimen/fs_48" />
+
+                <TextView
+                    android:id="@+id/order_detail_signstate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="1823"
+                    android:textColor="@color/gray_a6"
+                    android:textSize="@dimen/fs_48" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/view_line2" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/order_detail_commit"
+            style="@style/ButtonBigStyle"
+            android:layout_below="@id/underline1"
+            android:layout_marginBottom="@dimen/ds_150"
+            android:layout_marginTop="@dimen/ds_150"
+            android:text="开始"
+            android:textColor="@color/next_btn_selector" />
+
+    </LinearLayout>
+</ScrollView>

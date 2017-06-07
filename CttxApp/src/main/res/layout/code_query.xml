@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/colorNoticeGrayNumberFont"
+    android:fitsSystemWindows="true">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/cttx_title"/>
+    <RelativeLayout
+        android:id="@+id/code_query_rl"
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        android:paddingRight="16dip"
+        android:paddingLeft="16dip"
+        android:layout_marginTop="15dip"
+        android:layout_below="@id/title"
+        android:background="@color/white">
+        <TextView
+            android:id="@+id/citation_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="罚单编号"
+            style="@style/TextInfoStyle"/>
+        <ImageView
+            android:id="@+id/citation_notice_image"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_toRightOf="@id/citation_text"
+            android:src="@drawable/illegal_query_notice_selector"
+            android:layout_marginLeft="10dip"
+            android:layout_centerVertical="true"/>
+        <EditText
+            android:id="@+id/pay_code_number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_toRightOf="@id/citation_notice_image"
+            android:gravity="center_vertical|right"
+            android:inputType="number"
+            android:maxLength="16"
+            android:layout_centerVertical="true"
+            android:textCursorDrawable="@null"
+            android:background="@null"
+            style="@style/TextInfoStyle"
+            android:hint="请输入罚单条形码编号"/>
+    </RelativeLayout>
+    <Button
+        android:id="@+id/next_btn"
+        style="@style/ButtonBigStyle"
+        android:layout_marginTop="24dip"
+        android:layout_below="@id/code_query_rl"
+        android:text="查询"/>
+</RelativeLayout>

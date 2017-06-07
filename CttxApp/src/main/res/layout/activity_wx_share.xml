@@ -1,0 +1,128 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:id="@+id/share_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ds_40"
+            android:layout_marginRight="@dimen/ds_40"
+            android:background="@drawable/btn_share_dialog_white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/share_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ds_30"
+                android:layout_marginLeft="@dimen/ds_30"
+                android:layout_marginTop="@dimen/ds_30"
+                android:text="分享给我的好友"
+                android:textColor="@color/gray_66"
+                android:textSize="@dimen/fs_44" />
+
+            <LinearLayout
+                android:id="@+id/share_wx_haoyou"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/share_hint"
+                android:layout_marginLeft="@dimen/ds_30"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/ds_120"
+                    android:layout_height="@dimen/ds_120"
+                    android:background="@mipmap/icon_res_haoyou" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ds_30"
+                    android:layout_marginBottom="@dimen/ds_30"
+                    android:text="微信"
+                    android:textColor="@color/gray_55"
+                    android:textSize="@dimen/fs_44" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/share_wx_penyouquan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/share_hint"
+                android:layout_marginLeft="@dimen/ds_30"
+                android:layout_toRightOf="@+id/share_wx_haoyou"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/ds_120"
+                    android:layout_height="@dimen/ds_120"
+                    android:background="@mipmap/icon_res_penyouquan" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ds_30"
+                    android:layout_marginBottom="@dimen/ds_30"
+                    android:text="朋友圈"
+                    android:textColor="@color/gray_55"
+                    android:textSize="@dimen/fs_44" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/share_qr_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/share_hint"
+                android:visibility="gone"
+                android:layout_marginLeft="@dimen/ds_30"
+                android:layout_toRightOf="@+id/share_wx_penyouquan"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/ds_120"
+                    android:layout_height="@dimen/ds_120"
+                    android:background="@mipmap/icon_res_qrcode" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/ds_30"
+                    android:layout_marginBottom="@dimen/ds_30"
+                    android:text="二维码"
+                    android:textColor="@color/gray_55"
+                    android:textSize="@dimen/fs_44" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/share_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_120"
+            android:layout_marginBottom="@dimen/ds_30"
+            android:layout_marginLeft="@dimen/ds_40"
+            android:layout_marginRight="@dimen/ds_40"
+            android:layout_marginTop="@dimen/ds_30"
+            android:background="@drawable/btn_share_dialog_white"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/gray_66"
+            android:textSize="@dimen/fs_44" />
+
+    </LinearLayout>
+
+</RelativeLayout>

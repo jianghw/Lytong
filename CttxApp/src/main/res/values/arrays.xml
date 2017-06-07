@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+ Copyright (C) 2008 ZXing authors
+
+ Licensed under the Apache License, Version 2.0 (the "License</item>
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="country_codes" tools:ignore="MissingTranslation">
+        <item>-</item>
+        <item>AR</item>
+        <item>AU</item>
+        <item>BR</item>
+        <item>BG</item>
+        <item>CA</item>
+        <item>CH</item>
+        <item>CN</item>
+        <item>CZ</item>
+        <item>DE</item>
+        <item>DK</item>
+        <item>ES</item>
+        <item>FI</item>
+        <item>FR</item>
+        <item>GB</item>
+        <item>GR</item>
+        <item>HU</item>
+        <item>ID</item>
+        <item>IT</item>
+        <item>JP</item>
+        <item>KR</item>
+        <item>NL</item>
+        <item>PL</item>
+        <item>PT</item>
+        <item>RO</item>
+        <item>RU</item>
+        <item>SE</item>
+        <item>SK</item>
+        <item>SI</item>
+        <item>TR</item>
+        <item>TW</item>
+        <item>US</item>
+    </string-array>
+    <string-array name="preferences_front_light_values" tools:ignore="MissingTranslation">
+        <item>ON</item>
+        <item>AUTO</item>
+        <item>OFF</item>
+    </string-array>
+    <string-array name="preferences_front_light_options">
+        <item>@string/preferences_front_light_on</item>
+        <item>@string/preferences_front_light_auto</item>
+        <item>@string/preferences_front_light_off</item>
+    </string-array>
+    <string-array name="mine_help_content">
+        <item>@string/mine_help_str1</item>
+        <item>@string/mine_help_str2</item>
+        <item>@string/mine_help_str3</item>
+        <item>@string/mine_help_str4</item>
+    </string-array>
+    <string-array name="mine_tm_content">
+        <item>@string/mine_tm1</item>
+        <item>@string/mine_tm2</item>
+        <item>@string/mine_tm3</item>
+        <item>@string/mine_tm4</item>
+        <item>@string/mine_tm5</item>
+    </string-array>
+    <string-array name="mine_violation_date">
+        <item>一年内</item>
+        <item>6个月</item>
+        <item>3个月</item>
+    </string-array>
+    <string-array name="driving_type">
+        <item>A1</item>
+        <item>A2</item>
+        <item>A3</item>
+        <item>B1</item>
+        <item>B2</item>
+        <item>C1</item>
+        <item>C2</item>
+        <item>C3</item>
+        <item>C4</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>M</item>
+        <item>N</item>
+        <item>P</item>
+    </string-array>
+    <string-array name="driving_time">
+        <item>6年</item>
+        <item>10年</item>
+        <item>长期有效</item>
+    </string-array>
+    <!-- 车辆类型 -->
+    <string-array name="car_type">
+        <item>大型汽车</item>
+        <item>小型汽车</item>
+        <item>使馆汽车</item>
+        <item>领馆汽车</item>
+        <item>境外汽车</item>
+        <item>外籍汽车</item>
+        <item>两、三轮摩托车</item>
+        <item>轻便摩托车</item>
+        <item>使馆摩托车</item>
+        <item>境外摩托车</item>
+        <item>外籍摩托车</item>
+        <item>农用运输车</item>
+        <item>拖拉机</item>
+        <item>挂车</item>
+        <item>教练汽车</item>
+        <item>教练摩托车</item>
+        <item>试验汽车</item>
+        <item>试验摩托车</item>
+        <item>临时入境汽车</item>
+        <item>临时入境摩托车</item>
+        <item>临时行驶车</item>
+        <item>警用汽车</item>
+        <item>警用摩托</item>
+        <item>大型新能源汽车</item>
+        <item>小型新能源汽车</item>
+    </string-array>
+    <string-array name="weather_type">
+        <item>晴</item>
+        <item>多云</item>
+        <item>阴</item>
+        <item>阵雨</item>
+        <item>雷阵雨</item>
+        <item>雷阵雨伴有冰雹</item>
+        <item>雨夹雪</item>
+        <item>小雨</item>
+        <item>中雨</item>
+        <item>大雨</item>
+        <item>暴雨</item>
+        <item>大暴雨</item>
+        <item>特大暴雨</item>
+        <item>阵雪</item>
+        <item>小雪</item>
+        <item>中雪</item>
+        <item>大雪</item>
+        <item>暴雪</item>
+        <item>雾</item>
+        <item>冻雨</item>
+        <item>沙尘暴</item>
+        <item>小雨-中雨</item>
+        <item>中雨-大雨</item>
+        <item>大雨-暴雨</item>
+        <item>暴雨-大暴雨</item>
+        <item>大暴雨-特大暴雨</item>
+        <item>小雪-中雪</item>
+        <item>中雪-大雪</item>
+        <item>大雪-暴雪</item>
+        <item>浮沉</item>
+        <item>扬沙</item>
+        <item>强沙尘暴</item>
+        <item>霾</item>
+    </string-array>
+</resources>

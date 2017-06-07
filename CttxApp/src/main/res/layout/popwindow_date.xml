@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/ds_600"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_down_btn"
+    android:padding="@dimen/ds_1"
+    android:orientation="vertical" >
+    <include layout="@layout/view_line1" />
+    <Button
+        android:id="@+id/popwindow_first"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_96"
+        android:background="@color/white"
+        android:textColor="@color/gray_99"
+        android:textSize="@dimen/fs_42"
+        android:text="一年内" />
+    <include layout="@layout/view_line1"/>
+    <Button
+        android:id="@+id/popwindow_second"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_96"
+        android:background="@color/white"
+        android:textColor="@color/gray_99"
+        android:textSize="@dimen/fs_42"
+        android:text="6个月" />
+    <include layout="@layout/view_line1" />
+    <Button
+        android:id="@+id/popwindow_third"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_96"
+        android:background="@color/white"
+        android:textColor="@color/gray_99"
+        android:textSize="@dimen/fs_42"
+        android:text="3个月" />
+</LinearLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/base_titlebar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_216"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45"
+        android:paddingTop="@dimen/ds_36">
+
+        <TextView
+            android:id="@+id/mine_msg_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="标题"
+            android:textColor="@color/gray_33"
+            android:textSize="@dimen/fs_51" />
+        <ImageView
+            android:id="@+id/mine_msg_item_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_36"
+            android:background="@mipmap/query_item_more"/>
+
+        <TextView
+            android:id="@+id/mine_msg_item_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/mine_msg_item_more"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/ds_48"
+            android:text="2016-06-11"
+            android:textColor="@color/gray_66"
+            android:textSize="@dimen/fs_42" />
+
+        <TextView
+            android:id="@+id/mine_msg_item_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mine_msg_item_title"
+            android:layout_marginTop="@dimen/ds_24"
+            android:text="内容"
+            android:textColor="@color/gray_a6"
+            android:textSize="@dimen/fs_42" />
+
+
+    </RelativeLayout>
+
+    <include layout="@layout/view_line1" />
+</LinearLayout>

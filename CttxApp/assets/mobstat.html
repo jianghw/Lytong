@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Mob Stat Test</title>
+
+    <meta http-equiv="Content-Type" content="text/html">
+    <script src="mobstat.js" ></script>
+    <style type="text/css">
+        ul li {
+            margin-bottom: 20px;
+        }
+
+        ul li a {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>BaiduMobStat</h1>
+    <ul>
+        <li><a href="" onclick="BaiduMobStat.onPageStart('WebView');">onPageStart(String)</a></li>
+        <li><a href="" onclick="BaiduMobStat.onPageEnd('WebView');">onPageEnd(String)</a></li>
+        <li><a href="" onclick="BaiduMobStat.onEvent('registered id', 'pass');">onEvent(String, String)</a></li>
+        <li><a href="" onclick="BaiduMobStat.onEvent('registered id', 'pass', 123);">onEvent(String, String, int)</a></li>
+        <li><a href="" onclick="BaiduMobStat.onEventStart('registered id', 'pass');">onEventStart(String, String)</a></li>
+        <li><a href="" onclick="BaiduMobStat.onEventEnd('registered id', 'pass');">onEventEnd(String, String)</a></li>
+        <li><a href="" onclick="BaiduMobStat.onEventDuration('registered id', 'pass', 1000);">onEventDuration(String, String, long)</a></li>
+    </ul>
+</body>
+</html>

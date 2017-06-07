@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_f5"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_108"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/ds_45"
+        android:text="请选择您在何处遇到问题"
+        android:textColor="@color/gray_a6"
+        android:textSize="@dimen/fs_36" />
+
+    <RelativeLayout
+        android:id="@+id/rl_upay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_150"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/feedback_manage_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_48"
+            android:gravity="center_vertical"
+            android:text="车辆管理"
+            android:textColor="@color/gray_33"
+            android:textSize="@dimen/fs_48" />
+
+
+        <CheckBox
+            android:id="@+id/feedback_manage_checkbox"
+            android:layout_width="@dimen/ds_60"
+            android:layout_height="@dimen/ds_60"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ds_48"
+            android:button="@drawable/check_box"
+            android:clickable="false"
+            android:focusable="false" />
+    </RelativeLayout>
+
+    <include layout="@layout/view_line1" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_wechatpay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_150"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+
+        <TextView
+            android:id="@+id/feedback_pay_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_48"
+            android:text="违章缴费"
+            android:textColor="@color/gray_33"
+            android:textSize="@dimen/fs_48" />
+
+
+        <CheckBox
+            android:id="@+id/feedback_pay_checkbox"
+            android:layout_width="@dimen/ds_60"
+            android:layout_height="@dimen/ds_60"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ds_48"
+            android:button="@drawable/check_box"
+            android:clickable="false"
+            android:focusable="false" />
+    </RelativeLayout>
+
+    <include layout="@layout/view_line1" />
+
+    <RelativeLayout
+        android:id="@+id/rl_jdpay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_150"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/feedback_other_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_48"
+            android:text="其他"
+            android:textColor="@color/gray_33"
+            android:textSize="@dimen/fs_48" />
+
+
+        <CheckBox
+            android:id="@+id/feedback_other_checkbox"
+            android:layout_width="@dimen/ds_60"
+            android:layout_height="@dimen/ds_60"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ds_48"
+            android:button="@drawable/check_box"
+            android:clickable="false"
+            android:focusable="false"
+            android:checked="false" />
+    </RelativeLayout>
+
+    <include layout="@layout/view_line1" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_108"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/ds_45"
+        android:text="问题和建议"
+        android:textColor="@color/gray_a6"
+        android:textSize="@dimen/fs_36" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/feedback_question_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/ds_270"
+            android:padding="@dimen/ds_48"
+            android:gravity="top|left"
+            android:background="@null"
+            android:hint="请详细描述您的问题和建议"
+            android:textSize="@dimen/fs_48"
+            android:maxLength="120"
+            android:maxLines="6" />
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="bottom|right"-->
+            <!--android:text="0/120" />-->
+    </FrameLayout>
+
+    <include layout="@layout/view_line1" />
+
+    <LinearLayout
+        android:id="@+id/feedback_agree_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_138"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_48"
+        android:paddingRight="@dimen/ds_48">
+
+        <CheckBox
+            android:id="@+id/feedback_agree_checkbox"
+            android:layout_width="@dimen/ds_90"
+            android:layout_height="@dimen/ds_90" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="请允许我通过您的手机号联系您" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/feeback_commit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:layout_marginTop="@dimen/ds_27"
+        android:layout_marginLeft="@dimen/ds_48"
+        android:layout_marginRight="@dimen/ds_48"
+        style="@style/ButtonBigStyle"
+        android:enabled="false"
+        android:textColor="@color/next_btn_selector"
+        android:gravity="center"
+        android:text="提交" />
+</LinearLayout>

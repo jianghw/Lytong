@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/context_all">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_90"
+        android:background="@color/common_base_color"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/ds_30"
+        android:visibility="gone"
+        android:textSize="@dimen/fs_36"
+        android:text="修改可缴费车辆12小时后生效" />
+    <FrameLayout
+        android:id="@+id/activity_set_paycar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+
+
+</LinearLayout>

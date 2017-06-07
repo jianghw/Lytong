@@ -1,0 +1,189 @@
+apply plugin: 'com.android.application'
+android {
+    compileSdkVersion 23
+    buildToolsVersion '25.0.0'
+
+    defaultConfig {
+        applicationId "com.zantong.mobilecttx"
+        minSdkVersion 14
+        targetSdkVersion 24
+        versionCode 25
+        versionName "2.2.0"
+        aaptOptions.cruncherEnabled = false //禁止gradle检查png的合法性
+        aaptOptions.useNewCruncher = false //关闭androidstudio的png的合法性检查
+        // dex突破65535的限制
+        multiDexEnabled true
+//        // AndroidManifest.xml 里面UMENG_CHANNEL的value为 ${UMENG_CHANNEL_VALUE}
+//        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "channel_name"]
+
+//        ndk {
+//            abiFilters"armeabi","armeabi-v7a","x86","mips"
+//            abiFilters "armeabi-v7a", "x86" ,"arm64-v8a","armeabi","mips","mips64","x86_64"
+//        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            assets.srcDirs = ['assets']
+        }
+
+        instrumentTest.setRoot('tests')
+
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+
+    //执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关掉。
+    lintOptions {
+        abortOnError false
+        disable 'MissingTranslation'
+    }
+
+    signingConfigs {
+        debug {
+            //这样写就得把demo.jk文件放在项目目录
+            storeFile file("/Users/zhengyingbing/Z赞同科技/tzly.jks")
+            storePassword "123456"
+            keyAlias "jianghw"
+            keyPassword "123456"
+            v2SigningEnabled false
+        }
+
+        release {
+            try {
+                //这样写就得把demo.jk文件放在项目目录
+                storeFile file("/Users/zhengyingbing/Z赞同科技/CTTX.jks")
+                storePassword "zantong"
+                keyAlias "CTTX"
+                keyPassword "zantong"
+                v2SigningEnabled false
+
+            } catch (ex) {
+                throw new InvalidUserDataException(ex.toString())
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            // 显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            //下载地址  分享
+            buildConfigField "String", "APP_DOWNLOD", "\"http://liyingtong.com:8081/download/\""
+            buildConfigField "String", "CAR_MANGER_URL", "\"http://139.196.183.121:8081/\""
+            //新接口正式地址
+            buildConfigField "String", "BASE_URL", "\"https://ctkapptest.icbc-axa.com/ecip/mobilecall_call\""
+            //老接口正式地址
+            buildConfigField "String", "APP_URL", "\"https://ctkapptest.icbc-axa.com/ecip/\""
+            //老接口海洋正式地址
+            buildConfigField "String", "APPFileUrl", "\"https://ctkapp.icbc-axa.com:9000/\""
+            //领卡网点文件（正式地址）
+            buildConfigField "String", "ImageLoadUrl", "\"https://ctkapp.icbc-axa.com/\""
+            //图片下载地址（正式地址）
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+            // 不显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            //下载地址   分享
+            buildConfigField "String", "APP_DOWNLOD", "\"http://liyingtong.com:8081/download/\""
+            buildConfigField "String", "CAR_MANGER_URL", "\"http://liyingtong.com:8081/\""
+            //新接口正式地址
+            buildConfigField "String", "BASE_URL", "\"https://ctkapp.icbc-axa.com/ecip/mobilecall_call\""
+            //老接口正式地址
+            buildConfigField "String", "APP_URL", "\"https://ctkapp.icbc-axa.com/ecip/\""
+            //老接口海洋正式地址
+            buildConfigField "String", "APPFileUrl", "\"https://ctkapp.icbc-axa.com:9000/\""
+            //领卡网点文件（正式地址）
+            buildConfigField "String", "ImageLoadUrl", "\"https://ctkapp.icbc-axa.com/\""
+            //图片下载地址（正式地址）
+
+            //混淆
+            minifyEnabled false
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //签名
+            signingConfig signingConfigs.release
+        }
+
+    }
+
+    productFlavors {
+        //应用宝
+        YYB {}
+        //360应用市场
+        ZS_360 {}
+        //崇明区
+        CM {}
+        //官方
+        official {}
+
+        productFlavors.all { flavor ->
+            flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+        }
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs' //this way we can find the .aar file in libs folder
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':XRecyclerView')
+    compile project(':WheelPicker')
+
+    compile 'com.umeng.analytics:analytics:latest.integration'
+    compile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.android.support:palette-v7:23.3.0'
+    compile 'com.android.support:support-v4:23.3.0'
+    compile 'com.android.support:multidex:1.0.1'
+
+    compile 'com.jakewharton:butterknife:7.0.1'
+
+//    compile 'com.squareup.okhttp3:okhttp-android-support:3.2.0'
+//    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+//    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+//    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+//    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+//    compile 'io.reactivex:rxandroid:1.1.0'
+//    compile 'com.squareup:otto:1.3.8'
+
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.15'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.github.chrisbanes.actionbarpulltorefresh:library:0.9.9'
+    compile 'com.facebook.stetho:stetho-okhttp3:1.3.1'
+    //eventbus
+    compile 'org.greenrobot:eventbus:3.0.0'
+    //阿里云推送
+    compile 'com.j256.ormlite:ormlite-core:4.48'
+    compile 'com.j256.ormlite:ormlite-android:4.48'
+
+    compile 'com.aliyun.ams:alicloud-android-push:3.0.6@aar'
+    compile 'com.aliyun.ams:alicloud-android-utdid:1.1.5.3'
+    compile 'com.aliyun.ams:alicloud-android-ut:5.0.0'
+    compile(name: 'huawei-xiaomi-support-3.0.0', ext: 'aar')
+
+    // 指定下载编译百度移动统计JAR
+    compile 'com.alibaba:fastjson:1.1.54.android'
+    compile 'com.github.florent37:viewanimator:1.0.3'
+    compile files('libs/zxing.jar')
+
+    //可选，用于生成application类
+    compile files('libs/sun.misc.BASE64Decoder.jar')
+    compile files('libs/libammsdk.jar')
+    compile files('libs/pinyin4j-2.5.0.jar')
+    compile files('libs/baidumapapi_map_v4_2_0.jar')
+    compile files('libs/locSDK_6.13.jar')
+    compile files('libs/baidumapapi_base_v4_2_0.jar')
+}

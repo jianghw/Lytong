@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/dialog_recharge_paytype_close"
+            android:layout_width="@dimen/ds_144"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="@dimen/ds_42"
+                android:layout_height="@dimen/ds_42"
+                android:background="@mipmap/sure_pay_popup_close" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="支付类型"
+            android:textColor="@color/gray_33"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/view_line2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:paddingLeft="@dimen/ds_30"
+        android:paddingRight="@dimen/ds_30">
+
+        <TextView
+            android:id="@+id/dialog_recharge_paytype_changtongcard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="畅通卡支付"
+            android:textColor="@color/gray_99"
+            android:textSize="@dimen/fs_51" />
+
+
+    </LinearLayout>
+
+    <include layout="@layout/view_line2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:paddingLeft="@dimen/ds_30"
+        android:paddingRight="@dimen/ds_30">
+
+        <TextView
+            android:id="@+id/dialog_recharge_paytype_othercard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="工行其它银行卡支付"
+            android:textColor="@color/gray_99"
+            android:textSize="@dimen/fs_51" />
+    </LinearLayout>
+
+    <include layout="@layout/view_line2" />
+<View
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ds_300"/>
+</LinearLayout>

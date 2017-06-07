@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/dialog_recharge_close"
+            android:layout_width="@dimen/ds_144"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="@dimen/ds_42"
+                android:layout_height="@dimen/ds_42"
+                android:background="@mipmap/sure_pay_popup_close" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="付款详情"
+            android:textColor="@color/gray_33"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/view_line2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:paddingLeft="@dimen/ds_30"
+        android:paddingRight="@dimen/ds_30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单编号"
+            android:textColor="@color/gray_99"
+            android:textSize="@dimen/fs_51" />
+
+        <TextView
+            android:id="@+id/dialog_recharge_sn"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|center_vertical"
+            android:layout_marginLeft="@dimen/ds_40"
+            android:text="10101001"
+            android:textSize="@dimen/fs_51" />
+    </LinearLayout>
+
+    <include layout="@layout/view_line2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:paddingLeft="@dimen/ds_30"
+        android:paddingRight="@dimen/ds_30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="支付行"
+            android:textColor="@color/gray_99"
+            android:textSize="@dimen/fs_51" />
+
+        <TextView
+            android:id="@+id/dialog_recharge_bank"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|center_vertical"
+            android:text="中国工商银行"
+            android:textSize="@dimen/fs_51" />
+    </LinearLayout>
+
+    <include layout="@layout/view_line2" />
+
+    <LinearLayout
+        android:id="@+id/dialog_recharge_paytype_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/ds_30"
+        android:paddingRight="@dimen/ds_30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="支付方式"
+            android:textColor="@color/gray_99"
+            android:textSize="@dimen/fs_51" />
+
+        <TextView
+            android:id="@+id/dialog_recharge_paytype"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right|center_vertical"
+            android:text="畅通卡支付"
+            android:textSize="@dimen/fs_51" />
+        <ImageView
+            android:layout_width="@dimen/ds_27"
+            android:layout_height="@dimen/ds_42"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:visibility="gone"
+            android:background="@mipmap/query_item_more"/>
+    </LinearLayout>
+
+    <include layout="@layout/view_line2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:paddingLeft="@dimen/ds_30"
+        android:paddingRight="@dimen/ds_30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="支付金额"
+            android:textColor="@color/gray_99"
+            android:textSize="@dimen/fs_51" />
+
+        <TextView
+            android:id="@+id/dialog_recharge_amount"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|center_vertical"
+            android:text="100元"
+            android:textSize="@dimen/fs_51" />
+    </LinearLayout>
+
+
+    <include layout="@layout/view_line2" />
+
+    <Button
+        android:id="@+id/dialog_one_btn_commit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:layout_margin="@dimen/ds_60"
+        android:background="@drawable/shape_red"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="@dimen/fs_48" />
+</LinearLayout>

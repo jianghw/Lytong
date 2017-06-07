@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:id="@+id/content_all">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/cttx_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorNoticeGrayNumberFont"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextSmallNoticeInfoStyleWhite"
+                android:layout_below="@+id/title"
+                android:text="请对照《机动车行驶证》认真填写以下信息" />
+
+            <RelativeLayout style="@style/itemRelaStyle">
+
+                <TextView
+                    style="@style/TextInfoStyle"
+                    android:layout_alignParentLeft="true"
+                    android:text="车牌号码" />
+
+                <TextView
+                    android:id="@+id/car_number_tv"
+                    style="@style/EditextNormalNoStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:hint="车牌号" />
+
+                <RelativeLayout
+                    android:id="@+id/privince_edit_rl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="21.1dip"
+                    android:layout_toLeftOf="@id/car_number_tv">
+
+                    <TextView
+                        android:id="@+id/privince_edit"
+                        style="@style/TextInfoStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:text="沪"
+                        android:textColor="@color/appmain" />
+
+                    <ImageView
+                        android:layout_width="5.7dip"
+                        android:layout_height="9.2dip"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="6.2dip"
+                        android:layout_toRightOf="@id/privince_edit"
+                        android:src="@mipmap/arrow_province_car" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <TextView style="@style/line_splite_gray" />
+
+            <RelativeLayout
+                style="@style/itemRelaStyle">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:id="@+id/engine_number_text"
+                        style="@style/TextInfoStyle"
+                        android:layout_centerVertical="true"
+                        android:text="发动机号" />
+
+                    <ImageView
+                        android:id="@+id/engine_number_image"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="9dip"
+                        android:layout_toRightOf="@id/engine_number_text"
+                        android:src="@drawable/illegal_query_notice_selector" />
+                </RelativeLayout>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    style="@style/EditextNormalNoStyle"
+                    android:maxLength="5"
+                    android:inputType="number"
+                    android:gravity="right"
+                    android:background="@null"
+                    android:hint="请输入发动机号"
+                    android:id="@+id/engine_number_car" />
+            </RelativeLayout>
+
+            <TextView style="@style/line_splite_gray" />
+
+            <RelativeLayout
+                android:id="@+id/car_type_rl"
+                style="@style/itemRelaStyle">
+
+                <TextView
+                    style="@style/TextInfoStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="车辆类型" />
+
+                <RelativeLayout
+                    android:id="@+id/car_type_choose_rl"
+                    android:layout_width="180dip"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true">
+
+                    <ImageView
+                        android:id="@+id/arrow"
+                        style="@style/arrowLeftStyle" />
+
+                    <TextView
+                        android:id="@+id/vehicle_type_text"
+                        style="@style/TextInfoStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="6dip"
+                        android:layout_toLeftOf="@id/arrow"
+                        android:text="小型汽车号牌" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <TextView
+                style="@style/TextSmallNoticeInfoStyleWhite"
+                android:text="更多信息" />
+
+            <RelativeLayout
+                android:id="@+id/image_car"
+                style="@style/itemRelaStyle"
+                android:layout_height="88dip">
+
+                <TextView
+                    style="@style/TextInfoStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="爱车自拍" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true">
+
+                    <ImageView
+                        android:id="@+id/arrow_image"
+                        style="@style/arrowLeftStyle" />
+
+                    <ImageView
+                        android:id="@+id/image_car_view"
+                        android:layout_width="80dip"
+                        android:layout_height="60dip"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dip"
+                        android:layout_toLeftOf="@id/arrow_image"
+                        android:src="@mipmap/loading_image_failed"
+                        android:text="上海大众  Polo" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <TextView style="@style/line_splite_gray" />
+
+            <RelativeLayout style="@style/itemRelaStyle">
+
+                <TextView
+                    style="@style/TextInfoStyle"
+                    android:layout_alignParentLeft="true"
+                    android:text="车辆昵称" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    style="@style/EditextNormalNoStyle"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:hint="请输入车辆昵称"
+                    android:id="@+id/car_nick_name" />
+            </RelativeLayout>
+
+            <TextView style="@style/line_splite_gray" />
+
+            <RelativeLayout
+                style="@style/itemRelaStyle"
+                >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        android:id="@+id/notice_text"
+                        style="@style/TextInfoStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="注册日期" />
+
+                    <ImageView
+                        android:id="@+id/inspection_reminder_image"
+                        android:layout_width="15dip"
+                        android:layout_height="15dip"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="9dip"
+                        android:layout_toRightOf="@id/notice_text"
+                        android:src="@drawable/illegal_query_notice_selector" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/inspection_reminder_rl"
+                    android:layout_width="180dip"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true">
+
+                    <ImageView
+                        android:id="@+id/arrow3"
+                        style="@style/arrowLeftStyle" />
+
+                    <TextView
+                        android:id="@+id/inspection_reminder_text"
+                        style="@style/consum_gray_color_text_vertical_font"
+                        android:layout_marginRight="10dip"
+                        android:layout_toLeftOf="@id/arrow3"
+                        android:text="请选择年检日期" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/consummate_save"
+                style="@style/ButtonBigStyle"
+                android:layout_marginTop="60dip"
+                android:text="保存" />
+
+            <Button
+                android:id="@+id/default_btn"
+                style="@style/ButtonBigStyle"
+                android:layout_marginTop="20dip"
+                android:layout_marginBottom="32dip"
+                android:text="设为默认"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

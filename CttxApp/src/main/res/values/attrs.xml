@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="PagerSlidingTabStrip">
+        <attr name="pstsIndicatorColor" format="color" />
+        <attr name="pstsUnderlineColor" format="color" />
+        <attr name="pstsDividerColor" format="color" />
+        <attr name="pstsIndicatorHeight" format="dimension" />
+        <attr name="pstsUnderlineHeight" format="dimension" />
+        <attr name="pstsDividerPadding" format="dimension" />
+        <attr name="pstsTabPaddingLeftRight" format="dimension" />
+        <attr name="pstsScrollOffset" format="dimension" />
+        <attr name="pstsTabBackground" format="reference" />
+        <attr name="pstsShouldExpand" format="boolean" />
+        <attr name="pstsTextAllCaps" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="UltimateRecyclerView">
+
+        <!--
+        	Whether UltimateRecyclerView has it's extras enabled. This allows the user to be
+        	able to scroll while refreshing, and behaves better. It acheives this by adding
+        	Header and/or Footer Views to the WrapRecyclerView.
+        -->
+        <attr name="ptrURecyclerViewExtrasEnabled" format="reference|boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="WheelView">
+        <attr name="normalTextColor" format="color" />
+        <attr name="normalTextSize" format="dimension" />
+        <attr name="selectedTextColor" format="color" />
+        <attr name="selectedTextSize" format="dimension" />
+        <attr name="unitHight" format="dimension" />
+        <attr name="itemNumber" format="integer"/>
+        <attr name="lineColor" format="color" />
+        <attr name="lineHeight" format="dimension" />
+        <attr name="maskHight" format="dimension"/>
+        <attr name="noEmpty" format="boolean"/>
+        <attr name="isEnable" format="boolean"/>
+    </declare-styleable>
+
+    <!-- Switch按钮 -->
+    <declare-styleable name="SwitchButton">
+        <attr name="bmWidth" format="dimension" />
+        <attr name="bmHeight" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="RatingBar">
+        <!--星星间距-->
+        <attr format="dimension" name="starDistance"/>
+        <!--星星大小-->
+        <attr format="dimension" name="starSize"/>
+        <!--星星个数-->
+        <attr format="integer" name="starCount"/>
+        <!--星星空图-->
+        <attr format="reference" name="starEmpty"/>
+        <!--星星满图-->
+        <attr format="reference" name="starFill"/>
+    </declare-styleable>
+
+    <declare-styleable name="SettingItemView">
+        <attr name="titleS" format="string"/>
+        <attr name="titleSC" format="color"/>
+        <attr name="titleHintS" format="string"/>
+        <attr name="titleHintC" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="DrivingPriceItemView">
+        <attr name="bgColor" format="color"/>
+        <attr name="driving_time" format="string"/>
+        <attr name="driving_price" format="string"/>
+    </declare-styleable>
+
+
+    <!-- Switch按钮 -->
+    <declare-styleable name="ViewfinderViewImg">
+        <attr name="path" format="reference" />
+        <attr name="position" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="XImageView">
+        <attr name="auto_play" format="boolean"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="CttxEditText">
+        <attr name="imgflag" format="boolean"></attr>
+        <attr name="titletext" format="string"></attr>
+        <attr name="hinttext" format="string"></attr>
+        <attr name="contenttext" format="string"></attr>
+        <attr name="contentlength" format="integer"></attr>
+        <attr name="contentinputtype" format="integer"></attr>
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/fay_recharge"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/item_recharge_amount"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
+        android:layout_margin="@dimen/ds_18"
+        android:background="@drawable/shape_clean_btn"
+        android:gravity="center"
+        android:textColor="@color/gray_25"
+        android:textSize="@dimen/fs_18sp"
+        tools:text="¥ 100"/>
+
+    <TextView
+        android:id="@+id/item_recharge_discount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@drawable/shape_red"
+        android:paddingBottom="@dimen/ds_10"
+        android:paddingLeft="@dimen/ds_15"
+        android:paddingRight="@dimen/ds_15"
+        android:paddingTop="@dimen/ds_10"
+        android:textColor="@color/white"
+        android:textSize="@dimen/fs_12sp"
+        tools:text="9.8折"/>
+</FrameLayout>

@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#eee"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:layout_marginBottom="@dimen/ds_15"
+        android:paddingLeft="10dp">
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginRight="5dp"
+            android:background="@mipmap/app_icon" />
+
+        <TextView
+            style="@style/CustomKeyboardStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/fs_42"
+            android:text="安全键盘" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/input_q"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="q" />
+
+                <TextView
+                    android:id="@+id/input_w"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="w" />
+
+                <TextView
+                    android:id="@+id/input_e"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="e" />
+
+                <TextView
+                    android:id="@+id/input_r"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="r" />
+
+                <TextView
+                    android:id="@+id/input_t"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="t" />
+
+                <TextView
+                    android:id="@+id/input_y"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="y" />
+
+                <TextView
+                    android:id="@+id/input_u"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="u" />
+
+                <TextView
+                    android:id="@+id/input_i"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="i" />
+
+                <TextView
+                    android:id="@+id/input_o"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="o" />
+
+                <TextView
+                    android:id="@+id/input_p"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="p" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/input_a"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="a" />
+
+                <TextView
+                    android:id="@+id/input_s"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="s" />
+
+                <TextView
+                    android:id="@+id/input_d"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="d" />
+
+                <TextView
+                    android:id="@+id/input_f"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="f" />
+
+                <TextView
+                    android:id="@+id/input_g"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="g" />
+
+                <TextView
+                    android:id="@+id/input_h"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="h" />
+
+                <TextView
+                    android:id="@+id/input_j"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="j" />
+
+                <TextView
+                    android:id="@+id/input_k"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="k" />
+
+                <TextView
+                    android:id="@+id/input_l"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="l" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/input_tab"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.3"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/input_tab_img"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@mipmap/icon_xiaoxie_btn" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/input_z"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="z" />
+
+                <TextView
+                    android:id="@+id/input_x"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="x" />
+
+                <TextView
+                    android:id="@+id/input_c"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="c" />
+
+                <TextView
+                    android:id="@+id/input_v"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="v" />
+
+                <TextView
+                    android:id="@+id/input_b"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="b" />
+
+                <TextView
+                    android:id="@+id/input_n"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="n" />
+
+                <TextView
+                    android:id="@+id/input_m"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="m" />
+
+                <LinearLayout
+                    android:id="@+id/input_word_del"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1.3"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:background="@mipmap/icon_keyboard_del" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/input_num"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="123" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center" />
+
+                <LinearLayout
+                    android:id="@+id/input_word_hide"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_clean_btn"
+                    android:gravity="center"
+                    android:text="0">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="20dp"
+                        android:layout_height="14dp"
+                        android:background="@mipmap/icon_keyboard_hide" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/input_word_finish"
+                    style="@style/CustomKeyboardStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_keyboard_btn"
+                    android:gravity="center"
+                    android:textSize="@dimen/fs_57"
+                    android:textColor="@color/white"
+                    android:text="完成" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

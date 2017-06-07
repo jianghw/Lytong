@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_215"
+        android:background="@drawable/bg_item_select"
+        android:paddingLeft="@dimen/ds_48"
+        android:paddingRight="@dimen/ds_48">
+
+        <ImageView
+            android:id="@+id/msg_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/app_icon"/>
+
+        <TextView
+            android:id="@+id/msg_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/msg_img"
+            android:layout_marginLeft="@dimen/ds_48"
+            android:layout_toRightOf="@+id/msg_img"
+            android:text="xitong消息"
+            android:textColor="@color/gray_25"
+            android:textSize="@dimen/fs_18sp"/>
+
+        <TextView
+            android:id="@+id/msg_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/msg_title"
+            android:layout_below="@+id/msg_title"
+            android:layout_marginRight="@dimen/ds_48"
+            android:layout_marginTop="@dimen/ds_12"
+            android:layout_toLeftOf="@+id/msg_date"
+            android:ellipsize="end"
+            android:gravity="center_vertical|left"
+            android:lines="1"
+            android:text="asdadasdasdsadasdsadaddddddddddds"
+            android:textColor="@color/gray_99"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/msg_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/msg_title"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="@color/gray_5e"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="未读"/>
+
+        <TextView
+            android:id="@+id/msg_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/msg_content"
+            android:layout_below="@+id/msg_sign"
+            android:textSize="@dimen/fs_14sp"
+            tools:text="2017-05-12"/>
+    </RelativeLayout>
+
+    <!--    <TextView style="@style/line_splite_gray" />-->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_message_shade"/>
+</LinearLayout>

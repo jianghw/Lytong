@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout01"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/trans"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="@dimen/ds_480"
+        android:layout_height="@dimen/ds_120"
+        android:paddingBottom="@dimen/ds_12"
+        android:paddingRight="@dimen/ds_12"
+        android:background="@mipmap/map_mark_bg">
+
+        <TextView
+            android:id="@+id/map_mark_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/ds_36"
+            android:textColor="@color/gray_66"
+            android:textSize="@dimen/fs_39" />
+
+        <TextView
+            android:id="@+id/map_mark_discount_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/ds_24"
+            android:textColor="@color/gray_66"
+            android:textSize="@dimen/fs_39" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/ds_60"
+        android:layout_height="@dimen/ds_60"
+        android:src="@mipmap/map_location" />
+</LinearLayout>

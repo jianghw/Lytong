@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <SurfaceView
+        android:id="@+id/ocr_surfaceview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginRight="@dimen/ds_270" />
+    <ImageView
+        android:id="@+id/ocr_flash_btn"
+        android:layout_width="@dimen/ds_180"
+        android:layout_height="@dimen/ds_81"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/ds_280"
+        android:layout_marginTop="@dimen/ds_12"
+        android:background="@mipmap/icon_flash_off"/>
+
+    <ImageView
+        android:id="@+id/ocr_preview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginRight="@dimen/ds_270" />
+
+    <RelativeLayout
+        android:id="@+id/ocr_option_layout"
+        android:layout_width="@dimen/ds_270"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="@color/black">
+
+        <Button
+            android:id="@+id/ocr_driving_btn"
+            android:layout_width="@dimen/ds_200"
+            android:layout_height="@dimen/ds_200"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dip"
+            android:background="@mipmap/icon_camera" />
+
+        <Button
+            android:id="@+id/ocr_driver_btn"
+            android:layout_width="@dimen/ds_200"
+            android:layout_height="@dimen/ds_200"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dip"
+            android:background="@mipmap/icon_camera" />
+
+        <TextView
+            android:id="@+id/ocr_cancel_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_80"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/ds_50"
+            android:gravity="center"
+            android:text="重拍"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fs_48"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/ocr_confirm_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_80"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/ds_50"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fs_48"
+            android:visibility="gone" />
+
+
+    </RelativeLayout>
+
+    <com.zantong.mobilecttx.widght.Viewfinder
+        android:id="@+id/ocr_viewfinder"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="@dimen/ds_270" />
+</RelativeLayout>

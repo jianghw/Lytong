@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ds_144"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/mine_help_item_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/ds_48"
+        android:textColor="@color/gray_33"
+        android:textSize="@dimen/fs_48" />
+
+    <ImageView
+        android:layout_width="@dimen/ds_22"
+        android:layout_height="@dimen/ds_36"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:background="@mipmap/query_item_more"/>
+
+
+</RelativeLayout>

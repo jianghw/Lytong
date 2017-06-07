@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_255"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/ds_30">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/ds_255"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/ds_30">
+
+
+
+
+            <TextView
+                android:id="@+id/mine_order_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="工银安盛人寿百万保驾两全保险"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textColor="@color/gray_33"
+                android:textSize="@dimen/fs_51" />
+
+            <TextView
+                android:id="@+id/mine_order_item_sn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/mine_order_item_name"
+                android:layout_marginTop="@dimen/ds_12"
+                android:text="保单号:1000001"
+                android:textColor="@color/gray_a6"
+                android:textSize="@dimen/fs_36" />
+
+            <TextView
+                android:id="@+id/mine_order_item_uname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/mine_order_item_sn"
+                android:layout_marginTop="@dimen/ds_9"
+                android:text="投保人：李然"
+                android:textColor="@color/gray_a6"
+                android:textSize="@dimen/fs_36" />
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/mine_order_item_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/ds_30"
+            android:text="已支付"
+            android:textColor="@color/gray_33"
+            android:textSize="@dimen/fs_42" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/query_item_more" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_30"
+        android:background="@color/common_base_color"/>
+</LinearLayout>

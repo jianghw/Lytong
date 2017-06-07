@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/setting_item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingLeft="@dimen/ds_45"
+    android:paddingRight="@dimen/ds_45">
+    <TextView
+        android:id="@+id/setting_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:textColor="@color/colorAddCarGrayNumberFont"
+        android:textSize="@dimen/fs_42" />
+    <ImageView
+        android:id="@+id/setting_item_next"
+        android:layout_width="@dimen/ds_24"
+        android:layout_height="@dimen/ds_24"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/arrow_left_big_iamge" />
+    <TextView
+        android:id="@+id/setting_item_title_hint"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="right"
+        android:layout_marginRight="@dimen/ds_10"
+        android:layout_toLeftOf="@+id/setting_item_next"
+        android:layout_toStartOf="@+id/setting_item_next"
+        android:textColor="@color/gray_33"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="@dimen/fs_44" />
+</RelativeLayout>

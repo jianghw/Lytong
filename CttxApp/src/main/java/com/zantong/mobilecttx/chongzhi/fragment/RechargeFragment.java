@@ -1,0 +1,633 @@
+package com.zantong.mobilecttx.chongzhi.fragment;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.text.InputFilter;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.base.fragment.PullableBaseFragment;
+import com.zantong.mobilecttx.chongzhi.adapter.OilPriceAdapter;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeBean;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponBean;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
+import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
+import com.zantong.mobilecttx.common.activity.CommonProblemActivity;
+import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
+import com.zantong.mobilecttx.interf.IRechargeAtyContract;
+import com.zantong.mobilecttx.user.activity.CouponDetailActivity;
+import com.zantong.mobilecttx.user.bean.CouponFragmentBean;
+import com.zantong.mobilecttx.utils.DialogUtils;
+import com.zantong.mobilecttx.utils.StringUtils;
+import com.zantong.mobilecttx.utils.ToastUtils;
+import com.zantong.mobilecttx.utils.UiHelpers;
+import com.zantong.mobilecttx.utils.jumptools.Act;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * 加油充值页面业务
+ */
+
+public class RechargeFragment extends PullableBaseFragment
+        implements IRechargeAtyContract.IRechargeAtyView, View.OnClickListener {
+
+    private IRechargeAtyContract.IRechargeAtyPresenter mPresenter;
+
+    /**
+     * 中石化
+     */
+    private TextView mTvProvider;
+    private LinearLayout mLayProvider;
+    /**
+     * 请输入19位卡号
+     */
+    private EditText mEditCardnum;
+    private XRecyclerView mXRecyclerView;
+    /**
+     * 持畅通卡支付
+     */
+    private TextView mTvPayStyle;
+    private ImageView mImgAlipayBoult;
+    private RelativeLayout mRayPaystyleLayout;
+    /**
+     * 持畅通卡支付
+     */
+    private TextView mTvPayCoupon;
+    private TextView mTvPayCouponDate;
+    private ImageView mImgCouponState;
+    private RelativeLayout mRayDiscountCoupon;
+    private TextView mTvDesc;
+    /**
+     * 我已阅读用户充值协议
+     */
+    private TextView mTvAgreement;
+    private TextView mTvAmount;
+    /**
+     * 充值
+     */
+    private TextView mTvCommit;
+    private LinearLayout mLyBottom;
+    /**
+     * 默认折扣 价格提交用
+     */
+    private String DEFAULT_DISCOUNT_1 = "0.99";
+    private String DEFAULT_DISCOUNT_2 = "1.00";
+    private String CURRENT_DISCOUNT = "0.00";
+    private OilPriceAdapter mAdapter;
+    private List<RechargeBean> priceList;//价格
+    /**
+     * 供应商类型
+     */
+    private int mProviderType = 1;
+    private RechargeDTO mRechargeDTO = new RechargeDTO();
+    /**
+     * 是否选择使用优惠券
+     */
+    private boolean isChoice = true;
+    /**
+     * 优惠券 弹出框布局
+     */
+    private List<RechargeCouponBean> couponList;
+    /**
+     * 支付方式
+     */
+    private int mPayType = 0;
+    /**
+     * 优惠卷id
+     */
+    private Integer mCouponId;
+
+    public static RechargeFragment newInstance() {
+        return new RechargeFragment();
+    }
+
+    @Override
+    protected int getFragmentLayoutResId() {
+        return R.layout.home_chongzhi_activity;
+    }
+
+    @Override
+    protected void initFragmentView(View view) {
+        mTvProvider = (TextView) view.findViewById(R.id.tv_provider);
+        mLayProvider = (LinearLayout) view.findViewById(R.id.lay_provider);
+        mLayProvider.setOnClickListener(this);
+        mEditCardnum = (EditText) view.findViewById(R.id.edit_cardnum);
+        mXRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_list);
+        mTvPayStyle = (TextView) view.findViewById(R.id.tv_pay_style);
+        mImgAlipayBoult = (ImageView) view.findViewById(R.id.img_alipay_boult);
+        mRayPaystyleLayout = (RelativeLayout) view.findViewById(R.id.ray_paystyle_layout);
+        mRayPaystyleLayout.setOnClickListener(this);
+        mTvPayCoupon = (TextView) view.findViewById(R.id.tv_pay_coupon);
+        mTvPayCouponDate = (TextView) view.findViewById(R.id.tv_pay_coupon_date);
+        mImgCouponState = (ImageView) view.findViewById(R.id.img_coupon_state);
+        mRayDiscountCoupon = (RelativeLayout) view.findViewById(R.id.ray_discount_coupon);
+        mRayDiscountCoupon.setOnClickListener(this);
+        mTvDesc = (TextView) view.findViewById(R.id.tv_desc);
+        mTvAgreement = (TextView) view.findViewById(R.id.tv_agreement);
+        mTvAgreement.setOnClickListener(this);
+        mTvAmount = (TextView) view.findViewById(R.id.tv_amount);
+        mTvCommit = (TextView) view.findViewById(R.id.tv_commit);
+        mTvCommit.setOnClickListener(this);
+        mLyBottom = (LinearLayout) view.findViewById(R.id.ly_bottom);
+
+        mTvDesc.setText(getClickableSpan());
+        mTvDesc.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    /**
+     * 说明文字
+     */
+    private SpannableString getClickableSpan() {
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Act.getInstance().gotoIntent(getActivity(), CommonProblemActivity.class);
+            }
+        };
+
+        SpannableString spanableInfo = new SpannableString(
+                "1. 充值成功后，需要在加油站办理圈存即可使用；\n" +
+                        "2. 充值到账时间约10分钟，请耐心等待；\n" +
+                        "3. 暂时无法提供发票；\n" +
+                        "4. 如遇问题，请使用「帮助」");
+        //可以为多部分设置超链接
+        spanableInfo.setSpan(
+                new Clickable(listener),
+                spanableInfo.length() - 4, spanableInfo.length(),
+                Spanned.SPAN_MARK_MARK);
+        return spanableInfo;
+    }
+
+    private class Clickable extends ClickableSpan implements View.OnClickListener {
+        private final View.OnClickListener mListener;
+
+        Clickable(View.OnClickListener listener) {
+            mListener = listener;
+        }
+
+        @Override
+        public void onClick(View view) {
+            mListener.onClick(view);
+        }
+    }
+
+    @Override
+    public void setPresenter(IRechargeAtyContract.IRechargeAtyPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    protected void onLoadMoreData() {
+        loadingData();
+    }
+
+    @Override
+    protected void onRefreshData() {
+        loadingData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.onSubscribe();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.unSubscribe();
+        mRechargeDTO = null;
+        if (priceList != null) priceList.clear();
+        if (couponList != null) couponList.clear();
+    }
+
+    /**
+     * 可下拉刷新
+     *
+     * @return true
+     */
+    @Override
+    protected boolean isRefresh() {
+        return false;
+    }
+
+    /**
+     * 不可加载更多
+     *
+     * @return false
+     */
+    @Override
+    protected boolean isLoadMore() {
+        return false;
+    }
+
+
+    @Override
+    protected void loadingData() {
+        GridLayoutManager manager = new GridLayoutManager(getContext().getApplicationContext(), 3);
+        mXRecyclerView.setLayoutManager(manager);
+        mXRecyclerView.setPullRefreshEnabled(false);
+        mXRecyclerView.setLoadingMoreEnabled(false);
+        mXRecyclerView.noMoreLoadings();
+
+        mAdapter = new OilPriceAdapter(mRechargeDTO);
+        mXRecyclerView.setAdapter(mAdapter);
+//优惠劵
+        if (mPresenter != null) mPresenter.getCouponByType();
+
+//价格刷新
+        mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, Object data) {
+                if (data != null && data instanceof RechargeBean && mAdapter != null) {
+                    RechargeBean bean = (RechargeBean) data;
+                    //充值模板号
+                    mRechargeDTO.setRechargeTemplate(bean.getTemplate());
+                    //加油卡面值
+                    mRechargeDTO.setProdMoney(bean.getAmount());
+                    //充值折扣
+                    mRechargeDTO.setDiscount(bean.getDiscount());
+                    displayPriceValue(bean);
+
+                    for (RechargeBean rechargeBean : mAdapter.getAll()) {
+                        rechargeBean.setCheckd(rechargeBean.getTemplate().equals(bean.getTemplate()));
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
+
+    /**
+     * 价格显示
+     */
+    private void displayPriceValue(RechargeBean bean) {
+        double value = Double.parseDouble(TextUtils.isEmpty(bean.getDiscount()) ? "1" : bean.getDiscount());
+        double price = Double.parseDouble(bean.getAmount());
+        String priceValue = StringUtils.getPriceDouble(price * value);
+        mTvAmount.setText(priceValue);
+    }
+
+    /**
+     * 点击事件
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.lay_provider://提供商
+                DialogUtils.createSelectDialog(this.getActivity(),
+                        "提供商",
+                        initProviderList(),
+                        new DialogUtils.DialogOnClickBack() {
+                            @Override
+                            public void onRechargeProviderClick(View view, Object data) {
+                                initProvider(data);
+                            }
+                        });
+                break;
+            case R.id.ray_paystyle_layout://支付方式
+                DialogUtils.createSelectDialog(this.getActivity(),
+                        "支付方式",
+                        initPayStyles(),
+                        new DialogUtils.DialogOnClickBack() {
+                            @Override
+                            public void onRechargeProviderClick(View view, Object data) {
+                                initPayStyle(data);
+                            }
+                        });
+                break;
+            case R.id.ray_discount_coupon://优惠劵
+                if (initDiscountCoupon() == null || initDiscountCoupon().size() < 1) {
+                    if (mPresenter != null) mPresenter.getCouponByType();
+                } else {
+                    DialogUtils.createCouponSelectDialog(this.getActivity(),
+                            "优惠劵",
+                            initDiscountCoupon(),
+                            new DialogUtils.DialogOnClickBack() {
+                                @Override
+                                public void onRechargeProviderClick(View view, Object data) {
+                                    couponDialogClickBack(data);
+                                }
+                            },
+                            new DialogUtils.ActivityOnClick() {
+                                @Override
+                                public void onActivityCouponClick(View view) {
+                                    openCouponActy();
+                                }
+                            },
+                            isChoice);
+                }
+                break;
+            case R.id.tv_agreement:
+                break;
+            case R.id.tv_commit://提交
+                submitFormValidation();
+                break;
+        }
+    }
+
+    /**
+     * 去吧 优惠详情页面
+     */
+    private void openCouponActy() {
+        if (couponList != null && couponList.size() > 0) {
+            RechargeCouponBean bean = couponList.get(0);
+            CouponFragmentBean couponFragmentBean = null;
+            try {
+                couponFragmentBean = new CouponFragmentBean();
+                couponFragmentBean.setCouponId(String.valueOf(bean.getId()));
+                couponFragmentBean.setCouponName(bean.getCouponName());
+                couponFragmentBean.setCouponContent(bean.getCouponContent());
+                couponFragmentBean.setCouponCode(String.valueOf(bean.getCouponCode()));
+                couponFragmentBean.setCouponImage(bean.getCouponImage());
+                couponFragmentBean.setCouponStatus(String.valueOf(bean.getCouponType()));
+                couponFragmentBean.setCouponUse(bean.getCouponUse());
+                couponFragmentBean.setCouponValidityEnd(bean.getCouponValidityEnd());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            Intent intent = new Intent(getActivity(), CouponDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("CouponFragmentBean", couponFragmentBean);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+    }
+
+    /**
+     * 提交用表单验证
+     */
+    private void submitFormValidation() {
+        String card = mEditCardnum.getText().toString().trim();
+        if (TextUtils.isEmpty(card)) {
+            ToastUtils.showShort(getContext().getApplicationContext(), "请填写正确的卡号");
+        } else if (mProviderType == 1 && card.length() != 19) {
+            ToastUtils.showShort(getContext().getApplicationContext(), "请填写正确的19位卡号");
+        } else if (mProviderType == 2 && card.length() != 16) {
+            ToastUtils.showShort(getContext().getApplicationContext(), "请填写正确的16位卡号");
+        } else {
+            if (mPresenter != null) mPresenter.addOilCreateOrder();
+        }
+    }
+
+    /**
+     * 价格状态
+     * 1、优惠劵时改变
+     * 2、供应商时改变
+     * 3、支付方式时改变
+     */
+    private void priceStateList(int providerType) {
+        if (priceList == null) priceList = new ArrayList<>();
+        if (!priceList.isEmpty()) priceList.clear();
+        if (mAdapter != null && !mAdapter.getAll().isEmpty()) mAdapter.removeAll();
+        if (providerType == 1) {//中石化
+            //不选择优惠劵时，优惠劵为0时，
+            String value = isChoice && !CURRENT_DISCOUNT.equals("0.00") && mPayType == 0 ? CURRENT_DISCOUNT : DEFAULT_DISCOUNT_1;
+            priceList.add(new RechargeBean("100", "10001", value, true));
+            priceList.add(new RechargeBean("200", "10002", value, false));
+            priceList.add(new RechargeBean("500", "10003", value, false));
+            priceList.add(new RechargeBean("1000", "10004", value, false));
+            mAdapter.append(priceList);
+        } else if (providerType == 2) {//中石化
+            String value = isChoice && !CURRENT_DISCOUNT.equals("0.00") && mPayType == 0 ? CURRENT_DISCOUNT : DEFAULT_DISCOUNT_2;
+            priceList.add(new RechargeBean("100", "100082", value, true));
+            priceList.add(new RechargeBean("200", "100083", value, false));
+            priceList.add(new RechargeBean("500", "100084", value, false));
+            mAdapter.append(priceList);
+        }
+        displayPriceValue(priceList.get(0));
+    }
+
+    /**
+     * 供应商选择
+     * mProviderType =1、 2
+     */
+    private ArrayList<CommonTwoLevelMenuBean> initProviderList() {
+        ArrayList<CommonTwoLevelMenuBean> list = new ArrayList<>();
+        list.add(new CommonTwoLevelMenuBean(1, "中石化", R.mipmap.icon_zhongshihua));
+        list.add(new CommonTwoLevelMenuBean(2, "中石油", R.mipmap.icon_zhongshiyou));
+        return list;
+    }
+
+    private void initProvider(Object data) {
+        if (data != null && data instanceof CommonTwoLevelMenuBean) {
+            CommonTwoLevelMenuBean bean = (CommonTwoLevelMenuBean) data;
+            int id = bean.getId();
+            mProviderType = id;
+            if (id == 1) {
+                initEditViewByProvider(bean.getContext(), 19);
+            } else if (id == 2) {
+                initEditViewByProvider(bean.getContext(), 16);
+            } else {
+                initEditViewByProvider(bean.getContext(), 19);
+            }
+            priceStateList(mProviderType);
+        }
+    }
+
+    private void initEditViewByProvider(String context, int num) {
+        mTvProvider.setText(context);
+        mEditCardnum.setHint("请输入" + num + "位卡号");
+        mEditCardnum.setFilters(new InputFilter[]{new InputFilter.LengthFilter(num)});
+    }
+
+    /**
+     * 支付方式
+     */
+    private ArrayList<CommonTwoLevelMenuBean> initPayStyles() {
+        ArrayList<CommonTwoLevelMenuBean> list = new ArrayList<>();
+        list.add(new CommonTwoLevelMenuBean(1, "畅通卡支付", R.mipmap.icon_changtongka));
+        list.add(new CommonTwoLevelMenuBean(2, "工行其它银行卡支付", R.mipmap.icon_othercard));
+        return list;
+    }
+
+    private void initPayStyle(Object data) {
+        if (data != null && data instanceof CommonTwoLevelMenuBean) {
+            CommonTwoLevelMenuBean bean = (CommonTwoLevelMenuBean) data;
+            mTvPayStyle.setText(bean.getContext());
+            mPayType = bean.getId() == 1 ? 0 : 1;
+            priceStateList(mProviderType);
+            //优惠劵控件隐藏
+            mRayDiscountCoupon.setVisibility(mPayType == 0 ? View.VISIBLE : View.GONE);
+
+            if (bean.getId() == 1) {
+                initTvPayStyleDrawable(bean);
+            } else if (bean.getId() == 2) {
+                UiHelpers.setTextViewIcon(getContext().getApplicationContext(),
+                        mTvPayStyle,
+                        bean.getImgId(),
+                        -1,
+                        -1,
+                        UiHelpers.DRAWABLE_LEFT);
+            } else {
+                initTvPayStyleDrawable(bean);
+            }
+        }
+    }
+
+    private void initTvPayStyleDrawable(CommonTwoLevelMenuBean bean) {
+        Drawable drawableLeft = getResources().getDrawable(bean.getImgId());
+        drawableLeft.setBounds(0, 0, drawableLeft.getMinimumWidth(), drawableLeft.getMinimumHeight());
+        Drawable drawableRight = getResources().getDrawable(R.mipmap.icon_recommand);
+        drawableRight.setBounds(0, 0, drawableRight.getMinimumWidth(), drawableRight.getMinimumHeight());
+        mTvPayStyle.setCompoundDrawables(drawableLeft, null, drawableRight, null);
+    }
+
+    /**
+     * 优惠卷
+     */
+    private List<RechargeCouponBean> initDiscountCoupon() {
+        return couponList;
+    }
+
+    /**
+     * 点击优惠卷 回显示
+     */
+    private void couponDialogClickBack(Object data) {
+        isChoice = !isChoice;
+        if (data != null && data instanceof CommonTwoLevelMenuBean) {
+            CommonTwoLevelMenuBean bean = (CommonTwoLevelMenuBean) data;
+            if (couponList != null && couponList.size() > 0) {
+                for (RechargeCouponBean couponBean : couponList) {
+                    if (couponBean.getCouponContent().equals(bean.getContext())) {
+                        displayCouponByBean(couponBean);
+                        break;
+                    }
+                }
+            }
+            priceStateList(mProviderType);
+        }
+    }
+
+    /**
+     * 加载提示框
+     */
+    @Override
+    public void showLoadingDialog() {
+        showDialogLoading();
+    }
+
+    @Override
+    public void dismissLoadingDialog() {
+        hideDialogLoading();
+    }
+
+    /**
+     * 获取优惠劵失败
+     */
+    @Override
+    public void onCouponByTypeError(String message) {
+        displayCouponState("获取优惠劵失败,点击重新获取");
+
+        ToastUtils.showShort(getContext().getApplicationContext(), message);
+        dismissLoadingDialog();
+    }
+
+    /**
+     * 优惠劵错误状态
+     *
+     * @param msg
+     */
+    private void displayCouponState(String msg) {
+        mTvPayCoupon.setText(msg);
+        mTvPayCouponDate.setVisibility(View.GONE);
+        mImgCouponState.setImageResource(R.mipmap.icon_nocoupon);
+    }
+
+    /**
+     * 网络获取优惠卷 信息
+     *
+     * @param result 折扣值
+     */
+    @Override
+    public void onCouponByTypeSucceed(RechargeCouponResult result) {
+        if (result != null && result.getData() != null) {
+
+            List<RechargeCouponBean> resultData = result.getData();
+            if (couponList == null) couponList = new ArrayList<>();
+            if (!couponList.isEmpty()) couponList.clear();
+            couponList.addAll(resultData);
+
+            if (resultData.size() > 0) {
+                RechargeCouponBean bean = resultData.get(0);
+                if (bean == null) return;
+                displayCouponByBean(bean);
+            } else {
+                displayCouponState("无优惠劵");
+            }
+        } else {
+            displayCouponState("无优惠劵");
+        }
+
+        priceStateList(mProviderType);
+    }
+
+    /**
+     * 选择优惠券后的页面显示
+     */
+    @SuppressLint("SetTextI18n")
+    private void displayCouponByBean(RechargeCouponBean bean) {
+        double value = (bean.getCouponValue() / 100.00d);
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        CURRENT_DISCOUNT = decimalFormat.format(value);
+
+        if (isChoice) {
+            mCouponId = bean.getId();
+            mTvPayCoupon.setText(bean.getCouponContent());
+            mImgCouponState.setImageResource(R.mipmap.icon_coupon);
+            mTvPayCouponDate.setVisibility(View.VISIBLE);
+            mTvPayCouponDate.setText(bean.getCouponValidityEnd() + "到期");
+        } else {
+            displayCouponState("不使用优惠劵");
+        }
+    }
+
+    @Override
+    public void addOilCreateOrderError(String msg) {
+        ToastUtils.showShort(getContext().getApplicationContext(), msg);
+        dismissLoadingDialog();
+    }
+
+    /**
+     * 创建订单成功
+     */
+    @Override
+    public void addOilCreateOrderSucceed(RechargeResult result) {
+        ToastUtils.showShort(getContext().getApplicationContext(), result.getResponseDesc());
+    }
+
+    @Override
+    public RechargeDTO initRechargeDTO() {
+        mRechargeDTO.setMethodType("rechargeOrder");
+        String card = mEditCardnum.getText().toString().trim();
+        mRechargeDTO.setOilCardNum(card);//充值的卡号
+        mRechargeDTO.setOilType(mProviderType);//加油卡类型 （1:中石化、2:中石油；默认
+        mRechargeDTO.setPayType(mPayType);//0：畅通卡；1：其他卡
+        mRechargeDTO.setRechargeMoney(mTvAmount.getText().toString().trim());
+        if (isChoice) mRechargeDTO.setUserCouponId(mCouponId);
+        return mRechargeDTO;
+    }
+
+
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/ds_100"
+    android:paddingRight="@dimen/ds_100"
+    android:paddingBottom="@dimen/ds_200"
+    android:paddingTop="@dimen/ds_200"
+    android:background="@color/common_base_color">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/ds_80"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/user_qr_code_head_portrait"
+                android:layout_width="@dimen/ds_180"
+                android:layout_height="@dimen/ds_180"
+                android:src="@mipmap/mine_head_default"
+                android:layout_marginRight="@dimen/ds_100"/>
+
+            <TextView
+                android:id="@+id/user_qr_code_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ds_30"
+                android:layout_toRightOf="@id/user_qr_code_head_portrait"
+                android:textColor="@color/gray_25"
+                android:text="未登录" />
+            <TextView
+                android:id="@+id/user_qr_code_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/user_qr_code_head_portrait"
+                android:layout_below="@id/user_qr_code_nickname"
+                android:layout_marginTop="@dimen/ds_30"
+                android:text="" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/ds_80"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/user_qr_code_img"
+                android:layout_width="@dimen/ds_720"
+                android:layout_height="@dimen/ds_720" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ds_60"
+                android:text="扫一扫即可下载"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

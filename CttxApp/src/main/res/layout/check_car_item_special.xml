@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="36dip"
+    android:background="@color/colorNoticeGrayNumberFont"
+    android:paddingLeft="16dip"
+    android:visibility="gone"
+    android:gravity="center_vertical"
+    android:text="畅通卡仅支持2辆车辆缴费，以下车辆无法缴费"
+    android:id="@+id/special_item_notice"
+    style="@style/TextTitleSmallStyle">
+
+</TextView>

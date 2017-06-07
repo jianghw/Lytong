@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/common_base_color"
+    android:padding="@dimen/ds_60"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.zantong.mobilecttx.widght.DrivingPriceItemView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_150"
+        app:driving_price="起步费(8公里以内)"
+        app:driving_time="时间段"
+        app:bgColor="@color/changtongtitle"/>
+    <com.zantong.mobilecttx.widght.DrivingPriceItemView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_150"
+        app:driving_price="35元"
+        app:driving_time="07:00-21:59"
+        app:bgColor="@color/white"/>
+    <com.zantong.mobilecttx.widght.DrivingPriceItemView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_150"
+        app:driving_price="55元"
+        app:driving_time="22:00-23:59"
+        app:bgColor="@color/changtongtitle"/>
+    <com.zantong.mobilecttx.widght.DrivingPriceItemView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_150"
+        app:driving_price="75元"
+        app:driving_time="23:00-23:59"
+        app:bgColor="@color/white"/>
+    <com.zantong.mobilecttx.widght.DrivingPriceItemView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_150"
+        app:driving_price="85元"
+        app:driving_time="00:00-06:59"
+        app:bgColor="@color/changtongtitle"/>
+
+    <TextView
+        android:id="@+id/driving_price_desc"
+        android:layout_marginTop="@dimen/ds_30"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

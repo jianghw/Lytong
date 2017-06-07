@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:layout_width="@dimen/ds_210"
+        android:layout_height="@dimen/ds_210"
+        android:layout_marginBottom="@dimen/ds_90"
+        android:layout_marginTop="@dimen/ds_90"
+        android:background="@mipmap/icon_kefu"
+        android:gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/ds_60"
+        android:text="牡丹畅通卡办理及使用请咨询:"
+        android:textColor="@color/black_80"
+        android:textSize="@dimen/fs_50" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ds_30"
+        android:paddingLeft="@dimen/ds_60"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="工商银行客服热线"
+            android:textColor="@color/gray_66"
+            android:textSize="@dimen/fs_48" />
+
+        <TextView
+            android:id="@+id/problem_feedback_tel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phone_num"
+            android:textColor="@color/light_blue"
+            android:textSize="@dimen/fs_48" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/ds_60"
+        android:layout_marginBottom="@dimen/ds_30"
+        android:layout_marginTop="@dimen/ds_60"
+        android:text="畅通车友会App使用问题帮助:"
+        android:textColor="@color/black_80"
+        android:textSize="@dimen/fs_50"
+        android:id="@+id/textView5" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/ds_60"
+        android:paddingRight="@dimen/ds_60"
+        android:text="请搜索“畅通卡车友会”公众号，留言描述您的问题，我们将在工作时间2小时内进行反馈。 "
+        android:lineSpacingExtra="@dimen/ds_12"
+        android:textColor="@color/gray_66"
+        android:textSize="@dimen/fs_42" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/ds_60"
+        android:paddingRight="@dimen/ds_60"
+        android:layout_marginTop="@dimen/ds_12"
+        android:text="截屏保存图片，在微信扫一扫中选择扫描相册图片即可快捷关注。"
+        android:lineSpacingExtra="@dimen/ds_12"
+        android:textColor="@color/gray_66"
+        android:textSize="@dimen/fs_42" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ds_50"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/ds_70"
+            android:layout_height="@dimen/ds_70"
+            android:background="@mipmap/icon_tong"
+            android:textColor="@color/gray_66" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:text="畅通卡车友会公众号"
+            android:textColor="@color/gray_66"
+            android:textSize="@dimen/fs_48" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/ds_500"
+        android:layout_height="@dimen/ds_500"
+        android:background="@mipmap/icon_gongzuohao"
+        android:gravity="center_horizontal" />
+</LinearLayout>

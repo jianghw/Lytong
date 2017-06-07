@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/gray_f5"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    android:id="@+id/content_all">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_108"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/ds_45"
+        android:text="提醒设置"
+        android:textColor="@color/gray_a6"
+        android:textSize="@dimen/fs_36" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="违章主动通知"
+            android:textSize="@dimen/fs_48" />
+
+        <com.zantong.mobilecttx.widght.UISwitchButton xmlns:zc="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/setting_breakrules_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ds_30"
+            zc:bmHeight="@dimen/ds_90"
+            zc:bmWidth="@dimen/ds_150" />
+    </RelativeLayout>
+
+    <include
+        layout="@layout/view_line1"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="记分周期更新通知"
+            android:textSize="@dimen/fs_48" />
+
+        <com.zantong.mobilecttx.widght.UISwitchButton xmlns:zc="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/setting_score_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ds_30"
+            zc:bmHeight="@dimen/ds_90"
+            zc:bmWidth="@dimen/ds_150" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setting_date_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_45"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="初次领证日期"
+            android:textSize="@dimen/fs_48" />
+
+        <ImageView
+            android:id="@+id/setting_date_more"
+            style="@style/mineItemArrow"
+            android:src="@mipmap/arrow_left_big_iamge" />
+
+        <TextView
+            android:id="@+id/setting_date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ds_30"
+            android:layout_toLeftOf="@id/setting_date_more"
+            android:text="请选择日期"
+            android:textSize="@dimen/fs_48" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_108"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/ds_45"
+        android:text="更多设置"
+        android:textColor="@color/gray_a6"
+        android:textSize="@dimen/fs_36"
+        android:visibility="gone" />
+
+    <include layout="@layout/view_line1" />
+
+    <RelativeLayout
+        android:id="@+id/activity_help"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_45"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="意见反馈" />
+
+        <ImageView
+            style="@style/mineItemArrow"
+            android:src="@mipmap/arrow_left_big_iamge" />
+    </RelativeLayout>
+
+    <include layout="@layout/view_line1" />
+
+    <RelativeLayout
+        android:id="@+id/activity_about"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_45"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="关于我们" />
+
+        <ImageView
+            style="@style/mineItemArrow"
+            android:src="@mipmap/arrow_left_big_iamge" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_108"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/ds_45"
+        android:text="账户设置"
+        android:textColor="@color/gray_a6"
+        android:textSize="@dimen/fs_36" />
+
+    <RelativeLayout
+        android:id="@+id/user_info_head_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fs_144"
+        android:background="@color/civory"
+        android:paddingLeft="@dimen/fs_48"
+        android:paddingRight="@dimen/fs_48">
+
+        <TextView
+            style="@style/payRecordTime"
+            android:text="修改头像" />
+
+        <ImageView style="@style/arrowLeftStyle" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/view_line1" />
+
+    <RelativeLayout
+        android:id="@+id/user_info_name_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fs_144"
+        android:background="@color/civory"
+        android:paddingLeft="@dimen/fs_48"
+        android:paddingRight="@dimen/fs_48">
+
+        <TextView
+            style="@style/payRecordTime"
+            android:text="修改昵称" />
+
+        <TextView
+            android:id="@+id/user_info_name_text"
+            style="@style/mine_user_vertical_font"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/fs_57"
+            android:text="昵称" />
+
+        <ImageView style="@style/arrowLeftStyle" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/user_info_phone_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fs_144"
+        android:layout_marginTop="@dimen/fs_45"
+        android:background="@color/civory"
+        android:paddingLeft="@dimen/fs_48"
+        android:paddingRight="@dimen/fs_48">
+
+        <TextView
+            style="@style/payRecordTime"
+            android:text="手机号" />
+
+        <TextView
+            android:id="@+id/user_info_phone_text"
+            style="@style/mine_user_vertical_font"
+            android:layout_alignParentRight="true"
+            android:text="1860****547" />
+
+        <ImageView
+            style="@style/arrowLeftStyle"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <include layout="@layout/view_line1" />
+
+    <RelativeLayout
+        android:id="@+id/user_info_change_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fs_144"
+        android:background="@color/civory"
+        android:paddingLeft="@dimen/fs_48"
+        android:paddingRight="@dimen/fs_48">
+
+        <TextView
+            style="@style/payRecordTime"
+            android:text="修改登录密码" />
+
+        <ImageView style="@style/arrowLeftStyle" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/activity_logout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_144"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/ds_120"
+        android:layout_marginLeft="@dimen/ds_60"
+        android:layout_marginRight="@dimen/ds_60"
+        android:background="@drawable/btn_shape"
+        android:gravity="center"
+        android:text="退出登录"
+        android:textColor="@color/white"
+        android:textSize="@dimen/fs_51" />
+
+
+</LinearLayout>
