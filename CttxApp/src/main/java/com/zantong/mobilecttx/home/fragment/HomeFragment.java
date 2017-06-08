@@ -22,43 +22,48 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
-import com.zantong.mobilecttx.car.fragment.AddCarFragment;
-import com.zantong.mobilecttx.car.fragment.BindCarFragment;
-import com.zantong.mobilecttx.card.activity.ApplyCardFirstActivity;
-import com.zantong.mobilecttx.card.activity.CardHomeActivity;
-import com.zantong.mobilecttx.card.activity.MyCardActivity;
-import com.zantong.mobilecttx.common.AppManager;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
+import com.zantong.mobilecttx.api.FileDownloadApi;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.BaseAutoScrollUpTextView;
+import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
+import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.fragment.BaseExtraFragment;
 import com.zantong.mobilecttx.base.fragment.BaseFragment;
-import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
-import com.zantong.mobilecttx.huodong.bean.ActivityCarResult;
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import com.zantong.mobilecttx.car.dto.CarInfoDTO;
+import com.zantong.mobilecttx.car.dto.UserCarsDTO;
+import com.zantong.mobilecttx.car.fragment.AddCarFragment;
+import com.zantong.mobilecttx.car.fragment.BindCarFragment;
+import com.zantong.mobilecttx.card.activity.CardHomeActivity;
+import com.zantong.mobilecttx.card.activity.MyCardActivity;
+import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
+import com.zantong.mobilecttx.common.AppManager;
+import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.common.activity.BrowserActivity;
+import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
+import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
+import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
+import com.zantong.mobilecttx.home.activity.GuideActivity;
 import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.home.bean.HomeBean;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.HomeWeather;
+import com.zantong.mobilecttx.home.bean.VersionResult;
+import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+import com.zantong.mobilecttx.home.dto.VersionDTO;
+import com.zantong.mobilecttx.huodong.activity.HundredPlanActivity;
+import com.zantong.mobilecttx.huodong.bean.ActivityCarResult;
+import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
+import com.zantong.mobilecttx.map.activity.BaiduMapActivity;
+import com.zantong.mobilecttx.user.activity.LoginActivity;
+import com.zantong.mobilecttx.user.activity.MineActivity;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
-import com.zantong.mobilecttx.home.bean.VersionResult;
-import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
-import com.zantong.mobilecttx.car.dto.CarInfoDTO;
-import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
-import com.zantong.mobilecttx.car.dto.UserCarsDTO;
-import com.zantong.mobilecttx.home.dto.VersionDTO;
-import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
-import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
-import com.zantong.mobilecttx.api.FileDownloadApi;
-import com.zantong.mobilecttx.utils.rsa.Des3;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.DensityUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
@@ -74,19 +79,11 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.permission.PermissionFail;
 import com.zantong.mobilecttx.utils.permission.PermissionGen;
 import com.zantong.mobilecttx.utils.permission.PermissionSuccess;
+import com.zantong.mobilecttx.utils.rsa.Des3;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
-import com.zantong.mobilecttx.card.activity.ApplyCardSecondActivity;
-import com.zantong.mobilecttx.map.activity.BaiduMapActivity;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
-import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
-import com.zantong.mobilecttx.home.activity.GuideActivity;
-import com.zantong.mobilecttx.huodong.activity.HundredPlanActivity;
-import com.zantong.mobilecttx.user.activity.LoginActivity;
-import com.zantong.mobilecttx.user.activity.MineActivity;
 import com.zantong.mobilecttx.weizhang.activity.LicenseCheckGradeActivity;
 import com.zantong.mobilecttx.weizhang.activity.LicenseDetailActivity;
-import com.zantong.mobilecttx.weizhang.activity.QueryActivity;
-import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 import com.zantong.mobilecttx.weizhang.activity.ViolationQueryAcitvity;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
@@ -192,7 +189,6 @@ public class HomeFragment extends BaseExtraFragment {
         homeFragment = this;
         mAddCarViewPager.setFragmentList(mFragmentList, this.getFragmentManager());
         mHeaderViewPager.setFocusable(true);
-
     }
 
     @Override
@@ -296,7 +292,6 @@ public class HomeFragment extends BaseExtraFragment {
 
         if (PublicData.getInstance().loginFlag) {
             updateCarInfo(1);
-
         } else {
             bendiCarInfo(1);
         }
@@ -388,7 +383,6 @@ public class HomeFragment extends BaseExtraFragment {
                                     if (info.getIspaycar().equals("1")) {
                                         PublicData.getInstance().payData.add(info);//保存可缴费车辆
                                     }
-
                                 }
                             }
                             if (result.getRspInfo().getUserCarsInfo().size() < 3) {

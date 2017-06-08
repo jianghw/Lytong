@@ -8,7 +8,6 @@ import com.zantong.mobilecttx.base.bean.BaseResult;
  */
 public class MessageTypeResult extends BaseResult {
 
-
     private MessageTypeBean data;
 
     public void setData(MessageTypeBean data) {

@@ -10,6 +10,24 @@ public class HomeBean {
     private List<HomeNotice> notices;//通知
     private HomeWeather weatherResponse;//天气
     private List<HomeAdvertisement> advertisementResponse;//底部广告
+    private int msgNum;//未读消息数量
+    private String isExistMessage;
+
+    public int getMsgNum() {
+        return msgNum;
+    }
+
+    public void setMsgNum(int msgNum) {
+        this.msgNum = msgNum;
+    }
+
+    public String getIsExistMessage() {
+        return isExistMessage;
+    }
+
+    public void setIsExistMessage(String isExistMessage) {
+        this.isExistMessage = isExistMessage;
+    }
 
     public List<HomeNotice> getNotices() {
         return notices;

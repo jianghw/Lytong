@@ -1,37 +1,46 @@
 package com.zantong.mobilecttx.chongzhi.bean;
 
-import java.util.List;
-
 /**
  * 油卡充值实体类
+ *
  * @author zyb
- *
- * ZhengYingBing LOVE ZhengLinLin FOREVER
- *
- *    *  *   *  *
- *  *      *      *
- *  *             *  猜猜我是怎么做到的
- *   *           *
- *      *     *
+ *         <p>
+ *         ZhengYingBing LOVE ZhengLinLin FOREVER
+ *         <p>
+ *         *  *   *  *
+ *         *      *      *
+ *         *             *  猜猜我是怎么做到的
+ *         *           *
+ *         *     *
  *         *
- *
- *    是不是很厉害
- *
- * create at 16/12/30 下午4:15
+ *         <p>
+ *         是不是很厉害
+ *         <p>
+ *         create at 16/12/30 下午4:15
  */
 public class RechargeBean {
-    
+
     String amount;//金额
     String template;//充值代号 20001-中石化100
     String discount;//折扣
     boolean isCheckd;//选中状态
 
+    public int getCouponType() {
+        return couponType;
+    }
 
-    public RechargeBean(String amount, String template, String discount, boolean isCheckd) {
+    public void setCouponType(int couponType) {
+        this.couponType = couponType;
+    }
+
+    int couponType;
+
+    public RechargeBean(String amount, String template, String discount, boolean isCheckd,int couponType) {
         this.amount = amount;
         this.template = template;
         this.discount = discount;
         this.isCheckd = isCheckd;
+        this.couponType = couponType;
     }
 
     public String getAmount() {

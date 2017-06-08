@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
+import com.zantong.mobilecttx.card.bean.OpenQueryBean;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
@@ -144,6 +145,18 @@ public class LocalData {
         PublicData.getInstance().getdate = rspInfoBean.getGetdate();
         PublicData.getInstance().filenum = rspInfoBean.getFilenum();
         PublicData.getInstance().loginFlag = true;
+
+        Context context = weakReference.get();
+        if (context != null) {
+            OpenQueryBean.RspInfoBean.UserCarsInfoBean mUserCarsInfoBean =
+                    (OpenQueryBean.RspInfoBean.UserCarsInfoBean)
+                            UserInfoRememberCtrl.readObject(
+                                    context, PublicData.getInstance().DefaultCarLocalFlag);
+            if (mUserCarsInfoBean != null) {
+                PublicData.getInstance().defaultCar = true;
+                PublicData.getInstance().defaultCarNumber = mUserCarsInfoBean.getCarnum();
+            }
+        }
     }
 
     /**

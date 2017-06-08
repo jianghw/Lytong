@@ -24,6 +24,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import cn.qqtheme.framework.util.LogUtils;
+
 /**
  * @author: 正纬
  * @since: 15/4/9
@@ -65,11 +67,11 @@ public class MyMessageReceiver extends MessageReceiver {
                 if (entry.getKey().equals("title")) {
                     pushBean.setTitle(entry.getValue());
                 }
-                Log.i(REC_TAG, "@Get diy param : Key=" + entry.getKey() +
-                        " , Value=" + entry.getValue());
+                LogUtils.i("@Get diy param : Key=" + entry.getKey() + " , Value=" + entry.getValue());
             }
             pushBean.setDate(Tools.getYearDate());
             pushBean.setNewMeg(true);
+
             if (pushBean.getType() == 1) {
                 saveData(context, pushBean, "nianjian");
             } else if (pushBean.getType() == 2) {
@@ -95,7 +97,7 @@ public class MyMessageReceiver extends MessageReceiver {
     protected void onNotificationReceivedInApp(Context context, String title, String summary,
                                                Map<String, String> extraMap, int openType,
                                                String openActivity, String openUrl) {
-        Log.i(REC_TAG, "onNotificationReceivedInApp ： " + " : " + title + " : " + summary + "  " + extraMap + " : " + openType + " : " + openActivity + " : " + openUrl);
+        LogUtils.i("onNotificationReceivedInApp ： " + " : " + title + " : " + summary + "  " + extraMap + " : " + openType + " : " + openActivity + " : " + openUrl);
     }
 
     /**
@@ -107,14 +109,12 @@ public class MyMessageReceiver extends MessageReceiver {
     @Override
     public void onMessage(Context context, CPushMessage cPushMessage) {
         try {
-
-            Log.i(REC_TAG, "收到一条推送消息 ： " + cPushMessage.getTitle());
+            LogUtils.i("收到一条推送消息 ： " + cPushMessage.getTitle());
 
             // 持久化推送的消息到数据库
             new MessageDao(context).add(new MessageEntity(cPushMessage.getMessageId().substring(6, 16),
                     Integer.valueOf(cPushMessage.getAppId()), cPushMessage.getTitle(),
                     cPushMessage.getContent(), new SimpleDateFormat("HH:mm:ss").format(new Date())));
-
         } catch (Exception e) {
             Log.i(REC_TAG, e.toString());
         }
@@ -130,7 +130,7 @@ public class MyMessageReceiver extends MessageReceiver {
      */
     @Override
     public void onNotificationOpened(Context context, String title, String summary, String extraMap) {
-        Log.i(REC_TAG, "onNotificationOpened ： " + " : " + title + " : " + summary + " : " + extraMap);
+        LogUtils.i("onNotificationOpened ： " + " : " + title + " : " + summary + " : " + extraMap);
         if (!TextUtils.isEmpty(extraMap)) {
             Gson gson = new Gson();
             PushBean pushBean = gson.fromJson(extraMap, PushBean.class);
@@ -223,12 +223,12 @@ public class MyMessageReceiver extends MessageReceiver {
 
     @Override
     public void onNotificationRemoved(Context context, String messageId) {
-        Log.i(REC_TAG, "onNotificationRemoved ： " + messageId);
+        LogUtils.i("onNotificationRemoved ： " + messageId);
     }
 
 
     @Override
     protected void onNotificationClickedWithNoAction(Context context, String title, String summary, String extraMap) {
-        Log.i(REC_TAG, "onNotificationClickedWithNoAction ： " + " : " + title + " : " + summary + " : " + extraMap);
+        LogUtils.i("onNotificationClickedWithNoAction ： " + " : " + title + " : " + summary + " : " + extraMap);
     }
 }

@@ -26,7 +26,7 @@
                 android:layout_height="@dimen/ds_126"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:src="@mipmap/icon_menu_weizhang" />
+                android:src="@mipmap/icon_viosearch" />
 
             <TextView
                 style="@style/TextOpenTitleFont"

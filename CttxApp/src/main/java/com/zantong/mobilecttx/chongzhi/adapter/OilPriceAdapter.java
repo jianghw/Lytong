@@ -11,10 +11,8 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeBean;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
-import com.zantong.mobilecttx.utils.StringUtils;
 
 import java.text.DecimalFormat;
 
@@ -42,7 +40,9 @@ public class OilPriceAdapter extends BaseAdapter<RechargeBean> {
 
             double value = Double.parseDouble(
                     TextUtils.isEmpty(data.getDiscount()) ? "1" : data.getDiscount()) * 10;
-            holder.mDiscount.setVisibility(value >= 10 ? View.GONE : View.VISIBLE);
+
+            holder.mDiscount.setVisibility(value < 10 && data.getCouponType() == 2 ? View.VISIBLE : View.GONE);
+
             String valueString = new DecimalFormat("#.0").format(value);
             holder.mDiscount.setText(valueString + "折");
 
@@ -51,31 +51,7 @@ public class OilPriceAdapter extends BaseAdapter<RechargeBean> {
             holder.mAmount.setTextColor(data.isCheckd()
                     ? mContext.getResources().getColor(R.color.white)
                     : mContext.getResources().getColor(R.color.gray_25));
-
-//            if (data.isCheckd()) {
-//                holder.mAmount.setBackgroundResource(R.drawable.shape_keyboard_btn);
-//                holder.mAmount.setTextColor(mContext.getResources().getColor(R.color.white));
-//                setActualAmount(Double.parseDouble(data.getAmount()), Double.parseDouble(data.getDiscount()) / 10);
-//            } else {
-//                holder.mAmount.setBackgroundResource(R.drawable.shape_clean_btn);
-//                holder.mAmount.setTextColor(mContext.getResources().getColor(R.color.gray_25));
-//            }
         }
-//        holder.mLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                double discount = 1;
-//                double amount = Double.parseDouble(getAll().get(position).getAmount());
-//
-//                if (!"".equals(getAll().get(position).getDiscount())) {
-//                    discount = Double.parseDouble(getAll().get(position).getDiscount()) / 10;
-//                }
-//
-//                //设置实际金额
-//                setActualAmount(amount, discount);
-//                notifyDataSetChanged();
-//            }
-//        });
     }
 
     @Override

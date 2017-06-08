@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by zhoujie on 2016/11/21.
  */
 
-public class PushBean implements Serializable{
+public class PushBean implements Serializable {
     private String id;
     private int type;
     private String content;

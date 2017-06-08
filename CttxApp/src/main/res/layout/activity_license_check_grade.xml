@@ -72,12 +72,15 @@
                 android:layout_weight="1.2"
                 android:background="@null"
                 android:cursorVisible="true"
+                android:hint="请输入12位编号"
+                android:maxLength="12"
+                android:maxLines="1"
                 android:digits="@string/digits_content"
                 android:gravity="center_vertical|left"
                 android:singleLine="true"
                 android:textColor="@color/black_tv_title"
                 android:textSize="@dimen/fs_16sp"
-                tools:text="12345566667" />
+                tools:text="" />
         </LinearLayout>
 
         <View

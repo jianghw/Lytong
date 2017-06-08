@@ -284,7 +284,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:layout_marginBottom="@dimen/ds_30"
-                    android:layout_marginLeft="@dimen/ds_30"
                     android:drawableLeft="@mipmap/icon_agreement"
                     android:text="我已阅读用户充值协议"
                     android:textColor="@color/color_blue_light"

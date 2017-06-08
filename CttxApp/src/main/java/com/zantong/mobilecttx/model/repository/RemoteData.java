@@ -19,6 +19,7 @@ import com.zantong.mobilecttx.user.bean.MessageTypeResult;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 
 import retrofit2.Retrofit;
 import rx.Observable;
@@ -147,5 +148,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<RechargeResult> addOilCreateOrder(RechargeDTO rechargeDTO) {
         return initRetrofit().create(IAddOilService.class).addOilCreateOrder(rechargeDTO);
+    }
+
+    /**
+     * 54.充值接口
+     */
+    @Override
+    public Observable<PayOrderResult> onPayOrderByCoupon(String payUrl, String orderPrice, String payType) {
+        return initRetrofit().create(IAddOilService.class).onPayOrderByCoupon(payUrl, orderPrice, payType);
     }
 }

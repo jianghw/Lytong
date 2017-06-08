@@ -9,6 +9,7 @@ import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
 import com.zantong.mobilecttx.interf.IRechargeAtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -135,5 +136,44 @@ public class RechargePresenter implements IRechargeAtyContract.IRechargeAtyPrese
         RechargeDTO bean = mAtyView.initRechargeDTO();
         bean.setUserId(mRepository.getDefaultRASUserID());
         return bean;
+    }
+
+    /**
+     * 54.充值接口
+     */
+    @Override
+    public void onPayOrderByCoupon(String orderId, String orderPrice, String payType) {
+        Subscription subscription = mRepository.onPayOrderByCoupon(orderId, orderPrice, payType)
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mAtyView.showLoadingDialog();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<PayOrderResult>() {
+                    @Override
+                    public void doCompleted() {
+                        mAtyView.dismissLoadingDialog();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.onPayOrderByCouponError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(PayOrderResult result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.onPayOrderByCouponSucceed(result);
+                        } else {
+                            mAtyView.onPayOrderByCouponError(result != null
+                                    ? result.getResponseDesc() : "未知错误(54)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 }

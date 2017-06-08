@@ -193,7 +193,7 @@
 
                 <ImageView
                     style="@style/mineItemHead"
-                    android:src="@mipmap/icon_card"/>
+                    android:src="@mipmap/icon_card_old"/>
 
                 <TextView
                     style="@style/payRecordTime"

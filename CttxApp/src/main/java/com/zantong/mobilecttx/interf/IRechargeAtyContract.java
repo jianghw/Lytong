@@ -5,6 +5,7 @@ import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 
 /**
  * Created by jianghw on 2017/4/26.
@@ -38,6 +39,13 @@ public interface IRechargeAtyContract {
         void addOilCreateOrderSucceed(RechargeResult result);
 
         RechargeDTO initRechargeDTO();
+
+        /**
+         * 54.充值接口
+         */
+        void onPayOrderByCouponSucceed(PayOrderResult result);
+
+        void onPayOrderByCouponError(String s);
     }
 
     interface IRechargeAtyPresenter extends IMvpPresenter {
@@ -57,6 +65,15 @@ public interface IRechargeAtyContract {
         void addOilCreateOrder();
 
         RechargeDTO initRechargeDTO();
+
+        /**
+         * 54.充值接口
+         *
+         * @param orderId
+         * @param orderPrice
+         * @param payType
+         */
+        void onPayOrderByCoupon(String orderId, String orderPrice, String payType);
     }
 
 }

@@ -17,9 +17,9 @@
             android:layout_height="match_parent"
             android:background="@mipmap/bg_addcar"
             android:gravity="center"
+            android:text="数据加载中..."
             android:textColor="@color/white"
-            android:textSize="@dimen/fs_22sp"
-            tools:text="数据加载失败,点击重新获取"/>
+            android:textSize="@dimen/fs_22sp"/>
 
         <LinearLayout
             android:id="@+id/home_car_dots"
@@ -43,7 +43,7 @@
     <!--小喇叭-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_132">
+        android:layout_height="@dimen/ds_135">
 
         <ImageView
             android:id="@+id/img_trumpet"
@@ -52,7 +52,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/ds_36"
-            android:src="@mipmap/icon_notice"/>
+            android:src="@mipmap/icon_speaker"/>
 
         <ImageView
             android:id="@+id/img_label"
@@ -60,13 +60,15 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/img_trumpet"
             android:layout_toRightOf="@+id/img_trumpet"
-            android:src="@mipmap/icon_dot_sel"/>
+            android:src="@mipmap/icon_dot_sel"
+            android:visibility="invisible"/>
 
         <com.zantong.mobilecttx.widght.MainScrollUpAdvertisementView
             android:id="@+id/home_scroll_up"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
+
             android:layout_toRightOf="@+id/img_label"
             android:ellipsize="end"
             android:gravity="center_vertical"
@@ -107,7 +109,7 @@
                     android:layout_height="@dimen/ds_130"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:src="@mipmap/icon_menu_weizhang"/>
+                    android:src="@mipmap/icon_viosearch"/>
 
                 <TextView
                     style="@style/TextOpenTitleFont"
@@ -132,7 +134,7 @@
                     android:layout_width="@dimen/ds_130"
                     android:layout_height="@dimen/ds_130"
                     android:layout_centerHorizontal="true"
-                    android:src="@mipmap/icon_menu_nianjian"/>
+                    android:src="@mipmap/icon_point"/>
 
                 <TextView
                     style="@style/TextOpenTitleFont"
@@ -156,7 +158,7 @@
                     android:layout_width="@dimen/ds_130"
                     android:layout_height="@dimen/ds_130"
                     android:layout_centerHorizontal="true"
-                    android:src="@mipmap/icon_menu_xiche"/>
+                    android:src="@mipmap/icon_carwash"/>
 
                 <TextView
                     android:id="@+id/textView2"
@@ -182,7 +184,7 @@
                     android:layout_height="@dimen/ds_130"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:src="@mipmap/icon_menu_huodong"/>
+                    android:src="@mipmap/icon_noviolation"/>
 
                 <TextView
                     style="@style/TextOpenTitleFont"
@@ -214,7 +216,7 @@
                     android:layout_width="@dimen/ds_130"
                     android:layout_height="@dimen/ds_130"
                     android:layout_centerHorizontal="true"
-                    android:src="@mipmap/icon_menu_kaika"/>
+                    android:src="@mipmap/icon_card"/>
 
                 <TextView
                     style="@style/TextOpenTitleFont"
@@ -241,7 +243,7 @@
                     android:layout_height="@dimen/ds_130"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:src="@mipmap/icon_menu_chongzhi"/>
+                    android:src="@mipmap/icon_oil"/>
 
                 <TextView
                     style="@style/TextOpenTitleFont"
@@ -265,7 +267,7 @@
                     android:layout_width="@dimen/ds_130"
                     android:layout_height="@dimen/ds_130"
                     android:layout_centerHorizontal="true"
-                    android:src="@mipmap/icon_menu_daijia"/>
+                    android:src="@mipmap/icon_drive"/>
 
                 <TextView
                     style="@style/TextOpenTitleFont"
@@ -289,7 +291,7 @@
                     android:layout_width="@dimen/ds_130"
                     android:layout_height="@dimen/ds_130"
                     android:layout_centerHorizontal="true"
-                    android:src="@mipmap/icon_menu_wode"/>
+                    android:src="@mipmap/icon_info"/>
 
                 <TextView
                     style="@style/TextOpenTitleFont"

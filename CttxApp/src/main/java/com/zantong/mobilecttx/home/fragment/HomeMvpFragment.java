@@ -12,6 +12,7 @@ import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,15 +32,22 @@ import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
 import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.fragment.BaseFragment;
 import com.zantong.mobilecttx.base.fragment.PullableBaseFragment;
+import com.zantong.mobilecttx.car.dto.CarInfoDTO;
+import com.zantong.mobilecttx.car.dto.UserCarsDTO;
+import com.zantong.mobilecttx.car.fragment.AddCarFragment;
+import com.zantong.mobilecttx.car.fragment.BindCarFragment;
+import com.zantong.mobilecttx.card.activity.CardHomeActivity;
+import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.common.AppManager;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
+import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
+import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
 import com.zantong.mobilecttx.home.activity.GuideActivity;
-import com.zantong.mobilecttx.home.activity.LicenseCheckGradeActivity;
-import com.zantong.mobilecttx.home.activity.LicenseDetailActivity;
+import com.zantong.mobilecttx.home.activity.HomeActivity;
 import com.zantong.mobilecttx.home.bean.HomeBean;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.home.bean.HomeResult;
@@ -53,6 +61,7 @@ import com.zantong.mobilecttx.map.activity.BaiduMapActivity;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.user.activity.MineActivity;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
+import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.DensityUtils;
@@ -60,6 +69,7 @@ import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.OnClickUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
+import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -69,10 +79,16 @@ import com.zantong.mobilecttx.utils.permission.PermissionSuccess;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
+import com.zantong.mobilecttx.weizhang.activity.LicenseCheckGradeActivity;
+import com.zantong.mobilecttx.weizhang.activity.LicenseDetailActivity;
+import com.zantong.mobilecttx.weizhang.activity.ViolationQueryAcitvity;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobilecttx.widght.AddCarViewPager;
 import com.zantong.mobilecttx.widght.HeaderViewPager;
 import com.zantong.mobilecttx.widght.MainScrollUpAdvertisementView;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -83,6 +99,8 @@ import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -100,12 +118,12 @@ import rx.schedulers.Schedulers;
  */
 public class HomeMvpFragment extends PullableBaseFragment implements View.OnClickListener {
 
-    public boolean isCanBack = true;
-
-    ArrayList<BaseFragment> mFragmentList = new ArrayList<>();
+    private ArrayList<BaseFragment> mFragmentList = new ArrayList<>();
+    private List<HomeNotice> mList = new ArrayList<>();
 
     private static final String SHOWCASE_ID = "cttx_homefragment";
     private boolean signStatus;//获取报名状态是否成功
+    public boolean isCanBack = true;
 
     InputStream is;
     FileOutputStream fos;
@@ -146,6 +164,11 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
         return new HomeMvpFragment();
     }
 
+    @Override
+    protected int getFragmentLayoutResId() {
+        return R.layout.fragment_home_mvp;
+    }
+
     /**
      * 可下拉刷新
      *
@@ -170,17 +193,159 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
     protected void onRefreshData() {
         if (mHomeHeaderview != null) mHomeHeaderview.setAutoPlay(false);
         getHomeData();
+        if (PublicData.getInstance().loginFlag) {
+            updateCarInfo(0);
+        } else {
+            bendiCarInfo(0);
+        }
+    }
+
+    /**
+     * 加载本地数据
+     *
+     * @param bendi
+     */
+    private void bendiCarInfo(int bendi) {
+        if (!mFragmentList.isEmpty()) mFragmentList.clear();
+
+        List<CarInfoDTO> list = SPUtils.getInstance(this.getActivity()).getCarsInfo();
+        PublicData.getInstance().mLocalCars = list;
+        PublicData.getInstance().mCarNum = list.size();
+        if (bendi == 1) {
+            if (list.size() > 0) {
+                for (CarInfoDTO dto : list) {
+                    mFragmentList.add(new BindCarFragment(dto.getCarnum(), dto.getCarnumtype(), dto.getEnginenum(), "--", "--", "--"));
+                }
+            }
+            if (list.size() < 3) {
+                mFragmentList.add(new AddCarFragment());
+            }
+            mHomeCarViewpager.refreshData(mFragmentList);
+        } else {
+            if (list.size() < 3) {
+                mFragmentList.add(0, new AddCarFragment());
+            }
+            if (list.size() > 0) {
+                for (CarInfoDTO dto : list) {
+                    mFragmentList.add(0, new BindCarFragment(dto.getCarnum(), dto.getCarnumtype(), dto.getEnginenum(), "--", "--", "--"));
+                }
+            }
+            mHomeCarViewpager.refreshData(mFragmentList);
+        }
+    }
+
+    /**
+     * 加载网络数据
+     *
+     * @param update
+     */
+    public void updateCarInfo(final int update) {
+
+        UserCarsDTO params = new UserCarsDTO();
+        params.setUsrid(PublicData.getInstance().userID);
+        UserApiClient.getCarInfo(this.getActivity(), params, new CallBack<UserCarsResult>() {
+            @Override
+            public void onSuccess(UserCarsResult result) {
+                if (!mFragmentList.isEmpty()) mFragmentList.clear();
+
+                if ("000000".equals(result.getSYS_HEAD().getReturnCode())) {
+                    PublicData.getInstance().mCarNum = result.getRspInfo().getUserCarsInfo().size();
+                    mHomeFailRefresh.setVisibility(View.GONE);
+                    if (update == 1) {
+                        if (result.getRspInfo().getUserCarsInfo() != null) {
+                            if (result.getRspInfo().getUserCarsInfo().size() != 0) {
+                                PublicData.getInstance().mServerCars = listU(result.getRspInfo().getUserCarsInfo());
+                                PublicData.getInstance().mCarNum = result.getRspInfo().getUserCarsInfo().size();
+                                int len = result.getRspInfo().getUserCarsInfo().size();
+
+                                Collections.sort(result.getRspInfo().getUserCarsInfo(), new Comparator<UserCarInfoBean>() {
+
+                                    /*
+                                     * int compare(Student o1, Student o2) 返回一个基本类型的整型，
+                                     * 返回负数表示：o1 小于o2，
+                                     * 返回0 表示：o1和o2相等，
+                                     * 返回正数表示：o1大于o2。
+                                     */
+                                    public int compare(UserCarInfoBean o1, UserCarInfoBean o2) {
+
+                                        //按照学生的年龄进行升序排列
+                                        if (o1.getIspaycar().equals("0") && o2.getIspaycar().equals("1")) {
+                                            return 1;
+                                        }
+                                        return -1;
+                                    }
+                                });
+
+                                if (len > 3) {
+                                    len = 3;
+                                }
+                                PublicData.getInstance().payData.clear();
+                                for (int i = 0; i < len; i++) {
+                                    UserCarInfoBean info = result.getRspInfo().getUserCarsInfo().get(i);
+                                    mFragmentList.add(new BindCarFragment(info.getCarnum(), info.getCarnumtype(), info.getEnginenum(),
+                                            info.getUntreatcount(), StringUtils.getPriceString(info.getUntreatamt()), info.getUntreatcent()));
+                                    if (info.getIspaycar().equals("1")) {
+                                        PublicData.getInstance().payData.add(info);//保存可缴费车辆
+                                    }
+                                }
+                            }
+                            if (result.getRspInfo().getUserCarsInfo().size() < 3) {
+                                mFragmentList.add(new AddCarFragment());
+                            }
+                        }
+                        mHomeCarViewpager.refreshData(mFragmentList);
+                    } else {
+                        if (result.getRspInfo().getUserCarsInfo() != null) {
+                            PublicData.getInstance().mServerCars = listU(result.getRspInfo().getUserCarsInfo());
+                            if (result.getRspInfo().getUserCarsInfo().size() < 3) {
+                                mFragmentList.add(0, new AddCarFragment());
+                            }
+                            if (result.getRspInfo().getUserCarsInfo().size() != 0) {
+                                int len = result.getRspInfo().getUserCarsInfo().size();
+                                if (len > 3) {
+                                    len = 3;
+                                }
+                                for (int i = 0; i < len; i++) {
+                                    UserCarInfoBean info = result.getRspInfo().getUserCarsInfo().get(i);
+                                    mFragmentList.add(0, new BindCarFragment(info.getCarnum(), info.getCarnumtype(), info.getEnginenum(),
+                                            info.getUntreatcount(), StringUtils.getPriceString(info.getUntreatamt()), info.getUntreatcent()));
+                                }
+                            }
+                        }
+                        mHomeCarViewpager.refreshData(mFragmentList);
+                    }
+                } else {
+                    mHomeFailRefresh.setText("加载不给力？点击重试");
+                    mHomeFailRefresh.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onError(String errorCode, String msg) {
+                super.onError(errorCode, msg);
+
+                mHomeFailRefresh.setText("加载不给力？点击重试");
+                mHomeFailRefresh.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDataSynEvent(UpdateCarInfoEvent event) {
+        if (event.isStatus()) {
+            updateCarInfo(0);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDataSynEvent(BenDiCarInfoEvent event) {
+        if (event.isStatus()) {
+            bendiCarInfo(0);
+        }
     }
 
     @Override
     protected void onLoadMoreData() {
-        if (mHomeHeaderview != null) mHomeHeaderview.setAutoPlay(false);
-        getHomeData();
-    }
-
-    @Override
-    protected int getFragmentLayoutResId() {
-        return R.layout.fragment_home_mvp;
     }
 
     @Override
@@ -243,15 +408,20 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
     protected void loadingData() {
         //登录信息
         if (PublicData.getInstance().loginFlag) liyingreg();
-        //版本更新
-        initAppLatestVersion();
-        //mHeaderViewPager.setAutoScroll();
         //清空布局数据
         if (!mFragmentList.isEmpty()) mFragmentList.clear();
+        //违章车辆
+        if (PublicData.getInstance().loginFlag) {
+            updateCarInfo(1);
+        } else {
+            bendiCarInfo(1);
+        }
+        //mHeaderViewPager.setAutoScroll();
+
         //小喇叭
         initScrollUp(new ArrayList<HomeNotice>());
-        //利盈通数据
-        getHomeData();
+        //版本更新
+        initAppLatestVersion();
     }
 
     /**
@@ -266,6 +436,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                 if (result.getData() != null) {
                     int versionFlag = Tools.compareVersion(Tools.getVerName(getActivity()), result.getData().getVersion());
                     if (versionFlag == -1) {
+                        isCanBack = false;
                         showUpdateDialog(result);
                     } else {
                         ToastUtils.showShort(getActivity(), "当前已为最新版本");
@@ -284,12 +455,15 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {//暂不升级
-
+                        if (result.getData().getIsUpdate() == 1) {
+                            AppManager.getAppManager().AppExit(getActivity(), false);
+                        }
                     }
                 },
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        isCanBack = true;
                         //检查权限
                         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                             //如果没有授权，则请求授权
@@ -305,8 +479,9 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
     @Override
     public void onResume() {
         super.onResume();
+        //利盈通数据
+        getHomeData();
         if (mHomeScrollUp != null) mHomeScrollUp.start();
-
         new Thread(networkTask).start();
     }
 
@@ -344,7 +519,8 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.home_lllegal_search://违章查询
-                //TODO
+                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(2));
+                Act.getInstance().lauchIntent(this.getActivity(), ViolationQueryAcitvity.class);
                 break;
             case R.id.home_check://驾驶证查分
                 MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(35));
@@ -387,7 +563,16 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                 }
                 break;
             case R.id.home_lllegal_history://开通畅通卡
-                //TODO
+                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(3));
+                if (PublicData.getInstance().loginFlag) {
+                    if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {
+                        Act.getInstance().lauchIntentToLogin(this.getActivity(), CardHomeActivity.class);
+                    } else {
+                        Act.getInstance().lauchIntentToLogin(this.getActivity(), MyCardActivity.class);
+                    }
+                } else {
+                    Act.getInstance().gotoIntent(this.getActivity(), LoginActivity.class);
+                }
                 break;
             case R.id.home_recharge://加油充值
                 MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(6));
@@ -410,7 +595,12 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                 Act.getInstance().gotoIntent(this.getActivity(), MineActivity.class);
                 break;
             case R.id.home_fail_refresh://老接口刷新
-
+                if (OnClickUtils.isFastDoubleClick()) {
+                    mHomeFailRefresh.setText("刷新加载中...");
+                    updateCarInfo(1);
+                } else {
+                    ToastUtils.showShort(this.getActivity(), "亲，您点的太快了");
+                }
                 break;
             case R.id.home_bottom_fail_refresh://新接口刷新
                 if (OnClickUtils.isFastDoubleClick()) {
@@ -438,11 +628,21 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
             public void onSuccess(HomeResult result) {
                 if (result.getResponseCode() == 2000) {
                     displayBottomAdverState(false);
-                    //小喇叭通知
+
                     HomeBean bean = result.getData();
-                    if (bean.getNotices() != null) mHomeScrollUp.setData(bean.getNotices());
+                    //未读消息
+                    HomeActivity activity = (HomeActivity) getActivity();
+                    if (activity != null) {
+                        activity.messageCount(bean != null ? bean.getMsgNum() : 0);
+                    }
+                    //小喇叭通知
+                    if (bean != null && bean.getNotices() != null) {
+                        if (!mList.isEmpty()) mList.clear();
+                        mList.addAll(bean.getNotices());
+                        mHomeScrollUp.setData(bean.getNotices());
+                    }
                     //广告页面
-                    if (bean.getAdvertisementResponse() != null) {
+                    if (bean != null && bean.getAdvertisementResponse() != null) {
                         mHomeHeaderview.setImageUrls(bean.getAdvertisementResponse(), ImageView.ScaleType.FIT_XY);
                         mHomeHeaderview.setAutoPlay(true);
                     }
@@ -462,6 +662,45 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
     private void displayBottomAdverState(boolean isDisplay) {
         mHomeBottomFailRefresh.setVisibility(isDisplay ? View.VISIBLE : View.GONE);
         mHomeBottomFailRefresh.setText("加载不给力？点击重试");
+    }
+
+    /**
+     * 更新通知
+     */
+    public void updateNotice() {
+        try {
+            List<HomeNotice> listNotices = new ArrayList<HomeNotice>();
+            listNotices.addAll(mList);
+            for (HomeNotice notice : noticeList()) {
+                boolean isRet = false;  //是否有重复
+                for (HomeNotice homeNotice : mList) {
+                    if (notice.getId().equals(homeNotice.getId())
+                            && notice.getDesc().equals(homeNotice.getDesc())) {
+                        isRet = true;
+                    }
+                }
+                if (!isRet) {
+                    listNotices.add(notice);
+                }
+            }
+
+            mList.clear();
+            mList = listNotices;
+            mHomeScrollUp.setData(mList);
+            boolean isNewMeg = false;
+            for (HomeNotice homeNotice : mList) {
+                if (homeNotice.isNewMeg()) {
+                    isNewMeg = true;
+                }
+            }
+//            if (isNewMeg) {
+//                mImgIsNewMeg.setVisibility(View.VISIBLE);
+//            } else {
+//                mImgIsNewMeg.setVisibility(View.GONE);
+//            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -531,7 +770,6 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
             public void call(Subscriber<? super Long[]> subscriber) {
                 try {
 //                    String urls = "http://7b1g8u.com1.z0.glb.clouddn.com/app_newkey_release_8_4.apk";
-
                     Response<ResponseBody> response = api.downloadFileWithFixedUrl(url).execute();
                     try {
                         if (response != null && response.isSuccessful()) {
@@ -580,6 +818,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                         }
                     }
                 } catch (IOException e) {
+                    Log.e("why", e.toString());
                     e.printStackTrace();
                 }
             }
@@ -590,20 +829,22 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                 .subscribe(new Subscriber<Long[]>() {
                     @Override
                     public void onCompleted() {
+                        Log.d("MainActivity", "文件下载完成");
 //                        PublicData.getInstance().mNetLocationBean = bean;apkUrl
-                        Tools.installApk(HomeMvpFragment.this.getActivity(), apkUrl);
+                        Tools.installApk(getActivity(), apkUrl);
                         progressBar.dismiss();
-                        AppManager.getAppManager().AppExit(HomeMvpFragment.this.getActivity(), false);
+                        AppManager.getAppManager().AppExit(getActivity(), false);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        ToastUtils.showShort(HomeMvpFragment.this.getActivity(), "网络错误，请重试");
+                        ToastUtils.showShort(getActivity(), "网络错误，请重试");
                         e.printStackTrace();
                     }
 
                     @Override
                     public void onNext(Long[] data) {
+                        Log.d("MainActivity", data[0] + "");
                         progressBar.setCancelable(true);
                         progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                         int demo = (int) (data[0] * 100 / data[1]);

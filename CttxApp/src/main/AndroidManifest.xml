@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zantong.mobilecttx">
+          package="com.zantong.mobilecttx">
 
     <!--小米通道相关权限 -->
     <permission
@@ -75,324 +75,324 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SpalshActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
             <intent-filter android:priority="0">
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
-                <data android:scheme="geo1" />
+                <data android:scheme="geo1"/>
             </intent-filter>
         </activity>
         <!--引导页面-->
         <activity
             android:name=".home.activity.GuideCTActivity"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
         <activity
             android:name=".weizhang.activity.QueryActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <!--.MainActivity-->
         <activity
             android:name=".user.activity.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.zantong.mobilecttx.common.Demo"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".weizhang.activity.QueryResultActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".weizhang.activity.ViolationDetails"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".home.activity.Codequery"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".home.activity.CaptureActivity"
             android:screenOrientation="landscape"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name=".car.activity.SelectCarTypeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.SettingActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.HelpActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.UserInfoUpdate"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".car.activity.CarManageActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.MsgActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.UpdateNickName"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.UpdatePhoneNumber"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.ChangTongCard"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".car.activity.SetPayCarActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.OrderActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.BindCardSuccess"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".car.activity.CanPayCar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.FeedbackActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.AboutActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.RequestCodeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.RequestSuccActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.RegisterActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.Register2Activity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.ResetActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.ChangePwdActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.OrderDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".weizhang.activity.PayWebActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".weizhang.activity.PaymentActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.MineActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.AddrActivity"
-            android:screenOrientation="portrait" /><!-- 选a择城市 -->
+            android:screenOrientation="portrait"/><!-- 选a择城市 -->
         <activity
             android:name=".common.activity.CommonListActivity"
-            android:screenOrientation="portrait" /><!-- 公共列表类 -->
+            android:screenOrientation="portrait"/><!-- 公共列表类 -->
         <activity
             android:name=".card.activity.OpenCardWebActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.BindJiaZhaoActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <!-- 选a择城市 -->
         <!-- 选a择城市 -->
         <activity
             android:name=".car.activity.AddCarActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /><!-- 添加车辆 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/><!-- 添加车辆 -->
         <activity
             android:name=".common.activity.BrowserActivity"
-            android:screenOrientation="portrait" /><!-- 浏览器 -->
+            android:screenOrientation="portrait"/><!-- 浏览器 -->
         <activity
             android:name=".home.activity.HomeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan" /><!-- 首页 -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/><!-- 首页 -->
         <activity
             android:name=".map.activity.BaiduMapActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".car.activity.CarBrandActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".car.activity.CarChooseActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".daijia.activity.DaiJiaActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".chongzhi.activity.RechargeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".map.activity.NavActivity"
-            android:theme="@android:style/Theme.Translucent"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent"/>
         <activity
             android:name=".home.activity.GuideActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
         <activity
             android:name=".user.activity.UserQrCodeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".home.activity.CustomCordovaActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.GetBonusActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".common.activity.CommonProblemActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".common.activity.CommonProblemDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.ProblemFeedbackActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.ApplyCardCheckActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".common.activity.CommonTwoLevelMenuActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.ApplyCardFristStepActvity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.ApplyCardSecondStepActvity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.ApplyCardThirdStepActvity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.ApplyCardFourStepActvity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".chongzhi.activity.RechargeAgreementActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".chongzhi.activity.CheXiangKaActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.ApplySuccessActvity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.OrderRechargeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.OrderRechargeDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.MegTypeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.CouponActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".huodong.activity.HundredPlanActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".daijia.activity.DrivingActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".daijia.activity.DrivingPriceActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".daijia.activity.DrivingOrderActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".chongzhi.activity.ChooseAddressActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.DODetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.DODetailBeingActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.MegSecondLevelActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.MegDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".huodong.activity.HundredAgreementActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".huodong.activity.HundredRuleActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".common.activity.BrowserForPayActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".common.activity.OcrCameraActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".card.activity.ApplyCardSecondActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.ApplyCardFirstActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.CardHomeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.CardFlowActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.CardNoticeActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".car.activity.CarManageGroupActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".weizhang.activity.ViolationHistoryAcitvity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".weizhang.activity.ViolationResultAcitvity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".weizhang.activity.ViolationQueryAcitvity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".weizhang.activity.LicenseCheckGradeActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".weizhang.activity.LicenseDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.CouponDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.MyCardActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.ApplyCardQuickActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="58b3880304e20581760018e7"></meta-data>
+            android:value="58b3880304e20581760018e7"/>
         <meta-data
             android:name="com.zantong.mobilecttx.utils.imagetools.UnsafeOkHttpGlideModule"
-            android:value="GlideModule"></meta-data>
+            android:value="GlideModule"/>
         <!--<meta-data-->
         <!--android:name="UMENG_CHANNEL"-->
         <!--android:value="${UMENG_CHANNEL_VALUE}" >-->
@@ -400,39 +400,39 @@
 
         <service android:name=".utils.DateService">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </service>
         <service android:name=".utils.InspectService">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </service>
 
         <receiver android:name=".utils.MyReceiver">
             <intent-filter>
-                <action android:name="com.zantong.mobilecttx.USER_ACTION" />
+                <action android:name="com.zantong.mobilecttx.USER_ACTION"/>
             </intent-filter>
         </receiver>
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="E6lDRqyaSjj8jR8O5wdz5jpgiT0LOuQn" />
+            android:value="E6lDRqyaSjj8jR8O5wdz5jpgiT0LOuQn"/>
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote">
             <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2" >
+                <action android:name="com.baidu.location.service_v2.2">
                 </action>
             </intent-filter>
         </service>
         <!--<meta-data-->
-            <!--android:name="com.amap.api.v2.apikey"-->
-            <!--android:value="fdb1c0eb0417f7ee13fe16c6f9b38304" />-->
+        <!--android:name="com.amap.api.v2.apikey"-->
+        <!--android:value="fdb1c0eb0417f7ee13fe16c6f9b38304" />-->
         <!-- 定位需要的服务 -->
         <!--<service android:name="com.amap.api.location.APSService"></service>&lt;!&ndash; ATTENTION: This was auto-generated-->
         <!--to add、 See https://g.co/AppIndexing/AndroidStudio for more information. &ndash;&gt;-->
@@ -440,11 +440,10 @@
         <!--阿里推送-->
         <meta-data
             android:name="com.alibaba.app.appkey"
-            android:value="23481202" /> <!-- 请填写你自己的- appKey -->
+            android:value="23481202"/> <!-- 请填写你自己的- appKey -->
         <meta-data
             android:name="com.alibaba.app.appsecret"
-            android:value="a51ce60b119cf15b9ab220ed70d8078c" /> <!-- 请填写你自己的appSecret  在应用证书中  -->
-
+            android:value="a51ce60b119cf15b9ab220ed70d8078c"/> <!-- 请填写你自己的appSecret  在应用证书中  -->
 
         <!-- 通道保持服务（幽灵进程自动保活该服务） -->
         <service
@@ -452,12 +451,12 @@
             android:exported="true"
             android:process=":channel">
             <intent-filter>
-                <action android:name="com.taobao.accs.intent.action.SERVICE" />
+                <action android:name="com.taobao.accs.intent.action.SERVICE"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="org.agoo.android.intent.action.PING_V4" />
+                <action android:name="org.agoo.android.intent.action.PING_V4"/>
 
-                <category android:name="taobao" />
+                <category android:name="taobao"/>
             </intent-filter>
         </service>
 
@@ -466,7 +465,7 @@
             android:name="com.alibaba.sdk.android.push.MsgService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.taobao.accs.intent.action.RECEIVE" />
+                <action android:name="com.taobao.accs.intent.action.RECEIVE"/>
             </intent-filter>
         </service>
 
@@ -475,7 +474,7 @@
             android:name="com.alibaba.sdk.android.push.channel.TaobaoRecvService"
             android:exported="true">
             <intent-filter>
-                <action android:name="org.android.agoo.client.MessageReceiverService" />
+                <action android:name="org.android.agoo.client.MessageReceiverService"/>
             </intent-filter>
         </service>
 
@@ -484,81 +483,79 @@
             android:name=".alicloudpush.MyMessageReceiver"
             android:exported="true">
             <intent-filter>
-                 
-                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED"/>
             </intent-filter>
             <intent-filter>
-                     
-                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED" />
+                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.taobao.accs.intent.action.COMMAND" />
+                <action android:name="com.taobao.accs.intent.action.COMMAND"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.taobao.taobao.intent.action.COMMAND" />
+                <action android:name="com.taobao.taobao.intent.action.COMMAND"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="org.agoo.android.intent.action.RECEIVE" />
+                <action android:name="org.agoo.android.intent.action.RECEIVE"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.USER_PRESENT"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
 
-                <data android:scheme="com.zantong.mobilecttx" />
+                <data android:scheme="com.zantong.mobilecttx"/>
             </intent-filter>
         </receiver>
 
         <!-- 您从百度网站获取的APP KEY -->
         <meta-data
             android:name="BaiduMobAd_STAT_ID"
-            android:value="9f4d50c376" /> <!-- abcd1234 -->
+            android:value="9f4d50c376"/> <!-- abcd1234 -->
         <!-- 渠道商编号 -->
         <meta-data
             android:name="BaiduMobAd_CHANNEL"
-            android:value="Baidu Market" />
+            android:value="Baidu Market"/>
 
         <!-- 是否开启错误日志统计，默认为false -->
         <meta-data
             android:name="BaiduMobAd_EXCEPTION_LOG"
-            android:value="true" />
+            android:value="true"/>
         <!-- 日志发送策略，可选值：APP_START、ONCE_A_DAY、SET_TIME_INTERVAL，默认为APP_START -->
         <meta-data
             android:name="BaiduMobAd_SEND_STRATEGY"
-            android:value="APP_START" />
+            android:value="APP_START"/>
         <!-- 日志发送策略 为SET_TIME_INTERVAL时，需设定时间间隔(取消下行注释)。取值为1-24的整数，默认为1 -->
         <!-- <meta-data android:name="BaiduMobAd_TIME_INTERVAL" android:value="2" /> -->
         <!-- 日志仅在wifi网络下发送，默认为false -->
         <meta-data
             android:name="BaiduMobAd_ONLY_WIFI"
-            android:value="false" />
+            android:value="false"/>
         <!-- 是否获取基站位置信息 ,默认为true -->
         <meta-data
             android:name="BaiduMobAd_CELL_LOCATION"
-            android:value="true" />
+            android:value="true"/>
         <!-- 是否获取GPS位置信息，默认为true -->
         <meta-data
             android:name="BaiduMobAd_GPS_LOCATION"
-            android:value="true" />
+            android:value="true"/>
         <!-- 是否获取WIFI位置信息，默认为true -->
         <meta-data
             android:name="BaiduMobAd_WIFI_LOCATION"
-            android:value="true" />
+            android:value="true"/>
 
         <!--华为通道官方配置 -->
         <receiver android:name="com.alibaba.sdk.android.push.HuaWeiReceiver">
             <intent-filter>
-                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
-                <action android:name="com.huawei.android.push.intent.RECEIVE" />
-                <action android:name="com.huawei.intent.action.PUSH" />
-                <action android:name="com.huawei.intent.action.PUSH_STATE" />
+                <action android:name="com.huawei.android.push.intent.REGISTRATION"/>
+                <action android:name="com.huawei.android.push.intent.RECEIVE"/>
+                <action android:name="com.huawei.intent.action.PUSH"/>
+                <action android:name="com.huawei.intent.action.PUSH_STATE"/>
             </intent-filter>
         </receiver>
 
@@ -575,21 +572,21 @@
             android:name="com.alibaba.sdk.android.push.MiPushBroadcastReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.xiaomi.mipush.ERROR" />
+                <action android:name="com.xiaomi.mipush.ERROR"/>
             </intent-filter>
         </receiver>
         <receiver
             android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </receiver>
 

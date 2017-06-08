@@ -17,6 +17,7 @@ import com.zantong.mobilecttx.user.bean.MessageTypeResult;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import rx.Observable;
@@ -227,5 +228,12 @@ public class RepositoryManager {
      */
     public Observable<RechargeResult> addOilCreateOrder(RechargeDTO rechargeDTO) {
         return mRemoteData.addOilCreateOrder(rechargeDTO);
+    }
+
+    /**
+     * 54.充值接口
+     */
+    public Observable<PayOrderResult> onPayOrderByCoupon(String payUrl, String orderPrice, String payType) {
+        return mRemoteData.onPayOrderByCoupon(payUrl,orderPrice,payType);
     }
 }

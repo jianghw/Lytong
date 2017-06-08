@@ -28,16 +28,20 @@ import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponBean;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
-import com.zantong.mobilecttx.common.activity.CommonProblemActivity;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.common.activity.BrowserForPayActivity;
 import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
 import com.zantong.mobilecttx.interf.IRechargeAtyContract;
 import com.zantong.mobilecttx.user.activity.CouponDetailActivity;
+import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.user.bean.CouponFragmentBean;
 import com.zantong.mobilecttx.utils.DialogUtils;
+import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.UiHelpers;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -109,13 +113,17 @@ public class RechargeFragment extends PullableBaseFragment
      */
     private List<RechargeCouponBean> couponList;
     /**
-     * 支付方式
+     * 支付方式  0畅通
      */
     private int mPayType = 0;
     /**
      * 优惠卷id
      */
     private Integer mCouponId;
+    /**
+     * 优惠卷 type  优惠券类型：1 无；2 折扣；3 代金券
+     */
+    private int mCouponType;
 
     public static RechargeFragment newInstance() {
         return new RechargeFragment();
@@ -161,15 +169,17 @@ public class RechargeFragment extends PullableBaseFragment
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Act.getInstance().gotoIntent(getActivity(), CommonProblemActivity.class);
+                Act.getInstance().gotoIntent(getActivity(), ProblemFeedbackActivity.class);
             }
         };
 
         SpannableString spanableInfo = new SpannableString(
-                "1. 充值成功后，需要在加油站办理圈存即可使用；\n" +
-                        "2. 充值到账时间约10分钟，请耐心等待；\n" +
-                        "3. 暂时无法提供发票；\n" +
-                        "4. 如遇问题，请使用「帮助」");
+                "1. 充值成功后，在加油前把加油卡交给油站工作人员协助圈存；\n"
+                        + "2. 副卡、增值税票卡不支持在线充值；\n"
+                        + "3. 22：00--03：00进行系统维护，充值后将延迟到账;\n"
+                        + "4. 本服务为全国加油卡代充服务，故暂不支持开具发票;\n"
+                        + "5. 支付成功后将于30分钟内到账，超过24小时未到账请与我们「联系」"
+        );
         //可以为多部分设置超链接
         spanableInfo.setSpan(
                 new Clickable(listener),
@@ -279,13 +289,25 @@ public class RechargeFragment extends PullableBaseFragment
     }
 
     /**
-     * 价格显示
+     * 价格显示 各种状态判断
      */
     private void displayPriceValue(RechargeBean bean) {
-        double value = Double.parseDouble(TextUtils.isEmpty(bean.getDiscount()) ? "1" : bean.getDiscount());
-        double price = Double.parseDouble(bean.getAmount());
-        String priceValue = StringUtils.getPriceDouble(price * value);
-        mTvAmount.setText(priceValue);
+        if (mCouponType == 2) {
+            double value = Double.parseDouble(TextUtils.isEmpty(bean.getDiscount()) ? "1" : bean.getDiscount());
+            double price = Double.parseDouble(bean.getAmount());
+            String priceValue = StringUtils.getPriceDouble(price * value);
+            mTvAmount.setText(priceValue);
+        } else if (mCouponType == 3 && isChoice && mPayType == 0) {//抵扣
+            double value = Double.parseDouble(TextUtils.isEmpty(bean.getDiscount()) ? "0" : bean.getDiscount()) * 100;
+            double price = Double.parseDouble(bean.getAmount());
+            String priceValue = String.valueOf(price - value);
+            mTvAmount.setText(priceValue);
+        } else if (mCouponType == 3) {
+            double value = Double.parseDouble(TextUtils.isEmpty(bean.getDiscount()) ? "1" : bean.getDiscount());
+            double price = Double.parseDouble(bean.getAmount());
+            String priceValue = StringUtils.getPriceDouble(price * value);
+            mTvAmount.setText(priceValue);
+        }
     }
 
     /**
@@ -404,16 +426,16 @@ public class RechargeFragment extends PullableBaseFragment
         if (providerType == 1) {//中石化
             //不选择优惠劵时，优惠劵为0时，
             String value = isChoice && !CURRENT_DISCOUNT.equals("0.00") && mPayType == 0 ? CURRENT_DISCOUNT : DEFAULT_DISCOUNT_1;
-            priceList.add(new RechargeBean("100", "10001", value, true));
-            priceList.add(new RechargeBean("200", "10002", value, false));
-            priceList.add(new RechargeBean("500", "10003", value, false));
-            priceList.add(new RechargeBean("1000", "10004", value, false));
+            priceList.add(new RechargeBean("100", "10001", value, true, isChoice && mPayType == 0 ? mCouponType : 2));
+            priceList.add(new RechargeBean("200", "10002", value, false, isChoice && mPayType == 0 ? mCouponType : 2));
+            priceList.add(new RechargeBean("500", "10003", value, false, isChoice && mPayType == 0 ? mCouponType : 2));
+            priceList.add(new RechargeBean("1000", "10004", value, false, isChoice && mPayType == 0 ? mCouponType : 2));
             mAdapter.append(priceList);
         } else if (providerType == 2) {//中石化
             String value = isChoice && !CURRENT_DISCOUNT.equals("0.00") && mPayType == 0 ? CURRENT_DISCOUNT : DEFAULT_DISCOUNT_2;
-            priceList.add(new RechargeBean("100", "100082", value, true));
-            priceList.add(new RechargeBean("200", "100083", value, false));
-            priceList.add(new RechargeBean("500", "100084", value, false));
+            priceList.add(new RechargeBean("100", "100082", value, true, isChoice && mPayType == 0 ? mCouponType : 2));
+            priceList.add(new RechargeBean("200", "100083", value, false, isChoice && mPayType == 0 ? mCouponType : 2));
+            priceList.add(new RechargeBean("500", "100084", value, false, isChoice && mPayType == 0 ? mCouponType : 2));
             mAdapter.append(priceList);
         }
         displayPriceValue(priceList.get(0));
@@ -466,7 +488,8 @@ public class RechargeFragment extends PullableBaseFragment
         if (data != null && data instanceof CommonTwoLevelMenuBean) {
             CommonTwoLevelMenuBean bean = (CommonTwoLevelMenuBean) data;
             mTvPayStyle.setText(bean.getContext());
-            mPayType = bean.getId() == 1 ? 0 : 1;
+            mPayType = bean.getId() == 1 ? 0 : 1;//支付卡
+
             priceStateList(mProviderType);
             //优惠劵控件隐藏
             mRayDiscountCoupon.setVisibility(mPayType == 0 ? View.VISIBLE : View.GONE);
@@ -567,7 +590,8 @@ public class RechargeFragment extends PullableBaseFragment
             List<RechargeCouponBean> resultData = result.getData();
             if (couponList == null) couponList = new ArrayList<>();
             if (!couponList.isEmpty()) couponList.clear();
-            couponList.addAll(resultData);
+            if (resultData.size() > 0) couponList.add(resultData.get(0));
+            else couponList.addAll(resultData);
 
             if (resultData.size() > 0) {
                 RechargeCouponBean bean = resultData.get(0);
@@ -584,13 +608,14 @@ public class RechargeFragment extends PullableBaseFragment
     }
 
     /**
-     * 选择优惠券后的页面显示
+     * 选择优惠券 设置当前优惠券
      */
     @SuppressLint("SetTextI18n")
     private void displayCouponByBean(RechargeCouponBean bean) {
         double value = (bean.getCouponValue() / 100.00d);
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         CURRENT_DISCOUNT = decimalFormat.format(value);
+        mCouponType = bean.getCouponType();
 
         if (isChoice) {
             mCouponId = bean.getId();
@@ -613,8 +638,26 @@ public class RechargeFragment extends PullableBaseFragment
      * 创建订单成功
      */
     @Override
-    public void addOilCreateOrderSucceed(RechargeResult result) {
+    public void addOilCreateOrderSucceed(final RechargeResult result) {
         ToastUtils.showShort(getContext().getApplicationContext(), result.getResponseDesc());
+        DialogUtils.createRechargeDialog(getActivity(),
+                result.getData().getOrderId(),
+                getRechargeMoney(),
+                String.valueOf(mPayType),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onPayOrderByCoupon(result);
+                    }
+                });
+    }
+
+    private void onPayOrderByCoupon(RechargeResult result) {
+        if (mPresenter != null)
+            mPresenter.onPayOrderByCoupon(
+                    result.getData().getOrderId(),
+                    getRechargeMoney(),
+                    String.valueOf(mPayType));
     }
 
     @Override
@@ -624,9 +667,34 @@ public class RechargeFragment extends PullableBaseFragment
         mRechargeDTO.setOilCardNum(card);//充值的卡号
         mRechargeDTO.setOilType(mProviderType);//加油卡类型 （1:中石化、2:中石油；默认
         mRechargeDTO.setPayType(mPayType);//0：畅通卡；1：其他卡
-        mRechargeDTO.setRechargeMoney(mTvAmount.getText().toString().trim());
+        mRechargeDTO.setRechargeMoney(getRechargeMoney());//充值金额
         if (isChoice) mRechargeDTO.setUserCouponId(mCouponId);
         return mRechargeDTO;
+    }
+
+    /**
+     * 54.充值接口 成功回调
+     */
+    @Override
+    public void onPayOrderByCouponSucceed(PayOrderResult result) {
+        PublicData.getInstance().webviewTitle = "支付";
+        PublicData.getInstance().webviewUrl = result.getData();
+        Act.getInstance().lauchIntentToLogin(getActivity(), BrowserForPayActivity.class);
+        //TODO 保存卡号
+        SPUtils.getInstance(getActivity().getApplicationContext()).setOilCard(mRechargeDTO.getOilCardNum());
+    }
+
+    @Override
+    public void onPayOrderByCouponError(String msg) {
+        ToastUtils.showShort(getContext().getApplicationContext(), msg);
+        dismissLoadingDialog();
+    }
+
+    /**
+     * 获取要充值的金额
+     */
+    public String getRechargeMoney() {
+        return mTvAmount.getText().toString().trim();
     }
 
 

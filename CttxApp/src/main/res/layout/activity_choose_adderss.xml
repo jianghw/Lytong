@@ -65,8 +65,8 @@
         android:paddingRight="@dimen/ds_40">
 
         <ImageView
-            android:layout_width="@dimen/ds_60"
-            android:layout_height="@dimen/ds_80"
+            android:layout_width="@dimen/ds_78"
+            android:layout_height="@dimen/ds_78"
             android:background="@mipmap/icon_driving_adress" />
 
         <TextView

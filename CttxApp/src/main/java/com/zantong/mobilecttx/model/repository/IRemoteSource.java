@@ -13,6 +13,7 @@ import com.zantong.mobilecttx.user.bean.MessageTypeResult;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 
 import rx.Observable;
 
@@ -96,4 +97,9 @@ public interface IRemoteSource {
      * 10.创建加油订单
      */
     Observable<RechargeResult> addOilCreateOrder(RechargeDTO rechargeDTO);
+
+    /**
+     * 加油充值
+     */
+    Observable<PayOrderResult> onPayOrderByCoupon(String payUrl, String orderPrice, String payType);
 }

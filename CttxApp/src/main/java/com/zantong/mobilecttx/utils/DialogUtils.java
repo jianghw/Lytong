@@ -211,8 +211,6 @@ public class DialogUtils {
         dialog.getWindow().setBackgroundDrawableResource(R.color.trans);
         dialog.getWindow().setContentView(view);
         dialog.setCanceledOnTouchOutside(false);
-
-
     }
 
     /**
@@ -332,7 +330,6 @@ public class DialogUtils {
     public interface ActivityOnClick {
         void onActivityCouponClick(View view);
     }
-
 
     /**
      * 车辆删除
@@ -607,10 +604,9 @@ public class DialogUtils {
      * <p>
      * create at 17/1/16 下午3:12
      */
-    public static void createRechargeDialog(final Context context, String sn, String amount, String payType, final View.OnClickListener listener) {
+    public static void createRechargeDialog(final Context context, String ordId, String amount, String payType, final View.OnClickListener listener) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
-        View view = ((Activity) context).getLayoutInflater().inflate(
-                R.layout.dialog_recharge, null);
+        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_recharge, null);
 
         View mCancel = view.findViewById(R.id.dialog_recharge_close);
         View mPayTypeLayout = view.findViewById(R.id.dialog_recharge_paytype_layout);
@@ -618,7 +614,7 @@ public class DialogUtils {
         TextView mSn = (TextView) view.findViewById(R.id.dialog_recharge_sn);
         TextView mAmount = (TextView) view.findViewById(R.id.dialog_recharge_amount);
         Button mCommit = (Button) view.findViewById(R.id.dialog_one_btn_commit);
-        mSn.setText(sn);
+        mSn.setText(ordId);
         mAmount.setText(amount);
         mPayTypeText.setText(payType.equals("0") ? "畅通卡支付" : "工行其它银行卡支付");
 //		mPayTypeLayout.setOnClickListener(new View.OnClickListener() {
@@ -630,19 +626,24 @@ public class DialogUtils {
         mCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onClick(v);
-                dialog.dismiss();
+                if (dialog != null && dialog.isShowing()) dialog.dismiss();
+                if (listener != null) listener.onClick(v);
             }
         });
         mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                if (dialog != null && dialog.isShowing()) dialog.dismiss();
             }
         });
         dialog.show();
+        initWinBottomDialogParams(context, dialog, view);
+    }
+
+    private static void initWinBottomDialogParams(Context context, AlertDialog dialog, View view) {
         //获得dialog的window窗口
         Window window = dialog.getWindow();
+        if (window == null) return;
         //设置dialog在屏幕底部
         window.setGravity(Gravity.BOTTOM);
         WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
@@ -677,6 +678,7 @@ public class DialogUtils {
         View mCancel = view.findViewById(R.id.dialog_recharge_paytype_close);
         final TextView mPayType1 = (TextView) view.findViewById(R.id.dialog_recharge_paytype_changtongcard);
         final TextView mPayType2 = (TextView) view.findViewById(R.id.dialog_recharge_paytype_othercard);
+
         mPayType1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -5,12 +5,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseActivity;
+import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.fragment.HomeMvpFragment;
-import com.zantong.mobilecttx.user.activity.AddrActivity;
+import com.zantong.mobilecttx.user.activity.MegTypeActivity;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.utils.AccountRememberCtrl;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
@@ -35,6 +38,8 @@ public class HomeActivity extends BaseActivity {
 
     @Bind(R.id.home_sweep)
     View mSweep;
+    @Bind(R.id.home_addr_text)
+    TextView mTvMsgCount;
     @Bind(R.id.activity_home_title)
     RelativeLayout mLayout;
 
@@ -105,9 +110,12 @@ public class HomeActivity extends BaseActivity {
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
-            case R.id.home_addr:
-                Act.getInstance().lauchIntent(this, AddrActivity.class);
+            case R.id.home_addr://消息页面
+//                Act.getInstance().lauchIntent(this, AddrActivity.class);
+                MobclickAgent.onEvent(this.getApplicationContext(), Config.getUMengID(24));
+                Act.getInstance().lauchIntentToLogin(this, MegTypeActivity.class);
                 break;
+
             case R.id.home_sweep:
                 PermissionGen.needPermission(this, 100,
                         new String[]{
@@ -128,6 +136,16 @@ public class HomeActivity extends BaseActivity {
     @PermissionFail(requestCode = 100)
     public void doFailSomething() {
         ToastUtils.showShort(this, "您已关闭摄像头权限");
+    }
+
+    /**
+     * 未读消息
+     */
+    public void messageCount(int i) {
+        if (mTvMsgCount != null) {
+            mTvMsgCount.setVisibility(i > 0 ? View.VISIBLE : View.INVISIBLE);
+            mTvMsgCount.setText(String.valueOf(i));
+        }
     }
 
 }

@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/driving_near_siji"
         style="@style/TextSmallNoticeInfoStyleWhite"
-        android:textSize="@dimen/fs_32"
-        android:lines="1"
-        android:paddingLeft="0dp"
-        android:gravity="center"
-        android:marqueeRepeatLimit="marquee_forever"
         android:ellipsize="marquee"
-        android:scrollHorizontally="true"
-        android:focusableInTouchMode="true"
         android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:lines="1"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:paddingLeft="0dp"
+        android:scrollHorizontally="true"
+        android:textSize="@dimen/fs_32"
         android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/driving_headerview"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_480"
-        android:background="@mipmap/img_driving"
-        android:layout_marginBottom="@dimen/ds_60" />
+        android:layout_marginBottom="@dimen/ds_60"
+        android:background="@mipmap/img_driving"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,35 +34,35 @@
             android:id="@+id/driving_address_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_140"
-            android:gravity="center_vertical"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="@dimen/ds_40"
-                android:layout_height="@dimen/ds_60"
+                android:layout_width="@dimen/ds_78"
+                android:layout_height="@dimen/ds_78"
                 android:layout_marginLeft="@dimen/ds_60"
                 android:layout_marginRight="@dimen/ds_60"
-                android:background="@mipmap/icon_driving_adress" />
+                android:src="@mipmap/icon_driving_adress"/>
 
             <TextView
                 android:id="@+id/driving_address"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:lines="1"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
+                android:lines="1"
                 android:textColor="@color/gray_25"
-                android:textSize="@dimen/fs_48" />
+                android:textSize="@dimen/fs_48"/>
 
             <ImageView
                 android:layout_width="@dimen/ds_24"
                 android:layout_height="@dimen/ds_24"
                 android:layout_marginRight="@dimen/ds_40"
-                android:src="@mipmap/arrow_left_big_iamge" />
+                android:src="@mipmap/arrow_left_big_iamge"/>
         </LinearLayout>
 
-        <TextView style="@style/line_splite_gray" />
+        <TextView style="@style/line_splite_gray"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -71,11 +71,11 @@
             android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="@dimen/ds_60"
-                android:layout_height="@dimen/ds_60"
+                android:layout_width="@dimen/ds_78"
+                android:layout_height="@dimen/ds_78"
                 android:layout_marginLeft="@dimen/ds_50"
                 android:layout_marginRight="@dimen/ds_40"
-                android:background="@mipmap/icon_driving_phone" />
+                android:src="@mipmap/icon_driving_phone"/>
 
             <EditText
                 android:id="@+id/driving_phone"
@@ -87,7 +87,7 @@
                 android:cursorVisible="true"
                 android:gravity="center_vertical"
                 android:hint="请输入手机号码"
-                android:singleLine="true" />
+                android:singleLine="true"/>
         </LinearLayout>
 
         <TextView
@@ -98,13 +98,13 @@
             android:paddingLeft="@dimen/ds_60"
             android:text="35元起步，查看服务价格"
             android:textColor="@color/common_blue"
-            android:textSize="@dimen/fs_42" />
+            android:textSize="@dimen/fs_42"/>
 
         <Button
             android:id="@+id/frist_next"
             style="@style/ButtonBigStyle"
             android:layout_marginTop="@dimen/ds_150"
-            android:text="呼叫代驾" />
+            android:text="呼叫代驾"/>
 
     </LinearLayout>
 

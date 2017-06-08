@@ -15,7 +15,7 @@ public class RechargeCouponBean {
      * couponValidity_end : 2017-04-26
      * couponImage : 烦烦烦
      * couponName : 地对地导弹
-     * couponType : 1
+     * couponType : 1  优惠券类型：1 无；2 折扣；3 代金券
      * couponUse : 123
      * couponCode : null
      * couponContent : 反反复复
