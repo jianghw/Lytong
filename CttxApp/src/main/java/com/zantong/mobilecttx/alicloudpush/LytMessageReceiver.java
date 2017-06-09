@@ -2,26 +2,26 @@ package com.zantong.mobilecttx.alicloudpush;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.sdk.android.push.MessageReceiver;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.google.gson.Gson;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
+import com.zantong.mobilecttx.home.activity.HomeActivity;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
+import com.zantong.mobilecttx.home.fragment.HomeFragment;
+import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.Tools;
-import com.zantong.mobilecttx.map.activity.BaiduMapActivity;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
-import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
-import com.zantong.mobilecttx.home.fragment.HomeFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import cn.qqtheme.framework.util.LogUtils;
@@ -32,72 +32,49 @@ import cn.qqtheme.framework.util.LogUtils;
  * @version: 1.1
  * @feature: 用于接收推送的通知和消息
  */
-public class MyMessageReceiver extends MessageReceiver {
+public class LytMessageReceiver extends MessageReceiver {
 
     // 消息接收部分的LOG_TAG
-    public static final String REC_TAG = "devi";
+    public static final String REC_TAG = "receiver";
 
     /**
      * 推送通知的回调方法
-     *
-     * @param context
-     * @param title
-     * @param summary
-     * @param extraMap
+     * 1是小喇叭
+     * 2是消息
      */
     @Override
     public void onNotification(Context context, String title, String summary, Map<String, String> extraMap) {
-        // TODO 处理推送通知
+        PushBean pushBean = new PushBean();
         if (null != extraMap) {
-            PushBean pushBean = new PushBean();
             for (Map.Entry<String, String> entry : extraMap.entrySet()) {
                 if (entry.getKey().equals("id")) {
                     pushBean.setId(entry.getValue());
                 }
                 if (entry.getKey().equals("type")) {
-                    try {
-                        pushBean.setType(Integer.valueOf(entry.getValue()));
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
-                    }
+                    pushBean.setType(entry.getValue());
                 }
-                if (entry.getKey().equals("content")) {
-                    pushBean.setContent(entry.getValue());
-                }
-                if (entry.getKey().equals("title")) {
-                    pushBean.setTitle(entry.getValue());
-                }
-                LogUtils.i("@Get diy param : Key=" + entry.getKey() + " , Value=" + entry.getValue());
             }
+
+            pushBean.setTitle(title);
+            pushBean.setContent(summary);
+
             pushBean.setDate(Tools.getYearDate());
             pushBean.setNewMeg(true);
 
-            if (pushBean.getType() == 1) {
-                saveData(context, pushBean, "nianjian");
-            } else if (pushBean.getType() == 2) {
+            if (pushBean.getType().equals("1")) {
+                EventBus.getDefault().postSticky(new AddPushTrumpetEvent(pushBean));
+            }
 
-            } else if (pushBean.getType() == 3) {
-                saveData(context, pushBean, "youjia");
-            } else if (pushBean.getType() == 4) {
-                saveData(context, pushBean, PublicData.getInstance().userID);
-            }
-            try {
-                // 刷新下消息列表
-                HomeFragment.homeFragment.updateNotice();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         } else {
-            Log.i(REC_TAG, "@收到通知 && 自定义消息为空");
+            LogUtils.e("@收到通知 && 自定义消息为空");
         }
-        Log.i(REC_TAG, "收到一条推送通知 ： " + title);
     }
 
     @Override
     protected void onNotificationReceivedInApp(Context context, String title, String summary,
                                                Map<String, String> extraMap, int openType,
                                                String openActivity, String openUrl) {
-        LogUtils.i("onNotificationReceivedInApp ： " + " : " + title + " : " + summary + "  " + extraMap + " : " + openType + " : " + openActivity + " : " + openUrl);
+        LogUtils.e("onNotificationReceivedInApp ====： " + " : " + title + " : " + summary + "  " + extraMap + " : " + openType + " : " + openActivity + " : " + openUrl);
     }
 
     /**
@@ -109,12 +86,12 @@ public class MyMessageReceiver extends MessageReceiver {
     @Override
     public void onMessage(Context context, CPushMessage cPushMessage) {
         try {
-            LogUtils.i("收到一条推送消息 ： " + cPushMessage.getTitle());
+            LogUtils.i("收到一条推送消息 ====： " + cPushMessage.getTitle());
 
             // 持久化推送的消息到数据库
             new MessageDao(context).add(new MessageEntity(cPushMessage.getMessageId().substring(6, 16),
                     Integer.valueOf(cPushMessage.getAppId()), cPushMessage.getTitle(),
-                    cPushMessage.getContent(), new SimpleDateFormat("HH:mm:ss").format(new Date())));
+                    cPushMessage.getContent(), new SimpleDateFormat("HH:mm:ss", Locale.SIMPLIFIED_CHINESE).format(new Date())));
         } catch (Exception e) {
             Log.i(REC_TAG, e.toString());
         }
@@ -122,44 +99,20 @@ public class MyMessageReceiver extends MessageReceiver {
 
     /**
      * 从通知栏打开通知的扩展处理
-     *
-     * @param context
-     * @param title
-     * @param summary
-     * @param extraMap
      */
     @Override
     public void onNotificationOpened(Context context, String title, String summary, String extraMap) {
-        LogUtils.i("onNotificationOpened ： " + " : " + title + " : " + summary + " : " + extraMap);
-        if (!TextUtils.isEmpty(extraMap)) {
-            Gson gson = new Gson();
-            PushBean pushBean = gson.fromJson(extraMap, PushBean.class);
-            pushBean.setNewMeg(false);
-            UserInfoRememberCtrl.saveObject(context, "pushBean", pushBean);
-            if (pushBean.getType() == 1) {
-                //年检
-                saveDataOpen(context, pushBean, "nianjian");
-                PublicData.getInstance().mapType = BaiduMapActivity.TYPE_NIANJIAN;
-                Intent intent = new Intent(context, BaiduMapActivity.class);
+        AliPushExtBean pushExtBean = new Gson().fromJson(extraMap, AliPushExtBean.class);
+        if (pushExtBean != null) {
+            String type = pushExtBean.getType();
+            if (type.equals("1")) {//小喇叭页面
+                Intent intent = new Intent(context, HomeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
-            } else if (pushBean.getType() == 2) {
-                //驾照换证提醒
-
-            } else if (pushBean.getType() == 3) {
-                //油价提醒
-                saveDataOpen(context, pushBean, "youjia");
-                PublicData.getInstance().webviewUrl = Config.HOME_NOTICE_URL;
-                PublicData.getInstance().webviewTitle = "油价通知";
-                Intent intent = new Intent(context, BrowserActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            } else if (pushBean.getType() == 4) {
-                //违章
-                saveDataOpen(context, pushBean, PublicData.getInstance().userID);
-                PublicData.getInstance().mHashMap.put("ViolationDetailsStr", pushBean.getId());
-                PublicData.getInstance().mHashMap.put("mRes", "0");
-                Intent intent = new Intent(context, ViolationDetails.class);
+            } else if (type.equals("2")) {
+                Intent intent = new Intent(context, MegDetailActivity.class);
+                intent.putExtra("messageDetailId", pushExtBean.getId());
+                intent.putExtra("title", title);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -180,7 +133,7 @@ public class MyMessageReceiver extends MessageReceiver {
                 HomeNotice homeNotice = new HomeNotice();
                 homeNotice.setId(pushBean.getId());
                 homeNotice.setDesc(pushBean.getContent());
-                homeNotice.setType(pushBean.getType());
+                homeNotice.setType(Integer.valueOf(pushBean.getType()));
                 homeNotice.setDate(pushBean.getDate());
                 homeNotice.setNewMeg(pushBean.isNewMeg());
                 list.add(homeNotice);
@@ -191,7 +144,7 @@ public class MyMessageReceiver extends MessageReceiver {
             HomeNotice homeNotice = new HomeNotice();
             homeNotice.setId(pushBean.getId());
             homeNotice.setDesc(pushBean.getContent());
-            homeNotice.setType(pushBean.getType());
+            homeNotice.setType(Integer.valueOf(pushBean.getType()));
             homeNotice.setDate(pushBean.getDate());
             homeNotice.setNewMeg(pushBean.isNewMeg());
             list.add(homeNotice);
@@ -223,12 +176,12 @@ public class MyMessageReceiver extends MessageReceiver {
 
     @Override
     public void onNotificationRemoved(Context context, String messageId) {
-        LogUtils.i("onNotificationRemoved ： " + messageId);
+        LogUtils.i("onNotificationRemoved=== ： " + messageId);
     }
 
 
     @Override
     protected void onNotificationClickedWithNoAction(Context context, String title, String summary, String extraMap) {
-        LogUtils.i("onNotificationClickedWithNoAction ： " + " : " + title + " : " + summary + " : " + extraMap);
+        LogUtils.i("onNotificationClickedWithNoAction ====： " + " : " + title + " : " + summary + " : " + extraMap);
     }
 }

@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.weizhang.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 import butterknife.Bind;
 import butterknife.OnClick;
 
+@SuppressLint("ValidFragment")
 public class ViolationPayFragment extends BaseExtraFragment{
 
     @Bind(R.id.fragment_violation_paytype_layout)
@@ -48,9 +50,6 @@ public class ViolationPayFragment extends BaseExtraFragment{
         return R.layout.fragment_violation_pay;
     }
 
-
-    public ViolationPayFragment (){
-    }
     public ViolationPayFragment (ViolationBean data){
         this.data = data;
     }

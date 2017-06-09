@@ -161,7 +161,7 @@ public class SplashActivity extends AppCompatActivity
         }
         if (!TextUtils.isEmpty(url)) {
             ImageLoader.getInstance().displayImage(url, mImgAdvert,
-                    ImageOptions.getDefaultOptions(), new ImageLoadingListener() {
+                    ImageOptions.getSplashOptions(), new ImageLoadingListener() {
                         @Override
                         public void onLoadingStarted(String s, View view) {
 

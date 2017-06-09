@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class PushBean implements Serializable {
     private String id;
-    private int type;
+    private String type;
     private String content;
     private String title;
     private String date;
@@ -30,11 +30,11 @@ public class PushBean implements Serializable {
         this.id = id;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 

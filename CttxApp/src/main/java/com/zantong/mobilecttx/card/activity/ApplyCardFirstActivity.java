@@ -2,15 +2,13 @@ package com.zantong.mobilecttx.card.activity;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -31,7 +29,6 @@ import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
-import com.zantong.mobilecttx.utils.UiHelpers;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.permission.PermissionFail;
@@ -42,18 +39,18 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements HandleCTCardApiClient.ResultInterface{
+public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements HandleCTCardApiClient.ResultInterface {
 
     @Bind(R.id.apply_card_idcard_img)    //驾驶证档案编号
-    ImageView mIdCardImg;
+            ImageView mIdCardImg;
     @Bind(R.id.apply_card_first_camera)    //驾驶证档案编号
-    ImageView mCameraImg;
+            ImageView mCameraImg;
     @Bind(R.id.apply_card_first_filenum)    //驾驶证档案编号
-    EditText mDriverFileNum;
+            EditText mDriverFileNum;
     @Bind(R.id.apply_card_first_name)     //姓名
-    EditText mName;
+            EditText mName;
     @Bind(R.id.apply_card_first_idcard)   //身份证
-    EditText mIdCard;
+            EditText mIdCard;
 
 
     private String driverFileNum;
@@ -81,8 +78,8 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         setTitleText("申办畅通卡");
     }
 
-    @OnClick({R.id.apply_card_first_img, R.id.apply_card_first_desc,R.id.apply_card_first_commit,
-            R.id.apply_card_idcard_img,R.id.apply_card_first_camera})
+    @OnClick({R.id.apply_card_first_img, R.id.apply_card_first_desc, R.id.apply_card_first_commit,
+            R.id.apply_card_idcard_img, R.id.apply_card_first_camera})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.apply_card_first_img:  //驾驶证问号
@@ -148,7 +145,12 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
             return;
         }
         PublicData.getInstance().filenum = driverFileNum;
-        checkCtkDate();
+
+        if (BuildConfig.DEBUG) {//七天之内不能重复办卡 不用
+            checkApplyCardRecord();
+        } else {
+            checkCtkDate();
+        }
     }
 
     /**
@@ -192,7 +194,6 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         bidCTCardDTO.setPhoenum(RSAUtils.strByEncryption(this, SPUtils.getInstance(this).getLoginInfoBean().getUsrid(), true));
         HandleCTCardApiClient.htmlLocal(this, "cip.cfc.u006.01", bidCTCardDTO, this);
     }
-
 
 
     @Override
@@ -242,8 +243,8 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     @Override
     public void resultSuccess(Result result) {
         if (result.getSYS_HEAD().getReturnCode().equals("1")) {
-            startActivity(ApplyCardSecondActivity.getIntent(this, driverFileNum, name,idCard));
-        } else if (result.getSYS_HEAD().getReturnCode().equals("000000")){
+            startActivity(ApplyCardSecondActivity.getIntent(this, driverFileNum, name, idCard));
+        } else if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
             startActivity(ApplyCardQuickActivity.getIntent(this, driverFileNum, name, idCard));
         }
         hideDialogLoading();
@@ -258,20 +259,20 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
     @PermissionSuccess(requestCode = 100)
     public void doSomething() {
-        if (mPermissionFrom == 0){
+        if (mPermissionFrom == 0) {
             valueCheck();
-        }else if(mPermissionFrom == 1){
+        } else if (mPermissionFrom == 1) {
             Intent intentOcr = new Intent(this, OcrCameraActivity.class);
             intentOcr.putExtra("ocr_resource", 1);
-            startActivityForResult(intentOcr,1205);
+            startActivityForResult(intentOcr, 1205);
         }
     }
 
     @PermissionFail(requestCode = 100)
     public void doFailSomething() {
-        if (mPermissionFrom == 0){
+        if (mPermissionFrom == 0) {
             ToastUtils.showShort(this, "您已关闭内存卡读写权限");
-        }else if(mPermissionFrom == 1){
+        } else if (mPermissionFrom == 1) {
             ToastUtils.showShort(this, "您已关闭摄像头或者内存卡读写权限");
         }
 

@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.user.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,15 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.user.bean.MessageType;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.qqtheme.framework.util.DateTools;
+
+import static com.zantong.mobilecttx.utils.ImageOptions.getMessageOptions;
 
 /**
  * Created by zhoujie on 2017/2/13.
@@ -55,7 +59,11 @@ public class MegAdapter extends BaseAdapter<MessageType> {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
             holder.mTitle.setText(data.getMessageName());
+            holder.mTitle.setTextColor(Color.parseColor("#" + data.getColor()));
             holder.mContent.setText(data.getTitle());
+
+            if (data.getIcon() != null)
+                ImageLoader.getInstance().displayImage(data.getIcon(), holder.mImg, getMessageOptions());
 
             //1 已读  0未读
             holder.mSign.setText("1".equals(data.getFlag()) ? "已读" : "未读");

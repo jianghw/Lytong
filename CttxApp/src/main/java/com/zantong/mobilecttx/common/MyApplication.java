@@ -9,7 +9,6 @@ import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.alibaba.sdk.android.push.register.HuaWeiRegister;
 import com.alibaba.sdk.android.push.register.MiPushRegister;
 import com.baidu.mapapi.SDKInitializer;
-import com.facebook.stetho.Stetho;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -27,11 +26,11 @@ import cn.qqtheme.framework.util.LogUtils;
 public class MyApplication extends MultiDexApplication {
     public void onCreate(){
         super.onCreate();
-        Stetho.initializeWithDefaults(this);
-        initImageLoader(this);
+//        Stetho.initializeWithDefaults(this);
         initCloudChannel(this);
         // 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
         SDKInitializer.initialize(getApplicationContext());
+        initImageLoader(this);
         //bugly初始化
         CrashReport.initCrashReport(
                 getApplicationContext(),

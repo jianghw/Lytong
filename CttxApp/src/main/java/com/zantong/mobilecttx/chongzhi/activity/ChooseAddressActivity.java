@@ -41,7 +41,6 @@ import butterknife.Bind;
 public class ChooseAddressActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
         implements TextWatcher,ChooseAddressAdapter.OnRecyclerviewItemListener {
 
-
     @Bind(R.id.choose_address_input)
     EditText mInput;
     @Bind(R.id.choose_address_dingwei)

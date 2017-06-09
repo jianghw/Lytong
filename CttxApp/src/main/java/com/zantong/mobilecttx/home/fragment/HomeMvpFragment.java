@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.alicloudpush.PushBean;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.FileDownloadApi;
@@ -44,6 +45,7 @@ import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
+import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
 import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
 import com.zantong.mobilecttx.home.activity.GuideActivity;
@@ -344,6 +346,16 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
         }
     }
 
+    /**
+     * 标记小喇叭
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onDataSynEvent(AddPushTrumpetEvent event) {
+        if (event == null) return;
+        PushBean bean = event.getPushBean();
+        updateNoticeMessage(bean);
+    }
+
     @Override
     protected void onLoadMoreData() {
     }
@@ -438,8 +450,6 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                     if (versionFlag == -1) {
                         isCanBack = false;
                         showUpdateDialog(result);
-                    } else {
-                        ToastUtils.showShort(getActivity(), "当前已为最新版本");
                     }
                 }
             }
@@ -665,42 +675,20 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
     }
 
     /**
-     * 更新通知
+     * 小喇叭更新通知
      */
-    public void updateNotice() {
-        try {
-            List<HomeNotice> listNotices = new ArrayList<HomeNotice>();
-            listNotices.addAll(mList);
-            for (HomeNotice notice : noticeList()) {
-                boolean isRet = false;  //是否有重复
-                for (HomeNotice homeNotice : mList) {
-                    if (notice.getId().equals(homeNotice.getId())
-                            && notice.getDesc().equals(homeNotice.getDesc())) {
-                        isRet = true;
-                    }
-                }
-                if (!isRet) {
-                    listNotices.add(notice);
-                }
+    public void updateNoticeMessage(PushBean bean) {
+        List<HomeNotice> notices = new ArrayList<>();
+        if (mList.isEmpty()) return;
+        for (HomeNotice notice : mList) {
+            if (!bean.getId().equals(notice.getId())) {
+                notices.add(new HomeNotice(bean.getId(), 3, bean.getContent()));
             }
-
-            mList.clear();
-            mList = listNotices;
-            mHomeScrollUp.setData(mList);
-            boolean isNewMeg = false;
-            for (HomeNotice homeNotice : mList) {
-                if (homeNotice.isNewMeg()) {
-                    isNewMeg = true;
-                }
-            }
-//            if (isNewMeg) {
-//                mImgIsNewMeg.setVisibility(View.VISIBLE);
-//            } else {
-//                mImgIsNewMeg.setVisibility(View.GONE);
-//            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+        notices.addAll(mList);
+        if (!mList.isEmpty()) mList.clear();
+        mList.addAll(notices);
+        mHomeScrollUp.setData(mList);
     }
 
 
@@ -1031,5 +1019,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
     public void onDestroy() {
         super.onDestroy();
         if (mHomeHeaderview != null) mHomeHeaderview.close();
+        if (!mList.isEmpty()) mList.clear();
+        if (!mFragmentList.isEmpty()) mFragmentList.clear();
     }
 }

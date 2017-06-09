@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.zantong.mobilecttx">
+          package="com.zantong.mobilecttx"
+          android:installLocation="auto">
 
     <!--小米通道相关权限 -->
     <permission
@@ -460,7 +461,7 @@
             </intent-filter>
         </service>
 
-        <!-- 消息接收服务 -->
+        <!--  消息接收服务-->
         <service
             android:name="com.alibaba.sdk.android.push.MsgService"
             android:exported="false">
@@ -469,7 +470,7 @@
             </intent-filter>
         </service>
 
-        <!-- 消息接收增强服务（可提高消息/通知到达率） -->
+        <!-- 消息接收增强服务（可提高消息/通知到达率）-->
         <service
             android:name="com.alibaba.sdk.android.push.channel.TaobaoRecvService"
             android:exported="true">
@@ -480,12 +481,15 @@
 
         <!-- 消息接收监听器 （用户可自主扩展） -->
         <receiver
-            android:name=".alicloudpush.MyMessageReceiver"
+            android:name=".alicloudpush.LytMessageReceiver"
             android:exported="true">
             <intent-filter>
+
                 <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED"/>
             </intent-filter>
+
             <intent-filter>
+                     
                 <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED"/>
             </intent-filter>
             <intent-filter>
@@ -495,7 +499,7 @@
                 <action android:name="com.taobao.taobao.intent.action.COMMAND"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="org.agoo.android.intent.action.RECEIVE"/>
+                <action android:name="com.alibaba.sdk.android.push.RECEIVE"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
@@ -509,7 +513,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED"/>
 
-                <data android:scheme="com.zantong.mobilecttx"/>
+                <data android:scheme="package"/>
             </intent-filter>
         </receiver>
 
@@ -593,7 +597,7 @@
         <!-- bugly配置APP版本号 -->
         <meta-data
             android:name="BUGLY_APP_VERSION"
-            android:value="2.5.1"/>
+            android:value="2.5.0.1"/>
     </application>
 
 </manifest>

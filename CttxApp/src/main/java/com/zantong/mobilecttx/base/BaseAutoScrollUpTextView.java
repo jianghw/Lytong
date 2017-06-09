@@ -8,11 +8,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.interf.AutoScrollData;
+import com.zantong.mobilecttx.home.bean.HomeNotice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,21 +170,18 @@ public abstract class BaseAutoScrollUpTextView<T> extends ListView implements
                 viewHolder = new ViewHolder();
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.item_auto_scroll_up_layout, null);
                 viewHolder.mInfoView = (TextView) convertView.findViewById(R.id.tv_info);
+                viewHolder.mImgMsg = (ImageView) convertView.findViewById(R.id.img_label);
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
             T data = mDataList.get(position % mMax);
-//            viewHolder.mInfoView
-//                    .setLayoutParams(new LinearLayout.LayoutParams(
-//                            LinearLayout.LayoutParams.WRAP_CONTENT,
-//                            dip2px(getAdertisementHeight())));
+
             viewHolder.mInfoView.setTextSize(mSize);
             viewHolder.mInfoView.setText(getTextInfo(data));
-//            viewHolder.mInfoView.setSelected(true);
-//            viewHolder.mInfoView.setHorizontallyScrolling(true);
-//            viewHolder.mInfoView.setMarqueeRepeatLimit(1);
-//            viewHolder.mInfoView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            HomeNotice bean = (HomeNotice) data;
+            viewHolder.mImgMsg.setVisibility(bean.isNewMeg() ? VISIBLE : INVISIBLE);
+
             convertView.setOnClickListener(new OnClickListener() {
 
                 @Override
@@ -197,6 +196,7 @@ public abstract class BaseAutoScrollUpTextView<T> extends ListView implements
 
     static class ViewHolder {
         TextView mInfoView;// 内容
+        ImageView mImgMsg;
     }
 
     @Override
@@ -215,7 +215,7 @@ public abstract class BaseAutoScrollUpTextView<T> extends ListView implements
         mAutoScrollAdapter.notifyDataSetChanged();
     }
 
-    public List<T> getList(){
+    public List<T> getList() {
         return mDataList;
     }
 

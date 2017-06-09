@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
 import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
@@ -33,6 +34,7 @@ public class LicenseCheckGradeActivity extends MvpBaseActivity implements View.O
 
     private EditText mEditArchivesNumber;
     private TextView mTvDate;
+    private TextView mTvImage;
     private Button mBtnCommit;
     private RelativeLayout mLyData;
 
@@ -86,8 +88,16 @@ public class LicenseCheckGradeActivity extends MvpBaseActivity implements View.O
 //        mEditDrivingNumber = (EditText) findViewById(R.id.edit_driving_number);
         mEditArchivesNumber = (EditText) findViewById(R.id.edit_archives_number);
         mTvDate = (TextView) findViewById(R.id.tv_date);
+        mTvImage = (TextView) findViewById(R.id.textView14);
         mLyData = (RelativeLayout) findViewById(R.id.rl_date);
         mBtnCommit = (Button) findViewById(R.id.btn_commit);
+
+        mTvImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DialogMgr(LicenseCheckGradeActivity.this, R.mipmap.code_query_notice_iamge);
+            }
+        });
     }
 
     @Override

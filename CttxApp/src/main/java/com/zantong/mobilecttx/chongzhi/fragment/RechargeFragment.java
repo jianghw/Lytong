@@ -123,7 +123,7 @@ public class RechargeFragment extends PullableBaseFragment
     /**
      * 优惠卷 type  优惠券类型：1 无；2 折扣；3 代金券
      */
-    private int mCouponType;
+    private int mCouponType = 2;
 
     public static RechargeFragment newInstance() {
         return new RechargeFragment();
@@ -438,6 +438,14 @@ public class RechargeFragment extends PullableBaseFragment
             priceList.add(new RechargeBean("500", "100084", value, false, isChoice && mPayType == 0 ? mCouponType : 2));
             mAdapter.append(priceList);
         }
+        RechargeBean bean = priceList.get(0);
+        //充值模板号
+        mRechargeDTO.setRechargeTemplate(bean.getTemplate());
+        //加油卡面值
+        mRechargeDTO.setProdMoney(bean.getAmount());
+        //充值折扣
+        mRechargeDTO.setDiscount(bean.getDiscount());
+
         displayPriceValue(priceList.get(0));
     }
 
@@ -573,6 +581,7 @@ public class RechargeFragment extends PullableBaseFragment
      * @param msg
      */
     private void displayCouponState(String msg) {
+        mCouponType = 2;
         mTvPayCoupon.setText(msg);
         mTvPayCouponDate.setVisibility(View.GONE);
         mImgCouponState.setImageResource(R.mipmap.icon_nocoupon);

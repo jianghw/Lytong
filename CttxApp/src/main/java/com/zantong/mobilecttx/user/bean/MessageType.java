@@ -27,6 +27,24 @@ public class MessageType {
     private String flag;
     private String messageDetailId;
     private String userId;
+    private String color;
+    private String icon;
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 
     public String getMessageName() {
         return messageName;

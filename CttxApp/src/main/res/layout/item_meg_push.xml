@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/msg_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/ds_135"
+            android:layout_height="@dimen/ds_135"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/app_icon"/>

@@ -61,7 +61,7 @@
             android:layout_alignTop="@+id/img_trumpet"
             android:layout_toRightOf="@+id/img_trumpet"
             android:src="@mipmap/icon_dot_sel"
-            android:visibility="invisible"/>
+            android:visibility="gone"/>
 
         <com.zantong.mobilecttx.widght.MainScrollUpAdvertisementView
             android:id="@+id/home_scroll_up"
@@ -69,7 +69,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
 
-            android:layout_toRightOf="@+id/img_label"
+            android:layout_toRightOf="@+id/img_trumpet"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:singleLine="true"

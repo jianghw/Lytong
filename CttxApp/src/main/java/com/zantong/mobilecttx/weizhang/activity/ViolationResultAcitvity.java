@@ -5,16 +5,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.api.CallBack;
-import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.UiHelpers;
@@ -27,7 +23,7 @@ import com.zantong.mobilecttx.weizhang.fragment.ViolationResultFragment;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class ViolationResultAcitvity extends BaseMvpActivity<IBaseView,HelpPresenter> {
+public class ViolationResultAcitvity extends BaseMvpActivity<IBaseView, HelpPresenter> {
 
     @Bind(R.id.violation_query_topbtn_layou1)
     View mView1;
@@ -72,10 +68,10 @@ public class ViolationResultAcitvity extends BaseMvpActivity<IBaseView,HelpPrese
     @Override
     public void initView() {
         Intent intent = getIntent();
-        if (intent != null){
+        if (intent != null) {
             setTitleText(intent.getStringExtra("plateNum"));
             Bundle bundle = getIntent().getExtras();
-            dto = (ViolationDTO)bundle.getSerializable("params");
+            dto = (ViolationDTO) bundle.getSerializable("params");
         }
     }
 
@@ -87,18 +83,19 @@ public class ViolationResultAcitvity extends BaseMvpActivity<IBaseView,HelpPrese
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         mScreenwidth = dm.widthPixels;
-        tvs = new TextView[] { mAllTitle, mUnfinishedTitle, mfinishedTitle };
+        tvs = new TextView[]{mAllTitle, mUnfinishedTitle, mfinishedTitle};
         TEMP_STATE = 2;
         commitFragment();
         selectTab(0);
     }
+
     @Override
     public HelpPresenter initPresenter() {
         return new HelpPresenter();
     }
 
 
-    @OnClick({R.id.violation_query_topbtn_layou1,R.id.violation_query_topbtn_layou2,R.id.violation_query_topbtn_layou3})
+    @OnClick({R.id.violation_query_topbtn_layou1, R.id.violation_query_topbtn_layou2, R.id.violation_query_topbtn_layou3})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -140,12 +137,12 @@ public class ViolationResultAcitvity extends BaseMvpActivity<IBaseView,HelpPrese
 
     private void commitFragment() {
         transaction = mFragmentManager.beginTransaction();
-        mFragment = ViolationResultFragment.newInstance(TEMP_STATE,dto);
+        mFragment = ViolationResultFragment.newInstance(TEMP_STATE, dto);
         transaction.replace(R.id.violation_query_layout, mFragment);
         transaction.commit();
     }
 
-    public int getPayLayoutId(){
+    public int getPayLayoutId() {
         return R.id.violation_result_pay_layout;
     }
 
@@ -163,9 +160,10 @@ public class ViolationResultAcitvity extends BaseMvpActivity<IBaseView,HelpPrese
         return payType;
     }
 
-    public void setPayFragment(ViolationBean data){
+    public void setPayFragment(ViolationBean data) {
         payFragment = new ViolationPayFragment(data);
     }
+
     public ViolationPayFragment getPayFragment() {
         return payFragment;
     }
