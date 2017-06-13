@@ -145,11 +145,9 @@ public class BaseApiClient {
         FormBody.Builder builder = new FormBody.Builder();
 //        String data = asyncCallBack.getGson().toJson(jsonParams);
         if (jsonParams != null){
-            LogUtils.i("msg:" + jsonParams);
             builder.add("msg", jsonParams);
         }
         if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().userID)) {
-            LogUtils.i("BaseApiClient token :"+PublicData.getInstance().userID);
             builder.add("usrid", PublicData.getInstance().userID);
         }
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
@@ -160,7 +158,6 @@ public class BaseApiClient {
     public static <T> void post(Context context, String url, String base64File,
                                 AsyncCallBack<T> asyncCallBack) {
         FormBody.Builder builder = new FormBody.Builder();
-        LogUtils.i("data:" + base64File);
         builder.add("data", base64File);
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).post(builder.build()).build();

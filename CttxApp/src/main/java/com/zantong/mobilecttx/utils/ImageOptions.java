@@ -36,9 +36,9 @@ public class ImageOptions {
     public static DisplayImageOptions getSplashOptions() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .resetViewBeforeLoading(true)
+                .showImageOnLoading(R.mipmap.ic_splash_default)
                 .showImageForEmptyUri(R.mipmap.ic_splash_default)
-                .showImageOnFail(R.mipmap.ic_default_loading)
-                .showImageOnLoading(R.mipmap.ic_default_loading)
+                .showImageOnFail(R.mipmap.ic_splash_default)
                 .cacheInMemory(true)
                 .cacheOnDisk(true).considerExifParams(true)
                 .bitmapConfig(Bitmap.Config.RGB_565).build();
@@ -79,8 +79,6 @@ public class ImageOptions {
 
     /**
      * 获取头像
-     *
-     * @return
      */
     public static DisplayImageOptions getAvatarOptions() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()

@@ -22,6 +22,16 @@ public class RechargeCouponBean {
      * couponValue : 0
      */
 
+    private boolean isChoice;
+
+    public boolean isChoice() {
+        return isChoice;
+    }
+
+    public void setChoice(boolean choice) {
+        isChoice = choice;
+    }
+
     private int id;
     private String couponValidityEnd;
     private String couponImage;

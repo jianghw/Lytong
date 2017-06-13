@@ -69,9 +69,9 @@ public class GuideCTActivity extends BaseActivity implements GuideHeaderViewPage
         }
 
         List<Integer> guideS = new ArrayList<>();
-        guideS.add(R.mipmap.icon_guide_two);
-        guideS.add(R.mipmap.icon_guide_three);
-        guideS.add(R.mipmap.icon_guide_one);
+        guideS.add(R.mipmap.guide_1);
+        guideS.add(R.mipmap.guide_2);
+        guideS.add(R.mipmap.guide_3);
         mGuideHeaderview.setImageUrls(guideS, ImageView.ScaleType.FIT_XY, this, mList);
     }
 

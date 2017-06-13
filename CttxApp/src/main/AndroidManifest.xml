@@ -445,6 +445,13 @@
         <meta-data
             android:name="com.alibaba.app.appsecret"
             android:value="a51ce60b119cf15b9ab220ed70d8078c"/> <!-- 请填写你自己的appSecret  在应用证书中  -->
+        <!-- 测试专用  -->
+        <!--<meta-data-->
+        <!--android:name="com.alibaba.app.appkey"-->
+        <!--android:value="24038080"/> &lt;!&ndash; 请填写你自己的- appKey &ndash;&gt;-->
+        <!--<meta-data-->
+        <!--android:name="com.alibaba.app.appsecret"-->
+        <!--android:value="67e0f4f5e27e689af373fb3c2a8ace9c"/> &lt;!&ndash; 请填写你自己的appSecret  在应用证书中  &ndash;&gt;-->
 
         <!-- 通道保持服务（幽灵进程自动保活该服务） -->
         <service
@@ -597,7 +604,7 @@
         <!-- bugly配置APP版本号 -->
         <meta-data
             android:name="BUGLY_APP_VERSION"
-            android:value="2.5.0.1"/>
+            android:value="2.5.0.2"/>
     </application>
 
 </manifest>

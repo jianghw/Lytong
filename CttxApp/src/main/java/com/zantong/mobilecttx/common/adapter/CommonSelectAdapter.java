@@ -32,9 +32,8 @@ public class CommonSelectAdapter extends BaseAdapter<CommonTwoLevelMenuBean> {
 
             holder.mFlag.setVisibility(data.getContext().contains("畅通卡") ? View.VISIBLE : View.GONE);
 
-            holder.mChoice.setVisibility(data.getId() == -1 ? View.VISIBLE : View.GONE);
-            holder.mChoice.setImageResource(
-                    data.getImgId() == R.mipmap.icon_coupon ? R.mipmap.btn_tick_on : R.mipmap.btn_tick_off);
+            holder.mChoice.setVisibility(data.getId() == -1 || data.getId() == -2 ? View.VISIBLE : View.GONE);
+            holder.mChoice.setImageResource(data.getId() == -1 ? R.mipmap.btn_tick_on : R.mipmap.btn_tick_off);
 
             UiHelpers.setTextViewIcon(mContext,
                     holder.mName,

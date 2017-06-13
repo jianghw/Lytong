@@ -130,5 +130,5 @@
         android:id="@+id/apply_card_first_commit"
         style="@style/ButtonBigStyle"
         android:layout_marginTop="10dip"
-        android:text="下一步" />
+        android:text="下一步"/>
 </LinearLayout>

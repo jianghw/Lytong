@@ -29,7 +29,6 @@ import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.ImageTools;
 import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
-import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.widght.Viewfinder;
 
 import java.io.File;
@@ -39,9 +38,6 @@ import java.util.List;
 
 /**
  * 拍照扫描
- *
- * @author Sandy
- *         create at 16/6/12 下午5:10
  */
 public class OcrCameraActivity extends Activity implements View.OnClickListener {
 

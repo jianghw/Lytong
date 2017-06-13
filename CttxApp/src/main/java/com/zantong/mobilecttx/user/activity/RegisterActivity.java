@@ -11,19 +11,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.bean.Result;
+import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.interf.IOrderView;
+import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.user.bean.VcodeResult;
 import com.zantong.mobilecttx.user.dto.VcodeDTO;
-import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
-import com.zantong.mobilecttx.interf.IOrderView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -80,11 +81,9 @@ public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
-
             case R.id.register_vcode_btn:
                 getVerifyCode();
                 break;
-
             case R.id.register_del:
                 mPhone.setText("");
                 break;
@@ -230,48 +229,53 @@ public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter
      */
     private void checkVerifyCode() {
         phone = mPhone.getText().toString();
+        if (BuildConfig.DEBUG) {
+            Intent intent = new Intent(RegisterActivity.this, Register2Activity.class);
+            intent.putExtra(Register2Activity.RES_CODE, 0);
+            intent.putExtra(Register2Activity.PHONE, phone);
+            startActivity(intent);
+            finish();
+        } else {
+            onCheckVerifyCode();
+        }
 
+    }
 
-        Intent intent = new Intent(RegisterActivity.this, Register2Activity.class);
-        intent.putExtra(Register2Activity.RES_CODE, 0);
-        intent.putExtra(Register2Activity.PHONE, phone);
-        startActivity(intent);
-        finish();
+    private void onCheckVerifyCode() {
+        String vcode = mVCode.getText().toString();
+        if (TextUtils.isEmpty(vcode)) {
+            ToastUtils.showShort(this, "验证码不能为空");
+            return;
+        }
+        if (TextUtils.isEmpty(onlyflag)) {
+            ToastUtils.showShort(this, "请先获取验证码");
+            return;
+        }
+        VcodeDTO dto = new VcodeDTO();
+        dto.setSmsscene("001");
+        dto.setPhoenum(phone);
+        dto.setCaptcha(vcode);
+        dto.setOnlyflag(onlyflag);
+        showDialogLoading();
+        UserApiClient.checkVerifyCode(this, dto, new CallBack<Result>() {
+                    @Override
+                    public void onSuccess(Result result) {
+                        hideDialogLoading();
+                        if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
+                            Intent intent = new Intent(RegisterActivity.this, Register2Activity.class);
+                            intent.putExtra(Register2Activity.RES_CODE, 0);
+                            intent.putExtra(Register2Activity.PHONE, phone);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
 
-//        String vcode = mVCode.getText().toString();
-//        if (TextUtils.isEmpty(vcode)) {
-//            ToastUtils.showShort(this, "验证码不能为空");
-//            return;
-//        }
-//        if (TextUtils.isEmpty(onlyflag)) {
-//            ToastUtils.showShort(this, "请先获取验证码");
-//            return;
-//        }
-//        VcodeDTO dto = new VcodeDTO();
-//        dto.setSmsscene("001");
-//        dto.setPhoenum(phone);
-//        dto.setCaptcha(vcode);
-//        dto.setOnlyflag(onlyflag);
-//        showDialogLoading();
-//        UserApiClient.checkVerifyCode(this, dto, new CallBack<Result>() {
-//                    @Override
-//                    public void onSuccess(Result result) {
-//                        hideDialogLoading();
-//                        if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
-//                            Intent intent = new Intent(RegisterActivity.this, Register2Activity.class);
-//                            intent.putExtra(Register2Activity.RES_CODE, 0);
-//                            intent.putExtra(Register2Activity.PHONE, phone);
-//                            startActivity(intent);
-//                            finish();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(String errorCode, String msg) {
-//                        super.onError(errorCode, msg);
-//                        hideDialogLoading();
-//                    }
-//                }
-//        );
+                    @Override
+                    public void onError(String errorCode, String msg) {
+                        super.onError(errorCode, msg);
+                        hideDialogLoading();
+                    }
+                }
+        );
     }
 }

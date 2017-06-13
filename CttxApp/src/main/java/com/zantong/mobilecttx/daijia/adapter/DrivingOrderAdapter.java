@@ -38,34 +38,23 @@ public class DrivingOrderAdapter extends BaseAdapter<DaiJiaOrderListBean> {
             holder.mOrderId.setText(data.getOrderId());
             holder.mDate.setText(data.getCreateTime());
             holder.mStatus.setText(data.getOrderStatus());
-//            holder.mOption.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    cleanOrderDialog(data.getOrderId(),holder.mStatus,holder.mOption);
-//                }
-//            });
 
             // -1其取消  1派单中
-            if ("已取消".equals(data.getOrderStatus())){
+            if ("已取消".equals(data.getOrderStatus())) {
                 holder.mStatus.setTextColor(mContext.getResources().getColor(R.color.gray_cc));
-//                holder.mOption.setVisibility(View.GONE);
-            }else if ("派单中".equals(data.getOrderStatus())){
+            } else if ("派单中".equals(data.getOrderStatus())) {
                 holder.mStatus.setTextColor(mContext.getResources().getColor(R.color.red));
-//                holder.mOption.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 holder.mStatus.setTextColor(mContext.getResources().getColor(R.color.gray_66));
-//                holder.mOption.setVisibility(View.GONE);
             }
         }
-
     }
 
     @Override
     public View createView(ViewGroup viewGroup, int i) {
         mContext = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.item_driving, viewGroup, false);
-        return view;
+        return inflater.inflate(R.layout.item_driving, viewGroup, false);
     }
 
     @Override
@@ -83,8 +72,6 @@ public class DrivingOrderAdapter extends BaseAdapter<DaiJiaOrderListBean> {
         TextView mStatus;
         @Bind(R.id.driving_item_orderid)
         TextView mOrderId;
-//        @Bind(R.id.driving_item_order_option)
-//        TextView mOption;
 
         public ViewHolder(View view) {
             super(view);
@@ -96,27 +83,27 @@ public class DrivingOrderAdapter extends BaseAdapter<DaiJiaOrderListBean> {
     /**
      * 取消订单dialog
      */
-    private void cleanOrderDialog(final String orderId,final TextView mStatus,final TextView mOption){
+    private void cleanOrderDialog(final String orderId, final TextView mStatus, final TextView mOption) {
         DialogUtils.telDialog(mContext, "提示", "您确定取消订单吗？", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DaiJiaOrderDetailDTO dto = new DaiJiaOrderDetailDTO();
                 String time = "1488253689";
-                try{
+                try {
                     time = StringUtils.getTimeToStr();
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
                 dto.setTime(time);
                 dto.setOrderId(orderId);
                 HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("time",time);
-                hashMap.put("orderId",orderId);
+                hashMap.put("time", time);
+                hashMap.put("orderId", orderId);
                 dto.setHash(HashUtils.getSignature(hashMap));
                 CarApiClient.cancelDaiJiaOrderDetail(mContext, dto, new CallBack<BaseResult>() {
                     @Override
                     public void onSuccess(BaseResult result) {
-                        if (result.getResponseCode() == 2000){
+                        if (result.getResponseCode() == 2000) {
                             mStatus.setText("已取消");
                             mStatus.setTextColor(R.color.gray_cc);
                             mOption.setVisibility(View.GONE);

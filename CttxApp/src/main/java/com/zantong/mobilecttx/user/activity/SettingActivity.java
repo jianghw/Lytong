@@ -116,7 +116,6 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
             mLogout.setVisibility(View.GONE);
         } else {
             String date = PublicData.getInstance().mLoginInfoBean.getGetdate();
-            LogUtils.i("date:" + date);
             try {
                 if (date.contains("-")) {
                     mSelDate.setText(date);
@@ -151,7 +150,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         userInfoNameRl.setOnClickListener(this);
         userChangePwdRl.setOnClickListener(this);
         userInfoRl.setOnClickListener(this);
-        if (!PublicData.getInstance().loginFlag){
+        if (!PublicData.getInstance().loginFlag) {
             SPUtils.getInstance(SettingActivity.this).setWeizhangPush(false);
             SPUtils.getInstance(SettingActivity.this).setJifenPush(false);
         }
@@ -161,13 +160,13 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         mBreakRulesNotice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (PublicData.getInstance().loginFlag){
+                if (PublicData.getInstance().loginFlag) {
                     SPUtils.getInstance(SettingActivity.this).setWeizhangPush(isChecked);
                     mBreakRulesNotice.setChecked(isChecked);
-                    if (!isChecked){
+                    if (!isChecked) {
                         ToastUtils.showShort(SettingActivity.this, "违章主动通知已关闭");
                     }
-                }else{
+                } else {
                     mBreakRulesNotice.setChecked(false);
                     Intent intent2 = new Intent(SettingActivity.this, LoginActivity.class);
                     startActivity(intent2);
@@ -198,6 +197,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
             }
         });
     }
+
     @Override
     public LogoutPresenter initPresenter() {
         return new LogoutPresenter();
@@ -253,22 +253,22 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                             }
                             picker.setRangeStart(DateUtils.getYear() - 100, DateUtils.getMonth(), DateUtils.getDay());
                             picker.setRangeEnd(DateUtils.getYear(), DateUtils.getMonth(), DateUtils.getDay());
-                            try{
+                            try {
                                 String date = PublicData.getInstance().mLoginInfoBean.getGetdate();
-                                if (!"".equals(date)){
-                                    date = date.replace("-","");
-                                    picker.setSelectedItem(Integer.valueOf(date.substring(0, 4)),Integer.valueOf(date.substring(4, 6)),Integer.valueOf(date.substring(6, 8)));
-                                }else {
+                                if (!"".equals(date)) {
+                                    date = date.replace("-", "");
+                                    picker.setSelectedItem(Integer.valueOf(date.substring(0, 4)), Integer.valueOf(date.substring(4, 6)), Integer.valueOf(date.substring(6, 8)));
+                                } else {
                                     picker.setSelectedItem(DateUtils.getYear(), DateUtils.getMonth(), DateUtils.getDay());
                                 }
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
 
                             picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
                                 @Override
                                 public void onDatePicked(String year, String month, String day) {
-                                    commitGetCardDate(year+"-"+month+"-"+day);
+                                    commitGetCardDate(year + "-" + month + "-" + day);
                                 }
                             });
                             picker.show();
@@ -303,7 +303,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
     /**
      * 选择图片
      */
-    private void chooseHeadImg(){
+    private void chooseHeadImg() {
         File cacheDir;
         if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
             cacheDir = new File(android.os.Environment.getExternalStorageDirectory(), "CTTXHEAD");
@@ -326,9 +326,9 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
 
     public void takePhone() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
-        ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
+                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1001);
+                    Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1001);
         } else {
             camera();
         }
@@ -346,7 +346,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
 
     /**
      * 从相机获取
-	 */
+     */
     public void camera() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         // 判断存储卡是否可以用，可用进行存储
@@ -357,19 +357,19 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 ContentValues contentValues = new ContentValues(1);
                 contentValues.put(MediaStore.Images.Media.DATA, new File(
                         Environment.getExternalStorageDirectory() + "/CTTXHEAD/", PHOTO_FILE_NAME).getAbsolutePath());
-                mImageCaptureUri= getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);
-            }else{
+                mImageCaptureUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+            } else {
                 mImageCaptureUri = Uri.fromFile(new File(Environment
                         .getExternalStorageDirectory() + "/CTTXHEAD/", PHOTO_FILE_NAME));
             }
-            intent.putExtra(MediaStore.EXTRA_OUTPUT,mImageCaptureUri);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
         }
         startActivityForResult(intent, PHOTO_REQUEST_CAMERA);
     }
 
     /**
      * 从相册获取
-	 */
+     */
     public void gallery() {
         // 激活系统图库，选择一张图片
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -399,8 +399,8 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {//如果是7.0android系统
                     ContentValues contentValues = new ContentValues(1);
                     contentValues.put(MediaStore.Images.Media.DATA, cttxFile.getAbsolutePath());
-                    mImageCaptureUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);
-                }else{
+                    mImageCaptureUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+                } else {
                     mImageCaptureUri = Uri.fromFile(cttxFile);
                 }
                 crop(mImageCaptureUri);
@@ -462,9 +462,10 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
 
     /**
      * 更新用户头像信息
+     *
      * @param strUrl
      */
-    private void updateUserImg(final String strUrl){
+    private void updateUserImg(final String strUrl) {
         showDialogLoading();
         getBaseBack().setEnabled(false);
         UpdateUserHeadImgDTO updateUserHeadImgDTO = new UpdateUserHeadImgDTO();
@@ -478,7 +479,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 hideDialogLoading();
                 ImageLoader.getInstance().clearMemoryCache();
                 getBaseBack().setEnabled(true);
-                if(result.getSYS_HEAD().getReturnCode().equals("000000")){
+                if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
                     PublicData.getInstance().mLoginInfoBean.setPortrait(strUrl);
                     ToastUtils.showShort(SettingActivity.this, "修改头像成功");
                 }
@@ -565,7 +566,6 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
     }
 
 
-
     private boolean hasSdcard() {
         if (Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {
@@ -593,8 +593,8 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
             ContentValues contentValues = new ContentValues(1);
             contentValues.put(MediaStore.Images.Media.DATA, new File(Environment
                     .getExternalStorageDirectory() + "/CTTXHEAD/", PHOTO_CROP_FILE_NAME).getAbsolutePath());
-            mImageCaptureUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);
-        }else{
+            mImageCaptureUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+        } else {
             mImageCaptureUri = Uri.fromFile(new File(Environment
                     .getExternalStorageDirectory() + "/CTTXHEAD/", PHOTO_CROP_FILE_NAME));
         }

@@ -156,7 +156,7 @@ public class HomePresenter implements ISplashAtyContract.ISplashAtyPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        LogUtils.e(e.getMessage());
+                        mSplashAtyView.displayAdsImageError(e.getMessage());
                     }
 
                     @Override

@@ -35,6 +35,8 @@ public interface ISplashAtyContract {
         void displayAdsImage(StartPicResult result);
 
         void displayGuideImage(StartPicResult result);
+
+        void displayAdsImageError(String message);
     }
 
     interface ISplashAtyPresenter extends IMvpPresenter {

@@ -8,7 +8,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 24
         versionCode 25
-        versionName "2.5.0.1"
+        versionName "2.5.0.2"
         aaptOptions.cruncherEnabled = false //禁止gradle检查png的合法性
         aaptOptions.useNewCruncher = false //关闭androidstudio的png的合法性检查
         // dex突破65535的限制

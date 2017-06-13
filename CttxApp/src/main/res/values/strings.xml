@@ -18,7 +18,7 @@
     <string name="common_close">关闭</string>
     <string name="common_empty">很抱歉,暂无数据</string>
 
-<!-- zxing相关配置 -->
+    <!-- zxing相关配置 -->
     <string name="app_picker_name">Applications</string>
     <string name="bookmark_picker_name">Bookmarks</string>
     <string name="button_add_calendar">Add to calendar</string>
@@ -257,6 +257,10 @@
     </string>
     <string name="tv_license_instructions">
         <u>在线处理违章，只需要10S</u>
+    </string>
+    <string name="tv_driving_hint">
+        注：可手动刷新新查看订单状态；\n
+        代驾完成后可提醒司机上传订单完成，可查看消费价格。
     </string>
 
 </resources>

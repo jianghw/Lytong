@@ -9,20 +9,9 @@ import com.zantong.mobilecttx.presenter.HelpPresenter;
 
 /**
  * 活动规则说明
- * @author zyb
- *
- *  
- *    *  *   *  *     
- *  *      *      *   
- *  *             *   
- *   *           *    
- *      *     *       
- *         *          
- * 
- *
- * create at 17/1/11 下午4:10
  */
-public class HundredAgreementActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements View.OnClickListener, IBaseView {
+public class HundredAgreementActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
+        implements View.OnClickListener, IBaseView {
 
 
     @Override

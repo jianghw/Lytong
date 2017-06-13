@@ -510,6 +510,28 @@
                 android:src="@mipmap/arrow_left_big_iamge"/>
         </RelativeLayout>
 
+        <TextView style="@style/line_splite_gray"/>
+
+        <RelativeLayout
+            android:id="@+id/about_advertising"
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:background="@color/white">
+
+            <ImageView
+                style="@style/mineItemHead"
+                android:src="@mipmap/icon_xieyi"/>
+
+            <TextView
+                style="@style/payRecordTime"
+                android:layout_marginLeft="53dip"
+                android:text="用户协议与隐私说明"/>
+
+            <ImageView
+                style="@style/mineItemArrow"
+                android:src="@mipmap/arrow_left_big_iamge"/>
+        </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"

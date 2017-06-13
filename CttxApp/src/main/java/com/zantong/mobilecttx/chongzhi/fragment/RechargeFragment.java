@@ -22,6 +22,7 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.PullableBaseFragment;
+import com.zantong.mobilecttx.chongzhi.activity.RechargeAgreementActivity;
 import com.zantong.mobilecttx.chongzhi.adapter.OilPriceAdapter;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeBean;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponBean;
@@ -160,6 +161,9 @@ public class RechargeFragment extends PullableBaseFragment
 
         mTvDesc.setText(getClickableSpan());
         mTvDesc.setMovementMethod(LinkMovementMethod.getInstance());
+
+        //TODO 保存的卡号 显示
+        mEditCardnum.setText(SPUtils.getInstance(getActivity().getApplicationContext()).getOilCard());
     }
 
     /**
@@ -356,11 +360,11 @@ public class RechargeFragment extends PullableBaseFragment
                                 public void onActivityCouponClick(View view) {
                                     openCouponActy();
                                 }
-                            },
-                            isChoice);
+                            });
                 }
                 break;
-            case R.id.tv_agreement:
+            case R.id.tv_agreement://充值协议
+                Act.getInstance().gotoIntent(getActivity(), RechargeAgreementActivity.class);
                 break;
             case R.id.tv_commit://提交
                 submitFormValidation();
@@ -372,19 +376,30 @@ public class RechargeFragment extends PullableBaseFragment
      * 去吧 优惠详情页面
      */
     private void openCouponActy() {
+        //选择的优惠劵
         if (couponList != null && couponList.size() > 0) {
-            RechargeCouponBean bean = couponList.get(0);
+            RechargeCouponBean couponBean = null;
+            for (RechargeCouponBean bean : couponList) {
+                if (bean.isChoice()) {
+                    couponBean = bean;
+                    break;
+                }
+            }
+            if (couponBean == null) {
+                ToastUtils.showShort(getActivity().getApplicationContext(), "请选择优惠劵");
+                return;
+            }
             CouponFragmentBean couponFragmentBean = null;
             try {
                 couponFragmentBean = new CouponFragmentBean();
-                couponFragmentBean.setCouponId(String.valueOf(bean.getId()));
-                couponFragmentBean.setCouponName(bean.getCouponName());
-                couponFragmentBean.setCouponContent(bean.getCouponContent());
-                couponFragmentBean.setCouponCode(String.valueOf(bean.getCouponCode()));
-                couponFragmentBean.setCouponImage(bean.getCouponImage());
-                couponFragmentBean.setCouponStatus(String.valueOf(bean.getCouponType()));
-                couponFragmentBean.setCouponUse(bean.getCouponUse());
-                couponFragmentBean.setCouponValidityEnd(bean.getCouponValidityEnd());
+                couponFragmentBean.setCouponId(String.valueOf(couponBean.getId()));
+                couponFragmentBean.setCouponName(couponBean.getCouponName());
+                couponFragmentBean.setCouponContent(couponBean.getCouponContent());
+                couponFragmentBean.setCouponCode(String.valueOf(couponBean.getCouponCode()));
+                couponFragmentBean.setCouponImage(couponBean.getCouponImage());
+                couponFragmentBean.setCouponStatus(String.valueOf(couponBean.getCouponType()));
+                couponFragmentBean.setCouponUse(couponBean.getCouponUse());
+                couponFragmentBean.setCouponValidityEnd(couponBean.getCouponValidityEnd());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -536,14 +551,16 @@ public class RechargeFragment extends PullableBaseFragment
      * 点击优惠卷 回显示
      */
     private void couponDialogClickBack(Object data) {
-        isChoice = !isChoice;
         if (data != null && data instanceof CommonTwoLevelMenuBean) {
             CommonTwoLevelMenuBean bean = (CommonTwoLevelMenuBean) data;
             if (couponList != null && couponList.size() > 0) {
                 for (RechargeCouponBean couponBean : couponList) {
                     if (couponBean.getCouponContent().equals(bean.getContext())) {
+                        isChoice = !(bean.getId() == -1);
+                        couponBean.setChoice(isChoice);
                         displayCouponByBean(couponBean);
-                        break;
+                    } else {
+                        couponBean.setChoice(false);
                     }
                 }
             }
@@ -569,7 +586,7 @@ public class RechargeFragment extends PullableBaseFragment
      */
     @Override
     public void onCouponByTypeError(String message) {
-        displayCouponState("获取优惠劵失败,点击重新获取");
+        displayCouponState("获取失败,点击加载");
 
         ToastUtils.showShort(getContext().getApplicationContext(), message);
         dismissLoadingDialog();
@@ -582,6 +599,7 @@ public class RechargeFragment extends PullableBaseFragment
      */
     private void displayCouponState(String msg) {
         mCouponType = 2;
+        isChoice = msg.equals("无优惠劵") || msg.equals("获取失败,点击加载");
         mTvPayCoupon.setText(msg);
         mTvPayCouponDate.setVisibility(View.GONE);
         mImgCouponState.setImageResource(R.mipmap.icon_nocoupon);
@@ -599,12 +617,12 @@ public class RechargeFragment extends PullableBaseFragment
             List<RechargeCouponBean> resultData = result.getData();
             if (couponList == null) couponList = new ArrayList<>();
             if (!couponList.isEmpty()) couponList.clear();
-            if (resultData.size() > 0) couponList.add(resultData.get(0));
-            else couponList.addAll(resultData);
+            couponList.addAll(resultData);
 
             if (resultData.size() > 0) {
                 RechargeCouponBean bean = resultData.get(0);
                 if (bean == null) return;
+                bean.setChoice(true);//默认手动选择第一条优惠劵
                 displayCouponByBean(bean);
             } else {
                 displayCouponState("无优惠劵");

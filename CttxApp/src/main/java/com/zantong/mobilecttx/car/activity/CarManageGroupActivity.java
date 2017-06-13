@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -136,7 +135,7 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
         if (mServerList.size() < 3) {
             Act.getInstance().gotoIntent(this, AddCarActivity.class);
         } else {
-            DialogUtils.createDialog(this, "您的车辆数量已达上限（最多3两）");
+            DialogUtils.createDialog(this, "您的车辆数量已达上限（最多3辆）");
         }
     }
 

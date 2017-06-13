@@ -43,7 +43,8 @@ public class LytMessageReceiver extends MessageReceiver {
      * 2是消息
      */
     @Override
-    public void onNotification(Context context, String title, String summary, Map<String, String> extraMap) {
+    public void onNotification(Context context, String title,
+                               String summary, Map<String, String> extraMap) {
         PushBean pushBean = new PushBean();
         if (null != extraMap) {
             for (Map.Entry<String, String> entry : extraMap.entrySet()) {
@@ -61,7 +62,7 @@ public class LytMessageReceiver extends MessageReceiver {
             pushBean.setDate(Tools.getYearDate());
             pushBean.setNewMeg(true);
 
-            if (pushBean.getType().equals("1")) {
+            if (pushBean.getType() != null && pushBean.getType().equals("1")) {
                 EventBus.getDefault().postSticky(new AddPushTrumpetEvent(pushBean));
             }
 
@@ -87,7 +88,6 @@ public class LytMessageReceiver extends MessageReceiver {
     public void onMessage(Context context, CPushMessage cPushMessage) {
         try {
             LogUtils.i("收到一条推送消息 ====： " + cPushMessage.getTitle());
-
             // 持久化推送的消息到数据库
             new MessageDao(context).add(new MessageEntity(cPushMessage.getMessageId().substring(6, 16),
                     Integer.valueOf(cPushMessage.getAppId()), cPushMessage.getTitle(),
@@ -102,6 +102,7 @@ public class LytMessageReceiver extends MessageReceiver {
      */
     @Override
     public void onNotificationOpened(Context context, String title, String summary, String extraMap) {
+        LogUtils.e("onNotificationOpened");
         AliPushExtBean pushExtBean = new Gson().fromJson(extraMap, AliPushExtBean.class);
         if (pushExtBean != null) {
             String type = pushExtBean.getType();

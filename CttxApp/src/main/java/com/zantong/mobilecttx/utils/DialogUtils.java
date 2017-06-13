@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.utils;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,6 +10,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.Display;
@@ -254,14 +256,13 @@ public class DialogUtils {
     public static void createCouponSelectDialog(Context context, String title,
                                                 List<RechargeCouponBean> list,
                                                 final DialogOnClickBack onClickBack,
-                                                final ActivityOnClick onActivityClick,
-                                                boolean isChoice) {
+                                                final ActivityOnClick onActivityClick) {
         List<CommonTwoLevelMenuBean> mList = new ArrayList<>();
         for (RechargeCouponBean bean : list) {
             CommonTwoLevelMenuBean twoLevelMenuBean = new CommonTwoLevelMenuBean();
             //TODO 协议-1为优惠券
-            twoLevelMenuBean.setId(-1);
-            twoLevelMenuBean.setImgId(isChoice ? R.mipmap.icon_coupon : R.mipmap.icon_nocoupon);
+            twoLevelMenuBean.setId(bean.isChoice() ? -1 : -2);
+            twoLevelMenuBean.setImgId(bean.isChoice() ? R.mipmap.icon_coupon : R.mipmap.icon_nocoupon);
             twoLevelMenuBean.setContext(bean.getCouponContent());
             mList.add(twoLevelMenuBean);
         }
@@ -835,6 +836,7 @@ public class DialogUtils {
      *
      * @param context
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static void previewImg(final Context context, Bitmap bmp, final View.OnClickListener listener) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
         View view = ((Activity) context).getLayoutInflater().inflate(

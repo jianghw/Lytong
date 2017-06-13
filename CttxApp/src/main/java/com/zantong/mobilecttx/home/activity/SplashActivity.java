@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -159,32 +158,34 @@ public class SplashActivity extends AppCompatActivity
             StartPicBean bean = mList.get(0);
             url = bean.getPicUrl();
         }
-        if (!TextUtils.isEmpty(url)) {
-            ImageLoader.getInstance().displayImage(url, mImgAdvert,
-                    ImageOptions.getSplashOptions(), new ImageLoadingListener() {
-                        @Override
-                        public void onLoadingStarted(String s, View view) {
+        ImageLoader.getInstance().displayImage(url, mImgAdvert,
+                ImageOptions.getSplashOptions(), new ImageLoadingListener() {
+                    @Override
+                    public void onLoadingStarted(String s, View view) {
 
-                        }
+                    }
 
-                        @Override
-                        public void onLoadingFailed(String s, View view, FailReason failReason) {
-                            displaySkipTv(true);
-                        }
+                    @Override
+                    public void onLoadingFailed(String s, View view, FailReason failReason) {
+                        displaySkipTv(true);
+                    }
 
-                        @Override
-                        public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                            displaySkipTv(true);
-                        }
+                    @Override
+                    public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                        displaySkipTv(true);
+                    }
 
-                        @Override
-                        public void onLoadingCancelled(String s, View view) {
+                    @Override
+                    public void onLoadingCancelled(String s, View view) {
 
-                        }
-                    });
-        } else {
-            displaySkipTv(true);
-        }
+                    }
+                });
+    }
+
+    @Override
+    public void displayAdsImageError(String message) {
+        mImgAdvert.setImageResource(R.mipmap.ic_splash_default);
+        displaySkipTv(true);
     }
 
     /**

@@ -22,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tv_info"
+        android:layout_marginTop="@dimen/ds_30"
         android:src="@mipmap/icon_dot_sel"/>
 
 </RelativeLayout>

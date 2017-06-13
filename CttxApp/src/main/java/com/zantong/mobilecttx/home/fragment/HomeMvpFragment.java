@@ -31,6 +31,7 @@ import com.zantong.mobilecttx.api.FileDownloadApi;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
 import com.zantong.mobilecttx.base.bean.BaseResult;
+import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.fragment.BaseFragment;
 import com.zantong.mobilecttx.base.fragment.PullableBaseFragment;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
@@ -47,6 +48,7 @@ import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
+import com.zantong.mobilecttx.eventbus.GetMsgAgainEvent;
 import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
 import com.zantong.mobilecttx.home.activity.GuideActivity;
 import com.zantong.mobilecttx.home.activity.HomeActivity;
@@ -62,6 +64,7 @@ import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
 import com.zantong.mobilecttx.map.activity.BaiduMapActivity;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.user.activity.MineActivity;
+import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
@@ -89,6 +92,7 @@ import com.zantong.mobilecttx.widght.AddCarViewPager;
 import com.zantong.mobilecttx.widght.HeaderViewPager;
 import com.zantong.mobilecttx.widght.MainScrollUpAdvertisementView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -121,7 +125,7 @@ import rx.schedulers.Schedulers;
 public class HomeMvpFragment extends PullableBaseFragment implements View.OnClickListener {
 
     private ArrayList<BaseFragment> mFragmentList = new ArrayList<>();
-    private List<HomeNotice> mList = new ArrayList<>();
+    private List<HomeNotice> mList = Collections.synchronizedList(new ArrayList<HomeNotice>());
 
     private static final String SHOWCASE_ID = "cttx_homefragment";
     private boolean signStatus;//获取报名状态是否成功
@@ -356,6 +360,29 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
         updateNoticeMessage(bean);
     }
 
+    /**
+     * 再次获取消息数量
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onDataSynEvent(GetMsgAgainEvent event) {
+        LogUtils.e("GetMsgAgainEvent");
+        if (event != null && event.getStatus()) {
+            BaseDTO dto = new BaseDTO();
+            dto.setUsrId(RSAUtils.strByEncryption(this.getActivity(), PublicData.getInstance().userID, true));
+            CarApiClient.getUnReadMsgCount(this.getActivity(), dto, new CallBack<MessageCountResult>() {
+                @Override
+                public void onSuccess(MessageCountResult result) {
+                    if (result.getResponseCode() == 2000) {
+                        HomeActivity activity = (HomeActivity) getActivity();
+                        if (activity != null) {
+                            activity.messageCount(result.getData() != null ? result.getData().getCount() : 0);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
     @Override
     protected void onLoadMoreData() {
     }
@@ -429,9 +456,10 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
             bendiCarInfo(1);
         }
         //mHeaderViewPager.setAutoScroll();
-
         //小喇叭
         initScrollUp(new ArrayList<HomeNotice>());
+        //利盈通数据
+        getHomeData();
         //版本更新
         initAppLatestVersion();
     }
@@ -489,8 +517,6 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
     @Override
     public void onResume() {
         super.onResume();
-        //利盈通数据
-        getHomeData();
         if (mHomeScrollUp != null) mHomeScrollUp.start();
         new Thread(networkTask).start();
     }
@@ -647,9 +673,10 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                     }
                     //小喇叭通知
                     if (bean != null && bean.getNotices() != null) {
+                        mHomeScrollUp.setData(bean.getNotices());
+
                         if (!mList.isEmpty()) mList.clear();
                         mList.addAll(bean.getNotices());
-                        mHomeScrollUp.setData(bean.getNotices());
                     }
                     //广告页面
                     if (bean != null && bean.getAdvertisementResponse() != null) {
@@ -677,18 +704,26 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
     /**
      * 小喇叭更新通知
      */
-    public void updateNoticeMessage(PushBean bean) {
+    public synchronized void updateNoticeMessage(PushBean bean) {
         List<HomeNotice> notices = new ArrayList<>();
-        if (mList.isEmpty()) return;
-        for (HomeNotice notice : mList) {
-            if (!bean.getId().equals(notice.getId())) {
-                notices.add(new HomeNotice(bean.getId(), 3, bean.getContent()));
+        if (mList.isEmpty() || mList == null) {
+            notices.add(new HomeNotice(bean.getId(), 3, bean.getContent(), bean.isNewMeg()));
+        } else {
+            String newId = bean.getId();
+            for (HomeNotice notice : mList) {
+                if (notice.getId().equals(newId)) {
+                    notice.setNewMeg(bean.isNewMeg());
+                } else {
+                    notices.add(new HomeNotice(bean.getId(), 3, bean.getContent(), bean.isNewMeg()));
+                    break;
+                }
             }
+            notices.addAll(mList);
         }
-        notices.addAll(mList);
+        mHomeScrollUp.setData(notices);
+
         if (!mList.isEmpty()) mList.clear();
         mList.addAll(notices);
-        mHomeScrollUp.setData(mList);
     }
 
 
@@ -1021,5 +1056,9 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
         if (mHomeHeaderview != null) mHomeHeaderview.close();
         if (!mList.isEmpty()) mList.clear();
         if (!mFragmentList.isEmpty()) mFragmentList.clear();
+        EventBus.getDefault().removeStickyEvent(AddPushTrumpetEvent.class);
+        EventBus.getDefault().removeStickyEvent(GetMsgAgainEvent.class);
+        EventBus.getDefault().removeStickyEvent(UpdateCarInfoEvent.class);
+        EventBus.getDefault().removeStickyEvent(BenDiCarInfoEvent.class);
     }
 }

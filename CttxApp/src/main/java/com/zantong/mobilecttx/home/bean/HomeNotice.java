@@ -5,20 +5,26 @@ import java.io.Serializable;
 /**
  * Created by zhoujie on 2016/9/19.
  */
-public class HomeNotice implements Serializable{
-    private String id;	        //通知ID
-    private int type;	//通知类型  1.年检  2.驾照换证  3.油价通知  4.违章详情
-    private String desc;	//通知内容
+public class HomeNotice implements Serializable {
+    private String id;            //通知ID
+    private int type;    //通知类型  1.年检  2.驾照换证  3.油价通知  4.违章详情
+    private String desc;    //通知内容
     private String date; //日期
     private boolean isNewMeg;  //是否是一个新的消息
 
-    public HomeNotice(){
+    public HomeNotice() {
 
     }
+
     public HomeNotice(String id, int type, String desc) {
         this.id = id;
         this.type = type;
         this.desc = desc;
+    }
+
+    public HomeNotice(String id, int type, String desc, boolean isNewMeg) {
+        this(id, type, desc);
+        this.isNewMeg = isNewMeg;
     }
 
     public boolean isNewMeg() {

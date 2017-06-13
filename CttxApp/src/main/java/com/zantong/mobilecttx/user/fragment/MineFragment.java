@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -37,6 +38,7 @@ import com.zantong.mobilecttx.common.AppManager;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.common.activity.CommonProblemActivity;
 import com.zantong.mobilecttx.home.bean.VersionResult;
 import com.zantong.mobilecttx.home.dto.VersionDTO;
@@ -54,14 +56,11 @@ import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.ImageOptions;
-import com.zantong.mobilecttx.utils.LogUtils;
-import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationHistoryAcitvity;
-import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -105,17 +104,23 @@ public class MineFragment extends Fragment {
     @Bind(R.id.tv_update)
     TextView mTvUpdate;
 
+    @Bind(R.id.about_advertising)
+    RelativeLayout mTvAdvertising;
+
 
     private LoginInfoBean.RspInfoBean mLoginInfoBean;
 
     InputStream is;
     FileOutputStream fos;
-    private final String apkUrl = Environment.getExternalStorageDirectory().getPath() + File.separator + "app_newkey_release_1_3.apk";
+    private final String apkUrl = Environment.getExternalStorageDirectory().getPath()
+            + File.separator
+            + "app_newkey_release_1_3.apk";
     ProgressDialog progressBar;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mine_view, container, false);
         ButterKnife.bind(this, view);
         return view;
@@ -140,7 +145,7 @@ public class MineFragment extends Fragment {
         UserApiClient.getCurrentVerson(getActivity(), params, new CallBack<VersionResult>() {
             @Override
             public void onSuccess(VersionResult result) {
-                if (result.getData() != null) {
+                if (result != null && result.getData() != null) {
                     int versionFlag = Tools.compareVersion(Tools.getVerName(getActivity()), result.getData().getVersion());
                     if (versionFlag == -1) {//更新
                         mTvUpdate.setText("请更新最新版本v" + result.getData().getVersion());
@@ -229,23 +234,16 @@ public class MineFragment extends Fragment {
                 userNameText.setText(mLoginInfoBean.getPhoenum().substring(7));
             }
             if (!Tools.isStrEmpty(PublicData.getInstance().filenum)) {
-//                String temp = PublicData.getInstance().cttxCardNumber.substring(0,8);
-//                user_changtong_card.setText(temp+"***");
                 mine_changtong_notice_text.setText("已绑定");
             } else {
                 mine_changtong_notice_text.setText("未绑定");
             }
 
-//            OpenQueryBean.RspInfoBean mRspInfoBean = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(context, PublicData.getInstance().CarLocaelFlag);
-//            if (mRspInfoBean != null) {
-//                mine_manage_vechilse_notice.setText(mRspInfoBean.getUserCarsInfo().size() + " 辆车");
-//            } else {
-//                mine_manage_vechilse_notice.setText("0 辆车");
-//            }
-//            ImageLoad.loadHead(context, PublicData.getInstance().mLoginInfoBean.getPortrait(), userHeadImage);
-//            LogUtils.i("头像地址："+PublicData.getInstance().mLoginInfoBean.getPortrait());
-            ImageLoader.getInstance().displayImage(PublicData.getInstance().mLoginInfoBean.getPortrait(), userHeadImage, ImageOptions.getAvatarOptions());
-
+            ImageLoader.getInstance().displayImage(
+                    PublicData.getInstance().mLoginInfoBean.getPortrait(),
+                    userHeadImage,
+                    ImageOptions.getAvatarOptions()
+            );
         } else {
             mine_changtong_notice_text.setText("未绑定");
             userNameText.setText("您还未登录");
@@ -259,9 +257,13 @@ public class MineFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
+    /**
+     * 点击事件
+     */
     @OnClick({R.id.common_problem, R.id.mine_order, R.id.mine_pay_order, R.id.mine_info_rl,
-            R.id.mine_tools_part1, R.id.mine_manage_vechilse, R.id.mine_share, R.id.mine_manage_weizhang_history,
-            R.id.invite_red_packet, R.id.problem_feedback, R.id.about_us, R.id.mine_meg_layout, R.id.mine_ctk_layout,
+            R.id.mine_tools_part1, R.id.mine_manage_vechilse, R.id.mine_share,
+            R.id.mine_manage_weizhang_history, R.id.invite_red_packet, R.id.problem_feedback,
+            R.id.about_us, R.id.mine_meg_layout, R.id.mine_ctk_layout,
             R.id.mine_youhuijian_layout, R.id.about_update})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -272,7 +274,6 @@ public class MineFragment extends Fragment {
                 break;
             case R.id.mine_tools_part1:  //畅通卡
                 if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {
-                    LogUtils.i("filenum----" + PublicData.getInstance().filenum);
                     Act.getInstance().lauchIntentToLogin(getActivity(), CardHomeActivity.class);
                 } else {
                     Act.getInstance().lauchIntentToLogin(getActivity(), MyCardActivity.class);
@@ -293,7 +294,6 @@ public class MineFragment extends Fragment {
             case R.id.mine_pay_order:  //充值支付订单
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(30));
                 Act.getInstance().lauchIntentToLogin(getActivity(), OrderRechargeActivity.class);
-//                Act.getInstance().gotoIntent(context, OrderRechargeActivity.class);
                 break;
             case R.id.mine_share:  //分享
 
@@ -319,9 +319,7 @@ public class MineFragment extends Fragment {
                 break;
             case R.id.mine_ctk_layout:  //畅通卡
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(25));
-                LicenseFileNumDTO bean = SPUtils.getInstance(getActivity().getApplicationContext()).getLicenseFileNumDTO();
                 if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {
-                    LogUtils.i("filenum----" + PublicData.getInstance().filenum);
                     Act.getInstance().lauchIntentToLogin(getActivity(), CardHomeActivity.class);
                 } else {
                     Act.getInstance().lauchIntentToLogin(getActivity(), MyCardActivity.class);
@@ -333,6 +331,11 @@ public class MineFragment extends Fragment {
                 break;
             case R.id.about_update://版本更新
                 getAppLatestVerson();
+                break;
+            case R.id.about_advertising://用户隐私
+                PublicData.getInstance().webviewUrl = "file:///android_asset/bindcard_agreement.html";
+                PublicData.getInstance().webviewTitle = "隐私声明";
+                Act.getInstance().gotoIntent(getActivity(), BrowserActivity.class);
                 break;
             default:
                 break;

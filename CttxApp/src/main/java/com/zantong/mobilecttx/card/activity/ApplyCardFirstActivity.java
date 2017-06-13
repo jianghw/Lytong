@@ -41,17 +41,16 @@ import butterknife.OnClick;
 
 public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements HandleCTCardApiClient.ResultInterface {
 
-    @Bind(R.id.apply_card_idcard_img)    //驾驶证档案编号
-            ImageView mIdCardImg;
-    @Bind(R.id.apply_card_first_camera)    //驾驶证档案编号
-            ImageView mCameraImg;
-    @Bind(R.id.apply_card_first_filenum)    //驾驶证档案编号
-            EditText mDriverFileNum;
-    @Bind(R.id.apply_card_first_name)     //姓名
-            EditText mName;
-    @Bind(R.id.apply_card_first_idcard)   //身份证
-            EditText mIdCard;
-
+    @Bind(R.id.apply_card_idcard_img)
+    ImageView mIdCardImg; //驾驶证档案编号
+    @Bind(R.id.apply_card_first_camera)
+    ImageView mCameraImg; //驾驶证档案编号
+    @Bind(R.id.apply_card_first_filenum)
+    EditText mDriverFileNum; //驾驶证档案编号
+    @Bind(R.id.apply_card_first_name)
+    EditText mName;//姓名
+    @Bind(R.id.apply_card_first_idcard)
+    EditText mIdCard;//身份证
 
     private String driverFileNum;
     private String name;
