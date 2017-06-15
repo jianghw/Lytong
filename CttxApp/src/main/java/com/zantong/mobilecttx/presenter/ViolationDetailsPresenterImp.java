@@ -3,24 +3,25 @@ package com.zantong.mobilecttx.presenter;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
-import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
+import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.model.ViolationDetailsModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
+import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+
+import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * Created by Administrator on 2016/5/5.

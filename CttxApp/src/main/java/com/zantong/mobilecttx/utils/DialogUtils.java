@@ -755,7 +755,6 @@ public class DialogUtils {
             public void onItemClick(View view, Object data) {
                 UserCarInfoBean bean = (UserCarInfoBean) data;
                 HundredPlanActivity.isSelCar = true;
-                LogUtils.i("----" + bean.getCarnum());
                 textview.setText(bean.getCarnum());
                 dialog.dismiss();
             }

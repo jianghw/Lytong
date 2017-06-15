@@ -16,10 +16,11 @@ import android.widget.LinearLayout;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseFragment;
 import com.zantong.mobilecttx.utils.BaseFragmentPagerAdapter;
-import com.zantong.mobilecttx.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.qqtheme.framework.util.LogUtils;
 
 public class AddCarViewPager extends FrameLayout {
 
@@ -84,7 +85,7 @@ public class AddCarViewPager extends FrameLayout {
      * 初始化相关Data
      */
     private void initData() {
-        dotViewsList = new ArrayList<View>();
+        dotViewsList = new ArrayList<>();
     }
 
     public int getImageCount() {
@@ -95,14 +96,12 @@ public class AddCarViewPager extends FrameLayout {
      * 初始化Views等UI
      */
     private void initUI(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.widget_header_viewpager,
-                this, true);
+        LayoutInflater.from(context).inflate(R.layout.widget_header_viewpager, this, true);
         viewPager = (ViewPager) findViewById(R.id.header_viewpager_images);
         mDotsLayout = (LinearLayout) findViewById(R.id.header_viewpager_dots);
         viewPager.setFocusable(true);
         viewPager.setOffscreenPageLimit(2);
         viewPager.addOnPageChangeListener(new MyPageChangeListener());
-
     }
 
     public void setFragmentList(List<BaseFragment> list, FragmentManager fm) {
@@ -126,8 +125,7 @@ public class AddCarViewPager extends FrameLayout {
 
     private void setDots(int len) {
         if (len > 1) {
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    60, 6);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(60, 6);
             layoutParams.setMargins(8, 4, 10, 6);
             mDotsLayout.removeAllViews();
             dotViewsList.clear();
@@ -214,11 +212,9 @@ public class AddCarViewPager extends FrameLayout {
                 }
                 for (int i = 0; i < len; i++) {
                     if (i == position) {
-                        dotViewsList.get(position).setBackgroundResource(
-                                R.mipmap.icon_square_sel);
+                        dotViewsList.get(position).setBackgroundResource(R.mipmap.icon_square_sel);
                     } else {
-                        dotViewsList.get(i).setBackgroundResource(
-                                R.mipmap.icon_square_nor);
+                        dotViewsList.get(i).setBackgroundResource(R.mipmap.icon_square_nor);
                     }
                 }
             }

@@ -7,7 +7,6 @@ import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.NetUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,6 +25,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import cn.qqtheme.framework.util.LogUtils;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.FormBody;

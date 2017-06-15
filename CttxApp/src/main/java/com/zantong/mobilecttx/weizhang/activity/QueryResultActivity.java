@@ -14,17 +14,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zantong.mobilecttx.card.activity.ChangTongCard;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.weizhang.adapter.IllegalViolationAdapter;
-import com.zantong.mobilecttx.weizhang.bean.AddVehicleBean;
-import com.zantong.mobilecttx.weizhang.bean.IllegalQueryBean;
+import com.zantong.mobilecttx.card.activity.ChangTongCard;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
-import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.interf.ModelView;
 import com.zantong.mobilecttx.presenter.IllegalViolationPresenter;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.PullToRefreshLayout;
 import com.zantong.mobilecttx.utils.PullableRecyclerView;
 import com.zantong.mobilecttx.utils.RefreshNewTools.BaseRecyclerAdapter;
@@ -37,7 +33,10 @@ import com.zantong.mobilecttx.utils.StateBarSetting;
 import com.zantong.mobilecttx.utils.TitleSetting;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.interf.ModelView;
+import com.zantong.mobilecttx.weizhang.adapter.IllegalViolationAdapter;
+import com.zantong.mobilecttx.weizhang.bean.AddVehicleBean;
+import com.zantong.mobilecttx.weizhang.bean.IllegalQueryBean;
+import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,8 +47,10 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.LogUtils;
 
-public class QueryResultActivity extends AppCompatActivity implements BaseRecyclerAdapter.OnRecyclerViewListener, ModelView, View.OnClickListener {
+public class QueryResultActivity extends AppCompatActivity
+        implements BaseRecyclerAdapter.OnRecyclerViewListener, ModelView, View.OnClickListener {
 
     @Bind(R.id.open_view_recyclerview)
     PullableRecyclerView openViewRecyclerview;

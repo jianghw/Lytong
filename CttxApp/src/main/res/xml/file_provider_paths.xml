@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <paths xmlns:android="http://schemas.android.com/apk/res/android">
+        <!--下载apk-->
+
+
+        <!--外部存储空间根目录，等同于 Environment.getExternalStorageDirectory() 所获取的目录路径；-->
+        <external-path
+            name="sdcard_image"
+            path="TZImageDir/"/>
+
+        <!--这个好重要呀-->
+        <root-path
+            name="sdcard_image"
+            path=""/>
+
+        <!--Context.getFilesDir()=/data/data/com.harry.shopping/files-->
+        <!--Context.getCacheDir()=/data/data/com.harry.shopping/cache-->
+        <!--Environment.getExternalStorageDirectory()=/storage/emulated/0-->
+
+        <!--getExternalFilesDir(Environment.DIRECTORY_PICTURES)=/storage/emulated/0/Android/data/com.harry.shopping/files/Pictures-->
+        <!--Context.getExternalFilesDir(null)=/storage/emulated/0/Android/data/com.harry.shopping/files-->
+        <!--Context.getExternalCacheDir()=/storage/emulated/0/Android/data/com.harry.shopping/cache-->
+
+        <!--<files-path name="name" path="path" />-->
+        <!--Context.getFilesDir()-->
+        <!--<cache-path name="name" path="path" />-->
+        <!--Context.getCacheDir()-->
+        <!--<external-path name="name" path="path" />-->
+        <!--Environment.getExternalStorageDirectory()-->
+        <!--<external-files-path name="name" path="path" />-->
+        <!--Context#getExternalFilesDir(String) Context.getExternalFilesDir(null).-->
+        <!--<external-cache-path name="name" path="path" />-->
+        <!--Context.getExternalCacheDir()-->
+    </paths>
+</resources>

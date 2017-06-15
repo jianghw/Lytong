@@ -2,10 +2,8 @@ package com.zantong.mobilecttx.weizhang.activity;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -16,30 +14,25 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.interf.ItemClickListener;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
-import com.zantong.mobilecttx.utils.LogUtils;
-import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.adapter.SectionedExpandableLayoutHelper;
 import com.zantong.mobilecttx.weizhang.bean.ViolationCarInfo;
 import com.zantong.mobilecttx.weizhang.bean.ViolationHistoryBean;
-import com.zantong.mobilecttx.weizhang.bean.ViolationHistoryInfo;
 import com.zantong.mobilecttx.weizhang.bean.ViolationItemBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationItemInfo;
 import com.zantong.mobilecttx.weizhang.dto.ViolationSearchDTO;
-import com.zantong.mobilecttx.widght.ExpandTabView;
 import com.zantong.mobilecttx.widght.MyPopWindow;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.LogUtils;
 
 public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView,HelpPresenter> implements ItemClickListener{
 

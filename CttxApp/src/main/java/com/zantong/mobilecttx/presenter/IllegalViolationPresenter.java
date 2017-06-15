@@ -3,23 +3,22 @@ package com.zantong.mobilecttx.presenter;
 import android.text.TextUtils;
 
 import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.base.BasePresenter;
-import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.base.MessageFormat;
-import com.zantong.mobilecttx.weizhang.bean.AddVehicleBean;
+import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
-import com.zantong.mobilecttx.home.bean.UpdateInfo;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.eventbus.CarInfoEvent;
+import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.model.IllegalViolationModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.AccountRememberCtrl;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.QueryResultActivity;
+import com.zantong.mobilecttx.weizhang.bean.AddVehicleBean;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
@@ -27,6 +26,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
+
+import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * Created by 王海洋 on 16/6/1.

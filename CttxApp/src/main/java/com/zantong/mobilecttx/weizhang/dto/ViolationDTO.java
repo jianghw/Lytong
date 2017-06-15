@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by zhoujie on 2017/2/15.
  */
 
-public class ViolationDTO implements Serializable{
+public class ViolationDTO implements Serializable {
     private String carnum;
     private String enginenum;
     private String carnumtype;

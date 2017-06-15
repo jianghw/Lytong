@@ -33,6 +33,7 @@ public class QueryActivity extends FragmentActivity {
 
     private QueryFragment mQueryFragment;
     private QueryHistory mQueryHistory;
+
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
 
@@ -40,6 +41,7 @@ public class QueryActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.query_activity);
         ButterKnife.bind(this);
         StateBarSetting.settingBar(this);

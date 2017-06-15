@@ -5,7 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import com.zantong.mobilecttx.utils.LogUtils;
+import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * Created by zhengyingbing on 17/4/25.

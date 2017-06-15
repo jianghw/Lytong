@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
 import com.zantong.mobilecttx.utils.AmountUtils;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.BaseRecyclerAdapter;
 
 import java.util.LinkedList;
@@ -19,6 +18,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * Created by Administrator on 2016/5/12.

@@ -26,7 +26,6 @@ import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.DialogMgr;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
@@ -38,8 +37,13 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.LogUtils;
 
-public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements HandleCTCardApiClient.ResultInterface {
+/**
+ * 申办畅通卡
+ */
+public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
+        implements HandleCTCardApiClient.ResultInterface {
 
     @Bind(R.id.apply_card_idcard_img)
     ImageView mIdCardImg; //驾驶证档案编号
@@ -89,7 +93,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 PublicData.getInstance().webviewTitle = "隐私声明";
                 Act.getInstance().gotoIntent(this, BrowserActivity.class);
                 break;
-            case R.id.apply_card_first_commit:
+            case R.id.apply_card_first_commit://下一步
                 mPermissionFrom = 0;
                 PermissionGen.needPermission(this, 100,
                         new String[]{

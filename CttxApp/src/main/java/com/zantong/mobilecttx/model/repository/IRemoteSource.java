@@ -14,6 +14,7 @@ import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import rx.Observable;
 
@@ -102,4 +103,9 @@ public interface IRemoteSource {
      * 加油充值
      */
     Observable<PayOrderResult> onPayOrderByCoupon(String payUrl, String orderPrice, String payType);
+
+    /**
+     * 43.生成违章缴费订单
+     */
+    Observable<PayOrderResult> paymentCreateOrder(ViolationPayDTO payDTO);
 }

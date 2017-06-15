@@ -24,8 +24,9 @@ public class ImageOptions {
                 .showImageForEmptyUri(R.mipmap.ic_default_loading)
                 .showImageOnFail(R.mipmap.ic_default_loading)
                 .showImageOnLoading(R.mipmap.ic_default_loading)
-                .cacheInMemory(true)
-                .cacheOnDisk(true).considerExifParams(true)
+                .cacheInMemory(false)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
                 .bitmapConfig(Bitmap.Config.RGB_565).build();
         return options;
     }
@@ -39,8 +40,9 @@ public class ImageOptions {
                 .showImageOnLoading(R.mipmap.ic_splash_default)
                 .showImageForEmptyUri(R.mipmap.ic_splash_default)
                 .showImageOnFail(R.mipmap.ic_splash_default)
-                .cacheInMemory(true)
-                .cacheOnDisk(true).considerExifParams(true)
+                .cacheInMemory(false)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
                 .bitmapConfig(Bitmap.Config.RGB_565).build();
         return options;
     }
@@ -55,8 +57,26 @@ public class ImageOptions {
                 .showImageOnFail(R.mipmap.app_icon)
                 .showImageOnLoading(R.mipmap.app_icon)
                 .cacheInMemory(true)
-                .cacheOnDisk(true).considerExifParams(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
                 .bitmapConfig(Bitmap.Config.RGB_565).build();
+        return options;
+    }
+
+    /**
+     * 默认车辆图片
+     */
+    public static DisplayImageOptions getCarOptions() {
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .resetViewBeforeLoading(true)
+                .showImageForEmptyUri(R.mipmap.open_no_car_image)
+                .showImageOnFail(R.mipmap.open_no_car_image)
+                .showImageOnLoading(R.mipmap.open_no_car_image)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
         return options;
     }
 
@@ -73,7 +93,8 @@ public class ImageOptions {
                 .showImageOnLoading(defiamge)
                 .cacheInMemory(true)
                 .cacheOnDisk(true).considerExifParams(true)
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
         return options;
     }
 
@@ -82,13 +103,15 @@ public class ImageOptions {
      */
     public static DisplayImageOptions getAvatarOptions() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .resetViewBeforeLoading(true).cacheInMemory(true)
+                .resetViewBeforeLoading(true)
+                .cacheInMemory(true)
                 .showImageForEmptyUri(R.mipmap.icon_portrai)
-                .showImageOnFail(R.mipmap.icon_portrai)
                 .showImageOnLoading(R.mipmap.icon_portrai)
-                .cacheOnDisk(false).displayer(new RoundedBitmapDisplayer(200))
-                .cacheInMemory(false)
-                .considerExifParams(true).bitmapConfig(Bitmap.Config.RGB_565)
+                .showImageOnFail(R.mipmap.icon_portrai)
+                .cacheOnDisk(true)
+                .displayer(new RoundedBitmapDisplayer(200))
+                .considerExifParams(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
         return options;
     }

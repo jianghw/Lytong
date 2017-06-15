@@ -23,7 +23,10 @@ import java.util.List;
 public class PublicData {
 
     private static PublicData instance;
-    private PublicData (){}
+
+    private PublicData() {
+    }
+
     public static synchronized PublicData getInstance() {
         if (instance == null) {
             instance = new PublicData();
@@ -81,7 +84,7 @@ public class PublicData {
 
     public int GUIDE_TYPE = 0;//引导页面
 
-    public void clearData(Context mContext){
+    public void clearData(Context mContext) {
         userID = "";
         loginFlag = false;
         updateMsg = false;

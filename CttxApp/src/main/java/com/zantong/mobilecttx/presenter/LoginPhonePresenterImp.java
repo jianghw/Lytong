@@ -12,7 +12,6 @@ import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.SmsBean;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
@@ -27,6 +26,8 @@ import org.json.JSONObject;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+
+import cn.qqtheme.framework.util.LogUtils;
 
 
 /**

@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/colorNoticeGrayNumberFont">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorNoticeGrayNumberFont"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical">
+
     <include
         android:id="@+id/title"
         layout="@layout/cttx_title"/>
+
     <TextView
         android:id="@+id/refreshing_title_notice"
         android:layout_width="match_parent"
         android:layout_height="32dip"
-        android:gravity="center"
         android:layout_below="@id/title"
-        android:textSize="14sp"
-        android:visibility="gone"
         android:background="@color/noticeBackText"
-        android:text="刷新失败"/>
+        android:gravity="center"
+        android:text="刷新失败"
+        android:textSize="14sp"
+        android:visibility="gone"/>
+
     <RelativeLayout
         android:id="@+id/loading_content"
         android:layout_width="match_parent"
@@ -30,7 +34,7 @@
             style="@style/mine_user_font"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
-            android:text="正在努力查询中，请稍后..." />
+            android:text="正在努力查询中，请稍后..."/>
 
         <ImageView
             android:id="@+id/loading_image"
@@ -39,7 +43,7 @@
             android:layout_above="@id/loading_text"
             android:layout_centerInParent="true"
             android:layout_marginBottom="35dip"
-            android:src="@mipmap/loading" />
+            android:src="@mipmap/loading"/>
 
     </RelativeLayout>
 
@@ -56,7 +60,7 @@
             style="@style/mine_user_font"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
-            android:text="获取数据失败，请点击重试" />
+            android:text="获取数据失败，请点击重试"/>
 
         <ImageView
             android:id="@+id/loading_faild_image"
@@ -65,9 +69,10 @@
             android:layout_above="@id/loading_faild_text"
             android:layout_centerInParent="true"
             android:layout_marginBottom="35dip"
-            android:src="@drawable/loading_faild_image_selector" />
+            android:src="@drawable/loading_faild_image_selector"/>
 
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/loading_empty_content"
         android:layout_width="match_parent"
@@ -86,14 +91,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:src="@mipmap/common_empty_icom" />
+                android:src="@mipmap/common_empty_icom"/>
 
             <TextView
                 android:id="@+id/loading_empty_text"
                 style="@style/mine_user_font"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/loading_empty_image"
-                android:text="@string/common_empty" />
+                android:layout_centerHorizontal="true"
+                android:text="@string/common_empty"/>
 
 
         </RelativeLayout>
@@ -104,12 +109,12 @@
         android:id="@+id/add_vechiclies_text"
         android:layout_width="match_parent"
         android:layout_height="53dip"
-        android:gravity="center"
         android:layout_alignParentBottom="true"
-        android:textColor="@color/add_vechicles_selector"
         android:background="@color/civory"
-        android:visibility="gone"
-        android:text="绑定畅通卡"/>
+        android:gravity="center"
+        android:text="绑定畅通卡"
+        android:textColor="@color/add_vechicles_selector"
+        android:visibility="gone"/>
 
     <com.zantong.mobilecttx.utils.PullToRefreshLayout
         android:id="@+id/open_view_pullrefresh"

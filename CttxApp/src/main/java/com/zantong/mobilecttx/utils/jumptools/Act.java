@@ -5,8 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
+
+import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * Created by Administrator on 2016/5/4.

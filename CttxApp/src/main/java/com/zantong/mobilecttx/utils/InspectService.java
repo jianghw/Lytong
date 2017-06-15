@@ -6,13 +6,15 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * 监听日期的服务

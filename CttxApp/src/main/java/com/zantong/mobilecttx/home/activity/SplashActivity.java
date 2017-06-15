@@ -69,7 +69,6 @@ public class SplashActivity extends AppCompatActivity
         mTvCount = (TextView) findViewById(R.id.tv_count);
         mTvSkip = (TextView) findViewById(R.id.tv_skip);
         if (mTvSkip != null) mTvSkip.setOnClickListener(this);
-        displaySkipTv(false);
     }
 
     private void initPresenter() {
@@ -162,7 +161,7 @@ public class SplashActivity extends AppCompatActivity
                 ImageOptions.getSplashOptions(), new ImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String s, View view) {
-
+                        displaySkipTv(true);
                     }
 
                     @Override
@@ -177,7 +176,7 @@ public class SplashActivity extends AppCompatActivity
 
                     @Override
                     public void onLoadingCancelled(String s, View view) {
-
+                        displaySkipTv(true);
                     }
                 });
     }
@@ -200,6 +199,7 @@ public class SplashActivity extends AppCompatActivity
 
     public void displaySkipTv(boolean isDisplay) {
         mTvSkip.setVisibility(isDisplay ? View.VISIBLE : View.GONE);
+        if (isDisplay) mTvSkip.bringToFront();
     }
 
     /**

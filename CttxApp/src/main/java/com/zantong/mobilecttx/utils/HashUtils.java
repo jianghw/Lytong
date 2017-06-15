@@ -34,7 +34,7 @@ public class HashUtils {
         } else {
             basestring.append(saltRelease);
         }
-        LogUtils.i("hash", "===================>" + basestring.toString());
+
         // 使用MD5对待签名串求签
 //        try {
 //            // 生成一个MD5加密计算摘要

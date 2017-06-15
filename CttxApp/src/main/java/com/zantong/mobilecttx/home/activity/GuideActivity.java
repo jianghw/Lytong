@@ -11,12 +11,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.utils.DensityUtils;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
+
+import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * 关于我们

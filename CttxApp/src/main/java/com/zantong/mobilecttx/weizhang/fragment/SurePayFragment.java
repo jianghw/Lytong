@@ -15,27 +15,26 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.BuildConfig;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
-import com.zantong.mobilecttx.base.bean.Result;
-import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
-import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.utils.AmountUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.NetUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.PayWebActivity;
 import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
+import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
+import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.LogUtils;
 
 public class SurePayFragment extends Fragment{
 

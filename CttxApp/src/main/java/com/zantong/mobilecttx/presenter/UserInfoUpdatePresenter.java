@@ -1,35 +1,31 @@
 package com.zantong.mobilecttx.presenter;
 
-import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.base.BasePresenter;
 import com.zantong.mobilecttx.base.MessageFormat;
+import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
+import com.zantong.mobilecttx.interf.UserInfoUpdateView;
 import com.zantong.mobilecttx.model.UserInfoUpdateModel;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
+import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.ToastUtils;
-import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
-import com.zantong.mobilecttx.interf.UserInfoUpdateView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
 
 /**
  * 作者：王海洋
  * 时间：2016/6/3 11:10
  */
-public class UserInfoUpdatePresenter extends BasePresenter<UserInfoUpdateView> implements SimplePresenter, OnLoadServiceBackUI{
+public class UserInfoUpdatePresenter extends BasePresenter<UserInfoUpdateView> implements SimplePresenter, OnLoadServiceBackUI {
 
     private UserInfoUpdate mUserInfoUpdate;
     private UserInfoUpdateModel mUserInfoUpdateModel;
     private String msg = "";
-    private HashMap<String, Object> oMap = new HashMap<>();
     private JSONObject masp = null;
-//    private CTTXHttpQueryPOSTInterface cttxHttpQueryPOSTInterface;
 
     public UserInfoUpdatePresenter(UserInfoUpdate mUserInfoUpdate) {
         this.mUserInfoUpdate = mUserInfoUpdate;
@@ -40,10 +36,10 @@ public class UserInfoUpdatePresenter extends BasePresenter<UserInfoUpdateView> i
     @Override
     public void loadView(int index) {
         mUserInfoUpdate.showDialogLoading();
-        switch (index){
+        switch (index) {
             case 1:
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.u003.01");
-                masp = new JSONObject() ;
+                masp = new JSONObject();
                 try {
                     masp.put("usrid", PublicData.getInstance().userID);
                     masp.put("portrait", mUserInfoUpdate.mapData().get("portrait"));
@@ -63,27 +59,18 @@ public class UserInfoUpdatePresenter extends BasePresenter<UserInfoUpdateView> i
     public void onSuccess(Object clazz, int index) {
         mUserInfoUpdate.hideDialogLoading();
         UpdateInfo mUpdateInfo = (UpdateInfo) clazz;
-        switch (index){
+        switch (index) {
             case 1:
-                if(PublicData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())){
+                if (PublicData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())) {
                     mUserInfoUpdate.updateView(clazz, index);
                     PublicData.getInstance().mLoginInfoBean.setPortrait(mUserInfoUpdate.mapData().get("portrait"));
                     UserInfoRememberCtrl.saveObject(mUserInfoUpdate, PublicData.getInstance().mLoginInfoBean);
-                }else{
+                } else {
                     mUserInfoUpdate.setUserHeadImage();
                     ToastUtils.showShort(mUserInfoUpdate, mUpdateInfo.getSYS_HEAD().getReturnMessage());
                 }
                 break;
-
         }
-//        Gson gson = new Gson();
-//        String json = gson.toJson(mLoginInfoBean);
-////        Log.e("why", json);
-//        AccountRememberCtrl.savePersonal(mLoginPhone, json);
-
-//        Gson gson = new Gson();
-//        LoginInfoBean user = gson.fromJson(string, LoginInfoBean.class);
-
     }
 
     @Override

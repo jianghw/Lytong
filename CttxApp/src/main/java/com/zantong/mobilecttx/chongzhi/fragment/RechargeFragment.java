@@ -229,6 +229,7 @@ public class RechargeFragment extends PullableBaseFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        dismissLoadingDialog();
         mPresenter.unSubscribe();
         mRechargeDTO = null;
         if (priceList != null) priceList.clear();
@@ -680,11 +681,15 @@ public class RechargeFragment extends PullableBaseFragment
     }
 
     private void onPayOrderByCoupon(RechargeResult result) {
-        if (mPresenter != null)
+        String moneyString = getRechargeMoney();
+        double money = Double.parseDouble(moneyString) * 100;
+
+        if (mPresenter != null) {
             mPresenter.onPayOrderByCoupon(
                     result.getData().getOrderId(),
-                    getRechargeMoney(),
+                    String.valueOf(money),
                     String.valueOf(mPayType));
+        }
     }
 
     @Override
@@ -709,6 +714,8 @@ public class RechargeFragment extends PullableBaseFragment
         Act.getInstance().lauchIntentToLogin(getActivity(), BrowserForPayActivity.class);
         //TODO 保存卡号
         SPUtils.getInstance(getActivity().getApplicationContext()).setOilCard(mRechargeDTO.getOilCardNum());
+        //TODO 确保优惠劵的使用状态
+        getActivity().finish();
     }
 
     @Override

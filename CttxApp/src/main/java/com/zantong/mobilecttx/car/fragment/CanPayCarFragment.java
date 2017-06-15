@@ -3,21 +3,21 @@ package com.zantong.mobilecttx.car.fragment;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.car.adapter.CanPayCarAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
+import com.zantong.mobilecttx.car.adapter.CanPayCarAdapter;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.interf.ModelView;
 import com.zantong.mobilecttx.presenter.CanPayCarPresenter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.weizhang.activity.QueryResultActivity;
-import com.zantong.mobilecttx.interf.ModelView;
 import com.zantong.mobilecttx.weizhang.activity.ViolationQueryAcitvity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class CanPayCarFragment extends BaseListFragment<OpenQueryBean.RspInfoBean.UserCarsInfoBean> implements ModelView{
+public class CanPayCarFragment extends BaseListFragment<OpenQueryBean.RspInfoBean.UserCarsInfoBean>
+        implements ModelView{
 
     private CanPayCarPresenter mBindCardPresenter;
     private CanPayCarAdapter mCanPayCarAdapter;

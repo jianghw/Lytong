@@ -11,21 +11,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.weizhang.adapter.QueryHistoryAdapter;
-import com.zantong.mobilecttx.weizhang.bean.AddVehicleBean;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
-import com.zantong.mobilecttx.weizhang.bean.QueryHistoryBean;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.interf.ModelView;
 import com.zantong.mobilecttx.presenter.QueryHistoryPresenter;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.QueryResultActivity;
-import com.zantong.mobilecttx.interf.ModelView;
+import com.zantong.mobilecttx.weizhang.adapter.QueryHistoryAdapter;
+import com.zantong.mobilecttx.weizhang.bean.AddVehicleBean;
+import com.zantong.mobilecttx.weizhang.bean.QueryHistoryBean;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -33,6 +32,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.util.LogUtils;
+
 public class QueryHistory extends Fragment implements QueryHistoryAdapter.OnRecyclerviewItemListener, ModelView{
     @Bind(R.id.query_history_recycler)
     RecyclerView mRecyclerView;

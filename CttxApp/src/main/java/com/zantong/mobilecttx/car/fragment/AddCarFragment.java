@@ -10,9 +10,7 @@ import com.zantong.mobilecttx.car.activity.AddCarActivity;
 import butterknife.OnClick;
 
 /**
- * 用户消息页面
- * @author Sandy
- * create at 16/6/6 下午4:08
+ * 添加车辆页面
  */
 public class AddCarFragment extends BaseExtraFragment {
 

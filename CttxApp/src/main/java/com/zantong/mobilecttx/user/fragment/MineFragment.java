@@ -146,7 +146,8 @@ public class MineFragment extends Fragment {
             @Override
             public void onSuccess(VersionResult result) {
                 if (result != null && result.getData() != null) {
-                    int versionFlag = Tools.compareVersion(Tools.getVerName(getActivity()), result.getData().getVersion());
+                    int versionFlag = Tools.compareVersion(
+                            Tools.getVerName(getActivity()), result.getData().getVersion());
                     if (versionFlag == -1) {//更新
                         mTvUpdate.setText("请更新最新版本v" + result.getData().getVersion());
                         Drawable nav_up = getResources().getDrawable(R.mipmap.icon_dot_sel);
@@ -264,13 +265,11 @@ public class MineFragment extends Fragment {
             R.id.mine_tools_part1, R.id.mine_manage_vechilse, R.id.mine_share,
             R.id.mine_manage_weizhang_history, R.id.invite_red_packet, R.id.problem_feedback,
             R.id.about_us, R.id.mine_meg_layout, R.id.mine_ctk_layout,
-            R.id.mine_youhuijian_layout, R.id.about_update})
+            R.id.mine_youhuijian_layout, R.id.about_update,R.id.about_advertising})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.mine_info_rl:  //用户信息
-                if (!PublicData.getInstance().loginFlag) {
-                    Act.getInstance().lauchIntentToLogin(getActivity(), UserInfoUpdate.class);
-                }
+                Act.getInstance().lauchIntentToLogin(getActivity(), UserInfoUpdate.class);
                 break;
             case R.id.mine_tools_part1:  //畅通卡
                 if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {

@@ -74,7 +74,6 @@ public class DateService extends Service {
         String date = "";
         if (!Tools.isStrEmpty(b.getGetdate())){
             date = b.getGetdate().replace("-","").substring(4) + "095930";
-            LogUtils.i("date----  " + date + " : " + currentTm);
         }
         if (date.equals(currentTm)) {
             Intent intent = new Intent("com.zantong.mobilecttx.USER_ACTION");

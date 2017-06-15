@@ -15,17 +15,17 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
+import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.car.activity.CarManageActivity;
 import com.zantong.mobilecttx.card.activity.ChangTongCard;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
+import com.zantong.mobilecttx.home.activity.CaptureActivity;
+import com.zantong.mobilecttx.interf.ModelView;
 import com.zantong.mobilecttx.presenter.ViolationDetailsPresenterImp;
-import com.zantong.mobilecttx.utils.rsa.Des3;
+import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.utils.AmountUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.StateBarSetting;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.TitleSetting;
@@ -36,11 +36,10 @@ import com.zantong.mobilecttx.utils.permission.PermissionFail;
 import com.zantong.mobilecttx.utils.permission.PermissionGen;
 import com.zantong.mobilecttx.utils.permission.PermissionSuccess;
 import com.zantong.mobilecttx.utils.popwindow.SurePayPopupWindows;
-import com.zantong.mobilecttx.user.activity.LoginActivity;
-import com.zantong.mobilecttx.home.activity.CaptureActivity;
+import com.zantong.mobilecttx.utils.rsa.Des3;
+import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
 import com.zantong.mobilecttx.weizhang.fragment.PayTypeFragment;
 import com.zantong.mobilecttx.weizhang.fragment.SurePayFragment;
-import com.zantong.mobilecttx.interf.ModelView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -50,6 +49,7 @@ import java.util.HashMap;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.LogUtils;
 
 public class ViolationDetails extends FragmentActivity implements ModelView {
     @Bind(R.id.next_btn)

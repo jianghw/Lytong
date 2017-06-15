@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
@@ -33,7 +32,7 @@ public class GuideCTActivity extends BaseActivity implements GuideHeaderViewPage
     @Bind(R.id.guide_headerview)
     GuideHeaderViewPager mGuideHeaderview;
     @Bind(R.id.guide_open)
-    TextView mGuideOpen;
+    ImageView mGuideOpen;
 
     public static final String GUIDE_PIC = "guide_pic_url";
 
@@ -79,7 +78,6 @@ public class GuideCTActivity extends BaseActivity implements GuideHeaderViewPage
     public void getIndex(int index) {
         if (index == 1) {
             mGuideOpen.setVisibility(View.VISIBLE);
-            mGuideOpen.setText("立即开启");
         } else {
             mGuideOpen.setVisibility(View.GONE);
         }

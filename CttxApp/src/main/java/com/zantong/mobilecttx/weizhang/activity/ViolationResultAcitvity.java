@@ -23,6 +23,9 @@ import com.zantong.mobilecttx.weizhang.fragment.ViolationResultFragment;
 import butterknife.Bind;
 import butterknife.OnClick;
 
+/**
+ * 违章信息显示页面
+ */
 public class ViolationResultAcitvity extends BaseMvpActivity<IBaseView, HelpPresenter> {
 
     @Bind(R.id.violation_query_topbtn_layou1)
@@ -53,6 +56,7 @@ public class ViolationResultAcitvity extends BaseMvpActivity<IBaseView, HelpPres
 
     private FragmentTransaction transaction;
     private FragmentManager mFragmentManager;
+
     private ViolationResultFragment mFragment;
     private ViolationPayFragment payFragment;
     private ViolationPayTypeFragment payTypeFragment;

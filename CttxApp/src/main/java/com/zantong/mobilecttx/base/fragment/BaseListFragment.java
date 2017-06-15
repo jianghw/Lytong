@@ -1,7 +1,6 @@
 package com.zantong.mobilecttx.base.fragment;
 
 import android.graphics.Color;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import com.jcodecraeer.xrecyclerview.touch.SwipeMenuCreator;
 import com.jcodecraeer.xrecyclerview.touch.SwipeMenuItem;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.utils.LogUtils;
 
 import java.util.List;
 

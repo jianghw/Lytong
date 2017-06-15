@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * Created by namee on 2015. 11. 17..
  */
 @Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME  )
+@Retention(RetentionPolicy.RUNTIME)
 public @interface AllowPermissions {
-  String[] value();
+    String[] value();
 }

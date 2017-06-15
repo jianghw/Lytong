@@ -5,6 +5,7 @@ import com.zantong.mobilecttx.api.IAnShengService;
 import com.zantong.mobilecttx.api.IFebruaryService;
 import com.zantong.mobilecttx.api.IMessageService;
 import com.zantong.mobilecttx.api.ISplashService;
+import com.zantong.mobilecttx.api.IViolationService;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
@@ -20,6 +21,7 @@ import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import retrofit2.Retrofit;
 import rx.Observable;
@@ -156,5 +158,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<PayOrderResult> onPayOrderByCoupon(String payUrl, String orderPrice, String payType) {
         return initRetrofit().create(IAddOilService.class).onPayOrderByCoupon(payUrl, orderPrice, payType);
+    }
+
+    /**
+     * 43.生成违章缴费订单
+     */
+    @Override
+    public Observable<PayOrderResult> paymentCreateOrder(ViolationPayDTO payDTO) {
+        return initRetrofit().create(IViolationService.class).paymentCreateOrder(payDTO);
     }
 }

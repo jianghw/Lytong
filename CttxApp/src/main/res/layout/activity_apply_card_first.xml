@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <TextView
         style="@style/TextSmallNoticeInfoStyleWhite"
-        android:text="如您近期办理过本行信用卡,可进入快捷办卡操作" />
+        android:text="如您近期办理过本行信用卡,可进入快捷办卡操作"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
             android:maxLines="1"/>
     </LinearLayout>
 
-    <include layout="@layout/view_line1" />
+    <include layout="@layout/view_line1"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,13 +47,15 @@
 
         <TextView
             style="@style/TextInfoStyle"
-            android:text="驾驶证证号" />
+            android:text="驾驶证证号"/>
+
         <ImageView
             android:id="@+id/apply_card_idcard_img"
             android:layout_width="@dimen/ds_150"
             android:layout_height="match_parent"
             android:scaleType="center"
-            android:src="@drawable/illegal_query_notice_selector" />
+            android:src="@drawable/illegal_query_notice_selector"/>
+
         <EditText
             android:id="@+id/apply_card_first_idcard"
             style="@style/EditextNormalNoStyle"
@@ -66,17 +68,18 @@
             android:gravity="center_vertical|right"
             android:hint="请输入身份证号码"
             android:maxLength="18"
-            android:maxLines="1" />
+            android:maxLines="1"/>
+
         <ImageView
             android:id="@+id/apply_card_first_camera"
             android:layout_width="@dimen/ds_60"
             android:layout_height="@dimen/ds_60"
             android:layout_centerVertical="true"
             android:layout_marginLeft="4dip"
-            android:src="@mipmap/icon_blue_camera" />
+            android:src="@mipmap/icon_blue_camera"/>
     </LinearLayout>
 
-    <include layout="@layout/view_line1" />
+    <include layout="@layout/view_line1"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -89,14 +92,14 @@
 
         <TextView
             style="@style/TextInfoStyle"
-            android:text="驾档档案编号" />
+            android:text="驾档档案编号"/>
 
         <ImageView
             android:id="@+id/apply_card_first_img"
             android:layout_width="@dimen/ds_150"
             android:layout_height="match_parent"
             android:scaleType="center"
-            android:src="@drawable/illegal_query_notice_selector" />
+            android:src="@drawable/illegal_query_notice_selector"/>
 
         <EditText
             android:id="@+id/apply_card_first_filenum"
@@ -110,7 +113,7 @@
             android:hint="驾驶证档案编号"
             android:inputType="number"
             android:maxLength="12"
-            android:maxLines="1" />
+            android:maxLines="1"/>
     </LinearLayout>
 
     <TextView
@@ -124,7 +127,7 @@
         android:paddingRight="@dimen/ds_80"
         android:text="《用户隐私保密说明》"
         android:textColor="@color/light_blue"
-        android:textSize="@dimen/fs_36" />
+        android:textSize="@dimen/fs_14sp"/>
 
     <Button
         android:id="@+id/apply_card_first_commit"

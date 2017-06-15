@@ -25,7 +25,7 @@
                 android:id="@+id/user_qr_code_head_portrait"
                 android:layout_width="@dimen/ds_180"
                 android:layout_height="@dimen/ds_180"
-                android:src="@mipmap/mine_head_default"
+                android:src="@mipmap/icon_portrai"
                 android:layout_marginRight="@dimen/ds_100"/>
 
             <TextView

@@ -5,24 +5,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.bean.Result;
-import com.zantong.mobilecttx.user.dto.PersonInfoDTO;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.interf.ILoginView;
 import com.zantong.mobilecttx.presenter.LoginPresenter;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
+import com.zantong.mobilecttx.user.dto.PersonInfoDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.ValidateUtils;
-import com.zantong.mobilecttx.interf.ILoginView;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import butterknife.Bind;
+import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * 我的邀请码

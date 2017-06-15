@@ -45,6 +45,7 @@ public class LytMessageReceiver extends MessageReceiver {
     @Override
     public void onNotification(Context context, String title,
                                String summary, Map<String, String> extraMap) {
+        LogUtils.e(title+"onNotification"+summary);
         PushBean pushBean = new PushBean();
         if (null != extraMap) {
             for (Map.Entry<String, String> entry : extraMap.entrySet()) {

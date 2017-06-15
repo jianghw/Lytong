@@ -12,39 +12,37 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.zantong.mobilecttx.card.activity.CardHomeActivity;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.bean.BaseResult;
-import com.zantong.mobilecttx.user.bean.LoginResult;
-import com.zantong.mobilecttx.weizhang.bean.QueryHistoryBean;
 import com.zantong.mobilecttx.base.bean.Result;
-import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
+import com.zantong.mobilecttx.card.activity.CardHomeActivity;
+import com.zantong.mobilecttx.card.dto.BindCarDTO;
+import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.eventbus.CarInfoEvent;
+import com.zantong.mobilecttx.home.activity.HomeActivity;
+import com.zantong.mobilecttx.interf.IOrderView;
+import com.zantong.mobilecttx.presenter.OrderPresenter;
+import com.zantong.mobilecttx.user.bean.LoginResult;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.user.dto.RegisterDTO;
-import com.zantong.mobilecttx.eventbus.CarInfoEvent;
-import com.zantong.mobilecttx.presenter.OrderPresenter;
-import com.zantong.mobilecttx.utils.rsa.Des3;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.AccountRememberCtrl;
 import com.zantong.mobilecttx.utils.DialogMgr;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ScreenManager;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.utils.rsa.Des3;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
-import com.zantong.mobilecttx.card.activity.ChangTongCard;
-import com.zantong.mobilecttx.home.activity.HomeActivity;
-import com.zantong.mobilecttx.interf.IOrderView;
+import com.zantong.mobilecttx.weizhang.bean.QueryHistoryBean;
 import com.zantong.mobilecttx.widght.CustomCharKeyBoard;
 import com.zantong.mobilecttx.widght.CustomNumKeyBoard;
 
@@ -56,6 +54,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.Bind;
+import cn.qqtheme.framework.util.LogUtils;
 
 public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresenter> implements View.OnTouchListener, View.OnClickListener,View.OnLongClickListener {
 

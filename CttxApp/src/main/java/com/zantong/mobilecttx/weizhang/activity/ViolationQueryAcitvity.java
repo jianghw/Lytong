@@ -9,41 +9,33 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.api.CallBack;
-import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.car.adapter.MyCarAdapter;
 import com.zantong.mobilecttx.car.bean.MyCarBean;
-import com.zantong.mobilecttx.car.bean.PayCar;
-import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.CommonListActivity;
-import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
-import com.zantong.mobilecttx.user.dto.LogoutDTO;
 import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
 import com.zantong.mobilecttx.utils.DialogMgr;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.LogUtils;
 
-public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView,HelpPresenter> {
+public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPresenter> {
 
     @Bind(R.id.violation_query_province_text)
     TextView mProvinceText;//车牌省份
@@ -95,16 +87,16 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView,HelpPresen
         mRecyclerView.setAdapter(mAdapter);
         List<MyCarBean> list = new ArrayList<>();
         list.clear();
-        if (PublicData.getInstance().loginFlag){
-            for (int i = 0; i < PublicData.getInstance().mServerCars.size(); i++){
+        if (PublicData.getInstance().loginFlag) {
+            for (int i = 0; i < PublicData.getInstance().mServerCars.size(); i++) {
                 MyCarBean bean = new MyCarBean();
                 bean.setCar_name(PublicData.getInstance().mServerCars.get(i).getCarnum());
                 bean.setEngine_num(PublicData.getInstance().mServerCars.get(i).getEnginenum());
                 bean.setCar_type(PublicData.getInstance().mServerCars.get(i).getCarnumtype());
                 list.add(bean);
             }
-        }else{
-            for (int i = 0; i < PublicData.getInstance().mLocalCars.size(); i++){
+        } else {
+            for (int i = 0; i < PublicData.getInstance().mLocalCars.size(); i++) {
                 MyCarBean bean = new MyCarBean();
                 bean.setCar_name(PublicData.getInstance().mLocalCars.get(i).getCarnum());
                 bean.setEngine_num(PublicData.getInstance().mLocalCars.get(i).getEnginenum());
@@ -112,16 +104,16 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView,HelpPresen
                 list.add(bean);
             }
         }
-        if (list.size() > 0){
+        if (list.size() > 0) {
             mRecyclerViewTitle.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mRecyclerViewTitle.setVisibility(View.GONE);
         }
         mAdapter.append(list);
         mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, Object data) {
-                MyCarBean bean = (MyCarBean)data;
+                MyCarBean bean = (MyCarBean) data;
 //                PublicData.getInstance().mHashMap.put("carnum",bean.getCar_name());
 //                PublicData.getInstance().mHashMap.put("enginenum",bean.getEngine_num());
 //                PublicData.getInstance().mHashMap.put("carnumtype",bean.getCar_type());
@@ -129,26 +121,27 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView,HelpPresen
 //                Act.getInstance().gotoIntent(ViolationQueryAcitvity.this, QueryResultActivity.class);
 
                 ViolationDTO dto = new ViolationDTO();
-                dto.setCarnum(RSAUtils.strByEncryption(ViolationQueryAcitvity.this,bean.getCar_name(),true));
-                dto.setEnginenum(RSAUtils.strByEncryption(ViolationQueryAcitvity.this,bean.getEngine_num(),true));
+                dto.setCarnum(RSAUtils.strByEncryption(ViolationQueryAcitvity.this, bean.getCar_name(), true));
+                dto.setEnginenum(RSAUtils.strByEncryption(ViolationQueryAcitvity.this, bean.getEngine_num(), true));
                 dto.setCarnumtype(bean.getCar_type());
-                Intent intent = new Intent(ViolationQueryAcitvity.this,ViolationResultAcitvity.class);
+                Intent intent = new Intent(ViolationQueryAcitvity.this, ViolationResultAcitvity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("params",dto);
+                bundle.putSerializable("params", dto);
                 intent.putExtras(bundle);
-                intent.putExtra("plateNum",bean.getCar_name());
+                intent.putExtra("plateNum", bean.getCar_name());
                 startActivity(intent);
             }
         });
     }
+
     @Override
     public HelpPresenter initPresenter() {
         return new HelpPresenter();
     }
 
 
-    @OnClick({R.id.aviolation_query_btn,R.id.violation_query_cartype_desc,
-            R.id.violation_query_province_layout,R.id.violation_query_cartype_layout})
+    @OnClick({R.id.aviolation_query_btn, R.id.violation_query_cartype_desc,
+            R.id.violation_query_province_layout, R.id.violation_query_cartype_layout})
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -182,15 +175,15 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView,HelpPresen
                     return;
                 }
                 String plateNum = mProvinceText.getText().toString() + mPlateEdit.getTransformationMethod().getTransformation(mPlateEdit.getText(), mPlateEdit);
-                dto.setCarnum(RSAUtils.strByEncryption(this,plateNum,true));
-                dto.setEnginenum(RSAUtils.strByEncryption(this,mEngineEdit.getText().toString(),true));
+                dto.setCarnum(RSAUtils.strByEncryption(this, plateNum, true));
+                dto.setEnginenum(RSAUtils.strByEncryption(this, mEngineEdit.getText().toString(), true));
                 dto.setCarnumtype(VehicleTypeTools.switchVehicleCode(mCarTypeText.getText().toString()));
-                LogUtils.i(plateNum+"---"+mEngineEdit.getText().toString()+"---"+mCarTypeText.getText().toString());
-                Intent intent = new Intent(this,ViolationResultAcitvity.class);
+                LogUtils.i(plateNum + "---" + mEngineEdit.getText().toString() + "---" + mCarTypeText.getText().toString());
+                Intent intent = new Intent(this, ViolationResultAcitvity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("params",dto);
+                bundle.putSerializable("params", dto);
                 intent.putExtras(bundle);
-                intent.putExtra("plateNum",plateNum);
+                intent.putExtra("plateNum", plateNum);
                 startActivity(intent);
                 break;
         }

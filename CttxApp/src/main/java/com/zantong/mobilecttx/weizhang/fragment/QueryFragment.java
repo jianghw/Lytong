@@ -48,7 +48,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 public class QueryFragment extends Fragment implements ModelView {
+
     @Bind(R.id.engine_number_image)
     ImageView engine_number_image;
     @Bind(R.id.privince_edit_rl)
@@ -69,6 +71,7 @@ public class QueryFragment extends Fragment implements ModelView {
     TextView mRecyclerViewTitle;
     @Bind(R.id.illegal_query_xrecyclerview)
     XRecyclerView mRecyclerView;
+
     private TextPopupKeyboardUtil mTextPopupKeyboardUtil;
     private Context context;
     private View view;
@@ -79,6 +82,7 @@ public class QueryFragment extends Fragment implements ModelView {
     private boolean addFlag = false;
     private Dialog mDialog;
     MyCarAdapter mAdapter;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +101,7 @@ public class QueryFragment extends Fragment implements ModelView {
         InputMethodManager inputmanger = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
         ButterKnife.bind(this, view);
+
         mIllegalQueryPresenter = new IllegalQueryPresenter(this);
         illegal_query_content.setFocusable(true);
         car_number_tv.setTransformationMethod(new AllCapTransformationMethod());
@@ -113,16 +118,17 @@ public class QueryFragment extends Fragment implements ModelView {
         mRecyclerView.setAdapter(mAdapter);
         List<MyCarBean> list = new ArrayList<>();
         list.clear();
-        if (PublicData.getInstance().loginFlag){
-            for (int i = 0; i < PublicData.getInstance().mServerCars.size(); i++){
+
+        if (PublicData.getInstance().loginFlag) {
+            for (int i = 0; i < PublicData.getInstance().mServerCars.size(); i++) {
                 MyCarBean bean = new MyCarBean();
                 bean.setCar_name(PublicData.getInstance().mServerCars.get(i).getCarnum());
                 bean.setEngine_num(PublicData.getInstance().mServerCars.get(i).getEnginenum());
                 bean.setCar_type(PublicData.getInstance().mServerCars.get(i).getCarnumtype());
                 list.add(bean);
             }
-        }else{
-            for (int i = 0; i < PublicData.getInstance().mLocalCars.size(); i++){
+        } else {
+            for (int i = 0; i < PublicData.getInstance().mLocalCars.size(); i++) {
                 MyCarBean bean = new MyCarBean();
                 bean.setCar_name(PublicData.getInstance().mLocalCars.get(i).getCarnum());
                 bean.setEngine_num(PublicData.getInstance().mLocalCars.get(i).getEnginenum());
@@ -130,21 +136,21 @@ public class QueryFragment extends Fragment implements ModelView {
                 list.add(bean);
             }
         }
-        if (list.size() > 0){
+        if (list.size() > 0) {
             mRecyclerViewTitle.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             mRecyclerViewTitle.setVisibility(View.GONE);
         }
         mAdapter.append(list);
         mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, Object data) {
-                MyCarBean bean = (MyCarBean)data;
+                MyCarBean bean = (MyCarBean) data;
 
-                PublicData.getInstance().mHashMap.put("carnum",bean.getCar_name());
-                PublicData.getInstance().mHashMap.put("enginenum",bean.getEngine_num());
-                PublicData.getInstance().mHashMap.put("carnumtype",bean.getCar_type());
-                PublicData.getInstance().mHashMap.put("IllegalViolationName",bean.getCar_name());//标题
+                PublicData.getInstance().mHashMap.put("carnum", bean.getCar_name());
+                PublicData.getInstance().mHashMap.put("enginenum", bean.getEngine_num());
+                PublicData.getInstance().mHashMap.put("carnumtype", bean.getCar_type());
+                PublicData.getInstance().mHashMap.put("IllegalViolationName", bean.getCar_name());//标题
                 Act.getInstance().gotoIntent(QueryFragment.this.getActivity(), QueryResultActivity.class);
             }
         });
@@ -157,14 +163,13 @@ public class QueryFragment extends Fragment implements ModelView {
         vehicles_type_text.setText(PublicData.getInstance().commonListData);
     }
 
-
     public HashMap<String, String> mapData() {
-//        Log.e("why", (String) car_number_tv.getTransformationMethod().getTransformation(car_number_tv.getText(), car_number_tv));
+
         HashMap<String, String> mHashMap = new HashMap<>();
         mHashMap.put("carnum", privince_edit.getText().toString() + car_number_tv.getTransformationMethod().getTransformation(car_number_tv.getText(), car_number_tv));
         mHashMap.put("enginenum", engine_number_edit.getText().toString());
         mHashMap.put("carnumtype", VehicleTypeTools.switchVehicleCode(vehicles_type_text.getText().toString()));
-//        mHashMap.put("enginenum", vehicles_type_text.getText().toString());
+
         return mHashMap;
     }
 

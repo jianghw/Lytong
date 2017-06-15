@@ -1,87 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorNoticeGrayNumberFont"
-    android:id="@+id/content_all">
+              android:id="@+id/content_all"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorNoticeGrayNumberFont"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/user_info_head_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fs_270"
-        android:paddingRight="@dimen/fs_48"
+        android:background="@color/civory"
         android:paddingLeft="@dimen/fs_48"
-        android:background="@color/civory">
+        android:paddingRight="@dimen/fs_48">
+
         <TextView
             style="@style/payRecordTime"
             android:text="头像"/>
+
         <ImageView
+            android:id="@+id/user_head_image"
             android:layout_width="@dimen/fs_180"
             android:layout_height="@dimen/fs_180"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/fs_57"
-            android:id="@+id/user_head_image"
-            android:src="@mipmap/mine_head_default"/>
+            android:src="@mipmap/icon_portrai"/>
+
         <ImageView
-            style="@style/arrowLeftStyle" />
+            style="@style/arrowLeftStyle"/>
 
     </RelativeLayout>
+
     <include
-        layout="@layout/view_line1" />
+        layout="@layout/view_line1"/>
 
     <RelativeLayout
         android:id="@+id/user_info_name_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fs_144"
-        android:paddingRight="@dimen/fs_48"
+        android:background="@color/civory"
         android:paddingLeft="@dimen/fs_48"
-        android:background="@color/civory">
+        android:paddingRight="@dimen/fs_48">
+
         <TextView
             style="@style/payRecordTime"
             android:text="昵称"/>
+
         <TextView
+            android:id="@+id/user_info_name_text"
             style="@style/mine_user_vertical_font"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/fs_57"
-            android:text="昵称"
-            android:id="@+id/user_info_name_text" />
+            android:text="昵称"/>
+
         <ImageView
-            style="@style/arrowLeftStyle" />
+            style="@style/arrowLeftStyle"/>
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/user_info_phone_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fs_144"
         android:layout_marginTop="@dimen/fs_45"
-        android:paddingRight="@dimen/fs_48"
+        android:background="@color/civory"
         android:paddingLeft="@dimen/fs_48"
-        android:background="@color/civory">
+        android:paddingRight="@dimen/fs_48">
+
         <TextView
             style="@style/payRecordTime"
             android:text="手机号"/>
+
         <TextView
+            android:id="@+id/user_info_phone_text"
             style="@style/mine_user_vertical_font"
             android:layout_alignParentRight="true"
-            android:text="1860****547"
-            android:id="@+id/user_info_phone_text" />
+            android:text="1860****547"/>
+
         <ImageView
             style="@style/arrowLeftStyle"
             android:visibility="gone"/>
     </RelativeLayout>
+
     <include
-        layout="@layout/view_line1" />
+        layout="@layout/view_line1"/>
+
     <RelativeLayout
         android:id="@+id/user_info_change_pwd"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fs_144"
-        android:paddingRight="@dimen/fs_48"
+        android:background="@color/civory"
         android:paddingLeft="@dimen/fs_48"
-        android:background="@color/civory">
+        android:paddingRight="@dimen/fs_48">
+
         <TextView
             style="@style/payRecordTime"
             android:text="修改密码"/>
+
         <ImageView
-            style="@style/arrowLeftStyle" />
+            style="@style/arrowLeftStyle"/>
     </RelativeLayout>
 </LinearLayout>

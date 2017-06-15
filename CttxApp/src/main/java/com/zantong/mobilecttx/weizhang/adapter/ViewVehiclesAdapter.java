@@ -96,7 +96,7 @@ public class ViewVehiclesAdapter extends BaseRecyclerAdapter<OpenQueryBean.RspIn
                 }
             }
 
-            ImageLoad.load(getContext(), mItemLists.get(position).getCarimage(), holder.view_vehicles_image_head);
+            ImageLoad.load(mItemLists.get(position).getCarimage(), holder.view_vehicles_image_head);
         }
     }
 

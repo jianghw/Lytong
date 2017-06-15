@@ -35,7 +35,6 @@ import com.zantong.mobilecttx.map.bean.NetLocationBean;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.ReadFfile;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
@@ -55,6 +54,7 @@ import java.util.concurrent.TimeUnit;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.DatePicker;
+import cn.qqtheme.framework.util.LogUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
@@ -62,6 +62,9 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+/**
+ * 快捷办卡
+ */
 public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements HandleCTCardApiClient.ResultInterface {
 
     @Bind(R.id.applycard_qucik_idcard_num)
@@ -92,7 +95,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
     UISwitchButton mDuiZhangTiXing;
     @Bind(R.id.applycard_qucik_tixing)
     UISwitchButton mHuanKuanTiXing;
-    
+
     @Bind(R.id.applycard_qucik_commit)
     Button mCommit;
     @Bind(R.id.applycard_qucik_hint)
@@ -180,8 +183,9 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
         super.onDestroy();
         PublicData.getInstance().filenum = "";
     }
-    @OnClick({R.id.applycard_qucik_idcard_layout1,R.id.applycard_qucik_idcard_layout2,
-            R.id.applycard_qucik_wangdian,R.id.applycard_qucik_commit})
+
+    @OnClick({R.id.applycard_qucik_idcard_layout1, R.id.applycard_qucik_idcard_layout2,
+            R.id.applycard_qucik_wangdian, R.id.applycard_qucik_commit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.applycard_qucik_idcard_layout1:
@@ -320,11 +324,11 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
     private void checkData() {
         String kahao = mZhuanChuKaHao.getContentText();
         String email = mEmail.getContentText();
-        if (TextUtils.isEmpty(kahao)){
-            ToastUtils.showShort(this,"转出卡号不可为空");
+        if (TextUtils.isEmpty(kahao)) {
+            ToastUtils.showShort(this, "转出卡号不可为空");
             return;
         }
-        if ("".equals(email)){
+        if ("".equals(email)) {
             email = "690635872@qq.com";
         }
         String bankData = mZhuanChuKaHao.getContentText();
@@ -384,6 +388,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
             }
         });
     }
+
     /**
      * 提交办卡信息
      */
@@ -391,24 +396,25 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
         showDialogLoading();
         HandleCTCardApiClient.htmlLocal(this, "cip.cfc.u010.01", quickApplyCardDTO, this);
     }
+
     /**
      * 办卡申请成功后，提交营销代码
      */
-    private void commitYingXiaoDataForLYT(){
+    private void commitYingXiaoDataForLYT() {
 
         YingXiaoDataDTO dto = new YingXiaoDataDTO();
-        dto.setUsrnum(RSAUtils.strByEncryption(this,PublicData.getInstance().userID,true));
-        if (TextUtils.isEmpty(mYingXiaoCode.getContentText())){
+        dto.setUsrnum(RSAUtils.strByEncryption(this, PublicData.getInstance().userID, true));
+        if (TextUtils.isEmpty(mYingXiaoCode.getContentText())) {
             dto.setEmpNum(mEmpNum);
-        }else{
+        } else {
             dto.setEmpNum(mYingXiaoCode.getContentText());
         }
 
         CarApiClient.commitYingXiaoData(this, dto, new CallBack<BaseResult>() {
             @Override
             public void onSuccess(BaseResult result) {
-                if (result.getResponseCode() == 2000){
-                    ToastUtils.showShort(ApplyCardQuickActivity.this,"已提交营销代码");
+                if (result.getResponseCode() == 2000) {
+                    ToastUtils.showShort(ApplyCardQuickActivity.this, "已提交营销代码");
                 }
             }
         });
@@ -436,7 +442,9 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
             }
         });
     }
+
     private DatePicker picker;
+
     /**
      * 选择时间
      * 1.身份证有效期

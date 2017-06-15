@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/context_all"
@@ -14,7 +14,7 @@
             android:id="@+id/manage_cars_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -23,7 +23,7 @@
             android:layout_margin="@dimen/ds_30"
             android:padding="@dimen/ds_15"
             android:text="缴费/改绑说明"
-            android:textColor="@color/blue_light" />
+            android:textColor="@color/blue_light"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                 android:gravity="center"
                 android:text="改绑车辆"
                 android:textColor="@color/add_vechicles_selector"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
         </LinearLayout>
 
@@ -53,7 +53,8 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:gravity="center"
-        android:text="加载中..." />
+        android:text="加载中..."/>
+
     <RelativeLayout
         android:id="@+id/manage_cars_empty_layout"
         android:layout_width="match_parent"
@@ -72,7 +73,7 @@
                 android:id="@+id/pull_refresh_empty_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/common_empty_icom" />
+                android:src="@mipmap/common_empty_icom"/>
 
             <TextView
                 android:id="@+id/pull_refresh_empty_text"
@@ -81,7 +82,7 @@
                 android:layout_marginTop="@dimen/ds_60"
                 android:text="@string/common_empty"
                 android:textColor="@color/gray_66"
-                android:textSize="@dimen/fs_48" />
+                android:textSize="@dimen/fs_48"/>
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

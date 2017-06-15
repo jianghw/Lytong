@@ -3,14 +3,11 @@ package com.zantong.mobilecttx.car.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -52,7 +49,6 @@ import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
 import com.zantong.mobilecttx.utils.CarBrandParser;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
@@ -64,7 +60,6 @@ import com.zantong.mobilecttx.utils.permission.PermissionFail;
 import com.zantong.mobilecttx.utils.permission.PermissionGen;
 import com.zantong.mobilecttx.utils.permission.PermissionSuccess;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
-import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
@@ -81,6 +76,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.LogUtils;
 
 
 public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements IBaseView {

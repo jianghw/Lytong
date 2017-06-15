@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
 import com.zantong.mobilecttx.utils.ToastUtils;
 
@@ -23,6 +22,9 @@ import org.apache.cordova.CordovaWebViewImpl;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
 import org.json.JSONObject;
+
+import cn.qqtheme.framework.util.LogUtils;
+
 public class OpenCardWebActivity extends CordovaActivity {
     RelativeLayout mLayout;
 

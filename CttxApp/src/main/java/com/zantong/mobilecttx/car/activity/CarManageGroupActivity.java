@@ -33,6 +33,7 @@ import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
+import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 
@@ -90,6 +91,8 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
     @Override
     public void initView() {
         setTitleText("车辆管理");
+        setEnsureImg(R.mipmap.icon_addcar);
+
         AddCarActivity.isFrom = false;
     }
 
@@ -98,7 +101,7 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) getEnsureView().getLayoutParams();
         lp.width = 36;
         lp.height = 36;
-        lp.setMargins(0,0,20,0);//左上右下
+        lp.setMargins(0, 0, 20, 0);//左上右下
         getEnsureView().setLayoutParams(lp);
         getEnsureView().setBackgroundResource(R.mipmap.icon_add_car);
         mXRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -131,8 +134,9 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
     @Override
     protected void baseGoEnsure() {
-        super.baseGoEnsure();
-        if (mServerList.size() < 3) {
+        if (mLoadingView.getVisibility() == View.VISIBLE) {
+            ToastUtils.showShort(getApplicationContext(), "数据加载中,请稍后再点击");
+        } else if (mServerList.size() < 3) {
             Act.getInstance().gotoIntent(this, AddCarActivity.class);
         } else {
             DialogUtils.createDialog(this, "您的车辆数量已达上限（最多3辆）");
@@ -141,10 +145,11 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
     private void getCarsInfo() {
         mLoadingView.setVisibility(View.VISIBLE);
-        if(!PublicData.getInstance().loginFlag){
+
+        if (!PublicData.getInstance().loginFlag) {
             List<CarInfoDTO> list = SPUtils.getInstance(this).getCarsInfo();
             testSuperAdapter(list);
-        }else{
+        } else {
             UserCarsDTO params = new UserCarsDTO();
             params.setUsrid(PublicData.getInstance().userID);
             UserApiClient.getCarInfo(this, params, new CallBack<UserCarsResult>() {
@@ -152,7 +157,6 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 public void onSuccess(UserCarsResult result) {
                     hideDialogLoading();
 
-                    setEnsureImg(R.mipmap.icon_addcar);
                     mServerList = result.getRspInfo().getUserCarsInfo();
                     PublicData.getInstance().mCarNum = mServerList.size();
                     PublicData.getInstance().mServerCars = listU(result.getRspInfo().getUserCarsInfo());
@@ -203,16 +207,16 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
     }
 
     //获取活动车辆
-    private void getActivityCarInfo(final List<CarInfoDTO> carInfoDTOList){
+    private void getActivityCarInfo(final List<CarInfoDTO> carInfoDTOList) {
         ActivityCarDTO activityCarDTO = new ActivityCarDTO();
         activityCarDTO.setUsrnum(PublicData.getInstance().userID);
         CarApiClient.getActivityCar(this, activityCarDTO, new CallBack<ActivityCarResult>() {
             @Override
             public void onSuccess(ActivityCarResult result) {
-                if(result.getResponseCode() == 2000){
+                if (result.getResponseCode() == 2000) {
                     setData(result.getData().getPlateNo(), carInfoDTOList);
                 }
-                if(result.getResponseCode() == 4000){
+                if (result.getResponseCode() == 4000) {
                     testSuperAdapter(carInfoDTOList);
                 }
             }
@@ -226,13 +230,13 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
     }
 
     //比较活动车辆和我的车辆
-    private void setData(String plateNo, List<CarInfoDTO> carInfoDTOList){
+    private void setData(String plateNo, List<CarInfoDTO> carInfoDTOList) {
         List<CarInfoDTO> norCarList = new ArrayList<CarInfoDTO>();
-        for(CarInfoDTO carInfoDTO : carInfoDTOList){
+        for (CarInfoDTO carInfoDTO : carInfoDTOList) {
             carInfoDTO.setActivityCar("2");
-            if(plateNo.equals(carInfoDTO.getCarnum())){
+            if (plateNo.equals(carInfoDTO.getCarnum())) {
                 carInfoDTO.setActivityCar("1");
-            }else{
+            } else {
                 carInfoDTO.setActivityCar("2");
             }
             norCarList.add(carInfoDTO);
@@ -259,7 +263,7 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
 //        if (list.size() >= 3){
 //            getEnsureView().setVisibility(View.GONE);
 //        }
-        if (list == null || list.size() == 0)  {
+        if (list == null || list.size() == 0) {
             mEmptyView.setVisibility(View.VISIBLE);
             return;
         }
@@ -289,7 +293,7 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
                     public void onClick(View v) {
                         PublicData.getInstance().mHashMap.put("ConsummateInfo", item);
                         AddCarActivity.isFrom = true;
-                        Act.getInstance().gotoIntent(CarManageGroupActivity.this,AddCarActivity.class);
+                        Act.getInstance().gotoIntent(CarManageGroupActivity.this, AddCarActivity.class);
                     }
                 });
             }
@@ -307,28 +311,28 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
         List<CarInfoDTO> list1 = new ArrayList<>();
         List<CarInfoDTO> list2 = new ArrayList<>();
 //        if (PublicData.getInstance().mPayCarNum >= 2 && PublicData.getInstance().mNorCarNum > 0){
-            for (CarInfoDTO dto : list){
-                if ("1".equals(dto.getIspaycar())){
-                    list1.add(dto);
-                }else{
-                    list2.add(dto);
-                }
+        for (CarInfoDTO dto : list) {
+            if ("1".equals(dto.getIspaycar())) {
+                list1.add(dto);
+            } else {
+                list2.add(dto);
             }
+        }
 //        }else{
 //
 //        }
-        if (list1 != null && list1.size() > 0){
+        if (list1 != null && list1.size() > 0) {
             data.add(new LayoutWrapper(R.layout.item_manage_vehicles_group, new SuperBean("可缴费车辆", false), holderSuper));
-            for (CarInfoDTO dto : list1){
-                data.add(new LayoutWrapper(R.layout.item_manage_vehicles,dto,holderSimple));
+            for (CarInfoDTO dto : list1) {
+                data.add(new LayoutWrapper(R.layout.item_manage_vehicles, dto, holderSimple));
             }
         }
         if (list2 != null && list2.size() > 0) {
             data.add(new LayoutWrapper(R.layout.item_manage_vehicles_group, new SuperBean("仅限违章查询车辆", false), holderSuper));
-        for (CarInfoDTO dto : list2) {
-            data.add(new LayoutWrapper(R.layout.item_manage_vehicles, dto, holderSimple));
+            for (CarInfoDTO dto : list2) {
+                data.add(new LayoutWrapper(R.layout.item_manage_vehicles, dto, holderSimple));
+            }
         }
-    }
         adapter.setData(data);
     }
 
@@ -339,6 +343,7 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
         adapter.removeAll();
         testSuperAdapter(list);
     }
+
     //修改车辆
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSynEvent(EditCarInfoEvent event) {
@@ -347,6 +352,7 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
             getCarsInfo();
         }
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSynEvent(AddCarInfoEvent event) {
         if (event.getStatus()) {

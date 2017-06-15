@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/gray_f5"
-    android:fillViewport="true"
-    android:orientation="vertical"
-    android:id="@+id/content_all">
+              android:id="@+id/content_all"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@color/gray_f5"
+              android:fillViewport="true"
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/textView4"
@@ -15,7 +15,7 @@
         android:paddingLeft="@dimen/ds_45"
         android:text="提醒设置"
         android:textColor="@color/gray_a6"
-        android:textSize="@dimen/fs_36" />
+        android:textSize="@dimen/fs_36"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -30,9 +30,10 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="违章主动通知"
-            android:textSize="@dimen/fs_48" />
+            android:textSize="@dimen/fs_48"/>
 
-        <com.zantong.mobilecttx.widght.UISwitchButton xmlns:zc="http://schemas.android.com/apk/res-auto"
+        <com.zantong.mobilecttx.widght.UISwitchButton
+            xmlns:zc="http://schemas.android.com/apk/res-auto"
             android:id="@+id/setting_breakrules_notice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,12 +41,12 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/ds_30"
             zc:bmHeight="@dimen/ds_90"
-            zc:bmWidth="@dimen/ds_150" />
+            zc:bmWidth="@dimen/ds_150"/>
     </RelativeLayout>
 
     <include
         layout="@layout/view_line1"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -61,9 +62,10 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="记分周期更新通知"
-            android:textSize="@dimen/fs_48" />
+            android:textSize="@dimen/fs_48"/>
 
-        <com.zantong.mobilecttx.widght.UISwitchButton xmlns:zc="http://schemas.android.com/apk/res-auto"
+        <com.zantong.mobilecttx.widght.UISwitchButton
+            xmlns:zc="http://schemas.android.com/apk/res-auto"
             android:id="@+id/setting_score_notice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,7 +73,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/ds_30"
             zc:bmHeight="@dimen/ds_90"
-            zc:bmWidth="@dimen/ds_150" />
+            zc:bmWidth="@dimen/ds_150"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -88,12 +90,12 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="初次领证日期"
-            android:textSize="@dimen/fs_48" />
+            android:textSize="@dimen/fs_48"/>
 
         <ImageView
             android:id="@+id/setting_date_more"
             style="@style/mineItemArrow"
-            android:src="@mipmap/arrow_left_big_iamge" />
+            android:src="@mipmap/arrow_left_big_iamge"/>
 
         <TextView
             android:id="@+id/setting_date_text"
@@ -103,7 +105,7 @@
             android:layout_marginRight="@dimen/ds_30"
             android:layout_toLeftOf="@id/setting_date_more"
             android:text="请选择日期"
-            android:textSize="@dimen/fs_48" />
+            android:textSize="@dimen/fs_48"/>
     </RelativeLayout>
 
     <TextView
@@ -114,9 +116,9 @@
         android:text="更多设置"
         android:textColor="@color/gray_a6"
         android:textSize="@dimen/fs_36"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
-    <include layout="@layout/view_line1" />
+    <include layout="@layout/view_line1"/>
 
     <RelativeLayout
         android:id="@+id/activity_help"
@@ -131,14 +133,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="意见反馈" />
+            android:text="意见反馈"/>
 
         <ImageView
             style="@style/mineItemArrow"
-            android:src="@mipmap/arrow_left_big_iamge" />
+            android:src="@mipmap/arrow_left_big_iamge"/>
     </RelativeLayout>
 
-    <include layout="@layout/view_line1" />
+    <include layout="@layout/view_line1"/>
 
     <RelativeLayout
         android:id="@+id/activity_about"
@@ -153,11 +155,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="关于我们" />
+            android:text="关于我们"/>
 
         <ImageView
             style="@style/mineItemArrow"
-            android:src="@mipmap/arrow_left_big_iamge" />
+            android:src="@mipmap/arrow_left_big_iamge"/>
     </RelativeLayout>
 
     <TextView
@@ -167,7 +169,7 @@
         android:paddingLeft="@dimen/ds_45"
         android:text="账户设置"
         android:textColor="@color/gray_a6"
-        android:textSize="@dimen/fs_36" />
+        android:textSize="@dimen/fs_36"/>
 
     <RelativeLayout
         android:id="@+id/user_info_head_rl"
@@ -179,13 +181,13 @@
 
         <TextView
             style="@style/payRecordTime"
-            android:text="修改头像" />
+            android:text="修改头像"/>
 
-        <ImageView style="@style/arrowLeftStyle" />
+        <ImageView style="@style/arrowLeftStyle"/>
 
     </RelativeLayout>
 
-    <include layout="@layout/view_line1" />
+    <include layout="@layout/view_line1"/>
 
     <RelativeLayout
         android:id="@+id/user_info_name_rl"
@@ -197,16 +199,16 @@
 
         <TextView
             style="@style/payRecordTime"
-            android:text="修改昵称" />
+            android:text="修改昵称"/>
 
         <TextView
             android:id="@+id/user_info_name_text"
             style="@style/mine_user_vertical_font"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/fs_57"
-            android:text="昵称" />
+            android:text="昵称"/>
 
-        <ImageView style="@style/arrowLeftStyle" />
+        <ImageView style="@style/arrowLeftStyle"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -220,20 +222,20 @@
 
         <TextView
             style="@style/payRecordTime"
-            android:text="手机号" />
+            android:text="手机号"/>
 
         <TextView
             android:id="@+id/user_info_phone_text"
             style="@style/mine_user_vertical_font"
             android:layout_alignParentRight="true"
-            android:text="1860****547" />
+            android:text="1860****547"/>
 
         <ImageView
             style="@style/arrowLeftStyle"
-            android:visibility="gone" />
+            android:visibility="gone"/>
     </RelativeLayout>
 
-    <include layout="@layout/view_line1" />
+    <include layout="@layout/view_line1"/>
 
     <RelativeLayout
         android:id="@+id/user_info_change_pwd"
@@ -245,15 +247,15 @@
 
         <TextView
             style="@style/payRecordTime"
-            android:text="修改登录密码" />
+            android:text="修改登录密码"/>
 
-        <ImageView style="@style/arrowLeftStyle" />
+        <ImageView style="@style/arrowLeftStyle"/>
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"/>
 
     <TextView
         android:id="@+id/activity_logout"
@@ -267,7 +269,7 @@
         android:gravity="center"
         android:text="退出登录"
         android:textColor="@color/white"
-        android:textSize="@dimen/fs_51" />
+        android:textSize="@dimen/fs_51"/>
 
 
 </LinearLayout>

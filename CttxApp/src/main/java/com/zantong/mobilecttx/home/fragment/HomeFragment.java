@@ -67,7 +67,6 @@ import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.DensityUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.OnClickUtils;
 import com.zantong.mobilecttx.utils.PullToRefreshLayout;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
@@ -112,6 +111,7 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.LogUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
@@ -675,8 +675,7 @@ public class HomeFragment extends BaseExtraFragment {
                     listNotices.add(notice);
                 }
             }
-            LogUtils.i("meg", "===========mList=========>" + mList.size());
-            LogUtils.i("meg", "===========listNotices=========>" + listNotices.size());
+
             mList.clear();
             mList = listNotices;
             mScrollUp.setData(mList);

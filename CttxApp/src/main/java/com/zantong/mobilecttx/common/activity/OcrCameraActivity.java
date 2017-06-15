@@ -27,7 +27,6 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.utils.DensityUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.ImageTools;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
 import com.zantong.mobilecttx.widght.Viewfinder;
 
@@ -35,6 +34,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+
+import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * 拍照扫描

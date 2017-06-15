@@ -31,13 +31,16 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.umeng.analytics.MobclickAgent;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
+import com.zantong.mobilecttx.car.dto.CarManagerDTO;
+import com.zantong.mobilecttx.car.dto.CarMarnagerDetailDTO;
+import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.map.bean.GasStation;
 import com.zantong.mobilecttx.map.bean.GasStationDetail;
 import com.zantong.mobilecttx.map.bean.GasStationDetailResult;
@@ -46,13 +49,9 @@ import com.zantong.mobilecttx.map.bean.YearCheck;
 import com.zantong.mobilecttx.map.bean.YearCheckDetail;
 import com.zantong.mobilecttx.map.bean.YearCheckDetailResult;
 import com.zantong.mobilecttx.map.bean.YearCheckResult;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
-import com.zantong.mobilecttx.car.dto.CarManagerDTO;
-import com.zantong.mobilecttx.car.dto.CarMarnagerDetailDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.DensityUtils;
 import com.zantong.mobilecttx.utils.DistanceUtils;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
@@ -510,7 +509,6 @@ public class BaiduMapActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
         @Override
         public void onReceiveLocation(BDLocation location) {
             if (location == null) {
-                LogUtils.i("location_failed");
                 return;
             } else {
                 latitude = location.getLatitude();

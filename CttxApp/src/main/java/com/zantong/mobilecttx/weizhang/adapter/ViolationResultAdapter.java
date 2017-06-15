@@ -1,6 +1,5 @@
 package com.zantong.mobilecttx.weizhang.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
@@ -26,20 +25,15 @@ import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.LogUtils;
-import com.zantong.mobilecttx.utils.StateBarSetting;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
-import com.zantong.mobilecttx.weizhang.fragment.SurePayFragment;
-import com.zantong.mobilecttx.weizhang.fragment.ViolationPayFragment;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -54,9 +48,9 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
     public void showData(BaseRecyclerViewHolder viewHolder, int position, final ViolationBean data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
-            String date = data.getViolationdate().substring(0,4) + "-" + data.getViolationdate().substring(4,6) + "-" +
-                    data.getViolationdate().substring(6,8);
-            String time = data.getViolationtime().substring(0,2) + ":" + data.getViolationtime().substring(2,4);
+            String date = data.getViolationdate().substring(0, 4) + "-" + data.getViolationdate().substring(4, 6) + "-" +
+                    data.getViolationdate().substring(6, 8);
+            String time = data.getViolationtime().substring(0, 2) + ":" + data.getViolationtime().substring(2, 4);
             holder.mTm.setText(date + " " + time);
             holder.mAddr.setText(data.getViolationplace());
             holder.mReason.setText(data.getViolationinfo());
@@ -80,28 +74,30 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
                     if (!PublicData.getInstance().loginFlag) {
                         Act.getInstance().gotoIntent(mContext, LoginActivity.class);
                     } else {
-                        ((ViolationResultAcitvity)mContext).setPayFragment(data);
+                        ((ViolationResultAcitvity) mContext).setPayFragment(data);
                         if ("1".equals(bitNumber) || "2".equals(bitNumber)) {//是否处罚决定书
 
                             mFragmentManager.beginTransaction()
                                     .setCustomAnimations(R.anim.down_to_up, R.anim.left_to_right)
-                                    .replace(((ViolationResultAcitvity) mContext).getPayLayoutId(), ((ViolationResultAcitvity)mContext).getPayFragment()).commit();
+                                    .replace(((ViolationResultAcitvity) mContext).getPayLayoutId(), ((ViolationResultAcitvity) mContext).getPayFragment()).commit();
                             //直接去缴费
                         } else {
                             if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {//未綁卡
                                 MobclickAgent.onEvent(mContext, Config.getUMengID(11));
 //                                mContext, "","暂未绑卡", new On
-                                DialogUtils.remindDialog(mContext, "温馨提示", "您还未绑卡，暂时无法进行缴费", "取消", "立即绑卡", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
+                                DialogUtils.remindDialog(mContext, "温馨提示", "您还未绑卡，暂时无法进行缴费", "取消", "立即绑卡",
+                                        new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
 
-                                    }
-                                }, new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Act.getInstance().gotoIntent(mContext, CardHomeActivity.class);
-                                    }
-                                });
+                                            }
+                                        },
+                                        new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Act.getInstance().gotoIntent(mContext, CardHomeActivity.class);
+                                            }
+                                        });
                             } else {
                                 LogoutDTO dto = new LogoutDTO();
                                 dto.setUsrid(PublicData.getInstance().userID);
@@ -114,13 +110,13 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
                                         if (list.size() <= 2) {
                                             mFragmentManager.beginTransaction()
                                                     .setCustomAnimations(R.anim.down_to_up, R.anim.left_to_right)
-                                                    .replace(((ViolationResultAcitvity) mContext).getPayLayoutId(), ((ViolationResultAcitvity)mContext).getPayFragment()).commit();
+                                                    .replace(((ViolationResultAcitvity) mContext).getPayLayoutId(), ((ViolationResultAcitvity) mContext).getPayFragment()).commit();
                                         } else if (list.size() == 2) {
                                             for (PayCar car : list) {
                                                 if (car.getCarnum().equals(data.getCarnum())) {
                                                     mFragmentManager.beginTransaction()
                                                             .setCustomAnimations(R.anim.down_to_up, R.anim.left_to_right)
-                                                            .replace(((ViolationResultAcitvity) mContext).getPayLayoutId(), ((ViolationResultAcitvity)mContext).getPayFragment()).commit();
+                                                            .replace(((ViolationResultAcitvity) mContext).getPayLayoutId(), ((ViolationResultAcitvity) mContext).getPayFragment()).commit();
                                                 } else {
                                                     ToastUtils.showShort(mContext, "当前车辆为非绑定车辆，可去车辆管理进行改绑");
                                                 }

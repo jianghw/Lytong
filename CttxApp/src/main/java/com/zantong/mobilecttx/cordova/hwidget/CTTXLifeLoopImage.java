@@ -5,17 +5,17 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
+import android.view.View;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.zantong.mobilecttx.api.APPHttpClient;
-import com.zantong.mobilecttx.user.bean.CTTXInsurancePayBean;
-import com.zantong.mobilecttx.presenter.InsurancePayPresenterImp;
-import com.zantong.mobilecttx.utils.ImageTools;
-import com.zantong.mobilecttx.utils.LogUtils;
-import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.interf.ModelView;
+import com.zantong.mobilecttx.presenter.InsurancePayPresenterImp;
+import com.zantong.mobilecttx.user.bean.CTTXInsurancePayBean;
+import com.zantong.mobilecttx.utils.ImageTools;
+import com.zantong.mobilecttx.utils.Tools;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaArgs;
@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+import cn.qqtheme.framework.util.LogUtils;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -39,11 +40,11 @@ import okhttp3.Response;
 /**
  * Created by 王海洋 on 2016/5/24.
  */
-public class CTTXLifeLoopImage extends CordovaPlugin implements ModelView{
+public class CTTXLifeLoopImage extends CordovaPlugin implements ModelView {
     private String payUrl = "";
     private final int insurancePay = 1;
     private InsurancePayPresenterImp mInsurancePayPresenterImp;
-    HashMap<String, String>  mHashMap = new HashMap<>();
+    HashMap<String, String> mHashMap = new HashMap<>();
     private CallbackContext callbackContext;
     private CordovaArgs args;
     public static final int TAKE_PIC_SEC = 0;
@@ -56,14 +57,13 @@ public class CTTXLifeLoopImage extends CordovaPlugin implements ModelView{
     OkHttpClient client = APPHttpClient.getInstance().getUnsafeOkHttpClient();
 
 
-
     @Override
     public boolean execute(String action, CordovaArgs args, final CallbackContext callbackContext) throws JSONException {
-        if("queryLifeLoop".equals(action)){
+        if ("queryLifeLoop".equals(action)) {
 //            String merCustomIp = NetUtils.getPhontIP(cordova.getActivity());
             this.args = args;
             this.callbackContext = callbackContext;
-           boolean locationPermission = PermissionHelper.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            boolean locationPermission = PermissionHelper.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
             if (!locationPermission) {
                 locationPermission = true;
                 try {
@@ -108,7 +108,7 @@ public class CTTXLifeLoopImage extends CordovaPlugin implements ModelView{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if(!Tools.isStrEmpty(jsonStr)){
+        if (!Tools.isStrEmpty(jsonStr)) {
             JSONObject json = new JSONObject(jsonStr);
             final JSONArray urlList = (JSONArray) json.get("RotationCfg");
             final JSONArray jsons = new JSONArray();
@@ -116,47 +116,55 @@ public class CTTXLifeLoopImage extends CordovaPlugin implements ModelView{
             cordova.getActivity().runOnUiThread(new Runnable() {
                 public void run() {
 
-
-                    for (int i = 0 ; i < urlList.length() ; i ++){
-
-                        try {
+                    try {
+                        for (int i = 0; i < urlList.length(); i++) {
                             final String imageUrl = (String) ((JSONObject) urlList.get(i)).get("imgurl");
-                            LogUtils.e("why", i+imageUrl);
-                            Glide.with(cordova.getActivity().getBaseContext()).load(imageUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
+                            ImageLoader.getInstance().loadImage(imageUrl, new ImageLoadingListener() {
                                 @Override
-                                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                public void onLoadingStarted(String s, View view) {
+
+                                }
+
+                                @Override
+                                public void onLoadingFailed(String s, View view, FailReason failReason) {
+
+                                }
+
+                                @Override
+                                public void onLoadingComplete(String s, View view, Bitmap bitmap) {
                                     Bitmap myBitmap;
-                                    LogUtils.e("why", resource.toString());
-                                    myBitmap = resource;
+                                    myBitmap = bitmap;
                                     String[] imageName = imageUrl.split("\\/");
-                                    ImageTools.saveBitmap(myBitmap, cordova.getActivity(), imageName[imageName.length-1]);
+                                    ImageTools.saveBitmap(myBitmap, cordova.getActivity(), imageName[imageName.length - 1]);
                                     String urlImage = Environment
-                                            .getExternalStorageDirectory()+"/CTTXCACHE/"+imageName[imageName.length-1];
-//                    PublicData.getInstance().bitmap = bitmapBase64;
+                                            .getExternalStorageDirectory() + "/CTTXCACHE/" + imageName[imageName.length - 1];
+    //                    PublicData.getInstance().bitmap = bitmapBase64;
 
                                     File file = new File(urlImage);
                                     Uri uri = Uri.fromFile(file);
                                     LogUtils.e("why", uri.toString());
-//                    String demo = "file://"+file.getAbsolutePath();
+    //                    String demo = "file://"+file.getAbsolutePath();
                                     jsons.put(uri);
-                                    if(jsons.length() == 3){
+                                    if (jsons.length() == 3) {
                                         CTTXLifeLoopImage.this.echo(jsons, callbackContext);
                                     }
                                 }
+
+                                @Override
+                                public void onLoadingCancelled(String s, View view) {
+
+                                }
                             });
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-
-
                 }
 
 //                    private void echo(JSONArray jsons, CallbackContext callbackContext) {
 //                    }
             });
-
-        }else{
+        } else {
             this.echoerror("", callbackContext);
         }
 
@@ -164,18 +172,14 @@ public class CTTXLifeLoopImage extends CordovaPlugin implements ModelView{
     }
 
     public void onRequestPermissionResult(int requestCode, String[] permissions,
-                                          int[] grantResults) throws JSONException
-    {
-        for(int r:grantResults)
-        {
-            if(r == PackageManager.PERMISSION_DENIED)
-            {
+                                          int[] grantResults) throws JSONException {
+        for (int r : grantResults) {
+            if (r == PackageManager.PERMISSION_DENIED) {
                 this.callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, PERMISSION_DENIED_ERROR));
                 return;
             }
         }
-        switch(requestCode)
-        {
+        switch (requestCode) {
             case TAKE_PIC_SEC:
                 try {
                     imageLoad();
@@ -186,20 +190,21 @@ public class CTTXLifeLoopImage extends CordovaPlugin implements ModelView{
         }
     }
 
-    private void echo(JSONArray message, CallbackContext callbackContext){
+    private void echo(JSONArray message, CallbackContext callbackContext) {
 
-        if(message != null && message.length() > 0){
+        if (message != null && message.length() > 0) {
             callbackContext.success(message);
-        }else{
+        } else {
             callbackContext.error("Expected one non-empty string argument.");
         }
 
     }
-    private void echoerror(String message, CallbackContext callbackContext){
 
-        if(message != null && message.length() > 0){
+    private void echoerror(String message, CallbackContext callbackContext) {
+
+        if (message != null && message.length() > 0) {
             callbackContext.success(message);
-        }else{
+        } else {
             callbackContext.error("ERROR");
         }
 

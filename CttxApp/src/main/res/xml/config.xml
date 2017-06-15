@@ -50,8 +50,8 @@
     </feature>
     <!--&lt;!&ndash; OCR插件   &ndash;&gt;-->
     <!--<feature name="CTTXOCRScan">-->
-        <!--<param name="android-package" value="com.zantong.mobilecttx.cordova.hwidget.CTTXOCRScan"/>-->
-        <!--<param name="onload" value="true"/>-->
+    <!--<param name="android-package" value="com.zantong.mobilecttx.cordova.hwidget.CTTXOCRScan"/>-->
+    <!--<param name="onload" value="true"/>-->
     <!--</feature>-->
     <allow-intent href="market:*" />
     <name>HelloWorld</name>

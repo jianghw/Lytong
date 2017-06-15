@@ -18,7 +18,6 @@ import com.zantong.mobilecttx.eventbus.ExitAppEvent;
 import com.zantong.mobilecttx.interf.IBaseActivity;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.InspectService;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
 import com.zantong.mobilecttx.utils.ToastUtils;
 
@@ -27,6 +26,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * 基类
@@ -164,8 +164,6 @@ public abstract class BaseActivity extends FragmentActivity implements
         String status = event.getStatus();
         String message = event.getMsg();
         if (event.getContext().equals(this)) {
-            LogUtils.i("BaseActivity_error_status:" + event.getStatus());
-            LogUtils.i("BaseActivity_error_msg:" + event.getMsg());
             if (event.getStatus().equals("505"))
                 return;
             onFailure(status, message);

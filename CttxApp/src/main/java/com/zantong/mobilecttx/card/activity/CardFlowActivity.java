@@ -2,11 +2,9 @@ package com.zantong.mobilecttx.card.activity;
 
 import android.view.View;
 
-import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
@@ -14,7 +12,10 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import butterknife.OnClick;
 
-public class CardFlowActivity extends BaseMvpActivity<IBaseView, HelpPresenter>  {
+/**
+ * 办卡进度
+ */
+public class CardFlowActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
 
     @Override
     public void initView() {
@@ -24,7 +25,6 @@ public class CardFlowActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
     public void initData() {
         setTitleText("办卡进度");
     }
-
 
 
     @Override

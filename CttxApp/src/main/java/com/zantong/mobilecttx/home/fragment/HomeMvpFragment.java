@@ -220,7 +220,10 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
         if (bendi == 1) {
             if (list.size() > 0) {
                 for (CarInfoDTO dto : list) {
-                    mFragmentList.add(new BindCarFragment(dto.getCarnum(), dto.getCarnumtype(), dto.getEnginenum(), "--", "--", "--"));
+                    mFragmentList.add(
+                            new BindCarFragment(
+                                    dto.getCarnum(), dto.getCarnumtype(), dto.getEnginenum(),
+                                    "--", "--", "--"));
                 }
             }
             if (list.size() < 3) {
@@ -233,7 +236,11 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
             }
             if (list.size() > 0) {
                 for (CarInfoDTO dto : list) {
-                    mFragmentList.add(0, new BindCarFragment(dto.getCarnum(), dto.getCarnumtype(), dto.getEnginenum(), "--", "--", "--"));
+                    mFragmentList.add(
+                            0,
+                            new BindCarFragment(
+                                    dto.getCarnum(), dto.getCarnumtype(), dto.getEnginenum(),
+                                    "--", "--", "--"));
                 }
             }
             mHomeCarViewpager.refreshData(mFragmentList);
@@ -288,8 +295,14 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                                 PublicData.getInstance().payData.clear();
                                 for (int i = 0; i < len; i++) {
                                     UserCarInfoBean info = result.getRspInfo().getUserCarsInfo().get(i);
-                                    mFragmentList.add(new BindCarFragment(info.getCarnum(), info.getCarnumtype(), info.getEnginenum(),
-                                            info.getUntreatcount(), StringUtils.getPriceString(info.getUntreatamt()), info.getUntreatcent()));
+                                    mFragmentList.add(
+                                            new BindCarFragment(
+                                                    info.getCarnum(),
+                                                    info.getCarnumtype(),
+                                                    info.getEnginenum(),
+                                                    info.getUntreatcount(),
+                                                    StringUtils.getPriceString(info.getUntreatamt()),
+                                                    info.getUntreatcent()));
                                     if (info.getIspaycar().equals("1")) {
                                         PublicData.getInstance().payData.add(info);//保存可缴费车辆
                                     }
@@ -313,8 +326,13 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                                 }
                                 for (int i = 0; i < len; i++) {
                                     UserCarInfoBean info = result.getRspInfo().getUserCarsInfo().get(i);
-                                    mFragmentList.add(0, new BindCarFragment(info.getCarnum(), info.getCarnumtype(), info.getEnginenum(),
-                                            info.getUntreatcount(), StringUtils.getPriceString(info.getUntreatamt()), info.getUntreatcent()));
+                                    mFragmentList.add(
+                                            0,
+                                            new BindCarFragment(
+                                                    info.getCarnum(), info.getCarnumtype(), info.getEnginenum(),
+                                                    info.getUntreatcount(),
+                                                    StringUtils.getPriceString(info.getUntreatamt()),
+                                                    info.getUntreatcent()));
                                 }
                             }
                         }
@@ -355,6 +373,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
      */
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onDataSynEvent(AddPushTrumpetEvent event) {
+        LogUtils.e("onDataSynEvent");
         if (event == null) return;
         PushBean bean = event.getPushBean();
         updateNoticeMessage(bean);
@@ -365,7 +384,6 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
      */
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onDataSynEvent(GetMsgAgainEvent event) {
-        LogUtils.e("GetMsgAgainEvent");
         if (event != null && event.getStatus()) {
             BaseDTO dto = new BaseDTO();
             dto.setUsrId(RSAUtils.strByEncryption(this.getActivity(), PublicData.getInstance().userID, true));

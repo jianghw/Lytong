@@ -42,7 +42,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zantong.mobilecttx.utils.LogUtils;
+import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.utils.StateBarSetting;
+import com.zantong.mobilecttx.utils.TitleSetting;
+import com.zantong.mobilecttx.utils.ToastUtils;
+import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 import com.zantong.mobilecttx.zxing.BarcodeFormat;
 import com.zantong.mobilecttx.zxing.DecodeHintType;
@@ -67,17 +72,13 @@ import com.zantong.mobilecttx.zxing.client.android.history.HistoryItem;
 import com.zantong.mobilecttx.zxing.client.android.history.HistoryManager;
 import com.zantong.mobilecttx.zxing.client.android.result.ResultHandler;
 import com.zantong.mobilecttx.zxing.client.android.result.ResultHandlerFactory;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.utils.StateBarSetting;
-import com.zantong.mobilecttx.utils.TitleSetting;
-import com.zantong.mobilecttx.utils.ToastUtils;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.io.IOException;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Map;
+
+import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * This activity opens the camera and does the actual scanning on a background thread. It draws a

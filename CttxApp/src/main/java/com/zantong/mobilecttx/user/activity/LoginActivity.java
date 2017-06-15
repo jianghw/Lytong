@@ -29,28 +29,26 @@ import android.widget.TextView;
 
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
-import com.zantong.mobilecttx.card.activity.CardHomeActivity;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.bean.BaseResult;
-import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.base.bean.Result;
-import com.zantong.mobilecttx.user.bean.UserCarsResult;
-import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
-import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
+import com.zantong.mobilecttx.card.activity.CardHomeActivity;
+import com.zantong.mobilecttx.card.dto.BindCarDTO;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.eventbus.CarInfoEvent;
 import com.zantong.mobilecttx.eventbus.GetUserEvent;
+import com.zantong.mobilecttx.interf.LoginPhoneView;
 import com.zantong.mobilecttx.presenter.LoginPhonePresenterImp;
-import com.zantong.mobilecttx.utils.rsa.Des3;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
+import com.zantong.mobilecttx.user.bean.LoginInfoBean;
+import com.zantong.mobilecttx.user.bean.UserCarsResult;
+import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.utils.AccountRememberCtrl;
 import com.zantong.mobilecttx.utils.DialogMgr;
-import com.zantong.mobilecttx.utils.LogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ScreenManager;
 import com.zantong.mobilecttx.utils.StateBarSetting;
@@ -59,9 +57,9 @@ import com.zantong.mobilecttx.utils.TitleSetting;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.utils.rsa.Des3;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
-import com.zantong.mobilecttx.card.activity.ChangTongCard;
-import com.zantong.mobilecttx.interf.LoginPhoneView;
 import com.zantong.mobilecttx.widght.CustomCharKeyBoard;
 import com.zantong.mobilecttx.widght.CustomNumKeyBoard;
 
@@ -77,6 +75,7 @@ import java.util.TimerTask;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.LogUtils;
 
 /**
  * Created by Administrator on 2016/5/5.
@@ -438,9 +437,8 @@ public class LoginActivity extends Activity implements LoginPhoneView, View.OnTo
 
     @Override
     public void addLoginInfo(LoginInfoBean mLoginInfoBean) {
-//        Log.e("why",mLoginInfoBean.getRspInfo().getUsrid());
-
         EventBus.getDefault().post(new CarInfoEvent(true));
+
         Intent intent = new Intent();
         intent.putExtra("back", "wode");
         LoginActivity.this.setResult(1, intent);
@@ -449,6 +447,7 @@ public class LoginActivity extends Activity implements LoginPhoneView, View.OnTo
         SPUtils.getInstance(this).setUserPwd(mapData().get("pswd"));
         liyingreg(mLoginInfoBean.getRspInfo().getUsrid());
         setJiaoYiDaiMa(Des3.decode(mLoginInfoBean.getRspInfo().getFilenum()));
+
         if (!"0".equals(AccountRememberCtrl.getLoginAD(LoginActivity.this)) && Tools.isStrEmpty(PublicData.getInstance().filenum)) {
             new DialogMgr(LoginActivity.this, "登录成功", "畅通车友会欢迎您，赶快去注册您的牡丹卡吧！", "添加畅通卡", "继续",
                     new View.OnClickListener() {
@@ -464,26 +463,26 @@ public class LoginActivity extends Activity implements LoginPhoneView, View.OnTo
 
                             finish();
                         }
-                    }, new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    if (PublicData.getInstance().className != null) {
-                        Act.getInstance().lauchIntent(LoginActivity.this, PublicData.getInstance().className);
-                    }
+                    },
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (PublicData.getInstance().className != null) {
+                                Act.getInstance().lauchIntent(LoginActivity.this, PublicData.getInstance().className);
+                            }
 //                    ScreenManager.popActivity();
-                    finish();
-                }
-            }, new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    AccountRememberCtrl.saveLoginAD(LoginActivity.this, "0");
+                            finish();
+                        }
+                    },
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AccountRememberCtrl.saveLoginAD(LoginActivity.this, "0");
 //                    ScreenManager.popActivity();
-                    hideInputType();
-                    finish();
-                }
-            });
+                            hideInputType();
+                            finish();
+                        }
+                    });
         } else {
             ScreenManager.popActivity();
         }
@@ -493,8 +492,8 @@ public class LoginActivity extends Activity implements LoginPhoneView, View.OnTo
      * 交易代码
      */
     private void setJiaoYiDaiMa(String strFileNum) {
-        if(!TextUtils.isEmpty(strFileNum)){
-            UserApiClient.setJiaoYiDaiMa(this, strFileNum,new CallBack<Result>() {
+        if (!TextUtils.isEmpty(strFileNum)) {
+            UserApiClient.setJiaoYiDaiMa(this, strFileNum, new CallBack<Result>() {
                 @Override
                 public void onSuccess(Result result) {
                     if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
@@ -621,13 +620,13 @@ public class LoginActivity extends Activity implements LoginPhoneView, View.OnTo
     /**
      * 获取车辆数
      */
-    private void getUserCarInfo(){
+    private void getUserCarInfo() {
         UserCarsDTO dto = new UserCarsDTO();
         dto.setUsrid(PublicData.getInstance().userID);
         UserApiClient.getCarInfo(LoginActivity.this, dto, new CallBack<UserCarsResult>() {
             @Override
             public void onSuccess(UserCarsResult result) {
-                if (result.getRspInfo().getUserCarsInfo().size() <= 0){
+                if (result.getRspInfo().getUserCarsInfo().size() <= 0) {
                     commitCarInfoToNewServer();
                 }
             }
@@ -637,8 +636,8 @@ public class LoginActivity extends Activity implements LoginPhoneView, View.OnTo
     //提交新服务器
     private void commitCarInfoToNewServer() {
         List<CarInfoDTO> list = SPUtils.getInstance(LoginActivity.this).getCarsInfo();
-        for (CarInfoDTO info : list){
-            LogUtils.i("-----"+info.getCarnumtype());
+        for (CarInfoDTO info : list) {
+            LogUtils.i("-----" + info.getCarnumtype());
             BindCarDTO dto = new BindCarDTO();
             dto.setPlateNo(info.getCarnum());
             dto.setEngineNo(info.getEnginenum());

@@ -19,6 +19,7 @@ import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
+import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import rx.Observable;
 
@@ -234,6 +235,13 @@ public class RepositoryManager {
      * 54.充值接口
      */
     public Observable<PayOrderResult> onPayOrderByCoupon(String payUrl, String orderPrice, String payType) {
-        return mRemoteData.onPayOrderByCoupon(payUrl,orderPrice,payType);
+        return mRemoteData.onPayOrderByCoupon(payUrl, orderPrice, payType);
+    }
+
+    /**
+     * 43.生成违章缴费订单
+     */
+    public Observable<PayOrderResult> paymentCreateOrder(ViolationPayDTO payDTO) {
+        return mRemoteData.paymentCreateOrder(payDTO);
     }
 }

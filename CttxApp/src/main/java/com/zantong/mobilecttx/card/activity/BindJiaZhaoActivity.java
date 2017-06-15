@@ -2,59 +2,44 @@ package com.zantong.mobilecttx.card.activity;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.base.bean.BaseResult;
+import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.card.bean.BindCardResult;
-import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
-import com.zantong.mobilecttx.user.bean.LoginInfoBean;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
-import com.zantong.mobilecttx.common.activity.CommonListActivity;
-import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.card.dto.BindCardDTO;
 import com.zantong.mobilecttx.card.dto.BindDrivingDTO;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.common.activity.BrowserActivity;
+import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
+import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
+import com.zantong.mobilecttx.user.bean.LoginInfoBean;
+import com.zantong.mobilecttx.utils.DialogMgr;
+import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
+import com.zantong.mobilecttx.utils.ToastUtils;
+import com.zantong.mobilecttx.utils.ValidateUtils;
+import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.permission.PermissionFail;
 import com.zantong.mobilecttx.utils.permission.PermissionGen;
 import com.zantong.mobilecttx.utils.permission.PermissionSuccess;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
-import com.zantong.mobilecttx.utils.DateUtils;
-import com.zantong.mobilecttx.utils.DialogMgr;
-import com.zantong.mobilecttx.utils.LogUtils;
-import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import com.zantong.mobilecttx.utils.SPUtils;
-import com.zantong.mobilecttx.utils.ToastUtils;
-import com.zantong.mobilecttx.utils.UiHelpers;
-import com.zantong.mobilecttx.utils.ValidateUtils;
-import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
-import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.home.activity.GuideActivity;
-
-import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.picker.DatePicker;
+import cn.qqtheme.framework.util.LogUtils;
 
 /**
- * Created by zhoujie on 2016/10/11.
+ * 绑定畅通卡
  */
 public class BindJiaZhaoActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements IBaseView {
 
@@ -147,7 +132,7 @@ public class BindJiaZhaoActivity extends BaseMvpActivity<IBaseView, HelpPresente
                 new DialogMgr(BindJiaZhaoActivity.this, R.mipmap.img_jiazhao_idcard);
                 break;
             case R.id.bind_jia_zhao_phone_img:
-                ToastUtils.showShort(this,"预留手机号是指在办理银行卡过程中，开通网上银行时需要在柜台提交的银行预留手机号，作为以后确认信息的凭证，能及时接受账户资金变动信息。");
+                ToastUtils.showShort(this, "预留手机号是指在办理银行卡过程中，开通网上银行时需要在柜台提交的银行预留手机号，作为以后确认信息的凭证，能及时接受账户资金变动信息。");
                 break;
             case R.id.bind_jia_zhao_file_camera:
 
@@ -168,7 +153,7 @@ public class BindJiaZhaoActivity extends BaseMvpActivity<IBaseView, HelpPresente
                 bindChangTongKa();
                 break;
             case R.id.bind_jia_zhao_apply:
-                Act.getInstance().gotoIntent(this,ApplyCardFirstActivity.class);
+                Act.getInstance().gotoIntent(this, ApplyCardFirstActivity.class);
                 finish();
                 break;
         }
@@ -253,9 +238,9 @@ public class BindJiaZhaoActivity extends BaseMvpActivity<IBaseView, HelpPresente
                 hideDialogLoading();
                 if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
                     if (result.getRspInfo().getCardflag() != 0 && result.getRspInfo().getCustcodeflag() == 1 && result.getRspInfo().getMobileflag() == 1) {
-                        if ("男".equals(params.getSex())){
+                        if ("男".equals(params.getSex())) {
                             params.setSex("0");
-                        }else{
+                        } else {
                             params.setSex("1");
                         }
                         CarApiClient.commitDriving(BindJiaZhaoActivity.this, params, new CallBack<BaseResult>() {
@@ -275,7 +260,7 @@ public class BindJiaZhaoActivity extends BaseMvpActivity<IBaseView, HelpPresente
                         BindJiaZhaoActivity.this.finish();
                     } else if (result.getRspInfo().getCardflag() == 0) {
                         ToastUtils.showShort(BindJiaZhaoActivity.this, "您还没有畅通卡");
-                    }else if (result.getRspInfo().getCustcodeflag() == 0) {
+                    } else if (result.getRspInfo().getCustcodeflag() == 0) {
                         ToastUtils.showShort(BindJiaZhaoActivity.this, "您的身份证号与驾照号码不一致");
                     } else if (result.getRspInfo().getMobileflag() == 0) {
                         ToastUtils.showShort(BindJiaZhaoActivity.this, "您的预留手机号码不正确");
@@ -295,34 +280,34 @@ public class BindJiaZhaoActivity extends BaseMvpActivity<IBaseView, HelpPresente
      * ocr
      * 获取驾照信息
      */
-    private void getJiaZhaoInfo(){
+    private void getJiaZhaoInfo() {
         showDialogLoading();
         CarApiClient.uploadDriverImg(this, OcrCameraActivity.file, new CallBack<DriverOcrResult>() {
-                @Override
-                public void onSuccess(DriverOcrResult result) {
-                    hideDialogLoading();
-                    if ("OK".equals(result.getStatus())) {
-                        LogUtils.i(result.getContent().toString());
-                        mLicenseno.setText(result.getContent().getCardNo());
-                    } else {
-                        ToastUtils.showShort(BindJiaZhaoActivity.this, "解析失败，请重试");
-                    }
+            @Override
+            public void onSuccess(DriverOcrResult result) {
+                hideDialogLoading();
+                if ("OK".equals(result.getStatus())) {
+                    LogUtils.i(result.getContent().toString());
+                    mLicenseno.setText(result.getContent().getCardNo());
+                } else {
+                    ToastUtils.showShort(BindJiaZhaoActivity.this, "解析失败，请重试");
                 }
+            }
 
-                @Override
-                public void onError(String errorCode, String msg) {
-                    super.onError(errorCode, msg);
-                    hideDialogLoading();
-                }
-            });
+            @Override
+            public void onError(String errorCode, String msg) {
+                super.onError(errorCode, msg);
+                hideDialogLoading();
+            }
+        });
     }
 
     @PermissionSuccess(requestCode = 100)
     public void doSomething() {
         //有授权，直接开启摄像头
         Intent intent = new Intent(this, OcrCameraActivity.class);
-        intent.putExtra("ocr_resource",2);
-        startActivityForResult(intent,1203);
+        intent.putExtra("ocr_resource", 2);
+        startActivityForResult(intent, 1203);
     }
 
     @PermissionFail(requestCode = 100)

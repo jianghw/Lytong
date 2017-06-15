@@ -76,7 +76,7 @@ public abstract class BaseMvpActivity<V, T extends BasePresenter<V>> extends Bas
         mBaseEnsure = (TextView) findViewById(R.id.base_titlebar_ensure);
         mBaseBack = (TextView) findViewById(R.id.base_mvptitle_back);
 
-        if (mBaseBack.getText().toString().equals("返回")){
+        if (mBaseBack.getText().toString().equals("返回")) {
             // 初始化返回按钮图片大小
             UiHelpers.setTextViewIcon(this, mBaseBack, R.mipmap.back_btn_image,
                     R.dimen.ds_24,
@@ -142,6 +142,7 @@ public abstract class BaseMvpActivity<V, T extends BasePresenter<V>> extends Bas
     public RelativeLayout getRelativeLayout() {
         return mRelativeLayout;
     }
+
     /**
      * 获取左侧标题
      *
@@ -199,6 +200,7 @@ public abstract class BaseMvpActivity<V, T extends BasePresenter<V>> extends Bas
     public void setEnsureText(int resid) {
         mBaseEnsure.setText(resid);
     }
+
     public void setEnsureImg(int resid) {
         UiHelpers.setTextViewIcon(this, mBaseEnsure, resid,
                 R.dimen.ds_48,
@@ -265,7 +267,6 @@ public abstract class BaseMvpActivity<V, T extends BasePresenter<V>> extends Bas
     protected View getTitleSelLayout() {
         return mTitleSelLayout;
     }
-
 
 
 }
