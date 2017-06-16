@@ -9,6 +9,9 @@ import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.car.fragment.CarChooseXiFragment;
 import com.zantong.mobilecttx.car.fragment.CarChooseXingFragment;
 
+/**
+ * 车辆选择
+ */
 public class CarChooseActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
 
     public static final int REQUEST_L_CODE = 10003;
@@ -19,6 +22,16 @@ public class CarChooseActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
     public static final String CAR_XING_BEAN = "CarXingBean";
 
     @Override
+    public HelpPresenter initPresenter() {
+        return new HelpPresenter();
+    }
+
+    @Override
+    protected int getContentResId() {
+        return R.layout.mine_msg_activity;
+    }
+
+    @Override
     public void initView() {
     }
 
@@ -27,26 +40,16 @@ public class CarChooseActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         int type = getIntent().getIntExtra("type", 1);
         int id = getIntent().getIntExtra("id", 0);
-        if(type == 1){
+        if (type == 1) {
             setTitleText("车系");
-            transaction.replace(R.id.car_list_activity, CarChooseXiFragment.newInstance(id));
-        }else{
+            transaction.replace(R.id.mine_msg_layout, CarChooseXiFragment.newInstance(id));
+        } else {
             setTitleText("车型");
             int idB = getIntent().getIntExtra("idB", 0);
-            transaction.replace(R.id.car_list_activity, CarChooseXingFragment.newInstance(id, idB));
+            transaction.replace(R.id.mine_msg_layout, CarChooseXingFragment.newInstance(id, idB));
         }
         transaction.commit();
 
-    }
-
-    @Override
-    public HelpPresenter initPresenter() {
-        return new HelpPresenter();
-    }
-
-    @Override
-    protected int getContentResId() {
-        return R.layout.activity_car_line;
     }
 
 }

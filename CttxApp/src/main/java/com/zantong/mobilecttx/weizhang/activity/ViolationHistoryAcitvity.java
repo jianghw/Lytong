@@ -32,7 +32,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView,HelpPresenter> implements ItemClickListener{
 

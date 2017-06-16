@@ -20,7 +20,7 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 public class OrderRechargeFragment extends BaseListFragment<RechargeOrderBean> {
 

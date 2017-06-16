@@ -54,7 +54,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresenter> implements View.OnTouchListener, View.OnClickListener,View.OnLongClickListener {
 

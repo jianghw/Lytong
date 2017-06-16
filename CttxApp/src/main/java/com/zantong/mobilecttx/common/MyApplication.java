@@ -17,7 +17,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.zantong.mobilecttx.BuildConfig;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 
 /**

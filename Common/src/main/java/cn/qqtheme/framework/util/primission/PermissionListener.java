@@ -1,4 +1,4 @@
-package cn.qqtheme.framework.util;
+package cn.qqtheme.framework.util.primission;
 
 import java.util.List;
 

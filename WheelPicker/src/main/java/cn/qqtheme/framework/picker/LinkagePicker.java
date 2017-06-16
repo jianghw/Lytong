@@ -2,7 +2,6 @@ package cn.qqtheme.framework.picker;
 
 import android.app.Activity;
 import android.support.annotation.FloatRange;
-import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -10,9 +9,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 import cn.qqtheme.framework.widget.WheelView;
 
 /**

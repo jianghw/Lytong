@@ -20,9 +20,9 @@ import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.permission.PermissionFail;
-import com.zantong.mobilecttx.utils.permission.PermissionGen;
-import com.zantong.mobilecttx.utils.permission.PermissionSuccess;
+import cn.qqtheme.framework.util.primission.PermissionFail;
+import cn.qqtheme.framework.util.primission.PermissionGen;
+import cn.qqtheme.framework.util.primission.PermissionSuccess;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -75,8 +75,6 @@ public class HomeActivity extends BaseActivity {
                     getSupportFragmentManager(), homeFragment, R.id.home_content);
         }
 
-//        HomePresenter mPresenter = new HomePresenter(
-//                Injection.provideRepository(getApplicationContext()), homeFragment);
     }
 
     @Override

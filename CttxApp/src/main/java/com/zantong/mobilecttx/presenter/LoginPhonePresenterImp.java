@@ -27,7 +27,7 @@ import org.json.JSONObject;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 
 /**

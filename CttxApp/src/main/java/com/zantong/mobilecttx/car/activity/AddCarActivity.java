@@ -56,9 +56,9 @@ import com.zantong.mobilecttx.utils.UiHelpers;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.permission.PermissionFail;
-import com.zantong.mobilecttx.utils.permission.PermissionGen;
-import com.zantong.mobilecttx.utils.permission.PermissionSuccess;
+import cn.qqtheme.framework.util.primission.PermissionFail;
+import cn.qqtheme.framework.util.primission.PermissionGen;
+import cn.qqtheme.framework.util.primission.PermissionSuccess;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
@@ -76,7 +76,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 
 public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements IBaseView {

@@ -42,7 +42,7 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.PayHistoryDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 
 /**

@@ -22,7 +22,7 @@ import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * 我的邀请码

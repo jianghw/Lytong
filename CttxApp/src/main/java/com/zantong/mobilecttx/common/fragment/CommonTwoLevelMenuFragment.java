@@ -34,7 +34,7 @@ public class CommonTwoLevelMenuFragment extends BaseListFragment<CommonTwoLevelM
         super.initData();
         Bundle bundle = getArguments();
         type = bundle.getInt("type", 0);
-        commonTwoLevelMenuBeanList = new ArrayList<CommonTwoLevelMenuBean>();
+        commonTwoLevelMenuBeanList = new ArrayList<>();
         showData();
     }
 

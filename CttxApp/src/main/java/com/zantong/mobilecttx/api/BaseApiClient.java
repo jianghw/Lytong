@@ -25,7 +25,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.FormBody;
@@ -204,7 +204,6 @@ public class BaseApiClient {
         FormBody.Builder builder = new FormBody.Builder();
         String data = versionCallBack.getGson().toJson(jsonParams);
         if (data != null){
-            LogUtils.i("msg:" + data);
             builder.add("msg", data);
         }
         Request request = new Request.Builder().tag(versionCallBack.getTag())
@@ -264,7 +263,7 @@ public class BaseApiClient {
         if (context == null) {
             return;
         }
-        LogUtils.i("http_request_url:" + request.url());
+
         if (NetUtils.getNetStatus(context) == NetUtils.NET_NONE) {
             baseCallBack.getCallback().sendFailMessage(Config.ERROR_NET,
                     Config.ERROR_NET_MSG);

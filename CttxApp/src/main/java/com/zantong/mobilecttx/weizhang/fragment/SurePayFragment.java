@@ -34,7 +34,7 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 public class SurePayFragment extends Fragment{
 

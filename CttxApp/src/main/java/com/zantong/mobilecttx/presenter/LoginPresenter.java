@@ -9,7 +9,7 @@ import com.zantong.mobilecttx.interf.ILoginView;
 import com.zantong.mobilecttx.user.bean.LoginResult;
 import com.zantong.mobilecttx.user.dto.LoginDTO;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * Created by zhengyingbing on 16/6/1.

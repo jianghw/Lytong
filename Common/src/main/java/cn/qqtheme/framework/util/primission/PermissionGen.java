@@ -1,14 +1,15 @@
-package com.zantong.mobilecttx.utils.permission;
+package cn.qqtheme.framework.util.primission;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.widget.Toast;
 
-import com.zantong.mobilecttx.utils.permission.internal.Utils;
-
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ public class PermissionGen {
     private String[] mPermissions;
     private int mRequestCode;
     private Object object;
+
+    public static final int PER_REQUEST_CODE = 1000;
 
     private PermissionGen(Object object) {
         this.object = object;
@@ -49,29 +52,52 @@ public class PermissionGen {
         requestPermissions(object, mRequestCode, mPermissions);
     }
 
+    /**
+     * Activity发起权限请求
+     *
+     * @param activity
+     * @param requestCode
+     * @param permission
+     */
+    public static void needPermission(Activity activity, int requestCode, String permission) {
+        needPermission(activity, requestCode, new String[]{permission});
+    }
+
     public static void needPermission(Activity activity, int requestCode, String[] permissions) {
-        requestPermissions(activity, requestCode, permissions);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
+                    Manifest.permission.READ_CONTACTS)) {
+                Toast.makeText(activity.getApplicationContext(), "相应权限已被拒绝，请设置中开启", Toast.LENGTH_SHORT).show();
+            } else {
+                requestPermissions(activity, requestCode, permissions);
+            }
+        }
+    }
+
+    /**
+     * Fragment发起权限请求
+     *
+     * @param fragment
+     * @param requestCode
+     * @param permission
+     */
+    public static void needPermission(Fragment fragment, int requestCode, String permission) {
+        needPermission(fragment, requestCode, new String[]{permission});
     }
 
     public static void needPermission(Fragment fragment, int requestCode, String[] permissions) {
         requestPermissions(fragment, requestCode, permissions);
     }
 
-    public static void needPermission(Activity activity, int requestCode, String permission) {
-        needPermission(activity, requestCode, new String[]{permission});
-    }
-
-    public static void needPermission(Fragment fragment, int requestCode, String permission) {
-        needPermission(fragment, requestCode, new String[]{permission});
-    }
-
     @TargetApi(value = Build.VERSION_CODES.M)
     private static void requestPermissions(Object object, int requestCode, String[] permissions) {
-        if (!Utils.isOverMarshmallow()) {
+        if (!PermissionUtils.isOverMarshmallow()) {
             doExecuteSuccess(object, requestCode);
             return;
         }
-        List<String> deniedPermissions = Utils.findDeniedPermissions(Utils.getActivity(object), permissions);
+        List<String> deniedPermissions =
+                PermissionUtils.findDeniedPermissions(PermissionUtils.getActivity(object), permissions);
 
         if (deniedPermissions.size() > 0) {
             if (object instanceof Activity) {
@@ -81,53 +107,61 @@ public class PermissionGen {
             } else {
                 throw new IllegalArgumentException(object.getClass().getName() + " is not supported");
             }
-
         } else {
             doExecuteSuccess(object, requestCode);
         }
     }
 
-
+    /**
+     * 执行成功回调
+     *
+     * @param activity
+     * @param requestCode
+     */
     private static void doExecuteSuccess(Object activity, int requestCode) {
-        Method executeMethod = Utils.findMethodWithRequestCode(activity.getClass(),
-                PermissionSuccess.class, requestCode);
+        Method executeMethod = PermissionUtils.findMethodWithRequestCode(
+                activity.getClass(),
+                PermissionSuccess.class,
+                requestCode);
 
         executeMethod(activity, executeMethod);
     }
 
-    private static void doExecuteFail(Object activity, int requestCode) {
-        Method executeMethod = Utils.findMethodWithRequestCode(activity.getClass(),
-                PermissionFail.class, requestCode);
-
-        executeMethod(activity, executeMethod);
-    }
-
+    /**
+     * 反射 执行方法
+     *
+     * @param activity
+     * @param executeMethod
+     */
     private static void executeMethod(Object activity, Method executeMethod) {
         if (executeMethod != null) {
             try {
                 if (!executeMethod.isAccessible()) executeMethod.setAccessible(true);
-                executeMethod.invoke(activity, new Object[]{});
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-
-            } catch (InvocationTargetException e) {
+                executeMethod.invoke(activity);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public static void onRequestPermissionsResult(Activity activity, int requestCode, String[] permissions,
-                                                  int[] grantResults) {
+    private static void doExecuteFail(Object activity, int requestCode) {
+        Method executeMethod = PermissionUtils.findMethodWithRequestCode(activity.getClass(),
+                PermissionFail.class, requestCode);
+
+        executeMethod(activity, executeMethod);
+    }
+
+    public static void onRequestPermissionsResult(
+            Activity activity, int requestCode, String[] permissions, int[] grantResults) {
         requestResult(activity, requestCode, permissions, grantResults);
     }
 
-    public static void onRequestPermissionsResult(Fragment fragment, int requestCode, String[] permissions,
-                                                  int[] grantResults) {
+    public static void onRequestPermissionsResult(
+            Fragment fragment, int requestCode, String[] permissions, int[] grantResults) {
         requestResult(fragment, requestCode, permissions, grantResults);
     }
 
-    private static void requestResult(Object obj, int requestCode, String[] permissions,
-                                      int[] grantResults) {
+    private static void requestResult(Object obj, int requestCode, String[] permissions, int[] grantResults) {
         List<String> deniedPermissions = new ArrayList<>();
         for (int i = 0; i < grantResults.length; i++) {
             if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {

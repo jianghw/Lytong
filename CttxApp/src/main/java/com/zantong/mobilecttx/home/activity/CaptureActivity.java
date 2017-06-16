@@ -78,7 +78,7 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Map;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * This activity opens the camera and does the actual scanning on a background thread. It draws a

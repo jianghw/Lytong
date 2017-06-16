@@ -1,6 +1,5 @@
 package com.zantong.mobilecttx.card.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
 import android.text.Html;
@@ -54,7 +53,7 @@ import java.util.concurrent.TimeUnit;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.DatePicker;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
@@ -109,16 +108,6 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
     private String wangdianAdress;//网点地址
     private String mEmpNum;//获取的营销代码
-
-    public static Intent getIntent(Context context, String fileNum, String name,
-                                   String idCard) {
-        Intent intent = new Intent(context, ApplyCardQuickActivity.class);
-        intent.putExtra("filenum", fileNum);
-        intent.putExtra("name", name);
-        intent.putExtra("idCard", idCard);
-        return intent;
-    }
-
 
     @Override
     public void initView() {
@@ -363,7 +352,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
     }
 
     @Override
-    public void resultError(String mesage) {
+    public void resultError(String msg) {
         hideDialogLoading();
         Toast.makeText(ApplyCardQuickActivity.this, Config.getErrMsg("1"), Toast.LENGTH_SHORT).show();
     }

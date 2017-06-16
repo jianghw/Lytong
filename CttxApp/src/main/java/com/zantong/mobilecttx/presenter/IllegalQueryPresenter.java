@@ -23,7 +23,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * Created by 王海洋 on 16/6/1.

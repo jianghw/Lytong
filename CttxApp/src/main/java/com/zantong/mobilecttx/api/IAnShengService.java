@@ -17,4 +17,8 @@ public interface IAnShengService {
     @FormUrlEncoded
     @POST("mobilecall_call/mobilecall_call")
     Observable<LicenseResponseBean> driverLicenseCheckGrade(@Field("msg") String requestDTO);
+
+    @FormUrlEncoded
+    @POST("mobilecall_call")
+    Observable<LicenseResponseBean> loadLoginPostTest(@Field("msg") String msg);
 }

@@ -1,5 +1,6 @@
-package cn.qqtheme.framework.util;
+package cn.qqtheme.framework.util.log;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.util.Log;
 
@@ -38,6 +39,7 @@ public class AndroidLogAdapter implements LogAdapter {
         Log.v(tag, message);
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     @Override
     public void wtf(String tag, String message) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {

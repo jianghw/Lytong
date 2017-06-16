@@ -30,7 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

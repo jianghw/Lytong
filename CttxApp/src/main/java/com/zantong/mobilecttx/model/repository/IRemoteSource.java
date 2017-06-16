@@ -108,4 +108,6 @@ public interface IRemoteSource {
      * 43.生成违章缴费订单
      */
     Observable<PayOrderResult> paymentCreateOrder(ViolationPayDTO payDTO);
+
+    Observable<LicenseResponseBean> loadLoginPostTest(String msg);
 }

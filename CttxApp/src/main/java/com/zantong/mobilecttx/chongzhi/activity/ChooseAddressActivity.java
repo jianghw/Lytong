@@ -31,7 +31,7 @@ import com.zantong.mobilecttx.chongzhi.adapter.ChooseAddressAdapter;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * 选择地址页面

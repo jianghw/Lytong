@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.utils.permission;
+package cn.qqtheme.framework.util.primission;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AllowPermissions {
+public @interface PermissionAllow {
     String[] value();
 }

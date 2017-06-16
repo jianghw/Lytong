@@ -18,7 +18,7 @@ import com.zantong.mobilecttx.utils.UiHelpers;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * 支付浏览器

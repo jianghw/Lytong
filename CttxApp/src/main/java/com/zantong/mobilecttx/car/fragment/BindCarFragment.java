@@ -17,7 +17,7 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * 已经绑定的车辆

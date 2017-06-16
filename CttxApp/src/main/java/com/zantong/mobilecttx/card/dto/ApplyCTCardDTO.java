@@ -3,10 +3,10 @@ package com.zantong.mobilecttx.card.dto;
 import java.io.Serializable;
 
 /**
- * Created by zhoujie on 2017/1/3.
+ * 申请办卡 请求
  */
 
-public class ApplyCTCardDTO implements Serializable{
+public class ApplyCTCardDTO implements Serializable {
     private String usrid;//	 用户ID
     private String filenum;//	 档案号
     private String usrname;//	用户姓名

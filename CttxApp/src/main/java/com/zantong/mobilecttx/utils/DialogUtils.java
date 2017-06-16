@@ -59,8 +59,7 @@ public class DialogUtils {
      */
     public static Dialog showLoading(Context context, String messge) {
         Dialog dialog = null;
-        View mView = LayoutInflater.from(context).inflate(
-                R.layout.base_loading, null);
+        View mView = LayoutInflater.from(context).inflate(R.layout.base_loading, null);
         mView.setVisibility(View.VISIBLE);
         mView.setPadding(30, 30, 30, 30);
         TextView tv = (TextView) mView.findViewById(R.id.base_loading_msg);

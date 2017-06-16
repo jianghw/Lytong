@@ -12,8 +12,6 @@ import com.zantong.mobilecttx.user.fragment.HelpFragment;
 
 /**
  * 帮助与反馈
- * @author Sandy
- * create at 16/6/2 下午12:26
  */
 public class HelpActivity extends BaseMvpActivity<IBaseView,HelpPresenter> implements View.OnClickListener, IBaseView{
 

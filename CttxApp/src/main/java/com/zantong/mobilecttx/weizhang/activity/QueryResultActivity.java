@@ -47,7 +47,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 public class QueryResultActivity extends AppCompatActivity
         implements BaseRecyclerAdapter.OnRecyclerViewListener, ModelView, View.OnClickListener {

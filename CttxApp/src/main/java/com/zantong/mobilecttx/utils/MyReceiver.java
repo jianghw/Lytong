@@ -11,7 +11,7 @@ import android.widget.RemoteViews;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.home.activity.HomeActivity;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 
 /**

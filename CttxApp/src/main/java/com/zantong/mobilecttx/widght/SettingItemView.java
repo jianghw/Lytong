@@ -69,7 +69,7 @@ public class SettingItemView extends RelativeLayout {
     }
 
     public String getRightText(){
-        return titleHint.getText().toString();
+        return titleHint.getText().toString().trim();
     }
 
     public void setLeftTextColor(int leftTextColor){

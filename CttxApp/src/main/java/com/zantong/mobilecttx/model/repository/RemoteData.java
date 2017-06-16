@@ -167,4 +167,9 @@ public class RemoteData implements IRemoteSource {
     public Observable<PayOrderResult> paymentCreateOrder(ViolationPayDTO payDTO) {
         return initRetrofit().create(IViolationService.class).paymentCreateOrder(payDTO);
     }
+
+    @Override
+    public Observable<LicenseResponseBean> loadLoginPostTest(String msg) {
+        return initAppUrlRetrofit().create(IAnShengService.class).loadLoginPostTest(msg);
+    }
 }

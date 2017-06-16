@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.utils.permission.internal;
+package cn.qqtheme.framework.util.primission;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -6,25 +6,27 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 
-import com.zantong.mobilecttx.utils.permission.PermissionFail;
-import com.zantong.mobilecttx.utils.permission.PermissionSuccess;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by namee on 2015. 11. 18..
+ * 权限工具类封装
  */
-final public class Utils {
-    private Utils() {
-    }
+final public class PermissionUtils {
 
     public static boolean isOverMarshmallow() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
+    /**
+     * 判断有哪些权限是被禁止的
+     *
+     * @param activity
+     * @param permission
+     * @return
+     */
     @TargetApi(value = Build.VERSION_CODES.M)
     public static List<String> findDeniedPermissions(Activity activity, String... permission) {
         List<String> denyPermissions = new ArrayList<>();
@@ -58,7 +60,36 @@ final public class Utils {
         return null;
     }
 
-    public static boolean isEqualRequestCodeFromAnntation(Method m, Class clazz, int requestCode) {
+    /**
+     * 根据请求code找办法
+     *
+     * @param clazz
+     * @param annotation
+     * @param requestCode
+     * @param <A>
+     * @return
+     */
+    public static <A extends Annotation> Method findMethodWithRequestCode(
+            Class clazz, Class<A> annotation, int requestCode) {
+        for (Method method : clazz.getDeclaredMethods()) {
+            if (method.isAnnotationPresent(annotation)) {
+                if (isEqualRequestCodeFromAnnotation(method, annotation, requestCode)) {
+                    return method;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 判断根据请求code 执行响应方法
+     *
+     * @param m
+     * @param clazz
+     * @param requestCode
+     * @return
+     */
+    public static boolean isEqualRequestCodeFromAnnotation(Method m, Class clazz, int requestCode) {
         if (clazz.equals(PermissionFail.class)) {
             return requestCode == m.getAnnotation(PermissionFail.class).requestCode();
         } else if (clazz.equals(PermissionSuccess.class)) {
@@ -68,20 +99,8 @@ final public class Utils {
         }
     }
 
-    public static <A extends Annotation> Method findMethodWithRequestCode(Class clazz,
-                                                                          Class<A> annotation, int requestCode) {
-        for (Method method : clazz.getDeclaredMethods()) {
-            if (method.isAnnotationPresent(annotation)) {
-                if (isEqualRequestCodeFromAnntation(method, annotation, requestCode)) {
-                    return method;
-                }
-            }
-        }
-        return null;
-    }
-
-    public static <A extends Annotation> Method findMethodPermissionSuccessWithRequestCode(Class clazz,
-                                                                                           Class<A> permissionFailClass, int requestCode) {
+    public static <A extends Annotation> Method findMethodPermissionSuccessWithRequestCode(
+            Class clazz, Class<A> permissionFailClass, int requestCode) {
         for (Method method : clazz.getDeclaredMethods()) {
             if (method.isAnnotationPresent(permissionFailClass)) {
                 if (requestCode == method.getAnnotation(PermissionSuccess.class).requestCode()) {
@@ -92,6 +111,12 @@ final public class Utils {
         return null;
     }
 
+    /**
+     * 返回对象类型
+     *
+     * @param object
+     * @return
+     */
     public static Activity getActivity(Object object) {
         if (object instanceof Fragment) {
             return ((Fragment) object).getActivity();

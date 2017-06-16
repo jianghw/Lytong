@@ -6,6 +6,8 @@ import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
+import cn.qqtheme.framework.util.log.LogUtils;
+
 /**
  * 获取屏幕宽高等信息、全屏切换、保持屏幕常亮、截屏等
  *

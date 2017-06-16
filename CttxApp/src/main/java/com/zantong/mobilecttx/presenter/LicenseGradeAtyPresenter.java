@@ -11,7 +11,7 @@ import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
@@ -110,6 +110,7 @@ public class LicenseGradeAtyPresenter implements ILicenseGradeAtyContract.ILicen
         RequestHeadDTO requestHeadDTO = mRepository.initLicenseFileNumDTO("cip.cfc.v001.01");
         dto.setSYS_HEAD(requestHeadDTO);
         LicenseFileNumDTO bean = mView.initLicenseFileNumDTO();
+
         LogUtils.e(bean.getFilenum());
         LogUtils.e(bean.getStrtdt());
         LogUtils.e(bean.getEnddt());

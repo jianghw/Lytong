@@ -17,7 +17,7 @@ import com.zantong.mobilecttx.utils.DensityUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * 关于我们

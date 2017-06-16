@@ -20,7 +20,7 @@ import com.zantong.mobilecttx.utils.BaseFragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 public class AddCarViewPager extends FrameLayout {
 

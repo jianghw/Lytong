@@ -69,6 +69,9 @@ public interface ISplashAtyContract {
          * app启动图片获取
          */
         void startGuidePic();
+
+
+        void loadLoginPostTest();
     }
 
 }

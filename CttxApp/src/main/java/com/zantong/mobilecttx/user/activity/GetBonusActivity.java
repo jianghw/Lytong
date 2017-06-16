@@ -38,7 +38,7 @@ import com.zantong.mobilecttx.zxing.EncodingUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * 分享领红包

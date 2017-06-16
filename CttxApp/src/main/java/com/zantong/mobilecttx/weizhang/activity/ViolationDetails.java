@@ -32,9 +32,6 @@ import com.zantong.mobilecttx.utils.TitleSetting;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.permission.PermissionFail;
-import com.zantong.mobilecttx.utils.permission.PermissionGen;
-import com.zantong.mobilecttx.utils.permission.PermissionSuccess;
 import com.zantong.mobilecttx.utils.popwindow.SurePayPopupWindows;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
@@ -49,7 +46,10 @@ import java.util.HashMap;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
+import cn.qqtheme.framework.util.primission.PermissionFail;
+import cn.qqtheme.framework.util.primission.PermissionGen;
+import cn.qqtheme.framework.util.primission.PermissionSuccess;
 
 public class ViolationDetails extends FragmentActivity implements ModelView {
     @Bind(R.id.next_btn)
@@ -129,8 +129,7 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
     }
 

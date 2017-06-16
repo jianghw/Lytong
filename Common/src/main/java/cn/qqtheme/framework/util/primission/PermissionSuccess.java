@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.utils.permission;
+package cn.qqtheme.framework.util.primission;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

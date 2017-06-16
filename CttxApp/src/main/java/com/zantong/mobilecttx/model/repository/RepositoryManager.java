@@ -244,4 +244,8 @@ public class RepositoryManager {
     public Observable<PayOrderResult> paymentCreateOrder(ViolationPayDTO payDTO) {
         return mRemoteData.paymentCreateOrder(payDTO);
     }
+
+    public Observable<LicenseResponseBean> loadLoginPostTest(String msg) {
+        return mRemoteData.loadLoginPostTest(msg);
+    }
 }

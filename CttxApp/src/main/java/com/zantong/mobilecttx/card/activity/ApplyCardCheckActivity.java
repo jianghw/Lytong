@@ -42,7 +42,7 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.DatePicker;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 public class ApplyCardCheckActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements HandleCTCardApiClient.ResultInterface {
 
@@ -210,7 +210,7 @@ public class ApplyCardCheckActivity extends BaseMvpActivity<IBaseView, HelpPrese
     }
 
     @Override
-    public void resultError(String mesage) {
+    public void resultError(String msg) {
         hideDialogLoading();
         Toast.makeText(ApplyCardCheckActivity.this, Config.getErrMsg("1"), Toast.LENGTH_SHORT).show();
     }

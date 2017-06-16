@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:zyb="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scrollbars="none">
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:zyb="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
 
         <TextView
             style="@style/TextSmallNoticeInfoStyleWhite"
-            android:text="填写个人资料" />
+            android:text="填写个人资料"/>
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_filenum"
@@ -24,7 +24,7 @@
             zyb:contentlength="12"
             zyb:hinttext="请输入驾驶证档案编号"
             zyb:imgflag="true"
-            zyb:titletext="驾档编号" />
+            zyb:titletext="驾档编号"/>
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_username"
@@ -34,7 +34,7 @@
             zyb:contentinputtype="0"
             zyb:contentlength="4"
             zyb:hinttext="请输入姓名"
-            zyb:titletext="姓名" />
+            zyb:titletext="姓名"/>
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_username_pinyin"
@@ -43,9 +43,9 @@
             zyb:contentinputtype="4"
             zyb:contentlength="40"
             zyb:hinttext="请输入姓名拼音"
-            zyb:titletext="姓名拼音" />
+            zyb:titletext="姓名拼音"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.SettingItemView
             android:id="@+id/frist_gender"
@@ -54,7 +54,7 @@
             android:visibility="gone"
             app:titleHintS="请选择性别"
             app:titleS="性别"
-            app:titleSC="@color/gray_99" />
+            app:titleSC="@color/gray_99"/>
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_idcard_num"
@@ -64,7 +64,7 @@
             zyb:contentinputtype="3"
             zyb:contentlength="19"
             zyb:hinttext="请输入身份证号码"
-            zyb:titletext="身份证号" />
+            zyb:titletext="身份证号"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,7 +76,7 @@
 
             <TextView
                 style="@style/TextInfoStyle"
-                android:text="身份证有效期" />
+                android:text="身份证有效期"/>
 
             <RelativeLayout
                 android:id="@+id/applycard_normal_idcard_layout1"
@@ -90,7 +90,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:text="长期有效"
-                    android:textColor="@color/gray_99" />
+                    android:textColor="@color/gray_99"/>
 
                 <ImageView
                     android:id="@+id/applycard_normal_idcard_flag"
@@ -99,19 +99,18 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/ds_20"
                     android:layout_toLeftOf="@id/applycard_normal_idcard_forever"
-                    android:background="@mipmap/checkbox_normal" />
+                    android:background="@mipmap/checkbox_normal"/>
             </RelativeLayout>
         </LinearLayout>
 
-        <include layout="@layout/view_line1" />
-
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.SettingItemView
             android:id="@+id/applycard_normal_idcard_layout2"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
             app:titleHintS="年/月/日"
-            app:titleSC="@color/gray_99" />
+            app:titleSC="@color/gray_99"/>
 
         <com.zantong.mobilecttx.widght.SettingItemView
             android:layout_width="match_parent"
@@ -119,8 +118,7 @@
             android:visibility="gone"
             app:titleHintS="请选择出生日期"
             app:titleS="出生日期"
-            app:titleSC="@color/gray_99" />
-
+            app:titleSC="@color/gray_99"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,17 +129,16 @@
             android:paddingRight="@dimen/ds_60"
             android:visibility="gone">
 
-
             <TextView
                 style="@style/TextInfoStyle"
-                android:text="国籍" />
+                android:text="国籍"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|right"
                 android:text="中国"
-                android:textColor="@color/gray_99" />
+                android:textColor="@color/gray_99"/>
         </LinearLayout>
 
 
@@ -152,9 +149,9 @@
             zyb:contentinputtype="1"
             zyb:contentlength="11"
             zyb:hinttext="请输入手机号码"
-            zyb:titletext="手机号" />
+            zyb:titletext="手机号"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.SettingItemView
             android:id="@+id/applycard_normal_marital_status"
@@ -162,9 +159,9 @@
             android:layout_height="@dimen/ds_144"
             app:titleHintS="请选择婚姻状况"
             app:titleS="婚姻状况"
-            app:titleSC="@color/gray_99" />
+            app:titleSC="@color/gray_99"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.SettingItemView
             android:id="@+id/applycard_normal_education_status"
@@ -172,9 +169,9 @@
             android:layout_height="@dimen/ds_144"
             app:titleHintS="请选择受教育程度"
             app:titleS="受教育程度"
-            app:titleSC="@color/gray_99" />
+            app:titleSC="@color/gray_99"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.SettingItemView
             android:id="@+id/applycard_normal_house_status"
@@ -182,9 +179,9 @@
             android:layout_height="@dimen/ds_144"
             app:titleHintS="请选择住宅情况"
             app:titleS="住宅情况"
-            app:titleSC="@color/gray_99" />
+            app:titleSC="@color/gray_99"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.SettingItemView
             android:id="@+id/applycard_normal_addr"
@@ -192,9 +189,9 @@
             android:layout_height="@dimen/ds_144"
             app:titleHintS="请选择住宅所在区域"
             app:titleS="住宅所在区域"
-            app:titleSC="@color/gray_99" />
+            app:titleSC="@color/gray_99"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
 
         <com.zantong.mobilecttx.widght.CttxEditText
@@ -204,9 +201,9 @@
             zyb:contentinputtype="0"
             zyb:contentlength="80"
             zyb:hinttext="请输入详细地址"
-            zyb:titletext="详细地址" />
+            zyb:titletext="详细地址"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_tel"
@@ -215,11 +212,11 @@
             zyb:contentinputtype="1"
             zyb:contentlength="10"
             zyb:hinttext="请输入真实有效的固定电话"
-            zyb:titletext="固定电话(021)" />
+            zyb:titletext="固定电话(021)"/>
         <!-- 职业信息  -->
         <TextView
             style="@style/TextSmallNoticeInfoStyleWhite"
-            android:text="填写职业信息" />
+            android:text="填写职业信息"/>
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_income"
@@ -228,9 +225,9 @@
             zyb:contentinputtype="1"
             zyb:contentlength="7"
             zyb:hinttext="元"
-            zyb:titletext="本人年收入" />
+            zyb:titletext="本人年收入"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -243,7 +240,7 @@
 
             <TextView
                 style="@style/TextInfoStyle"
-                android:text="就职情况" />
+                android:text="就职情况"/>
 
             <RelativeLayout
                 android:id="@+id/applycard_normal_ziyou_layout"
@@ -257,7 +254,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/ds_30"
                     android:layout_toLeftOf="@+id/second_img_hint"
-                    android:background="@mipmap/checkbox_normal" />
+                    android:background="@mipmap/checkbox_normal"/>
 
                 <LinearLayout
                     android:id="@+id/second_img_hint"
@@ -274,14 +271,14 @@
                         android:layout_gravity="right"
                         android:text="自由职业"
                         android:textColor="@color/gray_66"
-                        android:textSize="@dimen/fs_42" />
+                        android:textSize="@dimen/fs_42"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="免填职业信息,额度上限2000元"
                         android:textColor="@color/gray_66"
-                        android:textSize="@dimen/fs_36" />
+                        android:textSize="@dimen/fs_36"/>
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
@@ -306,7 +303,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/ds_30"
                     android:layout_toLeftOf="@+id/second_qiye_img_hint"
-                    android:background="@mipmap/checkbox_checked" />
+                    android:background="@mipmap/checkbox_checked"/>
 
                 <LinearLayout
                     android:id="@+id/second_qiye_img_hint"
@@ -323,19 +320,19 @@
                         android:layout_gravity="right"
                         android:text="企事业单位"
                         android:textColor="@color/gray_66"
-                        android:textSize="@dimen/fs_42" />
+                        android:textSize="@dimen/fs_42"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="     填写职业详情,获取更高额度"
                         android:textColor="@color/gray_66"
-                        android:textSize="@dimen/fs_36" />
+                        android:textSize="@dimen/fs_36"/>
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_company_name"
@@ -344,9 +341,9 @@
             zyb:contentinputtype="0"
             zyb:contentlength="20"
             zyb:hinttext="请输入单位名称"
-            zyb:titletext="单位名称" />
+            zyb:titletext="单位名称"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.SettingItemView
             android:id="@+id/applycard_normal_company_type"
@@ -354,9 +351,9 @@
             android:layout_height="@dimen/ds_144"
             app:titleHintS="其它"
             app:titleS="单位性质"
-            app:titleSC="@color/gray_99" />
+            app:titleSC="@color/gray_99"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_department_name"
@@ -365,9 +362,9 @@
             zyb:contentinputtype="0"
             zyb:contentlength="20"
             zyb:hinttext="请输入部门名称"
-            zyb:titletext="部门名称" />
+            zyb:titletext="部门名称"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.SettingItemView
             android:id="@+id/applycard_normal_zhiwu"
@@ -375,9 +372,9 @@
             android:layout_height="@dimen/ds_144"
             app:titleHintS="请选择职务"
             app:titleS="职务"
-            app:titleSC="@color/gray_99" />
+            app:titleSC="@color/gray_99"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.SettingItemView
             android:id="@+id/applycard_normal_zhiye"
@@ -385,9 +382,9 @@
             android:layout_height="@dimen/ds_144"
             app:titleHintS="请选择职业"
             app:titleS="职业"
-            app:titleSC="@color/gray_99" />
+            app:titleSC="@color/gray_99"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.SettingItemView
             android:id="@+id/applycard_normal_compay_addr"
@@ -395,9 +392,9 @@
             android:layout_height="@dimen/ds_144"
             app:titleHintS="请选择单位地址"
             app:titleS="单位地址"
-            app:titleSC="@color/gray_99" />
+            app:titleSC="@color/gray_99"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_compay_detailaddr"
@@ -406,9 +403,9 @@
             zyb:contentinputtype="0"
             zyb:contentlength="20"
             zyb:hinttext="请输入详细地址"
-            zyb:titletext="详细地址" />
+            zyb:titletext="详细地址"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_compay_zipcode"
@@ -417,9 +414,9 @@
             zyb:contentinputtype="1"
             zyb:contentlength="6"
             zyb:hinttext="请输入邮编"
-            zyb:titletext="邮编" />
+            zyb:titletext="邮编"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_compay_tel"
@@ -428,14 +425,14 @@
             zyb:contentinputtype="1"
             zyb:contentlength="6"
             zyb:hinttext="请输入真实有效的固话"
-            zyb:titletext="电话" />
+            zyb:titletext="电话"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
 
         <TextView
             style="@style/TextSmallNoticeInfoStyleWhite"
-            android:text="填写联系人信息" />
+            android:text="填写联系人信息"/>
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_contact_name"
@@ -444,9 +441,9 @@
             zyb:contentinputtype="0"
             zyb:contentlength="4"
             zyb:hinttext="请输入联系人姓名"
-            zyb:titletext="联系人姓名" />
+            zyb:titletext="联系人姓名"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
 
         <com.zantong.mobilecttx.widght.SettingItemView
@@ -455,9 +452,9 @@
             android:layout_height="@dimen/ds_144"
             app:titleHintS="请选择与本人关系"
             app:titleS="与本人关系"
-            app:titleSC="@color/gray_99" />
+            app:titleSC="@color/gray_99"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_contact_mobile"
@@ -466,11 +463,11 @@
             zyb:contentinputtype="1"
             zyb:contentlength="11"
             zyb:hinttext="联系人手机号"
-            zyb:titletext="手机号" />
+            zyb:titletext="手机号"/>
 
         <TextView
             style="@style/TextSmallNoticeInfoStyleWhite"
-            android:text="填写还款信息" />
+            android:text="填写还款信息"/>
 
         <com.zantong.mobilecttx.widght.SettingItemView
             android:id="@+id/applycard_normal_huankuantype"
@@ -478,9 +475,9 @@
             android:layout_height="@dimen/ds_144"
             app:titleHintS="请选择自动还款类型"
             app:titleS="自动还款类型"
-            app:titleSC="@color/gray_99" />
+            app:titleSC="@color/gray_99"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_zhuanchukahao"
@@ -489,9 +486,9 @@
             zyb:contentinputtype="1"
             zyb:contentlength="19"
             zyb:hinttext="请输入自动还款转出卡号"
-            zyb:titletext="转出卡号" />
+            zyb:titletext="转出卡号"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -506,7 +503,7 @@
                 android:layout_centerVertical="true"
                 android:text="开启Email对账单"
                 android:textColor="@color/gray_99"
-                android:textSize="@dimen/fs_42" />
+                android:textSize="@dimen/fs_42"/>
 
             <com.zantong.mobilecttx.widght.UISwitchButton
                 android:id="@+id/activity_apply_four_duizhangdan"
@@ -516,10 +513,10 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 app:bmHeight="@dimen/ds_90"
-                app:bmWidth="@dimen/ds_150" />
+                app:bmWidth="@dimen/ds_150"/>
         </RelativeLayout>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_email"
@@ -528,9 +525,9 @@
             zyb:contentinputtype="0"
             zyb:contentlength="25"
             zyb:hinttext="邮箱地址"
-            zyb:titletext="Email" />
+            zyb:titletext="Email"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -549,13 +546,13 @@
                     style="@style/TextInfoStyle"
                     android:text="主卡余额变动提醒"
                     android:textColor="@color/gray_99"
-                    android:textSize="@dimen/fs_42" />
+                    android:textSize="@dimen/fs_42"/>
 
                 <TextView
                     style="@style/TextInfoStyle"
                     android:text="向发送余额变动提醒"
                     android:textColor="@color/gray_a6"
-                    android:textSize="@dimen/fs_40" />
+                    android:textSize="@dimen/fs_40"/>
             </LinearLayout>
 
             <com.zantong.mobilecttx.widght.UISwitchButton
@@ -565,10 +562,10 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 app:bmHeight="@dimen/ds_90"
-                app:bmWidth="@dimen/ds_150" />
+                app:bmWidth="@dimen/ds_150"/>
         </RelativeLayout>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.SettingItemView
             android:id="@+id/applycard_normal_wangdian"
@@ -576,8 +573,10 @@
             android:layout_height="@dimen/ds_144"
             app:titleHintS="请选择领卡网点"
             app:titleS="领卡网点"
-            app:titleSC="@color/gray_99" />
-        <include layout="@layout/view_line1" />
+            app:titleSC="@color/gray_99"/>
+
+        <include layout="@layout/view_line1"/>
+
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_yingxiaocode"
             android:layout_width="match_parent"
@@ -585,9 +584,9 @@
             zyb:contentinputtype="0"
             zyb:contentlength="80"
             zyb:hinttext=""
-            zyb:titletext="营销代码" />
+            zyb:titletext="营销代码"/>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -597,7 +596,8 @@
             android:paddingTop="@dimen/ds_30"
             android:text="申请人声明:"
             android:textColor="@color/red"
-            android:textSize="@dimen/fs_40" />
+            android:textSize="@dimen/fs_40"/>
+
         <TextView
             android:id="@+id/applycard_normal_hint"
             android:layout_width="match_parent"
@@ -607,13 +607,13 @@
             android:paddingRight="@dimen/ds_50"
             android:text="@string/apply_four_hint"
             android:textColor="@color/gray_66"
-            android:textSize="@dimen/fs_40" />
+            android:textSize="@dimen/fs_40"/>
 
         <Button
             android:id="@+id/applycard_normal_commit"
             style="@style/ButtonBigStyle"
             android:layout_marginBottom="@dimen/ds_80"
             android:layout_marginTop="@dimen/ds_120"
-            android:text="本人已阅读并同意" />
+            android:text="本人已阅读并同意"/>
     </LinearLayout>
 </ScrollView>

@@ -16,7 +16,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import java.util.HashMap;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -31,13 +31,13 @@ public class AsyncCallBack<T> implements Callback {
     private Class<T> clazz;
     private CallBack<T> callback;
 
-    private HashMap<String,String> errorList;
+    private HashMap<String, String> errorList;
 
     public AsyncCallBack() {
     }
 
-    public HashMap<String,String> getErrMsg() {
-        HashMap<String,String> errors = new HashMap<String,String>();
+    public HashMap<String, String> getErrMsg() {
+        HashMap<String, String> errors = new HashMap<String, String>();
         errors.put("000000", "成功");
         errors.put("CFB001", "推荐人不存在");
         errors.put("CFB002", "不能重复获取赠险");
@@ -91,7 +91,7 @@ public class AsyncCallBack<T> implements Callback {
         this.tag = tag;
         this.clazz = clazz;
         this.gson = new Gson();
-        this.errorList = new HashMap<String,String>();
+        this.errorList = new HashMap<String, String>();
     }
 
     public AsyncCallBack(Context context, CallBack<T> callback, Class<T> clazz) {
@@ -99,7 +99,7 @@ public class AsyncCallBack<T> implements Callback {
     }
 
     @Override
-    public void onResponse(Call call,Response response) throws IOException {
+    public void onResponse(Call call, Response response) throws IOException {
 
         if (response.isSuccessful()) {
             try {
@@ -111,7 +111,7 @@ public class AsyncCallBack<T> implements Callback {
 
                     Result result = (Result) t;
                     LogUtils.i("returncode===" + result.getSYS_HEAD().getReturnCode());
-                    if (!"CIE999".equals(result.getSYS_HEAD().getReturnCode()) && !"cip.cfc.v001.01".equals(result.getSYS_HEAD().getTransServiceCode())){
+                    if (!"CIE999".equals(result.getSYS_HEAD().getReturnCode()) && !"cip.cfc.v001.01".equals(result.getSYS_HEAD().getTransServiceCode())) {
                         sendErrorMsg(context, tag, result);
                     }
                     callback.sendSuccessMessage(t);
@@ -135,7 +135,7 @@ public class AsyncCallBack<T> implements Callback {
                 callback.sendFailMessage(Config.ERROR_PARSER, Config.ERROR_PARSER_MSG);
             }
         } else {
-            LogUtils.i("response.code:"+response.code());
+            LogUtils.i("response.code:" + response.code());
             EventBus.getDefault().post(
                     new ErrorEvent(Config.ERROR_IO, Config.ERROR_IO_MSG, tag,
                             context));
@@ -146,9 +146,9 @@ public class AsyncCallBack<T> implements Callback {
     /**
      * 发送错误信息
      *
-     * @param context   上下文对象
-     * @param tag       标签
-     * @param result    返回结果
+     * @param context 上下文对象
+     * @param tag     标签
+     * @param result  返回结果
      */
     private void sendErrorMsg(Context context, Object tag, Result result) {
         if (result != null) {
@@ -156,7 +156,7 @@ public class AsyncCallBack<T> implements Callback {
             String returnStatus = result.getSYS_HEAD().getReturnCode();
             try {
                 status = returnStatus;
-                LogUtils.i("ErrorMsgCode:"+status);
+                LogUtils.i("ErrorMsgCode:" + status);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -169,7 +169,7 @@ public class AsyncCallBack<T> implements Callback {
                         new ErrorEvent(status,
                                 msg, tag, context));
             }
-            if (result.getSYS_HEAD().getTransServiceCode().equals("cip.cfc.v001.01") && result.getSYS_HEAD().getReturnCode().equals("CIE999")){
+            if (result.getSYS_HEAD().getTransServiceCode().equals("cip.cfc.v001.01") && result.getSYS_HEAD().getReturnCode().equals("CIE999")) {
                 EventBus.getDefault().post(
                         new ErrorEvent(status,
                                 msg, tag, context));
@@ -182,23 +182,24 @@ public class AsyncCallBack<T> implements Callback {
         }
     }
 
-    public HashMap<String,String> getErrorList() {
+    public HashMap<String, String> getErrorList() {
         if (errorList.size() == 0) {
             return getErrMsg();
         }
         return errorList;
     }
+
     @Override
     public void onFailure(Call call, IOException ex) {
         String msg = ex.getMessage();
         LogUtils.i("failed msg:" + msg);
-        if("Canceled".equals(msg)){
+        if ("Canceled".equals(msg)) {
             LogUtils.i("msg:" + msg);
             EventBus.getDefault()
                     .post(new ErrorEvent(Config.ERROR_IO, Config.ERROR_IO_MSG, tag,
                             context));
             callback.sendFailMessage(Config.ERROR_IO, Config.ERROR_IO_MSG);
-        }else{
+        } else {
             EventBus.getDefault()
                     .post(new ErrorEvent(Config.ERROR_IO, Config.ERROR_IO_MSG, tag,
                             context));

@@ -35,10 +35,10 @@ public class Retrofit2Utils {
     private HttpLoggingInterceptor interceptor;
 
     public Retrofit2Utils() {
-        retrofitBuilder=new Retrofit.Builder().addCallAdapterFactory(RxJavaCallAdapterFactory.create());
-        interceptor=new HttpLoggingInterceptor();
+        retrofitBuilder = new Retrofit.Builder().addCallAdapterFactory(RxJavaCallAdapterFactory.create());
+        interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
-        okhttpBuilder=new OkHttpClient.Builder()
+        okhttpBuilder = new OkHttpClient.Builder()
                 .readTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
                 .connectTimeout(10, TimeUnit.SECONDS);
@@ -47,6 +47,7 @@ public class Retrofit2Utils {
 
     /**
      * 设置缓存
+     *
      * @param flag
      */
     public void enableCache(boolean flag, Context context) {
@@ -62,6 +63,7 @@ public class Retrofit2Utils {
 
     /**
      * 添加额外的拦截器
+     *
      * @param interceptor
      * @return
      */
@@ -76,13 +78,15 @@ public class Retrofit2Utils {
     public Retrofit getRetrofit(String baseUrl) {
         return retrofitBuilder.addConverterFactory(GsonConverterFactory.create()).client(okhttpBuilder.build()).baseUrl(baseUrl).build();
     }
+
     public Retrofit getRetrofitHttps(String baseUrl) {
         return retrofitBuilder.addConverterFactory(GsonConverterFactory.create()).client(getUnsafeOkHttpClient()).baseUrl(baseUrl).build();
     }
-    private  OkHttpClient getUnsafeOkHttpClient() {
+
+    private OkHttpClient getUnsafeOkHttpClient() {
         try {
             // Create a trust manager that does not validate certificate chains
-            final TrustManager[] trustAllCerts = new TrustManager[] {
+            final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {
                         @Override
                         public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
@@ -123,8 +127,6 @@ public class Retrofit2Utils {
             throw new RuntimeException(e);
         }
     }
-
-
 
 
 }

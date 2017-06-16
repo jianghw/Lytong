@@ -11,8 +11,6 @@ import butterknife.OnClick;
 
 /**
  * 选择城市
- * @author Sandy
- * create at 16/9/12 上午11:13
  */
 public class AddrActivity extends BaseMvpActivity<IBaseView,HelpPresenter> implements IBaseView{
 

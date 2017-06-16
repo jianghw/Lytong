@@ -1,11 +1,8 @@
 package com.zantong.mobilecttx.card.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Environment;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -25,7 +22,6 @@ import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
 import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.card.bean.ProvinceModel;
 import com.zantong.mobilecttx.card.bean.YingXiaoResult;
 import com.zantong.mobilecttx.card.dto.ApplyCTCardDTO;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
@@ -49,20 +45,23 @@ import com.zantong.mobilecttx.widght.CttxEditText;
 import com.zantong.mobilecttx.widght.SettingItemView;
 import com.zantong.mobilecttx.widght.UISwitchButton;
 
+import org.xml.sax.SAXException;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.DatePicker;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.FileUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
@@ -73,7 +72,8 @@ import rx.schedulers.Schedulers;
 /**
  * 办卡信息
  */
-public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements HandleCTCardApiClient.ResultInterface {
+public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
+        implements HandleCTCardApiClient.ResultInterface {
 
     @Bind(R.id.applycard_normal_filenum)
     CttxEditText mFileNum;
@@ -119,8 +119,9 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     ImageView mIdCardForeverImg;
     @Bind(R.id.applycard_normal_idcard_layout2)
     SettingItemView mIdCardLayout2;
-    @Bind(R.id.applycard_normal_marital_status)//婚姻状况
-            SettingItemView mMaritalStatus;
+    //婚姻状况
+    @Bind(R.id.applycard_normal_marital_status)
+    SettingItemView mMaritalStatus;
     @Bind(R.id.applycard_normal_education_status)
     SettingItemView mEducationStatus;
     @Bind(R.id.applycard_normal_house_status)
@@ -155,62 +156,69 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
 
     @Bind(R.id.applycard_normal_commit)
     Button mCommit;
+    //声明
     @Bind(R.id.applycard_normal_hint)
     TextView mNormalHint;
 
-    private ApplyCTCardDTO applyCTCardDTO;
-
-    private InputStream is;
-    private FileOutputStream fos;
+    /**
+     * 请求beanDTO
+     */
+    private ApplyCTCardDTO applyCTCardDTO = new ApplyCTCardDTO();
 
     private String wangdianAdress;//网点地址
-    private String mEmpNum;//获取的营销代码
+    private String mMarketingCode;//获取的营销代码
+    /**
+     * 自由职业==1
+     */
+    private int mWorkType = 2;
 
-    public static Intent getIntent(Context context, String fileNum, String name,
-                                   String idCard) {
-        Intent intent = new Intent(context, ApplyCardSecondActivity.class);
-        intent.putExtra("filenum", fileNum);
-        intent.putExtra("name", name);
-        intent.putExtra("idCard", idCard);
-        return intent;
+    @Override
+    public HelpPresenter initPresenter() {
+        return new HelpPresenter();
     }
 
+    @Override
+    protected int getContentResId() {
+        return R.layout.activity_applycard_second;
+    }
 
     @Override
     public void initView() {
+        setTitleText("申办畅通卡");
+
         Intent intent = getIntent();
         String idCard = intent.getStringExtra("idCard");
         mIdCardNum.setContentText(idCard);
+
+        mNormalHint.setText(Html.fromHtml(getResources().getString(R.string.apply_four_hint)));
     }
 
     @Override
     public void initData() {
-        applyCTCardDTO = new ApplyCTCardDTO();
-        setTitleText("申办畅通卡");
-        mNormalHint.setText(Html.fromHtml(getResources().getString(R.string.apply_four_hint)));
 
         getYingXiaoCode();
         downloadTxt();
-        String idCard = getIntent().getStringExtra("idCard");
 
+        String idCard = getIntent().getStringExtra("idCard");
+//身份证
         if (idCard.length() == 15) {
-            int temp = Integer.valueOf(idCard.lastIndexOf(0)) % 2;
+            int temp = idCard.lastIndexOf(0) % 2;
             applyCTCardDTO.setGnd(temp == 0 ? "2" : "1"); // 1男  2女
             applyCTCardDTO.setDtofbrth(idCard.substring(6, 8) + "-" + idCard.substring(8, 10) + "-" + idCard.substring(10, 12));
         } else if (idCard.length() == 18) {
-            int temp = Integer.valueOf(idCard.lastIndexOf(1)) % 2;
+            int temp = idCard.lastIndexOf(1) % 2;
             applyCTCardDTO.setGnd(temp == 0 ? "2" : "1");
             applyCTCardDTO.setDtofbrth(idCard.substring(6, 10) + "-" + idCard.substring(10, 12) + "-" + idCard.substring(12, 14));
         } else {
             applyCTCardDTO.setGnd("1");
         }
-        LogUtils.i("==============================" + applyCTCardDTO.getDtofbrth());
-
+//证件类型
         applyCTCardDTO.setCtftp("0");
         applyCTCardDTO.setUsrname(getIntent().getStringExtra("name"));
-        applyCTCardDTO.setUsrid(SPUtils.getInstance(this).getLoginInfoBean().getUsrid());
-        applyCTCardDTO.setCtfnum(RSAUtils.strByEncryption(this, idCard, true));
-        applyCTCardDTO.setFilenum(RSAUtils.strByEncryption(this, getIntent().getStringExtra("filenum"), true));
+        applyCTCardDTO.setUsrid(SPUtils.getInstance(getApplicationContext()).getLoginInfoBean().getUsrid());
+        applyCTCardDTO.setCtfnum(RSAUtils.strByEncryption(getApplicationContext(), idCard, true));
+        applyCTCardDTO.setFilenum(RSAUtils.strByEncryption(getApplicationContext(), getIntent().getStringExtra("filenum"), true));
+
         applyCTCardDTO.setActnotf("1");
         applyCTCardDTO.setElecbillsign("0");
         applyCTCardDTO.setAutcrepymtmth("9");
@@ -225,10 +233,12 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         applyCTCardDTO.setCoareacode("021");
         applyCTCardDTO.setCtc1("8");
         applyCTCardDTO.setCtc2("8");
+//联系人1单位电话分机号
         applyCTCardDTO.setCtccophoeexn1("");
         applyCTCardDTO.setCtccophoeexn2("");
         applyCTCardDTO.setCtchmadr1("无");
         applyCTCardDTO.setCtchmadr2("无");
+//联系人1住宅邮编
         applyCTCardDTO.setCtchmadrzip1("201900");
         applyCTCardDTO.setCtchmadrzip2("201900");
 
@@ -238,39 +248,22 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         applyCTCardDTO.setCtcconm2("无");
         applyCTCardDTO.setCtccoareacode1("021");
         applyCTCardDTO.setCtccoareacode2("021");
+
         mHuanKuanType.setRightText("不开通");
         mHuanKuanType.setRightTextColor(getResources().getColor(R.color.gray_33));
 
         mDuiZhangTiXing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    applyCTCardDTO.setActnotf("1");
-                } else {
-                    applyCTCardDTO.setActnotf("0");
-                }
+                applyCTCardDTO.setActnotf(isChecked ? "1" : "0");
             }
         });
         mHuanKuanTiXing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    applyCTCardDTO.setElecbillsign("1");
-                } else {
-                    applyCTCardDTO.setElecbillsign("0");
-                }
+                applyCTCardDTO.setElecbillsign(isChecked ? "1" : "0");
             }
         });
-    }
-
-    @Override
-    public HelpPresenter initPresenter() {
-        return new HelpPresenter();
-    }
-
-    @Override
-    protected int getContentResId() {
-        return R.layout.activity_applycard_second;
     }
 
     @Override
@@ -287,37 +280,38 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             R.id.applycard_normal_commit})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.applycard_normal_idcard_layout1:
+            case R.id.applycard_normal_idcard_layout1://身份证有效期
                 mIdCardForeverImg.setBackgroundResource(R.mipmap.checkbox_checked);
                 mIdCardLayout2.setRightText("年/月/日");
                 mIdCardLayout2.setRightTextColor(getResources().getColor(R.color.gray_99));
+
                 applyCTCardDTO.setCtfvldprd("9999-12-30");
                 break;
             case R.id.applycard_normal_idcard_layout2:
                 mIdCardForeverImg.setBackgroundResource(R.mipmap.checkbox_normal);
-                chooseDate();
+                identityCardDate();
                 break;
-            case R.id.applycard_normal_marital_status:
+            case R.id.applycard_normal_marital_status://请选择婚姻状况
                 startActivityForResult(CommonTwoLevelMenuActivity.getIntent(this, 0), 10000);
                 break;
-            case R.id.applycard_normal_education_status:
+            case R.id.applycard_normal_education_status://请选择受教育程度
                 startActivityForResult(CommonTwoLevelMenuActivity.getIntent(this, 1), 10001);
                 break;
-            case R.id.applycard_normal_house_status:
+            case R.id.applycard_normal_house_status://请选择住宅情况
                 startActivityForResult(CommonTwoLevelMenuActivity.getIntent(this, 2), 10002);
                 break;
-            case R.id.applycard_normal_addr:
+            case R.id.applycard_normal_addr://请选择住宅所在区域
                 chooseAddress();
                 break;
-            case R.id.applycard_normal_ziyou_layout:
-                mWorktype = 1;
+            case R.id.applycard_normal_ziyou_layout://自由职业
+                mWorkType = 1;
                 mZiyouImg.setBackgroundResource(R.mipmap.checkbox_checked);
                 mCompanyImg.setBackgroundResource(R.mipmap.checkbox_normal);
-                initValue();
-                chooseZiyouValue();
+                initCivilInfo();
+                initFreelancerValue();
                 break;
-            case R.id.applycard_normal_company_layout:
-                mWorktype = 2;
+            case R.id.applycard_normal_company_layout://企事业单位
+                mWorkType = 2;
                 mZiyouImg.setBackgroundResource(R.mipmap.checkbox_normal);
                 mCompanyImg.setBackgroundResource(R.mipmap.checkbox_checked);
                 chooseQiyeValue();
@@ -346,6 +340,8 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             case R.id.applycard_normal_commit:
                 checkData();
                 break;
+            default:
+                break;
         }
     }
 
@@ -353,97 +349,94 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 10000 && resultCode == 1000 && data != null) {
-            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean)
-                    data.getSerializableExtra("data");
+            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setMarlst(String.valueOf(commonTwoLevelMenuBean.getId()));
             mMaritalStatus.setRightText(commonTwoLevelMenuBean.getContext());
             mMaritalStatus.setRightTextColor(getResources().getColor(R.color.gray_33));
         } else if (requestCode == 10001 && resultCode == 1001 && data != null) {
-            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean)
-                    data.getSerializableExtra("data");
+            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setEdunlvl(String.valueOf(commonTwoLevelMenuBean.getId()));
             mEducationStatus.setRightText(commonTwoLevelMenuBean.getContext());
             mEducationStatus.setRightTextColor(getResources().getColor(R.color.gray_33));
         } else if (requestCode == 10002 && resultCode == 1002 && data != null) {
-            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean)
-                    data.getSerializableExtra("data");
+            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setResltp(String.valueOf(commonTwoLevelMenuBean.getId()));
             mHouseStatus.setRightText(commonTwoLevelMenuBean.getContext());
             mHouseStatus.setRightTextColor(getResources().getColor(R.color.gray_33));
         } else if (requestCode == 10004 && resultCode == 1004 && data != null) {
-            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean)
-                    data.getSerializableExtra("data");
+            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setOcp(String.valueOf(commonTwoLevelMenuBean.getId()));
             mZhiYe.setRightText(commonTwoLevelMenuBean.getContext());
             mZhiYe.setRightTextColor(getResources().getColor(R.color.gray_33));
         } else if (requestCode == 10005 && resultCode == 1005 && data != null) {
-            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean)
-                    data.getSerializableExtra("data");
+            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setCottl(String.valueOf(commonTwoLevelMenuBean.getId()));
             mZhiWu.setRightText(commonTwoLevelMenuBean.getContext());
             mZhiWu.setRightTextColor(getResources().getColor(R.color.gray_33));
         } else if (requestCode == 10006 && resultCode == 1006 && data != null) {
-            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean)
-                    data.getSerializableExtra("data");
+            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setCorptp(String.valueOf(commonTwoLevelMenuBean.getId()));
             mCompanyType.setRightText(commonTwoLevelMenuBean.getContext());
             mCompanyType.setRightTextColor(getResources().getColor(R.color.gray_33));
         } else if (requestCode == 10007 && resultCode == 1007 && data != null) {
-            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean)
-                    data.getSerializableExtra("data");
+            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setGnd(String.valueOf(commonTwoLevelMenuBean.getId()));
         } else if (requestCode == 10008 && resultCode == 1008 && data != null) {
-            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean)
-                    data.getSerializableExtra("data");
+            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setCtc1(String.valueOf(commonTwoLevelMenuBean.getId()));
             applyCTCardDTO.setCtc2(String.valueOf(commonTwoLevelMenuBean.getId()));
             mRelationShip.setRightText(commonTwoLevelMenuBean.getContext());
             mRelationShip.setRightTextColor(getResources().getColor(R.color.gray_33));
         } else if (requestCode == 10009 && resultCode == 1009 && data != null) {
-            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean)
-                    data.getSerializableExtra("data");
-//            ToastUtils.showShort(this,"选择了"+commonTwoLevelMenuBean.getId());
+            CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setAutcrepymtmth(String.valueOf(commonTwoLevelMenuBean.getId()));
-
             mHuanKuanType.setRightText(commonTwoLevelMenuBean.getContext());
             mHuanKuanType.setRightTextColor(getResources().getColor(R.color.gray_33));
         }
     }
 
     /**
-     * 赋初始值
+     * 赋初始值 公务员信息
      */
-    private void initValue() {
-        applyCTCardDTO.setOcp("1");
+    private void initCivilInfo() {
         mZhiYe.setRightText("公务员");
+        applyCTCardDTO.setOcp("1");
+
+        mZhiWu.setRightText("职员/科员级");
         mZhiYe.setRightTextColor(getResources().getColor(R.color.gray_33));
         applyCTCardDTO.setCottl("6");
-        mZhiWu.setRightText("职员/科员级");
+
+        mCompanyAddr.setRightText("无");
         mZhiWu.setRightTextColor(getResources().getColor(R.color.gray_33));
         applyCTCardDTO.setCorptp(String.valueOf("20"));
+
         mCompanyType.setRightText("集体");
         mCompanyType.setRightTextColor(getResources().getColor(R.color.gray_33));
-        mCompanyAddr.setRightText("无");
     }
 
     /**
      * 选择自由职业赋值
      */
-    private void chooseZiyouValue() {
+    private void initFreelancerValue() {
         mCompanyName.setContentText("无");
         applyCTCardDTO.setConm("无");
+
         mDepartName.setContentText("无");
         applyCTCardDTO.setCorpsecr("无");
+
         mCompanyTel.setContentText("00000000");
         applyCTCardDTO.setCophoe("00000000");
+
         mZipCode.setContentText("201900");
         applyCTCardDTO.setCoadrzip("201900");
         applyCTCardDTO.setCoadrprov("无");
         applyCTCardDTO.setCoadrcity("无");
         applyCTCardDTO.setCoadrcnty("无");
+
         mCompanyDetailAddr.setContentText("无");
         applyCTCardDTO.setCoadr("无");
         applyCTCardDTO.setOcp("5");
+
         mZhiYe.setRightText("自由职业者");
         mZhiYe.setRightTextColor(getResources().getColor(R.color.gray_33));
     }
@@ -454,18 +447,19 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     private void chooseQiyeValue() {
         mCompanyName.setContentText("");
         applyCTCardDTO.setConm("");
+
         mDepartName.setContentText("");
         applyCTCardDTO.setCorpsecr("");
+
         mCompanyTel.setContentText("");
-//        applyCTCardDTO.setCoadrprov("");
-//        applyCTCardDTO.setCoadrcity("");
-//        applyCTCardDTO.setCoadrcnty("");
         applyCTCardDTO.setCoadr("");
+
         mZipCode.setContentText("201900");
         applyCTCardDTO.setCoadrzip("201900");
-        applyCTCardDTO.setOcp("30");
+
         mZhiYe.setRightText("私人业主");
         mZhiYe.setRightTextColor(getResources().getColor(R.color.gray_33));
+        applyCTCardDTO.setOcp("30");
     }
 
     /**
@@ -496,71 +490,23 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         }
     }
 
+    /**
+     * 下载文件txt
+     */
     public void downloadTxt() {
-        Retrofit2Utils retrofit2Utils = new Retrofit2Utils();
-        final FileDownloadApi api = retrofit2Utils.getRetrofitHttps(BuildConfig.APP_URL).create(FileDownloadApi.class);
-        Observable.create(new Observable.OnSubscribe<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-
-                try {
-                    Response<ResponseBody> response = api.downloadFileWithFixedUrl("download/icbcorg.txt").execute();
-                    try {
-
-                        if (response != null && response.isSuccessful()) {
-                            //文件总长度
-                            long fileSize = response.body().contentLength();
-                            long fileSizeDownloaded = 0;
-                            is = response.body().byteStream();
-                            File file = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "networktable.txt");
-                            if (file.exists()) {
-                                file.delete();
-                            } else {
-                                file.createNewFile();
-                            }
-                            fos = new FileOutputStream(file);
-                            int count = 0;
-                            byte[] buffer = new byte[1024];
-                            while ((count = is.read(buffer)) != -1) {
-                                fos.write(buffer, 0, count);
-                                fileSizeDownloaded += count;
-                                subscriber.onNext("file download: " + fileSizeDownloaded + " of " + fileSize);
-                            }
-                            fos.flush();
-                            subscriber.onCompleted();
-                        } else {
-                            subscriber.onError(new Exception("接口请求异常"));
-                        }
-                    } catch (Exception e) {
-                        subscriber.onError(e);
-                    } finally {
-                        if (is != null) {
-                            try {
-                                is.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        if (fos != null) {
-                            try {
-                                fos.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
+        Observable
+                .create(new Observable.OnSubscribe<String>() {
+                    @Override
+                    public void call(Subscriber<? super String> subscriber) {
+                        downloadFile(subscriber);
                     }
-                } catch (IOException e) {
-                    Log.e("why", e.toString());
-                    e.printStackTrace();
-                }
-            }
-        }).subscribeOn(Schedulers.io())
+                })
+                .subscribeOn(Schedulers.io())
                 .sample(1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
-                        LogUtils.i("文件下载完成");
                         NetLocationBean bean = ReadFfile.readNetLocationFile();
 //                        PublicData.getInstance().mNetLocationBean.setNetLocationlist(bean.getNetLocationlist());
                         PublicData.getInstance().mNetLocationBean = bean;
@@ -568,42 +514,83 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
 
                     @Override
                     public void onError(Throwable e) {
-                        e.printStackTrace();
+                        LogUtils.e(e.getMessage());
                     }
 
                     @Override
                     public void onNext(String s) {
-                        Log.d("MainActivity", s);
                     }
                 });
+    }
+
+    private void downloadFile(Subscriber<? super String> subscriber) {
+        FileDownloadApi api = new Retrofit2Utils().getRetrofitHttps(BuildConfig.APP_URL).create(FileDownloadApi.class);
+        Response<ResponseBody> response = null;
+        try {
+            response = api.downloadFileWithFixedUrl("download/icbcorg.txt").execute();
+        } catch (IOException e) {
+            subscriber.onError(e);
+        }
+
+        if (response != null && response.isSuccessful()) {
+            InputStream inputStream = response.body().byteStream();
+            String filePath = FileUtils.icbTxtFilePath(getApplicationContext(), FileUtils.DOWNLOAD_DIR);
+            File txtFile = new File(filePath);
+            FileOutputStream fileOutputStream = null;
+            try {
+                fileOutputStream = new FileOutputStream(txtFile);
+                int count;
+                byte[] buffer = new byte[1024 * 8];
+                while ((count = inputStream.read(buffer)) != -1) {
+                    fileOutputStream.write(buffer, 0, count);
+                }
+                fileOutputStream.flush();
+                subscriber.onCompleted();
+            } catch (IOException e) {
+                subscriber.onError(e);
+            } finally {
+                try {
+                    inputStream.close();
+                    if (fileOutputStream != null) fileOutputStream.close();
+                } catch (IOException e) {
+                    subscriber.onError(e);
+                }
+            }
+        } else {
+            subscriber.onError(new Exception("银行网点接口请求异常,请退出页面稍后重试"));
+        }
     }
 
     /**
      * 选择地址
      */
     private void chooseAddress() {
-        List<ProvinceModel> provinceList = null;
+        // 创建一个解析xml的工厂对象
+        SAXParserFactory parserFactory = SAXParserFactory.newInstance();
+        XmlParserHandler parserHandler = new XmlParserHandler();
         try {
-            InputStream input = getAssets().open("province_data.xml");
-            // 创建一个解析xml的工厂对象
-            SAXParserFactory spf = SAXParserFactory.newInstance();
+            InputStream inputStream = getAssets().open("province_data.xml");
             // 解析xml
-            SAXParser parser = spf.newSAXParser();
-            XmlParserHandler handler = new XmlParserHandler();
-            parser.parse(input, handler);
-            input.close();
-            // 获取解析出来的数据
-            provinceList = handler.getDataList();
-            PublicData.getInstance().provinceModel = provinceList;
-        } catch (Throwable e) {
+            SAXParser saxParser = parserFactory.newSAXParser();
+            saxParser.parse(inputStream, parserHandler);
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
             e.printStackTrace();
         }
+        // 获取解析出来的数据
+        PublicData.getInstance().provinceModel = parserHandler.getDataList();
+
         CityDialog dialog = new CityDialog(this, null, new CityDialog.OnChooseDialogListener() {
             @Override
             public void back(String[] data) {
                 applyCTCardDTO.setHmadrprov(data[0]);
                 applyCTCardDTO.setHmadrcity(data[1]);
                 applyCTCardDTO.setHmadrcnty(data[2]);
+
                 mAddr.setRightText(data[0] + "、" + data[1] + "、" + data[2]);
                 mAddr.setRightTextColor(getResources().getColor(R.color.gray_33));
                 matchingZipCode(data[2]);
@@ -657,10 +644,9 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         } else if (quStr.contains("浦东新区")) {
             zipCode = "200135";
         }
+//住宅邮编
         applyCTCardDTO.setHmadrzip(zipCode);
     }
-
-    private int mWorktype = 2;
 
     /**
      * 检测数据
@@ -673,6 +659,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         String contactMobile = mContactMobile.getContentText();
         String kahao = mZhuanChuKaHao.getContentText();
         String email = mEmail.getContentText();
+
         if (TextUtils.isEmpty(pinyin)) {
             ToastUtils.showShort(this, "姓名拼音不可为空");
             return;
@@ -681,7 +668,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             ToastUtils.showShort(this, "详细地址不可为空");
             return;
         }
-        if (mWorktype == 2 && TextUtils.isEmpty(tel)) {
+        if (mWorkType == 2 && TextUtils.isEmpty(tel)) {
             ToastUtils.showShort(this, "座机号不可为空");
             return;
         }
@@ -716,6 +703,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         applyCTCardDTO.setCoadr(mCompanyDetailAddr.getContentText());
         applyCTCardDTO.setCoadrzip(mZipCode.getContentText());
         applyCTCardDTO.setCophoe(mCompanyTel.getContentText());
+
         applyCTCardDTO.setCtcnm1(contactName);
         applyCTCardDTO.setCtcnm2(contactName);
         applyCTCardDTO.setCtcphoenum1(contactMobile);
@@ -730,12 +718,33 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         applyCTCardDTO.setEnghnm(pinyin);
         applyCTCardDTO.setTurnoutacnum(bankData);
         applyCTCardDTO.setElecmail(email);
-        if (TextUtils.isEmpty(applyCTCardDTO.getDscode())
-                && TextUtils.isEmpty(applyCTCardDTO.getDscodegs())) {
+        if (TextUtils.isEmpty(applyCTCardDTO.getDscode()) && TextUtils.isEmpty(applyCTCardDTO.getDscodegs())) {
             applyCTCardDTO.setDscode("TZ666666");
             applyCTCardDTO.setDscodegs("TZ666666");
         }
         commitInfo();
+    }
+
+    /**
+     * 得到营销代码
+     */
+    private void getYingXiaoCode() {
+        CancelRechargeOrderDTO dto = new CancelRechargeOrderDTO();
+        CarApiClient.getYingXiaoCode(this, dto, new CallBack<YingXiaoResult>() {
+            @Override
+            public void onSuccess(YingXiaoResult result) {
+                if (result.getResponseCode() == 2000 && result.getData() != null) {
+                    mMarketingCode = result.getData().getEmpNum();
+//                    mYingXiaoCode.setContentText(mEmpNum);
+                    applyCTCardDTO.setDscode(result.getData().getEmpNum());
+                    applyCTCardDTO.setDscodegs(result.getData().getEmpNum());
+                }
+            }
+
+            @Override
+            public void onError(String errorCode, String msg) {
+            }
+        });
     }
 
     @Override
@@ -749,7 +758,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     }
 
     @Override
-    public void resultError(String mesage) {
+    public void resultError(String msg) {
         hideDialogLoading();
         Toast.makeText(ApplyCardSecondActivity.this, Config.getErrMsg("1"), Toast.LENGTH_SHORT).show();
     }
@@ -769,7 +778,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
                 if (result.getResponseCode() == 2000) {
                     commitInfo();
                 } else {
-                    ToastUtils.showShort(ApplyCardSecondActivity.this, "七天之内不能重复办卡");
+                    ToastUtils.showShort(getApplicationContext(), "七天之内不能重复办卡");
                 }
             }
         });
@@ -799,7 +808,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         YingXiaoDataDTO dto = new YingXiaoDataDTO();
         dto.setUsrnum(RSAUtils.strByEncryption(this, PublicData.getInstance().userID, true));
         if (TextUtils.isEmpty(mYingXiaoCode.getContentText())) {
-            dto.setEmpNum(mEmpNum);
+            dto.setEmpNum(mMarketingCode);
         } else {
             dto.setEmpNum(mYingXiaoCode.getContentText());
         }
@@ -814,65 +823,43 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         });
     }
 
-    /**
-     * 得到营销代码
-     */
-    private void getYingXiaoCode() {
-        CancelRechargeOrderDTO dto = new CancelRechargeOrderDTO();
-        CarApiClient.getYingXiaoCode(this, dto, new CallBack<YingXiaoResult>() {
-            @Override
-            public void onSuccess(YingXiaoResult result) {
-                if (result.getResponseCode() == 2000) {
-                    mEmpNum = result.getData().getEmpNum();
-//                    mYingXiaoCode.setContentText(mEmpNum);
-                    applyCTCardDTO.setDscode(result.getData().getEmpNum());
-                    applyCTCardDTO.setDscodegs(result.getData().getEmpNum());
-                }
-            }
-
-            @Override
-            public void onError(String errorCode, String msg) {
-                super.onError(errorCode, msg);
-            }
-        });
-    }
-
-    private DatePicker picker;
 
     /**
      * 选择时间
      * 1.身份证有效期
      */
-    private void chooseDate() {
-        picker = new DatePicker(ApplyCardSecondActivity.this);
-        String temp = "";
-        temp = mIdCardLayout2.getRightText();
-        picker.setRangeEnd(DateUtils.getYear() + 70, DateUtils.getMonth(), DateUtils.getDay());
-        picker.setRangeStart(DateUtils.getYear(), DateUtils.getMonth(), DateUtils.getDay());
-        if (temp.contains("请输入")) {
-            temp = "";
-        }
-        try {
-            String date = temp;
-            if (!"".equals(date)) {
-                date = date.replace("-", "");
-                picker.setSelectedItem(Integer.valueOf(date.substring(0, 4)), Integer.valueOf(date.substring(4, 6)), Integer.valueOf(date.substring(6, 8)));
+    private void identityCardDate() {
+        DatePicker datePicker = new DatePicker(this);
+        String dateString = mIdCardLayout2.getRightText();
+        datePicker.setRangeEnd(DateUtils.getYear() + 70, DateUtils.getMonth(), DateUtils.getDay());
+        datePicker.setRangeStart(DateUtils.getYear(), DateUtils.getMonth(), DateUtils.getDay());
+
+        if (dateString.contains("请输入")) dateString = "";
+
+        if (!TextUtils.isEmpty(dateString)) {
+            String date = dateString.replace("-", "");
+            if (!TextUtils.isEmpty(date) && date.length() >= 8) {
+                int year = Integer.valueOf(date.substring(0, 4));
+                int month = Integer.valueOf(date.substring(4, 6));
+                int day = Integer.valueOf(date.substring(6, 8));
+                datePicker.setSelectedItem(year, month, day);
             } else {
-                picker.setSelectedItem(DateUtils.getYear(), DateUtils.getMonth(), DateUtils.getDay());
+                datePicker.setSelectedItem(DateUtils.getYear(), DateUtils.getMonth(), DateUtils.getDay());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            datePicker.setSelectedItem(DateUtils.getYear(), DateUtils.getMonth(), DateUtils.getDay());
         }
 
-        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+        datePicker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
             @Override
             public void onDatePicked(String year, String month, String day) {
                 mIdCardLayout2.setRightText(year + "-" + month + "-" + day);
-                applyCTCardDTO.setCtfvldprd(mIdCardLayout2.getRightText());
                 mIdCardLayout2.setRightTextColor(getResources().getColor(R.color.gray_33));
+//证件有效期
+                applyCTCardDTO.setCtfvldprd(mIdCardLayout2.getRightText());
 
             }
         });
-        picker.show();
+        datePicker.show();
     }
 }

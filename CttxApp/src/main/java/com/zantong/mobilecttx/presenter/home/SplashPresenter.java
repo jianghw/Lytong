@@ -2,7 +2,10 @@ package com.zantong.mobilecttx.presenter.home;
 
 import android.support.annotation.NonNull;
 
+import com.google.gson.Gson;
 import com.zantong.mobilecttx.base.MessageFormat;
+import com.zantong.mobilecttx.base.dto.RequestDTO;
+import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.interf.ISplashAtyContract;
@@ -10,6 +13,8 @@ import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
+import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
+import com.zantong.mobilecttx.weizhang.dto.LicenseTestDTO;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,7 +22,7 @@ import org.json.JSONObject;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
 
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -101,6 +106,47 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
                     }
                 });
         mSubscriptions.add(subscription);
+    }
+
+    @Override
+    public void loadLoginPostTest() {
+        Subscription subscription = mRepository.loadLoginPostTest(initLicenseFileNumDTO())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<LicenseResponseBean>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(LicenseResponseBean result) {
+
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    public String initLicenseFileNumDTO() {
+        RequestDTO dto = new RequestDTO();
+
+        RequestHeadDTO requestHeadDTO = mRepository.initLicenseFileNumDTO("cip.cfc.v003.01");
+        dto.setSYS_HEAD(requestHeadDTO);
+
+        LicenseTestDTO bean = new LicenseTestDTO();
+
+        String fileNum = "3101057013022704";
+//        String fileNum = "3101057013022704";
+        bean.setViolationnum(fileNum);
+        bean.setToken(mRepository.getDefaultRASUserID());
+
+        dto.setReqInfo(bean);
+        String gson = new Gson().toJson(dto);
+        LogUtils.json(gson);
+        return gson;
     }
 
     /**

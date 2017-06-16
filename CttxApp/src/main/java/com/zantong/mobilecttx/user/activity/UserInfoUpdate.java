@@ -2,14 +2,12 @@ package com.zantong.mobilecttx.user.activity;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.view.View;
@@ -37,16 +35,16 @@ import com.zantong.mobilecttx.utils.popwindow.IOSpopwindow;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.FileUtils;
-import cn.qqtheme.framework.util.LogUtils;
-import cn.qqtheme.framework.util.PermissionListener;
+import cn.qqtheme.framework.util.log.LogUtils;
+import cn.qqtheme.framework.util.primission.PermissionFail;
+import cn.qqtheme.framework.util.primission.PermissionGen;
+import cn.qqtheme.framework.util.primission.PermissionSuccess;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -56,6 +54,7 @@ import retrofit2.Response;
 
 import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
+import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 个人中心页面
@@ -79,11 +78,6 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
 
     private UserInfoUpdatePresenter mUserInfoUpdatePresenter;
     HashMap<String, String> mHashMap = new HashMap<>();
-
-    /**
-     * 权限监听
-     */
-    private PermissionListener permissionListener;
 
     private static final int REQ_TAKE_PHOTO = 100;// 拍照
     private static final int REQ_ALBUM_1 = 101;
@@ -203,47 +197,33 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
      * 拍照
      */
     public void takePhoto() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            //如果是6.0或6.0以上，则要申请运行时权限，这里需要申请拍照和写入SD卡的权限
-            requestRuntimePermission(
-                    new String[]{
-                            //READ_EXTERNAL_STORAGE
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    new PermissionListener() {
-                        @Override
-                        public void onGranted() {
-                            openCamera();
-                        }
-
-                        @Override
-                        public void onDenied(List<String> deniedPermissions) {
-                            ToastUtils.showShort(getApplicationContext(), "拍照权限被拒绝了,请查看手机权限设置");
-                        }
-                    });
-            return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, PER_REQUEST_CODE, new String[]{
+                    //READ_EXTERNAL_STORAGE
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE});
+        } else {
+            openCamera();
         }
-        openCamera();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     /**
-     * 申请运行时权限
+     * 申请拍照运行时权限
      */
-    public void requestRuntimePermission(String[] permissions, PermissionListener listener) {
-        permissionListener = listener;
-        List<String> permissionList = new ArrayList<>();
-        for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                permissionList.add(permission);
-            }
-        }
+    @PermissionSuccess(requestCode = PER_REQUEST_CODE)
+    public void doPermissionSuccess() {
+        openCamera();
+    }
 
-        if (!permissionList.isEmpty()) {
-            ActivityCompat.requestPermissions(this, permissionList.toArray(new String[permissionList.size()]), 1);
-        } else {
-            if (permissionListener != null) permissionListener.onGranted();
-        }
+    @PermissionFail(requestCode = PER_REQUEST_CODE)
+    public void doPermissionFail() {
     }
 
     /**

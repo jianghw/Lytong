@@ -75,12 +75,13 @@ import java.util.TimerTask;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * Created by Administrator on 2016/5/5.
  */
-public class LoginActivity extends Activity implements LoginPhoneView, View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
+public class LoginActivity extends Activity
+        implements LoginPhoneView, View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
     @Bind(R.id.title_kong)
     RelativeLayout titleKong;
     @Bind(R.id.tv_back)
@@ -210,8 +211,7 @@ public class LoginActivity extends Activity implements LoginPhoneView, View.OnTo
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
                 // If request is cancelled, the result arrays are empty.

@@ -52,7 +52,7 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.LogUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
@@ -384,7 +384,7 @@ public class ApplyCardFourStepActvity extends BaseMvpActivity<IBaseView, HelpPre
     }
 
     @Override
-    public void resultError(String mesage) {
+    public void resultError(String msg) {
         hideDialogLoading();
         Toast.makeText(ApplyCardFourStepActvity.this, Config.getErrMsg("1"), Toast.LENGTH_SHORT).show();
     }
