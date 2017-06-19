@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.utils;
 
-import android.os.Environment;
+import android.content.Context;
 
 import com.zantong.mobilecttx.map.bean.NetLocationBean;
 
@@ -11,13 +11,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 作者：王海洋
- * 时间：2016/7/1 17:31
- */
 public class ReadFfile {
 
-    public static String readFile() {
+/*    public static String readFile() {
         String str = "";
         try {
 
@@ -34,24 +30,33 @@ public class ReadFfile {
             e.printStackTrace();
         }
         return str;
-    }
+    }*/
 
-    public static NetLocationBean readNetLocationFile() {
-        String str = "";
-        String historyStr = "";
+    /**
+     * 读取领卡网点文件
+     */
+    public static NetLocationBean readNetLocationFile(Context context) {
+        String historyStr;
         boolean flag = false;
         NetLocationBean bean = new NetLocationBean();
+
         try {
-            File urlFile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "networktable.txt");
+//            File urlFile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "networktable.txt");
+            String filePath = cn.qqtheme.framework.util.FileUtils.icbTxtFilePath(context, cn.qqtheme.framework.util.FileUtils.DOWNLOAD_DIR);
+            File urlFile = new File(filePath);
+
             InputStreamReader isr = new InputStreamReader(new FileInputStream(urlFile), "UTF-8");
             BufferedReader br = new BufferedReader(isr);
-            String mimeTypeLine = null;
+
             List<NetLocationBean.NetLocationElement> list = new ArrayList<>();
+
+            String mimeTypeLine;
             while ((mimeTypeLine = br.readLine()) != null) {
                 NetLocationBean.NetLocationElement element = new NetLocationBean.NetLocationElement();
                 NetLocationBean.NetLocationElement.NetQuBean mNetQuBean = new NetLocationBean.NetLocationElement.NetQuBean();
                 mimeTypeLine = mimeTypeLine.trim();
-                if (!"".equals(mimeTypeLine)){
+
+                if (!"".equals(mimeTypeLine)) {
                     String[] demo = mimeTypeLine.split("\\|");
                     mNetQuBean.setNetLocationNumber(demo[4]);
                     mNetQuBean.setNetLocationXiang(demo[3]);
@@ -74,11 +79,9 @@ public class ReadFfile {
                         listNetQuBean.add(mNetQuBean);
                         element.setListNet(listNetQuBean);
                         list.add(element);
-
                     } else {
                         flag = false;
                     }
-
                 }
 
 //                }

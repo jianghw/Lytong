@@ -245,7 +245,7 @@ public class BaseApiClient {
     public static <T> void post(Context context, String url, Object jsonParams,
                                 BaseCallBack<T> baseCallBack) {
         String data = baseCallBack.getGson().toJson(jsonParams);
-        LogUtils.i("requestData:"+data);
+
         Request request = new Request.Builder().tag(baseCallBack.getTag())
                 .url(url).post(RequestBody.create(JSON, data)).build();
         enqueue(context, request, baseCallBack);

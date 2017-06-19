@@ -289,7 +289,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
                     @Override
                     public void onCompleted() {
                         LogUtils.i("文件下载完成");
-                        NetLocationBean bean = ReadFfile.readNetLocationFile();
+                        NetLocationBean bean = ReadFfile.readNetLocationFile(getApplicationContext());
 //                        PublicData.getInstance().mNetLocationBean.setNetLocationlist(bean.getNetLocationlist());
                         PublicData.getInstance().mNetLocationBean = bean;
                     }

@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
             app:titleHintS="年/月/日"
-            app:titleSC="@color/gray_99" />
+            app:titleSC="@color/gray_99"/>
 
         <com.zantong.mobilecttx.widght.SettingItemView
             android:layout_width="match_parent"

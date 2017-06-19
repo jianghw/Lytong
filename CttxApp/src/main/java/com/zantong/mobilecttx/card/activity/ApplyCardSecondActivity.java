@@ -30,9 +30,9 @@ import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.CommonTwoLevelMenuActivity;
 import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
-import com.zantong.mobilecttx.map.bean.NetLocationBean;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;
+import com.zantong.mobilecttx.utils.ChineseToPinYin;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.ReadFfile;
 import com.zantong.mobilecttx.utils.SPUtils;
@@ -51,7 +51,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.TimeUnit;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -70,7 +69,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * 办卡信息
+ * 正常办卡信息
  */
 public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
         implements HandleCTCardApiClient.ResultInterface {
@@ -81,6 +80,11 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     CttxEditText mUserName;
     @Bind(R.id.applycard_normal_username_pinyin)
     CttxEditText mUserNamePinYin;
+    @Bind(R.id.cedit_gender)
+    SettingItemView mUserGender;
+    @Bind(R.id.sivTv_birth)
+    SettingItemView mUserBirth;
+
     @Bind(R.id.applycard_normal_idcard_num)
     CttxEditText mIdCardNum;
     @Bind(R.id.applycard_normal_detail_addr)
@@ -165,12 +169,21 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      */
     private ApplyCTCardDTO applyCTCardDTO = new ApplyCTCardDTO();
 
-    private String wangdianAdress;//网点地址
     private String mMarketingCode;//获取的营销代码
     /**
      * 自由职业==1
      */
     private int mWorkType = 2;
+    /**
+     * 领卡网点地址
+     */
+    private String wangdianAdress;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PublicData.getInstance().filenum = "";
+    }
 
     @Override
     public HelpPresenter initPresenter() {
@@ -185,48 +198,89 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     @Override
     public void initView() {
         setTitleText("申办畅通卡");
-
-        Intent intent = getIntent();
-        String idCard = intent.getStringExtra("idCard");
-        mIdCardNum.setContentText(idCard);
-
         mNormalHint.setText(Html.fromHtml(getResources().getString(R.string.apply_four_hint)));
+
+        getYingXiaoCode();
+        downloadTxt();
     }
 
     @Override
     public void initData() {
+        Intent intent = getIntent();
+        String userName = intent.getStringExtra("name");
+        String idCard = intent.getStringExtra("idCard");
+        String drivingNum = intent.getStringExtra("filenum");
+//驾档号
+        mFileNum.setContentText(drivingNum);
+        applyCTCardDTO.setFilenum(RSAUtils.strByEncryption(getApplicationContext(), drivingNum, true));
+//姓名
+        mUserName.setContentText(userName);
+        applyCTCardDTO.setUsrname(userName);
 
-        getYingXiaoCode();
-        downloadTxt();
-
-        String idCard = getIntent().getStringExtra("idCard");
-//身份证
+        String pinyin = ChineseToPinYin.getPingYin(userName);
+        mUserNamePinYin.setContentText(pinyin);
+        applyCTCardDTO.setEnghnm(pinyin);
+//性别
+        String mYear;
+        String mMonth;
+        String mDay;
         if (idCard.length() == 15) {
             int temp = idCard.lastIndexOf(0) % 2;
             applyCTCardDTO.setGnd(temp == 0 ? "2" : "1"); // 1男  2女
-            applyCTCardDTO.setDtofbrth(idCard.substring(6, 8) + "-" + idCard.substring(8, 10) + "-" + idCard.substring(10, 12));
+            mYear = idCard.substring(6, 8);
+            mMonth = idCard.substring(8, 10);
+            mDay = idCard.substring(10, 12);
+            applyCTCardDTO.setDtofbrth(mYear + "-" + mMonth + "-" + mDay);
+            mUserBirth.setRightText(mYear + "-" + mMonth + "-" + mDay);
         } else if (idCard.length() == 18) {
             int temp = idCard.lastIndexOf(1) % 2;
             applyCTCardDTO.setGnd(temp == 0 ? "2" : "1");
-            applyCTCardDTO.setDtofbrth(idCard.substring(6, 10) + "-" + idCard.substring(10, 12) + "-" + idCard.substring(12, 14));
+            mYear = idCard.substring(6, 10);
+            mMonth = idCard.substring(10, 12);
+            mDay = idCard.substring(12, 14);
+            applyCTCardDTO.setDtofbrth(mYear + "-" + mMonth + "-" + mDay);
+            mUserBirth.setRightText(mYear + "-" + mMonth + "-" + mDay);
         } else {
             applyCTCardDTO.setGnd("1");
         }
+        mUserGender.setRightText(applyCTCardDTO.getGnd().equals("1") ? "男" : "女");
+//身份证
+        mIdCardNum.setContentText(idCard);
+        applyCTCardDTO.setCtfnum(RSAUtils.strByEncryption(getApplicationContext(), idCard, true));
+
+//婚姻状况
+        applyCTCardDTO.setMarlst("1");
+        mMaritalStatus.setRightText("未婚");
+        mMaritalStatus.setRightTextColor(getResources().getColor(R.color.gray_33));
+//受教育程度
+        applyCTCardDTO.setEdunlvl("3");
+        mEducationStatus.setRightText("大学本科");
+        mEducationStatus.setRightTextColor(getResources().getColor(R.color.gray_33));
+//请选择住宅情况
+        applyCTCardDTO.setResltp("1");
+        mHouseStatus.setRightText("自有住房");
+        mHouseStatus.setRightTextColor(getResources().getColor(R.color.gray_33));
+
+        chooseQiyeValue();
+
+//朋友
+        applyCTCardDTO.setCtc1("8");
+        applyCTCardDTO.setCtc2("8");
+        mRelationShip.setRightText("朋友");
+        mRelationShip.setRightTextColor(getResources().getColor(R.color.gray_33));
+
 //证件类型
         applyCTCardDTO.setCtftp("0");
-        applyCTCardDTO.setUsrname(getIntent().getStringExtra("name"));
+
         applyCTCardDTO.setUsrid(SPUtils.getInstance(getApplicationContext()).getLoginInfoBean().getUsrid());
-        applyCTCardDTO.setCtfnum(RSAUtils.strByEncryption(getApplicationContext(), idCard, true));
-        applyCTCardDTO.setFilenum(RSAUtils.strByEncryption(getApplicationContext(), getIntent().getStringExtra("filenum"), true));
 
         applyCTCardDTO.setActnotf("1");
         applyCTCardDTO.setElecbillsign("0");
-        applyCTCardDTO.setAutcrepymtmth("9");
         applyCTCardDTO.setIssuoffic("0");
         applyCTCardDTO.setHmareacode("021");
         applyCTCardDTO.setIndate("2015-01-01");
         applyCTCardDTO.setHmphoeexn("");
-        mCompanyAddr.setRightText("无");
+
         applyCTCardDTO.setIdycgy("1");
         applyCTCardDTO.setJoindate("201501");
         applyCTCardDTO.setCophoeexn("");
@@ -251,6 +305,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
 
         mHuanKuanType.setRightText("不开通");
         mHuanKuanType.setRightTextColor(getResources().getColor(R.color.gray_33));
+        applyCTCardDTO.setAutcrepymtmth("9");
 
         mDuiZhangTiXing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -264,12 +319,6 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
                 applyCTCardDTO.setElecbillsign(isChecked ? "1" : "0");
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        PublicData.getInstance().filenum = "";
     }
 
     @OnClick({R.id.applycard_normal_idcard_layout1, R.id.applycard_normal_idcard_layout2, R.id.applycard_normal_marital_status,
@@ -287,7 +336,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
 
                 applyCTCardDTO.setCtfvldprd("9999-12-30");
                 break;
-            case R.id.applycard_normal_idcard_layout2:
+            case R.id.applycard_normal_idcard_layout2://选择有效日期
                 mIdCardForeverImg.setBackgroundResource(R.mipmap.checkbox_normal);
                 identityCardDate();
                 break;
@@ -301,7 +350,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
                 startActivityForResult(CommonTwoLevelMenuActivity.getIntent(this, 2), 10002);
                 break;
             case R.id.applycard_normal_addr://请选择住宅所在区域
-                chooseAddress();
+                chooseAddress(1);
                 break;
             case R.id.applycard_normal_ziyou_layout://自由职业
                 mWorkType = 1;
@@ -316,25 +365,25 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
                 mCompanyImg.setBackgroundResource(R.mipmap.checkbox_checked);
                 chooseQiyeValue();
                 break;
-            case R.id.applycard_normal_company_type:
+            case R.id.applycard_normal_company_type://单位性质
                 startActivityForResult(CommonTwoLevelMenuActivity.getIntent(this, 6), 10006);
                 break;
-            case R.id.applycard_normal_zhiwu:
+            case R.id.applycard_normal_zhiwu://职务
                 startActivityForResult(CommonTwoLevelMenuActivity.getIntent(this, 5), 10005);
                 break;
-            case R.id.applycard_normal_zhiye:
+            case R.id.applycard_normal_zhiye://职业
                 startActivityForResult(CommonTwoLevelMenuActivity.getIntent(this, 4), 10004);
                 break;
-            case R.id.applycard_normal_compay_addr:
-                chooseAddress();
+            case R.id.applycard_normal_compay_addr://单位地址区域
+                chooseAddress(2);
                 break;
-            case R.id.applycard_normal_contact_relationship:
+            case R.id.applycard_normal_contact_relationship://朋友
                 startActivityForResult(CommonTwoLevelMenuActivity.getIntent(this, 8), 10008);
                 break;
-            case R.id.applycard_normal_huankuantype:
+            case R.id.applycard_normal_huankuantype://自动还款类型
                 startActivityForResult(CommonTwoLevelMenuActivity.getIntent(this, 9), 10009);
                 break;
-            case R.id.applycard_normal_wangdian:
+            case R.id.applycard_normal_wangdian://领卡网点
                 lingQuWangDianDialog();
                 break;
             case R.id.applycard_normal_commit:
@@ -348,46 +397,53 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 10000 && resultCode == 1000 && data != null) {
+        if (requestCode == 10000 && resultCode == 1000 && data != null) {//请选择婚姻状况
             CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setMarlst(String.valueOf(commonTwoLevelMenuBean.getId()));
             mMaritalStatus.setRightText(commonTwoLevelMenuBean.getContext());
             mMaritalStatus.setRightTextColor(getResources().getColor(R.color.gray_33));
-        } else if (requestCode == 10001 && resultCode == 1001 && data != null) {
+
+        } else if (requestCode == 10001 && resultCode == 1001 && data != null) {//受教育程度
             CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setEdunlvl(String.valueOf(commonTwoLevelMenuBean.getId()));
             mEducationStatus.setRightText(commonTwoLevelMenuBean.getContext());
             mEducationStatus.setRightTextColor(getResources().getColor(R.color.gray_33));
-        } else if (requestCode == 10002 && resultCode == 1002 && data != null) {
+
+        } else if (requestCode == 10002 && resultCode == 1002 && data != null) {//请选择住宅情况
             CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setResltp(String.valueOf(commonTwoLevelMenuBean.getId()));
             mHouseStatus.setRightText(commonTwoLevelMenuBean.getContext());
             mHouseStatus.setRightTextColor(getResources().getColor(R.color.gray_33));
-        } else if (requestCode == 10004 && resultCode == 1004 && data != null) {
+
+        } else if (requestCode == 10004 && resultCode == 1004 && data != null) {//职业
             CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setOcp(String.valueOf(commonTwoLevelMenuBean.getId()));
             mZhiYe.setRightText(commonTwoLevelMenuBean.getContext());
             mZhiYe.setRightTextColor(getResources().getColor(R.color.gray_33));
-        } else if (requestCode == 10005 && resultCode == 1005 && data != null) {
+
+        } else if (requestCode == 10005 && resultCode == 1005 && data != null) {//职务
             CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setCottl(String.valueOf(commonTwoLevelMenuBean.getId()));
             mZhiWu.setRightText(commonTwoLevelMenuBean.getContext());
             mZhiWu.setRightTextColor(getResources().getColor(R.color.gray_33));
-        } else if (requestCode == 10006 && resultCode == 1006 && data != null) {
+
+        } else if (requestCode == 10006 && resultCode == 1006 && data != null) {//单位性质
             CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setCorptp(String.valueOf(commonTwoLevelMenuBean.getId()));
             mCompanyType.setRightText(commonTwoLevelMenuBean.getContext());
             mCompanyType.setRightTextColor(getResources().getColor(R.color.gray_33));
+
         } else if (requestCode == 10007 && resultCode == 1007 && data != null) {
             CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setGnd(String.valueOf(commonTwoLevelMenuBean.getId()));
-        } else if (requestCode == 10008 && resultCode == 1008 && data != null) {
+        } else if (requestCode == 10008 && resultCode == 1008 && data != null) {////朋友
             CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setCtc1(String.valueOf(commonTwoLevelMenuBean.getId()));
             applyCTCardDTO.setCtc2(String.valueOf(commonTwoLevelMenuBean.getId()));
             mRelationShip.setRightText(commonTwoLevelMenuBean.getContext());
             mRelationShip.setRightTextColor(getResources().getColor(R.color.gray_33));
-        } else if (requestCode == 10009 && resultCode == 1009 && data != null) {
+
+        } else if (requestCode == 10009 && resultCode == 1009 && data != null) {////自动还款类型
             CommonTwoLevelMenuBean commonTwoLevelMenuBean = (CommonTwoLevelMenuBean) data.getSerializableExtra("data");
             applyCTCardDTO.setAutcrepymtmth(String.valueOf(commonTwoLevelMenuBean.getId()));
             mHuanKuanType.setRightText(commonTwoLevelMenuBean.getContext());
@@ -400,18 +456,18 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      */
     private void initCivilInfo() {
         mZhiYe.setRightText("公务员");
+        mZhiYe.setRightTextColor(getResources().getColor(R.color.gray_33));
         applyCTCardDTO.setOcp("1");
 
         mZhiWu.setRightText("职员/科员级");
-        mZhiYe.setRightTextColor(getResources().getColor(R.color.gray_33));
+        mZhiWu.setRightTextColor(getResources().getColor(R.color.gray_33));
         applyCTCardDTO.setCottl("6");
 
         mCompanyAddr.setRightText("无");
-        mZhiWu.setRightTextColor(getResources().getColor(R.color.gray_33));
-        applyCTCardDTO.setCorptp(String.valueOf("20"));
 
         mCompanyType.setRightText("集体");
         mCompanyType.setRightTextColor(getResources().getColor(R.color.gray_33));
+        applyCTCardDTO.setCorptp(String.valueOf("20"));
     }
 
     /**
@@ -423,20 +479,21 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
 
         mDepartName.setContentText("无");
         applyCTCardDTO.setCorpsecr("无");
-
+//公司电话
         mCompanyTel.setContentText("00000000");
         applyCTCardDTO.setCophoe("00000000");
-
+//公司邮编
         mZipCode.setContentText("201900");
         applyCTCardDTO.setCoadrzip("201900");
+//公司地址区域
         applyCTCardDTO.setCoadrprov("无");
         applyCTCardDTO.setCoadrcity("无");
         applyCTCardDTO.setCoadrcnty("无");
 
         mCompanyDetailAddr.setContentText("无");
         applyCTCardDTO.setCoadr("无");
-        applyCTCardDTO.setOcp("5");
 
+        applyCTCardDTO.setOcp("5");
         mZhiYe.setRightText("自由职业者");
         mZhiYe.setRightTextColor(getResources().getColor(R.color.gray_33));
     }
@@ -457,9 +514,18 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         mZipCode.setContentText("201900");
         applyCTCardDTO.setCoadrzip("201900");
 
-        mZhiYe.setRightText("私人业主");
+        //单位性质
+        applyCTCardDTO.setCorptp("20");
+        mCompanyType.setRightText("集体");
+        mCompanyType.setRightTextColor(getResources().getColor(R.color.gray_33));
+//职务
+        applyCTCardDTO.setCottl("6");
+        mZhiWu.setRightText("职员/科员级");
+        mZhiWu.setRightTextColor(getResources().getColor(R.color.gray_33));
+//职业
+        applyCTCardDTO.setOcp("1");
+        mZhiYe.setRightText("公务员");
         mZhiYe.setRightTextColor(getResources().getColor(R.color.gray_33));
-        applyCTCardDTO.setOcp("30");
     }
 
     /**
@@ -478,6 +544,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
                     }
                     mLingKaWangDian.setRightText(address);
                     mLingKaWangDian.setRightTextColor(getResources().getColor(R.color.gray_33));
+//领卡网点
                     applyCTCardDTO.setGetbrno(data[1]);
                 }
             });
@@ -488,6 +555,277 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             downloadTxt();
             ToastUtils.showShort(this, "获取网点失败,正在为你重新获取");
         }
+    }
+
+    /**
+     * 选择地址 1==住宅  2==单位
+     */
+    private void chooseAddress(final int mType) {
+        // 创建一个解析xml的工厂对象
+        SAXParserFactory parserFactory = SAXParserFactory.newInstance();
+        XmlParserHandler parserHandler = new XmlParserHandler();
+        try {
+            InputStream inputStream = getAssets().open("province_data.xml");
+            // 解析xml
+            SAXParser saxParser = parserFactory.newSAXParser();
+            saxParser.parse(inputStream, parserHandler);
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
+        // 获取解析出来的数据
+        PublicData.getInstance().provinceModel = parserHandler.getDataList();
+
+        CityDialog dialog = new CityDialog(this, null, new CityDialog.OnChooseDialogListener() {
+            @Override
+            public void back(String[] data) {
+                if (mType == 1) {
+                    applyCTCardDTO.setHmadrprov(data[0]);
+                    applyCTCardDTO.setHmadrcity(data[1]);
+                    applyCTCardDTO.setHmadrcnty(data[2]);
+                    mAddr.setRightText(data[0] + "、" + data[1] + "、" + data[2]);
+                    mAddr.setRightTextColor(getResources().getColor(R.color.gray_33));
+                } else {
+                    applyCTCardDTO.setCoadrprov(data[0]);
+                    applyCTCardDTO.setCoadrcity(data[1]);
+                    applyCTCardDTO.setCoadrcnty(data[2]);
+
+                    mCompanyAddr.setRightText(data[0] + "、" + data[1] + "、" + data[2]);
+                    mCompanyAddr.setRightTextColor(getResources().getColor(R.color.gray_33));
+                }
+
+                matchingZipCode(data[2], mType);
+            }
+        });
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.show();
+    }
+
+    /**
+     * 匹配邮编
+     */
+    private void matchingZipCode(String quStr, int mType) {
+        String zipCode = "201900";
+        if (quStr.contains("卢湾区")) {
+            zipCode = "200020";
+        } else if (quStr.contains("徐汇区")) {
+            zipCode = "200030";
+        } else if (quStr.contains("长宁区")) {
+            zipCode = "200050";
+        } else if (quStr.contains("静安区")) {
+            zipCode = "200040";
+        } else if (quStr.contains("普陀区")) {
+            zipCode = "200333";
+        } else if (quStr.contains("闸北区")) {
+            zipCode = "200070";
+        } else if (quStr.contains("虹口区")) {
+            zipCode = "200080";
+        } else if (quStr.contains("杨浦区")) {
+            zipCode = "200082";
+        } else if (quStr.contains("闵行区")) {
+            zipCode = "201100";
+        } else if (quStr.contains("宝山区")) {
+            zipCode = "201900";
+        } else if (quStr.contains("嘉定区")) {
+            zipCode = "201800";
+        } else if (quStr.contains("金山区")) {
+            zipCode = "200540";
+        } else if (quStr.contains("松江区")) {
+            zipCode = "201600";
+        } else if (quStr.contains("青浦区")) {
+            zipCode = "201700";
+        } else if (quStr.contains("南汇区")) {
+            zipCode = "201300";
+        } else if (quStr.contains("奉贤区")) {
+            zipCode = "201400";
+        } else if (quStr.contains("崇明县")) {
+            zipCode = "202150";
+        } else if (quStr.contains("黄浦区")) {
+            zipCode = "200001";
+        } else if (quStr.contains("浦东新区")) {
+            zipCode = "200135";
+        }
+//住宅邮编
+        if (mType == 1) {
+            applyCTCardDTO.setHmadrzip(zipCode);
+        } else {
+            mZipCode.setContentText(zipCode);
+            applyCTCardDTO.setCoadrzip(zipCode);
+        }
+    }
+
+    /**
+     * 检测数据
+     */
+    private void checkData() {
+        String pinyin = mUserNamePinYin.getContentText();
+        if (checkIsEmpty(pinyin, "姓名拼音不可为空")) return;
+        applyCTCardDTO.setEnghnm(pinyin);
+
+        String tel = mTel.getContentText();
+        applyCTCardDTO.setHmphoe(tel);
+//住宅地址
+        String detailAddr = mDetailAddr.getContentText();
+        if (checkIsEmpty(detailAddr, "详细地址不可为空")) return;
+        applyCTCardDTO.setHmadr(detailAddr);
+
+        String income = mIncome.getContentText();
+        if (checkIsEmpty(income, "年收入不可为空")) return;
+        applyCTCardDTO.setAnulincm(income);
+
+        if (mWorkType == 2) {//事业单位
+            String companyName = mCompanyName.getContentText();
+            if (checkIsEmpty(companyName, "单位名称不可为空")) return;
+            applyCTCardDTO.setConm(companyName);
+
+            String departName = mDepartName.getContentText();
+            if (checkIsEmpty(companyName, "部门名称不可为空")) return;
+            applyCTCardDTO.setCorpsecr(departName);
+
+            String companyDetailAddr = mCompanyDetailAddr.getContentText();
+            if (checkIsEmpty(companyDetailAddr, "单位详细地址不可为空")) return;
+            applyCTCardDTO.setCoadr(companyDetailAddr);
+        } else {
+
+        }
+
+        applyCTCardDTO.setCoadrzip(mZipCode.getContentText());
+
+        String companyTel = mCompanyTel.getContentText();
+        if (checkIsEmpty(companyTel, "单位电话不可为空")) return;
+        applyCTCardDTO.setCophoe(companyTel);
+
+        String contactName = mContactName.getContentText();
+        if (checkIsEmpty(contactName, "联系人姓名不可为空")) return;
+        applyCTCardDTO.setCtcnm1(contactName);
+        applyCTCardDTO.setCtcnm2(contactName);
+
+        String contactMobile = mContactMobile.getContentText();
+        if (checkIsEmpty(contactMobile, "联系人手机号不可为空")) return;
+        applyCTCardDTO.setCtcphoenum1(contactMobile);
+        applyCTCardDTO.setCtcphoenum2(contactMobile);
+        applyCTCardDTO.setCtccophoe1(contactMobile);
+        applyCTCardDTO.setCtccophoe2(contactMobile);
+
+        String email = mEmail.getContentText();
+        if ("".equals(email)) email = "690635872@qq.com";
+        applyCTCardDTO.setElecmail(email);
+
+        String bankData = mZhuanChuKaHao.getContentText();
+        //autcrepymtmth 0是开通提醒 9是不开通
+        if ("0".equals(applyCTCardDTO.getAutcrepymtmth()) && TextUtils.isEmpty(bankData)) {
+            ToastUtils.showShort(this, "自动还款转出卡号不可为空");
+            return;
+        }
+        applyCTCardDTO.setTurnoutacnum(bankData);
+
+        String brno = applyCTCardDTO.getGetbrno();
+        if (checkIsEmpty(brno, "请选择领卡网点")) return;
+        applyCTCardDTO.setGetbrno(brno);
+
+        applyCTCardDTO.setPhoenum(RSAUtils.strByEncryption(this, PublicData.getInstance().mLoginInfoBean.getPhoenum(), true));
+        applyCTCardDTO.setBrthcty(applyCTCardDTO.getHmadrcity());
+
+        if (TextUtils.isEmpty(applyCTCardDTO.getDscode()) && TextUtils.isEmpty(applyCTCardDTO.getDscodegs())) {
+            applyCTCardDTO.setDscode("TZ666666");
+            applyCTCardDTO.setDscodegs("TZ666666");
+        }
+
+        commitInfo();
+    }
+
+    /**
+     * 检查是否为空
+     */
+    private boolean checkIsEmpty(String msg, String toast) {
+        if (TextUtils.isEmpty(msg) || msg.length() <= 0) {
+            ToastUtils.showShort(getApplicationContext(), toast);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean regularExpressValidator(ApplyCTCardDTO applyCTCardDTO) {
+        return true;
+    }
+
+    /**
+     * 提交办卡信息
+     */
+    private void commitInfo() {
+        showDialogLoading();
+
+        HandleCTCardApiClient.htmlLocal(this, "cip.cfc.u007.01", applyCTCardDTO, this);
+    }
+
+    /**
+     * 办卡成功返回
+     */
+    @Override
+    public void resultSuccess(Result result) {
+        hideDialogLoading();
+        if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
+            commitYingXiaoDataForLYT();
+            if (TextUtils.isEmpty(wangdianAdress)) {
+                ToastUtils.showShort(getApplicationContext(), "请选择领卡网点");
+            } else {
+                startActivity(ApplySuccessActvity.getIntent(this, wangdianAdress));
+            }
+        }
+    }
+
+    @Override
+    public void resultError(String msg) {
+        hideDialogLoading();
+        Toast.makeText(ApplyCardSecondActivity.this, Config.getErrMsg("1"), Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 办卡申请成功后，提交营销代码
+     */
+    private void commitYingXiaoDataForLYT() {
+        YingXiaoDataDTO dto = new YingXiaoDataDTO();
+        dto.setUsrnum(RSAUtils.strByEncryption(this, PublicData.getInstance().userID, true));
+
+        if (TextUtils.isEmpty(mYingXiaoCode.getContentText())) {
+            dto.setEmpNum(mMarketingCode);
+        } else {
+            dto.setEmpNum(mYingXiaoCode.getContentText());
+        }
+
+        CarApiClient.commitYingXiaoData(this, dto, new CallBack<BaseResult>() {
+            @Override
+            public void onSuccess(BaseResult result) {
+                if (result.getResponseCode() == 2000) {
+                    ToastUtils.showShort(ApplyCardSecondActivity.this, "已提交营销代码");
+                }
+            }
+        });
+    }
+
+    /**
+     * 申办畅通卡时间校验接口
+     */
+    private void checkCtkDate() {
+        CheckCtkDTO checkCtkDTO = new CheckCtkDTO();
+        checkCtkDTO.setApplyCode(PublicData.getInstance().filenum);
+        checkCtkDTO.setApplyInterface("banka");
+        checkCtkDTO.setFlag("1");
+        CarApiClient.checkCtk(this, checkCtkDTO, new CallBack<BaseResult>() {
+            @Override
+            public void onSuccess(BaseResult result) {
+                hideDialogLoading();
+                if (result.getResponseCode() == 2000) {
+                    commitInfo();
+                } else {
+                    ToastUtils.showShort(getApplicationContext(), "七天之内不能重复办卡");
+                }
+            }
+        });
     }
 
     /**
@@ -502,14 +840,12 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
                     }
                 })
                 .subscribeOn(Schedulers.io())
-                .sample(1, TimeUnit.SECONDS)
+//                .sample(1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
-                        NetLocationBean bean = ReadFfile.readNetLocationFile();
-//                        PublicData.getInstance().mNetLocationBean.setNetLocationlist(bean.getNetLocationlist());
-                        PublicData.getInstance().mNetLocationBean = bean;
+                        PublicData.getInstance().mNetLocationBean = ReadFfile.readNetLocationFile(getApplicationContext());
                     }
 
                     @Override
@@ -562,170 +898,6 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     }
 
     /**
-     * 选择地址
-     */
-    private void chooseAddress() {
-        // 创建一个解析xml的工厂对象
-        SAXParserFactory parserFactory = SAXParserFactory.newInstance();
-        XmlParserHandler parserHandler = new XmlParserHandler();
-        try {
-            InputStream inputStream = getAssets().open("province_data.xml");
-            // 解析xml
-            SAXParser saxParser = parserFactory.newSAXParser();
-            saxParser.parse(inputStream, parserHandler);
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        }
-        // 获取解析出来的数据
-        PublicData.getInstance().provinceModel = parserHandler.getDataList();
-
-        CityDialog dialog = new CityDialog(this, null, new CityDialog.OnChooseDialogListener() {
-            @Override
-            public void back(String[] data) {
-                applyCTCardDTO.setHmadrprov(data[0]);
-                applyCTCardDTO.setHmadrcity(data[1]);
-                applyCTCardDTO.setHmadrcnty(data[2]);
-
-                mAddr.setRightText(data[0] + "、" + data[1] + "、" + data[2]);
-                mAddr.setRightTextColor(getResources().getColor(R.color.gray_33));
-                matchingZipCode(data[2]);
-            }
-        });
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.show();
-    }
-
-    /**
-     * 匹配邮编
-     */
-    private void matchingZipCode(String quStr) {
-        String zipCode = "201900";
-        if (quStr.contains("卢湾区")) {
-            zipCode = "200020";
-        } else if (quStr.contains("徐汇区")) {
-            zipCode = "200030";
-        } else if (quStr.contains("长宁区")) {
-            zipCode = "200050";
-        } else if (quStr.contains("静安区")) {
-            zipCode = "200040";
-        } else if (quStr.contains("普陀区")) {
-            zipCode = "200333";
-        } else if (quStr.contains("闸北区")) {
-            zipCode = "200070";
-        } else if (quStr.contains("虹口区")) {
-            zipCode = "200080";
-        } else if (quStr.contains("杨浦区")) {
-            zipCode = "200082";
-        } else if (quStr.contains("闵行区")) {
-            zipCode = "201100";
-        } else if (quStr.contains("宝山区")) {
-            zipCode = "201900";
-        } else if (quStr.contains("嘉定区")) {
-            zipCode = "201800";
-        } else if (quStr.contains("金山区")) {
-            zipCode = "200540";
-        } else if (quStr.contains("松江区")) {
-            zipCode = "201600";
-        } else if (quStr.contains("青浦区")) {
-            zipCode = "201700";
-        } else if (quStr.contains("南汇区")) {
-            zipCode = "201300";
-        } else if (quStr.contains("奉贤区")) {
-            zipCode = "201400";
-        } else if (quStr.contains("崇明县")) {
-            zipCode = "202150";
-        } else if (quStr.contains("黄浦区")) {
-            zipCode = "200001";
-        } else if (quStr.contains("浦东新区")) {
-            zipCode = "200135";
-        }
-//住宅邮编
-        applyCTCardDTO.setHmadrzip(zipCode);
-    }
-
-    /**
-     * 检测数据
-     */
-    private void checkData() {
-        String pinyin = mUserNamePinYin.getContentText();
-        String detailAddr = mDetailAddr.getContentText();
-        String tel = mTel.getContentText();
-        String contactName = mContactName.getContentText();
-        String contactMobile = mContactMobile.getContentText();
-        String kahao = mZhuanChuKaHao.getContentText();
-        String email = mEmail.getContentText();
-
-        if (TextUtils.isEmpty(pinyin)) {
-            ToastUtils.showShort(this, "姓名拼音不可为空");
-            return;
-        }
-        if (TextUtils.isEmpty(detailAddr)) {
-            ToastUtils.showShort(this, "详细地址不可为空");
-            return;
-        }
-        if (mWorkType == 2 && TextUtils.isEmpty(tel)) {
-            ToastUtils.showShort(this, "座机号不可为空");
-            return;
-        }
-        if (TextUtils.isEmpty(contactName)) {
-            ToastUtils.showShort(this, "联系人姓名不可为空");
-            return;
-        }
-        if (TextUtils.isEmpty(contactMobile)) {
-            ToastUtils.showShort(this, "联系人手机号不可为空");
-            return;
-        }
-        if (TextUtils.isEmpty(kahao)) {
-            ToastUtils.showShort(this, "转出卡号不可为空");
-            return;
-        }
-        if ("".equals(email)) {
-            email = "690635872@qq.com";
-        }
-        String bankData = mZhuanChuKaHao.getContentText();
-        //autcrepymtmth 0是开通提醒 9是不开通
-        if ("0".equals(applyCTCardDTO.getAutcrepymtmth()) && TextUtils.isEmpty(bankData)) {
-            ToastUtils.showShort(this, "自动还款转出卡号不可为空");
-            return;
-        }
-        if (TextUtils.isEmpty(applyCTCardDTO.getGetbrno())) {
-            ToastUtils.showShort(this, "请选择领卡网点");
-            return;
-        }
-        applyCTCardDTO.setAnulincm(mIncome.getContentText());
-        applyCTCardDTO.setConm(mCompanyName.getContentText());
-        applyCTCardDTO.setCorpsecr(mDepartName.getContentText());
-        applyCTCardDTO.setCoadr(mCompanyDetailAddr.getContentText());
-        applyCTCardDTO.setCoadrzip(mZipCode.getContentText());
-        applyCTCardDTO.setCophoe(mCompanyTel.getContentText());
-
-        applyCTCardDTO.setCtcnm1(contactName);
-        applyCTCardDTO.setCtcnm2(contactName);
-        applyCTCardDTO.setCtcphoenum1(contactMobile);
-        applyCTCardDTO.setCtcphoenum2(contactMobile);
-        applyCTCardDTO.setCtccophoe1(contactMobile);
-        applyCTCardDTO.setCtccophoe2(contactMobile);
-
-        applyCTCardDTO.setPhoenum(RSAUtils.strByEncryption(this, PublicData.getInstance().mLoginInfoBean.getPhoenum(), true));
-        applyCTCardDTO.setBrthcty(applyCTCardDTO.getHmadrcity());
-        applyCTCardDTO.setHmphoe(tel);
-        applyCTCardDTO.setHmadr(mDetailAddr.getContentText());
-        applyCTCardDTO.setEnghnm(pinyin);
-        applyCTCardDTO.setTurnoutacnum(bankData);
-        applyCTCardDTO.setElecmail(email);
-        if (TextUtils.isEmpty(applyCTCardDTO.getDscode()) && TextUtils.isEmpty(applyCTCardDTO.getDscodegs())) {
-            applyCTCardDTO.setDscode("TZ666666");
-            applyCTCardDTO.setDscodegs("TZ666666");
-        }
-        commitInfo();
-    }
-
-    /**
      * 得到营销代码
      */
     private void getYingXiaoCode() {
@@ -735,9 +907,10 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             public void onSuccess(YingXiaoResult result) {
                 if (result.getResponseCode() == 2000 && result.getData() != null) {
                     mMarketingCode = result.getData().getEmpNum();
-//                    mYingXiaoCode.setContentText(mEmpNum);
-                    applyCTCardDTO.setDscode(result.getData().getEmpNum());
-                    applyCTCardDTO.setDscodegs(result.getData().getEmpNum());
+                    mYingXiaoCode.setContentText(mMarketingCode);
+
+                    applyCTCardDTO.setDscode(mMarketingCode);
+                    applyCTCardDTO.setDscodegs(mMarketingCode);
                 }
             }
 
@@ -746,83 +919,6 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             }
         });
     }
-
-    @Override
-    public void resultSuccess(Result result) {
-        hideDialogLoading();
-        if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
-            commitYingXiaoDataForLYT();
-            checkCtkDate();
-            startActivity(ApplySuccessActvity.getIntent(this, wangdianAdress));
-        }
-    }
-
-    @Override
-    public void resultError(String msg) {
-        hideDialogLoading();
-        Toast.makeText(ApplyCardSecondActivity.this, Config.getErrMsg("1"), Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * 申办畅通卡时间校验接口
-     */
-    private void checkCtkDate() {
-        CheckCtkDTO checkCtkDTO = new CheckCtkDTO();
-        checkCtkDTO.setApplyCode(PublicData.getInstance().filenum);
-        checkCtkDTO.setApplyInterface("banka");
-        checkCtkDTO.setFlag("1");
-        CarApiClient.checkCtk(this, checkCtkDTO, new CallBack<BaseResult>() {
-            @Override
-            public void onSuccess(BaseResult result) {
-                hideDialogLoading();
-                if (result.getResponseCode() == 2000) {
-                    commitInfo();
-                } else {
-                    ToastUtils.showShort(getApplicationContext(), "七天之内不能重复办卡");
-                }
-            }
-        });
-    }
-
-    /**
-     * 提交办卡信息
-     */
-    private void commitInfo() {
-        showDialogLoading();
-        if (regularExpressValidator(applyCTCardDTO)) {
-            HandleCTCardApiClient.htmlLocal(this, "cip.cfc.u007.01", applyCTCardDTO, this);
-        }
-
-    }
-
-    private boolean regularExpressValidator(ApplyCTCardDTO applyCTCardDTO) {
-//        RegexUtils.isIDCard15(applyCTCardDTO.getCoadr())
-
-        return true;
-    }
-
-    /**
-     * 办卡申请成功后，提交营销代码
-     */
-    private void commitYingXiaoDataForLYT() {
-        YingXiaoDataDTO dto = new YingXiaoDataDTO();
-        dto.setUsrnum(RSAUtils.strByEncryption(this, PublicData.getInstance().userID, true));
-        if (TextUtils.isEmpty(mYingXiaoCode.getContentText())) {
-            dto.setEmpNum(mMarketingCode);
-        } else {
-            dto.setEmpNum(mYingXiaoCode.getContentText());
-        }
-
-        CarApiClient.commitYingXiaoData(this, dto, new CallBack<BaseResult>() {
-            @Override
-            public void onSuccess(BaseResult result) {
-                if (result.getResponseCode() == 2000) {
-                    ToastUtils.showShort(ApplyCardSecondActivity.this, "已提交营销代码");
-                }
-            }
-        });
-    }
-
 
     /**
      * 选择时间
@@ -862,4 +958,5 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         });
         datePicker.show();
     }
+
 }

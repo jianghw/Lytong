@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true" android:drawable="@mipmap/illegal_query_notice_image_pre"></item>
-    <item android:state_pressed="false" android:drawable="@mipmap/illegal_query_notice_image"></item>
-    <item android:state_selected="true" android:drawable="@mipmap/illegal_query_notice_image_pre"></item>
-    <item android:state_selected="false" android:drawable="@mipmap/illegal_query_notice_image"></item>
-    <item android:drawable="@mipmap/illegal_query_notice_image"></item>
+    <item android:drawable="@mipmap/illegal_query_notice_image_pre" android:state_pressed="true"/>
+    <item android:drawable="@mipmap/illegal_query_notice_image" android:state_pressed="false"/>
+    <item android:drawable="@mipmap/illegal_query_notice_image_pre" android:state_selected="true"/>
+    <item android:drawable="@mipmap/illegal_query_notice_image" android:state_selected="false"/>
+    <item android:drawable="@mipmap/illegal_query_notice_image"/>
 </selector>

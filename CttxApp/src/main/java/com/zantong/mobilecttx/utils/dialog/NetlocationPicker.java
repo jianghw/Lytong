@@ -28,24 +28,24 @@ public class NetlocationPicker extends LinearLayout {
     private WheelView mWheelMonth;
 //    private WheelView mWheelDay;
 
-    private String curWheelprovince="徐汇区";
-    private String curWheelCity="习勤路支行";
-    private String curWheelDistrinc="宝山区";
+    private String curWheelprovince = "徐汇区";
+    private String curWheelCity = "习勤路支行";
+    private String curWheelDistrinc = "宝山区";
 
-	private int mCurrProvinceIndex = -1;
-	private int mTemCityIndex = -1;
-	private int mDistrincIndex = -1;
+    private int mCurrProvinceIndex = -1;
+    private int mTemCityIndex = -1;
+    private int mDistrincIndex = -1;
 
     Calendar calendar = Calendar.getInstance();
-//    private int currentYear= Calendar.getInstance().get(Calendar.YEAR);
+    //    private int currentYear= Calendar.getInstance().get(Calendar.YEAR);
 //    private int currentMonth= Calendar.getInstance().get(Calendar.MONTH);
 //    private int currentDay= Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-    private String selectProvince="上海市长宁区";
-    private String selectCity="上海市长宁区延安西路支行";
-    private String selectDistrinc="宝山区";
-	private Map<String, List<NetLocationBean.NetLocationElement.NetQuBean>> cityMap = new HashMap<>();
+    private String selectProvince = "上海市长宁区";
+    private String selectCity = "上海市长宁区延安西路支行";
+    private String selectDistrinc = "宝山区";
+    private Map<String, List<NetLocationBean.NetLocationElement.NetQuBean>> cityMap = new HashMap<>();
     private NetLocationBean.NetLocationElement.NetQuBean mNetQuBean;
-	private Map<String, List<DistrictModel>> disTrincMap = new HashMap<>();
+    private Map<String, List<DistrictModel>> disTrincMap = new HashMap<>();
     private List<NetLocationBean.NetLocationElement.NetQuBean> dataList = new ArrayList<>();
 
 
@@ -57,32 +57,35 @@ public class NetlocationPicker extends LinearLayout {
         super(context, attrs);
     }
 
-    public String getProvince(){
-    	return selectProvince;
-    }
-    public String getCity(){
-    	return selectCity;
-    }
-    public String getDistrinc(){
-    	return selectDistrinc;
-    }
-    public NetLocationBean.NetLocationElement.NetQuBean getDataBean(){
-    	return mNetQuBean;
+    public String getProvince() {
+        return selectProvince;
     }
 
-    public void setDefaultLocation(String[]selectweight){
-    	if(selectweight.length!=3){
-    		mWheelYear.setDefault(0);
-    		mWheelMonth.setDefault(0);
+    public String getCity() {
+        return selectCity;
+    }
+
+    public String getDistrinc() {
+        return selectDistrinc;
+    }
+
+    public NetLocationBean.NetLocationElement.NetQuBean getDataBean() {
+        return mNetQuBean;
+    }
+
+    public void setDefaultLocation(String[] selectweight) {
+        if (selectweight.length != 3) {
+            mWheelYear.setDefault(0);
+            mWheelMonth.setDefault(0);
 //    		mWheelDay.setDefault(0);
-    	}else{
+        } else {
 //    		mWheelYear.setDefault(Integer.parseInt(selectweight[0])-1);
 //    		mWheelMonth.setDefault(Integer.parseInt(selectweight[1])-1);
 //    		mWheelDay.setDefault(Integer.parseInt(selectweight[2])-1);
 //    		this.selectYear=selectweight[0];
 //    		this.selectMonth=selectweight[1];
 //    		this.selectDay=selectweight[2];
-    	}
+        }
     }
 
     @Override
@@ -106,58 +109,58 @@ public class NetlocationPicker extends LinearLayout {
 //        mWheelDay.setDefault(0);
         mWheelYear.setOnSelectListener(new OnSelectListener() {
 
-			@Override
-			public void selecting(int id, String text) {
-				// TODO Auto-generated method stub
+            @Override
+            public void selecting(int id, String text) {
+                // TODO Auto-generated method stub
 
-			}
+            }
 
-			@Override
-			public void endSelect(int id, String text) {
-				 if (text.equals("") || text == null)
-	                    return;
-	                if (mCurrProvinceIndex != id) {
-						mCurrProvinceIndex = id;
-	                    selectProvince = mWheelYear.getSelectedText();
-	                    if (selectProvince == null || selectProvince.equals(""))
-	                        return;
-	                    mWheelMonth.resetData(getCityData(selectProvince));
-                        dataList = cityMap.get(selectProvince);
-						mWheelMonth.setDefault(0);
-						selectCity = mWheelMonth.getSelectedText();
+            @Override
+            public void endSelect(int id, String text) {
+                if (text.equals("") || text == null)
+                    return;
+                if (mCurrProvinceIndex != id) {
+                    mCurrProvinceIndex = id;
+                    selectProvince = mWheelYear.getSelectedText();
+                    if (selectProvince == null || selectProvince.equals(""))
+                        return;
+                    mWheelMonth.resetData(getCityData(selectProvince));
+                    dataList = cityMap.get(selectProvince);
+                    mWheelMonth.setDefault(0);
+                    selectCity = mWheelMonth.getSelectedText();
 //	                    mWheelDay.resetData(getDisTrincData(selectCity));
 //						mWheelDay.setDefault(0);
 //						selectDistrinc = mWheelDay.getSelectedText();
-	                }
+                }
 
-				 }
-		});
+            }
+        });
         mWheelMonth.setOnSelectListener(new OnSelectListener() {
 
-			@Override
-			public void selecting(int id, String text) {
-				// TODO Auto-generated method stub
+            @Override
+            public void selecting(int id, String text) {
+                // TODO Auto-generated method stub
 
-			}
+            }
 
-			@Override
-			public void endSelect(int id, String text) {
-				if (text.equals("") || text == null)
+            @Override
+            public void endSelect(int id, String text) {
+                if (text.equals("") || text == null)
                     return;
                 if (mTemCityIndex != id) {
-					mTemCityIndex = id;
-	                	selectProvince = mWheelYear.getSelectedText();
-						selectCity = mWheelMonth.getSelectedText();
+                    mTemCityIndex = id;
+                    selectProvince = mWheelYear.getSelectedText();
+                    selectCity = mWheelMonth.getSelectedText();
                     mNetQuBean = dataList.get(id);
 //						selectDistrinc = mWheelDay.getSelectedText();
-	                    if (selectCity == null || selectCity.equals(""))
-	                        return;
+                    if (selectCity == null || selectCity.equals(""))
+                        return;
 //	                    mWheelDay.resetData(getDisTrincData(selectCity));
 //						mWheelDay.setDefault(0);
-                	}
+                }
 
-				}
-		});
+            }
+        });
 //        mWheelDay.setOnSelectListener(new OnSelectListener() {
 //
 //			@Override
@@ -186,12 +189,15 @@ public class NetlocationPicker extends LinearLayout {
 
     private ArrayList<String> getProvinceData() {
         ArrayList<String> list = new ArrayList<String>();
-        if(PublicData.getInstance().mNetLocationBean.getNetLocationlist() != null){
+        if (PublicData.getInstance().mNetLocationBean.getNetLocationlist() != null) {
             for (int i = 0; i < PublicData.getInstance().mNetLocationBean.getNetLocationlist().size(); i++) {
+
                 list.add(PublicData.getInstance().mNetLocationBean.getNetLocationlist().get(i).getNetLocationQu());
-                cityMap.put(PublicData.getInstance().mNetLocationBean.getNetLocationlist().get(i).getNetLocationQu(), PublicData.getInstance().mNetLocationBean.getNetLocationlist().get(i).getListNet());
+
+                cityMap.put(PublicData.getInstance().mNetLocationBean.getNetLocationlist().get(i).getNetLocationQu(),
+                        PublicData.getInstance().mNetLocationBean.getNetLocationlist().get(i).getListNet());
             }
-        }else{
+        } else {
             LogUtils.i("网点数据是空");
         }
 
@@ -209,7 +215,7 @@ public class NetlocationPicker extends LinearLayout {
 
     private ArrayList<String> getDisTrincData(String city) {
         //ignore condition
-    	
+
         ArrayList<String> list = new ArrayList<String>();
         for (int i = 0; i < disTrincMap.get(city).size(); i++) {
             list.add(disTrincMap.get(city).get(i).getName());

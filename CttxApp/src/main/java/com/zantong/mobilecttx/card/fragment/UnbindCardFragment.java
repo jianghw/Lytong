@@ -243,7 +243,7 @@ public class UnbindCardFragment extends BaseFragment {
                     @Override
                     public void onCompleted() {
                         LogUtils.i("文件下载完成");
-                        NetLocationBean bean = ReadFfile.readNetLocationFile();
+                        NetLocationBean bean = ReadFfile.readNetLocationFile(getContext());
                         PublicData.getInstance().mNetLocationBean = bean;
 //                        Log.e("why", bean.getNetLocationlist().get(0).toString());
                     }

@@ -81,6 +81,13 @@ public class CttxEditText extends LinearLayout {
 
         boolean isVisibleImg = typedArray.getBoolean(R.styleable.CttxEditText_imgflag, false);
         mImgFlag.setVisibility(isVisibleImg ? View.VISIBLE : View.GONE);
+
+        boolean editEnable = typedArray.getBoolean(R.styleable.CttxEditText_edit_enable, true);
+        if (!editEnable) {
+            mContent.setFocusable(false);
+            mContent.setFocusableInTouchMode(false);
+        }
+
         typedArray.recycle();
 
         if (TextUtils.isEmpty(strTitle)) {
@@ -113,7 +120,7 @@ public class CttxEditText extends LinearLayout {
      * 获取输入内容
      */
     public String getContentText() {
-        return mContent.getText().toString();
+        return mContent.getText().toString().trim();
     }
 
 

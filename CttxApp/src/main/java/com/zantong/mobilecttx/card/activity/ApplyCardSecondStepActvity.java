@@ -195,6 +195,7 @@ public class ApplyCardSecondStepActvity extends BaseMvpActivity<IBaseView, HelpP
 //        bundle.putSerializable("data", applyCTCardDTO);
 //        intent.putExtras(bundle);
 //        startActivity(intent);
+
         applyCTCardDTO.setIdycgy("1");
         applyCTCardDTO.setJoindate("201501");
         applyCTCardDTO.setCophoeexn("");

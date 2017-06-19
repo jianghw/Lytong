@@ -18,7 +18,7 @@ import com.zantong.mobilecttx.R;
 public class NetLocationDialog extends Dialog {
     //定义回调事件，用于dialog的点击事件
     public interface OnChooseDialogListener {
-        public void back(String[] name);
+        void back(String[] name);
     }
 
     private String[] name;
@@ -41,7 +41,7 @@ public class NetLocationDialog extends Dialog {
 //	                setTitle(name);
         mNetlocationPicker = (NetlocationPicker) findViewById(R.id.citypicker);
         Button btn_choose = (Button) findViewById(R.id.btn_choose);
-        if (name != null){
+        if (name != null) {
             mNetlocationPicker.setDefaultLocation(name);
         }
         btn_choose.setOnClickListener(clickListener);
@@ -52,7 +52,6 @@ public class NetLocationDialog extends Dialog {
         @Override
         public void onClick(View v) {
             try {
-
 //                int month = Integer.parseInt(mCityPicker.getMonth());
 //                int day = Integer.parseInt(mCityPicker.getDay());
 //                String tempMonth = String.valueOf(month);
@@ -70,7 +69,7 @@ public class NetLocationDialog extends Dialog {
                 data[3] = mNetlocationPicker.getDataBean().getNetLocationXiang();
                 data[4] = mNetlocationPicker.getDataBean().getNetLocationNumber();
 //                data[2] = mCityPicker.getDistrinc();
-                chooseDialogListener.back(data);
+                if (chooseDialogListener != null) chooseDialogListener.back(data);
                 NetLocationDialog.this.dismiss();
             } catch (Exception e) {
 

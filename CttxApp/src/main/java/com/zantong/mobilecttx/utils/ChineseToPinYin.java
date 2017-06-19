@@ -8,7 +8,7 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
 /**
- * Created by zhengyingbing on 17/3/7.
+ * 汉字转拼音工具
  */
 
 public class ChineseToPinYin {

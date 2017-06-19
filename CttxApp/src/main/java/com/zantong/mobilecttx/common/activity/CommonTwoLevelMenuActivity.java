@@ -7,10 +7,8 @@ import android.support.v4.app.FragmentTransaction;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.common.fragment.CommonTwoLevelMenuFragment;
-
-import static android.R.attr.type;
+import com.zantong.mobilecttx.presenter.HelpPresenter;
 
 /**
  * 公共的二级菜单 列表页面
@@ -44,7 +42,8 @@ public class CommonTwoLevelMenuActivity extends BaseMvpActivity<IBaseView, HelpP
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         int mType = getIntent().getIntExtra("type", 0);
         showTitle(mType);
-        transaction.replace(R.id.mine_msg_layout, CommonTwoLevelMenuFragment.newInstance(type));
+
+        transaction.replace(R.id.mine_msg_layout, CommonTwoLevelMenuFragment.newInstance(mType));
         transaction.commit();
     }
 

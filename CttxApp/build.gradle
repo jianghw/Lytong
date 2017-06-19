@@ -109,7 +109,6 @@ android {
             //签名
             signingConfig signingConfigs.release
         }
-
     }
 
     productFlavors {
@@ -122,11 +121,9 @@ android {
         //官方
         official {}
 
-
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
         }
-
     }
 }
 

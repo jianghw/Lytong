@@ -8,31 +8,33 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-
+        <!--填写个人资料-->
         <TextView
             style="@style/TextSmallNoticeInfoStyleWhite"
             android:text="填写个人资料"/>
-
+        <!--不可编辑-->
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_filenum"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
-            android:visibility="gone"
             zyb:contentinputtype="2"
             zyb:contentlength="12"
+            zyb:edit_enable="false"
             zyb:hinttext="请输入驾驶证档案编号"
             zyb:imgflag="true"
             zyb:titletext="驾档编号"/>
 
+        <include layout="@layout/view_line1"/>
+        <!--不可编辑-->
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_username"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
-            android:visibility="gone"
             zyb:contentinputtype="0"
             zyb:contentlength="4"
+            zyb:edit_enable="false"
             zyb:hinttext="请输入姓名"
             zyb:titletext="姓名"/>
 
@@ -48,19 +50,19 @@
         <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.SettingItemView
-            android:id="@+id/frist_gender"
+            android:id="@+id/cedit_gender"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
-            android:visibility="gone"
             app:titleHintS="请选择性别"
             app:titleS="性别"
             app:titleSC="@color/gray_99"/>
+
+        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:id="@+id/applycard_normal_idcard_num"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
-            android:visibility="gone"
             zyb:contentinputtype="3"
             zyb:contentlength="19"
             zyb:hinttext="请输入身份证号码"
@@ -103,7 +105,6 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <include layout="@layout/view_line1"/>
 
         <com.zantong.mobilecttx.widght.SettingItemView
             android:id="@+id/applycard_normal_idcard_layout2"
@@ -112,40 +113,50 @@
             app:titleHintS="年/月/日"
             app:titleSC="@color/gray_99"/>
 
+        <include layout="@layout/view_line1"/>
+
         <com.zantong.mobilecttx.widght.SettingItemView
+            android:id="@+id/sivTv_birth"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
-            android:visibility="gone"
             app:titleHintS="请选择出生日期"
             app:titleS="出生日期"
             app:titleSC="@color/gray_99"/>
 
-        <LinearLayout
+        <include layout="@layout/view_line1"/>
+
+        <com.zantong.mobilecttx.widght.SettingItemView
             android:layout_width="match_parent"
-            android:layout_height="48dip"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:paddingLeft="16dip"
-            android:paddingRight="@dimen/ds_60"
-            android:visibility="gone">
+            android:layout_height="@dimen/ds_144"
+            app:titleHintS="中国"
+            app:titleS="国籍"
+            app:titleSC="@color/gray_99"/>
 
-            <TextView
-                style="@style/TextInfoStyle"
-                android:text="国籍"/>
+        <include layout="@layout/view_line1"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|right"
-                android:text="中国"
-                android:textColor="@color/gray_99"/>
-        </LinearLayout>
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="48dip"-->
+        <!--android:background="@color/white"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:paddingLeft="16dip"-->
+        <!--android:paddingRight="@dimen/ds_60">-->
 
+        <!--<TextView-->
+        <!--style="@style/TextInfoStyle"-->
+        <!--android:text="国籍"/>-->
+
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:gravity="center_vertical|right"-->
+        <!--android:text="中国"-->
+        <!--android:textColor="@color/gray_99"/>-->
+        <!--</LinearLayout>-->
 
         <com.zantong.mobilecttx.widght.CttxEditText
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
-            android:visibility="gone"
             zyb:contentinputtype="1"
             zyb:contentlength="11"
             zyb:hinttext="请输入手机号码"

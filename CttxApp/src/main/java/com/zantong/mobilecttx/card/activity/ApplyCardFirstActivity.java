@@ -70,11 +70,16 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
     @Override
     public void initView() {
+        setTitleText("申办畅通卡");
     }
 
     @Override
     public void initData() {
-        setTitleText("申办畅通卡");
+        if (BuildConfig.DEBUG) {
+            mName.setText("遇紫紫");
+            mIdCard.setText("301364198811040740");
+            mDriverFileNum.setText("310002038631");
+        }
     }
 
     @OnClick({R.id.apply_card_first_img, R.id.apply_card_first_desc, R.id.apply_card_first_commit,
@@ -103,6 +108,9 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         }
     }
 
+    /**
+     * 下一步
+     */
     private void commitValue() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             PermissionGen.needPermission(this, 100,
@@ -186,6 +194,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         PublicData.getInstance().filenum = getDriverFileNum();
 
         if (BuildConfig.DEBUG) {//七天之内不能重复办卡 不用
+            showDialogLoading();
             checkApplyCardRecord();
         } else {
             checkCtkDate();
@@ -255,16 +264,16 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     @Override
     public void resultSuccess(Result result) {
         hideDialogLoading();
-        if (result.getSYS_HEAD().getReturnCode().equals("1")) {
+        if (result.getSYS_HEAD().getReturnCode().equals("1")) {//不可快捷办卡
             Intent intent = new Intent(this, ApplyCardSecondActivity.class);
             intent.putExtra("filenum", getDriverFileNum());
-            intent.putExtra("name",  getUserName());
+            intent.putExtra("name", getUserName());
             intent.putExtra("idCard", getUserIdCard());
             startActivity(intent);
 
         } else if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
             Intent intent = new Intent(this, ApplyCardQuickActivity.class);
-            intent.putExtra("filenum",  getDriverFileNum());
+            intent.putExtra("filenum", getDriverFileNum());
             intent.putExtra("name", getUserName());
             intent.putExtra("idCard", getUserIdCard());
             startActivity(intent);
