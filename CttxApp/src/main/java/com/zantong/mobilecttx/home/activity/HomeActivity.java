@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.home.activity;
 import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,22 +18,20 @@ import com.zantong.mobilecttx.user.activity.MegTypeActivity;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.utils.AccountRememberCtrl;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.AtyUtils;
+import cn.qqtheme.framework.util.primission.PermissionFail;
+import cn.qqtheme.framework.util.primission.PermissionGen;
+import cn.qqtheme.framework.util.primission.PermissionSuccess;
+
+import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
- * Created by zhengyingbing on 16/9/8.
- * Description:
- * Update by:
- * Update day:
+ * 主页面
  */
 public class HomeActivity extends BaseActivity {
 
@@ -66,6 +65,29 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        LoginInfoBean.RspInfoBean user = (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject(getApplicationContext());
+        if (null != user) {
+            PublicData.getInstance().userID = user.getUsrid();
+            PublicData.getInstance().loginFlag = true;
+            PublicData.getInstance().filenum = user.getFilenum();
+            PublicData.getInstance().getdate = user.getGetdate();
+            PublicData.getInstance().mLoginInfoBean = user;
+            if (UserInfoRememberCtrl.readObject(this, PublicData.getInstance().NOTICE_STATE) != null) {
+                PublicData.getInstance().updateMsg = (boolean) UserInfoRememberCtrl.readObject(getApplicationContext(), PublicData.getInstance().NOTICE_STATE);
+            }
+            if (!Tools.isStrEmpty(AccountRememberCtrl.getDefaultNumber(this))) {
+                PublicData.getInstance().defaultCar = true;
+                PublicData.getInstance().defaultCarNumber = AccountRememberCtrl.getDefaultNumber(getApplicationContext());
+            }
+        }
+        if (Build.VERSION.SDK_INT <= 23) {
+            PublicData.getInstance().imei = Tools.getIMEI(this);
+        }
+
+    }
+
+    @Override
+    public void initData() {
         HomeMvpFragment homeFragment =
                 (HomeMvpFragment) getSupportFragmentManager().findFragmentById(R.id.home_content);
         if (homeFragment == null) {
@@ -74,66 +96,54 @@ public class HomeActivity extends BaseActivity {
             AtyUtils.addFragmentToActivity(
                     getSupportFragmentManager(), homeFragment, R.id.home_content);
         }
-
-    }
-
-    @Override
-    public void initData() {
-        LoginInfoBean.RspInfoBean user = (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject(HomeActivity.this);
-        if (null != user) {
-            PublicData.getInstance().userID = user.getUsrid();
-            PublicData.getInstance().loginFlag = true;
-            PublicData.getInstance().filenum = user.getFilenum();
-            PublicData.getInstance().getdate = user.getGetdate();
-            PublicData.getInstance().mLoginInfoBean = user;
-            if (UserInfoRememberCtrl.readObject(this, PublicData.getInstance().NOTICE_STATE) != null) {
-                PublicData.getInstance().updateMsg = (boolean) UserInfoRememberCtrl.readObject(this, PublicData.getInstance().NOTICE_STATE);
-            }
-            if (!Tools.isStrEmpty(AccountRememberCtrl.getDefaultNumber(this))) {
-                PublicData.getInstance().defaultCar = true;
-                PublicData.getInstance().defaultCarNumber = AccountRememberCtrl.getDefaultNumber(this);
-            }
-        }
-        if (Build.VERSION.SDK_INT <= 23) {
-            PublicData.getInstance().imei = Tools.getIMEI(this);
-        }
-    }
-
-    public View getSweepView() {
-        return mSweep;
     }
 
     @OnClick({R.id.home_addr, R.id.home_sweep})
     @Override
     public void onClick(View v) {
-        super.onClick(v);
         switch (v.getId()) {
             case R.id.home_addr://消息页面
 //                Act.getInstance().lauchIntent(this, AddrActivity.class);
                 MobclickAgent.onEvent(this.getApplicationContext(), Config.getUMengID(24));
                 Act.getInstance().lauchIntentToLogin(this, MegTypeActivity.class);
                 break;
-
             case R.id.home_sweep:
-                PermissionGen.needPermission(this, 100,
-                        new String[]{
-                                Manifest.permission.CAMERA,
-//                                Manifest.permission.RECEIVE_SMS,
-//                                Manifest.permission.WRITE_CONTACTS
-                        }
-                );
+                takeCapture();
+                break;
+            default:
                 break;
         }
     }
 
-    @PermissionSuccess(requestCode = 100)
-    public void doSomething() {
+    /**
+     * 违章单扫描
+     */
+    public void takeCapture() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, PER_REQUEST_CODE,
+                    new String[]{
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE}
+            );
+        } else {
+            Act.getInstance().lauchIntent(this, CaptureActivity.class);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @PermissionSuccess(requestCode = PER_REQUEST_CODE)
+    public void doPermissionSuccess() {
         Act.getInstance().lauchIntent(this, CaptureActivity.class);
     }
 
-    @PermissionFail(requestCode = 100)
-    public void doFailSomething() {
-        ToastUtils.showShort(this, "您已关闭摄像头权限");
+    @PermissionFail(requestCode = PER_REQUEST_CODE)
+    public void doPermissionFail() {
     }
 
     /**

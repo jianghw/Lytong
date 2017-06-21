@@ -166,20 +166,20 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         userInfoRl.setOnClickListener(this);
 
         if (!PublicData.getInstance().loginFlag) {
-            SPUtils.getInstance(SettingActivity.this).setWeizhangPush(false);
-            SPUtils.getInstance(SettingActivity.this).setJifenPush(false);
+            SPUtils.getInstance(getApplicationContext()).setWeizhangPush(false);
+            SPUtils.getInstance(getApplicationContext()).setJifenPush(false);
         }
-        mBreakRulesNotice.setChecked(SPUtils.getInstance(SettingActivity.this).getWeizhangPush());
-        mScoreNotice.setChecked(SPUtils.getInstance(SettingActivity.this).getJifenPush());
+        mBreakRulesNotice.setChecked(SPUtils.getInstance(getApplicationContext()).getWeizhangPush());
+        mScoreNotice.setChecked(SPUtils.getInstance(getApplicationContext()).getJifenPush());
 
         mBreakRulesNotice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (PublicData.getInstance().loginFlag) {
-                    SPUtils.getInstance(SettingActivity.this).setWeizhangPush(isChecked);
+                    SPUtils.getInstance(getApplicationContext()).setWeizhangPush(isChecked);
                     mBreakRulesNotice.setChecked(isChecked);
                     if (!isChecked) {
-                        ToastUtils.showShort(SettingActivity.this, "违章主动通知已关闭");
+                        ToastUtils.showShort(getApplicationContext(), "违章主动通知已关闭");
                     }
                 } else {
                     mBreakRulesNotice.setChecked(false);
@@ -194,15 +194,15 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
 
                 Intent intent = new Intent(SettingActivity.this, DateService.class);
                 if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().userID)) {
-                    SPUtils.getInstance(SettingActivity.this).setJifenPush(isChecked);
+                    SPUtils.getInstance(getApplicationContext()).setJifenPush(isChecked);
                     PublicData.getInstance().updateMsg = isChecked;
                     if (isChecked) {
-                        UserInfoRememberCtrl.saveObject(SettingActivity.this, PublicData.getInstance().NOTICE_STATE, true);//已开启
+                        UserInfoRememberCtrl.saveObject(getApplicationContext(), PublicData.getInstance().NOTICE_STATE, true);//已开启
                         startService(intent);
                     } else {
-                        UserInfoRememberCtrl.saveObject(SettingActivity.this, PublicData.getInstance().NOTICE_STATE, false);//已关闭
+                        UserInfoRememberCtrl.saveObject(getApplicationContext(), PublicData.getInstance().NOTICE_STATE, false);//已关闭
                         stopService(intent);
-                        ToastUtils.showShort(SettingActivity.this, "记分周期提醒已关闭");
+                        ToastUtils.showShort(getApplicationContext(), "记分周期提醒已关闭");
                     }
                 } else {
                     Intent intent2 = new Intent(SettingActivity.this, LoginActivity.class);
@@ -269,9 +269,8 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
             @Override
             public void onClick(View v) {
                 String temp = mSelDate.getText().toString().trim();
-                String[] temps = null;
-                if ("" != temp && temp.contains("-")) {
-                    temps = temp.split("-");
+                if (!TextUtils.isEmpty(temp) && temp.contains("-")) {
+                    String[] temps = temp.split("-");
                     for (String tempStr : temps) {
                         try {
                             if (Integer.parseInt(tempStr) < 10) {

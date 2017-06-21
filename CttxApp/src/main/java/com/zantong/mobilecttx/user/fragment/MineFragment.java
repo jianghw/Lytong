@@ -23,6 +23,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.beta.UpgradeInfo;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -71,6 +73,7 @@ import java.util.concurrent.TimeUnit;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.AppUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
@@ -135,7 +138,21 @@ public class MineFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        updateVersion();
+        UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
+        int appCode = AppUtils.getAppVersionCode();
+        int mVersionCode = appCode;
+        String mVersionName = AppUtils.getAppVersionName();
+        if (upgradeInfo != null) {
+            mVersionCode = upgradeInfo.versionCode;
+            mVersionName = upgradeInfo.versionName;
+        }
+        mTvUpdate.setText(appCode >= mVersionCode
+                ? "当前已为最新版本" : "请更新最新版本v" + mVersionName);
+
+        if (appCode >= mVersionCode) return;
+        Drawable nav_up = getResources().getDrawable(R.mipmap.icon_dot_sel);
+        nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
+        mTvUpdateTitle.setCompoundDrawables(null, null, nav_up, null);
     }
 
     @SuppressLint("SetTextI18n")
@@ -265,7 +282,7 @@ public class MineFragment extends Fragment {
             R.id.mine_tools_part1, R.id.mine_manage_vechilse, R.id.mine_share,
             R.id.mine_manage_weizhang_history, R.id.invite_red_packet, R.id.problem_feedback,
             R.id.about_us, R.id.mine_meg_layout, R.id.mine_ctk_layout,
-            R.id.mine_youhuijian_layout, R.id.about_update,R.id.about_advertising})
+            R.id.mine_youhuijian_layout, R.id.about_update, R.id.about_advertising})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.mine_info_rl:  //用户信息
@@ -329,7 +346,7 @@ public class MineFragment extends Fragment {
                 Act.getInstance().lauchIntentToLogin(getActivity(), CouponActivity.class);
                 break;
             case R.id.about_update://版本更新
-                getAppLatestVerson();
+                Beta.checkUpgrade();
                 break;
             case R.id.about_advertising://用户隐私
                 PublicData.getInstance().webviewUrl = "file:///android_asset/bindcard_agreement.html";

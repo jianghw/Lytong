@@ -14,46 +14,57 @@ import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.bugly.Bugly;
 import com.zantong.mobilecttx.BuildConfig;
 
+import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 
 
 /**
- * Created by Administrator on 2016/5/19.
+ * 启动吧
  */
 public class MyApplication extends MultiDexApplication {
-    public void onCreate(){
+    public void onCreate() {
         super.onCreate();
-//        Stetho.initializeWithDefaults(this);
-        initCloudChannel(this);
-        // 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
-        SDKInitializer.initialize(getApplicationContext());
+
+        initThirdTools();
+    }
+
+    /**
+     * 第三方工具类
+     */
+    private void initThirdTools() {
+//工具类
+        ContextUtils.init(this);
+//图片
         initImageLoader(this);
-        //bugly初始化
-        CrashReport.initCrashReport(
-                getApplicationContext(),
-                BuildConfig.DEBUG ? "b7b596e1eb" : "62323a33e6", BuildConfig.DEBUG);
-        //Log环境初始化
+//推送
+        initCloudChannel(this);
+//百度 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
+        SDKInitializer.initialize(getApplicationContext());
+//bugly初始化
+        Bugly.init(getApplicationContext(),
+                BuildConfig.DEBUG ? "a116e4ea48"
+                        : "3a5bac152d", BuildConfig.DEBUG);
+//Log环境初始化
         LogUtils.initLogUtils(BuildConfig.DEBUG);
     }
 
     /**
      * 初始化加载图片工具类
      *
-     * @param context
-     *            上下文对象
+     * @param context 上下文对象
      */
     private void initImageLoader(Context context) {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                 context).threadPriority(Thread.NORM_PRIORITY - 2)
                 .denyCacheImageMultipleSizesInMemory()
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .diskCacheSize(50*1024*1024)
+                .diskCacheSize(50 * 1024 * 1024)
                 .tasksProcessingOrder(QueueProcessingType.LIFO)
                 .writeDebugLogs()
-                 // Remove for release app
+                // Remove for release app
                 .memoryCache(new LruMemoryCache(4 * 1024 * 1024))
                 .memoryCacheSize(4 * 1024 * 1024).build();
         // Initialize ImageLoader with configuration.
@@ -62,6 +73,7 @@ public class MyApplication extends MultiDexApplication {
 
     /**
      * 初始化云推送通道
+     *
      * @param applicationContext
      */
     private void initCloudChannel(Context applicationContext) {

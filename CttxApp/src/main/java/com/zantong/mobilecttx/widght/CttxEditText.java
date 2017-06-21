@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.R;
 
 /**
- * Created by zhoujie on 2016/10/20.
+ * 办卡输入框样式
  */
 
 public class CttxEditText extends LinearLayout {
@@ -60,15 +60,14 @@ public class CttxEditText extends LinearLayout {
 
         //设置输入类型
         int inputType = typedArray.getInt(R.styleable.CttxEditText_contentinputtype, -1);
-        String inputStr = "";
+
         if (inputType == 0) {//不限制
             mContent.setInputType(InputType.TYPE_CLASS_TEXT);
         } else if (inputType == 1) {//数字
             mContent.setInputType(InputType.TYPE_CLASS_NUMBER);
         } else if (inputType == 2) {//字母或数字
             mContent.setInputType(InputType.TYPE_NUMBER_VARIATION_NORMAL);
-            inputStr = "1234567890qwertyuiopasdfghjklzxcvbnm";
-//            mContent.setKeyListener(DigitsKeyListener.getInstance("1234567890qwertyuiopasdfghjklzxcvbnm"));
+            //            mContent.setKeyListener(DigitsKeyListener.getInstance("1234567890qwertyuiopasdfghjklzxcvbnm"));
         } else if (inputType == 3) {//数字或X（身份证号）
             mContent.setInputType(InputType.TYPE_NUMBER_VARIATION_NORMAL);
 //            mContent.setKeyListener(DigitsKeyListener.getInstance("1234567890Xx"));

@@ -33,7 +33,6 @@ public class Tools {
         }else{
             return true;
         }
-
     }
 
     public static String getYearDate(){
@@ -174,7 +173,7 @@ public class Tools {
 
     public static PackageInfo getPi(Context ctx){
         PackageManager pm = ctx.getPackageManager();
-        PackageInfo pi = null;
+        PackageInfo pi;
         try {
             pi = pm.getPackageInfo(ctx.getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
@@ -196,12 +195,11 @@ public class Tools {
         String type = "application/vnd.android.package-archive";
         intent.setDataAndType(Uri.fromFile(file), type);
         context.startActivity(intent);
-        Log.e("success", "the end");
+
         // 判断apk是否安装过
         PackageInfo pm;
         try {
-            pm = context.getPackageManager()
-                    .getPackageInfo(getAppInfo(context), 0);
+            pm = context.getPackageManager().getPackageInfo(getAppInfo(context), 0);
             Log.i("version", String.valueOf(pm));
         } catch (PackageManager.NameNotFoundException e) {
             // TODO Auto-generated catch block

@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.weizhang.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
@@ -44,22 +45,47 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
     private Context mContext;
     private FragmentManager mFragmentManager;
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void showData(BaseRecyclerViewHolder viewHolder, int position, final ViolationBean data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
-            String date = data.getViolationdate().substring(0, 4) + "-" + data.getViolationdate().substring(4, 6) + "-" +
-                    data.getViolationdate().substring(6, 8);
-            String time = data.getViolationtime().substring(0, 2) + ":" + data.getViolationtime().substring(2, 4);
-            holder.mTm.setText(date + " " + time);
-            holder.mAddr.setText(data.getViolationplace());
-            holder.mReason.setText(data.getViolationinfo());
-            holder.mAmount.setText(StringUtils.getPriceString(data.getViolationamt()) + "元");
-            holder.mCount.setText(data.getViolationcent() + "分");
+            String violationdate = data.getViolationdate();
+            String violationtime = data.getViolationtime();
 
-            if (data.getProcessste() == 0) {
+            if (!TextUtils.isEmpty(violationdate) && violationdate.length() >= 8
+                    && !TextUtils.isEmpty(violationdate) && violationtime.length() >= 4) {
+                String date = violationdate.substring(0, 4)
+                        + "-" +
+                        violationdate.substring(4, 6)
+                        + "-" +
+                        violationdate.substring(6, 8);
+
+                String time = violationtime.substring(0, 2) + ":" + violationtime.substring(2, 4);
+                holder.mTm.setText(date + " " + time);
+            }
+            int processte = data.getProcessste();
+
+            String violationamt = data.getViolationamt();
+            String violationcent = data.getViolationcent();
+
+            String violationplace = data.getViolationplace();
+            String violationinfo = data.getViolationinfo();
+
+            holder.mAddr.setVisibility(processte == 2 || processte == 3 ? View.VISIBLE : View.GONE);
+            holder.mReason.setVisibility(processte == 2 || processte == 3 ? View.VISIBLE : View.GONE);
+            holder.mAddr.setText(violationplace);
+            holder.mReason.setText(violationinfo);
+
+            holder.mAmount.setText(StringUtils.getPriceString(violationamt) + "元");
+            holder.mCount.setText(violationcent + "分");
+
+            if (processte == 0 || processte == 2) {
                 holder.mPay.setVisibility(View.VISIBLE);
                 holder.mFlagImg.setBackgroundResource(R.mipmap.icon_weichuli);
+            } else if (processte == 1 || processte == 3) {
+                holder.mPay.setVisibility(View.GONE);
+                holder.mFlagImg.setBackgroundResource(R.mipmap.icon_yichuli);
             } else {
                 holder.mPay.setVisibility(View.GONE);
                 holder.mFlagImg.setBackgroundResource(R.mipmap.icon_yichuli);
@@ -68,71 +94,91 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
             holder.mPay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //第一步，判断是否登录；第二步，判断是否是处罚决定书；第三步，判断是否绑卡；第四步，获取绑定车辆数量，判断是否为2辆；
-                    // 第五步，判断是否为绑定车厢；第六步，判断交易代码8400接口是否成功
-                    String bitNumber = data.getViolationnum();
-                    if (!PublicData.getInstance().loginFlag) {
-                        Act.getInstance().gotoIntent(mContext, LoginActivity.class);
-                    } else {
-                        ((ViolationResultAcitvity) mContext).setPayFragment(data);
-                        if ("1".equals(bitNumber) || "2".equals(bitNumber)) {//是否处罚决定书
-
-                            mFragmentManager.beginTransaction()
-                                    .setCustomAnimations(R.anim.down_to_up, R.anim.left_to_right)
-                                    .replace(((ViolationResultAcitvity) mContext).getPayLayoutId(), ((ViolationResultAcitvity) mContext).getPayFragment()).commit();
-                            //直接去缴费
-                        } else {
-                            if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {//未綁卡
-                                MobclickAgent.onEvent(mContext, Config.getUMengID(11));
-//                                mContext, "","暂未绑卡", new On
-                                DialogUtils.remindDialog(mContext, "温馨提示", "您还未绑卡，暂时无法进行缴费", "取消", "立即绑卡",
-                                        new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-
-                                            }
-                                        },
-                                        new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                Act.getInstance().gotoIntent(mContext, CardHomeActivity.class);
-                                            }
-                                        });
-                            } else {
-                                LogoutDTO dto = new LogoutDTO();
-                                dto.setUsrid(PublicData.getInstance().userID);
-                                UserApiClient.getPayCars(mContext, dto, new CallBack<PayCarResult>() {
-                                    @Override
-                                    public void onSuccess(PayCarResult result) {
-                                        EventBus.getDefault().post(
-                                                new UpdateCarInfoEvent(true));
-                                        List<PayCar> list = result.getRspInfo().getUserCarsInfo();
-                                        if (list.size() <= 2) {
-                                            mFragmentManager.beginTransaction()
-                                                    .setCustomAnimations(R.anim.down_to_up, R.anim.left_to_right)
-                                                    .replace(((ViolationResultAcitvity) mContext).getPayLayoutId(), ((ViolationResultAcitvity) mContext).getPayFragment()).commit();
-                                        } else if (list.size() == 2) {
-                                            for (PayCar car : list) {
-                                                if (car.getCarnum().equals(data.getCarnum())) {
-                                                    mFragmentManager.beginTransaction()
-                                                            .setCustomAnimations(R.anim.down_to_up, R.anim.left_to_right)
-                                                            .replace(((ViolationResultAcitvity) mContext).getPayLayoutId(), ((ViolationResultAcitvity) mContext).getPayFragment()).commit();
-                                                } else {
-                                                    ToastUtils.showShort(mContext, "当前车辆为非绑定车辆，可去车辆管理进行改绑");
-                                                }
-                                            }
-                                        }
-                                    }
-                                });
-
-                            }
-                        }
-                    }
-
-
+                    onPayClick(data);
                 }
             });
         }
+    }
+
+    private void onPayClick(final ViolationBean data) {
+        //第一步，判断是否登录；第二步，判断是否是处罚决定书；第三步，判断是否绑卡；第四步，获取绑定车辆数量，判断是否为2辆；
+        // 第五步，判断是否为绑定车厢；第六步，判断交易代码8400接口是否成功
+        String bitNumber = data.getViolationnum();
+        int processte = data.getProcessste();
+
+        if (!PublicData.getInstance().loginFlag) {
+            Act.getInstance().gotoIntent(mContext, LoginActivity.class);
+        } else if (processte == 2 || processte == 3) {
+            ((ViolationResultAcitvity) mContext).showDialogToCodequery();
+        } else {
+            ((ViolationResultAcitvity) mContext).setPayFragment(data);
+            if ("1".equals(bitNumber) || "2".equals(bitNumber)) {//是否处罚决定书
+
+                mFragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.down_to_up, R.anim.left_to_right)
+                        .replace(((ViolationResultAcitvity) mContext).getPayLayoutId(), ((ViolationResultAcitvity) mContext).getPayFragment()).commit();
+                //直接去缴费
+            } else {
+                if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {//未綁卡
+                    byCardHome();
+                } else {
+                    hasCarCard(data);
+                }
+            }
+        }
+    }
+
+    /**
+     * 已经绑定卡后的操作
+     */
+    private void hasCarCard(final ViolationBean data) {
+        LogoutDTO dto = new LogoutDTO();
+        dto.setUsrid(PublicData.getInstance().userID);
+        UserApiClient.getPayCars(mContext, dto, new CallBack<PayCarResult>() {
+            @Override
+            public void onSuccess(PayCarResult result) {
+                EventBus.getDefault().post(new UpdateCarInfoEvent(true));
+                List<PayCar> list = result.getRspInfo().getUserCarsInfo();
+                if (list.size() <= 2) {
+                    mFragmentManager.beginTransaction()
+                            .setCustomAnimations(R.anim.down_to_up, R.anim.left_to_right)
+                            .replace(((ViolationResultAcitvity) mContext).getPayLayoutId(), ((ViolationResultAcitvity) mContext).getPayFragment())
+                            .commit();
+                } else if (list.size() == 2) {
+                    for (PayCar car : list) {
+                        if (car.getCarnum().equals(data.getCarnum())) {
+                            mFragmentManager.beginTransaction()
+                                    .setCustomAnimations(R.anim.down_to_up, R.anim.left_to_right)
+                                    .replace(((ViolationResultAcitvity) mContext).getPayLayoutId(), ((ViolationResultAcitvity) mContext).getPayFragment())
+                                    .commit();
+                            break;
+                        } else {
+                            ToastUtils.showShort(mContext, "当前车辆为非绑定车辆，可去车辆管理进行改绑");
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * 去绑卡页面
+     */
+    private void byCardHome() {
+        MobclickAgent.onEvent(mContext, Config.getUMengID(11));
+        DialogUtils.remindDialog(mContext, "温馨提示", "您还未绑卡，暂时无法进行缴费", "取消", "立即绑卡",
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                },
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Act.getInstance().lauchIntentToLogin(mContext, CardHomeActivity.class);
+                    }
+                });
     }
 
     @Override

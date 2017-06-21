@@ -1,17 +1,14 @@
 package com.zantong.mobilecttx.card.activity;
 
 import android.content.Intent;
-import android.os.Environment;
 import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
@@ -30,7 +27,6 @@ import com.zantong.mobilecttx.card.dto.QuickApplyCardDTO;
 import com.zantong.mobilecttx.card.dto.YingXiaoDataDTO;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.map.bean.NetLocationBean;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
@@ -48,11 +44,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.DatePicker;
+import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -64,7 +60,8 @@ import rx.schedulers.Schedulers;
 /**
  * 快捷办卡
  */
-public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements HandleCTCardApiClient.ResultInterface {
+public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
+        implements HandleCTCardApiClient.ResultInterface {
 
     @Bind(R.id.applycard_qucik_idcard_num)
     CttxTextView mIdCardNum;
@@ -101,29 +98,42 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
     TextView mNormalHint;
 
 
-    private QuickApplyCardDTO quickApplyCardDTO; //快捷
-
-    private InputStream is;
-    private FileOutputStream fos;
-
+    private QuickApplyCardDTO quickApplyCardDTO = new QuickApplyCardDTO();
     private String wangdianAdress;//网点地址
     private String mEmpNum;//获取的营销代码
 
     @Override
-    public void initView() {
-        Intent intent = getIntent();
-        String idCard = intent.getStringExtra("idCard");
-        mIdCardNum.setContentText(idCard);
+    public HelpPresenter initPresenter() {
+        return new HelpPresenter();
     }
 
     @Override
-    public void initData() {
-        quickApplyCardDTO = new QuickApplyCardDTO();
-        setTitleText("申办畅通卡");
+    protected int getContentResId() {
+        return R.layout.activity_applycard_quick;
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PublicData.getInstance().filenum = "";
+    }
+
+    @Override
+    public void initView() {
+        setTitleText("快捷申办畅通卡");
         mNormalHint.setText(Html.fromHtml(getResources().getString(R.string.apply_four_hint)));
 
         getYingXiaoCode();
         downloadTxt();
+    }
+
+    @Override
+    public void initData() {
+        Intent intent = getIntent();
+        String idCard = intent.getStringExtra("idCard");
+        mIdCardNum.setContentText(idCard);
+
         quickApplyCardDTO.setCtftp("0");
         quickApplyCardDTO.setUsrname(getIntent().getStringExtra("name"));
         quickApplyCardDTO.setUsrid(SPUtils.getInstance(this).getLoginInfoBean().getUsrid());
@@ -134,6 +144,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
         quickApplyCardDTO.setActnotf("0");//默认不开启自动还款
         quickApplyCardDTO.setElecbillsign("0");
         quickApplyCardDTO.setAutcrepymtmth("0");//9
+
         mDuiZhangTiXing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -154,23 +165,6 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 }
             }
         });
-    }
-
-    @Override
-    public HelpPresenter initPresenter() {
-        return new HelpPresenter();
-    }
-
-    @Override
-    protected int getContentResId() {
-        return R.layout.activity_applycard_quick;
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        PublicData.getInstance().filenum = "";
     }
 
     @OnClick({R.id.applycard_qucik_idcard_layout1, R.id.applycard_qucik_idcard_layout2,
@@ -224,89 +218,6 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
         }
     }
 
-    public void downloadTxt() {
-        Retrofit2Utils retrofit2Utils = new Retrofit2Utils();
-        final FileDownloadApi api = retrofit2Utils.getRetrofitHttps(BuildConfig.APP_URL).create(FileDownloadApi.class);
-        Observable.create(new Observable.OnSubscribe<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-
-                try {
-                    Response<ResponseBody> response = api.downloadFileWithFixedUrl("download/icbcorg.txt").execute();
-                    try {
-
-                        if (response != null && response.isSuccessful()) {
-                            //文件总长度
-                            long fileSize = response.body().contentLength();
-                            long fileSizeDownloaded = 0;
-                            is = response.body().byteStream();
-                            File file = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "networktable.txt");
-                            if (file.exists()) {
-                                file.delete();
-                            } else {
-                                file.createNewFile();
-                            }
-                            fos = new FileOutputStream(file);
-                            int count = 0;
-                            byte[] buffer = new byte[1024];
-                            while ((count = is.read(buffer)) != -1) {
-                                fos.write(buffer, 0, count);
-                                fileSizeDownloaded += count;
-                                subscriber.onNext("file download: " + fileSizeDownloaded + " of " + fileSize);
-                            }
-                            fos.flush();
-                            subscriber.onCompleted();
-                        } else {
-                            subscriber.onError(new Exception("接口请求异常"));
-                        }
-                    } catch (Exception e) {
-                        subscriber.onError(e);
-                    } finally {
-                        if (is != null) {
-                            try {
-                                is.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        if (fos != null) {
-                            try {
-                                fos.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                } catch (IOException e) {
-                    Log.e("why", e.toString());
-                    e.printStackTrace();
-                }
-            }
-        }).subscribeOn(Schedulers.io())
-                .sample(1, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<String>() {
-                    @Override
-                    public void onCompleted() {
-                        LogUtils.i("文件下载完成");
-                        NetLocationBean bean = ReadFfile.readNetLocationFile(getApplicationContext());
-//                        PublicData.getInstance().mNetLocationBean.setNetLocationlist(bean.getNetLocationlist());
-                        PublicData.getInstance().mNetLocationBean = bean;
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onNext(String s) {
-                        Log.d("MainActivity", s);
-                    }
-                });
-    }
-
-
     /**
      * 检测数据
      */
@@ -341,20 +252,29 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
         commitInfo();
     }
 
+    /**
+     * 提交办卡信息
+     */
+    private void commitInfo() {
+        showDialogLoading();
+        HandleCTCardApiClient.htmlLocal(this, "cip.cfc.u010.01", quickApplyCardDTO, this);
+    }
+
     @Override
     public void resultSuccess(Result result) {
         hideDialogLoading();
         if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
             commitYingXiaoDataForLYT();
-            checkCtkDate();
             startActivity(ApplySuccessActvity.getIntent(this, wangdianAdress));
+        }else{
+            ToastUtils.showShort(getApplicationContext(),result.getSYS_HEAD().getReturnMessage());
         }
     }
 
     @Override
     public void resultError(String msg) {
         hideDialogLoading();
-        Toast.makeText(ApplyCardQuickActivity.this, Config.getErrMsg("1"), Toast.LENGTH_SHORT).show();
+        ToastUtils.showShort(getApplicationContext(), Config.getErrMsg("1"));
     }
 
     /**
@@ -379,18 +299,9 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
     }
 
     /**
-     * 提交办卡信息
-     */
-    private void commitInfo() {
-        showDialogLoading();
-        HandleCTCardApiClient.htmlLocal(this, "cip.cfc.u010.01", quickApplyCardDTO, this);
-    }
-
-    /**
      * 办卡申请成功后，提交营销代码
      */
     private void commitYingXiaoDataForLYT() {
-
         YingXiaoDataDTO dto = new YingXiaoDataDTO();
         dto.setUsrnum(RSAUtils.strByEncryption(this, PublicData.getInstance().userID, true));
         if (TextUtils.isEmpty(mYingXiaoCode.getContentText())) {
@@ -410,6 +321,76 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
     }
 
     /**
+     * 下载文件txt
+     */
+    public void downloadTxt() {
+        Observable
+                .create(new Observable.OnSubscribe<String>() {
+                    @Override
+                    public void call(Subscriber<? super String> subscriber) {
+                        downloadFile(subscriber);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+//                .sample(1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+                        PublicData.getInstance().mNetLocationBean
+                                = ReadFfile.readNetLocationFile(getApplicationContext());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        LogUtils.e(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                    }
+                });
+    }
+
+    private void downloadFile(Subscriber<? super String> subscriber) {
+        FileDownloadApi api = new Retrofit2Utils().getRetrofitHttps(BuildConfig.APP_URL).create(FileDownloadApi.class);
+        Response<ResponseBody> response = null;
+        try {
+            response = api.downloadFileWithFixedUrl("download/icbcorg.txt").execute();
+        } catch (IOException e) {
+            subscriber.onError(e);
+        }
+
+        if (response != null && response.isSuccessful()) {
+            InputStream inputStream = response.body().byteStream();
+            String filePath = FileUtils.icbTxtFilePath(getApplicationContext(), FileUtils.DOWNLOAD_DIR);
+            File txtFile = new File(filePath);
+            FileOutputStream fileOutputStream = null;
+            try {
+                fileOutputStream = new FileOutputStream(txtFile);
+                int count;
+                byte[] buffer = new byte[1024 * 8];
+                while ((count = inputStream.read(buffer)) != -1) {
+                    fileOutputStream.write(buffer, 0, count);
+                }
+                fileOutputStream.flush();
+                subscriber.onCompleted();
+            } catch (IOException e) {
+                subscriber.onError(e);
+            } finally {
+                try {
+                    inputStream.close();
+                    if (fileOutputStream != null) fileOutputStream.close();
+                } catch (IOException e) {
+                    subscriber.onError(e);
+                }
+            }
+        } else {
+            subscriber.onError(new Exception("银行网点接口请求异常,请退出页面稍后重试"));
+        }
+    }
+
+    /**
      * 得到营销代码
      */
     private void getYingXiaoCode() {
@@ -417,31 +398,31 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
         CarApiClient.getYingXiaoCode(this, dto, new CallBack<YingXiaoResult>() {
             @Override
             public void onSuccess(YingXiaoResult result) {
-                if (result.getResponseCode() == 2000) {
+                if (result.getResponseCode() == 2000 && result.getData() != null) {
                     mEmpNum = result.getData().getEmpNum();
+                    //TODO 手动不显示
 //                    mYingXiaoCode.setContentText(mEmpNum);
-                    quickApplyCardDTO.setDscode(result.getData().getEmpNum());
-                    quickApplyCardDTO.setDscodegs(result.getData().getEmpNum());
+
+                    quickApplyCardDTO.setDscode(mEmpNum);
+                    quickApplyCardDTO.setDscodegs(mEmpNum);
                 }
             }
 
             @Override
             public void onError(String errorCode, String msg) {
-                super.onError(errorCode, msg);
             }
         });
     }
 
-    private DatePicker picker;
 
     /**
      * 选择时间
      * 1.身份证有效期
      */
     private void chooseDate() {
-        picker = new DatePicker(ApplyCardQuickActivity.this);
-        String temp = "";
-        temp = mIdCardLayout2.getRightText();
+        DatePicker picker = new DatePicker(ApplyCardQuickActivity.this);
+
+        String temp = mIdCardLayout2.getRightText();
         picker.setRangeEnd(DateUtils.getYear() + 70, DateUtils.getMonth(), DateUtils.getDay());
         picker.setRangeStart(DateUtils.getYear(), DateUtils.getMonth(), DateUtils.getDay());
         if (temp.contains("请输入")) {
@@ -451,7 +432,10 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
             String date = temp;
             if (!"".equals(date)) {
                 date = date.replace("-", "");
-                picker.setSelectedItem(Integer.valueOf(date.substring(0, 4)), Integer.valueOf(date.substring(4, 6)), Integer.valueOf(date.substring(6, 8)));
+                picker.setSelectedItem(
+                        Integer.valueOf(date.substring(0, 4)),
+                        Integer.valueOf(date.substring(4, 6)),
+                        Integer.valueOf(date.substring(6, 8)));
             } else {
                 picker.setSelectedItem(DateUtils.getYear(), DateUtils.getMonth(), DateUtils.getDay());
             }

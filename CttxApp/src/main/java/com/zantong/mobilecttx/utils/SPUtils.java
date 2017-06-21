@@ -107,16 +107,14 @@ public class SPUtils {
      */
     public List<CarInfoDTO> getCarsInfo() {
         if (carsinfo == null) {
-            carsinfo = new ArrayList<CarInfoDTO>();
+            carsinfo = new ArrayList<>();
             // 获取序列化的数据
             String str = this.sp.getString(CARSINFO, "");
-
             try {
                 Object obj = SerializableUtils.str2Obj(str);
                 if (obj != null) {
                     carsinfo = (List<CarInfoDTO>) obj;
                 }
-
             } catch (StreamCorruptedException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -330,7 +328,7 @@ public class SPUtils {
         this.editor.commit();
     }
 
-    public LoginInfoBean.RspInfoBean getLoginInfoBean(){
+    public LoginInfoBean.RspInfoBean getLoginInfoBean() {
 
         LoginInfoBean.RspInfoBean mLoginInfoBean = null;
         // 获取序列化的数据

@@ -4,15 +4,12 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +24,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.alicloudpush.PushBean;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
-import com.zantong.mobilecttx.api.FileDownloadApi;
 import com.zantong.mobilecttx.api.UserApiClient;
-import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
 import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.fragment.BaseFragment;
@@ -61,7 +56,6 @@ import com.zantong.mobilecttx.home.dto.VersionDTO;
 import com.zantong.mobilecttx.huodong.activity.HundredPlanActivity;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResult;
 import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
-import com.zantong.mobilecttx.map.activity.BaiduMapActivity;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.user.activity.MineActivity;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
@@ -106,18 +100,23 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
+import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
 import rx.schedulers.Schedulers;
+
+import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 首页
@@ -129,13 +128,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
 
     private static final String SHOWCASE_ID = "cttx_homefragment";
     private boolean signStatus;//获取报名状态是否成功
-    public boolean isCanBack = true;
 
-    InputStream is;
-    FileOutputStream fos;
-    private final String apkUrl = Environment.getExternalStorageDirectory().getPath() + File.separator + "app_newkey_release_1_3.apk";
-
-    private int onClickRes = 0;
     long currentTm = -1;//當前网络时间
 
     private TextView mHomeFailRefresh;
@@ -165,6 +158,10 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
     private TextView mHomeBottomFailRefresh;
     private HeaderViewPager mHomeHeaderview;
     private FrameLayout mHomeBottomLayout;
+    /**
+     * apk 下载地址
+     */
+    private String mApkAddress;
 
     public static HomeMvpFragment newInstance() {
         return new HomeMvpFragment();
@@ -479,7 +476,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
         //利盈通数据
         getHomeData();
         //版本更新
-        initAppLatestVersion();
+//        initAppLatestVersion();
     }
 
     /**
@@ -494,7 +491,6 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                 if (result.getData() != null) {
                     int versionFlag = Tools.compareVersion(Tools.getVerName(getActivity()), result.getData().getVersion());
                     if (versionFlag == -1) {
-                        isCanBack = false;
                         showUpdateDialog(result);
                     }
                 }
@@ -511,7 +507,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {//暂不升级
-                        if (result.getData().getIsUpdate() == 1) {
+                        if (result.getData().getIsUpdate() == 1) {//强制更新
                             AppManager.getAppManager().AppExit(getActivity(), false);
                         }
                     }
@@ -519,15 +515,8 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        isCanBack = true;
-                        //检查权限
-                        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                            //如果没有授权，则请求授权
-                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                        } else {
-                            downloadDemo(result.getData().getAddress());
-                        }
-
+                        mApkAddress = result.getData().getAddress();
+                        downloadApk();
                     }
                 });
     }
@@ -635,13 +624,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                 break;
             case R.id.home_daijia://代驾
                 MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(7));
-
-                if (PublicData.getInstance().loginFlag) {
-                    onClickRes = 1;
-                    showContacts();
-                } else {
-                    Act.getInstance().gotoIntent(this.getActivity(), LoginActivity.class);
-                }
+                enterDrivingActivity();
                 break;
             case R.id.home_mine://我的
                 MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(9));
@@ -672,6 +655,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
     /**
      * 获取同赞利盈首页数据
      */
+
     private void getHomeData() {
         HomeDataDTO params = new HomeDataDTO();
         String userId = RSAUtils.strByEncryptionLiYing(getActivity(), PublicData.getInstance().userID, true);
@@ -801,112 +785,6 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
         return listHomeNotice;
     }
 
-    public void downloadDemo(final String url) {
-        final ProgressDialog progressBar = new ProgressDialog(getActivity());
-
-        Retrofit2Utils retrofit2Utils = new Retrofit2Utils();
-        final FileDownloadApi api = retrofit2Utils.getRetrofitHttps("http://192.9.210.176:8080/").create(FileDownloadApi.class);
-        Observable.create(new Observable.OnSubscribe<Long[]>() {
-            @Override
-            public void call(Subscriber<? super Long[]> subscriber) {
-                try {
-//                    String urls = "http://7b1g8u.com1.z0.glb.clouddn.com/app_newkey_release_8_4.apk";
-                    Response<ResponseBody> response = api.downloadFileWithFixedUrl(url).execute();
-                    try {
-                        if (response != null && response.isSuccessful()) {
-                            //文件总长度
-                            long fileSize = response.body().contentLength();
-                            long fileSizeDownloaded = 0;
-                            is = response.body().byteStream();
-                            File file = new File(apkUrl);
-                            if (file.exists()) {
-                                file.delete();
-                            } else {
-                                file.createNewFile();
-                            }
-                            fos = new FileOutputStream(file);
-                            int count = 0;
-                            byte[] buffer = new byte[1024];
-                            while ((count = is.read(buffer)) != -1) {
-                                fos.write(buffer, 0, count);
-                                fileSizeDownloaded += count;
-                                Long[] data = new Long[2];
-                                data[0] = fileSizeDownloaded;
-                                data[1] = fileSize;
-                                subscriber.onNext(data);
-                            }
-                            fos.flush();
-                            subscriber.onCompleted();
-                        } else {
-                            subscriber.onError(new Exception("接口请求异常"));
-                        }
-                    } catch (Exception e) {
-                        subscriber.onError(e);
-                    } finally {
-                        if (is != null) {
-                            try {
-                                is.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        if (fos != null) {
-                            try {
-                                fos.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                } catch (IOException e) {
-                    Log.e("why", e.toString());
-                    e.printStackTrace();
-                }
-            }
-        })
-                .subscribeOn(Schedulers.io())
-                .sample(1, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Long[]>() {
-                    @Override
-                    public void onCompleted() {
-                        Log.d("MainActivity", "文件下载完成");
-//                        PublicData.getInstance().mNetLocationBean = bean;apkUrl
-                        Tools.installApk(getActivity(), apkUrl);
-                        progressBar.dismiss();
-                        AppManager.getAppManager().AppExit(getActivity(), false);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtils.showShort(getActivity(), "网络错误，请重试");
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onNext(Long[] data) {
-                        Log.d("MainActivity", data[0] + "");
-                        progressBar.setCancelable(true);
-                        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                        int demo = (int) (data[0] * 100 / data[1]);
-                        progressBar.setProgress(demo);
-                        progressBar.setMax(100);
-                        progressBar.setCanceledOnTouchOutside(false);
-                        progressBar.setOnKeyListener(new DialogInterface.OnKeyListener() {
-                            @Override
-                            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                                    return true;
-                                }
-                                return false;
-                            }
-                        });
-                        progressBar.show();
-
-                    }
-                });
-    }
-
     /**
      * @return
      */
@@ -929,24 +807,29 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
     }
 
     private void liyingreg() {
+        LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
         try {
-            String phone = RSAUtils.strByEncryptionLiYing(this.getActivity(), PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
+            String phone = RSAUtils.strByEncryptionLiYing(
+                    getActivity().getApplicationContext(), PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
             SHATools sha = new SHATools();
-            String pwd = RSAUtils.strByEncryptionLiYing(this.getActivity(),
-                    SHATools.hexString(sha.eccryptSHA1(SPUtils.getInstance(getActivity()).getUserPwd())), true);
-            LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
+            String pwd = RSAUtils.strByEncryptionLiYing(
+                    getActivity().getApplicationContext(),
+                    SHATools.hexString(
+                            sha.eccryptSHA1(SPUtils.getInstance(getActivity()).getUserPwd())), true);
             liYingRegDTO.setPhoenum(phone);
             liYingRegDTO.setPswd(pwd);
-            liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(this.getActivity(), PublicData.getInstance().mLoginInfoBean.getUsrid(), true));
-            CarApiClient.liYingReg(this.getActivity(), liYingRegDTO, new CallBack<BaseResult>() {
-                @Override
-                public void onSuccess(BaseResult result) {
-
-                }
-            });
+            liYingRegDTO.setUsrid(
+                    RSAUtils.strByEncryptionLiYing(
+                            getActivity().getApplicationContext(), PublicData.getInstance().mLoginInfoBean.getUsrid(), true));
         } catch (Exception e) {
             e.printStackTrace();
         }
+        CarApiClient.liYingReg(this.getActivity(), liYingRegDTO, new CallBack<BaseResult>() {
+            @Override
+            public void onSuccess(BaseResult result) {
+
+            }
+        });
     }
 
     /**
@@ -1006,30 +889,169 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
         });
     }
 
-    public void showContacts() {
-        PermissionGen.needPermission(this, 100,
-                new String[]{
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_PHONE_STATE
-                }
-        );
+    /**
+     * 下载安装apk
+     */
+    public void downloadApk() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, 2000, new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE});
+        } else {
+            downloadApkByUrl();
+        }
     }
 
-    @PermissionSuccess(requestCode = 100)
-    public void doSomething() {
-        if (onClickRes == 0) {
-            Act.getInstance().gotoIntent(this.getActivity(), BaiduMapActivity.class);
-        } else if (onClickRes == 1) {
-            Act.getInstance().gotoIntent(this.getActivity(), DrivingActivity.class);
+    /**
+     * 文件下载
+     */
+    public void downloadApkByUrl() {
+        final ProgressDialog progressBar = new ProgressDialog(getActivity());
+        Observable
+                .create(new Observable.OnSubscribe<Long[]>() {
+                    @Override
+                    public void call(Subscriber<? super Long[]> subscriber) {
+                        downApkFile(subscriber);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        progressBar.setCancelable(true);
+                        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                        progressBar.setMax(100);
+                        progressBar.setCanceledOnTouchOutside(false);
+                        progressBar.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                            @Override
+                            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                                return keyCode == KeyEvent.KEYCODE_BACK;
+                            }
+                        });
+                        progressBar.show();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+//                .sample(1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Long[]>() {
+                    @Override
+                    public void onCompleted() {
+                        String apkPath = FileUtils.downApkFilePath(getActivity().getApplicationContext(), FileUtils.DOWNLOAD_DIR, "12345.apk");
+                        Tools.installApk(getActivity(), apkPath);
+                        if (progressBar.isShowing()) progressBar.dismiss();
+                        AppManager.getAppManager().AppExit(getActivity(), false);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (progressBar.isShowing()) progressBar.dismiss();
+                        ToastUtils.showShort(getActivity().getApplicationContext(), e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(Long[] data) {
+                        int demo = (int) (data[0] * 100 / data[1]);
+                        progressBar.setProgress(demo);
+                    }
+                });
+    }
+
+    private void downApkFile(Subscriber<? super Long[]> subscriber) {
+        if (TextUtils.isEmpty(mApkAddress)) {
+            subscriber.onError(new Exception("apk下载地址为空，请稍后重试~"));
+        }
+        Request request = new Request.Builder().url(mApkAddress).build();
+
+//        FileDownloadApi api = new Retrofit2Utils().getRetrofit("http://imtt.dd.qq.com/").create(FileDownloadApi.class);
+        Response<ResponseBody> response = null;
+        okhttp3.Response execute=null;
+        try {
+             execute = new OkHttpClient().newCall(request).execute();
+//            response = api.downloadFileWithFixedUrl(mApkAddress).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+        if (execute != null && execute.isSuccessful()) {
+//            long fileSize = response.body().contentLength();
+            long fileSize = execute.body().contentLength();
+            long fileSizeDownloaded = 0;
+            InputStream inputStream = execute.body().byteStream();
+
+            String filePath = FileUtils.downApkFilePath(getActivity().getApplicationContext(), FileUtils.DOWNLOAD_DIR, "12345.apk");
+            File apkFile = new File(filePath);
+            FileOutputStream fileOutputStream = null;
+
+            try {
+                fileOutputStream = new FileOutputStream(apkFile);
+                int count;
+                byte[] buffer = new byte[1024 * 8];
+                while ((count = inputStream.read(buffer)) != -1) {
+                    fileOutputStream.write(buffer, 0, count);
+                    fileSizeDownloaded += count;
+                    Long[] data = new Long[2];
+                    data[0] = fileSizeDownloaded;
+                    data[1] = fileSize;
+                    subscriber.onNext(data);
+                }
+                fileOutputStream.flush();
+                subscriber.onCompleted();
+            } catch (IOException e) {
+                subscriber.onError(e);
+            } finally {
+                try {
+                    inputStream.close();
+                    if (fileOutputStream != null) fileOutputStream.close();
+                } catch (IOException e) {
+                    subscriber.onError(e);
+                }
+            }
+        } else {
+            subscriber.onError(new Exception("下载失败，请稍后重试~"));
+        }
     }
 
-    @PermissionFail(requestCode = 100)
-    public void doFailSomething() {
-        ToastUtils.showShort(this.getActivity(), "您已关闭定位权限");
+    /**
+     * 进入代驾页面
+     */
+    public void enterDrivingActivity() {
+        if (!PublicData.getInstance().loginFlag) {
+            Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, PER_REQUEST_CODE, new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE});
+        } else {
+            Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @PermissionSuccess(requestCode = PER_REQUEST_CODE)
+    public void doDrivingSuccess() {
+//            Act.getInstance().gotoIntent(this.getActivity(), BaiduMapActivity.class);
+        Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+    }
+
+    @PermissionFail(requestCode = PER_REQUEST_CODE)
+    public void doDrivingFail() {
+        ToastUtils.showShort(getActivity().getApplicationContext(), "您已关闭定位权限");
+    }
+
+    @PermissionSuccess(requestCode = 2000)
+    public void doPermissionSuccess() {
+        downloadApkByUrl();
+    }
+
+    @PermissionFail(requestCode = 2000)
+    public void doPermissionFail() {
     }
 
     Runnable networkTask = new Runnable() {
@@ -1074,6 +1096,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
         if (mHomeHeaderview != null) mHomeHeaderview.close();
         if (!mList.isEmpty()) mList.clear();
         if (!mFragmentList.isEmpty()) mFragmentList.clear();
+
         EventBus.getDefault().removeStickyEvent(AddPushTrumpetEvent.class);
         EventBus.getDefault().removeStickyEvent(GetMsgAgainEvent.class);
         EventBus.getDefault().removeStickyEvent(UpdateCarInfoEvent.class);

@@ -52,7 +52,7 @@ public class BaseCallBack<T> implements Callback {
                 if (!TextUtils.isEmpty(reader)) {
                     T t = gson.fromJson(reader, clazz);
                     BaseResult result = (BaseResult) t;
-                    LogUtils.i("returncode===" + result.getResponseCode());
+
                     sendErrorMsg(context, tag, result);
                     callback.sendSuccessMessage(t);
                 } else {
@@ -97,7 +97,6 @@ public class BaseCallBack<T> implements Callback {
             String returnStatus = String.valueOf(result.getResponseCode());
             try {
                 status = returnStatus;
-                LogUtils.i("ErrorMsgCode:"+status);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -106,9 +105,7 @@ public class BaseCallBack<T> implements Callback {
                 String errMsg = result.getResponseDesc();
                 msg = TextUtils.isEmpty(errMsg) ? msg : errMsg;
                 LogUtils.i("status:" + status + ",Msg:" + msg);
-                EventBus.getDefault().post(
-                        new ErrorEvent(status,
-                                msg, tag, context));
+                EventBus.getDefault().post(new ErrorEvent(status, msg, tag, context));
             }
         } else {
             EventBus.getDefault().post(

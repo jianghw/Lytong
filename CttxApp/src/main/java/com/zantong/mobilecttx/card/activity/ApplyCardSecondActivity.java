@@ -34,6 +34,7 @@ import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;
 import com.zantong.mobilecttx.utils.ChineseToPinYin;
 import com.zantong.mobilecttx.utils.DateUtils;
+import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.ReadFfile;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
@@ -60,6 +61,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.util.FileUtils;
+import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -87,15 +89,11 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
 
     @Bind(R.id.applycard_normal_idcard_num)
     CttxEditText mIdCardNum;
-    @Bind(R.id.applycard_normal_detail_addr)
-    CttxEditText mDetailAddr;
-    @Bind(R.id.applycard_normal_tel)
-    CttxEditText mTel;
-
     @Bind(R.id.applycard_normal_income)
     CttxEditText mIncome;
     @Bind(R.id.applycard_normal_company_name)
     CttxEditText mCompanyName;
+
     @Bind(R.id.applycard_normal_department_name)
     CttxEditText mDepartName;
     @Bind(R.id.applycard_normal_compay_detailaddr)
@@ -104,23 +102,24 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     CttxEditText mZipCode;
     @Bind(R.id.applycard_normal_compay_tel)
     CttxEditText mCompanyTel;
-
     @Bind(R.id.applycard_normal_contact_name)
     CttxEditText mContactName;
     @Bind(R.id.applycard_normal_contact_mobile)
     CttxEditText mContactMobile;
+
     @Bind(R.id.applycard_normal_zhuanchukahao)
     CttxEditText mZhuanChuKaHao;
     @Bind(R.id.applycard_normal_email)
     CttxEditText mEmail;
     @Bind(R.id.applycard_normal_yingxiaocode)
     CttxEditText mYingXiaoCode;
-
-
+    @Bind(R.id.user_phone)
+    CttxEditText mUserPhone;
     @Bind(R.id.applycard_normal_idcard_layout1)
     View mIdCardLayout1;
     @Bind(R.id.applycard_normal_idcard_flag)
     ImageView mIdCardForeverImg;
+
     @Bind(R.id.applycard_normal_idcard_layout2)
     SettingItemView mIdCardLayout2;
     //婚姻状况
@@ -130,8 +129,13 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     SettingItemView mEducationStatus;
     @Bind(R.id.applycard_normal_house_status)
     SettingItemView mHouseStatus;
+    //住宅区域
     @Bind(R.id.applycard_normal_addr)
     SettingItemView mAddr;
+    @Bind(R.id.applycard_normal_detail_addr)
+    CttxEditText mDetailAddr;
+    @Bind(R.id.applycard_normal_tel)
+    CttxEditText mTel;
 
     @Bind(R.id.applycard_normal_ziyou_img)
     ImageView mZiyouImg;
@@ -202,6 +206,13 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
 
         getYingXiaoCode();
         downloadTxt();
+
+        mFileNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DialogMgr(ApplyCardSecondActivity.this, R.mipmap.code_query_notice_iamge);
+            }
+        });
     }
 
     @Override
@@ -245,8 +256,12 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         }
         mUserGender.setRightText(applyCTCardDTO.getGnd().equals("1") ? "男" : "女");
 //身份证
+        initIDNumber();
+
         mIdCardNum.setContentText(idCard);
         applyCTCardDTO.setCtfnum(RSAUtils.strByEncryption(getApplicationContext(), idCard, true));
+//手机号
+        mUserPhone.setContentText(PublicData.getInstance().mLoginInfoBean.getPhoenum());
 
 //婚姻状况
         applyCTCardDTO.setMarlst("1");
@@ -262,7 +277,6 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         mHouseStatus.setRightTextColor(getResources().getColor(R.color.gray_33));
 
         chooseQiyeValue();
-
 //朋友
         applyCTCardDTO.setCtc1("8");
         applyCTCardDTO.setCtc2("8");
@@ -330,11 +344,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.applycard_normal_idcard_layout1://身份证有效期
-                mIdCardForeverImg.setBackgroundResource(R.mipmap.checkbox_checked);
-                mIdCardLayout2.setRightText("年/月/日");
-                mIdCardLayout2.setRightTextColor(getResources().getColor(R.color.gray_99));
-
-                applyCTCardDTO.setCtfvldprd("9999-12-30");
+                initIDNumber();
                 break;
             case R.id.applycard_normal_idcard_layout2://选择有效日期
                 mIdCardForeverImg.setBackgroundResource(R.mipmap.checkbox_normal);
@@ -392,6 +402,17 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             default:
                 break;
         }
+    }
+
+    /**
+     * 身份证长期有效
+     */
+    private void initIDNumber() {
+        mIdCardForeverImg.setBackgroundResource(R.mipmap.checkbox_checked);
+        mIdCardLayout2.setRightText("年/月/日");
+        mIdCardLayout2.setRightTextColor(getResources().getColor(R.color.gray_99));
+
+        applyCTCardDTO.setCtfvldprd("9999-12-30");
     }
 
     @Override
@@ -665,40 +686,62 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         String pinyin = mUserNamePinYin.getContentText();
         if (checkIsEmpty(pinyin, "姓名拼音不可为空")) return;
         applyCTCardDTO.setEnghnm(pinyin);
+//手机号码
+        String userPhone = mUserPhone.getContentText();
+        if (checkIsEmpty(userPhone, "手机号不可为空")) return;
+        if (!RegexUtils.isMobileExact(userPhone)) {
+            ToastUtils.showShort(getApplicationContext(), "请确保手机号真实准确");
+            return;
+        }
+        applyCTCardDTO.setPhoenum(RSAUtils.strByEncryption(getApplicationContext(), userPhone, true));
+
+//住宅地址
+        String addr = mAddr.getRightText();
+        if (checkIsEmpty(addr, "住宅区域不可为空")) return;
+
+        String detailAddr = mDetailAddr.getContentText();
+        if (checkIsEmpty(detailAddr, "住宅详细地址不可为空")) return;
+        applyCTCardDTO.setHmadr(detailAddr);
 
         String tel = mTel.getContentText();
+        if (checkIsEmpty(tel, "固定电话不可为空")) return;
+        if (tel.length() != 8) {
+            ToastUtils.showShort(getApplicationContext(), "请确保固定座机8位有效");
+            return;
+        }
         applyCTCardDTO.setHmphoe(tel);
-//住宅地址
-        String detailAddr = mDetailAddr.getContentText();
-        if (checkIsEmpty(detailAddr, "详细地址不可为空")) return;
-        applyCTCardDTO.setHmadr(detailAddr);
 
         String income = mIncome.getContentText();
         if (checkIsEmpty(income, "年收入不可为空")) return;
         applyCTCardDTO.setAnulincm(income);
 
-        if (mWorkType == 2) {//事业单位
-            String companyName = mCompanyName.getContentText();
-            if (checkIsEmpty(companyName, "单位名称不可为空")) return;
-            applyCTCardDTO.setConm(companyName);
+        String companyName = mCompanyName.getContentText();
+        if (checkIsEmpty(companyName, "单位名称不可为空")) return;
+        applyCTCardDTO.setConm(companyName);
 
-            String departName = mDepartName.getContentText();
-            if (checkIsEmpty(companyName, "部门名称不可为空")) return;
-            applyCTCardDTO.setCorpsecr(departName);
+        String departName = mDepartName.getContentText();
+        if (checkIsEmpty(companyName, "部门名称不可为空")) return;
+        applyCTCardDTO.setCorpsecr(departName);
 
-            String companyDetailAddr = mCompanyDetailAddr.getContentText();
-            if (checkIsEmpty(companyDetailAddr, "单位详细地址不可为空")) return;
-            applyCTCardDTO.setCoadr(companyDetailAddr);
-        } else {
+        String companyAddr = mCompanyAddr.getRightText();
+        if (checkIsEmpty(companyAddr, "单位区域不可为空")) return;
 
-        }
+        String companyDetailAddr = mCompanyDetailAddr.getContentText();
+        if (checkIsEmpty(companyDetailAddr, "单位详细地址不可为空")) return;
+        applyCTCardDTO.setCoadr(companyDetailAddr);
 
-        applyCTCardDTO.setCoadrzip(mZipCode.getContentText());
+        String zipCode = mZipCode.getContentText();
+        if (checkIsEmpty(zipCode, "单位邮编不可为空")) return;
+        applyCTCardDTO.setCoadrzip(zipCode);
 
         String companyTel = mCompanyTel.getContentText();
         if (checkIsEmpty(companyTel, "单位电话不可为空")) return;
+        if (companyTel.length() != 8) {
+            ToastUtils.showShort(getApplicationContext(), "请确保单位固定座机8位有效");
+            return;
+        }
         applyCTCardDTO.setCophoe(companyTel);
-
+//联系人
         String contactName = mContactName.getContentText();
         if (checkIsEmpty(contactName, "联系人姓名不可为空")) return;
         applyCTCardDTO.setCtcnm1(contactName);
@@ -706,6 +749,10 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
 
         String contactMobile = mContactMobile.getContentText();
         if (checkIsEmpty(contactMobile, "联系人手机号不可为空")) return;
+        if (!RegexUtils.isMobileExact(contactMobile)) {
+            ToastUtils.showShort(getApplicationContext(), "请确保联系人手机号真实准确");
+            return;
+        }
         applyCTCardDTO.setCtcphoenum1(contactMobile);
         applyCTCardDTO.setCtcphoenum2(contactMobile);
         applyCTCardDTO.setCtccophoe1(contactMobile);
@@ -727,7 +774,6 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         if (checkIsEmpty(brno, "请选择领卡网点")) return;
         applyCTCardDTO.setGetbrno(brno);
 
-        applyCTCardDTO.setPhoenum(RSAUtils.strByEncryption(this, PublicData.getInstance().mLoginInfoBean.getPhoenum(), true));
         applyCTCardDTO.setBrthcty(applyCTCardDTO.getHmadrcity());
 
         if (TextUtils.isEmpty(applyCTCardDTO.getDscode()) && TextUtils.isEmpty(applyCTCardDTO.getDscodegs())) {
@@ -747,10 +793,6 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             return true;
         }
         return false;
-    }
-
-    private boolean regularExpressValidator(ApplyCTCardDTO applyCTCardDTO) {
-        return true;
     }
 
     /**
@@ -775,13 +817,15 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             } else {
                 startActivity(ApplySuccessActvity.getIntent(this, wangdianAdress));
             }
+        } else {
+            ToastUtils.showShort(getApplicationContext(), result.getSYS_HEAD().getReturnMessage());
         }
     }
 
     @Override
     public void resultError(String msg) {
         hideDialogLoading();
-        Toast.makeText(ApplyCardSecondActivity.this, Config.getErrMsg("1"), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), Config.getErrMsg("1"), Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -789,7 +833,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      */
     private void commitYingXiaoDataForLYT() {
         YingXiaoDataDTO dto = new YingXiaoDataDTO();
-        dto.setUsrnum(RSAUtils.strByEncryption(this, PublicData.getInstance().userID, true));
+        dto.setUsrnum(RSAUtils.strByEncryption(getApplicationContext(), PublicData.getInstance().userID, true));
 
         if (TextUtils.isEmpty(mYingXiaoCode.getContentText())) {
             dto.setEmpNum(mMarketingCode);
@@ -797,11 +841,11 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             dto.setEmpNum(mYingXiaoCode.getContentText());
         }
 
-        CarApiClient.commitYingXiaoData(this, dto, new CallBack<BaseResult>() {
+        CarApiClient.commitYingXiaoData(getApplicationContext(), dto, new CallBack<BaseResult>() {
             @Override
             public void onSuccess(BaseResult result) {
                 if (result.getResponseCode() == 2000) {
-                    ToastUtils.showShort(ApplyCardSecondActivity.this, "已提交营销代码");
+                    ToastUtils.showShort(getApplicationContext(), "已提交营销代码");
                 }
             }
         });
@@ -815,7 +859,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         checkCtkDTO.setApplyCode(PublicData.getInstance().filenum);
         checkCtkDTO.setApplyInterface("banka");
         checkCtkDTO.setFlag("1");
-        CarApiClient.checkCtk(this, checkCtkDTO, new CallBack<BaseResult>() {
+        CarApiClient.checkCtk(getApplicationContext(), checkCtkDTO, new CallBack<BaseResult>() {
             @Override
             public void onSuccess(BaseResult result) {
                 hideDialogLoading();
@@ -845,7 +889,8 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
-                        PublicData.getInstance().mNetLocationBean = ReadFfile.readNetLocationFile(getApplicationContext());
+                        PublicData.getInstance().mNetLocationBean
+                                = ReadFfile.readNetLocationFile(getApplicationContext());
                     }
 
                     @Override
@@ -902,12 +947,13 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      */
     private void getYingXiaoCode() {
         CancelRechargeOrderDTO dto = new CancelRechargeOrderDTO();
-        CarApiClient.getYingXiaoCode(this, dto, new CallBack<YingXiaoResult>() {
+        CarApiClient.getYingXiaoCode(getApplicationContext(), dto, new CallBack<YingXiaoResult>() {
             @Override
             public void onSuccess(YingXiaoResult result) {
                 if (result.getResponseCode() == 2000 && result.getData() != null) {
                     mMarketingCode = result.getData().getEmpNum();
-                    mYingXiaoCode.setContentText(mMarketingCode);
+                    //TODO 手动不显示
+//                    mYingXiaoCode.setContentText(mMarketingCode);
 
                     applyCTCardDTO.setDscode(mMarketingCode);
                     applyCTCardDTO.setDscodegs(mMarketingCode);

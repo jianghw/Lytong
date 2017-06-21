@@ -147,6 +147,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     setContentView(R.layout.capture);
     StateBarSetting.settingBar(this, R.color.black, Codequery.class, true);
+
     TitleSetting.getInstance().initTitle(this, "扫罚单", 0, "取消", null, "输入编码", R.color.black);
 
     hasSurface = false;

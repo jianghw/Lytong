@@ -155,6 +155,7 @@
         <!--</LinearLayout>-->
 
         <com.zantong.mobilecttx.widght.CttxEditText
+            android:id="@+id/user_phone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
             zyb:contentinputtype="1"
@@ -221,7 +222,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
             zyb:contentinputtype="1"
-            zyb:contentlength="10"
+            zyb:contentlength="8"
             zyb:hinttext="请输入真实有效的固定电话"
             zyb:titletext="固定电话(021)"/>
         <!-- 职业信息  -->
@@ -434,7 +435,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
             zyb:contentinputtype="1"
-            zyb:contentlength="6"
+            zyb:contentlength="8"
             zyb:hinttext="请输入真实有效的固话"
             zyb:titletext="电话"/>
 
@@ -594,7 +595,7 @@
             android:layout_height="@dimen/ds_144"
             zyb:contentinputtype="0"
             zyb:contentlength="80"
-            zyb:hinttext=""
+            zyb:hinttext="选填"
             zyb:titletext="营销代码"/>
 
         <include layout="@layout/view_line1"/>

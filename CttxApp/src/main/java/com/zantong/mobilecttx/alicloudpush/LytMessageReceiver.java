@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.home.activity.HomeActivity;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
-import com.zantong.mobilecttx.home.fragment.HomeFragment;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.Tools;
@@ -27,10 +26,7 @@ import java.util.Map;
 import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
- * @author: 正纬
- * @since: 15/4/9
- * @version: 1.1
- * @feature: 用于接收推送的通知和消息
+ * 用于接收推送的通知和消息
  */
 public class LytMessageReceiver extends MessageReceiver {
 
@@ -45,7 +41,7 @@ public class LytMessageReceiver extends MessageReceiver {
     @Override
     public void onNotification(Context context, String title,
                                String summary, Map<String, String> extraMap) {
-        LogUtils.e(title+"onNotification"+summary);
+        LogUtils.e(title + "onNotification" + summary);
         PushBean pushBean = new PushBean();
         if (null != extraMap) {
             for (Map.Entry<String, String> entry : extraMap.entrySet()) {
@@ -142,7 +138,7 @@ public class LytMessageReceiver extends MessageReceiver {
                 UserInfoRememberCtrl.saveObject(context, key, list);
             }
         } else {
-            list = new ArrayList<HomeNotice>();
+            list = new ArrayList<>();
             HomeNotice homeNotice = new HomeNotice();
             homeNotice.setId(pushBean.getId());
             homeNotice.setDesc(pushBean.getContent());
@@ -166,7 +162,7 @@ public class LytMessageReceiver extends MessageReceiver {
             UserInfoRememberCtrl.saveObject(context, key, list);
             try {
                 // 刷新下消息列表
-                HomeFragment.homeFragment.updateNotice();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

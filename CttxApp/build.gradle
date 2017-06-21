@@ -7,8 +7,8 @@ android {
         applicationId "com.zantong.mobilecttx"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 25
-        versionName "2.5.0.2"
+        versionCode 26
+        versionName "2.5.0.3"
         aaptOptions.cruncherEnabled = false //禁止gradle检查png的合法性
         aaptOptions.useNewCruncher = false //关闭androidstudio的png的合法性检查
         // dex突破65535的限制
@@ -138,6 +138,7 @@ dependencies {
     compile project(':CordovaLib')
     compile project(':XRecyclerView')
     compile project(':WheelPicker')
+
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'

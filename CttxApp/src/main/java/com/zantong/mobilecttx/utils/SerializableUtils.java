@@ -7,7 +7,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.StreamCorruptedException;
 import java.util.List;
 
 /**
@@ -50,8 +49,7 @@ public class SerializableUtils {
 	}
 
 	// 将序列化的数据还原成Object
-	public static Object str2Obj(String str) throws StreamCorruptedException,
-			IOException {
+	public static Object str2Obj(String str) throws IOException {
 		byte[] mByte = Base64.decode(str.getBytes(), Base64.DEFAULT);
 		ByteArrayInputStream bais = new ByteArrayInputStream(mByte);
 		ObjectInputStream ois = new ObjectInputStream(bais);
@@ -65,7 +63,7 @@ public class SerializableUtils {
 
 	@SuppressWarnings("unchecked")
 	public static <E> List<E> string2List(String str)
-			throws StreamCorruptedException, IOException {
+			throws IOException {
 		byte[] mByte = Base64.decode(str.getBytes(), Base64.DEFAULT);
 		ByteArrayInputStream bais = new ByteArrayInputStream(mByte);
 		ObjectInputStream ois = new ObjectInputStream(bais);

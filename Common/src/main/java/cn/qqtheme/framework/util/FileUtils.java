@@ -72,6 +72,10 @@ public class FileUtils {
         return getAppDir(name, context) + "networktable.txt";
     }
 
+    public static String downApkFilePath(Context context, String name, String apk) {
+        return getAppDir(name, context) + apk;
+    }
+
     /**
      * 头像文件类目录路径
      *

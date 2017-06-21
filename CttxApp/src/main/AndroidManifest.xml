@@ -114,6 +114,7 @@
         <activity
             android:name=".weizhang.activity.ViolationDetails"
             android:screenOrientation="portrait"/>
+        <!--输入编码查询违章页面-->
         <activity
             android:name=".home.activity.Codequery"
             android:screenOrientation="portrait"/>
@@ -198,29 +199,31 @@
         <activity
             android:name=".user.activity.MineActivity"
             android:screenOrientation="portrait"/>
+        <!-- 选a择城市 -->
         <activity
             android:name=".user.activity.AddrActivity"
-            android:screenOrientation="portrait"/><!-- 选a择城市 -->
+            android:screenOrientation="portrait"/>
+        <!-- 公共列表类 -->
         <activity
             android:name=".common.activity.CommonListActivity"
-            android:screenOrientation="portrait"/><!-- 公共列表类 -->
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.OpenCardWebActivity"
             android:screenOrientation="portrait"/>
-        <!-- 选a择城市 -->
-        <!-- 选a择城市 -->
+        <!-- 添加车辆 -->
         <activity
             android:name=".car.activity.AddCarActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/><!-- 添加车辆 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <!-- 浏览器 -->
         <activity
             android:name=".common.activity.BrowserActivity"
-            android:screenOrientation="portrait"/><!-- 浏览器 -->
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".home.activity.HomeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"/><!-- 首页 -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name=".map.activity.BaiduMapActivity"
             android:screenOrientation="portrait"/>
@@ -372,11 +375,11 @@
         <activity
             android:name=".card.activity.CardFlowActivity"
             android:screenOrientation="portrait"/>
-
         <!--快捷办卡-->
         <activity
             android:name=".card.activity.ApplyCardQuickActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".card.activity.CardNoticeActivity"
             android:screenOrientation="portrait"/>
@@ -620,7 +623,7 @@
         <!-- bugly配置APP版本号 -->
         <meta-data
             android:name="BUGLY_APP_VERSION"
-            android:value="2.5.0.2"/>
+            android:value="2.5.0.3"/>
         <!--7.0拍照适配-->
         <provider
             android:name="android.support.v4.content.FileProvider"

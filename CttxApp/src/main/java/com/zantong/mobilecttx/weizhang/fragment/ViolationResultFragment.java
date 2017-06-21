@@ -9,6 +9,7 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.utils.SPUtils;
+import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.adapter.ViolationResultAdapter;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
@@ -25,6 +26,7 @@ public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
         params = dto;
         return trade;
     }
+
     @Override
     protected void onLoadMoreData() {
 
@@ -32,13 +34,19 @@ public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
 
     @Override
     protected void onRefreshData() {
-
+        mCurrentPage = 1;
+        searchViolation();
     }
 
+    /**
+     * item点击事件
+     *
+     * @param view
+     * @param data
+     */
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
-        ViolationBean msg = (ViolationBean)data;
-//        ToastUtils.showShort(this.getActivity(),msg.getMsg_title());
+
     }
 
     @Override
@@ -48,7 +56,6 @@ public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
 
     @Override
     public void initData() {
-        super.initData();
         searchViolation();
     }
 
@@ -64,32 +71,42 @@ public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
 
     /**
      * 违章查询
+     * TEMP_STATE 请求常数
      */
-    private void searchViolation(){
+    private void searchViolation() {
         params.setProcessste(String.valueOf(TEMP_STATE));
         onShowLoading();
 
         if (TextUtils.isEmpty(PublicData.getInstance().imei)) {
-            params.setToken(RSAUtils.strByEncryption(this.getActivity(),"00000000",true));
+            params.setToken(RSAUtils.strByEncryption(getActivity().getApplicationContext(), "00000000", true));
         } else {
-            params.setToken(RSAUtils.strByEncryption(this.getActivity(),PublicData.getInstance().imei,true));
+            params.setToken(RSAUtils.strByEncryption(getActivity().getApplicationContext(), PublicData.getInstance().imei, true));
         }
+
         UserApiClient.searchViolation(this.getActivity(), params, new CallBack<ViolationResultParent>() {
             @Override
             public void onSuccess(ViolationResultParent result) {
                 SPUtils.getInstance(ViolationResultFragment.this.getActivity()).setViolation(params);
 
-                if ("000000".equals(result.getSYS_HEAD().getReturnCode())){
+                if ("000000".equals(result.getSYS_HEAD().getReturnCode())) {
                     setDataResult(result.getRspInfo().getViolationInfo());
+                } else {
+                    ToastUtils.showShort(getContext(), result.getSYS_HEAD().getReturnMessage());
+                    onShowFailed();
                 }
             }
 
+            @Override
+            public void onError(String errorCode, String msg) {
+                ToastUtils.showShort(getContext(), msg);
+                onShowFailed();
+            }
         });
     }
 
     @Override
     protected void onForceRefresh() {
-        super.onForceRefresh();
+        mCurrentPage = 1;
         searchViolation();
     }
 

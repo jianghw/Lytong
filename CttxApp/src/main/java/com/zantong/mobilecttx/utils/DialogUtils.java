@@ -105,8 +105,7 @@ public class DialogUtils {
      */
     public static void createDialog(final Context context, String message) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
-        View view = ((Activity) context).getLayoutInflater().inflate(
-                R.layout.dialog_one_btn, null);
+        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_one_btn, null);
         TextView mContent = (TextView) view.findViewById(R.id.dialog_one_btn_content);
         Button mCommit = (Button) view.findViewById(R.id.dialog_one_btn_commit);
         mContent.setText(message);

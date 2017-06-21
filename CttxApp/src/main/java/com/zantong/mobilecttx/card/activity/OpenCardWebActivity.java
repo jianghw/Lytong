@@ -111,7 +111,7 @@ public class OpenCardWebActivity extends CordovaActivity {
         public void handleMessage(Message msg) {
             if (Build.VERSION.SDK_INT < 23) {
                 if (msg.what == 1) {
-                    LogUtils.i("开发发送数据给h5");
+
                     Gson gson = new Gson();
                     JSONObject object = null;
 //                    try {

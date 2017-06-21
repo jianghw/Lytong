@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.weizhang.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,7 +14,9 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
+import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.UiHelpers;
+import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 import com.zantong.mobilecttx.weizhang.fragment.ViolationPayFragment;
@@ -103,17 +106,17 @@ public class ViolationResultAcitvity extends BaseMvpActivity<IBaseView, HelpPres
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.violation_query_topbtn_layou1:
+            case R.id.violation_query_topbtn_layou1://2
                 TEMP_STATE = STATUS_ALL;
                 selectTab(0);
                 commitFragment();
                 break;
-            case R.id.violation_query_topbtn_layou2:
+            case R.id.violation_query_topbtn_layou2://0
                 TEMP_STATE = STATUS_UNFINISHED;
                 selectTab(1);
                 commitFragment();
                 break;
-            case R.id.violation_query_topbtn_layou3:
+            case R.id.violation_query_topbtn_layou3://1
                 selectTab(2);
                 TEMP_STATE = STATUS_FINISHED;
                 commitFragment();
@@ -174,5 +177,18 @@ public class ViolationResultAcitvity extends BaseMvpActivity<IBaseView, HelpPres
 
     public ViolationPayTypeFragment getPayTypeFragment() {
         return payTypeFragment;
+    }
+
+    /**
+     * 罚单号
+     */
+    public void showDialogToCodequery() {
+        DialogUtils.createDialog(this, "请进行罚单编号查询", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Act.getInstance().lauchIntent(ViolationResultAcitvity.this, ViolationDetails.class);
+            }
+        });
     }
 }

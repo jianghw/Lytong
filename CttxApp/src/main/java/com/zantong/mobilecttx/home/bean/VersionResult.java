@@ -3,10 +3,10 @@ package com.zantong.mobilecttx.home.bean;
 import com.zantong.mobilecttx.base.bean.BaseResult;
 
 /**
- * Created by zhengyingbing on 16/6/1.
+ * 版本更新响应
  */
 public class VersionResult extends BaseResult {
-    public Version data;
+    private Version data;
 
     public Version getData() {
         return data;
@@ -16,10 +16,20 @@ public class VersionResult extends BaseResult {
         this.data = data;
     }
 
-    public class Version{
-        public String address;
-        public int isUpdate;// 0 表示不强制
-        public String version; //
+    public class Version {
+        private String address;
+        private int isUpdate;//是否强制更新1是 2否
+        private String version; //
+        private int versionType;
+        private int id;
+
+        public int getVersionType() {
+            return versionType;
+        }
+
+        public void setVersionType(int versionType) {
+            this.versionType = versionType;
+        }
 
         public String getAddress() {
             return address;

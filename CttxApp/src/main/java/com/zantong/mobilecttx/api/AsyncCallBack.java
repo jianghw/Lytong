@@ -194,7 +194,6 @@ public class AsyncCallBack<T> implements Callback {
         String msg = ex.getMessage();
         LogUtils.i("failed msg:" + msg);
         if ("Canceled".equals(msg)) {
-            LogUtils.i("msg:" + msg);
             EventBus.getDefault()
                     .post(new ErrorEvent(Config.ERROR_IO, Config.ERROR_IO_MSG, tag,
                             context));

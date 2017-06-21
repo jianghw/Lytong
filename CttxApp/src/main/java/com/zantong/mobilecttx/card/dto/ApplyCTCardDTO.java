@@ -15,9 +15,11 @@ public class ApplyCTCardDTO implements Serializable {
     private String ctfnum;//	证件号码
     private String ctfvldprd;//	证件有效期
     private String enghnm;//	英文名
+
     private String gnd;//	性别 1男 2女
     private String dtofbrth;//	出生日期
     private String brthcty;//	出生城市
+
     private String marlst;//	婚姻状况
     private String edunlvl;//	教育程度
     private String resltp;//	住宅类型

@@ -2,8 +2,9 @@ package com.zantong.mobilecttx.home.dto;
 
 /**
  * 应用版本号请求实体类
+ *
  * @author Sandy
- * create at 16/10/16 上午1:44
+ *         create at 16/10/16 上午1:44
  */
 public class VersionDTO {
 

@@ -75,6 +75,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
     @Override
     public void initData() {
+        //测试数据下
         if (BuildConfig.DEBUG) {
             mName.setText("遇紫紫");
             mIdCard.setText("301364198811040740");

@@ -1,7 +1,5 @@
 package com.zantong.mobilecttx.card.fragment;
 
-import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,7 +13,6 @@ import com.zantong.mobilecttx.card.activity.ApplyCardCheckActivity;
 import com.zantong.mobilecttx.card.activity.BindJiaZhaoActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.map.bean.NetLocationBean;
 import com.zantong.mobilecttx.presenter.UnbindCardPresenter;
 import com.zantong.mobilecttx.utils.ReadFfile;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -24,11 +21,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -99,166 +96,74 @@ public class UnbindCardFragment extends BaseFragment {
         }
     }
 
-//    public void downloadDemo() {
-//        Retrofit2Utils retrofit2Utils=new Retrofit2Utils();
-//        final FileDownloadApi api = retrofit2Utils.getRetrofitHttps(BuildConfig.APP_URL).create(FileDownloadApi.class);
-//        Observable.create(new Observable.OnSubscribe<String>() {
-//            @Override
-//            public void call(Subscriber<? super String> subscriber) {
-//                try {
-//                    Response<ResponseBody> response=api.downloadFileWithFixedUrl("download/icbcorg.txt").execute();
-//                    try {
-//                        if (response != null && response.isSuccessful()) {
-//                            //文件总长度
-//                            long fileSize = response.body().contentLength();
-//                            long fileSizeDownloaded = 0;
-//                            is = response.body().byteStream();
-//                            File file = new File(Environment.getExternalStorageDirectory().getPath() + File.separator +"networktable.txt");
-//                            if (file.exists()) {
-//                                file.delete();
-//                            } else {
-//                                file.createNewFile();
-//                            }
-//                            fos = new FileOutputStream(file);
-//                            int count = 0;
-//                            byte[] buffer = new byte[1024];
-//                            while ((count = is.read(buffer)) != -1) {
-//                                fos.write(buffer, 0, count);
-//                                fileSizeDownloaded += count;
-//                                subscriber.onNext("file download: " + fileSizeDownloaded + " of " + fileSize);
-//                            }
-//                            fos.flush();
-//                            subscriber.onCompleted();
-//                        } else {
-//                            subscriber.onError(new Exception("接口请求异常"));
-//                        }
-//                    } catch (Exception e) {
-//                        subscriber.onError(e);
-//                    } finally {
-//                        if (is != null) {
-//                            try {
-//                                is.close();
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                        if (fos != null) {
-//                            try {
-//                                fos.close();
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                } catch (IOException e) {
-//                    Log.e("why", e.toString());
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).subscribeOn(Schedulers.io())
-//                .sample(1, TimeUnit.SECONDS)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Subscriber<String>() {
-//                    @Override
-//                    public void onCompleted() {
-//                        Log.d("MainActivity", "文件下载完成");
-//                        NetLocationBean bean = ReadFfile.readNetLocationFile();
-//                        PublicData.getInstance().mNetLocationBean = bean;
-////                        Log.e("why", bean.getNetLocationlist().get(0).toString());
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    @Override
-//                    public void onNext(String s) {
-//                        Log.d("MainActivity", s);
-//
-//                    }
-//                });
-//    }
-
+    /**
+     * 下载文件txt
+     */
     public void downloadTxt() {
-        Retrofit2Utils retrofit2Utils = new Retrofit2Utils();
-        final FileDownloadApi api = retrofit2Utils.getRetrofitHttps(BuildConfig.APP_URL).create(FileDownloadApi.class);
-        Observable.create(new Observable.OnSubscribe<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-                try {
-                    Response<ResponseBody> response = api.downloadFileWithFixedUrl("download/icbcorg.txt").execute();
-                    try {
-                        if (response != null && response.isSuccessful()) {
-                            //文件总长度
-                            long fileSize = response.body().contentLength();
-                            long fileSizeDownloaded = 0;
-                            is = response.body().byteStream();
-                            File file = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "networktable.txt");
-                            if (file.exists()) {
-                                file.delete();
-                            } else {
-                                file.createNewFile();
-                            }
-                            fos = new FileOutputStream(file);
-                            int count = 0;
-                            byte[] buffer = new byte[1024];
-                            while ((count = is.read(buffer)) != -1) {
-                                fos.write(buffer, 0, count);
-                                fileSizeDownloaded += count;
-                                subscriber.onNext("file download: " + fileSizeDownloaded + " of " + fileSize);
-                            }
-                            fos.flush();
-                            subscriber.onCompleted();
-                        } else {
-                            subscriber.onError(new Exception("接口请求异常"));
-                        }
-                    } catch (Exception e) {
-                        subscriber.onError(e);
-                    } finally {
-                        if (is != null) {
-                            try {
-                                is.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        if (fos != null) {
-                            try {
-                                fos.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
+        Observable
+                .create(new Observable.OnSubscribe<String>() {
+                    @Override
+                    public void call(Subscriber<? super String> subscriber) {
+                        downloadFile(subscriber);
                     }
-                } catch (IOException e) {
-                    Log.e("why", e.toString());
-                    e.printStackTrace();
-                }
-            }
-        }).subscribeOn(Schedulers.io())
-                .sample(1, TimeUnit.SECONDS)
+                })
+                .subscribeOn(Schedulers.io())
+//                .sample(1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
-                        LogUtils.i("文件下载完成");
-                        NetLocationBean bean = ReadFfile.readNetLocationFile(getContext());
-                        PublicData.getInstance().mNetLocationBean = bean;
-//                        Log.e("why", bean.getNetLocationlist().get(0).toString());
+                        PublicData.getInstance().mNetLocationBean
+                                = ReadFfile.readNetLocationFile(getActivity().getApplicationContext());
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        e.printStackTrace();
+                        LogUtils.e(e.getMessage());
                     }
 
                     @Override
                     public void onNext(String s) {
-                        Log.d("MainActivity", s);
-
                     }
                 });
+    }
+
+    private void downloadFile(Subscriber<? super String> subscriber) {
+        FileDownloadApi api = new Retrofit2Utils().getRetrofitHttps(BuildConfig.APP_URL).create(FileDownloadApi.class);
+        Response<ResponseBody> response = null;
+        try {
+            response = api.downloadFileWithFixedUrl("download/icbcorg.txt").execute();
+        } catch (IOException e) {
+            subscriber.onError(e);
+        }
+
+        if (response != null && response.isSuccessful()) {
+            InputStream inputStream = response.body().byteStream();
+            String filePath = FileUtils.icbTxtFilePath(getActivity().getApplicationContext(), FileUtils.DOWNLOAD_DIR);
+            File txtFile = new File(filePath);
+            FileOutputStream fileOutputStream = null;
+            try {
+                fileOutputStream = new FileOutputStream(txtFile);
+                int count;
+                byte[] buffer = new byte[1024 * 8];
+                while ((count = inputStream.read(buffer)) != -1) {
+                    fileOutputStream.write(buffer, 0, count);
+                }
+                fileOutputStream.flush();
+                subscriber.onCompleted();
+            } catch (IOException e) {
+                subscriber.onError(e);
+            } finally {
+                try {
+                    inputStream.close();
+                    if (fileOutputStream != null) fileOutputStream.close();
+                } catch (IOException e) {
+                    subscriber.onError(e);
+                }
+            }
+        } else {
+            subscriber.onError(new Exception("银行网点接口请求异常,请退出页面稍后重试"));
+        }
     }
 
 }

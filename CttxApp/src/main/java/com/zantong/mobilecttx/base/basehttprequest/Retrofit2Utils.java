@@ -36,6 +36,7 @@ public class Retrofit2Utils {
 
     public Retrofit2Utils() {
         retrofitBuilder = new Retrofit.Builder().addCallAdapterFactory(RxJavaCallAdapterFactory.create());
+
         interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
         okhttpBuilder = new OkHttpClient.Builder()
@@ -76,11 +77,26 @@ public class Retrofit2Utils {
     }
 
     public Retrofit getRetrofit(String baseUrl) {
-        return retrofitBuilder.addConverterFactory(GsonConverterFactory.create()).client(okhttpBuilder.build()).baseUrl(baseUrl).build();
+        return retrofitBuilder
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okhttpBuilder.build())
+                .baseUrl(baseUrl)
+                .build();
     }
 
     public Retrofit getRetrofitHttps(String baseUrl) {
-        return retrofitBuilder.addConverterFactory(GsonConverterFactory.create()).client(getUnsafeOkHttpClient()).baseUrl(baseUrl).build();
+        return retrofitBuilder
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(getUnsafeOkHttpClient())
+                .baseUrl(baseUrl)
+                .build();
+    }
+
+    public Retrofit getRetrofitNoBaseUrl() {
+        return retrofitBuilder
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okhttpBuilder.build())
+                .build();
     }
 
     private OkHttpClient getUnsafeOkHttpClient() {
@@ -121,8 +137,7 @@ public class Retrofit2Utils {
                     .connectTimeout(30, TimeUnit.SECONDS)
                     .addNetworkInterceptor(new StethoInterceptor());
 
-            OkHttpClient okHttpClient = builder.build();
-            return okHttpClient;
+            return builder.build();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
