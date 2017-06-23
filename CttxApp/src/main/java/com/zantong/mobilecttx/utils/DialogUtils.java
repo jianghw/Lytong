@@ -778,10 +778,12 @@ public class DialogUtils {
      * @param message
      * @param listener1
      */
-    public static void remindDialog(final Context context, String title, String message, String leftBtn, String rightBtn, final View.OnClickListener listener1, final View.OnClickListener listener2) {
+    public static void remindDialog(final Context context, String title, String message,
+                                    String leftBtn, String rightBtn,
+                                    final View.OnClickListener listener1, final View.OnClickListener listener2) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
-        View view = ((Activity) context).getLayoutInflater().inflate(
-                R.layout.dialog_update, null);
+
+        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_update, null);
         TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
         TextView mContent = (TextView) view.findViewById(R.id.dialog_msg);
         Button btn1 = (Button) view.findViewById(R.id.dialog_btn1);
@@ -791,28 +793,26 @@ public class DialogUtils {
         btn1.setText(leftBtn);
         btn1.setTextColor(context.getResources().getColor(R.color.gray_99));
         btn2.setText(rightBtn);
+
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener1.onClick(v);
-                dialog.dismiss();
+                if (dialog != null && dialog.isShowing()) dialog.dismiss();
+                if (listener1 != null) listener1.onClick(v);
             }
         });
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener2.onClick(v);
-                dialog.dismiss();
+                if (dialog != null && dialog.isShowing()) dialog.dismiss();
+                if (listener2 != null) listener2.onClick(v);
             }
         });
 
         dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    return true;
-                }
-                return false;
+                return keyCode == KeyEvent.KEYCODE_BACK;
             }
         });
 
@@ -824,8 +824,6 @@ public class DialogUtils {
         dialog.getWindow().setBackgroundDrawableResource(R.color.trans);
         dialog.getWindow().setContentView(view);
         dialog.setCanceledOnTouchOutside(false);
-
-
     }
 
     /**

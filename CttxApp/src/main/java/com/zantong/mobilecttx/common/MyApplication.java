@@ -45,8 +45,8 @@ public class MyApplication extends MultiDexApplication {
         SDKInitializer.initialize(getApplicationContext());
 //bugly初始化
         Bugly.init(getApplicationContext(),
-                BuildConfig.DEBUG ? "a116e4ea48"
-                        : "3a5bac152d", BuildConfig.DEBUG);
+                BuildConfig.DEBUG ? "b7b596e1eb"
+                        : "62323a33e6", BuildConfig.DEBUG);
 //Log环境初始化
         LogUtils.initLogUtils(BuildConfig.DEBUG);
     }

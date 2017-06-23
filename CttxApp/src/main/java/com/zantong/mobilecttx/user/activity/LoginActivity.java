@@ -5,16 +5,14 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -76,9 +74,14 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.log.LogUtils;
+import cn.qqtheme.framework.util.primission.PermissionFail;
+import cn.qqtheme.framework.util.primission.PermissionGen;
+import cn.qqtheme.framework.util.primission.PermissionSuccess;
+
+import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
- * Created by Administrator on 2016/5/5.
+ * 登陆界面
  */
 public class LoginActivity extends Activity
         implements LoginPhoneView, View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
@@ -100,8 +103,7 @@ public class LoginActivity extends Activity
     TextView textRight;
     @Bind(R.id.title)
     RelativeLayout title;
-    //    @Bind(R.id.title1_all)
-//    RelativeLayout title1All;
+
     @Bind(R.id.phone_number_edittext)
     RelativeLayout phoneNumberEdittext;
     @Bind(R.id.underline)
@@ -153,26 +155,13 @@ public class LoginActivity extends Activity
         tintManager.setStatusBarTintResource(R.color.appmain);//通知栏所需颜色
         ScreenManager.pushActivity(this);
 
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
+        takePhoneIMEI();
 
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_PHONE_STATE)) {
-
-            } else {
-
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_PHONE_STATE},
-                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-            }
-        }
         init();
 
         mListNum = mNumKeyBoard.getRandomList();
         mListChar = mCharKeyBoard.getRandomList();
-        Log.i("tag:", mListNum.size() + "-----" + mListChar.size());
+
         for (int i = 0; i < mListNum.size(); i++) {
             mListNum.get(i).setOnClickListener(this);
         }
@@ -207,27 +196,36 @@ public class LoginActivity extends Activity
                 return false;
             }
         });
-
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    PublicData.getInstance().imei = Tools.getIMEI(this);
-                } else {
-                }
-                return;
-            }
+    public void takePhoneIMEI() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, PER_REQUEST_CODE,
+                    new String[]{
+                            Manifest.permission.READ_PHONE_STATE}
+            );
+        } else {
+            PublicData.getInstance().imei = Tools.getIMEI(this);
         }
     }
 
-    private void init() {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
+    @PermissionSuccess(requestCode = PER_REQUEST_CODE)
+    public void doPermissionSuccess() {
+        PublicData.getInstance().imei = Tools.getIMEI(this);
+    }
+
+    @PermissionFail(requestCode = PER_REQUEST_CODE)
+    public void doPermissionFail() {
+
+    }
+
+    private void init() {
         final Handler handler = new Handler() {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
@@ -245,8 +243,6 @@ public class LoginActivity extends Activity
                         btnNumber.setText("重发验证码");
                         break;
                 }
-//				}
-
                 super.handleMessage(msg);
             }
         };
@@ -334,7 +330,6 @@ public class LoginActivity extends Activity
     public void setCodeTime() {
         iTime = PublicData.getInstance().smCtrlTime;
         if (iTime > 0) {
-//          Toast.makeText(LoginPhone.this,"验证码发送成功，请注意查收", Toast.LENGTH_SHORT).show();
             btnNumber.setEnabled(false);
             btnNumber.setText("60s");
         }
@@ -415,7 +410,6 @@ public class LoginActivity extends Activity
                 hideInputManager();
                 break;
         }
-
     }
 
     //判断是否隐藏输入法键盘
@@ -526,10 +520,6 @@ public class LoginActivity extends Activity
 
     @Override
     public void hideProgress() {
-//        if(mLodingDialog != null){
-//            mLodingDialog.dismiss();
-//            mLodingDialog = null;
-//        }
         loginBtn.setText("开始");
         loginBtn.setClickable(true);
     }

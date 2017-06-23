@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.card.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -142,6 +143,12 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         Intent intentOcr = new Intent(this, OcrCameraActivity.class);
         intentOcr.putExtra("ocr_resource", 1);
         startActivityForResult(intentOcr, 1205);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     /**

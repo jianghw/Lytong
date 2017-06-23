@@ -8,12 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
-import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
-import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.bean.Result;
@@ -50,8 +51,8 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
     public void showData(BaseRecyclerViewHolder viewHolder, int position, final ViolationBean data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
-            String violationdate = data.getViolationdate();
-            String violationtime = data.getViolationtime();
+            String violationdate = data.getViolationdate();//违章日期
+            String violationtime = data.getViolationtime();//违章时间
 
             if (!TextUtils.isEmpty(violationdate) && violationdate.length() >= 8
                     && !TextUtils.isEmpty(violationdate) && violationtime.length() >= 4) {
@@ -66,23 +67,22 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
             }
             int processte = data.getProcessste();
 
-            String violationamt = data.getViolationamt();
-            String violationcent = data.getViolationcent();
-
             String violationplace = data.getViolationplace();
             String violationinfo = data.getViolationinfo();
-
-            holder.mAddr.setVisibility(processte == 2 || processte == 3 ? View.VISIBLE : View.GONE);
-            holder.mReason.setVisibility(processte == 2 || processte == 3 ? View.VISIBLE : View.GONE);
+            holder.mLayAddr.setVisibility(processte == 2 || processte == 3 ? View.GONE : View.VISIBLE);
+            holder.mLayReason.setVisibility(processte == 2 || processte == 3 ? View.GONE : View.VISIBLE);
             holder.mAddr.setText(violationplace);
             holder.mReason.setText(violationinfo);
 
+            String violationamt = data.getViolationamt();
+            String violationcent = data.getViolationcent();//扣分
             holder.mAmount.setText(StringUtils.getPriceString(violationamt) + "元");
             holder.mCount.setText(violationcent + "分");
 
             if (processte == 0 || processte == 2) {
                 holder.mPay.setVisibility(View.VISIBLE);
                 holder.mFlagImg.setBackgroundResource(R.mipmap.icon_weichuli);
+
             } else if (processte == 1 || processte == 3) {
                 holder.mPay.setVisibility(View.GONE);
                 holder.mFlagImg.setBackgroundResource(R.mipmap.icon_yichuli);
@@ -201,8 +201,12 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
     public static class ViewHolder extends BaseRecyclerViewHolder {
         @Bind(R.id.item_violation_result_tm)
         TextView mTm;//违章时间
+        @Bind(R.id.lay_address)
+        LinearLayout mLayAddr;
         @Bind(R.id.item_violation_result_addr)
         TextView mAddr;//地点
+        @Bind(R.id.lay_reason)
+        LinearLayout mLayReason;
         @Bind(R.id.item_violation_result_reason)
         TextView mReason;//行为
         @Bind(R.id.item_violation_result_amount)

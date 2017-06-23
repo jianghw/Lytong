@@ -144,6 +144,7 @@ public class HomeActivity extends BaseActivity {
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)
     public void doPermissionFail() {
+
     }
 
     /**

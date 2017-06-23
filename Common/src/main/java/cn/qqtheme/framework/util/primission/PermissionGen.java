@@ -1,12 +1,11 @@
 package cn.qqtheme.framework.util.primission;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
+import android.widget.Toast;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -62,14 +61,17 @@ public class PermissionGen {
     }
 
     public static void needPermission(Activity activity, int requestCode, String[] permissions) {
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
+//        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CONTACTS)
+//                != PackageManager.PERMISSION_GRANTED) {
 //            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_CONTACTS)) {
 //
 //                Toast.makeText(activity.getApplicationContext(), "相应权限已被拒绝，请设置中开启", Toast.LENGTH_SHORT).show();
 //            } else {
-                requestPermissions(activity, requestCode, permissions);
-        }
+        requestPermissions(activity, requestCode, permissions);
+//            }
+//        } else {
+//            doExecuteSuccess(activity, requestCode);
+//        }
     }
 
     /**
@@ -79,6 +81,7 @@ public class PermissionGen {
      * @param requestCode
      * @param permission
      */
+
     public static void needPermission(Fragment fragment, int requestCode, String permission) {
         needPermission(fragment, requestCode, new String[]{permission});
     }
@@ -146,6 +149,12 @@ public class PermissionGen {
                 PermissionFail.class, requestCode);
 
         executeMethod(activity, executeMethod);
+
+        if (activity instanceof Activity) {
+            Toast.makeText((Activity) activity, "相应权限已被拒绝，请设置中开启", Toast.LENGTH_SHORT).show();
+        } else if (activity instanceof Fragment) {
+            Toast.makeText(((Fragment) activity).getActivity(), "相应权限已被拒绝，请设置中开启", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static void onRequestPermissionsResult(

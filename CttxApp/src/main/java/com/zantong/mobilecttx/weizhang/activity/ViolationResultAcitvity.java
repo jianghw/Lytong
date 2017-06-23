@@ -1,6 +1,5 @@
 package com.zantong.mobilecttx.weizhang.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
+import com.zantong.mobilecttx.home.activity.Codequery;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.UiHelpers;
@@ -183,12 +183,18 @@ public class ViolationResultAcitvity extends BaseMvpActivity<IBaseView, HelpPres
      * 罚单号
      */
     public void showDialogToCodequery() {
-        DialogUtils.createDialog(this, "请进行罚单编号查询", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                Act.getInstance().lauchIntent(ViolationResultAcitvity.this, ViolationDetails.class);
-            }
-        });
+        DialogUtils.remindDialog(this, "温馨提示", "请使用处罚决定书编号进行缴纳", "取消", "罚单编号",
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                },
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Act.getInstance().lauchIntent(ViolationResultAcitvity.this, Codequery.class);
+                    }
+                });
     }
 }

@@ -330,7 +330,6 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
     public void takePhoto() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             PermissionGen.needPermission(this, PER_REQUEST_CODE, new String[]{
-                    //READ_EXTERNAL_STORAGE
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.CAMERA,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE});

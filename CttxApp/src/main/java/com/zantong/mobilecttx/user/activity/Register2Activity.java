@@ -56,7 +56,7 @@ import java.util.List;
 import butterknife.Bind;
 import cn.qqtheme.framework.util.log.LogUtils;
 
-public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresenter> implements View.OnTouchListener, View.OnClickListener,View.OnLongClickListener {
+public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresenter> implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
 
     @Bind(R.id.register_commit_btn)
     Button mCommit;
@@ -105,10 +105,10 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
 
         mListNum = mNumKeyBoard.getRandomList();
         mListChar = mCharKeyBoard.getRandomList();
-        for (int i=0; i < mListNum.size(); i++){
+        for (int i = 0; i < mListNum.size(); i++) {
             mListNum.get(i).setOnClickListener(this);
         }
-        for (int i=0; i < mListChar.size(); i++){
+        for (int i = 0; i < mListChar.size(); i++) {
             mListChar.get(i).setOnClickListener(this);
         }
 
@@ -174,56 +174,56 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
 
         Editable editable;
         int start = 0;
-        if (mFoucsPos == 0){
+        if (mFoucsPos == 0) {
             editable = mPwd.getText();
             start = mPwd.getSelectionStart();
-        }else{
+        } else {
             editable = mPwd2.getText();
             start = mPwd2.getSelectionStart();
         }
 
-        for (int i=0; i < mListNum.size(); i++){
-            if (view == mListNum.get(i)){
+        for (int i = 0; i < mListNum.size(); i++) {
+            if (view == mListNum.get(i)) {
                 editable.insert(start, mListNum.get(i).getText().toString());
             }
         }
-        for (int i=0; i < mListChar.size(); i++){
-            if (view == mListChar.get(i)){
+        for (int i = 0; i < mListChar.size(); i++) {
+            if (view == mListChar.get(i)) {
                 editable.insert(start, mListChar.get(i).getText().toString());
             }
         }
         //切换为字母输入
-        if (view == mNumKeyBoard.getChangeAbcView()){
+        if (view == mNumKeyBoard.getChangeAbcView()) {
             mCharKeyBoard.setVisibility(View.VISIBLE);
             mNumKeyBoard.setVisibility(View.GONE);
         }
         //删除
-        if (view == mNumKeyBoard.getNumDelView() || view == mCharKeyBoard.getCharDelView()){
-            if(editable != null && editable.length() > 0){
-                if(start > 0){
-                    editable.delete(start-1, start);//开始，结束位置
+        if (view == mNumKeyBoard.getNumDelView() || view == mCharKeyBoard.getCharDelView()) {
+            if (editable != null && editable.length() > 0) {
+                if (start > 0) {
+                    editable.delete(start - 1, start);//开始，结束位置
                 }
             }
         }
         //完成
         if (view == mNumKeyBoard.getNumFinishView() || view == mCharKeyBoard.getCharFinishView() ||
-                view == mNumKeyBoard.getNumHideView() || view == mCharKeyBoard.getCharHideView()){
+                view == mNumKeyBoard.getNumHideView() || view == mCharKeyBoard.getCharHideView()) {
             mNumKeyBoard.setVisibility(View.GONE);
             mCharKeyBoard.setVisibility(View.GONE);
         }
 
         //切换为数字输入
-        if (view == mCharKeyBoard.getChangeNumView()){
+        if (view == mCharKeyBoard.getChangeNumView()) {
             mCharKeyBoard.setVisibility(View.GONE);
             mNumKeyBoard.setVisibility(View.VISIBLE);
         }
         //切换大小写输入
-        if (view == mCharKeyBoard.getCharTabView()){
-            if (isDaxie){
+        if (view == mCharKeyBoard.getCharTabView()) {
+            if (isDaxie) {
                 isDaxie = false;
                 mCharKeyBoard.getCharTabViewImg().setBackgroundResource(R.mipmap.icon_xiaoxie_btn);
                 mCharKeyBoard.changeLower();
-            }else{
+            } else {
                 isDaxie = true;
                 mCharKeyBoard.getCharTabViewImg().setBackgroundResource(R.mipmap.icon_daxie_btn);
                 mCharKeyBoard.changeUpper();
@@ -257,12 +257,12 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                     String phone = RSAUtils.strByEncryption(this, getIntent().getStringExtra(PHONE), true);
                     dto.setToken(RSAUtils.strByEncryption(this, PublicData.getInstance().deviceId, true));
                     dto.setPhoenum(phone);
-                    if ("".equals(PublicData.getInstance().imei)){
+                    if ("".equals(PublicData.getInstance().imei)) {
                         dto.setDevicetoken("1234567890");
-                    }else{
+                    } else {
                         dto.setDevicetoken(PublicData.getInstance().imei);
                     }
-                    LogUtils.i("token:"+dto.getDevicetoken());
+                    LogUtils.i("token:" + dto.getDevicetoken());
                     try {
                         SHATools sha = new SHATools();
                         String password = SHATools.hexString(sha.eccryptSHA1(pwd));
@@ -291,38 +291,39 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                                 PublicData.getInstance().mLoginInfoBean = result.getRspInfo();
                                 PublicData.getInstance().userID = result.getRspInfo().getUsrid();
                                 PublicData.getInstance().filenum = result.getRspInfo().getFilenum();
-                                LogUtils.i("jiami", result.getRspInfo().getFilenum() + "============="
-                                        + result.getRspInfo().getPhoenum() + "==========" + result.getRspInfo().getCtfnum());
+
                                 PublicData.getInstance().loginFlag = true;
                                 commitLocalCar();
                                 commitIllegalHistory();
 //                                ToastUtils.showShort(Register2Activity.this, "注册申请已提交");
 //                                if(!"0".equals(AccountRememberCtrl.getLoginAD(Register2Activity.this)) && !Tools.isStrEmpty(PublicData.getInstance().cttxCardNumber)){
-                                new DialogMgr(Register2Activity.this, "登录成功！", "欢迎你加入畅通车友会\n赶快去添加你的牡丹畅通卡吧！", "添加畅通卡", "继续",
+                                new DialogMgr(Register2Activity.this,
+                                        "登录成功！",
+                                        "欢迎你加入畅通车友会\n赶快去添加你的牡丹畅通卡吧！",
+                                        "添加畅通卡",
+                                        "继续",
                                         new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 Act.getInstance().lauchIntent(Register2Activity.this, CardHomeActivity.class);
-//                                                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+                                                ScreenManager.getScreenManager().specialMethod();
                                             }
-                                        }, new View.OnClickListener() {
+                                        },
+                                        new View.OnClickListener() {
 
-                                    @Override
-                                    public void onClick(View v) {
-                                        ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+                                            @Override
+                                            public void onClick(View v) {
+                                                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+                                            }
+                                        },
+                                        new View.OnClickListener() {
 
-                                    }
-                                }, new View.OnClickListener() {
-
-                                    @Override
-                                    public void onClick(View v) {
-                                        AccountRememberCtrl.saveLoginAD(Register2Activity.this, "0");
-                                        ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
-                                    }
-                                });
-//                                else{
-//                                    ScreenManager.popActivity();
-//                                }
+                                            @Override
+                                            public void onClick(View v) {
+                                                AccountRememberCtrl.saveLoginAD(Register2Activity.this, "0");
+                                                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+                                            }
+                                        });
                                 EventBus.getDefault().post(new CarInfoEvent(true));
                             } else {
                                 ToastUtils.showShort(Register2Activity.this, result.getSYS_HEAD().getReturnMessage());
@@ -342,7 +343,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                     try {
                         SHATools sha = new SHATools();
                         String password = SHATools.hexString(sha.eccryptSHA1(pwd));
-                        password = RSAUtils.strByEncryption(this, password , true);
+                        password = RSAUtils.strByEncryption(this, password, true);
                         dto.setPswd(password);
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
@@ -370,7 +371,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
         }
     }
 
-    private void liyingreg(String pwd, String userId){
+    private void liyingreg(String pwd, String userId) {
         try {
             SHATools sha = new SHATools();
             String password = SHATools.hexString(sha.eccryptSHA1(pwd));
@@ -433,8 +434,8 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
         }
     }
 
-    private void commitIllegalHistory(){
-        try{
+    private void commitIllegalHistory() {
+        try {
             LinkedList<QueryHistoryBean.QueryCarBean> mDatas = PublicData.getInstance().mQueryHistoryBean.getQueryCar();
             if (null == mDatas && mDatas.size() <= 0) {
                 return;
@@ -459,7 +460,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                     }
                 });
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -467,10 +468,10 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
 
     @Override
     public boolean onLongClick(View view) {
-        if (view == mNumKeyBoard.getNumDelView() || view == mCharKeyBoard.getCharDelView()){
-            if ( mFoucsPos == 0){
+        if (view == mNumKeyBoard.getNumDelView() || view == mCharKeyBoard.getCharDelView()) {
+            if (mFoucsPos == 0) {
                 mPwd.setText("");
-            }else {
+            } else {
                 mPwd2.setText("");
             }
         }
@@ -479,7 +480,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        switch (event.getAction()){
+        switch (event.getAction()) {
             case MotionEvent.ACTION_UP:
                 if (v.getId() == R.id.register_pwd && mFoucsPos == 1) {
                     mFoucsPos = 0;
@@ -488,7 +489,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                     mNumKeyBoard.setVisibility(View.VISIBLE);
                     mPwd.requestFocus();
                     mPwd.setCursorVisible(true);
-                }else if(v.getId() == R.id.register_repwd && mFoucsPos == 0){
+                } else if (v.getId() == R.id.register_repwd && mFoucsPos == 0) {
                     mFoucsPos = 1;
                     hideInputType();
                     mCharKeyBoard.setVisibility(View.GONE);
@@ -504,11 +505,11 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
     /**
      * 判断当前系统版本，选择使用何种方式隐藏默认键盘
      */
-    private void hideInputType(){
+    private void hideInputType() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if ( mFoucsPos == 0){
+        if (mFoucsPos == 0) {
             imm.hideSoftInputFromWindow(mPwd.getWindowToken(), 0); //强制隐藏键盘
-        }else {
+        } else {
             imm.hideSoftInputFromWindow(mPwd2.getWindowToken(), 0); //强制隐藏键盘
         }
     }
