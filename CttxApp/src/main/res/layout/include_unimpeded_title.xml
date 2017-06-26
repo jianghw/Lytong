@@ -2,8 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
        xmlns:tools="http://schemas.android.com/tools"
        android:layout_width="match_parent"
-       android:layout_height="@dimen/ds_144"
-       android:background="@color/black_12">
+       android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/lay_msg"
@@ -16,8 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/ds_24"
-            android:layout_marginRight="@dimen/ds_24"
+            android:layout_marginLeft="@dimen/ds_45"
+            android:layout_marginRight="@dimen/ds_45"
             android:src="@mipmap/icon_msg"/>
 
         <TextView
@@ -48,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/ds_8"
+        android:layout_marginRight="@dimen/ds_15"
         android:layout_toLeftOf="@+id/tv_scan"
         android:src="@mipmap/btn_scan"/>
 
@@ -58,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="@dimen/ds_8"
+        android:layout_marginRight="@dimen/ds_15"
         android:text="扫罚单"
         android:textColor="@drawable/common_text_selecter"
         android:textSize="@dimen/fs_14sp"/>

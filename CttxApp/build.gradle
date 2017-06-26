@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.zantong.mobilecttx"
         minSdkVersion 14
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 27
         versionName "2.6.0"
         aaptOptions.cruncherEnabled = false //禁止gradle检查png的合法性
@@ -157,9 +157,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.15'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:0.9.9'
-    compile 'com.facebook.stetho:stetho-okhttp3:1.3.1'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+
+
     compile 'com.j256.ormlite:ormlite-core:4.48'
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'com.aliyun.ams:alicloud-android-push:3.0.6@aar'

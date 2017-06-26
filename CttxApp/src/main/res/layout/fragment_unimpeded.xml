@@ -1,10 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              tools:context="com.zantong.mobilecttx.home.fragment.UnimpededFragment">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.zantong.mobilecttx.home.fragment.UnimpededFragment">
+<!--头部banner-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -12,8 +12,11 @@
         <cn.qqtheme.framework.widght.banner.ConvenientBanner
             android:id="@+id/custom_convenientBanner"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
-        <include layout="@layout/include_unimpeded_title"/>
+        <include
+            layout="@layout/include_unimpeded_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_144" />
     </RelativeLayout>
 </LinearLayout>

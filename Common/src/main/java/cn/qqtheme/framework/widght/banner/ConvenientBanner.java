@@ -38,19 +38,22 @@ public class ConvenientBanner<T> extends LinearLayout {
     private boolean manualPageable = true;
 
     public enum Transformer {
-        DefaultTransformer("DefaultTransformer"), AccordionTransformer(
-                "AccordionTransformer"), BackgroundToForegroundTransformer(
-                "BackgroundToForegroundTransformer"), CubeInTransformer(
-                "CubeInTransformer"), CubeOutTransformer("CubeOutTransformer"), DepthPageTransformer(
-                "DepthPageTransformer"), FlipHorizontalTransformer(
-                "FlipHorizontalTransformer"), FlipVerticalTransformer(
-                "FlipVerticalTransformer"), ForegroundToBackgroundTransformer(
-                "ForegroundToBackgroundTransformer"), RotateDownTransformer(
-                "RotateDownTransformer"), RotateUpTransformer(
-                "RotateUpTransformer"), StackTransformer("StackTransformer"), TabletTransformer(
-                "TabletTransformer"), ZoomInTransformer("ZoomInTransformer"), ZoomOutSlideTransformer(
-                "ZoomOutSlideTransformer"), ZoomOutTranformer(
-                "ZoomOutTranformer");
+        DefaultTransformer("DefaultTransformer"),
+        AccordionTransformer("AccordionTransformer"),
+        BackgroundToForegroundTransformer("BackgroundToForegroundTransformer"),
+        CubeInTransformer("CubeInTransformer"),
+        CubeOutTransformer("CubeOutTransformer"),
+        DepthPageTransformer("DepthPageTransformer"),
+        FlipHorizontalTransformer("FlipHorizontalTransformer"),
+        FlipVerticalTransformer("FlipVerticalTransformer"),
+        ForegroundToBackgroundTransformer("ForegroundToBackgroundTransformer"),
+        RotateDownTransformer("RotateDownTransformer"),
+        RotateUpTransformer("RotateUpTransformer"),
+        StackTransformer("StackTransformer"),
+        TabletTransformer("TabletTransformer"),
+        ZoomInTransformer("ZoomInTransformer"),
+        ZoomOutSlideTransformer("ZoomOutSlideTransformer"),
+        ZoomOutTranformer("ZoomOutTranformer");
 
         private final String className;
 
@@ -79,6 +82,7 @@ public class ConvenientBanner<T> extends LinearLayout {
     public ConvenientBanner(Context context) {
         this(context, null);
     }
+
     public ConvenientBanner(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -190,13 +194,11 @@ public class ConvenientBanner<T> extends LinearLayout {
      */
     public ConvenientBanner setPageTransformer(Transformer transformer) {
         try {
-            viewPager
-                    .setPageTransformer(
+            viewPager.setPageTransformer(
                             true,
                             (PageTransformer) Class.forName(
                                     "com.bigkoo.convenientbanner.transforms."
-                                            + transformer.getClassName())
-                                    .newInstance());
+                                            + transformer.getClassName()).newInstance());
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -215,8 +217,7 @@ public class ConvenientBanner<T> extends LinearLayout {
             Field mScroller = null;
             mScroller = ViewPager.class.getDeclaredField("mScroller");
             mScroller.setAccessible(true);
-            ViewPagerScroller scroller = new ViewPagerScroller(
-                    viewPager.getContext());
+            ViewPagerScroller scroller = new ViewPagerScroller(viewPager.getContext());
 //			scroller.setScrollDuration(1500);
             mScroller.set(viewPager, scroller);
         } catch (NoSuchFieldException e) {

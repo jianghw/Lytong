@@ -128,7 +128,7 @@ public class UnimpededFragment extends Fragment implements View.OnClickListener 
                 },
                 networkImages)
                 //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
-                .setPageIndicator(new int[]{R.mipmap.icon_dot_sel, R.mipmap.icon_dot_nor})
+                .setPageIndicator(new int[]{R.mipmap.icon_dot_nor,R.mipmap.icon_dot_sel})
                 //设置翻页的效果，不需要翻页效果可用不设
                 .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
 
@@ -149,7 +149,7 @@ public class UnimpededFragment extends Fragment implements View.OnClickListener 
     public void onResume() {
         super.onResume();
         //开始自动翻页
-        mCustomConvenientBanner.startTurning(5000);
+        mCustomConvenientBanner.startTurning(4000);
     }
 
     @Override
