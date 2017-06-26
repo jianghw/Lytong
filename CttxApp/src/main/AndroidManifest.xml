@@ -224,6 +224,12 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <!--主页，这个很吊呀-->
+        <activity
+            android:name=".home.activity.ImmersionMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name=".map.activity.BaiduMapActivity"
             android:screenOrientation="portrait"/>
@@ -624,7 +630,7 @@
         <!-- bugly配置APP版本号 -->
         <meta-data
             android:name="BUGLY_APP_VERSION"
-            android:value="2.5.0.3"/>
+            android:value="2.6.0.1"/>
         <!--7.0拍照适配-->
         <provider
             android:name="android.support.v4.content.FileProvider"

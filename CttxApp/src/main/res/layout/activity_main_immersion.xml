@@ -3,11 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.zantong.mobilecttx.home.activity.ImmersionHomeActivity">
+    tools:context="com.zantong.mobilecttx.home.activity.ImmersionMainActivity">
 
     <FrameLayout
         android:id="@+id/content"
@@ -17,12 +16,10 @@
 
     </FrameLayout>
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
+    <cn.qqtheme.framework.widght.tablebottom.UiTableBottom
+        android:id="@+id/custom_bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/navigation"/>
+        android:layout_height="@dimen/ds_78"
+        android:background="?android:attr/windowBackground"/>
 
 </LinearLayout>

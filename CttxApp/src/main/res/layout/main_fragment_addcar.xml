@@ -15,7 +15,7 @@
         android:layout_width="@dimen/ds_144"
         android:layout_height="@dimen/ds_144"
         android:layout_marginBottom="@dimen/ds_18"
-        android:background="@drawable/btn_add_car_selector"/>
+        android:background="@drawable/bg_sel_main_home"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
