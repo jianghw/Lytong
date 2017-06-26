@@ -5,7 +5,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.IntRange;
 import android.view.View;
 
-import cn.qqtheme.framework.popup.ConfirmPopup;
+import cn.qqtheme.framework.widget.ConfirmPopup;
 import cn.qqtheme.framework.widget.WheelView;
 
 /**

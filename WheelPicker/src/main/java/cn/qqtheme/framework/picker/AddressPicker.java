@@ -1,7 +1,6 @@
 package cn.qqtheme.framework.picker;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,6 +12,8 @@ import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.County;
 import cn.qqtheme.framework.entity.Province;
 import cn.qqtheme.framework.widget.WheelView;
+
+import static android.support.v7.widget.ListPopupWindow.WRAP_CONTENT;
 
 /**
  * 地址选择器（包括省级、地级、县级）。
@@ -155,7 +156,6 @@ public class AddressPicker extends LinkagePicker {
         throw new UnsupportedOperationException("Please use setOnAddressPickListener instead.");
     }
 
-    @NonNull
     @Override
     protected View makeCenterView() {
         if (hideCounty) {

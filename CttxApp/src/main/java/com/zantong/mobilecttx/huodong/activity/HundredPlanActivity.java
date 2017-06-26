@@ -41,9 +41,6 @@ import butterknife.OnClick;
 
 /**
  * 活动报名
- *
- * @author Sandy
- *         create at 16/9/12 上午11:13
  */
 public class HundredPlanActivity extends BaseMvpActivity {
 

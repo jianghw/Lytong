@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-import cn.qqtheme.framework.util.log.LogUtils;
 import cn.qqtheme.framework.widget.WheelView;
 
 /**
@@ -72,7 +71,6 @@ public class LinkagePicker extends WheelPicker {
             String ft = firstList.get(i);
             if (ft.contains(firstText)) {
                 selectedFirstIndex = i;
-                LogUtils.debug("init select first text: " + ft + ", index:" + selectedFirstIndex);
                 break;
             }
         }
@@ -81,7 +79,6 @@ public class LinkagePicker extends WheelPicker {
             String st = secondTexts.get(j);
             if (st.contains(secondText)) {
                 selectedSecondIndex = j;
-                LogUtils.debug("init select second text: " + st + ", index:" + selectedSecondIndex);
                 break;
             }
         }
@@ -93,7 +90,6 @@ public class LinkagePicker extends WheelPicker {
             String tt = thirdTexts.get(k);
             if (tt.contains(thirdText)) {
                 selectedThirdIndex = k;
-                LogUtils.debug("init select third text: " + tt + ", index:" + selectedThirdIndex);
                 break;
             }
         }
@@ -153,8 +149,7 @@ public class LinkagePicker extends WheelPicker {
      * 三级联动默认每列宽度为屏幕宽度的三分之一，两级联动默认每列宽度为屏幕宽度的一半。
      */
     protected final int[] getColumnWidths(boolean onlyTwoColumn) {
-        LogUtils.verbose(this, String.format(java.util.Locale.CHINA, "column weight is: %f-%f-%f"
-                , firstColumnWeight, secondColumnWeight, thirdColumnWeight));
+
         int[] widths = new int[3];
         if (firstColumnWeight == 0 && secondColumnWeight == 0 && thirdColumnWeight == 0) {
             if (onlyTwoColumn) {

@@ -308,6 +308,7 @@
         <activity
             android:name=".user.activity.CouponActivity"
             android:screenOrientation="portrait"/>
+        <!--活动报名-->
         <activity
             android:name=".huodong.activity.HundredPlanActivity"
             android:screenOrientation="portrait"/>

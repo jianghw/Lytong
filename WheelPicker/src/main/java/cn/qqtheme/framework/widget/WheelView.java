@@ -24,8 +24,6 @@ import android.widget.TextView;
 import java.util.LinkedList;
 import java.util.List;
 
-import cn.qqtheme.framework.util.log.LogUtils;
-
 /**
  * 基于原版(https://github.com/wangjiegulu/WheelView)作了一下修改：
  * 去掉回弹阴影
@@ -134,7 +132,7 @@ public class WheelView extends ScrollView {
         tv.setPadding(padding, padding, padding, padding);
         if (0 == itemHeight) {
             itemHeight = getViewMeasuredHeight(tv);
-            LogUtils.verbose(this, "itemHeight: " + itemHeight);
+
             views.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, itemHeight * displayItemCount));
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) this.getLayoutParams();
             setLayoutParams(new LinearLayout.LayoutParams(lp.width, itemHeight * displayItemCount));
@@ -155,7 +153,6 @@ public class WheelView extends ScrollView {
                 position = divided + offset + 1;
             }
         }
-        LogUtils.verbose("current scroll position : " + position);
 
         int childSize = views.getChildCount();
         for (int i = 0; i < childSize; i++) {
@@ -179,7 +176,7 @@ public class WheelView extends ScrollView {
         if (null != onWheelViewListener) {
             // 2015/12/25 真实的index应该忽略偏移量
             int realIndex = selectedIndex - offset;
-            LogUtils.verbose("isUserScroll=" + isUserScroll + ",selectedIndex=" + selectedIndex + ",realIndex=" + realIndex);
+
             onWheelViewListener.onSelected(isUserScroll, realIndex, items.get(this.selectedIndex));
         }
     }
@@ -210,14 +207,14 @@ public class WheelView extends ScrollView {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
-        LogUtils.verbose(this, "horizontal scroll origin: " + l + ", vertical scroll origin: " + t);
+
         refreshItemView(t);
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        LogUtils.verbose(this, "w: " + w + ", h: " + h + ", oldw: " + oldw + ", oldh: " + oldh);
+
         viewWidth = w;
         setBackgroundDrawable(null);
     }
@@ -235,10 +232,9 @@ public class WheelView extends ScrollView {
                 previousY = ev.getY();
                 break;
             case MotionEvent.ACTION_UP:
-                LogUtils.verbose(this, String.format("items=%s, offset=%s", items.size(), offset));
-                LogUtils.verbose(this, "selectedIndex=" + selectedIndex);
+
                 float delta = ev.getY() - previousY;
-                LogUtils.verbose(this, "delta=" + delta);
+
                 if (selectedIndex == offset && delta > 0) {
                     //滑动到第一项时，若继续向下滑动，则自动跳到最后一项
                     setSelectedIndex(items.size() - offset * 2 - 1);
@@ -386,14 +382,14 @@ public class WheelView extends ScrollView {
         public void run() {
             // 2015/12/17 java.lang.ArithmeticException: divide by zero
             if (itemHeight == 0) {
-                LogUtils.debug(this, "itemHeight is zero");
+
                 return;
             }
             int newY = getScrollY();
             if (initialY - newY == 0) { // stopped
                 final int remainder = initialY % itemHeight;
                 final int divided = initialY / itemHeight;
-                LogUtils.verbose(this, "initialY: " + initialY + ", remainder: " + remainder + ", divided: " + divided);
+
                 if (remainder == 0) {
                     selectedIndex = divided + offset;
                     onSelectedCallBack();
@@ -430,7 +426,7 @@ public class WheelView extends ScrollView {
         LineDrawable() {
             if (viewWidth == 0) {
                 viewWidth = ((Activity) context).getWindowManager().getDefaultDisplay().getWidth();
-                LogUtils.debug(this, "viewWidth: " + viewWidth);
+
             }
 
             // 2015/12/22 可设置分隔线是否可见
