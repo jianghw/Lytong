@@ -16,7 +16,7 @@ import com.zantong.mobilecttx.presenter.LoginPresenter;
 import com.zantong.mobilecttx.user.dto.PersonInfoDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;

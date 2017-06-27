@@ -33,7 +33,6 @@ import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
-import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 
@@ -45,6 +44,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.ToastUtils;
 
 public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements View.OnClickListener, IBaseView {
 

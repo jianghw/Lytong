@@ -28,7 +28,7 @@ import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;

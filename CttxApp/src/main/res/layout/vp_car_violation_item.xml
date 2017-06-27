@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="20dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@mipmap/card_bg">
+
+                <TextView
+                    android:id="@+id/tv_plate_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ds_60"
+                    android:layout_marginTop="@dimen/ds_36"
+                    android:textSize="@dimen/fs_22sp"
+                    android:textStyle="bold"
+                    tools:text="沪A 12345678"/>
+
+                <TextView
+                    android:id="@+id/tv_motorcycle_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_plate_number"
+                    android:layout_marginLeft="@dimen/ds_60"
+                    android:layout_marginTop="@dimen/ds_36"
+                    android:textColor="@color/colorWhite"
+                    tools:text="小型车"/>
+
+                <TextView
+                    android:id="@+id/tv_motorcycle_brand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_plate_number"
+                    android:layout_marginLeft="@dimen/ds_24"
+                    android:layout_marginTop="@dimen/ds_36"
+                    android:layout_toRightOf="@+id/tv_motorcycle_type"
+                    android:textColor="@color/colorWhite"
+                    tools:text="陪吃xxxx"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_totamt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="@dimen/fs_22sp"
+                        tools:text="300"/>
+
+                    <TextView
+                        android:id="@+id/tv_totcent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="@dimen/fs_22sp"
+                        tools:text="300"/>
+
+                    <TextView
+                        android:id="@+id/tv_totcount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="@dimen/fs_22sp"
+                        tools:text="300"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="罚款金额"
+                        android:textSize="@dimen/fs_14sp"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="积分"
+                        android:textSize="@dimen/fs_14sp"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="违章次数"
+                        android:textSize="@dimen/fs_14sp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</FrameLayout>

@@ -36,7 +36,7 @@ import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ScreenManager;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.Des3;

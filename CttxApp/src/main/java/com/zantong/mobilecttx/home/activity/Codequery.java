@@ -18,7 +18,7 @@ import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.StateBarSetting;
 import com.zantong.mobilecttx.utils.TitleSetting;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.interf.ModelView;
 

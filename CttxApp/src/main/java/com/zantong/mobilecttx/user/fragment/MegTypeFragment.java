@@ -12,14 +12,12 @@ import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.interf.IMegTypeAtyContract;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
-import com.zantong.mobilecttx.user.activity.MegSecondLevelActivity;
 import com.zantong.mobilecttx.user.adapter.MegAdapter;
-import com.zantong.mobilecttx.user.bean.Meg;
 import com.zantong.mobilecttx.user.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.MessageType;
 import com.zantong.mobilecttx.user.bean.MessageTypeBean;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import java.util.ArrayList;

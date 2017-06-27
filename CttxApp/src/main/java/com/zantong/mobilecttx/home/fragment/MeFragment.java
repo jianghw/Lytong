@@ -1,19 +1,15 @@
 package com.zantong.mobilecttx.home.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 
 /**
  * 个人页面
  */
-public class MeFragment extends Fragment {
+public class MeFragment extends BaseRefreshJxFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -22,12 +18,6 @@ public class MeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-    private TextView mText;
-
-    public MeFragment() {
-
-    }
 
     /**
      * Use this factory method to create a new instance of
@@ -49,7 +39,6 @@ public class MeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -57,25 +46,32 @@ public class MeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_unimpeded, container, false);
-        initView(view);
-        mText.setText(mParam1+mParam2);
-        return view;
+    protected void onRefreshData() {
+
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    protected void onLoadMoreData() {
+
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    protected int getFragmentLayoutResId() {
+        return R.layout.fragment_unimpeded;
     }
 
-    private void initView(View view) {
-        mText = (TextView) view.findViewById(R.id.text);
+    @Override
+    protected void initFragmentView(View view) {
+
+    }
+
+    @Override
+    protected void onFirstDataVisible() {
+
+    }
+
+    @Override
+    protected void DestroyViewAndThing() {
+
     }
 }

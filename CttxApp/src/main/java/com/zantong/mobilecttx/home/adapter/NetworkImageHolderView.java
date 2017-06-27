@@ -6,7 +6,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
+import com.zantong.mobilecttx.utils.ImageOptions;
 
 import cn.qqtheme.framework.widght.banner.CBPageAdapter;
 
@@ -14,8 +15,9 @@ import cn.qqtheme.framework.widght.banner.CBPageAdapter;
  * Created by Sai on 15/8/4.
  * 网络图片加载例子
  */
-public class NetworkImageHolderView implements CBPageAdapter.Holder<String>{
+public class NetworkImageHolderView implements CBPageAdapter.Holder<HomeAdvertisement> {
     private ImageView imageView;
+
     @Override
     public View createView(Context context) {
         //你可以通过layout文件来创建，也可以像我一样用代码创建，不一定是Image，任何控件都可以进行翻页
@@ -25,9 +27,13 @@ public class NetworkImageHolderView implements CBPageAdapter.Holder<String>{
     }
 
     @Override
-    public void UpdateUI(Context context, final int position, String data) {
-        imageView.setImageResource(R.mipmap.banner);
-        ImageLoader.getInstance().displayImage(data,imageView);
+    public void UpdateUI(Context context, final int position, HomeAdvertisement data) {
+
+        ImageLoader.getInstance().displayImage(
+                data.getUrl(),
+                imageView,
+                ImageOptions.getDefaultOptions());
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

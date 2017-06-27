@@ -101,8 +101,7 @@ public class ConvenientBanner<T> extends LinearLayout {
         pageAdapter = new CBPageAdapter(holderCreator,mDatas);
         viewPager.setAdapter(pageAdapter);
         viewPager.setBoundaryCaching(true);
-        if (page_indicatorId != null)
-            setPageIndicator(page_indicatorId);
+        if (page_indicatorId != null) setPageIndicator(page_indicatorId);
         return this;
     }
 

@@ -87,7 +87,6 @@ public class SplashActivity extends AppCompatActivity
      * 数据初始
      */
     private void initThirdPartyData() {
-mPresenter.loadLoginPostTest();
         // 友盟日志发送策略
 //        MobclickAgent.updateOnlineConfig(this);
         // 友盟是否启用调试模式

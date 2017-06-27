@@ -8,12 +8,15 @@ import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
+import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
+import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
 import com.zantong.mobilecttx.user.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
+import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
@@ -247,5 +250,19 @@ public class RepositoryManager {
 
     public Observable<LicenseResponseBean> loadLoginPostTest(String msg) {
         return mRemoteData.loadLoginPostTest(msg);
+    }
+
+    /**
+     * 1.首页信息
+     */
+    public Observable<HomeResult> homePage(HomeDataDTO id) {
+        return mRemoteData.homePage(id);
+    }
+
+    /**
+     * cip.cfc.c003.01
+     */
+    public Observable<UserCarsResult> getRemoteCarInfo(String requestDTO) {
+        return mRemoteData.getRemoteCarInfo(requestDTO);
     }
 }

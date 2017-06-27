@@ -23,7 +23,7 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.ChineseToPinYin;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.DialogMgr;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.dialog.CityDialog;
 import com.zantong.mobilecttx.utils.xmlparser.XmlParserHandler;

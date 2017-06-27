@@ -100,7 +100,7 @@
         <activity
             android:name=".weizhang.activity.QueryActivity"
             android:screenOrientation="portrait"/>
-        <!--.MainActivity-->
+
         <activity
             android:name=".user.activity.LoginActivity"
             android:screenOrientation="portrait"/>

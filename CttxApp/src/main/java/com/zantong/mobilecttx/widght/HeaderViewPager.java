@@ -34,7 +34,6 @@ import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.ImageOptions;
 import com.zantong.mobilecttx.utils.SPUtils;
-import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.net.URL;
@@ -44,6 +43,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 
 public class HeaderViewPager extends FrameLayout {
@@ -199,6 +199,7 @@ public class HeaderViewPager extends FrameLayout {
                 ImageLoader.getInstance().displayImage(
                         imageUrls.get(i).getUrl(), view,
                         ImageOptions.getDefaultOptions());
+
                 imageViewsList.add(view);
             }
             mAdapter.notifyDataSetChanged();

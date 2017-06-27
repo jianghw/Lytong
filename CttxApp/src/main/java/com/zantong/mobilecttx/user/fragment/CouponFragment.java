@@ -16,7 +16,7 @@ import com.zantong.mobilecttx.user.bean.CouponFragmentBean;
 import com.zantong.mobilecttx.user.bean.CouponFragmentLBean;
 import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.user.bean.MessageResult;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.widght.SpaceItemDecoration;
 
 import java.util.ArrayList;

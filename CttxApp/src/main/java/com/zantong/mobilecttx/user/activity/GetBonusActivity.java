@@ -30,7 +30,7 @@ import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.user.bean.BonusResult;
 import com.zantong.mobilecttx.user.dto.BonusDTO;
 import com.zantong.mobilecttx.utils.DialogMgr;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;

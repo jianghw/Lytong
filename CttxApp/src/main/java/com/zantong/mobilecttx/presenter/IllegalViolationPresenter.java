@@ -14,7 +14,7 @@ import com.zantong.mobilecttx.model.IllegalViolationModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
 import com.zantong.mobilecttx.utils.AccountRememberCtrl;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.QueryResultActivity;

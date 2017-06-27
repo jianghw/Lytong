@@ -19,7 +19,7 @@ import com.zantong.mobilecttx.card.bean.ProvinceModel;
 import com.zantong.mobilecttx.common.activity.CommonTwoLevelMenuActivity;
 import com.zantong.mobilecttx.card.dto.ApplyCTCardDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.dialog.CityDialog;
 import com.zantong.mobilecttx.utils.xmlparser.XmlParserHandler;
 import com.zantong.mobilecttx.widght.SettingItemView;

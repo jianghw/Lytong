@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.api;
 
+import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 
 import retrofit2.http.Field;
@@ -9,10 +10,10 @@ import rx.Observable;
 
 /**
  * Created by jianghw on 2017/4/26.
- * 服务器接口
+ * 银行服务器接口
  */
 
-public interface IAnShengService {
+public interface IBankService {
 
     @FormUrlEncoded
     @POST("mobilecall_call/mobilecall_call")
@@ -21,4 +22,8 @@ public interface IAnShengService {
     @FormUrlEncoded
     @POST("mobilecall_call")
     Observable<LicenseResponseBean> loadLoginPostTest(@Field("msg") String msg);
+
+    @FormUrlEncoded
+    @POST("mobilecall_call")
+    Observable<UserCarsResult> getRemoteCarInfo(@Field("msg") String requestDTO);
 }

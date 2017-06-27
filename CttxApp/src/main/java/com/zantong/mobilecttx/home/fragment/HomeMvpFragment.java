@@ -69,7 +69,6 @@ import com.zantong.mobilecttx.utils.OnClickUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
-import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.Des3;
@@ -102,6 +101,7 @@ import java.util.Date;
 import java.util.List;
 
 import cn.qqtheme.framework.util.FileUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;

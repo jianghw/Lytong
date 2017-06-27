@@ -19,7 +19,7 @@
     <cn.qqtheme.framework.widght.tablebottom.UiTableBottom
         android:id="@+id/custom_bottom"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_78"
+        android:layout_height="@dimen/ds_123"
         android:background="?android:attr/windowBackground"/>
 
 </LinearLayout>

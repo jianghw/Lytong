@@ -2,4 +2,6 @@
 <resources>
 
     <color name="colorWhite">#FFFFFF</color>
+
+    <color name="colorBgGray_f8">#f8f8f8</color>
 </resources>

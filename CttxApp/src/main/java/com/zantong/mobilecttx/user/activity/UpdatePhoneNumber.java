@@ -16,7 +16,7 @@ import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.presenter.UpdatePhoneNumberPresenter;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.interf.ModelView;
 

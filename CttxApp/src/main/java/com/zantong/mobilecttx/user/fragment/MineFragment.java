@@ -13,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +57,7 @@ import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.ImageOptions;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
@@ -472,7 +471,7 @@ public class MineFragment extends Fragment {
                 .subscribe(new Subscriber<Long[]>() {
                     @Override
                     public void onCompleted() {
-                        Log.d("MainActivity", "文件下载完成");
+
 //                        PublicData.getInstance().mNetLocationBean = bean;apkUrl
                         Tools.installApk(MineFragment.this.getActivity(), apkUrl);
                         progressBar.dismiss();
@@ -487,7 +486,7 @@ public class MineFragment extends Fragment {
 
                     @Override
                     public void onNext(Long[] data) {
-                        Log.d("MainActivity", data[0] + "");
+
                         progressBar.setCancelable(true);
                         progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                         int demo = (int) (data[0] * 100 / data[1]);

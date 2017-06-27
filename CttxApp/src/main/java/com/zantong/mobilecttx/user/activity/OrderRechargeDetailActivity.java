@@ -22,7 +22,7 @@ import com.zantong.mobilecttx.eventbus.OrderCancelEvent;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.interf.IOrderView;
 

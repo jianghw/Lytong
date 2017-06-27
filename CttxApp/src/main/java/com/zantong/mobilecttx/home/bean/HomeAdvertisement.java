@@ -13,7 +13,6 @@ public class HomeAdvertisement {
     private String  displayTime;
     private String clickVolume;
 
-
     public String getUrl() {
         return url;
     }

@@ -11,7 +11,7 @@ import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaArgs;

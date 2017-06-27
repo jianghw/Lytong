@@ -11,7 +11,7 @@ import com.zantong.mobilecttx.model.UserInfoUpdateModel;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
 import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;

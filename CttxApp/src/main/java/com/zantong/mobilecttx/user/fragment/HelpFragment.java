@@ -6,7 +6,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.user.adapter.HelpAdapter;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 
 import java.util.Arrays;
 

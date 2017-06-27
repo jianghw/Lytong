@@ -6,7 +6,7 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.user.bean.CTTXInsurancePayBean;
 import com.zantong.mobilecttx.presenter.InsurancePayPresenterImp;
 import com.zantong.mobilecttx.utils.NetUtils;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.weizhang.activity.PayWebActivity;
 import com.zantong.mobilecttx.interf.ModelView;
 

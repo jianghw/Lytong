@@ -72,7 +72,7 @@ import com.zantong.mobilecttx.utils.PullToRefreshLayout;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.Des3;
@@ -822,8 +822,7 @@ public class HomeFragment extends BaseExtraFragment {
                 .subscribe(new Subscriber<Long[]>() {
                     @Override
                     public void onCompleted() {
-                        Log.d("MainActivity", "文件下载完成");
-//                        PublicData.getInstance().mNetLocationBean = bean;apkUrl
+
                         Tools.installApk(HomeFragment.this.getActivity(), apkUrl);
                         progressBar.dismiss();
                         AppManager.getAppManager().AppExit(HomeFragment.this.getActivity(), false);
@@ -837,7 +836,7 @@ public class HomeFragment extends BaseExtraFragment {
 
                     @Override
                     public void onNext(Long[] data) {
-                        Log.d("MainActivity", data[0] + "");
+
                         progressBar.setCancelable(true);
                         progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                         int demo = (int) (data[0] * 100 / data[1]);

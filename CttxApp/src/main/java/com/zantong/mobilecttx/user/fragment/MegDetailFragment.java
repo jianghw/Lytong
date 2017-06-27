@@ -25,7 +25,7 @@ import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.user.bean.Meg;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
 import com.zantong.mobilecttx.utils.ImageOptions;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import org.greenrobot.eventbus.EventBus;

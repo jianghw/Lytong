@@ -11,7 +11,7 @@ import com.zantong.mobilecttx.card.bean.OpenQueryBean;
 import com.zantong.mobilecttx.model.CarPayCarModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.car.fragment.CanPayCarFragment;
 
 import org.json.JSONException;

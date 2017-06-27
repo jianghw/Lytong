@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.FrameLayout;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.home.fragment.FavorableFragment;
@@ -21,7 +20,6 @@ import cn.qqtheme.framework.widght.tablebottom.UiTableBottom;
  */
 public class ImmersionMainActivity extends AppCompatActivity {
 
-    private FrameLayout mContent;
     private UiTableBottom mCustomBottom;
 
     /**
@@ -45,7 +43,6 @@ public class ImmersionMainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mContent = (FrameLayout) findViewById(R.id.content);
         mCustomBottom = (UiTableBottom) findViewById(R.id.custom_bottom);
     }
 
