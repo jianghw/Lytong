@@ -59,11 +59,6 @@ public class FavorableFragment extends BaseRefreshJxFragment {
     }
 
     @Override
-    protected void onLoadMoreData() {
-
-    }
-
-    @Override
     protected int getFragmentLayoutResId() {
         return R.layout.fragment_unimpeded;
     }

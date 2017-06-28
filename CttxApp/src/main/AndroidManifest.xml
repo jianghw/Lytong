@@ -3,10 +3,11 @@
           package="com.zantong.mobilecttx"
           android:installLocation="auto">
 
-    <!--小米通道相关权限 -->
+    <!-- 小米通道相关权限 -->
     <permission
         android:name="com.zantong.mobilecttx.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signatureOrSystem"/>
+
     <uses-permission android:name="com.zantong.mobilecttx.permission.MIPUSH_RECEIVE"/>
 
     <!-- 阿里移动推送相关权限 -->
@@ -37,7 +38,6 @@
     <!-- 允许task重排序 -->
     <uses-permission android:name="android.permission.REORDER_TASKS"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
     <uses-permission android:name="android.permission.GET_TASKS"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
@@ -54,15 +54,14 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
     <!-- 检测联网方式，区分用户设备使用的是2G、3G或是WiFi -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <!-- 定位包、导航包需要的额外权限（注：基础权限也需要）-->
+    <!-- 定位包、导航包需要的额外权限（注：基础权限也需要） -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
-    <!-- android:theme="@android:style/Theme.NoTitleBar"-->
 
+    <!-- android:theme="@android:style/Theme.NoTitleBar" -->
     <application
         android:name=".common.MyApplication"
         android:allowBackup="true"
@@ -72,7 +71,8 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--启动页面-->
+
+        <!-- 启动页面 -->
         <activity
             android:name=".home.activity.SplashActivity"
             android:screenOrientation="portrait"
@@ -82,7 +82,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
             <intent-filter android:priority="0">
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -92,7 +91,7 @@
                 <data android:scheme="geo1"/>
             </intent-filter>
         </activity>
-        <!--引导页面-->
+        <!-- 引导页面 -->
         <activity
             android:name=".home.activity.GuideCTActivity"
             android:screenOrientation="portrait"
@@ -100,12 +99,11 @@
         <activity
             android:name=".weizhang.activity.QueryActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".user.activity.LoginActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name="com.zantong.mobilecttx.common.Demo"
+            android:name=".common.Demo"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
@@ -114,7 +112,7 @@
         <activity
             android:name=".weizhang.activity.ViolationDetails"
             android:screenOrientation="portrait"/>
-        <!--输入编码查询违章页面-->
+        <!-- 输入编码查询违章页面 -->
         <activity
             android:name=".home.activity.Codequery"
             android:screenOrientation="portrait"/>
@@ -125,14 +123,14 @@
         <activity
             android:name=".car.activity.SelectCarTypeActivity"
             android:screenOrientation="portrait"/>
-        <!--设置页面-->
+        <!-- 设置页面 -->
         <activity
             android:name=".user.activity.SettingActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.HelpActivity"
             android:screenOrientation="portrait"/>
-        <!--个人中心页面-->
+        <!-- 个人中心页面 -->
         <activity
             android:name=".user.activity.UserInfoUpdate"
             android:screenOrientation="portrait"/>
@@ -224,7 +222,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
-        <!--主页，这个很吊呀-->
+        <!-- 主页，这个很吊呀 -->
         <activity
             android:name=".home.activity.ImmersionMainActivity"
             android:launchMode="singleTask"
@@ -314,7 +312,7 @@
         <activity
             android:name=".user.activity.CouponActivity"
             android:screenOrientation="portrait"/>
-        <!--活动报名-->
+        <!-- 活动报名 -->
         <activity
             android:name=".huodong.activity.HundredPlanActivity"
             android:screenOrientation="portrait"/>
@@ -355,38 +353,37 @@
             android:name=".common.activity.OcrCameraActivity"
             android:screenOrientation="landscape"/>
 
-        <!--======================畅通卡相关业务集合===========================-->
-        <!--我的畅通卡 有绑定卡页面-->
+        <!-- ======================畅通卡相关业务集合=========================== -->
+        <!-- 我的畅通卡 有绑定卡页面 -->
         <activity
             android:name=".card.activity.MyCardActivity"
             android:screenOrientation="portrait"/>
-        <!--我的办畅通卡 无绑定卡页面-->
+        <!-- 我的办畅通卡 无绑定卡页面 -->
         <activity
             android:name=".card.activity.CardHomeActivity"
             android:screenOrientation="portrait"/>
-        <!--绑定畅通卡-->
+        <!-- 绑定畅通卡 -->
         <activity
             android:name=".card.activity.BindJiaZhaoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <!--办卡信息-->
+        <!-- 办卡信息 -->
         <activity
             android:name=".card.activity.ApplyCardSecondActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
-        <!--申办畅通卡-->
+        <!-- 申办畅通卡 -->
         <activity
             android:name=".card.activity.ApplyCardFirstActivity"
             android:screenOrientation="portrait"/>
-        <!--办卡进度-->
+        <!-- 办卡进度 -->
         <activity
             android:name=".card.activity.CardFlowActivity"
             android:screenOrientation="portrait"/>
-        <!--快捷办卡-->
+        <!-- 快捷办卡 -->
         <activity
             android:name=".card.activity.ApplyCardQuickActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".card.activity.CardNoticeActivity"
             android:screenOrientation="portrait"/>
@@ -396,7 +393,7 @@
         <activity
             android:name=".weizhang.activity.ViolationHistoryAcitvity"
             android:screenOrientation="portrait"/>
-        <!--违章信息显示页面-->
+        <!-- 违章信息显示页面 -->
         <activity
             android:name=".weizhang.activity.ViolationResultAcitvity"
             android:screenOrientation="portrait"/>
@@ -420,20 +417,22 @@
         <meta-data
             android:name="com.zantong.mobilecttx.utils.imagetools.UnsafeOkHttpGlideModule"
             android:value="GlideModule"/>
-        <!--<meta-data-->
-        <!--android:name="UMENG_CHANNEL"-->
-        <!--android:value="${UMENG_CHANNEL_VALUE}" >-->
-        <!--</meta-data>-->
+        <!-- <meta-data -->
+        <!-- android:name="UMENG_CHANNEL" -->
+        <!-- android:value="${UMENG_CHANNEL_VALUE}" > -->
+        <!-- </meta-data> -->
 
         <service android:name=".utils.DateService">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </service>
         <service android:name=".utils.InspectService">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </service>
@@ -457,27 +456,29 @@
                 </action>
             </intent-filter>
         </service>
-        <!--<meta-data-->
-        <!--android:name="com.amap.api.v2.apikey"-->
-        <!--android:value="fdb1c0eb0417f7ee13fe16c6f9b38304" />-->
+        <!-- <meta-data -->
+        <!-- android:name="com.amap.api.v2.apikey" -->
+        <!-- android:value="fdb1c0eb0417f7ee13fe16c6f9b38304" /> -->
         <!-- 定位需要的服务 -->
-        <!--<service android:name="com.amap.api.location.APSService"></service>&lt;!&ndash; ATTENTION: This was auto-generated-->
-        <!--to add、 See https://g.co/AppIndexing/AndroidStudio for more information. &ndash;&gt;-->
+        <!-- <service android:name="com.amap.api.location.APSService"></service>&lt;!&ndash; ATTENTION: This was auto-generated -->
+        <!-- to add、 See https://g.co/AppIndexing/AndroidStudio for more information. &ndash;&gt; -->
 
-        <!--阿里推送-->
+
+        <!-- 阿里推送 -->
         <meta-data
             android:name="com.alibaba.app.appkey"
             android:value="23481202"/> <!-- 请填写你自己的- appKey -->
         <meta-data
             android:name="com.alibaba.app.appsecret"
-            android:value="a51ce60b119cf15b9ab220ed70d8078c"/> <!-- 请填写你自己的appSecret  在应用证书中  -->
-        <!-- 测试专用  -->
-        <!--<meta-data-->
-        <!--android:name="com.alibaba.app.appkey"-->
-        <!--android:value="24038080"/> &lt;!&ndash; 请填写你自己的- appKey &ndash;&gt;-->
-        <!--<meta-data-->
-        <!--android:name="com.alibaba.app.appsecret"-->
-        <!--android:value="67e0f4f5e27e689af373fb3c2a8ace9c"/> &lt;!&ndash; 请填写你自己的appSecret  在应用证书中  &ndash;&gt;-->
+            android:value="a51ce60b119cf15b9ab220ed70d8078c"/> <!-- 请填写你自己的appSecret  在应用证书中 -->
+        <!-- 测试专用 -->
+        <!-- <meta-data -->
+        <!-- android:name="com.alibaba.app.appkey" -->
+        <!-- android:value="24038080"/> &lt;!&ndash; 请填写你自己的- appKey &ndash;&gt; -->
+        <!-- <meta-data -->
+        <!-- android:name="com.alibaba.app.appsecret" -->
+        <!-- android:value="67e0f4f5e27e689af373fb3c2a8ace9c"/> &lt;!&ndash; 请填写你自己的appSecret  在应用证书中  &ndash;&gt; -->
+
 
         <!-- 通道保持服务（幽灵进程自动保活该服务） -->
         <service
@@ -494,7 +495,7 @@
             </intent-filter>
         </service>
 
-        <!--  消息接收服务-->
+        <!-- 消息接收服务 -->
         <service
             android:name="com.alibaba.sdk.android.push.MsgService"
             android:exported="false">
@@ -503,7 +504,7 @@
             </intent-filter>
         </service>
 
-        <!-- 消息接收增强服务（可提高消息/通知到达率）-->
+        <!-- 消息接收增强服务（可提高消息/通知到达率） -->
         <service
             android:name="com.alibaba.sdk.android.push.channel.TaobaoRecvService"
             android:exported="true">
@@ -517,10 +518,8 @@
             android:name=".alicloudpush.LytMessageReceiver"
             android:exported="true">
             <intent-filter>
-
                 <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED"/>
             </intent-filter>
-
             <intent-filter>
                      
                 <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED"/>
@@ -586,7 +585,7 @@
             android:name="BaiduMobAd_WIFI_LOCATION"
             android:value="true"/>
 
-        <!--华为通道官方配置 -->
+        <!-- 华为通道官方配置 -->
         <receiver android:name="com.alibaba.sdk.android.push.HuaWeiReceiver">
             <intent-filter>
                 <action android:name="com.huawei.android.push.intent.REGISTRATION"/>
@@ -623,6 +622,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </receiver>
@@ -631,17 +631,21 @@
         <meta-data
             android:name="BUGLY_APP_VERSION"
             android:value="2.6.0.1"/>
-        <!--7.0拍照适配-->
+        <!-- 7.0拍照适配 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
-            <!--元数据-->
+
+            <!-- 元数据 -->
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider_paths"/>
         </provider>
+
+        <activity android:name=".fahrschule.activity.FahrschuleActivity">
+        </activity>
     </application>
 
 </manifest>

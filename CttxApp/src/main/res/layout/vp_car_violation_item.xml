@@ -9,12 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="20dp"
+        app:cardCornerRadius="@dimen/ds_30"
+        app:cardElevation="@dimen/ds_24"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
+            android:id="@+id/lay_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -33,6 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/ds_60"
                     android:layout_marginTop="@dimen/ds_36"
+                    android:textColor="@color/colorWhite"
                     android:textSize="@dimen/fs_22sp"
                     android:textStyle="bold"
                     tools:text="沪A 12345678"/>
@@ -45,6 +47,7 @@
                     android:layout_marginLeft="@dimen/ds_60"
                     android:layout_marginTop="@dimen/ds_36"
                     android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/fs_16sp"
                     tools:text="小型车"/>
 
                 <TextView
@@ -56,6 +59,7 @@
                     android:layout_marginTop="@dimen/ds_36"
                     android:layout_toRightOf="@+id/tv_motorcycle_type"
                     android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/fs_16sp"
                     tools:text="陪吃xxxx"/>
             </RelativeLayout>
 
@@ -78,8 +82,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:textSize="@dimen/fs_22sp"
-                        tools:text="300"/>
+                        android:text="0"
+                        android:textColor="@color/colorTvBlack_4c"
+                        android:textSize="@dimen/fs_22sp"/>
 
                     <TextView
                         android:id="@+id/tv_totcent"
@@ -87,8 +92,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:textSize="@dimen/fs_22sp"
-                        tools:text="300"/>
+                        android:text="0"
+                        android:textColor="@color/colorTvBlack_4c"
+                        android:textSize="@dimen/fs_22sp"/>
 
                     <TextView
                         android:id="@+id/tv_totcount"
@@ -96,8 +102,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:textSize="@dimen/fs_22sp"
-                        tools:text="300"/>
+                        android:text="0"
+                        android:textColor="@color/colorTvBlack_4c"
+                        android:textSize="@dimen/fs_22sp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -113,6 +120,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="罚款金额"
+                        android:textColor="@color/colorTvBlack_b2"
                         android:textSize="@dimen/fs_14sp"/>
 
                     <TextView
@@ -121,6 +129,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="积分"
+                        android:textColor="@color/colorTvBlack_b2"
                         android:textSize="@dimen/fs_14sp"/>
 
                     <TextView
@@ -129,6 +138,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="违章次数"
+                        android:textColor="@color/colorTvBlack_b2"
                         android:textSize="@dimen/fs_14sp"/>
                 </LinearLayout>
             </LinearLayout>

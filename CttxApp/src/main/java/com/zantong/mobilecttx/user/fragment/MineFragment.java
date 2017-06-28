@@ -57,7 +57,6 @@ import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.ImageOptions;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
@@ -73,6 +72,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.AppUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
@@ -91,8 +91,7 @@ public class MineFragment extends Fragment {
     TextView mine_changtong_notice_text;
     @Bind(R.id.mine_manage_vechilse_notice)
     TextView mine_manage_vechilse_notice;
-    @Bind(R.id.mine_share)
-    View mShare;
+
     @Bind(R.id.mine_card_status)
     TextView mCardStatus;
 
@@ -278,7 +277,7 @@ public class MineFragment extends Fragment {
      * 点击事件
      */
     @OnClick({R.id.common_problem, R.id.mine_order, R.id.mine_pay_order, R.id.mine_info_rl,
-            R.id.mine_tools_part1, R.id.mine_manage_vechilse, R.id.mine_share,
+            R.id.mine_tools_part1, R.id.mine_manage_vechilse,
             R.id.mine_manage_weizhang_history, R.id.invite_red_packet, R.id.problem_feedback,
             R.id.about_us, R.id.mine_meg_layout, R.id.mine_ctk_layout,
             R.id.mine_youhuijian_layout, R.id.about_update, R.id.about_advertising})
@@ -309,9 +308,6 @@ public class MineFragment extends Fragment {
             case R.id.mine_pay_order:  //充值支付订单
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(30));
                 Act.getInstance().lauchIntentToLogin(getActivity(), OrderRechargeActivity.class);
-                break;
-            case R.id.mine_share:  //分享
-
                 break;
             case R.id.common_problem:  //常见问题
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(32));

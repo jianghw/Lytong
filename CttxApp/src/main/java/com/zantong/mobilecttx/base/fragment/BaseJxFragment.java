@@ -78,7 +78,6 @@ public abstract class BaseJxFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (isNeedKnife()) ButterKnife.bind(this, view);
 
         mLoadingLayout = view.findViewById(R.id.base_loading_bg);
         mLoadingSucceedLayout = view.findViewById(R.id.lay_base_content);
@@ -90,7 +89,9 @@ public abstract class BaseJxFragment extends Fragment {
                 onForceRefresh();
             }
         });
+
         initViewsAndEvents(view);
+        if (isNeedKnife()) ButterKnife.bind(this, view);
     }
 
     /**

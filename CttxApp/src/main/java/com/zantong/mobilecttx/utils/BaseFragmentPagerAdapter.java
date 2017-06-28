@@ -89,11 +89,10 @@ public abstract class BaseFragmentPagerAdapter extends PagerAdapter {
         // Do we already have this fragment?
         String name = makeFragmentName(container.getId(), itemId);
         Fragment fragment = mFragmentManager.findFragmentByTag(name);
-//        || position != 0
+
         if ( (fragment != null || position != 0 )) {
             if (DEBUG) Log.v(TAG, "Attaching item #" + itemId + ": f=" + fragment);
-//            name = makeFragmentName(container.getId(), position);
-//            fragment = mFragmentManager.findFragmentByTag(name);
+
             fragment = getItem(position);
             fragment.setMenuVisibility(false);
             fragment.setUserVisibleHint(false);
@@ -107,19 +106,16 @@ public abstract class BaseFragmentPagerAdapter extends PagerAdapter {
             fragment = getItem(position);
             if (DEBUG) Log.v(TAG, "Adding item #" + itemId + ": f=" + fragment);
             try{
-                mCurTransaction.add(container.getId(), fragment,
-                        makeFragmentName(container.getId(), position));
+                mCurTransaction.add(container.getId(), fragment, makeFragmentName(container.getId(), position));
             }catch (Exception e){
                 e.printStackTrace();
             }
-
         }
 
         if (fragment != mCurrentPrimaryItem && position == 0) {
             fragment.setMenuVisibility(false);
             fragment.setUserVisibleHint(false);
         }
-
         return fragment;
     }
 
@@ -132,8 +128,7 @@ public abstract class BaseFragmentPagerAdapter extends PagerAdapter {
         if (mCurTransaction == null) {
             mCurTransaction = mFragmentManager.beginTransaction();
         }
-        if (DEBUG) Log.v(TAG, "Detaching item #" + getItemId(position) + ": f=" + object
-                + " v=" + ((Fragment)object).getView());
+
         mCurTransaction.detach((Fragment)object);
     }
 

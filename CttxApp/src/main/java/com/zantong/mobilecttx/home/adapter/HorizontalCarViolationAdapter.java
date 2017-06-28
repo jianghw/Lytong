@@ -1,17 +1,28 @@
 package com.zantong.mobilecttx.home.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.car.activity.AddCarActivity;
+import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
-import com.zantong.mobilecttx.user.bean.UserCarsBean;
-import com.zantong.mobilecttx.user.bean.UserCarsResult;
+import com.zantong.mobilecttx.utils.StringUtils;
+import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
+import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
+import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,17 +44,25 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
      */
     private int carCount;
 
-    public HorizontalCarViolationAdapter(final Context context, UserCarsResult userCarsResult) {
+    public HorizontalCarViolationAdapter(final Context context, List<UserCarInfoBean> infoBeanList) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
-        UserCarsBean bean = userCarsResult.getRspInfo();
-        if (bean != null) {
-            List<UserCarInfoBean> infoBeanList = bean.getUserCarsInfo();
+
+        notifyListData(infoBeanList);
+    }
+
+    private void notifyListData(List<UserCarInfoBean> infoBeanList) {
+        if (infoBeanList != null) {
             carCount = infoBeanList.size();
             if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
             mUserCarInfoBeanList.addAll(infoBeanList);
         }
         if (carCount < 3) mUserCarInfoBeanList.add(new UserCarInfoBean());
+    }
+
+    public void notifyDataSetChanged(List<UserCarInfoBean> infoBeanList) {
+        notifyListData(infoBeanList);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -73,31 +92,71 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
         return view;
     }
 
+    /**
+     * 违章查询
+     */
     private void setupDefaultCarItem(View view, UserCarInfoBean userCarInfoBean) {
         ImageView imageView = (ImageView) view.findViewById(R.id.img_query);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AddCarActivity.isFrom = false;
+                Act.getInstance().lauchIntent(mContext, AddCarActivity.class);
             }
         });
     }
 
-    private void setupViolationCarItem(View view, UserCarInfoBean userCarInfoBean) {
+    private void setupViolationCarItem(View view, final UserCarInfoBean userCarInfoBean) {
+        LinearLayout layContent = (LinearLayout) view.findViewById(R.id.lay_content);
+        layContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickLayContent(userCarInfoBean);
+            }
+        });
         TextView tvPlateNumber = (TextView) view.findViewById(R.id.tv_plate_number);
         TextView tvType = (TextView) view.findViewById(R.id.tv_motorcycle_type);
         TextView tvBrand = (TextView) view.findViewById(R.id.tv_motorcycle_brand);
-        tvPlateNumber.setText(userCarInfoBean.getCarframenum());
-        tvType.setText(userCarInfoBean.getCarmodel());
-        tvBrand.setText(userCarInfoBean.getCarframenum());
+
+        tvPlateNumber.setText(userCarInfoBean.getCarnum());
+        tvType.setText(userCarInfoBean.getCarnumtype().equals("02") ? "小型汽车" : "大型汽车");
+        tvBrand.setText(userCarInfoBean.getEnginenum());
 
         TextView tvTotamt = (TextView) view.findViewById(R.id.tv_totamt);
         TextView tvTotcent = (TextView) view.findViewById(R.id.tv_totcent);
         TextView tvTotcount = (TextView) view.findViewById(R.id.tv_totcount);
+        //未处理总金额
+        String price = StringUtils.getPriceString(userCarInfoBean.getUntreatamt());
+        tvTotamt.setText(price);
+        //未处理总分值
+        tvTotcent.setText(TextUtils.isEmpty(userCarInfoBean.getUntreatcent())
+                ? "0" : userCarInfoBean.getUntreatcent());
+        //未处理总笔数
+        tvTotcount.setText(TextUtils.isEmpty(userCarInfoBean.getUntreatcount())
+                ? "0" : userCarInfoBean.getUntreatcount());
+    }
 
-        tvTotamt.setText(userCarInfoBean.getCarframenum());
-        tvTotcent.setText(userCarInfoBean.getCarframenum());
-        tvTotcount.setText(userCarInfoBean.getCarframenum());
+    /**
+     * 点击监听
+     */
+    private void onClickLayContent(UserCarInfoBean userCarInfoBean) {
+        MobclickAgent.onEvent(mContext, Config.getUMengID(1));
+        PublicData.getInstance().mHashMap.put("IllegalViolationName", userCarInfoBean.getCarnum());
+        PublicData.getInstance().mHashMap.put("carnum", userCarInfoBean.getCarnum());
+        PublicData.getInstance().mHashMap.put("enginenum", userCarInfoBean.getEnginenum());
+        PublicData.getInstance().mHashMap.put("carnumtype", userCarInfoBean.getCarnumtype());
+
+        ViolationDTO dto = new ViolationDTO();
+        dto.setCarnum(RSAUtils.strByEncryption(mContext, userCarInfoBean.getCarnum(), true));
+        dto.setEnginenum(RSAUtils.strByEncryption(mContext, userCarInfoBean.getEnginenum(), true));
+        dto.setCarnumtype(userCarInfoBean.getCarnumtype());
+
+        Intent intent = new Intent(mContext, ViolationResultAcitvity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("params", dto);
+        intent.putExtras(bundle);
+        intent.putExtra("plateNum", userCarInfoBean.getCarnum());
+        mContext.startActivity(intent);
     }
 
     @Override

@@ -12,12 +12,21 @@ import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.alicloudpush.PushBean;
+import com.zantong.mobilecttx.api.CallBack;
+import com.zantong.mobilecttx.api.CarApiClient;
+import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
+import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
+import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
+import com.zantong.mobilecttx.eventbus.GetMsgAgainEvent;
+import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
 import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.home.adapter.HorizontalCarViolationAdapter;
+import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.adapter.NetworkImageHolderView;
 import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.home.bean.HomeBean;
@@ -26,9 +35,19 @@ import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.interf.IUnimpededFtyContract;
 import com.zantong.mobilecttx.presenter.chongzhi.UnimpededFtyPresenter;
 import com.zantong.mobilecttx.user.activity.MegTypeActivity;
+import com.zantong.mobilecttx.user.bean.MessageCountBean;
+import com.zantong.mobilecttx.user.bean.MessageCountResult;
+import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
+import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.utils.rsa.Des3;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.widght.MainScrollUpAdvertisementView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,7 +66,8 @@ import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_COD
  * 畅通主页面
  */
 public class UnimpededFragment extends BaseRefreshJxFragment
-        implements View.OnClickListener, IUnimpededFtyContract.IUnimpededFtyView {
+        implements View.OnClickListener,
+        IUnimpededFtyContract.IUnimpededFtyView {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -99,6 +119,11 @@ public class UnimpededFragment extends BaseRefreshJxFragment
      * 小喇叭数据
      */
     private List<HomeNotice> mHomeNotices = Collections.synchronizedList(new ArrayList<HomeNotice>());
+    /**
+     * 违章车adapter
+     */
+    private HorizontalCarViolationAdapter mCarViolationAdapter;
+    private List<UserCarInfoBean> mUserCarInfoBeanList = new ArrayList<>();
 
     public static UnimpededFragment newInstance() {
         return new UnimpededFragment();
@@ -137,18 +162,29 @@ public class UnimpededFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    protected void onLoadMoreData() {
-//TODO 无业务需求
-    }
-
-    @Override
     protected void initFragmentView(View view) {
         initView(view);
 
         UnimpededFtyPresenter mPresenter = new UnimpededFtyPresenter(
                 Injection.provideRepository(getActivity().getApplicationContext()), this);
+
+        //广告页本地加载
+        List<Integer> localImages = new ArrayList<>();
+        localImages.add(R.mipmap.banner);
+        mCustomConvenientBanner.setPages(
+                new CBViewHolderCreator<LocalImageHolderView>() {
+                    @Override
+                    public LocalImageHolderView createHolder() {
+                        return new LocalImageHolderView();
+                    }
+                }, localImages)
+                .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
+                .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
         //小喇叭
         initScrollUp(mHomeNotices);
+        //违章车辆
+        mCarViolationAdapter = new HorizontalCarViolationAdapter(getContext(), mUserCarInfoBeanList);
+        mCustomViolation.setAdapter(mCarViolationAdapter);
     }
 
     private void initView(View view) {
@@ -181,8 +217,9 @@ public class UnimpededFragment extends BaseRefreshJxFragment
     protected void onFirstDataVisible() {
         if (PublicData.getInstance().loginFlag)
             mPresenter.getRemoteCarInfo();
+        else
+            getLocalCarInfo();
 
-        mPresenter.getRemoteCarInfo();
         mPresenter.homePage();
     }
 
@@ -214,10 +251,19 @@ public class UnimpededFragment extends BaseRefreshJxFragment
         mCustomConvenientBanner.stopTurning();
     }
 
+    /**
+     * 清除资源
+     */
     @Override
     protected void DestroyViewAndThing() {
         mPresenter.unSubscribe();
         if (!mHomeNotices.isEmpty()) mHomeNotices.clear();
+        if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
+
+        EventBus.getDefault().removeStickyEvent(AddPushTrumpetEvent.class);
+        EventBus.getDefault().removeStickyEvent(GetMsgAgainEvent.class);
+        EventBus.getDefault().removeStickyEvent(UpdateCarInfoEvent.class);
+        EventBus.getDefault().removeStickyEvent(BenDiCarInfoEvent.class);
     }
 
     @Override
@@ -287,7 +333,57 @@ public class UnimpededFragment extends BaseRefreshJxFragment
 
     @Override
     public void remoteCarInfoSucceed(UserCarsResult result) {
-        mCustomViolation.setAdapter(new HorizontalCarViolationAdapter(getContext(), result));
+        if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
+        if (result != null && result.getRspInfo() != null) {
+            List<UserCarInfoBean> infoBeanList = result.getRspInfo().getUserCarsInfo();
+//TODO 车辆数据保存处理
+            PublicData.getInstance().payData.clear();
+            PublicData.getInstance().mServerCars = decodeCarInfo(infoBeanList);
+            PublicData.getInstance().mCarNum = infoBeanList.size();
+
+            mUserCarInfoBeanList.addAll(infoBeanList);
+        }
+        mCarViolationAdapter.notifyDataSetChanged(mUserCarInfoBeanList);
+        mCustomViolation.setAdapter(mCarViolationAdapter);
+    }
+
+    /**
+     * 车辆数据解密
+     */
+    private List<UserCarInfoBean> decodeCarInfo(List<UserCarInfoBean> carInfoBeanList) {
+        List<UserCarInfoBean> arrayList = new ArrayList<>();
+        for (UserCarInfoBean userCarInfoBean : carInfoBeanList) {
+            userCarInfoBean.setEnginenum(Des3.decode(userCarInfoBean.getEnginenum()));
+            userCarInfoBean.setCarnum(Des3.decode(userCarInfoBean.getCarnum()));
+            userCarInfoBean.setCarframenum(Des3.decode(userCarInfoBean.getCarframenum()));
+
+            if (userCarInfoBean.getIspaycar().equals("1"))
+                PublicData.getInstance().payData.add(userCarInfoBean);
+
+            arrayList.add(userCarInfoBean);
+        }
+        return arrayList;
+    }
+
+    /**
+     * 本地车辆数据操作
+     */
+    private void getLocalCarInfo() {
+        List<CarInfoDTO> list = SPUtils.getInstance(getActivity().getApplicationContext()).getCarsInfo();
+        if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
+        if (list != null && list.size() > 0)
+            for (CarInfoDTO carInfoDTO : list) {
+                UserCarInfoBean userCarInfoBean = new UserCarInfoBean();
+                userCarInfoBean.setCarnum(carInfoDTO.getCarnum());
+                userCarInfoBean.setCarnumtype(carInfoDTO.getCarnumtype());
+                userCarInfoBean.setEnginenum(carInfoDTO.getEnginenum());
+                mUserCarInfoBeanList.add(userCarInfoBean);
+            }
+        mCarViolationAdapter.notifyDataSetChanged();
+        mCustomViolation.notifyDataSetChanged();
+
+        PublicData.getInstance().mLocalCars = list;
+        PublicData.getInstance().mCarNum = list != null ? list.size() : 0;
     }
 
     /**
@@ -313,6 +409,50 @@ public class UnimpededFragment extends BaseRefreshJxFragment
 
         if (!mHomeNotices.isEmpty()) mHomeNotices.clear();
         mHomeNotices.addAll(notices);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDataSynEvent(UpdateCarInfoEvent event) {
+        if (event.isStatus() && mPresenter != null) mPresenter.getRemoteCarInfo();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDataSynEvent(BenDiCarInfoEvent event) {
+        if (event.isStatus()) getLocalCarInfo();
+    }
+
+    /**
+     * 标记小喇叭
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onDataSynEvent(AddPushTrumpetEvent event) {
+        if (event == null) return;
+        PushBean bean = event.getPushBean();
+        updateNoticeMessage(bean);
+    }
+
+    /**
+     * 再次获取消息数量
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onDataSynEvent(GetMsgAgainEvent event) {
+        if (event != null && event.getStatus()) {
+            BaseDTO dto = new BaseDTO();
+            dto.setUsrId(RSAUtils.strByEncryption(this.getActivity(), PublicData.getInstance().userID, true));
+            CarApiClient.getUnReadMsgCount(this.getActivity(), dto, new CallBack<MessageCountResult>() {
+                @Override
+                public void onSuccess(MessageCountResult result) {
+                    if (result.getResponseCode() == 2000) {
+                        MessageCountBean bean = result.getData();
+                        //未读消息
+                        mTvMsgCount.setText(bean != null ? String.valueOf(bean.getCount()) : "0");
+                        mTvMsgCount.setVisibility(bean != null ?
+                                bean.getCount() == 0 ? View.INVISIBLE : View.VISIBLE
+                                : View.INVISIBLE);
+                    }
+                }
+            });
+        }
     }
 
     /**

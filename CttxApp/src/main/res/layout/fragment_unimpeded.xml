@@ -114,7 +114,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBgGray_f8"
-        app:icvp_center_page_scale_offset="@dimen/ds_37"
+        app:icvp_center_page_scale_offset="@dimen/ds_90"
         app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
         app:icvp_max_page_scale="0.8"
         app:icvp_medium_scaled="true"

@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="20dp"
+        app:cardCornerRadius="@dimen/ds_30"
+        app:cardElevation="@dimen/ds_24"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true">
 

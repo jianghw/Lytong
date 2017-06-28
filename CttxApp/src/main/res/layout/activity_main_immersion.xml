@@ -16,10 +16,15 @@
 
     </FrameLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorLineGray_e5"/>
+
     <cn.qqtheme.framework.widght.tablebottom.UiTableBottom
         android:id="@+id/custom_bottom"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_123"
-        android:background="?android:attr/windowBackground"/>
+        android:layout_height="@dimen/ds_135"
+        android:background="@color/colorWhite"/>
 
 </LinearLayout>

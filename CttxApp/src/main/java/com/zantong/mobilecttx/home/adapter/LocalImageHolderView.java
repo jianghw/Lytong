@@ -3,7 +3,6 @@ package com.zantong.mobilecttx.home.adapter;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import cn.qqtheme.framework.widght.banner.CBPageAdapter;
 
@@ -16,19 +15,19 @@ public class LocalImageHolderView implements CBPageAdapter.Holder<Integer>{
     @Override
     public View createView(Context context) {
         imageView = new ImageView(context);
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         return imageView;
     }
 
     @Override
     public void UpdateUI(Context context, final int position, Integer data) {
         imageView.setImageResource(data);
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //点击事件
-                Toast.makeText(view.getContext(),"点击了第"+position+"个",Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 }

@@ -20,8 +20,6 @@ import com.zantong.mobilecttx.utils.BaseFragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.util.log.LogUtils;
-
 public class AddCarViewPager extends FrameLayout {
 
     private List<BaseFragment> fragmentList = new ArrayList<>();
@@ -66,8 +64,6 @@ public class AddCarViewPager extends FrameLayout {
             case MotionEvent.ACTION_MOVE:
                 dealtX += Math.abs(x - lastX);
                 dealtY += Math.abs(y - lastY);
-                LogUtils.i("dealtX:=" + dealtX);
-                LogUtils.i("dealtY:=" + dealtY);
                 // 这里是够拦截的判断依据是左右滑动，读者可根据自己的逻辑进行是否拦截
                 if (dealtX >= dealtY) {
                     getParent().requestDisallowInterceptTouchEvent(true);

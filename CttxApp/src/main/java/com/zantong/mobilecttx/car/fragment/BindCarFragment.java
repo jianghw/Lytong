@@ -17,7 +17,6 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * 已经绑定的车辆
@@ -91,8 +90,6 @@ public class BindCarFragment extends BaseExtraFragment {
                 PublicData.getInstance().mHashMap.put("carnum", mCarNum);
                 PublicData.getInstance().mHashMap.put("enginenum", mEngineNum);
                 PublicData.getInstance().mHashMap.put("carnumtype", mCarType);
-                LogUtils.i(mCarNum + "<<<" + mEngineNum + "<<<" + mCarType);
-//                Act.getInstance().lauchIntent(getActivity(), ViolationResultAcitvity.class);
 
                 ViolationDTO dto = new ViolationDTO();
                 dto.setCarnum(RSAUtils.strByEncryption(this.getActivity(), mCarNum, true));

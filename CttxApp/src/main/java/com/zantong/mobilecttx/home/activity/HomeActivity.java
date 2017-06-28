@@ -83,7 +83,6 @@ public class HomeActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT <= 23) {
             PublicData.getInstance().imei = Tools.getIMEI(this);
         }
-
     }
 
     @Override

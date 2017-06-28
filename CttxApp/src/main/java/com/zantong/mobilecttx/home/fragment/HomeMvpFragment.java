@@ -214,6 +214,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
         List<CarInfoDTO> list = SPUtils.getInstance(this.getActivity()).getCarsInfo();
         PublicData.getInstance().mLocalCars = list;
         PublicData.getInstance().mCarNum = list.size();
+
         if (bendi == 1) {
             if (list.size() > 0) {
                 for (CarInfoDTO dto : list) {
@@ -262,10 +263,13 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                     PublicData.getInstance().mCarNum = result.getRspInfo().getUserCarsInfo().size();
                     mHomeFailRefresh.setVisibility(View.GONE);
                     if (update == 1) {
+
                         if (result.getRspInfo().getUserCarsInfo() != null) {
                             if (result.getRspInfo().getUserCarsInfo().size() != 0) {
+
                                 PublicData.getInstance().mServerCars = listU(result.getRspInfo().getUserCarsInfo());
                                 PublicData.getInstance().mCarNum = result.getRspInfo().getUserCarsInfo().size();
+
                                 int len = result.getRspInfo().getUserCarsInfo().size();
 
                                 Collections.sort(result.getRspInfo().getUserCarsInfo(), new Comparator<UserCarInfoBean>() {
@@ -451,6 +455,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
         layoutParams.width = screenWidth;
         layoutParams.height = screenWidth * 4 / 9;
         mHomeBottomLayout.setLayoutParams(layoutParams);
+
         //是否显示引导页面
         if (!SPUtils.getInstance(getActivity()).getGuideSaoFaDan()) {
             PublicData.getInstance().GUIDE_TYPE = 0;
@@ -964,9 +969,9 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
 
 //        FileDownloadApi api = new Retrofit2Utils().getRetrofit("http://imtt.dd.qq.com/").create(FileDownloadApi.class);
         Response<ResponseBody> response = null;
-        okhttp3.Response execute=null;
+        okhttp3.Response execute = null;
         try {
-             execute = new OkHttpClient().newCall(request).execute();
+            execute = new OkHttpClient().newCall(request).execute();
 //            response = api.downloadFileWithFixedUrl(mApkAddress).execute();
         } catch (IOException e) {
             e.printStackTrace();

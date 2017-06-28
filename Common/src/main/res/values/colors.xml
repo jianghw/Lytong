@@ -4,4 +4,13 @@
     <color name="colorWhite">#FFFFFF</color>
 
     <color name="colorBgGray_f8">#f8f8f8</color>
+
+    <color name="colorBgBlue_a4">#a4daf4</color>
+    <color name="colorBgBlue_59">#59b5ea</color>
+
+    <color name="colorLineGray_e5">#e5e5e5</color>
+
+    <color name="colorTvBlack_4c">#4c4c4c</color>
+    <color name="colorTvBlack_b2">#b2b2b2</color>
+    <color name="colorTvBlack_08">#084e6a</color>
 </resources>

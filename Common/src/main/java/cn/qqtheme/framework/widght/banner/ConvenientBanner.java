@@ -136,10 +136,9 @@ public class ConvenientBanner<T> extends LinearLayout {
             mPointViews.add(pointView);
             loPageTurningPoint.addView(pointView);
         }
-        pageChangeListener = new CBPageChangeListener(mPointViews,
-                page_indicatorId);
-        viewPager.setOnPageChangeListener(pageChangeListener);
 
+        pageChangeListener = new CBPageChangeListener(mPointViews, page_indicatorId);
+        viewPager.setOnPageChangeListener(pageChangeListener);
         return this;
     }
 
@@ -195,8 +194,7 @@ public class ConvenientBanner<T> extends LinearLayout {
         try {
             viewPager.setPageTransformer(
                             true,
-                            (PageTransformer) Class.forName(
-                                    "com.bigkoo.convenientbanner.transforms."
+                            (PageTransformer) Class.forName("cn.qqtheme.framework.widght.banner.transforms."
                                             + transformer.getClassName()).newInstance());
         } catch (InstantiationException e) {
             e.printStackTrace();

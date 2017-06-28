@@ -89,7 +89,9 @@ public abstract class BaseRefreshJxFragment extends BaseJxFragment {
     /**
      * 加载更多数据
      */
-    protected abstract void onLoadMoreData();
+    protected void onLoadMoreData() {
+        //TODO 子类想实现请重载
+    }
 
     /**
      * fragment布局

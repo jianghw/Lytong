@@ -28,7 +28,6 @@ import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
@@ -40,6 +39,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.util.ToastUtils;
 
 public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
 
@@ -68,11 +68,11 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
             int processte = data.getProcessste();
 
             String violationplace = data.getViolationplace();
-            String violationinfo = data.getViolationinfo();
+            String violationtype = data.getViolationtype();
             holder.mLayAddr.setVisibility(processte == 2 || processte == 3 ? View.GONE : View.VISIBLE);
             holder.mLayReason.setVisibility(processte == 2 || processte == 3 ? View.GONE : View.VISIBLE);
             holder.mAddr.setText(violationplace);
-            holder.mReason.setText(violationinfo);
+            holder.mReason.setText(violationtype);
 
             String violationamt = data.getViolationamt();
             String violationcent = data.getViolationcent();//扣分

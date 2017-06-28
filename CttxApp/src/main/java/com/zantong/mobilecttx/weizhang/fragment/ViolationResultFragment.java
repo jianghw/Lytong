@@ -3,18 +3,19 @@ package com.zantong.mobilecttx.weizhang.fragment;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
-import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.utils.SPUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.adapter.ViolationResultAdapter;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
+
+import cn.qqtheme.framework.util.ToastUtils;
 
 public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
     private static int TEMP_STATE;
@@ -75,6 +76,7 @@ public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
      */
     private void searchViolation() {
         params.setProcessste(String.valueOf(TEMP_STATE));
+//        params.setVersion("2.5.0");
         onShowLoading();
 
         if (TextUtils.isEmpty(PublicData.getInstance().imei)) {
