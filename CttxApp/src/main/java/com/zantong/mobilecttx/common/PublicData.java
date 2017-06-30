@@ -97,6 +97,7 @@ public class PublicData {
         UserInfoRememberCtrl.saveObject(mContext, "jiayou", null);
         UserInfoRememberCtrl.saveObject(mContext, "nianjian", null);
         UserInfoRememberCtrl.saveObject(mContext, PublicData.getInstance().userID, null);
+
         AccountRememberCtrl.nosaveDefaultNumber(mContext);
         AccountRememberCtrl.nosaveLoginAD(mContext);
         AccountRememberCtrl.nosaveDefaultNumber(mContext);

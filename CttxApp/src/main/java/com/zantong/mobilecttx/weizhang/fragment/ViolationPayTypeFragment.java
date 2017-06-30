@@ -1,24 +1,14 @@
 package com.zantong.mobilecttx.weizhang.fragment;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseExtraFragment;
-import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ViolationPayTypeFragment extends BaseExtraFragment {

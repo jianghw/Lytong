@@ -17,6 +17,7 @@ import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.NetUtils;
 import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.PayWebActivity;
 import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
@@ -26,7 +27,6 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.log.LogUtils;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;
@@ -132,7 +132,7 @@ public class ViolationPayFragment extends BaseExtraFragment {
         String merCustomId = PublicData.getInstance().filenum;//畅通卡档案编号
         String payUrl = BuildConfig.APP_URL + "payment_payForViolation?orderid=" + violationnum + "&amount=" + violationamt +
                 "&merCustomIp=" + merCustomIp + "&merCustomId=" + merCustomId + "&remark=" + remark;
-        LogUtils.i("payUrl---" + payUrl);
+
         PublicData.getInstance().mHashMap.put("PayWebActivity", payUrl);
         Act.getInstance().lauchIntent(getContext(), PayWebActivity.class);
     }
@@ -142,9 +142,10 @@ public class ViolationPayFragment extends BaseExtraFragment {
      */
     private void seachViolation() {
 //        ViolationDTO violationDTO = SPUtils.getInstance(getActivity()).getViolation();
+        //(String) PublicData.getInstance().mHashMap.get("carnum")
 
         ViolationPayDTO payDTO = new ViolationPayDTO();
-        payDTO.setCarnum(data.getCarnum());
+        payDTO.setCarnum(Des3.decode(data.getCarnum()));
         payDTO.setUsernum(RSAUtils.strByEncryption(getActivity().getApplicationContext(), PublicData.getInstance().userID, true));
         payDTO.setPeccancynum(data.getViolationnum());
         payDTO.setPeccancydate(data.getViolationdate());

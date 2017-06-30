@@ -16,11 +16,12 @@ public class RSAUtils {
 
     /**
      * 通过加密的字符串
+     *
      * @return
      */
-    public static String strByEncryption(Context context, String source, boolean isEncryp){
+    public static String strByEncryption(Context context, String source, boolean isEncryp) {
         String strEncryption = source;
-        if(isEncryption && isEncryp){
+        if (isEncryption && isEncryp) {
             try {
                 RSAEncryptor rsaEncryptor = new RSAEncryptor();
                 InputStream inPublic = context.getResources().getAssets().open("rsa_public_key.pem");
@@ -31,21 +32,20 @@ public class RSAUtils {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else{
-            strEncryption = source;
         }
         return strEncryption;
     }
 
     /**
      * 通过加密的字符串
+     *
      * @return
      */
     public static String strByEncryptionLiYing(Context context, String source, boolean isEncryp) {
         if (TextUtils.isEmpty(source)) return source;
 
         String strEncryption = source;
-        if(isEncryp){
+        if (isEncryp) {
             try {
                 RSAEncryptor rsaEncryptor = new RSAEncryptor();
                 InputStream inPublic = context.getResources().getAssets().open("rsa_public_key.pem");
@@ -54,7 +54,7 @@ public class RSAUtils {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             strEncryption = source;
         }
         return strEncryption;

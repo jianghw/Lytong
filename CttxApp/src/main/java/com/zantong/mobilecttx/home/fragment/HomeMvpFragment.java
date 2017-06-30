@@ -250,9 +250,9 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
      * @param update
      */
     public void updateCarInfo(final int update) {
-
         UserCarsDTO params = new UserCarsDTO();
         params.setUsrid(PublicData.getInstance().userID);
+
         UserApiClient.getCarInfo(this.getActivity(), params, new CallBack<UserCarsResult>() {
             @Override
             public void onSuccess(UserCarsResult result) {
@@ -265,6 +265,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                         if (result.getRspInfo().getUserCarsInfo() != null) {
                             if (result.getRspInfo().getUserCarsInfo().size() != 0) {
                                 PublicData.getInstance().mServerCars = listU(result.getRspInfo().getUserCarsInfo());
+
                                 PublicData.getInstance().mCarNum = result.getRspInfo().getUserCarsInfo().size();
                                 int len = result.getRspInfo().getUserCarsInfo().size();
 
@@ -534,6 +535,9 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
         if (mHomeScrollUp != null) mHomeScrollUp.stop();
     }
 
+    /**
+     * 解密喽
+     */
     private List<UserCarInfoBean> listU(List<UserCarInfoBean> listUcar) {
         List<UserCarInfoBean> listUcb = new ArrayList<UserCarInfoBean>();
         for (UserCarInfoBean userCarInfoBean : listUcar) {

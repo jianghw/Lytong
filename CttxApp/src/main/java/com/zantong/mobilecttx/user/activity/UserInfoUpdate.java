@@ -464,7 +464,7 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
 
         File mCropFile = new File(ImgPath);
         if (!mCropFile.exists()) {
-            ToastUtils.showShort(getApplicationContext(), "头像图片可能已经移位或删除");
+            ToastUtils.showShort(getApplicationContext(), "头像图片可能未生成或删除");
             return null;
         }
         Uri outputUri;

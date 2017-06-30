@@ -35,6 +35,9 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.log.LogUtils;
 
+/**
+ * 违章查询页面
+ */
 public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPresenter> {
 
     @Bind(R.id.violation_query_province_text)
@@ -85,6 +88,7 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPrese
         mRecyclerView.setArrowImageView(R.mipmap.loading);
         mAdapter = new MyCarAdapter();
         mRecyclerView.setAdapter(mAdapter);
+
         List<MyCarBean> list = new ArrayList<>();
         list.clear();
         if (PublicData.getInstance().loginFlag) {
@@ -114,16 +118,18 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPrese
             @Override
             public void onItemClick(View view, Object data) {
                 MyCarBean bean = (MyCarBean) data;
-//                PublicData.getInstance().mHashMap.put("carnum",bean.getCar_name());
-//                PublicData.getInstance().mHashMap.put("enginenum",bean.getEngine_num());
-//                PublicData.getInstance().mHashMap.put("carnumtype",bean.getCar_type());
-//                PublicData.getInstance().mHashMap.put("IllegalViolationName",bean.getCar_name());//标题
+
+                PublicData.getInstance().mHashMap.put("carnum", bean.getCar_name());
+                PublicData.getInstance().mHashMap.put("enginenum", bean.getEngine_num());
+                PublicData.getInstance().mHashMap.put("carnumtype", bean.getCar_type());
+                PublicData.getInstance().mHashMap.put("IllegalViolationName", bean.getCar_name());//标题
 //                Act.getInstance().gotoIntent(ViolationQueryAcitvity.this, QueryResultActivity.class);
 
                 ViolationDTO dto = new ViolationDTO();
                 dto.setCarnum(RSAUtils.strByEncryption(ViolationQueryAcitvity.this, bean.getCar_name(), true));
                 dto.setEnginenum(RSAUtils.strByEncryption(ViolationQueryAcitvity.this, bean.getEngine_num(), true));
                 dto.setCarnumtype(bean.getCar_type());
+
                 Intent intent = new Intent(ViolationQueryAcitvity.this, ViolationResultAcitvity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("params", dto);
@@ -174,11 +180,20 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPrese
                     ToastUtils.showShort(this, "发动机号格式不正确");
                     return;
                 }
-                String plateNum = mProvinceText.getText().toString() + mPlateEdit.getTransformationMethod().getTransformation(mPlateEdit.getText(), mPlateEdit);
+                String plateNum = mProvinceText.getText().toString().trim() +
+                        mPlateEdit.getTransformationMethod().getTransformation(mPlateEdit.getText(), mPlateEdit);
+
+                PublicData.getInstance().mHashMap.put("IllegalViolationName", plateNum);
+                PublicData.getInstance().mHashMap.put("carnum", plateNum);
+                PublicData.getInstance().mHashMap.put("enginenum", mEngineEdit.getText().toString().trim());
+                PublicData.getInstance().mHashMap.put("carnumtype", mCarTypeText.getText().toString().trim());
+
                 dto.setCarnum(RSAUtils.strByEncryption(this, plateNum, true));
-                dto.setEnginenum(RSAUtils.strByEncryption(this, mEngineEdit.getText().toString(), true));
-                dto.setCarnumtype(VehicleTypeTools.switchVehicleCode(mCarTypeText.getText().toString()));
+                dto.setEnginenum(RSAUtils.strByEncryption(this, mEngineEdit.getText().toString().trim(), true));
+                dto.setCarnumtype(VehicleTypeTools.switchVehicleCode(mCarTypeText.getText().toString().trim()));
                 LogUtils.i(plateNum + "---" + mEngineEdit.getText().toString() + "---" + mCarTypeText.getText().toString());
+
+
                 Intent intent = new Intent(this, ViolationResultAcitvity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("params", dto);

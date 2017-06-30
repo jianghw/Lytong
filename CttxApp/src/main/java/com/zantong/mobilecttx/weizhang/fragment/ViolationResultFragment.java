@@ -3,9 +3,10 @@ package com.zantong.mobilecttx.weizhang.fragment;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
-import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.utils.SPUtils;
@@ -77,10 +78,18 @@ public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
         params.setProcessste(String.valueOf(TEMP_STATE));
         onShowLoading();
 
-        if (TextUtils.isEmpty(PublicData.getInstance().imei)) {
-            params.setToken(RSAUtils.strByEncryption(getActivity().getApplicationContext(), "00000000", true));
+        if (!TextUtils.isEmpty(PublicData.getInstance().userID)) {
+            params.setToken(RSAUtils.strByEncryption(
+                    getActivity().getApplicationContext(),
+                    PublicData.getInstance().userID, true));
+        } else if (!TextUtils.isEmpty(PublicData.getInstance().imei)) {
+            params.setToken(RSAUtils.strByEncryption(
+                    getActivity().getApplicationContext(),
+                    PublicData.getInstance().imei, true));
         } else {
-            params.setToken(RSAUtils.strByEncryption(getActivity().getApplicationContext(), PublicData.getInstance().imei, true));
+            params.setToken(RSAUtils.strByEncryption(
+                    getActivity().getApplicationContext(),
+                    PushServiceFactory.getCloudPushService().getDeviceId(), true));
         }
 
         UserApiClient.searchViolation(this.getActivity(), params, new CallBack<ViolationResultParent>() {

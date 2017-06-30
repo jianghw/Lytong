@@ -115,6 +115,7 @@ public class GetBonusActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
 //        mDesc.setText(spanStr.getResult());
         mDesc.setText("用户名："+ PublicData.getInstance().mLoginInfoBean.getNickname());
         mShareDesc.setText(Html.fromHtml(getString(R.string.getbouns_share_desc)));
+
         getSignStatus();
     }
 
@@ -162,6 +163,7 @@ public class GetBonusActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
         BonusDTO dto = new BonusDTO();
         String phone = PublicData.getInstance().mLoginInfoBean.getPhoenum();
         dto.setUserPhone(RSAUtils.strByEncryptionLiYing(this, phone, true));
+
         CarApiClient.getBonusInfo(this, dto, new CallBack<BonusResult>() {
             @Override
             public void onSuccess(BonusResult result) {

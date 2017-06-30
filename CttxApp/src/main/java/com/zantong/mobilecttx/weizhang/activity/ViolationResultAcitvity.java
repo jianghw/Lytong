@@ -63,7 +63,9 @@ public class ViolationResultAcitvity extends BaseMvpActivity<IBaseView, HelpPres
     private ViolationResultFragment mFragment;
     private ViolationPayFragment payFragment;
     private ViolationPayTypeFragment payTypeFragment;
-
+    /**
+     * 加密后的数据
+     */
     ViolationDTO dto;
 
     @Override
@@ -92,6 +94,7 @@ public class ViolationResultAcitvity extends BaseMvpActivity<IBaseView, HelpPres
         mScreenwidth = dm.widthPixels;
         tvs = new TextView[]{mAllTitle, mUnfinishedTitle, mfinishedTitle};
         TEMP_STATE = 2;
+
         commitFragment();
         selectTab(0);
     }

@@ -303,10 +303,14 @@ public class RechargeFragment extends PullableBaseFragment
             String priceValue = StringUtils.getPriceDouble(price * value);
             mTvAmount.setText(priceValue);
         } else if (mCouponType == 3 && isChoice && mPayType == 0) {//抵扣
-            double value = Double.parseDouble(TextUtils.isEmpty(bean.getDiscount()) ? "0" : bean.getDiscount()) * 100;
+            double value = Double.parseDouble(TextUtils.isEmpty(bean.getDiscount()) ? "0" : bean.getDiscount()) * 100.00;
             double price = Double.parseDouble(bean.getAmount());
             String priceValue = String.valueOf(price - value);
-            mTvAmount.setText(priceValue);
+
+            double doubleValue = Double.parseDouble(priceValue);
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            String format = decimalFormat.format(doubleValue);
+            mTvAmount.setText(format);
         } else if (mCouponType == 3) {
             double value = Double.parseDouble(TextUtils.isEmpty(bean.getDiscount()) ? "1" : bean.getDiscount());
             double price = Double.parseDouble(bean.getAmount());
@@ -668,6 +672,7 @@ public class RechargeFragment extends PullableBaseFragment
     @Override
     public void addOilCreateOrderSucceed(final RechargeResult result) {
         ToastUtils.showShort(getContext().getApplicationContext(), result.getResponseDesc());
+
         DialogUtils.createRechargeDialog(getActivity(),
                 result.getData().getOrderId(),
                 getRechargeMoney(),
@@ -682,12 +687,15 @@ public class RechargeFragment extends PullableBaseFragment
 
     private void onPayOrderByCoupon(RechargeResult result) {
         String moneyString = getRechargeMoney();
+
         double money = Double.parseDouble(moneyString) * 100;
+        int intMoney = (int) money;
+        String stringMoney = String.valueOf(intMoney);
 
         if (mPresenter != null) {
             mPresenter.onPayOrderByCoupon(
                     result.getData().getOrderId(),
-                    String.valueOf(money),
+                    stringMoney,
                     String.valueOf(mPayType));
         }
     }

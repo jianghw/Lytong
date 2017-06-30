@@ -23,6 +23,7 @@ public class CanPayCarFragment extends BaseListFragment<OpenQueryBean.RspInfoBea
     private CanPayCarAdapter mCanPayCarAdapter;
     private OpenQueryBean mOpenQueryBean;
     private List<OpenQueryBean.RspInfoBean.UserCarsInfoBean> datas = new ArrayList<>();
+
     public CanPayCarFragment(){
         mBindCardPresenter = new CanPayCarPresenter(this);
     }

@@ -49,6 +49,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 违章查询
+ */
 public class QueryFragment extends Fragment implements ModelView {
 
     @Bind(R.id.engine_number_image)
@@ -201,7 +204,6 @@ public class QueryFragment extends Fragment implements ModelView {
             case R.id.next_btn:
 //                Act.getInstance().gotoIntent(this.getActivity(),ViolationResultAcitvity.class);
 
-
                 mIllegalQueryPresenter.loadView(1);
                 break;
         }
@@ -225,7 +227,8 @@ public class QueryFragment extends Fragment implements ModelView {
         PublicData.getInstance().mHashMap.put("carnum", privince_edit.getText().toString() + car_number_tv.getTransformationMethod().getTransformation(car_number_tv.getText(), car_number_tv));
         PublicData.getInstance().mHashMap.put("enginenum", engine_number_edit.getText().toString());
         PublicData.getInstance().mHashMap.put("carnumtype", VehicleTypeTools.switchVehicleCode(vehicles_type_text.getText().toString()));
-        List<OpenQueryBean.RspInfoBean.UserCarsInfoBean.ViolationInfoBean> mViolationInfoBean = (List<OpenQueryBean.RspInfoBean.UserCarsInfoBean.ViolationInfoBean>) mIllegalQueryBean.getRspInfo().getViolationInfo();
+
+        List<OpenQueryBean.RspInfoBean.UserCarsInfoBean.ViolationInfoBean> mViolationInfoBean = mIllegalQueryBean.getRspInfo().getViolationInfo();
         PublicData.getInstance().mHashMap.put("IllegalViolation", mViolationInfoBean);
         PublicData.getInstance().DialogCarNotice = true;
         Act.getInstance().lauchIntent(getActivity(), QueryResultActivity.class);

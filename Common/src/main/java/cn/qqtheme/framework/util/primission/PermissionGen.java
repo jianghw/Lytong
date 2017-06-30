@@ -151,9 +151,9 @@ public class PermissionGen {
         executeMethod(activity, executeMethod);
 
         if (activity instanceof Activity) {
-            Toast.makeText((Activity) activity, "相应权限已被拒绝，请设置中开启", Toast.LENGTH_SHORT).show();
+            Toast.makeText((Activity) activity, "相应权限已被拒绝，请设置中手动开启", Toast.LENGTH_SHORT).show();
         } else if (activity instanceof Fragment) {
-            Toast.makeText(((Fragment) activity).getActivity(), "相应权限已被拒绝，请设置中开启", Toast.LENGTH_SHORT).show();
+            Toast.makeText(((Fragment) activity).getActivity(), "相应权限已被拒绝，请设置中手动开启", Toast.LENGTH_SHORT).show();
         }
     }
 

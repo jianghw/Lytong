@@ -68,11 +68,11 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
             int processte = data.getProcessste();
 
             String violationplace = data.getViolationplace();
-            String violationinfo = data.getViolationinfo();
+            String violationtype = data.getViolationtype();
             holder.mLayAddr.setVisibility(processte == 2 || processte == 3 ? View.GONE : View.VISIBLE);
             holder.mLayReason.setVisibility(processte == 2 || processte == 3 ? View.GONE : View.VISIBLE);
             holder.mAddr.setText(violationplace);
-            holder.mReason.setText(violationinfo);
+            holder.mReason.setText(violationtype);
 
             String violationamt = data.getViolationamt();
             String violationcent = data.getViolationcent();//扣分

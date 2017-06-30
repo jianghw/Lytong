@@ -59,7 +59,9 @@ public class MegAdapter extends BaseAdapter<MessageType> {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
             holder.mTitle.setText(data.getMessageName());
-            holder.mTitle.setTextColor(Color.parseColor("#" + data.getColor()));
+            if (data.getColor() != null)
+                holder.mTitle.setTextColor(Color.parseColor("#" + data.getColor()));
+
             holder.mContent.setText(data.getTitle());
 
             if (data.getIcon() != null)

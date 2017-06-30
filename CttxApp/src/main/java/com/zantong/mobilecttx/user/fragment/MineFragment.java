@@ -6,13 +6,18 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -74,6 +79,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.AppUtils;
+import cn.qqtheme.framework.util.FileUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
@@ -82,9 +88,12 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
+import static com.zantong.mobilecttx.R.id.user_head_image;
+
 public class MineFragment extends Fragment {
 
-    @Bind(R.id.user_head_image)
+    @Bind(user_head_image)
     ImageView userHeadImage;
     @Bind(R.id.user_name_text)
     TextView userNameText;
@@ -256,16 +265,50 @@ public class MineFragment extends Fragment {
             } else {
                 mine_changtong_notice_text.setText("未绑定");
             }
-
-            ImageLoader.getInstance().displayImage(
-                    PublicData.getInstance().mLoginInfoBean.getPortrait(),
-                    userHeadImage,
-                    ImageOptions.getAvatarOptions()
-            );
+            if (TextUtils.isEmpty(PublicData.getInstance().mLoginInfoBean.getPortrait())) {
+                getHeadImageFile();
+            } else {
+                ImageLoader.getInstance().displayImage(
+                        PublicData.getInstance().mLoginInfoBean.getPortrait(),
+                        userHeadImage,
+                        ImageOptions.getAvatarOptions()
+                );
+            }
         } else {
             mine_changtong_notice_text.setText("未绑定");
             userNameText.setText("您还未登录");
             userHeadImage.setImageResource(R.mipmap.icon_portrai);
+        }
+    }
+
+    private File getHeadImageFile() {
+        String ImgPath = FileUtils.photoImagePath(getActivity().getApplicationContext(), FileUtils.CROP_DIR);
+
+        File mCropFile = new File(ImgPath);
+        if (!mCropFile.exists()) {
+            ToastUtils.showShort(getActivity().getApplicationContext(), "头像图片可能未生成或删除");
+            return null;
+        }
+        Uri outputUri;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            outputUri = getUriForFileByN(mCropFile);
+        } else {
+            outputUri = Uri.fromFile(mCropFile);
+        }
+
+        Bitmap bitmap = FileUtils.decodeUriAsBitmap(outputUri, getActivity().getApplicationContext());
+        if (bitmap != null) userHeadImage.setImageBitmap(bitmap);
+
+        return mCropFile;
+    }
+
+    private Uri getUriForFileByN(File mCameraFile) {
+        try {
+            return FileProvider.getUriForFile(getActivity().getApplicationContext(),
+                    getApplication().getPackageName() + ".fileprovider", mCameraFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Uri.fromFile(mCameraFile);
         }
     }
 

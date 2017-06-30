@@ -128,11 +128,9 @@ public class BaseApiClient {
         FormBody.Builder builder = new FormBody.Builder();
         String data = asyncCallBack.getGson().toJson(jsonParams);
         if (data != null){
-            LogUtils.i("msg:" + data);
             builder.add("msg", data);
         }
         if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().userID)) {
-            LogUtils.i("BaseApiClient token :"+PublicData.getInstance().userID);
             builder.add("usrid", PublicData.getInstance().userID);
         }
         Request request = new Request.Builder().tag(asyncCallBack.getTag())

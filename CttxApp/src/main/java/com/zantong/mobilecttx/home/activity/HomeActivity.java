@@ -80,10 +80,8 @@ public class HomeActivity extends BaseActivity {
                 PublicData.getInstance().defaultCarNumber = AccountRememberCtrl.getDefaultNumber(getApplicationContext());
             }
         }
-        if (Build.VERSION.SDK_INT <= 23) {
-            PublicData.getInstance().imei = Tools.getIMEI(this);
-        }
 
+        takePhoneIMEI();
     }
 
     @Override
@@ -129,6 +127,27 @@ public class HomeActivity extends BaseActivity {
         } else {
             Act.getInstance().lauchIntent(this, CaptureActivity.class);
         }
+    }
+
+    public void takePhoneIMEI() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, 100,
+                    new String[]{
+                            Manifest.permission.READ_PHONE_STATE}
+            );
+        } else {
+            PublicData.getInstance().imei = Tools.getIMEI(this);
+        }
+    }
+
+    @PermissionSuccess(requestCode = 100)
+    public void doPermissionIMEISuccess() {
+        PublicData.getInstance().imei = Tools.getIMEI(this);
+    }
+
+    @PermissionFail(requestCode = 100)
+    public void doPermissionIMEIFail() {
+
     }
 
     @Override
