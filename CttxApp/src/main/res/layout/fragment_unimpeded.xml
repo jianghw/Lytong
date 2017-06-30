@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="@dimen/ds_24"
-                android:drawableTop="@mipmap/icon_carwash"
+                android:drawableTop="@mipmap/icon_license"
                 android:gravity="center"
                 android:text="@string/car_wash"/>
 

@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
-    <!--驾校报名页面-->
+              android:layout_height="match_parent">
 
+    <!--驾校订单页面-->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        android:src="@mipmap/bg_recruit_up"/>
+        android:src="@mipmap/bg_confirm_up"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -119,8 +118,9 @@
             android:textSize="@dimen/fs_16sp"/>
     </RelativeLayout>
 
-    <!--用户信息输入-->
-    <include layout="@layout/include_apply_fahrschule_user"/>
-
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/bg_confirm_down"/>
 </LinearLayout>

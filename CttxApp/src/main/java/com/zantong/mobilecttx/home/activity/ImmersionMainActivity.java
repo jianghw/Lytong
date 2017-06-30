@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.home.activity;
 
+import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 
+import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 import cn.qqtheme.framework.widght.tablebottom.UiTableBottom;
 
@@ -90,7 +92,16 @@ public class ImmersionMainActivity extends AppCompatActivity {
                 PublicData.getInstance().defaultCarNumber = AccountRememberCtrl.getDefaultNumber(getApplicationContext());
             }
         }
-        if (Build.VERSION.SDK_INT <= 23) {
+        takePhoneIMEI();
+    }
+
+    public void takePhoneIMEI() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, 100,
+                    new String[]{
+                            Manifest.permission.READ_PHONE_STATE}
+            );
+        } else {
             PublicData.getInstance().imei = Tools.getIMEI(this);
         }
     }

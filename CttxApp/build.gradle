@@ -42,7 +42,7 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("/Users/zhengyingbing/Z赞同科技/tzly.jks")
+            storeFile file("/Users/tzly.jks")
             storePassword "123456"
             keyAlias "jianghw"
             keyPassword "123456"
@@ -50,16 +50,12 @@ android {
         }
 
         release {
-            try {
-                //这样写就得把demo.jk文件放在项目目录
-                storeFile file("/Users/zhengyingbing/Z赞同科技/CTTX.jks")
-                storePassword "zantong"
-                keyAlias "CTTX"
-                keyPassword "zantong"
-                v2SigningEnabled false
-            } catch (ex) {
-                throw new InvalidUserDataException(ex.toString())
-            }
+            //这样写就得把demo.jk文件放在项目目录
+            storeFile file("/Users/CTTX.jks")
+            storePassword "zantong"
+            keyAlias "CTTX"
+            keyPassword "zantong"
+            v2SigningEnabled false
         }
     }
 

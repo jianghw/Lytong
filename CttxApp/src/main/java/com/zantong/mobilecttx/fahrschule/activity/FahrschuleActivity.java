@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.fahrschule.fragment.ApplyFahrschuleFragment;
-import com.zantong.mobilecttx.home.fragment.FavorableFragment;
+import com.zantong.mobilecttx.fahrschule.fragment.OrderNumFahrschuleFragment;
 import com.zantong.mobilecttx.home.fragment.MeFragment;
 
 import cn.qqtheme.framework.util.ui.FragmentUtils;
@@ -24,7 +24,7 @@ public class FahrschuleActivity extends AppCompatActivity implements View.OnClic
      * 三个页面
      */
     private ApplyFahrschuleFragment mApplyFahrschuleFragment = null;
-    private FavorableFragment mFavorableFragment = null;
+    private OrderNumFahrschuleFragment mOrderNumFahrschuleFragment = null;
     private MeFragment mMeFragment = null;
     private ImageView mImgBack;
     private ImageView mImgHome;
@@ -41,21 +41,21 @@ public class FahrschuleActivity extends AppCompatActivity implements View.OnClic
     private void initFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (mCurPosition) {
-            case 0:
+            case 1://驾校报名页面
                 if (mApplyFahrschuleFragment == null) {
                     mApplyFahrschuleFragment = ApplyFahrschuleFragment.newInstance();
                     FragmentUtils.addFragment(fragmentManager, mApplyFahrschuleFragment, R.id.content);
                 }
                 FragmentUtils.hideAllShowFragment(mApplyFahrschuleFragment);
                 break;
-            case 1:
-                if (mFavorableFragment == null) {
-                    mFavorableFragment = FavorableFragment.newInstance("456", "456");
-                    FragmentUtils.addFragment(fragmentManager, mFavorableFragment, R.id.content);
+            case 2://驾校订单页面
+                if (mOrderNumFahrschuleFragment == null) {
+                    mOrderNumFahrschuleFragment = OrderNumFahrschuleFragment.newInstance();
+                    FragmentUtils.addFragment(fragmentManager, mOrderNumFahrschuleFragment, R.id.content);
                 }
-                FragmentUtils.hideAllShowFragment(mFavorableFragment);
+                FragmentUtils.hideAllShowFragment(mOrderNumFahrschuleFragment);
                 break;
-            case 2:
+            case 3:
                 if (mMeFragment == null) {
                     mMeFragment = MeFragment.newInstance();
                     FragmentUtils.addFragment(fragmentManager, mMeFragment, R.id.content);

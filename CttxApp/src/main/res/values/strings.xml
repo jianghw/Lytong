@@ -268,6 +268,6 @@
     <!--首页导航栏名称-->
     <string name="recharge">加油充值</string>
     <string name="annual">年检</string>
-    <string name="car_wash">洗车</string>
+    <string name="car_wash">驾驶证查分</string>
     <string name="designated_driver">代驾</string>
 </resources>

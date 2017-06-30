@@ -215,10 +215,11 @@ public class UnimpededFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onFirstDataVisible() {
-        if (PublicData.getInstance().loginFlag)
+        if (PublicData.getInstance().loginFlag) {
             mPresenter.getRemoteCarInfo();
-        else
+        } else {
             getLocalCarInfo();
+        }
 
         mPresenter.homePage();
     }
