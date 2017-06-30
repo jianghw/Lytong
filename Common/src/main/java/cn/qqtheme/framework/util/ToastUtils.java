@@ -24,7 +24,7 @@ public class ToastUtils {
         Toast.makeText(context, resId, Toast.LENGTH_SHORT).show();
     }
 
-    public static void toasetShort(String message) {
+    public static void toastShort(String message) {
         initToast(ContextUtils.getContext(), message, Toast.LENGTH_SHORT);
     }
 }

@@ -29,7 +29,7 @@
                     android:layout_marginTop="@dimen/ds_66"
                     android:gravity="center"
                     android:text="姓    名"
-                    android:textColor="@color/colorTvBlack_08"
+                    android:textColor="@color/colorTvCyan_08"
                     android:textSize="@dimen/fs_16sp"/>
 
                 <TextView
@@ -38,7 +38,7 @@
                     android:layout_marginTop="@dimen/ds_25"
                     android:gravity="center"
                     android:text="手    机"
-                    android:textColor="@color/colorTvBlack_08"
+                    android:textColor="@color/colorTvCyan_08"
                     android:textSize="@dimen/fs_16sp"/>
 
                 <TextView
@@ -47,7 +47,7 @@
                     android:layout_marginTop="@dimen/ds_25"
                     android:gravity="center"
                     android:text="身份证"
-                    android:textColor="@color/colorTvBlack_08"
+                    android:textColor="@color/colorTvCyan_08"
                     android:textSize="@dimen/fs_16sp"/>
             </LinearLayout>
 

@@ -375,7 +375,6 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
      */
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onDataSynEvent(AddPushTrumpetEvent event) {
-        LogUtils.e("onDataSynEvent");
         if (event == null) return;
         PushBean bean = event.getPushBean();
         updateNoticeMessage(bean);

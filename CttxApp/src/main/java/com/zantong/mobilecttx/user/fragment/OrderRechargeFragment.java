@@ -20,8 +20,6 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import cn.qqtheme.framework.util.log.LogUtils;
-
 public class OrderRechargeFragment extends BaseListFragment<RechargeOrderBean> {
 
     private static final String POSITION = "position";
@@ -65,7 +63,7 @@ public class OrderRechargeFragment extends BaseListFragment<RechargeOrderBean> {
         mStatus = bundle.getInt(POSITION, -1);
         RechargeOrderDTO dto = new RechargeOrderDTO();
         dto.setUserId(RSAUtils.strByEncryptionLiYing(this.getActivity(), PublicData.getInstance().userID, true));
-        LogUtils.i("------->"+mStatus);
+
         dto.setOrderStatus(mStatus);
         dto.setCurrentIndex(mCurrentPage);
         CarApiClient.queryOrders(this.getActivity(), dto, new CallBack<RechargeOrderResult>() {

@@ -29,13 +29,13 @@ import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.SPUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.RegexUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -316,15 +316,16 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
      */
     private void getJiaZhaoInfo() {
         showDialogLoading();
+
         CarApiClient.uploadDriverImg(this, OcrCameraActivity.file, new CallBack<DriverOcrResult>() {
             @Override
             public void onSuccess(DriverOcrResult result) {
                 hideDialogLoading();
-                if ("OK".equals(result.getStatus())) {
+                if ("OK".equals(result.getStatus()) && result.getContent() != null) {
                     mName.setText(result.getContent().getName());
                     mIdCard.setText(result.getContent().getCardNo());
                 } else {
-                    ToastUtils.showShort(ApplyCardFirstActivity.this, "解析失败，请重试");
+                    ToastUtils.toastShort("解析失败，请重试");
                 }
             }
 

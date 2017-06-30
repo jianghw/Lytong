@@ -392,8 +392,7 @@ public class CarApiClient extends BaseApiClient {
         post(context, "http://liyingtong.com:8080/PIM_DRIVING/SrvXMLAPI", file, result);
     }
     public static void uploadDriverImg(Context context, File file, CallBack<DriverOcrResult> callback) {
-        OcrCallBack<DriverOcrResult> result = new OcrCallBack<DriverOcrResult>(
-                context, callback, DriverOcrResult.class);
+        OcrCallBack<DriverOcrResult> result = new OcrCallBack<>(context, callback, DriverOcrResult.class);
         Config.OCR_TYPE = 1;
         post(context, "http://liyingtong.com:8080/PIM_DRIVER/SrvXMLAPI", file, result);
     }

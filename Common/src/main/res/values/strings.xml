@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--首页导航栏名称-->
+    <string name="recharge">加油充值</string>
+    <string name="annual">年检</string>
+    <string name="car_wash">驾驶证查分</string>
+    <string name="designated_driver">代驾</string>
+
+    <string name="tv_pay_type_prompt">
+        <font color='#ffffff'>银联卡支付&#160;&#160;</font>
+        <font color='#0f536f'>*不可改变</font>
+    </string>
+
+    <string name="tv_where_cash">
+        <i>返还的现金在哪里查看?&#160;&#160;>></i>
+    </string>
+
+    <string name="tv_apply_official_website">
+        <font color='#0f536f'>
+            <i>官网介绍链接</i>
+        </font>
+    </string>
+
+    <string name="tv_favorable_price_admissions">
+        <font color='#f3362b' size='14sp'>￥</font>
+        <font color='#f3362b' size='16sp'>￥</font>
+        <font color='#b3b3b3' size='14sp'>起</font>
+    </string>
+</resources>

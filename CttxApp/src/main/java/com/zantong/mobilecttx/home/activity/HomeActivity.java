@@ -136,13 +136,13 @@ public class HomeActivity extends BaseActivity {
                             Manifest.permission.READ_PHONE_STATE}
             );
         } else {
-            PublicData.getInstance().imei = Tools.getIMEI(this);
+            PublicData.getInstance().imei = Tools.getIMEI();
         }
     }
 
     @PermissionSuccess(requestCode = 100)
     public void doPermissionIMEISuccess() {
-        PublicData.getInstance().imei = Tools.getIMEI(this);
+        PublicData.getInstance().imei = Tools.getIMEI();
     }
 
     @PermissionFail(requestCode = 100)

@@ -54,7 +54,6 @@ public class RechargeOrderAdapter extends BaseAdapter<RechargeOrderBean> {
                     holder.mStatus.setText("未支付");
                     holder.mStatus.setTextColor(mContext.getResources().getColor(R.color.red));
                     holder.mOptionLayout.setVisibility(View.VISIBLE);
-
                     break;
                 case 1:
                     holder.mStatus.setText("支付失败");

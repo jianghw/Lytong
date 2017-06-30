@@ -33,7 +33,6 @@ import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.DialogMgr;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.UiHelpers;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -42,7 +41,7 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.DatePicker;
-import cn.qqtheme.framework.util.log.LogUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 
 public class ApplyCardCheckActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements HandleCTCardApiClient.ResultInterface {
 
@@ -171,7 +170,7 @@ public class ApplyCardCheckActivity extends BaseMvpActivity<IBaseView, HelpPrese
     /**
      * 申办畅通卡时间校验接口
      */
-    private void checkCtkDate(){
+    private void checkCtkDate() {
         showDialogLoading();
         CheckCtkDTO checkCtkDTO = new CheckCtkDTO();
         checkCtkDTO.setApplyCode(fileNum);
@@ -180,9 +179,9 @@ public class ApplyCardCheckActivity extends BaseMvpActivity<IBaseView, HelpPrese
         CarApiClient.checkCtk(this, checkCtkDTO, new CallBack<BaseResult>() {
             @Override
             public void onSuccess(BaseResult result) {
-                if(result.getResponseCode() == 2000 || result.getResponseCode() == 2001){
+                if (result.getResponseCode() == 2000 || result.getResponseCode() == 2001) {
                     checkBidCard();
-                }else{
+                } else {
                     hideDialogLoading();
                     ToastUtils.showShort(ApplyCardCheckActivity.this, "七天之内不能重复办卡");
                 }
@@ -201,7 +200,7 @@ public class ApplyCardCheckActivity extends BaseMvpActivity<IBaseView, HelpPrese
         if (result.getSYS_HEAD().getReturnCode().equals("1")) {
             startActivity(ApplyCardFristStepActvity.getIntent(this, fileNum, name,
                     licenseno, youxiaoDate));
-        }else if (result.getSYS_HEAD().getReturnCode().equals("000000")){
+        } else if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
             startActivity(ApplyCardFourStepActvity.getIntent(this, fileNum, name,
                     licenseno, youxiaoDate));
         }
@@ -272,16 +271,16 @@ public class ApplyCardCheckActivity extends BaseMvpActivity<IBaseView, HelpPrese
     protected void baseGoEnsure() {
         //检查权限
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
+                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CALL_CAMERA);
+                    Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_CALL_CAMERA);
 
         } else {
 
             //有授权，直接开启摄像头
             Intent intent = new Intent(this, OcrCameraActivity.class);
-            intent.putExtra("ocr_resource",1);
-            startActivityForResult(intent,1205);
+            intent.putExtra("ocr_resource", 1);
+            startActivityForResult(intent, 1205);
         }
     }
 
@@ -317,18 +316,17 @@ public class ApplyCardCheckActivity extends BaseMvpActivity<IBaseView, HelpPrese
      * ocr
      * 获取驾照信息
      */
-    private void getJiaZhaoInfo(){
+    private void getJiaZhaoInfo() {
         showDialogLoading();
         CarApiClient.uploadDriverImg(this, OcrCameraActivity.file, new CallBack<DriverOcrResult>() {
             @Override
             public void onSuccess(DriverOcrResult result) {
                 hideDialogLoading();
-                if ("OK".equals(result.getStatus())) {
-                    LogUtils.i(result.getContent().toString());
+                if ("OK".equals(result.getStatus()) && result.getContent() != null) {
                     mName.setText(result.getContent().getName());
                     mIdentityCard.setText(result.getContent().getCardNo());
                 } else {
-                    ToastUtils.showShort(ApplyCardCheckActivity.this, "解析失败，请重试");
+                    ToastUtils.toastShort("解析失败，请重试");
                 }
             }
 

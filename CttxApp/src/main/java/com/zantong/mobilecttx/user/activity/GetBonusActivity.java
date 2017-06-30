@@ -30,7 +30,6 @@ import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.user.bean.BonusResult;
 import com.zantong.mobilecttx.user.dto.BonusDTO;
 import com.zantong.mobilecttx.utils.DialogMgr;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
@@ -38,6 +37,7 @@ import com.zantong.mobilecttx.zxing.EncodingUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
@@ -113,7 +113,7 @@ public class GetBonusActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
 //        StringFormatUtils spanStr = new StringFormatUtils(this, "每成功邀请2人，即可获得5元红包",
 //                "5元红包", R.color.red).fillColor();
 //        mDesc.setText(spanStr.getResult());
-        mDesc.setText("用户名："+ PublicData.getInstance().mLoginInfoBean.getNickname());
+        mDesc.setText("用户名：" + PublicData.getInstance().mLoginInfoBean.getNickname());
         mShareDesc.setText(Html.fromHtml(getString(R.string.getbouns_share_desc)));
 
         getSignStatus();
@@ -134,6 +134,7 @@ public class GetBonusActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
 
         });
     }
+
     @Override
     public void initData() {
         getCode();
@@ -167,26 +168,30 @@ public class GetBonusActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
         CarApiClient.getBonusInfo(this, dto, new CallBack<BonusResult>() {
             @Override
             public void onSuccess(BonusResult result) {
-                if (result.getResponseCode() == 2000) {
-                    mCountText.setText(result.getData().getSharecount());
-                    mSuccCountText.setText(result.getData().getSuccesscount());
-                    int count = Integer.valueOf(result.getData().getSharecount());
-                    int succCount = Integer.valueOf(result.getData().getSuccesscount());
-                    mCountPoints.setText(Integer.valueOf(200*count+500*succCount)+"分");
+                if (result.getResponseCode() == 2000 && result.getData() != null) {
+
+                    String shareCount = result.getData().getSharecount();
+                    String successCount = result.getData().getSuccesscount();
+
+                    mCountText.setText(shareCount);
+                    mSuccCountText.setText(successCount);
+
+                    int count = Integer.valueOf(shareCount);
+                    int succeedCount = Integer.valueOf(successCount);
+                    mCountPoints.setText(200 * count + 500 * succeedCount + "分");
+
                 } else if (result.getResponseCode() == 4000) {
-                    LogUtils.i("code:" + result.getResponseDesc());
                     mCountText.setText("0");
                     mSuccCountText.setText("0");
                     mCountPoints.setText("0.0");
                 } else {
                     LogUtils.i("code:" + result.getResponseDesc());
                 }
-
             }
         });
     }
 
-    private void clickShare(){
+    private void clickShare() {
         new DialogMgr(this, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,9 +207,10 @@ public class GetBonusActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
 
     /**
      * 微信分享
+     *
      * @param flag(0:分享到微信好友，1：分享到微信朋友圈)
      */
-    private void wechatShare(int flag){
+    private void wechatShare(int flag) {
         IWXAPI api = WXAPIFactory.createWXAPI(this, WXEntryActivity.APP_ID, true);
         api.registerApp(WXEntryActivity.APP_ID);
 
@@ -214,10 +220,10 @@ public class GetBonusActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
         }
 
         WXWebpageObject webpage = new WXWebpageObject();
-        if(PublicData.getInstance().loginFlag){
+        if (PublicData.getInstance().loginFlag) {
             webpage.webpageUrl = "http://liyingtong.com:8081/h5/share/share.html?phoneNum="
                     + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
-        }else{
+        } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         }
         WXMediaMessage msg = new WXMediaMessage(webpage);

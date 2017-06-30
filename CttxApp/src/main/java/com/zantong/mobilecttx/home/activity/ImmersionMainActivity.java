@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.home.activity;
 import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.util.ArrayMap;
@@ -13,9 +14,9 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.home.fragment.FavorableFragment;
+import com.zantong.mobilecttx.home.fragment.HomeFavorableFragment;
 import com.zantong.mobilecttx.home.fragment.MeFragment;
-import com.zantong.mobilecttx.home.fragment.UnimpededFragment;
+import com.zantong.mobilecttx.home.fragment.HomeUnimpededFragment;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.utils.AccountRememberCtrl;
@@ -26,7 +27,9 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 
+import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
+import cn.qqtheme.framework.util.primission.PermissionSuccess;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 import cn.qqtheme.framework.widght.tablebottom.UiTableBottom;
 
@@ -45,8 +48,8 @@ public class ImmersionMainActivity extends AppCompatActivity {
     /**
      * 三个页面
      */
-    private UnimpededFragment mUnimpededFragment = null;
-    private FavorableFragment mFavorableFragment = null;
+    private HomeUnimpededFragment mHomeUnimpededFragment = null;
+    private HomeFavorableFragment mHomeFavorableFragment = null;
     private MeFragment mMeFragment = null;
 
     @Override
@@ -84,7 +87,7 @@ public class ImmersionMainActivity extends AppCompatActivity {
             PublicData.getInstance().filenum = user.getFilenum();
             PublicData.getInstance().getdate = user.getGetdate();
             PublicData.getInstance().mLoginInfoBean = user;
-            if (UserInfoRememberCtrl.readObject(this, PublicData.getInstance().NOTICE_STATE) != null) {
+            if (UserInfoRememberCtrl.readObject(getApplicationContext(), PublicData.getInstance().NOTICE_STATE) != null) {
                 PublicData.getInstance().updateMsg = (boolean) UserInfoRememberCtrl.readObject(getApplicationContext(), PublicData.getInstance().NOTICE_STATE);
             }
             if (!Tools.isStrEmpty(AccountRememberCtrl.getDefaultNumber(this))) {
@@ -92,6 +95,7 @@ public class ImmersionMainActivity extends AppCompatActivity {
                 PublicData.getInstance().defaultCarNumber = AccountRememberCtrl.getDefaultNumber(getApplicationContext());
             }
         }
+
         takePhoneIMEI();
     }
 
@@ -102,8 +106,24 @@ public class ImmersionMainActivity extends AppCompatActivity {
                             Manifest.permission.READ_PHONE_STATE}
             );
         } else {
-            PublicData.getInstance().imei = Tools.getIMEI(this);
+            PublicData.getInstance().imei = Tools.getIMEI();
         }
+    }
+
+    @PermissionSuccess(requestCode = 100)
+    public void doPermissionIMEISuccess() {
+        PublicData.getInstance().imei = Tools.getIMEI();
+    }
+
+    @PermissionFail(requestCode = 100)
+    public void doPermissionIMEIFail() {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     /**
@@ -128,18 +148,18 @@ public class ImmersionMainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (mCurBottomPosition) {
             case 0:
-                if (mUnimpededFragment == null) {
-                    mUnimpededFragment = UnimpededFragment.newInstance();
-                    FragmentUtils.addFragment(fragmentManager, mUnimpededFragment, R.id.content);
+                if (mHomeUnimpededFragment == null) {
+                    mHomeUnimpededFragment = HomeUnimpededFragment.newInstance();
+                    FragmentUtils.addFragment(fragmentManager, mHomeUnimpededFragment, R.id.content);
                 }
-                FragmentUtils.hideAllShowFragment(mUnimpededFragment);
+                FragmentUtils.hideAllShowFragment(mHomeUnimpededFragment);
                 break;
             case 1:
-                if (mFavorableFragment == null) {
-                    mFavorableFragment = FavorableFragment.newInstance("456", "456");
-                    FragmentUtils.addFragment(fragmentManager, mFavorableFragment, R.id.content);
+                if (mHomeFavorableFragment == null) {
+                    mHomeFavorableFragment = HomeFavorableFragment.newInstance("456", "456");
+                    FragmentUtils.addFragment(fragmentManager, mHomeFavorableFragment, R.id.content);
                 }
-                FragmentUtils.hideAllShowFragment(mFavorableFragment);
+                FragmentUtils.hideAllShowFragment(mHomeFavorableFragment);
                 break;
             case 2:
                 if (mMeFragment == null) {

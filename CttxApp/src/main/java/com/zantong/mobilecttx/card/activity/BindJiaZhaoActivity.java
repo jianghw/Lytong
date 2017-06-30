@@ -26,17 +26,16 @@ import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.log.LogUtils;
+import cn.qqtheme.framework.util.ToastUtils;
+import cn.qqtheme.framework.util.primission.PermissionFail;
+import cn.qqtheme.framework.util.primission.PermissionGen;
+import cn.qqtheme.framework.util.primission.PermissionSuccess;
 
 /**
  * 绑定畅通卡
@@ -286,17 +285,15 @@ public class BindJiaZhaoActivity extends BaseMvpActivity<IBaseView, HelpPresente
             @Override
             public void onSuccess(DriverOcrResult result) {
                 hideDialogLoading();
-                if ("OK".equals(result.getStatus())) {
-                    LogUtils.i(result.getContent().toString());
+                if ("OK".equals(result.getStatus()) && result.getContent() != null) {
                     mLicenseno.setText(result.getContent().getCardNo());
                 } else {
-                    ToastUtils.showShort(BindJiaZhaoActivity.this, "解析失败，请重试");
+                    ToastUtils.toastShort("解析失败，请重试");
                 }
             }
 
             @Override
             public void onError(String errorCode, String msg) {
-                super.onError(errorCode, msg);
                 hideDialogLoading();
             }
         });

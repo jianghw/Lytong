@@ -30,7 +30,7 @@ public class OrderRechargeActivity extends BaseMvpActivity<IOrderView,OrderPrese
     @Override
     public void initView() {
         setTitleText("充值订单");
-        fragmentList = new ArrayList<Fragment>();
+        fragmentList = new ArrayList<>();
 //        fragmentList.add(new OrderRechargeFragment(0));
 //        fragmentList.add(new OrderRechargeFragment(1));
 //        fragmentList.add(new OrderRechargeFragment(2));

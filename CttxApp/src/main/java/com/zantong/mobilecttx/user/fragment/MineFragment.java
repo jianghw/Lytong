@@ -18,7 +18,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,7 +78,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.AppUtils;
 import cn.qqtheme.framework.util.FileUtils;
-
+import cn.qqtheme.framework.util.ToastUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
@@ -89,7 +88,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
-import static com.zantong.mobilecttx.R.id.user_head_image;
 
 public class MineFragment extends Fragment {
 
@@ -238,7 +236,7 @@ public class MineFragment extends Fragment {
                             if (result.getData() != null) {
                                 mYouHui.setText(String.valueOf(result.getData().getCouponList().size()));
                             } else {
-                                ToastUtils.showShort(MineFragment.this.getActivity(), result.getResponseDesc());
+                                ToastUtils.toastShort(result.getResponseDesc());
                             }
                         }
                     }
@@ -285,7 +283,7 @@ public class MineFragment extends Fragment {
 
         File mCropFile = new File(ImgPath);
         if (!mCropFile.exists()) {
-            ToastUtils.showShort(getActivity().getApplicationContext(), "头像图片可能未生成或删除");
+            ToastUtils.toastShort("头像图片可能未生成或删除");
             return null;
         }
         Uri outputUri;
@@ -412,7 +410,7 @@ public class MineFragment extends Fragment {
                     if (versionFlag == -1) {
                         showUpdateDialog(result);
                     } else {
-                        ToastUtils.showShort(getActivity(), "当前已为最新版本");
+                        ToastUtils.toastShort("当前已为最新版本");
                     }
                 }
             }
@@ -521,7 +519,7 @@ public class MineFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        ToastUtils.showShort(MineFragment.this.getActivity(), "网络错误，请重试");
+                        ToastUtils.toastShort("网络错误，请重试");
                         e.printStackTrace();
                     }
 
@@ -537,10 +535,7 @@ public class MineFragment extends Fragment {
                         progressBar.setOnKeyListener(new DialogInterface.OnKeyListener() {
                             @Override
                             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                                    return true;
-                                }
-                                return false;
+                                return keyCode == KeyEvent.KEYCODE_BACK;
                             }
                         });
                         progressBar.show();

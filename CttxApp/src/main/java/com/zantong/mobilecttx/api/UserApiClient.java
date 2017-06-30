@@ -60,14 +60,14 @@ public class UserApiClient extends BaseApiClient {
      * @author Sandy
      * create at 16/6/8 上午10:30
      */
-    public static RequestHeadDTO getBean(Context context, String str) {
+    public static RequestHeadDTO getBean(String str) {
         RequestHeadDTO dto = new RequestHeadDTO();
         dto.setConsumerId("04");
         dto.setTransServiceCode(str);
         dto.setRequestDate(DateUtils.getDate());
         dto.setRequestTime(DateUtils.getTime());
         dto.setConsumerSeqNo(StringUtils.getRandomStr());
-        dto.setDvcToken(Tools.getIMEI(context));
+        dto.setDvcToken(Tools.getIMEI());
         return dto;
     }
 
@@ -94,7 +94,7 @@ public class UserApiClient extends BaseApiClient {
         params.setPushmode("2");
         params.setChkflg("1");
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.u001.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.u001.01"));
         t.setReqInfo(params);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -114,7 +114,7 @@ public class UserApiClient extends BaseApiClient {
         params.setPushswitch("0");
         params.setPushmode("2");
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.u001.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.u001.01"));
         t.setReqInfo(params);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -129,7 +129,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<VcodeResult> asyncCallBack = new AsyncCallBack<VcodeResult>(
                 context, callback, VcodeResult.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.u015.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.u015.01"));
         t.setReqInfo(params);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -144,7 +144,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<VcodeResult> asyncCallBack = new AsyncCallBack<VcodeResult>(
                 context, callback, VcodeResult.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.u014.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.u014.01"));
         t.setReqInfo(params);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -159,7 +159,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.p002.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.p002.01"));
         t.setReqInfo(params);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -177,7 +177,7 @@ public class UserApiClient extends BaseApiClient {
 //        params.setPushswitch("0");
 //        params.setPushmode("2");
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.u013.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.u013.01"));
         t.setReqInfo(params);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -192,7 +192,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.u012.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.u012.01"));
         t.setReqInfo(params);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -207,7 +207,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.u002.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.u002.01"));
         LogoutDTO dto = new LogoutDTO();
         LogUtils.i("userID:" + PublicData.getInstance().userID);
         dto.setUsrid(PublicData.getInstance().userID);
@@ -220,7 +220,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<PayHistoryResult> asyncCallBack = new AsyncCallBack<PayHistoryResult>(
                 context, callback, PayHistoryResult.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.v001.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.v001.01"));
         t.setReqInfo(params);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -229,7 +229,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<PayCarResult> asyncCallBack = new AsyncCallBack<PayCarResult>(
                 context, callback, PayCarResult.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.c002.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.c002.01"));
         t.setReqInfo(params);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -244,7 +244,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<OrderResult> asyncCallBack = new AsyncCallBack<OrderResult>(
                 context, callback, OrderResult.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.i001.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.i001.01"));
         t.setReqInfo(params);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -259,7 +259,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.i004.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.i004.01"));
         t.setReqInfo(params);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -274,7 +274,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<CheckOrderResult> asyncCallBack = new AsyncCallBack<CheckOrderResult>(
                 context, callback, CheckOrderResult.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.i006.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.i006.01"));
         t.setReqInfo(params);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -292,7 +292,7 @@ public class UserApiClient extends BaseApiClient {
         dto.setPushswitch(0);//不推送
         dto.setUsrid(PublicData.getInstance().userID);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.u003.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.u003.01"));
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -307,7 +307,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.u008.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.u008.01"));
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -345,7 +345,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.u005.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.u005.01"));
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -354,7 +354,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<BindCardResult> asyncCallBack = new AsyncCallBack<BindCardResult>(
                 context, callback, BindCardResult.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.u004.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.u004.01"));
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -365,7 +365,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.c001.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.c001.01"));
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -374,7 +374,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<UserCarsResult> asyncCallBack = new AsyncCallBack<UserCarsResult>(
                 context, callback, UserCarsResult.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.c003.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.c003.01"));
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -402,7 +402,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.u003.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.u003.01"));
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -411,7 +411,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.v002.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.v002.01"));
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -420,7 +420,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<ViolationResultParent> asyncCallBack = new AsyncCallBack<ViolationResultParent>(
                 context, callback, ViolationResultParent.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.v002.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.v002.01"));
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -432,7 +432,7 @@ public class UserApiClient extends BaseApiClient {
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
         RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean(context, "cip.cfc.v004.01"));
+        t.setSYS_HEAD(getBean("cip.cfc.v004.01"));
         t.setReqInfo(jiaoYiDaiMaDTO);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }

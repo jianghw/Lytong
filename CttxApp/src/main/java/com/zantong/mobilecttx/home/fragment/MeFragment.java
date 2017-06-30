@@ -257,7 +257,7 @@ public class MeFragment extends BaseRefreshJxFragment {
                             if (result.getData() != null) {
                                 mYouHui.setText(String.valueOf(result.getData().getCouponList().size()));
                             } else {
-                                ToastUtils.toasetShort(result.getResponseDesc());
+                                ToastUtils.toastShort(result.getResponseDesc());
                             }
                         }
                     }

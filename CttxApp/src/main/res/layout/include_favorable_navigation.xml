@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:paddingTop="@dimen/ds_36">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!--加油充值-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/ds_198"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="加油充值"
+                        android:textColor="@color/colorTvBlack_4d"
+                        android:textSize="@dimen/fs_16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_24"
+                        android:background="@drawable/shape_tv_favorable_red"
+                        android:gravity="center"
+                        android:text="9折优惠"
+                        android:textColor="@color/colorTvRed_f33"
+                        android:textSize="@dimen/fs_14sp"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/ds_165"
+                    android:layout_height="@dimen/ds_165"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/ds_36"
+                    android:src="@mipmap/icon_oil_favorable"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/colorLineGray_e5"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/ds_198"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="汽车嗨修"
+                        android:textColor="@color/colorTvBlack_4d"
+                        android:textSize="@dimen/fs_16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_24"
+                        android:background="@drawable/shape_tv_favorable_violet"
+                        android:gravity="center"
+                        android:text="极速维修"
+                        android:textColor="@color/colorTvViolet_f33"
+                        android:textSize="@dimen/fs_14sp"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/ds_165"
+                    android:layout_height="@dimen/ds_165"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/ds_36"
+                    android:src="@mipmap/icon_repair_favorable"/>
+            </LinearLayout>
+
+        </TableRow>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorLineGray_e5"/>
+        <!--第二列表-->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!--加油充值-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/ds_198"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="专业代驾"
+                        android:textColor="@color/colorTvBlack_4d"
+                        android:textSize="@dimen/fs_16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_24"
+                        android:background="@drawable/shape_tv_favorable_green"
+                        android:gravity="center"
+                        android:text="安全放心"
+                        android:textColor="@color/colorTvGreen_18"
+                        android:textSize="@dimen/fs_14sp"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/ds_165"
+                    android:layout_height="@dimen/ds_165"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/ds_36"
+                    android:src="@mipmap/icon_drive_favorable"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/colorLineGray_e5"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/ds_198"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="洗车美容"
+                        android:textColor="@color/colorTvBlack_4d"
+                        android:textSize="@dimen/fs_16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/ds_24"
+                        android:background="@drawable/shape_tv_favorable_violet"
+                        android:gravity="center"
+                        android:text="返  现5%"
+                        android:textColor="@color/colorTvBlue_2d"
+                        android:textSize="@dimen/fs_14sp"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/ds_165"
+                    android:layout_height="@dimen/ds_165"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/ds_36"
+                    android:src="@mipmap/icon_carwash"/>
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
+</merge>

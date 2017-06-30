@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/bg_success">
+
+    <ImageView
+        android:id="@+id/img_gift"
+        android:layout_width="@dimen/ds_600"
+        android:layout_height="@dimen/ds_600"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/pic_gift"/>
+
+    <TextView
+        android:id="@+id/tv_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_gift"
+        android:layout_centerHorizontal="true"
+        android:text="恭喜你获得一份大礼包"
+        android:textColor="@color/colorTvCyan_08"
+        android:textSize="@dimen/fs_16sp"/>
+
+    <TextView
+        android:id="@+id/tv_prompt_mine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_prompt"
+        android:layout_centerHorizontal="true"
+        android:text="礼品请到个人--优惠劵中查看"
+        android:textColor="@color/colorTvCyan_08"
+        android:textSize="@dimen/fs_16sp"/>
+
+    <Button
+        android:id="@+id/btn_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_prompt_mine"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_sel_apply_submit"
+        android:text="分享活动给好友"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/fs_18sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_pay"
+        android:layout_centerHorizontal="true"
+        android:text="好友报名付款成功后您可以获得100元的现金返现"
+        android:textColor="@color/colorTvRed_f33"
+        android:textSize="@dimen/fs_16sp"/>
+
+</RelativeLayout>

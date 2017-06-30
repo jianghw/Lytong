@@ -50,7 +50,6 @@ android {
         }
 
         release {
-            //这样写就得把demo.jk文件放在项目目录
             storeFile file("/Users/CTTX.jks")
             storePassword "zantong"
             keyAlias "CTTX"
@@ -131,14 +130,13 @@ repositories {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':CordovaLib')
+    compile project(':Common')
 
     //阿里云推送
     compile(name: 'huawei-xiaomi-support-3.0.0', ext: 'aar')
-    // 指定下载编译百度移动统计JAR
 
-    //    compile 'com.baidu.mobstat:mtj-sdk:latest.integration'
     compile files('libs/zxing.jar')
-    //可选，用于生成application类
     compile files('libs/sun.misc.BASE64Decoder.jar')
     compile files('libs/libammsdk.jar')
     compile files('libs/pinyin4j-2.5.0.jar')
@@ -148,9 +146,6 @@ dependencies {
     compile files('libs/universal-image-loader-1.9.4.jar')
     compile files('libs/baidumapapi_search_v4_2_0.jar')
 
-    //多余
-    compile project(':CordovaLib')
-    compile project(':Common')
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.jakewharton:butterknife:7.0.1'

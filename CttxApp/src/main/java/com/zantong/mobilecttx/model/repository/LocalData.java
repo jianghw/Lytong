@@ -106,7 +106,7 @@ public class LocalData {
             dto.setRequestDate(DateUtils.getDate());
             dto.setRequestTime(DateUtils.getTime());
             dto.setConsumerSeqNo(StringUtils.getRandomStr());
-            dto.setDvcToken(Tools.getIMEI(context));
+            dto.setDvcToken(Tools.getIMEI());
         }
         return dto;
     }

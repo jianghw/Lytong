@@ -28,8 +28,8 @@ import cn.qqtheme.framework.util.ToastUtils;
  * @author Sandy
  * create at 16/6/2 下午2:14
  */
-public abstract class BaseFragment extends Fragment implements
-        OnClickListener, IBaseFragment {
+public abstract class BaseFragment extends Fragment implements OnClickListener, IBaseFragment {
+
     protected boolean isPrepared = false;
 
     /**

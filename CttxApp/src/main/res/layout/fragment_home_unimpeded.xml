@@ -4,11 +4,11 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="com.zantong.mobilecttx.home.fragment.UnimpededFragment">
+              tools:context="com.zantong.mobilecttx.home.fragment.HomeUnimpededFragment">
     <!--头部banner-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_660">
+        android:layout_height="@dimen/ds_600">
 
         <cn.qqtheme.framework.widght.banner.ConvenientBanner
             android:id="@+id/custom_convenientBanner"
@@ -22,10 +22,10 @@
     </RelativeLayout>
     <!--导航控件-->
     <TableLayout
+        android:paddingTop="@dimen/ds_36"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/ds_36"
-        android:layout_marginTop="@dimen/ds_36">
+        android:background="@color/colorWhite">
 
         <TableRow
             android:layout_width="match_parent"
@@ -76,8 +76,10 @@
     <!--小广播-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_135"
-        android:layout_marginBottom="@dimen/ds_36">
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:paddingBottom="@dimen/ds_30"
+        android:paddingTop="@dimen/ds_30">
 
         <ImageView
             android:id="@+id/img_trumpet"
@@ -100,7 +102,7 @@
         <com.zantong.mobilecttx.widght.MainScrollUpAdvertisementView
             android:id="@+id/custom_grapevine"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/ds_135"
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@+id/img_trumpet"
             android:ellipsize="end"

@@ -65,7 +65,7 @@ import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_COD
 /**
  * 畅通主页面
  */
-public class UnimpededFragment extends BaseRefreshJxFragment
+public class HomeUnimpededFragment extends BaseRefreshJxFragment
         implements View.OnClickListener,
         IUnimpededFtyContract.IUnimpededFtyView {
 
@@ -125,12 +125,12 @@ public class UnimpededFragment extends BaseRefreshJxFragment
     private HorizontalCarViolationAdapter mCarViolationAdapter;
     private List<UserCarInfoBean> mUserCarInfoBeanList = new ArrayList<>();
 
-    public static UnimpededFragment newInstance() {
-        return new UnimpededFragment();
+    public static HomeUnimpededFragment newInstance() {
+        return new HomeUnimpededFragment();
     }
 
-    public static UnimpededFragment newInstance(String param1, String param2) {
-        UnimpededFragment fragment = new UnimpededFragment();
+    public static HomeUnimpededFragment newInstance(String param1, String param2) {
+        HomeUnimpededFragment fragment = new HomeUnimpededFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -150,7 +150,7 @@ public class UnimpededFragment extends BaseRefreshJxFragment
 
     @Override
     protected int getFragmentLayoutResId() {
-        return R.layout.fragment_unimpeded;
+        return R.layout.fragment_home_unimpeded;
     }
 
     /**
@@ -287,7 +287,7 @@ public class UnimpededFragment extends BaseRefreshJxFragment
      */
     @Override
     public void homePageError(String message) {
-        ToastUtils.toasetShort(message);
+        ToastUtils.toastShort(message);
     }
 
     @Override
@@ -329,7 +329,7 @@ public class UnimpededFragment extends BaseRefreshJxFragment
      */
     @Override
     public void remoteCarInfoError(String message) {
-        ToastUtils.toasetShort(message);
+        ToastUtils.toastShort(message);
     }
 
     @Override
@@ -513,6 +513,6 @@ public class UnimpededFragment extends BaseRefreshJxFragment
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)
     public void doPermissionFail() {
-
+        ToastUtils.toastShort("相机权限被拒绝，请手机设置中打开");
     }
 }

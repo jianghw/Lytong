@@ -143,10 +143,12 @@ public class AddCarViewPager extends FrameLayout {
     }
 
     public void refreshData(List<BaseFragment> fragmentLists) {
+        if (viewPager == null) return;
+
         if (!fragmentList.isEmpty()) fragmentList.clear();
         fragmentList.addAll(fragmentLists);
-//		Collections、reverse(fragmentList);
         mAdapter.notifyDataSetChanged();
+
         viewPager.setCurrentItem(0);
         setDots(mAdapter.getCount());
     }
@@ -183,7 +185,6 @@ public class AddCarViewPager extends FrameLayout {
             mChildCount = getCount();
             super.notifyDataSetChanged();
         }
-
     }
 
 

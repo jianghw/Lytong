@@ -1,15 +1,12 @@
 package com.zantong.mobilecttx.user.activity;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -74,11 +71,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.log.LogUtils;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
-
-import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 登陆界面
@@ -155,8 +147,6 @@ public class LoginActivity extends Activity
         tintManager.setStatusBarTintResource(R.color.appmain);//通知栏所需颜色
         ScreenManager.pushActivity(this);
 
-        takePhoneIMEI();
-
         init();
 
         mListNum = mNumKeyBoard.getRandomList();
@@ -196,33 +186,6 @@ public class LoginActivity extends Activity
                 return false;
             }
         });
-    }
-
-    public void takePhoneIMEI() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            PermissionGen.needPermission(this, PER_REQUEST_CODE,
-                    new String[]{
-                            Manifest.permission.READ_PHONE_STATE}
-            );
-        } else {
-            PublicData.getInstance().imei = Tools.getIMEI(this);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    @PermissionSuccess(requestCode = PER_REQUEST_CODE)
-    public void doPermissionSuccess() {
-        PublicData.getInstance().imei = Tools.getIMEI(this);
-    }
-
-    @PermissionFail(requestCode = PER_REQUEST_CODE)
-    public void doPermissionFail() {
-
     }
 
     private void init() {

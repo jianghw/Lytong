@@ -10,7 +10,6 @@ public class DriverOcrResult extends BaseOcrResult {
 
     DriverOcrBean content;
 
-
     public void setContent(DriverOcrBean content) {
         this.content = content;
     }

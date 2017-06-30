@@ -9,7 +9,7 @@ import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 /**
  * 驾校订单页面
  */
-public class OrderNumFahrschuleFragment extends BaseRefreshJxFragment {
+public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -18,12 +18,12 @@ public class OrderNumFahrschuleFragment extends BaseRefreshJxFragment {
     private String mParam1;
     private String mParam2;
 
-    public static OrderNumFahrschuleFragment newInstance() {
-        return new OrderNumFahrschuleFragment();
+    public static FahrschuleOrderNumFragment newInstance() {
+        return new FahrschuleOrderNumFragment();
     }
 
-    public static OrderNumFahrschuleFragment newInstance(String param1, String param2) {
-        OrderNumFahrschuleFragment fragment = new OrderNumFahrschuleFragment();
+    public static FahrschuleOrderNumFragment newInstance(String param1, String param2) {
+        FahrschuleOrderNumFragment fragment = new FahrschuleOrderNumFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -48,7 +48,7 @@ public class OrderNumFahrschuleFragment extends BaseRefreshJxFragment {
 
     @Override
     protected int getFragmentLayoutResId() {
-        return R.layout.fragment_order_num_fahrschule;
+        return R.layout.fragment_fahrschule_order_num;
     }
 
     @Override

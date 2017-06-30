@@ -411,6 +411,13 @@
             android:name=".user.activity.CouponDetailActivity"
             android:screenOrientation="portrait"/>
 
+        <!-- ===================活动模块=========================================-->
+        <!-- 活动页面;驾校报名-->
+        <activity
+            android:name=".fahrschule.activity.FahrschuleActivity"
+            android:screenOrientation="portrait"/>
+
+
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="58b3880304e20581760018e7"/>
@@ -552,7 +559,7 @@
         <!-- 您从百度网站获取的APP KEY -->
         <meta-data
             android:name="BaiduMobAd_STAT_ID"
-            android:value="9f4d50c376"/> <!-- abcd1234 -->
+            android:value="9f4d50c376"/>
         <!-- 渠道商编号 -->
         <meta-data
             android:name="BaiduMobAd_CHANNEL"
@@ -631,21 +638,19 @@
         <meta-data
             android:name="BUGLY_APP_VERSION"
             android:value="2.6.0.1"/>
+
         <!-- 7.0拍照适配 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
-
             <!-- 元数据 -->
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider_paths"/>
         </provider>
 
-        <activity android:name=".fahrschule.activity.FahrschuleActivity">
-        </activity>
     </application>
 
 </manifest>
