@@ -19,7 +19,7 @@ import com.zantong.mobilecttx.interf.IBaseActivity;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.InspectService;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

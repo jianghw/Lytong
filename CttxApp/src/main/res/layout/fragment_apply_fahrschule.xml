@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+    <!--驾校报名页面-->
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/bg_recruit_up"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBgBlue_a4">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_bg_course_apply"
+            android:padding="@dimen/ds_75"
+            android:layout_marginTop="@dimen/ds_48"
+            android:layout_marginLeft="@dimen/ds_75"
+            android:layout_marginRight="@dimen/ds_75"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true">
+            <!--课程名称-->
+            <TextView
+                android:id="@+id/tv_course"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/ds_90"
+                android:gravity="center"
+                android:text="课程名称"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_course_sel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_90"
+                android:layout_marginLeft="@dimen/ds_36"
+                android:layout_toRightOf="@+id/tv_course"
+                android:background="@drawable/shape_edit_apply"
+                android:drawableRight="@mipmap/arrow_down"
+                android:gravity="center_vertical"
+                android:hint="请选择课程"
+                android:paddingLeft="@dimen/ds_36"
+                android:paddingRight="@dimen/ds_36"
+                android:textSize="@dimen/fs_16sp"/>
+            <!--报名学校-->
+            <TextView
+                android:id="@+id/tv_school"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/ds_90"
+                android:layout_below="@+id/tv_course"
+                android:layout_marginTop="@dimen/ds_30"
+                android:gravity="center"
+                android:text="报名学校"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_school_sel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_90"
+                android:layout_alignTop="@+id/tv_school"
+                android:layout_marginLeft="@dimen/ds_36"
+                android:layout_toRightOf="@+id/tv_school"
+                android:background="@drawable/shape_edit_apply"
+                android:drawableRight="@mipmap/arrow_down"
+                android:gravity="center_vertical"
+                android:hint="请选择学校"
+                android:paddingLeft="@dimen/ds_36"
+                android:paddingRight="@dimen/ds_36"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <!--上课地点-->
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/ds_90"
+                android:layout_below="@+id/tv_school"
+                android:layout_marginTop="@dimen/ds_30"
+                android:gravity="center"
+                android:text="上课地点"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_address_sel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_90"
+                android:layout_alignTop="@+id/tv_address"
+                android:layout_marginLeft="@dimen/ds_36"
+                android:layout_toRightOf="@+id/tv_address"
+                android:background="@drawable/shape_edit_apply"
+                android:drawableRight="@mipmap/arrow_down"
+                android:gravity="center_vertical"
+                android:hint="请选择上课地点"
+                android:paddingLeft="@dimen/ds_36"
+                android:paddingRight="@dimen/ds_36"
+                android:textSize="@dimen/fs_16sp"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_introduce"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@mipmap/title_bg"
+            android:gravity="center"
+            android:text="课程介绍"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/fs_16sp"/>
+    </RelativeLayout>
+
+    <!--用户信息输入-->
+    <include layout="@layout/include_apply_fahrschule_user"/>
+
+
+</LinearLayout>

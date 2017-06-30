@@ -1,0 +1,124 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.zantong.mobilecttx.home.fragment.UnimpededFragment">
+    <!--头部banner-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_660">
+
+        <cn.qqtheme.framework.widght.banner.ConvenientBanner
+            android:id="@+id/custom_convenientBanner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <include
+            layout="@layout/include_unimpeded_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_111"/>
+    </RelativeLayout>
+    <!--导航控件-->
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/ds_36"
+        android:layout_marginTop="@dimen/ds_36">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_oil"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/ds_24"
+                android:drawableTop="@mipmap/icon_oil"
+                android:gravity="center"
+                android:text="@string/recharge"/>
+
+            <TextView
+                android:id="@+id/tv_check"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/ds_24"
+                android:drawableTop="@mipmap/icon_check"
+                android:gravity="center"
+                android:text="@string/annual"/>
+
+            <TextView
+                android:id="@+id/tv_carwash"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/ds_24"
+                android:drawableTop="@mipmap/icon_license"
+                android:gravity="center"
+                android:text="@string/car_wash"/>
+
+            <TextView
+                android:id="@+id/tv_drive"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/ds_24"
+                android:drawableTop="@mipmap/icon_drive"
+                android:gravity="center"
+                android:text="@string/designated_driver"/>
+        </TableRow>
+    </TableLayout>
+    <!--小广播-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_135"
+        android:layout_marginBottom="@dimen/ds_36">
+
+        <ImageView
+            android:id="@+id/img_trumpet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_36"
+            android:src="@mipmap/icon_toutiao"/>
+
+        <ImageView
+            android:id="@+id/img_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/img_trumpet"
+            android:layout_toRightOf="@+id/img_trumpet"
+            android:src="@mipmap/icon_dot_sel"
+            android:visibility="gone"/>
+
+        <com.zantong.mobilecttx.widght.MainScrollUpAdvertisementView
+            android:id="@+id/custom_grapevine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/img_trumpet"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:textColor="@color/gray_99"/>
+    </RelativeLayout>
+
+    <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
+        android:id="@+id/custom_violation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBgGray_f8"
+        app:icvp_center_page_scale_offset="@dimen/ds_90"
+        app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
+        app:icvp_max_page_scale="0.8"
+        app:icvp_medium_scaled="true"
+        app:icvp_min_page_scale="0.6"
+        app:icvp_min_page_scale_offset="5dp"
+        app:icvp_scroll_duration="500"/>
+</LinearLayout>

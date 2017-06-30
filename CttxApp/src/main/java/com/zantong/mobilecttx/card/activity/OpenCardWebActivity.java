@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 
 import org.apache.cordova.CordovaActivity;
 import org.apache.cordova.CordovaWebView;

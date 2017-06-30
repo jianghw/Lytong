@@ -258,7 +258,7 @@
                                 android:layout_width="@dimen/ds_130"
                                 android:layout_height="@dimen/ds_130"
                                 android:layout_centerHorizontal="true"
-                                android:src="@mipmap/icon_carwash"/>
+                                android:src="@mipmap/icon_license"/>
 
                             <TextView
                                 android:id="@+id/textView2"

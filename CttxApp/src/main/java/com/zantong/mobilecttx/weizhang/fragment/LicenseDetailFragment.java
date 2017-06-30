@@ -8,12 +8,12 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.PullableBaseFragment;
 import com.zantong.mobilecttx.interf.ILicenseGradeAtyContract;
-import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationQueryAcitvity;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.widght.CustomLoader;
 
 

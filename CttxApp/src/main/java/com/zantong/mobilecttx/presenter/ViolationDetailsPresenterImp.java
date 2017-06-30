@@ -11,7 +11,7 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.model.ViolationDetailsModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;

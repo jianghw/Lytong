@@ -263,8 +263,11 @@
         代驾完成后可提醒司机上传订单完成，可查看消费价格。
     </string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--首页导航栏名称-->
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="recharge">加油充值</string>
+    <string name="annual">年检</string>
+    <string name="car_wash">驾驶证查分</string>
+    <string name="designated_driver">代驾</string>
 </resources>

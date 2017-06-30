@@ -9,7 +9,7 @@ import com.zantong.mobilecttx.card.fragment.MyCardFragment;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.model.BindCardModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 

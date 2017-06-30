@@ -3,7 +3,9 @@ package com.zantong.mobilecttx.home.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -205,13 +207,14 @@ public class SplashActivity extends AppCompatActivity
     /**
      * 版本比较 页面跳转
      */
+    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     public void gotoMain() {
         int version = Tools.compareVersion(
                 SPUtils.getInstance(getApplicationContext()).getIsGuide(),
                 Tools.getVerName(getApplicationContext()));
         if (version != -1) {
             MobclickAgent.onEvent(this, Config.getUMengID(0));
-            Act.getInstance().gotoIntent(this, HomeActivity.class);
+            Act.getInstance().gotoIntent(this, ImmersionMainActivity.class);
             SPUtils.getInstance(getApplicationContext()).setIsGuide(Tools.getVerName(getApplicationContext()));
             finish();
         } else {

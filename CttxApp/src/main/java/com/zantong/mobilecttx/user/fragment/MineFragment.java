@@ -63,7 +63,6 @@ import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.ImageOptions;
-import com.zantong.mobilecttx.utils.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
@@ -80,6 +79,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.AppUtils;
 import cn.qqtheme.framework.util.FileUtils;
+
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
@@ -93,7 +93,7 @@ import static com.zantong.mobilecttx.R.id.user_head_image;
 
 public class MineFragment extends Fragment {
 
-    @Bind(user_head_image)
+    @Bind(R.id.user_head_image)
     ImageView userHeadImage;
     @Bind(R.id.user_name_text)
     TextView userNameText;
@@ -101,8 +101,7 @@ public class MineFragment extends Fragment {
     TextView mine_changtong_notice_text;
     @Bind(R.id.mine_manage_vechilse_notice)
     TextView mine_manage_vechilse_notice;
-    @Bind(R.id.mine_share)
-    View mShare;
+
     @Bind(R.id.mine_card_status)
     TextView mCardStatus;
 
@@ -322,7 +321,7 @@ public class MineFragment extends Fragment {
      * 点击事件
      */
     @OnClick({R.id.common_problem, R.id.mine_order, R.id.mine_pay_order, R.id.mine_info_rl,
-            R.id.mine_tools_part1, R.id.mine_manage_vechilse, R.id.mine_share,
+            R.id.mine_tools_part1, R.id.mine_manage_vechilse,
             R.id.mine_manage_weizhang_history, R.id.invite_red_packet, R.id.problem_feedback,
             R.id.about_us, R.id.mine_meg_layout, R.id.mine_ctk_layout,
             R.id.mine_youhuijian_layout, R.id.about_update, R.id.about_advertising})
@@ -354,9 +353,7 @@ public class MineFragment extends Fragment {
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(30));
                 Act.getInstance().lauchIntentToLogin(getActivity(), OrderRechargeActivity.class);
                 break;
-            case R.id.mine_share:  //分享
 
-                break;
             case R.id.common_problem:  //常见问题
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(32));
                 Act.getInstance().gotoIntent(getActivity(), CommonProblemActivity.class);
@@ -515,7 +512,7 @@ public class MineFragment extends Fragment {
                 .subscribe(new Subscriber<Long[]>() {
                     @Override
                     public void onCompleted() {
-                        Log.d("MainActivity", "文件下载完成");
+
 //                        PublicData.getInstance().mNetLocationBean = bean;apkUrl
                         Tools.installApk(MineFragment.this.getActivity(), apkUrl);
                         progressBar.dismiss();
@@ -530,7 +527,7 @@ public class MineFragment extends Fragment {
 
                     @Override
                     public void onNext(Long[] data) {
-                        Log.d("MainActivity", data[0] + "");
+
                         progressBar.setCancelable(true);
                         progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                         int demo = (int) (data[0] * 100 / data[1]);

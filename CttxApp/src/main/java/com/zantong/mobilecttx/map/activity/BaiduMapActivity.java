@@ -52,7 +52,7 @@ import com.zantong.mobilecttx.map.bean.YearCheckResult;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.DensityUtils;
 import com.zantong.mobilecttx.utils.DistanceUtils;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.util.List;

@@ -9,7 +9,7 @@ import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.model.UpdateNickNameModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.card.activity.BindCardSuccess;
 
 import org.json.JSONException;

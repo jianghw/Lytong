@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/base_loading_content_layout"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/lay_base_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"/>
+
+    <include layout="@layout/base_loading_failed"/>
+
+    <include layout="@layout/base_loading"/>
+
+    <include layout="@layout/base_loading_bg"/>
+
+</FrameLayout>

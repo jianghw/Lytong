@@ -6,7 +6,7 @@ import com.zantong.mobilecttx.user.adapter.MsgAdapter;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.user.bean.MsgBean;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 
 import java.util.ArrayList;
 

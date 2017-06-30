@@ -20,7 +20,7 @@ import com.zantong.mobilecttx.user.dto.InsOrderDTO;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.utils.NetUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.PayWebActivity;
 import com.zantong.mobilecttx.interf.IOrderView;

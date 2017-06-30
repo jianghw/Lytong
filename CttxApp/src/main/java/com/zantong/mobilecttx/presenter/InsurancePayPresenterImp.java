@@ -8,7 +8,7 @@ import com.zantong.mobilecttx.user.bean.CTTXInsurancePayBean;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
 import com.zantong.mobilecttx.model.InsurancePayModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;

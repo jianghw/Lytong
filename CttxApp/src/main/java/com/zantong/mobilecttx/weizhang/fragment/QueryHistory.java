@@ -19,7 +19,7 @@ import com.zantong.mobilecttx.presenter.QueryHistoryPresenter;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.QueryResultActivity;
 import com.zantong.mobilecttx.weizhang.adapter.QueryHistoryAdapter;

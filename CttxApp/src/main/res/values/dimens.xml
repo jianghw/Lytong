@@ -902,6 +902,7 @@
     <dimen name="ds_1054">351.3dp</dimen>
     <dimen name="ds_600">200dp</dimen>
     <dimen name="ds_618">206dp</dimen>
+    <dimen name="ds_660">220dp</dimen>
     <dimen name="ds_800">266.67dp</dimen>
     <dimen name="ds_900">280dp</dimen>
     <dimen name="ds_960">320dp</dimen>

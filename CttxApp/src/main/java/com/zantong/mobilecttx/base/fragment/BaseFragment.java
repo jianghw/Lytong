@@ -15,13 +15,13 @@ import com.zantong.mobilecttx.base.activity.BaseActivity;
 import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
 import com.zantong.mobilecttx.interf.IBaseFragment;
-import com.zantong.mobilecttx.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * Fragment基类
@@ -72,7 +72,7 @@ public abstract class BaseFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View mView = inflater.inflate(R.layout.base_loading_content, container, false);
-        LinearLayout llContent = (LinearLayout) mView.findViewById(R.id.base_loading_content);
+        LinearLayout linearLayout = (LinearLayout) mView.findViewById(R.id.base_loading_content);
         if (rootView == null) {
             registerEventBus();
             rootView = inflater.inflate(getLayoutResId(), null);
@@ -81,7 +81,7 @@ public abstract class BaseFragment extends Fragment implements
         if (parent != null) {
             parent.removeView(rootView);
         }
-        llContent.addView(rootView, new LinearLayout.LayoutParams(
+        linearLayout.addView(rootView, new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
         return mView;
@@ -234,6 +234,7 @@ public abstract class BaseFragment extends Fragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
 //        super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+
         mLoadingLayout = view.findViewById(R.id.base_loading_bg);
         mLoadingFailedLayout = view.findViewById(R.id.base_loading_failed_layout);
         mBaseContent = view.findViewById(R.id.base_loading_content);

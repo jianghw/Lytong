@@ -26,7 +26,7 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.interf.UserInfoUpdateView;
 import com.zantong.mobilecttx.presenter.UserInfoUpdatePresenter;
 import com.zantong.mobilecttx.utils.StringUtils;
-import com.zantong.mobilecttx.utils.ToastUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.imagetools.ImageLoad;
 import com.zantong.mobilecttx.utils.jumptools.Act;

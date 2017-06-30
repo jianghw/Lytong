@@ -29,9 +29,9 @@ public class UserCarInfoBean {
     private String carnum;//车牌
     private String violationflag;//违章提醒标识
     private String totamt;//总金额
-    private String untreatcount;//
-    private String untreatcent;//
-    private String untreatamt;//
+    private String untreatcount;//未处理总笔数
+    private String untreatcent;//未处理总分值
+    private String untreatamt;//未处理总金额
     private List<ViolationInfoBean> ViolationInfo;//
 
     public String getMileage() {

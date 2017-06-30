@@ -1,7 +1,8 @@
 package com.zantong.mobilecttx.model.repository;
 
 import com.zantong.mobilecttx.api.IAddOilService;
-import com.zantong.mobilecttx.api.IAnShengService;
+import com.zantong.mobilecttx.api.IBankService;
+import com.zantong.mobilecttx.api.ICttxService;
 import com.zantong.mobilecttx.api.IFebruaryService;
 import com.zantong.mobilecttx.api.IMessageService;
 import com.zantong.mobilecttx.api.ISplashService;
@@ -10,13 +11,16 @@ import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
+import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
+import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.interf.CTTXHttpPOSTInterface;
 import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
 import com.zantong.mobilecttx.user.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
+import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
@@ -110,7 +114,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<LicenseResponseBean> driverLicenseCheckGrade(String requestDTO) {
-        return initAppUrlRetrofit().create(IAnShengService.class).driverLicenseCheckGrade(requestDTO);
+        return initAppUrlRetrofit().create(IBankService.class).driverLicenseCheckGrade(requestDTO);
     }
 
     /**
@@ -170,6 +174,22 @@ public class RemoteData implements IRemoteSource {
 
     @Override
     public Observable<LicenseResponseBean> loadLoginPostTest(String msg) {
-        return initAppUrlRetrofit().create(IAnShengService.class).loadLoginPostTest(msg);
+        return initAppUrlRetrofit().create(IBankService.class).loadLoginPostTest(msg);
+    }
+
+    /**
+     * 1.首页信息
+     */
+    @Override
+    public Observable<HomeResult> homePage(HomeDataDTO id) {
+        return initRetrofit().create(ICttxService.class).homePage(id);
+    }
+
+    /**
+     * cip.cfc.c003.01
+     */
+    @Override
+    public Observable<UserCarsResult> getRemoteCarInfo(String requestDTO) {
+        return initAppUrlRetrofit().create(IBankService.class).getRemoteCarInfo(requestDTO);
     }
 }

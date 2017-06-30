@@ -51,8 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/ds_36"
-            android:src="@mipmap/icon_speaker"/>
+            android:layout_marginLeft="@dimen/ds_36"/>
 
         <ImageView
             android:id="@+id/img_label"
@@ -158,7 +157,7 @@
                     android:layout_width="@dimen/ds_130"
                     android:layout_height="@dimen/ds_130"
                     android:layout_centerHorizontal="true"
-                    android:src="@mipmap/icon_carwash"/>
+                    android:src="@mipmap/icon_license"/>
 
                 <TextView
                     android:id="@+id/textView2"
