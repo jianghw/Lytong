@@ -41,6 +41,7 @@ public class OrderRechargeActivity extends BaseMvpActivity<IOrderView,OrderPrese
         fragmentList.add(OrderRechargeFragment.newInstance(2));
         fragmentList.add(OrderRechargeFragment.newInstance(3));
         String titles[] = {"全部", "待付款", "已付款", "退款中"};
+
         mAdapter = new TabListAdapter(getSupportFragmentManager(), this, titles, fragmentList);
         mCommonTabContent.setAdapter(mAdapter);
         mCommonTabContent.setOffscreenPageLimit(fragmentList.size());

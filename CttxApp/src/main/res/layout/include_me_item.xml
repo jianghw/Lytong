@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ds_30"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/lay_order"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_120">
+
+            <ImageView
+                style="@style/mineItemHead"
+                android:src="@mipmap/icon_list"/>
+
+            <TextView
+                style="@style/payRecordTime"
+                android:layout_marginLeft="53dip"
+                android:text="我的畅通卡"/>
+
+            <ImageView
+                style="@style/mineItemArrow"
+                android:src="@mipmap/btn_rightarrow"/>
+        </RelativeLayout>
+
+        <TextView style="@style/line_splite_gray"/>
+
+        <RelativeLayout
+            android:id="@+id/lay_query"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_120">
+
+            <ImageView
+                style="@style/mineItemHead"
+                android:src="@mipmap/ic_violation"/>
+
+            <TextView
+                style="@style/payRecordTime"
+                android:layout_marginLeft="53dip"
+                android:text="违章缴费查询"/>
+
+            <ImageView
+                style="@style/mineItemArrow"
+                android:src="@mipmap/btn_rightarrow"/>
+        </RelativeLayout>
+
+        <TextView style="@style/line_splite_gray"/>
+        <!--我的消息-->
+        <RelativeLayout
+            android:id="@+id/lay_msg"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_120">
+
+            <ImageView
+                style="@style/mineItemHead"
+                android:src="@mipmap/ic_msg"/>
+
+            <TextView
+                style="@style/payRecordTime"
+                android:layout_marginLeft="53dip"
+                android:text="我的消息"/>
+
+            <ImageView
+                style="@style/mineItemArrow"
+                android:src="@mipmap/btn_rightarrow"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!--推荐送豪礼-->
+    <RelativeLayout
+        android:id="@+id/lay_recommend"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
+        android:layout_marginBottom="@dimen/ds_30"
+        android:layout_marginTop="@dimen/ds_30">
+
+        <ImageView
+            style="@style/mineItemHead"
+            android:src="@mipmap/ic_me_gift"/>
+
+        <TextView
+            style="@style/payRecordTime"
+            android:layout_marginLeft="53dip"
+            android:text="推荐送豪礼"/>
+
+        <ImageView
+            style="@style/mineItemArrow"
+            android:src="@mipmap/btn_rightarrow"/>
+    </RelativeLayout>
+
+    <!--常见问题-->
+    <RelativeLayout
+        android:id="@+id/lay_problem"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120">
+
+        <ImageView
+            style="@style/mineItemHead"
+            android:src="@mipmap/icon_common_problem"/>
+
+        <TextView
+            style="@style/payRecordTime"
+            android:layout_marginLeft="53dip"
+            android:text="常见问题"/>
+
+        <ImageView
+            style="@style/mineItemArrow"
+            android:src="@mipmap/btn_rightarrow"/>
+    </RelativeLayout>
+
+    <TextView style="@style/line_splite_gray"/>
+    <!--联系客服-->
+    <RelativeLayout
+        android:id="@+id/lay_service"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120">
+
+        <ImageView
+            style="@style/mineItemHead"
+            android:src="@mipmap/icon_server"/>
+
+        <TextView
+            style="@style/payRecordTime"
+            android:layout_marginLeft="53dip"
+            android:text="联系客服"/>
+
+        <ImageView
+            style="@style/mineItemArrow"
+            android:src="@mipmap/btn_rightarrow"/>
+    </RelativeLayout>
+
+    <TextView style="@style/line_splite_gray"/>
+    <!--关于我们-->
+    <RelativeLayout
+        android:id="@+id/about_us"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120">
+
+        <ImageView
+            style="@style/mineItemHead"
+            android:src="@mipmap/ic_us"/>
+
+        <TextView
+            style="@style/payRecordTime"
+            android:layout_marginLeft="53dip"
+            android:text="关于我们"/>
+
+        <ImageView
+            style="@style/mineItemArrow"
+            android:src="@mipmap/btn_rightarrow"/>
+    </RelativeLayout>
+
+    <TextView style="@style/line_splite_gray"/>
+
+    <RelativeLayout
+        android:id="@+id/lay_update"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120">
+
+        <ImageView
+            style="@style/mineItemHead"
+            android:src="@mipmap/icon_update"/>
+
+        <TextView
+            android:id="@+id/tv_update_title"
+            style="@style/payRecordTime"
+            android:layout_marginLeft="53dip"
+            android:drawablePadding="@dimen/ds_12"
+            android:text="版本更新"/>
+
+        <TextView
+            android:id="@+id/tv_update"
+            style="@style/mine_gray_color_text_vertical_font"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="13dp"
+            android:layout_marginRight="13dp"
+            android:layout_toLeftOf="@+id/img_update"
+            android:layout_toStartOf="@+id/img_update"
+            tools:text="最新版本是v2.5.0"/>
+
+        <ImageView
+            android:id="@+id/img_update"
+            style="@style/mineItemArrow"
+            android:src="@mipmap/btn_rightarrow"/>
+    </RelativeLayout>
+
+    <TextView style="@style/line_splite_gray"/>
+
+    <RelativeLayout
+        android:id="@+id/about_advertising"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120">
+
+        <ImageView
+            style="@style/mineItemHead"
+            android:src="@mipmap/icon_privacy"/>
+
+        <TextView
+            style="@style/payRecordTime"
+            android:layout_marginLeft="53dip"
+            android:text="用户协议与隐私说明"/>
+
+        <ImageView
+            style="@style/mineItemArrow"
+            android:src="@mipmap/btn_rightarrow"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/ds_30"
+        android:layout_marginTop="@dimen/ds_90"
+        android:text="\© ICBC-AXA LIFE"
+        android:textColor="@color/colorQueryNumberFont"
+        android:textSize="12sp"/>
+
+</LinearLayout>

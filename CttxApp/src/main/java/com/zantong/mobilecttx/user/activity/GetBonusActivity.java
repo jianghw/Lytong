@@ -110,10 +110,8 @@ public class GetBonusActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
     @Override
     public void initView() {
         setTitleText("推荐领积分");
-//        StringFormatUtils spanStr = new StringFormatUtils(this, "每成功邀请2人，即可获得5元红包",
-//                "5元红包", R.color.red).fillColor();
-//        mDesc.setText(spanStr.getResult());
-        mDesc.setText("用户名：" + PublicData.getInstance().mLoginInfoBean.getNickname());
+        if (PublicData.getInstance().mLoginInfoBean != null)
+            mDesc.setText("用户名：" + PublicData.getInstance().mLoginInfoBean.getNickname());
         mShareDesc.setText(Html.fromHtml(getString(R.string.getbouns_share_desc)));
 
         getSignStatus();

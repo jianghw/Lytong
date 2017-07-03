@@ -6,8 +6,6 @@ import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
-import cn.qqtheme.framework.util.log.LogUtils;
-
 /**
  * 获取屏幕宽高等信息、全屏切换、保持屏幕常亮、截屏等
  *
@@ -18,13 +16,10 @@ public final class ScreenUtils {
     private static boolean isFullScreen = false;
 
     public static DisplayMetrics displayMetrics(Context context) {
-        DisplayMetrics dm = new DisplayMetrics();
-        WindowManager windowManager = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
-        windowManager.getDefaultDisplay().getMetrics(dm);
-        LogUtils.verbose("screen width=" + dm.widthPixels + "px, screen height=" + dm.heightPixels
-                + "px, densityDpi=" + dm.densityDpi + ", density=" + dm.density);
-        return dm;
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics;
     }
 
     public static int widthPixels(Context context) {

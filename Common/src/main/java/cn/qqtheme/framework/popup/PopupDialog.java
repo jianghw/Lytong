@@ -46,7 +46,7 @@ class PopupDialog {
         if (window != null) {
             window.setWindowAnimations(R.style.Animation_Popup);
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            //android.util.AndroidRuntimeException: requestFeature() must be called before adding content
+
             window.requestFeature(Window.FEATURE_NO_TITLE);
             window.setContentView(contentLayout);
         }

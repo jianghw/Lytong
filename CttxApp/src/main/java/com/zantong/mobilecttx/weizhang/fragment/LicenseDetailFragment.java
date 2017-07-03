@@ -167,6 +167,6 @@ public class LicenseDetailFragment extends PullableBaseFragment
     public void driverLicenseCheckGradeError(String message) {
         setLayoutVisibilityByRefresh(false);
         showErrorCryingFace(true);
-        ToastUtils.showShort(getContext().getApplicationContext(), message);
+        ToastUtils.toastShort(message);
     }
 }

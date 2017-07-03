@@ -204,7 +204,14 @@ public class MineFragment extends Fragment {
             @Override
             public void onSuccess(MessageCountResult result) {
                 if (result.getResponseCode() == 2000) {
-                    mMegCount.setText(String.valueOf(result.getData().getCount()));
+                    if (result.getData() != null) {
+                        int count = result.getData().getCount();
+                        if (mMegCount != null)
+                            mMegCount.setText(String.valueOf(count));
+                    } else {
+                        if (mMegCount != null)
+                            mMegCount.setText("0");
+                    }
                 }
             }
         });

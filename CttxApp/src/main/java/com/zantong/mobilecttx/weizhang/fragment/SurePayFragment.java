@@ -23,7 +23,6 @@ import com.zantong.mobilecttx.utils.AmountUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.NetUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.PayWebActivity;
@@ -34,6 +33,7 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 
 public class SurePayFragment extends Fragment{
@@ -59,8 +59,6 @@ public class SurePayFragment extends Fragment{
     private FragmentTransaction transaction;
     private ViolationDetails mViolationDetails;
     private String  remark = "3|";
-    private Dialog mLoadingDialog;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -168,8 +166,8 @@ public class SurePayFragment extends Fragment{
      * 查询列表
      */
     private void seachViolation(){
-        mLoadingDialog = DialogUtils.showLoading(getActivity());
-        final ViolationDetails violationDetails = (ViolationDetails)getActivity();
+        final Dialog showLoading = DialogUtils.showLoading(getActivity());
+
         ViolationDTO violationDTO = SPUtils.getInstance(getActivity()).getViolation();
         violationDTO.setCarnum(RSAUtils.strByEncryption(getActivity(), violationDTO.getCarnum(), true));
         violationDTO.setEnginenum(RSAUtils.strByEncryption(getActivity(), violationDTO.getEnginenum(), true));
@@ -177,7 +175,7 @@ public class SurePayFragment extends Fragment{
         UserApiClient.searchViolation(getActivity(), violationDTO, new CallBack<ViolationResultParent>() {
             @Override
             public void onSuccess(ViolationResultParent result) {
-                mLoadingDialog.dismiss();
+                if(showLoading!=null&&showLoading.isShowing())  showLoading.dismiss();
                 if(result.getSYS_HEAD().getReturnCode().equals("000000")){
                     gotoPay();
                 }else{
@@ -187,8 +185,7 @@ public class SurePayFragment extends Fragment{
 
             @Override
             public void onError(String errorCode, String msg) {
-                super.onError(errorCode, msg);
-                mLoadingDialog.dismiss();
+                if(showLoading!=null&&showLoading.isShowing())  showLoading.dismiss();
                 ToastUtils.showShort(getActivity(), "请求失败,请再次点击...");
             }
         });

@@ -71,7 +71,7 @@ public abstract class BasicPopup<V extends View> implements DialogInterface.OnKe
         V view = makeContentView();
         popupDialog.setContentView(view);// 设置弹出窗体的布局
         setContentViewAfter(view);
-        LogUtils.verbose("do something before popup show");
+
         if (width == 0 && height == 0) {
             //未明确指定宽高，优先考虑全屏再考虑半屏然后再考虑包裹内容
             width = screenWidthPixels;
@@ -184,12 +184,10 @@ public abstract class BasicPopup<V extends View> implements DialogInterface.OnKe
     public void show() {
         onShowPrepare();
         popupDialog.show();
-        LogUtils.verbose("popup show");
     }
 
     public void dismiss() {
         popupDialog.dismiss();
-        LogUtils.verbose("popup dismiss");
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {

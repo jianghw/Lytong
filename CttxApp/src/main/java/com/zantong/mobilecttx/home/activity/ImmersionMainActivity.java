@@ -15,7 +15,7 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.fragment.HomeFavorableFragment;
-import com.zantong.mobilecttx.home.fragment.MeFragment;
+import com.zantong.mobilecttx.home.fragment.HomeMeFragment;
 import com.zantong.mobilecttx.home.fragment.HomeUnimpededFragment;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
@@ -50,7 +50,7 @@ public class ImmersionMainActivity extends AppCompatActivity {
      */
     private HomeUnimpededFragment mHomeUnimpededFragment = null;
     private HomeFavorableFragment mHomeFavorableFragment = null;
-    private MeFragment mMeFragment = null;
+    private HomeMeFragment mHomeMeFragment = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -156,17 +156,17 @@ public class ImmersionMainActivity extends AppCompatActivity {
                 break;
             case 1:
                 if (mHomeFavorableFragment == null) {
-                    mHomeFavorableFragment = HomeFavorableFragment.newInstance("456", "456");
+                    mHomeFavorableFragment = HomeFavorableFragment.newInstance();
                     FragmentUtils.addFragment(fragmentManager, mHomeFavorableFragment, R.id.content);
                 }
                 FragmentUtils.hideAllShowFragment(mHomeFavorableFragment);
                 break;
             case 2:
-                if (mMeFragment == null) {
-                    mMeFragment = MeFragment.newInstance();
-                    FragmentUtils.addFragment(fragmentManager, mMeFragment, R.id.content);
+                if (mHomeMeFragment == null) {
+                    mHomeMeFragment = HomeMeFragment.newInstance();
+                    FragmentUtils.addFragment(fragmentManager, mHomeMeFragment, R.id.content);
                 }
-                FragmentUtils.hideAllShowFragment(mMeFragment);
+                FragmentUtils.hideAllShowFragment(mHomeMeFragment);
                 break;
             default:
                 break;

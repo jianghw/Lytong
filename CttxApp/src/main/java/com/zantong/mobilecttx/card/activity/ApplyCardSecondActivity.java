@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
@@ -37,7 +36,6 @@ import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.ReadFfile;
 import com.zantong.mobilecttx.utils.SPUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.dialog.CityDialog;
 import com.zantong.mobilecttx.utils.dialog.NetLocationDialog;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
@@ -62,6 +60,7 @@ import butterknife.OnClick;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.RegexUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -261,7 +260,8 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         mIdCardNum.setContentText(idCard);
         applyCTCardDTO.setCtfnum(RSAUtils.strByEncryption(getApplicationContext(), idCard, true));
 //手机号
-        mUserPhone.setContentText(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+        mUserPhone.setContentText(PublicData.getInstance().mLoginInfoBean != null ?
+                PublicData.getInstance().mLoginInfoBean.getPhoenum() : "");
 
 //婚姻状况
         applyCTCardDTO.setMarlst("1");
@@ -813,19 +813,19 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
             commitYingXiaoDataForLYT();
             if (TextUtils.isEmpty(wangdianAdress)) {
-                ToastUtils.showShort(getApplicationContext(), "请选择领卡网点");
+                ToastUtils.toastShort("请选择领卡网点");
             } else {
                 startActivity(ApplySuccessActvity.getIntent(this, wangdianAdress));
             }
         } else {
-            ToastUtils.showShort(getApplicationContext(), result.getSYS_HEAD().getReturnMessage());
+            ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
         }
     }
 
     @Override
     public void resultError(String msg) {
         hideDialogLoading();
-        Toast.makeText(getApplicationContext(), Config.getErrMsg("1"), Toast.LENGTH_SHORT).show();
+        ToastUtils.toastShort(Config.getErrMsg("1"));
     }
 
     /**
@@ -845,7 +845,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             @Override
             public void onSuccess(BaseResult result) {
                 if (result.getResponseCode() == 2000) {
-                    ToastUtils.showShort(getApplicationContext(), "已提交营销代码");
+                    ToastUtils.toastShort("已提交营销代码");
                 }
             }
         });

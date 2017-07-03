@@ -48,6 +48,7 @@ public class RechargeOrderAdapter extends BaseAdapter<RechargeOrderBean> {
             holder.mTime.setText("订单时间：" + data.getRechargeDate());
             holder.mCount.setText("×" + data.getQuantity());
             holder.mNum.setText("共" + data.getQuantity() + "件商品");
+
             // 0：待支付；1：支付失败；2：已支付（钱支付）；3：退款中；4：退款成功；5：取消
             switch (data.getOrderStatus()) {
                 case 0:
@@ -65,14 +66,17 @@ public class RechargeOrderAdapter extends BaseAdapter<RechargeOrderBean> {
                     holder.mStatus.setText("已完成");
                     holder.mStatus.setTextColor(mContext.getResources().getColor(R.color.gray_99));
                     holder.mOptionLayout.setVisibility(View.GONE);
+                    break;
                 case 3:
                     holder.mStatus.setText("退款中");
                     holder.mStatus.setTextColor(mContext.getResources().getColor(R.color.gray_99));
                     holder.mOptionLayout.setVisibility(View.GONE);
+                    break;
                 case 4:
                     holder.mStatus.setText("已退款");
                     holder.mStatus.setTextColor(mContext.getResources().getColor(R.color.gray_99));
                     holder.mOptionLayout.setVisibility(View.GONE);
+                    break;
                 case 5:
                     holder.mStatus.setText("已取消");
                     holder.mStatus.setTextColor(mContext.getResources().getColor(R.color.gray_99));
@@ -86,46 +90,48 @@ public class RechargeOrderAdapter extends BaseAdapter<RechargeOrderBean> {
         holder.mCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogUtils.remindDialog(mContext, "温馨提醒", "您确定要取消该订单吗？", "取消", "确定", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                }, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CancelRechargeOrderDTO dto = new CancelRechargeOrderDTO();
-                        dto.setUserId(RSAUtils.strByEncryption(mContext, PublicData.getInstance().userID, true));
-                        dto.setOrderId(data.getOrderId());
-
-                        CarApiClient.cancelOrder(mContext, dto, new CallBack<BaseResult>() {
+                DialogUtils.remindDialog(mContext, "温馨提醒", "您确定要取消该订单吗？", "取消", "确定",
+                        new View.OnClickListener() {
                             @Override
-                            public void onSuccess(BaseResult result) {
-                                if (result.getResponseCode() == 2000) {
-                                    data.setOrderStatus(2);
-                                    holder.mStatus.setText("已取消");
-                                    holder.mStatus.setTextColor(mContext.getResources().getColor(R.color.gray_99));
-                                    holder.mOptionLayout.setVisibility(View.GONE);
-                                    EventBus.getDefault().post(new OrderCancelEvent(true));
-                                    notifyDataSetChanged();
-                                }
+                            public void onClick(View v) {
+
+                            }
+                        },
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                CancelRechargeOrderDTO dto = new CancelRechargeOrderDTO();
+                                dto.setUserId(RSAUtils.strByEncryption(mContext, PublicData.getInstance().userID, true));
+                                dto.setOrderId(data.getOrderId());
+
+                                CarApiClient.cancelOrder(mContext, dto, new CallBack<BaseResult>() {
+                                    @Override
+                                    public void onSuccess(BaseResult result) {
+                                        if (result.getResponseCode() == 2000) {
+                                            data.setOrderStatus(2);
+                                            holder.mStatus.setText("已取消");
+                                            holder.mStatus.setTextColor(mContext.getResources().getColor(R.color.gray_99));
+                                            holder.mOptionLayout.setVisibility(View.GONE);
+                                            EventBus.getDefault().post(new OrderCancelEvent(true));
+                                            notifyDataSetChanged();
+                                        }
+                                    }
+                                });
                             }
                         });
-                    }
-                });
             }
         });
         holder.mPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogUtils.createRechargeDialog(mContext, data.getOrderId(),
-                        data.getRechargeMoney(), data.getPayType(),new View.OnClickListener() {
+                        data.getRechargeMoney(), data.getPayType(), new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 int orderPrice = 0;
-                                try{
+                                try {
                                     orderPrice = Integer.valueOf((int) (Double.valueOf(data.getRechargeMoney()) * 100));
-                                }catch (Exception e){
+                                } catch (Exception e) {
 
                                 }
                                 String payUrl = "http://139.196.183.121:8081/payment/payForWapb2cPay?orderid=" +
@@ -134,10 +140,10 @@ public class RechargeOrderAdapter extends BaseAdapter<RechargeOrderBean> {
                                 CarApiClient.getPayOrderSn(mContext, payUrl, new CallBack<PayOrderResult>() {
                                     @Override
                                     public void onSuccess(PayOrderResult result) {
-                                        if (result.getResponseCode() == 2000){
+                                        if (result.getResponseCode() == 2000) {
                                             PublicData.getInstance().webviewTitle = "支付";
                                             PublicData.getInstance().webviewUrl = result.getData();
-                                            Act.getInstance().lauchIntentToLogin(mContext,BrowserForPayActivity.class);
+                                            Act.getInstance().lauchIntentToLogin(mContext, BrowserForPayActivity.class);
                                         }
                                     }
                                 });
@@ -153,8 +159,7 @@ public class RechargeOrderAdapter extends BaseAdapter<RechargeOrderBean> {
     public View createView(ViewGroup viewGroup, int i) {
         mContext = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.item_recharge_order, viewGroup, false);
-        return view;
+        return inflater.inflate(R.layout.item_recharge_order, viewGroup, false);
     }
 
     @Override

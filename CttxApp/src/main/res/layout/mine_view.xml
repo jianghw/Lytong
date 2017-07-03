@@ -521,7 +521,7 @@
             android:text="\© ICBC-AXA LIFE"
             android:textColor="@color/colorQueryNumberFont"
             android:textSize="12sp"/>
-
     </LinearLayout>
+
 </ScrollView>
 

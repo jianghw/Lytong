@@ -8,7 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
@@ -278,7 +277,6 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
             intent.putExtra("name", getUserName());
             intent.putExtra("idCard", getUserIdCard());
             startActivity(intent);
-
         } else if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
             Intent intent = new Intent(this, ApplyCardQuickActivity.class);
             intent.putExtra("filenum", getDriverFileNum());
@@ -291,7 +289,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     @Override
     public void resultError(String msg) {
         hideDialogLoading();
-        Toast.makeText(getApplicationContext(), Config.getErrMsg("1"), Toast.LENGTH_SHORT).show();
+        ToastUtils.toastShort(Config.getErrMsg("1"));
     }
 
     @Override

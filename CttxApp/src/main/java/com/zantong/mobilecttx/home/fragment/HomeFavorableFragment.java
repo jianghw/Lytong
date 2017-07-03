@@ -19,6 +19,10 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment {
     private String mParam1;
     private String mParam2;
 
+    public static HomeFavorableFragment newInstance() {
+        return new HomeFavorableFragment();
+    }
+
     public static HomeFavorableFragment newInstance(String param1, String param2) {
         HomeFavorableFragment fragment = new HomeFavorableFragment();
         Bundle args = new Bundle();

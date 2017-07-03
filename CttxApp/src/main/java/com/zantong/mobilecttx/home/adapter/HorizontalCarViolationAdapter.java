@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.home.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,18 +15,19 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.car.activity.AddCarActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.StringUtils;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.qqtheme.framework.popup.MoreWindow;
+import cn.qqtheme.framework.util.ScreenUtils;
 
 /**
  * Created by jianghw on 2017/6/27.
@@ -43,6 +45,10 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
      * 车的数量
      */
     private int carCount;
+    /**
+     * 违章查询选择页面
+     */
+    private MoreWindow mMoreWindow;
 
     public HorizontalCarViolationAdapter(final Context context, List<UserCarInfoBean> infoBeanList) {
         mContext = context;
@@ -100,11 +106,23 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddCarActivity.isFrom = false;
-                Act.getInstance().lauchIntent(mContext, AddCarActivity.class);
+//                AddCarActivity.isFrom = false;
+//                Act.getInstance().lauchIntent(mContext, AddCarActivity.class);
+                showMoreWindow(v);
             }
         });
     }
+
+    private void showMoreWindow(View view) {
+        if (!(mContext instanceof Activity)) return;
+
+        if (null == mMoreWindow) {
+            mMoreWindow = new MoreWindow((Activity) mContext);
+            mMoreWindow.init();
+        }
+        mMoreWindow.showMoreWindow(view, ScreenUtils.widthPixels(mContext)/2);
+    }
+
 
     private void setupViolationCarItem(View view, final UserCarInfoBean userCarInfoBean) {
         LinearLayout layContent = (LinearLayout) view.findViewById(R.id.lay_content);
