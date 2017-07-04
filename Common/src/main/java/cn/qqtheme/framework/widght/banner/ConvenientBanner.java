@@ -168,6 +168,10 @@ public class ConvenientBanner<T> extends LinearLayout {
         return this;
     }
 
+    public boolean isRunning() {
+        return turning;
+    }
+
     public void stopTurning() {
         turning = false;
         timeHandler.removeCallbacks(adSwitchTask);

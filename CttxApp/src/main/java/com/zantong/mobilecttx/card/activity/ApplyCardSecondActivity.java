@@ -222,7 +222,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         String drivingNum = intent.getStringExtra("filenum");
 //驾档号
         mFileNum.setContentText(drivingNum);
-        applyCTCardDTO.setFilenum(RSAUtils.strByEncryption(getApplicationContext(), drivingNum, true));
+        applyCTCardDTO.setFilenum(RSAUtils.strByEncryption(drivingNum, true));
 //姓名
         mUserName.setContentText(userName);
         applyCTCardDTO.setUsrname(userName);
@@ -258,7 +258,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         initIDNumber();
 
         mIdCardNum.setContentText(idCard);
-        applyCTCardDTO.setCtfnum(RSAUtils.strByEncryption(getApplicationContext(), idCard, true));
+        applyCTCardDTO.setCtfnum(RSAUtils.strByEncryption(idCard, true));
 //手机号
         mUserPhone.setContentText(PublicData.getInstance().mLoginInfoBean != null ?
                 PublicData.getInstance().mLoginInfoBean.getPhoenum() : "");
@@ -286,7 +286,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
 //证件类型
         applyCTCardDTO.setCtftp("0");
 
-        applyCTCardDTO.setUsrid(SPUtils.getInstance(getApplicationContext()).getLoginInfoBean().getUsrid());
+        applyCTCardDTO.setUsrid(SPUtils.getInstance().getLoginInfoBean().getUsrid());
 
         applyCTCardDTO.setActnotf("1");
         applyCTCardDTO.setElecbillsign("0");
@@ -693,7 +693,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             ToastUtils.showShort(getApplicationContext(), "请确保手机号真实准确");
             return;
         }
-        applyCTCardDTO.setPhoenum(RSAUtils.strByEncryption(getApplicationContext(), userPhone, true));
+        applyCTCardDTO.setPhoenum(RSAUtils.strByEncryption(userPhone, true));
 
 //住宅地址
         String addr = mAddr.getRightText();
@@ -833,7 +833,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      */
     private void commitYingXiaoDataForLYT() {
         YingXiaoDataDTO dto = new YingXiaoDataDTO();
-        dto.setUsrnum(RSAUtils.strByEncryption(getApplicationContext(), PublicData.getInstance().userID, true));
+        dto.setUsrnum(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
 
         if (TextUtils.isEmpty(mYingXiaoCode.getContentText())) {
             dto.setEmpNum(mMarketingCode);

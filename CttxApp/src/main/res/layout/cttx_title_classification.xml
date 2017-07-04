@@ -45,7 +45,7 @@
             android:text="查询历史"/>
     </LinearLayout>
     <FrameLayout
-        android:id="@+id/mine_msg_layout"
+        android:id="@+id/lay_base_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
     </FrameLayout>

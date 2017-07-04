@@ -142,7 +142,7 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         }
         Log.i("usrId",PublicData.getInstance().userID);
         DaiJiaCreateDTO dto = new DaiJiaCreateDTO();
-        dto.setUsrId(RSAUtils.strByEncryptionLiYing(this, PublicData.getInstance().userID, true));
+        dto.setUsrId(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
         dto.setName(phone);
         dto.setMobile(phone);
         dto.setAddress(mDrivingAddress.getText().toString());

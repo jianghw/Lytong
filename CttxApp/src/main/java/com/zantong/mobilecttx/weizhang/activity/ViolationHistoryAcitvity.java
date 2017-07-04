@@ -97,7 +97,7 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView,HelpPres
         showDialogLoading();
         ViolationSearchDTO dto = new ViolationSearchDTO();
         dto.setDate(mDate);
-        dto.setUsernum(RSAUtils.strByEncryption(this,PublicData.getInstance().userID,true));
+        dto.setUsernum(RSAUtils.strByEncryption(PublicData.getInstance().userID,true));
         CarApiClient.getViolationHistory(this, dto, new CallBack<ViolationHistoryBean>() {
             @Override
             public void onSuccess(ViolationHistoryBean result) {
@@ -113,7 +113,7 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView,HelpPres
                     ViolationSearchDTO dto = new ViolationSearchDTO();
                     dto.setCarnum(info.getCarnum());
                     dto.setDate(mDate);
-                    dto.setUsernum(RSAUtils.strByEncryption(ViolationHistoryAcitvity.this,PublicData.getInstance().userID,true));
+                    dto.setUsernum(RSAUtils.strByEncryption(PublicData.getInstance().userID,true));
                     getHistoryByCar(info,dto);
 
                 }

@@ -220,7 +220,7 @@ public class MeFragment extends BaseRefreshJxFragment {
     private void getUnReadMsgCount() {
         BaseDTO dto = new BaseDTO();
         dto.setUsrId(RSAUtils.strByEncryption(
-                getActivity().getApplicationContext(), PublicData.getInstance().userID, true));
+                PublicData.getInstance().userID, true));
         CarApiClient.getUnReadMsgCount(getActivity().getApplicationContext(), dto, new CallBack<MessageCountResult>() {
             @Override
             public void onSuccess(MessageCountResult result) {

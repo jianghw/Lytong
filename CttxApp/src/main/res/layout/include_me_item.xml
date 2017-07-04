@@ -1,77 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/lay_order"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/ds_120"
         android:layout_marginTop="@dimen/ds_30"
-        android:orientation="vertical">
+        android:background="@drawable/bg_sel_item_gray">
 
-        <RelativeLayout
-            android:id="@+id/lay_order"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_120">
+        <ImageView
+            style="@style/mineItemHead"
+            android:src="@mipmap/icon_list"/>
 
-            <ImageView
-                style="@style/mineItemHead"
-                android:src="@mipmap/icon_list"/>
+        <TextView
+            style="@style/payRecordTime"
+            android:layout_marginLeft="53dip"
+            android:text="我的畅通卡"/>
 
-            <TextView
-                style="@style/payRecordTime"
-                android:layout_marginLeft="53dip"
-                android:text="我的畅通卡"/>
+        <ImageView
+            style="@style/mineItemArrow"
+            android:src="@mipmap/btn_rightarrow"/>
+    </RelativeLayout>
 
-            <ImageView
-                style="@style/mineItemArrow"
-                android:src="@mipmap/btn_rightarrow"/>
-        </RelativeLayout>
+    <TextView style="@style/line_splite_gray"/>
 
-        <TextView style="@style/line_splite_gray"/>
+    <RelativeLayout
+        android:id="@+id/lay_query"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
+        android:background="@drawable/bg_sel_item_gray">
 
-        <RelativeLayout
-            android:id="@+id/lay_query"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_120">
+        <ImageView
+            style="@style/mineItemHead"
+            android:src="@mipmap/ic_violation"/>
 
-            <ImageView
-                style="@style/mineItemHead"
-                android:src="@mipmap/ic_violation"/>
+        <TextView
+            style="@style/payRecordTime"
+            android:layout_marginLeft="53dip"
+            android:text="违章缴费查询"/>
 
-            <TextView
-                style="@style/payRecordTime"
-                android:layout_marginLeft="53dip"
-                android:text="违章缴费查询"/>
+        <ImageView
+            style="@style/mineItemArrow"
+            android:src="@mipmap/btn_rightarrow"/>
+    </RelativeLayout>
 
-            <ImageView
-                style="@style/mineItemArrow"
-                android:src="@mipmap/btn_rightarrow"/>
-        </RelativeLayout>
+    <TextView style="@style/line_splite_gray"/>
+    <!--我的消息-->
+    <RelativeLayout
+        android:id="@+id/lay_msg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
+        android:background="@drawable/bg_sel_item_gray">
 
-        <TextView style="@style/line_splite_gray"/>
-        <!--我的消息-->
-        <RelativeLayout
-            android:id="@+id/lay_msg"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_120">
+        <ImageView
+            style="@style/mineItemHead"
+            android:src="@mipmap/ic_msg"/>
 
-            <ImageView
-                style="@style/mineItemHead"
-                android:src="@mipmap/ic_msg"/>
+        <TextView
+            style="@style/payRecordTime"
+            android:layout_marginLeft="53dip"
+            android:text="我的消息"/>
 
-            <TextView
-                style="@style/payRecordTime"
-                android:layout_marginLeft="53dip"
-                android:text="我的消息"/>
-
-            <ImageView
-                style="@style/mineItemArrow"
-                android:src="@mipmap/btn_rightarrow"/>
-        </RelativeLayout>
-    </LinearLayout>
+        <ImageView
+            style="@style/mineItemArrow"
+            android:src="@mipmap/btn_rightarrow"/>
+    </RelativeLayout>
 
     <!--推荐送豪礼-->
     <RelativeLayout
@@ -79,7 +76,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_120"
         android:layout_marginBottom="@dimen/ds_30"
-        android:layout_marginTop="@dimen/ds_30">
+        android:layout_marginTop="@dimen/ds_30"
+        android:background="@drawable/bg_sel_item_gray">
 
         <ImageView
             style="@style/mineItemHead"
@@ -99,7 +97,8 @@
     <RelativeLayout
         android:id="@+id/lay_problem"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_120">
+        android:layout_height="@dimen/ds_120"
+        android:background="@drawable/bg_sel_item_gray">
 
         <ImageView
             style="@style/mineItemHead"
@@ -120,7 +119,8 @@
     <RelativeLayout
         android:id="@+id/lay_service"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_120">
+        android:layout_height="@dimen/ds_120"
+        android:background="@drawable/bg_sel_item_gray">
 
         <ImageView
             style="@style/mineItemHead"
@@ -141,7 +141,8 @@
     <RelativeLayout
         android:id="@+id/about_us"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_120">
+        android:layout_height="@dimen/ds_120"
+        android:background="@drawable/bg_sel_item_gray">
 
         <ImageView
             style="@style/mineItemHead"
@@ -162,7 +163,8 @@
     <RelativeLayout
         android:id="@+id/lay_update"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_120">
+        android:layout_height="@dimen/ds_120"
+        android:background="@drawable/bg_sel_item_gray">
 
         <ImageView
             style="@style/mineItemHead"
@@ -196,7 +198,8 @@
     <RelativeLayout
         android:id="@+id/about_advertising"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_120">
+        android:layout_height="@dimen/ds_120"
+        android:background="@drawable/bg_sel_item_gray">
 
         <ImageView
             style="@style/mineItemHead"
@@ -229,4 +232,4 @@
         android:textColor="@color/colorQueryNumberFont"
         android:textSize="12sp"/>
 
-</LinearLayout>
+</merge>

@@ -130,7 +130,7 @@ public class CarManageGroupFragment extends BaseListFragment<CarInfoDTO>{
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSynEvent(BenDiCarInfoEvent event) {
 
-        List<CarInfoDTO> list = SPUtils.getInstance(this.getActivity()).getCarsInfo();
+        List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
         mCarManageAdapter.removeAll();
         setDataResult(list);
     }
@@ -156,7 +156,7 @@ public class CarManageGroupFragment extends BaseListFragment<CarInfoDTO>{
         noPayData = new ArrayList<>();
 
         if(!PublicData.getInstance().loginFlag){
-            List<CarInfoDTO> list = SPUtils.getInstance(this.getActivity()).getCarsInfo();
+            List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
             setDataResult(list);
             return;
         }

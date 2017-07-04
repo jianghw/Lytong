@@ -65,7 +65,7 @@ public class GuideActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.INVISIBLE);
-                SPUtils.getInstance(GuideActivity.this).setGuideSaoFaDan(true);
+                SPUtils.getInstance().setGuideSaoFaDan(true);
                 guideWeiZhang();
             }
         });
@@ -94,7 +94,7 @@ public class GuideActivity extends FragmentActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SPUtils.getInstance(GuideActivity.this).setGuideWeiZhang(true);
+                SPUtils.getInstance().setGuideWeiZhang(true);
                 view.setVisibility(View.INVISIBLE);
                 finish();
             }
@@ -118,7 +118,7 @@ public class GuideActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 view.setVisibility(View.INVISIBLE);
-                SPUtils.getInstance(GuideActivity.this).setGuideXingShiZheng(true);
+                SPUtils.getInstance().setGuideXingShiZheng(true);
                 finish();
             }
         });
@@ -145,9 +145,9 @@ public class GuideActivity extends FragmentActivity {
             public void onClick(View v) {
                 view.setVisibility(View.INVISIBLE);
                 if (PublicData.getInstance().GUIDE_TYPE == 2){
-                    SPUtils.getInstance(GuideActivity.this).setGuideJiaShiZheng(true);
+                    SPUtils.getInstance().setGuideJiaShiZheng(true);
                 }else{
-                    SPUtils.getInstance(GuideActivity.this).setGuideBanKa(true);
+                    SPUtils.getInstance().setGuideBanKa(true);
                 }
                 finish();
             }

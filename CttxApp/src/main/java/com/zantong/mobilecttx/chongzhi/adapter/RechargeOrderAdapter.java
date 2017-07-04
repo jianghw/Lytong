@@ -101,7 +101,7 @@ public class RechargeOrderAdapter extends BaseAdapter<RechargeOrderBean> {
                             @Override
                             public void onClick(View v) {
                                 CancelRechargeOrderDTO dto = new CancelRechargeOrderDTO();
-                                dto.setUserId(RSAUtils.strByEncryption(mContext, PublicData.getInstance().userID, true));
+                                dto.setUserId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
                                 dto.setOrderId(data.getOrderId());
 
                                 CarApiClient.cancelOrder(mContext, dto, new CallBack<BaseResult>() {

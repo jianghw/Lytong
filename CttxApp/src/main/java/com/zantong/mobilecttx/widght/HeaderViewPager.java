@@ -370,8 +370,8 @@ public class HeaderViewPager extends FrameLayout {
                 }
 
                 if (result.getResponseCode() == 2000 && !TextUtils.isEmpty(result.getData().getPlateNo())) {
-                    SPUtils.getInstance(context).setSignStatus(true);
-                    SPUtils.getInstance(context).setSignCarPlate(result.getData().getPlateNo());
+                    SPUtils.getInstance().setSignStatus(true);
+                    SPUtils.getInstance().setSignCarPlate(result.getData().getPlateNo());
 
                     if (currentTm < endTm) {//4.17号之前
                         MobclickAgent.onEvent(context, Config.getUMengID(22));
@@ -384,7 +384,7 @@ public class HeaderViewPager extends FrameLayout {
                     }
 
                 }else if (result.getResponseCode() == 4000) {
-                    SPUtils.getInstance(context).setSignStatus(false);
+                    SPUtils.getInstance().setSignStatus(false);
                     if (currentTm < endTm) {//4.17号之前
                         MobclickAgent.onEvent(context, Config.getUMengID(19));
                         Act.getInstance().lauchIntentToLogin(context, HundredPlanActivity.class);

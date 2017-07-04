@@ -28,7 +28,7 @@ public class MineActivity extends BaseMvpActivity<IBaseView,HelpPresenter> imple
 
     @Override
     protected int getContentResId() {
-        return R.layout.mine_msg_activity;
+        return R.layout.activity_base_frame;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class MineActivity extends BaseMvpActivity<IBaseView,HelpPresenter> imple
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         MineFragment helpFragment = new MineFragment();
-        transaction.replace(R.id.mine_msg_layout, helpFragment);
+        transaction.replace(R.id.lay_base_frame, helpFragment);
         transaction.commit();
     }
 }

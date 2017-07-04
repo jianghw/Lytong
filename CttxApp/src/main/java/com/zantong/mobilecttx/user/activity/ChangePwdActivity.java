@@ -201,8 +201,8 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
             String newPassword = SHATools.hexString(sha.eccryptSHA1(newPwd));
             final String newPwdLi = newPassword;
             String oldPassword = SHATools.hexString(sha.eccryptSHA1(oldPwd));
-            newPassword = RSAUtils.strByEncryption(this, newPassword, true);
-            oldPassword = RSAUtils.strByEncryption(this, oldPassword, true);
+            newPassword = RSAUtils.strByEncryption(newPassword, true);
+            oldPassword = RSAUtils.strByEncryption(oldPassword, true);
             dto.setNewpswd(newPassword);
             dto.setOldpswd(oldPassword);
             showDialogLoading();
@@ -232,13 +232,13 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
 
     private void liyingreg(String pwd) {
         try {
-            String phone = RSAUtils.strByEncryptionLiYing(this, PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
+            String phone = RSAUtils.strByEncryptionLiYing(PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
             SHATools sha = new SHATools();
-            String newPassword = RSAUtils.strByEncryptionLiYing(this,SHATools.hexString(sha.eccryptSHA1(pwd)), true);
+            String newPassword = RSAUtils.strByEncryptionLiYing(SHATools.hexString(sha.eccryptSHA1(pwd)), true);
             LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
             liYingRegDTO.setPhoenum(phone);
             liYingRegDTO.setPswd(newPassword);
-            liYingRegDTO.setUsrid(RSAUtils.strByEncryption(this, PublicData.getInstance().userID, true));
+            liYingRegDTO.setUsrid(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
             CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResult>() {
                 @Override
                 public void onSuccess(BaseResult result) {

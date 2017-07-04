@@ -57,9 +57,9 @@ public class ViolationDetailsPresenterImp implements SimplePresenter, OnLoadServ
                 try {
                     masp.put("violationnum", mViolationDetails.mapData().get("violationnum"));
                     if(TextUtils.isEmpty(PublicData.getInstance().imei)){
-                        masp.put("token", RSAUtils.strByEncryption(mViolationDetails, "00000000", true));
+                        masp.put("token", RSAUtils.strByEncryption("00000000", true));
                     }else{
-                        masp.put("token", RSAUtils.strByEncryption(mViolationDetails,PublicData.getInstance().imei, true));
+                        masp.put("token", RSAUtils.strByEncryption(PublicData.getInstance().imei, true));
                     }
                     LogUtils.i(masp.get("token").toString());
 //            masp.put("usrid","000160180 6199 2851");

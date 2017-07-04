@@ -168,9 +168,9 @@ public class SurePayFragment extends Fragment{
     private void seachViolation(){
         final Dialog showLoading = DialogUtils.showLoading(getActivity());
 
-        ViolationDTO violationDTO = SPUtils.getInstance(getActivity()).getViolation();
-        violationDTO.setCarnum(RSAUtils.strByEncryption(getActivity(), violationDTO.getCarnum(), true));
-        violationDTO.setEnginenum(RSAUtils.strByEncryption(getActivity(), violationDTO.getEnginenum(), true));
+        ViolationDTO violationDTO = SPUtils.getInstance().getViolation();
+        violationDTO.setCarnum(RSAUtils.strByEncryption(violationDTO.getCarnum(), true));
+        violationDTO.setEnginenum(RSAUtils.strByEncryption(violationDTO.getEnginenum(), true));
         violationDTO.setCarnumtype(violationDTO.getCarnumtype());
         UserApiClient.searchViolation(getActivity(), violationDTO, new CallBack<ViolationResultParent>() {
             @Override

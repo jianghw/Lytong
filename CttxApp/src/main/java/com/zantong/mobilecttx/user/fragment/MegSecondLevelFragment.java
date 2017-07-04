@@ -168,7 +168,7 @@ public class MegSecondLevelFragment extends BaseListFragment<Meg>
      */
     private void getMsgList() {
         MegDTO dto = new MegDTO();
-        dto.setUsrId(RSAUtils.strByEncryption(this.getActivity(), PublicData.getInstance().userID, true));
+        dto.setUsrId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
         String id = getArguments().getString(STR_TYPE);
         dto.setId(id);
         CarApiClient.getMsgList(this.getActivity(), dto, new CallBack<MessageResult>() {

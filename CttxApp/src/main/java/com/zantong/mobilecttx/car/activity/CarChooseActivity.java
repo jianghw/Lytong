@@ -28,7 +28,7 @@ public class CarChooseActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
 
     @Override
     protected int getContentResId() {
-        return R.layout.mine_msg_activity;
+        return R.layout.activity_base_frame;
     }
 
     @Override
@@ -42,11 +42,11 @@ public class CarChooseActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
         int id = getIntent().getIntExtra("id", 0);
         if (type == 1) {
             setTitleText("车系");
-            transaction.replace(R.id.mine_msg_layout, CarChooseXiFragment.newInstance(id));
+            transaction.replace(R.id.lay_base_frame, CarChooseXiFragment.newInstance(id));
         } else {
             setTitleText("车型");
             int idB = getIntent().getIntExtra("idB", 0);
-            transaction.replace(R.id.mine_msg_layout, CarChooseXingFragment.newInstance(id, idB));
+            transaction.replace(R.id.lay_base_frame, CarChooseXingFragment.newInstance(id, idB));
         }
         transaction.commit();
 

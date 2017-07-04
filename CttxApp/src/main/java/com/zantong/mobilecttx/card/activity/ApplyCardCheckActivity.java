@@ -161,9 +161,9 @@ public class ApplyCardCheckActivity extends BaseMvpActivity<IBaseView, HelpPrese
         bidCTCardDTO.setCtftp("0");
         bidCTCardDTO.setUsrname(name);
         bidCTCardDTO.setUsrid(PublicData.getInstance().mLoginInfoBean.getUsrid());
-        bidCTCardDTO.setCtfnum(RSAUtils.strByEncryption(this, licenseno, true));
-        bidCTCardDTO.setFilenum(RSAUtils.strByEncryption(this, fileNum, true));
-        bidCTCardDTO.setPhoenum(RSAUtils.strByEncryption(this, phone, true));
+        bidCTCardDTO.setCtfnum(RSAUtils.strByEncryption(licenseno, true));
+        bidCTCardDTO.setFilenum(RSAUtils.strByEncryption(fileNum, true));
+        bidCTCardDTO.setPhoenum(RSAUtils.strByEncryption(phone, true));
         HandleCTCardApiClient.htmlLocal(this, "cip.cfc.u006.01", bidCTCardDTO, this);
     }
 

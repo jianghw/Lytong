@@ -87,13 +87,13 @@ public class NetworkImageHolderView implements CBPageAdapter.Holder<HomeAdvertis
             @Override
             public void onSuccess(ActivityCarResult result) {
                 if (result.getResponseCode() == 2000 && !TextUtils.isEmpty(result.getData().getPlateNo())) {
-                    SPUtils.getInstance(mContext).setSignStatus(true);
-                    SPUtils.getInstance(mContext).setSignCarPlate(result.getData().getPlateNo());
+                    SPUtils.getInstance().setSignStatus(true);
+                    SPUtils.getInstance().setSignCarPlate(result.getData().getPlateNo());
                     PublicData.getInstance().webviewUrl = Config.HUNDRED_PLAN_HOME;
                     PublicData.getInstance().webviewTitle = "百日无违章";
                     Act.getInstance().lauchIntentToLogin(mContext, BrowserActivity.class);
                 } else if (result.getResponseCode() == 4000) {
-                    SPUtils.getInstance(mContext).setSignStatus(false);
+                    SPUtils.getInstance().setSignStatus(false);
                     PublicData.getInstance().webviewUrl = Config.HUNDRED_PLAN_DEADLINE;
                     PublicData.getInstance().webviewTitle = "百日无违章";
                     Act.getInstance().lauchIntentToLogin(mContext, BrowserActivity.class);

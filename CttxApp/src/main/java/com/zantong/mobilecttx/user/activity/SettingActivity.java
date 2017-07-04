@@ -166,17 +166,17 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         userInfoRl.setOnClickListener(this);
 
         if (!PublicData.getInstance().loginFlag) {
-            SPUtils.getInstance(getApplicationContext()).setWeizhangPush(false);
-            SPUtils.getInstance(getApplicationContext()).setJifenPush(false);
+            SPUtils.getInstance().setWeizhangPush(false);
+            SPUtils.getInstance().setJifenPush(false);
         }
-        mBreakRulesNotice.setChecked(SPUtils.getInstance(getApplicationContext()).getWeizhangPush());
-        mScoreNotice.setChecked(SPUtils.getInstance(getApplicationContext()).getJifenPush());
+        mBreakRulesNotice.setChecked(SPUtils.getInstance().getWeizhangPush());
+        mScoreNotice.setChecked(SPUtils.getInstance().getJifenPush());
 
         mBreakRulesNotice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (PublicData.getInstance().loginFlag) {
-                    SPUtils.getInstance(getApplicationContext()).setWeizhangPush(isChecked);
+                    SPUtils.getInstance().setWeizhangPush(isChecked);
                     mBreakRulesNotice.setChecked(isChecked);
                     if (!isChecked) {
                         ToastUtils.showShort(getApplicationContext(), "违章主动通知已关闭");
@@ -194,7 +194,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
 
                 Intent intent = new Intent(SettingActivity.this, DateService.class);
                 if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().userID)) {
-                    SPUtils.getInstance(getApplicationContext()).setJifenPush(isChecked);
+                    SPUtils.getInstance().setJifenPush(isChecked);
                     PublicData.getInstance().updateMsg = isChecked;
                     if (isChecked) {
                         UserInfoRememberCtrl.saveObject(getApplicationContext(), PublicData.getInstance().NOTICE_STATE, true);//已开启
@@ -636,7 +636,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 hideDialogLoading();
                 if ("000000".equals(result.getSYS_HEAD().getReturnCode())) {
                     PublicData.getInstance().clearData(SettingActivity.this);
-                    SPUtils.getInstance(SettingActivity.this).clear();
+                    SPUtils.getInstance().clear();
                     CleanUtils.cleanCustomCache(FileUtils.photoImageDirectory(getApplicationContext()));
 
                     mLogout.setVisibility(View.GONE);

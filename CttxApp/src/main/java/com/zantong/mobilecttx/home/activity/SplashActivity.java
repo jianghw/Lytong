@@ -93,7 +93,7 @@ public class SplashActivity extends AppCompatActivity
 //        MobclickAgent.setDebugMode(Config.DEBUG);
 
         int version = Tools.compareVersion(
-                SPUtils.getInstance(getApplicationContext()).getIsGuide(),
+                SPUtils.getInstance().getIsGuide(),
                 Tools.getVerName(getApplicationContext()));
         if (version == -1) {//需要更新时
             mResultList = new ArrayList<>();
@@ -210,12 +210,12 @@ public class SplashActivity extends AppCompatActivity
     @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     public void gotoMain() {
         int version = Tools.compareVersion(
-                SPUtils.getInstance(getApplicationContext()).getIsGuide(),
+                SPUtils.getInstance().getIsGuide(),
                 Tools.getVerName(getApplicationContext()));
         if (version != -1) {
             MobclickAgent.onEvent(this, Config.getUMengID(0));
-            Act.getInstance().gotoIntent(this, ImmersionMainActivity.class);
-            SPUtils.getInstance(getApplicationContext()).setIsGuide(Tools.getVerName(getApplicationContext()));
+            Act.getInstance().gotoIntent(this, HomeMainActivity.class);
+            SPUtils.getInstance().setIsGuide(Tools.getVerName(getApplicationContext()));
             finish();
         } else {
             Intent intent = new Intent(this, GuideCTActivity.class);

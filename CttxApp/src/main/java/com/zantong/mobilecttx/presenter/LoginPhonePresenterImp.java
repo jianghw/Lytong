@@ -86,9 +86,9 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
                 masp = new JSONObject();
 //
                 try {
-                    String phone = RSAUtils.strByEncryption(mLoginActivity, mLoginActivity.mapData().get("phoenum"), true);
+                    String phone = RSAUtils.strByEncryption(mLoginActivity.mapData().get("phoenum"), true);
                     SHATools sha = new SHATools();
-                    String pwd = RSAUtils.strByEncryption(mLoginActivity,
+                    String pwd = RSAUtils.strByEncryption(
                             SHATools.hexString(sha.eccryptSHA1(mLoginActivity.mapData().get("pswd"))), true);
 //                    String phone = mLoginActivity.mapData().get("phoenum");
 //                    SHAutils sha = new SHAutils();
@@ -98,7 +98,7 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
                     masp.put("devicetoken", PublicData.getInstance().imei);
                     masp.put("pushswitch", "0");
                     masp.put("pushmode", "2");
-                    String token = RSAUtils.strByEncryption(mLoginActivity, PublicData.getInstance().deviceId, true);
+                    String token = RSAUtils.strByEncryption(PublicData.getInstance().deviceId, true);
                     masp.put("token", token);
                     MessageFormat.getInstance().setMessageJSONObject(masp);
                 } catch (JSONException e) {
@@ -142,7 +142,7 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
 
                 LogUtils.i("usrid:" + this.mLoginInfoBean.getRspInfo().getUsrid());
                 PublicData.getInstance().mLoginInfoBean = this.mLoginInfoBean.getRspInfo();
-                SPUtils.getInstance(mLoginActivity).setLoginInfoBean(PublicData.getInstance().mLoginInfoBean);
+                SPUtils.getInstance().setLoginInfoBean(PublicData.getInstance().mLoginInfoBean);
                 PublicData.getInstance().userID = this.mLoginInfoBean.getRspInfo().getUsrid();
                 PublicData.getInstance().filenum = this.mLoginInfoBean.getRspInfo().getFilenum();
                 PublicData.getInstance().getdate = this.mLoginInfoBean.getRspInfo().getGetdate();

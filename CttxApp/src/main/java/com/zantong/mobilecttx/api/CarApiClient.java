@@ -181,18 +181,18 @@ public class CarApiClient extends BaseApiClient {
     }
 
     public static void commitCar(Context context, BindCarDTO params, CallBack<BaseResult> callback) {
-        params.setUsrnum(RSAUtils.strByEncryptionLiYing(context, PublicData.getInstance().userID, true));
-        params.setEngineNo(RSAUtils.strByEncryptionLiYing(context, params.getEngineNo(), true));
-        params.setPlateNo(RSAUtils.strByEncryptionLiYing(context, params.getPlateNo(), true));
+        params.setUsrnum(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
+        params.setEngineNo(RSAUtils.strByEncryptionLiYing(params.getEngineNo(), true));
+        params.setPlateNo(RSAUtils.strByEncryptionLiYing(params.getPlateNo(), true));
         if (TextUtils.isEmpty(params.getFileNum())) {
             params.setFileNum("");
         } else {
-            params.setFileNum(RSAUtils.strByEncryptionLiYing(context, params.getFileNum(), true));
+            params.setFileNum(RSAUtils.strByEncryptionLiYing(params.getFileNum(), true));
         }
         if (TextUtils.isEmpty(params.getVin())) {
             params.setVin("");
         } else {
-            params.setVin(RSAUtils.strByEncryptionLiYing(context, params.getVin(), true));
+            params.setVin(RSAUtils.strByEncryptionLiYing(params.getVin(), true));
         }
         BaseCallBack<BaseResult> baseCallBack = new BaseCallBack<BaseResult>(
                 context, callback, BaseResult.class);
@@ -200,16 +200,16 @@ public class CarApiClient extends BaseApiClient {
     }
 
     public static void commitDriving(Context context, BindDrivingDTO params, CallBack<BaseResult> callback) {
-        params.setUserId(RSAUtils.strByEncryptionLiYing(context, PublicData.getInstance().userID, true));
-        params.setFileNum(RSAUtils.strByEncryptionLiYing(context, params.getFileNum(), true));
-        params.setLicenseno(RSAUtils.strByEncryptionLiYing(context, params.getLicenseno(), true));
+        params.setUserId(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
+        params.setFileNum(RSAUtils.strByEncryptionLiYing(params.getFileNum(), true));
+        params.setLicenseno(RSAUtils.strByEncryptionLiYing(params.getLicenseno(), true));
         BaseCallBack<BaseResult> baseCallBack = new BaseCallBack<BaseResult>(
                 context, callback, BaseResult.class);
         post(context, getUrl("cttx/bindingDriving"), params, baseCallBack);
     }
 
     public static void liYingReg(Context context, LiYingRegDTO params, CallBack<BaseResult> callback) {
-        params.setToken(RSAUtils.strByEncryptionLiYing(context, PublicData.getInstance().deviceId, true));
+        params.setToken(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().deviceId, true));
         params.setPushmode("2");
         params.setPushswitch("1");
         BaseCallBack<BaseResult> baseCallBack = new BaseCallBack<BaseResult>(
@@ -218,8 +218,8 @@ public class CarApiClient extends BaseApiClient {
     }
 
     public static void liYingCarManage(Context context, LiYingCarManageDTO params, CallBack<BaseResult> callback) {
-        params.setUsrnum(RSAUtils.strByEncryptionLiYing(context, PublicData.getInstance().userID, true));
-        params.setPlateNo(RSAUtils.strByEncryptionLiYing(context, params.getPlateNo(), true));
+        params.setUsrnum(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
+        params.setPlateNo(RSAUtils.strByEncryptionLiYing(params.getPlateNo(), true));
         try {
             params.setVehicleType(String.valueOf(Integer.valueOf(params.getVehicleType())));
         } catch (NumberFormatException e) {
@@ -241,7 +241,6 @@ public class CarApiClient extends BaseApiClient {
                 context, callback, BonusResult.class);
         post(context, getDownUrl("shareRanking"), dto, result);
     }
-
 
     public static void createOrder(Context context, RechargeDTO dto, CallBack<RechargeResult> callback) {
         BaseCallBack<RechargeResult> result = new BaseCallBack<RechargeResult>(

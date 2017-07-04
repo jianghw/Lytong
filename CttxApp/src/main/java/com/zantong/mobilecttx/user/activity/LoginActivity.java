@@ -401,7 +401,7 @@ public class LoginActivity extends Activity
         LoginActivity.this.setResult(1, intent);
 //        alicloud();
         EventBus.getDefault().post(new GetUserEvent(true));
-        SPUtils.getInstance(this).setUserPwd(mapData().get("pswd"));
+        SPUtils.getInstance().setUserPwd(mapData().get("pswd"));
         liyingreg(mLoginInfoBean.getRspInfo().getUsrid());
         setJiaoYiDaiMa(Des3.decode(mLoginInfoBean.getRspInfo().getFilenum()));
 
@@ -462,13 +462,13 @@ public class LoginActivity extends Activity
 
     private void liyingreg(String userId) {
         try {
-            String phone = RSAUtils.strByEncryptionLiYing(this, mapData().get("phoenum"), true);
+            String phone = RSAUtils.strByEncryptionLiYing(mapData().get("phoenum"), true);
             SHATools sha = new SHATools();
-            String pwd = RSAUtils.strByEncryptionLiYing(this, SHATools.hexString(sha.eccryptSHA1(mapData().get("pswd"))), true);
+            String pwd = RSAUtils.strByEncryptionLiYing(SHATools.hexString(sha.eccryptSHA1(mapData().get("pswd"))), true);
             LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
             liYingRegDTO.setPhoenum(phone);
             liYingRegDTO.setPswd(pwd);
-            liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(this, userId, true));
+            liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(userId, true));
             CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResult>() {
                 @Override
                 public void onSuccess(BaseResult result) {
@@ -588,7 +588,7 @@ public class LoginActivity extends Activity
 
     //提交新服务器
     private void commitCarInfoToNewServer() {
-        List<CarInfoDTO> list = SPUtils.getInstance(LoginActivity.this).getCarsInfo();
+        List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
         for (CarInfoDTO info : list) {
             LogUtils.i("-----" + info.getCarnumtype());
             BindCarDTO dto = new BindCarDTO();

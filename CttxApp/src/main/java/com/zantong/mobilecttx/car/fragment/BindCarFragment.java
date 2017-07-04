@@ -92,8 +92,8 @@ public class BindCarFragment extends BaseExtraFragment {
                 PublicData.getInstance().mHashMap.put("carnumtype", mCarType);
 
                 ViolationDTO dto = new ViolationDTO();
-                dto.setCarnum(RSAUtils.strByEncryption(this.getActivity(), mCarNum, true));
-                dto.setEnginenum(RSAUtils.strByEncryption(this.getActivity(), mEngineNum, true));
+                dto.setCarnum(RSAUtils.strByEncryption(mCarNum, true));
+                dto.setEnginenum(RSAUtils.strByEncryption(mEngineNum, true));
                 dto.setCarnumtype(mCarType);
 
                 Intent intent = new Intent(this.getActivity(), ViolationResultAcitvity.class);

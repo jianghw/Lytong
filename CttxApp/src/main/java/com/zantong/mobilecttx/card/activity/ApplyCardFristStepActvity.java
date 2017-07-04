@@ -193,7 +193,7 @@ public class ApplyCardFristStepActvity extends BaseMvpActivity<IBaseView, HelpPr
             ToastUtils.showShort(this, "驾驶证档案编号不正确");
             return;
         }
-        applyCTCardDTO.setFilenum(RSAUtils.strByEncryption(this, fileNum, true));
+        applyCTCardDTO.setFilenum(RSAUtils.strByEncryption(fileNum, true));
 
         String name = mName.getText().toString();
         if (TextUtils.isEmpty(name)) {
@@ -225,7 +225,7 @@ public class ApplyCardFristStepActvity extends BaseMvpActivity<IBaseView, HelpPr
         }
         applyCTCardDTO.setIssuoffic("0");
         applyCTCardDTO.setCtftp("0");
-        applyCTCardDTO.setCtfnum(RSAUtils.strByEncryption(this, licenseno, true));
+        applyCTCardDTO.setCtfnum(RSAUtils.strByEncryption(licenseno, true));
 
         if (TextUtils.isEmpty(applyCTCardDTO.getCtfvldprd())) {
             ToastUtils.showShort(this, "请选择证件有效期");
@@ -250,7 +250,7 @@ public class ApplyCardFristStepActvity extends BaseMvpActivity<IBaseView, HelpPr
             ToastUtils.showShort(this, "手机号码不正确");
             return;
         }
-        applyCTCardDTO.setPhoenum(RSAUtils.strByEncryption(this, phone, true));
+        applyCTCardDTO.setPhoenum(RSAUtils.strByEncryption(phone, true));
 
         if (TextUtils.isEmpty(applyCTCardDTO.getMarlst())) {
             ToastUtils.showShort(this, "请选择婚姻状况");

@@ -47,7 +47,7 @@ public class LocalData {
         Context context = weakReference.get();
         BaseDTO dto = new BaseDTO();
         if (context != null) {
-            dto.setUsrId(strByEncryption(context, PublicData.getInstance().userID, true));
+            dto.setUsrId(strByEncryption(PublicData.getInstance().userID, true));
         }
         return dto;
     }
@@ -56,7 +56,7 @@ public class LocalData {
         Context context = weakReference.get();
         MessageDetailDTO dto = new MessageDetailDTO();
         if (context != null) {
-            dto.setUsrId(strByEncryption(context, PublicData.getInstance().userID, true));
+            dto.setUsrId(strByEncryption(PublicData.getInstance().userID, true));
         }
         return dto;
     }
@@ -88,7 +88,7 @@ public class LocalData {
     public String getStrByEncryption(String string) {
         Context context = weakReference.get();
         if (context != null) {
-            string = RSAUtils.strByEncryption(context, string, true);
+            string = RSAUtils.strByEncryption(string, true);
         }
         return string;
     }
@@ -114,7 +114,7 @@ public class LocalData {
     public void saveLicenseFileNumDTO(LicenseFileNumDTO licenseFileNumDTO) {
         Context context = weakReference.get();
         if (context != null) {
-            SPUtils.getInstance(context).saveLicenseFileNumDTO(licenseFileNumDTO);
+            SPUtils.getInstance().saveLicenseFileNumDTO(licenseFileNumDTO);
         }
     }
 

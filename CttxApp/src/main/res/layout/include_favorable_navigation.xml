@@ -2,6 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -184,7 +185,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/ds_24"
-                        android:background="@drawable/shape_tv_favorable_violet"
+                        android:background="@drawable/shape_tv_favorable_blue"
                         android:gravity="center"
                         android:text="返  现5%"
                         android:textColor="@color/colorTvBlue_2d"

@@ -155,7 +155,6 @@
     <string name="errcode_deny">分享被拒绝</string>
     <string name="errcode_unknown">分享返回</string>
 
-    <string name="digits_content">1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</string>
 
     <string name="rule_desc"><u>活动规则说明</u></string>
     <string name="phone_num"><u>95588</u></string>

@@ -53,6 +53,7 @@ public class BrowserActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStatusBarSpace();
+
         mFinish.setVisibility(View.GONE);
     }
 

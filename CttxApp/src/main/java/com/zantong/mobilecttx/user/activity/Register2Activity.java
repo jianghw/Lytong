@@ -251,11 +251,11 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                     ToastUtils.showShort(this, "两次输入的密码不一致");
                     return;
                 }
-                SPUtils.getInstance(this).setUserPwd(pwd);
+                SPUtils.getInstance().setUserPwd(pwd);
                 if (res == 0) {
                     final RegisterDTO dto = new RegisterDTO();
-                    String phone = RSAUtils.strByEncryption(this, getIntent().getStringExtra(PHONE), true);
-                    dto.setToken(RSAUtils.strByEncryption(this, PublicData.getInstance().deviceId, true));
+                    String phone = RSAUtils.strByEncryption(getIntent().getStringExtra(PHONE), true);
+                    dto.setToken(RSAUtils.strByEncryption(PublicData.getInstance().deviceId, true));
                     dto.setPhoenum(phone);
                     if ("".equals(PublicData.getInstance().imei)) {
                         dto.setDevicetoken("1234567890");
@@ -266,7 +266,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                     try {
                         SHATools sha = new SHATools();
                         String password = SHATools.hexString(sha.eccryptSHA1(pwd));
-                        password = RSAUtils.strByEncryption(this, password, true);
+                        password = RSAUtils.strByEncryption(password, true);
                         dto.setPswd(password);
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
@@ -279,7 +279,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                             hideDialogLoading();
                             if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
                                 liyingreg(pwd, result.getRspInfo().getUsrid());
-                                SPUtils.getInstance(Register2Activity.this).setLoginInfoBean(result.getRspInfo());
+                                SPUtils.getInstance().setLoginInfoBean(result.getRspInfo());
                                 result.getRspInfo().setFilenum(Des3.decode(result.getRspInfo().getFilenum()));
                                 result.getRspInfo().setPhoenum(Des3.decode(result.getRspInfo().getPhoenum()));
                                 result.getRspInfo().setCtfnum(Des3.decode(result.getRspInfo().getCtfnum()));
@@ -338,12 +338,12 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                     });
                 } else {
                     RegisterDTO dto = new RegisterDTO();
-                    String phone = RSAUtils.strByEncryption(this, getIntent().getStringExtra(PHONE), true);
+                    String phone = RSAUtils.strByEncryption(getIntent().getStringExtra(PHONE), true);
                     dto.setPhoenum(phone);
                     try {
                         SHATools sha = new SHATools();
                         String password = SHATools.hexString(sha.eccryptSHA1(pwd));
-                        password = RSAUtils.strByEncryption(this, password, true);
+                        password = RSAUtils.strByEncryption(password, true);
                         dto.setPswd(password);
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
@@ -376,9 +376,9 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
             SHATools sha = new SHATools();
             String password = SHATools.hexString(sha.eccryptSHA1(pwd));
             LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
-            liYingRegDTO.setPhoenum(RSAUtils.strByEncryptionLiYing(Register2Activity.this, getIntent().getStringExtra(PHONE), true));
-            liYingRegDTO.setPswd(RSAUtils.strByEncryptionLiYing(Register2Activity.this, password, true));
-            liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(Register2Activity.this, userId, true));
+            liYingRegDTO.setPhoenum(RSAUtils.strByEncryptionLiYing(getIntent().getStringExtra(PHONE), true));
+            liYingRegDTO.setPswd(RSAUtils.strByEncryptionLiYing(password, true));
+            liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(userId, true));
             CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResult>() {
                 @Override
                 public void onSuccess(BaseResult result) {
@@ -390,7 +390,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
     }
 
     private void commitLocalCar() {
-        List<CarInfoDTO> list = SPUtils.getInstance(this).getCarsInfo();
+        List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
         if (null == list && list.size() <= 0) {
             return;
         }
@@ -408,7 +408,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                 @Override
                 public void onSuccess(Result result) {
                     EventBus.getDefault().post(new CarInfoEvent(true));
-                    SPUtils.getInstance(getApplicationContext()).getCarsInfo().remove(index);
+                    SPUtils.getInstance().getCarsInfo().remove(index);
                 }
             });
         }

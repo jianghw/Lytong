@@ -23,8 +23,23 @@
     </string>
 
     <string name="tv_favorable_price_admissions">
-        <font color='#f3362b' size='14sp'>￥</font>
-        <font color='#f3362b' size='16sp'>￥</font>
-        <font color='#b3b3b3' size='14sp'>起</font>
+        <font color='#f3362b'>￥</font>&#160;
+        <font color='#f3362b'>%s</font>
+        <font color='#b3b3b3'>起</font>
+    </string>
+
+    <string name="digits_content">1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</string>
+    <string name="tv_violation_camera">
+        拍照扫描行驶证\n
+        车辆信息自动识别
+    </string>
+    <string name="tv_license_number">
+        <font color='#f3362b'>*</font>车牌号码
+    </string>
+    <string name="tv_engine_number">
+        <font color='#f3362b'>*</font>发动机号
+    </string>
+    <string name="tv_license_type">
+        <font color='#f3362b'>*</font>车牌类型
     </string>
 </resources>

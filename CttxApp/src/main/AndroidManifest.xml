@@ -224,7 +224,7 @@
             android:windowSoftInputMode="stateHidden|adjustPan"/>
         <!-- 主页，这个很吊呀 -->
         <activity
-            android:name=".home.activity.ImmersionMainActivity"
+            android:name=".home.activity.HomeMainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
@@ -393,10 +393,15 @@
         <activity
             android:name=".weizhang.activity.ViolationHistoryAcitvity"
             android:screenOrientation="portrait"/>
+        <!--========================违章查询页面=================================-->
+        <activity
+            android:name=".weizhang.activity.ViolationActivity"
+            android:screenOrientation="portrait"/>
         <!-- 违章信息显示页面 -->
         <activity
             android:name=".weizhang.activity.ViolationResultAcitvity"
             android:screenOrientation="portrait"/>
+        <!--违章查询页面-->
         <activity
             android:name=".weizhang.activity.ViolationQueryAcitvity"
             android:screenOrientation="portrait"/>

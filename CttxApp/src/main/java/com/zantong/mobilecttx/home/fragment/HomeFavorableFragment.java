@@ -6,8 +6,6 @@ import android.view.View;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 
-import cn.qqtheme.framework.util.log.LogUtils;
-
 /**
  * 优惠页面
  */
@@ -59,7 +57,7 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment {
 
     @Override
     protected void onFirstDataVisible() {
-        LogUtils.e("onFirstDataVisible");
+
     }
 
     @Override

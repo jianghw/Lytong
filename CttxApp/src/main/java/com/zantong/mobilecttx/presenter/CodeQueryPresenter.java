@@ -49,9 +49,9 @@ public class CodeQueryPresenter extends BasePresenter<IBaseView> implements Simp
                 try {
                     masp.put("violationnum", mCodequery.mapData().get("violationnum"));
                     if(TextUtils.isEmpty(PublicData.getInstance().imei)){
-                        masp.put("token", RSAUtils.strByEncryption(mCodequery, "00000000", true));
+                        masp.put("token", RSAUtils.strByEncryption("00000000", true));
                     }else{
-                        masp.put("token", RSAUtils.strByEncryption(mCodequery,PublicData.getInstance().imei, true));
+                        masp.put("token", RSAUtils.strByEncryption(PublicData.getInstance().imei, true));
                     }
 //            masp.put("usrid","000160180 6199 2851");
                     MessageFormat.getInstance().setMessageJSONObject(masp);

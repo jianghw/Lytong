@@ -36,7 +36,7 @@ public class DrivingFragment extends BaseListFragment<DaiJiaOrderListBean> {
 
     private void initDaiJiaOrderData() {
         DaiJiaOrderListDTO dto = new DaiJiaOrderListDTO();
-        dto.setUsrId(RSAUtils.strByEncryption(this.getActivity(), PublicData.getInstance().userID, true));
+        dto.setUsrId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
         onShowLoading();
         CarApiClient.getDaiJiaOrderList(this.getActivity(), dto, new CallBack<DaiJiaOrderListResult>() {
             @Override

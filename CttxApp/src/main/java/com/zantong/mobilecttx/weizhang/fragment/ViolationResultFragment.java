@@ -81,22 +81,19 @@ public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
 
         if (!TextUtils.isEmpty(PublicData.getInstance().userID)) {
             params.setToken(RSAUtils.strByEncryption(
-                    getActivity().getApplicationContext(),
                     PublicData.getInstance().userID, true));
         } else if (!TextUtils.isEmpty(PublicData.getInstance().imei)) {
             params.setToken(RSAUtils.strByEncryption(
-                    getActivity().getApplicationContext(),
                     PublicData.getInstance().imei, true));
         } else {
             params.setToken(RSAUtils.strByEncryption(
-                    getActivity().getApplicationContext(),
                     PushServiceFactory.getCloudPushService().getDeviceId(), true));
         }
 
         UserApiClient.searchViolation(this.getActivity(), params, new CallBack<ViolationResultParent>() {
             @Override
             public void onSuccess(ViolationResultParent result) {
-                SPUtils.getInstance(ViolationResultFragment.this.getActivity()).setViolation(params);
+                SPUtils.getInstance().setViolation(params);
 
                 if ("000000".equals(result.getSYS_HEAD().getReturnCode())) {
                     setDataResult(result.getRspInfo().getViolationInfo());

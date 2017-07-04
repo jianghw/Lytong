@@ -26,7 +26,7 @@ public class MegSecondLevelActivity extends MvpBaseActivity {
 
     @Override
     protected int getContentResId() {
-        return R.layout.mine_msg_activity;
+        return R.layout.activity_base_frame;
     }
 
     @Override
@@ -42,11 +42,11 @@ public class MegSecondLevelActivity extends MvpBaseActivity {
     @Override
     protected void initMvPresenter() {
         MegSecondLevelFragment megSecondLevelFragment =
-                (MegSecondLevelFragment) getSupportFragmentManager().findFragmentById(R.id.mine_msg_layout);
+                (MegSecondLevelFragment) getSupportFragmentManager().findFragmentById(R.id.lay_base_frame);
         if (megSecondLevelFragment == null) {
             megSecondLevelFragment = MegSecondLevelFragment.newInstance(id, title);
             AtyUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), megSecondLevelFragment, R.id.mine_msg_layout);
+                    getSupportFragmentManager(), megSecondLevelFragment, R.id.lay_base_frame);
         }
 
         MegSecondLevelAtyPresenter mPresenter = new MegSecondLevelAtyPresenter(

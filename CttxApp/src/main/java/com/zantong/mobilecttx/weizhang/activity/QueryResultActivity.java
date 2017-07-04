@@ -217,7 +217,7 @@ public class QueryResultActivity extends AppCompatActivity
         violationDTO.setCarnumtype(PublicData.getInstance().mHashMap.get("carnumtype").toString());
         violationDTO.setCarnum(PublicData.getInstance().mHashMap.get("carnum").toString());
         violationDTO.setEnginenum(PublicData.getInstance().mHashMap.get("enginenum").toString());
-        SPUtils.getInstance(this).setViolation(violationDTO);
+        SPUtils.getInstance().setViolation(violationDTO);
 
         PublicData.getInstance().mHashMap.put("ViolationDetailsStr", mLinkedList.get(position).getViolationnum());
         PublicData.getInstance().mHashMap.put("Processste", mLinkedList.get(position).getProcessste());

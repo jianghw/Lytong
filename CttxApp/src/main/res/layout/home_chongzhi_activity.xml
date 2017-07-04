@@ -20,7 +20,7 @@
                 android:id="@+id/lay_provider"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_150"
-                android:background="@drawable/bg_item_select"
+                android:background="@drawable/bg_sel_item_gray"
                 android:orientation="horizontal">
 
                 <TextView
@@ -125,7 +125,7 @@
                 android:id="@+id/ray_paystyle_layout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_150"
-                android:background="@drawable/bg_item_select">
+                android:background="@drawable/bg_sel_item_gray">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -170,7 +170,7 @@
                 android:id="@+id/ray_discount_coupon"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_150"
-                android:background="@drawable/bg_item_select">
+                android:background="@drawable/bg_sel_item_gray">
 
                 <TextView
                     android:layout_width="wrap_content"

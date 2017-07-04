@@ -245,7 +245,7 @@ public class HomeFragment extends BaseExtraFragment {
         initTopView();
         initScrollUp(new ArrayList<HomeNotice>());
         getHomeData();
-        if (!SPUtils.getInstance(this.getActivity()).getGuideSaoFaDan()) {
+        if (!SPUtils.getInstance().getGuideSaoFaDan()) {
             PublicData.getInstance().GUIDE_TYPE = 0;
             Act.getInstance().gotoIntent(this.getActivity(), GuideActivity.class);
         }
@@ -304,7 +304,7 @@ public class HomeFragment extends BaseExtraFragment {
      */
     private void bendiCarInfo(int bendi) {
         mFragmentList.clear();
-        List<CarInfoDTO> list = SPUtils.getInstance(this.getActivity()).getCarsInfo();
+        List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
         PublicData.getInstance().mLocalCars = list;
         PublicData.getInstance().mCarNum = list.size();
         if (bendi == 1) {
@@ -527,7 +527,7 @@ public class HomeFragment extends BaseExtraFragment {
                 MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(35));
                 //TODO 修改进入驾驶证查询页逻辑
                 LicenseFileNumDTO bean = SPUtils.getInstance(
-                        getActivity().getApplicationContext()).getLicenseFileNumDTO();
+                ).getLicenseFileNumDTO();
                 if (!PublicData.getInstance().loginFlag ||
                         bean == null && TextUtils.isEmpty(PublicData.getInstance().filenum)) {
                     Act.getInstance().lauchIntentToLogin(this.getActivity(), LicenseCheckGradeActivity.class);
@@ -601,7 +601,7 @@ public class HomeFragment extends BaseExtraFragment {
         HomeDataDTO params = new HomeDataDTO();
         String userId = "";
         if (!TextUtils.isEmpty(PublicData.getInstance().userID)) {
-            userId = RSAUtils.strByEncryptionLiYing(getActivity(), PublicData.getInstance().userID, true);
+            userId = RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true);
         }
         params.setUserId(userId);
         CarApiClient.getHomeData(this.getActivity(), params, new CallBack<HomeResult>() {
@@ -889,14 +889,14 @@ public class HomeFragment extends BaseExtraFragment {
     private void liyingreg() {
         try {
 
-            String phone = RSAUtils.strByEncryptionLiYing(this.getActivity(), PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
+            String phone = RSAUtils.strByEncryptionLiYing(PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
             SHATools sha = new SHATools();
-            String pwd = RSAUtils.strByEncryptionLiYing(this.getActivity(),
-                    SHATools.hexString(sha.eccryptSHA1(SPUtils.getInstance(getActivity()).getUserPwd())), true);
+            String pwd = RSAUtils.strByEncryptionLiYing(
+                    SHATools.hexString(sha.eccryptSHA1(SPUtils.getInstance().getUserPwd())), true);
             LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
             liYingRegDTO.setPhoenum(phone);
             liYingRegDTO.setPswd(pwd);
-            liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(this.getActivity(), PublicData.getInstance().mLoginInfoBean.getUsrid(), true));
+            liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().mLoginInfoBean.getUsrid(), true));
             CarApiClient.liYingReg(this.getActivity(), liYingRegDTO, new CallBack<BaseResult>() {
                 @Override
                 public void onSuccess(BaseResult result) {
@@ -933,8 +933,8 @@ public class HomeFragment extends BaseExtraFragment {
                 LogUtils.i("当前时间戳：" + currentTm + "，当前时间：" + currentTm + "，报名截止时间戳" + endTm);
 
                 if (result.getResponseCode() == 2000 && !TextUtils.isEmpty(result.getData().getPlateNo())) {
-                    SPUtils.getInstance(HomeFragment.this.getActivity()).setSignStatus(true);
-                    SPUtils.getInstance(HomeFragment.this.getActivity()).setSignCarPlate(result.getData().getPlateNo());
+                    SPUtils.getInstance().setSignStatus(true);
+                    SPUtils.getInstance().setSignCarPlate(result.getData().getPlateNo());
 
                     if (currentTm < endTm) {//4.17号之前
                         MobclickAgent.onEvent(HomeFragment.this.getActivity(), Config.getUMengID(22));
@@ -946,7 +946,7 @@ public class HomeFragment extends BaseExtraFragment {
                     }
                 }
                 if (result.getResponseCode() == 4000) {
-                    SPUtils.getInstance(HomeFragment.this.getActivity()).setSignStatus(false);
+                    SPUtils.getInstance().setSignStatus(false);
                     if (currentTm < endTm) {//4.17号之前
                         MobclickAgent.onEvent(HomeFragment.this.getActivity(), Config.getUMengID(19));
                         Act.getInstance().lauchIntentToLogin(HomeFragment.this.getActivity(), HundredPlanActivity.class);

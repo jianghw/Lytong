@@ -50,15 +50,11 @@ import com.zantong.mobilecttx.utils.CarBrandParser;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.UiHelpers;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
@@ -76,7 +72,11 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
+import cn.qqtheme.framework.util.primission.PermissionFail;
+import cn.qqtheme.framework.util.primission.PermissionGen;
+import cn.qqtheme.framework.util.primission.PermissionSuccess;
 
 
 public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements IBaseView {
@@ -177,7 +177,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
 
     @Override
     public void initView() {
-        if (!SPUtils.getInstance(this).getGuideXingShiZheng()) {
+        if (!SPUtils.getInstance().getGuideXingShiZheng()) {
             PublicData.getInstance().GUIDE_TYPE = 1;
             Act.getInstance().gotoIntent(this, GuideActivity.class);
         }
@@ -210,7 +210,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
             mRemove.setVisibility(View.VISIBLE);
             try {
                 pos = Integer.parseInt(infoBean.getCarnumtype());
-                LogUtils.i("pos---" + pos);
+
                 mType.setText(this.getResources().getStringArray(R.array.car_type)[pos - 1]);
             } catch (Exception e) {
 
@@ -366,9 +366,9 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
             params.setIssueDate(mRegisterDate.getText().toString());
         }
 
-        if (SPUtils.getInstance(this).getXinnengyuanFlag() && plateNum.length() >= 7 && (!dto.getCarnumtype().equals("51") ||
+        if (SPUtils.getInstance().getXinnengyuanFlag() && plateNum.length() >= 7 && (!dto.getCarnumtype().equals("51") ||
                 !dto.getCarnumtype().equals("52"))) {
-            SPUtils.getInstance(this).setXinnengyuanFlag(false);
+            SPUtils.getInstance().setXinnengyuanFlag(false);
             DialogUtils.createDialog(this, "温馨提示", "如果您的汽车为新能源汽车,车牌类型请选择新能源汽车", "取消", "继续查询", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -384,10 +384,10 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
 //未登录时直接提交到新服务器,登录时先提交旧服务器,再提交新服务器
             if (!PublicData.getInstance().loginFlag) {
 
-                List<CarInfoDTO> list = SPUtils.getInstance(this).getCarsInfo();
+                List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
                 if (isFrom) {//修改
-                    SPUtils.getInstance(this).getCarsInfo().remove(tempBean);
-                    SPUtils.getInstance(this).getCarsInfo().add(dto);
+                    SPUtils.getInstance().getCarsInfo().remove(tempBean);
+                    SPUtils.getInstance().getCarsInfo().add(dto);
                 } else {
                     if (list.size() > 2) {
                         list.remove(0);
@@ -406,12 +406,12 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                     PublicData.getInstance().mHashMap.put("enginenum", dto.getEnginenum());
                     PublicData.getInstance().mHashMap.put("carnumtype", dto.getCarnumtype());
                     PublicData.getInstance().mHashMap.put("IllegalViolationName", dto.getCarnum());//标题
-                    SPUtils.getInstance(this).getCarsInfo().add(dto);
+                    SPUtils.getInstance().getCarsInfo().add(dto);
 
                     ViolationDTO dto1 = new ViolationDTO();
                     LogUtils.i("车牌号-------------------" + dto.getCarnum());
-                    dto1.setCarnum(RSAUtils.strByEncryption(this, dto.getCarnum(), true));
-                    dto1.setEnginenum(RSAUtils.strByEncryption(this, dto.getEnginenum(), true));
+                    dto1.setCarnum(RSAUtils.strByEncryption(dto.getCarnum(), true));
+                    dto1.setEnginenum(RSAUtils.strByEncryption(dto.getEnginenum(), true));
                     dto1.setCarnumtype(dto.getCarnumtype());
                     Intent intent = new Intent(this, ViolationResultAcitvity.class);
                     Bundle bundle = new Bundle();
@@ -481,15 +481,15 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                     hideKeyBord();
 
                     ViolationDTO dto1 = new ViolationDTO();
-                    dto1.setCarnum(RSAUtils.strByEncryption(AddCarActivity.this, carNum, true));
-                    dto1.setEnginenum(RSAUtils.strByEncryption(AddCarActivity.this, dto.getEnginenum(), true));
+                    dto1.setCarnum(RSAUtils.strByEncryption(carNum, true));
+                    dto1.setEnginenum(RSAUtils.strByEncryption(dto.getEnginenum(), true));
                     dto1.setCarnumtype(dto.getCarnumtype());
 
                     Intent intent = new Intent(AddCarActivity.this, ViolationResultAcitvity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("params", dto1);
                     intent.putExtras(bundle);
-                    LogUtils.i("车牌号==================" + carNum);
+
                     intent.putExtra("plateNum", carNum);
                     startActivity(intent);
                     finish();
@@ -768,7 +768,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
 
     //删除本地车辆
     private void delLocalCarInfo() {
-        List<CarInfoDTO> list = SPUtils.getInstance(this).getCarsInfo();
+        List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
         list.remove(infoBean);
         PublicData.getInstance().mCarNum--;
         EventBus.getDefault().post(
@@ -779,7 +779,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
 
     private void dialogForDelCar() {
         carNum = mProvince.getText().toString() + mPlateNum.getText().toString();
-        String signCar = SPUtils.getInstance(this).getSignCarPlate();
+        String signCar = SPUtils.getInstance().getSignCarPlate();
         if ("1".equals(infoBean.getIspaycar())) {
             DialogUtils.createDialog(this, "该车辆为可缴费车辆不能进行删除操作", new View.OnClickListener() {
                 @Override

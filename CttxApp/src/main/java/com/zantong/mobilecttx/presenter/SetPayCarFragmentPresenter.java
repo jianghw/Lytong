@@ -46,9 +46,9 @@ public class SetPayCarFragmentPresenter extends BasePresenter<IBaseView> impleme
 //              OpenQueryBean.RspInfoBean.UserCarsInfoBean mUserCarsInfoBean = (OpenQueryBean.RspInfoBean.UserCarsInfoBean) mSetPayCarFragment.mapData().get("DefaultCarFragmentPresenter");
                 try {
                     masp.put("usrid", PublicData.getInstance().userID);
-                    masp.put("delcarnum", RSAUtils.strByEncryption(mSetPayCarFragment.getActivity(),
+                    masp.put("delcarnum", RSAUtils.strByEncryption(
                             mSetPayCarFragment.mapData().get("delcarnum"), true));
-                    masp.put("addcarnum", RSAUtils.strByEncryption(mSetPayCarFragment.getActivity(),
+                    masp.put("addcarnum", RSAUtils.strByEncryption(
                             mSetPayCarFragment.mapData().get("addcarnum"), true));
                     masp.put("carnumtype", mSetPayCarFragment.mapData().get("carnumtype"));
                     MessageFormat.getInstance().setMessageJSONObject(masp);

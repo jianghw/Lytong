@@ -137,10 +137,10 @@ public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePre
     }
 
     private void liyingreg() {
-        String phone = RSAUtils.strByEncryptionLiYing(this, PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
+        String phone = RSAUtils.strByEncryptionLiYing(PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
         LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
         liYingRegDTO.setPhoenum(phone);
-        liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(this, PublicData.getInstance().userID, true));
+        liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
         liYingRegDTO.setNickname(nickNameEdit.getText().toString());
         CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResult>() {
             @Override

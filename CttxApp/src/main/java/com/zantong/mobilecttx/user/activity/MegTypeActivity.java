@@ -17,7 +17,7 @@ public class MegTypeActivity extends MvpBaseActivity {
 
     @Override
     protected int getContentResId() {
-        return R.layout.mine_msg_activity;
+        return R.layout.activity_base_frame;
     }
 
     @Override
@@ -28,11 +28,11 @@ public class MegTypeActivity extends MvpBaseActivity {
     @Override
     protected void initMvPresenter() {
         MegTypeFragment megTypeFragment =
-                (MegTypeFragment) getSupportFragmentManager().findFragmentById(R.id.mine_msg_layout);
+                (MegTypeFragment) getSupportFragmentManager().findFragmentById(R.id.lay_base_frame);
         if (megTypeFragment == null) {
             megTypeFragment = MegTypeFragment.newInstance();
             AtyUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), megTypeFragment, R.id.mine_msg_layout);
+                    getSupportFragmentManager(), megTypeFragment, R.id.lay_base_frame);
         }
 
         MegTypeAtyPresenter mPresenter = new MegTypeAtyPresenter(

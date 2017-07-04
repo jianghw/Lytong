@@ -66,7 +66,7 @@ public class UpdatePhoneNumberPresenter extends BasePresenter<IBaseView> impleme
 //
                 try {
                     masp.put("usrid", PublicData.getInstance().userID);
-                    String phone = RSAUtils.strByEncryption(mUpdatePhoneNumber, mUpdatePhoneNumber.mapData().get("phoenum"), true);
+                    String phone = RSAUtils.strByEncryption(mUpdatePhoneNumber.mapData().get("phoenum"), true);
                     masp.put("phoenum", phone);
                     masp.put("devicetoken", PublicData.getInstance().imei);
                     masp.put("pushswitch", 0);

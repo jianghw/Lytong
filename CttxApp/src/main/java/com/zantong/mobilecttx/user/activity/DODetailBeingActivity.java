@@ -101,7 +101,7 @@ public class DODetailBeingActivity extends BaseMvpActivity<IBaseView, HelpPresen
                 Intent intent = getIntent();
                 String orderId = intent.getStringExtra("param");
                 dto.setOrderId(orderId);
-                dto.setUsrId(RSAUtils.strByEncryptionLiYing(DODetailBeingActivity.this, PublicData.getInstance().userID, true));
+                dto.setUsrId(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
                 HashMap<String, String> hashMap = new HashMap<String, String>();
                 hashMap.put("time",time);
                 hashMap.put("orderId",orderId);
@@ -146,7 +146,7 @@ public class DODetailBeingActivity extends BaseMvpActivity<IBaseView, HelpPresen
         String orderId = intent.getStringExtra(Act.ACT_PARAM);
         dto.setOrderId(orderId);
         dto.setTime(time);
-        dto.setUsrId(RSAUtils.strByEncryptionLiYing(this, PublicData.getInstance().userID, true));
+        dto.setUsrId(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
         CarApiClient.getDaiJiaOrderDetail(this, dto, new CallBack<DaiJiaOrderDetailResult>() {
             @Override
             public void onSuccess(DaiJiaOrderDetailResult result) {

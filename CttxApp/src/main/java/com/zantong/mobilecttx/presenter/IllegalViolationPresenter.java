@@ -63,13 +63,13 @@ public class IllegalViolationPresenter extends BasePresenter<IBaseView> implemen
 //
                 try {
                     if(TextUtils.isEmpty(PublicData.getInstance().imei)){
-                        masp.put("token", RSAUtils.strByEncryption(mQueryResultActivity, "00000000", true));
+                        masp.put("token", RSAUtils.strByEncryption("00000000", true));
                     }else{
-                        masp.put("token", RSAUtils.strByEncryption(mQueryResultActivity,PublicData.getInstance().imei, true));
+                        masp.put("token", RSAUtils.strByEncryption(PublicData.getInstance().imei, true));
                     }
                     masp.put("carnumtype", mQueryResultActivity.mapData().get("carnumtype"));
-                    masp.put("carnum", RSAUtils.strByEncryption(mQueryResultActivity, mQueryResultActivity.mapData().get("carnum"), true));
-                    masp.put("enginenum", RSAUtils.strByEncryption(mQueryResultActivity, mQueryResultActivity.mapData().get("enginenum"), true));
+                    masp.put("carnum", RSAUtils.strByEncryption(mQueryResultActivity.mapData().get("carnum"), true));
+                    masp.put("enginenum", RSAUtils.strByEncryption(mQueryResultActivity.mapData().get("enginenum"), true));
 //            masp.put("usrid","000160180 6199 2851");
                     MessageFormat.getInstance().setMessageJSONObject(masp);
                 } catch (JSONException e) {
@@ -84,8 +84,8 @@ public class IllegalViolationPresenter extends BasePresenter<IBaseView> implemen
                     masp.put("usrid", PublicData.getInstance().userID);
                     masp.put("opertype", "1");
                     masp.put("carnumtype", mQueryResultActivity.mapData().get("carnumtype"));
-                    masp.put("carnum", RSAUtils.strByEncryption(mQueryResultActivity, mQueryResultActivity.mapData().get("carnum").toString(), true));
-                    masp.put("enginenum", RSAUtils.strByEncryption(mQueryResultActivity, mQueryResultActivity.mapData().get("enginenum").toString(), true));
+                    masp.put("carnum", RSAUtils.strByEncryption(mQueryResultActivity.mapData().get("carnum").toString(), true));
+                    masp.put("enginenum", RSAUtils.strByEncryption(mQueryResultActivity.mapData().get("enginenum").toString(), true));
 //                    masp.put("carmodel","");
                     masp.put("ispaycar", "0");
 //                    if(PublicData.getInstance().isPayCar < 2){

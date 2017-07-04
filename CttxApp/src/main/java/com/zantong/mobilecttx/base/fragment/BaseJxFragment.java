@@ -14,6 +14,7 @@ import com.zantong.mobilecttx.base.activity.BaseActivity;
 import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
 
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * Fragment基类
@@ -126,6 +127,23 @@ public abstract class BaseJxFragment extends Fragment {
     protected abstract void onFirstUserVisible();
 
     @Override
+    public void onResume() {
+        super.onResume();
+        LogUtils.e("onResume==" + this.getClass().getSimpleName());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LogUtils.e("onPause==" + this.getClass().getSimpleName());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
     public void onDestroy() {
         if (isNeedKnife()) ButterKnife.unbind(this);
         DestroyViewAndThing();
@@ -133,6 +151,21 @@ public abstract class BaseJxFragment extends Fragment {
     }
 
     protected abstract void DestroyViewAndThing();
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        LogUtils.e("setUserVisibleHint==" + this.getClass().getSimpleName() + "==" + isVisibleToUser);
+    }
+
+    /**
+     * onResume 之后运行 onPause后不调用
+     */
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        LogUtils.e("onHiddenChanged==" + this.getClass().getSimpleName() + "==" + hidden);
+    }
 
     /**
      * 显示加载中遮罩层Dialog，带消息提示

@@ -136,10 +136,10 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
         quickApplyCardDTO.setCtftp("0");
         quickApplyCardDTO.setUsrname(getIntent().getStringExtra("name"));
-        quickApplyCardDTO.setUsrid(SPUtils.getInstance(this).getLoginInfoBean().getUsrid());
-        quickApplyCardDTO.setCtfnum(RSAUtils.strByEncryption(this, getIntent().getStringExtra("idCard"), true));
-        quickApplyCardDTO.setFilenum(RSAUtils.strByEncryption(this, getIntent().getStringExtra("filenum"), true));
-        quickApplyCardDTO.setPhoenum(RSAUtils.strByEncryption(this, PublicData.getInstance().mLoginInfoBean.getPhoenum(), true));
+        quickApplyCardDTO.setUsrid(SPUtils.getInstance().getLoginInfoBean().getUsrid());
+        quickApplyCardDTO.setCtfnum(RSAUtils.strByEncryption(getIntent().getStringExtra("idCard"), true));
+        quickApplyCardDTO.setFilenum(RSAUtils.strByEncryption(getIntent().getStringExtra("filenum"), true));
+        quickApplyCardDTO.setPhoenum(RSAUtils.strByEncryption(PublicData.getInstance().mLoginInfoBean.getPhoenum(), true));
         quickApplyCardDTO.setCtfvldprd(getIntent().getStringExtra("date"));
         quickApplyCardDTO.setActnotf("0");//默认不开启自动还款
         quickApplyCardDTO.setElecbillsign("0");
@@ -303,7 +303,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
      */
     private void commitYingXiaoDataForLYT() {
         YingXiaoDataDTO dto = new YingXiaoDataDTO();
-        dto.setUsrnum(RSAUtils.strByEncryption(this, PublicData.getInstance().userID, true));
+        dto.setUsrnum(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
         if (TextUtils.isEmpty(mYingXiaoCode.getContentText())) {
             dto.setEmpNum(mEmpNum);
         } else {

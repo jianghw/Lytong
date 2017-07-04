@@ -62,7 +62,7 @@ public class OrderRechargeFragment extends BaseListFragment<RechargeOrderBean> {
         Bundle bundle = getArguments();
         mStatus = bundle.getInt(POSITION, -1);
         RechargeOrderDTO dto = new RechargeOrderDTO();
-        dto.setUserId(RSAUtils.strByEncryptionLiYing(this.getActivity(), PublicData.getInstance().userID, true));
+        dto.setUserId(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
 
         dto.setOrderStatus(mStatus);
         dto.setCurrentIndex(mCurrentPage);

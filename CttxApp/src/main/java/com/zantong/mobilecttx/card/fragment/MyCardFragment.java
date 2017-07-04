@@ -116,8 +116,8 @@ public class MyCardFragment extends BaseExtraFragment implements ModelView {
                 PublicData.getInstance().mHashMap.put("IllegalViolationName",payCar.getCarnum());
 
                 ViolationDTO dto = new ViolationDTO();
-                dto.setCarnum(RSAUtils.strByEncryption(MyCardFragment.this.getActivity(),payCar.getCarnum(),true));
-                dto.setEnginenum(RSAUtils.strByEncryption(MyCardFragment.this.getActivity(),payCar.getEnginenum(),true));
+                dto.setCarnum(RSAUtils.strByEncryption(payCar.getCarnum(),true));
+                dto.setEnginenum(RSAUtils.strByEncryption(payCar.getEnginenum(),true));
                 dto.setCarnumtype(payCar.getCarnumtype());
                 Intent intent = new Intent(MyCardFragment.this.getActivity(),ViolationResultAcitvity.class);
                 Bundle bundle = new Bundle();

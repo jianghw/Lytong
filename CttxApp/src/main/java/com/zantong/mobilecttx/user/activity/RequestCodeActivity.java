@@ -75,8 +75,8 @@ public class RequestCodeActivity extends BaseMvpActivity<ILoginView,LoginPresent
         }else {
             showDialogLoading();
             PersonInfoDTO dto = new PersonInfoDTO();
-            dto.setRecdphoe(RSAUtils.strByEncryption(this, requestCode, true));
-            dto.setPhoenum(RSAUtils.strByEncryption(this, PublicData.getInstance().mLoginInfoBean.getPhoenum(), true));
+            dto.setRecdphoe(RSAUtils.strByEncryption(requestCode, true));
+            dto.setPhoenum(RSAUtils.strByEncryption(PublicData.getInstance().mLoginInfoBean.getPhoenum(), true));
             UserApiClient.commitPersonInfo(this, dto, new CallBack<Result>() {
                 @Override
                 public void onSuccess(Result result) {

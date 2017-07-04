@@ -199,7 +199,7 @@ public class MineFragment extends Fragment {
      */
     private void getUnReadMsgCount() {
         BaseDTO dto = new BaseDTO();
-        dto.setUsrId(RSAUtils.strByEncryption(this.getActivity(), PublicData.getInstance().userID, true));
+        dto.setUsrId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
         CarApiClient.getUnReadMsgCount(this.getActivity(), dto, new CallBack<MessageCountResult>() {
             @Override
             public void onSuccess(MessageCountResult result) {

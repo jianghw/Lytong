@@ -216,7 +216,7 @@ public class UserApiClient extends BaseApiClient {
     }
 
     public static void getPayHistory(Context context, PayHistoryDTO params, CallBack<PayHistoryResult> callback) {
-        params.setFilenum(RSAUtils.strByEncryption(context, params.getFilenum(), true));
+        params.setFilenum(RSAUtils.strByEncryption(params.getFilenum(), true));
         AsyncCallBack<PayHistoryResult> asyncCallBack = new AsyncCallBack<PayHistoryResult>(
                 context, callback, PayHistoryResult.class);
         RequestDTO t = new RequestDTO();
@@ -332,16 +332,16 @@ public class UserApiClient extends BaseApiClient {
      */
     public static void getCurrentShare(Context context, CallBack<VersionResult> callback) {
         ShareDTO dto = new ShareDTO();
-        dto.setUserPhone(RSAUtils.strByEncryption(context, "18410109993", false));
-        dto.setAcceptPhone(RSAUtils.strByEncryption(context, "18410109997", false));
+        dto.setUserPhone(RSAUtils.strByEncryption("18410109993", false));
+        dto.setAcceptPhone(RSAUtils.strByEncryption("18410109997", false));
         BaseCallBack<VersionResult> versionCallBack = new BaseCallBack<VersionResult>(
                 context, callback, VersionResult.class);
         post(context, getDownUrl("userShare"), dto, versionCallBack);
     }
 
     public static void addCarInfo(Context context, CarInfoDTO dto, CallBack<Result> callback) {
-        dto.setCarnum(RSAUtils.strByEncryption(context, dto.getCarnum(), true));
-        dto.setEnginenum(RSAUtils.strByEncryption(context, dto.getEnginenum(), true));
+        dto.setCarnum(RSAUtils.strByEncryption(dto.getCarnum(), true));
+        dto.setEnginenum(RSAUtils.strByEncryption(dto.getEnginenum(), true));
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
         RequestDTO t = new RequestDTO();
@@ -360,8 +360,8 @@ public class UserApiClient extends BaseApiClient {
     }
 
     public static void editCarInfo(Context context, CarInfoDTO dto, CallBack<Result> callback) {
-        dto.setCarnum(RSAUtils.strByEncryption(context, dto.getCarnum(), true));
-        dto.setEnginenum(RSAUtils.strByEncryption(context, dto.getEnginenum(), true));
+        dto.setCarnum(RSAUtils.strByEncryption(dto.getCarnum(), true));
+        dto.setEnginenum(RSAUtils.strByEncryption(dto.getEnginenum(), true));
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
         RequestDTO t = new RequestDTO();
@@ -428,7 +428,7 @@ public class UserApiClient extends BaseApiClient {
 
     public static void setJiaoYiDaiMa(Context context, String strFileNum,CallBack<Result> callback) {
         JiaoYiDaiMaDTO jiaoYiDaiMaDTO = new JiaoYiDaiMaDTO();
-        jiaoYiDaiMaDTO.setFilenum(RSAUtils.strByEncryption(context, strFileNum, true));
+        jiaoYiDaiMaDTO.setFilenum(RSAUtils.strByEncryption(strFileNum, true));
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
         RequestDTO t = new RequestDTO();

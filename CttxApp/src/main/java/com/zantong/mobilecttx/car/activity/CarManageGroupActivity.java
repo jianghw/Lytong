@@ -147,7 +147,7 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
         mLoadingView.setVisibility(View.VISIBLE);
 
         if (!PublicData.getInstance().loginFlag) {
-            List<CarInfoDTO> list = SPUtils.getInstance(this).getCarsInfo();
+            List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
             testSuperAdapter(list);
         } else {
             UserCarsDTO params = new UserCarsDTO();
@@ -339,7 +339,7 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSynEvent(BenDiCarInfoEvent event) {
 
-        List<CarInfoDTO> list = SPUtils.getInstance(this).getCarsInfo();
+        List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
         adapter.removeAll();
         testSuperAdapter(list);
     }

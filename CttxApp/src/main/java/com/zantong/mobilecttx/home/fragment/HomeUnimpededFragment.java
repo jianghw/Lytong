@@ -1,9 +1,11 @@
 package com.zantong.mobilecttx.home.fragment;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,7 +35,7 @@ import com.zantong.mobilecttx.home.bean.HomeBean;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.interf.IUnimpededFtyContract;
-import com.zantong.mobilecttx.presenter.chongzhi.UnimpededFtyPresenter;
+import com.zantong.mobilecttx.presenter.home.UnimpededFtyPresenter;
 import com.zantong.mobilecttx.user.activity.MegTypeActivity;
 import com.zantong.mobilecttx.user.bean.MessageCountBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
@@ -43,6 +45,9 @@ import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
+import com.zantong.mobilecttx.weizhang.activity.LicenseCheckGradeActivity;
+import com.zantong.mobilecttx.weizhang.activity.LicenseDetailActivity;
+import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobilecttx.widght.MainScrollUpAdvertisementView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -53,6 +58,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
@@ -214,6 +220,11 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     }
 
     @Override
+    public void setPresenter(IUnimpededFtyContract.IUnimpededFtyPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
     protected void onFirstDataVisible() {
         if (PublicData.getInstance().loginFlag) {
             mPresenter.getRemoteCarInfo();
@@ -239,17 +250,32 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     @Override
     public void onResume() {
         super.onResume();
-        if (mCustomGrapevine != null) mCustomGrapevine.start();
-        //开始自动翻页
-        mCustomConvenientBanner.startTurning(4000);
+        startCampaignCustom(false);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (mCustomGrapevine != null) mCustomGrapevine.stop();
-        //停止翻页
-        mCustomConvenientBanner.stopTurning();
+        startCampaignCustom(true);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        startCampaignCustom(hidden);
+    }
+
+    private void startCampaignCustom(boolean hidden) {
+        if (hidden) {//不可见时
+            if (mCustomGrapevine != null) mCustomGrapevine.stop();
+            //停止翻页
+            if (mCustomConvenientBanner != null) mCustomConvenientBanner.stopTurning();
+        } else {
+            if (mCustomGrapevine != null && !mCustomGrapevine.isRunning()) mCustomGrapevine.start();
+            //开始自动翻页
+            if (mCustomConvenientBanner != null && !mCustomConvenientBanner.isRunning())
+                mCustomConvenientBanner.startTurning(4000);
+        }
     }
 
     /**
@@ -265,11 +291,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         EventBus.getDefault().removeStickyEvent(GetMsgAgainEvent.class);
         EventBus.getDefault().removeStickyEvent(UpdateCarInfoEvent.class);
         EventBus.getDefault().removeStickyEvent(BenDiCarInfoEvent.class);
-    }
-
-    @Override
-    public void setPresenter(IUnimpededFtyContract.IUnimpededFtyPresenter presenter) {
-        mPresenter = presenter;
     }
 
     @Override
@@ -370,7 +391,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
      * 本地车辆数据操作
      */
     private void getLocalCarInfo() {
-        List<CarInfoDTO> list = SPUtils.getInstance(getActivity().getApplicationContext()).getCarsInfo();
+        List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
         if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
         if (list != null && list.size() > 0)
             for (CarInfoDTO carInfoDTO : list) {
@@ -439,7 +460,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     public void onDataSynEvent(GetMsgAgainEvent event) {
         if (event != null && event.getStatus()) {
             BaseDTO dto = new BaseDTO();
-            dto.setUsrId(RSAUtils.strByEncryption(this.getActivity(), PublicData.getInstance().userID, true));
+            dto.setUsrId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
             CarApiClient.getUnReadMsgCount(this.getActivity(), dto, new CallBack<MessageCountResult>() {
                 @Override
                 public void onSuccess(MessageCountResult result) {
@@ -464,7 +485,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         switch (v.getId()) {
             case R.id.img_msg://消息
             case R.id.tv_msg_count:
-                MobclickAgent.onEvent(getActivity().getApplicationContext(), Config.getUMengID(24));
+                MobclickAgent.onEvent(ContextUtils.getContext(), Config.getUMengID(24));
                 Act.getInstance().lauchIntentToLogin(getActivity(), MegTypeActivity.class);
                 break;
             case R.id.img_scan://扫描
@@ -475,7 +496,29 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                 break;
             case R.id.tv_check:
                 break;
-            case R.id.tv_carwash:
+            case R.id.tv_carwash://驾驶证查分
+                MobclickAgent.onEvent(ContextUtils.getContext(), Config.getUMengID(35));
+
+                LicenseFileNumDTO bean = SPUtils.getInstance(
+                ).getLicenseFileNumDTO();
+                if (!PublicData.getInstance().loginFlag ||
+                        bean == null && TextUtils.isEmpty(PublicData.getInstance().filenum)) {
+                    Act.getInstance().lauchIntentToLogin(getActivity(), LicenseCheckGradeActivity.class);
+                } else if (bean != null || !TextUtils.isEmpty(PublicData.getInstance().filenum)
+                        && !TextUtils.isEmpty(PublicData.getInstance().getdate)) {
+                    LicenseFileNumDTO loginBean = new LicenseFileNumDTO();
+                    loginBean.setFilenum(PublicData.getInstance().filenum);
+                    loginBean.setStrtdt(PublicData.getInstance().getdate);
+
+                    Intent intent = new Intent(getActivity(), LicenseDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(LicenseCheckGradeActivity.KEY_BUNDLE, bean != null ? bean : loginBean);
+                    bundle.putBoolean(LicenseCheckGradeActivity.KEY_BUNDLE_FINISH, true);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else {
+                    Act.getInstance().lauchIntentToLogin(getActivity(), LicenseCheckGradeActivity.class);
+                }
                 break;
             case R.id.tv_drive:
                 break;

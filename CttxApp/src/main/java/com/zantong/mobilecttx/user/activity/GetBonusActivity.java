@@ -161,7 +161,7 @@ public class GetBonusActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
     private void getBonus() {
         BonusDTO dto = new BonusDTO();
         String phone = PublicData.getInstance().mLoginInfoBean.getPhoenum();
-        dto.setUserPhone(RSAUtils.strByEncryptionLiYing(this, phone, true));
+        dto.setUserPhone(RSAUtils.strByEncryptionLiYing(phone, true));
 
         CarApiClient.getBonusInfo(this, dto, new CallBack<BonusResult>() {
             @Override

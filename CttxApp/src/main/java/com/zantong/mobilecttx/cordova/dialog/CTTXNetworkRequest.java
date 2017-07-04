@@ -144,25 +144,25 @@ public class CTTXNetworkRequest extends CordovaPlugin {
                 for (Iterator iterator = map.entrySet().iterator(); iterator.hasNext(); ) {
                     entry = (java.util.Map.Entry) iterator.next();
                     if (entry.getKey().equals("ctfnum")) {
-                        map.put(entry.getKey(), RSAUtils.strByEncryption(cordova.getActivity(), entry.getValue().toString(), true));
+                        map.put(entry.getKey(), RSAUtils.strByEncryption(entry.getValue().toString(), true));
                     }
                     if (entry.getKey().equals("filenum")) {
-                        map.put(entry.getKey(), RSAUtils.strByEncryption(cordova.getActivity(), entry.getValue().toString(), true));
+                        map.put(entry.getKey(), RSAUtils.strByEncryption(entry.getValue().toString(), true));
                     }
                     if (entry.getKey().equals("phoenum")) {
-                        map.put(entry.getKey(), RSAUtils.strByEncryption(cordova.getActivity(), entry.getValue().toString(), true));
+                        map.put(entry.getKey(), RSAUtils.strByEncryption(entry.getValue().toString(), true));
                     }
                     if (entry.getKey().equals("appsctfnum")) {
-                        map.put(entry.getKey(), RSAUtils.strByEncryption(cordova.getActivity(), entry.getValue().toString(), true));
+                        map.put(entry.getKey(), RSAUtils.strByEncryption(entry.getValue().toString(), true));
                     }
                     if (entry.getKey().equals("appsmblphoe")) {
-                        map.put(entry.getKey(), RSAUtils.strByEncryption(cordova.getActivity(), entry.getValue().toString(), true));
+                        map.put(entry.getKey(), RSAUtils.strByEncryption(entry.getValue().toString(), true));
                     }
                     if (entry.getKey().equals("insdctfnum")) {
-                        map.put(entry.getKey(), RSAUtils.strByEncryption(cordova.getActivity(), entry.getValue().toString(), true));
+                        map.put(entry.getKey(), RSAUtils.strByEncryption(entry.getValue().toString(), true));
                     }
                     if (entry.getKey().equals("insdmblphoe")) {
-                        map.put(entry.getKey(), RSAUtils.strByEncryption(cordova.getActivity(), entry.getValue().toString(), true));
+                        map.put(entry.getKey(), RSAUtils.strByEncryption(entry.getValue().toString(), true));
                     }
                 }
                 mapToString = transMapToString(map);

@@ -22,7 +22,6 @@ import com.zantong.mobilecttx.common.activity.CommonListActivity;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
 import com.zantong.mobilecttx.utils.DialogMgr;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
@@ -33,6 +32,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
@@ -117,27 +117,29 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPrese
         mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, Object data) {
-                MyCarBean bean = (MyCarBean) data;
-
-                PublicData.getInstance().mHashMap.put("carnum", bean.getCar_name());
-                PublicData.getInstance().mHashMap.put("enginenum", bean.getEngine_num());
-                PublicData.getInstance().mHashMap.put("carnumtype", bean.getCar_type());
-                PublicData.getInstance().mHashMap.put("IllegalViolationName", bean.getCar_name());//标题
-//                Act.getInstance().gotoIntent(ViolationQueryAcitvity.this, QueryResultActivity.class);
-
-                ViolationDTO dto = new ViolationDTO();
-                dto.setCarnum(RSAUtils.strByEncryption(ViolationQueryAcitvity.this, bean.getCar_name(), true));
-                dto.setEnginenum(RSAUtils.strByEncryption(ViolationQueryAcitvity.this, bean.getEngine_num(), true));
-                dto.setCarnumtype(bean.getCar_type());
-
-                Intent intent = new Intent(ViolationQueryAcitvity.this, ViolationResultAcitvity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("params", dto);
-                intent.putExtras(bundle);
-                intent.putExtra("plateNum", bean.getCar_name());
-                startActivity(intent);
+                papeTurns((MyCarBean) data);
             }
         });
+    }
+
+    private void papeTurns(MyCarBean data) {
+        PublicData.getInstance().mHashMap.put("carnum", data.getCar_name());
+        PublicData.getInstance().mHashMap.put("enginenum", data.getEngine_num());
+        PublicData.getInstance().mHashMap.put("carnumtype", data.getCar_type());
+        PublicData.getInstance().mHashMap.put("IllegalViolationName", data.getCar_name());//标题
+//                Act.getInstance().gotoIntent(ViolationQueryAcitvity.this, QueryResultActivity.class);
+
+        ViolationDTO dto = new ViolationDTO();
+        dto.setCarnum(RSAUtils.strByEncryption(data.getCar_name(), true));
+        dto.setEnginenum(RSAUtils.strByEncryption(data.getEngine_num(), true));
+        dto.setCarnumtype(data.getCar_type());
+
+        Intent intent = new Intent(this, ViolationResultAcitvity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("params", dto);
+        intent.putExtras(bundle);
+        intent.putExtra("plateNum", data.getCar_name());
+        startActivity(intent);
     }
 
     @Override
@@ -150,7 +152,6 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPrese
             R.id.violation_query_province_layout, R.id.violation_query_cartype_layout})
     @Override
     public void onClick(View v) {
-        super.onClick(v);
         switch (v.getId()) {
             case R.id.violation_query_cartype_desc:
                 new DialogMgr(this, R.mipmap.engine_number_image);
@@ -159,7 +160,7 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPrese
                 InputMethodManager imm = (InputMethodManager)
                         this.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                KeyWordPop mKeyWordPop = new KeyWordPop(this, v, new KeyWordPop.KeyWordLintener() {
+               new KeyWordPop(this, v, new KeyWordPop.KeyWordLintener() {
                     @Override
                     public void onKeyWordLintener(String cityStr) {
                         mProvinceText.setText(cityStr);
@@ -188,8 +189,8 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPrese
                 PublicData.getInstance().mHashMap.put("enginenum", mEngineEdit.getText().toString().trim());
                 PublicData.getInstance().mHashMap.put("carnumtype", mCarTypeText.getText().toString().trim());
 
-                dto.setCarnum(RSAUtils.strByEncryption(this, plateNum, true));
-                dto.setEnginenum(RSAUtils.strByEncryption(this, mEngineEdit.getText().toString().trim(), true));
+                dto.setCarnum(RSAUtils.strByEncryption(plateNum, true));
+                dto.setEnginenum(RSAUtils.strByEncryption(mEngineEdit.getText().toString().trim(), true));
                 dto.setCarnumtype(VehicleTypeTools.switchVehicleCode(mCarTypeText.getText().toString().trim()));
                 LogUtils.i(plateNum + "---" + mEngineEdit.getText().toString() + "---" + mCarTypeText.getText().toString());
 
@@ -202,8 +203,6 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPrese
                 startActivity(intent);
                 break;
         }
-
     }
-
 
 }

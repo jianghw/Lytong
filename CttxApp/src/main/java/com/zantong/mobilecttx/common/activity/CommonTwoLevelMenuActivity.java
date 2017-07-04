@@ -29,7 +29,7 @@ public class CommonTwoLevelMenuActivity extends BaseMvpActivity<IBaseView, HelpP
 
     @Override
     protected int getContentResId() {
-        return R.layout.mine_msg_activity;
+        return R.layout.activity_base_frame;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class CommonTwoLevelMenuActivity extends BaseMvpActivity<IBaseView, HelpP
         int mType = getIntent().getIntExtra("type", 0);
         showTitle(mType);
 
-        transaction.replace(R.id.mine_msg_layout, CommonTwoLevelMenuFragment.newInstance(mType));
+        transaction.replace(R.id.lay_base_frame, CommonTwoLevelMenuFragment.newInstance(mType));
         transaction.commit();
     }
 

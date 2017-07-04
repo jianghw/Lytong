@@ -27,7 +27,7 @@ public class MsgActivity extends BaseMvpActivity<IBaseView,HelpPresenter> implem
 
     @Override
     protected int getContentResId() {
-        return R.layout.mine_msg_activity;
+        return R.layout.activity_base_frame;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class MsgActivity extends BaseMvpActivity<IBaseView,HelpPresenter> implem
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         MsgFragment helpFragment = new MsgFragment(mTabTexts);
-        transaction.replace(R.id.mine_msg_layout, helpFragment);
+        transaction.replace(R.id.lay_base_frame, helpFragment);
         transaction.commit();
     }
 }

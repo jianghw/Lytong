@@ -224,11 +224,11 @@ public class BindJiaZhaoActivity extends BaseMvpActivity<IBaseView, HelpPresente
 //
 //        params.setValidPeriodStart(mStartDateText.getText().toString());
         BindCardDTO dto = new BindCardDTO();
-        dto.setCtfnum(RSAUtils.strByEncryption(this, licenseno, true));
+        dto.setCtfnum(RSAUtils.strByEncryption(licenseno, true));
         dto.setCtftp("0");
-        dto.setFilenum(RSAUtils.strByEncryption(this, fileNum, true));
+        dto.setFilenum(RSAUtils.strByEncryption(fileNum, true));
 //        dto.setGetdate(dateOfFirstIssue);
-        dto.setRelatedphone(RSAUtils.strByEncryption(this, phone, true));
+        dto.setRelatedphone(RSAUtils.strByEncryption(phone, true));
         dto.setUsrid(PublicData.getInstance().userID);
         showDialogLoading();
         UserApiClient.bindCard(this, dto, new CallBack<BindCardResult>() {

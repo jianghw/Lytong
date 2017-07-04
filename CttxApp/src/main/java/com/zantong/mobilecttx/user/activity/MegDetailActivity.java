@@ -24,7 +24,7 @@ public class MegDetailActivity extends MvpBaseActivity {
 
     @Override
     protected int getContentResId() {
-        return R.layout.mine_msg_activity;
+        return R.layout.activity_base_frame;
     }
 
     @Override
@@ -40,12 +40,12 @@ public class MegDetailActivity extends MvpBaseActivity {
     @Override
     protected void initMvPresenter() {
         MegDetailFragment megDetailFragment =
-                (MegDetailFragment) getSupportFragmentManager().findFragmentById(R.id.mine_msg_layout);
+                (MegDetailFragment) getSupportFragmentManager().findFragmentById(R.id.lay_base_frame);
         if (megDetailFragment == null) {
             megDetailFragment = MegDetailFragment.newInstance(messageDetailId);
 
             AtyUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), megDetailFragment, R.id.mine_msg_layout);
+                    getSupportFragmentManager(), megDetailFragment, R.id.lay_base_frame);
         }
 
         MegDetailAtyPresenter mPresenter = new MegDetailAtyPresenter(

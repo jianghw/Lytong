@@ -168,7 +168,7 @@ public class InterfaceForJS {
     @JavascriptInterface
     public String getEncreptUserId() {
         LogUtils.i("userId" + PublicData.getInstance().userID);
-        return RSAUtils.strByEncryptionLiYing(context, PublicData.getInstance().userID, true);
+        return RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true);
     }
 
     //跳转到积分规则页面

@@ -78,7 +78,7 @@ public class OrderRechargeDetailActivity extends BaseMvpActivity<IOrderView, Ord
 
         CancelRechargeOrderDTO dto = new CancelRechargeOrderDTO();
         dto.setOrderId(mOrderBean.getOrderId());
-        dto.setUserId(RSAUtils.strByEncryption(this, PublicData.getInstance().userID, true));
+        dto.setUserId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
         CarApiClient.queryOrderDetail(this, dto, new CallBack<RechargeOrderDetailResult>() {
             @Override
             public void onSuccess(RechargeOrderDetailResult result) {
@@ -198,7 +198,7 @@ public class OrderRechargeDetailActivity extends BaseMvpActivity<IOrderView, Ord
 
     private void cancelOrder() {
         CancelRechargeOrderDTO dto = new CancelRechargeOrderDTO();
-        dto.setUserId(RSAUtils.strByEncryption(this, PublicData.getInstance().userID, true));
+        dto.setUserId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
         dto.setOrderId(mOrderBean.getOrderId());
         CarApiClient.cancelOrder(this, dto, new CallBack<BaseResult>() {
             @Override

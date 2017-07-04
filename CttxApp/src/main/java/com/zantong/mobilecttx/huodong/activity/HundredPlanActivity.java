@@ -103,11 +103,11 @@ public class HundredPlanActivity extends BaseMvpActivity {
     public void initData() {
 //        getSignStatus();
         getSignNum();
-        if (SPUtils.getInstance(this).getSignStatus()) {
+        if (SPUtils.getInstance().getSignStatus()) {
             mUnSignLayout.setVisibility(View.GONE);
             mSignLayout.setVisibility(View.VISIBLE);
             mQueryViolationLayout.setVisibility(View.VISIBLE);
-            mCar.setText("报名车辆：" + SPUtils.getInstance(this).getSignCarPlate());
+            mCar.setText("报名车辆：" + SPUtils.getInstance().getSignCarPlate());
         } else {
             MobclickAgent.onEvent(this, Config.getUMengID(19));
             mUnSignLayout.setVisibility(View.VISIBLE);

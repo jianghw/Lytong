@@ -90,7 +90,7 @@ public class PublicData {
         updateMsg = false;
         filenum = "";
         mNetLocationBean = null;
-        SPUtils.getInstance(mContext).setUserPwd("");
+        SPUtils.getInstance().setUserPwd("");
         UserInfoRememberCtrl.saveObject(mContext, null);
         UserInfoRememberCtrl.saveObject(mContext, CarLocalFlag, null);
         UserInfoRememberCtrl.saveObject(mContext, DefaultCarLocalFlag, null);

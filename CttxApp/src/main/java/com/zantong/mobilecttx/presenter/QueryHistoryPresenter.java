@@ -47,10 +47,10 @@ public class QueryHistoryPresenter extends BasePresenter<IBaseView> implements S
                 masp = new JSONObject() ;
 //
                 try {
-                    masp.put("token", RSAUtils.strByEncryption(mQueryHistory.getActivity(),PublicData.getInstance().imei, true));
+                    masp.put("token", RSAUtils.strByEncryption(PublicData.getInstance().imei, true));
                     masp.put("carnumtype", PublicData.getInstance().mHashMap.get("carnumtype"));
-                    masp.put("carnum", RSAUtils.strByEncryption(mQueryHistory.getActivity(),PublicData.getInstance().mHashMap.get("carnum").toString(),true));
-                    masp.put("enginenum",  RSAUtils.strByEncryption(mQueryHistory.getActivity(),PublicData.getInstance().mHashMap.get("enginenum").toString(),true));
+                    masp.put("carnum", RSAUtils.strByEncryption(PublicData.getInstance().mHashMap.get("carnum").toString(),true));
+                    masp.put("enginenum",  RSAUtils.strByEncryption(PublicData.getInstance().mHashMap.get("enginenum").toString(),true));
                     LogUtils.i(masp.get("carnumtype").toString()+ masp.get("carnum")+masp.get("enginenum"));
 //            masp.put("usrid","000160180 6199 2851");
                     MessageFormat.getInstance().setMessageJSONObject(masp);

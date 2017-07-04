@@ -155,7 +155,7 @@ public class MegTypeFragment extends BaseListFragment<MessageType>
      */
     private void getMsgTypeList() {
         BaseDTO dto = new BaseDTO();
-        dto.setUsrId(RSAUtils.strByEncryption(this.getActivity(), PublicData.getInstance().userID, true));
+        dto.setUsrId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
         CarApiClient.getMsgTypeList(this.getActivity(), dto, new CallBack<MessageTypeResult>() {
             @Override
             public void onSuccess(MessageTypeResult result) {

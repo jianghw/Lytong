@@ -19,7 +19,9 @@ import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.StringUtils;
+import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
+import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
 import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qqtheme.framework.popup.MoreWindow;
+import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ScreenUtils;
 
 /**
@@ -121,6 +124,18 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
             mMoreWindow.init();
         }
         mMoreWindow.showMoreWindow(view, ScreenUtils.widthPixels(mContext)/2);
+        mMoreWindow.initClickListener(new MoreWindow.onClickListener() {
+            @Override
+            public void clickInquire() {//违章查询
+                MobclickAgent.onEvent(ContextUtils.getContext(), Config.getUMengID(2));
+                Act.getInstance().lauchIntent(mContext, ViolationActivity.class);
+            }
+
+            @Override
+            public void clickScan() {
+
+            }
+        });
     }
 
 
@@ -165,8 +180,8 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
         PublicData.getInstance().mHashMap.put("carnumtype", userCarInfoBean.getCarnumtype());
 
         ViolationDTO dto = new ViolationDTO();
-        dto.setCarnum(RSAUtils.strByEncryption(mContext, userCarInfoBean.getCarnum(), true));
-        dto.setEnginenum(RSAUtils.strByEncryption(mContext, userCarInfoBean.getEnginenum(), true));
+        dto.setCarnum(RSAUtils.strByEncryption(userCarInfoBean.getCarnum(), true));
+        dto.setEnginenum(RSAUtils.strByEncryption(userCarInfoBean.getEnginenum(), true));
         dto.setCarnumtype(userCarInfoBean.getCarnumtype());
 
         Intent intent = new Intent(mContext, ViolationResultAcitvity.class);

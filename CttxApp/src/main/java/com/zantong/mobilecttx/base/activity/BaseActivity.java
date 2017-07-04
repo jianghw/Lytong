@@ -19,13 +19,13 @@ import com.zantong.mobilecttx.interf.IBaseActivity;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.InspectService;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
-import cn.qqtheme.framework.util.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
@@ -34,8 +34,7 @@ import cn.qqtheme.framework.util.log.LogUtils;
  * @author Sandy
  *         create at 16/6/2 下午2:14
  */
-public abstract class BaseActivity extends FragmentActivity implements
-        OnClickListener, IBaseActivity {
+public abstract class BaseActivity extends FragmentActivity implements OnClickListener, IBaseActivity {
     private static final String NO_LOGIN = "109";
     private Dialog mLoadingDialog;
     protected SystemBarTintManager tintManager;
@@ -46,6 +45,7 @@ public abstract class BaseActivity extends FragmentActivity implements
 //        AndroidBottomBarUtils.assistActivity(findViewById(android.R.id.content));
         setStatusBarColor();
         onBeforeSetContentLayout();
+
         if (getLayoutResId() != 0) {
             setContentView(getLayoutResId());
         }

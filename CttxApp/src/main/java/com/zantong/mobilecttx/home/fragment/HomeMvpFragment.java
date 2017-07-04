@@ -211,7 +211,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
     private void bendiCarInfo(int bendi) {
         if (!mFragmentList.isEmpty()) mFragmentList.clear();
 
-        List<CarInfoDTO> list = SPUtils.getInstance(this.getActivity()).getCarsInfo();
+        List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
         PublicData.getInstance().mLocalCars = list;
         PublicData.getInstance().mCarNum = list.size();
 
@@ -387,7 +387,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
     public void onDataSynEvent(GetMsgAgainEvent event) {
         if (event != null && event.getStatus()) {
             BaseDTO dto = new BaseDTO();
-            dto.setUsrId(RSAUtils.strByEncryption(this.getActivity(), PublicData.getInstance().userID, true));
+            dto.setUsrId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
             CarApiClient.getUnReadMsgCount(this.getActivity(), dto, new CallBack<MessageCountResult>() {
                 @Override
                 public void onSuccess(MessageCountResult result) {
@@ -457,7 +457,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
         mHomeBottomLayout.setLayoutParams(layoutParams);
 
         //是否显示引导页面
-        if (!SPUtils.getInstance(getActivity()).getGuideSaoFaDan()) {
+        if (!SPUtils.getInstance().getGuideSaoFaDan()) {
             PublicData.getInstance().GUIDE_TYPE = 0;
             Act.getInstance().gotoIntent(this.getActivity(), GuideActivity.class);
         }
@@ -577,7 +577,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                 MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(35));
 
                 LicenseFileNumDTO bean = SPUtils.getInstance(
-                        getActivity().getApplicationContext()).getLicenseFileNumDTO();
+                ).getLicenseFileNumDTO();
                 if (!PublicData.getInstance().loginFlag ||
                         bean == null && TextUtils.isEmpty(PublicData.getInstance().filenum)) {
                     Act.getInstance().lauchIntentToLogin(this.getActivity(), LicenseCheckGradeActivity.class);
@@ -666,7 +666,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
 
     private void getHomeData() {
         HomeDataDTO params = new HomeDataDTO();
-        String userId = RSAUtils.strByEncryptionLiYing(getActivity(), PublicData.getInstance().userID, true);
+        String userId = RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true);
         params.setUserId(userId);
 
         CarApiClient.getHomeData(this.getActivity(), params, new CallBack<HomeResult>() {
@@ -818,17 +818,16 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
         LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
         try {
             String phone = RSAUtils.strByEncryptionLiYing(
-                    getActivity().getApplicationContext(), PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
+                    PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
             SHATools sha = new SHATools();
             String pwd = RSAUtils.strByEncryptionLiYing(
-                    getActivity().getApplicationContext(),
                     SHATools.hexString(
-                            sha.eccryptSHA1(SPUtils.getInstance(getActivity()).getUserPwd())), true);
+                            sha.eccryptSHA1(SPUtils.getInstance().getUserPwd())), true);
             liYingRegDTO.setPhoenum(phone);
             liYingRegDTO.setPswd(pwd);
             liYingRegDTO.setUsrid(
                     RSAUtils.strByEncryptionLiYing(
-                            getActivity().getApplicationContext(), PublicData.getInstance().mLoginInfoBean.getUsrid(), true));
+                            PublicData.getInstance().mLoginInfoBean.getUsrid(), true));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -865,8 +864,8 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                 LogUtils.i("当前时间戳：" + currentTm + "，当前时间：" + currentTm + "，报名截止时间戳" + endTm);
 
                 if (result.getResponseCode() == 2000 && !TextUtils.isEmpty(result.getData().getPlateNo())) {
-                    SPUtils.getInstance(HomeMvpFragment.this.getActivity()).setSignStatus(true);
-                    SPUtils.getInstance(HomeMvpFragment.this.getActivity()).setSignCarPlate(result.getData().getPlateNo());
+                    SPUtils.getInstance().setSignStatus(true);
+                    SPUtils.getInstance().setSignCarPlate(result.getData().getPlateNo());
 
                     if (currentTm < endTm) {//4.17号之前
                         MobclickAgent.onEvent(HomeMvpFragment.this.getActivity(), Config.getUMengID(22));
@@ -878,7 +877,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                     }
                 }
                 if (result.getResponseCode() == 4000) {
-                    SPUtils.getInstance(HomeMvpFragment.this.getActivity()).setSignStatus(false);
+                    SPUtils.getInstance().setSignStatus(false);
                     if (currentTm < endTm) {//4.17号之前
                         MobclickAgent.onEvent(HomeMvpFragment.this.getActivity(), Config.getUMengID(19));
                         Act.getInstance().lauchIntentToLogin(HomeMvpFragment.this.getActivity(), HundredPlanActivity.class);

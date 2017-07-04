@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.base.fragment;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,7 @@ import com.zantong.mobilecttx.utils.PullToRefreshLayout;
  */
 public abstract class BaseRefreshJxFragment extends BaseJxFragment {
 
-
-    PullToRefreshLayout mPullRefreshView;
+    private PullToRefreshLayout mPullRefreshView;
 
     @Override
     protected int getContentViewLayoutID() {
@@ -34,7 +34,7 @@ public abstract class BaseRefreshJxFragment extends BaseJxFragment {
         mPullRefreshView = (PullToRefreshLayout) view.findViewById(R.id.pull_refresh_view);
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.base_content);
 
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rootView = inflater.inflate(getFragmentLayoutResId(), null);
         ViewGroup parent = (ViewGroup) rootView.getParent();
         if (parent != null) {
@@ -77,7 +77,6 @@ public abstract class BaseRefreshJxFragment extends BaseJxFragment {
                 }, 2000);
             }
         });
-
         onFirstDataVisible();
     }
 
@@ -130,4 +129,5 @@ public abstract class BaseRefreshJxFragment extends BaseJxFragment {
     protected boolean isLoadMore() {
         return false;
     }
+
 }

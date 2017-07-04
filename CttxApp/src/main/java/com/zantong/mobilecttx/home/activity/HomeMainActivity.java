@@ -4,14 +4,15 @@ import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.util.ArrayMap;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
+import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.fragment.HomeFavorableFragment;
@@ -37,10 +38,10 @@ import cn.qqtheme.framework.widght.tablebottom.UiTableBottom;
 /**
  * 新的主页面
  */
-public class ImmersionMainActivity extends AppCompatActivity {
+public class HomeMainActivity extends BaseJxActivity {
 
+    private FrameLayout mFrameLayout;
     private UiTableBottom mCustomBottom;
-
     /**
      * 初始化当期页面
      */
@@ -53,27 +54,39 @@ public class ImmersionMainActivity extends AppCompatActivity {
     private HomeMeFragment mHomeMeFragment = null;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void bundleIntent(Bundle savedInstanceState) {
 
-        setContentView(R.layout.activity_main_immersion);
+    }
 
-        initView();
+    /**
+     * 不要基础title栏
+     */
+    protected boolean isNeedCustomTitle() {
+        return true;
+    }
+
+    @Override
+    protected int getContentResId() {
+        return R.layout.activity_main_immersion;
+    }
+
+    @Override
+    protected void initFragmentView(View view) {
+        mFrameLayout = (FrameLayout) view.findViewById(R.id.content);
+        mCustomBottom = (UiTableBottom) view.findViewById(R.id.custom_bottom);
+
+
         initLoginInfo();
         initBottomTable();
 
         //是否显示引导页面
-        if (!SPUtils.getInstance(getApplicationContext()).getGuideSaoFaDan()) {
+        if (!SPUtils.getInstance().getGuideSaoFaDan()) {
             PublicData.getInstance().GUIDE_TYPE = 0;
             Act.getInstance().gotoIntent(this, GuideActivity.class);
         }
 
         //登录信息
         if (PublicData.getInstance().loginFlag) liyingreg();
-    }
-
-    private void initView() {
-        mCustomBottom = (UiTableBottom) findViewById(R.id.custom_bottom);
     }
 
     /**
@@ -110,6 +123,12 @@ public class ImmersionMainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
     @PermissionSuccess(requestCode = 100)
     public void doPermissionIMEISuccess() {
         PublicData.getInstance().imei = Tools.getIMEI();
@@ -118,12 +137,6 @@ public class ImmersionMainActivity extends AppCompatActivity {
     @PermissionFail(requestCode = 100)
     public void doPermissionIMEIFail() {
 
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     /**
@@ -179,15 +192,15 @@ public class ImmersionMainActivity extends AppCompatActivity {
     private void liyingreg() {
         LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
         try {
-            String phone = RSAUtils.strByEncryptionLiYing(getApplicationContext(), PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
+            String phone = RSAUtils.strByEncryptionLiYing(PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
             SHATools sha = new SHATools();
-            String pwd = RSAUtils.strByEncryptionLiYing(getApplicationContext(),
+            String pwd = RSAUtils.strByEncryptionLiYing(
                     SHATools.hexString(
-                            sha.eccryptSHA1(SPUtils.getInstance(getApplicationContext()).getUserPwd())), true);
+                            sha.eccryptSHA1(SPUtils.getInstance().getUserPwd())), true);
             liYingRegDTO.setPhoenum(phone);
             liYingRegDTO.setPswd(pwd);
             liYingRegDTO.setUsrid(
-                    RSAUtils.strByEncryptionLiYing(getApplicationContext(), PublicData.getInstance().mLoginInfoBean.getUsrid(), true));
+                    RSAUtils.strByEncryptionLiYing(PublicData.getInstance().mLoginInfoBean.getUsrid(), true));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -198,4 +211,12 @@ public class ImmersionMainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void DestroyViewAndThing() {
+        mHomeUnimpededFragment = null;
+        mHomeFavorableFragment = null;
+        mHomeMeFragment = null;
+    }
+
 }

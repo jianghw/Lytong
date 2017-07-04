@@ -34,7 +34,7 @@ public class LicenseDetailActivity extends MvpBaseActivity implements View.OnCli
 
     @Override
     protected int getContentResId() {
-        return R.layout.mine_msg_activity;
+        return R.layout.activity_base_frame;
     }
 
     @Override
@@ -64,12 +64,12 @@ public class LicenseDetailActivity extends MvpBaseActivity implements View.OnCli
                 newBean.setEnddt(localDateFormat(getEndDate(startDay)));
 
                 LicenseDetailFragment detailFragment =
-                        (LicenseDetailFragment) getSupportFragmentManager().findFragmentById(R.id.mine_msg_layout);
+                        (LicenseDetailFragment) getSupportFragmentManager().findFragmentById(R.id.lay_base_frame);
                 if (detailFragment == null) {
                     detailFragment = LicenseDetailFragment.newInstance(newBean);
 
                     AtyUtils.addFragmentToActivity(
-                            getSupportFragmentManager(), detailFragment, R.id.mine_msg_layout);
+                            getSupportFragmentManager(), detailFragment, R.id.lay_base_frame);
                 }
                 LicenseGradeAtyPresenter mPresenter = new LicenseGradeAtyPresenter(
                         Injection.provideRepository(getApplicationContext()), detailFragment);

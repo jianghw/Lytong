@@ -27,7 +27,7 @@ public class RechargeActivity extends MvpBaseActivity {
 
     @Override
     protected int getContentResId() {
-        return R.layout.mine_msg_activity;
+        return R.layout.activity_base_frame;
     }
 
     @Override
@@ -39,11 +39,11 @@ public class RechargeActivity extends MvpBaseActivity {
     @Override
     protected void initMvPresenter() {
         RechargeFragment fragment =
-                (RechargeFragment) getSupportFragmentManager().findFragmentById(R.id.mine_msg_layout);
+                (RechargeFragment) getSupportFragmentManager().findFragmentById(R.id.lay_base_frame);
         if (fragment == null) {
             fragment = RechargeFragment.newInstance();
             AtyUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), fragment, R.id.mine_msg_layout);
+                    getSupportFragmentManager(), fragment, R.id.lay_base_frame);
         }
 
         RechargePresenter mPresenter = new RechargePresenter(

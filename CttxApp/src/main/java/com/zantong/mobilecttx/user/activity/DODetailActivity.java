@@ -144,7 +144,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
      */
     private void getOrderDetail() {
         DaiJiaOrderDetailDTO dto = new DaiJiaOrderDetailDTO();
-        dto.setUsrId(RSAUtils.strByEncryption(this, PublicData.getInstance().userID, true));
+        dto.setUsrId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
         Intent intent = getIntent();
         mOrderId = intent.getStringExtra(Act.ACT_PARAM);
         dto.setOrderId(mOrderId);
@@ -269,7 +269,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
                 }
                 dto.setTime(time);
                 dto.setOrderId(mOrderId);
-                dto.setUsrId(RSAUtils.strByEncryption(DODetailActivity.this, PublicData.getInstance().userID, true));
+                dto.setUsrId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
                 HashMap<String, String> hashMap = new HashMap<String, String>();
                 hashMap.put("time", time);
                 hashMap.put("orderId", mOrderId);

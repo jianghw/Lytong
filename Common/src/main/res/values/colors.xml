@@ -4,6 +4,7 @@
     <color name="colorWhite">#FFFFFF</color>
 
     <color name="colorBgGray_f8">#f8f8f8</color>
+    <color name="colorBgGray_d9">#d9d9d9</color>
 
     <color name="colorBgBlue_a4">#a4daf4</color>
     <color name="colorBgBlue_59">#59b5ea</color>
@@ -13,10 +14,13 @@
     <color name="colorTvBlack_4c">#4c4c4c</color>
     <color name="colorTvBlack_4d">#4d4d4d</color>
     <color name="colorTvBlack_b2">#b2b2b2</color>
+    <color name="colorTvGray_7f">#7f7f7f</color>
+
     <color name="colorTvCyan_08">#084e6a</color>
     <color name="colorTvRed_f33">#f3362b</color>
     <color name="colorTvGreen_18">#18d13f</color>
     <color name="colorTvBlue_2d">#2d8bf3</color>
     <color name="colorTvViolet_f33">#db29d4</color>
     <color name="colorTvYellow_f100">#fff100</color>
+
 </resources>

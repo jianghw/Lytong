@@ -66,7 +66,7 @@ public class LicenseCheckGradeActivity extends MvpBaseActivity implements View.O
         String beanStrtdt = removeDateAcross(startDate);
         if (!TextUtils.isEmpty(beanStrtdt)) mTvDate.setText(dateFormat(beanStrtdt));
 
-        LicenseFileNumDTO bean = SPUtils.getInstance(this).getLicenseFileNumDTO();
+        LicenseFileNumDTO bean = SPUtils.getInstance().getLicenseFileNumDTO();
         if (bean != null) {
             mEditArchivesNumber.setText(bean.getFilenum());
             mTvDate.setText(dateFormat(bean.getStrtdt()));
@@ -138,7 +138,7 @@ public class LicenseCheckGradeActivity extends MvpBaseActivity implements View.O
             LicenseFileNumDTO dto = new LicenseFileNumDTO();
             dto.setFilenum(getArchivesNumber());
             dto.setStrtdt(localDateFormat(getTvDate()));//真时的时间
-            SPUtils.getInstance(this).saveLicenseFileNumDTO(dto);
+            SPUtils.getInstance().saveLicenseFileNumDTO(dto);
 
             startIntentToAty();
         }

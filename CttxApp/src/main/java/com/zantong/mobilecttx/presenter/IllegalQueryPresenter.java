@@ -45,9 +45,9 @@ public class IllegalQueryPresenter extends BasePresenter<IBaseView> implements S
 
     @Override
     public void loadView(final int index) {
-        if (SPUtils.getInstance(mQueryFragment.getActivity()).getXinnengyuanFlag() && mQueryFragment.mapData().get("carnum").length() >= 8 && (!mQueryFragment.mapData().get("carnumtype").equals("51") ||
+        if (SPUtils.getInstance().getXinnengyuanFlag() && mQueryFragment.mapData().get("carnum").length() >= 8 && (!mQueryFragment.mapData().get("carnumtype").equals("51") ||
                     !mQueryFragment.mapData().get("carnumtype").equals("52"))){
-                SPUtils.getInstance(mQueryFragment.getActivity()).setXinnengyuanFlag(false);
+                SPUtils.getInstance().setXinnengyuanFlag(false);
                 DialogUtils.createDialog(mQueryFragment.getActivity(), "温馨提示", "如果您的汽车为新能源汽车,车牌类型请选择新能源汽车", "取消", "继续查询", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -78,14 +78,14 @@ public class IllegalQueryPresenter extends BasePresenter<IBaseView> implements S
                                         return;
                                     }
                                     if (TextUtils.isEmpty(PublicData.getInstance().imei)) {
-                                        masp.put("token", RSAUtils.strByEncryption(mQueryFragment.getActivity(), "00000000", true));
+                                        masp.put("token", RSAUtils.strByEncryption("00000000", true));
                                     } else {
-                                        masp.put("token", RSAUtils.strByEncryption(mQueryFragment.getActivity(), PublicData.getInstance().imei, true));
+                                        masp.put("token", RSAUtils.strByEncryption(PublicData.getInstance().imei, true));
                                     }
                                     LogUtils.i(masp.get("token").toString());
                                     masp.put("carnumtype", mQueryFragment.mapData().get("carnumtype"));
-                                    masp.put("carnum", RSAUtils.strByEncryption(mQueryFragment.getActivity(), mQueryFragment.mapData().get("carnum"), true));
-                                    masp.put("enginenum", RSAUtils.strByEncryption(mQueryFragment.getActivity(), mQueryFragment.mapData().get("enginenum"), true));
+                                    masp.put("carnum", RSAUtils.strByEncryption(mQueryFragment.mapData().get("carnum"), true));
+                                    masp.put("enginenum", RSAUtils.strByEncryption(mQueryFragment.mapData().get("enginenum"), true));
                                     MessageFormat.getInstance().setMessageJSONObject(masp);
                                     msg = MessageFormat.getInstance().getMessageFormat();
                                     mIllegalQueryModelImp.loadUpdate(IllegalQueryPresenter.this, msg, index);
@@ -120,14 +120,14 @@ public class IllegalQueryPresenter extends BasePresenter<IBaseView> implements S
                             return;
                         }
                         if (TextUtils.isEmpty(PublicData.getInstance().imei)) {
-                            masp.put("token", RSAUtils.strByEncryption(mQueryFragment.getActivity(), "00000000", true));
+                            masp.put("token", RSAUtils.strByEncryption("00000000", true));
                         } else {
-                            masp.put("token", RSAUtils.strByEncryption(mQueryFragment.getActivity(), PublicData.getInstance().imei, true));
+                            masp.put("token", RSAUtils.strByEncryption(PublicData.getInstance().imei, true));
                         }
                         LogUtils.i(masp.get("token").toString());
                         masp.put("carnumtype", mQueryFragment.mapData().get("carnumtype"));
-                        masp.put("carnum", RSAUtils.strByEncryption(mQueryFragment.getActivity(), mQueryFragment.mapData().get("carnum"), true));
-                        masp.put("enginenum", RSAUtils.strByEncryption(mQueryFragment.getActivity(), mQueryFragment.mapData().get("enginenum"), true));
+                        masp.put("carnum", RSAUtils.strByEncryption(mQueryFragment.mapData().get("carnum"), true));
+                        masp.put("enginenum", RSAUtils.strByEncryption(mQueryFragment.mapData().get("enginenum"), true));
                         MessageFormat.getInstance().setMessageJSONObject(masp);
                         msg = MessageFormat.getInstance().getMessageFormat();
                         mIllegalQueryModelImp.loadUpdate(IllegalQueryPresenter.this, msg, index);

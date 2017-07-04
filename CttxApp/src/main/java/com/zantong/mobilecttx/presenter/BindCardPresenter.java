@@ -65,7 +65,7 @@ public class BindCardPresenter extends BasePresenter<IBaseView> implements Simpl
                 masp = new JSONObject();
 //
                 try {
-                    masp.put("filenum", RSAUtils.strByEncryption(mBindCardFragment.getActivity(), PublicData.getInstance().mLoginInfoBean.getFilenum(), true));
+                    masp.put("filenum", RSAUtils.strByEncryption(PublicData.getInstance().mLoginInfoBean.getFilenum(), true));
                     masp.put("strtdt", getStartTime());
                     masp.put("enddt", Tools.getYearDate());
                     MessageFormat.getInstance().setMessageJSONObject(masp);

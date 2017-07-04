@@ -146,7 +146,7 @@ public class ViolationPayFragment extends BaseExtraFragment {
 
         ViolationPayDTO payDTO = new ViolationPayDTO();
         payDTO.setCarnum(Des3.decode(data.getCarnum()));
-        payDTO.setUsernum(RSAUtils.strByEncryption(getActivity().getApplicationContext(), PublicData.getInstance().userID, true));
+        payDTO.setUsernum(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
         payDTO.setPeccancynum(data.getViolationnum());
         payDTO.setPeccancydate(data.getViolationdate());
 

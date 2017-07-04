@@ -256,10 +256,10 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         BidCTCardDTO bidCTCardDTO = new BidCTCardDTO();
         bidCTCardDTO.setCtftp("0");
         bidCTCardDTO.setUsrname(getUserName());
-        bidCTCardDTO.setUsrid(SPUtils.getInstance(getApplicationContext()).getLoginInfoBean().getUsrid());
-        bidCTCardDTO.setCtfnum(RSAUtils.strByEncryption(getApplicationContext(), getUserIdCard(), true));
-        bidCTCardDTO.setFilenum(RSAUtils.strByEncryption(getApplicationContext(), getDriverFileNum(), true));
-        bidCTCardDTO.setPhoenum(RSAUtils.strByEncryption(getApplicationContext(), SPUtils.getInstance(this).getLoginInfoBean().getUsrid(), true));
+        bidCTCardDTO.setUsrid(SPUtils.getInstance().getLoginInfoBean().getUsrid());
+        bidCTCardDTO.setCtfnum(RSAUtils.strByEncryption(getUserIdCard(), true));
+        bidCTCardDTO.setFilenum(RSAUtils.strByEncryption(getDriverFileNum(), true));
+        bidCTCardDTO.setPhoenum(RSAUtils.strByEncryption(SPUtils.getInstance().getLoginInfoBean().getUsrid(), true));
         HandleCTCardApiClient.htmlLocal(this, "cip.cfc.u006.01", bidCTCardDTO, this);
     }
 

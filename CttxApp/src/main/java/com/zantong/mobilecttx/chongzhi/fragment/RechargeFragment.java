@@ -163,7 +163,7 @@ public class RechargeFragment extends PullableBaseFragment
         mTvDesc.setMovementMethod(LinkMovementMethod.getInstance());
 
         //TODO 保存的卡号 显示
-        mEditCardnum.setText(SPUtils.getInstance(getActivity().getApplicationContext()).getOilCard());
+        mEditCardnum.setText(SPUtils.getInstance().getOilCard());
     }
 
     /**
@@ -721,7 +721,7 @@ public class RechargeFragment extends PullableBaseFragment
         PublicData.getInstance().webviewUrl = result.getData();
         Act.getInstance().lauchIntentToLogin(getActivity(), BrowserForPayActivity.class);
         //TODO 保存卡号
-        SPUtils.getInstance(getActivity().getApplicationContext()).setOilCard(mRechargeDTO.getOilCardNum());
+        SPUtils.getInstance().setOilCard(mRechargeDTO.getOilCardNum());
         //TODO 确保优惠劵的使用状态
         getActivity().finish();
     }

@@ -39,6 +39,10 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
     private Bitmap overlay = null;
 
     private Handler mHandler = new Handler();
+    /**
+     * 按键监听
+     */
+    private onClickListener mListener;
 
     public MoreWindow(Activity context) {
         mContext = context;
@@ -156,6 +160,7 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
             }
             child.setOnClickListener(this);
             child.setVisibility(View.INVISIBLE);
+
             mHandler.postDelayed(new Runnable() {
 
                 @Override
@@ -170,7 +175,6 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
                 }
             }, i * 50);
         }
-
     }
 
     private void closeAnimation(ViewGroup layout) {
@@ -237,10 +241,11 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.tv_inquire) {
-
+            dismiss();
+            if (mListener != null) mListener.clickInquire();
         } else if (i == R.id.tv_scan) {
-
-        } else {
+            dismiss();
+            if (mListener != null) mListener.clickScan();
         }
     }
 
@@ -256,5 +261,16 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
             System.gc();
         }
     }
+
+    public void initClickListener(onClickListener listener) {
+        mListener = listener;
+    }
+
+    public interface onClickListener {
+        void clickInquire();
+
+        void clickScan();
+    }
+
 
 }

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/ds_48"
         android:layout_marginRight="@dimen/ds_48"
-        android:background="@drawable/bg_item_select">
+        android:background="@drawable/bg_sel_item_gray">
 
         <ImageView
             android:id="@+id/coupon_img"

@@ -69,6 +69,10 @@ public abstract class BaseAutoScrollUpTextView<T> extends ListView implements
     private long mTimer = 5000;
 
     private Context mContext;
+    /**
+     * 标记是否在滚动
+     */
+    private boolean turning;
 
     /**
      * 获取高度
@@ -246,13 +250,28 @@ public abstract class BaseAutoScrollUpTextView<T> extends ListView implements
      * 开启轮播
      */
     public void start() {
+        //如果是正在翻页的话先停掉
+        if (turning) {
+            stop();
+        }
+        turning = true;
         handler.postDelayed(runnable, 1000);
+    }
+
+    /**
+     * 是否正在跑
+     *
+     * @return
+     */
+    public boolean isRunning() {
+        return turning;
     }
 
     /**
      * 关闭轮播
      */
     public void stop() {
+        turning = false;
         handler.removeCallbacks(runnable);
     }
 
