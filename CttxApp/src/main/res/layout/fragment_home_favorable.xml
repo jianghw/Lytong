@@ -20,9 +20,11 @@
     <include layout="@layout/include_favorable_navigation"/>
 
     <ImageView
+        android:id="@+id/img_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_banner_act"/>
+
     <!--驾校专区-->
     <include layout="@layout/include_favorable_fahrschule"/>
 

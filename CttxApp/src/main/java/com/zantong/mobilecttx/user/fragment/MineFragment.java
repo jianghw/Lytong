@@ -257,18 +257,22 @@ public class MineFragment extends Fragment {
             mCardStatus.setText("已绑卡");
         }
         mine_manage_vechilse_notice.setText(PublicData.getInstance().mCarNum + " 辆车");
+
         if (PublicData.getInstance().loginFlag) {
             mLoginInfoBean = PublicData.getInstance().mLoginInfoBean;
+
             if (!Tools.isStrEmpty(mLoginInfoBean.getNickname())) {
                 userNameText.setText(mLoginInfoBean.getNickname());
             } else {
                 userNameText.setText(mLoginInfoBean.getPhoenum().substring(7));
             }
+
             if (!Tools.isStrEmpty(PublicData.getInstance().filenum)) {
                 mine_changtong_notice_text.setText("已绑定");
             } else {
                 mine_changtong_notice_text.setText("未绑定");
             }
+
             if (TextUtils.isEmpty(PublicData.getInstance().mLoginInfoBean.getPortrait())) {
                 getHeadImageFile();
             } else {

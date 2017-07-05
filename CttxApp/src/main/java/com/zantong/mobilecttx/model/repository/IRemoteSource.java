@@ -4,11 +4,13 @@ import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
+import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
+import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
 import com.zantong.mobilecttx.user.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
@@ -123,4 +125,14 @@ public interface IRemoteSource {
      * cip.cfc.c003.01
      */
     Observable<UserCarsResult> getRemoteCarInfo(String requestDTO);
+
+    /**
+     * 37.获取所有未读消息数量
+     */
+    Observable<MessageCountResult> countMessageDetail(BaseDTO baseDTO);
+
+    /**
+     * 58.获取banner图片
+     */
+    Observable<BannerResult> getBanner(String type);
 }

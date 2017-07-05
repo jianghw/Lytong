@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_plate_number"
                     android:layout_marginLeft="@dimen/ds_60"
-                    android:layout_marginTop="@dimen/ds_24"
+                    android:layout_marginTop="@dimen/ds_18"
                     android:text="一步完成、仅需10秒"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/fs_22sp"

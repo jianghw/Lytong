@@ -3,21 +3,23 @@ package com.zantong.mobilecttx.common.fragment;
 import android.content.Intent;
 import android.view.View;
 
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.common.adapter.CommonListAdapter;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
-import com.zantong.mobilecttx.common.activity.CommonListActivity;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.common.adapter.CommonListAdapter;
 
 import java.util.Arrays;
 
+import cn.qqtheme.framework.global.GlobalConstant;
+
 /**
  * 公共列表类
+ *
  * @author Sandy
- * create at 16/10/13 上午1:38
+ *         create at 16/10/13 上午1:38
  */
-public class CommonListFragment extends BaseListFragment<String>{
+public class CommonListFragment extends BaseListFragment<String> {
 
     @Override
     protected void onLoadMoreData() {
@@ -30,9 +32,11 @@ public class CommonListFragment extends BaseListFragment<String>{
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
         Intent intent = new Intent();
-        intent.putExtra(CommonListActivity.COMMON_EXTRA, data.toString());
+        intent.putExtra(GlobalConstant.putExtra.common_list_extra, data.toString());
+
         PublicData.getInstance().commonListData = data.toString();
-        getActivity().setResult(CommonListActivity.RESULT_COMMON_TYPE, intent);
+        getActivity().setResult(GlobalConstant.resultCode.common_list_fty, intent);
+
         getActivity().finish();
     }
 
@@ -48,7 +52,7 @@ public class CommonListFragment extends BaseListFragment<String>{
 
     @Override
     public void initData() {
-        switch (PublicData.getInstance().commonListType){
+        switch (PublicData.getInstance().commonListType) {
             case 0:
                 break;
             case 1://驾照有效期限

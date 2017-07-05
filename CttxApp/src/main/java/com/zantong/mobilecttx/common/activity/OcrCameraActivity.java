@@ -35,6 +35,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
@@ -55,7 +56,7 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
     private Camera mCamera;
     private Camera.Parameters parameters = null;
     public static File file = null;
-    int res;
+    int mResType;
 
     protected SystemBarTintManager tintManager;
 
@@ -85,13 +86,13 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
         mSurfaceView.setBackgroundColor(TRIM_MEMORY_BACKGROUND);
         mSurfaceHolder.addCallback(new SurfaceCallback());//为SurfaceView的句柄添加一个回调函数
         //设置参数,并拍照
-        res = getIntent().getIntExtra("ocr_resource", 0);
-        if (res == 0){
+        mResType = getIntent().getIntExtra(GlobalConstant.putExtra.ocr_camera_extra, 0);
+        if (mResType == 0) {
             mDriverBtn.setVisibility(View.GONE);
-        }else{
+        } else {
             mDrivingBtn.setVisibility(View.GONE);
         }
-        mViewfinder.setValue(res);
+        mViewfinder.setValue(mResType);
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -108,12 +109,12 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
     private void initCamera() {
         parameters = mCamera.getParameters();
         parameters.setPictureFormat(PixelFormat.JPEG);
-        parameters.setPictureSize(mSurfaceView.getWidth(),mSurfaceView.getHeight()); //部分定制手机，无法正常识别该方法。
+        parameters.setPictureSize(mSurfaceView.getWidth(), mSurfaceView.getHeight()); //部分定制手机，无法正常识别该方法。
         parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE); // 1连续对焦
         List<Camera.Size> sizes = parameters.getSupportedPreviewSizes();
         Camera.Size size = sizes.get(getPictureSize(sizes));
-        parameters.setPreviewSize(size.width,size.height);
-        parameters.setPictureSize(size.width,size.height);
+        parameters.setPreviewSize(size.width, size.height);
+        parameters.setPictureSize(size.width, size.height);
         mCamera.setParameters(parameters);
         mCamera.startPreview();
         mCamera.cancelAutoFocus(); // 2如果要实现连续的自动对焦，这一句必须加上
@@ -155,9 +156,9 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
                 mSurfaceView.setVisibility(View.VISIBLE);
                 mCancelBtn.setVisibility(View.GONE);
                 mConfirmBtn.setVisibility(View.GONE);
-                if (res == 0){
+                if (mResType == 0) {
                     mDrivingBtn.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mDriverBtn.setVisibility(View.VISIBLE);
                 }
                 break;
@@ -166,11 +167,11 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
                 mSurfaceView.setVisibility(View.VISIBLE);
                 mCancelBtn.setVisibility(View.GONE);
                 mConfirmBtn.setVisibility(View.GONE);
-                if (res == 0) {//行驶证
+                if (mResType == 0) {//行驶证
                     setResult(1202, new Intent());
-                } else if (res == 1) {//驾驶证
+                } else if (mResType == 1) {//驾驶证
                     setResult(1206, new Intent());
-                } else if (res == 2) {//驾驶证
+                } else if (mResType == 2) {//驾驶证
                     setResult(1204, new Intent());
                 }
                 finish();
@@ -205,7 +206,7 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
         @Override
         public void surfaceChanged(SurfaceHolder holder, int format, int width,
                                    int height) {
-            try{
+            try {
                 mCamera.autoFocus(new Camera.AutoFocusCallback() {
                     @Override
                     public void onAutoFocus(boolean success, Camera camera) {
@@ -216,15 +217,15 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
                     }
                 });
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 DialogUtils.createDialog(OcrCameraActivity.this, "请先设置拍照权限", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (res == 0) {//行驶证
+                        if (mResType == 0) {//行驶证
                             setResult(1202, new Intent());
-                        } else if (res == 1) {//驾驶证
+                        } else if (mResType == 1) {//驾驶证
                             setResult(1206, new Intent());
-                        } else if (res == 2) {//驾驶证
+                        } else if (mResType == 2) {//驾驶证
                             setResult(1204, new Intent());
                         }
                         finish();
@@ -255,13 +256,13 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
         // 停止拍照时调用该方法
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
-            try{
+            try {
                 if (mCamera != null) {
                     mCamera.stopPreview();
                     mCamera.release(); // 释放照相机
                     mCamera = null;
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
 
@@ -275,23 +276,21 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
         public void onPictureTaken(byte[] data, Camera Camera) {
             // 获得图片
             Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-            Bitmap bitmap = ImageTools.compressImage(bmp,3000);
+            Bitmap bitmap = ImageTools.compressImage(bmp, 3000);
             Drawable drawable = new BitmapDrawable(bitmap);
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 File jpgFile = new File(Environment.getExternalStorageDirectory() + "/DCIM/camera");
                 if (!jpgFile.exists()) {
                     jpgFile.mkdir();
                 }
-                file = new File(jpgFile.getAbsoluteFile(), res + "car.jpg");
+                file = new File(jpgFile.getAbsoluteFile(), mResType + "car.jpg");
                 try {
                     if (!file.exists()) {
-                        LogUtils.i("创建新文件");
                         file.createNewFile();
                     }
                     FileOutputStream outputStream = new FileOutputStream(file); // 文件输出流
                     outputStream.write(data); // 写入sd卡中
                     outputStream.close(); // 关闭输出
-
                 } catch (IOException e) {
                     LogUtils.i("创建失败");
                 }
@@ -324,10 +323,10 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
 //        if (index == -1) {
 //            index = sizes.size()  - 1;
 //        }
-        if (sizes.size() >= 2){
-            if (sizes.get(0).width > sizes.get(1).width){
+        if (sizes.size() >= 2) {
+            if (sizes.get(0).width > sizes.get(1).width) {
                 index = 0;
-            }else{
+            } else {
                 index = sizes.size() - 1;
             }
 

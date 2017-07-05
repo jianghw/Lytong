@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.model.repository;
 
 import com.zantong.mobilecttx.api.IAddOilService;
 import com.zantong.mobilecttx.api.IBankService;
+import com.zantong.mobilecttx.api.IBannerService;
 import com.zantong.mobilecttx.api.ICttxService;
 import com.zantong.mobilecttx.api.IFebruaryService;
 import com.zantong.mobilecttx.api.IMessageService;
@@ -11,12 +12,14 @@ import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
+import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.interf.CTTXHttpPOSTInterface;
 import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
+import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
 import com.zantong.mobilecttx.user.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
@@ -191,5 +194,18 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<UserCarsResult> getRemoteCarInfo(String requestDTO) {
         return initAppUrlRetrofit().create(IBankService.class).getRemoteCarInfo(requestDTO);
+    }
+
+    /**
+     * 37.获取所有未读消息数量
+     */
+    @Override
+    public Observable<MessageCountResult> countMessageDetail(BaseDTO baseDTO) {
+        return initRetrofit().create(IMessageService.class).countMessageDetail(baseDTO);
+    }
+
+    @Override
+    public Observable<BannerResult> getBanner(String type) {
+        return initRetrofit().create(IBannerService.class).getBanner(type);
     }
 }

@@ -42,4 +42,12 @@
     <string name="tv_license_type">
         <font color='#f3362b'>*</font>车牌类型
     </string>
+    <string name="tv_coupon_count">
+        <font color='#f3362b'>%d</font>&#160;
+        <font color='#4d4d4d'>张优惠劵</font>
+    </string>
+    <string name="tv_car_count">
+        <font color='#f3362b'>%d</font>&#160;
+        <font color='#4d4d4d'>辆车</font>
+    </string>
 </resources>

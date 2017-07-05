@@ -29,7 +29,7 @@ import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
 import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.home.adapter.HorizontalCarViolationAdapter;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
-import com.zantong.mobilecttx.home.adapter.NetworkImageHolderView;
+import com.zantong.mobilecttx.home.adapter.MainBannerImgHolderView;
 import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.home.bean.HomeBean;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
@@ -331,10 +331,10 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         if (bean != null && bean.getAdvertisementResponse() != null) {
             List<HomeAdvertisement> advertisementResponse = bean.getAdvertisementResponse();
             mCustomConvenientBanner.setPages(
-                    new CBViewHolderCreator<NetworkImageHolderView>() {
+                    new CBViewHolderCreator<MainBannerImgHolderView>() {
                         @Override
-                        public NetworkImageHolderView createHolder() {
-                            return new NetworkImageHolderView();
+                        public MainBannerImgHolderView createHolder() {
+                            return new MainBannerImgHolderView();
                         }
                     },
                     advertisementResponse)

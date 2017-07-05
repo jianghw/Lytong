@@ -9,7 +9,7 @@ import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.presenter.SetPayCarPresenter;
 import com.zantong.mobilecttx.car.fragment.SetPayCarFragment;
 
-public class SetPayCarActivity extends BaseMvpActivity<IBaseView,SetPayCarPresenter> implements IBaseView{
+public class SetPayCarActivity extends BaseMvpActivity<IBaseView, SetPayCarPresenter> implements IBaseView {
 
     @Override
     public SetPayCarPresenter initPresenter() {

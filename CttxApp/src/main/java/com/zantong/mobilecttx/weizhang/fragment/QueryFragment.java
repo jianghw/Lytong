@@ -16,30 +16,29 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.car.adapter.MyCarAdapter;
-import com.jcodecraeer.xrecyclerview.BaseAdapter;
-import com.zantong.mobilecttx.weizhang.bean.AddVehicleBean;
 import com.zantong.mobilecttx.car.bean.MyCarBean;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
-import com.zantong.mobilecttx.weizhang.bean.QueryHistoryBean;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.common.activity.CommonListActivity;
+import com.zantong.mobilecttx.interf.ModelView;
 import com.zantong.mobilecttx.presenter.IllegalQueryPresenter;
 import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.TextPopupKeyboardUtil;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
-import com.zantong.mobilecttx.common.activity.CommonListActivity;
 import com.zantong.mobilecttx.weizhang.activity.QueryResultActivity;
-import com.zantong.mobilecttx.interf.ModelView;
+import com.zantong.mobilecttx.weizhang.bean.AddVehicleBean;
+import com.zantong.mobilecttx.weizhang.bean.QueryHistoryBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +47,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 违章查询
@@ -195,10 +196,9 @@ public class QueryFragment extends Fragment implements ModelView {
 
                 break;
             case R.id.car_type_choose_rl:
-//                PublicData.getInstance().mHashMap.put("VehicleType", vehicles_type_text.getText().toString());
-//                Act.getInstance().lauchIntentForResult(getActivity(), SelectCarTypeActivity.class,VEHICLETYPE);
+
                 PublicData.getInstance().commonListType = 3;
-                startActivityForResult(new Intent(this.getActivity(), CommonListActivity.class), CommonListActivity.REQUEST_COMMON_TYPE);
+                startActivityForResult(new Intent(this.getActivity(), CommonListActivity.class), GlobalConstant.requestCode.add_car_aty);
 
                 break;
             case R.id.next_btn:

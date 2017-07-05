@@ -1,24 +1,46 @@
 package com.zantong.mobilecttx.home.fragment;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.interf.IHomeMeFtyContract;
 import com.zantong.mobilecttx.presenter.home.HomeMeFtyPresenter;
+import com.zantong.mobilecttx.user.bean.CouponFragmentBean;
+import com.zantong.mobilecttx.user.bean.CouponFragmentLBean;
+import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
+import com.zantong.mobilecttx.user.bean.LoginInfoBean;
+import com.zantong.mobilecttx.user.bean.MessageCountBean;
+import com.zantong.mobilecttx.user.bean.MessageCountResult;
+import com.zantong.mobilecttx.utils.ImageOptions;
+import com.zantong.mobilecttx.utils.Tools;
+
+import java.io.File;
+import java.util.List;
 
 import cn.qqtheme.framework.util.AppUtils;
+import cn.qqtheme.framework.util.FileUtils;
+import cn.qqtheme.framework.util.ToastUtils;
+
+import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 
 /**
  * 新个人页面
@@ -42,6 +64,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
      * 未登录
      */
     private TextView mTvLogin;
+    private TextView mTvToolbar;
     private Toolbar mToolbar;
     private CollapsingToolbarLayout mCollapsingToolbar;
     private AppBarLayout mAppbar;
@@ -60,6 +83,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
     private RelativeLayout mLayOrder;
     private RelativeLayout mLayQuery;
     private RelativeLayout mLayMsg;
+    private ImageView mImgMsg;
     private RelativeLayout mLayRecommend;
     private RelativeLayout mLayProblem;
     private RelativeLayout mLayService;
@@ -129,6 +153,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onFirstDataVisible() {
+        initDataRefresh();
 
         UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
         int appCode = AppUtils.getAppVersionCode();
@@ -150,9 +175,6 @@ public class HomeMeFragment extends BaseRefreshJxFragment
     @Override
     public void onResume() {
         super.onResume();
-
-        if (mPresenter != null) mPresenter.getCouponCount();
-        if (mPresenter != null) mPresenter.getUnReadMsgCount();
     }
 
     @Override
@@ -160,6 +182,93 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         super.onPause();
     }
 
+    /**
+     * 是否隐藏
+     */
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        if (hidden) return;
+        initDataRefresh();
+    }
+
+    private void initDataRefresh() {
+        if (mPresenter != null) mPresenter.getCouponCount();
+        if (mPresenter != null) mPresenter.getUnReadMsgCount();
+
+        boolean isUnBound = TextUtils.isEmpty(PublicData.getInstance().filenum);
+        mTvCard.setText(isUnBound ? "未绑卡" : "已绑卡");
+        mTvCard.setTextColor(
+                isUnBound ? getResources().getColor(R.color.colorTvRed_f33)
+                        : getResources().getColor(R.color.colorTvBlack_4d));
+        //车辆
+        String carCount = getResources().getString(R.string.tv_car_count);
+        mTvCar.setText(String.format(carCount, PublicData.getInstance().mCarNum));
+
+        if (PublicData.getInstance().loginFlag) {
+            LoginInfoBean.RspInfoBean infoBean = PublicData.getInstance().mLoginInfoBean;
+
+            if (infoBean == null || TextUtils.isEmpty(infoBean.getPortrait())) {
+                getHeadImageFile();
+            } else {
+                ImageLoader.getInstance().displayImage(
+                        infoBean.getPortrait(),
+                        mImgHead,
+                        ImageOptions.getAvatarOptions()
+                );
+            }
+
+            if (infoBean != null) {
+                if (!Tools.isStrEmpty(infoBean.getNickname())) {
+                    mTvLogin.setText(infoBean.getNickname());
+                } else {
+                    String phoenum = infoBean.getPhoenum();
+                    if (!TextUtils.isEmpty(phoenum) && phoenum.length() >= 7)
+                        mTvLogin.setText(infoBean.getPhoenum().substring(7));
+                }
+            }
+        } else {
+            mTvCard.setText("未绑定");
+            mTvLogin.setText("您还未登录");
+            mImgHead.setImageResource(R.mipmap.portrait);
+        }
+        mTvToolbar.setText(mTvLogin.getText().toString());
+    }
+
+    /**
+     * 头像
+     */
+    private File getHeadImageFile() {
+        String ImgPath = FileUtils.photoImagePath(getActivity().getApplicationContext(), FileUtils.CROP_DIR);
+
+        File mCropFile = new File(ImgPath);
+        if (!mCropFile.exists()) {
+            ToastUtils.toastShort("头像图片可能未生成或删除");
+            return null;
+        }
+        Uri outputUri;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            outputUri = getUriForFileByN(mCropFile);
+        } else {
+            outputUri = Uri.fromFile(mCropFile);
+        }
+
+        Bitmap bitmap = FileUtils.decodeUriAsBitmap(outputUri, getActivity().getApplicationContext());
+        if (bitmap != null) mImgHead.setImageBitmap(bitmap);
+
+        return mCropFile;
+    }
+
+    private Uri getUriForFileByN(File mCameraFile) {
+        try {
+            return FileProvider.getUriForFile(getActivity().getApplicationContext(),
+                    getApplication().getPackageName() + ".fileprovider", mCameraFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Uri.fromFile(mCameraFile);
+        }
+    }
 
     @Override
     protected void DestroyViewAndThing() {
@@ -174,6 +283,9 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         mImgHead.setOnClickListener(this);
         mTvLogin = (TextView) view.findViewById(R.id.tv_login);
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        mToolbar.setTitle("");
+        mTvToolbar = (TextView) view.findViewById(R.id.tv_toolbar);
+
         mCollapsingToolbar = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar);
         mAppbar = (AppBarLayout) view.findViewById(R.id.appbar);
         mTvCard = (TextView) view.findViewById(R.id.tv_card);
@@ -188,6 +300,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         mLayQuery.setOnClickListener(this);
         mLayMsg = (RelativeLayout) view.findViewById(R.id.lay_msg);
         mLayMsg.setOnClickListener(this);
+        mImgMsg = (ImageView) view.findViewById(R.id.img_msg);
         mLayRecommend = (RelativeLayout) view.findViewById(R.id.lay_recommend);
         mLayRecommend.setOnClickListener(this);
         mLayProblem = (RelativeLayout) view.findViewById(R.id.lay_problem);
@@ -203,6 +316,20 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         mLayUpdate.setOnClickListener(this);
         mAboutAdvertising = (RelativeLayout) view.findViewById(R.id.about_advertising);
         mAboutAdvertising.setOnClickListener(this);
+//动态调整标题透明度
+        mAppbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                int scrollRangle = appBarLayout.getTotalScrollRange();
+                //初始verticalOffset为0，不能参与计算。
+                if (verticalOffset == 0) {
+                    mTvToolbar.setAlpha(0.0f);
+                } else {//保留一位小数
+                    float alpha = Math.abs(Math.round(1.0f * verticalOffset / scrollRangle) * 10) / 10;
+                    mTvToolbar.setAlpha(alpha);
+                }
+            }
+        });
     }
 
     @Override
@@ -236,6 +363,46 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 break;
             case R.id.about_advertising:
                 break;
+            default:
+                break;
         }
+    }
+
+    /**
+     * 优惠券
+     */
+    @Override
+    public void getCouponCountSucceed(CouponFragmentResult result) {
+        CouponFragmentLBean resultData = result.getData();
+        String couponCount = getResources().getString(R.string.tv_coupon_count);
+        if (resultData != null && mTvCoupon != null) {
+            List<CouponFragmentBean> couponList = resultData.getCouponList();
+            mTvCoupon.setText(String.format(couponCount, couponList != null ? couponList.size() : 0));
+        } else if (mTvCoupon != null) {
+            mTvCoupon.setText(String.format(couponCount, 0));
+        }
+    }
+
+    @Override
+    public void getCouponCountError(String responseDesc) {
+        String couponCount = getResources().getString(R.string.tv_coupon_count);
+        if (mTvCoupon != null) mTvCoupon.setText(String.format(couponCount, 0));
+        ToastUtils.toastShort(responseDesc);
+    }
+
+    /**
+     * 未读消息
+     */
+    @Override
+    public void countMessageDetailSucceed(MessageCountResult result) {
+        MessageCountBean resultData = result.getData();
+        if (mImgMsg != null) mImgMsg.setVisibility(
+                resultData != null && resultData.getCount() > 0 ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void countMessageDetailError(String responseDesc) {
+        if (mImgMsg != null) mImgMsg.setVisibility(View.GONE);
+        ToastUtils.toastShort(responseDesc);
     }
 }

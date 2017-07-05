@@ -6,12 +6,6 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/consummate_car_notice"
-        style="@style/TextSmallNoticeInfoStyleWhite"
-        android:layout_alignParentTop="true"
-        android:text="请对照《机动车行驶证》认真填写以下信息" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -180,6 +174,12 @@
             android:textColor="@color/red"
             android:textSize="@dimen/fs_36"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/consummate_car_notice"
+        style="@style/TextSmallNoticeInfoStyleWhite"
+        android:layout_alignParentTop="true"
+        android:text="请对照《机动车行驶证》认真填写以下信息" />
 
     <RelativeLayout
         android:layout_width="match_parent"

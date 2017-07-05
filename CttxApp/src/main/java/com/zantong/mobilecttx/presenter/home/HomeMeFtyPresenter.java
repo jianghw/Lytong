@@ -3,12 +3,14 @@ package com.zantong.mobilecttx.presenter.home;
 
 import android.support.annotation.NonNull;
 
+import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.interf.IHomeMeFtyContract;
+import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
+import com.zantong.mobilecttx.user.bean.MessageCountResult;
 
-import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -49,33 +51,59 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
         Subscription subscription = mRepository.usrCouponInfo(PublicData.getInstance().userID, "1")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<CouponFragmentResult>() {
+                .subscribe(new BaseSubscriber<CouponFragmentResult>() {
                     @Override
-                    public void onCompleted() {
+                    public void doCompleted() {
 
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-
+                    public void doError(Throwable e) {
+                        mAtyView.getCouponCountError(e.getMessage());
                     }
 
                     @Override
-                    public void onNext(CouponFragmentResult result) {
-                        if (result.getResponseCode() == 2000) {
-//                            if (result.getData() != null) {
-//                                mYouHui.setText(String.valueOf(result.getData().getCouponList().size()));
-//                            } else {
-//                                ToastUtils.toastShort(result.getResponseDesc());
-//                            }
-                        }
+                    public void doNext(CouponFragmentResult result) {
+                        if (result.getResponseCode() == 2000)
+                            mAtyView.getCouponCountSucceed(result);
+                        else
+                            mAtyView.getCouponCountError(result.getResponseDesc());
                     }
                 });
-
+        mSubscriptions.add(subscription);
     }
 
     @Override
     public void getUnReadMsgCount() {
+        Subscription subscription = mRepository.countMessageDetail(initBaseDTO())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<MessageCountResult>() {
+                    @Override
+                    public void doCompleted() {
 
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.countMessageDetailError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(MessageCountResult result) {
+                        if (result.getResponseCode() == 2000)
+                            mAtyView.countMessageDetailSucceed(result);
+                        else
+                            mAtyView.countMessageDetailError(result.getResponseDesc());
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    @Override
+    public BaseDTO initBaseDTO() {
+        BaseDTO baseDTO = new BaseDTO();
+        baseDTO.setUsrId(mRepository.getDefaultRASUserID());
+        return baseDTO;
     }
 }

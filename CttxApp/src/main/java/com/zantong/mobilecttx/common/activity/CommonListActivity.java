@@ -12,14 +12,11 @@ import com.zantong.mobilecttx.common.fragment.CommonListFragment;
 
 /**
  * 公共列表类 用于选择
+ *
  * @author Sandy
- * create at 16/10/13 上午1:15
+ *         create at 16/10/13 上午1:15
  */
-public class CommonListActivity extends  BaseMvpActivity<IBaseView, HelpPresenter>  {
-
-    public static final String COMMON_EXTRA = "common_extra";
-    public static final int REQUEST_COMMON_TYPE = 101;
-    public static final int RESULT_COMMON_TYPE = 102;
+public class CommonListActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
 
     @Override
     public HelpPresenter initPresenter() {
@@ -42,8 +39,8 @@ public class CommonListActivity extends  BaseMvpActivity<IBaseView, HelpPresente
     @Override
     public void initData() {
         Intent intent = getIntent();
-        if (intent != null){
-            switch (PublicData.getInstance().commonListType){
+        if (intent != null) {
+            switch (PublicData.getInstance().commonListType) {
                 case 0:
                     setTitleText("");
                     break;

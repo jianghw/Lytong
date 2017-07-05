@@ -33,7 +33,7 @@ public class RetrofitFactory {
             case 3:
                 return BuildConfig.BASE_URL;
             default:
-                return "http://192.168.1.148:80/";
+                return "http://192.168.1.147:80/";
         }
     }
 }

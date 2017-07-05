@@ -32,8 +32,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * 违章查询页面
@@ -91,6 +91,7 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPrese
 
         List<MyCarBean> list = new ArrayList<>();
         list.clear();
+
         if (PublicData.getInstance().loginFlag) {
             for (int i = 0; i < PublicData.getInstance().mServerCars.size(); i++) {
                 MyCarBean bean = new MyCarBean();
@@ -169,7 +170,7 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPrese
                 break;
             case R.id.violation_query_cartype_layout:
                 PublicData.getInstance().commonListType = 3;
-                startActivityForResult(new Intent(this, CommonListActivity.class), CommonListActivity.REQUEST_COMMON_TYPE);
+                startActivityForResult(new Intent(this, CommonListActivity.class), GlobalConstant.requestCode.violation_query_plate);
                 break;
             case R.id.aviolation_query_btn:
                 ViolationDTO dto = new ViolationDTO();
@@ -192,8 +193,6 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPrese
                 dto.setCarnum(RSAUtils.strByEncryption(plateNum, true));
                 dto.setEnginenum(RSAUtils.strByEncryption(mEngineEdit.getText().toString().trim(), true));
                 dto.setCarnumtype(VehicleTypeTools.switchVehicleCode(mCarTypeText.getText().toString().trim()));
-                LogUtils.i(plateNum + "---" + mEngineEdit.getText().toString() + "---" + mCarTypeText.getText().toString());
-
 
                 Intent intent = new Intent(this, ViolationResultAcitvity.class);
                 Bundle bundle = new Bundle();

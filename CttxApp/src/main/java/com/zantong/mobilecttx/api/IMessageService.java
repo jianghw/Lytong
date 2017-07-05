@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.api;
 
 import com.zantong.mobilecttx.base.dto.BaseDTO;
+import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
 import com.zantong.mobilecttx.user.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
@@ -52,4 +53,10 @@ public interface IMessageService {
      */
     @POST("message/deleteMessageDetail")
     Observable<MessageResult> deleteMessageDetail(@Body MegDTO megDTO);
+
+    /**
+     * 37.获取所有未读消息数量
+     */
+    @POST("message/countMessageDetail")
+    Observable<MessageCountResult> countMessageDetail(@Body BaseDTO baseDTO);
 }

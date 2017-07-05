@@ -20,7 +20,8 @@
             app:contentScrim="@color/colorTvRed_f33"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -73,7 +74,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_132"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                <TextView
+                    android:id="@+id/tv_toolbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:text="文字居中"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/fs_18sp"/>
+            </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
@@ -101,7 +113,7 @@
                     android:layout_weight="1"
                     android:drawableTop="@mipmap/ic_me_card"
                     android:gravity="center_horizontal"
-                    android:text="1张牡丹畅通卡"/>
+                    tools:text="1张牡丹畅通卡"/>
 
                 <TextView
                     android:id="@+id/tv_car"
@@ -110,7 +122,7 @@
                     android:layout_weight="1"
                     android:drawableTop="@mipmap/ic_me_car"
                     android:gravity="center_horizontal"
-                    android:text="1辆车"/>
+                    tools:text="@string/tv_car_count"/>
 
                 <TextView
                     android:id="@+id/tv_coupon"
@@ -119,7 +131,7 @@
                     android:layout_weight="1"
                     android:drawableTop="@mipmap/ic_me_coupon"
                     android:gravity="center_horizontal"
-                    android:text="1张优惠劵"/>
+                    tools:text="@string/tv_coupon_count"/>
 
             </LinearLayout>
 

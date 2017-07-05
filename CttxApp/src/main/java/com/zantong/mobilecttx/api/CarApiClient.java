@@ -368,7 +368,7 @@ public class CarApiClient extends BaseApiClient {
         post(context, getUrl("message/findMessageDetailByMessageId"), dto, result);
     }
     public static void getUnReadMsgCount(Context context, BaseDTO dto, CallBack<MessageCountResult> callback) {
-        BaseCallBack<MessageCountResult> result = new BaseCallBack<MessageCountResult>(
+        BaseCallBack<MessageCountResult> result = new BaseCallBack<>(
                 context, callback, MessageCountResult.class);
 //        post(context, "http://139.196.183.121:8081/message/countMessageDetail", dto,result);
         post(context, getUrl("message/countMessageDetail"), dto, result);
