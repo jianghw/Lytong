@@ -60,6 +60,7 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/edit_name"
                     android:layout_width="@dimen/ds_600"
                     android:layout_height="@dimen/ds_90"
                     android:layout_marginTop="@dimen/ds_66"
@@ -70,17 +71,20 @@
                     android:textSize="@dimen/fs_16sp"/>
 
                 <EditText
+                    android:id="@+id/edit_phone"
                     android:layout_width="@dimen/ds_600"
                     android:layout_height="@dimen/ds_90"
                     android:layout_marginTop="@dimen/ds_25"
                     android:background="@drawable/shape_edit_apply"
                     android:hint="请输入手机号"
+                    android:inputType="phone"
                     android:paddingLeft="@dimen/ds_36"
                     android:paddingRight="@dimen/ds_36"
                     android:textSize="@dimen/fs_16sp"
                     tools:text="15770900918"/>
 
                 <EditText
+                    android:id="@+id/edit_identity_card"
                     android:layout_width="@dimen/ds_600"
                     android:layout_height="@dimen/ds_90"
                     android:layout_marginTop="@dimen/ds_25"
@@ -95,6 +99,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btn_commit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

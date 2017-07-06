@@ -26,6 +26,7 @@ import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
 import com.zantong.mobilecttx.eventbus.GetMsgAgainEvent;
 import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
+import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.home.adapter.HorizontalCarViolationAdapter;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
@@ -492,7 +493,8 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
             case R.id.tv_scan:
                 takeCapture();
                 break;
-            case R.id.tv_oil:
+            case R.id.tv_oil://加油
+                Act.getInstance().lauchIntentToLogin(getActivity(), FahrschuleActivity.class);
                 break;
             case R.id.tv_check:
                 break;

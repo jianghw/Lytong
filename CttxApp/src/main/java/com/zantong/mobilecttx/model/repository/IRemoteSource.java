@@ -4,6 +4,11 @@ import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
+import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
+import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
+import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
+import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
@@ -21,6 +26,7 @@ import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
+import okhttp3.MultipartBody;
 import rx.Observable;
 
 /**
@@ -135,4 +141,24 @@ public interface IRemoteSource {
      * 58.获取banner图片
      */
     Observable<BannerResult> getBanner(String type);
+
+    /**
+     * 55.行驶证扫描接口
+     */
+    Observable<DrivingOcrResult> uploadDrivingImg(MultipartBody.Part part);
+
+    /**
+     * 3.获取商户区域列表
+     */
+    Observable<MerchantAresResult> getMerchantArea();
+
+    /**
+     * 4.获取区域商品列表
+     */
+    Observable<AresGoodsResult> getAreaGoods(int areaCode);
+
+    /**
+     * 2.创建订单
+     */
+    Observable<CreateOrderResult> createOrder(CreateOrderDTO createOrder);
 }

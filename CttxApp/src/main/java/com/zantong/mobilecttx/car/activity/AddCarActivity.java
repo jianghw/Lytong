@@ -152,7 +152,6 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
     CarInfoDTO tempBean;
     int pos = 1;
 
-
     private String carNum = "";
     private String carEngineNum = "";
 
@@ -188,6 +187,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
         UiHelpers.setTextViewIcon(this, getEnsureView(), R.mipmap.icon_add_car_camera,
                 R.dimen.ds_60,
                 R.dimen.ds_48, UiHelpers.DRAWABLE_RIGHT);
+
         setCarItemCanClickT(mCarBrand);
         setCarItemNoClick(mCarXi);
         setCarItemNoClick(mCarXing);
@@ -315,7 +315,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
         dto.setUsrid(PublicData.getInstance().userID);
 
         dto.setCarnumtype(VehicleTypeTools.switchVehicleCode(mType.getText().toString()));
-        LogUtils.i("选中的位置" + VehicleTypeTools.switchVehicleCode(mType.getText().toString()));
+
         dto.setEnginenum(mEngineNum.getText().toString());
         dto.setIspaycar("0");
         dto.setDefaultflag("0");
@@ -347,11 +347,13 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
             ToastUtils.showShort(this, "请输入正确的发动机号");
             return;
         }
+
         params.setPlateNo(mProvince.getText().toString() + plateNum);
         carNum = mProvince.getText().toString() + plateNum;
         carEngineNum = engineNum;
         params.setFileNum("");
         params.setVehicleType(String.valueOf(pos + 1));
+
         LogUtils.i("老接口选中的位置" + (pos + 1));
         params.setAddress(mPosition.getText().toString());
         params.setUseCharacter(mUseProperty.getText().toString());
@@ -447,10 +449,8 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                     mCommit.setClickable(true);
                     commitCarInfoToOldServer();
                 }
-
             }
         }
-
     }
 
 

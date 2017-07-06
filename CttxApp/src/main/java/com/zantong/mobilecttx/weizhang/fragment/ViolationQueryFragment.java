@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,11 +18,23 @@ import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
+import com.zantong.mobilecttx.car.activity.CarBrandActivity;
+import com.zantong.mobilecttx.car.activity.CarChooseActivity;
+import com.zantong.mobilecttx.car.bean.CarBrandBean;
+import com.zantong.mobilecttx.car.bean.CarStyleInfoBean;
+import com.zantong.mobilecttx.car.bean.CarXiBean;
+import com.zantong.mobilecttx.car.dto.CarInfoDTO;
+import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.CommonListActivity;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
+import com.zantong.mobilecttx.daijia.bean.DrivingOcrBean;
+import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
+import com.zantong.mobilecttx.interf.IViolationQueryFtyContract;
 import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
 import com.zantong.mobilecttx.utils.DialogMgr;
+import com.zantong.mobilecttx.utils.VehicleTypeTools;
+import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
 import com.zantong.mobilecttx.widght.UISwitchButton;
 
@@ -35,7 +49,8 @@ import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_COD
 /**
  * 违法查询页面
  */
-public class ViolationQueryFragment extends BaseRefreshJxFragment implements View.OnClickListener {
+public class ViolationQueryFragment extends BaseRefreshJxFragment
+        implements View.OnClickListener, IViolationQueryFtyContract.IViolationQueryFtyView {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -88,6 +103,25 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment implements Vie
      * 查询
      */
     private Button mBtnQuery;
+    private RelativeLayout mLayoutBrand;
+    private RelativeLayout mLayoutCarSeries;
+    private RelativeLayout mLayoutVehicle;
+    private RelativeLayout mLayDate;
+    /**
+     * P
+     */
+    private IViolationQueryFtyContract.IViolationQueryFtyPresenter mPresenter;
+    /**
+     * 车品牌id
+     */
+    private int carBrandId;
+
+    /**
+     * 车系id
+     */
+    private int carSeriesId;
+    private BindCarDTO mBindCarDTO = new BindCarDTO();
+    private CarInfoDTO mCarInfoDTO = new CarInfoDTO();
 
 
     public static ViolationQueryFragment newInstance() {
@@ -124,11 +158,27 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment implements Vie
     }
 
     @Override
+    public void setPresenter(IViolationQueryFtyContract.IViolationQueryFtyPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
     protected void initFragmentView(View view) {
         initView(view);
 //车牌号
         mEditPlate.setTransformationMethod(new AllCapTransformationMethod());
         mEditPlate.setSelection(mEditPlate.getText().toString().length());
+//选择项目
+        initLayEnable(true, mLayoutBrand);
+        initLayEnable(false, mLayoutCarSeries);
+        initLayEnable(false, mLayoutVehicle);
+    }
+
+    /**
+     * 是否可以点击
+     */
+    private void initLayEnable(boolean enabled, RelativeLayout layoutBrand) {
+        if (layoutBrand != null) layoutBrand.setEnabled(enabled);
     }
 
     @Override
@@ -162,22 +212,29 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment implements Vie
 
         mImgType = (ImageView) view.findViewById(R.id.img_type);
         mImgType.setOnClickListener(this);
+
+        mLayDate = (RelativeLayout) view.findViewById(R.id.lay_date);
+        mLayDate.setOnClickListener(this);
         mTvDate = (TextView) view.findViewById(R.id.tv_date);
-        mTvDate.setOnClickListener(this);
         mImgDate = (ImageView) view.findViewById(R.id.img_date);
-        mImgDate.setOnClickListener(this);
+
+
+        mLayoutBrand = (RelativeLayout) view.findViewById(R.id.lay_brand);
+        mLayoutBrand.setOnClickListener(this);
         mTvBrand = (TextView) view.findViewById(R.id.tv_brand);
-        mTvBrand.setOnClickListener(this);
         mImgBrand = (ImageView) view.findViewById(R.id.img_brand);
         mImgBrand.setOnClickListener(this);
+        mLayoutCarSeries = (RelativeLayout) view.findViewById(R.id.lay_car_series);
+        mLayoutCarSeries.setOnClickListener(this);
         mTvCarSeries = (TextView) view.findViewById(R.id.tv_car_series);
-        mTvCarSeries.setOnClickListener(this);
+
         mImgCarSeries = (ImageView) view.findViewById(R.id.img_car_series);
         mImgCarSeries.setOnClickListener(this);
+        mLayoutVehicle = (RelativeLayout) view.findViewById(R.id.lay_vehicle);
+        mLayoutVehicle.setOnClickListener(this);
         mTvVehicle = (TextView) view.findViewById(R.id.tv_vehicle);
-        mTvVehicle.setOnClickListener(this);
+
         mImgVehicle = (ImageView) view.findViewById(R.id.img_vehicle);
-        mImgVehicle.setOnClickListener(this);
         mCustomSwitchBtn = (UISwitchButton) view.findViewById(R.id.custom_switch_btn);
         mCustomSwitchBtn.setOnClickListener(this);
         mBtnQuery = (Button) view.findViewById(R.id.btn_query);
@@ -214,27 +271,98 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment implements Vie
             case R.id.img_type:
                 ToastUtils.toastShort("xxxxxxxxxxxxxxxxx");
                 break;
-            case R.id.tv_date:
+            case R.id.lay_date://日期
+                String temp = mTvDate.getText().toString().trim();
+                String[] temps = null;
+                if ("" != temp) {
+                    temps = temp.split("-");
+                }
+                MyChooseDialog dialog = new MyChooseDialog(
+                        getActivity(),
+                        temps,
+                        new MyChooseDialog.OnChooseDialogListener() {
+
+                            @Override
+                            public void back(String name) {
+                                mTvDate.setText(name);
+                            }
+                        });
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.show();
                 break;
-            case R.id.img_date:
-                break;
-            case R.id.tv_brand:
+            case R.id.lay_brand://品牌
+                startActivityForResult(
+                        new Intent(getActivity(), CarBrandActivity.class),
+                        CarBrandActivity.REQUEST_CODE);
                 break;
             case R.id.img_brand:
                 break;
-            case R.id.tv_car_series:
+            case R.id.lay_car_series://车系
+                Intent intentL = new Intent(getActivity(), CarChooseActivity.class);
+                intentL.putExtra("type", 1);
+                intentL.putExtra("id", carBrandId);
+                startActivityForResult(intentL, CarChooseActivity.REQUEST_L_CODE);
                 break;
             case R.id.img_car_series:
                 break;
-            case R.id.tv_vehicle:
-                break;
-            case R.id.img_vehicle:
+            case R.id.lay_vehicle://车型
+                Intent intentX = new Intent(getActivity(), CarChooseActivity.class);
+                intentX.putExtra("type", 2);
+                intentX.putExtra("id", carSeriesId);
+                intentX.putExtra("idB", carBrandId);
+                startActivityForResult(intentX, CarChooseActivity.REQUEST_X_CODE);
                 break;
             case R.id.custom_switch_btn:
                 break;
-            case R.id.btn_query:
+            case R.id.btn_query://提交
+                dataFormValidation();
                 break;
         }
+    }
+
+    /**
+     * 数据表单验证
+     */
+    private void dataFormValidation() {
+        String plate = mEditPlate.getTransformationMethod().getTransformation(getEditPlate(), mEditPlate).toString();
+        String engine = getEditEngine();
+        String carType = getTvType();
+
+        if (TextUtils.isEmpty(plate)) {
+            ToastUtils.toastShort("请输入正确的车牌号");
+            return;
+        }
+        if (TextUtils.isEmpty(plate) || engine.length() != 5) {
+            ToastUtils.toastShort("请输入正确的发动机号");
+            return;
+        }
+
+        if (TextUtils.isEmpty(carType)) {
+            ToastUtils.toastShort("请选择车辆类型");
+            return;
+        }
+
+//        carNum = getTvProvince() + plate;
+//        carEngineNum = engine;
+//        params.setPlateNo(carNum);
+//        params.setFileNum("");
+//        params.setVehicleType(String.valueOf(pos + 1));
+    }
+
+    public String getTvProvince() {
+        return mTvProvince.getText().toString();
+    }
+
+    public String getEditPlate() {
+        return mEditPlate.getText().toString().trim();
+    }
+
+    public String getEditEngine() {
+        return mEditEngine.getText().toString().trim();
+    }
+
+    public String getTvType() {
+        return mTvType.getText().toString();
     }
 
     /**
@@ -277,6 +405,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment implements Vie
         ToastUtils.toastShort("您已关闭摄像头权限,请设置中打开");
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -285,6 +414,92 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment implements Vie
                 && resultCode == GlobalConstant.resultCode.common_list_fty) {
 
         }
+//拍照回调
+        if (requestCode == GlobalConstant.requestCode.violation_query_camera
+                && resultCode == GlobalConstant.resultCode.ocr_camera_license) {
+            if (OcrCameraActivity.file == null)
+                ToastUtils.toastShort("照片获取失败");
+            else if (mPresenter != null)
+                mPresenter.uploadDrivingImg();
+        }
+//品牌
+        if (requestCode == CarBrandActivity.REQUEST_CODE
+                && resultCode == CarBrandActivity.RESULT_CODE && data != null) {
+            CarBrandBean carBrandBean = (CarBrandBean) data.getSerializableExtra(CarBrandActivity.CAR_BRAND_BEAN);
+            if (carBrandBean != null) {
+                mTvBrand.setText(carBrandBean.getBrandName());
+
+                carBrandId = carBrandBean.getId();
+                mBindCarDTO.setBrandId(String.valueOf(carBrandId));
+
+                initLayEnable(true, mLayoutCarSeries);
+            }
+        }
+//车系
+        if (requestCode == CarChooseActivity.REQUEST_L_CODE
+                && resultCode == CarChooseActivity.RESULT_L_CODE && data != null) {
+            CarXiBean carBrandBean = (CarXiBean) data.getSerializableExtra(CarChooseActivity.CAR_LINE_BEAN);
+            if (carBrandBean != null) {
+                mTvCarSeries.setText(carBrandBean.getSeriesName());
+
+                carSeriesId = carBrandBean.getSeriesId();
+                mBindCarDTO.setSeriesId(String.valueOf(carSeriesId));
+
+                initLayEnable(true, mLayoutVehicle);
+            }
+        }
+//车型
+        if (requestCode == CarChooseActivity.REQUEST_X_CODE
+                && resultCode == CarChooseActivity.RESULT_X_CODE && data != null) {
+            CarStyleInfoBean carBrandBean = (CarStyleInfoBean) data.getSerializableExtra(CarChooseActivity.CAR_XING_BEAN);
+            if (carBrandBean != null) {
+                mTvVehicle.setText(carBrandBean.getCarModelName());
+                mBindCarDTO.setCarModelId(String.valueOf(carBrandBean.getCarModelId()));
+            }
+        }
     }
 
+    @Override
+    public void loadingProgress() {
+
+    }
+
+    @Override
+    public void hideLoadingProgress() {
+
+    }
+
+    /**
+     * 55.行驶证扫描接口
+     */
+    @Override
+    public void uploadDrivingImgSucceed(DrivingOcrResult result) {
+        DrivingOcrBean bean = result.getContent();
+        if (bean != null) {
+            String cardNo = bean.getCardNo();
+            String provinces = "沪浙苏皖京藏川鄂甘赣贵桂黑吉冀津晋辽鲁蒙闽宁青琼陕湘新渝豫粤云";
+            if (!TextUtils.isEmpty(cardNo) && cardNo.length() >= 1) {
+                String province = cardNo.substring(0, 1);
+                String plateNum = cardNo.substring(1, cardNo.length());
+                if (provinces.contains(province)) mTvProvince.setText(province);
+                mEditPlate.setText(plateNum);
+            }
+
+            String engineNum = bean.getEnginePN();
+            if (!TextUtils.isEmpty(engineNum) && engineNum.length() > 5) {
+                String engine = engineNum.substring(engineNum.length() - 5, engineNum.length());
+                mEditEngine.setText(engine);
+            }
+            mTvType.setText(bean.getVehicleType() != null ? bean.getVehicleType() : "");
+
+            mCarInfoDTO.setCarnumtype(VehicleTypeTools.switchVehicleCode(mTvType.getText().toString()));
+        } else {
+            ToastUtils.toastShort("行驶证图片解析失败(55)，请重试");
+        }
+    }
+
+    @Override
+    public void uploadDrivingImgError(String message) {
+        ToastUtils.toastShort(message);
+    }
 }

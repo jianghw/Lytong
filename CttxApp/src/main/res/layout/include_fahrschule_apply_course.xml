@@ -19,63 +19,12 @@
             android:layout_marginTop="@dimen/ds_48"
             android:background="@drawable/shape_bg_course_apply"
             android:padding="@dimen/ds_75">
-            <!--课程名称-->
-            <TextView
-                android:id="@+id/tv_course"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/ds_90"
-                android:gravity="center"
-                android:text="课程名称"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/fs_16sp"/>
-
-            <TextView
-                android:id="@+id/tv_course_sel"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_90"
-                android:layout_marginLeft="@dimen/ds_36"
-                android:layout_toRightOf="@+id/tv_course"
-                android:background="@drawable/shape_edit_apply"
-                android:drawableRight="@mipmap/arrow_down"
-                android:gravity="center_vertical"
-                android:hint="请选择课程"
-                android:paddingLeft="@dimen/ds_36"
-                android:paddingRight="@dimen/ds_36"
-                android:textSize="@dimen/fs_16sp"/>
-            <!--报名学校-->
-            <TextView
-                android:id="@+id/tv_school"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/ds_90"
-                android:layout_below="@+id/tv_course"
-                android:layout_marginTop="@dimen/ds_30"
-                android:gravity="center"
-                android:text="报名学校"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/fs_16sp"/>
-
-            <TextView
-                android:id="@+id/tv_school_sel"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_90"
-                android:layout_alignTop="@+id/tv_school"
-                android:layout_marginLeft="@dimen/ds_36"
-                android:layout_toRightOf="@+id/tv_school"
-                android:background="@drawable/shape_edit_apply"
-                android:drawableRight="@mipmap/arrow_down"
-                android:gravity="center_vertical"
-                android:hint="请选择学校"
-                android:paddingLeft="@dimen/ds_36"
-                android:paddingRight="@dimen/ds_36"
-                android:textSize="@dimen/fs_16sp"/>
 
             <!--上课地点-->
             <TextView
                 android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/ds_90"
-                android:layout_below="@+id/tv_school"
-                android:layout_marginTop="@dimen/ds_30"
                 android:gravity="center"
                 android:text="上课地点"
                 android:textColor="@color/colorWhite"
@@ -85,15 +34,47 @@
                 android:id="@+id/tv_address_sel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_90"
-                android:layout_alignTop="@+id/tv_address"
                 android:layout_marginLeft="@dimen/ds_36"
                 android:layout_toRightOf="@+id/tv_address"
                 android:background="@drawable/shape_edit_apply"
                 android:drawableRight="@mipmap/arrow_down"
                 android:gravity="center_vertical"
                 android:hint="请选择上课地点"
+                android:maxLength="12"
                 android:paddingLeft="@dimen/ds_36"
                 android:paddingRight="@dimen/ds_36"
+                android:singleLine="true"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <!--课程名称-->
+            <TextView
+                android:id="@+id/tv_course"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/ds_90"
+                android:layout_below="@+id/tv_address"
+                android:layout_marginTop="@dimen/ds_30"
+                android:gravity="center"
+                android:text="课程名称"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_course_sel"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_90"
+                android:layout_alignBaseline="@+id/tv_course"
+                android:layout_marginLeft="@dimen/ds_36"
+                android:layout_toRightOf="@+id/tv_course"
+                android:background="@drawable/shape_edit_apply"
+                android:drawableRight="@mipmap/arrow_down"
+                android:gravity="center_vertical"
+                android:hint="请选择课程"
+                android:maxLength="12"
+                android:paddingLeft="@dimen/ds_36"
+                android:paddingRight="@dimen/ds_36"
+                android:singleLine="true"
+                android:textColor="@color/colorTvBlack_4d"
                 android:textSize="@dimen/fs_16sp"/>
 
             <!--来往交通-->
@@ -101,7 +82,7 @@
                 android:id="@+id/tv_traffic_title"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/ds_90"
-                android:layout_below="@+id/tv_address"
+                android:layout_below="@+id/tv_course_sel"
                 android:layout_marginTop="@dimen/ds_30"
                 android:gravity="center"
                 android:text="来往交通"
@@ -191,9 +172,9 @@
                 android:layout_toRightOf="@+id/tv_info_title"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="@dimen/ds_36"
+                android:text="@string/tv_apply_official_website"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/fs_16sp"
-                android:text="@string/tv_apply_official_website"/>
+                android:textSize="@dimen/fs_16sp"/>
 
         </RelativeLayout>
 

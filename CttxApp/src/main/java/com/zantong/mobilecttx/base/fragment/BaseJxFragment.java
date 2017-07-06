@@ -224,4 +224,5 @@ public abstract class BaseJxFragment extends Fragment {
     public void showFailedView() {
         showViewByStatus(LOADING_FAILED);
     }
+
 }

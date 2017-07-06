@@ -168,7 +168,7 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
                 mCancelBtn.setVisibility(View.GONE);
                 mConfirmBtn.setVisibility(View.GONE);
                 if (mResType == 0) {//行驶证
-                    setResult(1202, new Intent());
+                    setResult(GlobalConstant.resultCode.ocr_camera_license, new Intent());
                 } else if (mResType == 1) {//驾驶证
                     setResult(1206, new Intent());
                 } else if (mResType == 2) {//驾驶证
@@ -222,7 +222,7 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
                     @Override
                     public void onClick(View v) {
                         if (mResType == 0) {//行驶证
-                            setResult(1202, new Intent());
+                            setResult(GlobalConstant.resultCode.ocr_camera_license, new Intent());
                         } else if (mResType == 1) {//驾驶证
                             setResult(1206, new Intent());
                         } else if (mResType == 2) {//驾驶证

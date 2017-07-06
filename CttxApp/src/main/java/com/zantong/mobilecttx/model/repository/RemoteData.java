@@ -4,7 +4,9 @@ import com.zantong.mobilecttx.api.IAddOilService;
 import com.zantong.mobilecttx.api.IBankService;
 import com.zantong.mobilecttx.api.IBannerService;
 import com.zantong.mobilecttx.api.ICttxService;
+import com.zantong.mobilecttx.api.IDrivingImageService;
 import com.zantong.mobilecttx.api.IFebruaryService;
+import com.zantong.mobilecttx.api.IGoodsService;
 import com.zantong.mobilecttx.api.IMessageService;
 import com.zantong.mobilecttx.api.ISplashService;
 import com.zantong.mobilecttx.api.IViolationService;
@@ -12,6 +14,11 @@ import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
+import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
+import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
+import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
+import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
@@ -30,6 +37,7 @@ import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
+import okhttp3.MultipartBody;
 import retrofit2.Retrofit;
 import rx.Observable;
 
@@ -204,8 +212,46 @@ public class RemoteData implements IRemoteSource {
         return initRetrofit().create(IMessageService.class).countMessageDetail(baseDTO);
     }
 
+    /**
+     * 58.获取banner图片
+     */
     @Override
     public Observable<BannerResult> getBanner(String type) {
         return initRetrofit().create(IBannerService.class).getBanner(type);
+    }
+
+    /**
+     * 55.行驶证扫描接口
+     */
+    @Override
+    public Observable<DrivingOcrResult> uploadDrivingImg(MultipartBody.Part part) {
+        return initRetrofit().create(IDrivingImageService.class).uploadDrivingImg(part);
+    }
+
+    /**
+     * 3.获取商户区域列表
+     */
+    @Override
+    public Observable<MerchantAresResult> getMerchantArea() {
+        return initTestRetrofit(4).create(IGoodsService.class).getMerchantArea();
+    }
+
+    /**
+     * 4.获取区域商品列表
+     */
+    @Override
+    public Observable<AresGoodsResult> getAreaGoods(int areaCode) {
+        return initTestRetrofit(4).create(IGoodsService.class).getAreaGoods(areaCode);
+    }
+
+    /**
+     * 2.创建订单
+     */
+    @Override
+    public Observable<CreateOrderResult> createOrder(CreateOrderDTO createOrder) {
+        return initTestRetrofit(4).create(IGoodsService.class).createOrder(
+                createOrder.getType(),createOrder.getUserNum(),
+                createOrder.getGoodsId(),createOrder.getPrice(),
+                createOrder.getUserName(),createOrder.getPhone(),createOrder.getIdCard());
     }
 }

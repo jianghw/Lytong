@@ -166,7 +166,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_120"
-        android:background="@color/colorWhite"
+        android:background="@drawable/bg_sel_item_gray"
         android:paddingLeft="@dimen/ds_45"
         android:paddingRight="@dimen/ds_45">
 
@@ -197,9 +197,9 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/ds_48"
             android:layout_toLeftOf="@+id/img_type"
+            android:text="小型汽车"
             android:textColor="@color/colorTvBlack_4d"
-            android:textSize="@dimen/fs_16sp"
-            tools:text="@string/tv_license_type"/>
+            android:textSize="@dimen/fs_16sp"/>
 
         <ImageView
             android:id="@+id/img_type"
@@ -213,9 +213,10 @@
     <TextView style="@style/line_splite_gray"/>
     <!--初次领行驶证日期-->
     <RelativeLayout
+        android:id="@+id/lay_date"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_120"
-        android:background="@color/colorWhite"
+        android:background="@drawable/bg_sel_item_gray"
         android:paddingLeft="@dimen/ds_45"
         android:paddingRight="@dimen/ds_45">
 
@@ -270,9 +271,10 @@
 
     <!--品牌-->
     <RelativeLayout
+        android:id="@+id/lay_brand"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_120"
-        android:background="@color/colorWhite"
+        android:background="@drawable/bg_sel_item_gray"
         android:paddingLeft="@dimen/ds_45"
         android:paddingRight="@dimen/ds_45">
 
@@ -310,9 +312,10 @@
 
     <!--车系-->
     <RelativeLayout
+        android:id="@+id/lay_car_series"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_120"
-        android:background="@color/colorWhite"
+        android:background="@drawable/bg_sel_item_gray"
         android:paddingLeft="@dimen/ds_45"
         android:paddingRight="@dimen/ds_45">
 
@@ -349,9 +352,10 @@
     <TextView style="@style/line_splite_gray"/>
     <!--车型-->
     <RelativeLayout
+        android:id="@+id/lay_vehicle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_120"
-        android:background="@color/colorWhite"
+        android:background="@drawable/bg_sel_item_gray"
         android:paddingLeft="@dimen/ds_45"
         android:paddingRight="@dimen/ds_45">
 
@@ -417,7 +421,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-
             zc:bmHeight="@dimen/ds_90"
             zc:bmWidth="@dimen/ds_150"/>
     </RelativeLayout>
@@ -427,6 +430,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/ds_48"
         android:layout_marginTop="@dimen/ds_48"
         android:background="@mipmap/ic_btn_bg"
         android:text="查询"

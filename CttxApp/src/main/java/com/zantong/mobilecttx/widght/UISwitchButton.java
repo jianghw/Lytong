@@ -102,14 +102,13 @@ public class UISwitchButton extends CheckBox {
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
 
         // get Bitmap
-        bmBgGreen = BitmapFactory.decodeResource(resources,
-                R.drawable.widget_switch_btn_bg_green);
-        bmBgWhite = BitmapFactory.decodeResource(resources,
-                R.drawable.widget_switch_btn_bg_white);
-        bmBtnNormal = BitmapFactory.decodeResource(resources,
-                R.drawable.widget_switch_btn_normal);
-        bmBtnPressed = BitmapFactory.decodeResource(resources,
-                R.drawable.widget_switch_btn_pressed);
+        bmBgGreen = BitmapFactory.decodeResource(resources, R.drawable.widget_switch_btn_bg_green);
+
+        bmBgWhite = BitmapFactory.decodeResource(resources, R.drawable.widget_switch_btn_bg_white);
+
+        bmBtnNormal = BitmapFactory.decodeResource(resources, R.drawable.widget_switch_btn_normal);
+
+        bmBtnPressed = BitmapFactory.decodeResource(resources, R.drawable.widget_switch_btn_pressed);
 
         // size Bitmap
         bmBgGreen = Bitmap.createScaledBitmap(bmBgGreen, width, height, true);

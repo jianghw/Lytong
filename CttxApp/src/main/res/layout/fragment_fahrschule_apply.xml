@@ -11,19 +11,14 @@
         android:scaleType="centerCrop"
         android:src="@mipmap/bg_recruit_up"/>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <!--课程介绍-->
-            <include layout="@layout/include_fahrschule_apply_course"/>
-            <!--用户信息输入-->
-            <include layout="@layout/include_fahrschule_apply_user"/>
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!--课程介绍-->
+        <include layout="@layout/include_fahrschule_apply_course"/>
+        <!--用户信息输入-->
+        <include layout="@layout/include_fahrschule_apply_user"/>
+    </LinearLayout>
 
 </LinearLayout>

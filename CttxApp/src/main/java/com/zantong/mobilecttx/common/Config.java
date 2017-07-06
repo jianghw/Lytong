@@ -131,7 +131,7 @@ public class Config {
     }
 
     public static String getUMengID(int id) {
-        HashMap<Integer, String> umengIDs = new HashMap<Integer, String>();
+        HashMap<Integer, String> umengIDs = new HashMap<>();
         umengIDs.put(0, "root");//首页
         umengIDs.put(1, "carvioltation_root");//首页-车辆违章页面
         umengIDs.put(2, "checkviolation_root");//首页-违章查询页面

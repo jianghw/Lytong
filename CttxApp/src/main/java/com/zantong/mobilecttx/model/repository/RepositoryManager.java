@@ -8,6 +8,11 @@ import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
+import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
+import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
+import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
+import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
@@ -26,6 +31,7 @@ import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
+import okhttp3.MultipartBody;
 import rx.Observable;
 
 /**
@@ -280,5 +286,33 @@ public class RepositoryManager {
      */
     public Observable<BannerResult> getBanner(String type) {
         return mRemoteData.getBanner(type);
+    }
+
+    /**
+     * 55.行驶证扫描接口
+     */
+    public Observable<DrivingOcrResult> uploadDrivingImg(MultipartBody.Part part) {
+        return mRemoteData.uploadDrivingImg(part);
+    }
+
+    /**
+     * 3.获取商户区域列表
+     */
+    public Observable<MerchantAresResult> getMerchantArea() {
+        return mRemoteData.getMerchantArea();
+    }
+
+    /**
+     * 4.获取区域商品列表
+     */
+    public Observable<AresGoodsResult> getAreaGoods(int areaCode) {
+        return mRemoteData.getAreaGoods(areaCode);
+    }
+
+    /**
+     * 2.创建订单
+     */
+    public Observable<CreateOrderResult>  createOrder(CreateOrderDTO createOrder) {
+        return mRemoteData.createOrder(createOrder);
     }
 }

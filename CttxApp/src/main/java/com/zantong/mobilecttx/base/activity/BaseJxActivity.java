@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.base.activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -200,4 +201,16 @@ public abstract class BaseJxActivity extends AppCompatActivity implements View.O
      * 收尾工作要做好
      */
     protected abstract void DestroyViewAndThing();
+
+    /**
+     * 关闭Fragment
+     */
+    public void closeFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 1) {
+            fragmentManager.popBackStack();
+        } else {
+            finish();
+        }
+    }
 }

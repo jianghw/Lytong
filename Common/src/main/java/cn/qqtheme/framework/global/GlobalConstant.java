@@ -16,7 +16,8 @@ public final class GlobalConstant {
     }
 
     public static final class resultCode {
-        public static final int common_list_fty = 200;
+        public static final int common_list_fty = 2000;
+        public static final int ocr_camera_license = 2001;
     }
 
     public static final class putExtra {

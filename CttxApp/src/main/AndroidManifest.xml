@@ -420,8 +420,8 @@
         <!-- 活动页面;驾校报名-->
         <activity
             android:name=".fahrschule.activity.FahrschuleActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:screenOrientation="portrait"/>
-
 
         <meta-data
             android:name="UMENG_APPKEY"
