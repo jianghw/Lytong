@@ -50,4 +50,17 @@
         <font color='#f3362b'>%d</font>&#160;
         <font color='#4d4d4d'>辆车</font>
     </string>
+    <string name="tv_apply_contact">
+        客服会在24小时内联系您\n
+        如有疑问，请拨打客户热线：400-9200-260
+    </string>
+
+    <string name="tv_credit_prompt">
+        <font color='#b2b2b2'>每成功推荐1人注册APP，即可获</font>
+        <font color='#f3362b'>200</font>
+        <font color='#b2b2b2'>活动积分</font>\n
+        <font color='#b2b2b2'>若其中有人完成绑卡，再送推荐者</font>
+        <font color='#f3362b'>500</font>
+        <font color='#b2b2b2'>活动积分</font>
+    </string>
 </resources>

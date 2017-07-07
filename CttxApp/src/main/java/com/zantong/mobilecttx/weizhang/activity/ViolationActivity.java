@@ -46,9 +46,8 @@ public class ViolationActivity extends BaseJxActivity {
             case 0://驾校报名页面
                 if (mViolationQueryFragment == null) {
                     mViolationQueryFragment = ViolationQueryFragment.newInstance();
-                    FragmentUtils.addFragment(fragmentManager, mViolationQueryFragment, R.id.lay_base_frame);
                 }
-                FragmentUtils.hideAllShowFragment(mViolationQueryFragment);
+                FragmentUtils.replaceFragment(fragmentManager, mViolationQueryFragment, R.id.lay_base_frame, true);
                 break;
             default:
                 break;

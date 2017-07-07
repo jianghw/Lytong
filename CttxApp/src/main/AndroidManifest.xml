@@ -396,7 +396,8 @@
         <!--========================违章查询页面=================================-->
         <activity
             android:name=".weizhang.activity.ViolationActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <!-- 违章信息显示页面 -->
         <activity
             android:name=".weizhang.activity.ViolationResultAcitvity"
@@ -420,7 +421,13 @@
         <!-- 活动页面;驾校报名-->
         <activity
             android:name=".fahrschule.activity.FahrschuleActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+
+        <!-- ===================分享模块=========================================-->
+        <!-- 分享模块页面-->
+        <activity
+            android:name=".share.activity.ShareParentActivity"
             android:screenOrientation="portrait"/>
 
         <meta-data

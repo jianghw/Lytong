@@ -444,6 +444,11 @@ public class FragmentUtils {
         return operateFragment(fragment.getFragmentManager(), null, fragment, TYPE_SHOW_FRAGMENT);
     }
 
+    public static Fragment hideAllShowFragment(@NonNull FragmentManager fragmentManager, @NonNull Fragment fragment) {
+        hideFragments(fragmentManager);
+        return operateFragment(fragmentManager, null, fragment, TYPE_SHOW_FRAGMENT);
+    }
+
     /**
      * 先隐藏后显示fragment
      *
@@ -880,7 +885,7 @@ public class FragmentUtils {
     }
 
     static class Args {
-        int     id;
+        int id;
         boolean isHide;
         boolean isAddStack;
 
@@ -892,7 +897,7 @@ public class FragmentUtils {
     }
 
     public static class SharedElement {
-        View   sharedElement;
+        View sharedElement;
         String name;
 
         public SharedElement(View sharedElement, String name) {
@@ -902,7 +907,7 @@ public class FragmentUtils {
     }
 
     static class FragmentNode {
-        Fragment           fragment;
+        Fragment fragment;
         List<FragmentNode> next;
 
         public FragmentNode(Fragment fragment, List<FragmentNode> next) {

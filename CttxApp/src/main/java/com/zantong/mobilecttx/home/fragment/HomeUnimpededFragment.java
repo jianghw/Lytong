@@ -366,8 +366,12 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
             mUserCarInfoBeanList.addAll(infoBeanList);
         }
+        //违章车辆
+//        mCarViolationAdapter = new HorizontalCarViolationAdapter(getContext(), mUserCarInfoBeanList);
+//        mCustomViolation.setAdapter(mCarViolationAdapter);
+
         mCarViolationAdapter.notifyDataSetChanged(mUserCarInfoBeanList);
-        mCustomViolation.setAdapter(mCarViolationAdapter);
+//        mCustomViolation.setAdapter(mCarViolationAdapter);
     }
 
     /**

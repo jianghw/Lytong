@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.api;
 
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
+import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
 import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.user.bean.MessageResult;
 
@@ -38,4 +39,11 @@ public interface IFebruaryService {
     @FormUrlEncoded
     @POST("february/getConponByType")
     Observable<RechargeCouponResult> getConponByType(@Field("userId") String userId, @Field("type") String type);
+
+    /**
+     * 7.获取用户指定活动的统计总数
+     */
+    @FormUrlEncoded
+    @POST("activity/getRecordCount")
+    Observable<RecordCountResult> getRecordCount(@Field("type") String type, @Field("phone") String phone);
 }

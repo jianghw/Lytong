@@ -292,9 +292,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_48"
             android:layout_marginRight="@dimen/ds_48"
             android:layout_toLeftOf="@+id/img_brand"
             android:hint="请选择"
+            android:singleLine="true"
             android:textColor="@color/colorTvBlack_4d"
             android:textColorHint="@color/colorLineGray_e5"
             android:textSize="@dimen/fs_16sp"/>
@@ -333,9 +335,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_48"
             android:layout_marginRight="@dimen/ds_48"
             android:layout_toLeftOf="@+id/img_car_series"
             android:hint="请选择"
+            android:singleLine="true"
             android:textColor="@color/colorTvBlack_4d"
             android:textColorHint="@color/colorLineGray_e5"
             android:textSize="@dimen/fs_16sp"/>
@@ -364,6 +368,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:singleLine="true"
             android:text="车型"
             android:textColor="@color/colorTvBlack_4d"
             android:textSize="@dimen/fs_16sp"/>
@@ -373,9 +378,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_48"
             android:layout_marginRight="@dimen/ds_48"
             android:layout_toLeftOf="@+id/img_vehicle"
             android:hint="请选择"
+            android:singleLine="true"
             android:textColor="@color/colorTvBlack_4d"
             android:textColorHint="@color/colorLineGray_e5"
             android:textSize="@dimen/fs_16sp"/>

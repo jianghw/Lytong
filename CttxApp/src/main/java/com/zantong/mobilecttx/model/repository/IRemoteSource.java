@@ -8,6 +8,7 @@ import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
+import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
@@ -161,4 +162,9 @@ public interface IRemoteSource {
      * 2.创建订单
      */
     Observable<CreateOrderResult> createOrder(CreateOrderDTO createOrder);
+
+    /**
+     * 7.获取用户指定活动的统计总数
+     */
+    Observable<RecordCountResult> getRecordCount(String type, String phone);
 }

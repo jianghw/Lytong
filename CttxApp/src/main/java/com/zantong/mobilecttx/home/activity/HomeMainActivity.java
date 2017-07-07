@@ -165,21 +165,24 @@ public class HomeMainActivity extends BaseJxActivity {
                     mHomeUnimpededFragment = HomeUnimpededFragment.newInstance();
                     FragmentUtils.addFragment(fragmentManager, mHomeUnimpededFragment, R.id.content);
                 }
-                FragmentUtils.hideAllShowFragment(mHomeUnimpededFragment);
+                if (mHomeUnimpededFragment != null)
+                    FragmentUtils.hideAllShowFragment(fragmentManager, mHomeUnimpededFragment);
                 break;
             case 1:
                 if (mHomeFavorableFragment == null) {
                     mHomeFavorableFragment = HomeFavorableFragment.newInstance();
                     FragmentUtils.addFragment(fragmentManager, mHomeFavorableFragment, R.id.content);
                 }
-                FragmentUtils.hideAllShowFragment(mHomeFavorableFragment);
+                if (mHomeFavorableFragment != null)
+                    FragmentUtils.hideAllShowFragment(fragmentManager, mHomeFavorableFragment);
                 break;
             case 2:
                 if (mHomeMeFragment == null) {
                     mHomeMeFragment = HomeMeFragment.newInstance();
                     FragmentUtils.addFragment(fragmentManager, mHomeMeFragment, R.id.content);
                 }
-                FragmentUtils.hideAllShowFragment(mHomeMeFragment);
+                if (mHomeMeFragment != null)
+                    FragmentUtils.hideAllShowFragment(fragmentManager, mHomeMeFragment);
                 break;
             default:
                 break;

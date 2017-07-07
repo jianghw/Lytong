@@ -23,7 +23,7 @@ import cn.qqtheme.framework.util.ui.StatusBarUtils;
 /**
  * activity 基类
  */
-public abstract class BaseJxActivity extends AppCompatActivity implements View.OnClickListener {
+public abstract class BaseJxActivity extends AppCompatActivity {
 
     private Dialog mLoadingDialog;
     private ImageView mImgBack;
@@ -36,7 +36,6 @@ public abstract class BaseJxActivity extends AppCompatActivity implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         bundleIntent(savedInstanceState);
 
@@ -111,20 +110,20 @@ public abstract class BaseJxActivity extends AppCompatActivity implements View.O
      */
     protected void initTitleView(View view) {
         mImgBack = (ImageView) view.findViewById(R.id.img_back);
-        mImgBack.setOnClickListener(this);
+        mImgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backClickListener();
+            }
+        });
         mTvTitle = (TextView) view.findViewById(R.id.tv_title);
         mImgHome = (ImageView) view.findViewById(R.id.img_home);
-        mImgHome.setOnClickListener(this);
-    }
+        mImgHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.img_back:
-                break;
-            case R.id.img_home:
-                break;
-        }
+            }
+        });
     }
 
     /**
@@ -132,6 +131,13 @@ public abstract class BaseJxActivity extends AppCompatActivity implements View.O
      */
     protected void initTitleContent(String title) {
         if (mTvTitle != null) mTvTitle.setText(title);
+    }
+
+    /**
+     * 回退监听功能
+     */
+    protected void backClickListener() {
+        closeFragment();
     }
 
     /**
@@ -206,8 +212,12 @@ public abstract class BaseJxActivity extends AppCompatActivity implements View.O
      * 关闭Fragment
      */
     public void closeFragment() {
+        closeFragment(1);
+    }
+
+    public void closeFragment(int count) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (fragmentManager.getBackStackEntryCount() > 1) {
+        if (fragmentManager.getBackStackEntryCount() > count) {
             fragmentManager.popBackStack();
         } else {
             finish();

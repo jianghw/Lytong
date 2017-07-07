@@ -25,16 +25,21 @@ import com.zantong.mobilecttx.car.bean.CarStyleInfoBean;
 import com.zantong.mobilecttx.car.bean.CarXiBean;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
+import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.CommonListActivity;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrBean;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
+import com.zantong.mobilecttx.home.activity.GuideActivity;
 import com.zantong.mobilecttx.interf.IViolationQueryFtyContract;
+import com.zantong.mobilecttx.presenter.weizhang.ViolationQueryFtyPresenter;
 import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
 import com.zantong.mobilecttx.utils.DialogMgr;
+import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
+import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
 import com.zantong.mobilecttx.widght.UISwitchButton;
 
@@ -77,7 +82,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
     private TextView mTvTypeTitle;
     private ImageView mImgTypeDesc;
     private TextView mTvType;
-    private ImageView mImgType;
+
     /**
      * 请选择
      */
@@ -121,6 +126,9 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
      */
     private int carSeriesId;
     private BindCarDTO mBindCarDTO = new BindCarDTO();
+    /**
+     * 老接口
+     */
     private CarInfoDTO mCarInfoDTO = new CarInfoDTO();
 
 
@@ -147,6 +155,10 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         }
     }
 
+    protected boolean isRefresh() {
+        return false;
+    }
+
     @Override
     protected void onRefreshData() {
 
@@ -158,13 +170,11 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void setPresenter(IViolationQueryFtyContract.IViolationQueryFtyPresenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
     protected void initFragmentView(View view) {
         initView(view);
+
+        ViolationQueryFtyPresenter mPresenter = new ViolationQueryFtyPresenter(
+                Injection.provideRepository(getActivity().getApplicationContext()), this);
 //车牌号
         mEditPlate.setTransformationMethod(new AllCapTransformationMethod());
         mEditPlate.setSelection(mEditPlate.getText().toString().length());
@@ -172,6 +182,11 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         initLayEnable(true, mLayoutBrand);
         initLayEnable(false, mLayoutCarSeries);
         initLayEnable(false, mLayoutVehicle);
+    }
+
+    @Override
+    public void setPresenter(IViolationQueryFtyContract.IViolationQueryFtyPresenter presenter) {
+        mPresenter = presenter;
     }
 
     /**
@@ -183,12 +198,15 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onFirstDataVisible() {
-
+        if (!SPUtils.getInstance().getGuideXingShiZheng()) {
+            PublicData.getInstance().GUIDE_TYPE = 1;
+            Act.getInstance().gotoIntent(getActivity(), GuideActivity.class);
+        }
     }
 
     @Override
     protected void DestroyViewAndThing() {
-
+        if (mPresenter != null) mPresenter.unSubscribe();
     }
 
     public void initView(View view) {
@@ -210,26 +228,20 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         mTvType = (TextView) view.findViewById(R.id.tv_type);
         mTvType.setOnClickListener(this);
 
-        mImgType = (ImageView) view.findViewById(R.id.img_type);
-        mImgType.setOnClickListener(this);
-
         mLayDate = (RelativeLayout) view.findViewById(R.id.lay_date);
         mLayDate.setOnClickListener(this);
         mTvDate = (TextView) view.findViewById(R.id.tv_date);
         mImgDate = (ImageView) view.findViewById(R.id.img_date);
 
-
         mLayoutBrand = (RelativeLayout) view.findViewById(R.id.lay_brand);
         mLayoutBrand.setOnClickListener(this);
         mTvBrand = (TextView) view.findViewById(R.id.tv_brand);
         mImgBrand = (ImageView) view.findViewById(R.id.img_brand);
-        mImgBrand.setOnClickListener(this);
         mLayoutCarSeries = (RelativeLayout) view.findViewById(R.id.lay_car_series);
         mLayoutCarSeries.setOnClickListener(this);
         mTvCarSeries = (TextView) view.findViewById(R.id.tv_car_series);
 
         mImgCarSeries = (ImageView) view.findViewById(R.id.img_car_series);
-        mImgCarSeries.setOnClickListener(this);
         mLayoutVehicle = (RelativeLayout) view.findViewById(R.id.lay_vehicle);
         mLayoutVehicle.setOnClickListener(this);
         mTvVehicle = (TextView) view.findViewById(R.id.tv_vehicle);
@@ -259,17 +271,15 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
                 });
                 break;
             case R.id.img_cartype_desc://发动机
+                new DialogMgr(getActivity(), R.mipmap.engine_number_image);
                 break;
             case R.id.img_type_desc:
-                new DialogMgr(getActivity(), R.mipmap.engine_number_image);
+                ToastUtils.toastShort("xxxxxxxxxxxxxxxxx");
                 break;
             case R.id.tv_type://车牌类型
                 PublicData.getInstance().commonListType = 3;
                 Intent intent = new Intent(getActivity(), CommonListActivity.class);
                 startActivityForResult(intent, GlobalConstant.requestCode.violation_query_plate);
-                break;
-            case R.id.img_type:
-                ToastUtils.toastShort("xxxxxxxxxxxxxxxxx");
                 break;
             case R.id.lay_date://日期
                 String temp = mTvDate.getText().toString().trim();
@@ -295,15 +305,11 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
                         new Intent(getActivity(), CarBrandActivity.class),
                         CarBrandActivity.REQUEST_CODE);
                 break;
-            case R.id.img_brand:
-                break;
             case R.id.lay_car_series://车系
                 Intent intentL = new Intent(getActivity(), CarChooseActivity.class);
                 intentL.putExtra("type", 1);
                 intentL.putExtra("id", carBrandId);
                 startActivityForResult(intentL, CarChooseActivity.REQUEST_L_CODE);
-                break;
-            case R.id.img_car_series:
                 break;
             case R.id.lay_vehicle://车型
                 Intent intentX = new Intent(getActivity(), CarChooseActivity.class);
@@ -347,6 +353,28 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 //        params.setPlateNo(carNum);
 //        params.setFileNum("");
 //        params.setVehicleType(String.valueOf(pos + 1));
+    }
+
+    /* 获取请求参数*/
+    private void initCarInfoDto() {
+        /* 老接口传值*/
+//        mCarInfoDTO.setCarnum(mProvince.getText().toString() + mPlateNum.getTransformationMethod().getTransformation(mPlateNum.getText(), mPlateNum).toString());
+//        mCarInfoDTO.setUsrid(PublicData.getInstance().userID);
+//
+//        mCarInfoDTO.setCarnumtype(VehicleTypeTools.switchVehicleCode(mType.getText().toString()));
+//
+//        mCarInfoDTO.setEnginenum(mEngineNum.getText().toString());
+//        mCarInfoDTO.setIspaycar("0");
+//        mCarInfoDTO.setDefaultflag("0");
+//        mCarInfoDTO.setInspectflag("0");
+//        mCarInfoDTO.setViolationflag("0");
+//        mCarInfoDTO.setCarmodel("");
+//        mCarInfoDTO.setInspectdate("");
+//        if (infoBean != null) {
+//            mCarInfoDTO.setIspaycar(infoBean.getIspaycar());
+//            mCarInfoDTO.setCarmodel(infoBean.getCarmodel());
+//            mCarInfoDTO.setInspectdate(infoBean.getInspectdate());
+//        }
     }
 
     public String getTvProvince() {
@@ -500,6 +528,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
     @Override
     public void uploadDrivingImgError(String message) {
+        hideLoadingProgress();
         ToastUtils.toastShort(message);
     }
 }

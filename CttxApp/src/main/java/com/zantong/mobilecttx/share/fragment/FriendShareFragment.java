@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.fahrschule.fragment;
+package com.zantong.mobilecttx.share.fragment;
 
 import android.os.Bundle;
 import android.view.View;
@@ -20,9 +20,9 @@ import java.util.List;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
- * 驾校报名分享页面
+ * 分享返现页面
  */
-public class FahrschuleShareFragment extends BaseRefreshJxFragment
+public class FriendShareFragment extends BaseRefreshJxFragment
         implements IFahrschuleShareFtyContract.IFahrschuleShareFtyView, View.OnClickListener {
 
     private static final String ARG_PARAM1 = "param1";
@@ -59,12 +59,12 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
     private IFahrschuleShareFtyContract.IFahrschuleShareFtyPresenter mPresenter;
     private ShareParentActivity.FragmentDestroy mCloseListener;
 
-    public static FahrschuleShareFragment newInstance() {
-        return new FahrschuleShareFragment();
+    public static FriendShareFragment newInstance() {
+        return new FriendShareFragment();
     }
 
-    public static FahrschuleShareFragment newInstance(String param1, String param2) {
-        FahrschuleShareFragment fragment = new FahrschuleShareFragment();
+    public static FriendShareFragment newInstance(String param1, String param2) {
+        FriendShareFragment fragment = new FriendShareFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -89,7 +89,7 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
 
     @Override
     protected int getFragmentLayoutResId() {
-        return R.layout.fragment_fahrschule_share;
+        return R.layout.fragment_friend_share;
     }
 
     @Override
@@ -137,7 +137,7 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
 
     @Override
     public String getType() {
-        return "驾校报名";
+        return "分享返现";
     }
 
     /**
@@ -157,7 +157,7 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
         List<RecordCountBean> countBeanList = result.getData();
         if (countBeanList != null && countBeanList.size() > 0) {
             for (RecordCountBean bean : countBeanList) {
-                if (bean.getStatisticalType() == 4) {
+                if (bean.getStatisticalType() == 3) {
                     mTvPeoplePay.setText(String.valueOf(bean.getStatisticalNum()));
                 } else if (bean.getStatisticalType() == 1) {
                     mTvPeopleCount.setText(String.valueOf(bean.getStatisticalType()));
@@ -184,4 +184,5 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
                 break;
         }
     }
+
 }

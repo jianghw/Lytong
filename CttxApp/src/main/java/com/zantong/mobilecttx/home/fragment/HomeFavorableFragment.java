@@ -14,6 +14,8 @@ import com.zantong.mobilecttx.home.bean.BannerBean;
 import com.zantong.mobilecttx.home.bean.BannersBean;
 import com.zantong.mobilecttx.interf.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.presenter.home.HomeFavorableFtyPresenter;
+import com.zantong.mobilecttx.share.activity.ShareParentActivity;
+import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,7 @@ import cn.qqtheme.framework.widght.banner.ConvenientBanner;
  * 优惠页面
  */
 public class HomeFavorableFragment extends BaseRefreshJxFragment
-        implements IHomeFavorableFtyContract.IHomeFavorableFtyView {
+        implements IHomeFavorableFtyContract.IHomeFavorableFtyView, View.OnClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -190,5 +192,17 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
         mLayRiver = (LinearLayout) view.findViewById(R.id.lay_river);
         mLayBeauty = (LinearLayout) view.findViewById(R.id.lay_beauty);
         mImgBanner = (ImageView) view.findViewById(R.id.img_banner);
+        mImgBanner.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.img_banner:
+                Act.getInstance().lauchIntentToLogin(getActivity(), ShareParentActivity.class);
+                break;
+            default:
+                break;
+        }
     }
 }

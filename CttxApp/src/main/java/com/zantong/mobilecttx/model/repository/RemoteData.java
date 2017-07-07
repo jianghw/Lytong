@@ -18,6 +18,7 @@ import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
+import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
@@ -233,7 +234,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<MerchantAresResult> getMerchantArea() {
-        return initTestRetrofit(4).create(IGoodsService.class).getMerchantArea();
+        return initRetrofit().create(IGoodsService.class).getMerchantArea();
     }
 
     /**
@@ -241,7 +242,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<AresGoodsResult> getAreaGoods(int areaCode) {
-        return initTestRetrofit(4).create(IGoodsService.class).getAreaGoods(areaCode);
+        return initRetrofit().create(IGoodsService.class).getAreaGoods(areaCode);
     }
 
     /**
@@ -249,9 +250,17 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<CreateOrderResult> createOrder(CreateOrderDTO createOrder) {
-        return initTestRetrofit(4).create(IGoodsService.class).createOrder(
-                createOrder.getType(),createOrder.getUserNum(),
-                createOrder.getGoodsId(),createOrder.getPrice(),
-                createOrder.getUserName(),createOrder.getPhone(),createOrder.getIdCard());
+        return initRetrofit().create(IGoodsService.class).createOrder(
+                createOrder.getType(), createOrder.getUserNum(),
+                createOrder.getGoodsId(), createOrder.getPrice(),
+                createOrder.getUserName(), createOrder.getPhone(), createOrder.getIdCard());
+    }
+
+    /**
+     * 7.获取用户指定活动的统计总数
+     */
+    @Override
+    public Observable<RecordCountResult> getRecordCount(String type, String phone) {
+        return initRetrofit().create(IFebruaryService.class).getRecordCount(type, phone);
     }
 }

@@ -26,7 +26,7 @@ public interface IGoodsService {
      * 4.获取区域商品列表
      */
     @FormUrlEncoded
-    @POST("goods/createOrder")
+    @POST("goods/getAreaGoods")
     Observable<AresGoodsResult> getAreaGoods(@Field("code") int code);
 
     /**
@@ -42,7 +42,7 @@ public interface IGoodsService {
      * @return
      */
     @FormUrlEncoded
-    @POST("goods/getAreaGoods")
+    @POST("order/createOrder")
     Observable<CreateOrderResult> createOrder(
             @Field("type") String type, @Field("userNum") String userNum,
             @Field("goodsId") String goodsId, @Field("price") String price,

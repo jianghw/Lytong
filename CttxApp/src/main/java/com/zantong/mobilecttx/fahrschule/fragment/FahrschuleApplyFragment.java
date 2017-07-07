@@ -17,16 +17,20 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.eventbus.FahrschuleApplyEvent;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.fahrschule.adapter.FahrschulePopupAresAdapter;
 import com.zantong.mobilecttx.fahrschule.adapter.FahrschulePopupGoodsAdapter;
 import com.zantong.mobilecttx.fahrschule.bean.AresGoodsBean;
 import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderBean;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresBean;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.interf.IFahrschuleApplyFtyContract;
 import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleApplyPresenter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -111,6 +115,16 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
     private int mAreaCode;
     private int mGoodsId;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
+
     public static FahrschuleApplyFragment newInstance() {
         return new FahrschuleApplyFragment();
     }
@@ -122,16 +136,6 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     protected boolean isRefresh() {
@@ -416,6 +420,14 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
 
     @Override
     public void createOrderSucceed(CreateOrderResult result) {
-        if (mSwitcherListener != null) mSwitcherListener.setCurPosition(1);
+        CreateOrderBean bean = result.getData();
+        if (bean != null && mPresenter != null) {
+            if (mSwitcherListener != null) mSwitcherListener.setCurPosition(1);
+            EventBus.getDefault().postSticky(
+                    new FahrschuleApplyEvent(
+                            bean.getOrderId(), mPresenter.getCreateOrder(), getTvCourseSel()));
+        } else {
+            ToastUtils.toastShort("订单号创建失败，稍后再试一试");
+        }
     }
 }

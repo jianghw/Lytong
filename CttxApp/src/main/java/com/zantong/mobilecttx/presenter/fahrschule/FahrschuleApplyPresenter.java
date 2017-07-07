@@ -174,7 +174,7 @@ public class FahrschuleApplyPresenter
     public CreateOrderDTO getCreateOrder() {
         CreateOrderDTO orderDTO = new CreateOrderDTO();
         orderDTO.setType("3");
-        orderDTO.setUserNum(mRepository.getDefaultUserID());
+        orderDTO.setUserNum(mRepository.getDefaultRASUserID());
         orderDTO.setGoodsId(mAtyView.getGoodsId());
         orderDTO.setUserName(mAtyView.getEditName());
         orderDTO.setPhone(mAtyView.getEditPhone());

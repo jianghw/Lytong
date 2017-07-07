@@ -181,6 +181,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
             PublicData.getInstance().GUIDE_TYPE = 1;
             Act.getInstance().gotoIntent(this, GuideActivity.class);
         }
+
         mPlateNum.setTransformationMethod(new AllCapTransformationMethod());
         mPlateNum.setSelection(mPlateNum.getText().toString().length());
 //        setEnsureText("扫描行驶证正面");
@@ -206,6 +207,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
             mProvinceSelBtn.setEnabled(false);
             mEngineNum.setText(infoBean.getEnginenum());
             mProvince.setText(infoBean.getCarnum().substring(0, 1));
+
             mCommit.setText("保存");
             setTitleText("编辑车辆");
             mRemove.setVisibility(View.VISIBLE);

@@ -73,21 +73,18 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
                         initFragment();
                     }
                 });
-                FragmentUtils.removeToFragment(mFahrschuleApplyFragment, false);
                 break;
             case 1://驾校订单页面
                 if (mFahrschuleOrderNumFragment == null) {
                     mFahrschuleOrderNumFragment = FahrschuleOrderNumFragment.newInstance();
                     FragmentUtils.replaceFragment(fragmentManager, mFahrschuleOrderNumFragment, R.id.content, true);
                 }
-                FragmentUtils.removeToFragment(mFahrschuleOrderNumFragment, false);
                 break;
             case 2:
                 if (mMeFragment == null) {
                     mMeFragment = MeFragment.newInstance();
                     FragmentUtils.addFragment(fragmentManager, mMeFragment, R.id.content);
                 }
-                FragmentUtils.removeToFragment(mMeFragment, false);
                 break;
             default:
                 break;

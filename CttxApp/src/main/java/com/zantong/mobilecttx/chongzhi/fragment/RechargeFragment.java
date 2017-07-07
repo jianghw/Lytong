@@ -39,7 +39,6 @@ import com.zantong.mobilecttx.user.bean.CouponFragmentBean;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.UiHelpers;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
@@ -47,6 +46,8 @@ import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.qqtheme.framework.util.ToastUtils;
 
 
 /**
@@ -728,8 +729,8 @@ public class RechargeFragment extends PullableBaseFragment
 
     @Override
     public void onPayOrderByCouponError(String msg) {
-        ToastUtils.showShort(getContext().getApplicationContext(), msg);
         dismissLoadingDialog();
+        ToastUtils.showShort(getContext().getApplicationContext(), msg);
     }
 
     /**
@@ -738,6 +739,5 @@ public class RechargeFragment extends PullableBaseFragment
     public String getRechargeMoney() {
         return mTvAmount.getText().toString().trim();
     }
-
 
 }

@@ -49,6 +49,7 @@ public class ViolationQueryFtyPresenter implements IViolationQueryFtyContract.IV
 
     @Override
     public void unSubscribe() {
+        mAtyView.hideLoadingProgress();
         mSubscriptions.clear();
     }
 
@@ -87,7 +88,6 @@ public class ViolationQueryFtyPresenter implements IViolationQueryFtyContract.IV
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.hideLoadingProgress();
                         mAtyView.uploadDrivingImgError(e.getMessage());
                     }
 

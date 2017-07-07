@@ -6,9 +6,10 @@
 
     <ImageView
         android:id="@+id/img_gift"
-        android:layout_width="@dimen/ds_600"
-        android:layout_height="@dimen/ds_600"
-        android:layout_centerInParent="true"
+        android:layout_width="@dimen/ds_504"
+        android:layout_height="@dimen/ds_504"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/ds_504"
         android:src="@mipmap/pic_gift"/>
 
     <TextView
@@ -31,11 +32,23 @@
         android:textColor="@color/colorTvCyan_08"
         android:textSize="@dimen/fs_16sp"/>
 
+    <TextView
+        android:id="@+id/tv_prompt_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_prompt_mine"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/ds_48"
+        android:gravity="center"
+        android:text="@string/tv_apply_contact"
+        android:textColor="@color/colorTvCyan_08"
+        android:textSize="@dimen/fs_16sp"/>
+
     <Button
         android:id="@+id/btn_pay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_prompt_mine"
+        android:layout_below="@+id/tv_prompt_contact"
         android:layout_centerHorizontal="true"
         android:background="@drawable/bg_sel_apply_submit"
         android:text="分享活动给好友"
