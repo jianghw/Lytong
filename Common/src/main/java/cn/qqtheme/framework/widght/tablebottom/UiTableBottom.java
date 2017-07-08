@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import cn.qqtheme.framework.R;
@@ -50,14 +51,14 @@ public class UiTableBottom extends LinearLayout implements View.OnClickListener 
         invalidate();
     }
 
-//    public void setTipOfNumber(int position, int number) {
-//        for (int j = 0; j < itemHashMap.size(); j++) {
-//            if (j == position) {
-//                itemHashMap.get(j).tipView.setVisibility(number > 0 ? View.VISIBLE : View.INVISIBLE);
-//            }
-//        }
-//        invalidate();
-//    }
+    public void setTipOfNumber(int position, int number) {
+        for (int j = 0; j < itemHashMap.size(); j++) {
+            if (j == position) {
+                itemHashMap.get(j).msgView.setVisibility(number > 0 ? View.VISIBLE : View.INVISIBLE);
+            }
+        }
+        invalidate();
+    }
 
     /**
      * UITab 改变监听器
@@ -117,6 +118,7 @@ public class UiTableBottom extends LinearLayout implements View.OnClickListener 
         UITableItem tableItem = new UITableItem();
         tableItem.parent = LayoutInflater.from(context).inflate(R.layout.custom_table_bottom, null);
         tableItem.iconView = (UiItemImage) tableItem.parent.findViewById(R.id.img_bottom);
+        tableItem.msgView = (ImageView) tableItem.parent.findViewById(R.id.img_msg);
 
         tableItem.parent.setTag(i);
         tableItem.parent.setOnClickListener(this);
@@ -126,6 +128,7 @@ public class UiTableBottom extends LinearLayout implements View.OnClickListener 
     private class UITableItem {
         View parent; //父控件
         UiItemImage iconView; //图片
+        ImageView msgView; //图片
     }
 
     /**

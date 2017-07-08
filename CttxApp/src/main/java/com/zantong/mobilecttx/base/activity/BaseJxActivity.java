@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -158,18 +157,11 @@ public abstract class BaseJxActivity extends AppCompatActivity {
     protected abstract void initFragmentView(View view);
 
     /**
-     * 左侧的按钮事件
+     * 加载中效果
      */
-    protected void baseGoBack() {
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (inputMethodManager.isActive() &&
-                getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null) {
-            inputMethodManager.hideSoftInputFromWindow(
-                    getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-        finish();
+    public void showDialogLoading() {
+        mLoadingDialog = DialogUtils.showLoading(this);
     }
-
 
     /**
      * 加载中效果

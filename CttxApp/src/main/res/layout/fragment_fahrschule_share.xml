@@ -16,7 +16,8 @@
             android:id="@+id/img_scan"
             android:layout_width="@dimen/ds_360"
             android:layout_height="@dimen/ds_360"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/app_icon"/>
 
         <Button
             android:id="@+id/btn_pay"

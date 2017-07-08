@@ -42,6 +42,7 @@ public class FahrschuleOrderNumPresenter
 
     @Override
     public void unSubscribe() {
+        mAtyView.dismissLoadingDialog();
         mSubscriptions.clear();
     }
 
@@ -51,6 +52,45 @@ public class FahrschuleOrderNumPresenter
     @Override
     public void onPayOrderByCoupon(String orderId, String orderPrice, String payType) {
         Subscription subscription = mRepository.onPayOrderByCoupon(orderId, orderPrice, payType)
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mAtyView.showLoadingDialog();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<PayOrderResult>() {
+                    @Override
+                    public void doCompleted() {
+                        mAtyView.dismissLoadingDialog();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.onPayOrderByCouponError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(PayOrderResult result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.onPayOrderByCouponSucceed(result);
+                        } else {
+                            mAtyView.onPayOrderByCouponError(result != null
+                                    ? result.getResponseDesc() : "未知错误(54)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * N 5.获取工行支付页面
+     */
+    @Override
+    public void getBankPayHtml(String orderId, String orderPrice) {
+        Subscription subscription = mRepository.getBankPayHtml(orderId, orderPrice)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override

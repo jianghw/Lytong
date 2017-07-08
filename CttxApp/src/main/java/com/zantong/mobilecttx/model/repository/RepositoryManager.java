@@ -3,8 +3,11 @@ package com.zantong.mobilecttx.model.repository;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.zantong.mobilecttx.base.bean.BaseResult;
+import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
+import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
@@ -135,7 +138,6 @@ public class RepositoryManager {
      * 驾驶证查分
      *
      * @param urlCode cip.cfc.v001.01
-     * @return
      */
     public RequestHeadDTO initLicenseFileNumDTO(String urlCode) {
         RequestHeadDTO dto = mLocalData.initRequestHeadDTO();
@@ -145,9 +147,6 @@ public class RepositoryManager {
 
     /**
      * 驾驶证查分 cip.cfc.v001.01
-     *
-     * @param requestDTO
-     * @return
      */
     public Observable<LicenseResponseBean> driverLicenseCheckGrade(String requestDTO) {
         return mRemoteData.driverLicenseCheckGrade(requestDTO);
@@ -319,9 +318,29 @@ public class RepositoryManager {
 
     /**
      * 7.获取用户指定活动的统计总数
-     *
      */
     public Observable<RecordCountResult> getRecordCount(String type, String phone) {
         return mRemoteData.getRecordCount(type, phone);
+    }
+
+    /**
+     * cip.cfc.u005.01
+     */
+    public Observable<Result> commitCarInfoToOldServer(String msg) {
+        return mRemoteData.commitCarInfoToOldServer(msg);
+    }
+
+    /**
+     * 48.绑定行驶证接口
+     */
+    public Observable<BaseResult> commitCarInfoToNewServer(BindCarDTO bindCarDTO) {
+        return mRemoteData.commitCarInfoToNewServer(bindCarDTO);
+    }
+
+    /**
+     * N 5.获取工行支付页面
+     */
+    public Observable<PayOrderResult> getBankPayHtml(String orderId, String orderPrice) {
+        return mRemoteData.getBankPayHtml(orderId, orderPrice);
     }
 }

@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.fahrschule.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -55,7 +56,9 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
 
     @Override
     protected void DestroyViewAndThing() {
-
+        mFahrschuleApplyFragment = null;
+        mFahrschuleOrderNumFragment = null;
+        mMeFragment = null;
     }
 
     private void initFragment() {
@@ -105,8 +108,20 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
                 closeFragment();
                 break;
             case R.id.img_home:
+                finish();
                 break;
         }
+    }
+
+    /**
+     * 返回监听
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            closeFragment();
+        }
+        return false;
     }
 
     public interface SwitcherListener {

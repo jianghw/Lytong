@@ -19,15 +19,18 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
+import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
 import com.zantong.mobilecttx.eventbus.GetMsgAgainEvent;
 import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.home.activity.CaptureActivity;
+import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 import com.zantong.mobilecttx.home.adapter.HorizontalCarViolationAdapter;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.adapter.MainBannerImgHolderView;
@@ -130,7 +133,13 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
      * 违章车adapter
      */
     private HorizontalCarViolationAdapter mCarViolationAdapter;
+    private HomeMainActivity.MessageListener mHomeMainListener;
+
     private List<UserCarInfoBean> mUserCarInfoBeanList = new ArrayList<>();
+    /**
+     * 控制数据加载 resume
+     */
+    private boolean isSecondData = false;
 
     public static HomeUnimpededFragment newInstance() {
         return new HomeUnimpededFragment();
@@ -165,7 +174,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
      */
     @Override
     protected void onRefreshData() {
-        onFirstDataVisible();
+        initFirstData(isSecondData);
     }
 
     @Override
@@ -227,12 +236,17 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onFirstDataVisible() {
+        initFirstData(!isSecondData);
+    }
+
+    private void initFirstData(boolean isSecondData) {
+        if (!isSecondData) return;
+
         if (PublicData.getInstance().loginFlag) {
             mPresenter.getRemoteCarInfo();
         } else {
             getLocalCarInfo();
         }
-
         mPresenter.homePage();
     }
 
@@ -248,9 +262,16 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         mCustomGrapevine.setTimer(5000);
     }
 
+    /**
+     * 会多次刷新数据 ^3^
+     */
     @Override
     public void onResume() {
         super.onResume();
+
+        initFirstData(isSecondData);
+        isSecondData = true;
+
         startCampaignCustom(false);
     }
 
@@ -296,12 +317,12 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
     @Override
     public void loadingProgress() {
-
+        showDialogLoading();
     }
 
     @Override
     public void hideLoadingProgress() {
-
+        hideDialogLoading();
     }
 
     /**
@@ -320,6 +341,9 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         mTvMsgCount.setVisibility(bean != null ?
                 bean.getMsgNum() == 0 ? View.INVISIBLE : View.VISIBLE
                 : View.INVISIBLE);
+
+        if (mHomeMainListener != null)
+            mHomeMainListener.setTipOfNumber(2, bean != null ? bean.getMsgNum() : 0);
         //小喇叭通知
         if (bean != null && bean.getNotices() != null) {
             mCustomGrapevine.setData(bean.getNotices());
@@ -406,8 +430,8 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                 userCarInfoBean.setEnginenum(carInfoDTO.getEnginenum());
                 mUserCarInfoBeanList.add(userCarInfoBean);
             }
-        mCarViolationAdapter.notifyDataSetChanged();
-        mCustomViolation.notifyDataSetChanged();
+
+        mCarViolationAdapter.notifyDataSetChanged(mUserCarInfoBeanList);
 
         PublicData.getInstance().mLocalCars = list;
         PublicData.getInstance().mCarNum = list != null ? list.size() : 0;
@@ -474,8 +498,10 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                         //未读消息
                         mTvMsgCount.setText(bean != null ? String.valueOf(bean.getCount()) : "0");
                         mTvMsgCount.setVisibility(bean != null ?
-                                bean.getCount() == 0 ? View.INVISIBLE : View.VISIBLE
-                                : View.INVISIBLE);
+                                bean.getCount() == 0 ? View.INVISIBLE : View.VISIBLE : View.INVISIBLE);
+
+                        if (mHomeMainListener != null)
+                            mHomeMainListener.setTipOfNumber(2, bean != null ? bean.getCount() : 0);
                     }
                 }
             });
@@ -498,9 +524,11 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                 takeCapture();
                 break;
             case R.id.tv_oil://加油
-                Act.getInstance().lauchIntentToLogin(getActivity(), FahrschuleActivity.class);
+                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(6));
+                Act.getInstance().lauchIntentToLogin(this.getActivity(), RechargeActivity.class);
                 break;
             case R.id.tv_check:
+                Act.getInstance().lauchIntentToLogin(getActivity(), FahrschuleActivity.class);
                 break;
             case R.id.tv_carwash://驾驶证查分
                 MobclickAgent.onEvent(ContextUtils.getContext(), Config.getUMengID(35));
@@ -527,9 +555,28 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                 }
                 break;
             case R.id.tv_drive:
+                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(7));
+                enterDrivingActivity();
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * 进入代驾页面
+     */
+    public void enterDrivingActivity() {
+        if (!PublicData.getInstance().loginFlag) {
+            Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, 2000, new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE});
+        } else {
+            Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
         }
     }
 
@@ -563,5 +610,19 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     @PermissionFail(requestCode = PER_REQUEST_CODE)
     public void doPermissionFail() {
         ToastUtils.toastShort("相机权限被拒绝，请手机设置中打开");
+    }
+
+    public void setMessageListener(HomeMainActivity.MessageListener messageListener) {
+        mHomeMainListener = messageListener;
+    }
+
+    @PermissionSuccess(requestCode = 2000)
+    public void doDrivingSuccess() {
+        Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+    }
+
+    @PermissionFail(requestCode = 2000)
+    public void doDrivingFail() {
+        ToastUtils.toastShort("您已关闭定位权限,请手机设置中打开");
     }
 }

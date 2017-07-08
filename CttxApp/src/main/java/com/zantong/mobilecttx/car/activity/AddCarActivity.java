@@ -336,7 +336,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
     /**
      * 保存车辆
      */
-    private void commitCarInfo() {
+    private void    commitCarInfo() {
         String plateNum = mPlateNum.getTransformationMethod().getTransformation(mPlateNum.getText(), mPlateNum).toString();
         String engineNum = mEngineNum.getText().toString();
         getCarInfoDto();
@@ -353,6 +353,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
         params.setPlateNo(mProvince.getText().toString() + plateNum);
         carNum = mProvince.getText().toString() + plateNum;
         carEngineNum = engineNum;
+
         params.setFileNum("");
         params.setVehicleType(String.valueOf(pos + 1));
 
@@ -362,6 +363,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
         params.setCarModel(mBrand.getText().toString());
         params.setVin(mCode.getText().toString());
         params.setEngineNo(mEngineNum.getText().toString());
+
         if (mRegisterDate.getText().toString().contains("请")) {
             params.setRegisterDate("");
             params.setIssueDate("");
@@ -404,8 +406,8 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                     }
                     mCommit.setClickable(false);
                     showDialogLoading();
-                    PublicData.getInstance().mCarNum++;
 
+                    PublicData.getInstance().mCarNum++;
                     PublicData.getInstance().mHashMap.put("carnum", dto.getCarnum());
                     PublicData.getInstance().mHashMap.put("enginenum", dto.getEnginenum());
                     PublicData.getInstance().mHashMap.put("carnumtype", dto.getCarnumtype());
@@ -413,10 +415,11 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                     SPUtils.getInstance().getCarsInfo().add(dto);
 
                     ViolationDTO dto1 = new ViolationDTO();
-                    LogUtils.i("车牌号-------------------" + dto.getCarnum());
+
                     dto1.setCarnum(RSAUtils.strByEncryption(dto.getCarnum(), true));
                     dto1.setEnginenum(RSAUtils.strByEncryption(dto.getEnginenum(), true));
                     dto1.setCarnumtype(dto.getCarnumtype());
+
                     Intent intent = new Intent(this, ViolationResultAcitvity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("params", dto1);
@@ -427,8 +430,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                 }
                 mCommit.setClickable(true);
                 hideDialogLoading();
-                EventBus.getDefault().post(
-                        new BenDiCarInfoEvent(true, dto));
+                EventBus.getDefault().post(new BenDiCarInfoEvent(true, dto));
                 hideKeyBord();
             } else {
                 LogUtils.i("老服务器");
@@ -474,12 +476,12 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                     PublicData.getInstance().mHashMap.put("IllegalViolationName", carNum);//标题
 
                     PublicData.getInstance().mCarNum++;//车辆数+1
-                    EventBus.getDefault().post(
-                            new UpdateCarInfoEvent(true));
+                    EventBus.getDefault().post(new UpdateCarInfoEvent(true));
+
                     dto.setCarnum(carNum);
                     dto.setEnginenum(carEngineNum);
-                    EventBus.getDefault().post(
-                            new AddCarInfoEvent(true, dto));
+
+                    EventBus.getDefault().post(new AddCarInfoEvent(true, dto));
                     hideKeyBord();
 
                     ViolationDTO dto1 = new ViolationDTO();

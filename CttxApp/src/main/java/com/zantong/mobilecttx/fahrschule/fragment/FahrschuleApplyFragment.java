@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.common.Injection;
@@ -33,6 +34,7 @@ import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleApplyPresenter;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+import java.util.Random;
 
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.RegexUtils;
@@ -171,12 +173,15 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onFirstDataVisible() {
-
+        if (BuildConfig.DEBUG) {
+            mEditName.setText("测试人员" + new Random().nextInt(10));
+            mEditPhone.setText("1525252552" + new Random().nextInt(10));
+            mEditIdentityCard.setText("342628198004160012");
+        }
     }
 
     @Override
     protected void DestroyViewAndThing() {
-        hideDialogLoading();
         if (mPresenter != null) mPresenter.unSubscribe();
     }
 
@@ -282,12 +287,12 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
 
     @Override
     public void showLoadingDialog() {
-
+        showDialogLoading();
     }
 
     @Override
     public void dismissLoadingDialog() {
-
+        hideDialogLoading();
     }
 
     /**
@@ -348,7 +353,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
 
     @Override
     public void getMerchantAreaError(String message) {
-        hideDialogLoading();
+        dismissLoadingDialog();
         ToastUtils.toastShort(message);
     }
 
@@ -362,7 +367,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
      */
     @Override
     public void getAreaGoodsError(String message) {
-        hideDialogLoading();
+        dismissLoadingDialog();
         ToastUtils.toastShort(message);
     }
 
@@ -414,7 +419,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
      */
     @Override
     public void createOrderError(String message) {
-        hideDialogLoading();
+        dismissLoadingDialog();
         ToastUtils.toastShort(message);
     }
 

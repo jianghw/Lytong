@@ -85,10 +85,6 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
      * P
      */
     private IFahrschuleOrderNumFtyContract.IFahrschuleOrderNumFtyPresenter mPresenter;
-    /**
-     * 支付方式  0畅通
-     */
-    private int mPayType = 0;
 
     public static FahrschuleOrderNumFragment newInstance() {
         return new FahrschuleOrderNumFragment();
@@ -147,7 +143,7 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
 
     @Override
     protected void DestroyViewAndThing() {
-        dismissLoadingDialog();
+        if (mPresenter != null) mPresenter.unSubscribe();
         EventBus.getDefault().removeStickyEvent(FahrschuleApplyEvent.class);
         EventBus.getDefault().unregister(this);
     }
@@ -202,10 +198,9 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
                     double money = Double.parseDouble(moneyString) * 100;
                     int intMoney = (int) money;
                     String stringMoney = String.valueOf(intMoney);
-                    mPresenter.onPayOrderByCoupon(
+                    mPresenter.getBankPayHtml(
                             mTvOrder.getText().toString(),
-                            stringMoney,
-                            String.valueOf(mPayType));
+                            stringMoney);
                 }
                 break;
             default:
@@ -215,12 +210,12 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
 
     @Override
     public void showLoadingDialog() {
-
+        showDialogLoading();
     }
 
     @Override
     public void dismissLoadingDialog() {
-
+        hideDialogLoading();
     }
 
     /**

@@ -24,6 +24,8 @@ public interface IFahrschuleOrderNumFtyContract {
     interface IFahrschuleOrderNumFtyPresenter extends IMvpPresenter {
 
         void onPayOrderByCoupon(String orderId, String orderPrice, String payType);
+
+        void getBankPayHtml(String orderId, String orderPrice);
     }
 
 }

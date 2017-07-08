@@ -96,7 +96,7 @@ public class GuideCTActivity extends BaseActivity implements GuideHeaderViewPage
 
     private void gotoActivity() {
         MobclickAgent.onEvent(this, Config.getUMengID(0));
-        Act.getInstance().gotoIntent(this, HomeActivity.class);
+        Act.getInstance().gotoIntent(this, HomeMainActivity.class);
         SPUtils.getInstance().setIsGuide(Tools.getVerName(this));
         finish();
     }

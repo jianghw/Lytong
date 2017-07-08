@@ -8,9 +8,13 @@ import com.zantong.mobilecttx.api.IDrivingImageService;
 import com.zantong.mobilecttx.api.IFebruaryService;
 import com.zantong.mobilecttx.api.IGoodsService;
 import com.zantong.mobilecttx.api.IMessageService;
+import com.zantong.mobilecttx.api.IPayService;
 import com.zantong.mobilecttx.api.ISplashService;
 import com.zantong.mobilecttx.api.IViolationService;
+import com.zantong.mobilecttx.base.bean.BaseResult;
+import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
+import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
@@ -250,7 +254,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<CreateOrderResult> createOrder(CreateOrderDTO createOrder) {
-        return initRetrofit().create(IGoodsService.class).createOrder(
+        return initTestRetrofit(4).create(IGoodsService.class).createOrder(
                 createOrder.getType(), createOrder.getUserNum(),
                 createOrder.getGoodsId(), createOrder.getPrice(),
                 createOrder.getUserName(), createOrder.getPhone(), createOrder.getIdCard());
@@ -262,5 +266,30 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<RecordCountResult> getRecordCount(String type, String phone) {
         return initRetrofit().create(IFebruaryService.class).getRecordCount(type, phone);
+    }
+
+    /**
+     *
+     * cip.cfc.u005.01
+     */
+    @Override
+    public Observable<Result> commitCarInfoToOldServer(String msg) {
+        return initAppUrlRetrofit().create(IBankService.class).commitCarInfoToOldServer(msg);
+    }
+
+    /**
+     * 48.绑定行驶证接口
+     */
+    @Override
+    public Observable<BaseResult> commitCarInfoToNewServer(BindCarDTO bindCarDTO) {
+        return initRetrofit().create(ICttxService.class).commitCarInfoToNewServer(bindCarDTO);
+    }
+
+    /**
+     * 5.获取工行支付页面
+     */
+    @Override
+    public Observable<PayOrderResult> getBankPayHtml(String orderId, String orderPrice) {
+        return initRetrofit().create(IPayService.class).getBankPayHtml(orderId,orderPrice);
     }
 }

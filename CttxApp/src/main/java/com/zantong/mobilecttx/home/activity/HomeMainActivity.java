@@ -165,6 +165,13 @@ public class HomeMainActivity extends BaseJxActivity {
                     mHomeUnimpededFragment = HomeUnimpededFragment.newInstance();
                     FragmentUtils.addFragment(fragmentManager, mHomeUnimpededFragment, R.id.content);
                 }
+                mHomeUnimpededFragment.setMessageListener(new MessageListener() {
+                    @Override
+                    public void setTipOfNumber(int position, int number) {
+                        mCustomBottom.setTipOfNumber(position, number);
+                    }
+                });
+
                 if (mHomeUnimpededFragment != null)
                     FragmentUtils.hideAllShowFragment(fragmentManager, mHomeUnimpededFragment);
                 break;
@@ -181,6 +188,12 @@ public class HomeMainActivity extends BaseJxActivity {
                     mHomeMeFragment = HomeMeFragment.newInstance();
                     FragmentUtils.addFragment(fragmentManager, mHomeMeFragment, R.id.content);
                 }
+                mHomeMeFragment.setMessageListener(new MessageListener() {
+                    @Override
+                    public void setTipOfNumber(int position, int number) {
+                        mCustomBottom.setTipOfNumber(position, number);
+                    }
+                });
                 if (mHomeMeFragment != null)
                     FragmentUtils.hideAllShowFragment(fragmentManager, mHomeMeFragment);
                 break;
@@ -221,5 +234,10 @@ public class HomeMainActivity extends BaseJxActivity {
         mHomeFavorableFragment = null;
         mHomeMeFragment = null;
     }
+
+    public interface MessageListener {
+        void setTipOfNumber(int position, int number);
+    }
+
 
 }

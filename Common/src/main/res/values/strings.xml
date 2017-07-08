@@ -18,7 +18,7 @@
 
     <string name="tv_apply_official_website">
         <font color='#0f536f'>
-            <i>官网介绍链接</i>
+            <u>官网介绍链接</u>
         </font>
     </string>
 

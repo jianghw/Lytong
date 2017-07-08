@@ -25,7 +25,7 @@ import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.eventbus.CarInfoEvent;
-import com.zantong.mobilecttx.home.activity.HomeActivity;
+import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 import com.zantong.mobilecttx.interf.IOrderView;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.user.bean.LoginResult;
@@ -36,7 +36,6 @@ import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ScreenManager;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.Des3;
@@ -54,6 +53,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.Bind;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 
 public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresenter> implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
@@ -313,7 +313,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
 
                                             @Override
                                             public void onClick(View v) {
-                                                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+                                                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeMainActivity.class);
                                             }
                                         },
                                         new View.OnClickListener() {
@@ -321,7 +321,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                                             @Override
                                             public void onClick(View v) {
                                                 AccountRememberCtrl.saveLoginAD(Register2Activity.this, "0");
-                                                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeActivity.class);
+                                                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeMainActivity.class);
                                             }
                                         });
                                 EventBus.getDefault().post(new CarInfoEvent(true));

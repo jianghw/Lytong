@@ -124,7 +124,6 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
     public void onPause() {
         super.onPause();
         startCampaignCustom(false);
-
     }
 
     @Override
@@ -147,7 +146,7 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
 
     @Override
     protected void DestroyViewAndThing() {
-
+        if (mPresenter != null) mPresenter.unSubscribe();
     }
 
     /**

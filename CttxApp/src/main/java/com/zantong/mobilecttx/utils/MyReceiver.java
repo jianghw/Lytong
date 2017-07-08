@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.home.activity.HomeActivity;
+import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 
 import cn.qqtheme.framework.util.log.LogUtils;
 
@@ -41,7 +41,7 @@ public class MyReceiver extends BroadcastReceiver {
                 R.layout.view_notification);
         rv.setTextViewText(R.id.notification_content, content);
         myNotify.contentView = rv;
-        Intent intent = new Intent(context, HomeActivity.class);
+        Intent intent = new Intent(context, HomeMainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 1,intent, 0);
         myNotify.contentIntent = contentIntent;
         mNotificationManager.notify(NOTIFICATION_FLAG, myNotify);

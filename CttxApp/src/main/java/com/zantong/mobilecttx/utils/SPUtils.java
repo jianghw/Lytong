@@ -4,7 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
@@ -103,24 +104,18 @@ public class SPUtils {
 
     /**
      * 获取车辆信息
-     *
-     * @return
      */
     public List<CarInfoDTO> getCarsInfo() {
-        if (carsinfo == null) {
-            carsinfo = new ArrayList<>();
-            // 获取序列化的数据
-            String str = this.mSharedPreferences.getString(CARSINFO, "");
-            try {
-                Object obj = SerializableUtils.str2Obj(str);
-                if (obj != null) {
-                    carsinfo = (List<CarInfoDTO>) obj;
-                }
-            } catch (StreamCorruptedException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (carsinfo == null) carsinfo = new ArrayList<>();
+        // 获取序列化的数据
+        String str = mSharedPreferences.getString(CARSINFO, "");
+        try {
+            Object obj = SerializableUtils.str2Obj(str);
+            if (obj == null) return carsinfo;
+            carsinfo = new Gson().fromJson(obj.toString(), new TypeToken<List<CarInfoDTO>>() {
+            }.getType());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return carsinfo;
     }

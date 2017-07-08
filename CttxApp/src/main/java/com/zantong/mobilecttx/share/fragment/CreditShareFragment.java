@@ -1,19 +1,32 @@
 package com.zantong.mobilecttx.share.fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountBean;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
 import com.zantong.mobilecttx.interf.IFahrschuleShareFtyContract;
 import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleSharePresenter;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
+import com.zantong.mobilecttx.utils.DialogMgr;
+import com.zantong.mobilecttx.utils.rsa.Des3;
+import com.zantong.mobilecttx.wxapi.WXEntryActivity;
+import com.zantong.mobilecttx.zxing.EncodingUtils;
 
 import java.util.List;
 
@@ -55,9 +68,26 @@ public class CreditShareFragment extends BaseRefreshJxFragment
      * 已成功支付
      */
     private TextView mTvPayed;
+    private TextView mTvIntegral;
 
     private IFahrschuleShareFtyContract.IFahrschuleShareFtyPresenter mPresenter;
     private ShareParentActivity.FragmentDestroy mCloseListener;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mCloseListener != null) mCloseListener.closeListener(0);
+    }
 
     public static CreditShareFragment newInstance() {
         return new CreditShareFragment();
@@ -70,16 +100,6 @@ public class CreditShareFragment extends BaseRefreshJxFragment
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -108,16 +128,22 @@ public class CreditShareFragment extends BaseRefreshJxFragment
     @Override
     protected void onFirstDataVisible() {
         if (mPresenter != null) mPresenter.getRecordCount();
+
+        String contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
+        if (PublicData.getInstance().loginFlag && PublicData.getInstance().mLoginInfoBean != null)
+            contentString = "http://liyingtong.com:8081/h5/share/share.html?phoneNum="
+                    + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+        else
+            contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
+        if (!TextUtils.isEmpty(contentString)) {
+            Bitmap qrCodeBitmap = EncodingUtils.createQRCode(
+                    contentString, 360, 360, BitmapFactory.decodeResource(getResources(), R.mipmap.app_icon));
+            mImgScan.setImageBitmap(qrCodeBitmap);
+        }
     }
 
     public void setCloseListener(ShareParentActivity.FragmentDestroy fragmentDestroy) {
         mCloseListener = fragmentDestroy;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (mCloseListener != null) mCloseListener.closeListener(0);
     }
 
     @Override
@@ -127,12 +153,12 @@ public class CreditShareFragment extends BaseRefreshJxFragment
 
     @Override
     public void showLoadingDialog() {
-
+        showDialogLoading();
     }
 
     @Override
     public void dismissLoadingDialog() {
-
+        hideDialogLoading();
     }
 
     @Override
@@ -164,6 +190,10 @@ public class CreditShareFragment extends BaseRefreshJxFragment
                 }
             }
         }
+        String pay = mTvPeoplePay.getText().toString();
+        String count = mTvPeopleCount.getText().toString();
+        mTvIntegral.setText("200*" + pay + "500*" + count + "="
+                + 200 * Integer.valueOf(pay) + 500 * Integer.valueOf(count) + "分");
     }
 
     public void initView(View view) {
@@ -175,13 +205,67 @@ public class CreditShareFragment extends BaseRefreshJxFragment
         mTvInvited = (TextView) view.findViewById(R.id.tv_invited);
         mTvPeoplePay = (TextView) view.findViewById(R.id.tv_people_pay);
         mTvPayed = (TextView) view.findViewById(R.id.tv_payed);
+        mTvIntegral = (TextView) view.findViewById(R.id.tv_integral);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_pay:
+                new DialogMgr(getActivity(),
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                wechatShare(0);
+                            }
+                        },
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                wechatShare(1);
+                            }
+                        });
                 break;
         }
     }
+
+    /**
+     * 微信分享
+     *
+     * @param flag (0 分享到微信好友 1 分享到微信朋友圈)
+     */
+    private void wechatShare(int flag) {
+        IWXAPI api = WXAPIFactory.createWXAPI(getActivity(), WXEntryActivity.APP_ID, true);
+        api.registerApp(WXEntryActivity.APP_ID);
+
+        if (!api.isWXAppInstalled()) {
+            ToastUtils.toastShort("您还未安装微信客户端");
+            return;
+        }
+
+        WXWebpageObject webpage = new WXWebpageObject();
+        if (PublicData.getInstance().loginFlag) {
+            webpage.webpageUrl = "http://liyingtong.com:8081/h5/share/share.html?phoneNum="
+                    + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+        } else {
+            webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
+        }
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = "掌上违章缴费，销分一步到位，与你只有一个App的距离";
+        msg.description = "畅通车友会——有我在手，一路畅通畅通车友会由工银安盛与中国工商银行" +
+                "上海分行联手打造，旨在为牡丹畅通卡用户提供便捷的驾乘金融服务体验。功能覆盖了" +
+                "交通违章缴费、驾乘人员保险保障、特色增值服务等多项方便快捷的在线服务，" +
+                "使车主的驾车生活更便捷、更丰富，更畅通!";
+        //这里替换一张自己工程里的图片资源
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_sharelogo);
+        msg.setThumbImage(thumb);
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = String.valueOf(System.currentTimeMillis());
+        req.message = msg;
+        req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+        api.sendReq(req);
+    }
 }
+
+

@@ -45,6 +45,7 @@ public class FahrschuleApplyPresenter
 
     @Override
     public void unSubscribe() {
+        mAtyView.dismissLoadingDialog();
         mSubscriptions.clear();
     }
 

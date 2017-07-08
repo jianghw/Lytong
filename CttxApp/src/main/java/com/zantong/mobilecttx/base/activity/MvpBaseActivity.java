@@ -279,8 +279,14 @@ public abstract class MvpBaseActivity extends AppCompatActivity {
 
     /**
      * 加载中效果
-     *
-     * @param msg 提示信息
+     */
+    public void showDialogLoading() {
+        if (mLoadingDialog == null || !mLoadingDialog.isShowing())
+            mLoadingDialog = DialogUtils.showLoading(this);
+    }
+
+    /**
+     * 加载中效果
      */
     public void showDialogLoading(String msg) {
         if (mLoadingDialog == null || !mLoadingDialog.isShowing())

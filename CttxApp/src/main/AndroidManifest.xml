@@ -217,17 +217,13 @@
         <activity
             android:name=".common.activity.BrowserActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".home.activity.HomeActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
         <!-- 主页，这个很吊呀 -->
         <activity
             android:name=".home.activity.HomeMainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity
             android:name=".map.activity.BaiduMapActivity"
             android:screenOrientation="portrait"/>

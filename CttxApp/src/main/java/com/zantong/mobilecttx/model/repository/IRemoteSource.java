@@ -1,6 +1,9 @@
 package com.zantong.mobilecttx.model.repository;
 
+import com.zantong.mobilecttx.base.bean.BaseResult;
+import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
+import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
@@ -167,4 +170,19 @@ public interface IRemoteSource {
      * 7.获取用户指定活动的统计总数
      */
     Observable<RecordCountResult> getRecordCount(String type, String phone);
+
+    /**
+     * 48.绑定行驶证接口
+     */
+    Observable<BaseResult> commitCarInfoToNewServer(BindCarDTO bindCarDTO);
+
+    /**
+     * cip.cfc.u005.01
+     */
+    Observable<Result> commitCarInfoToOldServer(String msg);
+
+    /**
+     * 5.获取工行支付页面
+     */
+    Observable<PayOrderResult> getBankPayHtml(String orderId, String orderPrice);
 }

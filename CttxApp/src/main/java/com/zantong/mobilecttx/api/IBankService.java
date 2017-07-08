@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.api;
 
+import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 
@@ -26,4 +27,8 @@ public interface IBankService {
     @FormUrlEncoded
     @POST("mobilecall_call")
     Observable<UserCarsResult> getRemoteCarInfo(@Field("msg") String requestDTO);
+
+    @FormUrlEncoded
+    @POST("mobilecall_call")
+    Observable<Result> commitCarInfoToOldServer(@Field("msg") String msg);
 }

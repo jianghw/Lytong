@@ -66,7 +66,7 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
             if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
             mUserCarInfoBeanList.addAll(infoBeanList);
         }
-        if (carCount < 3) mUserCarInfoBeanList.add(new UserCarInfoBean());
+        if (carCount <= 3) mUserCarInfoBeanList.add(new UserCarInfoBean());
     }
 
     public void notifyDataSetChanged(List<UserCarInfoBean> infoBeanList) {

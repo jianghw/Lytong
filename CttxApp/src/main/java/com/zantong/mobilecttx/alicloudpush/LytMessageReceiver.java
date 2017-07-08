@@ -8,7 +8,7 @@ import com.alibaba.sdk.android.push.MessageReceiver;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.google.gson.Gson;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
-import com.zantong.mobilecttx.home.activity.HomeActivity;
+import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
@@ -104,7 +104,7 @@ public class LytMessageReceiver extends MessageReceiver {
         if (pushExtBean != null) {
             String type = pushExtBean.getType();
             if (type.equals("1")) {//小喇叭页面
-                Intent intent = new Intent(context, HomeActivity.class);
+                Intent intent = new Intent(context, HomeMainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             } else if (type.equals("2")) {

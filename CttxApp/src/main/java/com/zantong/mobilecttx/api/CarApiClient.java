@@ -181,9 +181,11 @@ public class CarApiClient extends BaseApiClient {
     }
 
     public static void commitCar(Context context, BindCarDTO params, CallBack<BaseResult> callback) {
+
         params.setUsrnum(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
         params.setEngineNo(RSAUtils.strByEncryptionLiYing(params.getEngineNo(), true));
         params.setPlateNo(RSAUtils.strByEncryptionLiYing(params.getPlateNo(), true));
+
         if (TextUtils.isEmpty(params.getFileNum())) {
             params.setFileNum("");
         } else {

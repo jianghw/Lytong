@@ -428,6 +428,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:checked="true"
             zc:bmHeight="@dimen/ds_90"
             zc:bmWidth="@dimen/ds_150"/>
     </RelativeLayout>
@@ -440,6 +441,7 @@
         android:layout_marginBottom="@dimen/ds_48"
         android:layout_marginTop="@dimen/ds_48"
         android:background="@mipmap/ic_btn_bg"
+        android:enabled="true"
         android:text="查询"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/fs_18sp"/>

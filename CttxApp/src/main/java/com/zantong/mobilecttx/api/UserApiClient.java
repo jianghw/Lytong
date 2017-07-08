@@ -342,9 +342,10 @@ public class UserApiClient extends BaseApiClient {
     public static void addCarInfo(Context context, CarInfoDTO dto, CallBack<Result> callback) {
         dto.setCarnum(RSAUtils.strByEncryption(dto.getCarnum(), true));
         dto.setEnginenum(RSAUtils.strByEncryption(dto.getEnginenum(), true));
-        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
-                context, callback, Result.class);
+
+        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(context, callback, Result.class);
         RequestDTO t = new RequestDTO();
+
         t.setSYS_HEAD(getBean("cip.cfc.u005.01"));
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);

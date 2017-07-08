@@ -2,6 +2,8 @@ package com.zantong.mobilecttx.interf;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
+import com.zantong.mobilecttx.car.dto.CarInfoDTO;
+import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 
 import java.io.File;
@@ -26,6 +28,14 @@ public interface IViolationQueryFtyContract {
         void uploadDrivingImgSucceed(DrivingOcrResult result);
 
         void uploadDrivingImgError(String s);
+
+        CarInfoDTO getCarInfoDTO();
+
+        void commitCarInfoToOldServerError(String message);
+
+        BindCarDTO getBindCarDTO();
+
+        void commitCarInfoToNewServerError(String message);
     }
 
     interface IViolationQueryFtyPresenter extends IMvpPresenter {
@@ -35,6 +45,14 @@ public interface IViolationQueryFtyContract {
         void uploadDrivingImg();
 
         File getImageFile();
+
+        void commitCarInfoToOldServer();
+
+        void commitCarInfoToNewServer();
+
+        String initCarInfoDTO();
+
+        BindCarDTO initBindCarDTO();
     }
 
 }

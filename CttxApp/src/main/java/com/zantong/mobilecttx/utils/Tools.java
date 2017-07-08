@@ -30,11 +30,7 @@ public class Tools {
     public static final String FAILURE = "0";
 
     public static boolean isStrEmpty(String str) {
-        if ((str != null) && (str.trim().length() > 0) && (!"null".equals(str)) && (!"[]".equals(str))) {
-            return false;
-        } else {
-            return true;
-        }
+        return !((str != null) && (str.trim().length() > 0) && (!"null".equals(str)) && (!"[]".equals(str)));
     }
 
     public static String getYearDate() {

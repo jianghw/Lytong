@@ -18,12 +18,27 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
+import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
+import com.zantong.mobilecttx.car.activity.CarManageGroupActivity;
+import com.zantong.mobilecttx.card.activity.CardHomeActivity;
+import com.zantong.mobilecttx.card.activity.MyCardActivity;
+import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.common.activity.BrowserActivity;
+import com.zantong.mobilecttx.common.activity.CommonProblemActivity;
+import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 import com.zantong.mobilecttx.interf.IHomeMeFtyContract;
 import com.zantong.mobilecttx.presenter.home.HomeMeFtyPresenter;
+import com.zantong.mobilecttx.share.activity.ShareParentActivity;
+import com.zantong.mobilecttx.user.activity.AboutActivity;
+import com.zantong.mobilecttx.user.activity.CouponActivity;
+import com.zantong.mobilecttx.user.activity.MegTypeActivity;
+import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
+import com.zantong.mobilecttx.user.activity.SettingActivity;
+import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
 import com.zantong.mobilecttx.user.bean.CouponFragmentBean;
 import com.zantong.mobilecttx.user.bean.CouponFragmentLBean;
 import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
@@ -32,11 +47,14 @@ import com.zantong.mobilecttx.user.bean.MessageCountBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.utils.ImageOptions;
 import com.zantong.mobilecttx.utils.Tools;
+import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.weizhang.activity.ViolationHistoryAcitvity;
 
 import java.io.File;
 import java.util.List;
 
 import cn.qqtheme.framework.util.AppUtils;
+import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
@@ -100,6 +118,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
      * mPresenter
      */
     private IHomeMeFtyContract.IHomeMeFtyPresenter mPresenter;
+    private HomeMainActivity.MessageListener mHomeListener;
 
     public static HomeMeFragment newInstance() {
         return new HomeMeFragment();
@@ -153,8 +172,6 @@ public class HomeMeFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onFirstDataVisible() {
-        initDataRefresh();
-
         UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
         int appCode = AppUtils.getAppVersionCode();
         int mVersionCode = appCode;
@@ -166,15 +183,21 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         mTvUpdate.setText(appCode >= mVersionCode
                 ? "当前已为最新版本" : "请更新最新版本v" + mVersionName);
 
-        if (appCode >= mVersionCode) return;
-        Drawable nav_up = getResources().getDrawable(R.mipmap.icon_dot_sel);
-        nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
-        mTvUpdateTitle.setCompoundDrawables(null, null, nav_up, null);
+        if (appCode < mVersionCode) {
+            Drawable nav_up = getResources().getDrawable(R.mipmap.icon_dot_sel);
+            nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
+            mTvUpdateTitle.setCompoundDrawables(null, null, nav_up, null);
+        }
     }
 
+    /**
+     * 会多次刷新数据 ^3^
+     */
     @Override
     public void onResume() {
         super.onResume();
+
+        initDataRefresh();
     }
 
     @Override
@@ -188,9 +211,6 @@ public class HomeMeFragment extends BaseRefreshJxFragment
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-
-        if (hidden) return;
-        initDataRefresh();
     }
 
     private void initDataRefresh() {
@@ -244,7 +264,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
 
         File mCropFile = new File(ImgPath);
         if (!mCropFile.exists()) {
-            ToastUtils.toastShort("头像图片可能未生成或删除");
+//            ToastUtils.toastShort("头像图片未生成或丢失");
             return null;
         }
         Uri outputUri;
@@ -272,7 +292,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
 
     @Override
     protected void DestroyViewAndThing() {
-
+        if (mPresenter != null) mPresenter.unSubscribe();
     }
 
     public void initView(View view) {
@@ -335,33 +355,57 @@ public class HomeMeFragment extends BaseRefreshJxFragment
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.img_setting:
+            case R.id.img_setting://设置
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(26));
+                Act.getInstance().lauchIntentToLogin(getActivity(), SettingActivity.class);
                 break;
             case R.id.img_head:
+                Act.getInstance().lauchIntentToLogin(getActivity(), UserInfoUpdate.class);
                 break;
+            case R.id.lay_order://我的畅通卡
             case R.id.tv_card:
+                if (Tools.isStrEmpty(PublicData.getInstance().filenum))
+                    Act.getInstance().lauchIntentToLogin(getActivity(), CardHomeActivity.class);
+                else
+                    Act.getInstance().lauchIntentToLogin(getActivity(), MyCardActivity.class);
                 break;
             case R.id.tv_car:
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(28));
+                Act.getInstance().gotoIntent(getActivity(), CarManageGroupActivity.class);
                 break;
             case R.id.tv_coupon:
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(27));
+                Act.getInstance().lauchIntentToLogin(getActivity(), CouponActivity.class);
                 break;
-            case R.id.lay_order:
+            case R.id.lay_query://违章缴费查询
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(34));
+                Act.getInstance().lauchIntentToLogin(getActivity(), ViolationHistoryAcitvity.class);
                 break;
-            case R.id.lay_query:
+            case R.id.lay_msg://消息
+                MobclickAgent.onEvent(ContextUtils.getContext(), Config.getUMengID(24));
+                Act.getInstance().lauchIntentToLogin(getActivity(), MegTypeActivity.class);
                 break;
-            case R.id.lay_msg:
+            case R.id.lay_recommend://推荐送豪礼
+                Act.getInstance().lauchIntentToLogin(getActivity(), ShareParentActivity.class);
                 break;
-            case R.id.lay_recommend:
+            case R.id.lay_problem://常见问题
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(32));
+                Act.getInstance().gotoIntent(getActivity(), CommonProblemActivity.class);
                 break;
-            case R.id.lay_problem:
+            case R.id.lay_service://联系客服
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(33));
+                Act.getInstance().gotoIntent(getActivity(), ProblemFeedbackActivity.class);
                 break;
-            case R.id.lay_service:
-                break;
-            case R.id.about_us:
+            case R.id.about_us://关于我们
+                Act.getInstance().gotoIntent(getActivity(), AboutActivity.class);
                 break;
             case R.id.lay_update:
+                Beta.checkUpgrade();
                 break;
             case R.id.about_advertising:
+                PublicData.getInstance().webviewUrl = "file:///android_asset/bindcard_agreement.html";
+                PublicData.getInstance().webviewTitle = "隐私声明";
+                Act.getInstance().gotoIntent(getActivity(), BrowserActivity.class);
                 break;
             default:
                 break;
@@ -398,11 +442,18 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         MessageCountBean resultData = result.getData();
         if (mImgMsg != null) mImgMsg.setVisibility(
                 resultData != null && resultData.getCount() > 0 ? View.VISIBLE : View.GONE);
+
+        if (mHomeListener != null)
+            mHomeListener.setTipOfNumber(2, resultData != null ? resultData.getCount() : 0);
     }
 
     @Override
     public void countMessageDetailError(String responseDesc) {
         if (mImgMsg != null) mImgMsg.setVisibility(View.GONE);
         ToastUtils.toastShort(responseDesc);
+    }
+
+    public void setMessageListener(HomeMainActivity.MessageListener messageListener) {
+        mHomeListener = messageListener;
     }
 }

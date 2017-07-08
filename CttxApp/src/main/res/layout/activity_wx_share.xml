@@ -1,17 +1,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/transparent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/share_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                 android:layout_marginTop="@dimen/ds_30"
                 android:text="分享给我的好友"
                 android:textColor="@color/gray_66"
-                android:textSize="@dimen/fs_44" />
+                android:textSize="@dimen/fs_44"/>
 
             <LinearLayout
                 android:id="@+id/share_wx_haoyou"
@@ -44,16 +44,16 @@
                 <ImageView
                     android:layout_width="@dimen/ds_120"
                     android:layout_height="@dimen/ds_120"
-                    android:background="@mipmap/icon_res_haoyou" />
+                    android:background="@mipmap/icon_wechat"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ds_30"
                     android:layout_marginBottom="@dimen/ds_30"
+                    android:layout_marginTop="@dimen/ds_30"
                     android:text="微信"
                     android:textColor="@color/gray_55"
-                    android:textSize="@dimen/fs_44" />
+                    android:textSize="@dimen/fs_44"/>
             </LinearLayout>
 
             <LinearLayout
@@ -69,16 +69,16 @@
                 <ImageView
                     android:layout_width="@dimen/ds_120"
                     android:layout_height="@dimen/ds_120"
-                    android:background="@mipmap/icon_res_penyouquan" />
+                    android:background="@mipmap/icon_friends"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ds_30"
                     android:layout_marginBottom="@dimen/ds_30"
+                    android:layout_marginTop="@dimen/ds_30"
                     android:text="朋友圈"
                     android:textColor="@color/gray_55"
-                    android:textSize="@dimen/fs_44" />
+                    android:textSize="@dimen/fs_44"/>
             </LinearLayout>
 
             <LinearLayout
@@ -86,25 +86,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/share_hint"
-                android:visibility="gone"
                 android:layout_marginLeft="@dimen/ds_30"
                 android:layout_toRightOf="@+id/share_wx_penyouquan"
                 android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="@dimen/ds_120"
                     android:layout_height="@dimen/ds_120"
-                    android:background="@mipmap/icon_res_qrcode" />
+                    android:background="@mipmap/icon_res_qrcode"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/ds_30"
                     android:layout_marginBottom="@dimen/ds_30"
+                    android:layout_marginTop="@dimen/ds_30"
                     android:text="二维码"
                     android:textColor="@color/gray_55"
-                    android:textSize="@dimen/fs_44" />
+                    android:textSize="@dimen/fs_44"/>
             </LinearLayout>
 
         </RelativeLayout>
@@ -121,7 +121,7 @@
             android:gravity="center"
             android:text="取消"
             android:textColor="@color/gray_66"
-            android:textSize="@dimen/fs_44" />
+            android:textSize="@dimen/fs_44"/>
 
     </LinearLayout>
 

@@ -2,8 +2,22 @@ package com.zantong.mobilecttx.car.dto;
 
 /**
  * 车辆信息实体
- * @author Sandy
- * create at 16/6/8 下午11:48
+ * <p>
+ * 参数名	必选	类型	说明
+ * usrid	是	string	用户ID
+ * carnum	是	string	车牌号 加密
+ * <p>
+ * carmodel	否	string	车辆型号
+ * <p>
+ * ispaycar	是	string	是否可缴费车辆
+ * <p>
+ * inspectdate	否	string	年检日期
+ * <p>
+ * defaultflag	是	string	默认标识
+ * inspectflag	是	string	年检提醒标识
+ * carnumtype	是	string	车牌类型
+ * violationflag	是	string	违章提醒标识
+ * enginenum	是	string	发动机号 加密
  */
 public class CarInfoDTO {
 
@@ -20,6 +34,27 @@ public class CarInfoDTO {
     private String carimage;
     private String opertype;
     private String activityCar;
+
+    public CarInfoDTO() {
+    }
+
+    public CarInfoDTO(String carnumtype, String inspectdate,
+                      String carmodel, String usrid, String ispaycar, String defaultflag,
+                      String inspectflag, String violationflag, String carimage,
+                      String opertype, String activityCar) {
+
+        this.carnumtype = carnumtype;
+        this.inspectdate = inspectdate;
+        this.carmodel = carmodel;
+        this.usrid = usrid;
+        this.ispaycar = ispaycar;
+        this.defaultflag = defaultflag;
+        this.inspectflag = inspectflag;
+        this.violationflag = violationflag;
+        this.carimage = carimage;
+        this.opertype = opertype;
+        this.activityCar = activityCar;
+    }
 
     public String getActivityCar() {
         return activityCar;

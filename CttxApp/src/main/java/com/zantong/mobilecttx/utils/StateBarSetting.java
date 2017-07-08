@@ -10,8 +10,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.home.activity.HomeActivity;
 
 /**
  * Created by 王海洋 on 2016/5/9.
@@ -29,7 +29,7 @@ public class StateBarSetting {
         settingBar(mContext, 0, clazz, popFlag);
     }
     public static void settingBar(final Activity mContext, int res, final Class<?> clazz, final boolean popFlag){
-        if(!(mContext instanceof HomeActivity)){
+        if(!(mContext instanceof HomeMainActivity)){
             ScreenManager.pushActivity(mContext);
         }
         View view = mContext.findViewById(R.id.tv_back);

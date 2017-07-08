@@ -98,14 +98,14 @@ public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
                 if ("000000".equals(result.getSYS_HEAD().getReturnCode())) {
                     setDataResult(result.getRspInfo().getViolationInfo());
                 } else {
-                    ToastUtils.showShort(getContext(), result.getSYS_HEAD().getReturnMessage());
+                    ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
                     onShowFailed();
                 }
             }
 
             @Override
             public void onError(String errorCode, String msg) {
-                ToastUtils.showShort(getContext(), msg);
+                ToastUtils.toastShort(msg);
                 onShowFailed();
             }
         });

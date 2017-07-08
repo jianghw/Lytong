@@ -13,6 +13,7 @@
         android:orientation="vertical">
 
         <ImageView
+            android:src="@mipmap/app_icon"
             android:id="@+id/img_scan"
             android:layout_width="@dimen/ds_360"
             android:layout_height="@dimen/ds_360"
@@ -87,7 +88,7 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/ds_36"
             android:layout_marginTop="@dimen/ds_36"
-            android:background="@color/colorWhite"/>
+            android:background="@color/colorTvRed_f33"/>
 
         <RelativeLayout
             android:layout_width="0dp"

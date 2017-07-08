@@ -879,10 +879,12 @@ public class DialogUtils {
      * @param listener1
      * @param listener2
      */
-    public static void createDialog(final Context context, String title, String content, String leftMenu, String rightMenu, final View.OnClickListener listener1, final View.OnClickListener listener2) {
+    public static void createDialog(final Context context, String title, String content,
+                                    String leftMenu, String rightMenu,
+                                    final View.OnClickListener listener1, final View.OnClickListener listener2) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
-        View view = ((Activity) context).getLayoutInflater().inflate(
-                R.layout.dialog_update, null);
+
+        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_update, null);
         TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
         TextView mContent = (TextView) view.findViewById(R.id.dialog_msg);
         Button btn1 = (Button) view.findViewById(R.id.dialog_btn1);

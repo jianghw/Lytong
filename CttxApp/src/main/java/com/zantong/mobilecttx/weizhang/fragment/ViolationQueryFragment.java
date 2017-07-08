@@ -31,17 +31,28 @@ import com.zantong.mobilecttx.common.activity.CommonListActivity;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrBean;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
+import com.zantong.mobilecttx.eventbus.AddCarInfoEvent;
+import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
 import com.zantong.mobilecttx.home.activity.GuideActivity;
 import com.zantong.mobilecttx.interf.IViolationQueryFtyContract;
 import com.zantong.mobilecttx.presenter.weizhang.ViolationQueryFtyPresenter;
+import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
 import com.zantong.mobilecttx.utils.DialogMgr;
+import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
+import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
+import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 import com.zantong.mobilecttx.widght.UISwitchButton;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 
 import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
@@ -176,7 +187,9 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         ViolationQueryFtyPresenter mPresenter = new ViolationQueryFtyPresenter(
                 Injection.provideRepository(getActivity().getApplicationContext()), this);
 //车牌号
+        //小写转化为大写
         mEditPlate.setTransformationMethod(new AllCapTransformationMethod());
+        ////设置光标位置在文本框末尾
         mEditPlate.setSelection(mEditPlate.getText().toString().length());
 //选择项目
         initLayEnable(true, mLayoutBrand);
@@ -202,11 +215,21 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
             PublicData.getInstance().GUIDE_TYPE = 1;
             Act.getInstance().gotoIntent(getActivity(), GuideActivity.class);
         }
+//可添加控件操作
+        int size;
+        if (PublicData.getInstance().loginFlag)
+            size = PublicData.getInstance().mServerCars.size();
+        else
+            size = SPUtils.getInstance().getCarsInfo().size();
+        mCustomSwitchBtn.setChecked(size < 3);
+        mCustomSwitchBtn.setEnabled(size < 3);
     }
 
     @Override
     protected void DestroyViewAndThing() {
         if (mPresenter != null) mPresenter.unSubscribe();
+        mCarInfoDTO = null;
+        mBindCarDTO = null;
     }
 
     public void initView(View view) {
@@ -248,7 +271,6 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
         mImgVehicle = (ImageView) view.findViewById(R.id.img_vehicle);
         mCustomSwitchBtn = (UISwitchButton) view.findViewById(R.id.custom_switch_btn);
-        mCustomSwitchBtn.setOnClickListener(this);
         mBtnQuery = (Button) view.findViewById(R.id.btn_query);
         mBtnQuery.setOnClickListener(this);
     }
@@ -284,9 +306,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
             case R.id.lay_date://日期
                 String temp = mTvDate.getText().toString().trim();
                 String[] temps = null;
-                if ("" != temp) {
-                    temps = temp.split("-");
-                }
+                if (!TextUtils.isEmpty(temp)) temps = temp.split("-");
                 MyChooseDialog dialog = new MyChooseDialog(
                         getActivity(),
                         temps,
@@ -318,10 +338,10 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
                 intentX.putExtra("idB", carBrandId);
                 startActivityForResult(intentX, CarChooseActivity.REQUEST_X_CODE);
                 break;
-            case R.id.custom_switch_btn:
-                break;
             case R.id.btn_query://提交
                 dataFormValidation();
+                break;
+            default:
                 break;
         }
     }
@@ -348,33 +368,186 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
             return;
         }
 
-//        carNum = getTvProvince() + plate;
-//        carEngineNum = engine;
-//        params.setPlateNo(carNum);
-//        params.setFileNum("");
-//        params.setVehicleType(String.valueOf(pos + 1));
+        String vehicleCode = VehicleTypeTools.switchVehicleCode(carType);
+        if (plate.length() >= 7 && (vehicleCode.equals("51") || vehicleCode.equals("52"))) {
+            DialogUtils.createDialog(getActivity(),
+                    "温馨提示",
+                    "如果您的汽车为新能源汽车,车牌类型请选择新能源汽车",
+                    "取消",
+                    "继续查询",
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    },
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
+        }
+
+        String carNum = getTvProvince() + plate;
+        initCarInfoDto(carNum, engine, carType);
+        initBindCarDTO(carNum, engine, carType);
+
+        submitData();
     }
 
-    /* 获取请求参数*/
-    private void initCarInfoDto() {
-        /* 老接口传值*/
-//        mCarInfoDTO.setCarnum(mProvince.getText().toString() + mPlateNum.getTransformationMethod().getTransformation(mPlateNum.getText(), mPlateNum).toString());
-//        mCarInfoDTO.setUsrid(PublicData.getInstance().userID);
-//
-//        mCarInfoDTO.setCarnumtype(VehicleTypeTools.switchVehicleCode(mType.getText().toString()));
-//
-//        mCarInfoDTO.setEnginenum(mEngineNum.getText().toString());
-//        mCarInfoDTO.setIspaycar("0");
-//        mCarInfoDTO.setDefaultflag("0");
-//        mCarInfoDTO.setInspectflag("0");
-//        mCarInfoDTO.setViolationflag("0");
-//        mCarInfoDTO.setCarmodel("");
-//        mCarInfoDTO.setInspectdate("");
-//        if (infoBean != null) {
-//            mCarInfoDTO.setIspaycar(infoBean.getIspaycar());
-//            mCarInfoDTO.setCarmodel(infoBean.getCarmodel());
-//            mCarInfoDTO.setInspectdate(infoBean.getInspectdate());
-//        }
+    /**
+     * 未登录时直接提交到新服务器
+     * 登录时先提交旧服务器,再提交新服务器
+     */
+    private void submitData() {
+        if (PublicData.getInstance().loginFlag) {
+            if (mCustomSwitchBtn.isChecked()) {
+                List<UserCarInfoBean> serverCars = PublicData.getInstance().mServerCars;
+                if (serverCars != null && serverCars.size() > 0) {
+                    int size = serverCars.size();
+                    if (size >= 3) {
+                        ToastUtils.toastShort("当前车辆已超过3俩，请不要再保存");
+                        return;
+                    }
+                    for (int i = 0; i < size; i++) {
+                        if (serverCars.get(i).getCarnum().equals(mCarInfoDTO.getCarnum())) {
+                            ToastUtils.toastShort("该车辆已存在，请不要重复添加");
+                            return;
+                        }
+                    }
+                }
+                commitCarInfoToServer();
+            }
+            doQueryVehicle();
+        }
+
+        if (!PublicData.getInstance().loginFlag) {
+            if (mCustomSwitchBtn.isChecked()) {
+                List<CarInfoDTO> infoDTOList = SPUtils.getInstance().getCarsInfo();
+                if (infoDTOList != null && infoDTOList.size() > 0) {
+                    int size = infoDTOList.size();
+                    if (size >= 3) {
+                        ToastUtils.toastShort("当前车辆已超过3俩，请不要再保存");
+                        return;
+                    }
+                    for (int i = 0; i < size; i++) {
+                        if (infoDTOList.get(i).getCarnum().equals(mCarInfoDTO.getCarnum())) {
+                            ToastUtils.toastShort("该车辆已存在，请不要重复添加");
+                            return;
+                        }
+                    }
+                }
+                SPUtils.getInstance().getCarsInfo().add(getCarInfoDTO());
+                PublicData.getInstance().mCarNum++;//车辆数+1
+                EventBus.getDefault().post(new UpdateCarInfoEvent(true));
+                EventBus.getDefault().post(new AddCarInfoEvent(true, getCarInfoDTO()));
+            }
+            doQueryVehicle();
+        }
+    }
+
+    private void commitCarInfoToServer() {
+        if (mPresenter != null) mPresenter.commitCarInfoToOldServer();
+        if (mPresenter != null) mPresenter.commitCarInfoToNewServer();
+
+        PublicData.getInstance().mCarNum++;//车辆数+1
+        EventBus.getDefault().post(new UpdateCarInfoEvent(true));
+        EventBus.getDefault().post(new AddCarInfoEvent(true, getCarInfoDTO()));
+    }
+
+    private void doQueryVehicle() {
+        PublicData.getInstance().mHashMap.put("carnum", mCarInfoDTO.getCarnum());
+        PublicData.getInstance().mHashMap.put("enginenum", mCarInfoDTO.getEnginenum());
+        PublicData.getInstance().mHashMap.put("carnumtype", mCarInfoDTO.getCarnumtype());
+        PublicData.getInstance().mHashMap.put("IllegalViolationName", mCarInfoDTO.getCarnum());//标题
+
+        ViolationDTO violationDTO = new ViolationDTO();
+        violationDTO.setCarnum(RSAUtils.strByEncryption(mCarInfoDTO.getCarnum(), true));
+        violationDTO.setEnginenum(RSAUtils.strByEncryption(mCarInfoDTO.getEnginenum(), true));
+        violationDTO.setCarnumtype(mCarInfoDTO.getCarnumtype());
+
+        Intent intent = new Intent(getActivity(), ViolationResultAcitvity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("params", violationDTO);
+        intent.putExtras(bundle);
+        intent.putExtra("plateNum", mCarInfoDTO.getCarnum());
+        startActivity(intent);
+    }
+
+    /**
+     * cip.cfc.u005.01 添加
+     * cip.cfc.c001.01 修改
+     * 参数名	必选	类型	说明
+     * usrid	是	string	用户ID
+     * carnum	是	string	车牌号 加密
+     * carmodel	否	string	车辆型号
+     * ispaycar	是	string	是否可缴费车辆
+     * inspectdate	否	string	年检日期
+     * defaultflag	是	string	默认标识
+     * inspectflag	是	string	年检提醒标识
+     * carnumtype	是	string	车牌类型
+     * violationflag	是	string	违章提醒标识
+     * enginenum	是	string	发动机号 加密
+     */
+    private void initCarInfoDto(String carNum, String engine, String carType) {
+        mCarInfoDTO.setUsrid(PublicData.getInstance().userID);
+        mCarInfoDTO.setCarnum(carNum);
+        mCarInfoDTO.setEnginenum(engine);
+        mCarInfoDTO.setCarnumtype(VehicleTypeTools.switchVehicleCode(carType));
+
+        mCarInfoDTO.setCarmodel("");
+        mCarInfoDTO.setIspaycar("0");
+        mCarInfoDTO.setInspectdate(getTvData());
+        mCarInfoDTO.setDefaultflag("0");
+        mCarInfoDTO.setInspectflag("0");
+        mCarInfoDTO.setViolationflag("0");
+    }
+
+    @Override
+    public CarInfoDTO getCarInfoDTO() {
+        return mCarInfoDTO;
+    }
+
+    /**
+     * 保存 老接口 失败
+     */
+    @Override
+    public void commitCarInfoToOldServerError(String message) {
+        ToastUtils.toastShort(message);
+    }
+
+    @Override
+    public BindCarDTO getBindCarDTO() {
+        return mBindCarDTO;
+    }
+
+    @Override
+    public void commitCarInfoToNewServerError(String message) {
+        ToastUtils.toastShort(message);
+    }
+
+    /**
+     * 48.绑定行驶证接口
+     * 参数名	必选	类型	说明
+     * plateNo	是	string	车牌号
+     * engineNo	是	string	发动机号
+     * vehicleType	是	string	车辆类型
+     * usrnum	是	string	安盛id
+     * issueDate	否	string	初次领证日期
+     */
+    private void initBindCarDTO(String carNum, String engine, String carType) {
+        mBindCarDTO.setPlateNo(carNum);
+        mBindCarDTO.setEngineNo(engine);
+        mBindCarDTO.setVehicleType(carType);
+        mBindCarDTO.setUsrnum(PublicData.getInstance().userID);
+        mBindCarDTO.setIssueDate(getTvData());
+
+//        mBindCarDTO.setFileNum("");
+//        mBindCarDTO.setAddress(mPosition.getText().toString());
+//        mBindCarDTO.setUseCharacter(mUseProperty.getText().toString());
+//        mBindCarDTO.setCarModel(mBrand.getText().toString());
+//        mBindCarDTO.setVin(mCode.getText().toString());
     }
 
     public String getTvProvince() {
@@ -391,6 +564,10 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
     public String getTvType() {
         return mTvType.getText().toString();
+    }
+
+    public String getTvData() {
+        return mTvDate.getText().toString();
     }
 
     /**
@@ -428,19 +605,19 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         startActivityForResult(intentOcr, GlobalConstant.requestCode.violation_query_camera);
     }
 
+
     @PermissionFail(requestCode = PER_REQUEST_CODE)
     public void doPermissionFail() {
         ToastUtils.toastShort("您已关闭摄像头权限,请设置中打开");
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 //车牌类型
         if (requestCode == GlobalConstant.requestCode.violation_query_plate
-                && resultCode == GlobalConstant.resultCode.common_list_fty) {
-
+                && resultCode == GlobalConstant.resultCode.common_list_fty && data != null) {
+            mTvType.setText(data.getStringExtra(GlobalConstant.putExtra.common_list_extra));
         }
 //拍照回调
         if (requestCode == GlobalConstant.requestCode.violation_query_camera
@@ -489,12 +666,12 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
     @Override
     public void loadingProgress() {
-
+        showDialogLoading();
     }
 
     @Override
     public void hideLoadingProgress() {
-
+        hideDialogLoading();
     }
 
     /**

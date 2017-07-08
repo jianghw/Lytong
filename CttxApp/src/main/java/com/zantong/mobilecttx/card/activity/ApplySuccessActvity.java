@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
+import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
-import com.zantong.mobilecttx.home.activity.HomeActivity;
 
 import butterknife.Bind;
 
@@ -22,7 +22,7 @@ public class ApplySuccessActvity extends BaseMvpActivity<IBaseView, HelpPresente
     @Bind(R.id.activity_apply_success_wangdian)
     TextView mSuccessWangdian;
 
-    public static Intent getIntent(Context context, String wangdian){
+    public static Intent getIntent(Context context, String wangdian) {
         Intent intent = new Intent(context, ApplySuccessActvity.class);
         intent.putExtra("wangdian", wangdian);
         return intent;
@@ -47,18 +47,17 @@ public class ApplySuccessActvity extends BaseMvpActivity<IBaseView, HelpPresente
 
     @Override
     protected void baseGoEnsure() {
-        super.baseGoEnsure();
-        startActivity(new Intent(ApplySuccessActvity.this, HomeActivity.class));
+        startActivity(new Intent(this, HomeMainActivity.class));
         finish();
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            startActivity(new Intent(ApplySuccessActvity.this, HomeActivity.class));
+            startActivity(new Intent(this, HomeMainActivity.class));
             finish();
             return false;
-        }else{
+        } else {
             return super.onKeyDown(keyCode, event);
         }
     }

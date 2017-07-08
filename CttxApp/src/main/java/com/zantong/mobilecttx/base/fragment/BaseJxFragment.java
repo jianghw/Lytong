@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseActivity;
+import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
 
 import butterknife.ButterKnife;
@@ -168,6 +169,20 @@ public abstract class BaseJxFragment extends Fragment {
     }
 
     /**
+     * 显示加载中遮罩层Dialog
+     */
+    public void showDialogLoading() {
+        FragmentActivity activity = getActivity();
+        if (activity != null && activity instanceof BaseActivity) {
+            ((BaseActivity) activity).showDialogLoading();
+        } else if (activity != null && activity instanceof MvpBaseActivity) {
+            ((MvpBaseActivity) activity).showDialogLoading();
+        } else if (activity != null && activity instanceof BaseJxActivity) {
+            ((BaseJxActivity) activity).showDialogLoading();
+        }
+    }
+
+    /**
      * 显示加载中遮罩层Dialog，带消息提示
      *
      * @param msg
@@ -178,6 +193,8 @@ public abstract class BaseJxFragment extends Fragment {
             ((BaseActivity) activity).showDialogLoading(msg);
         } else if (activity != null && activity instanceof MvpBaseActivity) {
             ((MvpBaseActivity) activity).showDialogLoading(msg);
+        } else if (activity != null && activity instanceof BaseJxActivity) {
+            ((BaseJxActivity) activity).showDialogLoading(msg);
         }
     }
 
@@ -190,6 +207,8 @@ public abstract class BaseJxFragment extends Fragment {
             ((BaseActivity) activity).hideDialogLoading();
         } else if (activity != null && activity instanceof MvpBaseActivity) {
             ((MvpBaseActivity) activity).hideDialogLoading();
+        } else if (activity != null && activity instanceof BaseJxActivity) {
+            ((BaseJxActivity) activity).hideDialogLoading();
         }
     }
 

@@ -72,7 +72,7 @@ public class MyChooseDialog extends Dialog {
                 currentDate = Integer.valueOf(DateUtils.getEndDate());
                 selDate = Integer.valueOf(timePicker.getYear() + tempMonth + tempDay);
                 if (currentDate < selDate){
-                    ToastUtils.showShort(context,"初次领证日期错误");
+                    ToastUtils.toastShort("初次领证日期错误");
                 }else{
                     chooseDialogListener.back(String.valueOf(timePicker.getYear() + "-" + tempMonth + "-" + tempDay));
                 }

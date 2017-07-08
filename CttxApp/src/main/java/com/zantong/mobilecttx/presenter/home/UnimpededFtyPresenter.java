@@ -46,6 +46,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
     @Override
     public void unSubscribe() {
+        mAtyView.hideLoadingProgress();
         mSubscriptions.clear();
     }
 
