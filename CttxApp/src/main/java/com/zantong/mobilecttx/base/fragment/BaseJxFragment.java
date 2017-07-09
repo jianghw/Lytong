@@ -56,7 +56,8 @@ public abstract class BaseJxFragment extends Fragment {
             return inflater.inflate(getContentViewLayoutID(), null);
         } else {
             View inflate = inflater.inflate(R.layout.fragment_base_jx, container, false);
-            LinearLayout linearLayout = (LinearLayout) inflate.findViewById(R.id.lay_base_content);
+            LinearLayout linearLayout = (LinearLayout)
+                    inflate.findViewById(R.id.lay_base_content);
 
             View rootView = inflater.inflate(getContentLayoutResID(), null);
             ViewGroup parent = (ViewGroup) rootView.getParent();
@@ -156,7 +157,8 @@ public abstract class BaseJxFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        LogUtils.e("setUserVisibleHint==" + this.getClass().getSimpleName() + "==" + isVisibleToUser);
+        LogUtils.e("setUserVisibleHint==" +
+                this.getClass().getSimpleName() + "==" + isVisibleToUser);
     }
 
     /**

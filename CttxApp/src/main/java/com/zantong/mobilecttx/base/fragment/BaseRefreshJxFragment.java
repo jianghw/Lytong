@@ -34,7 +34,8 @@ public abstract class BaseRefreshJxFragment extends BaseJxFragment {
         mPullRefreshView = (PullToRefreshLayout) view.findViewById(R.id.pull_refresh_view);
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.base_content);
 
-        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) getActivity()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rootView = inflater.inflate(getFragmentLayoutResId(), null);
         ViewGroup parent = (ViewGroup) rootView.getParent();
         if (parent != null) {
