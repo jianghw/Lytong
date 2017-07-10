@@ -46,7 +46,8 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.ToastUtils;
 
-public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements View.OnClickListener, IBaseView {
+public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
+        implements View.OnClickListener, IBaseView {
 
     @Bind(R.id.manage_cars_loading)
     TextView mLoadingView;
@@ -106,6 +107,7 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
         getEnsureView().setBackgroundResource(R.mipmap.icon_add_car);
         mXRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         int[] layoutIds = {R.layout.item_manage_vehicles, R.layout.item_manage_vehicles_group};
+
         adapter = new SuperAdapter(this, layoutIds);
         mXRecyclerView.setAdapter(adapter);
 

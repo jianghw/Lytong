@@ -8,6 +8,7 @@ import com.zantong.mobilecttx.api.IDrivingImageService;
 import com.zantong.mobilecttx.api.IFebruaryService;
 import com.zantong.mobilecttx.api.IGoodsService;
 import com.zantong.mobilecttx.api.IMessageService;
+import com.zantong.mobilecttx.api.IOrderService;
 import com.zantong.mobilecttx.api.IPayService;
 import com.zantong.mobilecttx.api.ISplashService;
 import com.zantong.mobilecttx.api.IViolationService;
@@ -29,6 +30,8 @@ import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.interf.CTTXHttpPOSTInterface;
+import com.zantong.mobilecttx.order.bean.OrderDetailResult;
+import com.zantong.mobilecttx.order.bean.OrderListResult;
 import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
@@ -254,7 +257,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<CreateOrderResult> createOrder(CreateOrderDTO createOrder) {
-        return initTestRetrofit(4).create(IGoodsService.class).createOrder(
+        return initRetrofit().create(IGoodsService.class).createOrder(
                 createOrder.getType(), createOrder.getUserNum(),
                 createOrder.getGoodsId(), createOrder.getPrice(),
                 createOrder.getUserName(), createOrder.getPhone(), createOrder.getIdCard());
@@ -269,7 +272,6 @@ public class RemoteData implements IRemoteSource {
     }
 
     /**
-     *
      * cip.cfc.u005.01
      */
     @Override
@@ -290,6 +292,22 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<PayOrderResult> getBankPayHtml(String orderId, String orderPrice) {
-        return initRetrofit().create(IPayService.class).getBankPayHtml(orderId,orderPrice);
+        return initTestRetrofit(4).create(IPayService.class).getBankPayHtml(orderId, orderPrice);
+    }
+
+    /**
+     * 8.查询订单列表
+     */
+    @Override
+    public Observable<OrderListResult> getOrderList(String userId) {
+        return initRetrofit().create(IOrderService.class).getOrderList(userId);
+    }
+
+    /**
+     * 9.获取订单详情
+     */
+    @Override
+    public Observable<OrderDetailResult> getOrderDetail(String orderId) {
+        return initRetrofit().create(IOrderService.class).getOrderDetail(orderId);
     }
 }

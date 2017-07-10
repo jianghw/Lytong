@@ -18,6 +18,6 @@ public interface IPayService {
      * 5.获取工行支付页面
      */
     @FormUrlEncoded
-    @POST("goods/getAreaGoods")
+    @POST("pay/getBankPayHtml")
     Observable<PayOrderResult> getBankPayHtml(@Field("orderId") String orderId, @Field("amount") String orderPrice);
 }

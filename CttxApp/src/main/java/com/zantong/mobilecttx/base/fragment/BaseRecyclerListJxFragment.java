@@ -232,11 +232,6 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
     }
 
     /**
-     * fragment布局
-     */
-    protected abstract int getFragmentLayoutResId();
-
-    /**
      * 布局控件初始化
      */
     protected abstract void initFragmentView(View view);

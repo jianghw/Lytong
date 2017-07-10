@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.fahrschule.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
@@ -9,9 +10,11 @@ import android.widget.ImageView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.fahrschule.fragment.FahrschuleApplyFragment;
+import com.zantong.mobilecttx.fahrschule.fragment.FahrschuleApplySucceedFragment;
 import com.zantong.mobilecttx.fahrschule.fragment.FahrschuleOrderNumFragment;
-import com.zantong.mobilecttx.home.fragment.MeFragment;
 
+import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
@@ -26,7 +29,7 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
      */
     private FahrschuleApplyFragment mFahrschuleApplyFragment = null;
     private FahrschuleOrderNumFragment mFahrschuleOrderNumFragment = null;
-    private MeFragment mMeFragment = null;
+    private FahrschuleApplySucceedFragment mFahrschuleApplySucceedFragment = null;
     private ImageView mImgBack;
     private ImageView mImgHome;
 
@@ -51,19 +54,19 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
     protected void initFragmentView(View view) {
         initView(view);
 
-        initFragment();
+        initFragment(mCurPosition);
     }
 
     @Override
     protected void DestroyViewAndThing() {
         mFahrschuleApplyFragment = null;
         mFahrschuleOrderNumFragment = null;
-        mMeFragment = null;
+        mFahrschuleApplySucceedFragment = null;
     }
 
-    private void initFragment() {
+    private void initFragment(int position) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        switch (mCurPosition) {
+        switch (position) {
             case 0://驾校报名页面
                 if (mFahrschuleApplyFragment == null) {
                     mFahrschuleApplyFragment = FahrschuleApplyFragment.newInstance();
@@ -72,8 +75,7 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
                 mFahrschuleApplyFragment.setSwitcherListener(new SwitcherListener() {
                     @Override
                     public void setCurPosition(int position) {
-                        mCurPosition = position;
-                        initFragment();
+                        initFragment(position);
                     }
                 });
                 break;
@@ -84,13 +86,29 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
                 }
                 break;
             case 2:
-                if (mMeFragment == null) {
-                    mMeFragment = MeFragment.newInstance();
-                    FragmentUtils.addFragment(fragmentManager, mMeFragment, R.id.content);
+                if (mFahrschuleApplySucceedFragment == null) {
+                    mFahrschuleApplySucceedFragment = FahrschuleApplySucceedFragment.newInstance();
+                    FragmentUtils.replaceFragment(fragmentManager, mFahrschuleApplySucceedFragment, R.id.content, true);
                 }
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     *
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
+                && resultCode == GlobalConstant.resultCode.web_order_id_succeed) {
+            initFragment(2);
+        } else if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
+                && resultCode == GlobalConstant.resultCode.web_order_id_error) {
+//TODO 订单详情
+            ToastUtils.toastShort("去订单详情，未完成");
         }
     }
 

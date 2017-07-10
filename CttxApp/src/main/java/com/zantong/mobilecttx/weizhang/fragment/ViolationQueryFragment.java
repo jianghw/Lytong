@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.car.activity.CarBrandActivity;
 import com.zantong.mobilecttx.car.activity.CarChooseActivity;
@@ -296,7 +297,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
                 new DialogMgr(getActivity(), R.mipmap.engine_number_image);
                 break;
             case R.id.img_type_desc:
-                ToastUtils.toastShort("xxxxxxxxxxxxxxxxx");
+                ToastUtils.toastShort("请新能源车辆选择新能源汽车车牌");
                 break;
             case R.id.tv_type://车牌类型
                 PublicData.getInstance().commonListType = 3;
@@ -419,7 +420,6 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
                 }
                 commitCarInfoToServer();
             }
-            doQueryVehicle();
         }
 
         if (!PublicData.getInstance().loginFlag) {
@@ -473,6 +473,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         intent.putExtras(bundle);
         intent.putExtra("plateNum", mCarInfoDTO.getCarnum());
         startActivity(intent);
+        getActivity().finish();
     }
 
     /**
@@ -514,7 +515,12 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
      */
     @Override
     public void commitCarInfoToOldServerError(String message) {
-        ToastUtils.toastShort(message);
+        ToastUtils.toastShort("保存车辆失败" + message);
+    }
+
+    @Override
+    public void commitCarInfoToOldServerSucceed(Result responseBean) {
+        doQueryVehicle();
     }
 
     @Override

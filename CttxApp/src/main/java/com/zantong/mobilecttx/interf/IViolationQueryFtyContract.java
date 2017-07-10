@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.interf;
 
+import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
@@ -36,6 +37,8 @@ public interface IViolationQueryFtyContract {
         BindCarDTO getBindCarDTO();
 
         void commitCarInfoToNewServerError(String message);
+
+        void commitCarInfoToOldServerSucceed(Result responseBean);
     }
 
     interface IViolationQueryFtyPresenter extends IMvpPresenter {

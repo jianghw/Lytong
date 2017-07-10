@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.weizhang.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.zantong.mobilecttx.R;
@@ -57,5 +58,14 @@ public class ViolationActivity extends BaseJxActivity {
     @Override
     protected void DestroyViewAndThing() {
         mViolationQueryFragment = null;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            closeFragment();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -5,7 +5,11 @@ import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
+import com.zantong.mobilecttx.order.activity.OrderParentActivity;
+import com.zantong.mobilecttx.order.adapter.OrderStatusAdapter;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
+
+import java.util.List;
 
 /**
  * 所有订单
@@ -19,7 +23,7 @@ public class OrderAllStatusFragment extends BaseRecyclerListJxFragment<OrderList
     private String mParam1;
     private String mParam2;
 
-
+    private OrderParentActivity.RefreshListener mRefreshListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,11 +48,13 @@ public class OrderAllStatusFragment extends BaseRecyclerListJxFragment<OrderList
         return fragment;
     }
 
+    /**
+     * adapter
+     */
     @Override
     public BaseAdapter<OrderListBean> createAdapter() {
-        return null;
+        return new OrderStatusAdapter();
     }
-
 
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
@@ -57,12 +63,7 @@ public class OrderAllStatusFragment extends BaseRecyclerListJxFragment<OrderList
 
     @Override
     protected void onRefreshData() {
-
-    }
-
-    @Override
-    protected int getFragmentLayoutResId() {
-        return 0;
+        if (mRefreshListener != null) mRefreshListener.refreshListData(0);
     }
 
     @Override
@@ -78,5 +79,13 @@ public class OrderAllStatusFragment extends BaseRecyclerListJxFragment<OrderList
     @Override
     protected void DestroyViewAndThing() {
 
+    }
+
+    public void setPayOrderListData(List<OrderListBean> data) {
+        setDataResult(data);
+    }
+
+    public void setRefreshListener(OrderParentActivity.RefreshListener refreshListener) {
+        mRefreshListener = refreshListener;
     }
 }

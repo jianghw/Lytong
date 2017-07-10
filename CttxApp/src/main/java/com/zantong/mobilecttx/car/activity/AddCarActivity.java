@@ -336,16 +336,16 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
     /**
      * 保存车辆
      */
-    private void    commitCarInfo() {
+    private void commitCarInfo() {
         String plateNum = mPlateNum.getTransformationMethod().getTransformation(mPlateNum.getText(), mPlateNum).toString();
         String engineNum = mEngineNum.getText().toString();
         getCarInfoDto();
 
-        if (plateNum.length() < 5) {
+        if (plateNum.length() < 4) {
             ToastUtils.showShort(this, "请输入正确的车牌号");
             return;
         }
-        if (Tools.isStrEmpty(engineNum) || engineNum.length() < 5) {
+        if (Tools.isStrEmpty(engineNum) || engineNum.length() != 5) {
             ToastUtils.showShort(this, "请输入正确的发动机号");
             return;
         }
@@ -810,7 +810,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
         getCarInfoDto();
         String plateNum = mPlateNum.getText().toString();
         String engineNum = mEngineNum.getText().toString();
-        if (plateNum.length() < 6) {
+        if (TextUtils.isEmpty(plateNum)) {
             ToastUtils.showShort(this, "请输入正确的车牌号");
             return;
         }
@@ -827,7 +827,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
         getCarInfoDto();
         String plateNum = mPlateNum.getText().toString();
         String engineNum = mEngineNum.getText().toString();
-        if (plateNum.length() < 6) {
+        if (TextUtils.isEmpty(plateNum)) {
             ToastUtils.showShort(this, "请输入正确的车牌号");
             return;
         }

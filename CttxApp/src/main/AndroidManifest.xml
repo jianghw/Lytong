@@ -343,9 +343,6 @@
             android:name=".huodong.activity.HundredRuleActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".common.activity.BrowserForPayActivity"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name=".common.activity.OcrCameraActivity"
             android:screenOrientation="landscape"/>
 
@@ -424,6 +421,21 @@
         <!-- 分享模块页面-->
         <activity
             android:name=".share.activity.ShareParentActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- ===================订单模块=========================================-->
+        <!-- 订单模块列表页面-->
+        <activity
+            android:name=".order.activity.OrderParentActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- ===================付款web模块=========================================-->
+        <!-- 付款web模块页面-->
+        <activity
+            android:name=".common.activity.BrowserForPayActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".common.activity.FahrschulePayBrowserActivity"
             android:screenOrientation="portrait"/>
 
         <meta-data

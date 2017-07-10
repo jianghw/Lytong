@@ -27,7 +27,7 @@ public class ValidateUtils {
      * @return
      */
     public static boolean isIdCard(String idcard) {
-        return match("^(\\d{15}$|^\\d{18}$|^\\d{17}(\\d|X|x))$", idcard);
+        return match("^(\\d{15}|\\d{18}|\\d{17}(\\d|X|x))$", idcard);
 //		return match("(\\d{14}[0-9a-zA-Z])|(\\d{17}[0-9a-zA-Z])", idcard);
     }
 

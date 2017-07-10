@@ -300,7 +300,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
      */
     @Override
     public void getMerchantAreaSucceed(MerchantAresResult result) {
-        if (result != null && result.getData() != null) {
+        if (result.getData() != null) {
             List<MerchantAresBean> list = result.getData();
             selectArea(list, mTvAddressSel);
         } else {
@@ -402,7 +402,8 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
                 AresGoodsBean bean = goodsBeanList.get(position);
                 popupWindow.dismiss();
                 if (bean == null) return;
-                textView.setText(bean.getName() + "" + bean.getPrice() + "元");
+                textView.setText(bean.getName() + bean.getPrice() + "元");
+
                 mTvPrice.setText(bean.getPrice() + "元");
                 mTvGift.setText(bean.getDescription());
                 mGoodsId = bean.getGoodsId();
@@ -434,5 +435,15 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
         } else {
             ToastUtils.toastShort("订单号创建失败，稍后再试一试");
         }
+    }
+
+    @Override
+    public String getPriceValue() {
+        String price = mTvPrice.getText().toString();
+        String priceValue = price;
+        if (!TextUtils.isEmpty(price) && price.contains("元")) {
+            priceValue = price.substring(0, price.length() - 1);
+        }
+        return priceValue;
     }
 }

@@ -47,7 +47,7 @@ public class FahrschuleOrderNumPresenter
     }
 
     /**
-     * 54.充值接口
+     * 54.充值接口  加油旧接口 不用
      */
     @Override
     public void onPayOrderByCoupon(String orderId, String orderPrice, String payType) {

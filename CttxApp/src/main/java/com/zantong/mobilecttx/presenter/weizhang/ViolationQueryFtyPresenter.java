@@ -137,7 +137,7 @@ public class ViolationQueryFtyPresenter implements IViolationQueryFtyContract.IV
                     public void doNext(Result responseBean) {
                         if (responseBean != null
                                 && responseBean.getSYS_HEAD().getReturnCode().equals("000000")) {
-
+                            mAtyView.commitCarInfoToOldServerSucceed(responseBean);
                         } else {
                             mAtyView.commitCarInfoToOldServerError(responseBean != null
                                     ? responseBean.getSYS_HEAD().getReturnMessage() : "未知错误(cip.cfc.u005.01)");

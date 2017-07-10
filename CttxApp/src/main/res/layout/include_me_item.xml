@@ -19,7 +19,7 @@
         <TextView
             style="@style/payRecordTime"
             android:layout_marginLeft="53dip"
-            android:text="我的畅通卡"/>
+            android:text="我的订单"/>
 
         <ImageView
             style="@style/mineItemArrow"

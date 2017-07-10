@@ -82,7 +82,7 @@ public class SuperAdapter extends RecyclerView.Adapter<SuperViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void removeAll(){
+    public void removeAll() {
         items.clear();
         notifyDataSetChanged();
     }

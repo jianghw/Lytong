@@ -31,6 +31,7 @@ import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.common.activity.CommonProblemActivity;
 import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 import com.zantong.mobilecttx.interf.IHomeMeFtyContract;
+import com.zantong.mobilecttx.order.activity.OrderParentActivity;
 import com.zantong.mobilecttx.presenter.home.HomeMeFtyPresenter;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.user.activity.AboutActivity;
@@ -362,8 +363,11 @@ public class HomeMeFragment extends BaseRefreshJxFragment
             case R.id.img_head:
                 Act.getInstance().lauchIntentToLogin(getActivity(), UserInfoUpdate.class);
                 break;
-            case R.id.lay_order://我的畅通卡
-            case R.id.tv_card:
+            case R.id.lay_order://我的订单
+                MobclickAgent.onEvent(getActivity(), Config.getUMengID(30));
+                Act.getInstance().lauchIntentToLogin(getActivity(), OrderParentActivity.class);
+                break;
+            case R.id.tv_card://我的畅通卡
                 if (Tools.isStrEmpty(PublicData.getInstance().filenum))
                     Act.getInstance().lauchIntentToLogin(getActivity(), CardHomeActivity.class);
                 else

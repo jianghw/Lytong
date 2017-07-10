@@ -17,6 +17,8 @@ import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+import com.zantong.mobilecttx.order.bean.OrderDetailResult;
+import com.zantong.mobilecttx.order.bean.OrderListResult;
 import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
@@ -185,4 +187,14 @@ public interface IRemoteSource {
      * 5.获取工行支付页面
      */
     Observable<PayOrderResult> getBankPayHtml(String orderId, String orderPrice);
+
+    /**
+     * 8.查询订单列表
+     */
+    Observable<OrderListResult> getOrderList(String userId);
+
+    /**
+     * 9.获取订单详情
+     */
+    Observable<OrderDetailResult> getOrderDetail(String orderId);
 }

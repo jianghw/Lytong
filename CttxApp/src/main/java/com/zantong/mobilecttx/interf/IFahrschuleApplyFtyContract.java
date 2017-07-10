@@ -40,6 +40,9 @@ public interface IFahrschuleApplyFtyContract {
         void createOrderError(String message);
 
         void createOrderSucceed(CreateOrderResult result);
+
+        String getPriceValue();
+
     }
 
     interface IFahrschuleApplyFtyPresenter extends IMvpPresenter {

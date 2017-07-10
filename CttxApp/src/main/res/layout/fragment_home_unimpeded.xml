@@ -22,10 +22,10 @@
     </RelativeLayout>
     <!--导航控件-->
     <TableLayout
-        android:paddingTop="@dimen/ds_36"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite">
+        android:background="@color/colorWhite"
+        android:paddingTop="@dimen/ds_36">
 
         <TableRow
             android:layout_width="match_parent"
@@ -68,9 +68,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:drawablePadding="@dimen/ds_24"
-                android:drawableTop="@mipmap/icon_drive"
+                android:drawableTop="@mipmap/ic_carwash"
                 android:gravity="center"
-                android:text="@string/designated_driver"/>
+                android:text="@string/designated_wash"/>
         </TableRow>
     </TableLayout>
     <!--小广播-->

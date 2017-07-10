@@ -6,10 +6,11 @@
     <string name="annual">年检</string>
     <string name="car_wash">驾驶证查分</string>
     <string name="designated_driver">代驾</string>
+    <string name="designated_wash">洗车</string>
 
     <string name="tv_pay_type_prompt">
         <font color='#ffffff'>银联卡支付&#160;&#160;</font>
-        <font color='#0f536f'>*不可改变</font>
+        <font color='#0f536f'>*不可改</font>
     </string>
 
     <string name="tv_where_cash">
@@ -62,5 +63,9 @@
         <font color='#b2b2b2'>若其中有人完成绑卡，再送推荐者</font>
         <font color='#f3362b'>500</font>
         <font color='#b2b2b2'>活动积分</font>
+    </string>
+
+    <string name="tv_order_num">
+        订单编号：&#160;&#160;%d
     </string>
 </resources>

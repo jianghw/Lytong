@@ -21,6 +21,8 @@ import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+import com.zantong.mobilecttx.order.bean.OrderDetailResult;
+import com.zantong.mobilecttx.order.bean.OrderListResult;
 import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
@@ -342,5 +344,21 @@ public class RepositoryManager {
      */
     public Observable<PayOrderResult> getBankPayHtml(String orderId, String orderPrice) {
         return mRemoteData.getBankPayHtml(orderId, orderPrice);
+    }
+
+    /**
+     * 8.查询订单列表
+     *
+     * @param userId
+     */
+    public Observable<OrderListResult> getOrderList(String userId) {
+        return mRemoteData.getOrderList(userId);
+    }
+
+    /**
+     * 9.获取订单详情
+     */
+    public Observable<OrderDetailResult> getOrderDetail(String orderId) {
+        return mRemoteData.getOrderDetail(orderId);
     }
 }

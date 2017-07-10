@@ -1,6 +1,8 @@
 package com.zantong.mobilecttx.fahrschule.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -10,18 +12,19 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserForPayActivity;
+import com.zantong.mobilecttx.common.activity.FahrschulePayBrowserActivity;
 import com.zantong.mobilecttx.eventbus.FahrschuleApplyEvent;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.interf.IFahrschuleOrderNumFtyContract;
 import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleOrderNumPresenter;
-import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -143,15 +146,14 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
 
     @Override
     protected void DestroyViewAndThing() {
-        if (mPresenter != null) mPresenter.unSubscribe();
         EventBus.getDefault().removeStickyEvent(FahrschuleApplyEvent.class);
         EventBus.getDefault().unregister(this);
+        if (mPresenter != null) mPresenter.unSubscribe();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onMainEvent(FahrschuleApplyEvent event) {
-        if (event == null) return;
-        initData(event);
+        if (event != null) initData(event);
     }
 
     private void initData(FahrschuleApplyEvent event) {
@@ -195,7 +197,7 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
                 if (mPresenter != null) {
                     String moneyString = mTvMoney.getText().toString();
 
-                    double money = Double.parseDouble(moneyString) * 100;
+                    double money = Double.parseDouble(moneyString);
                     int intMoney = (int) money;
                     String stringMoney = String.valueOf(intMoney);
                     mPresenter.getBankPayHtml(
@@ -229,11 +231,16 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
 
     @Override
     public void onPayOrderByCouponSucceed(PayOrderResult result) {
-        PublicData.getInstance().webviewTitle = "支付";
-        PublicData.getInstance().webviewUrl = result.getData();
-        Act.getInstance().lauchIntentToLogin(getActivity(), BrowserForPayActivity.class);
 
-        //TODO 确保优惠劵的使用状态
-        getActivity().finish();
+        if (!PublicData.getInstance().loginFlag && !TextUtils.isEmpty(PublicData.getInstance().userID)) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            getActivity().startActivity(intent);
+        } else {
+            Intent intent = new Intent(getActivity(), FahrschulePayBrowserActivity.class);
+            intent.putExtra(GlobalConstant.putExtra.web_title_extra, "支付");
+            intent.putExtra(GlobalConstant.putExtra.web_url_extra, result.getData());
+            intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, mTvOrder.getText().toString());
+            getActivity().startActivityForResult(intent, GlobalConstant.requestCode.fahrschule_order_num_web);
+        }
     }
 }

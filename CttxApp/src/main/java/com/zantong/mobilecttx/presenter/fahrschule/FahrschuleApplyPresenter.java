@@ -177,6 +177,7 @@ public class FahrschuleApplyPresenter
         orderDTO.setType("3");
         orderDTO.setUserNum(mRepository.getDefaultRASUserID());
         orderDTO.setGoodsId(mAtyView.getGoodsId());
+        orderDTO.setPrice(mAtyView.getPriceValue());
         orderDTO.setUserName(mAtyView.getEditName());
         orderDTO.setPhone(mAtyView.getEditPhone());
         orderDTO.setIdCard(mAtyView.getEditIdentityCard());
