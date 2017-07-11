@@ -19,6 +19,6 @@ public interface IDrivingImageService {
      * 55.行驶证扫描接口
      */
     @Multipart
-    @POST("api/Document/Upload")
+    @POST("PIM_DRIVING/SrvXMLAPI")
     Observable<DrivingOcrResult> uploadDrivingImg(@Part() MultipartBody.Part part);
 }

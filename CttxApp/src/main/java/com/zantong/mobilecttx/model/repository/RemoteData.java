@@ -292,7 +292,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<PayOrderResult> getBankPayHtml(String orderId, String orderPrice) {
-        return initTestRetrofit(4).create(IPayService.class).getBankPayHtml(orderId, orderPrice);
+        return initRetrofit().create(IPayService.class).getBankPayHtml(orderId, orderPrice);
     }
 
     /**
@@ -309,5 +309,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<OrderDetailResult> getOrderDetail(String orderId) {
         return initRetrofit().create(IOrderService.class).getOrderDetail(orderId);
+    }
+
+    /**
+     * 10.更新订单状态
+     */
+    @Override
+    public Observable<BaseResult> updateOrderStatus(String orderId, int orderStatus) {
+        return initRetrofit().create(IOrderService.class).updateOrderStatus(orderId, String.valueOf(orderStatus));
     }
 }

@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jcodecraeer.xrecyclerview.touch.OnSwipeMenuItemClickListener;
 import com.jcodecraeer.xrecyclerview.touch.SwipeMenu;
 import com.jcodecraeer.xrecyclerview.touch.SwipeMenuCreator;

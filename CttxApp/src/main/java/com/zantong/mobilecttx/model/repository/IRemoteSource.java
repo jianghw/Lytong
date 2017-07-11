@@ -197,4 +197,9 @@ public interface IRemoteSource {
      * 9.获取订单详情
      */
     Observable<OrderDetailResult> getOrderDetail(String orderId);
+
+    /**
+     * 10.更新订单状态
+     */
+    Observable<BaseResult> updateOrderStatus(String orderId, int orderStatus);
 }

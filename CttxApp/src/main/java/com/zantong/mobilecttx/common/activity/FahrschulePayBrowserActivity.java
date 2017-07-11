@@ -1,9 +1,13 @@
 package com.zantong.mobilecttx.common.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.http.SslError;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -44,6 +48,7 @@ public class FahrschulePayBrowserActivity extends BaseJxActivity
         return R.layout.activity_fahrschule_pay_browser;
     }
 
+    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     @Override
     protected void initFragmentView(View view) {
         FahrschuleBrowserPresenter presenter = new FahrschuleBrowserPresenter(
@@ -56,23 +61,30 @@ public class FahrschulePayBrowserActivity extends BaseJxActivity
             mOrderId = intent.getStringExtra(GlobalConstant.putExtra.web_order_id_extra);
         }
 
-        mWebView = (WebView) view.findViewById(R.id.webView);
-
         initTitleContent(mTitleWeb);
 
+        mWebView = (WebView) view.findViewById(R.id.webView);
         String url = "<%@ page language=\"java\" contentType=\"text/html; charset=GBK\" pageEncoding=\"GBK\"%>" +
                 "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\" http://www.w3.org/TR/html4/loose.dtd\">" +
                 "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\">" +
                 "<title>表单提交</title></head><body>" + mUrl + "</body></html>";
-        LogUtils.e(url);
+
+        LogUtils.xml(url);
+
+        WebSettings settings = mWebView.getSettings();
+        //设置支持Javascript
+        settings.setJavaScriptEnabled(true);
+        settings.setDefaultTextEncodingName("utf-8");
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
 
         mWebView.loadDataWithBaseURL(null, url, "text/html", "utf-8", null);
         mWebView.setWebViewClient(new MyWebViewClient());
+        mWebView.setWebChromeClient(new MyWebViewChromeClient());
         mWebView.addJavascriptInterface(new InterfaceForJS(this), "CTTX");
-        mWebView.getSettings().setDefaultTextEncodingName("utf-8");
-        mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        mWebView.getSettings().setJavaScriptEnabled(true); //设置支持Javascript
-        mWebView.requestFocus(); //触摸焦点起作用.如果不设置，则在点击网页文本输入框时，不能弹出软键盘及不响应其他的一些事件。
+
+        //触摸焦点起作用.
+        //如果不设置，则在点击网页文本输入框时，不能弹出软键盘及不响应其他的一些事件。
+        mWebView.requestFocus();
     }
 
     @Override
@@ -95,7 +107,7 @@ public class FahrschulePayBrowserActivity extends BaseJxActivity
         hideDialogLoading();
     }
 
-    class MyWebViewClient extends WebViewClient {
+    private class MyWebViewClient extends WebViewClient {
 
         // 重写shouldOverrideUrlLoading方法，使点击链接后不使用其他的浏览器打开。
         @Override
@@ -103,6 +115,19 @@ public class FahrschulePayBrowserActivity extends BaseJxActivity
 //            mWebView.loadUrl(url);
             // 如果不需要其他对点击链接事件的处理返回true，否则返回false
             return true;
+        }
+
+        @Override
+        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+            super.onReceivedSslError(view, handler, error);
+            handler.proceed();
+        }
+    }
+
+    private class MyWebViewChromeClient extends WebChromeClient {
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
         }
     }
 
@@ -151,12 +176,14 @@ public class FahrschulePayBrowserActivity extends BaseJxActivity
 
     protected void succeedStatus() {
         Intent intent = new Intent();
+        intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, mOrderId);
         setResult(GlobalConstant.resultCode.web_order_id_succeed, intent);
         finish();
     }
 
     protected void errorStatus() {
         Intent intent = new Intent();
+        intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, mOrderId);
         setResult(GlobalConstant.resultCode.web_order_id_error, intent);
         finish();
     }

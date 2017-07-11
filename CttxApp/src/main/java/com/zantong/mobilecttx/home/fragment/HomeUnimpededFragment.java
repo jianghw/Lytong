@@ -39,6 +39,7 @@ import com.zantong.mobilecttx.home.bean.HomeBean;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.interf.IUnimpededFtyContract;
+import com.zantong.mobilecttx.map.activity.BaiduMapActivity;
 import com.zantong.mobilecttx.presenter.home.UnimpededFtyPresenter;
 import com.zantong.mobilecttx.user.activity.MegTypeActivity;
 import com.zantong.mobilecttx.user.bean.MessageCountBean;
@@ -527,8 +528,9 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                 MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(6));
                 Act.getInstance().lauchIntentToLogin(this.getActivity(), RechargeActivity.class);
                 break;
-            case R.id.tv_check:
-                Act.getInstance().lauchIntentToLogin(getActivity(), FahrschuleActivity.class);
+            case R.id.tv_check://年检
+                PublicData.getInstance().mapType = BaiduMapActivity.TYPE_NIANJIAN;
+                enterDrivingActivity();
                 break;
             case R.id.tv_carwash://驾驶证查分
                 MobclickAgent.onEvent(ContextUtils.getContext(), Config.getUMengID(35));
@@ -554,9 +556,12 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                     Act.getInstance().lauchIntentToLogin(getActivity(), LicenseCheckGradeActivity.class);
                 }
                 break;
-            case R.id.tv_drive:
-                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(7));
-                enterDrivingActivity();
+            case R.id.tv_drive://洗车
+                Act.getInstance().lauchIntentToLogin(getActivity(), FahrschuleActivity.class);
+
+//                Intent intent = new Intent(getActivity(), FahrschulePayBrowserActivity.class);
+//                intent.putExtra(GlobalConstant.putExtra.web_title_extra, "支付");
+//                getActivity().startActivity(intent);
                 break;
             default:
                 break;
@@ -564,7 +569,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     }
 
     /**
-     * 进入代驾页面
+     * 进入年检页面
      */
     public void enterDrivingActivity() {
         if (!PublicData.getInstance().loginFlag) {
@@ -576,7 +581,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_PHONE_STATE});
         } else {
-            Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+            Act.getInstance().lauchIntentToLogin(getActivity(), BaiduMapActivity.class);
         }
     }
 
@@ -618,7 +623,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
     @PermissionSuccess(requestCode = 2000)
     public void doDrivingSuccess() {
-        Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+        Act.getInstance().lauchIntentToLogin(getActivity(), BaiduMapActivity.class);
     }
 
     @PermissionFail(requestCode = 2000)

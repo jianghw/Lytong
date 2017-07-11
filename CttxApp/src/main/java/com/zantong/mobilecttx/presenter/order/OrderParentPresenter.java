@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.presenter.order;
 
 import android.support.annotation.NonNull;
 
+import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.interf.IOrderParentFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
@@ -158,5 +159,45 @@ public class OrderParentPresenter
     @Override
     public String initUserId() {
         return mRepository.getDefaultRASUserID();
+    }
+
+    /**
+     * 10.更新订单状态
+     */
+    @Override
+    public void updateOrderStatus(OrderListBean bean) {
+        Subscription subscription = mRepository.updateOrderStatus(bean.getOrderId(), 2)
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mAtyView.showLoadingDialog();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResult>() {
+                    @Override
+                    public void doCompleted() {
+                        mAtyView.dismissLoadingDialog();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.updateOrderStatusError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(BaseResult result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.updateOrderStatusSucceed(result);
+
+                        } else {
+                            mAtyView.updateOrderStatusError(result != null
+                                    ? result.getResponseDesc() : "未知错误(N10)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 }

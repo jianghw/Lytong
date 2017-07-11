@@ -18,37 +18,41 @@ public class ProgressWebView extends LinearLayout {
     private WebView mWebView;
     private onReceivedTitleListener listener;
     private boolean isLoadCompleted;
+
     public ProgressWebView(Context context) {
         super(context);
     }
+
     public ProgressWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.widget_progress_webview, this);
-        mProgressBar=(ProgressBar) findViewById(R.id.widget_progress_webview_pb);
-        mWebView=(WebView)findViewById(R.id.widget_progress_webview);
+        mProgressBar = (ProgressBar) findViewById(R.id.widget_progress_webview_pb);
+        mWebView = (WebView) findViewById(R.id.widget_progress_webview);
 //        // 如需支持h5统计，需要将 assets/mobstat.js 拷贝到工程目录下
 //        StatService.bindJSInterface(context, mWebView);
         mWebView.setWebChromeClient(new WebChromeClient());
-		mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDomStorageEnabled(true);
-        mWebView.getSettings().setAppCacheMaxSize(1024*1024*8);
+        mWebView.getSettings().setAppCacheMaxSize(1024 * 1024 * 8);
         String appCachePath = context.getApplicationContext().getCacheDir().getAbsolutePath();
         mWebView.getSettings().setAppCachePath(appCachePath);
         mWebView.getSettings().setAllowFileAccess(true);
         mWebView.getSettings().setAppCacheEnabled(true);
     }
-    public void setWebViewClient(WebViewClient client){
-    	mWebView.setWebViewClient(client);
+
+    public void setWebViewClient(WebViewClient client) {
+        mWebView.setWebViewClient(client);
     }
+
     public class WebChromeClient extends android.webkit.WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             if (newProgress == 100) {
-            	mProgressBar.setVisibility(GONE);
+                mProgressBar.setVisibility(GONE);
                 isLoadCompleted = true;
             } else {
-                if (mProgressBar.getVisibility() == GONE){
+                if (mProgressBar.getVisibility() == GONE) {
                     mProgressBar.setVisibility(VISIBLE);
                     isLoadCompleted = false;
                 }
@@ -56,38 +60,46 @@ public class ProgressWebView extends LinearLayout {
             }
             super.onProgressChanged(view, newProgress);
         }
+
         @Override
         public void onReceivedTitle(WebView view, String title) {
-        	if(listener!=null){
-        		listener.onReceivedTitle(view, title);
+            if (listener != null) {
+                listener.onReceivedTitle(view, title);
             }
             super.onReceivedTitle(view, title);
         }
     }
 
-    public void loadUrl(String url){
-    	mWebView.loadUrl(url);
+    public void loadUrl(String url) {
+        mWebView.loadUrl(url);
     }
-    public boolean canGoBack(){
-    	return mWebView.canGoBack();
+
+    public boolean canGoBack() {
+        return mWebView.canGoBack();
     }
-    public void goBack(){
-    	mWebView.goBack();
+
+    public void goBack() {
+        mWebView.goBack();
     }
-    public void setOnReceivedTitleListener(onReceivedTitleListener listener){
-    	this.listener = listener;
+
+    public void setOnReceivedTitleListener(onReceivedTitleListener listener) {
+        this.listener = listener;
     }
-    public interface onReceivedTitleListener{
-    	public void onReceivedTitle(WebView view, String title);
+
+    public interface onReceivedTitleListener {
+        public void onReceivedTitle(WebView view, String title);
     }
+
     @SuppressLint({"AddJavascriptInterface", "JavascriptInterface"})
-    public void addJavascriptInterface(Object object,String name){
-        mWebView.addJavascriptInterface(object,name);
+    public void addJavascriptInterface(Object object, String name) {
+        mWebView.addJavascriptInterface(object, name);
     }
-    public boolean getIsLoadCompleted(){
+
+    public boolean getIsLoadCompleted() {
         return this.isLoadCompleted;
     }
-    public void destroyWebview(){
+
+    public void destroyWebview() {
         mWebView.destroy();
     }
 }

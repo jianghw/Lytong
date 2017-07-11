@@ -398,6 +398,10 @@ public final class LogUtils {
         Logger.json(meg);
     }
 
+    public static void xml(String xml) {
+        Logger.xml(xml);
+    }
+
     public static void jsonObject(Object object) {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")

@@ -66,6 +66,9 @@
     </string>
 
     <string name="tv_order_num">
-        订单编号：&#160;&#160;%d
+        订单编号：&#160;&#160;%s
+    </string>
+    <string name="tv_price_china">
+      <font color='#f3362b'>￥</font>&#160;
     </string>
 </resources>

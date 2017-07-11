@@ -41,7 +41,6 @@ import com.zantong.mobilecttx.utils.InspectService;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.popwindow.IOSpopwindow;
@@ -58,6 +57,7 @@ import butterknife.Bind;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.util.CleanUtils;
 import cn.qqtheme.framework.util.FileUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -634,7 +634,9 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
             @Override
             public void onSuccess(Result result) {
                 hideDialogLoading();
+
                 if ("000000".equals(result.getSYS_HEAD().getReturnCode())) {
+
                     PublicData.getInstance().clearData(SettingActivity.this);
                     SPUtils.getInstance().clear();
                     CleanUtils.cleanCustomCache(FileUtils.photoImageDirectory(getApplicationContext()));

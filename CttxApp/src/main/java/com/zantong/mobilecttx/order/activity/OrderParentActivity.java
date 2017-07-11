@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.order.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -8,6 +9,7 @@ import android.view.View;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
+import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.interf.IOrderParentFtyContract;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
@@ -21,7 +23,7 @@ import java.util.List;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
- * 页面
+ * 订单列表页面
  */
 public class OrderParentActivity extends BaseJxActivity
         implements IOrderParentFtyContract.IOrderParentFtyView {
@@ -49,6 +51,8 @@ public class OrderParentActivity extends BaseJxActivity
 
     @Override
     protected void initFragmentView(View view) {
+        initTitleContent("我的订单");
+        
         OrderParentPresenter presenter = new OrderParentPresenter(
                 Injection.provideRepository(getApplicationContext()), this);
 
@@ -68,45 +72,46 @@ public class OrderParentActivity extends BaseJxActivity
 
     private void initFragment() {
         if (mFragmentList != null && !mFragmentList.isEmpty()) mFragmentList.clear();
+
         orderAllStatusFragment = OrderAllStatusFragment.newInstance();
-        orderAllStatusFragment.setRefreshListener(new RefreshListener() {
-            @Override
-            public void refreshListData(int position) {
-                if (mPresenter != null) mPresenter.getOrderList();
-            }
-        });
+        orderAllStatusFragment.setRefreshListener(getRefreshListener());
         mFragmentList.add(orderAllStatusFragment);
 
         orderUnStatusFragment = OrderAllStatusFragment.newInstance();
-        orderUnStatusFragment.setRefreshListener(new RefreshListener() {
-            @Override
-            public void refreshListData(int position) {
-                if (mPresenter != null) mPresenter.getOrderList();
-            }
-        });
+        orderUnStatusFragment.setRefreshListener(getRefreshListener());
         mFragmentList.add(orderUnStatusFragment);
 
         orderCancleStatusFragment = OrderAllStatusFragment.newInstance();
-        orderCancleStatusFragment.setRefreshListener(new RefreshListener() {
-            @Override
-            public void refreshListData(int position) {
-                if (mPresenter != null) mPresenter.getOrderList();
-            }
-        });
+        orderCancleStatusFragment.setRefreshListener(getRefreshListener());
         mFragmentList.add(orderCancleStatusFragment);
 
         orderPayStatusFragment = OrderAllStatusFragment.newInstance();
-        orderPayStatusFragment.setRefreshListener(new RefreshListener() {
+        orderPayStatusFragment.setRefreshListener(getRefreshListener());
+        mFragmentList.add(orderPayStatusFragment);
+    }
+
+    @NonNull
+    private RefreshListener getRefreshListener() {
+        return new RefreshListener() {
             @Override
             public void refreshListData(int position) {
                 if (mPresenter != null) mPresenter.getOrderList();
             }
-        });
-        mFragmentList.add(orderPayStatusFragment);
+
+            @Override
+            public void doClickCancel(OrderListBean bean) {
+                if (mPresenter != null) mPresenter.updateOrderStatus(bean);
+            }
+
+            @Override
+            public void doClickPay(OrderListBean bean) {
+
+            }
+        };
     }
 
     private void initViewPager() {
-        String[] title = new String[]{"全部订单", "未支付", "已取消", "已支付"};
+        String[] title = new String[]{"全部订单", "待支付", "已取消", "已支付"};
         OrderFragmentAdapter mainFragmentAdapter =
                 new OrderFragmentAdapter(getSupportFragmentManager(), mFragmentList, title);
         mViewPager.setAdapter(mainFragmentAdapter);
@@ -165,6 +170,9 @@ public class OrderParentActivity extends BaseJxActivity
         ToastUtils.toastShort(message);
     }
 
+    /**
+     * 数据分发
+     */
     @Override
     public void allPaymentData(List<OrderListBean> data) {
         if (orderAllStatusFragment != null)
@@ -189,7 +197,27 @@ public class OrderParentActivity extends BaseJxActivity
             orderCancleStatusFragment.setPayOrderListData(orderList);
     }
 
+    /**
+     * 10.更新订单状态
+     */
+    @Override
+    public void updateOrderStatusError(String message) {
+        dismissLoadingDialog();
+        ToastUtils.toastShort(message);
+    }
+
+    @Override
+    public void updateOrderStatusSucceed(BaseResult result) {
+        if (mPresenter != null) mPresenter.getOrderList();
+    }
+
+
     public interface RefreshListener {
+
         void refreshListData(int position);
+
+        void doClickCancel(OrderListBean bean);
+
+        void doClickPay(OrderListBean bean);
     }
 }

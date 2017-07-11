@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.interf;
 
+import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
@@ -29,11 +30,17 @@ public interface IOrderParentFtyContract {
         void cancelPaymentData(List<OrderListBean> orderList);
 
         void allPaymentData(List<OrderListBean> data);
+
+        void updateOrderStatusError(String message);
+
+        void updateOrderStatusSucceed(BaseResult result);
     }
 
     interface IOrderParentFtyPresenter extends IMvpPresenter {
         void getOrderList();
 
         String initUserId();
+
+        void updateOrderStatus(OrderListBean bean);
     }
 }

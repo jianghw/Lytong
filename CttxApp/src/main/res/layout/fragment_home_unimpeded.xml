@@ -8,7 +8,8 @@
     <!--头部banner-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_600">
+        android:layout_height="0dp"
+        android:layout_weight="40">
 
         <cn.qqtheme.framework.widght.banner.ConvenientBanner
             android:id="@+id/custom_convenientBanner"
@@ -23,7 +24,8 @@
     <!--导航控件-->
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="16"
         android:background="@color/colorWhite"
         android:paddingTop="@dimen/ds_36">
 
@@ -76,10 +78,11 @@
     <!--小广播-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="9"
         android:background="@color/colorWhite"
-        android:paddingBottom="@dimen/ds_30"
-        android:paddingTop="@dimen/ds_30">
+        android:paddingTop="@dimen/ds_12"
+        android:paddingBottom="@dimen/ds_12">
 
         <ImageView
             android:id="@+id/img_trumpet"
@@ -87,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/ds_36"
+            android:layout_marginLeft="@dimen/ds_35"
             android:src="@mipmap/icon_toutiao"/>
 
         <ImageView
@@ -102,11 +105,11 @@
         <com.zantong.mobilecttx.widght.MainScrollUpAdvertisementView
             android:id="@+id/custom_grapevine"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_135"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@+id/img_trumpet"
             android:ellipsize="end"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:singleLine="true"
             android:textColor="@color/gray_99"/>
     </RelativeLayout>
@@ -114,7 +117,8 @@
     <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
         android:id="@+id/custom_violation"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="36"
         android:background="@color/colorBgGray_f8"
         app:icvp_center_page_scale_offset="@dimen/ds_90"
         app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"

@@ -43,7 +43,7 @@ public class OilPriceAdapter extends BaseAdapter<RechargeBean> {
 
             holder.mDiscount.setVisibility(value < 10 && data.getCouponType() == 2 ? View.VISIBLE : View.GONE);
 
-            String valueString = new DecimalFormat("#.0").format(value);
+            String valueString = new DecimalFormat("#0.0#").format(value);
             holder.mDiscount.setText(valueString + "折");
 
             holder.mAmount.setBackgroundResource(data.isCheckd()

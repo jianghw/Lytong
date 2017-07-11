@@ -96,7 +96,7 @@ public class RechargeFragment extends PullableBaseFragment
     /**
      * 默认折扣 价格提交用
      */
-    private String DEFAULT_DISCOUNT_1 = "0.99";
+    private String DEFAULT_DISCOUNT_1 = "0.993";
     private String DEFAULT_DISCOUNT_2 = "1.00";
     private String CURRENT_DISCOUNT = "0.00";
     private OilPriceAdapter mAdapter;
@@ -306,7 +306,8 @@ public class RechargeFragment extends PullableBaseFragment
         } else if (mCouponType == 3 && isChoice && mPayType == 0) {//抵扣
             double value = Double.parseDouble(TextUtils.isEmpty(bean.getDiscount()) ? "0" : bean.getDiscount()) * 100.00;
             double price = Double.parseDouble(bean.getAmount());
-            String priceValue = String.valueOf(price - value);
+            double submitPrice = (price - value) <= 0 ? 0 : (price - value);
+            String priceValue = String.valueOf(submitPrice);
 
             double doubleValue = Double.parseDouble(priceValue);
             DecimalFormat decimalFormat = new DecimalFormat("0.00");
@@ -509,7 +510,7 @@ public class RechargeFragment extends PullableBaseFragment
     private ArrayList<CommonTwoLevelMenuBean> initPayStyles() {
         ArrayList<CommonTwoLevelMenuBean> list = new ArrayList<>();
         list.add(new CommonTwoLevelMenuBean(1, "畅通卡支付", R.mipmap.icon_changtongka));
-        list.add(new CommonTwoLevelMenuBean(2, "工行其它银行卡支付", R.mipmap.icon_othercard));
+        list.add(new CommonTwoLevelMenuBean(2, "其它银行卡支付", R.mipmap.icon_othercard));
         return list;
     }
 

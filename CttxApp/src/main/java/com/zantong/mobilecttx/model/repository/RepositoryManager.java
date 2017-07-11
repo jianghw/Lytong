@@ -361,4 +361,11 @@ public class RepositoryManager {
     public Observable<OrderDetailResult> getOrderDetail(String orderId) {
         return mRemoteData.getOrderDetail(orderId);
     }
+
+    /**
+     * 10.更新订单状态 N
+     */
+    public Observable<BaseResult> updateOrderStatus(String orderId, int orderStatus) {
+        return mRemoteData.updateOrderStatus(orderId,orderStatus);
+    }
 }

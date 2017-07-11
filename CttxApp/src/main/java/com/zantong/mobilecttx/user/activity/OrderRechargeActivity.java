@@ -17,7 +17,7 @@ import java.util.List;
 
 import butterknife.Bind;
 
-public class OrderRechargeActivity extends BaseMvpActivity<IOrderView,OrderPresenter> implements View.OnClickListener, IOrderView {
+public class OrderRechargeActivity extends BaseMvpActivity<IOrderView, OrderPresenter> implements View.OnClickListener, IOrderView {
 
     @Bind(R.id.common_tab)
     SlidingTabLayout mCommonTab;

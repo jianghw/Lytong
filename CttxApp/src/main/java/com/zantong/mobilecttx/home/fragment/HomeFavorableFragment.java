@@ -1,6 +1,9 @@
 package com.zantong.mobilecttx.home.fragment;
 
+import android.Manifest;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -8,6 +11,8 @@ import android.widget.LinearLayout;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.home.adapter.FavorableBannerImgHolderView;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.bean.BannerBean;
@@ -21,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qqtheme.framework.util.ToastUtils;
+import cn.qqtheme.framework.util.primission.PermissionFail;
+import cn.qqtheme.framework.util.primission.PermissionGen;
+import cn.qqtheme.framework.util.primission.PermissionSuccess;
 import cn.qqtheme.framework.widght.banner.CBViewHolderCreator;
 import cn.qqtheme.framework.widght.banner.ConvenientBanner;
 
@@ -189,6 +197,7 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
         mLayOrder = (LinearLayout) view.findViewById(R.id.lay_order);
         mLayRepair = (LinearLayout) view.findViewById(R.id.lay_repair);
         mLayRiver = (LinearLayout) view.findViewById(R.id.lay_river);
+        mLayRiver.setOnClickListener(this);
         mLayBeauty = (LinearLayout) view.findViewById(R.id.lay_beauty);
         mImgBanner = (ImageView) view.findViewById(R.id.img_banner);
         mImgBanner.setOnClickListener(this);
@@ -200,8 +209,44 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
             case R.id.img_banner:
                 Act.getInstance().lauchIntentToLogin(getActivity(), ShareParentActivity.class);
                 break;
+            case R.id.lay_river://代驾
+                enterDrivingActivity();
+                break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 进入年检页面
+     */
+    public void enterDrivingActivity() {
+        if (!PublicData.getInstance().loginFlag) {
+            Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, 2000, new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE});
+        } else {
+            Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @PermissionSuccess(requestCode = 2000)
+    public void doDrivingSuccess() {
+        Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+    }
+
+    @PermissionFail(requestCode = 2000)
+    public void doDrivingFail() {
+        ToastUtils.toastShort("您已关闭定位权限,请手机设置中打开");
     }
 }

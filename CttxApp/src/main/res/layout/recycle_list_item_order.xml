@@ -100,11 +100,13 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/tv_pay_line"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_1"
             android:background="@color/colorGray"/>
 
         <RelativeLayout
+            android:id="@+id/lay_pay"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_150">
 
@@ -146,8 +148,8 @@
                 android:singleLine="true"
                 android:text="删除订单"
                 android:textColor="@color/colorTvBlack_b2"
-                android:textSize="@dimen/fs_14sp"/>
-
+                android:textSize="@dimen/fs_14sp"
+                android:visibility="gone"/>
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

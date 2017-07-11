@@ -419,6 +419,8 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
                     }
                 }
                 commitCarInfoToServer();
+            } else {
+                doQueryVehicle();
             }
         }
 
@@ -450,13 +452,10 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
     private void commitCarInfoToServer() {
         if (mPresenter != null) mPresenter.commitCarInfoToOldServer();
         if (mPresenter != null) mPresenter.commitCarInfoToNewServer();
-
-        PublicData.getInstance().mCarNum++;//车辆数+1
-        EventBus.getDefault().post(new UpdateCarInfoEvent(true));
-        EventBus.getDefault().post(new AddCarInfoEvent(true, getCarInfoDTO()));
     }
 
     private void doQueryVehicle() {
+
         PublicData.getInstance().mHashMap.put("carnum", mCarInfoDTO.getCarnum());
         PublicData.getInstance().mHashMap.put("enginenum", mCarInfoDTO.getEnginenum());
         PublicData.getInstance().mHashMap.put("carnumtype", mCarInfoDTO.getCarnumtype());
@@ -511,7 +510,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
     }
 
     /**
-     * 保存 老接口 失败
+     * 添加保存 老接口 失败
      */
     @Override
     public void commitCarInfoToOldServerError(String message) {
@@ -520,6 +519,10 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
     @Override
     public void commitCarInfoToOldServerSucceed(Result responseBean) {
+        PublicData.getInstance().mCarNum++;//车辆数+1
+        EventBus.getDefault().post(new UpdateCarInfoEvent(true));
+        EventBus.getDefault().post(new AddCarInfoEvent(true, getCarInfoDTO()));
+
         doQueryVehicle();
     }
 

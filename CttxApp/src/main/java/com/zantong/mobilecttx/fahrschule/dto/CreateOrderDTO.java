@@ -8,14 +8,36 @@ package com.zantong.mobilecttx.fahrschule.dto;
  */
 
 public class CreateOrderDTO {
+    /**
+     * 参数名	必选	类型	说明	类型
+     * type	是	string	商品类型	1 加油充值，2 代驾，3 学车，4 科目强化，5 陪练
+     * userNum	是	string	用户id	1，2，3，4，5
+     * goodsId	是	string	商品id	1，2，3，4，5
+     * price	是	string	价格	1，2，3，4，5
+     * remark	否	string	补充说明	1，2，3，4，5
+     * oilCardNum	否	string	油卡号	1
+     * userName	是	string	用户名	3
+     * phone	是	string	手机号	3
+     * idCard	是	string	身份证	3
+     */
+
     private String type;
     private String userNum;
     private String goodsId;
     private String price;
     private String remark;
+    private String oilCardNum;
     private String userName;
     private String phone;
     private String idCard;
+
+    public String getOilCardNum() {
+        return oilCardNum;
+    }
+
+    public void setOilCardNum(String oilCardNum) {
+        this.oilCardNum = oilCardNum;
+    }
 
     public String getType() {
         return type;

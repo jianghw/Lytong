@@ -132,6 +132,9 @@ public class FahrschuleApplyPresenter
         return mAtyView.getAreaCode();
     }
 
+    /**
+     * 2.创建订单 N
+     */
     @Override
     public void createOrder() {
         Subscription subscription = mRepository.createOrder(getCreateOrder())

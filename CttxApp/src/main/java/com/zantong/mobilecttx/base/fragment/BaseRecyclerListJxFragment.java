@@ -34,7 +34,7 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
     /**
      * 默认页数
      */
-    private int mCurrentPage = 1;
+    protected int mCurrentPage = 1;
 
     /**
      * 数据源
@@ -245,6 +245,11 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
     protected void onForceRefresh() {
         mCurrentPage = 1;
         onFirstDataVisible();
+    }
+
+    protected void setSimpleDataResult(List<T> list) {
+        mCurrentPage = 1;
+        setDataResult(list);
     }
 
     /**

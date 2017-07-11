@@ -436,6 +436,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         String couponCount = getResources().getString(R.string.tv_coupon_count);
         if (mTvCoupon != null) mTvCoupon.setText(String.format(couponCount, 0));
         ToastUtils.toastShort(responseDesc);
+
     }
 
     /**

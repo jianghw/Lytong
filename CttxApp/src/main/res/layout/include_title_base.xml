@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="驾校报名"
+            tools:text="驾校报名"
             android:textColor="@color/colorTvBlack_4c"
             android:textSize="@dimen/fs_18sp"/>
 
@@ -37,5 +37,10 @@
             android:src="@mipmap/btn_homepage"
             android:visibility="gone"/>
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_1"
+        android:background="@color/colorLineGray_e5"/>
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.api;
 
+import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
 import com.zantong.mobilecttx.order.bean.OrderListResult;
 
@@ -28,4 +29,11 @@ public interface IOrderService {
     @FormUrlEncoded
     @POST("order/getOrderDetail")
     Observable<OrderDetailResult> getOrderDetail(@Field("orderId") String orderId);
+
+    /**
+     * 10.更新订单状态
+     */
+    @FormUrlEncoded
+    @POST("order/updateOrderStatus")
+    Observable<BaseResult> updateOrderStatus(@Field("orderId") String orderId, @Field("orderStatus") String orderStatus);
 }

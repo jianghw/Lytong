@@ -20,13 +20,12 @@ import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
 import com.zantong.mobilecttx.user.activity.GetBonusActivity;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.QueryActivity;
 
-import cn.qqtheme.framework.util.log.LogUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * @author Sandy
@@ -99,9 +98,7 @@ public class InterfaceForJS {
                 @Override
                 public void onLocationChanged(Location location) {
                     if (location != null) {
-                        Log.e("Map", "Location changed : Lat: "
-                                + location.getLatitude() + " Lng: "
-                                + location.getLongitude());
+                        Log.e("Map", "Location changed : Lat: " + location.getLatitude() + " Lng: " + location.getLongitude());
                     }
                 }
             };
@@ -148,7 +145,6 @@ public class InterfaceForJS {
     //获取用户ID
     @JavascriptInterface
     public String getUserId() {
-        LogUtils.i("userId" + PublicData.getInstance().userID);
         return PublicData.getInstance().userID;
     }
 
@@ -167,7 +163,6 @@ public class InterfaceForJS {
     //获取用户ID
     @JavascriptInterface
     public String getEncreptUserId() {
-        LogUtils.i("userId" + PublicData.getInstance().userID);
         return RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true);
     }
 

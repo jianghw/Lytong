@@ -29,5 +29,5 @@
         android:paddingTop="@dimen/ds_10"
         android:textColor="@color/white"
         android:textSize="@dimen/fs_12sp"
-        tools:text="9.8折"/>
+        tools:text="9.80折"/>
 </FrameLayout>
