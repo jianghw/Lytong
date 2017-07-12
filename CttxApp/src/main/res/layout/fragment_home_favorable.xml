@@ -6,7 +6,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_111"
+        android:layout_height="@dimen/ds_132"
         android:gravity="center"
         android:text="优惠"
         android:textColor="@color/colorTvRed_f33"
@@ -15,7 +15,7 @@
     <cn.qqtheme.framework.widght.banner.ConvenientBanner
         android:id="@+id/custom_convenientBanner"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_378"/>
+        android:layout_height="@dimen/ds_450"/>
 
     <include layout="@layout/include_favorable_navigation"/>
 

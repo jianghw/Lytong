@@ -116,9 +116,6 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
         parameters.setPreviewSize(size.width, size.height);
         parameters.setPictureSize(size.width, size.height);
         mCamera.setParameters(parameters);
-        mCamera.startPreview();
-        mCamera.cancelAutoFocus(); // 2如果要实现连续的自动对焦，这一句必须加上
-
     }
 
     boolean isOpenFlash;
@@ -212,7 +209,9 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
                     public void onAutoFocus(boolean success, Camera camera) {
                         if (success) {
                             initCamera(); //实现相机的参数初始化
-                            camera.cancelAutoFocus(); //只有加上了这一句，才会自动对焦。
+
+                            mCamera.startPreview();
+                            mCamera.cancelAutoFocus();
                         }
                     }
                 });
@@ -232,8 +231,6 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
                     }
                 });
             }
-
-
         }
 
         // 开始拍照时调用该方法
@@ -245,13 +242,13 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
                 }
                 mCamera.setPreviewDisplay(mSurfaceHolder); // 设置用于显示拍照影像的SurfaceHolder对象
                 initCamera();
-                mCamera.startPreview(); // 开始预览
+
+                mCamera.startPreview();
+                mCamera.cancelAutoFocus();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
-
 
         // 停止拍照时调用该方法
         @Override

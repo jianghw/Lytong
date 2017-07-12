@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="40">
+        android:layout_weight="44">
 
         <cn.qqtheme.framework.widght.banner.ConvenientBanner
             android:id="@+id/custom_convenientBanner"
@@ -25,7 +25,7 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="16"
+        android:layout_weight="18"
         android:background="@color/colorWhite"
         android:paddingTop="@dimen/ds_36">
 
@@ -78,8 +78,7 @@
     <!--小广播-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9"
+        android:layout_height="@dimen/ds_150"
         android:background="@color/colorWhite"
         android:paddingTop="@dimen/ds_12"
         android:paddingBottom="@dimen/ds_12">
@@ -114,11 +113,11 @@
             android:textColor="@color/gray_99"/>
     </RelativeLayout>
 
-    <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
+    <cn.qqtheme.framework.widght.HorizontalCarViewPager
         android:id="@+id/custom_violation"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="36"
+        android:layout_weight="39"
         android:background="@color/colorBgGray_f8"
         app:icvp_center_page_scale_offset="@dimen/ds_90"
         app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"

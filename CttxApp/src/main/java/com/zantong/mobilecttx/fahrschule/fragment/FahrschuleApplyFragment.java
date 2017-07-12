@@ -18,6 +18,8 @@ import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.eventbus.FahrschuleApplyEvent;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.fahrschule.adapter.FahrschulePopupAresAdapter;
@@ -26,10 +28,13 @@ import com.zantong.mobilecttx.fahrschule.bean.AresGoodsBean;
 import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderBean;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
+import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailBean;
+import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresBean;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.interf.IFahrschuleApplyFtyContract;
 import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleApplyPresenter;
+import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -200,6 +205,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
         mTvGift = (TextView) view.findViewById(R.id.tv_gift);
         mTvInfoTitle = (TextView) view.findViewById(R.id.tv_info_title);
         mTvInfo = (TextView) view.findViewById(R.id.tv_info);
+        mTvInfo.setOnClickListener(this);
         mTvIntroduce = (TextView) view.findViewById(R.id.tv_introduce);
         mBtnCommint = (Button) view.findViewById(R.id.btn_commit);
         mBtnCommint.setOnClickListener(this);
@@ -219,6 +225,12 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
                 if (mAreaCode == 0) {
                     ToastUtils.toastShort("请先选择上课地点");
                 } else if (mPresenter != null) mPresenter.getAreaGoods();
+                break;
+            case R.id.tv_info://官网
+                PublicData.getInstance().webviewUrl = "http://www.antingjx.com/jianjie/";
+                PublicData.getInstance().webviewTitle = "驾校报名官网";
+                PublicData.getInstance().isCheckLogin = true;
+                Act.getInstance().gotoIntent(getActivity(), BrowserActivity.class);
                 break;
             case R.id.btn_commit:
                 dataFormValidation();
@@ -388,7 +400,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
 
     private void selectGoods(final List<AresGoodsBean> goodsBeanList, final TextView textView) {
         final PopupWindow popupWindow = new PopupWindow(getActivity());
-        popupWindow.setWidth(textView.getMeasuredWidth());
+//        popupWindow.setWidth(textView.getMeasuredWidth());
 
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.custom_listview_tv, null);
         ListView mListView = (ListView) inflate.findViewById(R.id.lv_list);
@@ -402,11 +414,10 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
                 AresGoodsBean bean = goodsBeanList.get(position);
                 popupWindow.dismiss();
                 if (bean == null) return;
-                textView.setText(bean.getName() + bean.getPrice() + "元");
+                textView.setText(bean.getName());
 
-                mTvPrice.setText(bean.getPrice() + "元");
-                mTvGift.setText(bean.getDescription());
-                mGoodsId = bean.getGoodsId();
+                if (mPresenter != null)
+                    mPresenter.getGoodsDetail(String.valueOf(bean.getGoodsId()));
             }
         });
         FahrschulePopupGoodsAdapter adapter = new FahrschulePopupGoodsAdapter(getActivity(), goodsBeanList);
@@ -445,5 +456,27 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
             priceValue = price.substring(0, price.length() - 1);
         }
         return priceValue;
+    }
+
+    /**
+     * 6.获取商品详情
+     */
+    @Override
+    public void getGoodsDetailError(String message) {
+        dismissLoadingDialog();
+        ToastUtils.toastShort(message);
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void getGoodsDetailSucceed(GoodsDetailResult result) {
+        GoodsDetailBean bean = result.getData();
+        if (bean != null) {
+            mTvTraffic.setText(bean.getTraffic());
+            mTvPrice.setText(bean.getPrice() + "元");
+            mTvGift.setText(bean.getDescription());
+            mGoodsId = bean.getGoodsId();
+        } else
+            ToastUtils.toastShort("获取课程商品失败，请重新选择");
     }
 }

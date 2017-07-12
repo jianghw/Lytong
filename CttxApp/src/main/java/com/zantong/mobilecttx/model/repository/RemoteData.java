@@ -22,6 +22,7 @@ import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
+import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
@@ -81,6 +82,10 @@ public class RemoteData implements IRemoteSource {
 
     private Retrofit initTestRetrofit(int type) {
         return RetrofitFactory.getInstance().createRetrofit(type);
+    }
+
+    private Retrofit initImageRetrofit() {
+        return RetrofitFactory.getInstance().createRetrofit(5);
     }
 
     /**
@@ -233,7 +238,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<DrivingOcrResult> uploadDrivingImg(MultipartBody.Part part) {
-        return initRetrofit().create(IDrivingImageService.class).uploadDrivingImg(part);
+        return initImageRetrofit().create(IDrivingImageService.class).uploadDrivingImg(part);
     }
 
     /**
@@ -317,5 +322,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<BaseResult> updateOrderStatus(String orderId, int orderStatus) {
         return initRetrofit().create(IOrderService.class).updateOrderStatus(orderId, String.valueOf(orderStatus));
+    }
+
+    /**
+     * 6.获取商品详情
+     */
+    @Override
+    public Observable<GoodsDetailResult> getGoodsDetail(String goodsId) {
+        return initRetrofit().create(IGoodsService.class).getGoodsDetail(goodsId);
     }
 }

@@ -15,7 +15,6 @@ import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.SPUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
@@ -24,6 +23,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import cn.qqtheme.framework.global.GlobalConfig;
+import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * Created by jianghw on 2017/5/4.
@@ -135,6 +137,8 @@ public class LicenseCheckGradeActivity extends MvpBaseActivity implements View.O
         } else if (TextUtils.isEmpty(getTvDate())) {
             ToastUtils.showShort(getApplicationContext(), "请选择初次领证日期");
         } else {
+            GlobalConfig.getInstance().eventIdByUMeng(8);
+
             LicenseFileNumDTO dto = new LicenseFileNumDTO();
             dto.setFilenum(getArchivesNumber());
             dto.setStrtdt(localDateFormat(getTvDate()));//真时的时间

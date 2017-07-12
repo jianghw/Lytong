@@ -19,7 +19,7 @@ public class RetrofitFactory {
     }
 
     public Retrofit createRetrofit(int type) {
-        return type == 1 ? DefaultRetrofit.getInstance().createRetrofit(getBaseUrl(type))
+        return type == 1 || type == 5 ? DefaultRetrofit.getInstance().createRetrofit(getBaseUrl(type))
                 : type != 4 ? AnShengRetrofit.getInstance().createRetrofit(getBaseUrl(type))
                 : DefaultRetrofit.getInstance().createRetrofit(getBaseUrl(type));
     }
@@ -32,6 +32,8 @@ public class RetrofitFactory {
                 return BuildConfig.APP_URL;
             case 3:
                 return BuildConfig.BASE_URL;
+            case 5:
+                return "http://liyingtong.com:8080/";
             default:
                 return "http://192.168.1.147:80/";
         }

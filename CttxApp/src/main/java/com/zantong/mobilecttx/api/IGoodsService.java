@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.api;
 
 import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
+import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 
 import retrofit2.http.Field;
@@ -48,4 +49,11 @@ public interface IGoodsService {
             @Field("goodsId") String goodsId, @Field("price") String price,
             @Field("userName") String userName, @Field("phone") String phone,
             @Field("idCard") String idCard);
+
+    /**
+     * 6.获取商品详情
+     */
+    @FormUrlEncoded
+    @POST("goods/getGoodsDetail")
+    Observable<GoodsDetailResult> getGoodsDetail(@Field("goodsId") String goodsId);
 }

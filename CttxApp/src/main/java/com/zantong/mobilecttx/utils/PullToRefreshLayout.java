@@ -254,7 +254,7 @@ public class PullToRefreshLayout extends RelativeLayout {
      */
     public void refreshFinish(final int refreshResult) {
         try {
-            if(null != refreshingView) {
+            if (null != refreshingView) {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -305,7 +305,7 @@ public class PullToRefreshLayout extends RelativeLayout {
                     }
                 }, 0);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 

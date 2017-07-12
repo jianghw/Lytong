@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseActivity;
 import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
@@ -163,13 +164,13 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
     @Override
     public void onResume() {
         super.onResume();
-//        onShowLoading();
-//        MobclickAgent.onPageStart("start" + this.getClass().getName()); // 统计页面
-    }    
+        // 统计页面
+        MobclickAgent.onPageStart(this.getClass().getSimpleName());
+    }
     @Override
     public void onPause() {
         super.onPause();
-//        MobclickAgent.onPageEnd("end" + this.getClass().getName());
+        MobclickAgent.onPageEnd(this.getClass().getSimpleName());
     }
 
     @Override

@@ -62,8 +62,8 @@ public class FahrschulePayBrowserActivity extends BaseJxActivity
         }
 
         initTitleContent(mTitleWeb);
-
         mWebView = (WebView) view.findViewById(R.id.webView);
+
         String url = "<%@ page language=\"java\" contentType=\"text/html; charset=GBK\" pageEncoding=\"GBK\"%>" +
                 "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\" http://www.w3.org/TR/html4/loose.dtd\">" +
                 "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\">" +
@@ -135,10 +135,10 @@ public class FahrschulePayBrowserActivity extends BaseJxActivity
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
             mWebView.goBack();//返回webView的上一页面
-            return true;
+            return false;
         }
         orderDetail();
-        return true;
+        return false;
 //        return super.onKeyDown(keyCode, event);
     }
 

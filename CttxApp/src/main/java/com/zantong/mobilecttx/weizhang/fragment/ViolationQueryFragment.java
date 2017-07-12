@@ -53,14 +53,20 @@ import com.zantong.mobilecttx.widght.UISwitchButton;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
 
+import static android.R.attr.name;
 import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
@@ -394,6 +400,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         initCarInfoDto(carNum, engine, carType);
         initBindCarDTO(carNum, engine, carType);
 
+        GlobalConfig.getInstance().eventIdByUMeng(13);
         submitData();
     }
 
@@ -692,6 +699,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         if (bean != null) {
             String cardNo = bean.getCardNo();
             String provinces = "沪浙苏皖京藏川鄂甘赣贵桂黑吉冀津晋辽鲁蒙闽宁青琼陕湘新渝豫粤云";
+
             if (!TextUtils.isEmpty(cardNo) && cardNo.length() >= 1) {
                 String province = cardNo.substring(0, 1);
                 String plateNum = cardNo.substring(1, cardNo.length());
@@ -707,6 +715,18 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
             mTvType.setText(bean.getVehicleType() != null ? bean.getVehicleType() : "");
 
             mCarInfoDTO.setCarnumtype(VehicleTypeTools.switchVehicleCode(mTvType.getText().toString()));
+//TODO RegisterDate 注册日期
+            String registerDate = bean.getRegisterDate();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.SIMPLIFIED_CHINESE);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
+            try {
+                Date data = simpleDateFormat.parse(registerDate);
+                String dataString = sdf.format(data);
+                mTvDate.setText(dataString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
         } else {
             ToastUtils.toastShort("行驶证图片解析失败(55)，请重试");
         }

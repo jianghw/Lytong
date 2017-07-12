@@ -67,11 +67,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/img_brand"
                 android:layout_marginLeft="@dimen/ds_35"
+                android:layout_toLeftOf="@+id/tv_price"
                 android:layout_toRightOf="@+id/img_brand"
                 android:singleLine="true"
                 android:textColor="@color/colorTvBlack_4c"
                 android:textSize="@dimen/fs_16sp"
-                tools:text="中石油加油聚会i地"/>
+                tools:text="中石油加油聚会i地fdfdf"/>
 
             <TextView
                 android:id="@+id/tv_date"

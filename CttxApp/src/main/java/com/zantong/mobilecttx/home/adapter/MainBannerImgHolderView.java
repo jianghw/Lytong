@@ -6,14 +6,13 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
-import com.zantong.mobilecttx.home.activity.CustomCordovaActivity;
+import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResult;
 import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
@@ -53,21 +52,20 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                MobclickAgent.onEvent(mContext, Config.getUMengID(10));
+//                PublicData.getInstance().webviewUrl = data.getAdvertisementSkipUrl();
+//                PublicData.getInstance().mHashMap.put("htmlUrl", PublicData.getInstance().webviewUrl);
+//                PublicData.getInstance().webviewTitle = "广告";
+//                PublicData.getInstance().isCheckLogin = false;
 
-                MobclickAgent.onEvent(mContext, Config.getUMengID(10));
-                PublicData.getInstance().webviewUrl = data.getAdvertisementSkipUrl();
-                PublicData.getInstance().mHashMap.put("htmlUrl", PublicData.getInstance().webviewUrl);
-                PublicData.getInstance().webviewTitle = "广告";
-                PublicData.getInstance().isCheckLogin = false;
-
-                if (PublicData.getInstance().webviewUrl.contains("discount") || PublicData.getInstance().webviewUrl.contains("happysend")) {
-                    Act.getInstance().gotoIntent(mContext, CustomCordovaActivity.class);
-                } else if (PublicData.getInstance().webviewUrl.contains("localActivity")) {
+                if (PublicData.getInstance().webviewUrl.contains("localActivity")) {
                     if (PublicData.getInstance().loginFlag) {
                         getSignStatus();
                     } else {
                         Act.getInstance().gotoIntent(mContext, LoginActivity.class);
                     }
+                } else if (PublicData.getInstance().webviewUrl.contains("fahrschule")) {
+                    Act.getInstance().lauchIntentToLogin(mContext, FahrschuleActivity.class);
                 } else {
                     Act.getInstance().gotoIntent(mContext, BrowserActivity.class);
                     CarApiClient.commitAdClick(mContext, data.getId(), new CallBack<BaseResult>() {

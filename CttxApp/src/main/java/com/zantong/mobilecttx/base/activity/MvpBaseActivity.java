@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
@@ -302,6 +303,20 @@ public abstract class MvpBaseActivity extends AppCompatActivity {
             mLoadingDialog.dismiss();
             mLoadingDialog = null;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 友盟统计开始
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // 友盟统计结束
+        MobclickAgent.onPause(this);
     }
 
 }

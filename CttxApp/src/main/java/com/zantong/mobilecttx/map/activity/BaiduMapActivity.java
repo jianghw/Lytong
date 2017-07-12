@@ -52,13 +52,14 @@ import com.zantong.mobilecttx.map.bean.YearCheckResult;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.DensityUtils;
 import com.zantong.mobilecttx.utils.DistanceUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.global.GlobalConfig;
+import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 地图
@@ -434,12 +435,14 @@ public class BaiduMapActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
                 }
                 break;
             case R.id.map_type1:
+                GlobalConfig.getInstance().eventIdByUMeng(6);
                 dto.setType("1");
                 mBtnType1.setTextColor(getResources().getColor(R.color.red));
                 mBtnType2.setTextColor(getResources().getColor(R.color.gray_99));
                 getYearCheck();
                 break;
             case R.id.map_type2:
+                GlobalConfig.getInstance().eventIdByUMeng(5);
                 dto.setType("2");
                 mBtnType1.setTextColor(getResources().getColor(R.color.gray_99));
                 mBtnType2.setTextColor(getResources().getColor(R.color.red));

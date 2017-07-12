@@ -8,9 +8,11 @@ import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
+import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
+import com.zantong.mobilecttx.home.activity.CustomCordovaActivity;
 import com.zantong.mobilecttx.home.bean.BannersBean;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResult;
 import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
@@ -49,8 +51,22 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                PublicData.getInstance().webviewUrl = data.getAdvertisementSkipUrl();
+                PublicData.getInstance().mHashMap.put("htmlUrl", PublicData.getInstance().webviewUrl);
+                PublicData.getInstance().webviewTitle = "广告";
+                PublicData.getInstance().isCheckLogin = false;
 
-
+                if (PublicData.getInstance().webviewUrl.contains("discount")
+                        || PublicData.getInstance().webviewUrl.contains("happysend")) {
+                    Act.getInstance().gotoIntent(mContext, CustomCordovaActivity.class);
+                } else {
+                    Act.getInstance().gotoIntent(mContext, BrowserActivity.class);
+                    CarApiClient.commitAdClick(mContext, data.getId(), new CallBack<BaseResult>() {
+                        @Override
+                        public void onSuccess(BaseResult result) {
+                        }
+                    });
+                }
             }
         });
     }

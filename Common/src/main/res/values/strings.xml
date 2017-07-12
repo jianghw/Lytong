@@ -24,8 +24,7 @@
     </string>
 
     <string name="tv_favorable_price_admissions">
-        <font color='#f3362b'>￥</font>&#160;
-        <font color='#f3362b'>%s</font>
+        <font color='#f3362b'>￥&#160;%s</font>
         <font color='#b3b3b3'>起</font>
     </string>
 
@@ -66,7 +65,7 @@
     </string>
 
     <string name="tv_order_num">
-        订单编号：&#160;&#160;%s
+        订单编号：&#160;%s
     </string>
     <string name="tv_price_china">
       <font color='#f3362b'>￥</font>&#160;

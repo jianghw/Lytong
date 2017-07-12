@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.order.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -11,15 +12,22 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.common.activity.BrowserForPayActivity;
+import com.zantong.mobilecttx.common.activity.FahrschulePayBrowserActivity;
+import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.interf.IOrderParentFtyContract;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
 import com.zantong.mobilecttx.order.fragment.OrderAllStatusFragment;
 import com.zantong.mobilecttx.presenter.order.OrderParentPresenter;
+import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -52,7 +60,7 @@ public class OrderParentActivity extends BaseJxActivity
     @Override
     protected void initFragmentView(View view) {
         initTitleContent("我的订单");
-        
+
         OrderParentPresenter presenter = new OrderParentPresenter(
                 Injection.provideRepository(getApplicationContext()), this);
 
@@ -61,8 +69,6 @@ public class OrderParentActivity extends BaseJxActivity
         initFragment();
 
         initViewPager();
-
-        if (mPresenter != null) mPresenter.getOrderList();
     }
 
     public void initView(View view) {
@@ -105,7 +111,16 @@ public class OrderParentActivity extends BaseJxActivity
 
             @Override
             public void doClickPay(OrderListBean bean) {
-
+                String orderId = bean.getOrderId();
+                int orderPrice = bean.getAmount();
+                String payType = String.valueOf(bean.getPayType());
+                if (mPresenter != null && bean.getType() == 1) {
+                    int price = orderPrice * 100;
+                    mPresenter.onPayOrderByCoupon(orderId, String.valueOf(price), payType);
+                }
+                if (mPresenter != null && bean.getType() == 3) {
+                    mPresenter.getBankPayHtml(orderId, String.valueOf(orderPrice));
+                }
             }
         };
     }
@@ -131,6 +146,15 @@ public class OrderParentActivity extends BaseJxActivity
         });
 
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    /**
+     * 刷新
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mPresenter != null) mPresenter.getOrderList();
     }
 
     @Override
@@ -209,6 +233,54 @@ public class OrderParentActivity extends BaseJxActivity
     @Override
     public void updateOrderStatusSucceed(BaseResult result) {
         if (mPresenter != null) mPresenter.getOrderList();
+    }
+
+    @Override
+    public void onPayOrderByCouponError(String message) {
+        dismissLoadingDialog();
+        ToastUtils.toastShort(message);
+    }
+
+    @Override
+    public void onPayOrderByCouponSucceed(PayOrderResult result) {
+        PublicData.getInstance().webviewTitle = "支付";
+        PublicData.getInstance().webviewUrl = result.getData();
+        Act.getInstance().lauchIntentToLogin(this, BrowserForPayActivity.class);
+    }
+
+    @Override
+    public void getBankPayHtmlSucceed(PayOrderResult result, String orderId) {
+
+        Intent intent = new Intent(this, FahrschulePayBrowserActivity.class);
+        intent.putExtra(GlobalConstant.putExtra.web_title_extra, "支付");
+        intent.putExtra(GlobalConstant.putExtra.web_url_extra, result.getData());
+        intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, orderId);
+        startActivityForResult(intent, GlobalConstant.requestCode.fahrschule_order_num_web);
+    }
+
+    /**
+     * 页面回调
+     * 1、驾校报名成功页面
+     * 2、订单详情页面
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
+                && resultCode == GlobalConstant.resultCode.web_order_id_succeed) {
+
+            Intent intent = new Intent();
+            intent.putExtra(GlobalConstant.putExtra.fahrschule_position_extra, 2);
+            Act.getInstance().launchLoginByIntent(this, FahrschuleActivity.class, intent);
+
+        } else if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
+                && resultCode == GlobalConstant.resultCode.web_order_id_error && data != null) {
+            //前往 订单详情页面
+            String orderId = data.getStringExtra(GlobalConstant.putExtra.web_order_id_extra);
+            Intent intent = new Intent(this, OrderDetailActivity.class);
+            intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, orderId);
+            startActivity(intent);
+        }
     }
 
 

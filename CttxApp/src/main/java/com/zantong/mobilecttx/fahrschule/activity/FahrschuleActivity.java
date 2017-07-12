@@ -35,7 +35,9 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
-
+        Intent intent = getIntent();
+        if (intent != null)
+            mCurPosition = intent.getIntExtra(GlobalConstant.putExtra.fahrschule_position_extra, 0);
     }
 
     /**
@@ -104,9 +106,8 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
                 && resultCode == GlobalConstant.resultCode.web_order_id_succeed) {
-            initFragment(2);
-            FragmentUtils.removeToFragment(mFahrschuleApplySucceedFragment, false);
-
+            mCurPosition = 2;
+            initFragment(mCurPosition);
         } else if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
                 && resultCode == GlobalConstant.resultCode.web_order_id_error && data != null) {
             //前往 订单详情页面
@@ -129,7 +130,10 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_back://上一级
-                closeFragment();
+                if (mCurPosition == 2)
+                    finish();
+                else
+                    closeFragment();
                 break;
             case R.id.img_home:
                 finish();
@@ -143,7 +147,10 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            closeFragment();
+            if (mCurPosition == 2)
+                finish();
+            else
+                closeFragment();
         }
         return false;
     }

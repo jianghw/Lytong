@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.share.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.zantong.mobilecttx.fahrschule.fragment.FahrschuleShareFragment;
 import com.zantong.mobilecttx.share.fragment.CreditShareFragment;
 import com.zantong.mobilecttx.share.fragment.FriendShareFragment;
 
+import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
@@ -35,7 +37,10 @@ public class ShareParentActivity extends BaseJxActivity implements View.OnClickL
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
-
+        Intent intent = getIntent();
+        if (intent != null) {
+            mCurPosition = intent.getIntExtra(GlobalConstant.putExtra.share_position_extra, 0);
+        }
     }
 
     @Override
@@ -48,6 +53,8 @@ public class ShareParentActivity extends BaseJxActivity implements View.OnClickL
         initTitle(mCurPosition);
 
         initView(view);
+
+        if (mCurPosition != 0) initFragment();
     }
 
     protected void initTitle(int curPosition) {

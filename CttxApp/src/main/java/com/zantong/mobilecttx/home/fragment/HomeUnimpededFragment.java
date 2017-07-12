@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
-import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.alicloudpush.PushBean;
 import com.zantong.mobilecttx.api.CallBack;
@@ -23,12 +21,12 @@ import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
 import com.zantong.mobilecttx.eventbus.GetMsgAgainEvent;
 import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
-import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 import com.zantong.mobilecttx.home.adapter.HorizontalCarViolationAdapter;
@@ -63,11 +61,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import cn.qqtheme.framework.util.ContextUtils;
+import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
+import cn.qqtheme.framework.widght.HorizontalCarViewPager;
 import cn.qqtheme.framework.widght.banner.CBViewHolderCreator;
 import cn.qqtheme.framework.widght.banner.ConvenientBanner;
 
@@ -121,7 +120,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     private ImageView mImgTrumpet;
     private ImageView mImgLabel;
     private MainScrollUpAdvertisementView mCustomGrapevine;
-    private HorizontalInfiniteCycleViewPager mCustomViolation;
+    private HorizontalCarViewPager mCustomViolation;
     /**
      * P 指示器
      */
@@ -137,10 +136,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     private HomeMainActivity.MessageListener mHomeMainListener;
 
     private List<UserCarInfoBean> mUserCarInfoBeanList = new ArrayList<>();
-    /**
-     * 控制数据加载 resume
-     */
-    private boolean isSecondData = false;
 
     public static HomeUnimpededFragment newInstance() {
         return new HomeUnimpededFragment();
@@ -175,7 +170,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
      */
     @Override
     protected void onRefreshData() {
-        initFirstData(isSecondData);
+        resumeDataVisible();
     }
 
     @Override
@@ -227,7 +222,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         mImgTrumpet = (ImageView) view.findViewById(R.id.img_trumpet);
         mImgLabel = (ImageView) view.findViewById(R.id.img_label);
         mCustomGrapevine = (MainScrollUpAdvertisementView) view.findViewById(R.id.custom_grapevine);
-        mCustomViolation = (HorizontalInfiniteCycleViewPager) view.findViewById(R.id.custom_violation);
+        mCustomViolation = (HorizontalCarViewPager) view.findViewById(R.id.custom_violation);
     }
 
     @Override
@@ -237,18 +232,15 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onFirstDataVisible() {
-        initFirstData(!isSecondData);
     }
 
-    private void initFirstData(boolean isSecondData) {
-        if (!isSecondData) return;
-
+    private void resumeDataVisible() {
+        mPresenter.homePage();
         if (PublicData.getInstance().loginFlag) {
             mPresenter.getRemoteCarInfo();
         } else {
             getLocalCarInfo();
         }
-        mPresenter.homePage();
     }
 
     private void initScrollUp(final List<HomeNotice> mDataLists) {
@@ -270,8 +262,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     public void onResume() {
         super.onResume();
 
-        initFirstData(isSecondData);
-        isSecondData = true;
+        resumeDataVisible();
 
         startCampaignCustom(false);
     }
@@ -517,23 +508,28 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         switch (v.getId()) {
             case R.id.img_msg://消息
             case R.id.tv_msg_count:
-                MobclickAgent.onEvent(ContextUtils.getContext(), Config.getUMengID(24));
+                GlobalConfig.getInstance().eventIdByUMeng(15);
+
                 Act.getInstance().lauchIntentToLogin(getActivity(), MegTypeActivity.class);
                 break;
             case R.id.img_scan://扫描
             case R.id.tv_scan:
+                GlobalConfig.getInstance().eventIdByUMeng(17);
                 takeCapture();
                 break;
             case R.id.tv_oil://加油
-                MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(6));
+                GlobalConfig.getInstance().eventIdByUMeng(2);
+
                 Act.getInstance().lauchIntentToLogin(this.getActivity(), RechargeActivity.class);
                 break;
             case R.id.tv_check://年检
+                GlobalConfig.getInstance().eventIdByUMeng(4);
+
                 PublicData.getInstance().mapType = BaiduMapActivity.TYPE_NIANJIAN;
                 enterDrivingActivity();
                 break;
             case R.id.tv_carwash://驾驶证查分
-                MobclickAgent.onEvent(ContextUtils.getContext(), Config.getUMengID(35));
+                GlobalConfig.getInstance().eventIdByUMeng(7);
 
                 LicenseFileNumDTO bean = SPUtils.getInstance(
                 ).getLicenseFileNumDTO();
@@ -557,11 +553,13 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                 }
                 break;
             case R.id.tv_drive://洗车
-                Act.getInstance().lauchIntentToLogin(getActivity(), FahrschuleActivity.class);
+                GlobalConfig.getInstance().eventIdByUMeng(9);
 
-//                Intent intent = new Intent(getActivity(), FahrschulePayBrowserActivity.class);
-//                intent.putExtra(GlobalConstant.putExtra.web_title_extra, "支付");
-//                getActivity().startActivity(intent);
+                PublicData.getInstance().webviewUrl = Config.HOME_CAR_WASH_URL;
+                PublicData.getInstance().webviewTitle = "洗车";
+                PublicData.getInstance().isCheckLogin = true;
+                Act.getInstance().gotoIntent(this.getActivity(), BrowserActivity.class);
+
                 break;
             default:
                 break;

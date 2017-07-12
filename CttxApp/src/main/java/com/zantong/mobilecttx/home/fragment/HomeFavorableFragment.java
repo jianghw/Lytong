@@ -1,18 +1,24 @@
 package com.zantong.mobilecttx.home.fragment;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
+import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
+import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
+import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.home.adapter.FavorableBannerImgHolderView;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.bean.BannerBean;
@@ -25,6 +31,7 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
@@ -57,6 +64,8 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
      */
     private LinearLayout mLayBeauty;
     private ImageView mImgBanner;
+    private LinearLayout mLayAdmissions;
+    private TextView mTvAdmissions;
 
     public static HomeFavorableFragment newInstance() {
         return new HomeFavorableFragment();
@@ -120,6 +129,9 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
                 }, localImages)
                 .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
                 .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
+
+        String priceAdmissions = getResources().getString(R.string.tv_favorable_price_admissions);
+        mTvAdmissions.setText(String.format(priceAdmissions, "5600"));
     }
 
     @Override
@@ -195,10 +207,17 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
     public void initView(View view) {
         mCustomConvenientBanner = (ConvenientBanner) view.findViewById(R.id.custom_convenientBanner);
         mLayOrder = (LinearLayout) view.findViewById(R.id.lay_order);
+        mLayOrder.setOnClickListener(this);
         mLayRepair = (LinearLayout) view.findViewById(R.id.lay_repair);
+        mLayRepair.setOnClickListener(this);
         mLayRiver = (LinearLayout) view.findViewById(R.id.lay_river);
         mLayRiver.setOnClickListener(this);
         mLayBeauty = (LinearLayout) view.findViewById(R.id.lay_beauty);
+        mLayBeauty.setOnClickListener(this);
+        mLayAdmissions = (LinearLayout) view.findViewById(R.id.lay_admissions);
+        mLayAdmissions.setOnClickListener(this);
+        mTvAdmissions = (TextView) view.findViewById(R.id.tv_admissions);
+
         mImgBanner = (ImageView) view.findViewById(R.id.img_banner);
         mImgBanner.setOnClickListener(this);
     }
@@ -207,10 +226,30 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_banner:
-                Act.getInstance().lauchIntentToLogin(getActivity(), ShareParentActivity.class);
+                Intent intent = new Intent();
+                intent.putExtra(GlobalConstant.putExtra.share_position_extra, 1);
+                Act.getInstance().launchLoginByIntent(getActivity(), ShareParentActivity.class, intent);
+                break;
+            case R.id.lay_order://加油
+                Act.getInstance().lauchIntentToLogin(getActivity(), RechargeActivity.class);
+                break;
+            case R.id.lay_repair://害羞
+                PublicData.getInstance().webviewUrl = Config.HOME_CAR_WASH_URL;
+                PublicData.getInstance().webviewTitle = "洗车";
+                PublicData.getInstance().isCheckLogin = true;
+                Act.getInstance().gotoIntent(getActivity(), BrowserActivity.class);
+                break;
+            case R.id.lay_beauty://美容
+                PublicData.getInstance().webviewUrl = "http://m.hiservice.com.cn/market/icbc58";
+                PublicData.getInstance().webviewTitle = "汽车美容";
+                PublicData.getInstance().isCheckLogin = true;
+                Act.getInstance().gotoIntent(getActivity(), BrowserActivity.class);
                 break;
             case R.id.lay_river://代驾
                 enterDrivingActivity();
+                break;
+            case R.id.lay_admissions://驾校招生
+                Act.getInstance().lauchIntentToLogin(getActivity(), FahrschuleActivity.class);
                 break;
             default:
                 break;

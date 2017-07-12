@@ -4,6 +4,7 @@ import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
+import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 
@@ -43,6 +44,9 @@ public interface IFahrschuleApplyFtyContract {
 
         String getPriceValue();
 
+        void getGoodsDetailError(String message);
+
+        void getGoodsDetailSucceed(GoodsDetailResult result);
     }
 
     interface IFahrschuleApplyFtyPresenter extends IMvpPresenter {
@@ -58,6 +62,8 @@ public interface IFahrschuleApplyFtyContract {
         void createOrder();
 
         CreateOrderDTO getCreateOrder();
+
+        void getGoodsDetail(String goodsId);
     }
 
 }

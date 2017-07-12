@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.utils.DialogUtils;
 
@@ -184,6 +185,19 @@ public abstract class BaseJxActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 友盟统计开始
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // 友盟统计结束
+        MobclickAgent.onPause(this);
+    }
 
     @Override
     protected void onDestroy() {

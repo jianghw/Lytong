@@ -15,6 +15,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tencent.bugly.Bugly;
+import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.BuildConfig;
 
 import cn.qqtheme.framework.util.ContextUtils;
@@ -35,6 +36,18 @@ public class MyApplication extends MultiDexApplication {
      * 第三方工具类
      */
     private void initThirdTools() {
+//有盟+统计初始化
+        if (BuildConfig.DEBUG) {
+            MobclickAgent.UMAnalyticsConfig umAnalyticsConfig =
+                    new MobclickAgent.UMAnalyticsConfig(
+                            getApplicationContext(), "592544d7b27b0a65a200069e", "ZS_360");
+            MobclickAgent.startWithConfigure(umAnalyticsConfig);
+        }
+        MobclickAgent.setDebugMode(BuildConfig.DEBUG);
+        MobclickAgent.enableEncrypt(true);//日志加密
+        MobclickAgent.setCatchUncaughtExceptions(BuildConfig.DEBUG);
+        MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计方式
+
 //工具类
         ContextUtils.init(this);
 //图片

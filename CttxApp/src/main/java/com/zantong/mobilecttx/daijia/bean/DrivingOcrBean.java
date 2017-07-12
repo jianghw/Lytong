@@ -5,6 +5,20 @@ package com.zantong.mobilecttx.daijia.bean;
  */
 public class DrivingOcrBean {
 
+    /**
+     * {"content":
+     * {"CardNo":"贵CAA631",
+     * "enginePN":"010051",
+     * "Address":"贵州遵义市汇川区高坪镇仁江村20号",
+     * "useCharacte":"非营运","IssueDate":"20120511",
+     * "model":"起亚牌YQZ7204AM",
+     * "vin":"LJDKAA244C0040712",
+     * "vehicleType":"小型轿车",
+     * "Name":"陈丹炭",
+     * "registerDate":"20120511"},
+     * "status":"OK"}
+     */
+
     private String Address;
     private String CardNo;
     private String IssueDate;

@@ -28,6 +28,7 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 
+import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -174,6 +175,8 @@ public class HomeMainActivity extends BaseJxActivity {
 
                 if (mHomeUnimpededFragment != null)
                     FragmentUtils.hideAllShowFragment(fragmentManager, mHomeUnimpededFragment);
+
+                GlobalConfig.getInstance().eventIdByUMeng(18);
                 break;
             case 1:
                 if (mHomeFavorableFragment == null) {

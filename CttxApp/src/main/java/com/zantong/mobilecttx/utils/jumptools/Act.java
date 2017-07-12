@@ -79,4 +79,16 @@ public class Act {
         }
     }
 
+    public void launchLoginByIntent(Context packageContext, Class<?> className, Intent intent) {
+        if (PublicData.getInstance().loginFlag
+                && !TextUtils.isEmpty(PublicData.getInstance().userID)) {
+            intent.setClass(packageContext, className);
+            packageContext.startActivity(intent);
+        } else {
+            PublicData.getInstance().className = className;
+            intent.setClass(packageContext, LoginActivity.class);
+            packageContext.startActivity(intent);
+        }
+    }
+
 }

@@ -14,6 +14,7 @@ import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
+import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
@@ -366,6 +367,13 @@ public class RepositoryManager {
      * 10.更新订单状态 N
      */
     public Observable<BaseResult> updateOrderStatus(String orderId, int orderStatus) {
-        return mRemoteData.updateOrderStatus(orderId,orderStatus);
+        return mRemoteData.updateOrderStatus(orderId, orderStatus);
+    }
+
+    /**
+     * 6.获取商品详情
+     */
+    public Observable<GoodsDetailResult> getGoodsDetail(String goodsId) {
+        return mRemoteData.getGoodsDetail(goodsId);
     }
 }

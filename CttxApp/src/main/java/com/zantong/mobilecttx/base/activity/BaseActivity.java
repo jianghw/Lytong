@@ -95,9 +95,7 @@ public abstract class BaseActivity extends FragmentActivity implements OnClickLi
     }
 
     /**
-     * 资源文件Layout ID
-     *
-     * @return
+     * 资源文件Layout ID 友盟统计
      */
     protected int getLayoutResId() {
         return 0;

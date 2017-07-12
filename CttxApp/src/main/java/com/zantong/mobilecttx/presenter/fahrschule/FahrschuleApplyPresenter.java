@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
+import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.interf.IFahrschuleApplyFtyContract;
@@ -120,7 +121,46 @@ public class FahrschuleApplyPresenter
                             mAtyView.getAreaGoodsSucceed(result);
                         } else {
                             mAtyView.getAreaGoodsError(result != null
-                                    ? result.getResponseDesc() : "未知错误(54)");
+                                    ? result.getResponseDesc() : "未知错误(N4)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 6.获取商品详情
+     */
+    @Override
+    public void getGoodsDetail(String goodsId) {
+        Subscription subscription = mRepository.getGoodsDetail(goodsId)
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mAtyView.showLoadingDialog();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<GoodsDetailResult>() {
+                    @Override
+                    public void doCompleted() {
+                        mAtyView.dismissLoadingDialog();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.getGoodsDetailError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(GoodsDetailResult result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.getGoodsDetailSucceed(result);
+                        } else {
+                            mAtyView.getGoodsDetailError(result != null
+                                    ? result.getResponseDesc() : "未知错误(N6)");
                         }
                     }
                 });

@@ -13,6 +13,7 @@ import com.zantong.mobilecttx.map.activity.BaiduMapActivity;
 import com.zantong.mobilecttx.presenter.chongzhi.RechargePresenter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
+import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.util.AtyUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
@@ -52,7 +53,8 @@ public class RechargeActivity extends MvpBaseActivity {
 
     @Override
     protected void baseGoEnsure() {
-        super.baseGoEnsure();
+        GlobalConfig.getInstance().eventIdByUMeng(3);
+
         PublicData.getInstance().mapType = BaiduMapActivity.TYPE_JIAYOU;
         showContacts();
     }

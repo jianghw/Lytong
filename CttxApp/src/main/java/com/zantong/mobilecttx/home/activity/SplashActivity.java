@@ -87,11 +87,6 @@ public class SplashActivity extends AppCompatActivity
      * 数据初始
      */
     private void initThirdPartyData() {
-        // 友盟日志发送策略
-//        MobclickAgent.updateOnlineConfig(this);
-        // 友盟是否启用调试模式
-//        MobclickAgent.setDebugMode(Config.DEBUG);
-
         int version = Tools.compareVersion(
                 SPUtils.getInstance().getIsGuide(),
                 Tools.getVerName(getApplicationContext()));

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseActivity;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
@@ -131,13 +132,13 @@ public abstract class BaseJxFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        LogUtils.e("onResume==" + this.getClass().getSimpleName());
+        // 统计页面
+        MobclickAgent.onPageStart(this.getClass().getSimpleName());
     }
-
     @Override
     public void onPause() {
         super.onPause();
-        LogUtils.e("onPause==" + this.getClass().getSimpleName());
+        MobclickAgent.onPageEnd(this.getClass().getSimpleName());
     }
 
     @Override

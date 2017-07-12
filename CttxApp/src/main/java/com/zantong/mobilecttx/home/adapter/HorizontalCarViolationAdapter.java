@@ -17,6 +17,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.home.activity.Codequery;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -28,8 +29,8 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.popup.MoreWindow;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ScreenUtils;
 
 /**
@@ -109,8 +110,8 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                AddCarActivity.isFrom = false;
-//                Act.getInstance().lauchIntent(mContext, AddCarActivity.class);
+                GlobalConfig.getInstance().eventIdByUMeng(11);
+
                 showMoreWindow(v);
             }
         });
@@ -123,17 +124,18 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
             mMoreWindow = new MoreWindow((Activity) mContext);
             mMoreWindow.init();
         }
-        mMoreWindow.showMoreWindow(view, ScreenUtils.widthPixels(mContext)/2);
+        mMoreWindow.showMoreWindow(view, ScreenUtils.widthPixels(mContext) / 2);
         mMoreWindow.initClickListener(new MoreWindow.onClickListener() {
             @Override
             public void clickInquire() {//违章查询
-                MobclickAgent.onEvent(ContextUtils.getContext(), Config.getUMengID(2));
+                GlobalConfig.getInstance().eventIdByUMeng(12);
                 Act.getInstance().lauchIntent(mContext, ViolationActivity.class);
             }
 
             @Override
             public void clickScan() {
-
+                GlobalConfig.getInstance().eventIdByUMeng(14);
+                Act.getInstance().lauchIntent(mContext, Codequery.class);
             }
         });
     }

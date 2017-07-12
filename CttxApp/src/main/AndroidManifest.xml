@@ -112,7 +112,7 @@
         <activity
             android:name=".weizhang.activity.ViolationDetails"
             android:screenOrientation="portrait"/>
-        <!-- 输入编码查询违章页面 -->
+        <!-- =======================输入编码查询违章页面===================================== -->
         <activity
             android:name=".home.activity.Codequery"
             android:screenOrientation="portrait"/>
@@ -120,6 +120,7 @@
             android:name=".home.activity.CaptureActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden"/>
+
         <activity
             android:name=".car.activity.SelectCarTypeActivity"
             android:screenOrientation="portrait"/>
@@ -442,15 +443,9 @@
             android:screenOrientation="portrait"/>
 
         <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="58b3880304e20581760018e7"/>
-        <meta-data
             android:name="com.zantong.mobilecttx.utils.imagetools.UnsafeOkHttpGlideModule"
             android:value="GlideModule"/>
-        <!-- <meta-data -->
-        <!-- android:name="UMENG_CHANNEL" -->
-        <!-- android:value="${UMENG_CHANNEL_VALUE}" > -->
-        <!-- </meta-data> -->
+
 
         <service android:name=".utils.DateService">
             <intent-filter>
@@ -501,14 +496,6 @@
         <meta-data
             android:name="com.alibaba.app.appsecret"
             android:value="a51ce60b119cf15b9ab220ed70d8078c"/> <!-- 请填写你自己的appSecret  在应用证书中 -->
-        <!-- 测试专用 -->
-        <!-- <meta-data -->
-        <!-- android:name="com.alibaba.app.appkey" -->
-        <!-- android:value="24038080"/> &lt;!&ndash; 请填写你自己的- appKey &ndash;&gt; -->
-        <!-- <meta-data -->
-        <!-- android:name="com.alibaba.app.appsecret" -->
-        <!-- android:value="67e0f4f5e27e689af373fb3c2a8ace9c"/> &lt;!&ndash; 请填写你自己的appSecret  在应用证书中  &ndash;&gt; -->
-
 
         <!-- 通道保持服务（幽灵进程自动保活该服务） -->
         <service
@@ -673,6 +660,14 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_provider_paths"/>
         </provider>
+
+        <!-- 友盟+适配 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="58b3880304e20581760018e7"/>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}"/>
 
     </application>
 

@@ -4,6 +4,7 @@ import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 
 import java.util.List;
 
@@ -34,6 +35,12 @@ public interface IOrderParentFtyContract {
         void updateOrderStatusError(String message);
 
         void updateOrderStatusSucceed(BaseResult result);
+
+        void onPayOrderByCouponError(String message);
+
+        void onPayOrderByCouponSucceed(PayOrderResult result);
+
+        void getBankPayHtmlSucceed(PayOrderResult result, String orderId);
     }
 
     interface IOrderParentFtyPresenter extends IMvpPresenter {
@@ -42,5 +49,9 @@ public interface IOrderParentFtyContract {
         String initUserId();
 
         void updateOrderStatus(OrderListBean bean);
+
+        void onPayOrderByCoupon(String orderId, String orderPrice, String payType);
+
+        void getBankPayHtml(String orderId, String orderPrice);
     }
 }
