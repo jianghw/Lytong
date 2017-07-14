@@ -64,6 +64,7 @@ import java.util.List;
 
 import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.util.ToastUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -256,7 +257,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     private void resumeDataVisible() {
         mPresenter.homePage();
         if (PublicData.getInstance().loginFlag) {
-            mPresenter.getRemoteCarInfo();
             mPresenter.getTextNoticeInfo();
         } else {
             getLocalCarInfo();
@@ -395,10 +395,11 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
         if (result != null && result.getData() != null) {
             List<UserCarInfoBean> infoBeanList = result.getData();
+            LogUtils.e("==========="+infoBeanList.size());
 //TODO 车辆数据保存处理
             PublicData.getInstance().payData.clear();
-            PublicData.getInstance().mServerCars = decodeCarInfo(infoBeanList);
             PublicData.getInstance().mCarNum = infoBeanList.size();
+            PublicData.getInstance().mServerCars = decodeCarInfo(infoBeanList);
 
             mUserCarInfoBeanList.addAll(infoBeanList);
         }
@@ -422,7 +423,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
             userCarInfoBean.setCarnum(Des3.decode(userCarInfoBean.getCarnum()));
             userCarInfoBean.setCarframenum(Des3.decode(userCarInfoBean.getCarframenum()));
 
-            if (userCarInfoBean.getIspaycar().equals("1"))
+            if (!TextUtils.isEmpty(userCarInfoBean.getIspaycar()) && userCarInfoBean.getIspaycar().equals("1"))
                 PublicData.getInstance().payData.add(userCarInfoBean);
 
             arrayList.add(userCarInfoBean);
@@ -484,7 +485,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSynEvent(UpdateCarInfoEvent event) {
         if (event.isStatus() && mPresenter != null) {
-            mPresenter.getRemoteCarInfo();
             mPresenter.getTextNoticeInfo();
         }
     }

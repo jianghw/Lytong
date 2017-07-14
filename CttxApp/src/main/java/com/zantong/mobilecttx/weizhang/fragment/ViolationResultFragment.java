@@ -18,7 +18,10 @@ import com.zantong.mobilecttx.weizhang.adapter.ViolationResultAdapter;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResult;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
+import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
+
+import java.util.List;
 
 import cn.qqtheme.framework.util.ToastUtils;
 import rx.android.schedulers.AndroidSchedulers;
@@ -104,7 +107,7 @@ public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
                 if ("000000".equals(result.getSYS_HEAD().getReturnCode())) {
                     setDataResult(result.getRspInfo().getViolationInfo());
 
-                    handleViolations(result.getRspInfo());
+                    if (TEMP_STATE == 2) handleViolations(result.getRspInfo());
                 } else {
                     ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
                     onShowFailed();
@@ -120,8 +123,29 @@ public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
     }
 
     public void handleViolations(ViolationResult violationResult) {
+
+        String carnum = (String) PublicData.getInstance().mHashMap.get("carnum");
+        String enginenum = (String) PublicData.getInstance().mHashMap.get("enginenum");
+
+        ViolationCarDTO violationCarDTO = new ViolationCarDTO();
+        violationCarDTO.setCarnum(carnum);
+        violationCarDTO.setCarnumtype(params.getCarnumtype());
+        violationCarDTO.setEnginenum(enginenum);
+
+        List<ViolationBean> violationInfo = violationResult.getViolationInfo();
+//        List<ViolationBean> violationInfo = new ArrayList<>();
+//        ViolationBean bean = new ViolationBean();
+//        bean.setViolationamt("4");
+//        bean.setViolationcent("5");
+//        bean.setViolationdate("1");
+//        bean.setViolationtime("3");
+//        bean.setViolationnum("3333333333333333");
+//        bean.setProcessste(3);
+//        violationInfo.add(bean);
+
+        violationCarDTO.setViolationInfo(violationInfo);
         Injection.provideRepository(getActivity().getApplicationContext())
-                .handleViolations(violationResult)
+                .handleViolations(violationCarDTO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResult>() {

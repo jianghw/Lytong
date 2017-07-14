@@ -155,7 +155,8 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
         TextView tvBrand = (TextView) view.findViewById(R.id.tv_motorcycle_brand);
 
         tvPlateNumber.setText(userCarInfoBean.getCarnum());
-        String carType = VehicleTypeTools.switchVehicleCode(userCarInfoBean.getCarnumtype());
+
+        String carType = VehicleTypeTools.switchVehicleType(userCarInfoBean.getCarnumtype());
         tvType.setText(carType);
         tvBrand.setText(userCarInfoBean.getEnginenum());
 

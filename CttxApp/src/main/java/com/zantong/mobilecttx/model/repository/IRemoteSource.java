@@ -32,7 +32,7 @@ import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
-import com.zantong.mobilecttx.weizhang.bean.ViolationResult;
+import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import okhttp3.MultipartBody;
@@ -219,5 +219,5 @@ public interface IRemoteSource {
     /**
      * 处理违章信息
      */
-    Observable<BaseResult> handleViolations(ViolationResult violationResult);
+    Observable<BaseResult> handleViolations(ViolationCarDTO violationResult);
 }

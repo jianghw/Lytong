@@ -5,7 +5,11 @@ import android.text.TextUtils;
 import java.util.LinkedList;
 
 public class VehicleTypeTools {
+
+
     public static String switchVehicleType(String number) {
+        if (TextUtils.isEmpty(number)) return "小型汽车";
+
         String vehicleName = null;
         if ("01".equals(number)) {
             vehicleName = "大型汽车";
@@ -59,12 +63,15 @@ public class VehicleTypeTools {
             vehicleName = "大型新能源汽车";
         } else if ("52".equals(number)) {
             vehicleName = "小型新能源汽车";
+        } else {
+            vehicleName = "小型汽车";
         }
-
-
         return vehicleName;
     }
 
+    /**
+     * 数字
+     */
     public static String switchVehicleCode(String number) {
         String vehicleName = "02";
         if (TextUtils.isEmpty(number)) return vehicleName;

@@ -1,5 +1,7 @@
 package com.zantong.mobilecttx.utils.rsa;
 
+import android.text.TextUtils;
+
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -38,7 +40,7 @@ public class Des3 {
      * @return
      * @throws Exception
      */
-    public static String encode(String plainText){
+    public static String encode(String plainText) {
         String encodeStr = "";
         try {
             Key deskey = null;
@@ -78,20 +80,20 @@ public class Des3 {
      * @return
      * @throws Exception
      */
-    public static String decode(String encryptText){
+    public static String decode(String encryptText) {
+        if (TextUtils.isEmpty(encryptText)) return encryptText;
+
         String strDecode = encryptText;
         try {
-            if(isDecode){
-                Key deskey = null;
-                DESedeKeySpec spec = new DESedeKeySpec(secretKey.getBytes());
-                SecretKeyFactory keyfactory = SecretKeyFactory.getInstance("desede");
-                deskey = keyfactory.generateSecret(spec);
-                Cipher cipher = Cipher.getInstance("desede/CBC/PKCS5Padding");
-                IvParameterSpec ips = new IvParameterSpec(iv.getBytes());
-                cipher.init(Cipher.DECRYPT_MODE, deskey, ips);
-                byte[] decryptData = cipher.doFinal(BaseUtil64.decode(encryptText));
-                strDecode = new String(decryptData, encoding);
-            }
+            Key deskey = null;
+            DESedeKeySpec spec = new DESedeKeySpec(secretKey.getBytes());
+            SecretKeyFactory keyfactory = SecretKeyFactory.getInstance("desede");
+            deskey = keyfactory.generateSecret(spec);
+            Cipher cipher = Cipher.getInstance("desede/CBC/PKCS5Padding");
+            IvParameterSpec ips = new IvParameterSpec(iv.getBytes());
+            cipher.init(Cipher.DECRYPT_MODE, deskey, ips);
+            byte[] decryptData = cipher.doFinal(BaseUtil64.decode(encryptText));
+            strDecode = new String(decryptData, encoding);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -66,7 +66,6 @@ import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
 
-import static android.R.attr.name;
 import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
@@ -501,6 +500,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         mCarInfoDTO.setUsrid(PublicData.getInstance().userID);
         mCarInfoDTO.setCarnum(carNum);
         mCarInfoDTO.setEnginenum(engine);
+        //数字
         mCarInfoDTO.setCarnumtype(VehicleTypeTools.switchVehicleCode(carType));
 
         mCarInfoDTO.setCarmodel("");

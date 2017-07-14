@@ -48,7 +48,8 @@ public class ViolationActivity extends BaseJxActivity {
                 if (mViolationQueryFragment == null) {
                     mViolationQueryFragment = ViolationQueryFragment.newInstance();
                 }
-                FragmentUtils.replaceFragment(fragmentManager, mViolationQueryFragment, R.id.lay_base_frame, true);
+                FragmentUtils.replaceFragment(
+                        fragmentManager, mViolationQueryFragment, R.id.lay_base_frame, true);
                 break;
             default:
                 break;

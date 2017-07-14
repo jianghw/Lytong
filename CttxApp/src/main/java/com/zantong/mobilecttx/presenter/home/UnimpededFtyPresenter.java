@@ -137,7 +137,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
      */
     @Override
     public void getTextNoticeInfo() {
-        Subscription subscription = mRepository.getTextNoticeInfo(mRepository.getDefaultUserID())
+        Subscription subscription = mRepository.getTextNoticeInfo(mRepository.getDefaultRASUserID())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HomeCarResult>() {

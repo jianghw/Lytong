@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.api;
 
 import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
-import com.zantong.mobilecttx.weizhang.bean.ViolationResult;
+import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -26,5 +26,5 @@ public interface ITextService {
      * 处理违章信息
      */
     @POST("text/handleViolations")
-    Observable<BaseResult> HandleViolationDTO(@Body ViolationResult violationResult);
+    Observable<BaseResult> HandleViolationDTO(@Body ViolationCarDTO violationResult);
 }
