@@ -51,7 +51,7 @@ public class OcrCallBack<T> implements Callback {
                 if (!TextUtils.isEmpty(reader)) {
                     T t = gson.fromJson(reader, clazz);
                     BaseOcrResult result = (BaseOcrResult) t;
-                    LogUtils.i("returncode===" + result.getStatus());
+
                     callback.sendSuccessMessage(t);
                 } else {
                     EventBus.getDefault().post(

@@ -33,7 +33,7 @@ public final class GlobalConfig {
     }
 
     private void initHashMapData() {
-        simpleArrayMap.put(1, "");
+        simpleArrayMap.put(1, "home_unblocked_banner_localActivity");//首页_畅_Banner_活动百日无违章
         simpleArrayMap.put(2, "home_unblocked_rechargeOilCard");//首页_畅_加油充值_油卡充值
         simpleArrayMap.put(3, "oilCard_oilDiscount_oilDiscountMap");//油卡充值_加油优惠_加油优惠地图
         simpleArrayMap.put(4, "home_unblocked_vehicleInspection_inspectionMap");//首页_畅_年检_年检地图

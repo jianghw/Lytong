@@ -63,12 +63,10 @@ import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 地图
- *
- * @author Sandy
- *         create at 16/9/19 上午11:46
  */
-public class BaiduMapActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements BaiduMap.OnMapLoadedCallback,
-        BaiduMap.OnMarkerClickListener, BaiduMap.OnMapClickListener, BaiduMap.OnMapTouchListener {
+public class BaiduMapActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
+        implements BaiduMap.OnMapLoadedCallback, BaiduMap.OnMarkerClickListener,
+        BaiduMap.OnMapClickListener, BaiduMap.OnMapTouchListener {
 
     public static final int TYPE_JIAYOU = 0;
     public static final int TYPE_NIANJIAN = 1;
@@ -118,7 +116,7 @@ public class BaiduMapActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
     //默认经纬度
     private double latitude = 31.230372;// 纬度
     private double longitude = 121.473662;// 经度
-    private LatLng defaultPos = new LatLng(latitude, longitude);// 默认坐标
+    private LatLng mDefaultPos = new LatLng(latitude, longitude);// 默认坐标
 
     public static BaiduMapActivity mapActivity;
     private Animation mapLocationIcon;
@@ -130,8 +128,8 @@ public class BaiduMapActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
     CarMarnagerDetailDTO mCarnagerDetailDTO;
     public String latitudeStr;
     public String longitudeStr;
-    //    private String type = "1";//年检类型 1年检  2免年检(默认)
 
+    //    private String type = "1";//年检类型 1年检  2免年检(默认)
     private String provider;
     BaiduMap mBaiduMap;
     public LocationClient mLocationClient = null;
@@ -149,9 +147,9 @@ public class BaiduMapActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        MapView.setMapCustomEnable(true);
         super.onCreate(savedInstanceState);
         mapActivity = this;
+        MapView.setMapCustomEnable(true);
     }
 
     @Override
@@ -166,29 +164,29 @@ public class BaiduMapActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
 
     @Override
     public void initView() {
-        mMapView.showScaleControl(false);//默认是true，显示缩放按钮
-        mMapView.showZoomControls(false);//默认是true，显示比例尺
-
         //BaiduMap管理具体的某一个MapView： 旋转，移动，缩放，事件。。。
         mBaiduMap = mMapView.getMap();
+
+        mMapView.showScaleControl(false);//默认是true，显示缩放按钮
+        mMapView.showZoomControls(false);//默认是true，显示比例尺
         //普通地图
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
         //开启交通图
         mBaiduMap.setTrafficEnabled(true);
         //设置缩放级别，默认级别为12
         MapStatusUpdate mapstatusUpdate = MapStatusUpdateFactory.zoomTo(15);
-        ;
         mBaiduMap.setMapStatus(mapstatusUpdate);
 
         // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         mBaiduMap.setMyLocationEnabled(true);
-        mBaiduMap.setOnMarkerClickListener(this);// 设置点击marker事件监听器
+        // 设置点击marker事件监听器
+        mBaiduMap.setOnMarkerClickListener(this);
         mBaiduMap.setOnMapTouchListener(this);
-        mBaiduMap.setOnMapClickListener(this);// 对amap添加单击地图事件监听器
+        // 对amap添加单击地图事件监听器
+        mBaiduMap.setOnMapClickListener(this);
         //设置地图中心点，默认是上海
-        MapStatusUpdate mapstatusUpdatePoint = MapStatusUpdateFactory.newLatLng(defaultPos);
-        mBaiduMap.setMapStatus(mapstatusUpdatePoint);
-
+        MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newLatLng(mDefaultPos);
+        mBaiduMap.setMapStatus(mapStatusUpdate);
 
         mapLocationIcon = AnimationUtils.loadAnimation(this, R.anim.center_map_bounds);
 
@@ -261,9 +259,9 @@ public class BaiduMapActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mMapView.onDestroy();
-        mLocationClient.stop();
         MapView.setMapCustomEnable(false);
+        mLocationClient.stop();
+        mMapView.onDestroy();
     }
 
 
@@ -344,7 +342,6 @@ public class BaiduMapActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
                 OverlayOptions option = new MarkerOptions().position(l).icon(bitmap).period(list.get(i).getId());
                 //在地图上添加Marker，并显示
                 mBaiduMap.addOverlay(option);
-
             }
         } else {
             mMapBottomView.setVisibility(View.GONE);

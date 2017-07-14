@@ -82,7 +82,6 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
             if (processte == 0 || processte == 2) {
                 holder.mPay.setVisibility(View.VISIBLE);
                 holder.mFlagImg.setBackgroundResource(R.mipmap.icon_weichuli);
-
             } else if (processte == 1 || processte == 3) {
                 holder.mPay.setVisibility(View.GONE);
                 holder.mFlagImg.setBackgroundResource(R.mipmap.icon_yichuli);
@@ -90,7 +89,6 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
                 holder.mPay.setVisibility(View.GONE);
                 holder.mFlagImg.setBackgroundResource(R.mipmap.icon_yichuli);
             }
-
             holder.mPay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -223,7 +221,6 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
             ButterKnife.bind(this, view);
         }
     }
-
 
     /**
      * 交易代码8400

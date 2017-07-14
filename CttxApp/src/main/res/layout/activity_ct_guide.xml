@@ -10,14 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <ImageView
+    <TextView
         android:id="@+id/guide_open"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/ds_140"
         android:gravity="center"
-        android:src="@mipmap/btn_start"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        tools:text="立即开启"/>
 </RelativeLayout>

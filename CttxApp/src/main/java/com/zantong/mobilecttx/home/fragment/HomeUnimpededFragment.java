@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.adapter.MainBannerImgHolderView;
 import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.home.bean.HomeBean;
+import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.interf.IUnimpededFtyContract;
@@ -43,7 +45,6 @@ import com.zantong.mobilecttx.user.activity.MegTypeActivity;
 import com.zantong.mobilecttx.user.bean.MessageCountBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
-import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.Des3;
@@ -223,6 +224,24 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         mImgLabel = (ImageView) view.findViewById(R.id.img_label);
         mCustomGrapevine = (MainScrollUpAdvertisementView) view.findViewById(R.id.custom_grapevine);
         mCustomViolation = (HorizontalCarViewPager) view.findViewById(R.id.custom_violation);
+
+        mCustomViolation.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                getPullRefreshView().setPullDownEnable(false);
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                    case MotionEvent.ACTION_UP:
+                        getPullRefreshView().setPullDownEnable(true);
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -238,6 +257,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         mPresenter.homePage();
         if (PublicData.getInstance().loginFlag) {
             mPresenter.getRemoteCarInfo();
+            mPresenter.getTextNoticeInfo();
         } else {
             getLocalCarInfo();
         }
@@ -371,10 +391,10 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void remoteCarInfoSucceed(UserCarsResult result) {
+    public void getTextNoticeInfo(HomeCarResult result) {
         if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
-        if (result != null && result.getRspInfo() != null) {
-            List<UserCarInfoBean> infoBeanList = result.getRspInfo().getUserCarsInfo();
+        if (result != null && result.getData() != null) {
+            List<UserCarInfoBean> infoBeanList = result.getData();
 //TODO 车辆数据保存处理
             PublicData.getInstance().payData.clear();
             PublicData.getInstance().mServerCars = decodeCarInfo(infoBeanList);
@@ -383,11 +403,13 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
             mUserCarInfoBeanList.addAll(infoBeanList);
         }
         //违章车辆
-//        mCarViolationAdapter = new HorizontalCarViolationAdapter(getContext(), mUserCarInfoBeanList);
-//        mCustomViolation.setAdapter(mCarViolationAdapter);
+
+//        HorizontalCarViolationAdapter carViolationAdapter =
+//                new HorizontalCarViolationAdapter(getContext(), mUserCarInfoBeanList);
+//        mCustomViolation.setAdapter(carViolationAdapter);
 
         mCarViolationAdapter.notifyDataSetChanged(mUserCarInfoBeanList);
-//        mCustomViolation.setAdapter(mCarViolationAdapter);
+        mCustomViolation.notifyDataSetChanged();
     }
 
     /**
@@ -424,6 +446,11 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
             }
 
         mCarViolationAdapter.notifyDataSetChanged(mUserCarInfoBeanList);
+        mCustomViolation.notifyDataSetChanged();
+
+//        HorizontalCarViolationAdapter carViolationAdapter =
+//                new HorizontalCarViolationAdapter(getContext(), mUserCarInfoBeanList);
+//        mCustomViolation.setAdapter(carViolationAdapter);
 
         PublicData.getInstance().mLocalCars = list;
         PublicData.getInstance().mCarNum = list != null ? list.size() : 0;
@@ -456,7 +483,10 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSynEvent(UpdateCarInfoEvent event) {
-        if (event.isStatus() && mPresenter != null) mPresenter.getRemoteCarInfo();
+        if (event.isStatus() && mPresenter != null) {
+            mPresenter.getRemoteCarInfo();
+            mPresenter.getTextNoticeInfo();
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

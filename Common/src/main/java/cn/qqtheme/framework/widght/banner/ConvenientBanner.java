@@ -21,6 +21,7 @@ import cn.qqtheme.framework.R;
 /**
  * 页面翻转控件，极方便的广告栏
  * 支持无限循环，自动翻页，翻页特效
+ *
  * @author Sai 支持自动翻页
  */
 public class ConvenientBanner<T> extends LinearLayout {
@@ -95,10 +96,10 @@ public class ConvenientBanner<T> extends LinearLayout {
         initViewPagerScroll();
     }
 
-    public ConvenientBanner setPages(CBViewHolderCreator holderCreator,List<T> datas){
+    public ConvenientBanner setPages(CBViewHolderCreator holderCreator, List<T> datas) {
         this.mDatas = datas;
         this.holderCreator = holderCreator;
-        pageAdapter = new CBPageAdapter(holderCreator,mDatas);
+        pageAdapter = new CBPageAdapter(holderCreator, mDatas);
         viewPager.setAdapter(pageAdapter);
         viewPager.setBoundaryCaching(true);
         if (page_indicatorId != null) setPageIndicator(page_indicatorId);
@@ -124,7 +125,7 @@ public class ConvenientBanner<T> extends LinearLayout {
         loPageTurningPoint.removeAllViews();
         mPointViews.clear();
         this.page_indicatorId = page_indicatorId;
-        if(mDatas==null)return this;
+        if (mDatas == null) return this;
         for (int count = 0; count < mDatas.size(); count++) {
             // 翻页指示的点
             ImageView pointView = new ImageView(getContext());
@@ -157,7 +158,7 @@ public class ConvenientBanner<T> extends LinearLayout {
      */
     public ConvenientBanner startTurning(long autoTurningTime) {
         //如果是正在翻页的话先停掉
-        if(turning){
+        if (turning) {
             stopTurning();
         }
         //设置可以翻页并开启翻页
@@ -197,9 +198,9 @@ public class ConvenientBanner<T> extends LinearLayout {
     public ConvenientBanner setPageTransformer(Transformer transformer) {
         try {
             viewPager.setPageTransformer(
-                            true,
-                            (PageTransformer) Class.forName("cn.qqtheme.framework.widght.banner.transforms."
-                                            + transformer.getClassName()).newInstance());
+                    true,
+                    (PageTransformer) Class.forName("cn.qqtheme.framework.widght.banner.transforms."
+                            + transformer.getClassName()).newInstance());
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -212,7 +213,7 @@ public class ConvenientBanner<T> extends LinearLayout {
 
     /**
      * 设置ViewPager的滑动速度
-     * */
+     */
     private void initViewPagerScroll() {
         try {
             Field mScroller = null;
@@ -244,12 +245,12 @@ public class ConvenientBanner<T> extends LinearLayout {
 
         if (ev.getAction() == MotionEvent.ACTION_UP) {
             // 开始翻页
-            if (canTurn)startTurning(autoTurningTime);
+            if (canTurn) startTurning(autoTurningTime);
         } else if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             // 停止翻页
-            if (canTurn)stopTurning();
+            if (canTurn) stopTurning();
         }
-        if(manualPageable)return super.dispatchTouchEvent(ev);
+        if (manualPageable) return super.dispatchTouchEvent(ev);
         else return true;
     }
 

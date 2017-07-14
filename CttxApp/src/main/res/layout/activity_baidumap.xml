@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/activity_map_layout"
@@ -12,7 +12,7 @@
         <com.baidu.mapapi.map.MapView
             android:id="@+id/activity_baidumap"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
     </LinearLayout>
 
     <Button
@@ -21,7 +21,7 @@
         android:layout_height="@dimen/ds_108"
         android:layout_gravity="right"
         android:layout_margin="@dimen/ds_30"
-        android:background="@mipmap/icon_dingwei" />
+        android:background="@mipmap/icon_dingwei"/>
 
     <LinearLayout
         android:id="@+id/map_bottom_view"
@@ -46,7 +46,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="@color/gray_25"
-                android:textSize="14sp" />
+                android:textSize="14sp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -61,14 +61,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/red"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <View
                     android:layout_width="@dimen/ds_1"
                     android:layout_height="@dimen/ds_36"
                     android:layout_marginLeft="@dimen/ds_30"
                     android:layout_marginRight="@dimen/ds_30"
-                    android:background="@color/gray_66" />
+                    android:background="@color/gray_66"/>
 
                 <TextView
                     android:id="@+id/bottom_view_addr"
@@ -78,7 +78,7 @@
                     android:maxLines="1"
                     android:textColor="@color/gray_66"
                     android:textSize="12sp"
-                    android:typeface="serif" />
+                    android:typeface="serif"/>
 
 
             </LinearLayout>
@@ -88,11 +88,11 @@
                 android:layout_width="@dimen/ds_144"
                 android:layout_height="@dimen/ds_144"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/btn_navigation_selector" />
+                android:background="@drawable/btn_navigation_selector"/>
 
         </RelativeLayout>
 
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <LinearLayout
             android:id="@+id/bottom_view_nianjian_layout"
@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/ds_30"
                     android:text="联系电话"
-                    android:textSize="@dimen/fs_39" />
+                    android:textSize="@dimen/fs_39"/>
 
                 <TextView
                     android:id="@+id/bottom_view_tel"
@@ -120,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:text="020-1898731"
                     android:textColor="@color/gray_25"
-                    android:textSize="@dimen/fs_39" />
+                    android:textSize="@dimen/fs_39"/>
             </LinearLayout>
 
             <LinearLayout
@@ -135,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/ds_30"
                     android:text="营业时间"
-                    android:textSize="@dimen/fs_39" />
+                    android:textSize="@dimen/fs_39"/>
 
                 <TextView
                     android:id="@+id/bottom_view_time"
@@ -143,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:text="020-1898731"
                     android:textColor="@color/gray_25"
-                    android:textSize="@dimen/fs_39" />
+                    android:textSize="@dimen/fs_39"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -172,7 +172,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/ds_60"
                         android:text="92#"
-                        android:textSize="@dimen/fs_39" />
+                        android:textSize="@dimen/fs_39"/>
 
                     <TextView
                         android:id="@+id/bottom_view_jiayou_price1"
@@ -180,14 +180,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/ds_30"
                         android:textColor="@color/gray_25"
-                        android:textSize="@dimen/fs_39" />
+                        android:textSize="@dimen/fs_39"/>
 
                     <TextView
                         android:id="@+id/bottom_view_jiayou_discount1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/red"
-                        android:textSize="@dimen/fs_39" />
+                        android:textSize="@dimen/fs_39"/>
                 </LinearLayout>
 
                 <TextView
@@ -196,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/ds_30"
                     android:textColor="@color/gray_99"
-                    android:textSize="@dimen/fs_39" />
+                    android:textSize="@dimen/fs_39"/>
             </LinearLayout>
 
             <LinearLayout
@@ -210,7 +210,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/ds_3"
                     android:layout_marginLeft="@dimen/ds_30"
-                    android:background="@color/gray_f5" />
+                    android:background="@color/gray_f5"/>
             </LinearLayout>
 
             <LinearLayout
@@ -225,7 +225,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/ds_60"
                     android:text="95#"
-                    android:textSize="@dimen/fs_39" />
+                    android:textSize="@dimen/fs_39"/>
 
                 <TextView
                     android:id="@+id/bottom_view_jiayou_price2"
@@ -233,14 +233,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/ds_30"
                     android:textColor="@color/gray_25"
-                    android:textSize="@dimen/fs_39" />
+                    android:textSize="@dimen/fs_39"/>
 
                 <TextView
                     android:id="@+id/bottom_view_jiayou_discount2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/red"
-                    android:textSize="@dimen/fs_39" />
+                    android:textSize="@dimen/fs_39"/>
             </LinearLayout>
 
             <TextView
@@ -250,7 +250,7 @@
                 android:paddingBottom="@dimen/ds_30"
                 android:paddingLeft="@dimen/ds_30"
                 android:textColor="@color/gray_99"
-                android:textSize="@dimen/fs_39" />
+                android:textSize="@dimen/fs_39"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -273,12 +273,12 @@
             android:gravity="center"
             android:text="免检领标"
             android:textColor="@color/red"
-            android:textSize="@dimen/ds_45" />
+            android:textSize="@dimen/ds_45"/>
 
         <View
             android:layout_width="@dimen/ds_3"
             android:layout_height="@dimen/ds_72"
-            android:background="@color/gray_ee" />
+            android:background="@color/gray_ee"/>
 
         <TextView
             android:id="@+id/map_type1"
@@ -290,7 +290,7 @@
             android:gravity="center"
             android:text="年检站点"
             android:textColor="@color/gray_66"
-            android:textSize="@dimen/ds_45" />
+            android:textSize="@dimen/ds_45"/>
 
     </LinearLayout>
 

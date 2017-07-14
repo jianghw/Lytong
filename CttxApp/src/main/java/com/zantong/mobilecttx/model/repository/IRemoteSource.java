@@ -15,6 +15,7 @@ import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
+import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
@@ -31,6 +32,7 @@ import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.ViolationResult;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import okhttp3.MultipartBody;
@@ -208,4 +210,14 @@ public interface IRemoteSource {
      * 6.获取商品详情
      */
     Observable<GoodsDetailResult> getGoodsDetail(String goodsId);
+
+    /**
+     * 获取违章信息
+     */
+    Observable<HomeCarResult> getTextNoticeInfo(String defaultUserID);
+
+    /**
+     * 处理违章信息
+     */
+    Observable<BaseResult> handleViolations(ViolationResult violationResult);
 }

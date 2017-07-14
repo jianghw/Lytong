@@ -53,7 +53,7 @@ public class Config {
     public static final String HOME_NOTICE_URL = "http://liyingtong.com:8081/h5/price_change/oilprice_message.html";
     //	public static final String HOME_NOTICE_URL = "http://test.w1buy.cn:8081/h5/price_change/oilprice_message.html";
 //	public static final String HOME_CAR_WASH_URL = "http://test.w1buy.cn:8081/h5/car_wash/car_wash.html";
-    public static final String HOME_CAR_WASH_URL = "http://liyingtong.com:8081/h5/car_wash/car_wash.html";
+    public static final String HOME_CAR_WASH_URL = BuildConfig.CAR_MANGER_URL+"h5/car_wash/car_wash.html";
 
     public static final String HUNDRED_PLAN_HOME = BuildConfig.CAR_MANGER_URL + "h5/build/index.html";
     public static final String HUNDRED_PLAN_DEADLINE = BuildConfig.CAR_MANGER_URL + "h5/build/pages/deadline.html";

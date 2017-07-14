@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +26,7 @@ import com.zantong.mobilecttx.home.bean.BannerBean;
 import com.zantong.mobilecttx.home.bean.BannersBean;
 import com.zantong.mobilecttx.interf.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.presenter.home.HomeFavorableFtyPresenter;
+import com.zantong.mobilecttx.share.activity.CarBeautyActivity;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
@@ -130,8 +132,16 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
                 .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
                 .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
 
-        String priceAdmissions = getResources().getString(R.string.tv_favorable_price_admissions);
-        mTvAdmissions.setText(String.format(priceAdmissions, "5600"));
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("￥");
+        buffer.append("&#160;");
+        buffer.append(5120);
+        buffer.append("&#160;");
+        buffer.append("<font color=\"#b3b3b3\">");
+        buffer.append("起");
+        buffer.append("</font>");
+        mTvAdmissions.setText(Html.fromHtml(buffer.toString()));
+
     }
 
     @Override
@@ -240,10 +250,7 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
                 Act.getInstance().gotoIntent(getActivity(), BrowserActivity.class);
                 break;
             case R.id.lay_beauty://美容
-                PublicData.getInstance().webviewUrl = "http://m.hiservice.com.cn/market/icbc58";
-                PublicData.getInstance().webviewTitle = "汽车美容";
-                PublicData.getInstance().isCheckLogin = true;
-                Act.getInstance().gotoIntent(getActivity(), BrowserActivity.class);
+                Act.getInstance().lauchIntentToLogin(getActivity(), CarBeautyActivity.class);
                 break;
             case R.id.lay_river://代驾
                 enterDrivingActivity();

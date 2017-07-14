@@ -8,7 +8,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 27
-        versionName "2.6.0"
+        versionName "2.7.0.1"
         aaptOptions.cruncherEnabled = false //禁止gradle检查png的合法性
         aaptOptions.useNewCruncher = false //关闭androidstudio的png的合法性检查
         // dex突破65535的限制
@@ -16,10 +16,6 @@ android {
 //        // AndroidManifest.xml 里面UMENG_CHANNEL的value为 ${UMENG_CHANNEL_VALUE}
 //        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "channel_name"]
 
-//        ndk {
-//            abiFilters"armeabi","armeabi-v7a","x86","mips"
-//            abiFilters "armeabi-v7a", "x86" ,"arm64-v8a","armeabi","mips","mips64","x86_64"
-//        }
     }
 
     sourceSets {
@@ -99,9 +95,9 @@ android {
             buildConfigField "String", "ImageLoadUrl", "\"https://ctkapp.icbc-axa.com/\""
 
             //分享url
-            buildConfigField "String", "SHARE_APP_URL_1", "\"http://liyingtong.com:8081/h5/share/share.html\""
-            buildConfigField "String", "SHARE_APP_URL_2", "\"http://liyingtong.com:8081/h5/share/share.html\""
-            buildConfigField "String", "SHARE_APP_URL_3", "\"http://liyingtong.com:8081/h5/share/share.html\""
+            buildConfigField "String", "SHARE_APP_URL_1", "\"http://liyingtong.com/h5/share1/share.html\""
+            buildConfigField "String", "SHARE_APP_URL_2", "\"http://liyingtong.com/h5/share2/share.html\""
+            buildConfigField "String", "SHARE_APP_URL_3", "\"http://liyingtong.com/h5/share3/share.html\""
 
             //混淆
             minifyEnabled false

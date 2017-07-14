@@ -27,11 +27,12 @@ import com.zantong.mobilecttx.interf.ISplashAtyContract;
 import com.zantong.mobilecttx.presenter.home.SplashPresenter;
 import com.zantong.mobilecttx.utils.ImageOptions;
 import com.zantong.mobilecttx.utils.SPUtils;
-import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.qqtheme.framework.util.AppUtils;
 
 import static com.zantong.mobilecttx.home.activity.GuideCTActivity.GUIDE_PIC;
 
@@ -50,7 +51,7 @@ public class SplashActivity extends AppCompatActivity
     /**
      * 引导页图片地址
      */
-    private ArrayList<StartPicBean> mResultList;
+    private ArrayList<StartPicBean> mResultList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,13 +88,7 @@ public class SplashActivity extends AppCompatActivity
      * 数据初始
      */
     private void initThirdPartyData() {
-        int version = Tools.compareVersion(
-                SPUtils.getInstance().getIsGuide(),
-                Tools.getVerName(getApplicationContext()));
-        if (version == -1) {//需要更新时
-            mResultList = new ArrayList<>();
-            mPresenter.startGuidePic();
-        }
+
         mPresenter.startCountDown();
         mPresenter.readObjectLoginInfoBean();
         startAnimation();
@@ -186,8 +181,6 @@ public class SplashActivity extends AppCompatActivity
 
     /**
      * 添加引导页面图片
-     *
-     * @param result
      */
     @Override
     public void displayGuideImage(StartPicResult result) {
@@ -204,13 +197,19 @@ public class SplashActivity extends AppCompatActivity
      */
     @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     public void gotoMain() {
-        int version = Tools.compareVersion(
-                SPUtils.getInstance().getIsGuide(),
-                Tools.getVerName(getApplicationContext()));
-        if (version != -1) {
+        int appCode = AppUtils.getAppVersionCode();//当前手机的
+
+        String guide = SPUtils.getInstance().getIsGuide();
+        int versionCode = 1;//保存版本
+        try {
+            versionCode = Integer.valueOf(guide);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        if (appCode <= versionCode) {
             MobclickAgent.onEvent(this, Config.getUMengID(0));
             Act.getInstance().gotoIntent(this, HomeMainActivity.class);
-            SPUtils.getInstance().setIsGuide(Tools.getVerName(getApplicationContext()));
             finish();
         } else {
             Intent intent = new Intent(this, GuideCTActivity.class);
@@ -240,6 +239,8 @@ public class SplashActivity extends AppCompatActivity
         switch (v.getId()) {
             case R.id.tv_skip:
                 gotoMain();
+                break;
+            default:
                 break;
         }
     }

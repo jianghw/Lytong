@@ -42,6 +42,7 @@
             <TextView
                 android:id="@+id/tv_admissions"
                 android:layout_width="wrap_content"
+                android:textColor="@color/colorTvRed_f33"
                 android:layout_height="wrap_content"
                 android:text="@string/tv_favorable_price_admissions"/>
         </LinearLayout>

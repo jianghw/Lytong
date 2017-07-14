@@ -30,6 +30,24 @@ public class CreateOrderDTO {
     private String userName;
     private String phone;
     private String idCard;
+    private String payType;
+    private String couponId;
+
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType;
+    }
+
+    public String getCouponId() {
+        return couponId;
+    }
+
+    public void setCouponId(String couponId) {
+        this.couponId = couponId;
+    }
 
     public String getOilCardNum() {
         return oilCardNum;

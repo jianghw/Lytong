@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
+import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.interf.IUnimpededFtyContract;
@@ -50,7 +51,9 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
         mSubscriptions.clear();
     }
 
-
+    /**
+     * 1.首页信息
+     */
     @Override
     public void homePage() {
         Subscription subscription = mRepository.homePage(initHomeDataDTO())
@@ -105,7 +108,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                     @Override
                     public void doNext(UserCarsResult result) {
                         if (result != null && "000000".equals(result.getSYS_HEAD().getReturnCode())) {
-                            mAtyView.remoteCarInfoSucceed(result);
+
                         } else {
                             mAtyView.remoteCarInfoError(result != null
                                     ? result.getSYS_HEAD().getReturnMessage()
@@ -128,4 +131,38 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
         dto.setReqInfo(params);
         return new Gson().toJson(dto);
     }
+
+    /**
+     * 新获取违章信息
+     */
+    @Override
+    public void getTextNoticeInfo() {
+        Subscription subscription = mRepository.getTextNoticeInfo(mRepository.getDefaultUserID())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<HomeCarResult>() {
+                    @Override
+                    public void doCompleted() {
+
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        e.printStackTrace();
+                        mAtyView.remoteCarInfoError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(HomeCarResult result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.getTextNoticeInfo(result);
+                        } else {
+                            mAtyView.remoteCarInfoError(result != null
+                                    ? result.getResponseDesc() : "未知错误(NoticeInfo)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
 }

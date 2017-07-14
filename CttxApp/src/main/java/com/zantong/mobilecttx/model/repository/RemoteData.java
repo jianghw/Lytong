@@ -11,6 +11,7 @@ import com.zantong.mobilecttx.api.IMessageService;
 import com.zantong.mobilecttx.api.IOrderService;
 import com.zantong.mobilecttx.api.IPayService;
 import com.zantong.mobilecttx.api.ISplashService;
+import com.zantong.mobilecttx.api.ITextService;
 import com.zantong.mobilecttx.api.IViolationService;
 import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
@@ -27,6 +28,7 @@ import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
+import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
@@ -44,6 +46,7 @@ import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.ViolationResult;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import okhttp3.MultipartBody;
@@ -265,7 +268,8 @@ public class RemoteData implements IRemoteSource {
         return initRetrofit().create(IGoodsService.class).createOrder(
                 createOrder.getType(), createOrder.getUserNum(),
                 createOrder.getGoodsId(), createOrder.getPrice(),
-                createOrder.getUserName(), createOrder.getPhone(), createOrder.getIdCard());
+                createOrder.getUserName(), createOrder.getPhone(),
+                createOrder.getIdCard(), createOrder.getPayType());
     }
 
     /**
@@ -330,5 +334,21 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<GoodsDetailResult> getGoodsDetail(String goodsId) {
         return initRetrofit().create(IGoodsService.class).getGoodsDetail(goodsId);
+    }
+
+    /**
+     * 获取违章信息
+     */
+    @Override
+    public Observable<HomeCarResult> getTextNoticeInfo(String defaultUserID) {
+        return initRetrofit().create(ITextService.class).getTextNoticeInfo(defaultUserID);
+    }
+
+    /**
+     * 处理违章信息
+     */
+    @Override
+    public Observable<BaseResult> handleViolations(ViolationResult violationResult) {
+        return initRetrofit().create(ITextService.class).HandleViolationDTO(violationResult);
     }
 }

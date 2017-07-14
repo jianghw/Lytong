@@ -19,6 +19,7 @@ import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
+import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
@@ -35,6 +36,7 @@ import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.ViolationResult;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
@@ -375,5 +377,19 @@ public class RepositoryManager {
      */
     public Observable<GoodsDetailResult> getGoodsDetail(String goodsId) {
         return mRemoteData.getGoodsDetail(goodsId);
+    }
+
+    /**
+     * 新获取违章信息
+     */
+    public Observable<HomeCarResult> getTextNoticeInfo(String defaultUserID) {
+        return mRemoteData.getTextNoticeInfo(defaultUserID);
+    }
+
+    /**
+     * 处理违章信息
+     */
+    public Observable<BaseResult> handleViolations(ViolationResult violationResult) {
+        return mRemoteData.handleViolations(violationResult);
     }
 }

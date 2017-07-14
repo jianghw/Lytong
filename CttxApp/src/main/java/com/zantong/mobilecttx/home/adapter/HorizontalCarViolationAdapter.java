@@ -20,6 +20,7 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.activity.Codequery;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.StringUtils;
+import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
@@ -154,7 +155,8 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
         TextView tvBrand = (TextView) view.findViewById(R.id.tv_motorcycle_brand);
 
         tvPlateNumber.setText(userCarInfoBean.getCarnum());
-        tvType.setText(userCarInfoBean.getCarnumtype().equals("02") ? "小型汽车" : "大型汽车");
+        String carType = VehicleTypeTools.switchVehicleCode(userCarInfoBean.getCarnumtype());
+        tvType.setText(carType);
         tvBrand.setText(userCarInfoBean.getEnginenum());
 
         TextView tvTotamt = (TextView) view.findViewById(R.id.tv_totamt);
@@ -176,6 +178,7 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
      */
     private void onClickLayContent(UserCarInfoBean userCarInfoBean) {
         MobclickAgent.onEvent(mContext, Config.getUMengID(1));
+
         PublicData.getInstance().mHashMap.put("IllegalViolationName", userCarInfoBean.getCarnum());
         PublicData.getInstance().mHashMap.put("carnum", userCarInfoBean.getCarnum());
         PublicData.getInstance().mHashMap.put("enginenum", userCarInfoBean.getEnginenum());

@@ -64,10 +64,11 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
 
                     @Override
                     public void doNext(CouponFragmentResult result) {
-                        if (result.getResponseCode() == 2000)
+                        if (result != null && result.getResponseCode() == 2000)
                             mAtyView.getCouponCountSucceed(result);
                         else
-                            mAtyView.getCouponCountError(result.getResponseDesc());
+                            mAtyView.getCouponCountError(
+                                    result != null ? result.getResponseDesc() : "未知错误2.4.2");
                     }
                 });
         mSubscriptions.add(subscription);
@@ -91,10 +92,11 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
 
                     @Override
                     public void doNext(MessageCountResult result) {
-                        if (result.getResponseCode() == 2000)
+                        if (result != null && result.getResponseCode() == 2000)
                             mAtyView.countMessageDetailSucceed(result);
                         else
-                            mAtyView.countMessageDetailError(result.getResponseDesc());
+                            mAtyView.countMessageDetailError(
+                                    result != null ? result.getResponseDesc() : "未知错误37");
                     }
                 });
         mSubscriptions.add(subscription);

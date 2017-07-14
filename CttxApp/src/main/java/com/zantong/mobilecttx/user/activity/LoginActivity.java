@@ -1,12 +1,15 @@
 package com.zantong.mobilecttx.user.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -70,7 +73,11 @@ import java.util.TimerTask;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
+import cn.qqtheme.framework.util.primission.PermissionFail;
+import cn.qqtheme.framework.util.primission.PermissionGen;
+import cn.qqtheme.framework.util.primission.PermissionSuccess;
 
 /**
  * 登陆界面
@@ -137,6 +144,7 @@ public class LoginActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_phone);
+
         ButterKnife.bind(this);
         mLoginPhonePresenterImp = new LoginPhonePresenterImp(this);
         StateBarSetting.settingBar(this);
@@ -148,6 +156,7 @@ public class LoginActivity extends Activity
         ScreenManager.pushActivity(this);
 
         init();
+        takePhoneIMEI();
 
         mListNum = mNumKeyBoard.getRandomList();
         mListChar = mCharKeyBoard.getRandomList();
@@ -399,7 +408,7 @@ public class LoginActivity extends Activity
         Intent intent = new Intent();
         intent.putExtra("back", "wode");
         LoginActivity.this.setResult(1, intent);
-//        alicloud();
+
         EventBus.getDefault().post(new GetUserEvent(true));
         SPUtils.getInstance().setUserPwd(mapData().get("pswd"));
         liyingreg(mLoginInfoBean.getRspInfo().getUsrid());
@@ -604,6 +613,31 @@ public class LoginActivity extends Activity
                 }
             });
         }
+    }
 
+    public void takePhoneIMEI() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, 100,
+                    new String[]{Manifest.permission.READ_PHONE_STATE}
+            );
+        } else {
+            PublicData.getInstance().imei = Tools.getIMEI();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @PermissionSuccess(requestCode = 100)
+    public void doPermissionIMEISuccess() {
+        PublicData.getInstance().imei = Tools.getIMEI();
+    }
+
+    @PermissionFail(requestCode = 100)
+    public void doPermissionIMEIFail() {
+        ToastUtils.toastShort("手机识别码权限被拒绝，请手机设置中打开");
     }
 }

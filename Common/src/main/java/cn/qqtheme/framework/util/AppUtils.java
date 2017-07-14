@@ -1,8 +1,11 @@
 package cn.qqtheme.framework.util;
 
 
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.text.TextUtils;
 
 /**
  * App相关工具类
@@ -81,5 +84,27 @@ public final class AppUtils {
             e.printStackTrace();
             return -1;
         }
+    }
+
+    public static String getAppMetaData(Context context, String key) {
+        if (context == null || TextUtils.isEmpty(key)) {
+            return null;
+        }
+        String resultData = null;
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            if (packageManager != null) {
+                ApplicationInfo applicationInfo =
+                        packageManager.getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+                if (applicationInfo != null) {
+                    if (applicationInfo.metaData != null) {
+                        resultData = applicationInfo.metaData.getString(key);
+                    }
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resultData;
     }
 }

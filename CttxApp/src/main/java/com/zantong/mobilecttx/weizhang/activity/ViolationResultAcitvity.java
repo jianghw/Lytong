@@ -124,7 +124,6 @@ public class ViolationResultAcitvity extends BaseMvpActivity<IBaseView, HelpPres
                 TEMP_STATE = STATUS_FINISHED;
                 commitFragment();
                 break;
-
         }
         super.onClick(v);
     }
@@ -145,6 +144,9 @@ public class ViolationResultAcitvity extends BaseMvpActivity<IBaseView, HelpPres
                     tvs[index].getWidth(), 5, UiHelpers.DRAWABLE_BOTTOM);
     }
 
+    /**
+     * fragment子布局
+     */
     private void commitFragment() {
         transaction = mFragmentManager.beginTransaction();
         mFragment = ViolationResultFragment.newInstance(TEMP_STATE, dto);

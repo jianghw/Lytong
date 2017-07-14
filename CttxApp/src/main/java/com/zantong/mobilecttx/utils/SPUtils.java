@@ -239,7 +239,7 @@ public class SPUtils {
     }
 
     public String getIsGuide() {
-        return this.mSharedPreferences.getString(IS_GUIDE, "1.0.0");
+        return this.mSharedPreferences.getString(IS_GUIDE, "1");
     }
 
     public void setSignStatus(boolean isSign) {

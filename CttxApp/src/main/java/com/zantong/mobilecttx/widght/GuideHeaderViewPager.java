@@ -66,8 +66,7 @@ public class GuideHeaderViewPager extends FrameLayout {
      * 初始化Views等UI
      */
     private void initUI(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.widget_header_ct_viewpager,
-                this, true);
+        LayoutInflater.from(context).inflate(R.layout.widget_header_ct_viewpager, this, true);
 
         viewPager = (ViewPager) findViewById(R.id.header_viewpager_images);
         mDotsLayout = (LinearLayout) findViewById(R.id.header_viewpager_dots);

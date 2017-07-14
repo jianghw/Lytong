@@ -4,7 +4,6 @@ package com.zantong.mobilecttx.base.bean;
  * Created by zhengyingbing on 16/9/13.
  */
 public class BaseResult {
-
     int responseCode;
     String responseDesc;
 

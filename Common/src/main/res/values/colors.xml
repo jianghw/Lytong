@@ -2,6 +2,7 @@
 <resources>
 
     <color name="colorWhite">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
 
     <color name="colorBgGray_f8">#f8f8f8</color>
     <color name="colorBgGray_d9">#d9d9d9</color>
@@ -16,6 +17,7 @@
     <color name="colorTvBlack_b2">#b2b2b2</color>
     <color name="colorTvGray_7f">#7f7f7f</color>
     <color name="colorTvGray_b2">#b2b2b2</color>
+    <color name="colorTvGray_80">#808080</color>
 
     <color name="colorTvCyan_08">#084e6a</color>
     <color name="colorTvRed_f33">#f3362b</color>

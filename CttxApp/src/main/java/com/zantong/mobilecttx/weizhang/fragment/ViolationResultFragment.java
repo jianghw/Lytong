@@ -7,16 +7,22 @@ import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
+import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
+import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.adapter.ViolationResultAdapter;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
+import com.zantong.mobilecttx.weizhang.bean.ViolationResult;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import cn.qqtheme.framework.util.ToastUtils;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
     private static int TEMP_STATE;
@@ -73,7 +79,7 @@ public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
 
     /**
      * 违章查询
-     * TEMP_STATE 请求常数
+     * cip.cfc.v002.01
      */
     private void searchViolation() {
         params.setProcessste(String.valueOf(TEMP_STATE));
@@ -97,6 +103,8 @@ public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
 
                 if ("000000".equals(result.getSYS_HEAD().getReturnCode())) {
                     setDataResult(result.getRspInfo().getViolationInfo());
+
+                    handleViolations(result.getRspInfo());
                 } else {
                     ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
                     onShowFailed();
@@ -109,6 +117,29 @@ public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
                 onShowFailed();
             }
         });
+    }
+
+    public void handleViolations(ViolationResult violationResult) {
+        Injection.provideRepository(getActivity().getApplicationContext())
+                .handleViolations(violationResult)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResult>() {
+                    @Override
+                    public void doCompleted() {
+
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void doNext(BaseResult result) {
+
+                    }
+                });
     }
 
     @Override

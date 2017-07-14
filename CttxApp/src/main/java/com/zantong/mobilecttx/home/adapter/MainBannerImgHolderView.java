@@ -21,6 +21,7 @@ import com.zantong.mobilecttx.utils.ImageOptions;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
+import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.widght.banner.CBPageAdapter;
 
 /**
@@ -52,14 +53,15 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                MobclickAgent.onEvent(mContext, Config.getUMengID(10));
-//                PublicData.getInstance().webviewUrl = data.getAdvertisementSkipUrl();
-//                PublicData.getInstance().mHashMap.put("htmlUrl", PublicData.getInstance().webviewUrl);
-//                PublicData.getInstance().webviewTitle = "广告";
-//                PublicData.getInstance().isCheckLogin = false;
+
+                PublicData.getInstance().webviewUrl = data.getAdvertisementSkipUrl();
+                PublicData.getInstance().mHashMap.put("htmlUrl", PublicData.getInstance().webviewUrl);
+                PublicData.getInstance().webviewTitle = "广告";
+                PublicData.getInstance().isCheckLogin = false;
 
                 if (PublicData.getInstance().webviewUrl.contains("localActivity")) {
                     if (PublicData.getInstance().loginFlag) {
+                        GlobalConfig.getInstance().eventIdByUMeng(1);
                         getSignStatus();
                     } else {
                         Act.getInstance().gotoIntent(mContext, LoginActivity.class);

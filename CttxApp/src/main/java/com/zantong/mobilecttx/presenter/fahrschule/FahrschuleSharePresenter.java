@@ -56,7 +56,9 @@ public class FahrschuleSharePresenter
     public String getPhone() {
         return PublicData.getInstance().mLoginInfoBean.getPhoenum();
     }
-
+    /**
+     * 7.获取用户指定活动的统计总数
+     */
     @Override
     public void getRecordCount() {
         Subscription subscription = mRepository.getRecordCount(getType(), getPhone())

@@ -119,11 +119,11 @@
         android:layout_height="0dp"
         android:layout_weight="39"
         android:background="@color/colorBgGray_f8"
-        app:icvp_center_page_scale_offset="@dimen/ds_90"
+        app:icvp_center_page_scale_offset="1dp"
         app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
         app:icvp_max_page_scale="0.8"
-        app:icvp_medium_scaled="true"
+        app:icvp_medium_scaled="false"
         app:icvp_min_page_scale="0.6"
-        app:icvp_min_page_scale_offset="5dp"
-        app:icvp_scroll_duration="500"/>
+        app:icvp_min_page_scale_offset="1dp"
+        app:icvp_scroll_duration="100"/>
 </LinearLayout>

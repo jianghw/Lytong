@@ -28,7 +28,8 @@
         <font color='#b3b3b3'>起</font>
     </string>
 
-    <string name="digits_content">1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</string>
+    <string name="digits_content">1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+    </string>
     <string name="tv_violation_camera">
         拍照扫描行驶证\n
         车辆信息自动识别
@@ -42,14 +43,15 @@
     <string name="tv_license_type">
         <font color='#f3362b'>*</font>车牌类型
     </string>
+
     <string name="tv_coupon_count">
-        <font color='#f3362b'>%d</font>&#160;
-        <font color='#4d4d4d'>张优惠劵</font>
+        <font color='#f3362b'>%1$d</font>&#160;张优惠劵
     </string>
+
     <string name="tv_car_count">
-        <font color='#f3362b'>%d</font>&#160;
-        <font color='#4d4d4d'>辆车</font>
+        <font color='#f3362b'>%1$d</font>&#160;辆车
     </string>
+
     <string name="tv_apply_contact">
         客服会在24小时内联系您\n
         如有疑问，请拨打客户热线：400-9200-260
@@ -68,6 +70,34 @@
         订单编号：&#160;%s
     </string>
     <string name="tv_price_china">
-      <font color='#f3362b'>￥</font>&#160;
+        <font color='#f3362b'>￥</font>&#160;
+    </string>
+    <string name="tv_share_fahrschule_weixin_title">
+        畅通车友会APP —车主一站式服务APP
+    </string>
+    <string name="tv_share_fahrschule_weixin_content">
+        【限时活动】畅通车友会APP联合上海知名驾校开启暑假报名价格优惠并送好礼活动。
+        活动期间每成功邀请好友报名成功，即可获得100元现金返现。
+        活动期间邀请越多返现越高噢！ 
+        畅通车友会APP是中国工商银行上海分行打造的一款车主一站式服务APP。
+    </string>
+
+    <string name="tv_share_pertussis_weixin_title">
+        畅通车友会APP —车主一站式服务APP
+    </string>
+    <string name="tv_share_pertussis_weixin_content">
+        【百日无违章 共赢百吨油】上海交通广播、中国工商银行上海分行协同畅通车友会APP举办上海市首届”百日无违章 共赢百吨油”活动。
+        邀请好友赚积分，赢大奖！活动火热进行中。
+        畅通车友会APP是中国工商银行上海分行打造的一款车主一站式服务APP。
+    </string>
+
+    <string name="tv_share_cash_weixin_title">
+      畅通车友会APP —车主一站式服务APP
+    </string>
+    <string name="tv_share_cash_weixin_content">
+        畅通车友会APP邀请好友成功注册APP，即可参加”分享返现”活动。
+        活动期间好友扫描分享者二维码，并成功注册。分享用户即可获取现金。
+        分享成功越多金额越高，快去邀请好友吧！
+        畅通车友会APP是中国工商银行上海分行打造的一款车主一站式服务APP。
     </string>
 </resources>

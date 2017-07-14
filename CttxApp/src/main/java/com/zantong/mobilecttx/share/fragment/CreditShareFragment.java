@@ -164,7 +164,7 @@ public class CreditShareFragment extends BaseRefreshJxFragment
 
     @Override
     public String getType() {
-        return "百日无违章";
+        return "2";
     }
 
     /**
@@ -246,17 +246,14 @@ public class CreditShareFragment extends BaseRefreshJxFragment
 
         WXWebpageObject webpage = new WXWebpageObject();
         if (PublicData.getInstance().loginFlag) {
-            webpage.webpageUrl = "http://liyingtong.com:8081/h5/share/share.html?phoneNum="
+            webpage.webpageUrl = BuildConfig.SHARE_APP_URL_2 + "?phoneNum="
                     + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         }
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title = "掌上违章缴费，销分一步到位，与你只有一个App的距离";
-        msg.description = "畅通车友会——有我在手，一路畅通畅通车友会由工银安盛与中国工商银行" +
-                "上海分行联手打造，旨在为牡丹畅通卡用户提供便捷的驾乘金融服务体验。功能覆盖了" +
-                "交通违章缴费、驾乘人员保险保障、特色增值服务等多项方便快捷的在线服务，" +
-                "使车主的驾车生活更便捷、更丰富，更畅通!";
+        msg.title = getResources().getString(R.string.tv_share_pertussis_weixin_title);
+        msg.description =  getResources().getString(R.string.tv_share_pertussis_weixin_content);
         //这里替换一张自己工程里的图片资源
         Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_sharelogo);
         msg.setThumbImage(thumb);

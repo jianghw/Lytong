@@ -1,7 +1,5 @@
 package com.zantong.mobilecttx.home.activity;
 
-import android.Manifest;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
@@ -29,9 +27,7 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 
 import cn.qqtheme.framework.global.GlobalConfig;
-import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 import cn.qqtheme.framework.widght.tablebottom.UiTableBottom;
 
@@ -109,35 +105,12 @@ public class HomeMainActivity extends BaseJxActivity {
                 PublicData.getInstance().defaultCarNumber = AccountRememberCtrl.getDefaultNumber(getApplicationContext());
             }
         }
-
-        takePhoneIMEI();
-    }
-
-    public void takePhoneIMEI() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            PermissionGen.needPermission(this, 100,
-                    new String[]{
-                            Manifest.permission.READ_PHONE_STATE}
-            );
-        } else {
-            PublicData.getInstance().imei = Tools.getIMEI();
-        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    @PermissionSuccess(requestCode = 100)
-    public void doPermissionIMEISuccess() {
-        PublicData.getInstance().imei = Tools.getIMEI();
-    }
-
-    @PermissionFail(requestCode = 100)
-    public void doPermissionIMEIFail() {
-
     }
 
     /**
@@ -241,6 +214,5 @@ public class HomeMainActivity extends BaseJxActivity {
     public interface MessageListener {
         void setTipOfNumber(int position, int number);
     }
-
 
 }

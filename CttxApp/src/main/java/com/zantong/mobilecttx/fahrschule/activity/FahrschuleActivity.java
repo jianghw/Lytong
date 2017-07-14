@@ -54,6 +54,7 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
 
     @Override
     protected void initFragmentView(View view) {
+
         initView(view);
 
         initFragment(mCurPosition);

@@ -24,8 +24,6 @@
                 android:visibility="gone"
                 android:background="@mipmap/pull_icon_big" />
 
-
-
             <TextView
                 android:id="@+id/state_tv"
                 android:layout_width="wrap_content"

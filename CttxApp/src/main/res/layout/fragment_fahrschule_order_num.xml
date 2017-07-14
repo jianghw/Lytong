@@ -145,17 +145,16 @@
                 android:layout_marginRight="@dimen/ds_36"
                 android:layout_toRightOf="@+id/tv_course_title"
                 android:gravity="left|center_vertical"
-                android:singleLine="true"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/fs_16sp"
-                tools:text="订单号数据of司法局"/>
+                tools:text="订单号数据offfsfsf司fsfsfssfsf法局"/>
 
             <!--支付方式-->
             <TextView
                 android:id="@+id/tv_pay_type_title"
                 android:layout_width="@dimen/ds_360"
                 android:layout_height="@dimen/ds_90"
-                android:layout_below="@+id/tv_course_title"
+                android:layout_below="@+id/tv_course"
                 android:gravity="right|center_vertical"
                 android:text="支付方式："
                 android:textColor="@color/colorWhite"

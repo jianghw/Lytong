@@ -32,6 +32,7 @@ public abstract class BaseRefreshJxFragment extends BaseJxFragment {
     @Override
     protected void initViewsAndEvents(View view) {
         mPullRefreshView = (PullToRefreshLayout) view.findViewById(R.id.pull_refresh_view);
+
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.base_content);
 
         LayoutInflater inflater = (LayoutInflater) getActivity()
@@ -131,4 +132,13 @@ public abstract class BaseRefreshJxFragment extends BaseJxFragment {
         return false;
     }
 
+
+    protected void setPullDownEnable(boolean isRefresh) {
+        mPullRefreshView.setPullDownEnable(isRefresh);
+        mPullRefreshView.setEnabled(isRefresh);
+    }
+
+    protected PullToRefreshLayout getPullRefreshView(){
+        return mPullRefreshView;
+    }
 }

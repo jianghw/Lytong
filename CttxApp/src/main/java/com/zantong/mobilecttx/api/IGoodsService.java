@@ -48,7 +48,7 @@ public interface IGoodsService {
             @Field("type") String type, @Field("userNum") String userNum,
             @Field("goodsId") String goodsId, @Field("price") String price,
             @Field("userName") String userName, @Field("phone") String phone,
-            @Field("idCard") String idCard);
+            @Field("idCard") String idCard, @Field("payType") String payType);
 
     /**
      * 6.获取商品详情

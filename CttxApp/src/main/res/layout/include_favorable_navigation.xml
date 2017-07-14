@@ -180,7 +180,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="洗车美容"
+                        android:text="汽车保养"
                         android:textColor="@color/colorTvBlack_4d"
                         android:textSize="@dimen/fs_16sp"/>
 

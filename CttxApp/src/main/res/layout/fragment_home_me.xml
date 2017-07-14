@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 xmlns:tools="http://schemas.android.com/tools"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 android:fitsSystemWindows="false">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -72,8 +73,8 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_height="@dimen/ds_132"
+                android:layout_gravity="center_horizontal"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -114,6 +115,7 @@
                     android:layout_weight="1"
                     android:drawableTop="@mipmap/ic_me_card"
                     android:gravity="center_horizontal"
+                    android:textColor="@color/colorTvBlack_4d"
                     tools:text="1张牡丹畅通卡"/>
 
                 <TextView
@@ -123,6 +125,7 @@
                     android:layout_weight="1"
                     android:drawableTop="@mipmap/ic_me_car"
                     android:gravity="center_horizontal"
+                    android:textColor="@color/colorTvBlack_4d"
                     tools:text="@string/tv_car_count"/>
 
                 <TextView
@@ -132,8 +135,8 @@
                     android:layout_weight="1"
                     android:drawableTop="@mipmap/ic_me_coupon"
                     android:gravity="center_horizontal"
+                    android:textColor="@color/colorTvBlack_4d"
                     tools:text="@string/tv_coupon_count"/>
-
             </LinearLayout>
 
             <include layout="@layout/include_me_item"/>

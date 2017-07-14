@@ -9,6 +9,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -218,14 +219,34 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         if (mPresenter != null) mPresenter.getCouponCount();
         if (mPresenter != null) mPresenter.getUnReadMsgCount();
 
+        //畅通卡
         boolean isUnBound = TextUtils.isEmpty(PublicData.getInstance().filenum);
-        mTvCard.setText(isUnBound ? "未绑卡" : "已绑卡");
-        mTvCard.setTextColor(
-                isUnBound ? getResources().getColor(R.color.colorTvRed_f33)
-                        : getResources().getColor(R.color.colorTvBlack_4d));
+//        StringBuffer sb = new StringBuffer();
+//        if (isUnBound)
+//            sb.append("<font color=\"#b3b3b3\">");
+//        else
+//            sb.append("<font color=\"#f3362b\">");
+//        sb.append(isUnBound ? 0 : 1);
+//        sb.append("</font>");
+//        sb.append("&#160;");
+//        sb.append("张牡丹畅通卡");
+//        mTvCard.setText(Html.fromHtml(sb.toString()));
+        mTvCard.setText(isUnBound ? "未绑定牡丹畅通卡" : "已绑定牡丹畅通卡");
+        mTvCard.setTextColor(isUnBound
+                ? getResources().getColor(R.color.colorTvGray_b2)
+                : getResources().getColor(R.color.colorTvBlack_4d));
+
         //车辆
-        String carCount = getResources().getString(R.string.tv_car_count);
-        mTvCar.setText(String.format(carCount, PublicData.getInstance().mCarNum));
+        StringBuffer stringBuffer = new StringBuffer();
+        if (PublicData.getInstance().mCarNum == 0)
+            stringBuffer.append("<font color=\"#b3b3b3\">");
+        else
+            stringBuffer.append("<font color=\"#f3362b\">");
+        stringBuffer.append(PublicData.getInstance().mCarNum);
+        stringBuffer.append("</font>");
+        stringBuffer.append("&#160;");
+        stringBuffer.append("车辆");
+        mTvCar.setText(Html.fromHtml(stringBuffer.toString()));
 
         if (PublicData.getInstance().loginFlag) {
             LoginInfoBean.RspInfoBean infoBean = PublicData.getInstance().mLoginInfoBean;
@@ -250,7 +271,17 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 }
             }
         } else {
-            mTvCard.setText("未绑定");
+//            StringBuffer buffer = new StringBuffer();
+//            buffer.append("<font color=\"#b3b3b3\">");
+//            buffer.append(0);
+//            buffer.append("</font>");
+//            buffer.append("&#160;");
+//            buffer.append("张牡丹畅通卡");
+//            mTvCard.setText(Html.fromHtml(buffer.toString()));
+
+            mTvCard.setText("未绑定牡丹畅通卡");
+            mTvCard.setTextColor(getResources().getColor(R.color.colorTvGray_b2));
+
             mTvLogin.setText("您还未登录");
             mImgHead.setImageResource(R.mipmap.portrait);
         }
@@ -422,21 +453,38 @@ public class HomeMeFragment extends BaseRefreshJxFragment
     @Override
     public void getCouponCountSucceed(CouponFragmentResult result) {
         CouponFragmentLBean resultData = result.getData();
-        String couponCount = getResources().getString(R.string.tv_coupon_count);
-        if (resultData != null && mTvCoupon != null) {
-            List<CouponFragmentBean> couponList = resultData.getCouponList();
-            mTvCoupon.setText(String.format(couponCount, couponList != null ? couponList.size() : 0));
-        } else if (mTvCoupon != null) {
-            mTvCoupon.setText(String.format(couponCount, 0));
+        StringBuffer stringBuffer = new StringBuffer();
+        List<CouponFragmentBean> couponList = null;
+
+        if (resultData == null) {
+            stringBuffer.append("<font color=\"#b3b3b3\">");
+        } else {
+            couponList = resultData.getCouponList();
+            if (couponList == null || couponList.size() == 0)
+                stringBuffer.append("<font color=\"#b3b3b3\">");
+            else
+                stringBuffer.append("<font color=\"#f3362b\">");
         }
+
+        stringBuffer.append(couponList != null ? couponList.size() : 0);
+
+        stringBuffer.append("</font>");
+        stringBuffer.append("&#160;");
+        stringBuffer.append("张优惠券");
+        mTvCoupon.setText(Html.fromHtml(stringBuffer.toString()));
     }
 
     @Override
     public void getCouponCountError(String responseDesc) {
-        String couponCount = getResources().getString(R.string.tv_coupon_count);
-        if (mTvCoupon != null) mTvCoupon.setText(String.format(couponCount, 0));
-        ToastUtils.toastShort(responseDesc);
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("<font color=\"#b3b3b3\">");
+        stringBuffer.append(0);
+        stringBuffer.append("</font>");
+        stringBuffer.append("&#160;");
+        stringBuffer.append("张优惠券");
+        mTvCoupon.setText(Html.fromHtml(stringBuffer.toString()));
 
+        ToastUtils.toastShort(responseDesc);
     }
 
     /**

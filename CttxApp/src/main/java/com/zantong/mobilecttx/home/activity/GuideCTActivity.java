@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.beta.UpgradeInfo;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseActivity;
@@ -14,7 +17,6 @@ import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
-import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.widght.GuideHeaderViewPager;
 
@@ -23,6 +25,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.AppUtils;
 
 /**
  * 引导页面
@@ -32,9 +35,10 @@ public class GuideCTActivity extends BaseActivity implements GuideHeaderViewPage
     @Bind(R.id.guide_headerview)
     GuideHeaderViewPager mGuideHeaderview;
     @Bind(R.id.guide_open)
-    ImageView mGuideOpen;
+    TextView mGuideOpen;
 
     public static final String GUIDE_PIC = "guide_pic_url";
+    int mVersionCode;
 
     @Override
     public void initView() {
@@ -58,9 +62,17 @@ public class GuideCTActivity extends BaseActivity implements GuideHeaderViewPage
 
     @Override
     public void initData() {
+        UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
+        int appCode = AppUtils.getAppVersionCode();//当前手机的
+        mVersionCode = appCode;
+        if (upgradeInfo != null) {
+            mVersionCode = upgradeInfo.versionCode;
+        }
+
         Bundle bundle = getIntent().getExtras();
         ArrayList<StartPicBean> arrayList = bundle.getParcelableArrayList(GUIDE_PIC);
         List<StartPicBean> mList = new ArrayList<>();
+
         if (arrayList != null && arrayList.size() > 0) {
             for (StartPicBean bean : arrayList) {
                 mList.add(bean.getPicNum() - 1, bean);
@@ -97,7 +109,7 @@ public class GuideCTActivity extends BaseActivity implements GuideHeaderViewPage
     private void gotoActivity() {
         MobclickAgent.onEvent(this, Config.getUMengID(0));
         Act.getInstance().gotoIntent(this, HomeMainActivity.class);
-        SPUtils.getInstance().setIsGuide(Tools.getVerName(this));
+        SPUtils.getInstance().setIsGuide(String.valueOf(mVersionCode));
         finish();
     }
 

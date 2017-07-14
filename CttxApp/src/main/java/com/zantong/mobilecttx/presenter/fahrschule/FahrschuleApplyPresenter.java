@@ -224,6 +224,7 @@ public class FahrschuleApplyPresenter
         orderDTO.setUserName(mAtyView.getEditName());
         orderDTO.setPhone(mAtyView.getEditPhone());
         orderDTO.setIdCard(mAtyView.getEditIdentityCard());
+        orderDTO.setPayType("1");
         return orderDTO;
     }
 }

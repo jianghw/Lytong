@@ -53,7 +53,7 @@ public class FahrschulePopupGoodsAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         AresGoodsBean bean = mDataList.get(position);
-        holder.mTextName.setText(bean != null ? bean.getName() + "" + bean.getPrice() + "元" : "");
+        holder.mTextName.setText(bean != null ? bean.getName() : "");
         return convertView;
     }
 

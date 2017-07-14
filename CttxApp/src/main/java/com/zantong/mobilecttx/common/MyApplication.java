@@ -18,6 +18,7 @@ import com.tencent.bugly.Bugly;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.BuildConfig;
 
+import cn.qqtheme.framework.util.AppUtils;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 
@@ -37,12 +38,14 @@ public class MyApplication extends MultiDexApplication {
      */
     private void initThirdTools() {
 //有盟+统计初始化
-        if (BuildConfig.DEBUG) {
-            MobclickAgent.UMAnalyticsConfig umAnalyticsConfig =
-                    new MobclickAgent.UMAnalyticsConfig(
-                            getApplicationContext(), "592544d7b27b0a65a200069e", "ZS_360");
-            MobclickAgent.startWithConfigure(umAnalyticsConfig);
-        }
+
+        MobclickAgent.UMAnalyticsConfig umAnalyticsConfig =
+                new MobclickAgent.UMAnalyticsConfig(
+                        getApplicationContext(), BuildConfig.DEBUG
+                        ? "5966d2ba6e27a408f2000ce8" : "5964328782b6357ca70006df",
+                        AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL"));
+
+        MobclickAgent.startWithConfigure(umAnalyticsConfig);
         MobclickAgent.setDebugMode(BuildConfig.DEBUG);
         MobclickAgent.enableEncrypt(true);//日志加密
         MobclickAgent.setCatchUncaughtExceptions(BuildConfig.DEBUG);

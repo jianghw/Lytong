@@ -426,7 +426,6 @@ public class UserApiClient extends BaseApiClient {
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
 
-
     public static void setJiaoYiDaiMa(Context context, String strFileNum,CallBack<Result> callback) {
         JiaoYiDaiMaDTO jiaoYiDaiMaDTO = new JiaoYiDaiMaDTO();
         jiaoYiDaiMaDTO.setFilenum(RSAUtils.strByEncryption(strFileNum, true));

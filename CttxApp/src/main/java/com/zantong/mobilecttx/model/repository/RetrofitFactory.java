@@ -32,6 +32,8 @@ public class RetrofitFactory {
                 return BuildConfig.APP_URL;
             case 3:
                 return BuildConfig.BASE_URL;
+            case 4:
+                return "http://192.168.1.126:80/";
             case 5:
                 return "http://liyingtong.com:8080/";
             default:

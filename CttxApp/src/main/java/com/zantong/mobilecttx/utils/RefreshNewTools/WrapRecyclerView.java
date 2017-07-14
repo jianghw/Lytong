@@ -12,13 +12,13 @@ import java.util.List;
 
 /**
  * 版权所有：王海洋
- *
+ * <p>
  * WrapRecyclerView
  *
  * @author zhou.wenkai ,Created on 2015-11-24 10:48:29
- * Major Function：A RecyclerView that allows for headers and footers as well.
- *
- * 注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！
+ *         Major Function：A RecyclerView that allows for headers and footers as well.
+ *         <p>
+ *         注:如果您修改了本类请填写以下内容作为记录，如非本人操作劳烦通知，谢谢！！！
  * @author mender，Modified Date Modify Content:
  */
 public class WrapRecyclerView extends RecyclerView {
@@ -45,29 +45,29 @@ public class WrapRecyclerView extends RecyclerView {
 
     @Override
     public void setAdapter(Adapter adapter) {
-        if(adapter instanceof WrapAdapter) {
+        if (adapter instanceof WrapAdapter) {
             mWrapAdapter = (WrapAdapter) adapter;
             super.setAdapter(adapter);
         } else {
             mWrapAdapter = new WrapAdapter(adapter);
-            for(View view : mTmpHeaderView) {
+            for (View view : mTmpHeaderView) {
                 mWrapAdapter.addHeaderView(view);
             }
-            if(mTmpHeaderView.size() > 0) {
+            if (mTmpHeaderView.size() > 0) {
                 mTmpHeaderView.clear();
             }
 
-            for(View view : mTmpFooterView) {
+            for (View view : mTmpFooterView) {
                 mWrapAdapter.addFooterView(view);
             }
-            if(mTmpFooterView.size() > 0) {
+            if (mTmpFooterView.size() > 0) {
                 mTmpFooterView.clear();
             }
 
             super.setAdapter(mWrapAdapter);
         }
 
-        if(shouldAdjustSpanSize) {
+        if (shouldAdjustSpanSize) {
             mWrapAdapter.adjustSpanSize(this);
         }
 
@@ -92,7 +92,7 @@ public class WrapRecyclerView extends RecyclerView {
      * @version 1.0
      */
     public Adapter getWrappedAdapter() {
-        if(mWrapAdapter == null) {
+        if (mWrapAdapter == null) {
             throw new IllegalStateException("You must set a adapter before!");
         }
         return mWrapAdapter.getWrappedAdapter();
@@ -107,7 +107,7 @@ public class WrapRecyclerView extends RecyclerView {
     public void addHeaderView(View view) {
         if (null == view) {
             throw new IllegalArgumentException("the view to add must not be null!");
-        } else if(mWrapAdapter == null) {
+        } else if (mWrapAdapter == null) {
             mTmpHeaderView.add(view);
         } else {
             mWrapAdapter.addHeaderView(view);
@@ -123,7 +123,7 @@ public class WrapRecyclerView extends RecyclerView {
     public void addFooterView(View view) {
         if (null == view) {
             throw new IllegalArgumentException("the view to add must not be null!");
-        } else if(mWrapAdapter == null) {
+        } else if (mWrapAdapter == null) {
             mTmpFooterView.add(view);
         } else {
             mWrapAdapter.addFooterView(view);
@@ -139,7 +139,7 @@ public class WrapRecyclerView extends RecyclerView {
     public void addFooterView(View view, boolean reverse) {
         if (null == view) {
             throw new IllegalArgumentException("the view to add must not be null!");
-        } else if(mWrapAdapter == null) {
+        } else if (mWrapAdapter == null) {
             mTmpFooterView.add(view);
         } else {
             mWrapAdapter.addFooterView(view, reverse);
@@ -161,7 +161,7 @@ public class WrapRecyclerView extends RecyclerView {
      * @version 1.0
      */
     public List<View> getHeadersView() {
-        if(mWrapAdapter == null) {
+        if (mWrapAdapter == null) {
             throw new IllegalStateException("You must set a adapter before!");
         }
         return mWrapAdapter.getHeadersView();
@@ -174,7 +174,7 @@ public class WrapRecyclerView extends RecyclerView {
      * @version 1.0
      */
     public List<View> getFootersView() {
-        if(mWrapAdapter == null) {
+        if (mWrapAdapter == null) {
             throw new IllegalStateException("You must set a adapter before!");
         }
         return mWrapAdapter.getFootersView();
@@ -187,7 +187,7 @@ public class WrapRecyclerView extends RecyclerView {
      * @version 1.0
      */
     public void setFooterVisibility(boolean shouldShow) {
-        if(mWrapAdapter == null) {
+        if (mWrapAdapter == null) {
             throw new IllegalStateException("You must set a adapter before!");
         }
         mWrapAdapter.setFooterVisibility(shouldShow);
@@ -200,7 +200,7 @@ public class WrapRecyclerView extends RecyclerView {
      * @version 1.0
      */
     public void setHeaderVisibility(boolean shouldShow) {
-        if(mWrapAdapter == null) {
+        if (mWrapAdapter == null) {
             throw new IllegalStateException("You must set a adapter before!");
         }
         mWrapAdapter.setHeaderVisibility(shouldShow);
@@ -213,7 +213,7 @@ public class WrapRecyclerView extends RecyclerView {
      * @version 1.0
      */
     public int getHeadersCount() {
-        if(mWrapAdapter == null) {
+        if (mWrapAdapter == null) {
             throw new IllegalStateException("You must set a adapter before!");
         }
         return mWrapAdapter.getHeadersCount();
@@ -226,7 +226,7 @@ public class WrapRecyclerView extends RecyclerView {
      * @version 1.0
      */
     public int getFootersCount() {
-        if(mWrapAdapter == null) {
+        if (mWrapAdapter == null) {
             throw new IllegalStateException("You must set a adapter before!");
         }
         return mWrapAdapter.getFootersCount();

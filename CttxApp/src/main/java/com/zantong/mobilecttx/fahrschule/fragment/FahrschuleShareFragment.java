@@ -1,9 +1,12 @@
 package com.zantong.mobilecttx.fahrschule.fragment;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -125,7 +128,7 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
 
         String contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         if (PublicData.getInstance().loginFlag && PublicData.getInstance().mLoginInfoBean != null)
-            contentString = BuildConfig.SHARE_APP_URL_1 + "?phoneNum="
+            contentString = BuildConfig.SHARE_APP_URL_3 + "?phoneNum="
                     + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
         else
             contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
@@ -163,7 +166,7 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
 
     @Override
     public String getType() {
-        return "驾校报名";
+        return "3";
     }
 
     /**
@@ -197,6 +200,7 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
         mBtnPay = (Button) view.findViewById(R.id.btn_pay);
         mBtnPay.setOnClickListener(this);
         mTvPrompt = (TextView) view.findViewById(R.id.tv_prompt);
+        mTvPrompt.setOnClickListener(this);
         mTvPeopleCount = (TextView) view.findViewById(R.id.tv_people_count);
         mTvInvited = (TextView) view.findViewById(R.id.tv_invited);
         mTvPeoplePay = (TextView) view.findViewById(R.id.tv_people_pay);
@@ -206,6 +210,9 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_prompt:
+                customImageDialog();
+                break;
             case R.id.btn_pay:
                 new DialogMgr(getActivity(),
                         new View.OnClickListener() {
@@ -226,6 +233,22 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
         }
     }
 
+    protected void customImageDialog() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity(), R.style.CustomImageDialog);
+        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.dialog_custom_image, null);
+        ImageView imageClose = (ImageView) layout.findViewById(R.id.img_close);
+        dialog.setView(layout);
+        final AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
+        imageClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+    }
+
     /**
      * 微信分享
      *
@@ -242,17 +265,14 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
 
         WXWebpageObject webpage = new WXWebpageObject();
         if (PublicData.getInstance().loginFlag) {
-            webpage.webpageUrl = "http://liyingtong.com:8081/h5/share/share.html?phoneNum="
+            webpage.webpageUrl = BuildConfig.SHARE_APP_URL_3 + "?phoneNum="
                     + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         }
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title = "掌上违章缴费，销分一步到位，与你只有一个App的距离";
-        msg.description = "畅通车友会——有我在手，一路畅通畅通车友会由工银安盛与中国工商银行" +
-                "上海分行联手打造，旨在为牡丹畅通卡用户提供便捷的驾乘金融服务体验。功能覆盖了" +
-                "交通违章缴费、驾乘人员保险保障、特色增值服务等多项方便快捷的在线服务，" +
-                "使车主的驾车生活更便捷、更丰富，更畅通!";
+        msg.title = getResources().getString(R.string.tv_share_fahrschule_weixin_title);
+        msg.description = getResources().getString(R.string.tv_share_fahrschule_weixin_content);
         //这里替换一张自己工程里的图片资源
         Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_sharelogo);
         msg.setThumbImage(thumb);
@@ -260,7 +280,8 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = String.valueOf(System.currentTimeMillis());
         req.message = msg;
-        req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+        req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession
+                : SendMessageToWX.Req.WXSceneTimeline;
         api.sendReq(req);
     }
 }

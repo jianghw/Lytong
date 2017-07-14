@@ -10,16 +10,17 @@
     <!--标题栏-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_114"
+        android:layout_height="@dimen/ds_132"
         android:background="@color/colorWhite">
 
         <ImageView
             android:id="@+id/img_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/ds_132"
+            android:layout_height="@dimen/ds_132"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/ds_36"
+
+            android:scaleType="centerInside"
             android:src="@mipmap/btn_back"/>
 
         <TextView
@@ -30,11 +31,12 @@
 
         <ImageView
             android:id="@+id/img_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/ds_132"
+            android:layout_height="@dimen/ds_132"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/ds_36"
+
+            android:scaleType="centerInside"
             android:src="@mipmap/btn_homepage"/>
     </RelativeLayout>
 
