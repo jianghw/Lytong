@@ -42,9 +42,9 @@
             <TextView
                 android:id="@+id/tv_admissions"
                 android:layout_width="wrap_content"
-                android:textColor="@color/colorTvRed_f33"
                 android:layout_height="wrap_content"
-                android:text="@string/tv_favorable_price_admissions"/>
+                android:text="@string/tv_favorable_price_admissions"
+                android:textColor="@color/colorTvRed_f33"/>
         </LinearLayout>
 
         <LinearLayout
@@ -53,10 +53,23 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/pic_drive2"/>
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/pic_drive2"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="敬请期待"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/fs_16sp"/>
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -77,10 +90,23 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/pic_drive3"/>
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/pic_drive3"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="敬请期待"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/fs_16sp"/>
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"

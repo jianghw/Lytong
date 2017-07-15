@@ -158,6 +158,8 @@ public class HomeMainActivity extends BaseJxActivity {
                 }
                 if (mHomeFavorableFragment != null)
                     FragmentUtils.hideAllShowFragment(fragmentManager, mHomeFavorableFragment);
+
+                GlobalConfig.getInstance().eventIdByUMeng(19);
                 break;
             case 2:
                 if (mHomeMeFragment == null) {

@@ -45,6 +45,7 @@ import com.zantong.mobilecttx.user.activity.MegTypeActivity;
 import com.zantong.mobilecttx.user.bean.MessageCountBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
+import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.Des3;
@@ -64,7 +65,6 @@ import java.util.List;
 
 import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -395,7 +395,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
         if (result != null && result.getData() != null) {
             List<UserCarInfoBean> infoBeanList = result.getData();
-            LogUtils.e("==========="+infoBeanList.size());
 //TODO 车辆数据保存处理
             PublicData.getInstance().payData.clear();
             PublicData.getInstance().mCarNum = infoBeanList.size();
@@ -404,11 +403,30 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
             mUserCarInfoBeanList.addAll(infoBeanList);
         }
         //违章车辆
-
 //        HorizontalCarViolationAdapter carViolationAdapter =
 //                new HorizontalCarViolationAdapter(getContext(), mUserCarInfoBeanList);
 //        mCustomViolation.setAdapter(carViolationAdapter);
 
+        mCarViolationAdapter.notifyDataSetChanged(mUserCarInfoBeanList);
+        mCustomViolation.notifyDataSetChanged();
+    }
+
+    /**
+     * @deprecated 旧方法遗弃
+     */
+    @Override
+    public void getRemoteCarInfoSucceed(UserCarsResult result) {
+        if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
+        if (result != null && result.getRspInfo() != null) {
+            List<UserCarInfoBean> infoBeanList = result.getRspInfo().getUserCarsInfo();
+
+            PublicData.getInstance().payData.clear();
+            PublicData.getInstance().mCarNum = infoBeanList.size();
+            PublicData.getInstance().mServerCars = decodeCarInfo(infoBeanList);
+
+            mUserCarInfoBeanList.addAll(infoBeanList);
+        }
+        //违章车辆
         mCarViolationAdapter.notifyDataSetChanged(mUserCarInfoBeanList);
         mCustomViolation.notifyDataSetChanged();
     }
@@ -452,7 +470,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 //        HorizontalCarViolationAdapter carViolationAdapter =
 //                new HorizontalCarViolationAdapter(getContext(), mUserCarInfoBeanList);
 //        mCustomViolation.setAdapter(carViolationAdapter);
-
         PublicData.getInstance().mLocalCars = list;
         PublicData.getInstance().mCarNum = list != null ? list.size() : 0;
     }
@@ -589,7 +606,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                 PublicData.getInstance().webviewTitle = "洗车";
                 PublicData.getInstance().isCheckLogin = true;
                 Act.getInstance().gotoIntent(this.getActivity(), BrowserActivity.class);
-
                 break;
             default:
                 break;

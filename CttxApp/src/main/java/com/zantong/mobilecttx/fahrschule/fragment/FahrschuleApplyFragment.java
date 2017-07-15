@@ -41,6 +41,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.List;
 import java.util.Random;
 
+import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;
@@ -270,6 +271,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
             ToastUtils.toastShort("请输入正确身份证号码");
             return;
         }
+        GlobalConfig.getInstance().eventIdByUMeng(29);
 
         if (mPresenter != null) mPresenter.createOrder();
     }

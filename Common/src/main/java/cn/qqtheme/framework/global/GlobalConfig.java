@@ -50,6 +50,22 @@ public final class GlobalConfig {
         simpleArrayMap.put(16, "home_unblocked_message_fty");//消息页面浏览量
         simpleArrayMap.put(17, "home_unblocked_scanBar_code2_scan");//首页_畅_扫一扫
         simpleArrayMap.put(18, "home_unblocked");//首页“畅”的点击量
+
+        simpleArrayMap.put(19, "home_discount_discount");//首页_优惠_优惠页面
+        simpleArrayMap.put(20, "discount_a_discountBanner");// 优惠页面_优惠Banner
+        simpleArrayMap.put(21, "discount_oilCard_discountOil_discountMap");//优惠_油卡充值_加油优惠_加油优惠地图
+        simpleArrayMap.put(22, "oilCardOil_discountOil_discountMap");//进入“油卡充值”页面浏览量
+        simpleArrayMap.put(23, "discount_maintenance_maintenanceA");//优惠页面_汽车嗨修_汽车嗨修页面
+        simpleArrayMap.put(24, "maintenanceA_bannera");//汽车嗨修_Bannera_供应商H5页面
+        simpleArrayMap.put(25, "discount_driving_instead_drivingInsteadA");//优惠页面_代驾_代驾页面
+        simpleArrayMap.put(26, "driving_insteadA_call_driver");//代驾页面_呼叫代驾
+        simpleArrayMap.put(27, "discount_washCar_washCarA");//优惠页面_洗车美容_洗车页面
+        simpleArrayMap.put(28, "discount_driverSchool_signUp");//优惠_驾校报名_报名页面
+        simpleArrayMap.put(29, "signUp_immediatelySignUp_order");//报名页面_立即报名_订单页面
+        simpleArrayMap.put(30, "order_payment_share");// 订单_支付_分享
+        simpleArrayMap.put(31, "share_shareA");// 分享_朋友圈或好友
+        simpleArrayMap.put(32, "shareA_shareNumber");//分享_分享数量
+        simpleArrayMap.put(33, "shareNumber_money");//分享数据_返还现金
     }
 
     public String getgetUMengEventID(int position) {

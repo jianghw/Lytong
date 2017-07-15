@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/ds_45"
         android:layout_marginTop="@dimen/ds_45"
-        android:text="返还的现金在哪里查看？"
+        android:text="你所用来支付的银行卡。"
         android:textColor="@color/colorTvGray_80"
         android:textSize="@dimen/fs_14sp"/>
 </LinearLayout>

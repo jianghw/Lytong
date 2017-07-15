@@ -34,6 +34,7 @@ import com.zantong.mobilecttx.zxing.EncodingUtils;
 
 import java.util.List;
 
+import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -211,9 +212,13 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_prompt:
+                GlobalConfig.getInstance().eventIdByUMeng(33);
+
                 customImageDialog();
                 break;
             case R.id.btn_pay:
+                GlobalConfig.getInstance().eventIdByUMeng(32);
+
                 new DialogMgr(getActivity(),
                         new View.OnClickListener() {
                             @Override

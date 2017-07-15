@@ -40,6 +40,7 @@ import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -140,7 +141,7 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         } catch (Exception e) {
 
         }
-        Log.i("usrId", PublicData.getInstance().userID);
+
         DaiJiaCreateDTO dto = new DaiJiaCreateDTO();
         dto.setUsrId(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
         dto.setName(phone);
@@ -150,7 +151,6 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         dto.setAddressLng(longitude);
         dto.setDriverNum("1");
         dto.setTime(time);
-
 
         HashMap<String, String> hashMap = new HashMap<String, String>();
         hashMap.put("mobile", phone);
@@ -186,6 +186,8 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
 //        String hashStr = HashUtils.getSignature(hashMap);
 //        dto.setHash(hashStr);
 
+        GlobalConfig.getInstance().eventIdByUMeng(26);
+
         CarApiClient.huJiaoDaiJia(this, dto, new CallBack<DaiJiaCreateResult>() {
             @Override
             public void onSuccess(DaiJiaCreateResult result) {
@@ -199,7 +201,6 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
                 }
             }
         });
-
     }
 
     /**

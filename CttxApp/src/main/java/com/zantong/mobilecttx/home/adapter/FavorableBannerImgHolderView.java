@@ -20,6 +20,7 @@ import com.zantong.mobilecttx.utils.ImageOptions;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
+import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.widght.banner.CBPageAdapter;
 
 /**
@@ -55,6 +56,8 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
                 PublicData.getInstance().mHashMap.put("htmlUrl", PublicData.getInstance().webviewUrl);
                 PublicData.getInstance().webviewTitle = "广告";
                 PublicData.getInstance().isCheckLogin = false;
+
+                GlobalConfig.getInstance().eventIdByUMeng(20);
 
                 if (PublicData.getInstance().webviewUrl.contains("discount")
                         || PublicData.getInstance().webviewUrl.contains("happysend")) {

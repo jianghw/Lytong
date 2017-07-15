@@ -5,6 +5,7 @@ import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+import com.zantong.mobilecttx.user.bean.UserCarsResult;
 
 /**
  * 畅通页面
@@ -30,6 +31,8 @@ public interface IUnimpededFtyContract {
         void remoteCarInfoError(String message);
 
         void getTextNoticeInfo(HomeCarResult result);
+
+        void getRemoteCarInfoSucceed(UserCarsResult result);
     }
 
     interface IUnimpededFtyPresenter extends IMvpPresenter {

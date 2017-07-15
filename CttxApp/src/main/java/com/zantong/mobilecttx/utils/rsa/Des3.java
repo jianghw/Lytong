@@ -2,17 +2,8 @@ package com.zantong.mobilecttx.utils.rsa;
 
 import android.text.TextUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 import javax.crypto.spec.IvParameterSpec;
@@ -29,7 +20,7 @@ public class Des3 {
     //private final static String secretKey = "zhangtong-cttx&changtong-gongyinansheng";
     private final static String secretKey = "liuyunqiang@lx100$#365#$";
     // 向量
-    private final static String iv = "01234567";
+    private final static String mIV = "01234567";
     // 加解密统一使用的编码方式
     private final static String encoding = "utf-8";
 
@@ -41,34 +32,21 @@ public class Des3 {
      * @throws Exception
      */
     public static String encode(String plainText) {
-        String encodeStr = "";
+        String encodeStr;
         try {
-            Key deskey = null;
-            DESedeKeySpec spec = new DESedeKeySpec(secretKey.getBytes());
-            SecretKeyFactory keyfactory = SecretKeyFactory.getInstance("desede");
-            deskey = keyfactory.generateSecret(spec);
+
+            DESedeKeySpec deSedeKeySpec = new DESedeKeySpec(secretKey.getBytes());
+            SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("desede");
+            SecretKey secretKey = secretKeyFactory.generateSecret(deSedeKeySpec);
 
             Cipher cipher = Cipher.getInstance("desede/CBC/PKCS5Padding");
-            IvParameterSpec ips = new IvParameterSpec(iv.getBytes());
-            cipher.init(Cipher.ENCRYPT_MODE, deskey, ips);
+            IvParameterSpec parameterSpec = new IvParameterSpec(mIV.getBytes());
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey, parameterSpec);
             byte[] encryptData = cipher.doFinal(plainText.getBytes(encoding));
             encodeStr = BaseUtil64.encode(encryptData);
-        } catch (InvalidKeyException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (InvalidKeySpecException e) {
-            e.printStackTrace();
-        } catch (NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (InvalidAlgorithmParameterException e) {
-            e.printStackTrace();
-        } catch (IllegalBlockSizeException e) {
-            e.printStackTrace();
-        } catch (BadPaddingException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            encodeStr = plainText;
         }
         return encodeStr;
     }
@@ -82,22 +60,21 @@ public class Des3 {
      */
     public static String decode(String encryptText) {
         if (TextUtils.isEmpty(encryptText)) return encryptText;
-
-        String strDecode = encryptText;
+        String strDecode;
         try {
-            Key deskey = null;
-            DESedeKeySpec spec = new DESedeKeySpec(secretKey.getBytes());
-            SecretKeyFactory keyfactory = SecretKeyFactory.getInstance("desede");
-            deskey = keyfactory.generateSecret(spec);
+            DESedeKeySpec deSedeKeySpec = new DESedeKeySpec(secretKey.getBytes());
+            SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("desede");
+            SecretKey deskey = secretKeyFactory.generateSecret(deSedeKeySpec);
+
             Cipher cipher = Cipher.getInstance("desede/CBC/PKCS5Padding");
-            IvParameterSpec ips = new IvParameterSpec(iv.getBytes());
-            cipher.init(Cipher.DECRYPT_MODE, deskey, ips);
+            IvParameterSpec parameterSpec = new IvParameterSpec(mIV.getBytes());
+            cipher.init(Cipher.DECRYPT_MODE, deskey, parameterSpec);
             byte[] decryptData = cipher.doFinal(BaseUtil64.decode(encryptText));
             strDecode = new String(decryptData, encoding);
         } catch (Exception e) {
             e.printStackTrace();
+            strDecode = encryptText;
         }
-
         return strDecode;
     }
 }

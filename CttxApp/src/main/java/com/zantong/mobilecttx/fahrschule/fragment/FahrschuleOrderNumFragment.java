@@ -24,6 +24,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
 
@@ -203,6 +204,8 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
                     mPresenter.getBankPayHtml(
                             mTvOrder.getText().toString(),
                             stringMoney);
+
+                    GlobalConfig.getInstance().eventIdByUMeng(30);
                 }
                 break;
             default:

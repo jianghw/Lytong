@@ -33,6 +33,7 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
@@ -141,7 +142,6 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
         buffer.append("起");
         buffer.append("</font>");
         mTvAdmissions.setText(Html.fromHtml(buffer.toString()));
-
     }
 
     @Override
@@ -241,21 +241,31 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
                 Act.getInstance().launchLoginByIntent(getActivity(), ShareParentActivity.class, intent);
                 break;
             case R.id.lay_order://加油
+                GlobalConfig.getInstance().eventIdByUMeng(21);
+
                 Act.getInstance().lauchIntentToLogin(getActivity(), RechargeActivity.class);
                 break;
             case R.id.lay_repair://害羞
+                GlobalConfig.getInstance().eventIdByUMeng(23);
+
                 PublicData.getInstance().webviewUrl = Config.HOME_CAR_WASH_URL;
                 PublicData.getInstance().webviewTitle = "洗车";
                 PublicData.getInstance().isCheckLogin = true;
                 Act.getInstance().gotoIntent(getActivity(), BrowserActivity.class);
                 break;
             case R.id.lay_beauty://美容
+                GlobalConfig.getInstance().eventIdByUMeng(27);
+
                 Act.getInstance().lauchIntentToLogin(getActivity(), CarBeautyActivity.class);
                 break;
             case R.id.lay_river://代驾
+                GlobalConfig.getInstance().eventIdByUMeng(25);
+
                 enterDrivingActivity();
                 break;
             case R.id.lay_admissions://驾校招生
+                GlobalConfig.getInstance().eventIdByUMeng(28);
+
                 Act.getInstance().lauchIntentToLogin(getActivity(), FahrschuleActivity.class);
                 break;
             default:

@@ -35,6 +35,8 @@ public class RechargeActivity extends MvpBaseActivity {
     protected void setTitleView() {
         setTitleText("油卡充值");
         setEnsureText("加油充值");
+
+        GlobalConfig.getInstance().eventIdByUMeng(22);
     }
 
     @Override

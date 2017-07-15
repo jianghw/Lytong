@@ -108,7 +108,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                     @Override
                     public void doNext(UserCarsResult result) {
                         if (result != null && "000000".equals(result.getSYS_HEAD().getReturnCode())) {
-
+                            mAtyView.getRemoteCarInfoSucceed(result);
                         } else {
                             mAtyView.remoteCarInfoError(result != null
                                     ? result.getSYS_HEAD().getReturnMessage()

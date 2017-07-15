@@ -11,6 +11,7 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
+import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.global.GlobalConstant;
 
 /**
@@ -44,6 +45,8 @@ public class CarBeautyActivity extends BaseJxActivity implements View.OnClickLis
         initTitleContent("汽车保养");
 
         initView(view);
+
+        GlobalConfig.getInstance().eventIdByUMeng(24);
     }
 
     @Override

@@ -42,7 +42,7 @@ public class MyApplication extends MultiDexApplication {
         MobclickAgent.UMAnalyticsConfig umAnalyticsConfig =
                 new MobclickAgent.UMAnalyticsConfig(
                         getApplicationContext(), BuildConfig.DEBUG
-                        ? "5966d2ba6e27a408f2000ce8" : "5964328782b6357ca70006df",
+                        ? "592544d7b27b0a65a200069e" : "58b3880304e20581760018e7",
                         AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL"));
 
         MobclickAgent.startWithConfigure(umAnalyticsConfig);
