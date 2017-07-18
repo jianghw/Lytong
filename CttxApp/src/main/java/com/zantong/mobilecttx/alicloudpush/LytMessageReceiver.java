@@ -120,7 +120,7 @@ public class LytMessageReceiver extends MessageReceiver {
     private void saveData(Context context, PushBean pushBean, String key) {
         List<HomeNotice> list;
         boolean isHave = false;
-        list = (List<HomeNotice>) UserInfoRememberCtrl.readObject(context, key);
+        list = (List<HomeNotice>) UserInfoRememberCtrl.readObject(key);
         if (list != null) {
             for (HomeNotice item : list) {
                 if (item.getId().equals(pushBean.getId())) {
@@ -135,7 +135,7 @@ public class LytMessageReceiver extends MessageReceiver {
                 homeNotice.setDate(pushBean.getDate());
                 homeNotice.setNewMeg(pushBean.isNewMeg());
                 list.add(homeNotice);
-                UserInfoRememberCtrl.saveObject(context, key, list);
+                UserInfoRememberCtrl.saveObject(key, list);
             }
         } else {
             list = new ArrayList<>();
@@ -146,20 +146,20 @@ public class LytMessageReceiver extends MessageReceiver {
             homeNotice.setDate(pushBean.getDate());
             homeNotice.setNewMeg(pushBean.isNewMeg());
             list.add(homeNotice);
-            UserInfoRememberCtrl.saveObject(context, key, list);
+            UserInfoRememberCtrl.saveObject(key, list);
         }
     }
 
     private void saveDataOpen(Context context, PushBean pushBean, String key) {
         try {
             List<HomeNotice> list;
-            list = (List<HomeNotice>) UserInfoRememberCtrl.readObject(context, key);
+            list = (List<HomeNotice>) UserInfoRememberCtrl.readObject(key);
             for (HomeNotice item : list) {
                 if (item.getId().equals(pushBean.getId())) {
                     item.setNewMeg(false);
                 }
             }
-            UserInfoRememberCtrl.saveObject(context, key, list);
+            UserInfoRememberCtrl.saveObject(key, list);
             try {
                 // 刷新下消息列表
 

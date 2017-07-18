@@ -38,7 +38,6 @@ public class MyApplication extends MultiDexApplication {
      */
     private void initThirdTools() {
 //有盟+统计初始化
-
         MobclickAgent.UMAnalyticsConfig umAnalyticsConfig =
                 new MobclickAgent.UMAnalyticsConfig(
                         getApplicationContext(), BuildConfig.DEBUG

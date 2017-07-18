@@ -26,6 +26,7 @@ public class LocalImageHolderView implements CBPageAdapter.Holder<Integer>{
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
             }
         });
     }

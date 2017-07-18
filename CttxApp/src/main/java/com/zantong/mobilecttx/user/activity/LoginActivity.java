@@ -411,6 +411,7 @@ public class LoginActivity extends Activity
 
         EventBus.getDefault().post(new GetUserEvent(true));
         SPUtils.getInstance().setUserPwd(mapData().get("pswd"));
+
         liyingreg(mLoginInfoBean.getRspInfo().getUsrid());
         setJiaoYiDaiMa(Des3.decode(mLoginInfoBean.getRspInfo().getFilenum()));
 
@@ -478,6 +479,7 @@ public class LoginActivity extends Activity
             liYingRegDTO.setPhoenum(phone);
             liYingRegDTO.setPswd(pwd);
             liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(userId, true));
+
             CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResult>() {
                 @Override
                 public void onSuccess(BaseResult result) {

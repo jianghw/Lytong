@@ -249,10 +249,10 @@ public class BindJiaZhaoActivity extends BaseMvpActivity<IBaseView, HelpPresente
                             }
                         });
                         PublicData.getInstance().filenum = fileNum;
-                        LoginInfoBean.RspInfoBean user = (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject(BindJiaZhaoActivity.this);
+                        LoginInfoBean.RspInfoBean user = (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject();
                         user.setFilenum(fileNum);
 //                        user.setGetdate(dateOfFirstIssue);
-                        UserInfoRememberCtrl.saveObject(BindJiaZhaoActivity.this, user);
+                        UserInfoRememberCtrl.saveObject(user);
                         PublicData.getInstance().mLoginInfoBean.setFilenum(fileNum);
 //                        PublicData.getInstance().mLoginInfoBean.setGetdate(dateOfFirstIssue);
                         Act.getInstance().gotoIntent(BindJiaZhaoActivity.this, BindCardSuccess.class);

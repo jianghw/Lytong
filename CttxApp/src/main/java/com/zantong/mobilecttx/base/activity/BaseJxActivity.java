@@ -37,15 +37,12 @@ public abstract class BaseJxActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_base_jx);
+
         bundleIntent(savedInstanceState);
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View contentView = inflater.inflate(R.layout.activity_base_jx, null);
-
-        setContentView(contentView);
-        initStatusBarColor();
-
-        LinearLayout linearLayout = (LinearLayout) contentView.findViewById(R.id.lay_base_content);
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.lay_base_content);
         //Title
         if (!isNeedCustomTitle()) {
             View rootView = inflater.inflate(getTitleLayoutResID(), null);
@@ -56,7 +53,7 @@ public abstract class BaseJxActivity extends AppCompatActivity {
             linearLayout.addView(rootView, new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT));
-            initTitleView(contentView);
+            initTitleView(linearLayout);
         }
         //Body
         if (getContentResId() != 0) {
@@ -68,20 +65,31 @@ public abstract class BaseJxActivity extends AppCompatActivity {
             linearLayout.addView(rootView, new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.MATCH_PARENT));
-            initFragmentView(contentView);
+            initFragmentView(linearLayout);
         }
 
         if (isNeedKnife()) ButterKnife.bind(this);
     }
 
-    protected abstract void bundleIntent(Bundle savedInstanceState);
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+
+        if (isNeedStatus()) initStatusBarColor();
+    }
+
+    /**
+     * 是否需要修改状态栏
+     */
+    protected boolean isNeedStatus() {
+        return true;
+    }
 
     /**
      * 状态栏颜色
      */
-
     protected void initStatusBarColor() {
-        StatusBarUtils.setColor(this, iniStatusColor());
+        StatusBarUtils.setColor(this, iniStatusColor(), 38);
     }
 
     /**
@@ -90,6 +98,11 @@ public abstract class BaseJxActivity extends AppCompatActivity {
     protected int iniStatusColor() {
         return getResources().getColor(R.color.colorTvRed_f33);
     }
+
+    /**
+     * 数据传递口及保存口
+     */
+    protected abstract void bundleIntent(Bundle savedInstanceState);
 
     /**
      * 子布局可以继承实现

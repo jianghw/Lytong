@@ -3,7 +3,7 @@
        xmlns:tools="http://schemas.android.com/tools"
        android:layout_width="match_parent"
        android:layout_height="wrap_content">
-
+    <!--相对布局-->
     <ImageView
         android:id="@+id/img_msg"
         android:layout_width="wrap_content"
@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="@dimen/ds_36"
         android:layout_marginRight="@dimen/ds_36"
-        android:layout_marginTop="@dimen/ds_36"
+        android:layout_marginTop="@dimen/bar_marginTop"
         android:src="@mipmap/icon_msg"/>
 
     <TextView
@@ -20,11 +20,11 @@
         android:layout_height="@dimen/ds_48"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="@dimen/ds_60"
-        android:layout_marginTop="@dimen/ds_24"
+        android:layout_marginTop="@dimen/bar_count_marginTop"
         android:background="@drawable/bg_tv_msg_count"
         android:gravity="center"
         android:textColor="@color/red_normal"
-        android:textSize="@dimen/fs_12sp"
+        android:textSize="@dimen/fs_10sp"
         tools:text="5"/>
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/ds_36"
+        android:layout_marginTop="@dimen/bar_marginTop"
         android:text="畅通车友会"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/fs_18sp"/>
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginRight="@dimen/ds_15"
-        android:layout_marginTop="@dimen/ds_36"
+        android:layout_marginTop="@dimen/bar_marginTop"
         android:layout_toLeftOf="@+id/tv_scan"
         android:src="@mipmap/btn_scan"/>
 
@@ -55,7 +55,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="@dimen/ds_15"
-        android:layout_marginTop="@dimen/ds_36"
+        android:layout_marginTop="@dimen/bar_marginTop"
         android:text="扫罚单"
         android:textColor="@drawable/common_text_selecter"
         android:textSize="@dimen/fs_14sp"/>

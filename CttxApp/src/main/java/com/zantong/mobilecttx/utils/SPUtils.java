@@ -108,9 +108,9 @@ public class SPUtils {
     public List<CarInfoDTO> getCarsInfo() {
         if (carsinfo == null) carsinfo = new ArrayList<>();
         // 获取序列化的数据
-        String str = mSharedPreferences.getString(CARSINFO, "");
+        String sharedPreferences = mSharedPreferences.getString(CARSINFO, "");
         try {
-            Object obj = SerializableUtils.str2Obj(str);
+            Object obj = SerializableUtils.str2Obj(sharedPreferences);
             if (obj == null) return carsinfo;
             carsinfo = new Gson().fromJson(obj.toString(), new TypeToken<List<CarInfoDTO>>() {
             }.getType());

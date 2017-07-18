@@ -147,7 +147,7 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
                 mRspInfoBean.get(i).setIspaycar("1");
             }
         }
-        UserInfoRememberCtrl.saveObject(getActivity(), "userCarInfo", mRspInfoBean);
+        UserInfoRememberCtrl.saveObject("userCarInfo", mRspInfoBean);
         ToastUtils.showShort(getActivity(), "修改成功");
         getActivity().finish();
     }

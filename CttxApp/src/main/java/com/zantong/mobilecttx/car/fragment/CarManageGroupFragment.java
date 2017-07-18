@@ -151,7 +151,7 @@ public class CarManageGroupFragment extends BaseListFragment<CarInfoDTO>{
 
     private void initListData(){
         onShowLoading();
-        mRspInfoBean = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(getActivity(), PublicData.getInstance().CarLocalFlag);
+        mRspInfoBean = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(PublicData.getInstance().CarLocalFlag);
         payData = new ArrayList<>();
         noPayData = new ArrayList<>();
 

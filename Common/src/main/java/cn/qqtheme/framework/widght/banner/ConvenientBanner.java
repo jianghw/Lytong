@@ -106,6 +106,10 @@ public class ConvenientBanner<T> extends LinearLayout {
         return this;
     }
 
+    public CBPageAdapter getCBPageAdapter() {
+        return pageAdapter;
+    }
+
     /**
      * 设置底部指示器是否可见
      *
@@ -141,6 +145,10 @@ public class ConvenientBanner<T> extends LinearLayout {
         pageChangeListener = new CBPageChangeListener(mPointViews, page_indicatorId);
         viewPager.setOnPageChangeListener(pageChangeListener);
         return this;
+    }
+
+    public CBLoopViewPager getCBLoopViewPager() {
+        return viewPager;
     }
 
     /***

@@ -93,6 +93,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
 
                     @Override
                     public void onError(Throwable e) {
+                        e.printStackTrace();
                     }
 
                     @Override
@@ -145,7 +146,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
 
         dto.setReqInfo(bean);
         String gson = new Gson().toJson(dto);
-        LogUtils.json(gson);
+
         return gson;
     }
 

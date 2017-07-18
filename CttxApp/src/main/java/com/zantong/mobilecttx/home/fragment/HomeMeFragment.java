@@ -368,6 +368,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         mLayUpdate.setOnClickListener(this);
         mAboutAdvertising = (RelativeLayout) view.findViewById(R.id.about_advertising);
         mAboutAdvertising.setOnClickListener(this);
+
 //动态调整标题透明度
         mAppbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override

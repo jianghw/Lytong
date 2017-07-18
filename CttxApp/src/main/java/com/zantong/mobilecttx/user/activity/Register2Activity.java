@@ -283,9 +283,9 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                                 result.getRspInfo().setFilenum(Des3.decode(result.getRspInfo().getFilenum()));
                                 result.getRspInfo().setPhoenum(Des3.decode(result.getRspInfo().getPhoenum()));
                                 result.getRspInfo().setCtfnum(Des3.decode(result.getRspInfo().getCtfnum()));
-                                UserInfoRememberCtrl.saveObject(Register2Activity.this, UserInfoRememberCtrl.USERPD, mPwd.getText().toString());
-                                UserInfoRememberCtrl.saveObject(Register2Activity.this, UserInfoRememberCtrl.USERDEVICE, PublicData.getInstance().imei);
-                                UserInfoRememberCtrl.saveObject(Register2Activity.this, result.getRspInfo());
+                                UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERPD, mPwd.getText().toString());
+                                UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, PublicData.getInstance().imei);
+                                UserInfoRememberCtrl.saveObject(result.getRspInfo());
 
                                 LogUtils.i("usrid:" + result.getRspInfo().getUsrid());
                                 PublicData.getInstance().mLoginInfoBean = result.getRspInfo();

@@ -70,7 +70,7 @@ public class DateService extends Service {
         Date now = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd HH:mm:ss");
         String currentTm = sdf.format(now).replace("/","").replace(":","").replace(" ","");
-        LoginInfoBean.RspInfoBean b = (LoginInfoBean.RspInfoBean)UserInfoRememberCtrl.readObject(this);
+        LoginInfoBean.RspInfoBean b = (LoginInfoBean.RspInfoBean)UserInfoRememberCtrl.readObject();
         String date = "";
         if (!Tools.isStrEmpty(b.getGetdate())){
             date = b.getGetdate().replace("-","").substring(4) + "095930";

@@ -34,7 +34,6 @@ import com.zantong.mobilecttx.daijia.bean.DrivingOcrBean;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.eventbus.AddCarInfoEvent;
 import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
-import com.zantong.mobilecttx.home.activity.GuideActivity;
 import com.zantong.mobilecttx.interf.IViolationQueryFtyContract;
 import com.zantong.mobilecttx.presenter.weizhang.ViolationQueryFtyPresenter;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
@@ -44,7 +43,6 @@ import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
@@ -196,7 +194,8 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         //小写转化为大写
         mEditPlate.setTransformationMethod(new AllCapTransformationMethod());
         ////设置光标位置在文本框末尾
-        mEditPlate.setSelection(mEditPlate.getText().toString().length());
+        int plateText = mEditPlate.getText().toString().trim().length();
+        mEditPlate.setSelection(plateText);
 //选择项目
         initLayEnable(true, mLayoutBrand);
         initLayEnable(false, mLayoutCarSeries);
@@ -217,16 +216,18 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onFirstDataVisible() {
-        if (!SPUtils.getInstance().getGuideXingShiZheng()) {
-            PublicData.getInstance().GUIDE_TYPE = 1;
-            Act.getInstance().gotoIntent(getActivity(), GuideActivity.class);
-        }
+
+//        if (!SPUtils.getInstance().getGuideXingShiZheng()) {
+//            PublicData.getInstance().GUIDE_TYPE = 1;
+//            Act.getInstance().gotoIntent(getActivity(), GuideActivity.class);
+//        }
 //可添加控件操作
         int size;
         if (PublicData.getInstance().loginFlag)
             size = PublicData.getInstance().mServerCars.size();
         else
             size = SPUtils.getInstance().getCarsInfo().size();
+
         mCustomSwitchBtn.setChecked(size < 3);
         mCustomSwitchBtn.setEnabled(size < 3);
     }
@@ -357,6 +358,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
      */
     private void dataFormValidation() {
         String plate = mEditPlate.getTransformationMethod().getTransformation(getEditPlate(), mEditPlate).toString();
+
         String engine = getEditEngine();
         String carType = getTvType();
 

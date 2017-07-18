@@ -7,9 +7,10 @@
               tools:context="com.zantong.mobilecttx.home.fragment.HomeUnimpededFragment">
     <!--头部banner-->
     <RelativeLayout
+        android:id="@+id/lay_banner"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="44">
+        android:layout_weight="45">
 
         <cn.qqtheme.framework.widght.banner.ConvenientBanner
             android:id="@+id/custom_convenientBanner"
@@ -23,6 +24,7 @@
     </RelativeLayout>
     <!--导航控件-->
     <TableLayout
+        android:id="@+id/lay_tab"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="18"

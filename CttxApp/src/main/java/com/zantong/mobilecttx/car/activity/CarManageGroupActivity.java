@@ -46,6 +46,9 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.ToastUtils;
 
+/**
+ * 车辆管理
+ */
 public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
         implements View.OnClickListener, IBaseView {
 
@@ -59,8 +62,8 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
     TextView mChangePayCar;
     @Bind(R.id.manage_cars_recyclerview)
     XRecyclerView mXRecyclerView;
-    List<UserCarInfoBean> mServerList = new ArrayList<>();
 
+    List<UserCarInfoBean> mServerList = new ArrayList<>();
     SuperAdapter adapter;
 
     @Override
@@ -162,6 +165,7 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
                     mServerList = result.getRspInfo().getUserCarsInfo();
                     PublicData.getInstance().mCarNum = mServerList.size();
                     PublicData.getInstance().mServerCars = listU(result.getRspInfo().getUserCarsInfo());
+
                     int canPayNum = 0;
                     int notPayNum = 0;
                     for (int i = 0; i < mServerList.size(); i++) {
@@ -197,7 +201,7 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
                 @Override
                 public void onError(String errorCode, String msg) {
-                    super.onError(errorCode, msg);
+
                     mLoadingView.setVisibility(View.GONE);
                     mEmptyView.setVisibility(View.GONE);
                     hideDialogLoading();

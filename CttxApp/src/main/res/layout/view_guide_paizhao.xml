@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/view_guide_paizhao_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:id="@+id/view_guide_paizhao_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/content_box"
@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@drawable/common_text_selecter"
-                    android:textSize="@dimen/fs_48" />
+                    android:textSize="@dimen/fs_48"/>
 
                 <ImageView
                     android:id="@+id/view_guide_paizhao_iv"
@@ -52,7 +52,7 @@
             <ImageView
                 android:layout_width="@dimen/ds_150"
                 android:layout_height="@dimen/ds_150"
-                android:background="@mipmap/img_guide_arrow_top" />
+                android:background="@mipmap/img_guide_arrow_top"/>
         </LinearLayout>
 
         <LinearLayout
@@ -64,7 +64,7 @@
                 android:layout_width="@dimen/ds_300"
                 android:layout_height="@dimen/ds_600"
                 android:layout_marginLeft="@dimen/ds_60"
-                android:background="@mipmap/img_guide_paizhao" />
+                android:background="@mipmap/img_guide_paizhao"/>
 
             <TextView
                 android:id="@+id/view_guide_paizhao_content"
@@ -73,7 +73,7 @@
                 android:paddingLeft="@dimen/ds_30"
                 android:text="输入罚单编号太麻烦条形码扫一扫方便又快捷"
                 android:textColor="@color/white"
-                android:textSize="@dimen/fs_72" />
+                android:textSize="@dimen/fs_72"/>
         </LinearLayout>
 
         <TextView
@@ -86,7 +86,7 @@
             android:gravity="center"
             android:text="确定"
             android:textColor="@android:color/white"
-            android:textSize="22dp" />
+            android:textSize="22dp"/>
 
     </LinearLayout>
 </RelativeLayout>

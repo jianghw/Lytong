@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/item_manage_vehicles_layout"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/item_manage_vehicles_layout"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/ds_30"
-                android:text="沪 NB8888" />
+                tools:text="沪 NB8888" />
 
             <TextView
                 android:id="@+id/item_manage_vehicles_flag"
@@ -48,7 +48,7 @@
                 android:paddingRight="@dimen/ds_9"
                 android:paddingTop="@dimen/ds_3"
                 android:text="已绑定"
-                android:textColor="@color/white"
+                android:textColor="@color/colorWhite"
                 android:textSize="@dimen/fs_36"
                 android:visibility="visible" />
         </LinearLayout>

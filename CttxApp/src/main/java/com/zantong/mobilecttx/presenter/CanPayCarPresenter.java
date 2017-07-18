@@ -109,7 +109,7 @@ public class CanPayCarPresenter extends BasePresenter<IBaseView> implements Simp
                     mCanPayCarFragment.updateView(null, 1);
                     break;
                 }
-                UserInfoRememberCtrl.saveObject(mCanPayCarFragment.getActivity(), PublicData.getInstance().CarLocalFlag, mOpenQueryBean.getRspInfo());
+                UserInfoRememberCtrl.saveObject(PublicData.getInstance().CarLocalFlag, mOpenQueryBean.getRspInfo());
 //                int size = mOpenQueryBean.getRspInfo().getUserCarsInfo().size();
 //                for (int i = 0; i < size; i ++){
 //                    String flag = mOpenQueryBean.getRspInfo().getUserCarsInfo().get(i).getDefaultflag();

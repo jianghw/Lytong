@@ -72,7 +72,7 @@ public class InspectService extends Service {
     private void updateCurrentTime() {
         Date now = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd HH:mm:ss");
-        OpenQueryBean.RspInfoBean b = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(this.getBaseContext(), PublicData.getInstance().CarLocalFlag);
+        OpenQueryBean.RspInfoBean b = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(PublicData.getInstance().CarLocalFlag);
         String currentTm = sdf.format(now).replace("/","").replace(":","").replace(" ","");
         if (b != null) {
             for (int i = 0; i < b.getUserCarsInfo().size(); i++) {

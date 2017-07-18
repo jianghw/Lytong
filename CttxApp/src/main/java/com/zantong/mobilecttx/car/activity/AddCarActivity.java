@@ -42,7 +42,6 @@ import com.zantong.mobilecttx.eventbus.AddCarInfoEvent;
 import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
 import com.zantong.mobilecttx.eventbus.EditCarInfoEvent;
 import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
-import com.zantong.mobilecttx.home.activity.GuideActivity;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
@@ -54,7 +53,6 @@ import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.UiHelpers;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
@@ -177,14 +175,15 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
 
     @Override
     public void initView() {
-        if (!SPUtils.getInstance().getGuideXingShiZheng()) {
-            PublicData.getInstance().GUIDE_TYPE = 1;
-            Act.getInstance().gotoIntent(this, GuideActivity.class);
-        }
+
+//        if (!SPUtils.getInstance().getGuideXingShiZheng()) {
+//            PublicData.getInstance().GUIDE_TYPE = 1;
+//            Act.getInstance().gotoIntent(this, GuideActivity.class);
+//        }
 
         mPlateNum.setTransformationMethod(new AllCapTransformationMethod());
         mPlateNum.setSelection(mPlateNum.getText().toString().length());
-//        setEnsureText("扫描行驶证正面");
+
         UiHelpers.setTextViewIcon(this, getEnsureView(), R.mipmap.icon_add_car_camera,
                 R.dimen.ds_60,
                 R.dimen.ds_48, UiHelpers.DRAWABLE_RIGHT);

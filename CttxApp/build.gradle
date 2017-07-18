@@ -58,7 +58,7 @@ android {
             // 显示Log
             buildConfigField "boolean", "LOG_DEBUG", "true"
             //下载地址  分享
-            buildConfigField "String", "APP_DOWNLOD", "\"http://liyingtong.com:8081/download/\""
+            buildConfigField "String", "APP_DOWNLOD", "\"http://139.196.183.121/download/\""
 
             buildConfigField "String", "CAR_MANGER_URL", "\"http://139.196.183.121/\""
             //新接口正式地址

@@ -47,7 +47,10 @@ public class CBLoopViewPager extends ViewPager {
     OnPageChangeListener mOuterPageChangeListener;
     private CBLoopPagerAdapterWrapper mAdapter;
     private boolean mBoundaryCaching = DEFAULT_BOUNDARY_CASHING;
-
+    /**
+     * 自定义一个接口回调
+     */
+    private CustomListener mCustomListener;
 
     /**
      * helper function which may be used when implementing FragmentPagerAdapter
@@ -115,7 +118,9 @@ public class CBLoopViewPager extends ViewPager {
         mOuterPageChangeListener = listener;
     }
 
-    ;
+    public void setCustomPageChangeListener(CustomListener listener) {
+        mCustomListener = listener;
+    }
 
     public CBLoopViewPager(Context context) {
         super(context);
@@ -145,11 +150,12 @@ public class CBLoopViewPager extends ViewPager {
                     mOuterPageChangeListener.onPageSelected(realPosition);
                 }
             }
+
+            if (mCustomListener != null) mCustomListener.onPageSelected(position);
         }
 
         @Override
-        public void onPageScrolled(int position, float positionOffset,
-                                   int positionOffsetPixels) {
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             int realPosition = position;
             if (mAdapter != null) {
                 realPosition = mAdapter.toRealPosition(position);
@@ -170,11 +176,13 @@ public class CBLoopViewPager extends ViewPager {
                     if (positionOffset > .5) {
                         mOuterPageChangeListener.onPageScrolled(0, 0, 0);
                     } else {
-                        mOuterPageChangeListener.onPageScrolled(realPosition,
-                                0, 0);
+                        mOuterPageChangeListener.onPageScrolled(realPosition, 0, 0);
                     }
                 }
             }
+
+            if (mCustomListener != null)
+                mCustomListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
         }
 
         @Override
@@ -190,7 +198,19 @@ public class CBLoopViewPager extends ViewPager {
             if (mOuterPageChangeListener != null) {
                 mOuterPageChangeListener.onPageScrollStateChanged(state);
             }
+
+            if (mCustomListener != null)
+                mCustomListener.onPageScrollStateChanged(state);
         }
     };
+
+    public interface CustomListener {
+        void onPageSelected(int position);
+
+        void onPageScrolled(int position, float positionOffset, int positionOffsetPixels);
+
+        void onPageScrollStateChanged(int state);
+    }
+
 
 }

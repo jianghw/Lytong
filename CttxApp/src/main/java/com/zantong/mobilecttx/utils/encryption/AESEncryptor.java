@@ -40,7 +40,6 @@ public class AESEncryptor {
         return raw;
     }
 
-
     private static byte[] encrypt(byte[] raw, byte[] clear) throws Exception {
         SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
         Cipher cipher = Cipher.getInstance("AES");

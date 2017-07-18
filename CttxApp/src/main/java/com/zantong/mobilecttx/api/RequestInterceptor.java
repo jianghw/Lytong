@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.api;
 
+import com.google.gson.Gson;
 import com.zantong.mobilecttx.common.PublicData;
 
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class RequestInterceptor implements Interceptor {
                 .cacheControl(cache)
                 .build();
         Response response=chain.proceed(newRequest);
-        LogUtils.i("response---"+response.body().toString());
+        LogUtils.d("response--->" + new Gson().toJson(response.body().toString()));
         return response;
     }
 }

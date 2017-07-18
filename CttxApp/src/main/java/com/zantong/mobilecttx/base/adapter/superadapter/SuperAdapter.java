@@ -26,6 +26,7 @@ public class SuperAdapter extends RecyclerView.Adapter<SuperViewHolder> {
     public SuperAdapter(Context context, int[] layoutIds) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
+
         for (int i = 0; i < layoutIds.length; i++) {
             layoutMap.put(i, layoutIds[i]);
         }
@@ -60,6 +61,7 @@ public class SuperAdapter extends RecyclerView.Adapter<SuperViewHolder> {
     public int getViewType(int position) {
         LayoutWrapper wrapper = items.get(position);
         Iterator iter = layoutMap.entrySet().iterator();
+
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
             Integer key = (Integer) entry.getKey();

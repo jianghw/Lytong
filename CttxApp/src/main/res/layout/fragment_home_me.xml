@@ -5,12 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false">
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_480"
+        android:layout_height="@dimen/ds_540"
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -37,7 +37,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_margin="@dimen/ds_36"
+                    android:layout_marginBottom="@dimen/ds_36"
+                    android:layout_marginTop="@dimen/bar_marginTop"
                     android:text="个人中心"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/fs_18sp"/>
@@ -47,7 +48,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_margin="@dimen/ds_36"
+                    android:layout_marginRight="@dimen/ds_36"
+                    android:layout_marginTop="@dimen/bar_marginTop"
                     android:src="@mipmap/icon_setting"/>
 
                 <ImageView
@@ -140,8 +142,8 @@
             </LinearLayout>
 
             <include layout="@layout/include_me_item"/>
-
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>
+

@@ -64,7 +64,7 @@ public class UserInfoUpdatePresenter extends BasePresenter<UserInfoUpdateView> i
                 if (PublicData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())) {
                     mUserInfoUpdate.updateView(clazz, index);
                     PublicData.getInstance().mLoginInfoBean.setPortrait(mUserInfoUpdate.mapData().get("portrait"));
-                    UserInfoRememberCtrl.saveObject(mUserInfoUpdate, PublicData.getInstance().mLoginInfoBean);
+                    UserInfoRememberCtrl.saveObject(PublicData.getInstance().mLoginInfoBean);
                 } else {
                     mUserInfoUpdate.setUserHeadImage();
                     ToastUtils.showShort(mUserInfoUpdate, mUpdateInfo.getSYS_HEAD().getReturnMessage());

@@ -85,7 +85,7 @@ public class RequestCodeActivity extends BaseMvpActivity<ILoginView,LoginPresent
                         PublicData.getInstance().mLoginInfoBean.setRecdphoe(requestCode);
                         PublicData.getInstance().mLoginInfoBean.setRecddt(DateUtils.getDate());
                         LogUtils.i(DateUtils.getYearMonthDay());
-                        UserInfoRememberCtrl.saveObject(RequestCodeActivity.this, PublicData.getInstance().mLoginInfoBean);
+                        UserInfoRememberCtrl.saveObject(PublicData.getInstance().mLoginInfoBean);
                         Intent intent = new Intent(RequestCodeActivity.this, RequestSuccActivity.class);
                         startActivity(intent);
                         finish();

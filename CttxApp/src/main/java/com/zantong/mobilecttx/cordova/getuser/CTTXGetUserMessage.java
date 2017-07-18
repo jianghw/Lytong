@@ -69,7 +69,7 @@ public class CTTXGetUserMessage extends CordovaPlugin {
 
     private void sendData(CallbackContext callbackContext){
         try {
-            LoginInfoBean.RspInfoBean user = (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject(cordova.getActivity());
+            LoginInfoBean.RspInfoBean user = (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject();
             if(user == null){
 //                CTTXGetUserMessage.this.errorEcho("ERROR", callbackContext);
                 callbackContext.error("ERROR");

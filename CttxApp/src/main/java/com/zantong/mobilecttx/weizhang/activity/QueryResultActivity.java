@@ -103,8 +103,8 @@ public class QueryResultActivity extends AppCompatActivity
 //
         TitleSetting.getInstance().initTitle(QueryResultActivity.this, title, 0, "取消", null, "缴费须知");
 //        TitleSetting.getInstance().initTitle(IllegalViolation.this, title, 0, "取消", null, "");
-        mIllegalViolations = (Map<String, List<String>>) UserInfoRememberCtrl.readObject(this, PublicData.getInstance().IllegalViolationFlag);
-        mRspInfoBean = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(this, PublicData.getInstance().CarLocalFlag);
+        mIllegalViolations = (Map<String, List<String>>) UserInfoRememberCtrl.readObject(PublicData.getInstance().IllegalViolationFlag);
+        mRspInfoBean = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(PublicData.getInstance().CarLocalFlag);
 
         if (mIllegalViolations != null) {
             if (mIllegalViolations.containsKey(title)) {
@@ -179,7 +179,7 @@ public class QueryResultActivity extends AppCompatActivity
                 refreshing_title_notice.setVisibility(View.GONE);
             }
         }
-        mRspInfoBean = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(this, PublicData.getInstance().CarLocalFlag);
+        mRspInfoBean = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(PublicData.getInstance().CarLocalFlag);
         if (mRspInfoBean != null && mRspInfoBean.getUserCarsInfo().size() != 0) {
             for (int i = 0; i < mRspInfoBean.getUserCarsInfo().size(); i++) {
                 if (mRspInfoBean.getUserCarsInfo().get(i).getCarnum().equals(title)) {
@@ -211,7 +211,7 @@ public class QueryResultActivity extends AppCompatActivity
                 mIllegalViolations.put(title, mIllegalViolation);
             }
         }
-        UserInfoRememberCtrl.saveObject(this, PublicData.getInstance().IllegalViolationFlag, mIllegalViolations);
+        UserInfoRememberCtrl.saveObject(PublicData.getInstance().IllegalViolationFlag, mIllegalViolations);
 
         ViolationDTO violationDTO = new ViolationDTO();
         violationDTO.setCarnumtype(PublicData.getInstance().mHashMap.get("carnumtype").toString());
@@ -273,7 +273,7 @@ public class QueryResultActivity extends AppCompatActivity
                 for (int i = 0; i < mRspInfoBean.getUserCarsInfo().size(); i++) {
                     if (title.equals(mRspInfoBean.getUserCarsInfo().get(i).getCarnum())) {
                         mRspInfoBean.getUserCarsInfo().get(i).setViolationInfo(mAddVehicleBean.getRspInfo().getViolationInfo());
-                        UserInfoRememberCtrl.saveObject(this, PublicData.getInstance().CarLocalFlag, mRspInfoBean);
+                        UserInfoRememberCtrl.saveObject(PublicData.getInstance().CarLocalFlag, mRspInfoBean);
                     }
                 }
 

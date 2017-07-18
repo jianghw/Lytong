@@ -99,6 +99,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
      */
     private TextView mTvTitle;
     private ImageView mImgScan;
+
     /**
      * 扫罚单
      */
@@ -121,6 +122,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     private TextView mTvDrive;
     private ImageView mImgTrumpet;
     private ImageView mImgLabel;
+
     private MainScrollUpAdvertisementView mCustomGrapevine;
     private HorizontalCarViewPager mCustomViolation;
     /**
@@ -131,12 +133,12 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
      * 小喇叭数据
      */
     private List<HomeNotice> mHomeNotices = Collections.synchronizedList(new ArrayList<HomeNotice>());
+
     /**
      * 违章车adapter
      */
     private HorizontalCarViolationAdapter mCarViolationAdapter;
     private HomeMainActivity.MessageListener mHomeMainListener;
-
     private List<UserCarInfoBean> mUserCarInfoBeanList = new ArrayList<>();
 
     public static HomeUnimpededFragment newInstance() {
@@ -194,6 +196,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                 }, localImages)
                 .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
                 .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
+
         //小喇叭
         initScrollUp(mHomeNotices);
         //违章车辆
@@ -203,6 +206,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
     private void initView(View view) {
         mCustomConvenientBanner = (ConvenientBanner) view.findViewById(R.id.custom_convenientBanner);
+
         mTvMsgCount = (TextView) view.findViewById(R.id.tv_msg_count);
         mTvMsgCount.setOnClickListener(this);
         mImgMsg = (ImageView) view.findViewById(R.id.img_msg);
@@ -226,6 +230,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         mCustomGrapevine = (MainScrollUpAdvertisementView) view.findViewById(R.id.custom_grapevine);
         mCustomViolation = (HorizontalCarViewPager) view.findViewById(R.id.custom_violation);
 
+        //简单滑动冲突解决
         mCustomViolation.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

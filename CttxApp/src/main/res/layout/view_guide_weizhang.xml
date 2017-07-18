@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/home_lllegal_search"
@@ -26,7 +26,7 @@
                 android:layout_height="@dimen/ds_126"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:src="@mipmap/icon_viosearch" />
+                android:src="@mipmap/icon_viosearch"/>
 
             <TextView
                 style="@style/TextOpenTitleFont"
@@ -35,14 +35,14 @@
                 android:layout_marginTop="@dimen/ds_12"
                 android:text="违章查询"
                 android:textColor="@color/white"
-                android:textSize="@dimen/fs_48" />
+                android:textSize="@dimen/fs_48"/>
         </LinearLayout>
 
         <ImageView
             android:layout_width="@dimen/ds_150"
             android:layout_height="@dimen/ds_90"
             android:layout_marginLeft="@dimen/ds_90"
-            android:background="@mipmap/img_guide_arrow_left" />
+            android:background="@mipmap/img_guide_arrow_left"/>
 
     </LinearLayout>
 

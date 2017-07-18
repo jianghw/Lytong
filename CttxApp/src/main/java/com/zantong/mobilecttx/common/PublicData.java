@@ -92,12 +92,12 @@ public class PublicData {
         mNetLocationBean = null;
         SPUtils.getInstance().setUserPwd("");
 
-        UserInfoRememberCtrl.saveObject(mContext, null);
-        UserInfoRememberCtrl.saveObject(mContext, CarLocalFlag, null);
-        UserInfoRememberCtrl.saveObject(mContext, DefaultCarLocalFlag, null);
-        UserInfoRememberCtrl.saveObject(mContext, "jiayou", null);
-        UserInfoRememberCtrl.saveObject(mContext, "nianjian", null);
-        UserInfoRememberCtrl.saveObject(mContext, PublicData.getInstance().userID, null);
+        UserInfoRememberCtrl.saveObject(null);
+        UserInfoRememberCtrl.saveObject(CarLocalFlag, null);
+        UserInfoRememberCtrl.saveObject(DefaultCarLocalFlag, null);
+        UserInfoRememberCtrl.saveObject("jiayou", null);
+        UserInfoRememberCtrl.saveObject("nianjian", null);
+        UserInfoRememberCtrl.saveObject(PublicData.getInstance().userID, null);
 
         AccountRememberCtrl.nosaveDefaultNumber(mContext);
         AccountRememberCtrl.nosaveLoginAD(mContext);

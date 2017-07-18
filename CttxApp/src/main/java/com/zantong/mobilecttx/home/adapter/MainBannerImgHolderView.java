@@ -13,6 +13,7 @@ import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
+import com.zantong.mobilecttx.home.activity.CustomCordovaActivity;
 import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResult;
 import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
@@ -39,6 +40,7 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
         //你可以通过layout文件来创建，也可以像我一样用代码创建，不一定是Image，任何控件都可以进行翻页
         imageView = new ImageView(context);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
         return imageView;
     }
 
@@ -59,7 +61,10 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
                 PublicData.getInstance().webviewTitle = "广告";
                 PublicData.getInstance().isCheckLogin = false;
 
-                if (PublicData.getInstance().webviewUrl.contains("localActivity")) {
+                if (PublicData.getInstance().webviewUrl.contains("discount")
+                        || PublicData.getInstance().webviewUrl.contains("happysend")) {
+                    Act.getInstance().gotoIntent(mContext, CustomCordovaActivity.class);
+                } else if (PublicData.getInstance().webviewUrl.contains("localActivity")) {
                     if (PublicData.getInstance().loginFlag) {
                         GlobalConfig.getInstance().eventIdByUMeng(1);
                         getSignStatus();
@@ -70,6 +75,7 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
                     Act.getInstance().lauchIntentToLogin(mContext, FahrschuleActivity.class);
                 } else {
                     Act.getInstance().gotoIntent(mContext, BrowserActivity.class);
+
                     CarApiClient.commitAdClick(mContext, data.getId(), new CallBack<BaseResult>() {
                         @Override
                         public void onSuccess(BaseResult result) {

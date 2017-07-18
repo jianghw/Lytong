@@ -19,6 +19,7 @@ import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.activity.Codequery;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
+import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -156,6 +157,8 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
         TextView tvBrand = (TextView) view.findViewById(R.id.tv_motorcycle_brand);
 
         tvPlateNumber.setText(userCarInfoBean.getCarnum());
+        //小写转化为大写
+        tvPlateNumber.setTransformationMethod(new AllCapTransformationMethod());
 
         String carType = VehicleTypeTools.switchVehicleType(userCarInfoBean.getCarnumtype());
         tvType.setText(carType);

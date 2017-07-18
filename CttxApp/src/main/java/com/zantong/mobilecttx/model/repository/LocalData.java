@@ -44,20 +44,14 @@ public class LocalData {
     }
 
     BaseDTO initBaseDTO() {
-        Context context = weakReference.get();
         BaseDTO dto = new BaseDTO();
-        if (context != null) {
-            dto.setUsrId(strByEncryption(PublicData.getInstance().userID, true));
-        }
+        dto.setUsrId(strByEncryption(PublicData.getInstance().userID, true));
         return dto;
     }
 
     public MessageDetailDTO initMessageDetailDTO() {
-        Context context = weakReference.get();
         MessageDetailDTO dto = new MessageDetailDTO();
-        if (context != null) {
-            dto.setUsrId(strByEncryption(PublicData.getInstance().userID, true));
-        }
+        dto.setUsrId(strByEncryption(PublicData.getInstance().userID, true));
         return dto;
     }
 
@@ -86,10 +80,7 @@ public class LocalData {
      * @return
      */
     public String getStrByEncryption(String string) {
-        Context context = weakReference.get();
-        if (context != null) {
-            string = RSAUtils.strByEncryption(string, true);
-        }
+        string = RSAUtils.strByEncryption(string, true);
         return string;
     }
 
@@ -99,23 +90,19 @@ public class LocalData {
      * @return
      */
     public RequestHeadDTO initRequestHeadDTO() {
-        Context context = weakReference.get();
+
         RequestHeadDTO dto = new RequestHeadDTO();
-        if (context != null) {
-            dto.setConsumerId("04");
-            dto.setRequestDate(DateUtils.getDate());
-            dto.setRequestTime(DateUtils.getTime());
-            dto.setConsumerSeqNo(StringUtils.getRandomStr());
-            dto.setDvcToken(Tools.getIMEI());
-        }
+
+        dto.setConsumerId("04");
+        dto.setRequestDate(DateUtils.getDate());
+        dto.setRequestTime(DateUtils.getTime());
+        dto.setConsumerSeqNo(StringUtils.getRandomStr());
+        dto.setDvcToken(Tools.getIMEI());
         return dto;
     }
 
     public void saveLicenseFileNumDTO(LicenseFileNumDTO licenseFileNumDTO) {
-        Context context = weakReference.get();
-        if (context != null) {
-            SPUtils.getInstance().saveLicenseFileNumDTO(licenseFileNumDTO);
-        }
+        SPUtils.getInstance().saveLicenseFileNumDTO(licenseFileNumDTO);
     }
 
     /**
@@ -124,11 +111,8 @@ public class LocalData {
      * @return LoginInfoBean.RspInfoBean
      */
     public LoginInfoBean.RspInfoBean readObjectLoginInfoBean() {
-        Context context = weakReference.get();
-        LoginInfoBean.RspInfoBean rspInfoBean = null;
-        if (context != null) {
-            rspInfoBean = (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject(context);
-        }
+        LoginInfoBean.RspInfoBean rspInfoBean;
+        rspInfoBean = (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject();
         return rspInfoBean;
     }
 
@@ -146,16 +130,13 @@ public class LocalData {
         PublicData.getInstance().filenum = rspInfoBean.getFilenum();
         PublicData.getInstance().loginFlag = true;
 
-        Context context = weakReference.get();
-        if (context != null) {
-            OpenQueryBean.RspInfoBean.UserCarsInfoBean mUserCarsInfoBean =
-                    (OpenQueryBean.RspInfoBean.UserCarsInfoBean)
-                            UserInfoRememberCtrl.readObject(
-                                    context, PublicData.getInstance().DefaultCarLocalFlag);
-            if (mUserCarsInfoBean != null) {
-                PublicData.getInstance().defaultCar = true;
-                PublicData.getInstance().defaultCarNumber = mUserCarsInfoBean.getCarnum();
-            }
+        OpenQueryBean.RspInfoBean.UserCarsInfoBean mUserCarsInfoBean =
+                (OpenQueryBean.RspInfoBean.UserCarsInfoBean)
+                        UserInfoRememberCtrl.readObject(
+                                PublicData.getInstance().DefaultCarLocalFlag);
+        if (mUserCarsInfoBean != null) {
+            PublicData.getInstance().defaultCar = true;
+            PublicData.getInstance().defaultCarNumber = mUserCarsInfoBean.getCarnum();
         }
     }
 
@@ -165,11 +146,8 @@ public class LocalData {
      * @return
      */
     public String readLoginPassword() {
-        Context context = weakReference.get();
-        String pwd = null;
-        if (context != null) {
-            pwd = (String) UserInfoRememberCtrl.readObject(context, UserInfoRememberCtrl.USERPD);
-        }
+        String pwd;
+        pwd = (String) UserInfoRememberCtrl.readObject(UserInfoRememberCtrl.USERPD);
         return pwd;
     }
 
@@ -179,11 +157,8 @@ public class LocalData {
      * @param result
      */
     public void saveLoginInfoRepeat(LoginInfoBean result) {
-        Context context = weakReference.get();
-        if (context != null) {
-            initGlobalLoginInfo(result.getRspInfo());
-            UserInfoRememberCtrl.saveObject(context, UserInfoRememberCtrl.USERDEVICE, PublicData.getInstance().imei);
-            UserInfoRememberCtrl.saveObject(context, result.getRspInfo());
-        }
+        initGlobalLoginInfo(result.getRspInfo());
+        UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, PublicData.getInstance().imei);
+        UserInfoRememberCtrl.saveObject(result.getRspInfo());
     }
 }

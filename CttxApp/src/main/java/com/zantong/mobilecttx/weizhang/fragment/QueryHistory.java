@@ -162,7 +162,7 @@ public class QueryHistory extends Fragment implements QueryHistoryAdapter.OnRecy
                     PublicData.getInstance().mQueryHistoryBean.getQueryCar().addFirst(mQueryCarBean);
                 }
 
-                UserInfoRememberCtrl.saveObject(getContext(), "QueryHistory", PublicData.getInstance().mQueryHistoryBean);
+                UserInfoRememberCtrl.saveObject("QueryHistory", PublicData.getInstance().mQueryHistoryBean);
                 break;
         }
     }

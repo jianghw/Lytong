@@ -17,8 +17,6 @@ import com.zantong.mobilecttx.utils.DensityUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
 
-import cn.qqtheme.framework.util.log.LogUtils;
-
 /**
  * 关于我们
  * @author Sandy
@@ -34,8 +32,10 @@ public class GuideActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         tintManager = new SystemBarTintManager(this);
         setContentView(R.layout.activity_guide);
+
         mLayout = (RelativeLayout)findViewById(R.id.activity_guide_layout);
         mLayout.setPadding(0, tintManager.getConfig().getStatusBarHeight(), 0, 0);
+
         if (PublicData.getInstance().GUIDE_TYPE == 0){
             guidePaiZhao();
         }else if(PublicData.getInstance().GUIDE_TYPE == 1){
@@ -47,8 +47,6 @@ public class GuideActivity extends FragmentActivity {
         }
 
     }
-
-
 
     private void guidePaiZhao() {
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -78,7 +76,7 @@ public class GuideActivity extends FragmentActivity {
         View mImgLayout =  view.findViewById(R.id.view_guide_weizhang_layout);
         TextView content = (TextView)view.findViewById(R.id.view_guide_weizhang_content);
         TextView btn = (TextView)view.findViewById(R.id.view_guide_weizhang_ok);
-        LogUtils.i("分辨率--------"+DensityUtils.getScreenWidth(this));
+
         if(DensityUtils.getScreenWidth(this) == 720){
             mImgLayout.setPadding(40,0,0,66);
         }if(DensityUtils.getScreenWidth(this) == 768){
@@ -87,7 +85,6 @@ public class GuideActivity extends FragmentActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 mImgLayout.setPadding(42,0,0,24);
             }else{
-
                 mImgLayout.setPadding(42,0,0,99);
             }
         }
@@ -101,8 +98,6 @@ public class GuideActivity extends FragmentActivity {
         });
         mLayout.addView(view);
     }
-
-
 
     protected void guideXingShiZheng() {
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -156,9 +151,7 @@ public class GuideActivity extends FragmentActivity {
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
 
-        }
         return false;
     }
 }

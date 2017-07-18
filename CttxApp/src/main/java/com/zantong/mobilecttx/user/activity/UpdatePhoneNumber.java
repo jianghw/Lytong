@@ -230,7 +230,7 @@ public class UpdatePhoneNumber extends BaseMvpActivity<IBaseView, UpdatePhoneNum
             case 2:
                 if(PublicData.getInstance().success.equals(((UpdateInfo) object).getSYS_HEAD().getReturnCode())){
                     PublicData.getInstance().mLoginInfoBean.setPhoenum(edit_phone_number.getText().toString());
-                    UserInfoRememberCtrl.saveObject(UpdatePhoneNumber.this, PublicData.getInstance().mLoginInfoBean);
+                    UserInfoRememberCtrl.saveObject(PublicData.getInstance().mLoginInfoBean);
                     finish();
                 }
                 break;

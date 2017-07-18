@@ -143,7 +143,7 @@ public class IllegalViolationPresenter extends BasePresenter<IBaseView> implemen
                         AccountRememberCtrl.saveDefaultNumber(mQueryResultActivity, carNumber);
                     }
                     EventBus.getDefault().post(new CarInfoEvent(true));
-                    mRspInfoBean = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(mQueryResultActivity, PublicData.getInstance().CarLocalFlag);
+                    mRspInfoBean = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(PublicData.getInstance().CarLocalFlag);
                     OpenQueryBean.RspInfoBean.UserCarsInfoBean mUserCarsInfoBean = new OpenQueryBean.RspInfoBean.UserCarsInfoBean();
                     mUserCarsInfoBean.setCarnum(carNumber);
                     mUserCarsInfoBean.setCarnumtype(carNumberType);
@@ -154,7 +154,7 @@ public class IllegalViolationPresenter extends BasePresenter<IBaseView> implemen
                     mUserCarsInfoBean.setViolationflag("0");
                     mUserCarsInfoBean.setViolationInfo(ViolationInfo);
                     mRspInfoBean.getUserCarsInfo().add(mUserCarsInfoBean);
-                    UserInfoRememberCtrl.saveObject(mQueryResultActivity, PublicData.getInstance().CarLocalFlag, mRspInfoBean);
+                    UserInfoRememberCtrl.saveObject(PublicData.getInstance().CarLocalFlag, mRspInfoBean);
 
                     mQueryResultActivity.updateView(clazz, index);
                 }else{

@@ -1,0 +1,8 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="custom_bar_height">25dp</dimen>
+
+    <dimen name="bar_marginTop">32dp</dimen>
+    <dimen name="bar_count_marginTop">28dp</dimen>
+</resources>

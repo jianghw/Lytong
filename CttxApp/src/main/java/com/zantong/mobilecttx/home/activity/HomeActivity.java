@@ -65,15 +65,15 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        LoginInfoBean.RspInfoBean user = (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject(getApplicationContext());
+        LoginInfoBean.RspInfoBean user = (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject();
         if (null != user) {
             PublicData.getInstance().userID = user.getUsrid();
             PublicData.getInstance().loginFlag = true;
             PublicData.getInstance().filenum = user.getFilenum();
             PublicData.getInstance().getdate = user.getGetdate();
             PublicData.getInstance().mLoginInfoBean = user;
-            if (UserInfoRememberCtrl.readObject(this, PublicData.getInstance().NOTICE_STATE) != null) {
-                PublicData.getInstance().updateMsg = (boolean) UserInfoRememberCtrl.readObject(getApplicationContext(), PublicData.getInstance().NOTICE_STATE);
+            if (UserInfoRememberCtrl.readObject(PublicData.getInstance().NOTICE_STATE) != null) {
+                PublicData.getInstance().updateMsg = (boolean) UserInfoRememberCtrl.readObject(PublicData.getInstance().NOTICE_STATE);
             }
             if (!Tools.isStrEmpty(AccountRememberCtrl.getDefaultNumber(this))) {
                 PublicData.getInstance().defaultCar = true;

@@ -72,7 +72,6 @@ import com.zantong.mobilecttx.utils.PullToRefreshLayout;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.Des3;
@@ -108,6 +107,7 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
@@ -702,7 +702,7 @@ public class HomeFragment extends BaseExtraFragment {
         try {
             List<HomeNotice> listHomeNotice = new ArrayList<HomeNotice>();
             List<HomeNotice> listCommom = (List<HomeNotice>) UserInfoRememberCtrl
-                    .readObject(getActivity(), key);
+                    .readObject(key);
             if (listCommom != null) {
                 for (HomeNotice homeNot : listCommom) {
                     if (homeNot.getDesc().equals(homeNotice.getDesc())
@@ -712,7 +712,7 @@ public class HomeFragment extends BaseExtraFragment {
                     }
                     listHomeNotice.add(homeNot);
                 }
-                UserInfoRememberCtrl.saveObject(getActivity(), key, listHomeNotice);
+                UserInfoRememberCtrl.saveObject(key, listHomeNotice);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -726,9 +726,9 @@ public class HomeFragment extends BaseExtraFragment {
         List<HomeNotice> listHomeNotice = new ArrayList<HomeNotice>();
         try {
             List<HomeNotice> listNianJian = (List<HomeNotice>) UserInfoRememberCtrl
-                    .readObject(getActivity(), "nianjian");
+                    .readObject("nianjian");
             List<HomeNotice> listJiaYou = (List<HomeNotice>) UserInfoRememberCtrl
-                    .readObject(getActivity(), "youjia");
+                    .readObject("youjia");
             if (listNianJian != null) {
                 listHomeNotice.addAll(listByDate("nianjian", listNianJian));
                 LogUtils.i("meg", "===========listNianJian=========>" + listNianJian.size());
@@ -741,7 +741,7 @@ public class HomeFragment extends BaseExtraFragment {
             LogUtils.i("meg", "===========listJiaYou=========>");
             if (PublicData.getInstance().loginFlag) {
                 List<HomeNotice> listWeiZahng = (List<HomeNotice>) UserInfoRememberCtrl
-                        .readObject(getActivity(), PublicData.getInstance().userID);
+                        .readObject(PublicData.getInstance().userID);
                 if (listWeiZahng != null) {
                     listHomeNotice.addAll(listByDate(PublicData.getInstance().userID, listWeiZahng));
                     LogUtils.i("meg", "===========listWeiZahng=========>" + listWeiZahng.size());
@@ -872,7 +872,7 @@ public class HomeFragment extends BaseExtraFragment {
                     noticeList.add(homeNotice);
                 }
             }
-            UserInfoRememberCtrl.saveObject(getActivity(), key, noticeList);
+            UserInfoRememberCtrl.saveObject(key, noticeList);
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -128,7 +128,7 @@ public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePre
                 if (PublicData.getInstance().success.equals(((UpdateInfo) object).getSYS_HEAD().getReturnCode())) {
                     liyingreg();
                     PublicData.getInstance().mLoginInfoBean.setNickname(nickNameEdit.getText().toString());
-                    UserInfoRememberCtrl.saveObject(UpdateNickName.this, PublicData.getInstance().mLoginInfoBean);
+                    UserInfoRememberCtrl.saveObject(PublicData.getInstance().mLoginInfoBean);
                     finish();
                 }
 

@@ -254,7 +254,7 @@ public class QueryFragment extends Fragment implements ModelView {
             PublicData.getInstance().mQueryHistoryBean.getQueryCar().addFirst(mQueryCarBean);
         }
 
-        UserInfoRememberCtrl.saveObject(getActivity(), "QueryHistory", PublicData.getInstance().mQueryHistoryBean);
+        UserInfoRememberCtrl.saveObject("QueryHistory", PublicData.getInstance().mQueryHistoryBean);
 
     }
 

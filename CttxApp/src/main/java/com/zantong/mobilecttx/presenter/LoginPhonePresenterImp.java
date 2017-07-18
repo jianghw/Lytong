@@ -14,7 +14,6 @@ import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.SmsBean;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
@@ -27,6 +26,7 @@ import org.json.JSONObject;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 
 
@@ -136,16 +136,20 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
                 this.mLoginInfoBean.getRspInfo().setCtfnum(Des3.decode(this.mLoginInfoBean.getRspInfo().getCtfnum()));
                 this.mLoginInfoBean.getRspInfo().setRecdphoe(Des3.decode(this.mLoginInfoBean.getRspInfo().getRecdphoe()));
 
-                UserInfoRememberCtrl.saveObject(mLoginActivity, UserInfoRememberCtrl.USERPD, mLoginActivity.mapData().get("pswd"));
-                UserInfoRememberCtrl.saveObject(mLoginActivity, UserInfoRememberCtrl.USERDEVICE, PublicData.getInstance().imei);
-                UserInfoRememberCtrl.saveObject(mLoginActivity, this.mLoginInfoBean.getRspInfo());
+                UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERPD, mLoginActivity.mapData().get("pswd"));
+                UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, PublicData.getInstance().imei);
+                UserInfoRememberCtrl.saveObject(this.mLoginInfoBean.getRspInfo());
 
                 LogUtils.i("usrid:" + this.mLoginInfoBean.getRspInfo().getUsrid());
+
                 PublicData.getInstance().mLoginInfoBean = this.mLoginInfoBean.getRspInfo();
+
                 SPUtils.getInstance().setLoginInfoBean(PublicData.getInstance().mLoginInfoBean);
+
                 PublicData.getInstance().userID = this.mLoginInfoBean.getRspInfo().getUsrid();
                 PublicData.getInstance().filenum = this.mLoginInfoBean.getRspInfo().getFilenum();
                 PublicData.getInstance().getdate = this.mLoginInfoBean.getRspInfo().getGetdate();
+
                 PublicData.getInstance().loginFlag = true;
                 mLoginActivity.addLoginInfo(this.mLoginInfoBean);
                 EventBus.getDefault().post(new UpdateCarInfoEvent(true));

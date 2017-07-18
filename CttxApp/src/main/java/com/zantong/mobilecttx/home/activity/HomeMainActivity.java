@@ -22,13 +22,13 @@ import com.zantong.mobilecttx.utils.AccountRememberCtrl;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.Tools;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 
 import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
+import cn.qqtheme.framework.util.ui.StatusBarUtils;
 import cn.qqtheme.framework.widght.tablebottom.UiTableBottom;
 
 
@@ -55,6 +55,11 @@ public class HomeMainActivity extends BaseJxActivity {
 
     }
 
+    @Override
+    protected void initStatusBarColor() {
+        StatusBarUtils.setTranslucentForImageViewInFragment(this, 38, null);
+    }
+
     /**
      * 不要基础title栏
      */
@@ -72,15 +77,14 @@ public class HomeMainActivity extends BaseJxActivity {
         mFrameLayout = (FrameLayout) view.findViewById(R.id.content);
         mCustomBottom = (UiTableBottom) view.findViewById(R.id.custom_bottom);
 
-
         initLoginInfo();
         initBottomTable();
 
         //是否显示引导页面
-        if (!SPUtils.getInstance().getGuideSaoFaDan()) {
-            PublicData.getInstance().GUIDE_TYPE = 0;
-            Act.getInstance().gotoIntent(this, GuideActivity.class);
-        }
+//        if (!SPUtils.getInstance().getGuideSaoFaDan()) {
+//            PublicData.getInstance().GUIDE_TYPE = 0;
+//            Act.getInstance().gotoIntent(this, GuideActivity.class);
+//        }
 
         //登录信息
         if (PublicData.getInstance().loginFlag) liyingreg();
@@ -90,19 +94,22 @@ public class HomeMainActivity extends BaseJxActivity {
      * 登陆信息
      */
     public void initLoginInfo() {
-        LoginInfoBean.RspInfoBean user = (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject(getApplicationContext());
+        LoginInfoBean.RspInfoBean user =
+                (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject();
         if (null != user) {
             PublicData.getInstance().userID = user.getUsrid();
             PublicData.getInstance().loginFlag = true;
             PublicData.getInstance().filenum = user.getFilenum();
             PublicData.getInstance().getdate = user.getGetdate();
             PublicData.getInstance().mLoginInfoBean = user;
-            if (UserInfoRememberCtrl.readObject(getApplicationContext(), PublicData.getInstance().NOTICE_STATE) != null) {
-                PublicData.getInstance().updateMsg = (boolean) UserInfoRememberCtrl.readObject(getApplicationContext(), PublicData.getInstance().NOTICE_STATE);
+            if (UserInfoRememberCtrl.readObject(PublicData.getInstance().NOTICE_STATE) != null) {
+                PublicData.getInstance().updateMsg =
+                        (boolean) UserInfoRememberCtrl.readObject(PublicData.getInstance().NOTICE_STATE);
             }
-            if (!Tools.isStrEmpty(AccountRememberCtrl.getDefaultNumber(this))) {
+            if (!Tools.isStrEmpty(AccountRememberCtrl.getDefaultNumber(getApplicationContext()))) {
                 PublicData.getInstance().defaultCar = true;
-                PublicData.getInstance().defaultCarNumber = AccountRememberCtrl.getDefaultNumber(getApplicationContext());
+                PublicData.getInstance().defaultCarNumber =
+                        AccountRememberCtrl.getDefaultNumber(getApplicationContext());
             }
         }
     }
@@ -132,6 +139,8 @@ public class HomeMainActivity extends BaseJxActivity {
     }
 
     private void initFragment() {
+        initStatusBarColor();
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (mCurBottomPosition) {
             case 0:
@@ -186,15 +195,15 @@ public class HomeMainActivity extends BaseJxActivity {
     private void liyingreg() {
         LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
         try {
-            String phone = RSAUtils.strByEncryptionLiYing(PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
+            String phone = RSAUtils.strByEncryptionLiYing(
+                    PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
             SHATools sha = new SHATools();
-            String pwd = RSAUtils.strByEncryptionLiYing(
-                    SHATools.hexString(
-                            sha.eccryptSHA1(SPUtils.getInstance().getUserPwd())), true);
+            String pwd = RSAUtils.strByEncryptionLiYing(SHATools.hexString(
+                    sha.eccryptSHA1(SPUtils.getInstance().getUserPwd())), true);
             liYingRegDTO.setPhoenum(phone);
             liYingRegDTO.setPswd(pwd);
-            liYingRegDTO.setUsrid(
-                    RSAUtils.strByEncryptionLiYing(PublicData.getInstance().mLoginInfoBean.getUsrid(), true));
+            liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(
+                    PublicData.getInstance().mLoginInfoBean.getUsrid(), true));
         } catch (Exception e) {
             e.printStackTrace();
         }

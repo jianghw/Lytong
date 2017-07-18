@@ -197,10 +197,10 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                     SPUtils.getInstance().setJifenPush(isChecked);
                     PublicData.getInstance().updateMsg = isChecked;
                     if (isChecked) {
-                        UserInfoRememberCtrl.saveObject(getApplicationContext(), PublicData.getInstance().NOTICE_STATE, true);//已开启
+                        UserInfoRememberCtrl.saveObject(PublicData.getInstance().NOTICE_STATE, true);//已开启
                         startService(intent);
                     } else {
-                        UserInfoRememberCtrl.saveObject(getApplicationContext(), PublicData.getInstance().NOTICE_STATE, false);//已关闭
+                        UserInfoRememberCtrl.saveObject(PublicData.getInstance().NOTICE_STATE, false);//已关闭
                         stopService(intent);
                         ToastUtils.showShort(getApplicationContext(), "记分周期提醒已关闭");
                     }
@@ -613,7 +613,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
                     picker.dismiss();
                     PublicData.getInstance().mLoginInfoBean.setGetdate(date);
-                    UserInfoRememberCtrl.saveObject(SettingActivity.this, PublicData.getInstance().mLoginInfoBean);
+                    UserInfoRememberCtrl.saveObject(PublicData.getInstance().mLoginInfoBean);
                 }
             }
 

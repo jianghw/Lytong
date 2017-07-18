@@ -743,7 +743,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
     private void clickUpdateData(String key, HomeNotice homeNotice) {
         try {
             List<HomeNotice> listHomeNotice = new ArrayList<HomeNotice>();
-            List<HomeNotice> listCommom = (List<HomeNotice>) UserInfoRememberCtrl.readObject(getActivity(), key);
+            List<HomeNotice> listCommom = (List<HomeNotice>) UserInfoRememberCtrl.readObject(key);
             if (listCommom != null) {
                 for (HomeNotice homeNot : listCommom) {
                     if (homeNot.getDesc().equals(homeNotice.getDesc())
@@ -753,7 +753,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                     }
                     listHomeNotice.add(homeNot);
                 }
-                UserInfoRememberCtrl.saveObject(getActivity(), key, listHomeNotice);
+                UserInfoRememberCtrl.saveObject(key, listHomeNotice);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -768,9 +768,9 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
         List<HomeNotice> listHomeNotice = new ArrayList<HomeNotice>();
         try {
             List<HomeNotice> listNianJian = (List<HomeNotice>) UserInfoRememberCtrl
-                    .readObject(getActivity(), "nianjian");
+                    .readObject("nianjian");
             List<HomeNotice> listJiaYou = (List<HomeNotice>) UserInfoRememberCtrl
-                    .readObject(getActivity(), "youjia");
+                    .readObject("youjia");
             if (listNianJian != null) {
                 listHomeNotice.addAll(listByDate("nianjian", listNianJian));
                 LogUtils.i("meg", "===========listNianJian=========>" + listNianJian.size());
@@ -782,7 +782,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
 
             if (PublicData.getInstance().loginFlag) {
                 List<HomeNotice> listWeiZahng = (List<HomeNotice>) UserInfoRememberCtrl
-                        .readObject(getActivity(), PublicData.getInstance().userID);
+                        .readObject(PublicData.getInstance().userID);
                 if (listWeiZahng != null) {
                     listHomeNotice.addAll(listByDate(PublicData.getInstance().userID, listWeiZahng));
                 }
@@ -807,7 +807,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                     noticeList.add(homeNotice);
                 }
             }
-            UserInfoRememberCtrl.saveObject(getActivity(), key, noticeList);
+            UserInfoRememberCtrl.saveObject(key, noticeList);
         } catch (ParseException e) {
             e.printStackTrace();
         }
