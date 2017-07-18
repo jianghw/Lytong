@@ -97,12 +97,21 @@
             android:name=".home.activity.GuideCTActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+        <!-- 主页，这个很吊呀 -->
+        <activity
+            android:name=".home.activity.HomeMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+
         <activity
             android:name=".weizhang.activity.QueryActivity"
             android:screenOrientation="portrait"/>
+        <!-- 登陆页面 -->
         <activity
             android:name=".user.activity.LoginActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".common.Demo"
             android:screenOrientation="portrait"
@@ -220,12 +229,6 @@
             android:name=".common.activity.BrowserActivity"
             android:screenOrientation="portrait"/>
 
-        <!-- 主页，这个很吊呀 -->
-        <activity
-            android:name=".home.activity.HomeMainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
@@ -364,7 +367,7 @@
             android:name=".card.activity.ApplyCardSecondActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
-        <!-- 申办畅通卡 -->
+        <!-- 申办畅通卡 第一页面 -->
         <activity
             android:name=".card.activity.ApplyCardFirstActivity"
             android:screenOrientation="portrait"/>

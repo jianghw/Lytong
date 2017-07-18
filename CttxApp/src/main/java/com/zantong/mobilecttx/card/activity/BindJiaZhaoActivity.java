@@ -77,6 +77,7 @@ public class BindJiaZhaoActivity extends BaseMvpActivity<IBaseView, HelpPresente
     @Override
     public void initView() {
         setTitleText("绑定畅通卡");
+
 //        UiHelpers.setTextViewIcon(this, getEnsureView(), R.mipmap.icon_add_car_camera,
 //                R.dimen.ds_60,
 //                R.dimen.ds_48, UiHelpers.DRAWABLE_RIGHT);

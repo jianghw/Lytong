@@ -87,6 +87,7 @@ public class SurePayFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.sure_pay_popupwindows, container, false);
+
         ButterKnife.bind(this, mView);
         transaction = ((ViolationDetails) mContext).getSurePayFragmentManager().beginTransaction();
         String bitNumber = mViolationDetails.mapData().get("violationnum").substring(6,7);

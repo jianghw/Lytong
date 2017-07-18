@@ -32,7 +32,6 @@ import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.ReadFfile;
 import com.zantong.mobilecttx.utils.SPUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.dialog.NetLocationDialog;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.widght.CttxEditText;
@@ -49,6 +48,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.util.FileUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -402,7 +402,6 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
                     mEmpNum = result.getData().getEmpNum();
                     //TODO 手动不显示
 //                    mYingXiaoCode.setContentText(mEmpNum);
-
                     quickApplyCardDTO.setDscode(mEmpNum);
                     quickApplyCardDTO.setDscodegs(mEmpNum);
                 }

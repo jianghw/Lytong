@@ -16,7 +16,6 @@ public interface ISplashService {
     /**
      * 40.app启动图片获取
      */
-
     @GET("start/getPic")
     Observable<StartPicResult> startGetPic(@Query("picNum") String picNum);
 }

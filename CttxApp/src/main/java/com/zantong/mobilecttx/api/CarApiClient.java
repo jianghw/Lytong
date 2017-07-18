@@ -284,7 +284,6 @@ public class CarApiClient extends BaseApiClient {
                 context, callback, BaseResult.class);
 //        post(context, "http://139.196.183.121:8081/february/signUpActivity", dto, result);
         post(context, getUrl("february/signUpActivity"), dto, result);
-
     }
 
     public static void getCouponList(Context context, CouponDTO dto, CallBack<CouponResult> callback) {

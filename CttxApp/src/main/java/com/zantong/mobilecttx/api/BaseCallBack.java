@@ -48,7 +48,9 @@ public class BaseCallBack<T> implements Callback {
             try {
                 String reader = response.body().string();
                 PublicData.getInstance().mHashMap.put("htmlResponse", reader);
+
                 LogUtils.i("reader===" + reader);
+
                 if (!TextUtils.isEmpty(reader)) {
                     T t = gson.fromJson(reader, clazz);
                     BaseResult result = (BaseResult) t;

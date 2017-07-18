@@ -32,9 +32,9 @@ public class RetrofitFactory {
                 return BuildConfig.APP_URL;
             case 3:
                 return BuildConfig.BASE_URL;
-            case 4:
+            case 4://后台开发人员本地调试接口
                 return "http://192.168.1.127:80/";
-            case 5:
+            case 5://拍照扫描上传接口
                 return "http://liyingtong.com:8080/";
             default:
                 return "http://192.168.1.147:80/";
