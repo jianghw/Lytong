@@ -13,6 +13,8 @@ import com.zantong.mobilecttx.interf.IOrderDetailContract;
 import com.zantong.mobilecttx.order.bean.OrderDetailBean;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
 import com.zantong.mobilecttx.presenter.order.OrderDetailPresenter;
+import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
+import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.text.DecimalFormat;
 
@@ -115,6 +117,7 @@ public class OrderDetailActivity extends BaseJxActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_query:
+                Act.getInstance().gotoIntent(this, ProblemFeedbackActivity.class);
                 break;
             default:
                 break;

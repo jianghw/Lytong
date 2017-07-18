@@ -142,7 +142,7 @@ public class GetBonusActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
     private void getCode() {
         String contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         if (PublicData.getInstance().loginFlag) {
-            contentString = "http://liyingtong.com:8081/h5/share/share.html?phoneNum="
+            contentString = "http://api.liyingtong.com/h5/share/share.html?phoneNum="
                     + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
@@ -219,7 +219,7 @@ public class GetBonusActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
 
         WXWebpageObject webpage = new WXWebpageObject();
         if (PublicData.getInstance().loginFlag) {
-            webpage.webpageUrl = "http://liyingtong.com:8081/h5/share/share.html?phoneNum="
+            webpage.webpageUrl = "http://api.liyingtong.com/h5/share/share.html?phoneNum="
                     + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";

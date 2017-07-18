@@ -43,6 +43,7 @@ public class QueryActivity extends FragmentActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.query_activity);
+
         ButterKnife.bind(this);
         StateBarSetting.settingBar(this);
         PublicData.getInstance().mQueryHistoryBean = (QueryHistoryBean) UserInfoRememberCtrl.readObject("QueryHistory");

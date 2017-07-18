@@ -10,7 +10,8 @@
         android:layout_width="@dimen/ds_45"
         android:layout_height="@dimen/ds_45"
         android:layout_gravity="right"
-        android:layout_margin="@dimen/ds_60"
+        android:layout_marginTop="@dimen/ds_75"
+        android:layout_marginRight="@dimen/ds_60"
         android:src="@mipmap/btn_close"/>
 
     <TextView
@@ -27,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/ds_45"
         android:layout_marginTop="@dimen/ds_45"
-        android:text="你所用来支付的银行卡。"
+        android:text="请关注“畅通卡车友会”公众号"
         android:textColor="@color/colorTvGray_80"
         android:textSize="@dimen/fs_14sp"/>
 </LinearLayout>

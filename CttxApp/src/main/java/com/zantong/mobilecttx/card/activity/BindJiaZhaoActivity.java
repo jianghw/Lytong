@@ -26,6 +26,7 @@ import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
+import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
@@ -202,8 +203,19 @@ public class BindJiaZhaoActivity extends BaseMvpActivity<IBaseView, HelpPresente
             ToastUtils.showShort(this, "手机号码不可为空");
             return;
         }
+
+        if (!ValidateUtils.isIdCard(licenseno)) {
+            ToastUtils.showShort(this, "身份证号码格式不正确");
+            return;
+        }
+
         if (fileNum.length() != 12) {
             ToastUtils.showShort(this, "请输入12位正确驾档编号");
+            return;
+        }
+
+        if (!ValidateUtils.isMobile(phone)) {
+            ToastUtils.showShort(this, "手机号码格式不正确");
             return;
         }
 

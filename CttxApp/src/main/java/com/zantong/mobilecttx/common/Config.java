@@ -49,8 +49,8 @@ public class Config {
     public static final String ERROR_PARSER_MSG = "服务器繁忙,请您稍后再试";
     public static final String ERROR_IO_MSG = "系统繁忙，请您稍后再试";
     public static final String ERROR_NET_MSG = "请检查您的网络设置";
-    public static final String UPDATEVERSION_URL = "http://liyingtong.com:8081/h5/updateVersion/updateVersion.html";
-    public static final String HOME_NOTICE_URL = "http://liyingtong.com:8081/h5/price_change/oilprice_message.html";
+    public static final String UPDATEVERSION_URL = "http://api.liyingtong.com/h5/updateVersion/updateVersion.html";
+    public static final String HOME_NOTICE_URL = "http://api.liyingtong.com/h5/price_change/oilprice_message.html";
     //	public static final String HOME_NOTICE_URL = "http://test.w1buy.cn:8081/h5/price_change/oilprice_message.html";
 //	public static final String HOME_CAR_WASH_URL = "http://test.w1buy.cn:8081/h5/car_wash/car_wash.html";
     public static final String HOME_CAR_WASH_URL = BuildConfig.CAR_MANGER_URL+"h5/car_wash/car_wash.html";

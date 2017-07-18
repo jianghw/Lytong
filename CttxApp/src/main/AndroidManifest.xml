@@ -103,10 +103,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-
+        <!--旧版 违章查询-->
         <activity
             android:name=".weizhang.activity.QueryActivity"
             android:screenOrientation="portrait"/>
+
         <!-- 登陆页面 -->
         <activity
             android:name=".user.activity.LoginActivity"

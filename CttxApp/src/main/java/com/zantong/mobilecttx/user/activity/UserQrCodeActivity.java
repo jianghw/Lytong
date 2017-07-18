@@ -74,7 +74,7 @@ public class UserQrCodeActivity extends BaseMvpActivity<IBaseView, HelpPresenter
     private void getCode() {
         String contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         if (PublicData.getInstance().loginFlag){
-            contentString = "http://liyingtong.com:8081/h5/share/share.html?phoneNum="
+            contentString = "http://api.liyingtong.com/h5/share/share.html?phoneNum="
                     + Des3.decode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
         }else{
             contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
