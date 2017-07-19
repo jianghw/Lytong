@@ -1,5 +1,7 @@
 package com.zantong.mobilecttx.utils;
 
+import android.text.TextUtils;
+
 import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,7 +12,9 @@ import java.util.regex.Pattern;
  * 时间：2016/7/25 17:31
  */
 public class AmountUtils {
-    /**金额为分的格式 */
+    /**
+     * 金额为分的格式
+     */
     public static final String CURRENCY_FEN_REGEX = "\\-?[0-9]+";
 
     /**
@@ -20,35 +24,35 @@ public class AmountUtils {
      * @return
      * @throws Exception
      */
-    public static String changeF2Y(Long amount) throws Exception{
-        if(!amount.toString().matches(CURRENCY_FEN_REGEX)) {
+    public static String changeF2Y(Long amount) throws Exception {
+        if (!amount.toString().matches(CURRENCY_FEN_REGEX)) {
             throw new Exception("金额格式有误");
         }
 
         int flag = 0;
         String amString = amount.toString();
-        if(amString.charAt(0)=='-'){
+        if (amString.charAt(0) == '-') {
             flag = 1;
             amString = amString.substring(1);
         }
         StringBuffer result = new StringBuffer();
-        if(amString.length()==1){
+        if (amString.length() == 1) {
             result.append("0.0").append(amString);
-        }else if(amString.length() == 2){
+        } else if (amString.length() == 2) {
             result.append("0.").append(amString);
-        }else{
-            String intString = amString.substring(0,amString.length()-2);
-            for(int i=1; i<=intString.length();i++){
-                if( (i-1)%3 == 0 && i !=1){
+        } else {
+            String intString = amString.substring(0, amString.length() - 2);
+            for (int i = 1; i <= intString.length(); i++) {
+                if ((i - 1) % 3 == 0 && i != 1) {
                     result.append(",");
                 }
-                result.append(intString.substring(intString.length()-i,intString.length()-i+1));
+                result.append(intString.substring(intString.length() - i, intString.length() - i + 1));
             }
-            result.reverse().append(".").append(amString.substring(amString.length()-2));
+            result.reverse().append(".").append(amString.substring(amString.length() - 2));
         }
-        if(flag == 1){
-            return "-"+result.toString();
-        }else{
+        if (flag == 1) {
+            return "-" + result.toString();
+        } else {
             return result.toString();
         }
     }
@@ -60,11 +64,15 @@ public class AmountUtils {
      * @return
      * @throws Exception
      */
-    public static String changeF2Y(String amount) throws Exception{
-        if(!amount.matches(CURRENCY_FEN_REGEX)) {
-            throw new Exception("金额格式有误");
+    public static String changeF2Y(String amount){
+        String price = "0.00";
+        if (TextUtils.isEmpty(amount)) return price;
+
+        if (!amount.matches(CURRENCY_FEN_REGEX)) {
+            return price;
         }
-        return BigDecimal.valueOf(Long.valueOf(amount)).divide(new BigDecimal(100)).toString();
+        Integer intPrice = Integer.valueOf(amount);
+        return BigDecimal.valueOf(intPrice).divide(new BigDecimal(100)).toString();
     }
 
     /**
@@ -73,7 +81,7 @@ public class AmountUtils {
      * @param amount
      * @return
      */
-    public static String changeY2F(Long amount){
+    public static String changeY2F(Long amount) {
         return BigDecimal.valueOf(amount).multiply(new BigDecimal(100)).toString();
     }
 
@@ -81,8 +89,7 @@ public class AmountUtils {
     /**
      * 分转换为元.
      *
-     * @param fen
-     *            分
+     * @param fen 分
      * @return 元
      */
     public static String fromFenToYuan(final String fen) {
@@ -105,19 +112,19 @@ public class AmountUtils {
      * @param amount
      * @return
      */
-    public static String changeY2F(String amount){
-        String currency =  amount.replaceAll("\\$|\\￥|\\,", "");  //处理包含, ￥ 或者$的金额
+    public static String changeY2F(String amount) {
+        String currency = amount.replaceAll("\\$|\\￥|\\,", "");  //处理包含, ￥ 或者$的金额
         int index = currency.indexOf(".");
         int length = currency.length();
         Long amLong = 0l;
-        if(index == -1){
-            amLong = Long.valueOf(currency+"00");
-        }else if(length - index >= 3){
-            amLong = Long.valueOf((currency.substring(0, index+3)).replace(".", ""));
-        }else if(length - index == 2){
-            amLong = Long.valueOf((currency.substring(0, index+2)).replace(".", "")+0);
-        }else{
-            amLong = Long.valueOf((currency.substring(0, index+1)).replace(".", "")+"00");
+        if (index == -1) {
+            amLong = Long.valueOf(currency + "00");
+        } else if (length - index >= 3) {
+            amLong = Long.valueOf((currency.substring(0, index + 3)).replace(".", ""));
+        } else if (length - index == 2) {
+            amLong = Long.valueOf((currency.substring(0, index + 2)).replace(".", "") + 0);
+        } else {
+            amLong = Long.valueOf((currency.substring(0, index + 1)).replace(".", "") + "00");
         }
         return amLong.toString();
     }

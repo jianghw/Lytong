@@ -45,7 +45,7 @@ import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
-import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
+import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 import com.zantong.mobilecttx.widght.UISwitchButton;
 
@@ -474,7 +474,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         violationDTO.setEnginenum(RSAUtils.strByEncryption(mCarInfoDTO.getEnginenum(), true));
         violationDTO.setCarnumtype(mCarInfoDTO.getCarnumtype());
 
-        Intent intent = new Intent(getActivity(), ViolationResultAcitvity.class);
+        Intent intent = new Intent(getActivity(), ViolationListActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("params", violationDTO);
         intent.putExtras(bundle);

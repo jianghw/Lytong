@@ -16,6 +16,7 @@ import com.zantong.mobilecttx.api.IViolationService;
 import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
+import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
@@ -46,6 +47,7 @@ import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
@@ -350,5 +352,22 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<BaseResult> handleViolations(ViolationCarDTO violationResult) {
         return initRetrofit().create(ITextService.class).HandleViolationDTO(violationResult);
+    }
+
+    /**
+     * 车辆违章查询
+     * cip.cfc.v002.01
+     */
+    @Override
+    public Observable<ViolationResultParent> searchViolation(String msg) {
+        return initAppUrlRetrofit().create(IBankService.class).searchViolation(msg);
+    }
+
+    /**
+     * cip.cfc.c002.01
+     */
+    @Override
+    public Observable<PayCarResult> getPayCars(String msg) {
+        return initAppUrlRetrofit().create(IBankService.class).getPayCars(msg);
     }
 }

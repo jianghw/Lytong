@@ -25,7 +25,7 @@ import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
-import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
+import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.util.ArrayList;
@@ -194,7 +194,7 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
         dto.setEnginenum(RSAUtils.strByEncryption(userCarInfoBean.getEnginenum(), true));
         dto.setCarnumtype(userCarInfoBean.getCarnumtype());
 
-        Intent intent = new Intent(mContext, ViolationResultAcitvity.class);
+        Intent intent = new Intent(mContext, ViolationListActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("params", dto);
         intent.putExtras(bundle);

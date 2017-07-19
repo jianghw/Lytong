@@ -1,79 +1,118 @@
 package com.zantong.mobilecttx.weizhang.fragment;
 
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.fragment.BaseExtraFragment;
-import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
+import com.zantong.mobilecttx.base.fragment.BaseJxFragment;
+import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class ViolationPayTypeFragment extends BaseExtraFragment {
+public class ViolationPayTypeFragment extends BaseJxFragment {
 
     @Bind(R.id.fragment_violation_paytype_img1)
     ImageView mImg1;
     @Bind(R.id.fragment_violation_paytype_img2)
     ImageView mImg2;
 
-    private FragmentTransaction mTransaction;
-
+    public static ViolationPayTypeFragment newInstance() {
+        return new ViolationPayTypeFragment();
+    }
 
     @Override
-    protected int getLayoutResId() {
+    protected int getContentViewLayoutID() {
         return R.layout.fragment_violation_paytype;
     }
 
     @Override
-    public void initView(View view) {
-        mTransaction = ((ViolationResultAcitvity) getActivity()).getSurePayFragmentManager().beginTransaction();
+    protected int getContentLayoutResID() {
+        return 0;
+    }
+
+    protected boolean isNeedKnife() {
+        return true;
     }
 
     @Override
-    public void initData() {
+    protected void onForceRefresh() {
 
+    }
+
+    @Override
+    protected void initViewsAndEvents(View view) {
+
+    }
+
+    @Override
+    protected void onFirstUserVisible() {
+        ViolationListActivity violationListActivity = getParentActivity();
+        if (violationListActivity != null) {
+            int payType = violationListActivity.getPayType();
+            if (payType == 1) {
+                mImg2.setVisibility(View.GONE);
+                mImg1.setVisibility(View.VISIBLE);
+            } else {
+                mImg2.setVisibility(View.VISIBLE);
+                mImg1.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    public ViolationListActivity getParentActivity() {
+        FragmentActivity activity = getActivity();
+        ViolationListActivity violationListActivity = null;
+        if (activity instanceof ViolationListActivity) {
+            violationListActivity = (ViolationListActivity) activity;
+        }
+        return violationListActivity;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        switch (((ViolationResultAcitvity) getActivity()).getPayType()){
-            case 1:
-                mImg2.setVisibility(View.GONE);
-                mImg1.setVisibility(View.VISIBLE);
-                break;
-            case 2:
-                mImg2.setVisibility(View.VISIBLE);
-                mImg1.setVisibility(View.GONE);
-                break;
-        }
     }
 
-    @OnClick({R.id.fragment_violation_paytype_close, R.id.fragment_violation_paytype_layout1, R.id.fragment_violation_paytype_layout2})
+    @Override
+    protected void DestroyViewAndThing() {
+
+    }
+
+    @OnClick({R.id.fragment_violation_paytype_close,
+            R.id.fragment_violation_paytype_layout1, R.id.fragment_violation_paytype_layout2})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fragment_violation_paytype_close:
                 closeFragment();
                 break;
             case R.id.fragment_violation_paytype_layout1:
-                mImg2.setVisibility(View.GONE);
-                mImg1.setVisibility(View.VISIBLE);
-                ((ViolationResultAcitvity) getActivity()).setPayType(1);
-                closeFragment();
+                choicePayType(View.GONE, View.VISIBLE, 1);
                 break;
             case R.id.fragment_violation_paytype_layout2:
-                mImg2.setVisibility(View.VISIBLE);
-                mImg1.setVisibility(View.GONE);
-                ((ViolationResultAcitvity) getActivity()).setPayType(2);
-                closeFragment();
+                choicePayType(View.VISIBLE, View.GONE, 2);
+                break;
+            default:
                 break;
         }
     }
-    private void closeFragment(){
-        mTransaction.setCustomAnimations(R.anim.right_to_left, R.anim.left_to_right)
-                .replace(((ViolationResultAcitvity)getActivity()).getPayLayoutId(),((ViolationResultAcitvity)getActivity()).getPayFragment()).commit();
+
+    protected void choicePayType(int gone, int visible, int payType) {
+        mImg2.setVisibility(gone);
+        mImg1.setVisibility(visible);
+        ViolationListActivity violationListActivity = getParentActivity();
+        if (violationListActivity != null) {
+            violationListActivity.setPayType(payType);
+        }
+        closeFragment();
+    }
+
+    private void closeFragment() {
+        ViolationListActivity violationListActivity = getParentActivity();
+        if (violationListActivity != null) {
+            violationListActivity.closeFragment();
+        }
     }
 
 }

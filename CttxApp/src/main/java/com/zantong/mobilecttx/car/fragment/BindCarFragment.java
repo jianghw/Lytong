@@ -12,7 +12,7 @@ import com.zantong.mobilecttx.base.fragment.BaseExtraFragment;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
-import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
+import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import butterknife.Bind;
@@ -96,7 +96,7 @@ public class BindCarFragment extends BaseExtraFragment {
                 dto.setEnginenum(RSAUtils.strByEncryption(mEngineNum, true));
                 dto.setCarnumtype(mCarType);
 
-                Intent intent = new Intent(this.getActivity(), ViolationResultAcitvity.class);
+                Intent intent = new Intent(this.getActivity(), ViolationListActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("params", dto);
                 intent.putExtras(bundle);

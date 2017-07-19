@@ -183,15 +183,34 @@ public class OrderParentActivity extends BaseJxActivity
         hideDialogLoading();
     }
 
+    /**
+     * 加载订单失败状态
+     */
     @Override
     public void getOrderListError(String message) {
         dismissLoadingDialog();
         ToastUtils.toastShort(message);
+
+        if (orderAllStatusFragment != null) orderAllStatusFragment.setPayOrderListData(null);
+        if (orderUnStatusFragment != null) orderUnStatusFragment.setPayOrderListData(null);
+        if (orderCancleStatusFragment != null) orderCancleStatusFragment.setPayOrderListData(null);
+        if (orderPayStatusFragment != null) orderPayStatusFragment.setPayOrderListData(null);
     }
 
     @Override
-    public void dataDistribution(String message) {
+    public void dataDistribution(String message, int orderStatus) {
         ToastUtils.toastShort(message);
+
+        if (orderStatus == 0) {
+            if (orderUnStatusFragment != null)
+                orderUnStatusFragment.setPayOrderListData(null);
+        } else if (orderStatus == 1) {
+            if (orderPayStatusFragment != null)
+                orderPayStatusFragment.setPayOrderListData(null);
+        } else if (orderStatus == 2) {
+            if (orderCancleStatusFragment != null)
+                orderCancleStatusFragment.setPayOrderListData(null);
+        }
     }
 
     /**

@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.model.repository;
 import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
+import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
@@ -32,6 +33,7 @@ import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
@@ -220,4 +222,15 @@ public interface IRemoteSource {
      * 处理违章信息
      */
     Observable<BaseResult> handleViolations(ViolationCarDTO violationResult);
+
+    /**
+     * 车辆违章查询
+     * cip.cfc.v002.01
+     */
+    Observable<ViolationResultParent> searchViolation(String msg);
+
+    /**
+     * cip.cfc.c002.01
+     */
+    Observable<PayCarResult> getPayCars(String msg);
 }

@@ -39,8 +39,6 @@ public abstract class BaseJxActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_base_jx);
 
-        bundleIntent(savedInstanceState);
-
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.lay_base_content);
         //Title
@@ -55,6 +53,7 @@ public abstract class BaseJxActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT));
             initTitleView(linearLayout);
         }
+
         //Body
         if (getContentResId() != 0) {
             View rootView = inflater.inflate(getContentResId(), null);
@@ -69,6 +68,8 @@ public abstract class BaseJxActivity extends AppCompatActivity {
         }
 
         if (isNeedKnife()) ButterKnife.bind(this);
+
+        bundleIntent(savedInstanceState);
     }
 
     @Override

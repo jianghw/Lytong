@@ -202,7 +202,7 @@ public class QueryFragment extends Fragment implements ModelView {
 
                 break;
             case R.id.next_btn:
-//                Act.getInstance().gotoIntent(this.getActivity(),ViolationResultAcitvity.class);
+
 
                 mIllegalQueryPresenter.loadView(1);
                 break;

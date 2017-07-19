@@ -4,10 +4,13 @@ package com.zantong.mobilecttx.weizhang.bean;
  * Created by zhengyingbing on 16/6/7.
  */
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 违章信息
  */
-public class ViolationBean {
+public class ViolationBean implements Parcelable {
 
     private String violationtime; //违章时间
     private String carnumtype; //车辆类型
@@ -108,4 +111,53 @@ public class ViolationBean {
     public int getProcessste() {
         return processste;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.violationtime);
+        dest.writeString(this.carnumtype);
+        dest.writeString(this.violationcent);
+        dest.writeInt(this.processste);
+        dest.writeString(this.carnum);
+        dest.writeString(this.violationdate);
+        dest.writeString(this.violationamt);
+        dest.writeString(this.violationnum);
+        dest.writeString(this.violationplace);
+        dest.writeString(this.violationinfo);
+        dest.writeString(this.violationtype);
+    }
+
+    public ViolationBean() {
+    }
+
+    protected ViolationBean(Parcel in) {
+        this.violationtime = in.readString();
+        this.carnumtype = in.readString();
+        this.violationcent = in.readString();
+        this.processste = in.readInt();
+        this.carnum = in.readString();
+        this.violationdate = in.readString();
+        this.violationamt = in.readString();
+        this.violationnum = in.readString();
+        this.violationplace = in.readString();
+        this.violationinfo = in.readString();
+        this.violationtype = in.readString();
+    }
+
+    public static final Parcelable.Creator<ViolationBean> CREATOR = new Parcelable.Creator<ViolationBean>() {
+        @Override
+        public ViolationBean createFromParcel(Parcel source) {
+            return new ViolationBean(source);
+        }
+
+        @Override
+        public ViolationBean[] newArray(int size) {
+            return new ViolationBean[size];
+        }
+    };
 }

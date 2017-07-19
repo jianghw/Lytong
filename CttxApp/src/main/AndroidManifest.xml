@@ -394,9 +394,9 @@
             android:name=".weizhang.activity.ViolationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-        <!-- 违章信息显示页面 -->
+        <!-- 违章列表信息显示页面 -->
         <activity
-            android:name=".weizhang.activity.ViolationResultAcitvity"
+            android:name=".weizhang.activity.ViolationListActivity"
             android:screenOrientation="portrait"/>
         <!--违章查询页面-->
         <activity

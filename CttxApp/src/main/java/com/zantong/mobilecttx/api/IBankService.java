@@ -1,8 +1,10 @@
 package com.zantong.mobilecttx.api;
 
 import com.zantong.mobilecttx.base.bean.Result;
+import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
+import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -31,4 +33,12 @@ public interface IBankService {
     @FormUrlEncoded
     @POST("mobilecall_call")
     Observable<Result> commitCarInfoToOldServer(@Field("msg") String msg);
+
+    @FormUrlEncoded
+    @POST("mobilecall_call")
+    Observable<ViolationResultParent> searchViolation(@Field("msg") String msg);
+
+    @FormUrlEncoded
+    @POST("mobilecall_call")
+    Observable<PayCarResult> getPayCars(@Field("msg") String msg);
 }

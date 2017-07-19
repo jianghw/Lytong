@@ -141,7 +141,7 @@ public class OrderParentPresenter
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.dataDistribution(e.getMessage());
+                        mAtyView.dataDistribution(e.getMessage(),orderStatus);
                     }
 
                     @Override

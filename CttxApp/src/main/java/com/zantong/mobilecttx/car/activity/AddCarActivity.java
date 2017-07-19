@@ -55,7 +55,7 @@ import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
-import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
+import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 import com.zantong.mobilecttx.widght.SettingItemView;
 
@@ -419,7 +419,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                     dto1.setEnginenum(RSAUtils.strByEncryption(dto.getEnginenum(), true));
                     dto1.setCarnumtype(dto.getCarnumtype());
 
-                    Intent intent = new Intent(this, ViolationResultAcitvity.class);
+                    Intent intent = new Intent(this, ViolationListActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("params", dto1);
                     intent.putExtras(bundle);
@@ -488,7 +488,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                     dto1.setEnginenum(RSAUtils.strByEncryption(dto.getEnginenum(), true));
                     dto1.setCarnumtype(dto.getCarnumtype());
 
-                    Intent intent = new Intent(AddCarActivity.this, ViolationResultAcitvity.class);
+                    Intent intent = new Intent(AddCarActivity.this, ViolationListActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("params", dto1);
                     intent.putExtras(bundle);

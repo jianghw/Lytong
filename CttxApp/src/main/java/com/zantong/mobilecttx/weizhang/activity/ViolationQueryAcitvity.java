@@ -128,14 +128,13 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPrese
         PublicData.getInstance().mHashMap.put("enginenum", data.getEngine_num());
         PublicData.getInstance().mHashMap.put("carnumtype", data.getCar_type());
         PublicData.getInstance().mHashMap.put("IllegalViolationName", data.getCar_name());//标题
-//                Act.getInstance().gotoIntent(ViolationQueryAcitvity.this, QueryResultActivity.class);
 
         ViolationDTO dto = new ViolationDTO();
         dto.setCarnum(RSAUtils.strByEncryption(data.getCar_name(), true));
         dto.setEnginenum(RSAUtils.strByEncryption(data.getEngine_num(), true));
         dto.setCarnumtype(data.getCar_type());
 
-        Intent intent = new Intent(this, ViolationResultAcitvity.class);
+        Intent intent = new Intent(this, ViolationListActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("params", dto);
         intent.putExtras(bundle);
@@ -161,7 +160,7 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPrese
                 InputMethodManager imm = (InputMethodManager)
                         this.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-               new KeyWordPop(this, v, new KeyWordPop.KeyWordLintener() {
+                new KeyWordPop(this, v, new KeyWordPop.KeyWordLintener() {
                     @Override
                     public void onKeyWordLintener(String cityStr) {
                         mProvinceText.setText(cityStr);
@@ -194,12 +193,14 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPrese
                 dto.setEnginenum(RSAUtils.strByEncryption(mEngineEdit.getText().toString().trim(), true));
                 dto.setCarnumtype(VehicleTypeTools.switchVehicleCode(mCarTypeText.getText().toString().trim()));
 
-                Intent intent = new Intent(this, ViolationResultAcitvity.class);
+                Intent intent = new Intent(this, ViolationListActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("params", dto);
                 intent.putExtras(bundle);
                 intent.putExtra("plateNum", plateNum);
                 startActivity(intent);
+                break;
+            default:
                 break;
         }
     }

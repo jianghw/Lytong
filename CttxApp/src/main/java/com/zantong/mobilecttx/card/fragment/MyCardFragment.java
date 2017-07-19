@@ -25,11 +25,10 @@ import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
 import com.zantong.mobilecttx.utils.AmountUtils;
 import com.zantong.mobilecttx.utils.PullToRefreshLayout;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
-import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
+import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.util.ArrayList;
@@ -38,6 +37,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.ToastUtils;
 
 public class MyCardFragment extends BaseExtraFragment implements ModelView {
 
@@ -119,7 +119,7 @@ public class MyCardFragment extends BaseExtraFragment implements ModelView {
                 dto.setCarnum(RSAUtils.strByEncryption(payCar.getCarnum(),true));
                 dto.setEnginenum(RSAUtils.strByEncryption(payCar.getEnginenum(),true));
                 dto.setCarnumtype(payCar.getCarnumtype());
-                Intent intent = new Intent(MyCardFragment.this.getActivity(),ViolationResultAcitvity.class);
+                Intent intent = new Intent(getActivity(),ViolationListActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("params",dto);
                 intent.putExtras(bundle);

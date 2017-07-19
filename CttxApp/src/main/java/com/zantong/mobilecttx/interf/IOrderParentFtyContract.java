@@ -22,7 +22,7 @@ public interface IOrderParentFtyContract {
 
         void getOrderListError(String message);
 
-        void dataDistribution(String message);
+        void dataDistribution(String message, int orderStatus);
 
         void nonPaymentData(List<OrderListBean> orderList);
 

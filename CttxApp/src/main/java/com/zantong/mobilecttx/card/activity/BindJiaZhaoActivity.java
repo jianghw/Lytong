@@ -188,9 +188,9 @@ public class BindJiaZhaoActivity extends BaseMvpActivity<IBaseView, HelpPresente
 //
 //        }
 
-        final String fileNum = mFileNum.getText().toString();
-        String licenseno = mLicenseno.getText().toString();
-        String phone = mPhone.getText().toString();
+        final String fileNum = mFileNum.getText().toString().trim();
+        String licenseno = mLicenseno.getText().toString().trim();
+        String phone = mPhone.getText().toString().trim();
         if (TextUtils.isEmpty(fileNum)) {
             ToastUtils.showShort(this, "档案编号不可为空");
             return;

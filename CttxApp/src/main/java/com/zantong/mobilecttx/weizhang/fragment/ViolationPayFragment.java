@@ -1,38 +1,34 @@
 package com.zantong.mobilecttx.weizhang.fragment;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.support.v4.app.FragmentTransaction;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.fragment.BaseExtraFragment;
-import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.api.CallBack;
+import com.zantong.mobilecttx.api.UserApiClient;
+import com.zantong.mobilecttx.base.bean.Result;
+import com.zantong.mobilecttx.base.fragment.BaseJxFragment;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.utils.AmountUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.NetUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.rsa.Des3;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.PayWebActivity;
-import com.zantong.mobilecttx.weizhang.activity.ViolationResultAcitvity;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
-import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.schedulers.Schedulers;
+import cn.qqtheme.framework.util.ContextUtils;
+import cn.qqtheme.framework.util.ToastUtils;
+import cn.qqtheme.framework.util.ui.FragmentUtils;
 
-@SuppressLint("ValidFragment")
-public class ViolationPayFragment extends BaseExtraFragment {
+public class ViolationPayFragment extends BaseJxFragment {
 
     @Bind(R.id.fragment_violation_paytype_layout)
     View mPayTypeLayout;
@@ -44,168 +40,158 @@ public class ViolationPayFragment extends BaseExtraFragment {
     TextView mVioNum;
 
     private String remark = "3|";
-    private Dialog mLoadingDialog;
+    private ViolationBean violationBean;
 
-    private FragmentTransaction mTransaction;
-    ViolationBean data;
+    private static final String ARG_PARAM1 = "violationBean";
+
+    public static ViolationPayFragment newInstance() {
+        return new ViolationPayFragment();
+    }
+
+    public static ViolationPayFragment newInstance(ViolationBean param1) {
+        ViolationPayFragment fragment = new ViolationPayFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(ARG_PARAM1, param1);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    protected int getLayoutResId() {
+    protected int getContentViewLayoutID() {
         return R.layout.fragment_violation_pay;
     }
 
-    public ViolationPayFragment(ViolationBean data) {
-        this.data = data;
+    @Override
+    protected int getContentLayoutResID() {
+        return 0;
+    }
+
+    protected boolean isNeedKnife() {
+        return true;
     }
 
     @Override
-    public void initView(View view) {
-        mTransaction = ((ViolationResultAcitvity) this.getActivity()).getSurePayFragmentManager().beginTransaction();
-        try {
-            mAmount.setText(AmountUtils.changeF2Y(data.getViolationamt()) + "元");
-        } catch (Exception e) {
-            e.printStackTrace();
+    protected void onForceRefresh() {
+
+    }
+
+    @Override
+    protected void initViewsAndEvents(View view) {
+
+    }
+
+    @Override
+    protected void onFirstUserVisible() {
+        if (getArguments() != null) {
+            violationBean = getArguments().getParcelable(ARG_PARAM1);
+            if (violationBean != null) {
+                String violationamt = violationBean.getViolationamt();
+                mAmount.setText(AmountUtils.changeF2Y(violationamt) + "元");
+                mVioNum.setText(violationBean.getViolationnum());
+            }
         }
-        mVioNum.setText(data.getViolationnum());
-    }
-
-    @Override
-    public void initData() {
-        String bitNumber = data.getViolationnum().substring(6, 7);
-//        if("1".equals(bitNumber) || "2".equals(bitNumber)){
-//            mPayTypeLayout.setClickable(true);
-//            mPayTypeLayout.setFocusable(true);
-//        }else{
-//            mPayTypeLayout.setClickable(false);
-//            mPayTypeLayout.setFocusable(false);
-//        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        switch (((ViolationResultAcitvity) getActivity()).getPayType()) {
-            case 1:
+        FragmentActivity activity = getActivity();
+        if (activity instanceof ViolationListActivity) {
+            ViolationListActivity violationListActivity = (ViolationListActivity) activity;
+            int payType = violationListActivity.getPayType();
+            if (payType == 1) {
                 remark = "3|";
                 mPayTypeText.setText("使用畅通卡缴费");
-                break;
-            case 2:
+            } else {
                 remark = "4|";
                 mPayTypeText.setText("使用其他工行银行卡缴费");
-                break;
+            }
         }
+    }
+
+    @Override
+    protected void DestroyViewAndThing() {
+        getParentActivity().dismissLoadingDialog();
     }
 
     @OnClick({R.id.fragment_violation_paytype_layout, R.id.fragment_violation_commit, R.id.fragment_violation_close})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fragment_violation_paytype_layout:
-                mTransaction.setCustomAnimations(R.anim.right_to_left, R.anim.left_to_right)
-                        .replace(((ViolationResultAcitvity) getActivity()).getPayLayoutId(), (((ViolationResultAcitvity) getActivity()).getPayTypeFragment())).commit();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                ViolationPayTypeFragment payTypeFragment = ViolationPayTypeFragment.newInstance();
+                FragmentUtils.replaceFragment(
+                        fragmentManager, payTypeFragment, R.id.lay_content, true);
                 break;
             case R.id.fragment_violation_commit:
-                seachViolation();
+                searchViolation();
                 break;
             case R.id.fragment_violation_close:
-                mTransaction.remove(this).commit();
+                FragmentActivity activity = getActivity();
+                if (activity instanceof ViolationListActivity) {
+                    ViolationListActivity violationListActivity = (ViolationListActivity) activity;
+                    violationListActivity.closeFragment();
+                }
                 break;
-//            case R.id.pay_doubt_img:
-//                lateFeeDialog();
-//                break;
+            default:
+                break;
         }
-    }
-
-    private void closeFragment() {
-//        mTransaction.remove(this).commit();
-//        ((ViolationResultAcitvity) getActivity()).setIndexFlag(0);
-//        ((ViolationDetails) mContext).setTitleColor();
     }
 
     /**
      * 跳转到缴费页面
      */
     private void gotoPay() {
-        String merCustomIp = NetUtils.getPhontIP(this.getActivity());
+        String merCustomIp = NetUtils.getPhontIP(ContextUtils.getContext());
 
-        String violationnum = data.getViolationnum();
-        String violationamt = data.getViolationamt();
+        String violationnum = violationBean.getViolationnum();
+        String violationamt = violationBean.getViolationamt();
         String merCustomId = PublicData.getInstance().filenum;//畅通卡档案编号
-        String payUrl = BuildConfig.APP_URL + "payment_payForViolation?orderid=" + violationnum + "&amount=" + violationamt +
-                "&merCustomIp=" + merCustomIp + "&merCustomId=" + merCustomId + "&remark=" + remark;
+
+        String payUrl = BuildConfig.APP_URL
+                + "payment_payForViolation?orderid=" + violationnum
+                + "&amount=" + violationamt
+                + "&merCustomIp=" + merCustomIp
+                + "&merCustomId=" + merCustomId
+                + "&remark=" + remark;
 
         PublicData.getInstance().mHashMap.put("PayWebActivity", payUrl);
-        Act.getInstance().lauchIntent(getContext(), PayWebActivity.class);
+        Act.getInstance().lauchIntent(getActivity(), PayWebActivity.class);
     }
 
     /**
-     * 查询列表
+     * cip.cfc.v004.01
      */
-    private void seachViolation() {
-//        ViolationDTO violationDTO = SPUtils.getInstance(getActivity()).getViolation();
-        //(String) PublicData.getInstance().mHashMap.get("carnum")
-
-        ViolationPayDTO payDTO = new ViolationPayDTO();
-        payDTO.setCarnum(Des3.decode(data.getCarnum()));
-        payDTO.setUsernum(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
-        payDTO.setPeccancynum(data.getViolationnum());
-        payDTO.setPeccancydate(data.getViolationdate());
-
-        double price = Double.parseDouble(data.getViolationamt()) / 100.00;
-        payDTO.setOrderprice(String.valueOf(price));
-        String enginenum = (String) PublicData.getInstance().mHashMap.get("enginenum");
-        payDTO.setEnginenum(enginenum);
-
-        Injection.provideRepository(getActivity().getApplicationContext())
-                .paymentCreateOrder(payDTO)
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        mLoadingDialog = DialogUtils.showLoading(getActivity());
-                    }
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<PayOrderResult>() {
-                    @Override
-                    public void doCompleted() {
-                        mLoadingDialog.dismiss();
-                    }
-
-                    @Override
-                    public void doError(Throwable e) {
-                        mLoadingDialog.dismiss();
-                        ToastUtils.showShort(getActivity(), "请求失败,请再次点击...");
-                    }
-
-                    @Override
-                    public void doNext(PayOrderResult result) {
-                        if (result != null && result.getResponseCode() == 2000) {
-                            gotoPay();
-                        } else {
-                            ToastUtils.showShort(getActivity(), "请求失败,请再次点击...");
+    private void searchViolation() {
+        if (!TextUtils.isEmpty(PublicData.getInstance().filenum)) {
+            getParentActivity().showLoadingDialog();
+            UserApiClient.setJiaoYiDaiMa(ContextUtils.getContext(),
+                    PublicData.getInstance().filenum, new CallBack<Result>() {
+                        @Override
+                        public void onSuccess(Result result) {
+                            getParentActivity().dismissLoadingDialog();
+                            if (result != null &&
+                                    result.getSYS_HEAD().getReturnCode().equals("000000")) {
+                                gotoPay();
+                            } else {
+                                ToastUtils.toastShort(result != null
+                                        ? result.getSYS_HEAD().getReturnMessage()
+                                        : "未知错误(cip.cfc.v004.01)");
+                            }
                         }
-                    }
-                });
 
-//        UserApiClient.searchViolation(getActivity(), violationDTO, new CallBack<ViolationResultParent>() {
-//            @Override
-//            public void onSuccess(ViolationResultParent result) {
-//                mLoadingDialog.dismiss();
-//                if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
-//                    gotoPay();
-//                } else {
-//                    ToastUtils.showShort(getActivity(), "请求失败,请再次点击...");
-//                }
-//            }
-//
-//            @Override
-//            public void onError(String errorCode, String msg) {
-//                super.onError(errorCode, msg);
-//                mLoadingDialog.dismiss();
-//                ToastUtils.showShort(getActivity(), "请求失败,请再次点击...");
-//            }
-//        });
+                        @Override
+                        public void onError(String errorCode, String msg) {
+                            getParentActivity().dismissLoadingDialog();
+                        }
+                    });
+        } else {
+            ToastUtils.toastShort("出错档案编号为空，请重新登录试试");
+        }
+    }
+
+    public ViolationListActivity getParentActivity() {
+        FragmentActivity activity = getActivity();
+        ViolationListActivity violationListActivity = null;
+        if (activity instanceof ViolationListActivity) {
+            violationListActivity = (ViolationListActivity) activity;
+        }
+        return violationListActivity;
     }
 
     /**

@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Created by jianghw on 17-7-9.
+ * fragment adapter
  */
 
 public class OrderFragmentAdapter extends FragmentPagerAdapter {

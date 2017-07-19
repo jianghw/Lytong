@@ -7,6 +7,7 @@ import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
+import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
@@ -36,6 +37,7 @@ import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
@@ -391,5 +393,20 @@ public class RepositoryManager {
      */
     public Observable<BaseResult> handleViolations(ViolationCarDTO violationResult) {
         return mRemoteData.handleViolations(violationResult);
+    }
+
+    /**
+     * 车辆违章查询
+     * cip.cfc.v002.01
+     */
+    public Observable<ViolationResultParent> searchViolation(String msg) {
+        return mRemoteData.searchViolation(msg);
+    }
+
+    /**
+     * cip.cfc.c002.01
+     */
+    public Observable<PayCarResult> getPayCars(String msg) {
+        return mRemoteData.getPayCars(msg);
     }
 }
