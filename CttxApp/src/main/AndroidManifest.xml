@@ -103,10 +103,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-        <!--旧版 违章查询-->
-        <activity
-            android:name=".weizhang.activity.QueryActivity"
-            android:screenOrientation="portrait"/>
 
         <!-- 登陆页面 -->
         <activity
@@ -663,7 +659,7 @@
         <!-- bugly配置APP版本号 -->
         <meta-data
             android:name="BUGLY_APP_VERSION"
-            android:value="3.0.0"/>
+            android:value="3.1.1"/>
 
         <!-- 7.0拍照适配 -->
         <provider
@@ -677,7 +673,7 @@
                 android:resource="@xml/file_provider_paths"/>
         </provider>
 
-        <!-- 友盟+适配 -->
+        <!-- 友盟+适配 appkey 代码控制 -->
         <!--<meta-data-->
         <!--android:name="UMENG_APPKEY"-->
         <!--android:value="5964328782b6357ca70006df"/>-->

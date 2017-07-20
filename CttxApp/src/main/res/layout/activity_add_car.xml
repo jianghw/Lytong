@@ -6,7 +6,6 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/add_vehicle_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -407,7 +406,6 @@
                         android:text="请选择注册日期" />
 
                     <ImageView
-                        android:id="@+id/arrow3"
                         style="@style/arrowLeftStyle"
                         android:layout_marginLeft="@dimen/ds_30" />
                 </LinearLayout>

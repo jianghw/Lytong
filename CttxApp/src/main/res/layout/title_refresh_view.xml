@@ -63,7 +63,6 @@
             android:text="获取数据失败，请点击重试"/>
 
         <ImageView
-            android:id="@+id/loading_faild_image"
             android:layout_width="44dip"
             android:layout_height="44dip"
             android:layout_above="@id/loading_faild_text"

@@ -27,7 +27,6 @@
         android:layout_marginRight="@dimen/ds_270" />
 
     <RelativeLayout
-        android:id="@+id/ocr_option_layout"
         android:layout_width="@dimen/ds_270"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"

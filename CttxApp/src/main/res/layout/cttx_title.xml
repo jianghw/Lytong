@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="48dip"
     android:background="@color/white"
-    android:id="@+id/title1_all" >
+    >
     <RelativeLayout
         android:id="@+id/title_kong"
         android:layout_width="fill_parent"

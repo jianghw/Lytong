@@ -7,7 +7,6 @@
               tools:context="com.zantong.mobilecttx.home.fragment.HomeUnimpededFragment">
     <!--头部banner-->
     <RelativeLayout
-        android:id="@+id/lay_banner"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="46">
@@ -24,7 +23,6 @@
     </RelativeLayout>
     <!--导航控件-->
     <TableLayout
-        android:id="@+id/lay_tab"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="18"

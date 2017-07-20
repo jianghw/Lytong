@@ -3,12 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/content_webview"
-    android:fitsSystemWindows="true">
+              android:fitsSystemWindows="true">
 
 
     <TextView
-        android:id="@+id/zhan"
         android:layout_width="match_parent"
         android:layout_height="48dip"
         android:background="@color/white"

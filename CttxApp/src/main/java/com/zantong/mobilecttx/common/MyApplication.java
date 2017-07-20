@@ -88,8 +88,6 @@ public class MyApplication extends MultiDexApplication {
 
     /**
      * 初始化云推送通道
-     *
-     * @param applicationContext
      */
     private void initCloudChannel(Context applicationContext) {
         PushServiceFactory.init(applicationContext);

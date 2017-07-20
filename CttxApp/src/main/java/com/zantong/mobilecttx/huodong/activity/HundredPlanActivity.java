@@ -14,30 +14,29 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.umeng.analytics.MobclickAgent;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.huodong.bean.ActivitySignNum;
 import com.zantong.mobilecttx.base.bean.BaseResult;
+import com.zantong.mobilecttx.car.activity.CarManageActivity;
+import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.huodong.bean.ActivitySignNum;
 import com.zantong.mobilecttx.huodong.dto.HundredPlanDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
+import com.zantong.mobilecttx.user.activity.SettingActivity;
 import com.zantong.mobilecttx.utils.DensityUtils;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.user.activity.SettingActivity;
-import com.zantong.mobilecttx.car.activity.CarManageActivity;
-import com.zantong.mobilecttx.weizhang.activity.QueryActivity;
 import com.zantong.mobilecttx.widght.DanceWageTimer;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 活动报名
@@ -163,7 +162,7 @@ public class HundredPlanActivity extends BaseMvpActivity {
                 Act.getInstance().gotoIntent(this, HundredAgreementActivity.class);
                 break;
             case R.id.hundred_plan_query_violation:
-                Act.getInstance().gotoIntent(this, QueryActivity.class);
+
                 break;
         }
     }

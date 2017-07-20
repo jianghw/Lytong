@@ -64,7 +64,6 @@
             android:textSize="@dimen/fs_48"/>
 
         <TextView
-            android:id="@+id/driving_item_order_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -101,7 +100,6 @@
             android:textSize="@dimen/fs_48"/>
 
         <TextView
-            android:id="@+id/driving_item_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="陆家嘴东路161号招商局大厦"
@@ -126,7 +124,6 @@
             android:textSize="@dimen/fs_48"/>
 
         <TextView
-            android:id="@+id/driving_item_yhq_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="app用户首单立减30"

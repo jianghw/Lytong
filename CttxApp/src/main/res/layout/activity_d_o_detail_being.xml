@@ -123,7 +123,6 @@
                         android:layout_marginTop="@dimen/ds_30">
 
                         <TextView
-                            android:id="@+id/textView13"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="行驶里程："
@@ -182,7 +181,6 @@
                             android:textSize="@dimen/fs_48" />
 
                         <TextView
-                            android:id="@+id/order_detail_yhq_content_being"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="app用户首单立减30"

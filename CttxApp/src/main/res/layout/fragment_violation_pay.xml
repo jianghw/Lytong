@@ -6,7 +6,6 @@
     android:gravity="bottom">
 
     <LinearLayout
-        android:id="@+id/fragment_violation_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_960"
         android:background="@color/white"
@@ -78,7 +77,6 @@
                 android:textColor="@color/colorGrayFontSmmall" />
 
             <TextView
-                android:id="@+id/fragment_violation_bank"
                 style="@style/TextInfoRightStyle"
                 android:textSize="@dimen/fs_45"
                 android:text="中国工商银行" />
@@ -96,7 +94,6 @@
             android:paddingRight="@dimen/ds_48">
 
             <TextView
-                android:id="@+id/textView16"
                 style="@style/TextInfoStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

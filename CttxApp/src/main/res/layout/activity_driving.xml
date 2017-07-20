@@ -19,7 +19,6 @@
         android:visibility="gone"/>
 
     <ImageView
-        android:id="@+id/driving_headerview"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_480"
         android:layout_marginBottom="@dimen/ds_60"

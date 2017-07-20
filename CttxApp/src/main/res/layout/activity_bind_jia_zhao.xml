@@ -132,7 +132,6 @@
         <include layout="@layout/view_line1" />
 
         <LinearLayout
-            android:id="@+id/bind_jia_zhao_frist_date_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
             android:visibility="gone"
@@ -149,7 +148,6 @@
                 android:textSize="@dimen/ds_48" />
 
             <TextView
-                android:id="@+id/bind_jia_zhao_frist_date_text"
                 style="@style/consum_gray_color_text_vertical_font"
                 android:layout_width="0dp"
                 android:layout_weight="1"

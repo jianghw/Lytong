@@ -35,7 +35,6 @@
 
 
     <RelativeLayout
-        android:id="@+id/item_recharge_content_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_240"
         android:paddingLeft="@dimen/ds_30"

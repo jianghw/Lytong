@@ -5,7 +5,6 @@
     android:gravity="bottom">
 
     <LinearLayout
-        android:id="@+id/fragment_violation_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_960"
         android:layout_alignParentBottom="true"

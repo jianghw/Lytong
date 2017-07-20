@@ -78,7 +78,6 @@
             android:layout_below="@id/engine_number_rl" />
 
         <RelativeLayout
-            android:id="@+id/city_info_rl"
             android:layout_width="match_parent"
             android:layout_height="48dip"
             android:layout_below="@+id/line2"
@@ -199,7 +198,7 @@
         android:id="@+id/info_notice_text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/info_notice_text1"
+        android:layout_below="@+id/info_notice_text1"
         android:layout_centerHorizontal="true"
         android:text="xxx将会严格保密，请您放心填写"
         android:visibility="gone" />
@@ -207,7 +206,7 @@
     <Button
         android:id="@+id/next_btn"
         style="@style/ButtonBigStyle"
-        android:layout_below="@id/info_notice_text2"
+        android:layout_below="@+id/info_notice_text2"
         android:layout_marginTop="16dip"
         android:textSize="@dimen/fs_48"
         android:text="查询" />
@@ -224,7 +223,6 @@
         android:text="提示：外省市机动车只能查询在沪违法信息。" />
 
     <RelativeLayout
-        android:id="@+id/cttx_agree_rl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/next_btn"

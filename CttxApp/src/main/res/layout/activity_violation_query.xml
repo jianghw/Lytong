@@ -187,7 +187,6 @@
         android:layout_alignParentBottom="true">
 
         <android.inputmethodservice.KeyboardView
-            android:id="@+id/violation_query_keyboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

@@ -139,7 +139,6 @@
                 android:textSize="@dimen/fs_14sp"/>
 
             <TextView
-                android:id="@+id/tv_delete_order"
                 android:layout_width="@dimen/ds_240"
                 android:layout_height="@dimen/ds_90"
                 android:layout_alignParentRight="true"

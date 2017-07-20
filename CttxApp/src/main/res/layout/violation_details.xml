@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/violation_content_all"
-    android:layout_width="match_parent"
+                android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorNoticeGrayNumberFont"
     android:fitsSystemWindows="true"
@@ -54,7 +53,6 @@
             android:text="获取数据失败，请点击重试" />
 
         <ImageView
-            android:id="@+id/loading_faild_image"
             android:layout_width="44dip"
             android:layout_height="44dip"
             android:layout_above="@id/loading_faild_text"
