@@ -24,7 +24,6 @@ public class SPUtils {
      */
     public static final String SP_NAME = "cttx";
 
-
     public static final String CARSINFO = "carsinfo";
 
     public static final String GUIDE_SAOFADAN = "saofadan";

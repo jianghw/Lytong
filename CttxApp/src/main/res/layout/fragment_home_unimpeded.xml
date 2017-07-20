@@ -10,7 +10,7 @@
         android:id="@+id/lay_banner"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="45">
+        android:layout_weight="46">
 
         <cn.qqtheme.framework.widght.banner.ConvenientBanner
             android:id="@+id/custom_convenientBanner"
@@ -41,7 +41,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawablePadding="@dimen/ds_24"
+                android:drawablePadding="@dimen/ds_18"
                 android:drawableTop="@mipmap/icon_oil"
                 android:gravity="center"
                 android:text="@string/recharge"/>
@@ -51,7 +51,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawablePadding="@dimen/ds_24"
+                android:drawablePadding="@dimen/ds_18"
                 android:drawableTop="@mipmap/icon_check"
                 android:gravity="center"
                 android:text="@string/annual"/>
@@ -61,7 +61,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawablePadding="@dimen/ds_24"
+                android:drawablePadding="@dimen/ds_18"
                 android:drawableTop="@mipmap/icon_license"
                 android:gravity="center"
                 android:text="@string/car_wash"/>
@@ -71,7 +71,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawablePadding="@dimen/ds_24"
+                android:drawablePadding="@dimen/ds_18"
                 android:drawableTop="@mipmap/ic_carwash"
                 android:gravity="center"
                 android:text="@string/designated_wash"/>
@@ -82,8 +82,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_150"
         android:background="@color/colorWhite"
-        android:paddingTop="@dimen/ds_12"
-        android:paddingBottom="@dimen/ds_12">
+        android:paddingBottom="@dimen/ds_12"
+        android:paddingTop="@dimen/ds_12">
 
         <ImageView
             android:id="@+id/img_trumpet"

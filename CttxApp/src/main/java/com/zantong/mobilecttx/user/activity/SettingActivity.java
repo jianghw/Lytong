@@ -56,6 +56,7 @@ import java.util.Map;
 import butterknife.Bind;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.util.CleanUtils;
+import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
@@ -138,7 +139,6 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -249,7 +249,6 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 logout();
                 break;
             case R.id.setting_breakrules_notice: //违章主动通知
-
                 break;
             case R.id.user_info_change_pwd:
                 Act.getInstance().lauchIntent(this, ChangePwdActivity.class);
@@ -260,6 +259,8 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 break;
             case R.id.user_info_name_rl:
                 Act.getInstance().lauchIntent(this, UpdateNickName.class);
+                break;
+            default:
                 break;
         }
     }
@@ -630,6 +631,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
      */
     private void logout() {
         showDialogLoading();
+
         UserApiClient.logout(this, new CallBack<Result>() {
             @Override
             public void onSuccess(Result result) {
@@ -637,23 +639,26 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
 
                 if ("000000".equals(result.getSYS_HEAD().getReturnCode())) {
 
-                    PublicData.getInstance().clearData(SettingActivity.this);
+                    PublicData.getInstance().clearData(ContextUtils.getContext());
                     SPUtils.getInstance().clear();
                     CleanUtils.cleanCustomCache(FileUtils.photoImageDirectory(getApplicationContext()));
 
                     mLogout.setVisibility(View.GONE);
+
                     Intent intent = new Intent(SettingActivity.this, InspectService.class);
                     stopService(intent);
-//                    stopService(getInspectService());
                     EventBus.getDefault().post(new BenDiCarInfoEvent(true, null));
+
                     finish();
+                } else {
+                    ToastUtils.toastShort("退出失败");
                 }
             }
 
             @Override
             public void onError(String errorCode, String msg) {
-                super.onError(errorCode, msg);
                 hideDialogLoading();
+                ToastUtils.toastShort(msg + "退出失败");
             }
         });
     }

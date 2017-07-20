@@ -157,7 +157,7 @@ public class OrderDetailActivity extends BaseJxActivity
      * 订单状态,0未至付，1已支付,2取消或过期
      */
     private void initDataByText(OrderDetailBean bean) {
-        int price = bean.getAmount();
+        float price = bean.getAmount();
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         String format = decimalFormat.format(price);
         mTvPrice.setText(format);

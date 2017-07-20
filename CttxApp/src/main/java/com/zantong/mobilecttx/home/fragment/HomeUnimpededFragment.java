@@ -261,6 +261,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
     private void resumeDataVisible() {
         mPresenter.homePage();
+
         if (PublicData.getInstance().loginFlag) {
             mPresenter.getTextNoticeInfo();
         } else {

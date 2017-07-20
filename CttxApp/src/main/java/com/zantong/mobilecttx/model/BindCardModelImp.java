@@ -72,11 +72,5 @@ public class BindCardModelImp implements SimpleModel {
                 break;
 
         }
-
-//        APPHttpClient.getInstance().sendTrad(msg, mSubscriber, CTTXHttpPOSTInterface.class);
-//        APPHttpClient.getCTTXHttpPOSTInterface().loadPost(msg)
-//                .subscribeOn(Schedulers.newThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe();
     }
 }

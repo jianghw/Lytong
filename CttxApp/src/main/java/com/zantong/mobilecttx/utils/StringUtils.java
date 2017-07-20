@@ -6,6 +6,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by zhengyingbing on 16/6/8.
@@ -82,7 +83,7 @@ public class StringUtils {
     public static String getTimeToStr() throws ParseException {
         long day = 1488253689;
         try {
-            SimpleDateFormat myFormatter = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat myFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
             Date date = myFormatter.parse(DateUtils.getDateFormat());
             Date mydate = myFormatter.parse("1970-01-01");
             day = (date.getTime() - mydate.getTime()) / 1000;

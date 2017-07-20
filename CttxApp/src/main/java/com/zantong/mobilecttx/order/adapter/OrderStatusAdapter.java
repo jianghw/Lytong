@@ -65,7 +65,7 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
             holder.mOrderTvBrand.setText(data.getGoodsName());
             holder.mOrderDate.setText(data.getCreateDate());
 
-            int price = data.getAmount();
+            float price = data.getAmount();
             DecimalFormat decimalFormat = new DecimalFormat("0.00");
             String format = decimalFormat.format(price);
             holder.mOrderPrice.setText("￥" + format);

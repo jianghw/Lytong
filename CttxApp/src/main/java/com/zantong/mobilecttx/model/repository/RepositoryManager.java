@@ -140,7 +140,7 @@ public class RepositoryManager {
     }
 
     /**
-     * 驾驶证查分
+     * urlCode 构造器
      *
      * @param urlCode cip.cfc.v001.01
      */

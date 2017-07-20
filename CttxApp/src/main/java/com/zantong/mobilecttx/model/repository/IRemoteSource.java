@@ -74,9 +74,6 @@ public interface IRemoteSource {
 
     /**
      * 驾驶证查分 cip.cfc.v001.01
-     *
-     * @param requestDTO
-     * @return
      */
     Observable<LicenseResponseBean> driverLicenseCheckGrade(String requestDTO);
 

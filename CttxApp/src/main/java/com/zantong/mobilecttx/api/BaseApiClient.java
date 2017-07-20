@@ -43,13 +43,14 @@ public class BaseApiClient {
             .parse("application/raw; charset=utf-8");
     public static OkHttpClient client = new OkHttpClient();
     public static final OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
+
     static {
         builder.connectTimeout(180, TimeUnit.SECONDS)
                 .readTimeout(180, TimeUnit.SECONDS)
                 .writeTimeout(180, TimeUnit.SECONDS);
         try {
             // Create a trust manager that does not validate certificate chains
-            final TrustManager[] trustAllCerts = new TrustManager[] {
+            final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {
                         @Override
                         public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
@@ -111,7 +112,6 @@ public class BaseApiClient {
     }
 
 
-
     public static <T> void get(Context context, String url,
                                AsyncCallBack<T> asyncCallBack) {
 //        PrefUtils pf = PrefUtils.getInstance(context);
@@ -127,7 +127,7 @@ public class BaseApiClient {
                                 AsyncCallBack<T> asyncCallBack) {
         FormBody.Builder builder = new FormBody.Builder();
         String data = asyncCallBack.getGson().toJson(jsonParams);
-        if (data != null){
+        if (data != null) {
             builder.add("msg", data);
         }
         if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().userID)) {
@@ -139,10 +139,10 @@ public class BaseApiClient {
     }
 
     public static <T> void htmlpost(Context context, String url, String jsonParams,
-                                AsyncCallBack<T> asyncCallBack) {
+                                    AsyncCallBack<T> asyncCallBack) {
         FormBody.Builder builder = new FormBody.Builder();
 //        String data = asyncCallBack.getGson().toJson(jsonParams);
-        if (jsonParams != null){
+        if (jsonParams != null) {
             builder.add("msg", jsonParams);
         }
         if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().userID)) {
@@ -177,21 +177,21 @@ public class BaseApiClient {
         } else {
             //为OkHttp设置自动携带Cookie的功能
             builder.followRedirects(false)  //禁制OkHttp的重定向操作，我们自己处理重定向
-                   .followSslRedirects(false)
-                   .cookieJar(new LocalCookieJar() {
-                private final HashMap<String, List<Cookie>> cookieStore = new HashMap<String, List<Cookie>>();
+                    .followSslRedirects(false)
+                    .cookieJar(new LocalCookieJar() {
+                        private final HashMap<String, List<Cookie>> cookieStore = new HashMap<String, List<Cookie>>();
 
-                @Override
-                public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-                    cookieStore.put(url.host(), cookies);
-                }
+                        @Override
+                        public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+                            cookieStore.put(url.host(), cookies);
+                        }
 
-                @Override
-                public List<Cookie> loadForRequest(HttpUrl url) {
-                    List<Cookie> cookies = cookieStore.get(url.host());
-                    return cookies != null ? cookies : new ArrayList<Cookie>();
-                }
-            });
+                        @Override
+                        public List<Cookie> loadForRequest(HttpUrl url) {
+                            List<Cookie> cookies = cookieStore.get(url.host());
+                            return cookies != null ? cookies : new ArrayList<Cookie>();
+                        }
+                    });
             client = builder.build();
             client.newCall(request).enqueue(asyncCallback);
         }
@@ -201,7 +201,7 @@ public class BaseApiClient {
                                 VersionCallBack<T> versionCallBack) {
         FormBody.Builder builder = new FormBody.Builder();
         String data = versionCallBack.getGson().toJson(jsonParams);
-        if (data != null){
+        if (data != null) {
             builder.add("msg", data);
         }
         Request request = new Request.Builder().tag(versionCallBack.getTag())
@@ -275,6 +275,7 @@ public class BaseApiClient {
 
     public static class LocalCookieJar implements CookieJar {
         List<Cookie> cookies;
+
         @Override
         public List<Cookie> loadForRequest(HttpUrl arg0) {
             if (cookies != null)
@@ -294,7 +295,7 @@ public class BaseApiClient {
 
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("file","ocr_img.jpg", RequestBody.create(MediaType.parse("application/octet-stream"), file))
+                .addFormDataPart("file", "ocr_img.jpg", RequestBody.create(MediaType.parse("application/octet-stream"), file))
                 .build();
         Request request = new Request.Builder().tag(baseCallBack.getTag())
                 .url(url).post(requestBody).build();

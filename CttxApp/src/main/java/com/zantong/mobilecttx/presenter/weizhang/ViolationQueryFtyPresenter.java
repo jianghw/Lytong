@@ -78,8 +78,7 @@ public class ViolationQueryFtyPresenter implements IViolationQueryFtyContract.IV
                     @Override
                     public MultipartBody.Part call(File file) {
                         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                        MultipartBody.Part part = MultipartBody.Part.createFormData("file", "ocr_img.jpg", requestBody);
-                        return part;
+                        return MultipartBody.Part.createFormData("file", "ocr_img.jpg", requestBody);
                     }
                 })
                 .flatMap(new Func1<MultipartBody.Part, Observable<DrivingOcrResult>>() {

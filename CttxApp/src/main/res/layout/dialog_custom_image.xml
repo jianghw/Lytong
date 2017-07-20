@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
+              android:layout_width="240dp"
               android:layout_height="wrap_content"
               android:background="@mipmap/cashreturn_popover"
               android:orientation="vertical">
@@ -27,8 +27,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/ds_45"
+        android:layout_marginRight="@dimen/ds_45"
         android:layout_marginTop="@dimen/ds_45"
-        android:text="请关注“畅通卡车友会”公众号"
+        android:text="@string/tv_custom_image"
         android:textColor="@color/colorTvGray_80"
         android:textSize="@dimen/fs_14sp"/>
 </LinearLayout>

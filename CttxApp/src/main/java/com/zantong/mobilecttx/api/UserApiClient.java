@@ -204,12 +204,11 @@ public class UserApiClient extends BaseApiClient {
      * create at 16/6/8 下午11:48
      */
     public static void logout(Context context, CallBack<Result> callback) {
-        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
-                context, callback, Result.class);
+        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(context, callback, Result.class);
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u002.01"));
         LogoutDTO dto = new LogoutDTO();
-        LogUtils.i("userID:" + PublicData.getInstance().userID);
+
         dto.setUsrid(PublicData.getInstance().userID);
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);

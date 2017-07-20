@@ -403,7 +403,6 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
     private void selectGoods(final List<AresGoodsBean> goodsBeanList, final TextView textView) {
         final PopupWindow popupWindow = new PopupWindow(getActivity());
 //        popupWindow.setWidth(textView.getMeasuredWidth());
-
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.custom_listview_tv, null);
         ListView mListView = (ListView) inflate.findViewById(R.id.lv_list);
         mListView.setDivider(null);
