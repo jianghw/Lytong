@@ -108,10 +108,10 @@ public class AsyncCallBack<T> implements Callback {
                 LogUtils.i("reader===" + reader);
                 if (!TextUtils.isEmpty(reader)) {
                     T t = gson.fromJson(reader, clazz);
-
                     Result result = (Result) t;
-                    LogUtils.i("returncode===" + result.getSYS_HEAD().getReturnCode());
-                    if (!"CIE999".equals(result.getSYS_HEAD().getReturnCode()) && !"cip.cfc.v001.01".equals(result.getSYS_HEAD().getTransServiceCode())) {
+
+                    if (!"CIE999".equals(result.getSYS_HEAD().getReturnCode())
+                            && !"cip.cfc.v001.01".equals(result.getSYS_HEAD().getTransServiceCode())) {
                         sendErrorMsg(context, tag, result);
                     }
                     callback.sendSuccessMessage(t);
@@ -169,15 +169,15 @@ public class AsyncCallBack<T> implements Callback {
                         new ErrorEvent(status,
                                 msg, tag, context));
             }
-            if (result.getSYS_HEAD().getTransServiceCode().equals("cip.cfc.v001.01") && result.getSYS_HEAD().getReturnCode().equals("CIE999")) {
-                EventBus.getDefault().post(
-                        new ErrorEvent(status,
-                                msg, tag, context));
+            if (result.getSYS_HEAD().getTransServiceCode().equals("cip.cfc.v001.01")
+                    && result.getSYS_HEAD().getReturnCode().equals("CIE999")) {
+
+                EventBus.getDefault().post(new ErrorEvent(status, msg, tag, context));
             }
         } else {
             EventBus.getDefault().post(
-                    new ErrorEvent(Config.ERROR_PARSER,
-                            Config.ERROR_PARSER_MSG, tag, context));
+                    new ErrorEvent(Config.ERROR_PARSER, Config.ERROR_PARSER_MSG, tag, context));
+
             callback.sendFailMessage(Config.ERROR_PARSER, Config.ERROR_PARSER_MSG);
         }
     }

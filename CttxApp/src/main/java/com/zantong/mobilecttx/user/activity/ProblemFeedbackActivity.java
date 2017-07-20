@@ -26,7 +26,7 @@ public class ProblemFeedbackActivity extends BaseMvpActivity<IBaseView, HelpPres
 
     @Override
     public void initView() {
-        setTitleText("问题反馈");
+        setTitleText("联系客服");
     }
 
     @Override

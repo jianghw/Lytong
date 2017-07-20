@@ -112,14 +112,16 @@ public class OrderParentActivity extends BaseJxActivity
             @Override
             public void doClickPay(OrderListBean bean) {
                 String orderId = bean.getOrderId();
-                int orderPrice = bean.getAmount();
                 String payType = String.valueOf(bean.getPayType());
+
+                float orderPrice = bean.getAmount();
+                int price = (int) (orderPrice * 100);
+
                 if (mPresenter != null && bean.getType() == 1) {
-                    int price = orderPrice * 100;
                     mPresenter.onPayOrderByCoupon(orderId, String.valueOf(price), payType);
                 }
                 if (mPresenter != null && bean.getType() == 3) {
-                    mPresenter.getBankPayHtml(orderId, String.valueOf(orderPrice));
+                    mPresenter.getBankPayHtml(orderId, String.valueOf(price));
                 }
             }
         };

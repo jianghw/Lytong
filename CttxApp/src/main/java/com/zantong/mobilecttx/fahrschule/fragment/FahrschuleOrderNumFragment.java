@@ -199,7 +199,7 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
                     String moneyString = mTvMoney.getText().toString();
 
                     double money = Double.parseDouble(moneyString);
-                    int intMoney = (int) money;
+                    int intMoney = (int) money * 100;
                     String stringMoney = String.valueOf(intMoney);
                     mPresenter.getBankPayHtml(
                             mTvOrder.getText().toString(),

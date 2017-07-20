@@ -76,6 +76,7 @@ public class BrowserForPayActivity extends BaseActivity {
                 "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\">" +
                 "<title>表单提交</title></head><body>" + strUrl + "</body></html>";
         LogUtils.i(url);
+
         mWebView.loadDataWithBaseURL(null, url, "text/html", "utf-8", null);
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.addJavascriptInterface(new InterfaceForJS(this), "CTTX");
@@ -83,7 +84,6 @@ public class BrowserForPayActivity extends BaseActivity {
         mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         mWebView.getSettings().setJavaScriptEnabled(true); //设置支持Javascript
         mWebView.requestFocus(); //触摸焦点起作用.如果不设置，则在点击网页文本输入框时，不能弹出软键盘及不响应其他的一些事件。
-
     }
 
     @Override

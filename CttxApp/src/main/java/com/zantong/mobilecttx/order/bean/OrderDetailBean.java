@@ -27,7 +27,7 @@ public class OrderDetailBean {
 
     private String orderId;
     private int type;
-    private int amount;
+    private float amount;
     private int payType;
     private int orderStatus;
     private String remark;
@@ -53,11 +53,11 @@ public class OrderDetailBean {
         this.type = type;
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 

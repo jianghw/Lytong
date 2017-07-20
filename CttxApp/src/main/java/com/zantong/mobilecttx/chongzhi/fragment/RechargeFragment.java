@@ -230,6 +230,7 @@ public class RechargeFragment extends PullableBaseFragment
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
         dismissLoadingDialog();
         mPresenter.unSubscribe();
         mRechargeDTO = null;

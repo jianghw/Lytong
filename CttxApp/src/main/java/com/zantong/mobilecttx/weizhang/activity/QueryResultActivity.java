@@ -95,6 +95,7 @@ public class QueryResultActivity extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.title_refresh_view);
+
         ButterKnife.bind(this);
         StateBarSetting.settingBar(this);
         mIllegalViolationPresenter = new IllegalViolationPresenter(this);
@@ -153,8 +154,6 @@ public class QueryResultActivity extends AppCompatActivity
         }
         add_vechiclies_text.setOnClickListener(this);
         empty_text.setText("无违章车辆或查询结果为空");
-
-
     }
 
     @Override

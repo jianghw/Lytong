@@ -235,7 +235,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         String mMonth;
         String mDay;
         if (idCard.length() == 15) {
-            int temp = idCard.lastIndexOf(0) % 2;
+            int temp = Integer.valueOf(idCard.substring(14, 15)) % 2;
             applyCTCardDTO.setGnd(temp == 0 ? "2" : "1"); // 1男  2女
             mYear = idCard.substring(6, 8);
             mMonth = idCard.substring(8, 10);
@@ -243,7 +243,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             applyCTCardDTO.setDtofbrth(mYear + "-" + mMonth + "-" + mDay);
             mUserBirth.setRightText(mYear + "-" + mMonth + "-" + mDay);
         } else if (idCard.length() == 18) {
-            int temp = idCard.lastIndexOf(1) % 2;
+            int temp = Integer.valueOf(idCard.substring(16, 17))  % 2;
             applyCTCardDTO.setGnd(temp == 0 ? "2" : "1");
             mYear = idCard.substring(6, 10);
             mMonth = idCard.substring(10, 12);

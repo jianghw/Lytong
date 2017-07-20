@@ -139,14 +139,14 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
 
         LicenseTestDTO bean = new LicenseTestDTO();
 
-        String fileNum = "3101057013022704";
 //        String fileNum = "3101057013022704";
+        String fileNum = "3101147014160528";
+
         bean.setViolationnum(fileNum);
         bean.setToken(mRepository.getDefaultRASUserID());
 
         dto.setReqInfo(bean);
         String gson = new Gson().toJson(dto);
-
         return gson;
     }
 

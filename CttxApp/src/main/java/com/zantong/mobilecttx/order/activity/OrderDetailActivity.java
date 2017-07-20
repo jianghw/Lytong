@@ -13,6 +13,8 @@ import com.zantong.mobilecttx.interf.IOrderDetailContract;
 import com.zantong.mobilecttx.order.bean.OrderDetailBean;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
 import com.zantong.mobilecttx.presenter.order.OrderDetailPresenter;
+import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
+import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.text.DecimalFormat;
 
@@ -115,6 +117,7 @@ public class OrderDetailActivity extends BaseJxActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_query:
+                Act.getInstance().gotoIntent(this, ProblemFeedbackActivity.class);
                 break;
             default:
                 break;
@@ -154,7 +157,7 @@ public class OrderDetailActivity extends BaseJxActivity
      * 订单状态,0未至付，1已支付,2取消或过期
      */
     private void initDataByText(OrderDetailBean bean) {
-        int price = bean.getAmount();
+        float price = bean.getAmount();
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
         String format = decimalFormat.format(price);
         mTvPrice.setText(format);

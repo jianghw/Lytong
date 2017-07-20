@@ -203,18 +203,22 @@ public class BindJiaZhaoActivity extends BaseMvpActivity<IBaseView, HelpPresente
             ToastUtils.showShort(this, "手机号码不可为空");
             return;
         }
-        if (fileNum.length() != 12) {
-            ToastUtils.showShort(this, "驾档编号格式不正确");
-            return;
-        }
+
         if (!ValidateUtils.isIdCard(licenseno)) {
             ToastUtils.showShort(this, "身份证号码格式不正确");
             return;
         }
+
+        if (fileNum.length() != 12) {
+            ToastUtils.showShort(this, "请输入12位正确驾档编号");
+            return;
+        }
+
         if (!ValidateUtils.isMobile(phone)) {
             ToastUtils.showShort(this, "手机号码格式不正确");
             return;
         }
+
         params.setUserId(PublicData.getInstance().userID);
         params.setLicenseno(licenseno);
         params.setFileNum(fileNum);
