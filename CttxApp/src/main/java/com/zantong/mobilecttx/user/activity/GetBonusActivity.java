@@ -104,7 +104,6 @@ public class GetBonusActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
                 clickShare();
                 break;
         }
-
     }
 
     @Override
