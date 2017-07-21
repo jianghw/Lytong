@@ -61,6 +61,7 @@ public class MyChooseDialog extends Dialog {
 
                 int month = Integer.parseInt(timePicker.getMonth());
                 int day = Integer.parseInt(timePicker.getDay());
+
                 String tempMonth = String.valueOf(month);
                 String tempDay = String.valueOf(day);
                 if (month < 10) {

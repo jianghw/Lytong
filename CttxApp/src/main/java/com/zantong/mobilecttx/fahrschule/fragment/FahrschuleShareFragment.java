@@ -189,8 +189,8 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
             for (RecordCountBean bean : countBeanList) {
                 if (bean.getStatisticalType() == 4) {
                     mTvPeoplePay.setText(String.valueOf(bean.getStatisticalNum()));
-                } else if (bean.getStatisticalType() == 1) {
-                    mTvPeopleCount.setText(String.valueOf(bean.getStatisticalType()));
+                } else if (bean.getStatisticalType() == 2) {
+                    mTvPeopleCount.setText(String.valueOf(bean.getStatisticalNum()));
                 }
             }
         }

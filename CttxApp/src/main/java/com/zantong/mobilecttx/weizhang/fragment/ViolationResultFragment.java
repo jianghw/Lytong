@@ -23,6 +23,7 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.util.List;
 
+import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -107,7 +108,11 @@ public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
                 if ("000000".equals(result.getSYS_HEAD().getReturnCode())) {
                     setDataResult(result.getRspInfo().getViolationInfo());
 
-                    if (TEMP_STATE == 2) handleViolations(result.getRspInfo());
+                    try {
+                        if (TEMP_STATE == 2) handleViolations(result.getRspInfo());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
                     onShowFailed();
@@ -144,7 +149,7 @@ public class ViolationResultFragment extends BaseListFragment<ViolationBean> {
 //        violationInfo.add(bean);
 
         violationCarDTO.setViolationInfo(violationInfo);
-        Injection.provideRepository(getActivity().getApplicationContext())
+        Injection.provideRepository(ContextUtils.getContext())
                 .handleViolations(violationCarDTO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

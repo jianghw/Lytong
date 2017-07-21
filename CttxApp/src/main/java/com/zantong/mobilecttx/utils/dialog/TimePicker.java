@@ -31,6 +31,7 @@ public class TimePicker extends LinearLayout {
     private int currentYear = Calendar.getInstance().get(Calendar.YEAR);
     private int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
     private int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+
     private String selectYear = 1990 + "";
     private String selectMonth = currentMonth + 1 + "";
     private String selectDay = currentDay + "";
@@ -171,7 +172,7 @@ public class TimePicker extends LinearLayout {
     }
 
     private ArrayList<String> getMonthData() {
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         for (int i = 1; i <= 12; i++) {
             list.add(String.valueOf(i));
         }
@@ -182,7 +183,7 @@ public class TimePicker extends LinearLayout {
         //ignore condition
 
         ArrayList<String> list = new ArrayList<String>();
-        for (int i = 1; i <= calDayByYearAndMonth(year, month); i++) {
+        for (int i = 1; i <= calDayByYearAndMonth(year, month)+1; i++) {
             list.add(String.valueOf(i));
         }
         return list;
