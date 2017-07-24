@@ -95,7 +95,7 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onRefreshData() {
-
+        if (mPresenter != null) mPresenter.getBanner();
     }
 
     @Override
@@ -118,7 +118,6 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onFirstDataVisible() {
-        if (mPresenter != null) mPresenter.getBanner();
 
         //广告页本地加载
         List<Integer> localImages = new ArrayList<>();
@@ -148,12 +147,14 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
     public void onResume() {
         super.onResume();
         startCampaignCustom(false);
+
+        if (mPresenter != null) mPresenter.getBanner();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        startCampaignCustom(false);
+        startCampaignCustom(true);
     }
 
     @Override

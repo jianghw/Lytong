@@ -127,7 +127,8 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="@dimen/ds_900"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/ds_24"
         android:layout_height="@dimen/ds_120"
         android:layout_marginTop="@dimen/ds_48"
         android:gravity="center_vertical"

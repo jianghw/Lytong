@@ -186,14 +186,14 @@ public class CreditShareFragment extends BaseRefreshJxFragment
             for (RecordCountBean bean : countBeanList) {
                 if (bean.getStatisticalType() == 3) {
                     mTvPeoplePay.setText(String.valueOf(bean.getStatisticalNum()));
-                } else if (bean.getStatisticalType() == 1) {
-                    mTvPeopleCount.setText(String.valueOf(bean.getStatisticalType()));
+                } else if (bean.getStatisticalType() == 2) {
+                    mTvPeopleCount.setText(String.valueOf(bean.getStatisticalNum()));
                 }
             }
         }
         String pay = mTvPeoplePay.getText().toString();
         String count = mTvPeopleCount.getText().toString();
-        mTvIntegral.setText("200*" + pay + "500*" + count + "="
+        mTvIntegral.setText("200*" + pay +"+"+ "500*" + count + "="
                 + 200 * Integer.valueOf(pay) + 500 * Integer.valueOf(count) + "分");
     }
 

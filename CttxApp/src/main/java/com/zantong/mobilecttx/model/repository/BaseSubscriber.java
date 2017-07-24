@@ -29,6 +29,7 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> implements IBaseOb
         } else {
             doError(e);
         }
+        e.printStackTrace();
     }
 
     @Override
