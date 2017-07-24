@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.base.activity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
@@ -32,6 +34,9 @@ public abstract class BaseJxActivity extends AppCompatActivity {
      */
     private TextView mTvTitle;
     private ImageView mImgHome;
+    private TextView mTvRight;
+    private TextView mTvLine;
+    private RelativeLayout mBackgroundLay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,11 +106,6 @@ public abstract class BaseJxActivity extends AppCompatActivity {
     }
 
     /**
-     * 数据传递口及保存口
-     */
-    protected abstract void bundleIntent(Bundle savedInstanceState);
-
-    /**
      * 子布局可以继承实现
      */
     protected int getTitleLayoutResID() {
@@ -123,6 +123,7 @@ public abstract class BaseJxActivity extends AppCompatActivity {
      * 只有当title布局不为0时，子类可以继承
      */
     protected void initTitleView(View view) {
+        mBackgroundLay = (RelativeLayout) view.findViewById(R.id.lay_background);
         mImgBack = (ImageView) view.findViewById(R.id.img_back);
         mImgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,9 +136,48 @@ public abstract class BaseJxActivity extends AppCompatActivity {
         mImgHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                imageClickListener();
             }
         });
+
+        mTvRight = (TextView) view.findViewById(R.id.tv_right);
+        mTvRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rightClickListener();
+            }
+        });
+        mTvLine = (TextView) view.findViewById(R.id.tv_line);
+    }
+
+    /**
+     * 最多只能有一个可见
+     */
+    protected void setTvRightVisible(String msg) {
+        if (mImgHome != null && mImgHome.getVisibility() != View.GONE)
+            mImgHome.setVisibility(View.GONE);
+        if (mTvRight != null && mTvRight.getVisibility() != View.VISIBLE) {
+            mTvRight.setVisibility(View.VISIBLE);
+            mTvRight.setText(msg);
+        }
+    }
+
+    /**
+     * 定义渐变色红色
+     */
+    protected void setTitleBackgroundRed() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            if (mBackgroundLay != null)
+                mBackgroundLay.setBackground(getResources().getDrawable(R.drawable.bg_title_shade));
+            if (mImgBack != null)
+                mImgBack.setImageResource(R.mipmap.back_white);
+            if (mTvTitle != null)
+                mTvTitle.setTextColor(getResources().getColor(R.color.colorWhite));
+            if (mTvRight != null)
+                mTvRight.setTextColor(getResources().getColor(R.color.colorWhite));
+            if (mTvLine != null)
+                mTvLine.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -152,6 +192,12 @@ public abstract class BaseJxActivity extends AppCompatActivity {
      */
     protected void backClickListener() {
         closeFragment();
+    }
+
+    protected void imageClickListener() {
+    }
+
+    protected void rightClickListener() {
     }
 
     /**
@@ -170,6 +216,11 @@ public abstract class BaseJxActivity extends AppCompatActivity {
      * 子布局初始化信息
      */
     protected abstract void initFragmentView(View view);
+
+    /**
+     * 数据传递口及保存口
+     */
+    protected abstract void bundleIntent(Bundle savedInstanceState);
 
     /**
      * 加载中效果

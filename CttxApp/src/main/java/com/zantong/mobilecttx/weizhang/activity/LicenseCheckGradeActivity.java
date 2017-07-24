@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
+import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.SPUtils;
@@ -32,7 +32,7 @@ import cn.qqtheme.framework.util.ToastUtils;
  * 驾驶证查分
  */
 
-public class LicenseCheckGradeActivity extends MvpBaseActivity implements View.OnClickListener {
+public class LicenseCheckGradeActivity extends BaseJxActivity implements View.OnClickListener {
 
     private EditText mEditArchivesNumber;
     private TextView mTvDate;
@@ -49,12 +49,29 @@ public class LicenseCheckGradeActivity extends MvpBaseActivity implements View.O
     }
 
     @Override
-    protected void setTitleView() {
-        setTitleText("驾驶证查分");
+    protected void initFragmentView(View view) {
+        initTitleContent("驾驶证查分");
 
         assignViews();
 
+        mBtnCommit.setOnClickListener(this);
+
+        mLyData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDataDialog();
+            }
+        });
+    }
+
+    @Override
+    protected void bundleIntent(Bundle savedInstanceState) {
         initIntentData();
+    }
+
+    @Override
+    protected void DestroyViewAndThing() {
+
     }
 
     /**
@@ -75,6 +92,9 @@ public class LicenseCheckGradeActivity extends MvpBaseActivity implements View.O
         }
     }
 
+    /**
+     * 日期格式标准化
+     */
     private String removeDateAcross(String beanStrtdt) {
         if (beanStrtdt.contains("-")) {
             String[] days = beanStrtdt.split("-");
@@ -102,30 +122,19 @@ public class LicenseCheckGradeActivity extends MvpBaseActivity implements View.O
         });
     }
 
-    @Override
-    protected void initMvPresenter() {
-        mBtnCommit.setOnClickListener(this);
-
-        mLyData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDataDialog();
-            }
-        });
-    }
-
     private void showDataDialog() {
         String[] temps = null;
         String temp = getTvDate();
         if (!TextUtils.isEmpty(temp) && temp.contains("-")) {
             temps = temp.split("-");
         }
-        MyChooseDialog dialog = new MyChooseDialog(this, temps, new MyChooseDialog.OnChooseDialogListener() {
-            @Override
-            public void back(String name) {
-                mTvDate.setText(name);
-            }
-        });
+        MyChooseDialog dialog = new MyChooseDialog(this, temps,
+                new MyChooseDialog.OnChooseDialogListener() {
+                    @Override
+                    public void back(String name) {
+                        mTvDate.setText(name);
+                    }
+                });
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.show();
     }
@@ -133,9 +142,9 @@ public class LicenseCheckGradeActivity extends MvpBaseActivity implements View.O
     @Override
     public void onClick(View v) {
         if (TextUtils.isEmpty(getArchivesNumber()) || getArchivesNumber().length() != 12) {
-            ToastUtils.showShort(getApplicationContext(), "请输入正确12位驾驶证档案编号");
+            ToastUtils.toastShort("请输入正确12位驾驶证档案编号");
         } else if (TextUtils.isEmpty(getTvDate())) {
-            ToastUtils.showShort(getApplicationContext(), "请选择初次领证日期");
+            ToastUtils.toastShort("请选择初次领证日期");
         } else {
             GlobalConfig.getInstance().eventIdByUMeng(8);
 
@@ -174,8 +183,6 @@ public class LicenseCheckGradeActivity extends MvpBaseActivity implements View.O
 
     /**
      * 复杂逻辑的 初始时间
-     *
-     * @return
      */
     public String getStartDate() {
         //去年的今天时间

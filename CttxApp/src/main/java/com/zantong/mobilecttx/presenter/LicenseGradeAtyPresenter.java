@@ -27,10 +27,6 @@ public class LicenseGradeAtyPresenter implements ILicenseGradeAtyContract.ILicen
     private final RepositoryManager mRepository;
     private final ILicenseGradeAtyContract.ILicenseGradeAtyView mView;
     private final CompositeSubscription mSubscriptions;
-    /**
-     * 是否为刷新操作
-     */
-    private boolean isRefresh = false;
 
     public LicenseGradeAtyPresenter(@NonNull RepositoryManager repositoryManager,
                                     @NonNull ILicenseGradeAtyContract.ILicenseGradeAtyView view) {
@@ -61,7 +57,7 @@ public class LicenseGradeAtyPresenter implements ILicenseGradeAtyContract.ILicen
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        if (!isRefresh) mView.onShowDefaultData();
+                    mView.onShowDefaultData();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -69,13 +65,11 @@ public class LicenseGradeAtyPresenter implements ILicenseGradeAtyContract.ILicen
                 .subscribe(new BaseSubscriber<LicenseResponseBean>() {
                     @Override
                     public void doCompleted() {
-                        isRefresh = true;
                     }
 
                     @Override
                     public void doError(Throwable e) {
                         mView.driverLicenseCheckGradeError(e.getMessage());
-                        isRefresh = false;
                     }
 
                     @Override

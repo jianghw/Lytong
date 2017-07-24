@@ -13,7 +13,6 @@ import android.view.View;
 public abstract class BaseRecyclerViewHolder extends ViewHolder {
 
     public BaseRecyclerViewHolder(View itemView) {
-
         super(itemView);
     }
 

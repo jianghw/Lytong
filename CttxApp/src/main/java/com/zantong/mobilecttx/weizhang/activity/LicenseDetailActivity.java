@@ -2,10 +2,11 @@ package com.zantong.mobilecttx.weizhang.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
+import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.presenter.LicenseGradeAtyPresenter;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
@@ -17,7 +18,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import cn.qqtheme.framework.util.AtyUtils;
+import cn.qqtheme.framework.util.ui.FragmentUtils;
+import cn.qqtheme.framework.util.ui.StatusBarUtils;
 
 import static com.zantong.mobilecttx.weizhang.activity.LicenseCheckGradeActivity.KEY_BUNDLE;
 
@@ -26,11 +28,18 @@ import static com.zantong.mobilecttx.weizhang.activity.LicenseCheckGradeActivity
  * 驾驶证查分
  */
 
-public class LicenseDetailActivity extends MvpBaseActivity implements View.OnClickListener {
+public class LicenseDetailActivity extends BaseJxActivity {
     /**
      * 是否手动关闭当前页面
      */
     private boolean isClose;
+
+    /**
+     * 状态栏颜色
+     */
+    protected void initStatusBarColor() {
+        StatusBarUtils.setColor(this, getResources().getColor(R.color.colorTvRed_f33), 0);
+    }
 
     @Override
     protected int getContentResId() {
@@ -38,43 +47,53 @@ public class LicenseDetailActivity extends MvpBaseActivity implements View.OnCli
     }
 
     @Override
-    protected void setTitleView() {
-        setTitleText("驾驶证查分");
+    protected void initFragmentView(View view) {
+        setTvRightVisible("编辑");
+        setTitleBackgroundRed();
 
-        setEnsureText("编辑");
-        setEnsureEnable(true);
-        getEnsureView().setOnClickListener(this);
+        initTitleContent("本计分周期累计扣分");
+    }
+
+    protected void rightClickListener() {
+        Intent intent = new Intent(this, LicenseCheckGradeActivity.class);
+        startActivity(intent);
+        if (isClose) finish();
     }
 
     @Override
-    protected void initMvPresenter() {
+    protected void bundleIntent(Bundle savedInstanceState) {
         Intent intent = getIntent();
+        LicenseFileNumDTO bean = null;
         if (intent != null) {
             Bundle bundle = intent.getExtras();
-            LicenseFileNumDTO bean = bundle.getParcelable(KEY_BUNDLE);
+            bean = bundle.getParcelable(KEY_BUNDLE);
             isClose = bundle.getBoolean(LicenseCheckGradeActivity.KEY_BUNDLE_FINISH, false);
-
-            if (bean != null) {
-                String beanStrtdt = bean.getStrtdt();
-                String startDay = removeDateAcross(beanStrtdt);
-
-                LicenseFileNumDTO newBean = new LicenseFileNumDTO();
-                newBean.setFilenum(bean.getFilenum());
-                newBean.setStrtdt(getStartDate(startDay));
-                newBean.setEnddt(localDateFormat(getEndDate(startDay)));
-
-                LicenseDetailFragment detailFragment =
-                        (LicenseDetailFragment) getSupportFragmentManager().findFragmentById(R.id.lay_base_frame);
-                if (detailFragment == null) {
-                    detailFragment = LicenseDetailFragment.newInstance(newBean);
-
-                    AtyUtils.addFragmentToActivity(
-                            getSupportFragmentManager(), detailFragment, R.id.lay_base_frame);
-                }
-                LicenseGradeAtyPresenter mPresenter = new LicenseGradeAtyPresenter(
-                        Injection.provideRepository(getApplicationContext()), detailFragment);
-            }
         }
+        if (bean != null) {
+            String beanStrtdt = bean.getStrtdt();
+            String startDay = removeDateAcross(beanStrtdt);
+
+            LicenseFileNumDTO newBean = new LicenseFileNumDTO();
+            newBean.setFilenum(bean.getFilenum());
+            newBean.setStrtdt(getStartDate(startDay));
+            newBean.setEnddt(localDateFormat(getEndDate(startDay)));
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            LicenseDetailFragment detailFragment =
+                    (LicenseDetailFragment) getSupportFragmentManager().findFragmentById(R.id.lay_base_frame);
+            if (detailFragment == null) {
+                detailFragment = LicenseDetailFragment.newInstance(newBean);
+
+                FragmentUtils.addFragment(fragmentManager, detailFragment, R.id.lay_base_frame);
+            }
+            LicenseGradeAtyPresenter mPresenter = new LicenseGradeAtyPresenter(
+                    Injection.provideRepository(getApplicationContext()), detailFragment);
+        }
+    }
+
+    @Override
+    protected void DestroyViewAndThing() {
+
     }
 
     /**
@@ -92,13 +111,6 @@ public class LicenseDetailActivity extends MvpBaseActivity implements View.OnCli
             return days[0] + days[1] + days[2];
         }
         return beanStrtdt;
-    }
-
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(this, LicenseCheckGradeActivity.class);
-        startActivity(intent);
-        if (isClose) finish();
     }
 
     /**

@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:loader="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:loader="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/lay_score"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_600"
-        android:background="@mipmap/ic_bg_license_head"
-        android:orientation="vertical">
+        android:layout_height="@dimen/ds_450"
+        android:background="@drawable/bg_title_shade"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <RelativeLayout
-            android:id="@+id/ry_bg_loader"
-            android:layout_width="@dimen/ds_345"
-            android:layout_height="@dimen/ds_345"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/ds_36"
-            android:background="@mipmap/ic_loading_coupon_bg">
+            android:id="@+id/lay_center_score"
+            android:layout_width="@dimen/ds_300"
+            android:layout_height="@dimen/ds_300"
+            android:layout_centerInParent="true">
 
             <cn.qqtheme.framework.widght.CustomLoader
                 android:id="@+id/img_loader"
@@ -28,7 +27,7 @@
                 android:layout_centerInParent="true"
                 loader:cycle="1500"
                 loader:image="@mipmap/ic_loading_coupon"
-                loader:imageHeight="@dimen/ds_342" />
+                loader:imageHeight="@dimen/ds_300"/>
 
             <TextView
                 android:id="@+id/tv_score"
@@ -37,87 +36,93 @@
                 android:layout_centerInParent="true"
                 android:text="0"
                 android:textColor="@color/white"
-                android:textSize="@dimen/fs_48sp" />
+                android:textSize="@dimen/fs_48sp"/>
 
             <TextView
                 android:id="@+id/tv_score_z"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/tv_score"
+                android:layout_alignBaseline="@+id/tv_score"
                 android:layout_centerInParent="true"
                 android:layout_toRightOf="@+id/tv_score"
                 android:text="分"
                 android:textColor="@color/white"
-                android:textSize="@dimen/fs_16sp" />
+                android:textSize="@dimen/fs_16sp"/>
+
         </RelativeLayout>
+    </RelativeLayout>
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/custom_recycler"
+        android:background="@color/colorBgGray_f8"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lay_score"/>
+
+    <LinearLayout
+        android:id="@+id/lay_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lay_score"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_error_meg"
+            android:id="@+id/tv_finger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/ds_24"
-            android:text="本记分周期累计扣分"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fs_18sp" />
-    </LinearLayout>
+            android:layout_marginTop="@dimen/ds_51"
+            android:drawablePadding="@dimen/ds_24"
+            android:drawableRight="@mipmap/ic_finger_left"
+            android:text="@string/tv_license_instructions"
+            android:textColor="@color/light_blue"
+            android:textSize="@dimen/fs_18sp"/>
 
-    <TextView
-        android:id="@+id/tv_finger"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/ds_51"
-        android:drawablePadding="@dimen/ds_24"
-        android:drawableRight="@mipmap/ic_finger_left"
-        android:text="@string/tv_license_instructions"
-        android:textColor="@color/light_blue"
-        android:textSize="@dimen/fs_18sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/ds_48"
+            android:background="#D0D0D0"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/ds_48"
-        android:background="#D0D0D0" />
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/ds_800"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/ds_48">
-
-        <TextView
-            android:id="@+id/tv_prompt"
-            android:layout_width="@dimen/ds_960"
-            android:layout_height="@dimen/ds_582"
-            android:layout_alignTop="@+id/tv_hint"
-            android:layout_marginTop="@dimen/ds_33"
-            android:background="@drawable/bg_license_detail_shape"
-            android:lineSpacingMultiplier="1.2"
-            android:text="@string/tv_license_detail_prompt"
-            android:textSize="@dimen/fs_16sp" />
-
-        <TextView
-            android:id="@+id/tv_hint"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/ds_66"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@color/white"
-            android:paddingLeft="@dimen/ds_42"
-            android:paddingRight="@dimen/ds_42"
-            android:text="小提示"
-            android:textColor="@color/line_blue"
-            android:textSize="@dimen/fs_18sp" />
+            android:layout_height="@dimen/ds_800"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/ds_96">
 
-        <ImageView
-            android:layout_width="@dimen/ds_285"
-            android:layout_height="@dimen/ds_384"
-            android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/tv_prompt"
-            android:layout_marginRight="@dimen/ds_48"
-            android:background="@color/white"
-            android:src="@mipmap/ic_man_trumpet" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_prompt"
+                android:layout_width="@dimen/ds_960"
+                android:layout_height="@dimen/ds_582"
+                android:layout_alignTop="@+id/tv_hint"
+                android:layout_marginTop="@dimen/ds_33"
+                android:background="@drawable/bg_license_detail_shape"
+                android:lineSpacingMultiplier="1.2"
+                android:text="@string/tv_license_detail_prompt"
+                android:textSize="@dimen/fs_16sp"/>
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/tv_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/ds_66"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/ds_42"
+                android:paddingRight="@dimen/ds_42"
+                android:text="小提示"
+                android:textColor="@color/line_blue"
+                android:textSize="@dimen/fs_18sp"/>
+
+            <ImageView
+                android:layout_width="@dimen/ds_285"
+                android:layout_height="@dimen/ds_384"
+                android:layout_alignParentBottom="true"
+                android:layout_alignRight="@+id/tv_prompt"
+                android:layout_marginRight="@dimen/ds_48"
+                android:background="@color/white"
+                android:src="@mipmap/ic_man_trumpet"/>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

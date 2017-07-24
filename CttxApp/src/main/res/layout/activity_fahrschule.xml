@@ -35,7 +35,6 @@
             android:layout_height="@dimen/ds_132"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-
             android:scaleType="centerInside"
             android:src="@mipmap/btn_homepage"/>
     </RelativeLayout>

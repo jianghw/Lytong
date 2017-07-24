@@ -15,6 +15,7 @@
     <color name="colorTvBlack_4c">#4c4c4c</color>
     <color name="colorTvBlack_4d">#4d4d4d</color>
     <color name="colorTvBlack_b2">#b2b2b2</color>
+    <color name="colorTvBlack_b3">#b3b3b3</color>
     <color name="colorTvGray_7f">#7f7f7f</color>
     <color name="colorTvGray_b2">#b2b2b2</color>
     <color name="colorTvGray_80">#808080</color>
@@ -27,5 +28,9 @@
     <color name="colorTvBlue_2d">#2d8bf3</color>
     <color name="colorTvViolet_f33">#db29d4</color>
     <color name="colorTvYellow_f100">#fff100</color>
+
+
+    <color name="colorRedStart_ef">#ef8e3d</color>
+    <color name="colorRedEnd_f3">#f3362b</color>
 
 </resources>

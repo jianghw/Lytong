@@ -6,6 +6,7 @@
               android:orientation="vertical">
     <!--标题栏-->
     <RelativeLayout
+        android:id="@+id/lay_background"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_132"
         android:background="@color/colorWhite">
@@ -30,15 +31,28 @@
 
         <ImageView
             android:id="@+id/img_home"
+            android:layout_width="@dimen/ds_132"
+            android:layout_height="@dimen/ds_132"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:src="@mipmap/btn_homepage"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/btn_homepage"
+            android:layout_marginRight="@dimen/ds_48"
+            android:textColor="@color/colorTvBlack_4c"
+            android:textSize="@dimen/fs_16sp"
             android:visibility="gone"/>
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/tv_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_1"
         android:background="@color/colorLineGray_e5"/>

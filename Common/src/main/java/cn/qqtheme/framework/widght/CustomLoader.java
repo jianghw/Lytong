@@ -275,7 +275,6 @@ public class CustomLoader extends View {
      * 开启动画
      */
     public void startAnimation() {
-        cancelAnimation();
         animation = new RotateAnimation();
         animation.setInterpolator(new LinearInterpolator());
         animation.setDuration(this.cycle);
@@ -284,12 +283,18 @@ public class CustomLoader extends View {
     }
 
     public void cancelAnimation() {
-        if (animation != null && animation.hasStarted()) clearAnimation();
+        if (animation != null) {
+            animation.cancel();
+            clearAnimation();
+        }
     }
 
     public void AnimationControlCenter(boolean start) {
-        if (start) startAnimation();
-        else cancelAnimation();
+        if (start) {
+            startAnimation();
+        } else {
+            cancelAnimation();
+        }
     }
 
     /**

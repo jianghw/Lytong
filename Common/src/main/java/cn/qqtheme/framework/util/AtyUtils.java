@@ -5,10 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-/**
- * Created by jianghw on 2017/4/26.
- */
-
 public class AtyUtils {
     /**
      * 添加fragment到activity

@@ -447,9 +447,10 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
             userCarInfoBean.setCarnum(Des3.decode(userCarInfoBean.getCarnum()));
             userCarInfoBean.setCarframenum(Des3.decode(userCarInfoBean.getCarframenum()));
 
-            if (!TextUtils.isEmpty(userCarInfoBean.getIspaycar()) && userCarInfoBean.getIspaycar().equals("1"))
-                PublicData.getInstance().payData.add(userCarInfoBean);
+            if (!TextUtils.isEmpty(userCarInfoBean.getIspaycar())
+                    && userCarInfoBean.getIspaycar().equals("1"))
 
+                PublicData.getInstance().payData.add(userCarInfoBean);
             arrayList.add(userCarInfoBean);
         }
         return arrayList;

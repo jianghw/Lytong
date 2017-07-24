@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                xmlns:zc="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ds_45"
+        android:layout_marginRight="@dimen/ds_45"
+        android:layout_marginTop="@dimen/ds_45"
+        android:background="@drawable/shape_bg_popu_white"
+        android:padding="@dimen/ds_45">
+
+        <TextView
+            android:id="@+id/tv_title_violation_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="违章日期："
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_title_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_title_violation_date"
+            android:layout_alignParentRight="true"
+            android:drawablePadding="@dimen/ds_15"
+            android:drawableRight="@mipmap/btn_rightarrow"
+            android:text="详情"
+            android:textColor="@color/colorTvBlack_b2"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_violation_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_title_violation_date"
+            android:textColor="@color/colorTvRed_f33"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="2017-04-15"/>
+
+        <TextView
+            android:id="@+id/tv_title_payment_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title_violation_date"
+            android:layout_marginTop="@dimen/ds_45"
+            android:text="缴费日期："
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_payment_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_title_payment_date"
+            android:layout_toRightOf="@+id/tv_title_payment_date"
+            android:textColor="@color/colorTvRed_f33"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="2017-04-15"/>
+
+        <TextView
+            android:id="@+id/tv_title_payment_plate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title_payment_date"
+            android:layout_marginTop="@dimen/ds_45"
+            android:text="违章车牌："
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_payment_plate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_title_payment_plate"
+            android:layout_toRightOf="@+id/tv_title_payment_plate"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="2017-04-15"/>
+
+        <TextView
+            android:id="@+id/tv_title_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_title_payment_plate"
+            android:layout_alignParentRight="true"
+            android:text="分"
+            android:textColor="@color/colorTvRed_f33"
+            android:textSize="@dimen/fs_12sp"/>
+
+        <TextView
+            android:id="@+id/tv_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_title_payment_plate"
+            android:layout_marginRight="@dimen/ds_15"
+            android:layout_toLeftOf="@+id/tv_title_mark"
+            android:text="0"
+            android:textColor="@color/colorTvRed_f33"
+            android:textSize="@dimen/fs_22sp"/>
+
+        <TextView
+            android:id="@+id/tv_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_1"
+            android:layout_below="@+id/tv_title_payment_plate"
+            android:layout_marginBottom="@dimen/ds_45"
+            android:layout_marginTop="@dimen/ds_45"
+            android:background="@color/colorGray"/>
+
+        <RelativeLayout
+            android:id="@+id/lay_period"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_line">
+
+            <TextView
+                android:id="@+id/tv_title_period"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:drawablePadding="@dimen/ds_15"
+                android:drawableRight="@drawable/illegal_query_notice_selector"
+                android:text="计入本周期"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <com.zantong.mobilecttx.widght.UISwitchButton
+                android:id="@+id/custom_switch_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:checked="false"
+                android:clickable="true"
+                zc:bmHeight="@dimen/ds_90"
+                zc:bmWidth="@dimen/ds_150"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

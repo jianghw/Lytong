@@ -21,7 +21,7 @@ import java.util.List;
  */
 public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
 
-    private XRecyclerView customRecycler;
+    private XRecyclerView mCustomRecycler;
     private android.widget.RelativeLayout layEmpty;
     private android.widget.ImageView imgEmpty;
     private android.widget.TextView tvEmpty;
@@ -62,38 +62,38 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
         layoutManager.setOrientation(mOrientation == 0 ?
                 LinearLayoutManager.VERTICAL : LinearLayoutManager.HORIZONTAL);
 
-        customRecycler.setLayoutManager(layoutManager);
-        customRecycler.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        customRecycler.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
-        customRecycler.setArrowImageView(R.mipmap.loading);
-        customRecycler.setPullRefreshEnabled(isRefresh());
-        customRecycler.setLoadingMoreEnabled(isLoadMore());
+        mCustomRecycler.setLayoutManager(layoutManager);
+        mCustomRecycler.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        mCustomRecycler.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
+        mCustomRecycler.setArrowImageView(R.mipmap.loading);
+        mCustomRecycler.setPullRefreshEnabled(isRefresh());
+        mCustomRecycler.setLoadingMoreEnabled(isLoadMore());
 
         if (getRecyclerHeader() != null) {
-            customRecycler.addHeaderView(getRecyclerHeader());
+            mCustomRecycler.addHeaderView(getRecyclerHeader());
         }
 
-        customRecycler.setLoadingListener(new XRecyclerView.LoadingListener() {
+        mCustomRecycler.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                customRecycler.postDelayed(new Runnable() {
+                mCustomRecycler.postDelayed(new Runnable() {
                     public void run() {
-                        if (customRecycler == null) return;
+                        if (mCustomRecycler == null) return;
                         mCurrentPage = 1;
                         onRefreshData();
-                        customRecycler.refreshComplete();
+                        mCustomRecycler.refreshComplete();
                     }
                 }, 1500);
             }
 
             @Override
             public void onLoadMore() {
-                customRecycler.postDelayed(new Runnable() {
+                mCustomRecycler.postDelayed(new Runnable() {
                     public void run() {
-                        if (customRecycler == null) return;
-                        customRecycler.loadMoreComplete();
+                        if (mCustomRecycler == null) return;
+                        mCustomRecycler.loadMoreComplete();
                         onLoadMoreData();
-                        customRecycler.refreshComplete();
+                        mCustomRecycler.refreshComplete();
                     }
                 }, 1500);
             }
@@ -101,15 +101,15 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
 
         if (isDeleteItem()) {
             // 设置菜单创建器。
-            customRecycler.setSwipeMenuCreator(swipeMenuCreator);
+            mCustomRecycler.setSwipeMenuCreator(swipeMenuCreator);
             // 设置菜单Item点击监听。
-            customRecycler.setSwipeMenuItemClickListener(menuItemClickListener);
+            mCustomRecycler.setSwipeMenuItemClickListener(menuItemClickListener);
         }
 
         mAdapter = createAdapter();
         if (mAdapter == null) throw new IllegalArgumentException("adapter is must not null");
         mAdapter.setOnItemClickListener(onItemClickListener);
-        customRecycler.setAdapter(mAdapter);
+        mCustomRecycler.setAdapter(mAdapter);
 
         initFragmentView(view);
     }
@@ -126,7 +126,7 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
     }
 
     private void initParentView(View view) {
-        customRecycler = (XRecyclerView) view.findViewById(R.id.custom_recycler);
+        mCustomRecycler = (XRecyclerView) view.findViewById(R.id.custom_recycler);
         layEmpty = (RelativeLayout) view.findViewById(R.id.lay_empty);
         imgEmpty = (ImageView) view.findViewById(R.id.img_empty);
         tvEmpty = (TextView) view.findViewById(R.id.tv_empty);
@@ -258,7 +258,7 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
      * @param list
      */
     protected void setDataResult(List<T> list) {
-        if (customRecycler == null) showFailedView();
+        if (mCustomRecycler == null) showFailedView();
         else showListViewLayout(list);
     }
 
@@ -280,9 +280,9 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
             mAdapter.removeAll();
         }
 
-        if (isRefresh()) customRecycler.refreshComplete();
+        if (isRefresh()) mCustomRecycler.refreshComplete();
 
-        if (isLoadMore()) customRecycler.refreshComplete();
+        if (isLoadMore()) mCustomRecycler.refreshComplete();
 
         layEmpty.setVisibility(mAdapter.getItemCount() < 1 ? View.VISIBLE : View.GONE);
     }
