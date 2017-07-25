@@ -6,7 +6,6 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-
     <include
         android:id="@+id/title"
         layout="@layout/cttx_title" />
@@ -43,7 +42,6 @@
         android:layout_height="match_parent"
         android:layout_below="@id/title"
         android:visibility="gone">
-
 
         <TextView
             android:id="@+id/loading_faild_text"

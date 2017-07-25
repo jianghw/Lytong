@@ -6,7 +6,7 @@ import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.interf.IMegTypeAtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
-import com.zantong.mobilecttx.user.bean.MessageResult;
+import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.MessageType;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
 import com.zantong.mobilecttx.user.dto.MegDTO;

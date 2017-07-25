@@ -44,6 +44,8 @@ public abstract class BaseJxActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_base_jx);
 
+        bundleIntent(savedInstanceState);
+
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.lay_base_content);
         //Title
@@ -73,8 +75,6 @@ public abstract class BaseJxActivity extends AppCompatActivity {
         }
 
         if (isNeedKnife()) ButterKnife.bind(this);
-
-        bundleIntent(savedInstanceState);
     }
 
     @Override
@@ -102,7 +102,7 @@ public abstract class BaseJxActivity extends AppCompatActivity {
      * 状态栏颜色
      */
     protected int iniStatusColor() {
-        return getResources().getColor(R.color.colorTvRed_f33);
+        return getResources().getColor(R.color.colorWhite);
     }
 
     /**
@@ -208,6 +208,11 @@ public abstract class BaseJxActivity extends AppCompatActivity {
     }
 
     /**
+     * 数据传递口及保存口
+     */
+    protected abstract void bundleIntent(Bundle savedInstanceState);
+
+    /**
      * 子布局文件
      */
     protected abstract int getContentResId();
@@ -218,14 +223,10 @@ public abstract class BaseJxActivity extends AppCompatActivity {
     protected abstract void initFragmentView(View view);
 
     /**
-     * 数据传递口及保存口
-     */
-    protected abstract void bundleIntent(Bundle savedInstanceState);
-
-    /**
      * 加载中效果
      */
-    public void showDialogLoading() {
+    public synchronized void showDialogLoading() {
+        hideDialogLoading();
         mLoadingDialog = DialogUtils.showLoading(this);
     }
 
@@ -234,7 +235,7 @@ public abstract class BaseJxActivity extends AppCompatActivity {
      *
      * @param msg 提示信息
      */
-    public void showDialogLoading(String msg) {
+    public synchronized void showDialogLoading(String msg) {
         if (mLoadingDialog == null || !mLoadingDialog.isShowing())
             mLoadingDialog = TextUtils.isEmpty(msg)
                     ? DialogUtils.showLoading(this) : DialogUtils.showLoading(this, msg);
@@ -243,7 +244,7 @@ public abstract class BaseJxActivity extends AppCompatActivity {
     /**
      * 隐藏遮罩的dialog
      */
-    public void hideDialogLoading() {
+    public synchronized void hideDialogLoading() {
         if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
             mLoadingDialog = null;

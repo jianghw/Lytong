@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.api;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
-import com.zantong.mobilecttx.user.bean.MessageResult;
+import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;

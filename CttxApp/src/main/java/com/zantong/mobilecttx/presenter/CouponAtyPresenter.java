@@ -4,9 +4,9 @@ import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.interf.ICouponAtyContract;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
-import com.zantong.mobilecttx.user.bean.CouponFragmentBean;
-import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
-import com.zantong.mobilecttx.user.bean.MessageResult;
+import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
+import com.zantong.mobilecttx.order.bean.MessageResult;
 
 import java.util.List;
 
@@ -45,7 +45,6 @@ public class CouponAtyPresenter implements ICouponAtyContract.ICouponAtyPresente
     @Override
     public void onSubscribe() {
         //TODO 缓存操作 暂时先就这样
-
     }
 
     @Override
@@ -53,6 +52,9 @@ public class CouponAtyPresenter implements ICouponAtyContract.ICouponAtyPresente
         mSubscriptions.clear();
     }
 
+    /**
+     * 18.查看优惠券信息
+     */
     @Override
     public void usrCouponInfo() {
         Subscription subscription = mRepository.usrCouponInfo(mRepository.getDefaultUserID(), mView.getCouponStatus())
@@ -60,7 +62,7 @@ public class CouponAtyPresenter implements ICouponAtyContract.ICouponAtyPresente
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        if (!isRefresh) mView.onShowLoading();
+                        mView.showLoadingDialog();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -68,7 +70,7 @@ public class CouponAtyPresenter implements ICouponAtyContract.ICouponAtyPresente
                 .subscribe(new Subscriber<CouponFragmentResult>() {
                     @Override
                     public void onCompleted() {
-                        isRefresh = true;
+                        mView.dismissLoadingDialog();
                     }
 
                     @Override
@@ -90,6 +92,9 @@ public class CouponAtyPresenter implements ICouponAtyContract.ICouponAtyPresente
         mSubscriptions.add(subscription);
     }
 
+    /**
+     * 数据过滤
+     */
     @Override
     public void processingDataFiltrate(List<CouponFragmentBean> beanList) {
         if (beanList == null) {
@@ -111,18 +116,20 @@ public class CouponAtyPresenter implements ICouponAtyContract.ICouponAtyPresente
                     .toList()
                     .subscribeOn(Schedulers.computation())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<List<CouponFragmentBean>>() {
-                        @Override
-                        public void call(List<CouponFragmentBean> megs) {
-                            mView.setListDataResult(megs);
-                        }
-                    }, new Action1<Throwable>() {
-                        @Override
-                        public void call(Throwable throwable) {
-                            mView.usrCouponInfoError(throwable != null
-                                    ? throwable.getMessage() : "未知错误(2.4.2)");
-                        }
-                    });
+                    .subscribe(
+                            new Action1<List<CouponFragmentBean>>() {
+                                @Override
+                                public void call(List<CouponFragmentBean> megs) {
+                                    mView.setListDataResult(megs);
+                                }
+                            },
+                            new Action1<Throwable>() {
+                                @Override
+                                public void call(Throwable throwable) {
+                                    mView.usrCouponInfoError(throwable != null
+                                            ? throwable.getMessage() : "未知错误(2.4.2)");
+                                }
+                            });
             mSubscriptions.add(subscription);
         }
     }
@@ -135,7 +142,7 @@ public class CouponAtyPresenter implements ICouponAtyContract.ICouponAtyPresente
      */
     @Override
     public void delUsrCoupon(CouponFragmentBean meg, final int position) {
-        Subscription subscription = mRepository.delUsrCoupon(meg.getCouponId(),mRepository.initDelUsrCouponDTODTO())
+        Subscription subscription = mRepository.delUsrCoupon(meg.getCouponId(), mRepository.initDelUsrCouponDTODTO())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override

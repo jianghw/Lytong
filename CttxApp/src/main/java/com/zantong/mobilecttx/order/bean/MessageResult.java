@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.user.bean;
+package com.zantong.mobilecttx.order.bean;
 
 import com.zantong.mobilecttx.base.bean.BaseResult;
 
@@ -7,7 +7,6 @@ import com.zantong.mobilecttx.base.bean.BaseResult;
  * 消息类别返回实体列表
  */
 public class MessageResult extends BaseResult {
-
 
     private MessageBean data;
 

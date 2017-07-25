@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.user.bean;
+package com.zantong.mobilecttx.order.bean;
 
 import com.zantong.mobilecttx.base.bean.BaseResult;
 

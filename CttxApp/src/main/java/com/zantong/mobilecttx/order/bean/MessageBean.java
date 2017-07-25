@@ -1,4 +1,6 @@
-package com.zantong.mobilecttx.user.bean;
+package com.zantong.mobilecttx.order.bean;
+
+import com.zantong.mobilecttx.user.bean.Meg;
 
 import java.util.List;
 

@@ -2,8 +2,8 @@ package com.zantong.mobilecttx.api;
 
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
-import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
-import com.zantong.mobilecttx.user.bean.MessageResult;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
+import com.zantong.mobilecttx.order.bean.MessageResult;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

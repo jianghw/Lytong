@@ -2,9 +2,9 @@ package com.zantong.mobilecttx.interf;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import com.zantong.mobilecttx.user.bean.CouponFragmentBean;
-import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
-import com.zantong.mobilecttx.user.bean.MessageResult;
+import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
+import com.zantong.mobilecttx.order.bean.MessageResult;
 
 import java.util.List;
 
@@ -16,12 +16,8 @@ public interface ICouponAtyContract {
 
     interface ICouponAtyView extends IMvpView<ICouponAtyPresenter> {
 
-        void onShowLoading();
-
         /**
          * 请求响应成功
-         *
-         * @param result
          */
         void usrCouponInfoSucceed(CouponFragmentResult result);
 

@@ -21,7 +21,7 @@ import java.util.List;
  */
 public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
 
-    private XRecyclerView mCustomRecycler;
+    protected XRecyclerView mCustomRecycler;
     private android.widget.RelativeLayout layEmpty;
     private android.widget.ImageView imgEmpty;
     private android.widget.TextView tvEmpty;
@@ -69,6 +69,8 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
         mCustomRecycler.setPullRefreshEnabled(isRefresh());
         mCustomRecycler.setLoadingMoreEnabled(isLoadMore());
 
+        initRecyclerHeader(customViewHeader());
+
         if (getRecyclerHeader() != null) {
             mCustomRecycler.addHeaderView(getRecyclerHeader());
         }
@@ -112,6 +114,10 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
         mCustomRecycler.setAdapter(mAdapter);
 
         initFragmentView(view);
+    }
+
+    protected View customViewHeader() {
+        return null;
     }
 
     /**
@@ -287,4 +293,7 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
         layEmpty.setVisibility(mAdapter.getItemCount() < 1 ? View.VISIBLE : View.GONE);
     }
 
+    protected XRecyclerView getCustomRecycler() {
+        return mCustomRecycler;
+    }
 }

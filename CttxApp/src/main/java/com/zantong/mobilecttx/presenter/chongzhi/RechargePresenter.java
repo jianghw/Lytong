@@ -44,6 +44,7 @@ public class RechargePresenter implements IRechargeAtyContract.IRechargeAtyPrese
 
     @Override
     public void unSubscribe() {
+        mAtyView.dismissLoadingDialog();
         mSubscriptions.clear();
     }
 

@@ -47,7 +47,7 @@ import com.zantong.mobilecttx.map.bean.YearCheckDetailResult;
 import com.zantong.mobilecttx.map.bean.YearCheckResult;
 import com.zantong.mobilecttx.user.bean.BonusResult;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
-import com.zantong.mobilecttx.user.bean.MessageResult;
+import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
 import com.zantong.mobilecttx.user.dto.BonusDTO;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;

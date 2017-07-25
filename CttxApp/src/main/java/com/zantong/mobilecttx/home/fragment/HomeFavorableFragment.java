@@ -118,7 +118,6 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onFirstDataVisible() {
-
         //广告页本地加载
         List<Integer> localImages = new ArrayList<>();
         localImages.add(R.mipmap.banner);

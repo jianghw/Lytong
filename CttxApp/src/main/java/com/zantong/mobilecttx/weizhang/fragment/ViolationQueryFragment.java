@@ -398,8 +398,8 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         }
 
         String carNum = getTvProvince() + plate;
-        initCarInfoDto(carNum, engine, carType);
-        initBindCarDTO(carNum, engine, carType);
+        initCarInfoDto(carNum, engine, vehicleCode);
+        initBindCarDTO(carNum, engine, vehicleCode);
 
         GlobalConfig.getInstance().eventIdByUMeng(13);
         submitData();
@@ -498,12 +498,12 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
      * violationflag	是	string	违章提醒标识
      * enginenum	是	string	发动机号 加密
      */
-    private void initCarInfoDto(String carNum, String engine, String carType) {
+    private void initCarInfoDto(String carNum, String engine, String vehicleCode) {
         mCarInfoDTO.setUsrid(PublicData.getInstance().userID);
         mCarInfoDTO.setCarnum(carNum);
         mCarInfoDTO.setEnginenum(engine);
         //数字
-        mCarInfoDTO.setCarnumtype(VehicleTypeTools.switchVehicleCode(carType));
+        mCarInfoDTO.setCarnumtype(vehicleCode);
 
         mCarInfoDTO.setCarmodel("");
         mCarInfoDTO.setIspaycar("0");
@@ -554,10 +554,10 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
      * usrnum	是	string	安盛id
      * issueDate	否	string	初次领证日期
      */
-    private void initBindCarDTO(String carNum, String engine, String carType) {
+    private void initBindCarDTO(String carNum, String engine, String vehicleCode) {
         mBindCarDTO.setPlateNo(carNum);
         mBindCarDTO.setEngineNo(engine);
-        mBindCarDTO.setVehicleType(carType);
+        mBindCarDTO.setVehicleType(vehicleCode);
         mBindCarDTO.setUsrnum(PublicData.getInstance().userID);
         mBindCarDTO.setIssueDate(getTvData());
 

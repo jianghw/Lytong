@@ -33,9 +33,10 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserForPayActivity;
 import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
 import com.zantong.mobilecttx.interf.IRechargeAtyContract;
-import com.zantong.mobilecttx.user.activity.CouponDetailActivity;
+import com.zantong.mobilecttx.order.activity.CouponDetailActivity;
+import com.zantong.mobilecttx.order.activity.CouponListActivity;
+import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
-import com.zantong.mobilecttx.user.bean.CouponFragmentBean;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
@@ -47,6 +48,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
 
 
@@ -231,7 +233,6 @@ public class RechargeFragment extends PullableBaseFragment
     public void onDestroyView() {
         super.onDestroyView();
 
-        dismissLoadingDialog();
         mPresenter.unSubscribe();
         mRechargeDTO = null;
         if (priceList != null) priceList.clear();
@@ -354,21 +355,15 @@ public class RechargeFragment extends PullableBaseFragment
                 if (initDiscountCoupon() == null || initDiscountCoupon().size() < 1) {
                     if (mPresenter != null) mPresenter.getCouponByType();
                 } else {
-                    DialogUtils.createCouponSelectDialog(this.getActivity(),
-                            "优惠劵",
-                            initDiscountCoupon(),
-                            new DialogUtils.DialogOnClickBack() {
-                                @Override
-                                public void onRechargeProviderClick(View view, Object data) {
-                                    couponDialogClickBack(data);
-                                }
-                            },
-                            new DialogUtils.ActivityOnClick() {
-                                @Override
-                                public void onActivityCouponClick(View view) {
-                                    openCouponActy();
-                                }
-                            });
+                    Intent intent = new Intent(getActivity(), CouponListActivity.class);
+                    Bundle bundle = new Bundle();
+                    List<RechargeCouponBean> list = initDiscountCoupon();
+                    ArrayList<RechargeCouponBean> arrayList = new ArrayList<>();
+                    arrayList.addAll(list);
+
+                    bundle.putParcelableArrayList(GlobalConstant.putExtra.recharge_coupon_extra, arrayList);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
                 break;
             case R.id.tv_agreement://充值协议
@@ -378,6 +373,27 @@ public class RechargeFragment extends PullableBaseFragment
                 submitFormValidation();
                 break;
         }
+    }
+
+    /**
+     * @deprecated 旧
+     */
+    protected void oldChoiceCoupon() {
+        DialogUtils.createCouponSelectDialog(this.getActivity(),
+                "优惠劵",
+                initDiscountCoupon(),
+                new DialogUtils.DialogOnClickBack() {
+                    @Override
+                    public void onRechargeProviderClick(View view, Object data) {
+                        couponDialogClickBack(data);
+                    }
+                },
+                new DialogUtils.ActivityOnClick() {
+                    @Override
+                    public void onActivityCouponClick(View view) {
+                        openCouponActy();
+                    }
+                });
     }
 
     /**

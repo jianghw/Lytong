@@ -1,5 +1,8 @@
 package com.zantong.mobilecttx.chongzhi.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by jianghw on 2017/6/5.
  * Description:
@@ -7,8 +10,7 @@ package com.zantong.mobilecttx.chongzhi.bean;
  * Update day:
  */
 
-public class RechargeCouponBean {
-
+public class RechargeCouponBean implements Parcelable {
 
     /**
      * id : 1
@@ -38,7 +40,7 @@ public class RechargeCouponBean {
     private String couponName;
     private int couponType;
     private String couponUse;
-    private Object couponCode;
+    private String couponCode;
     private String couponContent;
     private int couponValue;
 
@@ -90,11 +92,11 @@ public class RechargeCouponBean {
         this.couponUse = couponUse;
     }
 
-    public Object getCouponCode() {
+    public String getCouponCode() {
         return couponCode;
     }
 
-    public void setCouponCode(Object couponCode) {
+    public void setCouponCode(String couponCode) {
         this.couponCode = couponCode;
     }
 
@@ -113,4 +115,52 @@ public class RechargeCouponBean {
     public void setCouponValue(int couponValue) {
         this.couponValue = couponValue;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte(this.isChoice ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.id);
+        dest.writeString(this.couponValidityEnd);
+        dest.writeString(this.couponImage);
+        dest.writeString(this.couponName);
+        dest.writeInt(this.couponType);
+        dest.writeString(this.couponUse);
+        dest.writeString(this.couponCode);
+        dest.writeString(this.couponContent);
+        dest.writeInt(this.couponValue);
+    }
+
+    public RechargeCouponBean() {
+    }
+
+    protected RechargeCouponBean(Parcel in) {
+        this.isChoice = in.readByte() != 0;
+        this.id = in.readInt();
+        this.couponValidityEnd = in.readString();
+        this.couponImage = in.readString();
+        this.couponName = in.readString();
+        this.couponType = in.readInt();
+        this.couponUse = in.readString();
+        this.couponCode = in.readString();
+        this.couponContent = in.readString();
+        this.couponValue = in.readInt();
+    }
+
+    public static final Parcelable.Creator<RechargeCouponBean> CREATOR = new Parcelable.Creator<RechargeCouponBean>() {
+        @Override
+        public RechargeCouponBean createFromParcel(Parcel source) {
+            return new RechargeCouponBean(source);
+        }
+
+        @Override
+        public RechargeCouponBean[] newArray(int size) {
+            return new RechargeCouponBean[size];
+        }
+    };
 }

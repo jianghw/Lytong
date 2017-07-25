@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.user.fragment;
+package com.zantong.mobilecttx.order.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,27 +6,28 @@ import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.fragment.BaseListFragment;
+import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.presenter.CouponAtyPresenter;
 import com.zantong.mobilecttx.interf.ICouponAtyContract;
-import com.zantong.mobilecttx.user.activity.CouponDetailActivity;
-import com.zantong.mobilecttx.user.adapter.CouponAdapter;
-import com.zantong.mobilecttx.user.bean.CouponFragmentBean;
-import com.zantong.mobilecttx.user.bean.CouponFragmentLBean;
-import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
-import com.zantong.mobilecttx.user.bean.MessageResult;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.zantong.mobilecttx.presenter.CouponAtyPresenter;
+import com.zantong.mobilecttx.order.activity.CouponDetailActivity;
+import com.zantong.mobilecttx.order.adapter.CouponAdapter;
+import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
+import com.zantong.mobilecttx.order.bean.CouponFragmentLBean;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
+import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.widght.SpaceItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.util.ToastUtils;
+
 /**
  * 优惠券
  */
 
-public class CouponFragment extends BaseListFragment<CouponFragmentBean>
+public class CouponFragment extends BaseRecyclerListJxFragment<CouponFragmentBean>
         implements ICouponAtyContract.ICouponAtyView {
 
 
@@ -42,11 +43,9 @@ public class CouponFragment extends BaseListFragment<CouponFragmentBean>
     }
 
     @Override
-    public void initView(View view) {
-        super.initView(view);
-
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.ds_48);
-        getListView().addItemDecoration(new SpaceItemDecoration(spacingInPixels));
+    protected void initFragmentView(View view) {
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.ds_30);
+        getCustomRecycler().addItemDecoration(new SpaceItemDecoration(spacingInPixels));
 
         CouponAtyPresenter mPresenter = new CouponAtyPresenter(
                 Injection.provideRepository(getActivity().getApplicationContext()), this);
@@ -82,18 +81,13 @@ public class CouponFragment extends BaseListFragment<CouponFragmentBean>
     }
 
     @Override
-    protected void onLoadMoreData() {
-        getData();
+    protected void onFirstDataVisible() {
+        if (mPresenter != null) mPresenter.usrCouponInfo();
     }
 
     @Override
     protected void onRefreshData() {
-        getData();
-    }
-
-    @Override
-    protected void getData() {
-        if (mPresenter != null) mPresenter.usrCouponInfo();
+        onFirstDataVisible();
     }
 
     /**
@@ -102,21 +96,6 @@ public class CouponFragment extends BaseListFragment<CouponFragmentBean>
     @Override
     public BaseAdapter<CouponFragmentBean> createAdapter() {
         return new CouponAdapter(getCouponStatus());
-    }
-
-    @Override
-    protected boolean isRefresh() {
-        return true;
-    }
-
-    /**
-     * 不可加载更多
-     *
-     * @return false
-     */
-    @Override
-    protected boolean isLoadMore() {
-        return false;
     }
 
     /**
@@ -131,7 +110,7 @@ public class CouponFragment extends BaseListFragment<CouponFragmentBean>
 
     @Override
     protected int resetDeleteItemHeight() {
-        return getResources().getDimensionPixelSize(R.dimen.ds_180);
+        return getResources().getDimensionPixelSize(R.dimen.ds_210);
     }
 
     @Override
@@ -141,33 +120,33 @@ public class CouponFragment extends BaseListFragment<CouponFragmentBean>
             List<CouponFragmentBean> couponList = dateBean.getCouponList();
             mPresenter.processingDataFiltrate(couponList);
         } else {
-            setDataResult(null);
+            setSimpleDataResult(null);
         }
     }
 
     @Override
     public void usrCouponInfoError(String message) {
-        onShowFailed();
-        ToastUtils.showShort(getContext().getApplicationContext(), message);
+        dismissLoadingDialog();
+        ToastUtils.toastShort(message);
     }
 
     @Override
     public void delUsrCouponSucceed(MessageResult result, int position) {
         mAdapter.remove(position);
-        ToastUtils.showShort(getContext().getApplicationContext(), result.getResponseDesc());
+        ToastUtils.toastShort(result.getResponseDesc());
 
-        if (position == 0 && mAdapter.getAll().isEmpty()) getData();
+        if (position == 0 && mAdapter.getAll().isEmpty()) onFirstDataVisible();
     }
 
     @Override
     public void delUsrCouponError(String message) {
-        ToastUtils.showShort(getContext().getApplicationContext(), message);
+        ToastUtils.toastShort(message);
         dismissLoadingDialog();
     }
 
     @Override
     public void setListDataResult(List<CouponFragmentBean> megList) {
-        setDataResult(megList);
+        setSimpleDataResult(megList);
     }
 
     @Override
@@ -189,5 +168,10 @@ public class CouponFragment extends BaseListFragment<CouponFragmentBean>
     public String getCouponStatus() {
         int anInt = getArguments().getInt(POSITION, 1);
         return String.valueOf(anInt);
+    }
+
+    @Override
+    protected void DestroyViewAndThing() {
+        if (mPresenter != null) mPresenter.unSubscribe();
     }
 }

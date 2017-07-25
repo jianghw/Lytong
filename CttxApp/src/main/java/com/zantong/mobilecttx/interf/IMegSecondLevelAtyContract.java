@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.interf;
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.user.bean.Meg;
-import com.zantong.mobilecttx.user.bean.MessageResult;
+import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 
 import java.util.List;

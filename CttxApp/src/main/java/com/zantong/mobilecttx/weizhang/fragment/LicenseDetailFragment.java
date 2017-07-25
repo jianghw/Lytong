@@ -14,7 +14,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.interf.ILicenseGradeAtyContract;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.weizhang.activity.ViolationQueryAcitvity;
+import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
 import com.zantong.mobilecttx.weizhang.adapter.LicenseDetailAdapter;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.RspInfoBean;
@@ -165,7 +165,7 @@ public class LicenseDetailFragment extends BaseRefreshJxFragment
         mTvFinger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Act.getInstance().gotoIntent(getActivity(), ViolationQueryAcitvity.class);
+                Act.getInstance().gotoIntent(getActivity(), ViolationActivity.class);
             }
         });
         mTvPrompt = (TextView) view.findViewById(R.id.tv_prompt);
@@ -221,14 +221,11 @@ public class LicenseDetailFragment extends BaseRefreshJxFragment
      */
     @Override
     public void driverLicenseCheckGradeSucceed(LicenseResponseBean result) {
-        setLayoutVisibilityByRefresh(false);
-
-        RspInfoBean rspInfo = result.getRspInfo();
 //        mTvScore.setText(rspInfo != null ? String.valueOf(rspInfo.getTotcent()) : "0");
 
+        RspInfoBean rspInfo = result.getRspInfo();
         List<RspInfoBean.ViolationInfoBean> infoBeanList = rspInfo.getViolationInfo();
         setDataResult(infoBeanList);
-
         ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
     }
 
@@ -266,20 +263,10 @@ public class LicenseDetailFragment extends BaseRefreshJxFragment
      * 数据加载
      */
     protected void setDataResult(List<RspInfoBean.ViolationInfoBean> list) {
-        showListViewLayout(list);
-    }
-
-    private void showListViewLayout(List<RspInfoBean.ViolationInfoBean> list) {
-        if (mCurrentPage == 1) mAdapter.removeAll();
-
-        if (list != null && list.size() > 0) {
-            mAdapter.append(list);
-            mCurrentPage += 1;
-        } else {
-            mAdapter.removeAll();
-        }
-        mCustomRecycler.refreshComplete();
-
+        mAdapter.append(list);
         mLayError.setVisibility(mAdapter.getItemCount() < 1 ? View.VISIBLE : View.GONE);
+
+        setLayoutVisibilityByRefresh(false);
     }
+
 }

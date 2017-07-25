@@ -49,6 +49,10 @@ public class LicenseCheckGradeActivity extends BaseJxActivity implements View.On
     }
 
     @Override
+    protected void bundleIntent(Bundle savedInstanceState) {
+    }
+
+    @Override
     protected void initFragmentView(View view) {
         initTitleContent("驾驶证查分");
 
@@ -62,10 +66,7 @@ public class LicenseCheckGradeActivity extends BaseJxActivity implements View.On
                 showDataDialog();
             }
         });
-    }
 
-    @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
         initIntentData();
     }
 

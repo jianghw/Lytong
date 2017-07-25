@@ -1,54 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@color/colorNoticeGrayNumberFont"
-    android:fitsSystemWindows="true">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorBgGray_f8"
+              android:orientation="vertical">
 
-    <include
-        android:id="@+id/title"
-        layout="@layout/cttx_title"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
+        android:layout_marginTop="@dimen/ds_30"
+        android:background="@color/colorWhite"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="罚单信息"
+            android:textColor="@color/colorTvRed_f33"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/img_camera"
+            android:gravity="right"
+            android:text="扫罚单"
+            android:textColor="@color/colorTvGray_7f"
+            android:textSize="@dimen/fs_14sp"/>
+
+        <ImageView
+            android:id="@+id/img_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:src="@mipmap/ic_btn_scan"/>
+    </RelativeLayout>
+
+    <include layout="@layout/view_line1"/>
+
     <RelativeLayout
         android:id="@+id/code_query_rl"
         android:layout_width="match_parent"
-        android:layout_height="48dip"
-        android:paddingRight="16dip"
-        android:paddingLeft="16dip"
-        android:layout_marginTop="15dip"
-        android:layout_below="@id/title"
-        android:background="@color/white">
+        android:layout_height="@dimen/ds_120"
+        android:background="@color/colorWhite"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
+
         <TextView
             android:id="@+id/citation_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:text="罚单编号"
-            style="@style/TextInfoStyle"/>
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
         <ImageView
             android:id="@+id/citation_notice_image"
-            android:layout_width="20dip"
-            android:layout_height="20dip"
-            android:layout_toRightOf="@id/citation_text"
-            android:src="@drawable/illegal_query_notice_selector"
-            android:layout_marginLeft="10dip"
-            android:layout_centerVertical="true"/>
+            android:layout_width="@dimen/ds_48"
+            android:layout_height="@dimen/ds_48"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_15"
+            android:layout_toRightOf="@+id/citation_text"
+            android:src="@drawable/illegal_query_notice_selector"/>
+
         <EditText
             android:id="@+id/pay_code_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_96"
             android:layout_toRightOf="@id/citation_notice_image"
+            android:background="@null"
             android:gravity="center_vertical|right"
+            android:hint="请输入罚单条形码编号"
             android:inputType="number"
             android:maxLength="16"
-            android:layout_centerVertical="true"
+            android:maxLines="1"
+            android:minWidth="@dimen/ds_180"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textColorHint="@color/colorLineGray_e5"
             android:textCursorDrawable="@null"
-            android:background="@null"
-            style="@style/TextInfoStyle"
-            android:hint="请输入罚单条形码编号"/>
+            android:textSize="@dimen/fs_16sp"/>
     </RelativeLayout>
+
     <Button
         android:id="@+id/next_btn"
-        style="@style/ButtonBigStyle"
-        android:layout_marginTop="24dip"
-        android:layout_below="@id/code_query_rl"
-        android:text="查询"/>
-</RelativeLayout>
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_150"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/ds_45"
+        android:layout_marginRight="@dimen/ds_45"
+        android:layout_marginTop="@dimen/ds_150"
+        android:background="@drawable/bg_submit_btn_shade"
+        android:text="查  询"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/fs_18sp"/>
+</LinearLayout>

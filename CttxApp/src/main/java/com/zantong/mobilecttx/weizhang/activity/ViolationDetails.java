@@ -29,7 +29,6 @@ import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.StateBarSetting;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.TitleSetting;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.popwindow.SurePayPopupWindows;
@@ -46,6 +45,7 @@ import java.util.HashMap;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
@@ -54,8 +54,6 @@ import cn.qqtheme.framework.util.primission.PermissionSuccess;
 public class ViolationDetails extends FragmentActivity implements ModelView {
     @Bind(R.id.next_btn)
     Button nextBtn;
-    //    @Bind(R.id.violation_state_text)
-//    TextView violationStateText;
     @Bind(R.id.violation_location_text)
     TextView violation_location_text;
     @Bind(R.id.violation_content_text)
@@ -104,6 +102,7 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.violation_details);
+
         ButterKnife.bind(this);
         if ("1".equals(PublicData.getInstance().mHashMap.get("mRes"))) {
             TitleSetting.getInstance().initTitle(this, "缴费详情", R.mipmap.back_btn_image, "返回", null, null);
@@ -247,7 +246,6 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
             mDesc.setVisibility(View.GONE);
         }
     }
-
 
     public HashMap<String, String> mapData() {
         HashMap<String, String> mHashMap = new HashMap<>();

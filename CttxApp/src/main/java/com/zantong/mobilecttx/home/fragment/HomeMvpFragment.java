@@ -576,8 +576,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
             case R.id.home_check://驾驶证查分
                 MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(35));
 
-                LicenseFileNumDTO bean = SPUtils.getInstance(
-                ).getLicenseFileNumDTO();
+                LicenseFileNumDTO bean = SPUtils.getInstance().getLicenseFileNumDTO();
                 if (!PublicData.getInstance().loginFlag ||
                         bean == null && TextUtils.isEmpty(PublicData.getInstance().filenum)) {
                     Act.getInstance().lauchIntentToLogin(this.getActivity(), LicenseCheckGradeActivity.class);

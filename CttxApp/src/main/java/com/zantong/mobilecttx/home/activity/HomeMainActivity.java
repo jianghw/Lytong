@@ -52,7 +52,6 @@ public class HomeMainActivity extends BaseJxActivity {
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
-
     }
 
     @Override

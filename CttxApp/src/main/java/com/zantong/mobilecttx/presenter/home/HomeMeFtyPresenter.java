@@ -8,7 +8,7 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.interf.IHomeMeFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
-import com.zantong.mobilecttx.user.bean.CouponFragmentResult;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 
 import rx.Subscription;

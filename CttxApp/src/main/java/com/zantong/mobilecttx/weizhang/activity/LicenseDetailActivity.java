@@ -33,6 +33,7 @@ public class LicenseDetailActivity extends BaseJxActivity {
      * 是否手动关闭当前页面
      */
     private boolean isClose;
+    private LicenseFileNumDTO bean;
 
     /**
      * 状态栏颜色
@@ -47,28 +48,22 @@ public class LicenseDetailActivity extends BaseJxActivity {
     }
 
     @Override
-    protected void initFragmentView(View view) {
-        setTvRightVisible("编辑");
-        setTitleBackgroundRed();
-
-        initTitleContent("本计分周期累计扣分");
-    }
-
-    protected void rightClickListener() {
-        Intent intent = new Intent(this, LicenseCheckGradeActivity.class);
-        startActivity(intent);
-        if (isClose) finish();
-    }
-
-    @Override
     protected void bundleIntent(Bundle savedInstanceState) {
         Intent intent = getIntent();
-        LicenseFileNumDTO bean = null;
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             bean = bundle.getParcelable(KEY_BUNDLE);
             isClose = bundle.getBoolean(LicenseCheckGradeActivity.KEY_BUNDLE_FINISH, false);
         }
+    }
+
+    @Override
+    protected void initFragmentView(View view) {
+        setTvRightVisible("编辑");
+        setTitleBackgroundRed();
+
+        initTitleContent("本计分周期累计扣分");
+
         if (bean != null) {
             String beanStrtdt = bean.getStrtdt();
             String startDay = removeDateAcross(beanStrtdt);
@@ -89,6 +84,12 @@ public class LicenseDetailActivity extends BaseJxActivity {
             LicenseGradeAtyPresenter mPresenter = new LicenseGradeAtyPresenter(
                     Injection.provideRepository(getApplicationContext()), detailFragment);
         }
+    }
+
+    protected void rightClickListener() {
+        Intent intent = new Intent(this, LicenseCheckGradeActivity.class);
+        startActivity(intent);
+        if (isClose) finish();
     }
 
     @Override

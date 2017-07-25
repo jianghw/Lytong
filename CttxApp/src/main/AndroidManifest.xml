@@ -304,9 +304,21 @@
         <activity
             android:name=".user.activity.MegTypeActivity"
             android:screenOrientation="portrait"/>
+
+        <!-- ======================优惠劵模块=========================== -->
+        <!--优惠劵-->
         <activity
-            android:name=".user.activity.CouponActivity"
+            android:name=".order.activity.CouponActivity"
             android:screenOrientation="portrait"/>
+        <!--优惠劵详情-->
+        <activity
+            android:name=".order.activity.CouponDetailActivity"
+            android:screenOrientation="portrait"/>
+        <!--加油优惠劵选择-->
+        <activity
+            android:name=".order.activity.CouponListActivity"
+            android:screenOrientation="portrait"/>
+
         <!-- 活动报名 -->
         <activity
             android:name=".huodong.activity.HundredPlanActivity"
@@ -380,7 +392,6 @@
             android:name=".card.activity.CardNoticeActivity"
             android:screenOrientation="portrait"/>
 
-
         <!--========================车辆管理模块================================-->
         <!--车辆管理-->
         <activity
@@ -408,9 +419,6 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".weizhang.activity.LicenseDetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".user.activity.CouponDetailActivity"
             android:screenOrientation="portrait"/>
 
         <!-- ===================活动模块=========================================-->
@@ -449,7 +457,6 @@
         <activity
             android:name=".share.activity.CarBeautyActivity"
             android:screenOrientation="portrait"/>
-
 
         <meta-data
             android:name="com.zantong.mobilecttx.utils.imagetools.UnsafeOkHttpGlideModule"

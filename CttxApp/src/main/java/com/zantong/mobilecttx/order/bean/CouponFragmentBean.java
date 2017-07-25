@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.user.bean;
+package com.zantong.mobilecttx.order.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
