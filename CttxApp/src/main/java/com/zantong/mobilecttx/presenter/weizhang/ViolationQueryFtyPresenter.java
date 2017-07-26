@@ -182,7 +182,7 @@ public class ViolationQueryFtyPresenter implements IViolationQueryFtyContract.IV
         BindCarDTO carDTO = new BindCarDTO();
         carDTO.setPlateNo(RSAUtils.strByEncryption(bindCarDTO.getPlateNo(), true));
         carDTO.setEngineNo(RSAUtils.strByEncryption(bindCarDTO.getEngineNo(), true));
-        carDTO.setVehicleType(RSAUtils.strByEncryption(bindCarDTO.getVehicleType(), true));
+        carDTO.setVehicleType(bindCarDTO.getVehicleType());
         carDTO.setUsrnum(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
         carDTO.setIssueDate(bindCarDTO.getIssueDate());
 
