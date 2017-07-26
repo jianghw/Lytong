@@ -363,7 +363,7 @@ public class RechargeFragment extends PullableBaseFragment
 
                     bundle.putParcelableArrayList(GlobalConstant.putExtra.recharge_coupon_extra, arrayList);
                     intent.putExtras(bundle);
-                    startActivity(intent);
+                    startActivityForResult(intent, GlobalConstant.requestCode.recharge_coupon_list);
                 }
                 break;
             case R.id.tv_agreement://充值协议
@@ -373,6 +373,47 @@ public class RechargeFragment extends PullableBaseFragment
                 submitFormValidation();
                 break;
         }
+    }
+
+    /**
+     * 页面回掉
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (data != null && requestCode == GlobalConstant.requestCode.recharge_coupon_list
+                && resultCode == GlobalConstant.resultCode.recharge_coupon_choice) {
+            Bundle bundle = data.getExtras();
+            RechargeCouponBean couponBean = bundle.getParcelable(
+                    GlobalConstant.putExtra.recharge_coupon_bean_extra);
+            couponActivityResult(couponBean);
+        } else if (data != null && requestCode == GlobalConstant.requestCode.recharge_coupon_list
+                && resultCode == GlobalConstant.resultCode.recharge_coupon_unchoice) {
+
+            couponActivityResult(null);
+        }
+    }
+
+    /**
+     * 选择优惠后显示
+     */
+    private void couponActivityResult(RechargeCouponBean couponBean) {
+        if (couponBean != null && couponList != null && couponList.size() > 0) {
+            for (RechargeCouponBean bean : couponList) {
+                if (bean.getId() == couponBean.getId()) {
+                    bean.setChoice(true);
+                    isChoice = bean.isChoice();
+                    displayCouponByBean(bean);
+                } else {
+                    bean.setChoice(false);
+                }
+            }
+        } else {
+            isChoice = false;
+            displayCouponState("不使用优惠劵");
+        }
+        priceStateList(mProviderType);
     }
 
     /**
@@ -636,7 +677,7 @@ public class RechargeFragment extends PullableBaseFragment
      */
     @Override
     public void onCouponByTypeSucceed(RechargeCouponResult result) {
-        if (result != null && result.getData() != null) {
+        if (result.getData() != null) {
 
             List<RechargeCouponBean> resultData = result.getData();
             if (couponList == null) couponList = new ArrayList<>();

@@ -1,6 +1,5 @@
 package com.zantong.mobilecttx.common.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,23 +18,21 @@ import butterknife.ButterKnife;
  */
 
 public class CommonProblemAdapter extends BaseAdapter<CommonProblem> {
-    private Context mContext;
-
 
     @Override
     public void showData(BaseRecyclerViewHolder viewHolder, int position, CommonProblem data) {
-        ViewHolder holder = (ViewHolder)viewHolder;
-        if (data != null){
-            holder.mText.setText(data.getProblemId() + ". " + data.getProblemChileTitle());
+        ViewHolder holder = (ViewHolder) viewHolder;
+        if (data != null) {
+            holder.mTextPositon.setText(data.getProblemId() + "、");
+            holder.mText.setText(data.getProblemChileTitle());
         }
     }
 
     @Override
     public View createView(ViewGroup viewGroup, int i) {
-        mContext = viewGroup.getContext();
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.item_commom_problem, viewGroup,false);
-        return view;
+
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        return inflater.inflate(R.layout.item_commom_problem, viewGroup, false);
     }
 
     @Override
@@ -47,6 +44,8 @@ public class CommonProblemAdapter extends BaseAdapter<CommonProblem> {
      * 自定义的ViewHolder，持有每个Item的的所有界面元素
      */
     public static class ViewHolder extends BaseRecyclerViewHolder {
+        @Bind(R.id.tv_positon)
+        TextView mTextPositon;
         @Bind(R.id.common_problem_title)
         TextView mText;
 

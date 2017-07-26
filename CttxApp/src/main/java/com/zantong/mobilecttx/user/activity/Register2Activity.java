@@ -20,7 +20,7 @@ import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
-import com.zantong.mobilecttx.card.activity.CardHomeActivity;
+import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
@@ -53,6 +53,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.Bind;
+import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 
@@ -295,8 +296,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                                 PublicData.getInstance().loginFlag = true;
                                 commitLocalCar();
                                 commitIllegalHistory();
-//                                ToastUtils.showShort(Register2Activity.this, "注册申请已提交");
-//                                if(!"0".equals(AccountRememberCtrl.getLoginAD(Register2Activity.this)) && !Tools.isStrEmpty(PublicData.getInstance().cttxCardNumber)){
+
                                 new DialogMgr(Register2Activity.this,
                                         "登录成功！",
                                         "欢迎你加入畅通车友会\n赶快去添加你的牡丹畅通卡吧！",
@@ -305,7 +305,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                                         new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                Act.getInstance().lauchIntent(Register2Activity.this, CardHomeActivity.class);
+                                                Act.getInstance().lauchIntent(Register2Activity.this, UnblockedCardActivity.class);
                                                 ScreenManager.getScreenManager().specialMethod();
                                             }
                                         },
@@ -326,7 +326,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                                         });
                                 EventBus.getDefault().post(new CarInfoEvent(true));
                             } else {
-                                ToastUtils.showShort(Register2Activity.this, result.getSYS_HEAD().getReturnMessage());
+                                ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
                             }
                         }
 
@@ -349,7 +349,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                         e.printStackTrace();
                     }
                     showDialogLoading();
-                    UserApiClient.reset(this, dto, new CallBack<LoginResult>() {
+                    UserApiClient.reset(ContextUtils.getContext(), dto, new CallBack<LoginResult>() {
                         @Override
                         public void onSuccess(LoginResult result) {
                             hideDialogLoading();

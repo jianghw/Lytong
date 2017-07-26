@@ -216,7 +216,7 @@ public class WeiZhangHistoryActivity extends BaseMvpActivity<IBaseView, HelpPres
     //多布局多实体的Adapter
     private void testSuperAdapter(List<CarInfoDTO> list) {
         mXRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        int[] layoutIds = {R.layout.item_manage_vehicles, R.layout.item_manage_vehicles_group};
+        int[] layoutIds = {R.layout.recycle_list_item_car, R.layout.item_manage_vehicles_group};
         adapter = new SuperAdapter(this, layoutIds);
         mXRecyclerView.setAdapter(adapter);
 
@@ -225,7 +225,7 @@ public class WeiZhangHistoryActivity extends BaseMvpActivity<IBaseView, HelpPres
             public void bind(Context context, SuperViewHolder holder, CarInfoDTO item, int position) {
                 TextView mCarNum = holder.getView(R.id.item_manage_vehicles_num);
                 TextView mCarPayFlag = holder.getView(R.id.item_manage_vehicles_flag);
-                TextView mCarSignFlag = holder.getView(R.id.item_manage_activity_car);
+
                 mCarNum.setText(item.getCarnum());
                 if ("1".equals(item.getIspaycar())) {
                     mCarPayFlag.setVisibility(View.VISIBLE);
@@ -233,11 +233,7 @@ public class WeiZhangHistoryActivity extends BaseMvpActivity<IBaseView, HelpPres
                     mCarPayFlag.setVisibility(View.GONE);
                 }
                 if (!TextUtils.isEmpty(item.getActivityCar())) {
-                    if (item.getActivityCar().equals("1")) {
-                        mCarSignFlag.setVisibility(View.VISIBLE);
-                    } else {
-                        mCarSignFlag.setVisibility(View.GONE);
-                    }
+
                 }
             }
         };
@@ -267,12 +263,12 @@ public class WeiZhangHistoryActivity extends BaseMvpActivity<IBaseView, HelpPres
 
         data.add(new LayoutWrapper(R.layout.item_manage_vehicles_group, new SuperBean("可缴费车辆", false), holderSuper));
         for (CarInfoDTO dto : list1){
-            data.add(new LayoutWrapper(R.layout.item_manage_vehicles,dto,holderSimple));
+            data.add(new LayoutWrapper(R.layout.recycle_list_item_car,dto,holderSimple));
         }
 
         data.add(new LayoutWrapper(R.layout.item_manage_vehicles_group, new SuperBean("紧查询车辆", false), holderSuper));
         for (CarInfoDTO dto : list2){
-            data.add(new LayoutWrapper(R.layout.item_manage_vehicles,dto,holderSimple));
+            data.add(new LayoutWrapper(R.layout.recycle_list_item_car,dto,holderSimple));
         }
         adapter.setData(data);
     }

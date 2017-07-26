@@ -75,6 +75,8 @@ public abstract class BaseJxActivity extends AppCompatActivity {
         }
 
         if (isNeedKnife()) ButterKnife.bind(this);
+
+        initViewStatus();
     }
 
     @Override
@@ -162,6 +164,17 @@ public abstract class BaseJxActivity extends AppCompatActivity {
         }
     }
 
+    protected void setImageRightVisible(int imgRed) {
+        if (mImgHome != null && mImgHome.getVisibility() != View.VISIBLE) {
+            mImgHome.setVisibility(View.VISIBLE);
+            mImgHome.setImageResource(imgRed != 0 ? imgRed : R.mipmap.btn_homepage);
+        }
+
+        if (mTvRight != null && mTvRight.getVisibility() != View.GONE) {
+            mTvRight.setVisibility(View.GONE);
+        }
+    }
+
     /**
      * 定义渐变色红色
      */
@@ -205,6 +218,13 @@ public abstract class BaseJxActivity extends AppCompatActivity {
      */
     protected boolean isNeedKnife() {
         return false;
+    }
+
+    /**
+     * 有些用Knife 的页面也许会用到
+     * 注册控件之后
+     */
+    protected void initViewStatus() {
     }
 
     /**

@@ -19,7 +19,7 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.bean.BaseResult;
-import com.zantong.mobilecttx.car.activity.CarManageActivity;
+import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.huodong.bean.ActivitySignNum;
@@ -122,7 +122,7 @@ public class HundredPlanActivity extends BaseMvpActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.hundred_plan_addcar:
-                Act.getInstance().gotoIntent(this, CarManageActivity.class);
+                Act.getInstance().lauchIntentToLogin(this, ManageCarActivity.class);
                 finish();
                 break;
             case R.id.hundred_plan_selcar:

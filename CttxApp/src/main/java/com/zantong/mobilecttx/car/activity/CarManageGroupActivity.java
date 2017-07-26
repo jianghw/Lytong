@@ -109,7 +109,7 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
         getEnsureView().setLayoutParams(lp);
         getEnsureView().setBackgroundResource(R.mipmap.icon_add_car);
         mXRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        int[] layoutIds = {R.layout.item_manage_vehicles, R.layout.item_manage_vehicles_group};
+        int[] layoutIds = {R.layout.recycle_list_item_car, R.layout.item_manage_vehicles_group};
 
         adapter = new SuperAdapter(this, layoutIds);
         mXRecyclerView.setAdapter(adapter);
@@ -277,10 +277,11 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
         DataHolder<CarInfoDTO> holderSimple = new DataHolder<CarInfoDTO>() {
             @Override
             public void bind(Context context, SuperViewHolder holder, final CarInfoDTO item, int position) {
-                View mLayout = holder.getView(R.id.item_manage_vehicles_layout);
+
                 TextView mCarNum = holder.getView(R.id.item_manage_vehicles_num);
                 TextView mCarPayFlag = holder.getView(R.id.item_manage_vehicles_flag);
-                TextView mCarSignFlag = holder.getView(R.id.item_manage_activity_car);
+
+
                 mCarNum.setText(item.getCarnum());
                 if ("1".equals(item.getIspaycar())) {
                     mCarPayFlag.setVisibility(View.VISIBLE);
@@ -288,20 +289,9 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
                     mCarPayFlag.setVisibility(View.GONE);
                 }
                 if (!TextUtils.isEmpty(item.getActivityCar())) {
-                    if (item.getActivityCar().equals("1")) {
-                        mCarSignFlag.setVisibility(View.VISIBLE);
-                    } else {
-                        mCarSignFlag.setVisibility(View.GONE);
-                    }
+
                 }
-                mLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        PublicData.getInstance().mHashMap.put("ConsummateInfo", item);
-                        AddCarActivity.isFrom = true;
-                        Act.getInstance().gotoIntent(CarManageGroupActivity.this, AddCarActivity.class);
-                    }
-                });
+
             }
         };
 
@@ -330,13 +320,13 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
         if (list1 != null && list1.size() > 0) {
             data.add(new LayoutWrapper(R.layout.item_manage_vehicles_group, new SuperBean("可缴费车辆", false), holderSuper));
             for (CarInfoDTO dto : list1) {
-                data.add(new LayoutWrapper(R.layout.item_manage_vehicles, dto, holderSimple));
+                data.add(new LayoutWrapper(R.layout.recycle_list_item_car, dto, holderSimple));
             }
         }
         if (list2 != null && list2.size() > 0) {
             data.add(new LayoutWrapper(R.layout.item_manage_vehicles_group, new SuperBean("仅限违章查询车辆", false), holderSuper));
             for (CarInfoDTO dto : list2) {
-                data.add(new LayoutWrapper(R.layout.item_manage_vehicles, dto, holderSimple));
+                data.add(new LayoutWrapper(R.layout.recycle_list_item_car, dto, holderSimple));
             }
         }
         adapter.setData(data);

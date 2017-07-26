@@ -33,8 +33,8 @@ import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.car.fragment.AddCarFragment;
 import com.zantong.mobilecttx.car.fragment.BindCarFragment;
-import com.zantong.mobilecttx.card.activity.CardHomeActivity;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
+import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.common.AppManager;
 import com.zantong.mobilecttx.common.Config;
@@ -57,7 +57,6 @@ import com.zantong.mobilecttx.huodong.activity.HundredPlanActivity;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResult;
 import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
-import com.zantong.mobilecttx.user.activity.MineActivity;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
@@ -616,7 +615,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                 MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(3));
                 if (PublicData.getInstance().loginFlag) {
                     if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {
-                        Act.getInstance().lauchIntentToLogin(this.getActivity(), CardHomeActivity.class);
+                        Act.getInstance().lauchIntentToLogin(this.getActivity(), UnblockedCardActivity.class);
                     } else {
                         Act.getInstance().lauchIntentToLogin(this.getActivity(), MyCardActivity.class);
                     }
@@ -636,7 +635,6 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
             case R.id.home_mine://我的
                 MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(9));
 
-                Act.getInstance().gotoIntent(this.getActivity(), MineActivity.class);
                 break;
             case R.id.home_fail_refresh://老接口刷新
                 if (OnClickUtils.isFastDoubleClick()) {

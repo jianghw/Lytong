@@ -331,7 +331,7 @@ public final class LogUtils {
      * @param isDebug
      */
     public static void initLogUtils(boolean isDebug) {
-        if (isDebug) {
+        if (!isDebug) {
             Logger.init().logLevel(LogLevel.NONE);
         } else {
             Logger.init(TAG)

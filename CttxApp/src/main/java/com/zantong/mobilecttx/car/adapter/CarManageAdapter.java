@@ -1,15 +1,14 @@
 package com.zantong.mobilecttx.car.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zantong.mobilecttx.R;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
+import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 
 import butterknife.Bind;
@@ -26,7 +25,6 @@ public class CarManageAdapter extends BaseAdapter<CarInfoDTO> {
     private Context mContext;
     private int payNumber = 0;
 
-
     @Override
     public void showData(BaseRecyclerViewHolder viewHolder, int position, CarInfoDTO data) {
         ViewHolder holder = (ViewHolder) viewHolder;
@@ -34,28 +32,22 @@ public class CarManageAdapter extends BaseAdapter<CarInfoDTO> {
             holder.mCarNumber.setText(data.getCarnum());
             if ("1".equals(data.getIspaycar())) {
                 holder.mFlag.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 holder.mFlag.setVisibility(View.GONE);
             }
-            if (!TextUtils.isEmpty(data.getActivityCar())){
-                if(data.getActivityCar().equals("1")){
-                    holder.mActivityCar.setVisibility(View.VISIBLE);
-                }else{
-                    holder.mActivityCar.setVisibility(View.GONE);
-                }
-            }
+
         }
     }
 
-    public static enum ITEM_TYPE{
+    public static enum ITEM_TYPE {
         ITEM_TYPE_NORAML, ITEM_TYPE_PAY
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(payNumber == 2 && position == 0){
+        if (payNumber == 2 && position == 0) {
             return ITEM_TYPE.ITEM_TYPE_PAY.ordinal();
-        }else{
+        } else {
             return ITEM_TYPE.ITEM_TYPE_NORAML.ordinal();
         }
     }
@@ -64,7 +56,7 @@ public class CarManageAdapter extends BaseAdapter<CarInfoDTO> {
     public View createView(ViewGroup viewGroup, int viewType) {
         mContext = viewGroup.getContext();
         LayoutInflater inflate = LayoutInflater.from(mContext);
-        return inflate.inflate(R.layout.item_manage_vehicles, viewGroup, false);
+        return inflate.inflate(R.layout.recycle_list_item_car, viewGroup, false);
     }
 
     @Override
@@ -80,8 +72,7 @@ public class CarManageAdapter extends BaseAdapter<CarInfoDTO> {
         TextView mCarNumber;
         @Bind(R.id.item_manage_vehicles_flag)
         TextView mFlag;
-        @Bind(R.id.item_manage_activity_car)
-        TextView mActivityCar;
+
 
         public ViewHolder(View view) {
             super(view);

@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:background="@color/common_base_color"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorBgGray_f8"
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/common_problem_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/fs_60"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/ds_40"
-        android:textColor="@color/gray_25"/>
+        android:layout_height="@dimen/ds_165"
+        android:layout_marginTop="@dimen/ds_30"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45"
+        android:textColor="@color/colorTvBlack_4d"
+        android:textSize="@dimen/fs_18sp"
+        tools:text="福建搜房iOS就分手健身房就删掉"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_1"
+        android:layout_marginLeft="@dimen/ds_45"
+        android:background="@color/colorLineGray_e6"/>
 
     <TextView
         android:id="@+id/common_problem_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        tools:text="fjsfjisfjfisfjiosjfjsfojfjsd祭扫福建福建奥 防守反击激发肌肤附加按实际佛缴费"
+        android:background="@color/colorWhite"
         android:lineSpacingExtra="@dimen/ds_24"
-        android:paddingRight="@dimen/ds_60"
-        android:paddingLeft="@dimen/ds_60"
-        android:paddingTop="@dimen/ds_30"
-        android:textSize="@dimen/fs_50"
-        android:textColor="@color/gray_66"/>
+        android:padding="@dimen/ds_45"
+        android:textColor="@color/colorTvBlack_4d"
+        android:textSize="@dimen/fs_16sp"/>
 
 </LinearLayout>

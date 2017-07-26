@@ -1,135 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:scrollbars="none"
+            android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/red"
-        android:orientation="vertical">
+        android:background="@mipmap/progress">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/ds_30"
-            android:text="APP在线办卡流程图"
-            android:textColor="@color/white" />
-
-        <com.zantong.mobilecttx.widght.CustomFlowView
+            android:id="@+id/tv_web"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_720" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/ds_60">
-
-            <ImageView
-                android:layout_width="@dimen/ds_48"
-                android:layout_height="@dimen/ds_48"
-                android:background="@mipmap/icon_card_notice" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ds_30"
-                android:text="线上办卡一般为7天左右，比线下办卡快一倍"
-                android:textColor="@color/white" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_144"
-            android:layout_marginLeft="@dimen/ds_60"
-            android:layout_marginRight="@dimen/ds_60"
-            android:background="@color/trans_white"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="@dimen/ds_54"
-                android:layout_height="@dimen/ds_54"
-                android:background="@mipmap/icon_card_search" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ds_9"
-                android:gravity="center_horizontal"
-                android:text="进度查询" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#efffffff"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ds_60"
-                android:layout_marginRight="@dimen/ds_60"
-                android:background="@color/white"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/ds_30"
-                    android:text="访问工商银行上海分行首页" />
-
-                <TextView
-                    android:id="@+id/card_flow_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/ds_30"
-                    android:text="www.sh.icbc.com.cn"
-                    android:textColor="@color/common_blue" />
-
-                <ImageView
-                    android:layout_width="@dimen/ds_48"
-                    android:layout_height="@dimen/ds_48"
-                    android:background="@mipmap/icon_card_arrow" />
-
-                <TextView
-                    android:layout_width="@dimen/ds_600"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/ds_30"
-                    android:gravity="center"
-                    android:text="点击右上角特色服务中的'信用卡办卡进度查询'" />
-
-                <ImageView
-                    android:layout_width="@dimen/ds_48"
-                    android:layout_height="@dimen/ds_48"
-                    android:layout_marginTop="@dimen/ds_30"
-                    android:background="@mipmap/icon_card_arrow" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/ds_30"
-                    android:text="进入在线交易页面点击'进度查询'" />
-
-                <ImageView
-                    android:layout_width="@dimen/ds_48"
-                    android:layout_height="@dimen/ds_48"
-                    android:layout_marginTop="@dimen/ds_30"
-                    android:background="@mipmap/icon_card_arrow" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/ds_30"
-                    android:text="输入证件号进行查询" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
+            android:layout_height="@dimen/ds_960"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+    </RelativeLayout>
 </ScrollView>

@@ -84,7 +84,7 @@
             android:maxLines="1"
             android:minWidth="@dimen/ds_180"
             android:textColor="@color/colorTvBlack_4d"
-            android:textColorHint="@color/colorLineGray_e5"
+            android:textColorHint="@color/colorLineGray_e6"
             android:textCursorDrawable="@null"
             android:textSize="@dimen/fs_16sp"/>
     </RelativeLayout>
@@ -97,7 +97,7 @@
         android:layout_marginLeft="@dimen/ds_45"
         android:layout_marginRight="@dimen/ds_45"
         android:layout_marginTop="@dimen/ds_150"
-        android:background="@drawable/bg_submit_btn_shade"
+        android:background="@mipmap/ic_btn_bg"
         android:text="查  询"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/fs_18sp"/>

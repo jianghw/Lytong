@@ -1,13 +1,13 @@
 package com.zantong.mobilecttx.common.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.interf.IBaseView;
+import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.common.bean.CommonProblem;
-import com.zantong.mobilecttx.presenter.HelpPresenter;
 
 import butterknife.Bind;
 
@@ -15,37 +15,45 @@ import butterknife.Bind;
  * Created by zhoujie on 2016/12/23.
  */
 
-public class CommonProblemDetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
+public class CommonProblemDetailActivity extends BaseJxActivity {
 
     @Bind(R.id.common_problem_detail)
     TextView mDetail;
     @Bind(R.id.common_problem_title)
     TextView mTitle;
 
-    @Override
-    public void initView() {
-
-    }
+    private CommonProblem mCommonProblem;
 
     @Override
-    public void initData() {
+    protected void bundleIntent(Bundle savedInstanceState) {
         Intent intent = getIntent();
         if (intent != null) {
-            CommonProblem commonProblem = (CommonProblem) intent.getSerializableExtra("commonproblem");
-            setTitleText(commonProblem.getProblemTitle());
-            mTitle.setText(commonProblem.getProblemChileTitle());
-            mDetail.setText(commonProblem.getProblemDetail());
+            mCommonProblem = (CommonProblem) intent.getSerializableExtra("commonproblem");
         }
-    }
-
-    @Override
-    public HelpPresenter initPresenter() {
-        return new HelpPresenter();
     }
 
     @Override
     protected int getContentResId() {
         return R.layout.activity_common_problem_detail;
+    }
+
+    @Override
+    protected void initFragmentView(View view) {
+    }
+
+    protected boolean isNeedKnife() {
+        return true;
+    }
+
+    protected void initViewStatus() {
+        initTitleContent(mCommonProblem != null ? mCommonProblem.getProblemTitle() : "出错");
+
+        mTitle.setText(mCommonProblem != null ? mCommonProblem.getProblemChileTitle() : "出错");
+        mDetail.setText(mCommonProblem != null ? mCommonProblem.getProblemDetail() : "出错");
+    }
+
+    @Override
+    protected void DestroyViewAndThing() {
     }
 
 }

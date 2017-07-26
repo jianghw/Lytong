@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
-import com.zantong.mobilecttx.common.adapter.CommonProblemAdapter;
-import com.zantong.mobilecttx.base.fragment.BaseListFragment;
-import com.zantong.mobilecttx.common.bean.CommonProblem;
+import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.common.activity.CommonProblemDetailActivity;
+import com.zantong.mobilecttx.common.adapter.CommonProblemAdapter;
+import com.zantong.mobilecttx.common.bean.CommonProblem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +17,10 @@ import java.util.List;
  * Created by zhoujie on 2016/12/23.
  */
 
-public class CommonProblemFragment extends BaseListFragment<CommonProblem> {
+public class CommonProblemFragment extends BaseRecyclerListJxFragment<CommonProblem> {
 
-    @Override
-    protected boolean isLoadMore() {
-        return false;
+    public static CommonProblemFragment newInstance() {
+        return new CommonProblemFragment();
     }
 
     @Override
@@ -29,20 +28,31 @@ public class CommonProblemFragment extends BaseListFragment<CommonProblem> {
         return false;
     }
 
-
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
-        CommonProblem commonProblem = (CommonProblem) data;
-        Intent intent = new Intent(getActivity(), CommonProblemDetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("commonproblem", commonProblem);
-        intent.putExtras(bundle);
-        getActivity().startActivity(intent);
+        if (data instanceof CommonProblem) {
+            CommonProblem commonProblem = (CommonProblem) data;
+            Intent intent = new Intent(getActivity(), CommonProblemDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("commonproblem", commonProblem);
+            intent.putExtras(bundle);
+            getActivity().startActivity(intent);
+        }
     }
 
     @Override
-    protected void getData() {
-        getListView().noMoreLoadings();
+    public BaseAdapter<CommonProblem> createAdapter() {
+        return new CommonProblemAdapter();
+    }
+
+
+    @Override
+    protected void initFragmentView(View view) {
+
+    }
+
+    @Override
+    protected void onFirstDataVisible() {
         List<CommonProblem> commonProblemList = new ArrayList<>();
 
         commonProblemList.add(
@@ -121,21 +131,14 @@ public class CommonProblemFragment extends BaseListFragment<CommonProblem> {
                         "如何缴纳罚款?",
                         "        用畅通车友会App扫描处罚决定书，即可按照系统提示按步骤操作。支持工商银行所有银行卡。请确认该卡已开通“工银e支付”功能。"));
 
-        setDataResult(commonProblemList);
-    }
-
-    @Override
-    public BaseAdapter<CommonProblem> createAdapter() {
-        return new CommonProblemAdapter();
-    }
-
-    @Override
-    protected void onLoadMoreData() {
-
+        setSimpleDataResult(commonProblemList);
     }
 
     @Override
     protected void onRefreshData() {
+    }
 
+    @Override
+    protected void DestroyViewAndThing() {
     }
 }

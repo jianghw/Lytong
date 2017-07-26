@@ -15,6 +15,7 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.util.AtyUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -89,6 +90,7 @@ public class RechargeActivity extends MvpBaseActivity {
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)
     public void doPermissionFail() {
+        ToastUtils.toastShort("此功能需要打开相关的地图权限");
     }
 
 }

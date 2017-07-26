@@ -277,7 +277,7 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
         showSucceedView();
         hideDialogLoading();
 
-        if (mCurrentPage == 1) mAdapter.removeAll();
+        if (mCurrentPage == 1) mAdapter.removeAllOnly();
 
         if (list != null && list.size() > 0) {
             mAdapter.append(list);

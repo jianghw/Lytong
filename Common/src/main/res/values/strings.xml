@@ -34,6 +34,10 @@
         拍照扫描行驶证\n
         车辆信息自动识别
     </string>
+    <string name="tv_license_camera">
+        拍照扫描驾驶证\n
+        车辆信息自动识别
+    </string>
     <string name="tv_license_number">
         <font color='#f3362b'>*</font>车牌号码
     </string>
@@ -43,6 +47,17 @@
     <string name="tv_license_type">
         <font color='#f3362b'>*</font>车牌类型
     </string>
+
+    <string name="tv_license_num_type">
+        <font color='#f3362b'>*</font>驾驶证证号
+    </string>
+    <string name="tv_record_num_type">
+        <font color='#f3362b'>*</font>驾驶证档案编号
+    </string>
+    <string name="tv_phone_num_type">
+        <font color='#f3362b'>*</font>预留手机号
+    </string>
+
 
     <string name="tv_coupon_count">
         <font color='#f3362b'>%1$d</font>&#160;张优惠劵
@@ -106,5 +121,9 @@
        3.“个人中心”-联系客服-识别途中二维码关注“畅通卡车友会公众号”;\n
        4.畅通卡车友会公众号内回复“驾校返现”按照提示信息即可完成提现流程;\n
        5.自发起提现之日起2-3个工作日内到账;\n
+    </string>
+
+    <string name="tv_bind_rules">
+        我已阅读并同意<font color='#0f536f'>《用户隐私保密说明》</font>&#160;
     </string>
 </resources>

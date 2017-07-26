@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zantong.mobilecttx.utils.PullToRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zantong.mobilecttx.utils.PullToRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refresh_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/refresh_view">
+    android:layout_height="match_parent">
 
     <com.zantong.mobilecttx.utils.PullableScrollView
         android:layout_width="match_parent"
@@ -14,173 +15,63 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorNoticeGrayNumberFont"
+            android:background="@color/colorBgGray_f8"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/refreshing_title_notice"
                 android:layout_width="match_parent"
-                android:layout_height="32dip"
-                android:gravity="center"
-                android:layout_below="@id/title"
-                android:textSize="14sp"
-                android:visibility="visible"
+                android:layout_height="@dimen/ds_90"
+                android:layout_below="@+id/title"
                 android:background="@color/noticeBackText"
-                android:text="刷新失败，请手动刷新"/>
+                android:gravity="center"
+                android:text="刷新失败，请手动刷新"
+                android:textSize="14sp"
+                android:visibility="visible"/>
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/ds_30"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/ds_30"
+                android:layout_marginTop="@dimen/ds_30"
                 android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/img_card"/>
+                android:scaleType="centerCrop"
+                android:src="@mipmap/card"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="173dip"
-                android:layout_gravity="center"
-                android:layout_marginLeft="16dip"
-                android:layout_marginRight="16dip"
-                android:visibility="gone"
-                android:layout_marginTop="@dimen/ds_45"
-                android:background="@mipmap/icon_bind_card">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/ds_42"
-                    android:layout_marginTop="37dip"
-                    android:text="牡丹畅通卡"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/ds_36" />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dip"
-                    android:layout_marginLeft="@dimen/ds_42"
-                    android:layout_marginTop="90.5dip"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="****"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/ds_90" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="18.4dip"
-                        android:text="****"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/ds_90" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="18.4dip"
-                        android:text="****"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/ds_90" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="18.4dip"
-                        android:text="****"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/ds_90"
-                        android:id="@+id/bind_card_number_four" />
-                </LinearLayout>
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_210"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <RelativeLayout
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:paddingLeft="30dip">
-
-                    <TextView
-                        style="@style/grayColorTextFont"
-                        android:layout_marginTop="@dimen/ds_48"
-                        android:text="本期已罚分值" />
-
-                    <TextView
-                        style="@style/redColorTextFont"
-                        android:layout_marginTop="36.5dip"
-                        android:text="0 分"
-                        android:id="@+id/bind_card_cen" />
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="@dimen/ds_1"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/ds_30"
-                    android:layout_marginBottom="@dimen/ds_30"
-                    android:background="@color/gray_99"/>
-                <RelativeLayout
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:paddingLeft="30dip">
-
-                    <TextView
-                        style="@style/grayColorTextFont"
-                        android:layout_marginTop="@dimen/ds_48"
-                        android:text="总罚款" />
-
-                    <TextView
-                        style="@style/redColorTextFont"
-                        android:layout_marginTop="36.5dip"
-                        android:text="0.00 元"
-                        android:id="@+id/bind_card_money" />
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="1dip"
-                    android:layout_height="28dip"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/light_gray" />
-
-            </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/ds_24"
-                android:background="@color/common_base_color"
+                android:layout_height="@dimen/ds_120"
+                android:background="@color/colorWhite"
                 android:gravity="center_vertical"
+                android:paddingLeft="@dimen/ds_30"
                 android:text="本卡绑定车辆"
-                android:textSize="@dimen/fs_36"
-                android:textColor="@color/gray_a6"
-                android:paddingLeft="@dimen/ds_30"/>
+                android:textColor="@color/colorTvRed_f33"
+                android:textSize="@dimen/fs_18sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_1"
+                android:background="@color/colorLineGray_e6"/>
+
             <com.jcodecraeer.xrecyclerview.XRecyclerView
                 android:id="@+id/mine_card_car_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"/>
+                android:layout_height="wrap_content"/>
+
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_3"
-                android:background="@color/common_base_color"/>
+                android:layout_height="@dimen/ds_1"
+                android:background="@color/colorLineGray_e6"/>
+
             <LinearLayout
                 android:id="@+id/card_lose_help"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_144"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
+                android:layout_height="@dimen/ds_120"
                 android:layout_marginTop="@dimen/ds_30"
+                android:background="@color/colorWhite"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/ds_30"
                 android:paddingRight="@dimen/ds_30">
 
@@ -188,18 +79,22 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textColor="@color/gray_66"
-                    android:text="信用卡挂失" />
+                    android:text="信用卡挂失"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textSize="@dimen/fs_16sp"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/ds_30"
-                    android:textColor="@color/gray_99"
-                    android:text="拨打客服热线" />
+                    android:text="拨打客服热线"
+                    android:textColor="@color/colorTvBlack_b3"/>
 
                 <ImageView
-                    style="@style/arrowLeftStyle"
-                    android:layout_alignParentRight="true" />
+                    android:id="@+id/img_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/btn_rightarrow"/>
             </LinearLayout>
         </LinearLayout>
     </com.zantong.mobilecttx.utils.PullableScrollView>

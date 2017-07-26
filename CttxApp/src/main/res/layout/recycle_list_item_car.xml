@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_210"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/img_car"
+            android:layout_width="@dimen/ds_144"
+            android:layout_height="@dimen/ds_144"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_45"
+            android:src="@mipmap/icon_car"/>
+
+        <TextView
+            android:id="@+id/item_manage_vehicles_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:layout_marginRight="@dimen/ds_30"
+            android:layout_toRightOf="@+id/img_car"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_18sp"
+            tools:text="沪 NB8888"/>
+
+        <TextView
+            android:id="@+id/item_manage_vehicles_flag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/item_manage_vehicles_num"
+            android:background="@drawable/text_shape_bind"
+            android:paddingBottom="@dimen/ds_3"
+            android:paddingLeft="@dimen/ds_9"
+            android:paddingRight="@dimen/ds_9"
+            android:paddingTop="@dimen/ds_3"
+            android:text="已绑定"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/fs_14sp"
+            android:visibility="visible"/>
+
+        <ImageView
+            android:id="@+id/img_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ds_45"
+            android:src="@mipmap/btn_rightarrow"/>
+    </RelativeLayout>
+
+    <include layout="@layout/view_line1"/>
+</LinearLayout>

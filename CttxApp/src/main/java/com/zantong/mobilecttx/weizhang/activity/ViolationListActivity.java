@@ -16,7 +16,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.car.bean.PayCar;
 import com.zantong.mobilecttx.car.bean.PayCarBean;
-import com.zantong.mobilecttx.card.activity.CardHomeActivity;
+import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
@@ -209,7 +209,8 @@ public class ViolationListActivity extends BaseJxActivity
      */
     private void byCardHome() {
         MobclickAgent.onEvent(ContextUtils.getContext(), Config.getUMengID(11));
-        DialogUtils.remindDialog(this, "温馨提示", "您还未绑卡，暂时无法进行缴费", "取消", "立即绑卡",
+        DialogUtils.remindDialog(this,
+                "温馨提示", "您还未绑卡，暂时无法进行缴费", "取消", "立即绑卡",
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -218,7 +219,7 @@ public class ViolationListActivity extends BaseJxActivity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Act.getInstance().lauchIntentToLogin(ViolationListActivity.this, CardHomeActivity.class);
+                        Act.getInstance().lauchIntentToLogin(ViolationListActivity.this, UnblockedCardActivity.class);
                     }
                 });
     }

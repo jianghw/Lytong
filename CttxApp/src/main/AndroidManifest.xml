@@ -62,7 +62,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
 
-    <!-- android:theme="@android:style/Theme.NoTitleBar" -->
     <application
         android:name=".common.MyApplication"
         android:allowBackup="true"
@@ -143,9 +142,6 @@
             android:name=".user.activity.UserInfoUpdate"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".car.activity.CarManageActivity"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name=".user.activity.MsgActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -202,9 +198,7 @@
         <activity
             android:name=".weizhang.activity.PaymentActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".user.activity.MineActivity"
-            android:screenOrientation="portrait"/>
+
         <!-- 选a择城市 -->
         <activity
             android:name=".user.activity.AddrActivity"
@@ -364,7 +358,7 @@
             android:screenOrientation="portrait"/>
         <!-- 我的办畅通卡 无绑定卡页面 -->
         <activity
-            android:name=".card.activity.CardHomeActivity"
+            android:name=".card.activity.UnblockedCardActivity"
             android:screenOrientation="portrait"/>
         <!-- 绑定畅通卡 -->
         <activity
@@ -395,10 +389,14 @@
         <!--========================车辆管理模块================================-->
         <!--车辆管理-->
         <activity
-            android:name=".car.activity.CarManageGroupActivity"
+            android:name=".car.activity.ManageCarActivity"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".weizhang.activity.ViolationHistoryAcitvity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".car.activity.CarManageActivity"
             android:screenOrientation="portrait"/>
         <!--========================违章查询页面=================================-->
         <activity

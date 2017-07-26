@@ -1,48 +1,64 @@
 package com.zantong.mobilecttx.card.activity;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
+import android.view.View;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.interf.IBaseView;
+import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.card.fragment.MyCardFragment;
-import com.zantong.mobilecttx.presenter.HelpPresenter;
 
-public class MyCardActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
+import cn.qqtheme.framework.util.ui.FragmentUtils;
 
+public class MyCardActivity extends BaseJxActivity {
+
+    private int mCurBottomPosition;
+    private MyCardFragment mCouponListFragment;
 
     @Override
-    public HelpPresenter initPresenter() {
-        return new HelpPresenter();
+    protected void bundleIntent(Bundle savedInstanceState) {
+        mCurBottomPosition = 1;
     }
 
     @Override
     protected int getContentResId() {
-        return R.layout.mine_help_activity;
+        return R.layout.activity_base_frame;
     }
 
     @Override
-    public void initView() {
-        setTitleText("我的畅通卡");
+    protected void initFragmentView(View view) {
+        initTitleContent("我的畅通卡");
+
+        initFragment();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initContent();
-    }
-
-    public void initContent() {
+    private void initFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        MyCardFragment mBindCardFragment = new MyCardFragment();
-        transaction.replace(R.id.mine_help_layout, mBindCardFragment);
-        transaction.commit();
+        switch (mCurBottomPosition) {
+            case 1:
+                if (mCouponListFragment == null) {
+                    mCouponListFragment = MyCardFragment.newInstance();
+                }
+                FragmentUtils.replaceFragment(
+                        fragmentManager, mCouponListFragment, R.id.lay_base_frame, true);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
-    public void initData() {
-
+    protected void DestroyViewAndThing() {
+        mCouponListFragment = null;
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            closeFragment();
+        }
+        return false;
+    }
+
 }

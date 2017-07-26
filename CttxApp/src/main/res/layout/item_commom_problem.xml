@@ -1,36 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/ds_150"
-    android:background="@color/white"
-    android:gravity="center_vertical"
-    android:orientation="vertical">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_vertical"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/white"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
         android:gravity="center_vertical"
         android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_positon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ds_45"
+            android:layout_marginLeft="@dimen/ds_45"
+            android:layout_marginTop="@dimen/ds_45"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="1、"/>
 
         <TextView
             android:id="@+id/common_problem_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ds_45"
+            android:layout_marginTop="@dimen/ds_45"
             android:layout_weight="1"
-            android:paddingLeft="@dimen/ds_40"
-            android:paddingRight="@dimen/ds_30"
-            android:textColor="@color/gray_25"
-            android:textSize="@dimen/fs_48" />
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="金佛is金粉世家缴费iOS缴费缴费时发生纠纷ISO"/>
 
         <ImageView
-            style="@style/mineItemArrow"
-            android:gravity="right"
-            android:src="@mipmap/arrow_left_big_iamge" />
+            android:id="@+id/img_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginLeft="@dimen/ds_75"
+            android:layout_marginRight="@dimen/ds_45"
+            android:src="@mipmap/btn_rightarrow"/>
     </LinearLayout>
 
     <TextView
-        style="@style/line_splite_gray"
-        android:layout_marginLeft="0dp" />
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_1"
+        android:layout_marginLeft="@dimen/ds_45"
+        android:background="@color/colorLineGray_e6"/>
 </LinearLayout>

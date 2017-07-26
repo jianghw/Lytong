@@ -59,7 +59,7 @@
             <LinearLayout
                 android:layout_width="1px"
                 android:layout_height="match_parent"
-                android:background="@color/colorLineGray_e5"/>
+                android:background="@color/colorLineGray_e6"/>
 
             <LinearLayout
                 android:id="@+id/lay_repair"
@@ -108,7 +108,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/colorLineGray_e5"/>
+            android:background="@color/colorLineGray_e6"/>
         <!--第二列表-->
         <TableRow
             android:layout_width="match_parent"
@@ -160,7 +160,7 @@
             <LinearLayout
                 android:layout_width="1px"
                 android:layout_height="match_parent"
-                android:background="@color/colorLineGray_e5"/>
+                android:background="@color/colorLineGray_e6"/>
 
             <LinearLayout
                 android:id="@+id/lay_beauty"

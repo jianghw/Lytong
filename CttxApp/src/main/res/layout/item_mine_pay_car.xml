@@ -1,36 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:orientation="vertical">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_180"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/ds_60"
-        android:orientation="horizontal">
+        android:layout_height="@dimen/ds_120"
+        android:background="@drawable/bg_sel_item_gray">
 
         <TextView
             android:id="@+id/item_mine_pay_car_num"
-            android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_33"
-            android:textSize="@dimen/fs_51"
-            android:text="Ayy333" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:layout_weight="6"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="Ayy333"/>
+
+        <ImageView
+            android:id="@+id/img_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ds_30"
+            android:src="@mipmap/btn_rightarrow"/>
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="4"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/ds_30"
+            android:layout_toLeftOf="@+id/img_right"
             android:gravity="center"
-            android:background="@color/red"
             android:text="违章查询"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fs_45" />
-    </LinearLayout>
+            android:textColor="@color/colorTvRed_f33"
+            android:textSize="@dimen/fs_16sp"/>
+    </RelativeLayout>
 
-    <include layout="@layout/view_line1" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_1"
+        android:background="@color/colorLineGray_e6"/>
 </LinearLayout>

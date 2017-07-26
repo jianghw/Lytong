@@ -6,19 +6,19 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.car.adapter.PayCarAdapter;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.fragment.BaseExtraFragment;
+import com.zantong.mobilecttx.car.activity.ManageCarActivity;
+import com.zantong.mobilecttx.car.adapter.PayCarAdapter;
 import com.zantong.mobilecttx.car.bean.PayCar;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
-import com.zantong.mobilecttx.user.dto.LogoutDTO;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
-import com.zantong.mobilecttx.utils.rsa.Des3;
+import com.zantong.mobilecttx.user.dto.LogoutDTO;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.car.activity.CarManageActivity;
+import com.zantong.mobilecttx.utils.rsa.Des3;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -97,9 +97,9 @@ public class BindCarSuccessFragment extends BaseExtraFragment {
     }
 
     //解密
-    private List<PayCar> jieMi(List<PayCar> list){
-        List<PayCar> payCarList = new ArrayList<PayCar>();
-        for (PayCar payCar:list){
+    private List<PayCar> jieMi(List<PayCar> list) {
+        List<PayCar> payCarList = new ArrayList<>();
+        for (PayCar payCar : list) {
             payCar.setCarnum(Des3.decode(payCar.getCarnum()));
             payCar.setEnginenum(Des3.decode(payCar.getEnginenum()));
             payCarList.add(payCar);
@@ -113,10 +113,10 @@ public class BindCarSuccessFragment extends BaseExtraFragment {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.bind_card_success_carmanager:
-                Act.getInstance().gotoIntent(this.getActivity(), CarManageActivity.class);
+                Act.getInstance().lauchIntentToLogin(getActivity(), ManageCarActivity.class);
                 break;
             case R.id.bind_card_success_finish:
-                this.getActivity().finish();
+                getActivity().finish();
                 break;
         }
     }

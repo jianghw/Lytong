@@ -14,13 +14,11 @@ public class ManageVehiclesPresenter extends BasePresenter<IBaseView> implements
 
     CarManageActivity mCarManageActivity;
     ManageVehiclesModelImp mManageVehiclesModelImp;
+
     public ManageVehiclesPresenter(CarManageActivity mCarManageActivity) {
         this.mCarManageActivity = mCarManageActivity;
         mManageVehiclesModelImp = new ManageVehiclesModelImp();
-
-
     }
-
 
     @Override
     public void loadView(int index) {

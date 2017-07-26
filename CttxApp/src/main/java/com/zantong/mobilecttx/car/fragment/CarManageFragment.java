@@ -37,12 +37,12 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarManageFragment extends BaseListFragment<CarInfoDTO>{
+public class CarManageFragment extends BaseListFragment<CarInfoDTO> {
     private CarManageAdapter mCarManageAdapter;
     private OpenQueryBean.RspInfoBean mRspInfoBean;
     private List<UserCarInfoBean> payData;
     private List<UserCarInfoBean> noPayData;
-    TextView mChangeCarBtn,mAddBtn;
+    TextView mChangeCarBtn, mAddBtn;
 
     List<UserCarInfoBean> mServerList = new ArrayList<>();
 
@@ -67,17 +67,12 @@ public class CarManageFragment extends BaseListFragment<CarInfoDTO>{
     @Override
     public void onResume() {
         super.onResume();
-//        if (PublicData.getInstance().isDelCar == true){
-//            PublicData.getInstance().isDelCar = false;
-//            mCarManageAdapter.removeAll();
-//            initListData();
-//        }
-        if (PublicData.getInstance().isSetPayCar == true){
+
+        if (PublicData.getInstance().isSetPayCar == true) {
             PublicData.getInstance().isSetPayCar = false;
             mCarManageAdapter.removeAll();
             initListData();
         }
-
     }
 
     @Override
@@ -111,7 +106,6 @@ public class CarManageFragment extends BaseListFragment<CarInfoDTO>{
 
     }
 
-
     @Override
     public void initData() {
         super.initData();
@@ -120,13 +114,13 @@ public class CarManageFragment extends BaseListFragment<CarInfoDTO>{
         this.mAddBtn = carManageActivity.getEnsureView();
         mAddBtn.setOnClickListener(this);
         mChangeCarBtn.setOnClickListener(this);
-        if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().filenum)){
+        if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().filenum)) {
             getBangDingCar();
         }
 
-
         initListData();
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSynEvent(BenDiCarInfoEvent event) {
 
@@ -134,6 +128,7 @@ public class CarManageFragment extends BaseListFragment<CarInfoDTO>{
         mCarManageAdapter.removeAll();
         setDataResult(list);
     }
+
     //修改车辆
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSynEvent(EditCarInfoEvent event) {
@@ -142,6 +137,7 @@ public class CarManageFragment extends BaseListFragment<CarInfoDTO>{
             initListData();
         }
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSynEvent(AddCarInfoEvent event) {
         if (event.getStatus()) {
@@ -149,13 +145,13 @@ public class CarManageFragment extends BaseListFragment<CarInfoDTO>{
         }
     }
 
-    private void initListData(){
+    private void initListData() {
         onShowLoading();
         mRspInfoBean = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(PublicData.getInstance().CarLocalFlag);
         payData = new ArrayList<>();
         noPayData = new ArrayList<>();
 
-        if(!PublicData.getInstance().loginFlag){
+        if (!PublicData.getInstance().loginFlag) {
             List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
             setDataResult(list);
             return;
@@ -172,23 +168,23 @@ public class CarManageFragment extends BaseListFragment<CarInfoDTO>{
                 PublicData.getInstance().mCarNum = mServerList.size();
                 PublicData.getInstance().mServerCars = listU(result.getRspInfo().getUserCarsInfo());
                 int canPayNum = 0;
-                int notPayNum =  0;
-                for (int i = 0; i < mServerList.size(); i++){
-                    if ("1".equals(mServerList.get(i).getIspaycar())){
+                int notPayNum = 0;
+                for (int i = 0; i < mServerList.size(); i++) {
+                    if ("1".equals(mServerList.get(i).getIspaycar())) {
                         canPayNum++;
-                    }else{
+                    } else {
                         notPayNum++;
                     }
                 }
-                if (canPayNum > 0 && notPayNum > 0){
+                if (canPayNum > 0 && notPayNum > 0) {
                     mChangeCarBtn.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mChangeCarBtn.setVisibility(View.GONE);
                 }
-                if (result.getRspInfo().getUserCarsInfo() != null && result.getRspInfo().getUserCarsInfo().size() > 0){
+                if (result.getRspInfo().getUserCarsInfo() != null && result.getRspInfo().getUserCarsInfo().size() > 0) {
                     List<CarInfoDTO> list = new ArrayList<CarInfoDTO>();
                     int len = result.getRspInfo().getUserCarsInfo().size();
-                    for (int i = 0; i < len; i++){
+                    for (int i = 0; i < len; i++) {
                         UserCarInfoBean info = result.getRspInfo().getUserCarsInfo().get(i);
                         CarInfoDTO dto = new CarInfoDTO();
                         dto.setCarnum(info.getCarnum());
@@ -198,11 +194,11 @@ public class CarManageFragment extends BaseListFragment<CarInfoDTO>{
                         dto.setCarnumtype(info.getCarnumtype());
                         list.add(dto);
                     }
-                    if (list.size() == 0){
+                    if (list.size() == 0) {
                         getEmptyView().setVisibility(View.VISIBLE);
                     }
                     getActivityCarInfo(list);
-                }else{
+                } else {
                     getEmptyView().setVisibility(View.VISIBLE);
                 }
             }
@@ -210,16 +206,16 @@ public class CarManageFragment extends BaseListFragment<CarInfoDTO>{
     }
 
     //获取活动车辆
-    private void getActivityCarInfo(final List<CarInfoDTO> carInfoDTOList){
+    private void getActivityCarInfo(final List<CarInfoDTO> carInfoDTOList) {
         ActivityCarDTO activityCarDTO = new ActivityCarDTO();
         activityCarDTO.setUsrnum(PublicData.getInstance().userID);
         CarApiClient.getActivityCar(getActivity(), activityCarDTO, new CallBack<ActivityCarResult>() {
             @Override
             public void onSuccess(ActivityCarResult result) {
-                if(result.getResponseCode() == 2000){
+                if (result.getResponseCode() == 2000) {
                     setData(result.getData().getPlateNo(), carInfoDTOList);
                 }
-                if(result.getResponseCode() == 4000){
+                if (result.getResponseCode() == 4000) {
                     setDataResult(carInfoDTOList);
                 }
             }
@@ -233,13 +229,13 @@ public class CarManageFragment extends BaseListFragment<CarInfoDTO>{
     }
 
     //比较活动车辆和我的车辆
-    private void setData(String plateNo, List<CarInfoDTO> carInfoDTOList){
+    private void setData(String plateNo, List<CarInfoDTO> carInfoDTOList) {
         List<CarInfoDTO> carInfoDTOLists = new ArrayList<CarInfoDTO>();
-        for(CarInfoDTO carInfoDTO : carInfoDTOList){
+        for (CarInfoDTO carInfoDTO : carInfoDTOList) {
             carInfoDTO.setActivityCar("2");
-            if(plateNo.equals(carInfoDTO.getCarnum())){
+            if (plateNo.equals(carInfoDTO.getCarnum())) {
                 carInfoDTO.setActivityCar("1");
-            }else{
+            } else {
                 carInfoDTO.setActivityCar("2");
             }
             carInfoDTOLists.add(carInfoDTO);
@@ -248,9 +244,9 @@ public class CarManageFragment extends BaseListFragment<CarInfoDTO>{
         setDataResult(carInfoDTOLists);
     }
 
-    private List<UserCarInfoBean> listU(List<UserCarInfoBean> listUcar){
+    private List<UserCarInfoBean> listU(List<UserCarInfoBean> listUcar) {
         List<UserCarInfoBean> listUcb = new ArrayList<UserCarInfoBean>();
-        for (UserCarInfoBean userCarInfoBean:listUcar){
+        for (UserCarInfoBean userCarInfoBean : listUcar) {
             userCarInfoBean.setEnginenum(Des3.decode(userCarInfoBean.getEnginenum()));
             userCarInfoBean.setCarnum(Des3.decode(userCarInfoBean.getCarnum()));
             userCarInfoBean.setCarframenum(Des3.decode(userCarInfoBean.getCarframenum()));
@@ -262,28 +258,30 @@ public class CarManageFragment extends BaseListFragment<CarInfoDTO>{
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        if (v == mAddBtn){
-            if (mServerList.size() < 3){
+        if (v == mAddBtn) {
+            if (mServerList.size() < 3) {
                 Act.getInstance().gotoIntent(this.getActivity(), AddCarActivity.class);
-            }else{
-                DialogUtils.createDialog(this.getActivity(),"您的车辆数量已达上限");
+            } else {
+                DialogUtils.createDialog(this.getActivity(), "您的车辆数量已达上限");
             }
-        }else if(v == mChangeCarBtn){
+        } else if (v == mChangeCarBtn) {
             Act.getInstance().gotoIntent(this.getActivity(), SetPayCarActivity.class);
         }
     }
+
     int mTimes = 0;
+
     /**
      * 获取绑定车辆信息
      */
-    private void getBangDingCar(){
+    private void getBangDingCar() {
         mTimes++;
         LogoutDTO dto = new LogoutDTO();
         dto.setUsrid(PublicData.getInstance().userID);
         UserApiClient.getPayCars(this.getActivity(), dto, new CallBack<PayCarResult>() {
             @Override
             public void onSuccess(PayCarResult result) {
-                if (!"000000".equals(result.getSYS_HEAD().getReturnCode()) && mTimes < 3){
+                if (!"000000".equals(result.getSYS_HEAD().getReturnCode()) && mTimes < 3) {
 //                    LogUtils.i("查询绑定车辆" + mTimes + "次失败");
 //                    ToastUtils.showShort(CarManageFragment.this.getActivity(),"查询绑定车辆" + mTimes + "次失败");
                     getBangDingCar();

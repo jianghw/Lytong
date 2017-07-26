@@ -1,13 +1,12 @@
 package com.zantong.mobilecttx.card.activity;
 
+import android.os.Bundle;
 import android.view.View;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.interf.IBaseView;
+import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
-import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import butterknife.OnClick;
@@ -15,21 +14,12 @@ import butterknife.OnClick;
 /**
  * 办卡进度
  */
-public class CardFlowActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
-
-    @Override
-    public void initView() {
-    }
-
-    @Override
-    public void initData() {
-        setTitleText("办卡进度");
-    }
+public class CardFlowActivity extends BaseJxActivity {
 
 
     @Override
-    public HelpPresenter initPresenter() {
-        return new HelpPresenter();
+    protected void bundleIntent(Bundle savedInstanceState) {
+
     }
 
     @Override
@@ -37,11 +27,21 @@ public class CardFlowActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
         return R.layout.activity_card_flow;
     }
 
-
-    @OnClick(R.id.card_flow_search)
     @Override
+    protected void initFragmentView(View view) {
+        initTitleContent("办卡进度");
+    }
+
+    protected boolean isNeedKnife() {
+        return true;
+    }
+
+    @Override
+    protected void DestroyViewAndThing() {
+    }
+
+    @OnClick(R.id.tv_web)
     public void onClick(View v) {
-        super.onClick(v);
         PublicData.getInstance().webviewUrl = "http://www.sh.icbc.com.cn";
         PublicData.getInstance().webviewTitle = "办卡进度查询";
         PublicData.getInstance().isCheckLogin = false;

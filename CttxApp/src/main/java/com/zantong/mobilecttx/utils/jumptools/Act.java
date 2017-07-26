@@ -64,7 +64,6 @@ public class Act {
             Intent intent = new Intent(packageContext, className);
             packageContext.startActivityForResult(intent, requestCode);
         }
-
     }
 
     public void lauchIntentToLogin(Context packageContext, Class<?> className) {

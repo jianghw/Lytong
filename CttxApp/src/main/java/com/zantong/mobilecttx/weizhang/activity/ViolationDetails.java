@@ -16,14 +16,13 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.car.activity.CarManageActivity;
+import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.card.activity.ChangTongCard;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.interf.ModelView;
 import com.zantong.mobilecttx.presenter.ViolationDetailsPresenterImp;
-import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.utils.AmountUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.StateBarSetting;
@@ -193,7 +192,7 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
         try {
             violation_money_text.setText(StringUtils.getPriceString(mViolationDetailsBean.getRspInfo().getViolationamt()) + "元");
             violation_money_zhinajin_text.setText(StringUtils.getPriceString(mViolationDetailsBean.getRspInfo().getZhinajin()) + "元");
-            violation_money_text.setText(AmountUtils.changeF2Y(mViolationDetailsBean.getRspInfo().getViolationamt())+"元");
+            violation_money_text.setText(AmountUtils.changeF2Y(mViolationDetailsBean.getRspInfo().getViolationamt()) + "元");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -213,7 +212,7 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
             }
         }
         String bitNumber = ((String) PublicData.getInstance().mHashMap.get("ViolationDetailsStr")).substring(6, 7);
-        LogUtils.i("bitNumber:"+bitNumber);
+        LogUtils.i("bitNumber:" + bitNumber);
         if ("0".equals(mViolationDetailsBean.getRspInfo().getProcessste())) {//未交费
             if ("1".equals(bitNumber) || "2".equals(bitNumber)) {//是否处罚决定书
                 nextBtn.setEnabled(true);
@@ -227,7 +226,7 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
                     nextBtn.setText("绑定畅通卡");
                     mCommitType = 1;
                 } else {
-                    LogUtils.i("boolean:"+isPagCar+"-----payDataSize:"+PublicData.getInstance().payData.size());
+                    LogUtils.i("boolean:" + isPagCar + "-----payDataSize:" + PublicData.getInstance().payData.size());
                     if (isPagCar || PublicData.getInstance().payData.size() < 2) {
                         nextBtn.setEnabled(true);
                         nextBtn.setText("违章缴费");
@@ -260,14 +259,9 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-//            if(getSupportFragmentManager().getBackStackEntryCount()<=0){
-//                exit();
-//            }else{
-//                return super.onKeyDown(keyCode, event);
-//            }
+
             switch (indexFlag) {
                 case 0:
-//                    ScreenManager.popActivity();
                     return super.onKeyDown(keyCode, event);
                 case 1:
                     indexFlag = 0;
@@ -299,14 +293,10 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
                                 .replace(R.id.sure_pay_frame, mSurePayFragment).commit();
                         break;
                     case 1://绑卡
-                        if (PublicData.getInstance().loginFlag){
-                            Act.getInstance().gotoIntent(this, ChangTongCard.class);
-                        }else{
-                            Act.getInstance().gotoIntent(this, LoginActivity.class);
-                        }
+                        Act.getInstance().lauchIntentToLogin(this, ChangTongCard.class);
                         break;
                     case 2:
-                        Act.getInstance().gotoIntent(this, CarManageActivity.class);
+                        Act.getInstance().lauchIntentToLogin(this, ManageCarActivity.class);
                         break;
                 }
                 break;
@@ -322,7 +312,7 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
     /**
      * 滞纳金dialog
      */
-    private void lateFeeDialog(){
+    private void lateFeeDialog() {
         DialogUtils.createLateFeeDialog(this, "滞纳金说明", "根据《中华人民共和国道" +
                 "路交通安全法》108条:当事人应当自收到行政处罚决定书" +
                 "之日起15日内，到指定的银行缴纳罚款。\n" +

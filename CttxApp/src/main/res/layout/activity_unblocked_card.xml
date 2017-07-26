@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorBgGray_f8"
+              android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/ds_100"
+        android:layout_marginTop="@dimen/ds_30"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/card_d"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/ds_45"
+        android:paddingTop="@dimen/ds_45">
+
+        <TextView
+            android:id="@+id/tv_bound"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/ds_30"
+            android:drawableTop="@mipmap/btn_bund"
+            android:gravity="center_horizontal"
+            android:text="绑定畅通卡"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_bid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/ds_30"
+            android:drawableTop="@mipmap/btn_add"
+            android:gravity="center_horizontal"
+            android:text="申办畅通卡"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_plan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/ds_30"
+            android:drawableTop="@mipmap/btn_progress"
+            android:gravity="center_horizontal"
+            android:text="申办进度"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+    </LinearLayout>
+
+</LinearLayout>

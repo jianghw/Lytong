@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.order.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.zantong.mobilecttx.R;
@@ -70,5 +71,13 @@ public class CouponListActivity extends BaseJxActivity {
     protected void DestroyViewAndThing() {
         mCouponListFragment = null;
         if (rechargeCouponBeen != null) rechargeCouponBeen.clear();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            closeFragment();
+        }
+        return false;
     }
 }

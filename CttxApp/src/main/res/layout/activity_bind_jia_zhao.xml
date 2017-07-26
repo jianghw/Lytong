@@ -1,190 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/ds_12"
+        android:layout_marginLeft="@dimen/ds_45"
+        android:layout_marginTop="@dimen/ds_12"
+        android:text="请对照《机动车驾驶证证》认真填写以下信息"
+        android:textSize="@dimen/fs_14sp"/>
+
+    <!--车辆信息-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
+        android:background="@color/colorWhite"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="驾驶证信息"
+            android:textColor="@color/colorTvRed_f33"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <ImageView
+            android:id="@+id/bind_jia_zhao_file_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_45"
+            android:src="@mipmap/btn_camera"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/bind_jia_zhao_file_camera"
+            android:gravity="right"
+            android:text="@string/tv_license_camera"
+            android:textColor="@color/colorTvGray_7f"
+            android:textSize="@dimen/fs_14sp"/>
+    </RelativeLayout>
+
+    <include layout="@layout/view_line1"/>
+    <!--驾驶证证号-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:layout_height="@dimen/ds_120"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
 
         <TextView
-            android:id="@+id/consummate_car_notice"
-            style="@style/TextSmallNoticeInfoStyleWhite"
-            android:textColor="@color/red"
-            android:layout_alignParentTop="true"
-            android:text="该版本暂只支持上海本地的驾照" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_144"
-            android:background="@color/color_white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/ds_60"
-            android:paddingRight="@dimen/ds_60">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="档案编号"
-                android:textSize="@dimen/ds_48" />
-
-            <ImageView
-                android:id="@+id/bind_jia_zhao_file_num_img"
-                android:layout_width="25dip"
-                android:layout_height="25dip"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="4dip"
-                android:padding="5dip"
-                android:src="@drawable/illegal_query_notice_selector" />
-
-            <EditText
-                android:id="@+id/bind_jia_zhao_file_num"
-                style="@style/EditextNormalNoStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/trans"
-                android:cursorVisible="true"
-                android:gravity="center_vertical|right"/>
-            <ImageView
-                android:id="@+id/bind_jia_zhao_file_camera"
-                android:layout_width="@dimen/ds_60"
-                android:layout_height="@dimen/ds_60"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="4dip"
-                android:src="@mipmap/icon_blue_camera" />
-        </LinearLayout>
-
-        <include layout="@layout/view_line1" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_144"
-            android:background="@color/color_white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/ds_60"
-            android:paddingRight="@dimen/ds_60">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="身份证号码"
-                android:textSize="@dimen/ds_48" />
-            <ImageView
-                android:id="@+id/bind_jia_zhao_idcard_img"
-                android:layout_width="25dip"
-                android:layout_height="25dip"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="4dip"
-                android:padding="5dip"
-                android:src="@drawable/illegal_query_notice_selector" />
-            <EditText
-                android:id="@+id/bind_jia_zhao_licenseno"
-                style="@style/EditextNormalNoStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/trans"
-                android:cursorVisible="true"
-                android:gravity="center_vertical|right"/>
-        </LinearLayout>
-
-        <include layout="@layout/view_line1" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_144"
-            android:background="@color/color_white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/ds_60"
-            android:paddingRight="@dimen/ds_60">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="预留手机号"
-                android:textSize="@dimen/ds_48" />
-            <ImageView
-                android:id="@+id/bind_jia_zhao_phone_img"
-                android:layout_width="25dip"
-                android:layout_height="25dip"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="4dip"
-                android:padding="5dip"
-                android:src="@drawable/illegal_query_notice_selector" />
-
-            <EditText
-                android:id="@+id/bind_jia_zhao_phone"
-                style="@style/EditextNormalNoStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/trans"
-                android:cursorVisible="true"
-                android:gravity="center_vertical|right"/>
-        </LinearLayout>
-
-        <include layout="@layout/view_line1" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_144"
-            android:visibility="gone"
-            android:background="@color/color_white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/ds_60"
-            android:paddingRight="@dimen/ds_60">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="初次领证日期"
-                android:textSize="@dimen/ds_48" />
-
-            <TextView
-                style="@style/consum_gray_color_text_vertical_font"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="请选择初次领证日期" />
-
-            <ImageView
-                style="@style/arrowLeftStyle"
-                android:layout_marginLeft="@dimen/ds_30" />
-
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/activity_bind_jia_zhao_agreement"
-            style="@style/TextTitleSmallStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ds_60"
-            android:padding="@dimen/ds_30"
-            android:layout_gravity="center"
-            android:textColor="@color/color_blue_light"
-            android:text="《用户隐私保密协议》" />
+            android:text="@string/tv_license_num_type"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
 
-        <Button
-            android:id="@+id/bind_jia_zhao_commit"
-            style="@style/ButtonBigStyle"
-            android:layout_marginBottom="@dimen/ds_50"
-            android:layout_marginTop="@dimen/ds_30"
-            android:text="马上绑定" />
+        <ImageView
+            android:id="@+id/bind_jia_zhao_idcard_img"
+            android:layout_width="@dimen/ds_48"
+            android:layout_height="@dimen/ds_48"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:layout_marginRight="@dimen/ds_30"
+            android:src="@drawable/illegal_query_notice_selector"/>
 
-        <TextView
-            android:id="@+id/bind_jia_zhao_apply"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="立即去办卡"
-            android:textColor="@color/common_blue"
-            android:textSize="@dimen/ds_48" />
+        <EditText
+            android:id="@+id/bind_jia_zhao_licenseno"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:digits="@string/digits_content"
+            android:gravity="right|center_vertical"
+            android:hint="请输入驾驶证号"
+            android:maxLines="1"
+            android:minWidth="@dimen/ds_180"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textColorHint="@color/colorLineGray_e6"
+            android:textSize="@dimen/fs_16sp"/>
     </LinearLayout>
-</ScrollView>
+
+    <TextView style="@style/line_splite_gray"/>
+    <!--驾驶证档案编号-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_record_num_type"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <ImageView
+            android:id="@+id/bind_jia_zhao_file_num_img"
+            android:layout_width="@dimen/ds_48"
+            android:layout_height="@dimen/ds_48"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:layout_marginRight="@dimen/ds_30"
+            android:src="@drawable/illegal_query_notice_selector"/>
+
+        <EditText
+            android:id="@+id/bind_jia_zhao_file_num"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:digits="@string/digits_content"
+            android:gravity="right|center_vertical"
+            android:hint="请输入档案编号"
+            android:maxLength="12"
+            android:maxLines="1"
+            android:minWidth="@dimen/ds_180"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textColorHint="@color/colorLineGray_e6"
+            android:textSize="@dimen/fs_16sp"/>
+    </LinearLayout>
+
+    <TextView style="@style/line_splite_gray"/>
+    <!--预留手机号-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_phone_num_type"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <ImageView
+            android:id="@+id/bind_jia_zhao_phone_img"
+            android:layout_width="@dimen/ds_48"
+            android:layout_height="@dimen/ds_48"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:layout_marginRight="@dimen/ds_30"
+            android:src="@drawable/illegal_query_notice_selector"/>
+
+        <EditText
+            android:id="@+id/bind_jia_zhao_phone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:digits="@string/digits_content"
+            android:gravity="right|center_vertical"
+            android:hint="请输入预留手机号"
+            android:maxLength="12"
+            android:maxLines="1"
+            android:minWidth="@dimen/ds_180"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textColorHint="@color/colorLineGray_e6"
+            android:textSize="@dimen/fs_16sp"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/ds_30"
+        android:layout_marginLeft="@dimen/ds_45"
+        android:layout_marginTop="@dimen/ds_30"
+        android:text="*该版本暂只支持上海本地驾驶证。"
+        android:textColor="@color/colorTvRed_f33"
+        android:textSize="@dimen/fs_14sp"/>
+
+    <TextView
+        android:id="@+id/activity_bind_jia_zhao_agreement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ds_45"
+        android:drawableLeft="@mipmap/btn_tick_on"
+        android:text="@string/tv_bind_rules"
+        android:textColor="@color/colorTvBlack_b3"
+        android:textSize="@dimen/fs_14sp"/>
+
+    <Button
+        android:id="@+id/bind_jia_zhao_commit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/ds_48"
+        android:layout_marginTop="@dimen/ds_90"
+        android:background="@mipmap/ic_btn_bg"
+        android:enabled="true"
+        android:text="立即绑定"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/fs_18sp"/>
+
+</LinearLayout>
+

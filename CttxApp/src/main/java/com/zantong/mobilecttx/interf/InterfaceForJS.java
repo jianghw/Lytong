@@ -12,8 +12,8 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
-import com.zantong.mobilecttx.card.activity.CardHomeActivity;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
+import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
@@ -116,7 +116,7 @@ public class InterfaceForJS {
     @JavascriptInterface
     public void bindCard() {
         if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {
-            Act.getInstance().lauchIntentToLogin(context, CardHomeActivity.class);
+            Act.getInstance().lauchIntentToLogin(context, UnblockedCardActivity.class);
         } else {
             Act.getInstance().lauchIntentToLogin(context, MyCardActivity.class);
         }

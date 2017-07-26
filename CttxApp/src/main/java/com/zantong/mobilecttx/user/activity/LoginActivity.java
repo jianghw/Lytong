@@ -35,7 +35,7 @@ import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
-import com.zantong.mobilecttx.card.activity.CardHomeActivity;
+import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.eventbus.CarInfoEvent;
@@ -420,7 +420,7 @@ public class LoginActivity extends Activity
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Act.getInstance().lauchIntent(LoginActivity.this, CardHomeActivity.class);
+                            Act.getInstance().lauchIntent(LoginActivity.this, UnblockedCardActivity.class);
                             InputMethodManager imm = (InputMethodManager) LoginActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
                             if (imm.isActive() && LoginActivity.this.getCurrentFocus() != null) {
                                 if (LoginActivity.this.getCurrentFocus().getWindowToken() != null) {
@@ -437,7 +437,6 @@ public class LoginActivity extends Activity
                             if (PublicData.getInstance().className != null) {
                                 Act.getInstance().lauchIntent(LoginActivity.this, PublicData.getInstance().className);
                             }
-//                    ScreenManager.popActivity();
                             finish();
                         }
                     },
@@ -445,7 +444,6 @@ public class LoginActivity extends Activity
                         @Override
                         public void onClick(View v) {
                             AccountRememberCtrl.saveLoginAD(LoginActivity.this, "0");
-//                    ScreenManager.popActivity();
                             hideInputType();
                             finish();
                         }

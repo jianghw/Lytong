@@ -22,9 +22,9 @@ import com.tencent.bugly.beta.UpgradeInfo;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobilecttx.car.activity.CarManageGroupActivity;
-import com.zantong.mobilecttx.card.activity.CardHomeActivity;
+import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
+import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
@@ -32,18 +32,18 @@ import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.common.activity.CommonProblemActivity;
 import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 import com.zantong.mobilecttx.interf.IHomeMeFtyContract;
+import com.zantong.mobilecttx.order.activity.CouponActivity;
 import com.zantong.mobilecttx.order.activity.OrderParentActivity;
+import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
+import com.zantong.mobilecttx.order.bean.CouponFragmentLBean;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.presenter.home.HomeMeFtyPresenter;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.user.activity.AboutActivity;
-import com.zantong.mobilecttx.order.activity.CouponActivity;
 import com.zantong.mobilecttx.user.activity.MegTypeActivity;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.user.activity.SettingActivity;
 import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
-import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
-import com.zantong.mobilecttx.order.bean.CouponFragmentLBean;
-import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
@@ -401,13 +401,13 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 break;
             case R.id.tv_card://我的畅通卡
                 if (Tools.isStrEmpty(PublicData.getInstance().filenum))
-                    Act.getInstance().lauchIntentToLogin(getActivity(), CardHomeActivity.class);
+                    Act.getInstance().lauchIntentToLogin(getActivity(), UnblockedCardActivity.class);
                 else
                     Act.getInstance().lauchIntentToLogin(getActivity(), MyCardActivity.class);
                 break;
             case R.id.tv_car:
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(28));
-                Act.getInstance().gotoIntent(getActivity(), CarManageGroupActivity.class);
+                Act.getInstance().lauchIntentToLogin(getActivity(), ManageCarActivity.class);
                 break;
             case R.id.tv_coupon:
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(27));

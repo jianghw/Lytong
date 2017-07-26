@@ -6,10 +6,10 @@
             <!-- 边框的颜色 ：不能和窗口背景色一样-->
             <stroke
                 android:width="1px"
-                android:color="@color/colorLineGray_e5"/>
+                android:color="@color/colorLineGray_e6"/>
             <!-- 设置按钮的四个角为弧形 -->
             <!-- android:radius 弧形的半径 -->
-            <corners android:radius="10dp"/>
+            <corners android:radius="8dp"/>
         </shape>
     </item>
     <item android:state_enabled="true" android:state_pressed="false">
@@ -18,10 +18,10 @@
             <!-- 边框的颜色 ：不能和窗口背景色一样-->
             <stroke
                 android:width="1px"
-                android:color="@color/colorLineGray_e5"/>
+                android:color="@color/colorLineGray_e6"/>
             <!-- 设置按钮的四个角为弧形 -->
             <!-- android:radius 弧形的半径 -->
-            <corners android:radius="10dp"/>
+            <corners android:radius="8dp"/>
         </shape>
     </item>
     <item android:state_enabled="false">
@@ -30,10 +30,10 @@
             <!-- 边框的颜色 ：不能和窗口背景色一样-->
             <stroke
                 android:width="1px"
-                android:color="@color/colorLineGray_e5"/>
+                android:color="@color/colorLineGray_e6"/>
             <!-- 设置按钮的四个角为弧形 -->
             <!-- android:radius 弧形的半径 -->
-            <corners android:radius="10dp"/>
+            <corners android:radius="8dp"/>
         </shape>
     </item>
 </selector>

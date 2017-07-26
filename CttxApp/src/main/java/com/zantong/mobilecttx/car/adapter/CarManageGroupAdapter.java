@@ -1,15 +1,14 @@
 package com.zantong.mobilecttx.car.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zantong.mobilecttx.R;
-import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
+import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 
 import java.util.ArrayList;
@@ -52,13 +51,6 @@ public class CarManageGroupAdapter extends BaseAdapter<CarInfoDTO> {
                     }else{
                         holder.mFlag.setVisibility(View.GONE);
                     }
-                    if (!TextUtils.isEmpty(data.getActivityCar())){
-                        if(data.getActivityCar().equals("1")){
-                            holder.mActivityCar.setVisibility(View.VISIBLE);
-                        }else{
-                            holder.mActivityCar.setVisibility(View.GONE);
-                        }
-                    }
                 }
                 break;
         }
@@ -87,7 +79,7 @@ public class CarManageGroupAdapter extends BaseAdapter<CarInfoDTO> {
         if (viewType == TYPE_TITLE){
             return inflate.inflate(R.layout.item_manage_vehicles_group, viewGroup, false);
         }else {
-            return inflate.inflate(R.layout.item_manage_vehicles, viewGroup, false);
+            return inflate.inflate(R.layout.recycle_list_item_car, viewGroup, false);
         }
     }
 
@@ -108,8 +100,7 @@ public class CarManageGroupAdapter extends BaseAdapter<CarInfoDTO> {
         TextView mCarNumber;
         @Bind(R.id.item_manage_vehicles_flag)
         TextView mFlag;
-        @Bind(R.id.item_manage_activity_car)
-        TextView mActivityCar;
+
 
         public ViewHolder(View view) {
             super(view);

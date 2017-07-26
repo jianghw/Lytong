@@ -59,10 +59,10 @@ public class LicenseDetailActivity extends BaseJxActivity {
 
     @Override
     protected void initFragmentView(View view) {
+        initTitleContent("本计分周期累计扣分");
+
         setTvRightVisible("编辑");
         setTitleBackgroundRed();
-
-        initTitleContent("本计分周期累计扣分");
 
         if (bean != null) {
             String beanStrtdt = bean.getStrtdt();

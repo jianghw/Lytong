@@ -49,10 +49,8 @@ public abstract class BaseAdapter<ItemDataType> extends
      * @param itemDataTypes 数据实体类集合
      */
     public void append(List<ItemDataType> itemDataTypes) {
-        if (itemDataTypes.size() > 0) {
-            mItemDataList.addAll(itemDataTypes);
-            notifyDataSetChanged();
-        }
+        mItemDataList.addAll(itemDataTypes);
+        notifyDataSetChanged();
     }
 
     /**
@@ -93,6 +91,10 @@ public abstract class BaseAdapter<ItemDataType> extends
     /**
      * 移除所有数据
      */
+    public void removeAllOnly() {
+        if (mItemDataList != null) mItemDataList.clear();
+    }
+
     public void removeAll() {
         if (mItemDataList != null) mItemDataList.clear();
         notifyDataSetChanged();
@@ -135,7 +137,7 @@ public abstract class BaseAdapter<ItemDataType> extends
                 swipeRightMenuView.bindMenu(swipeRightMenu, XRecyclerView.RIGHT_DIRECTION);
                 swipeRightMenuView.bindMenuItemClickListener(mSwipeMenuItemClickListener, swipeMenuLayout);
             }
-            if (leftMenuCount > 0 ||rightMenuCount > 0) {
+            if (leftMenuCount > 0 || rightMenuCount > 0) {
                 ViewGroup viewById = (ViewGroup) swipeMenuLayout.findViewById(R.id.lv_swipe_content);
                 viewById.addView(contentView);
                 contentView = swipeMenuLayout;
