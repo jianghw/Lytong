@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.user.activity.UserQrCodeActivity;
 
+import cn.qqtheme.framework.util.ui.DensityUtils;
+
 
 /**
  * @version 创建时间：2011-11-1 下午05:34:54

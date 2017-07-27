@@ -58,9 +58,9 @@ android {
             // 显示Log
             buildConfigField "boolean", "LOG_DEBUG", "true"
             //下载地址  分享
-            buildConfigField "String", "APP_DOWNLOD", "\"http://139.196.183.121/download/\""
+            buildConfigField "String", "APP_DOWNLOD", "\"http://dev.liyingtong.com:8080/download/\""
 
-            buildConfigField "String", "CAR_MANGER_URL", "\"http://139.196.183.121/\""
+            buildConfigField "String", "CAR_MANGER_URL", "\"http://dev.liyingtong.com:8080/\""
             //新接口正式地址
             buildConfigField "String", "BASE_URL", "\"https://ctkapptest.icbc-axa.com/ecip/mobilecall_call\""
             //老接口正式地址
@@ -70,9 +70,9 @@ android {
             //领卡网点文件（正式地址）
             buildConfigField "String", "ImageLoadUrl", "\"https://ctkapp.icbc-axa.com/\""
             //分享url
-            buildConfigField "String", "SHARE_APP_URL_1", "\"http://139.196.183.121/h5/share1/share.html\""
-            buildConfigField "String", "SHARE_APP_URL_2", "\"http://139.196.183.121/h5/share2/share.html\""
-            buildConfigField "String", "SHARE_APP_URL_3", "\"http://139.196.183.121/h5/share3/share.html\""
+            buildConfigField "String", "SHARE_APP_URL_1", "\"http://dev.liyingtong.com:8080/h5/share1/share.html\""
+            buildConfigField "String", "SHARE_APP_URL_2", "\"http://dev.liyingtong.com:8080/h5/share2/share.html\""
+            buildConfigField "String", "SHARE_APP_URL_3", "\"http://dev.liyingtong.com:8080/h5/share3/share.html\""
             //图片下载地址（正式地址）
             signingConfig signingConfigs.debug
         }

@@ -375,24 +375,24 @@ public class HeaderViewPager extends FrameLayout {
 
                     if (currentTm < endTm) {//4.17号之前
                         MobclickAgent.onEvent(context, Config.getUMengID(22));
-                        Act.getInstance().lauchIntentToLogin(context, HundredPlanActivity.class);
+                        Act.getInstance().gotoIntentLogin(context, HundredPlanActivity.class);
 
                     } else {//4.17号之后
                         PublicData.getInstance().webviewUrl = Config.HUNDRED_PLAN_HOME;
                         PublicData.getInstance().webviewTitle = "百日无违章";
-                        Act.getInstance().lauchIntentToLogin(context, BrowserActivity.class);
+                        Act.getInstance().gotoIntentLogin(context, BrowserActivity.class);
                     }
 
                 }else if (result.getResponseCode() == 4000) {
                     SPUtils.getInstance().setSignStatus(false);
                     if (currentTm < endTm) {//4.17号之前
                         MobclickAgent.onEvent(context, Config.getUMengID(19));
-                        Act.getInstance().lauchIntentToLogin(context, HundredPlanActivity.class);
+                        Act.getInstance().gotoIntentLogin(context, HundredPlanActivity.class);
 
                     } else {//4.17号之后
                         PublicData.getInstance().webviewUrl = Config.HUNDRED_PLAN_DEADLINE;
                         PublicData.getInstance().webviewTitle = "百日无违章";
-                        Act.getInstance().lauchIntentToLogin(context, BrowserActivity.class);
+                        Act.getInstance().gotoIntentLogin(context, BrowserActivity.class);
                     }
                 }
             }

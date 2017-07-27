@@ -26,7 +26,7 @@ import com.zantong.mobilecttx.huodong.bean.ActivitySignNum;
 import com.zantong.mobilecttx.huodong.dto.HundredPlanDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.user.activity.SettingActivity;
-import com.zantong.mobilecttx.utils.DensityUtils;
+import cn.qqtheme.framework.util.ui.DensityUtils;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
@@ -122,7 +122,7 @@ public class HundredPlanActivity extends BaseMvpActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.hundred_plan_addcar:
-                Act.getInstance().lauchIntentToLogin(this, ManageCarActivity.class);
+                Act.getInstance().gotoIntentLogin(this, ManageCarActivity.class);
                 finish();
                 break;
             case R.id.hundred_plan_selcar:

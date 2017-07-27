@@ -4,31 +4,32 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.base.bean.BaseResult;
-import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderDetailResult;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.base.interf.IBaseView;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserForPayActivity;
+import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderDetailResult;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderDetailDTO;
 import com.zantong.mobilecttx.eventbus.DrivingCancelEvent;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.HashUtils;
 import com.zantong.mobilecttx.utils.PullToRefreshLayout;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 
 import butterknife.Bind;
+import cn.qqtheme.framework.global.GlobalConstant;
 
 /**
  * 代驾订单详情页面
@@ -106,7 +107,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
                                         if (result.getResponseCode() == 2000) {
                                             PublicData.getInstance().webviewTitle = "支付";
                                             PublicData.getInstance().webviewUrl = result.getData();
-                                            Act.getInstance().lauchIntentToLogin(DODetailActivity.this, BrowserForPayActivity.class);
+                                            Act.getInstance().gotoIntentLogin(DODetailActivity.this, BrowserForPayActivity.class);
                                         }
                                     }
                                 });
@@ -146,7 +147,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
         DaiJiaOrderDetailDTO dto = new DaiJiaOrderDetailDTO();
         dto.setUsrId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
         Intent intent = getIntent();
-        mOrderId = intent.getStringExtra(Act.ACT_PARAM);
+        mOrderId = intent.getStringExtra(GlobalConstant.putExtra.common_extra);
         dto.setOrderId(mOrderId);
         String time = "1488253689";
         try {

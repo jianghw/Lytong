@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -316,6 +317,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
     public void getMerchantAreaSucceed(MerchantAresResult result) {
         if (result.getData() != null) {
             List<MerchantAresBean> list = result.getData();
+
             selectArea(list, mTvAddressSel);
         } else {
             ToastUtils.toastShort("地点数据为空，请稍后再试一试");
@@ -327,7 +329,9 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
      */
     protected void selectArea(final List<MerchantAresBean> aresBeanList, final TextView textView) {
         final PopupWindow popupWindow = new PopupWindow(getActivity());
+
         popupWindow.setWidth(textView.getMeasuredWidth());
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.custom_listview_tv, null);
         ListView mListView = (ListView) inflate.findViewById(R.id.lv_list);
@@ -344,7 +348,9 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
                 mAreaCode = bean.getCode();
             }
         });
-        FahrschulePopupAresAdapter adapter = new FahrschulePopupAresAdapter(getActivity(), aresBeanList);
+
+        FahrschulePopupAresAdapter adapter =
+                new FahrschulePopupAresAdapter(getActivity(), aresBeanList);
         mListView.setAdapter(adapter);
 
         popupShowAs(textView, popupWindow, mListView);
@@ -354,14 +360,14 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
         popupWindow.setContentView(mListView);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             popupWindow.setElevation(16);
-            popupWindow.setBackgroundDrawable(
-                    ContextCompat.getDrawable(ContextUtils.getContext(), R.drawable.shape_bg_popu_white));
-        } else {
-            popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(ContextUtils.getContext(),
-                    R.drawable.shape_bg_popu_white));
         }
+
+        popupWindow.setBackgroundDrawable(
+                ContextCompat.getDrawable(ContextUtils.getContext(), R.drawable.shape_bg_popu_white));
+
         popupWindow.showAsDropDown(textView, 0, 30);
     }
 
@@ -402,7 +408,9 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
 
     private void selectGoods(final List<AresGoodsBean> goodsBeanList, final TextView textView) {
         final PopupWindow popupWindow = new PopupWindow(getActivity());
-//        popupWindow.setWidth(textView.getMeasuredWidth());
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+
         View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.custom_listview_tv, null);
         ListView mListView = (ListView) inflate.findViewById(R.id.lv_list);
         mListView.setDivider(null);
@@ -421,7 +429,8 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
                     mPresenter.getGoodsDetail(String.valueOf(bean.getGoodsId()));
             }
         });
-        FahrschulePopupGoodsAdapter adapter = new FahrschulePopupGoodsAdapter(getActivity(), goodsBeanList);
+        FahrschulePopupGoodsAdapter adapter =
+                new FahrschulePopupGoodsAdapter(getActivity(), goodsBeanList);
         mListView.setAdapter(adapter);
 
         popupShowAs(textView, popupWindow, mListView);

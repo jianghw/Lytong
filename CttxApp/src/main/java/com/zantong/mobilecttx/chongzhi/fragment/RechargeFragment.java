@@ -779,7 +779,7 @@ public class RechargeFragment extends PullableBaseFragment
     public void onPayOrderByCouponSucceed(PayOrderResult result) {
         PublicData.getInstance().webviewTitle = "支付";
         PublicData.getInstance().webviewUrl = result.getData();
-        Act.getInstance().lauchIntentToLogin(getActivity(), BrowserForPayActivity.class);
+        Act.getInstance().gotoIntentLogin(getActivity(), BrowserForPayActivity.class);
         //TODO 保存卡号
         SPUtils.getInstance().setOilCard(mRechargeDTO.getOilCardNum());
         //TODO 确保优惠劵的使用状态

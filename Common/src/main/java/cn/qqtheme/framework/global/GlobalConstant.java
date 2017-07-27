@@ -27,6 +27,7 @@ public final class GlobalConstant {
     }
 
     public static final class putExtra {
+        public static final String common_extra = "common_extra";
         public static final String common_list_extra = "common_list_extra";
         public static final String ocr_camera_extra = "ocr_resource_extra";
         public static final String web_title_extra = "web_title_extra";

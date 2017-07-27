@@ -116,9 +116,9 @@ public class InterfaceForJS {
     @JavascriptInterface
     public void bindCard() {
         if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {
-            Act.getInstance().lauchIntentToLogin(context, UnblockedCardActivity.class);
+            Act.getInstance().gotoIntentLogin(context, UnblockedCardActivity.class);
         } else {
-            Act.getInstance().lauchIntentToLogin(context, MyCardActivity.class);
+            Act.getInstance().gotoIntentLogin(context, MyCardActivity.class);
         }
     }
 

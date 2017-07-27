@@ -46,7 +46,7 @@ public class CTTXGetUserMessage extends CordovaPlugin {
 //                Intent intent = new Intent(cordova.getActivity(), LoginPhone.class);
 ////                cordova.setActivityResultCallback(CTTXGetUserMessage.this);
 //                cordova.startActivityForResult((CordovaPlugin) this, intent, 1);
-//                Act.getInstance().lauchIntentForResult(cordova.getActivity(), LoginPhone.class, 1);
+
 //                CTTXGetUserMessage.this.errorEcho("ERROR", callbackContext);
             }
 

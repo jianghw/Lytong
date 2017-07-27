@@ -46,7 +46,6 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.utils.StateBarSetting;
 import com.zantong.mobilecttx.utils.TitleSetting;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 import com.zantong.mobilecttx.zxing.BarcodeFormat;
@@ -78,6 +77,7 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Map;
 
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
@@ -560,6 +560,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     CharSequence displayContents = resultHandler.getDisplayContents();
     PublicData.getInstance().mHashMap.put("ViolationDetailsStr", displayContents);
+
     if("http".equals(displayContents.toString().substring(0,4))){
       continuePreview();
       ToastUtils.showShort(CaptureActivity.this, "该违章单编号不正确，请重新扫描");
@@ -569,7 +570,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         LogUtils.i("去查询违章");
       }else{
         continuePreview();
-        ToastUtils.showShort(CaptureActivity.this, "该违章单编号不正确，请重新扫描");
+        ToastUtils.toastShort("该违章单编号不正确，请重新扫描");
       }
 
     }

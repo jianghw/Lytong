@@ -8,16 +8,14 @@ import android.text.TextUtils;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 
+import cn.qqtheme.framework.global.GlobalConstant;
+
 /**
  * Created by Administrator on 2016/5/4.
  */
 public class Act {
 
-    public static final String ACT_PARAM = "param";
     private static Act instance;
-
-    private Act() {
-    }
 
     public static synchronized Act getInstance() {
         if (instance == null) {
@@ -29,15 +27,8 @@ public class Act {
     public void lauchIntent(Context packageContext, Class<?> className) {
         Intent intent = new Intent(packageContext, className);
         packageContext.startActivity(intent);
-
     }
 
-    /**
-     * 该跳转需要验证登录状态
-     *
-     * @param packageContext
-     * @param className
-     */
     public void gotoIntent(Context packageContext, Class<?> className) {
         Intent intent = new Intent(packageContext, className);
         packageContext.startActivity(intent);
@@ -45,30 +36,17 @@ public class Act {
 
     public void gotoIntent(Context packageContext, Class<?> className, String str) {
         Intent intent = new Intent(packageContext, className);
-        intent.putExtra(ACT_PARAM, str);
+        intent.putExtra(GlobalConstant.putExtra.common_extra, str);
         packageContext.startActivity(intent);
     }
 
-    public void lauchIntentForResult(Activity packageContext, Class<?> className, int requestCode) {
-        Intent intent = new Intent(packageContext, className);
-        packageContext.startActivityForResult(intent, requestCode);
-    }
+    /**
+     * 该跳转需要验证登录状态
+     */
+    public void gotoIntentLogin(Context packageContext, Class<?> className) {
 
-    public void lauchIntentToLoginForResult(Activity packageContext, Class<?> className, int requestCode) {
-
-        if (!PublicData.getInstance().loginFlag && !TextUtils.isEmpty(PublicData.getInstance().userID)) {
-
-            Intent intent = new Intent(packageContext, LoginActivity.class);
-            packageContext.startActivity(intent);
-        } else {
-            Intent intent = new Intent(packageContext, className);
-            packageContext.startActivityForResult(intent, requestCode);
-        }
-    }
-
-    public void lauchIntentToLogin(Context packageContext, Class<?> className) {
-
-        if (PublicData.getInstance().loginFlag && !TextUtils.isEmpty(PublicData.getInstance().userID)) {
+        if (PublicData.getInstance().loginFlag
+                && !TextUtils.isEmpty(PublicData.getInstance().userID)) {
             Intent intent = new Intent(packageContext, className);
             packageContext.startActivity(intent);
         } else {
@@ -78,7 +56,24 @@ public class Act {
         }
     }
 
-    public void launchLoginByIntent(Context packageContext, Class<?> className, Intent intent) {
+    public void gotoIntentForResult(Activity packageContext, Class<?> className, int requestCode) {
+        Intent intent = new Intent(packageContext, className);
+        packageContext.startActivityForResult(intent, requestCode);
+    }
+
+    public void gotoIntentLoginForResult(Activity packageContext, Class<?> className, int requestCode) {
+
+        if (!PublicData.getInstance().loginFlag
+                && !TextUtils.isEmpty(PublicData.getInstance().userID)) {
+            Intent intent = new Intent(packageContext, LoginActivity.class);
+            packageContext.startActivity(intent);
+        } else {
+            Intent intent = new Intent(packageContext, className);
+            packageContext.startActivityForResult(intent, requestCode);
+        }
+    }
+
+    public void gotoLoginByIntent(Context packageContext, Class<?> className, Intent intent) {
         if (PublicData.getInstance().loginFlag
                 && !TextUtils.isEmpty(PublicData.getInstance().userID)) {
             intent.setClass(packageContext, className);

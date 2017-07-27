@@ -96,7 +96,7 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
     @Override
     protected void baseGoEnsure() {
         super.baseGoEnsure();
-        Act.getInstance().lauchIntentToLogin(this, DrivingOrderActivity.class);
+        Act.getInstance().gotoIntentLogin(this, DrivingOrderActivity.class);
     }
 
     @OnClick({R.id.driving_address_layout, R.id.driving_address, R.id.frist_next, R.id.driving_price})
@@ -121,7 +121,7 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
                 }
                 break;
             case R.id.driving_price:
-                Act.getInstance().lauchIntentToLogin(this, DrivingPriceActivity.class);
+                Act.getInstance().gotoIntentLogin(this, DrivingPriceActivity.class);
                 break;
         }
     }

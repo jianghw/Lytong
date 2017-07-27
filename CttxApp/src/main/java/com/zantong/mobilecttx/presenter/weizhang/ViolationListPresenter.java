@@ -8,10 +8,10 @@ import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
-import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.interf.IViolationListFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.user.dto.LogoutDTO;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResult;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
@@ -185,7 +185,8 @@ public class ViolationListPresenter
                     public void doNext(List<ViolationBean> beanList) {
                         if (value == 0) {
                             mAtyView.nonPaymentData(beanList);
-                            handleViolations(beanList);
+
+                            if (beanList != null && !beanList.isEmpty()) handleViolations(beanList);
                         } else if (value == 1)
                             mAtyView.havePaymentData(beanList);
                     }
@@ -194,7 +195,7 @@ public class ViolationListPresenter
     }
 
     /**
-     * 处理违章信息
+     * 处理违章信息 上传数据后台
      */
     @Override
     public void handleViolations(List<ViolationBean> beanList) {
@@ -248,8 +249,8 @@ public class ViolationListPresenter
                         if (result != null && "000000".equals(result.getSYS_HEAD().getReturnCode())) {
                             mAtyView.getPayCarsSucceed(result.getRspInfo());
                         } else {
-                            mAtyView.getPayCarsError(result!=null
-                                    ?result.getSYS_HEAD().getReturnMessage()
+                            mAtyView.getPayCarsError(result != null
+                                    ? result.getSYS_HEAD().getReturnMessage()
                                     : "未知错误(cip.cfc.c002.01)");
                         }
                     }
@@ -263,8 +264,8 @@ public class ViolationListPresenter
         RequestHeadDTO requestHeadDTO = mRepository.initLicenseFileNumDTO("cip.cfc.c002.01");
         dto.setSYS_HEAD(requestHeadDTO);
 
-        HomeDataDTO params = new HomeDataDTO();
-        params.setUserId(mRepository.getDefaultRASUserID());
+        LogoutDTO params = new LogoutDTO();
+        params.setUsrid(mRepository.getDefaultRASUserID());
 
         dto.setReqInfo(params);
         return new Gson().toJson(dto);

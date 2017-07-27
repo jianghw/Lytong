@@ -238,12 +238,12 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
             case R.id.img_banner:
                 Intent intent = new Intent();
                 intent.putExtra(GlobalConstant.putExtra.share_position_extra, 1);
-                Act.getInstance().launchLoginByIntent(getActivity(), ShareParentActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(getActivity(), ShareParentActivity.class, intent);
                 break;
             case R.id.lay_order://加油
                 GlobalConfig.getInstance().eventIdByUMeng(21);
 
-                Act.getInstance().lauchIntentToLogin(getActivity(), RechargeActivity.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), RechargeActivity.class);
                 break;
             case R.id.lay_repair://害羞
                 GlobalConfig.getInstance().eventIdByUMeng(23);
@@ -256,7 +256,7 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
             case R.id.lay_beauty://美容
                 GlobalConfig.getInstance().eventIdByUMeng(27);
 
-                Act.getInstance().lauchIntentToLogin(getActivity(), CarBeautyActivity.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), CarBeautyActivity.class);
                 break;
             case R.id.lay_river://代驾
                 GlobalConfig.getInstance().eventIdByUMeng(25);
@@ -266,7 +266,7 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
             case R.id.lay_admissions://驾校招生
                 GlobalConfig.getInstance().eventIdByUMeng(28);
 
-                Act.getInstance().lauchIntentToLogin(getActivity(), FahrschuleActivity.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), FahrschuleActivity.class);
                 break;
             default:
                 break;
@@ -278,7 +278,7 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
      */
     public void enterDrivingActivity() {
         if (!PublicData.getInstance().loginFlag) {
-            Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+            Act.getInstance().gotoIntentLogin(getActivity(), DrivingActivity.class);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             PermissionGen.needPermission(this, 2000, new String[]{
                     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -286,7 +286,7 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_PHONE_STATE});
         } else {
-            Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+            Act.getInstance().gotoIntentLogin(getActivity(), DrivingActivity.class);
         }
     }
 
@@ -298,7 +298,7 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
 
     @PermissionSuccess(requestCode = 2000)
     public void doDrivingSuccess() {
-        Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+        Act.getInstance().gotoIntentLogin(getActivity(), DrivingActivity.class);
     }
 
     @PermissionFail(requestCode = 2000)

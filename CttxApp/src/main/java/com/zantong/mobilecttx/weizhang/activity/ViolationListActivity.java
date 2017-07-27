@@ -66,6 +66,7 @@ public class ViolationListActivity extends BaseJxActivity
      * 传值
      */
     private ViolationDTO mViolationDTO;
+    private String mTitle;
     /**
      * 已绑定车辆
      */
@@ -83,8 +84,7 @@ public class ViolationListActivity extends BaseJxActivity
     protected void bundleIntent(Bundle savedInstanceState) {
         Intent intent = getIntent();
         if (intent != null) {
-            String title = intent.getStringExtra("plateNum");
-            initTitleContent(title);
+            mTitle = intent.getStringExtra("plateNum");
 
             Bundle bundle = intent.getExtras();
             mViolationDTO = (ViolationDTO) bundle.getSerializable("params");
@@ -98,6 +98,7 @@ public class ViolationListActivity extends BaseJxActivity
 
     @Override
     protected void initFragmentView(View view) {
+        initTitleContent(mTitle);
 
         ViolationListPresenter presenter = new ViolationListPresenter(
                 Injection.provideRepository(getApplicationContext()), this);
@@ -118,6 +119,9 @@ public class ViolationListActivity extends BaseJxActivity
 
     private void initFragment() {
         if (mFragmentList != null && !mFragmentList.isEmpty()) mFragmentList.clear();
+        orderAllStatusFragment = ViolationListFragment.newInstance();
+        orderAllStatusFragment.setRefreshListener(getRefreshListener());
+        mFragmentList.add(orderAllStatusFragment);
 
         orderUnStatusFragment = ViolationListFragment.newInstance();
         orderUnStatusFragment.setRefreshListener(getRefreshListener());
@@ -126,10 +130,6 @@ public class ViolationListActivity extends BaseJxActivity
         orderPayStatusFragment = ViolationListFragment.newInstance();
         orderPayStatusFragment.setRefreshListener(getRefreshListener());
         mFragmentList.add(orderPayStatusFragment);
-
-        orderAllStatusFragment = ViolationListFragment.newInstance();
-        orderAllStatusFragment.setRefreshListener(getRefreshListener());
-        mFragmentList.add(orderAllStatusFragment);
     }
 
     @NonNull
@@ -171,28 +171,29 @@ public class ViolationListActivity extends BaseJxActivity
         }
     }
 
+    /**
+     * 付款fragment
+     */
     private void goToPayFragment(ViolationBean bean, String violationnum) {
         if ("1".equals(violationnum) || "2".equals(violationnum)) {//是否处罚决定书
             showPayFragment(bean);
+        } else if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {//未綁卡
+            byCardHome();
         } else {
-            if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {//未綁卡
-                byCardHome();
+            if (!mPayCarOk) {
+                ToastUtils.toastShort("获取已绑定车辆失败，请下拉刷新数据");
+                return;
+            }
+            if (mPayCarList == null || mPayCarList.size() < 2) {
+                showPayFragment(bean);
             } else {
-                if (!mPayCarOk) {
-                    ToastUtils.toastShort("获取已绑定车辆失败，请下拉刷新数据");
-                    return;
-                }
-                if (mPayCarList == null || mPayCarList.size() < 2) {
-                    showPayFragment(bean);
-                } else {
-                    for (PayCar payCar : mPayCarList) {
-                        if (payCar.getCarnum().equals(bean.getCarnum())) {
-                            showPayFragment(bean);
-                            break;
-                        }
+                for (PayCar payCar : mPayCarList) {
+                    if (payCar.getCarnum().equals(bean.getCarnum())) {
+                        showPayFragment(bean);
+                        break;
                     }
-                    ToastUtils.toastShort("当前车辆为非绑定车辆，可去车辆管理进行改绑");
                 }
+                ToastUtils.toastShort("当前车辆为非绑定车辆，可去车辆管理进行改绑");
             }
         }
     }
@@ -219,7 +220,7 @@ public class ViolationListActivity extends BaseJxActivity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Act.getInstance().lauchIntentToLogin(ViolationListActivity.this, UnblockedCardActivity.class);
+                        Act.getInstance().gotoIntentLogin(ViolationListActivity.this, UnblockedCardActivity.class);
                     }
                 });
     }
@@ -243,7 +244,7 @@ public class ViolationListActivity extends BaseJxActivity
     }
 
     private void initViewPager() {
-        String[] title = new String[]{"未处理", "已处理", "全部"};
+        String[] title = new String[]{"全部", "未处理", "已处理"};
         OrderFragmentAdapter mainFragmentAdapter =
                 new OrderFragmentAdapter(getSupportFragmentManager(), mFragmentList, title);
         mViewPager.setAdapter(mainFragmentAdapter);
@@ -263,6 +264,8 @@ public class ViolationListActivity extends BaseJxActivity
         });
 
         mTabLayout.setupWithViewPager(mViewPager);
+
+        mViewPager.setCurrentItem(1);
     }
 
     /**
@@ -416,7 +419,7 @@ public class ViolationListActivity extends BaseJxActivity
 
             Intent intent = new Intent();
             intent.putExtra(GlobalConstant.putExtra.fahrschule_position_extra, 2);
-            Act.getInstance().launchLoginByIntent(this, FahrschuleActivity.class, intent);
+            Act.getInstance().gotoLoginByIntent(this, FahrschuleActivity.class, intent);
 
         } else if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
                 && resultCode == GlobalConstant.resultCode.web_order_id_error && data != null) {

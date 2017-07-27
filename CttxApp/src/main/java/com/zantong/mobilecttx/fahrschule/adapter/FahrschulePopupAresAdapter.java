@@ -13,7 +13,7 @@ import com.zantong.mobilecttx.fahrschule.bean.MerchantAresBean;
 import java.util.List;
 
 /**
- *
+ * 弹出框
  */
 public class FahrschulePopupAresAdapter extends BaseAdapter {
 

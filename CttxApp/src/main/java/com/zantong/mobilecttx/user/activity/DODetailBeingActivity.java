@@ -4,28 +4,29 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.base.bean.BaseResult;
+import com.zantong.mobilecttx.base.interf.IBaseView;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.daijia.activity.DrivingOrderActivity;
 import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderDetailResult;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderDetailDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.HashUtils;
 import com.zantong.mobilecttx.utils.PullToRefreshLayout;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.daijia.activity.DrivingOrderActivity;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.global.GlobalConstant;
 
 /**
  * 代驾派单中详情页面
@@ -143,7 +144,7 @@ public class DODetailBeingActivity extends BaseMvpActivity<IBaseView, HelpPresen
         }
         DaiJiaOrderDetailDTO dto = new DaiJiaOrderDetailDTO();
         Intent intent = getIntent();
-        String orderId = intent.getStringExtra(Act.ACT_PARAM);
+        String orderId = intent.getStringExtra(GlobalConstant.putExtra.common_extra);
         dto.setOrderId(orderId);
         dto.setTime(time);
         dto.setUsrId(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));

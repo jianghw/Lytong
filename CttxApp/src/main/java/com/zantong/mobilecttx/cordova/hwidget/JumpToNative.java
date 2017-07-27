@@ -26,7 +26,7 @@ public class JumpToNative extends CordovaPlugin {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            Act.getInstance().lauchIntentToLogin(cordova.getActivity(), clazz);
+            Act.getInstance().gotoIntentLogin(cordova.getActivity(), clazz);
             cordova.getActivity().finish();
 //            this.echo(temp, callbackContext);
 

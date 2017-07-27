@@ -103,7 +103,7 @@ public class HomeActivity extends BaseActivity {
             case R.id.home_addr://消息页面
 //                Act.getInstance().lauchIntent(this, AddrActivity.class);
                 MobclickAgent.onEvent(this.getApplicationContext(), Config.getUMengID(24));
-                Act.getInstance().lauchIntentToLogin(this, MegTypeActivity.class);
+                Act.getInstance().gotoIntentLogin(this, MegTypeActivity.class);
                 break;
             case R.id.home_sweep:
                 takeCapture();

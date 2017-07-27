@@ -68,7 +68,8 @@ public class CodeQueryPresenter extends BasePresenter<IBaseView> implements Simp
         switch (index) {
             case 1:
                 ViolationDetailsBean mViolationDetailsBean = (ViolationDetailsBean) clazz;
-                if (PublicData.getInstance().success.equals(mViolationDetailsBean.getSYS_HEAD().getReturnCode())) {
+                if (PublicData.getInstance().success.equals(
+                        mViolationDetailsBean.getSYS_HEAD().getReturnCode())) {
                     mCodequery.updateView(clazz, index);
                 } else {
                     ToastUtils.toastShort(mViolationDetailsBean.getSYS_HEAD().getReturnMessage());

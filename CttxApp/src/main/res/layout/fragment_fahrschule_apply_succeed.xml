@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/img_gift"
-        android:layout_width="@dimen/ds_504"
-        android:layout_height="@dimen/ds_504"
+        android:layout_width="@dimen/ds_480"
+        android:layout_height="@dimen/ds_480"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/ds_504"
         android:src="@mipmap/pic_gift"/>

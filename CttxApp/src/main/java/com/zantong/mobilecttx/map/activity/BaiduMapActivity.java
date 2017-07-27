@@ -50,7 +50,7 @@ import com.zantong.mobilecttx.map.bean.YearCheckDetail;
 import com.zantong.mobilecttx.map.bean.YearCheckDetailResult;
 import com.zantong.mobilecttx.map.bean.YearCheckResult;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
-import com.zantong.mobilecttx.utils.DensityUtils;
+import cn.qqtheme.framework.util.ui.DensityUtils;
 import com.zantong.mobilecttx.utils.DistanceUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 

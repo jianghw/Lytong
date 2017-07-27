@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.utils;
+package cn.qqtheme.framework.util.ui;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,8 +19,7 @@ public class DensityUtils {
 	 */
 	public static int getScreenHeight(Context context) {
 		DisplayMetrics dm = new DisplayMetrics();
-		((Activity) context).getWindowManager().getDefaultDisplay()
-				.getMetrics(dm);
+		((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
 		return dm.heightPixels;
 	}
 
@@ -32,8 +31,7 @@ public class DensityUtils {
 	 */
 	public static int getScreenWidth(Context context) {
 		DisplayMetrics dm = new DisplayMetrics();
-		((Activity) context).getWindowManager().getDefaultDisplay()
-				.getMetrics(dm);
+		((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
 		return dm.widthPixels;
 	}
 
@@ -57,7 +55,6 @@ public class DensityUtils {
 	 * 将px值转换为sp值 保证文字大小不变
 	 * 
 	 * @param pxValue
-	 * @param fontScale
 	 * @return
 	 */
 	public static int px2sp(Context context, float pxValue) {
@@ -69,7 +66,6 @@ public class DensityUtils {
 	 * 将sp值转换为px值 保证文字大小不变
 	 * 
 	 * @param spValue
-	 * @param fontScale
 	 * @return
 	 */
 	public static int sp2px(Context context, float spValue) {

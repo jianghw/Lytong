@@ -26,7 +26,7 @@ public class CTTXSelectContry extends CordovaPlugin {
             LogUtils.i("选择领卡网点");
 //            netLocation = args.getString(0);
 //            PublicData.getInstance().mHashMap.put("NetLocationActivity", netLocation);
-//            Act.getInstance().lauchIntentForResult(cordova.getActivity(), NetLocationActivity.class, insurancePay);
+
 
 //            this.echo(temp, callbackContext);
 

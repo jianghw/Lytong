@@ -180,7 +180,7 @@ public class OrderRechargeDetailActivity extends BaseMvpActivity<IOrderView, Ord
                                         if (result.getResponseCode() == 2000) {
                                             PublicData.getInstance().webviewTitle = "支付";
                                             PublicData.getInstance().webviewUrl = result.getData();
-                                            Act.getInstance().lauchIntentToLogin(OrderRechargeDetailActivity.this, BrowserForPayActivity.class);
+                                            Act.getInstance().gotoIntentLogin(OrderRechargeDetailActivity.this, BrowserForPayActivity.class);
                                         }
                                     }
                                 });

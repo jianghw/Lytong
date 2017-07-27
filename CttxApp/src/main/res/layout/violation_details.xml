@@ -17,7 +17,6 @@
         android:layout_below="@id/title"
         android:visibility="gone">
 
-
         <TextView
             android:id="@+id/loading_text"
             style="@style/mine_user_font"

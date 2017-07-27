@@ -76,7 +76,7 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
                 Act.getInstance().gotoIntent(mContext, LoginActivity.class);
             }
         } else if (PublicData.getInstance().webviewUrl.contains("fahrschule")) {//驾校报名
-            Act.getInstance().lauchIntentToLogin(mContext, FahrschuleActivity.class);
+            Act.getInstance().gotoIntentLogin(mContext, FahrschuleActivity.class);
         } else {
             Act.getInstance().gotoIntent(mContext, BrowserActivity.class);
 
@@ -99,12 +99,12 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
                     SPUtils.getInstance().setSignCarPlate(result.getData().getPlateNo());
                     PublicData.getInstance().webviewUrl = Config.HUNDRED_PLAN_HOME;
                     PublicData.getInstance().webviewTitle = "百日无违章";
-                    Act.getInstance().lauchIntentToLogin(mContext, BrowserActivity.class);
+                    Act.getInstance().gotoIntentLogin(mContext, BrowserActivity.class);
                 } else if (result.getResponseCode() == 4000) {
                     SPUtils.getInstance().setSignStatus(false);
                     PublicData.getInstance().webviewUrl = Config.HUNDRED_PLAN_DEADLINE;
                     PublicData.getInstance().webviewTitle = "百日无违章";
-                    Act.getInstance().lauchIntentToLogin(mContext, BrowserActivity.class);
+                    Act.getInstance().gotoIntentLogin(mContext, BrowserActivity.class);
                 }
             }
 

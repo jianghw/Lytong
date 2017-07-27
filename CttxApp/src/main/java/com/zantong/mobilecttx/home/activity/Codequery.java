@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.home.activity;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -49,7 +50,10 @@ public class Codequery extends BaseJxActivity implements ModelView {
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
-
+        Intent intent = getIntent();
+        if (intent != null) {
+//            intent.get
+        }
     }
 
     @Override
@@ -102,6 +106,9 @@ public class Codequery extends BaseJxActivity implements ModelView {
         mDialog = DialogUtils.showLoading(this);
     }
 
+    /**
+     * 查询成功
+     */
     @Override
     public void updateView(Object object, int index) {
         PublicData.getInstance().mHashMap.put("ViolationDetailsStr", getEditNumber());

@@ -113,7 +113,7 @@ public class BindCarSuccessFragment extends BaseExtraFragment {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.bind_card_success_carmanager:
-                Act.getInstance().lauchIntentToLogin(getActivity(), ManageCarActivity.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), ManageCarActivity.class);
                 break;
             case R.id.bind_card_success_finish:
                 getActivity().finish();

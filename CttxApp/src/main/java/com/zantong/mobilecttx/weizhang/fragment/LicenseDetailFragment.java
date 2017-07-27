@@ -8,10 +8,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
+import com.zantong.mobilecttx.home.activity.Codequery;
 import com.zantong.mobilecttx.interf.ILicenseGradeAtyContract;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
@@ -98,9 +98,6 @@ public class LicenseDetailFragment extends BaseRefreshJxFragment
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         mCustomRecycler.setLayoutManager(layoutManager);
-        mCustomRecycler.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        mCustomRecycler.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
-        mCustomRecycler.setArrowImageView(R.mipmap.loading);
         mCustomRecycler.setPullRefreshEnabled(false);
         mCustomRecycler.setLoadingMoreEnabled(false);
 
@@ -127,7 +124,7 @@ public class LicenseDetailFragment extends BaseRefreshJxFragment
         mAdapter.setItemClickListener(new LicenseDetailAdapter.ItemClickListener() {
             @Override
             public void doClickViolation(String num) {//违章查询页面
-
+                Act.getInstance().gotoIntent(getActivity(), Codequery.class, "type=finish");
             }
 
             /**

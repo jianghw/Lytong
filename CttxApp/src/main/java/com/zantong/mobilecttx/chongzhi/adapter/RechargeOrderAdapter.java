@@ -143,7 +143,7 @@ public class RechargeOrderAdapter extends BaseAdapter<RechargeOrderBean> {
                                         if (result.getResponseCode() == 2000) {
                                             PublicData.getInstance().webviewTitle = "支付";
                                             PublicData.getInstance().webviewUrl = result.getData();
-                                            Act.getInstance().lauchIntentToLogin(mContext, BrowserForPayActivity.class);
+                                            Act.getInstance().gotoIntentLogin(mContext, BrowserForPayActivity.class);
                                         }
                                     }
                                 });

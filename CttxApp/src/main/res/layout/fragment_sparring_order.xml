@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorBgGray_f8"
+                android:orientation="vertical">
+    <!--信息确认-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/ds_30"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_135"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="信息确认"
+            android:textColor="@color/colorTvBlue_59b"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_1"
+            android:layout_marginLeft="@dimen/ds_45"
+            android:layout_marginRight="@dimen/ds_45"
+            android:background="@color/colorLineGray_e6"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_120">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/ds_45"
+                android:text="订单号"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_order_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/ds_45"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="4545"/>
+        </RelativeLayout>
+        <!--服务地区-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_120">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/ds_45"
+                android:text="服务地区"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_locale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/ds_45"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="4545"/>
+        </RelativeLayout>
+        <!--车型/变速箱-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_120">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:text="车型/变速箱"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_motorcycle_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/ds_45"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="4545"/>
+        </RelativeLayout>
+        <!--服务时间段-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_120">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:text="服务时间段"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/ds_45"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="4545"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_120">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:text="姓名"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/ds_45"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="4545"/>
+        </RelativeLayout>
+        <!--手机-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_120">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:text="手机"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/ds_45"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="4545"/>
+        </RelativeLayout>
+        <!--驾驶证号-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_120">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:text="驾驶证号"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_license"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/ds_45"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="4545"/>
+        </RelativeLayout>
+        <!--备注-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_120">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:text="备注"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_remark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/ds_45"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="4545"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_30"
+            android:background="@color/colorBgGray_f8"/>
+        <!--优惠劵-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_135"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="优惠劵"
+            android:textColor="@color/colorTvBlue_59b"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_1"
+            android:layout_marginLeft="@dimen/ds_45"
+            android:layout_marginRight="@dimen/ds_45"
+            android:background="@color/colorLineGray_e6"/>
+
+        <RelativeLayout
+            android:id="@+id/lay_coupon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_120">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/ds_45"
+                android:text="优惠劵"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_coupon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/ds_45"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="4545"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_30"
+            android:background="@color/colorBgGray_f8"/>
+        <!--支付方式-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_135"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="支付方式"
+            android:textColor="@color/colorTvBlue_59b"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_1"
+            android:layout_marginLeft="@dimen/ds_45"
+            android:layout_marginRight="@dimen/ds_45"
+            android:background="@color/colorLineGray_e6"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_120">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/ds_45"
+                android:text="银联卡支付"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/ds_45"
+                android:text="不可更改"
+                android:textColor="@color/colorTvRed_f33"
+                android:textSize="@dimen/fs_16sp"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_180"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/tv_price_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_45"
+            android:text="订单金额"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_45"
+            android:layout_toRightOf="@+id/tv_price_title"
+            android:text="订单金额"
+            android:textColor="@color/colorTvRed_f33"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_commit"
+            android:layout_width="@dimen/ds_360"
+            android:layout_height="@dimen/ds_180"
+            android:layout_alignParentRight="true"
+            android:background="@color/colorTvBlue_59b"
+            android:gravity="center"
+            android:text="提交订单"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/fs_18sp"/>
+    </RelativeLayout>
+</RelativeLayout>

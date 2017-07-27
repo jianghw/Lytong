@@ -564,7 +564,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
             case R.id.tv_msg_count:
                 GlobalConfig.getInstance().eventIdByUMeng(15);
 
-                Act.getInstance().lauchIntentToLogin(getActivity(), MegTypeActivity.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), MegTypeActivity.class);
                 break;
             case R.id.img_scan://扫描
             case R.id.tv_scan:
@@ -574,7 +574,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
             case R.id.tv_oil://加油
                 GlobalConfig.getInstance().eventIdByUMeng(2);
 
-                Act.getInstance().lauchIntentToLogin(this.getActivity(), RechargeActivity.class);
+                Act.getInstance().gotoIntentLogin(this.getActivity(), RechargeActivity.class);
                 break;
             case R.id.tv_check://年检
                 GlobalConfig.getInstance().eventIdByUMeng(4);
@@ -589,7 +589,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                 ).getLicenseFileNumDTO();
                 if (!PublicData.getInstance().loginFlag ||
                         bean == null && TextUtils.isEmpty(PublicData.getInstance().filenum)) {
-                    Act.getInstance().lauchIntentToLogin(getActivity(), LicenseCheckGradeActivity.class);
+                    Act.getInstance().gotoIntentLogin(getActivity(), LicenseCheckGradeActivity.class);
                 } else if (bean != null || !TextUtils.isEmpty(PublicData.getInstance().filenum)
                         && !TextUtils.isEmpty(PublicData.getInstance().getdate)) {
                     LicenseFileNumDTO loginBean = new LicenseFileNumDTO();
@@ -603,7 +603,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                     intent.putExtras(bundle);
                     startActivity(intent);
                 } else {
-                    Act.getInstance().lauchIntentToLogin(getActivity(), LicenseCheckGradeActivity.class);
+                    Act.getInstance().gotoIntentLogin(getActivity(), LicenseCheckGradeActivity.class);
                 }
                 break;
             case R.id.tv_drive://洗车
@@ -624,7 +624,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
      */
     public void enterDrivingActivity() {
         if (!PublicData.getInstance().loginFlag) {
-            Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+            Act.getInstance().gotoIntentLogin(getActivity(), DrivingActivity.class);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             PermissionGen.needPermission(this, 2000, new String[]{
                     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -632,7 +632,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_PHONE_STATE});
         } else {
-            Act.getInstance().lauchIntentToLogin(getActivity(), BaiduMapActivity.class);
+            Act.getInstance().gotoIntentLogin(getActivity(), BaiduMapActivity.class);
         }
     }
 
@@ -674,7 +674,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
     @PermissionSuccess(requestCode = 2000)
     public void doDrivingSuccess() {
-        Act.getInstance().lauchIntentToLogin(getActivity(), BaiduMapActivity.class);
+        Act.getInstance().gotoIntentLogin(getActivity(), BaiduMapActivity.class);
     }
 
     @PermissionFail(requestCode = 2000)

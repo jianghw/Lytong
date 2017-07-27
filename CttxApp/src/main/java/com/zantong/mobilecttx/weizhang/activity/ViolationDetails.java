@@ -45,7 +45,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -83,6 +82,7 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
     TextView tvBack;
     @Bind(R.id.viloation_detail_commit_desc)
     TextView mDesc;
+
     private SurePayPopupWindows mSurePayPopupWindows;
     private SurePayPopupWindows mSurePayPopupWindows2;
     private SurePayFragment mSurePayFragment;
@@ -103,6 +103,7 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
         setContentView(R.layout.violation_details);
 
         ButterKnife.bind(this);
+
         if ("1".equals(PublicData.getInstance().mHashMap.get("mRes"))) {
             TitleSetting.getInstance().initTitle(this, "缴费详情", R.mipmap.back_btn_image, "返回", null, null);
         } else {
@@ -148,7 +149,6 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
         } else {
             mViolationDetailsPresenterImp.loadView(1);
         }
-
     }
 
     private void initText() {
@@ -182,10 +182,9 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
             e.printStackTrace();
         }
 
-//        violation_time_text.setText(mViolationDetailsBean.getRspInfo().getViolationtime());
+
         if ("0".equals(mViolationDetailsBean.getRspInfo().getProcessste())) {
             violation_state_text.setText("未缴费");
-//            violation_state_text.setText("未处理");
         } else {
             violation_state_text.setText("已缴费");
         }
@@ -212,7 +211,7 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
             }
         }
         String bitNumber = ((String) PublicData.getInstance().mHashMap.get("ViolationDetailsStr")).substring(6, 7);
-        LogUtils.i("bitNumber:" + bitNumber);
+
         if ("0".equals(mViolationDetailsBean.getRspInfo().getProcessste())) {//未交费
             if ("1".equals(bitNumber) || "2".equals(bitNumber)) {//是否处罚决定书
                 nextBtn.setEnabled(true);
@@ -226,7 +225,7 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
                     nextBtn.setText("绑定畅通卡");
                     mCommitType = 1;
                 } else {
-                    LogUtils.i("boolean:" + isPagCar + "-----payDataSize:" + PublicData.getInstance().payData.size());
+
                     if (isPagCar || PublicData.getInstance().payData.size() < 2) {
                         nextBtn.setEnabled(true);
                         nextBtn.setText("违章缴费");
@@ -238,7 +237,6 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
                         mCommitType = 2;
                     }
                 }
-
             }
         } else {//已缴费
             nextBtn.setVisibility(View.GONE);
@@ -293,10 +291,10 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
                                 .replace(R.id.sure_pay_frame, mSurePayFragment).commit();
                         break;
                     case 1://绑卡
-                        Act.getInstance().lauchIntentToLogin(this, ChangTongCard.class);
+                        Act.getInstance().gotoIntentLogin(this, ChangTongCard.class);
                         break;
                     case 2:
-                        Act.getInstance().lauchIntentToLogin(this, ManageCarActivity.class);
+                        Act.getInstance().gotoIntentLogin(this, ManageCarActivity.class);
                         break;
                 }
                 break;

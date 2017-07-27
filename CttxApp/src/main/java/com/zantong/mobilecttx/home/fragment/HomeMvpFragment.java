@@ -62,7 +62,6 @@ import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
-import com.zantong.mobilecttx.utils.DensityUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.OnClickUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
@@ -105,6 +104,7 @@ import cn.qqtheme.framework.util.log.LogUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
+import cn.qqtheme.framework.util.ui.DensityUtils;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
@@ -578,7 +578,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                 LicenseFileNumDTO bean = SPUtils.getInstance().getLicenseFileNumDTO();
                 if (!PublicData.getInstance().loginFlag ||
                         bean == null && TextUtils.isEmpty(PublicData.getInstance().filenum)) {
-                    Act.getInstance().lauchIntentToLogin(this.getActivity(), LicenseCheckGradeActivity.class);
+                    Act.getInstance().gotoIntentLogin(this.getActivity(), LicenseCheckGradeActivity.class);
                 } else if (bean != null || !TextUtils.isEmpty(PublicData.getInstance().filenum)
                         && !TextUtils.isEmpty(PublicData.getInstance().getdate)) {
                     LicenseFileNumDTO loginBean = new LicenseFileNumDTO();
@@ -592,7 +592,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                     intent.putExtras(bundle);
                     startActivity(intent);
                 } else {
-                    Act.getInstance().lauchIntentToLogin(this.getActivity(), LicenseCheckGradeActivity.class);
+                    Act.getInstance().gotoIntentLogin(this.getActivity(), LicenseCheckGradeActivity.class);
                 }
                 break;
             case R.id.home_wash://洗车
@@ -615,9 +615,9 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                 MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(3));
                 if (PublicData.getInstance().loginFlag) {
                     if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {
-                        Act.getInstance().lauchIntentToLogin(this.getActivity(), UnblockedCardActivity.class);
+                        Act.getInstance().gotoIntentLogin(this.getActivity(), UnblockedCardActivity.class);
                     } else {
-                        Act.getInstance().lauchIntentToLogin(this.getActivity(), MyCardActivity.class);
+                        Act.getInstance().gotoIntentLogin(this.getActivity(), MyCardActivity.class);
                     }
                 } else {
                     Act.getInstance().gotoIntent(this.getActivity(), LoginActivity.class);
@@ -626,7 +626,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
             case R.id.home_recharge://加油充值
                 MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(6));
 
-                Act.getInstance().lauchIntentToLogin(this.getActivity(), RechargeActivity.class);
+                Act.getInstance().gotoIntentLogin(this.getActivity(), RechargeActivity.class);
                 break;
             case R.id.home_daijia://代驾
                 MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(7));
@@ -866,22 +866,22 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
 
                     if (currentTm < endTm) {//4.17号之前
                         MobclickAgent.onEvent(HomeMvpFragment.this.getActivity(), Config.getUMengID(22));
-                        Act.getInstance().lauchIntentToLogin(HomeMvpFragment.this.getActivity(), HundredPlanActivity.class);
+                        Act.getInstance().gotoIntentLogin(HomeMvpFragment.this.getActivity(), HundredPlanActivity.class);
                     } else {//4.17号之后
                         PublicData.getInstance().webviewUrl = Config.HUNDRED_PLAN_HOME;
                         PublicData.getInstance().webviewTitle = "百日无违章";
-                        Act.getInstance().lauchIntentToLogin(HomeMvpFragment.this.getActivity(), BrowserActivity.class);
+                        Act.getInstance().gotoIntentLogin(HomeMvpFragment.this.getActivity(), BrowserActivity.class);
                     }
                 }
                 if (result.getResponseCode() == 4000) {
                     SPUtils.getInstance().setSignStatus(false);
                     if (currentTm < endTm) {//4.17号之前
                         MobclickAgent.onEvent(HomeMvpFragment.this.getActivity(), Config.getUMengID(19));
-                        Act.getInstance().lauchIntentToLogin(HomeMvpFragment.this.getActivity(), HundredPlanActivity.class);
+                        Act.getInstance().gotoIntentLogin(HomeMvpFragment.this.getActivity(), HundredPlanActivity.class);
                     } else {//4.17号之后
                         PublicData.getInstance().webviewUrl = Config.HUNDRED_PLAN_DEADLINE;
                         PublicData.getInstance().webviewTitle = "百日无违章";
-                        Act.getInstance().lauchIntentToLogin(HomeMvpFragment.this.getActivity(), BrowserActivity.class);
+                        Act.getInstance().gotoIntentLogin(HomeMvpFragment.this.getActivity(), BrowserActivity.class);
                     }
                 }
             }
@@ -1020,7 +1020,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
      */
     public void enterDrivingActivity() {
         if (!PublicData.getInstance().loginFlag) {
-            Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+            Act.getInstance().gotoIntentLogin(getActivity(), DrivingActivity.class);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             PermissionGen.needPermission(this, PER_REQUEST_CODE, new String[]{
                     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -1028,7 +1028,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_PHONE_STATE});
         } else {
-            Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+            Act.getInstance().gotoIntentLogin(getActivity(), DrivingActivity.class);
         }
     }
 
@@ -1041,7 +1041,7 @@ public class HomeMvpFragment extends PullableBaseFragment implements View.OnClic
     @PermissionSuccess(requestCode = PER_REQUEST_CODE)
     public void doDrivingSuccess() {
 //            Act.getInstance().gotoIntent(this.getActivity(), BaiduMapActivity.class);
-        Act.getInstance().lauchIntentToLogin(getActivity(), DrivingActivity.class);
+        Act.getInstance().gotoIntentLogin(getActivity(), DrivingActivity.class);
     }
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)

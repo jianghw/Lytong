@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.utils.DensityUtils;
+import cn.qqtheme.framework.util.ui.DensityUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
 

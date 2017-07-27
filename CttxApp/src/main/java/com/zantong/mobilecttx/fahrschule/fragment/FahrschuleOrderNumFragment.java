@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.fahrschule.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -167,6 +168,16 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
         mTvPhone.setText(createOrder.getPhone());
         mTvIdentityCard.setText(createOrder.getIdCard());
         mTvCourse.setText(course);
+
+        StringBuffer sb = new StringBuffer();
+        sb.append("<font color=\"#ffffff\">");
+        sb.append("银联卡支付&#160;&#160;");
+        sb.append("</font>");
+        sb.append("<font color=\"#0f536f\">");
+        sb.append("*不可改");
+        sb.append("</font>");
+        mTvPayType.setText(Html.fromHtml(sb.toString()));
+
         mTvMoney.setText(createOrder.getPrice());
     }
 

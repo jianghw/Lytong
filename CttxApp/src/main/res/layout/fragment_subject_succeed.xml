@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorBgGray_f8"
+                android:orientation="vertical">
+    <!--获得礼包-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/ds_30"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_135"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="获得礼包"
+            android:textColor="@color/colorTvBlue_59b"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_1"
+            android:layout_marginLeft="@dimen/ds_45"
+            android:layout_marginRight="@dimen/ds_45"
+            android:background="@color/colorLineGray_e6"/>
+
+        <ImageView
+            android:id="@+id/img_gift"
+            android:layout_width="@dimen/ds_480"
+            android:layout_height="@dimen/ds_480"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/ds_45"
+            android:src="@mipmap/pic_gift"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/ds_45"
+            android:gravity="center"
+            android:text="免费科目强化课程4小时"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/ds_90"
+            android:layout_marginTop="@dimen/ds_90"
+            android:gravity="center"
+            android:text="免费科目强化课程4小时"
+            android:textColor="@color/colorTvBlack_b3"
+            android:textSize="@dimen/fs_16sp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_commit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_180"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorTvBlue_59b"
+        android:gravity="center"
+        android:text="分享活动给好友"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/fs_18sp"/>
+
+</RelativeLayout>

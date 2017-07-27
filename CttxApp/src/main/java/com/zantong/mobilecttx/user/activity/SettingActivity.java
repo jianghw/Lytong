@@ -232,7 +232,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.activity_help:
-                Act.getInstance().lauchIntentToLogin(this, FeedbackActivity.class);
+                Act.getInstance().gotoIntentLogin(this, FeedbackActivity.class);
                 break;
             case R.id.activity_about:
                 Act.getInstance().gotoIntent(this, AboutActivity.class);

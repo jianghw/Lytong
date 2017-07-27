@@ -390,39 +390,39 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         switch (v.getId()) {
             case R.id.img_setting://设置
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(26));
-                Act.getInstance().lauchIntentToLogin(getActivity(), SettingActivity.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), SettingActivity.class);
                 break;
             case R.id.img_head:
-                Act.getInstance().lauchIntentToLogin(getActivity(), UserInfoUpdate.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), UserInfoUpdate.class);
                 break;
             case R.id.lay_order://我的订单
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(30));
-                Act.getInstance().lauchIntentToLogin(getActivity(), OrderParentActivity.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), OrderParentActivity.class);
                 break;
             case R.id.tv_card://我的畅通卡
                 if (Tools.isStrEmpty(PublicData.getInstance().filenum))
-                    Act.getInstance().lauchIntentToLogin(getActivity(), UnblockedCardActivity.class);
+                    Act.getInstance().gotoIntentLogin(getActivity(), UnblockedCardActivity.class);
                 else
-                    Act.getInstance().lauchIntentToLogin(getActivity(), MyCardActivity.class);
+                    Act.getInstance().gotoIntentLogin(getActivity(), MyCardActivity.class);
                 break;
             case R.id.tv_car:
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(28));
-                Act.getInstance().lauchIntentToLogin(getActivity(), ManageCarActivity.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), ManageCarActivity.class);
                 break;
             case R.id.tv_coupon:
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(27));
-                Act.getInstance().lauchIntentToLogin(getActivity(), CouponActivity.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), CouponActivity.class);
                 break;
             case R.id.lay_query://违章缴费查询
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(34));
-                Act.getInstance().lauchIntentToLogin(getActivity(), ViolationHistoryAcitvity.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), ViolationHistoryAcitvity.class);
                 break;
             case R.id.lay_msg://消息
                 MobclickAgent.onEvent(ContextUtils.getContext(), Config.getUMengID(24));
-                Act.getInstance().lauchIntentToLogin(getActivity(), MegTypeActivity.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), MegTypeActivity.class);
                 break;
             case R.id.lay_recommend://推荐送豪礼
-                Act.getInstance().lauchIntentToLogin(getActivity(), ShareParentActivity.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), ShareParentActivity.class);
                 break;
             case R.id.lay_problem://常见问题
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(32));

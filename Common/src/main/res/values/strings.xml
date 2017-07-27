@@ -126,4 +126,15 @@
     <string name="tv_bind_rules">
         我已阅读并同意<font color='#0f536f'>《用户隐私保密说明》</font>&#160;
     </string>
+
+    <string name="tv_sparring_prompt">
+        您已经拥有牡丹畅通卡\n
+        再赠送您免费陪练2小时课程
+    </string>
+    <string name="tv_sparring_prompt_un_card">
+        <font color='#f3362b'>
+            <u>在线办理牡丹畅通卡</u>
+        </font>
+        \n可再获得免费陪练2小时课程
+    </string>
 </resources>

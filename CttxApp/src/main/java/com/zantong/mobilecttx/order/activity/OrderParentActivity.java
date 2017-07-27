@@ -266,7 +266,7 @@ public class OrderParentActivity extends BaseJxActivity
     public void onPayOrderByCouponSucceed(PayOrderResult result) {
         PublicData.getInstance().webviewTitle = "支付";
         PublicData.getInstance().webviewUrl = result.getData();
-        Act.getInstance().lauchIntentToLogin(this, BrowserForPayActivity.class);
+        Act.getInstance().gotoIntentLogin(this, BrowserForPayActivity.class);
     }
 
     @Override
@@ -292,7 +292,7 @@ public class OrderParentActivity extends BaseJxActivity
 
             Intent intent = new Intent();
             intent.putExtra(GlobalConstant.putExtra.fahrschule_position_extra, 2);
-            Act.getInstance().launchLoginByIntent(this, FahrschuleActivity.class, intent);
+            Act.getInstance().gotoLoginByIntent(this, FahrschuleActivity.class, intent);
 
         } else if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
                 && resultCode == GlobalConstant.resultCode.web_order_id_error && data != null) {
