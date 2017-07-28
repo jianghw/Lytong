@@ -5,8 +5,8 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.IntRange;
 import android.view.View;
 
-import cn.qqtheme.framework.widget.ConfirmPopup;
-import cn.qqtheme.framework.widget.WheelView;
+import cn.qqtheme.framework.widght.popup.ConfirmPopup;
+import cn.qqtheme.framework.widght.popup.WheelView;
 
 /**
  * 滑轮选择器
@@ -15,6 +15,7 @@ import cn.qqtheme.framework.widget.WheelView;
  * @since 2015/12/22
  */
 public abstract class WheelPicker extends ConfirmPopup<View> {
+
     protected int textSize = WheelView.TEXT_SIZE;
     protected int textColorNormal = WheelView.TEXT_COLOR_NORMAL;
     protected int textColorFocus = WheelView.TEXT_COLOR_FOCUS;

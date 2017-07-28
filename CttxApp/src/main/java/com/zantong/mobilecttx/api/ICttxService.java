@@ -1,9 +1,12 @@
 package com.zantong.mobilecttx.api;
 
 import com.zantong.mobilecttx.base.bean.BaseResult;
+import com.zantong.mobilecttx.car.bean.VehicleLicenseResult;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+
+import java.util.List;
 
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -27,4 +30,7 @@ public interface ICttxService {
      */
     @POST("cttx/bindingVehicle")
     Observable<BaseResult> commitCarInfoToNewServer(@Body BindCarDTO bindCarDTO);
+
+    @POST("cttx/addVehiclelicense")
+    Observable<VehicleLicenseResult> addVehicleLicense(@Body List<BindCarDTO> dtoList);
 }

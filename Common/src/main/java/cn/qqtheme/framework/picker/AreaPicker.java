@@ -1,66 +1,75 @@
 package cn.qqtheme.framework.picker;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.R;
 import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.County;
 import cn.qqtheme.framework.entity.Province;
-import cn.qqtheme.framework.widget.WheelView;
-
-import static android.support.v7.widget.ListPopupWindow.WRAP_CONTENT;
+import cn.qqtheme.framework.util.ContextUtils;
+import cn.qqtheme.framework.util.ConvertUtils;
+import cn.qqtheme.framework.widght.popup.WheelView;
 
 /**
- * 地址选择器（包括省级、地级、县级）。
- * 地址数据见示例项目的“assets/city.json”，来源于国家统计局官网（http://www.stats.gov.cn/tjsj/tjbz/xzqhdm）
- *
- * @author 李玉江[QQ:1032694760]
- * @see Province
- * @see City
- * @see County
- * @since 2015/12/15
+ * 地区选择器
  */
-public class AddressPicker extends LinkagePicker {
+public class AreaPicker extends LinkagePicker {
+
     private OnAddressPickListener onAddressPickListener;
+
     //只显示地市及区县
     private boolean hideProvince = false;
-    //只显示省份及地市
-    private boolean hideCounty = false;
-    //省市县数据
-    private List<Province> provinceList = new ArrayList<Province>();
 
-    public AddressPicker(Activity activity, ArrayList<Province> data) {
+    //只显示省份及地市 二个
+    private boolean hideCounty = true;
+
+    //省市县数据
+    private List<Province> mProvinceList = new ArrayList<>();
+
+    public AreaPicker(Activity activity, List<Province> data) {
         super(activity);
-        parseData(data);
+
+        initListData(data);
     }
 
-    private void parseData(ArrayList<Province> data) {
-        int provinceSize = data.size();
-        provinceList.clear();
-        provinceList.addAll(data);
-        //添加省
+    private void initListData(List<Province> provinceList) {
+        if (!mProvinceList.isEmpty()) this.mProvinceList.clear();
+        this.mProvinceList.addAll(provinceList);
+
+        int provinceSize = provinceList.size();
+        //添加省 名字
         for (int x = 0; x < provinceSize; x++) {
-            Province pro = data.get(x);
-            firstList.add(pro.getAreaName());
-            ArrayList<City> cities = pro.getCities();
-            ArrayList<String> xCities = new ArrayList<String>();
-            ArrayList<ArrayList<String>> xCounties = new ArrayList<ArrayList<String>>();
+            Province province = provinceList.get(x);
+            firstList.add(province.getAreaName());
+
+            ArrayList<String> xCities = new ArrayList<>();
+            ArrayList<ArrayList<String>> xCounties = new ArrayList<>();
+
+            ArrayList<City> cities = province.getCities();
             int citySize = cities.size();
-            //添加地市
+            //添加地市 名字
             for (int y = 0; y < citySize; y++) {
-                City cit = cities.get(y);
-                xCities.add(cit.getAreaName());
-                ArrayList<County> counties = cit.getCounties();
-                ArrayList<String> yCounties = new ArrayList<String>();
+                City city = cities.get(y);
+                xCities.add(city.getAreaName());
+
+                ArrayList<String> yCounties = new ArrayList<>();
+
+                ArrayList<County> counties = city.getCounties();
                 int countySize = counties.size();
-                //添加区县
+
+                //添加区县 名字
                 if (countySize == 0) {
-                    yCounties.add(cit.getAreaName());
+                    yCounties.add(city.getAreaName());
                 } else {
                     for (int z = 0; z < countySize; z++) {
                         yCounties.add(counties.get(z).getAreaName());
@@ -68,6 +77,7 @@ public class AddressPicker extends LinkagePicker {
                 }
                 xCounties.add(yCounties);
             }
+
             secondList.add(xCities);
             thirdList.add(xCounties);
         }
@@ -117,7 +127,7 @@ public class AddressPicker extends LinkagePicker {
     }
 
     public Province getSelectedProvince() {
-        return provinceList.get(selectedFirstIndex);
+        return mProvinceList.get(selectedFirstIndex);
     }
 
     public City getSelectedCity() {
@@ -126,15 +136,6 @@ public class AddressPicker extends LinkagePicker {
 
     public County getSelectedCounty() {
         return getSelectedCity().getCounties().get(selectedThirdIndex);
-    }
-
-    /**
-     * 隐藏省级行政区，只显示地市级和区县级。
-     * 设置为true的话，地址数据中只需要某个省份的即可
-     * 参见示例中的“assets/city2.json”
-     */
-    public void setHideProvince(boolean hideProvince) {
-        this.hideProvince = hideProvince;
     }
 
     /**
@@ -164,29 +165,36 @@ public class AddressPicker extends LinkagePicker {
         if (firstList.size() == 0) {
             throw new IllegalArgumentException("please initial data at first, can't be empty");
         }
+
         int[] widths = getColumnWidths(hideProvince || hideCounty);
         int provinceWidth = widths[0];
         int cityWidth = widths[1];
         int countyWidth = widths[2];
+
         if (hideProvince) {
             provinceWidth = 0;
             cityWidth = widths[0];
             countyWidth = widths[1];
         }
+
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER);
+
         final WheelView provinceView = new WheelView(activity);
         provinceView.setLayoutParams(new LinearLayout.LayoutParams(provinceWidth, WRAP_CONTENT));
+
         provinceView.setTextSize(textSize);
         provinceView.setTextColor(textColorNormal, textColorFocus);
         provinceView.setLineVisible(lineVisible);
         provinceView.setLineColor(lineColor);
         provinceView.setOffset(offset);
         layout.addView(provinceView);
+
         if (hideProvince) {
             provinceView.setVisibility(View.GONE);
         }
+
         final WheelView cityView = new WheelView(activity);
         cityView.setLayoutParams(new LinearLayout.LayoutParams(cityWidth, WRAP_CONTENT));
         cityView.setTextSize(textSize);
@@ -195,6 +203,7 @@ public class AddressPicker extends LinkagePicker {
         cityView.setLineColor(lineColor);
         cityView.setOffset(offset);
         layout.addView(cityView);
+
         final WheelView countyView = new WheelView(activity);
         countyView.setLayoutParams(new LinearLayout.LayoutParams(countyWidth, WRAP_CONTENT));
         countyView.setTextSize(textSize);
@@ -203,9 +212,11 @@ public class AddressPicker extends LinkagePicker {
         countyView.setLineColor(lineColor);
         countyView.setOffset(offset);
         layout.addView(countyView);
+
         if (hideCounty) {
             countyView.setVisibility(View.GONE);
         }
+
         provinceView.setItems(firstList, selectedFirstIndex);
         provinceView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
             @Override
@@ -287,6 +298,48 @@ public class AddressPicker extends LinkagePicker {
          */
         void onAddressPicked(Province province, City city, County county);
 
+    }
+
+    /**
+     * 覆盖父类  头部状态
+     */
+    @Nullable
+    protected View makeHeaderView() {
+        LinearLayout linearLayout = new LinearLayout(activity);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, ConvertUtils.toPx(45f));
+        linearLayout.setLayoutParams(layoutParams);
+        linearLayout.setPadding(ConvertUtils.toPx(15f), 0, ConvertUtils.toPx(15f), 0);
+        linearLayout.setVerticalGravity(LinearLayout.VERTICAL);
+        linearLayout.setBackgroundColor(ContextUtils.getContext().getResources().getColor(R.color.colorWhite));
+
+        TextView textView = new TextView(activity);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        textView.setLayoutParams(params);
+        textView.setText("请选择地区");
+        textView.setGravity(Gravity.CENTER);
+        textView.setTextColor(ContextUtils.getContext().getResources().getColor(R.color.colorTvBlue_59b));
+
+        Drawable drawableRight = ContextUtils.getContext().getResources().getDrawable(R.mipmap.ic_tv_close);
+        textView.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableRight, null);
+//        textView.setCompoundDrawablePadding(ConvertUtils.toDp(45f));
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+                onCancel();
+            }
+        });
+        linearLayout.addView(textView);
+
+        TextView line = new TextView(activity);
+        line.setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, ConvertUtils.toPx(0.5f)));
+        line.setBackgroundColor(ContextUtils.getContext().getResources().getColor(R.color.colorLineGray_e6));
+        linearLayout.addView(line);
+
+        return linearLayout;
     }
 
 }

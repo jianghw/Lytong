@@ -42,7 +42,6 @@ public class MyChooseDialog extends Dialog {
         //设置标题
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timepickers);
-//	                setTitle(name);
         timePicker = (TimePicker) findViewById(R.id.timepicker);
         Button btn_choose = (Button) findViewById(R.id.btn_choose);
         if (name != null){

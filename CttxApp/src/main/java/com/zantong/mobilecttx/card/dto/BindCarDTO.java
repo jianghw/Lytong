@@ -17,6 +17,15 @@ public class BindCarDTO {
     private String engineNo;//发动机号码
     private String registerDate;//注册日期
     private String issueDate;//发证日期
+    private int isPay;//是否为付费车
+
+    public int getIsPay() {
+        return isPay;
+    }
+
+    public void setIsPay(int isPay) {
+        this.isPay = isPay;
+    }
 
     private String approvedPeople;//核定载人数
     private String totalMass;//总质量

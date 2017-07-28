@@ -9,12 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:gravity="center"
-        />
+        android:gravity="center"/>
     <RelativeLayout 
         android:id="@+id/line"
         android:layout_below="@id/timepicker"
-        style="@style/bottom_line2"></RelativeLayout>
+        style="@style/bottom_line2"/>
     <Button 
         android:id="@+id/btn_choose"
         android:layout_below="@id/line"

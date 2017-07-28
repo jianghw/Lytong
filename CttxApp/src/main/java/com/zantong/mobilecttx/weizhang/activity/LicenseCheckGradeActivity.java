@@ -20,11 +20,16 @@ import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import cn.qqtheme.framework.entity.City;
+import cn.qqtheme.framework.entity.County;
+import cn.qqtheme.framework.entity.Province;
 import cn.qqtheme.framework.global.GlobalConfig;
+import cn.qqtheme.framework.util.CustomDialog;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -63,11 +68,45 @@ public class LicenseCheckGradeActivity extends BaseJxActivity implements View.On
         mLyData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDataDialog();
+//                showDataDialog();
+                showTestDialog();
             }
         });
 
         initIntentData();
+    }
+
+    /**
+     * Test
+     */
+    private void showTestDialog() {
+        ArrayList<Province> aresBeanList = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            Province province = new Province();
+            province.setAreaId(String.valueOf(i));
+            province.setAreaName("province" + i);
+
+            ArrayList<City> cities = new ArrayList<>();
+            for (int j = 0; j < 5; j++) {
+                City city = new City();
+                city.setAreaId(String.valueOf(j));
+                city.setAreaName("city" + j);
+
+                ArrayList<County> counties = new ArrayList<>();
+                for (int k = 0; k < 4; k++) {
+                    County county = new County();
+                    county.setAreaId(String.valueOf(k));
+                    county.setAreaName("county" + k);
+                    counties.add(county);
+                }
+                city.setCounties(counties);
+                cities.add(city);
+            }
+            province.setCities(cities);
+            aresBeanList.add(province);
+        }
+
+        CustomDialog.popupBottomArea(this, aresBeanList);
     }
 
     @Override

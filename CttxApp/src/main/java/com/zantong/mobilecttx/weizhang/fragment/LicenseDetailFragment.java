@@ -59,6 +59,7 @@ public class LicenseDetailFragment extends BaseRefreshJxFragment
      * 数据源
      */
     protected LicenseDetailAdapter mAdapter;
+    private TextView mTvPromptWeep;
 
     public static LicenseDetailFragment newInstance(LicenseFileNumDTO bean) {
         LicenseDetailFragment fragment = new LicenseDetailFragment();
@@ -165,6 +166,7 @@ public class LicenseDetailFragment extends BaseRefreshJxFragment
                 Act.getInstance().gotoIntent(getActivity(), ViolationActivity.class);
             }
         });
+        mTvPromptWeep = (TextView) view.findViewById(R.id.tv_prompt_weep);
         mTvPrompt = (TextView) view.findViewById(R.id.tv_prompt);
         mTvHint = (TextView) view.findViewById(R.id.tv_hint);
         mLayError = (LinearLayout) view.findViewById(R.id.lay_error);
@@ -228,10 +230,10 @@ public class LicenseDetailFragment extends BaseRefreshJxFragment
 
     @Override
     public void driverLicenseCheckGradeError(String message) {
-        setLayoutVisibilityByRefresh(false);
         showErrorCryingFace(true);
-
         mLayError.setVisibility(View.VISIBLE);
+
+        setLayoutVisibilityByRefresh(false);
         ToastUtils.toastShort(message);
     }
 
@@ -251,6 +253,8 @@ public class LicenseDetailFragment extends BaseRefreshJxFragment
      */
     @Override
     public void showErrorCryingFace(boolean isCrying) {
+        mTvPromptWeep.setVisibility(isCrying ? View.VISIBLE : View.INVISIBLE);
+
         mTvScore.setVisibility(isCrying ? View.INVISIBLE : View.VISIBLE);
         mTvScoreZ.setVisibility(isCrying ? View.INVISIBLE : View.VISIBLE);
         mRyBgLoader.setBackgroundResource(isCrying ? R.mipmap.ic_loading_coupon_cry : R.mipmap.ic_loading_coupon_bg);

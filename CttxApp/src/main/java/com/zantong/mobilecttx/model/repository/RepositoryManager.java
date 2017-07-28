@@ -8,6 +8,7 @@ import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
+import com.zantong.mobilecttx.car.bean.VehicleLicenseResult;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
@@ -24,13 +25,13 @@ import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
+import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
 import com.zantong.mobilecttx.order.bean.OrderListResult;
-import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
-import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.user.dto.MegDTO;
@@ -41,6 +42,8 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import rx.Observable;
@@ -408,5 +411,12 @@ public class RepositoryManager {
      */
     public Observable<PayCarResult> getPayCars(String msg) {
         return mRemoteData.getPayCars(msg);
+    }
+
+    /**
+     * /cttx/addVehiclelicense
+     */
+    public Observable<VehicleLicenseResult> addVehicleLicense(List<BindCarDTO> dtoList) {
+        return mRemoteData.addVehicleLicense(dtoList);
     }
 }

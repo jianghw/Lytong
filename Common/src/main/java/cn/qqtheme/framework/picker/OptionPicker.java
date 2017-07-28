@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import cn.qqtheme.framework.widget.WheelView;
+import cn.qqtheme.framework.widght.popup.WheelView;
 
 /**
  * 单项选择器
@@ -20,6 +20,7 @@ import cn.qqtheme.framework.widget.WheelView;
  * @since 2015/9/29
  */
 public class OptionPicker extends WheelPicker {
+
     protected ArrayList<String> options = new ArrayList<String>();
     private OnOptionPickListener onOptionPickListener;
     private int selectedOptionIndex = 0;

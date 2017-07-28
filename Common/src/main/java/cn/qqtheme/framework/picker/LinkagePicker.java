@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-import cn.qqtheme.framework.widget.WheelView;
+import cn.qqtheme.framework.widght.popup.WheelView;
 
 /**
  * 两级、三级联动选择器。
@@ -23,13 +23,20 @@ import cn.qqtheme.framework.widget.WheelView;
  * Builder:Android Studio
  */
 public class LinkagePicker extends WheelPicker {
-    protected ArrayList<String> firstList = new ArrayList<String>();
+    /**
+     * 默认第一列
+     */
+    protected ArrayList<String> firstList = new ArrayList<>();
     protected ArrayList<ArrayList<String>> secondList = new ArrayList<ArrayList<String>>();
     protected ArrayList<ArrayList<ArrayList<String>>> thirdList = new ArrayList<ArrayList<ArrayList<String>>>();
+
     protected OnLinkageListener onLinkageListener;
+
     protected String selectedFirstText = "", selectedSecondText = "", selectedThirdText = "";
     protected int selectedFirstIndex = 0, selectedSecondIndex = 0, selectedThirdIndex = 0;
+
     protected boolean onlyTwo = false;//是否只是二级联动
+
     private double firstColumnWeight = 0;//第一级显示的宽度比
     private double secondColumnWeight = 0;//第二级显示的宽度比
     private double thirdColumnWeight = 0;//第三级显示的宽度比
@@ -149,7 +156,6 @@ public class LinkagePicker extends WheelPicker {
      * 三级联动默认每列宽度为屏幕宽度的三分之一，两级联动默认每列宽度为屏幕宽度的一半。
      */
     protected final int[] getColumnWidths(boolean onlyTwoColumn) {
-
         int[] widths = new int[3];
         if (firstColumnWeight == 0 && secondColumnWeight == 0 && thirdColumnWeight == 0) {
             if (onlyTwoColumn) {
@@ -179,6 +185,7 @@ public class LinkagePicker extends WheelPicker {
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER);
+
         final WheelView firstView = new WheelView(activity);
         firstView.setLayoutParams(new LinearLayout.LayoutParams(widths[0], WRAP_CONTENT));
         firstView.setTextSize(textSize);
@@ -187,6 +194,7 @@ public class LinkagePicker extends WheelPicker {
         firstView.setLineColor(lineColor);
         firstView.setOffset(offset);
         layout.addView(firstView);
+
         final WheelView secondView = new WheelView(activity);
         secondView.setLayoutParams(new LinearLayout.LayoutParams(widths[1], WRAP_CONTENT));
         secondView.setTextSize(textSize);
@@ -195,6 +203,7 @@ public class LinkagePicker extends WheelPicker {
         secondView.setLineColor(lineColor);
         secondView.setOffset(offset);
         layout.addView(secondView);
+
         final WheelView thirdView = new WheelView(activity);
         thirdView.setLayoutParams(new LinearLayout.LayoutParams(widths[2], WRAP_CONTENT));
         thirdView.setTextSize(textSize);
@@ -203,6 +212,7 @@ public class LinkagePicker extends WheelPicker {
         thirdView.setLineColor(lineColor);
         thirdView.setOffset(offset);
         layout.addView(thirdView);
+
         if (onlyTwo) {
             thirdView.setVisibility(View.GONE);
         }

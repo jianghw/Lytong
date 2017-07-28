@@ -1,4 +1,4 @@
-package cn.qqtheme.framework.util;
+package cn.qqtheme.framework.widght.popup;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.IntDef;
@@ -11,9 +11,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-
-import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * 日期时间工具类
@@ -103,8 +100,7 @@ public class DateUtils extends android.text.format.DateUtils {
         long elapsedMinutes = differentMilliSeconds / minutesInMilli;
         differentMilliSeconds = differentMilliSeconds % minutesInMilli;
         long elapsedSeconds = differentMilliSeconds / secondsInMilli;
-        LogUtils.debug(String.format(Locale.CHINA, "different: %d ms, %d days, %d hours, %d minutes, %d seconds",
-                differentMilliSeconds, elapsedDays, elapsedHours, elapsedMinutes, elapsedSeconds));
+
         return new long[]{elapsedDays, elapsedHours, elapsedMinutes, elapsedSeconds};
     }
 
@@ -195,7 +191,6 @@ public class DateUtils extends android.text.format.DateUtils {
             Date date = dateFormat.parse(dateStr);
             return new Date(date.getTime());
         } catch (Exception e) {
-            LogUtils.warn(e);
             return null;
         }
     }

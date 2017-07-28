@@ -10,7 +10,8 @@ import java.util.ArrayList;
  * Builder:Android Studio
  */
 public class City extends Area {
-    private ArrayList<County> counties = new ArrayList<County>();
+
+    private ArrayList<County> counties = new ArrayList<>();
 
     public ArrayList<County> getCounties() {
         return counties;

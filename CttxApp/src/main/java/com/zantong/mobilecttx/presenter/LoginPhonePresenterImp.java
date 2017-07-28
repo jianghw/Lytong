@@ -27,7 +27,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
 
 
 /**
@@ -140,8 +139,6 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
                 UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, PublicData.getInstance().imei);
                 UserInfoRememberCtrl.saveObject(this.mLoginInfoBean.getRspInfo());
 
-                LogUtils.i("usrid:" + this.mLoginInfoBean.getRspInfo().getUsrid());
-
                 PublicData.getInstance().mLoginInfoBean = this.mLoginInfoBean.getRspInfo();
 
                 SPUtils.getInstance().setLoginInfoBean(PublicData.getInstance().mLoginInfoBean);
@@ -154,9 +151,6 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
                 mLoginActivity.addLoginInfo(this.mLoginInfoBean);
                 EventBus.getDefault().post(new UpdateCarInfoEvent(true));
 
-//                PrefUtils.getInstance(mLoginPhone).setFilenum(this.mLoginInfoBean.getRspInfo().getFilenum());
-//                PrefUtils.getInstance(mLoginPhone).setToken(this.mLoginInfoBean.getRspInfo().getUsrid());
-//                PrefUtils.getInstance(mLoginPhone).setIsLogin(true);
                 break;
         }
     }

@@ -23,6 +23,7 @@ import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
@@ -47,12 +48,13 @@ public class Codequery extends BaseJxActivity implements ModelView {
     private CodeQueryPresenter mCodeQueryPresenter;
 
     private Dialog mDialog;
+    private String mType;
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
         Intent intent = getIntent();
         if (intent != null) {
-//            intent.get
+            mType = intent.getStringExtra(GlobalConstant.putExtra.common_extra);
         }
     }
 
@@ -68,6 +70,10 @@ public class Codequery extends BaseJxActivity implements ModelView {
     @Override
     protected void initFragmentView(View view) {
         initTitleContent("扫描单查询");
+
+        if (!TextUtils.isEmpty(mType) && mType.equals("type=finish")) {
+            pay_code_number.setText(mType);
+        }
         mCodeQueryPresenter = new CodeQueryPresenter(this);
     }
 
@@ -114,6 +120,10 @@ public class Codequery extends BaseJxActivity implements ModelView {
         PublicData.getInstance().mHashMap.put("ViolationDetailsStr", getEditNumber());
 
         Act.getInstance().lauchIntent(this, ViolationDetails.class);
+
+        if (!TextUtils.isEmpty(mType) && mType.equals("type=finish")) {
+            finish();
+        }
     }
 
     @Override
@@ -122,6 +132,11 @@ public class Codequery extends BaseJxActivity implements ModelView {
             mDialog.dismiss();
             mDialog = null;
         }
+        if (!TextUtils.isEmpty(mType) && mType.equals("type=finish")) {
+            ToastUtils.toastShort("违章编号查询失败");
+            finish();
+        }
+
     }
 
     /**
@@ -136,13 +151,13 @@ public class Codequery extends BaseJxActivity implements ModelView {
                             Manifest.permission.WRITE_EXTERNAL_STORAGE}
             );
         } else {
-            Act.getInstance().lauchIntent(this, CaptureActivity.class);
+            Act.getInstance().gotoIntent(this, CaptureActivity.class);
         }
     }
 
     @PermissionSuccess(requestCode = PER_REQUEST_CODE)
     public void doPermissionSuccess() {
-        Act.getInstance().lauchIntent(this, CaptureActivity.class);
+        Act.getInstance().gotoIntent(this, CaptureActivity.class);
     }
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)

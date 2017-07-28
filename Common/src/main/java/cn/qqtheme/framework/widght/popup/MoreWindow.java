@@ -1,4 +1,4 @@
-package cn.qqtheme.framework.popup;
+package cn.qqtheme.framework.widght.popup;
 
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
@@ -28,6 +28,9 @@ import android.widget.RelativeLayout;
 
 import cn.qqtheme.framework.R;
 
+/**
+ * 高仿微博弹出框功能
+ */
 public class MoreWindow extends PopupWindow implements OnClickListener {
     private String TAG = MoreWindow.class.getSimpleName();
 
@@ -124,16 +127,7 @@ public class MoreWindow extends PopupWindow implements OnClickListener {
         setContentView(layout);
 
         ImageView close = (ImageView) layout.findViewById(R.id.img_close);
-//        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-//        params.bottomMargin = bottomMargin;
-//
-//        params.addRule(RelativeLayout.BELOW, R.id.tv_inquire);
-//        params.addRule(RelativeLayout.RIGHT_OF, R.id.tv_scan);
-//
-//        params.topMargin = 200;
-//        params.leftMargin = 18;
-//
-//        close.setLayoutParams(params);
+
         close.setOnClickListener(new OnClickListener() {
 
             @Override

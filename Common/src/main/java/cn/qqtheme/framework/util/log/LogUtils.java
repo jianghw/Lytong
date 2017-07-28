@@ -13,8 +13,6 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import cn.qqtheme.framework.AppConfig;
-
 /**
  * 将信息记录到“LogCat”，显示调用方法及所在的文件、行号，方便调试查错。
  * 在Debug状态下开启，在Release状态下关闭以提高程序性能。
@@ -26,8 +24,8 @@ public final class LogUtils {
     private static final int MIN_STACK_OFFSET = 3;// starts at this class after two native calls
     private static final int MAX_STACK_TRACE_SIZE = 131071; //128 KB - 1
     private static final int METHOD_COUNT = 2; // show method count in trace
-    private static boolean isDebug = AppConfig.DEBUG_ENABLE;// 是否调试模式
-    private static String debugTag = AppConfig.DEBUG_TAG;// LogCat的标记
+    private static boolean isDebug =false;// 是否调试模式
+    private static String debugTag = "liyujiang";// LogCat的标记
 
     /**
      * Verbose.

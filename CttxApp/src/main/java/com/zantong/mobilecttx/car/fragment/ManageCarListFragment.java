@@ -10,6 +10,7 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.car.adapter.ManageCarListAdapter;
+import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.interf.IManageCarFtyContract;
@@ -110,22 +111,13 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<UserCarInf
 
     @Override
     protected void onFirstDataVisible() {
-        if (mPresenter != null) mPresenter.getTextNoticeInfo();
+        if (mPresenter != null) mPresenter.getAllVehicles();
+//        if (mPresenter != null) mPresenter.getTextNoticeInfo();
     }
 
     @Override
     protected void DestroyViewAndThing() {
         if (mPresenter != null) mPresenter.unSubscribe();
-    }
-
-    @Override
-    public void loadingProgress() {
-        showDialogLoading();
-    }
-
-    @Override
-    public void hideLoadingProgress() {
-        hideDialogLoading();
     }
 
     @Override
@@ -138,5 +130,35 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<UserCarInf
     public void textNoticeInfoSucceed(HomeCarResult result) {
         List<UserCarInfoBean> userCarInfoBeen = result.getData();
         setSimpleDataResult(userCarInfoBeen);
+    }
+
+    /**
+     * 操作失败
+     */
+    @Override
+    public void addVehicleLicenseError(String message) {
+        ToastUtils.toastShort(message);
+        dismissLoadingDialog();
+    }
+
+    @Override
+    public void allVehiclesError(String message) {
+        ToastUtils.toastShort(message);
+        dismissLoadingDialog();
+    }
+
+    @Override
+    public void addVehicleLicenseSucceed(VehicleLicenseBean data) {
+
+    }
+
+    @Override
+    public void showLoadingDialog() {
+        showDialogLoading();
+    }
+
+    @Override
+    public void dismissLoadingDialog() {
+        hideDialogLoading();
     }
 }

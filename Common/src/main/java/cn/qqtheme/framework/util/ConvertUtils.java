@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.Locale;
 
 import cn.qqtheme.framework.util.log.LogUtils;
+import cn.qqtheme.framework.widght.popup.DateUtils;
 
 /**
  * 数据类型转换、单位转换
@@ -402,14 +403,14 @@ public class ConvertUtils {
     /**
      * dp转换为px
      */
-    public static int toPx(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
+    public static int toPx(float dpValue) {
+        final float scale = ContextUtils.getContext().getResources().getDisplayMetrics().density;
         int pxValue = (int) (dpValue * scale + 0.5f);
-        LogUtils.verbose(dpValue + " dp == " + pxValue + " px");
+        LogUtils.v(dpValue + " dp == " + pxValue + " px");
         return pxValue;
     }
 
-    public static int toPx(float dpValue) {
+    public static int toPxDefault(float dpValue) {
         Resources resources = Resources.getSystem();
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, resources.getDisplayMetrics());
         return (int) px;
@@ -418,10 +419,10 @@ public class ConvertUtils {
     /**
      * px转换为dp
      */
-    public static int toDp(Context context, float pxValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
+    public static int toDp(float pxValue) {
+        float scale = ContextUtils.getContext().getResources().getDisplayMetrics().density;
         int dpValue = (int) (pxValue / scale + 0.5f);
-        LogUtils.verbose(pxValue + " px == " + dpValue + " dp");
+        LogUtils.v(pxValue + " px == " + dpValue + " dp");
         return dpValue;
     }
 
@@ -429,9 +430,9 @@ public class ConvertUtils {
      * px转换为sp
      */
     public static int toSp(Context context, float pxValue) {
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         int spValue = (int) (pxValue / fontScale + 0.5f);
-        LogUtils.verbose(pxValue + " px == " + spValue + " sp");
+        LogUtils.v(pxValue + " px == " + spValue + " sp");
         return spValue;
     }
 

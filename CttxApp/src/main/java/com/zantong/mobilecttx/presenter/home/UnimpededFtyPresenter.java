@@ -148,7 +148,6 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
                     @Override
                     public void doError(Throwable e) {
-                        e.printStackTrace();
                         mAtyView.remoteCarInfoError(e.getMessage());
                     }
 

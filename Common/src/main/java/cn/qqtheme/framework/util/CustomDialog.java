@@ -1,5 +1,6 @@
-package cn.qqtheme.framework.popup;
+package cn.qqtheme.framework.util;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.Gravity;
@@ -15,6 +16,8 @@ import java.util.List;
 
 import cn.qqtheme.framework.R;
 import cn.qqtheme.framework.adapter.PopupCarTypeAdapter;
+import cn.qqtheme.framework.entity.Province;
+import cn.qqtheme.framework.picker.AreaPicker;
 import cn.qqtheme.framework.util.ui.DensityUtils;
 
 /**
@@ -96,5 +99,15 @@ public class CustomDialog {
             params.width = DensityUtils.getScreenWidth(context);
             dialogWindow.setAttributes(params);
         }
+    }
+
+    /**
+     * 车辆类型、变速箱 选择器
+     */
+    public static void popupBottomArea(Activity context, List<Province> aresBeanList) {
+        AreaPicker areaPicker = new AreaPicker(context,aresBeanList);
+        areaPicker.setHideCounty(true);
+        areaPicker.setHalfScreen(true);
+        areaPicker.show();
     }
 }

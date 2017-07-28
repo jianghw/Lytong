@@ -10,6 +10,7 @@ import java.util.ArrayList;
  * Builder:Android Studio
  */
 public class Province extends Area {
+
     private ArrayList<City> cities = new ArrayList<City>();
 
     public ArrayList<City> getCities() {

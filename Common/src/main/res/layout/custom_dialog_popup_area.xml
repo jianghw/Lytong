@@ -14,7 +14,7 @@
         android:drawableRight="@mipmap/ic_tv_close"
         android:gravity="center"
         android:paddingRight="@dimen/ds_45"
-        android:text="请选择车型"
+        android:text="请选择地区"
         android:textColor="@color/colorTvBlue_59b"
         android:textSize="@dimen/fs_16sp"/>
 
@@ -25,24 +25,10 @@
         android:layout_marginRight="@dimen/ds_45"
         android:background="@color/colorLineGray_e6"/>
 
-    <ListView
-        android:id="@+id/lv_type"
-        android:scrollbars="none"
+    <cn.qqtheme.framework.picker.AddressPicker
+        android:id="@+id/custom_address_picker"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_1"
-        android:layout_marginLeft="@dimen/ds_45"
-        android:layout_marginRight="@dimen/ds_45"
-        android:background="@color/colorLineGray_e6"/>
-
-    <ListView
-        android:id="@+id/lv_gearbox"
-        android:scrollbars="none"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="@dimen/ds_600"/>
 
     <TextView
         android:id="@+id/tv_commit"

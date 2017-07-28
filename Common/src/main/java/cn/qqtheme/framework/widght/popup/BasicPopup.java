@@ -1,4 +1,4 @@
-package cn.qqtheme.framework.popup;
+package cn.qqtheme.framework.widght.popup;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,23 +11,19 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-
-import cn.qqtheme.framework.util.ScreenUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
+import android.view.WindowManager;
 
 /**
  * 弹窗基类
- *
- * @param <V> 弹窗的内容视图类型
- * @author 李玉江[QQ:1023694760]
- * @since 2015/7/19
  */
 public abstract class BasicPopup<V extends View> implements DialogInterface.OnKeyListener {
     public static final int MATCH_PARENT = ViewGroup.LayoutParams.MATCH_PARENT;
     public static final int WRAP_CONTENT = ViewGroup.LayoutParams.WRAP_CONTENT;
+
     protected Activity activity;
     protected int screenWidthPixels;
     protected int screenHeightPixels;
+
     private PopupDialog popupDialog;
     private int width = 0, height = 0;
     private boolean isFillScreen = false;
@@ -37,11 +33,18 @@ public abstract class BasicPopup<V extends View> implements DialogInterface.OnKe
 
     public BasicPopup(Activity activity) {
         this.activity = activity;
-        DisplayMetrics displayMetrics = ScreenUtils.displayMetrics(activity);
+        DisplayMetrics displayMetrics = displayMetrics(activity);
         screenWidthPixels = displayMetrics.widthPixels;
         screenHeightPixels = displayMetrics.heightPixels;
         popupDialog = new PopupDialog(activity);
         popupDialog.setOnKeyListener(this);
+    }
+
+    public DisplayMetrics displayMetrics(Context context) {
+        DisplayMetrics dm = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(dm);
+        return dm;
     }
 
     public int getScreenWidthPixels() {
@@ -68,8 +71,10 @@ public abstract class BasicPopup<V extends View> implements DialogInterface.OnKe
         }
         popupDialog.getWindow().setGravity(gravity);
         setContentViewBefore();
+
         V view = makeContentView();
         popupDialog.setContentView(view);// 设置弹出窗体的布局
+
         setContentViewAfter(view);
 
         if (width == 0 && height == 0) {
@@ -141,7 +146,6 @@ public abstract class BasicPopup<V extends View> implements DialogInterface.OnKe
 
     public void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
         popupDialog.setOnDismissListener(onDismissListener);
-        LogUtils.verbose("popup setOnDismissListener");
     }
 
     /**

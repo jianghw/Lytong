@@ -238,7 +238,7 @@ public class ViolationListActivity extends BaseJxActivity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Act.getInstance().lauchIntent(ViolationListActivity.this, Codequery.class);
+                        Act.getInstance().gotoIntent(ViolationListActivity.this, Codequery.class);
                     }
                 });
     }

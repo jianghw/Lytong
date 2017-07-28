@@ -1,4 +1,4 @@
-package cn.qqtheme.framework.widget;
+package cn.qqtheme.framework.widght.popup;
 
 import android.app.Activity;
 import android.content.Context;
@@ -23,6 +23,7 @@ import android.widget.TextView;
  * 带确定及取消按钮的弹窗
  */
 public abstract class ConfirmPopup<V extends View> extends BasicPopup<View> {
+
     protected boolean topLineVisible = true;
     protected int topLineColor = 0xFFDDDDDD;
     protected int topBackgroundColor = Color.WHITE;
@@ -40,6 +41,7 @@ public abstract class ConfirmPopup<V extends View> extends BasicPopup<View> {
 
     public ConfirmPopup(Activity activity) {
         super(activity);
+
         cancelText = activity.getString(android.R.string.cancel);
         submitText = activity.getString(android.R.string.ok);
     }
@@ -210,6 +212,7 @@ public abstract class ConfirmPopup<V extends View> extends BasicPopup<View> {
         cancelButton.setLayoutParams(cancelButtonLayoutParams);
         cancelButton.setBackgroundColor(Color.TRANSPARENT);
         cancelButton.setGravity(Gravity.CENTER);
+
         if (!TextUtils.isEmpty(cancelText)) {
             cancelButton.setText(cancelText);
         }

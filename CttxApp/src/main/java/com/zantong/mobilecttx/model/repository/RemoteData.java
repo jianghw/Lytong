@@ -17,6 +17,7 @@ import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
+import com.zantong.mobilecttx.car.bean.VehicleLicenseResult;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
@@ -50,6 +51,8 @@ import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.Retrofit;
@@ -369,5 +372,10 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<PayCarResult> getPayCars(String msg) {
         return initAppUrlRetrofit().create(IBankService.class).getPayCars(msg);
+    }
+
+    @Override
+    public Observable<VehicleLicenseResult> addVehicleLicense(List<BindCarDTO> dtoList) {
+        return initRetrofit().create(ICttxService.class).addVehicleLicense(dtoList);
     }
 }

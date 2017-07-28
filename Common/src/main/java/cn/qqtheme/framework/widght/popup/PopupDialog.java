@@ -1,4 +1,4 @@
-package cn.qqtheme.framework.popup;
+package cn.qqtheme.framework.widght.popup;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -14,7 +14,7 @@ import android.view.Window;
 import android.widget.FrameLayout;
 
 import cn.qqtheme.framework.R;
-import cn.qqtheme.framework.util.log.LogUtils;
+
 
 /**
  * 弹窗，内部类，仅供{@link BasicPopup}调用
@@ -24,7 +24,7 @@ import cn.qqtheme.framework.util.log.LogUtils;
  * @since 2015-10-19
  */
 class PopupDialog {
-    private android.app.Dialog dialog;
+    private Dialog dialog;
     private FrameLayout contentLayout;
 
     PopupDialog(Context context) {
@@ -46,7 +46,7 @@ class PopupDialog {
         if (window != null) {
             window.setWindowAnimations(R.style.Animation_Popup);
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
+            //android.util.AndroidRuntimeException: requestFeature() must be called before adding content
             window.requestFeature(Window.FEATURE_NO_TITLE);
             window.setContentView(contentLayout);
         }
@@ -87,7 +87,7 @@ class PopupDialog {
     }
 
     void setSize(int width, int height) {
-        LogUtils.verbose(String.format("will set popup width/height to: %s/%s", width, height));
+
         ViewGroup.LayoutParams params = contentLayout.getLayoutParams();
         if (params == null) {
             params = new ViewGroup.LayoutParams(width, height);

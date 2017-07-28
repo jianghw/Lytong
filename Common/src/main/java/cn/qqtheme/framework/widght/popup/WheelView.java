@@ -1,4 +1,4 @@
-package cn.qqtheme.framework.widget;
+package cn.qqtheme.framework.widght.popup;
 
 import android.app.Activity;
 import android.content.Context;
