@@ -32,7 +32,7 @@ import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailBean;
 import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresBean;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
-import com.zantong.mobilecttx.interf.IFahrschuleApplyFtyContract;
+import com.zantong.mobilecttx.contract.IFahrschuleApplyFtyContract;
 import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleApplyPresenter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 

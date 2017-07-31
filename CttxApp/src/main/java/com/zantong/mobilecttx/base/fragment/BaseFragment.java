@@ -15,7 +15,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseActivity;
 import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
-import com.zantong.mobilecttx.interf.IBaseFragment;
+import com.zantong.mobilecttx.contract.IBaseFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

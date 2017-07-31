@@ -40,7 +40,7 @@ import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.eventbus.CarInfoEvent;
 import com.zantong.mobilecttx.eventbus.GetUserEvent;
-import com.zantong.mobilecttx.interf.LoginPhoneView;
+import com.zantong.mobilecttx.contract.LoginPhoneView;
 import com.zantong.mobilecttx.presenter.LoginPhonePresenterImp;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;

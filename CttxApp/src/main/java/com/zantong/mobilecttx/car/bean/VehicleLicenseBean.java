@@ -2,30 +2,26 @@ package com.zantong.mobilecttx.car.bean;
 
 /**
  * Created by jianghw on 2017/7/28.
- * Description:
+ * Description:  addVehiclelicense HTTP/1.1
  * Update by:
  * Update day:
  */
 
 public class VehicleLicenseBean {
 
-
     /**
-     * id : 1209
-     * plateNo : 沪F12345
-     * fileNum : null
-     * vehicleType : v3JEaGali1b1DBBfC8nZ/lpNVvpnIwFeAjQSHS1nYeZX/XtLEUVA4vnagzpKLOBLWAwwZ1FEAlqy
-     * E+ada6C78FGtowUtkapVFYmcQFqONiEujmRqV1SYNLzmxa/ZeYd+vok8c3pnuqcClBlhGFyNIdgU
-     * RdxmCNNg+1dnLM+Oa2Q=
-     * <p>
-     * usrnum : 00015515300010001
+     * id : 1208
+     * plateNo : 甘Y14863
+     * fileNum : 310010152836
+     * vehicleType : 02
+     * usrnum : 00090018811095999
      * address : null
      * useCharacter : null
-     * carModel : null
+     * carModel : 1001001
      * vin : null
-     * engineNo : 45678
+     * engineNo : 85147
      * registerDate : null
-     * issueDate : 2014-04-07
+     * issueDate : null
      * approvedPeople : null
      * totalMass : null
      * tractionMass : null
@@ -34,28 +30,27 @@ public class VehicleLicenseBean {
      * memo : null
      * inspectionRecord : null
      * isDeleted : null
-     * brandId : 221
-     * seriesId : 2745
-     * carModelId : 1001002
+     * brandId : 0
+     * seriesId : 0
+     * carModelId : 0
      * gasolineType : null
      * engineOilType : null
      * ownerName : null
-     * userId : 5311
+     * userId : 5272
      * image : null
      */
-
     private int id;
     private String plateNo;
-    private Object fileNum;
+    private String fileNum;
     private String vehicleType;
     private String usrnum;
     private Object address;
     private Object useCharacter;
-    private Object carModel;
+    private String carModel;
     private Object vin;
     private String engineNo;
     private Object registerDate;
-    private String issueDate;
+    private Object issueDate;
     private Object approvedPeople;
     private Object totalMass;
     private Object tractionMass;
@@ -89,11 +84,11 @@ public class VehicleLicenseBean {
         this.plateNo = plateNo;
     }
 
-    public Object getFileNum() {
+    public String getFileNum() {
         return fileNum;
     }
 
-    public void setFileNum(Object fileNum) {
+    public void setFileNum(String fileNum) {
         this.fileNum = fileNum;
     }
 
@@ -129,11 +124,11 @@ public class VehicleLicenseBean {
         this.useCharacter = useCharacter;
     }
 
-    public Object getCarModel() {
+    public String getCarModel() {
         return carModel;
     }
 
-    public void setCarModel(Object carModel) {
+    public void setCarModel(String carModel) {
         this.carModel = carModel;
     }
 
@@ -161,11 +156,11 @@ public class VehicleLicenseBean {
         this.registerDate = registerDate;
     }
 
-    public String getIssueDate() {
+    public Object getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(String issueDate) {
+    public void setIssueDate(Object issueDate) {
         this.issueDate = issueDate;
     }
 

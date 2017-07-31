@@ -7,7 +7,7 @@ import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.car.adapter.CanPayCarAdapter;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.interf.ModelView;
+import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.presenter.CanPayCarPresenter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationQueryAcitvity;

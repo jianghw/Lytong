@@ -5,7 +5,8 @@ import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.interf.IHomeMeFtyContract;
+import com.zantong.mobilecttx.home.bean.DriverCoachResult;
+import com.zantong.mobilecttx.contract.IHomeMeFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
@@ -107,5 +108,41 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
         BaseDTO baseDTO = new BaseDTO();
         baseDTO.setUsrId(mRepository.getDefaultRASUserID());
         return baseDTO;
+    }
+
+    /**
+     * 13.判断是否为司机
+     */
+    @Override
+    public void getDriverCoach() {
+        Subscription subscription = mRepository.getDriverCoach(initUserPhone())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<DriverCoachResult>() {
+                    @Override
+                    public void doCompleted() {
+
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.driverCoachError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(DriverCoachResult result) {
+                        if (result != null && result.getResponseCode() == 2000)
+                            mAtyView.driverCoachSucceed(result);
+                        else
+                            mAtyView.driverCoachError(
+                                    result != null ? result.getResponseDesc() : "未知错误N13");
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    @Override
+    public String initUserPhone() {
+        return mRepository.getDefaultUserPhone();
     }
 }

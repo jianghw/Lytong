@@ -32,12 +32,12 @@ public class CarManageGroupAdapter extends BaseAdapter<CarInfoDTO> {
 
     @Override
     public void showData(BaseRecyclerViewHolder viewHolder, int position, CarInfoDTO data) {
-        switch (viewHolder.getItemViewType()){
+        switch (viewHolder.getItemViewType()) {
             case TYPE_TITLE:
                 TitleViewHolder holder0 = (TitleViewHolder) viewHolder;
-                if ("1".equals(data.getIspaycar())){
+                if ("1".equals(data.getIspaycar())) {
                     holder0.mTitle.setText("可缴费车辆");
-                }else{
+                } else {
                     holder0.mTitle.setText("紧查询车辆");
                 }
 
@@ -48,7 +48,7 @@ public class CarManageGroupAdapter extends BaseAdapter<CarInfoDTO> {
                     holder.mCarNumber.setText(data.getCarnum());
                     if ("1".equals(data.getIspaycar())) {
                         holder.mFlag.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         holder.mFlag.setVisibility(View.GONE);
                     }
                 }
@@ -59,35 +59,36 @@ public class CarManageGroupAdapter extends BaseAdapter<CarInfoDTO> {
 
     @Override
     public int getItemViewType(int position) {
-        if(isPayCar(position)){
+        if (isPayCar(position)) {
             return TYPE_CONTENT;
-        }else{
+        } else {
             return TYPE_TITLE;
         }
     }
 
-    private boolean isPayCar(int pos){
-        if("1".equals(mData.get(pos).getIspaycar())) {
+    private boolean isPayCar(int pos) {
+        if ("1".equals(mData.get(pos).getIspaycar())) {
             return true;
         }
         return false;
     }
+
     @Override
     public View createView(ViewGroup viewGroup, int viewType) {
         mContext = viewGroup.getContext();
         LayoutInflater inflate = LayoutInflater.from(mContext);
-        if (viewType == TYPE_TITLE){
+        if (viewType == TYPE_TITLE) {
             return inflate.inflate(R.layout.item_manage_vehicles_group, viewGroup, false);
-        }else {
+        } else {
             return inflate.inflate(R.layout.recycle_list_item_car, viewGroup, false);
         }
     }
 
     @Override
     public BaseRecyclerViewHolder createViewHolder(View view, int itemType) {
-        if (itemType == TYPE_TITLE){
+        if (itemType == TYPE_TITLE) {
             return new TitleViewHolder(view);
-        }else {
+        } else {
             return new ViewHolder(view);
         }
     }
@@ -107,6 +108,7 @@ public class CarManageGroupAdapter extends BaseAdapter<CarInfoDTO> {
             ButterKnife.bind(this, view);
         }
     }
+
     /**
      * 自定义的ViewHolder，持有每个Item的的所有界面元素
      */

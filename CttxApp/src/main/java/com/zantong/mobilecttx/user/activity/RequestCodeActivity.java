@@ -11,7 +11,7 @@ import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.interf.ILoginView;
+import com.zantong.mobilecttx.contract.ILoginView;
 import com.zantong.mobilecttx.presenter.LoginPresenter;
 import com.zantong.mobilecttx.user.dto.PersonInfoDTO;
 import com.zantong.mobilecttx.utils.DateUtils;

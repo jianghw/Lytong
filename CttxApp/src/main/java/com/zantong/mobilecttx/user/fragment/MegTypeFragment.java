@@ -10,7 +10,7 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.interf.IMegTypeAtyContract;
+import com.zantong.mobilecttx.contract.IMegTypeAtyContract;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.user.adapter.MegAdapter;
 import com.zantong.mobilecttx.order.bean.MessageResult;

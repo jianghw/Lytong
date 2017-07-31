@@ -23,7 +23,8 @@ import cn.qqtheme.framework.R;
  * @see android.widget.PopupWindow
  * @since 2015-10-19
  */
-class PopupDialog {
+public class PopupDialog {
+
     private Dialog dialog;
     private FrameLayout contentLayout;
 
@@ -33,15 +34,19 @@ class PopupDialog {
 
     private void init(Context context) {
         contentLayout = new FrameLayout(context);
-        contentLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        contentLayout.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         contentLayout.setFocusable(true);
         contentLayout.setFocusableInTouchMode(true);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             //contentLayout.setFitsSystemWindows(true);
         }
+
         dialog = new Dialog(context);
         dialog.setCanceledOnTouchOutside(true);//触摸屏幕取消窗体
         dialog.setCancelable(true);//按返回键取消窗体
+
         Window window = dialog.getWindow();
         if (window != null) {
             window.setWindowAnimations(R.style.Animation_Popup);
@@ -87,7 +92,6 @@ class PopupDialog {
     }
 
     void setSize(int width, int height) {
-
         ViewGroup.LayoutParams params = contentLayout.getLayoutParams();
         if (params == null) {
             params = new ViewGroup.LayoutParams(width, height);

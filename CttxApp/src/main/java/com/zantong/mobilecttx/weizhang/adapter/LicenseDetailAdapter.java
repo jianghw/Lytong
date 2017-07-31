@@ -52,6 +52,13 @@ public class LicenseDetailAdapter extends BaseAdapter<RspInfoBean.ViolationInfoB
             }
         });
 
+        holder.mTvTitlePeriod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {//小问号
+
+            }
+        });
+
         holder.mCustomSwitchBtn.setOnCheckedChangeListener(
                 new CompoundButton.OnCheckedChangeListener() {
                     @Override

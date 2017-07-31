@@ -25,7 +25,7 @@ import com.zantong.mobilecttx.car.bean.MyCarBean;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.CommonListActivity;
-import com.zantong.mobilecttx.interf.ModelView;
+import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.presenter.IllegalQueryPresenter;
 import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
 import com.zantong.mobilecttx.utils.DialogMgr;

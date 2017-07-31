@@ -42,8 +42,6 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.PayHistoryDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
-import cn.qqtheme.framework.util.log.LogUtils;
-
 
 /**
  * 我的API
@@ -362,6 +360,7 @@ public class UserApiClient extends BaseApiClient {
     public static void editCarInfo(Context context, CarInfoDTO dto, CallBack<Result> callback) {
         dto.setCarnum(RSAUtils.strByEncryption(dto.getCarnum(), true));
         dto.setEnginenum(RSAUtils.strByEncryption(dto.getEnginenum(), true));
+
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
         RequestDTO t = new RequestDTO();

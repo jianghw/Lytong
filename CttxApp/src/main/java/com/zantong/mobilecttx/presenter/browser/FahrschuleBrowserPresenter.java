@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.presenter.browser;
 
 import android.support.annotation.NonNull;
 
-import com.zantong.mobilecttx.interf.IFahrschuleBrowserFtyContract;
+import com.zantong.mobilecttx.contract.IFahrschuleBrowserFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;

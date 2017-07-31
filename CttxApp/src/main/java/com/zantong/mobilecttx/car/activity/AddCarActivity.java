@@ -841,20 +841,19 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
     //修改、删除服务器车辆请求
     private void editAndDelCarInfo() {
         LogUtils.i("getOpertype:" + dto.getOpertype());
+
         UserApiClient.editCarInfo(this, dto, new CallBack<Result>() {
             @Override
             public void onSuccess(Result result) {
                 mCommit.setClickable(true);
                 hideDialogLoading();
                 if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
-                    EventBus.getDefault().post(
-                            new UpdateCarInfoEvent(true));
+                    EventBus.getDefault().post(new UpdateCarInfoEvent(true));
                     dto.setCarnum(carNum);
                     dto.setEnginenum(carEngineNum);
                     if (dto.getOpertype().equals("2")) {
 
-                        EventBus.getDefault().post(
-                                new EditCarInfoEvent(true, tempBean, dto));
+                        EventBus.getDefault().post(new EditCarInfoEvent(true, tempBean, dto));
                     } else {
                         EventBus.getDefault().post(
                                 new EditCarInfoEvent(true, dto, null));

@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.interf.ModelView;
+import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.presenter.QueryHistoryPresenter;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;

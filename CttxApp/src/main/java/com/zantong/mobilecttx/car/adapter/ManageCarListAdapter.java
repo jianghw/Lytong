@@ -1,6 +1,5 @@
 package com.zantong.mobilecttx.car.adapter;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +8,10 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
-import com.zantong.mobilecttx.utils.rsa.Des3;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -18,27 +19,68 @@ import butterknife.ButterKnife;
 /**
  * 车俩管理列表
  */
-public class ManageCarListAdapter extends BaseAdapter<UserCarInfoBean> {
+public class ManageCarListAdapter extends BaseAdapter<VehicleLicenseBean> {
+
+    private static final int ITEM_TYPE_TITLE = 100;
+    private static final int ITEM_TYPE_CONTENT = 200;
+
+    private List<UserCarInfoBean> mUserCarInfoBeanList;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, UserCarInfoBean carInfoBean) {
-        ViewHolder holder = (ViewHolder) viewHolder;
+    public void showData(BaseRecyclerViewHolder viewHolder, int position, VehicleLicenseBean carInfoBean) {
         if (carInfoBean != null) {
-            holder.mCarNumber.setText(Des3.decode(carInfoBean.getCarnum()));
-            String ispaycar = carInfoBean.getIspaycar();
-            holder.mFlag.setVisibility(!TextUtils.isEmpty(ispaycar) && ispaycar.equals("1")
-                    ? View.VISIBLE : View.INVISIBLE);
+            switch (viewHolder.getItemViewType()) {
+                case ITEM_TYPE_TITLE:
+                    TitleViewHolder holder0 = (TitleViewHolder) viewHolder;
+                    holder0.mTitle.setText(carInfoBean.getCarModel().equals("1")
+                            ? "可缴费车辆" : "仅限违章查询车辆");
+                    break;
+                case ITEM_TYPE_CONTENT:
+                    ViewHolder holder = (ViewHolder) viewHolder;
+//                    holder.mCarNumber.setText(Des3.decode(carInfoBean.getCarnum()));
+//                    String ispaycar = carInfoBean.getIspaycar();
+//                    holder.mFlag.setVisibility(!TextUtils.isEmpty(ispaycar) && ispaycar.equals("1")
+//                            ? View.VISIBLE : View.INVISIBLE);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
-    public View createView(ViewGroup viewGroup, int i) {
+    /**
+     * 自定义类型布局
+     */
+    @Override
+    public int getItemViewType(int position) {
+
+        return isPayCar(position) ? ITEM_TYPE_CONTENT : ITEM_TYPE_TITLE;
+    }
+
+    private boolean isPayCar(int position) {
+        if (mUserCarInfoBeanList != null && mUserCarInfoBeanList.get(position) != null) {
+            return mUserCarInfoBeanList.get(position).getBuydate().equals("1");
+        }
+        return false;
+    }
+
+    public View createView(ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        return inflater.inflate(R.layout.recycle_list_item_car, viewGroup, false);
+        if (viewType == ITEM_TYPE_TITLE) {
+            return inflater.inflate(R.layout.item_manage_vehicles_group, viewGroup, false);
+        } else {
+            return inflater.inflate(R.layout.recycle_list_item_car, viewGroup, false);
+        }
     }
 
     @Override
     public BaseRecyclerViewHolder createViewHolder(View view, int itemType) {
-        return new ViewHolder(view);
+
+        return itemType == ITEM_TYPE_TITLE ? new TitleViewHolder(view) : new ViewHolder(view);
+    }
+
+    public void setDataList(List<UserCarInfoBean> userCarInfoBeen) {
+        mUserCarInfoBeanList = userCarInfoBeen;
     }
 
     /**
@@ -51,6 +93,16 @@ public class ManageCarListAdapter extends BaseAdapter<UserCarInfoBean> {
         TextView mFlag;
 
         public ViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    public static class TitleViewHolder extends BaseRecyclerViewHolder {
+        @Bind(R.id.item_manage_vehicles_title)
+        TextView mTitle;
+
+        public TitleViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }

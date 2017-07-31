@@ -4,8 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.zantong.mobilecttx.interf.ItemClickListener;
-import com.zantong.mobilecttx.interf.SectionStateChangeListener;
+import com.zantong.mobilecttx.contract.ItemClickListener;
+import com.zantong.mobilecttx.contract.SectionStateChangeListener;
 import com.zantong.mobilecttx.weizhang.activity.ViolationHistoryAcitvity;
 import com.zantong.mobilecttx.weizhang.bean.ViolationCarInfo;
 import com.zantong.mobilecttx.weizhang.bean.ViolationItemInfo;
@@ -13,7 +13,6 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationItemInfo;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

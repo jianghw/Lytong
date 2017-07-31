@@ -27,8 +27,8 @@ public class LinkagePicker extends WheelPicker {
      * 默认第一列
      */
     protected ArrayList<String> firstList = new ArrayList<>();
-    protected ArrayList<ArrayList<String>> secondList = new ArrayList<ArrayList<String>>();
-    protected ArrayList<ArrayList<ArrayList<String>>> thirdList = new ArrayList<ArrayList<ArrayList<String>>>();
+    protected ArrayList<ArrayList<String>> secondList = new ArrayList<>();
+    protected ArrayList<ArrayList<ArrayList<String>>> thirdList = new ArrayList<>();
 
     protected OnLinkageListener onLinkageListener;
 
@@ -60,8 +60,16 @@ public class LinkagePicker extends WheelPicker {
                          ArrayList<ArrayList<String>> secondList,
                          ArrayList<ArrayList<ArrayList<String>>> thirdList) {
         super(activity);
+
+        initAllListData(firstList, secondList, thirdList);
+    }
+
+    protected void initAllListData(ArrayList<String> firstList,
+                                   ArrayList<ArrayList<String>> secondList,
+                                   ArrayList<ArrayList<ArrayList<String>>> thirdList) {
         this.firstList = firstList;
         this.secondList = secondList;
+
         if (thirdList == null || thirdList.size() == 0) {
             this.onlyTwo = true;
         } else {
@@ -177,14 +185,15 @@ public class LinkagePicker extends WheelPicker {
 
     @NonNull
     @Override
-    protected View makeCenterView() {
+    protected View makeChildCenterView() {
         if (firstList.size() == 0 || secondList.size() == 0) {
             throw new IllegalArgumentException("please initial data at first, can't be empty");
         }
-        int[] widths = getColumnWidths(onlyTwo);
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER);
+
+        int[] widths = getColumnWidths(onlyTwo);
 
         final WheelView firstView = new WheelView(activity);
         firstView.setLayoutParams(new LinearLayout.LayoutParams(widths[0], WRAP_CONTENT));
@@ -281,9 +290,7 @@ public class LinkagePicker extends WheelPicker {
     }
 
     public interface OnLinkageListener {
-
         void onPicked(String first, String second, String third);
-
     }
 
 }

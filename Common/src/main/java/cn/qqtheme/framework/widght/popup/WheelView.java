@@ -3,11 +3,11 @@ package cn.qqtheme.framework.widght.popup;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
@@ -39,15 +39,15 @@ import java.util.List;
  */
 public class WheelView extends ScrollView {
     public static final int TEXT_SIZE = 20;
-    public static final int TEXT_COLOR_FOCUS = 0XFF0288CE;
-    public static final int TEXT_COLOR_NORMAL = 0XFFBBBBBB;
-    public static final int LINE_COLOR = 0XFF83CDE6;
+    public static final int TEXT_COLOR_FOCUS = Color.parseColor("#59b5e2");
+    public static final int TEXT_COLOR_NORMAL = Color.parseColor("#4d4d4d");
+    public static final int LINE_COLOR = Color.parseColor("#e6e6e6");
     public static final int OFF_SET = 1;
     private static final int DELAY = 50;
 
     private Context context;
     private LinearLayout views;
-    private LinkedList<String> items = new LinkedList<String>();
+    private LinkedList<String> items = new LinkedList<>();
     private int offset = OFF_SET; // 偏移量（需要在最前面和最后面补全）
 
     private int displayItemCount; // 每页显示的数量
@@ -87,12 +87,10 @@ public class WheelView extends ScrollView {
 
     private void init(Context context) {
         this.context = context;
-
         // 2015/12/15 去掉ScrollView的阴影
         setFadingEdgeLength(0);
-        if (Build.VERSION.SDK_INT >= 9) {
-            setOverScrollMode(OVER_SCROLL_NEVER);
-        }
+
+        setOverScrollMode(OVER_SCROLL_NEVER);
 
         setVerticalScrollBarEnabled(false);
 
@@ -130,6 +128,7 @@ public class WheelView extends ScrollView {
         tv.setGravity(Gravity.CENTER);
         int padding = dip2px(15);
         tv.setPadding(padding, padding, padding, padding);
+
         if (0 == itemHeight) {
             itemHeight = getViewMeasuredHeight(tv);
 
@@ -382,7 +381,6 @@ public class WheelView extends ScrollView {
         public void run() {
             // 2015/12/17 java.lang.ArithmeticException: divide by zero
             if (itemHeight == 0) {
-
                 return;
             }
             int newY = getScrollY();
@@ -426,7 +424,6 @@ public class WheelView extends ScrollView {
         LineDrawable() {
             if (viewWidth == 0) {
                 viewWidth = ((Activity) context).getWindowManager().getDefaultDisplay().getWidth();
-
             }
 
             // 2015/12/22 可设置分隔线是否可见

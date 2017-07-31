@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
-import com.zantong.mobilecttx.interf.IFahrschuleShareFtyContract;
+import com.zantong.mobilecttx.contract.IFahrschuleShareFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 

@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import cn.qqtheme.framework.util.ConvertUtils;
+
 
 /**
  * 带确定及取消按钮的弹窗
@@ -25,9 +27,10 @@ import android.widget.TextView;
 public abstract class ConfirmPopup<V extends View> extends BasicPopup<View> {
 
     protected boolean topLineVisible = true;
-    protected int topLineColor = 0xFFDDDDDD;
+    protected int topLineColor = Color.parseColor("#e6e6e6");
     protected int topBackgroundColor = Color.WHITE;
     protected int topHeight = 40;//dp
+
     protected boolean cancelVisible = true;
     protected CharSequence cancelText = "";
     protected CharSequence submitText = "";
@@ -167,7 +170,7 @@ public abstract class ConfirmPopup<V extends View> extends BasicPopup<View> {
 
     /**
      * @see #makeHeaderView()
-     * @see #makeCenterView()
+     * @see #makeChildCenterView()
      * @see #makeFooterView()
      */
     @Override
@@ -179,17 +182,26 @@ public abstract class ConfirmPopup<V extends View> extends BasicPopup<View> {
         rootLayout.setGravity(Gravity.CENTER);
         rootLayout.setPadding(0, 0, 0, 0);
         rootLayout.setClipToPadding(false);
+
+        //头布局
         View headerView = makeHeaderView();
         if (headerView != null) {
             rootLayout.addView(headerView);
         }
+        //分割线
         if (topLineVisible) {
-            View lineView = new View(activity);
-            lineView.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, 1));
-            lineView.setBackgroundColor(topLineColor);
-            rootLayout.addView(lineView);
+            View line = makeHeaderLine();
+            rootLayout.addView(line);
         }
-        rootLayout.addView(makeCenterView(), new LinearLayout.LayoutParams(MATCH_PARENT, 0, 1.0f));
+        //额外布局
+        View headerExtra = makeHeaderExtra();
+        if (headerExtra != null) {
+            rootLayout.addView(headerExtra);
+        }
+
+        rootLayout.addView(makeChildCenterView(),
+                new LinearLayout.LayoutParams(MATCH_PARENT, 0, 1.0f));
+        //尾布局
         View footerView = makeFooterView();
         if (footerView != null) {
             rootLayout.addView(footerView);
@@ -197,10 +209,13 @@ public abstract class ConfirmPopup<V extends View> extends BasicPopup<View> {
         return rootLayout;
     }
 
+    /**
+     * 头
+     */
     @Nullable
     protected View makeHeaderView() {
         RelativeLayout topButtonLayout = new RelativeLayout(activity);
-        topButtonLayout.setLayoutParams(new RelativeLayout.LayoutParams(MATCH_PARENT,toPx(activity, topHeight)));
+        topButtonLayout.setLayoutParams(new RelativeLayout.LayoutParams(MATCH_PARENT, toPx(activity, topHeight)));
         topButtonLayout.setBackgroundColor(topBackgroundColor);
         topButtonLayout.setGravity(Gravity.CENTER_VERTICAL);
 
@@ -274,6 +289,26 @@ public abstract class ConfirmPopup<V extends View> extends BasicPopup<View> {
     }
 
     /**
+     * 分割线
+     */
+    @NonNull
+    private View makeHeaderLine() {
+        View line = new View(activity);
+        LinearLayout.LayoutParams lineParams = new LinearLayout.LayoutParams(MATCH_PARENT, 1);
+        lineParams.setMargins(ConvertUtils.toPx(15f), 0, ConvertUtils.toPx(15f), 0);
+        line.setLayoutParams(lineParams);
+        line.setBackgroundColor(topLineColor);
+        return line;
+    }
+
+    /**
+     * 额外 布局控件
+     */
+    protected View makeHeaderExtra() {
+        return null;
+    }
+
+    /**
      * dp转换为px
      */
     public static int toPx(Context context, float dpValue) {
@@ -289,7 +324,7 @@ public abstract class ConfirmPopup<V extends View> extends BasicPopup<View> {
     }
 
     @NonNull
-    protected abstract V makeCenterView();
+    protected abstract V makeChildCenterView();
 
     @Nullable
     protected View makeFooterView() {
@@ -297,11 +332,9 @@ public abstract class ConfirmPopup<V extends View> extends BasicPopup<View> {
     }
 
     protected void onSubmit() {
-
     }
 
     protected void onCancel() {
-
     }
 
 }

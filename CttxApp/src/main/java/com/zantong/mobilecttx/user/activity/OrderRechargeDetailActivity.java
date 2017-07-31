@@ -24,7 +24,7 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.interf.IOrderView;
+import com.zantong.mobilecttx.contract.IOrderView;
 
 import org.greenrobot.eventbus.EventBus;
 

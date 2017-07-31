@@ -8,7 +8,7 @@ import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
 import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
-import com.zantong.mobilecttx.interf.IFahrschuleApplyFtyContract;
+import com.zantong.mobilecttx.contract.IFahrschuleApplyFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 

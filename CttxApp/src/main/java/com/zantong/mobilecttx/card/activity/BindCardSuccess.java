@@ -10,7 +10,7 @@ import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.eventbus.ChangTongEvent;
 import com.zantong.mobilecttx.presenter.BindCardSuccessPresenter;
 import com.zantong.mobilecttx.car.fragment.BindCarSuccessFragment;
-import com.zantong.mobilecttx.interf.ModelView;
+import com.zantong.mobilecttx.contract.ModelView;
 
 import org.greenrobot.eventbus.EventBus;
 

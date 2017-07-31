@@ -15,7 +15,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.BaseApiClient;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
 import com.zantong.mobilecttx.eventbus.ExitAppEvent;
-import com.zantong.mobilecttx.interf.IBaseActivity;
+import com.zantong.mobilecttx.contract.IBaseActivity;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.InspectService;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;

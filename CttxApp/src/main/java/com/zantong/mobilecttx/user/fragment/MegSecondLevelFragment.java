@@ -10,7 +10,7 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.interf.IMegSecondLevelAtyContract;
+import com.zantong.mobilecttx.contract.IMegSecondLevelAtyContract;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.user.activity.MegSecondLevelActivity;
 import com.zantong.mobilecttx.user.adapter.MegSecondLevelAdapter;

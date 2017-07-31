@@ -29,6 +29,29 @@
     <TextView style="@style/line_splite_gray"/>
 
     <RelativeLayout
+        android:id="@+id/lay_driver_order"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
+
+        android:background="@drawable/bg_sel_item_gray">
+
+        <ImageView
+            style="@style/mineItemHead"
+            android:src="@mipmap/icon_driverlist"/>
+
+        <TextView
+            style="@style/payRecordTime"
+            android:layout_marginLeft="53dip"
+            android:text="司机订单"/>
+
+        <ImageView
+            style="@style/mineItemArrow"
+            android:src="@mipmap/btn_rightarrow"/>
+    </RelativeLayout>
+
+    <TextView style="@style/line_splite_gray"/>
+
+    <RelativeLayout
         android:id="@+id/lay_query"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_120"

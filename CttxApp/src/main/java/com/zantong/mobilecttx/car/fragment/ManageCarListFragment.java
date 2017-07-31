@@ -11,9 +11,10 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.car.adapter.ManageCarListAdapter;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
+import com.zantong.mobilecttx.car.bean.VehicleLicenseResult;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
-import com.zantong.mobilecttx.interf.IManageCarFtyContract;
+import com.zantong.mobilecttx.contract.IManageCarFtyContract;
 import com.zantong.mobilecttx.presenter.car.ManageCarFtyPresenter;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 
@@ -25,7 +26,7 @@ import cn.qqtheme.framework.util.ToastUtils;
 /**
  * 车辆列表
  */
-public class ManageCarListFragment extends BaseRecyclerListJxFragment<UserCarInfoBean>
+public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLicenseBean>
         implements IManageCarFtyContract.IManageCarFtyView {
 
     private static final String ARG_PARAM1 = "param1";
@@ -35,6 +36,7 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<UserCarInf
     private String mParam2;
 
     private IManageCarFtyContract.IManageCarFtyPresenter mPresenter;
+    private ManageCarListAdapter mCarListAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<UserCarInf
     protected View customViewHeader() {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
         TextView textView = new TextView(getActivity());
         textView.setText("可缴费罚款车辆");
         textView.setTextSize(14);
@@ -80,15 +83,15 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<UserCarInf
      * adapter
      */
     @Override
-    public BaseAdapter<UserCarInfoBean> createAdapter() {
-
-        return new ManageCarListAdapter();
+    public BaseAdapter<VehicleLicenseBean> createAdapter() {
+        mCarListAdapter =new ManageCarListAdapter();
+        return mCarListAdapter;
     }
 
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
-        if (data instanceof UserCarInfoBean) {
-            UserCarInfoBean bean = (UserCarInfoBean) data;
+        if (data instanceof VehicleLicenseBean) {
+            VehicleLicenseBean bean = (VehicleLicenseBean) data;
         }
     }
 
@@ -112,7 +115,6 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<UserCarInf
     @Override
     protected void onFirstDataVisible() {
         if (mPresenter != null) mPresenter.getAllVehicles();
-//        if (mPresenter != null) mPresenter.getTextNoticeInfo();
     }
 
     @Override
@@ -129,7 +131,7 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<UserCarInf
     @Override
     public void textNoticeInfoSucceed(HomeCarResult result) {
         List<UserCarInfoBean> userCarInfoBeen = result.getData();
-        setSimpleDataResult(userCarInfoBeen);
+        mCarListAdapter.setDataList(userCarInfoBeen);
     }
 
     /**
@@ -148,8 +150,9 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<UserCarInf
     }
 
     @Override
-    public void addVehicleLicenseSucceed(VehicleLicenseBean data) {
-
+    public void addVehicleLicenseSucceed(VehicleLicenseResult data) {
+        List<VehicleLicenseBean> licenseBeanList = data.getData();
+        setSimpleDataResult(licenseBeanList);
     }
 
     @Override

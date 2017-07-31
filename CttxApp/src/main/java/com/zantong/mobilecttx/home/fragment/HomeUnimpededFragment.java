@@ -38,7 +38,7 @@ import com.zantong.mobilecttx.home.bean.HomeBean;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.home.bean.HomeResult;
-import com.zantong.mobilecttx.interf.IUnimpededFtyContract;
+import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
 import com.zantong.mobilecttx.map.activity.BaiduMapActivity;
 import com.zantong.mobilecttx.presenter.home.UnimpededFtyPresenter;
 import com.zantong.mobilecttx.user.activity.MegTypeActivity;

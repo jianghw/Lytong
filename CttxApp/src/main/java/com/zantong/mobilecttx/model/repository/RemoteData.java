@@ -12,6 +12,7 @@ import com.zantong.mobilecttx.api.IOrderService;
 import com.zantong.mobilecttx.api.IPayService;
 import com.zantong.mobilecttx.api.ISplashService;
 import com.zantong.mobilecttx.api.ITextService;
+import com.zantong.mobilecttx.api.IUserService;
 import com.zantong.mobilecttx.api.IViolationService;
 import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
@@ -30,18 +31,19 @@ import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
+import com.zantong.mobilecttx.home.bean.DriverCoachResult;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
-import com.zantong.mobilecttx.interf.CTTXHttpPOSTInterface;
+import com.zantong.mobilecttx.contract.CTTXHttpPOSTInterface;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
+import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
 import com.zantong.mobilecttx.order.bean.OrderListResult;
-import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
-import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.user.dto.MegDTO;
@@ -377,5 +379,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<VehicleLicenseResult> addVehicleLicense(List<BindCarDTO> dtoList) {
         return initRetrofit().create(ICttxService.class).addVehicleLicense(dtoList);
+    }
+
+    /**
+     * 13.判断是否为司机
+     */
+    @Override
+    public Observable<DriverCoachResult> getDriverCoach(String phone) {
+        return initRetrofit().create(IUserService.class).getDriverCoach(phone);
     }
 }

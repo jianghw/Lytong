@@ -8,7 +8,7 @@ import com.zantong.mobilecttx.presenter.InsurancePayPresenterImp;
 import com.zantong.mobilecttx.utils.NetUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.weizhang.activity.PayWebActivity;
-import com.zantong.mobilecttx.interf.ModelView;
+import com.zantong.mobilecttx.contract.ModelView;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaArgs;

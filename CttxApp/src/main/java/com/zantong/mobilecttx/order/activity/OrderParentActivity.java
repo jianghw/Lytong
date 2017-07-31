@@ -16,7 +16,7 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserForPayActivity;
 import com.zantong.mobilecttx.common.activity.FahrschulePayBrowserActivity;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
-import com.zantong.mobilecttx.interf.IOrderParentFtyContract;
+import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
 import com.zantong.mobilecttx.order.fragment.OrderAllStatusFragment;

@@ -26,7 +26,7 @@ import com.zantong.mobilecttx.utils.TextWatchUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
-import com.zantong.mobilecttx.interf.IOrderView;
+import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.widght.CustomCharKeyBoard;
 import com.zantong.mobilecttx.widght.CustomNumKeyBoard;
 

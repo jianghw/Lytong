@@ -23,7 +23,7 @@ import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.interf.UserInfoUpdateView;
+import com.zantong.mobilecttx.contract.UserInfoUpdateView;
 import com.zantong.mobilecttx.presenter.UserInfoUpdatePresenter;
 import com.zantong.mobilecttx.utils.StringUtils;
 import cn.qqtheme.framework.util.ToastUtils;

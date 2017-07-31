@@ -65,7 +65,7 @@ public class OptionPicker extends WheelPicker {
 
     @Override
     @NonNull
-    protected View makeCenterView() {
+    protected View makeChildCenterView() {
         if (options.size() == 0) {
             throw new IllegalArgumentException("please initial options at first, can't be empty");
         }

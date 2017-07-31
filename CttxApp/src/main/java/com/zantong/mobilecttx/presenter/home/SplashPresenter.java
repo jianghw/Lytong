@@ -8,7 +8,7 @@ import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
-import com.zantong.mobilecttx.interf.ISplashAtyContract;
+import com.zantong.mobilecttx.contract.ISplashAtyContract;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.utils.Tools;

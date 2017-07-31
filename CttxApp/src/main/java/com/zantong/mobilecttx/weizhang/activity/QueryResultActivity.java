@@ -18,7 +18,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.card.activity.ChangTongCard;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.interf.ModelView;
+import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.presenter.IllegalViolationPresenter;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.PullToRefreshLayout;

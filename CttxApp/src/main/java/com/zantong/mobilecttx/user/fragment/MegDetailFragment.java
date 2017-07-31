@@ -20,7 +20,7 @@ import com.zantong.mobilecttx.base.fragment.PullableBaseFragment;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.eventbus.GetMsgAgainEvent;
-import com.zantong.mobilecttx.interf.IMegDetailAtyContract;
+import com.zantong.mobilecttx.contract.IMegDetailAtyContract;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.user.bean.Meg;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;

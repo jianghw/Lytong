@@ -23,7 +23,7 @@ import com.zantong.mobilecttx.utils.StringUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.PayWebActivity;
-import com.zantong.mobilecttx.interf.IOrderView;
+import com.zantong.mobilecttx.contract.IOrderView;
 
 import butterknife.Bind;
 

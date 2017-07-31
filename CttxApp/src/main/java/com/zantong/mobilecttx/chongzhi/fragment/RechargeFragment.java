@@ -32,7 +32,7 @@ import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserForPayActivity;
 import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
-import com.zantong.mobilecttx.interf.IRechargeAtyContract;
+import com.zantong.mobilecttx.contract.IRechargeAtyContract;
 import com.zantong.mobilecttx.order.activity.CouponDetailActivity;
 import com.zantong.mobilecttx.order.activity.CouponListActivity;
 import com.zantong.mobilecttx.order.bean.CouponFragmentBean;

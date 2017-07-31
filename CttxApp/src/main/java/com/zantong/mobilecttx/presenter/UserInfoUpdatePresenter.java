@@ -6,7 +6,7 @@ import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
-import com.zantong.mobilecttx.interf.UserInfoUpdateView;
+import com.zantong.mobilecttx.contract.UserInfoUpdateView;
 import com.zantong.mobilecttx.model.UserInfoUpdateModel;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
 import com.zantong.mobilecttx.user.activity.UserInfoUpdate;

@@ -39,8 +39,7 @@
                 android:background="@color/white"
                 android:gravity="center"
                 android:text="改绑车辆"
-                android:textColor="@color/add_vechicles_selector"
-                android:visibility="gone"/>
+                android:textColor="@color/add_vechicles_selector"/>
 
         </LinearLayout>
 

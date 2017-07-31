@@ -24,7 +24,7 @@ import com.zantong.mobilecttx.home.adapter.FavorableBannerImgHolderView;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.bean.BannerBean;
 import com.zantong.mobilecttx.home.bean.BannersBean;
-import com.zantong.mobilecttx.interf.IHomeFavorableFtyContract;
+import com.zantong.mobilecttx.contract.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.presenter.home.HomeFavorableFtyPresenter;
 import com.zantong.mobilecttx.share.activity.CarBeautyActivity;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;

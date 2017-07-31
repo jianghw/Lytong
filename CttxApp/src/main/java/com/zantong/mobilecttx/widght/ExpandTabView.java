@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.interf.IBasePopWindow;
+import com.zantong.mobilecttx.contract.IBasePopWindow;
 import com.zantong.mobilecttx.utils.UiHelpers;
 
 /**

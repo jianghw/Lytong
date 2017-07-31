@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.zantong.mobilecttx.interf.ICouponAtyContract;
+import com.zantong.mobilecttx.contract.ICouponAtyContract;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResult;

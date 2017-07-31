@@ -16,7 +16,7 @@ import com.zantong.mobilecttx.base.activity.BaseActivity;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.huodong.activity.HundredAgreementActivity;
 import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
-import com.zantong.mobilecttx.interf.InterfaceForJS;
+import com.zantong.mobilecttx.contract.InterfaceForJS;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.utils.UiHelpers;
 import com.zantong.mobilecttx.utils.jumptools.Act;

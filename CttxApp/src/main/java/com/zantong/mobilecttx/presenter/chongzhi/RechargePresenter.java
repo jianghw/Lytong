@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
-import com.zantong.mobilecttx.interf.IRechargeAtyContract;
+import com.zantong.mobilecttx.contract.IRechargeAtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;

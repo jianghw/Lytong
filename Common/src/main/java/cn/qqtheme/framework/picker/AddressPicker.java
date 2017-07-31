@@ -157,7 +157,7 @@ public class AddressPicker extends LinkagePicker {
     }
 
     @Override
-    protected View makeCenterView() {
+    protected View makeChildCenterView() {
         if (hideCounty) {
             hideProvince = false;
         }

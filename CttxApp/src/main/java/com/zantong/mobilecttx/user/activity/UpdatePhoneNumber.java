@@ -18,7 +18,7 @@ import com.zantong.mobilecttx.presenter.UpdatePhoneNumberPresenter;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
-import com.zantong.mobilecttx.interf.ModelView;
+import com.zantong.mobilecttx.contract.ModelView;
 
 import java.util.HashMap;
 import java.util.Timer;

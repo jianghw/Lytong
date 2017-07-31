@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.interf.ItemClickListener;
-import com.zantong.mobilecttx.interf.SectionStateChangeListener;
+import com.zantong.mobilecttx.contract.ItemClickListener;
+import com.zantong.mobilecttx.contract.SectionStateChangeListener;
 import com.zantong.mobilecttx.weizhang.bean.ViolationCarInfo;
 import com.zantong.mobilecttx.weizhang.bean.ViolationItemInfo;
 

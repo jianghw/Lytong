@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.common.MyPopWindowAdapter;
-import com.zantong.mobilecttx.interf.IBasePopWindow;
+import com.zantong.mobilecttx.contract.IBasePopWindow;
 
 
 public class MyPopWindow extends RelativeLayout implements IBasePopWindow {

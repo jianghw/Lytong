@@ -37,7 +37,10 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.util.ContextUtils;
+
 public class CarManageGroupFragment extends BaseListFragment<CarInfoDTO>{
+
     private CarManageGroupAdapter mCarManageAdapter;
     private OpenQueryBean.RspInfoBean mRspInfoBean;
     private List<UserCarInfoBean> payData;
@@ -67,11 +70,7 @@ public class CarManageGroupFragment extends BaseListFragment<CarInfoDTO>{
     @Override
     public void onResume() {
         super.onResume();
-//        if (PublicData.getInstance().isDelCar == true){
-//            PublicData.getInstance().isDelCar = false;
-//            mCarManageAdapter.removeAll();
-//            initListData();
-//        }
+
         if (PublicData.getInstance().isSetPayCar == true){
             PublicData.getInstance().isSetPayCar = false;
             mCarManageAdapter.removeAll();
@@ -83,6 +82,7 @@ public class CarManageGroupFragment extends BaseListFragment<CarInfoDTO>{
     @Override
     public void onStop() {
         super.onStop();
+
         payData.clear();
         noPayData.clear();
     }
@@ -108,18 +108,19 @@ public class CarManageGroupFragment extends BaseListFragment<CarInfoDTO>{
     public BaseAdapter<CarInfoDTO> createAdapter() {
         mCarManageAdapter = new CarManageGroupAdapter();
         return mCarManageAdapter;
-
     }
 
 
     @Override
     public void initData() {
         super.initData();
+
         CarManageActivity carManageActivity = (CarManageActivity) getActivity();
         this.mChangeCarBtn = carManageActivity.getChangePayCar();
         this.mAddBtn = carManageActivity.getEnsureView();
         mAddBtn.setOnClickListener(this);
         mChangeCarBtn.setOnClickListener(this);
+
         if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().filenum)){
             getBangDingCar();
         }
@@ -163,7 +164,7 @@ public class CarManageGroupFragment extends BaseListFragment<CarInfoDTO>{
 
         UserCarsDTO params = new UserCarsDTO();
         params.setUsrid(PublicData.getInstance().userID);
-        UserApiClient.getCarInfo(this.getActivity(), params, new CallBack<UserCarsResult>() {
+        UserApiClient.getCarInfo(ContextUtils.getContext(), params, new CallBack<UserCarsResult>() {
             @Override
             public void onSuccess(UserCarsResult result) {
                 onShowContent();

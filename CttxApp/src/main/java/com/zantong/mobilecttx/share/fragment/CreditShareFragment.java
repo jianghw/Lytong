@@ -21,7 +21,7 @@ import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountBean;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
-import com.zantong.mobilecttx.interf.IFahrschuleShareFtyContract;
+import com.zantong.mobilecttx.contract.IFahrschuleShareFtyContract;
 import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleSharePresenter;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;

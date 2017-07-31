@@ -21,6 +21,7 @@ import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
+import com.zantong.mobilecttx.home.bean.DriverCoachResult;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
@@ -117,6 +118,14 @@ public class RepositoryManager {
      */
     public String getStrByEncryption(String string) {
         return mLocalData.getStrByEncryption(string);
+    }
+
+    /**
+     * 手机号码
+     */
+    public String getDefaultUserPhone() {
+        return mLocalData.getDefaultUser() != null
+                ? mLocalData.getDefaultUser().getPhoenum() : "";
     }
 
     /**
@@ -418,5 +427,12 @@ public class RepositoryManager {
      */
     public Observable<VehicleLicenseResult> addVehicleLicense(List<BindCarDTO> dtoList) {
         return mRemoteData.addVehicleLicense(dtoList);
+    }
+
+    /**
+     * 13.判断是否为司机
+     */
+    public Observable<DriverCoachResult> getDriverCoach(String phone) {
+        return mRemoteData.getDriverCoach(phone);
     }
 }

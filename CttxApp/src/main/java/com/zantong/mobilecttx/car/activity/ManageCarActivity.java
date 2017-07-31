@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.car.fragment.ManageCarListFragment;
+import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 
@@ -26,12 +28,20 @@ public class ManageCarActivity extends BaseJxActivity {
 
     @Override
     protected int getContentResId() {
-        return R.layout.activity_base_frame;
+        return R.layout.activity_manage_car;
     }
 
     @Override
     protected void initFragmentView(View view) {
         initTitleContent("车辆管理");
+
+        TextView tvCar = (TextView) view.findViewById(R.id.tv_bind_car);
+        tvCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Act.getInstance().gotoIntent(ManageCarActivity.this, SetPayCarActivity.class);
+            }
+        });
 
         initFragment();
     }

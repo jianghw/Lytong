@@ -4,7 +4,7 @@ package com.zantong.mobilecttx.presenter.order;
 import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.base.bean.BaseResult;
-import com.zantong.mobilecttx.interf.IOrderParentFtyContract;
+import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.order.bean.OrderListBean;

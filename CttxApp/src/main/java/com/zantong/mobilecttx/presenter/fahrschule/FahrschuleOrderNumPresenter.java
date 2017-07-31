@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.presenter.fahrschule;
 
 import android.support.annotation.NonNull;
 
-import com.zantong.mobilecttx.interf.IFahrschuleOrderNumFtyContract;
+import com.zantong.mobilecttx.contract.IFahrschuleOrderNumFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;

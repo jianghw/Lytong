@@ -208,12 +208,11 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 }
             });
         }
-
-
     }
 
     //获取活动车辆
     private void getActivityCarInfo(final List<CarInfoDTO> carInfoDTOList) {
+
         ActivityCarDTO activityCarDTO = new ActivityCarDTO();
         activityCarDTO.setUsrnum(PublicData.getInstance().userID);
         CarApiClient.getActivityCar(this, activityCarDTO, new CallBack<ActivityCarResult>() {
@@ -249,7 +248,6 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
         }
         testSuperAdapter(norCarList);
     }
-
 
     private List<UserCarInfoBean> listU(List<UserCarInfoBean> listUcar) {
         List<UserCarInfoBean> listUcb = new ArrayList<UserCarInfoBean>();

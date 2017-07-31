@@ -21,6 +21,7 @@ public abstract class WheelPicker extends ConfirmPopup<View> {
     protected int textColorFocus = WheelView.TEXT_COLOR_FOCUS;
     protected int lineColor = WheelView.LINE_COLOR;
     protected boolean lineVisible = true;
+
     protected int offset = WheelView.OFF_SET;
 
     public WheelPicker(Activity activity) {

@@ -24,7 +24,7 @@ import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountBean;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
-import com.zantong.mobilecttx.interf.IFahrschuleShareFtyContract;
+import com.zantong.mobilecttx.contract.IFahrschuleShareFtyContract;
 import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleSharePresenter;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
@@ -241,7 +241,7 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
     protected void customImageDialog() {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity(), R.style.CustomImageDialog);
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.dialog_custom_image, null);
+        View layout = inflater.inflate(R.layout.custom_dialog_image_content, null);
         ImageView imageClose = (ImageView) layout.findViewById(R.id.img_close);
         dialog.setView(layout);
         final AlertDialog alertDialog = dialog.create();

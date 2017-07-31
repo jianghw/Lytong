@@ -3,12 +3,14 @@ package cn.qqtheme.framework.util;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -105,9 +107,31 @@ public class CustomDialog {
      * 车辆类型、变速箱 选择器
      */
     public static void popupBottomArea(Activity context, List<Province> aresBeanList) {
-        AreaPicker areaPicker = new AreaPicker(context,aresBeanList);
-        areaPicker.setHideCounty(true);
+        AreaPicker areaPicker = new AreaPicker(context);
+        areaPicker.initListData(aresBeanList);
+        areaPicker.setOffset(2);
         areaPicker.setHalfScreen(true);
         areaPicker.show();
+    }
+
+    /**
+     * 显示提示文本
+     */
+    public static void customContentDialog(Context context, String content) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.CustomImageDialog);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.custom_dialog_popup_area, null);
+
+        ImageView imageClose = (ImageView) layout.findViewById(R.id.img_close);
+        dialog.setView(layout);
+
+        final AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
+        imageClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

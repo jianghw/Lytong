@@ -14,7 +14,7 @@ import com.zantong.mobilecttx.car.bean.VehicleLicenseResult;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
-import com.zantong.mobilecttx.interf.IManageCarFtyContract;
+import com.zantong.mobilecttx.contract.IManageCarFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
@@ -419,7 +419,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     @Override
                     public void doNext(VehicleLicenseResult result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.addVehicleLicenseSucceed(result.getData());
+                            mAtyView.addVehicleLicenseSucceed(result);
                         } else {
                             mAtyView.addVehicleLicenseError(result != null
                                     ? result.getResponseDesc()

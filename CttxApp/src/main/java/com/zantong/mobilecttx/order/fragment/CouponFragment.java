@@ -8,7 +8,7 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.interf.ICouponAtyContract;
+import com.zantong.mobilecttx.contract.ICouponAtyContract;
 import com.zantong.mobilecttx.presenter.CouponAtyPresenter;
 import com.zantong.mobilecttx.order.activity.CouponDetailActivity;
 import com.zantong.mobilecttx.order.adapter.CouponAdapter;

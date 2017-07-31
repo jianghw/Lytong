@@ -174,7 +174,7 @@ public class DatePicker extends WheelPicker {
 
     @Override
     @NonNull
-    protected View makeCenterView() {
+    protected View makeChildCenterView() {
         if (months.size() == 0) {
             // 如果未设置默认项，则需要在此初始化数据
             int year = Calendar.getInstance(Locale.CHINA).get(Calendar.YEAR);

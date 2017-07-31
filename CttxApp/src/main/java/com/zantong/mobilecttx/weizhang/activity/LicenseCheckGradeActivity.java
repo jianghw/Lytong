@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -41,7 +42,7 @@ public class LicenseCheckGradeActivity extends BaseJxActivity implements View.On
 
     private EditText mEditArchivesNumber;
     private TextView mTvDate;
-    private TextView mTvImage;
+    private ImageView mTvImage;
     private Button mBtnCommit;
     private RelativeLayout mLyData;
 
@@ -147,10 +148,10 @@ public class LicenseCheckGradeActivity extends BaseJxActivity implements View.On
     }
 
     private void assignViews() {
-//        mEditDrivingNumber = (EditText) findViewById(R.id.edit_driving_number);
+
         mEditArchivesNumber = (EditText) findViewById(R.id.edit_archives_number);
         mTvDate = (TextView) findViewById(R.id.tv_date);
-        mTvImage = (TextView) findViewById(R.id.textView14);
+        mTvImage = (ImageView) findViewById(R.id.img_cartype_desc);
         mLyData = (RelativeLayout) findViewById(R.id.rl_date);
         mBtnCommit = (Button) findViewById(R.id.btn_commit);
 

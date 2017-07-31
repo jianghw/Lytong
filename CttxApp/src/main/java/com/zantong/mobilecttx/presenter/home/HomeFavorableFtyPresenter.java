@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.home.bean.BannerBean;
 import com.zantong.mobilecttx.home.bean.BannerResult;
-import com.zantong.mobilecttx.interf.IHomeFavorableFtyContract;
+import com.zantong.mobilecttx.contract.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 

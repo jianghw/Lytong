@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.presenter;
 import android.content.Context;
 
 import com.zantong.mobilecttx.base.BasePresenter;
-import com.zantong.mobilecttx.interf.IOrderView;
+import com.zantong.mobilecttx.contract.IOrderView;
 
 /**
  * Created by zhengyingbing on 16/6/1.

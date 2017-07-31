@@ -7,7 +7,7 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.presenter.LoginPresenter;
-import com.zantong.mobilecttx.interf.ILoginView;
+import com.zantong.mobilecttx.contract.ILoginView;
 
 import butterknife.Bind;
 

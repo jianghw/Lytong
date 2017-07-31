@@ -23,7 +23,7 @@ import com.zantong.mobilecttx.user.dto.VcodeDTO;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
 import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
-import com.zantong.mobilecttx.interf.IOrderView;
+import com.zantong.mobilecttx.contract.IOrderView;
 
 import java.util.Timer;
 import java.util.TimerTask;

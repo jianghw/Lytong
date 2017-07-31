@@ -80,8 +80,14 @@ public class LocalData {
      * @return
      */
     public String getStrByEncryption(String string) {
-        string = RSAUtils.strByEncryption(string, true);
-        return string;
+        return RSAUtils.strByEncryption(string, true);
+    }
+
+    /**
+     * 登陆用户信息
+     */
+    public LoginInfoBean.RspInfoBean getDefaultUser() {
+        return PublicData.getInstance().mLoginInfoBean;
     }
 
     /**

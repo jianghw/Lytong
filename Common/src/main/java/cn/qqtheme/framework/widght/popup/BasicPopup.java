@@ -17,6 +17,7 @@ import android.view.WindowManager;
  * 弹窗基类
  */
 public abstract class BasicPopup<V extends View> implements DialogInterface.OnKeyListener {
+
     public static final int MATCH_PARENT = ViewGroup.LayoutParams.MATCH_PARENT;
     public static final int WRAP_CONTENT = ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -26,6 +27,7 @@ public abstract class BasicPopup<V extends View> implements DialogInterface.OnKe
 
     private PopupDialog popupDialog;
     private int width = 0, height = 0;
+
     private boolean isFillScreen = false;
     private boolean isHalfScreen = false;
     private boolean isPrepared = false;
@@ -41,10 +43,10 @@ public abstract class BasicPopup<V extends View> implements DialogInterface.OnKe
     }
 
     public DisplayMetrics displayMetrics(Context context) {
-        DisplayMetrics dm = new DisplayMetrics();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        windowManager.getDefaultDisplay().getMetrics(dm);
-        return dm;
+        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics;
     }
 
     public int getScreenWidthPixels() {

@@ -23,7 +23,7 @@ import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
-import com.zantong.mobilecttx.interf.ISplashAtyContract;
+import com.zantong.mobilecttx.contract.ISplashAtyContract;
 import com.zantong.mobilecttx.presenter.home.SplashPresenter;
 import com.zantong.mobilecttx.utils.ImageOptions;
 import com.zantong.mobilecttx.utils.SPUtils;

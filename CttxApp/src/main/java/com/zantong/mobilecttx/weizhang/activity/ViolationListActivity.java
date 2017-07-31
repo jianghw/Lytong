@@ -22,7 +22,7 @@ import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.home.activity.Codequery;
-import com.zantong.mobilecttx.interf.IViolationListFtyContract;
+import com.zantong.mobilecttx.contract.IViolationListFtyContract;
 import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.presenter.weizhang.ViolationListPresenter;

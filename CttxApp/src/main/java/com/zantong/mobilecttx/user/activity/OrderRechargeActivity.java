@@ -9,7 +9,7 @@ import com.zantong.mobilecttx.common.adapter.TabListAdapter;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.user.fragment.OrderRechargeFragment;
-import com.zantong.mobilecttx.interf.IOrderView;
+import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.widght.SlidingTabLayout;
 
 import java.util.ArrayList;

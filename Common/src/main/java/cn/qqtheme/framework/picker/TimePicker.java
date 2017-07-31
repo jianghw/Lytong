@@ -129,7 +129,7 @@ public class TimePicker extends WheelPicker {
 
     @Override
     @NonNull
-    protected View makeCenterView() {
+    protected View makeChildCenterView() {
         LinearLayout layout = new LinearLayout(activity);
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER);

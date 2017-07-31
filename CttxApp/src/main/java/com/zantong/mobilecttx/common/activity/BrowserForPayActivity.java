@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseActivity;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.interf.InterfaceForJS;
+import com.zantong.mobilecttx.contract.InterfaceForJS;
 import com.zantong.mobilecttx.utils.UiHelpers;
 
 import butterknife.Bind;

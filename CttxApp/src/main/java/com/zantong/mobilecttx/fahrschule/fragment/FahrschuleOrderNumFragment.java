@@ -16,7 +16,7 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.FahrschulePayBrowserActivity;
 import com.zantong.mobilecttx.eventbus.FahrschuleApplyEvent;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
-import com.zantong.mobilecttx.interf.IFahrschuleOrderNumFtyContract;
+import com.zantong.mobilecttx.contract.IFahrschuleOrderNumFtyContract;
 import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleOrderNumPresenter;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;

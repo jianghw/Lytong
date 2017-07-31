@@ -17,6 +17,7 @@ import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
+import com.zantong.mobilecttx.home.bean.DriverCoachResult;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
@@ -235,4 +236,10 @@ public interface IRemoteSource {
     Observable<PayCarResult> getPayCars(String msg);
 
     Observable<VehicleLicenseResult> addVehicleLicense(List<BindCarDTO> dtoList);
+
+    /**
+     * 13.判断是否为司机
+     */
+    Observable<DriverCoachResult> getDriverCoach(String phone);
+
 }

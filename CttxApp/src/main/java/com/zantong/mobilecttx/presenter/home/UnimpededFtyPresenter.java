@@ -10,7 +10,7 @@ import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
-import com.zantong.mobilecttx.interf.IUnimpededFtyContract;
+import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;

@@ -31,7 +31,8 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.common.activity.CommonProblemActivity;
 import com.zantong.mobilecttx.home.activity.HomeMainActivity;
-import com.zantong.mobilecttx.interf.IHomeMeFtyContract;
+import com.zantong.mobilecttx.home.bean.DriverCoachResult;
+import com.zantong.mobilecttx.contract.IHomeMeFtyContract;
 import com.zantong.mobilecttx.order.activity.CouponActivity;
 import com.zantong.mobilecttx.order.activity.OrderParentActivity;
 import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
@@ -101,6 +102,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
      */
     private TextView mTvCoupon;
     private RelativeLayout mLayOrder;
+    private RelativeLayout mLayDriverOrder;
     private RelativeLayout mLayQuery;
     private RelativeLayout mLayMsg;
     private ImageView mImgMsg;
@@ -216,7 +218,13 @@ public class HomeMeFragment extends BaseRefreshJxFragment
     }
 
     private void initDataRefresh() {
-        if (mPresenter != null) mPresenter.getCouponCount();
+        if (mPresenter != null && !TextUtils.isEmpty(mPresenter.initUserPhone())) {
+            mPresenter.getDriverCoach();
+        } else {
+            mLayDriverOrder.setVisibility(View.GONE);
+        }
+
+        if (mPresenter != null) mPresenter.getUnReadMsgCount();
         if (mPresenter != null) mPresenter.getUnReadMsgCount();
 
         //畅通卡
@@ -348,6 +356,8 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         mTvCoupon.setOnClickListener(this);
         mLayOrder = (RelativeLayout) view.findViewById(R.id.lay_order);
         mLayOrder.setOnClickListener(this);
+        mLayDriverOrder = (RelativeLayout) view.findViewById(R.id.lay_driver_order);
+        mLayDriverOrder.setOnClickListener(this);
         mLayQuery = (RelativeLayout) view.findViewById(R.id.lay_query);
         mLayQuery.setOnClickListener(this);
         mLayMsg = (RelativeLayout) view.findViewById(R.id.lay_msg);
@@ -397,6 +407,9 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 break;
             case R.id.lay_order://我的订单
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(30));
+                Act.getInstance().gotoIntentLogin(getActivity(), OrderParentActivity.class);
+                break;
+            case R.id.lay_driver_order://司机订单
                 Act.getInstance().gotoIntentLogin(getActivity(), OrderParentActivity.class);
                 break;
             case R.id.tv_card://我的畅通卡
@@ -505,6 +518,19 @@ public class HomeMeFragment extends BaseRefreshJxFragment
     public void countMessageDetailError(String responseDesc) {
         if (mImgMsg != null) mImgMsg.setVisibility(View.GONE);
         ToastUtils.toastShort(responseDesc);
+    }
+
+    /**
+     * 13.判断是否为司机 错误
+     */
+    @Override
+    public void driverCoachError(String message) {
+        ToastUtils.toastShort(message);
+    }
+
+    @Override
+    public void driverCoachSucceed(DriverCoachResult result) {
+        mLayDriverOrder.setVisibility(result.getData() ? View.VISIBLE : View.GONE);
     }
 
     public void setMessageListener(HomeMainActivity.MessageListener messageListener) {

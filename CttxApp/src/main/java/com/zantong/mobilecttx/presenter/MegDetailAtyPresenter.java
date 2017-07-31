@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.presenter;
 
 import android.support.annotation.NonNull;
 
-import com.zantong.mobilecttx.interf.IMegDetailAtyContract;
+import com.zantong.mobilecttx.contract.IMegDetailAtyContract;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;

@@ -12,7 +12,7 @@ import com.zantong.mobilecttx.presenter.SetPayCarFragmentPresenter;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import cn.qqtheme.framework.util.ToastUtils;
-import com.zantong.mobilecttx.interf.ModelView;
+import com.zantong.mobilecttx.contract.ModelView;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.interf.IOrderDetailContract;
+import com.zantong.mobilecttx.contract.IOrderDetailContract;
 import com.zantong.mobilecttx.order.bean.OrderDetailBean;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
 import com.zantong.mobilecttx.presenter.order.OrderDetailPresenter;
