@@ -88,9 +88,9 @@ public class SplashActivity extends AppCompatActivity
      * 数据初始
      */
     private void initThirdPartyData() {
-
         mPresenter.startCountDown();
         mPresenter.readObjectLoginInfoBean();
+
         startAnimation();
     }
 

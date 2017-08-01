@@ -132,13 +132,13 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
             @Override
             public void clickInquire() {//违章查询
                 GlobalConfig.getInstance().eventIdByUMeng(12);
-                Act.getInstance().lauchIntent(mContext, ViolationActivity.class);
+                Act.getInstance().gotoIntent(mContext, ViolationActivity.class);
             }
 
             @Override
             public void clickScan() {
                 GlobalConfig.getInstance().eventIdByUMeng(14);
-                Act.getInstance().lauchIntent(mContext, Codequery.class);
+                Act.getInstance().gotoIntent(mContext, Codequery.class);
             }
         });
     }

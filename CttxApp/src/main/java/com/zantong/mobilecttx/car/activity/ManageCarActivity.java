@@ -10,6 +10,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.car.fragment.ManageCarListFragment;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
 
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 
@@ -44,6 +45,22 @@ public class ManageCarActivity extends BaseJxActivity {
         });
 
         initFragment();
+    }
+
+    /**
+     * >=3 不添加
+     */
+    public void isAddCarTitle(int count) {
+        setImageRightVisible(count >= 3 ? -1 : R.mipmap.ic_title_add);
+    }
+
+    /**
+     * 添加车辆
+     */
+    protected void imageClickListener() {
+        //TODO 确保每次能添加
+
+        Act.getInstance().gotoIntent(this, ViolationActivity.class);
     }
 
     private void initFragment() {

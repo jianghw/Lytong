@@ -69,8 +69,14 @@ public class LicenseCheckGradeActivity extends BaseJxActivity implements View.On
         mLyData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                showDataDialog();
-                showTestDialog();
+                showDataDialog();
+            }
+        });
+
+        mTvImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DialogMgr(LicenseCheckGradeActivity.this, R.mipmap.code_query_notice_iamge);
             }
         });
 
@@ -152,15 +158,8 @@ public class LicenseCheckGradeActivity extends BaseJxActivity implements View.On
         mEditArchivesNumber = (EditText) findViewById(R.id.edit_archives_number);
         mTvDate = (TextView) findViewById(R.id.tv_date);
         mTvImage = (ImageView) findViewById(R.id.img_cartype_desc);
-        mLyData = (RelativeLayout) findViewById(R.id.rl_date);
+        mLyData = (RelativeLayout) findViewById(R.id.lay_date);
         mBtnCommit = (Button) findViewById(R.id.btn_commit);
-
-        mTvImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new DialogMgr(LicenseCheckGradeActivity.this, R.mipmap.code_query_notice_iamge);
-            }
-        });
     }
 
     private void showDataDialog() {

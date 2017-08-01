@@ -235,11 +235,25 @@ public interface IRemoteSource {
      */
     Observable<PayCarResult> getPayCars(String msg);
 
-    Observable<VehicleLicenseResult> addVehicleLicense(List<BindCarDTO> dtoList);
+    Observable<VehicleLicenseResult> addOrUpdateVehicleLicense(List<BindCarDTO> dtoList);
 
     /**
      * 13.判断是否为司机
      */
     Observable<DriverCoachResult> getDriverCoach(String phone);
 
+    /**
+     * 16.新增车辆
+     */
+    Observable<BaseResult> addVehicleLicense(BindCarDTO bindCarDTO);
+
+    /**
+     * 18.删除车辆
+     */
+    Observable<BaseResult> removeVehicleLicense(BindCarDTO bindCarDTO);
+
+    /**
+     * 17.编辑车辆
+     */
+    Observable<BaseResult> updateVehicleLicense(BindCarDTO bindCarDTO);
 }

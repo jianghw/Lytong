@@ -239,7 +239,7 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
     }
 
     protected void customImageDialog() {
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity(), R.style.CustomImageDialog);
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity(), R.style.CustomImageDialog);
         LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.custom_dialog_image_content, null);
         ImageView imageClose = (ImageView) layout.findViewById(R.id.img_close);

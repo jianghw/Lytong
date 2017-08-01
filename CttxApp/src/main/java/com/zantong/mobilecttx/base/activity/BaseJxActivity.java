@@ -170,6 +170,8 @@ public abstract class BaseJxActivity extends AppCompatActivity {
             mImgHome.setImageResource(imgRed != 0 ? imgRed : R.mipmap.btn_homepage);
         }
 
+        if (imgRed < 0 && mImgHome != null) mImgHome.setVisibility(View.GONE);
+
         if (mTvRight != null && mTvRight.getVisibility() != View.GONE) {
             mTvRight.setVisibility(View.GONE);
         }

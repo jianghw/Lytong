@@ -61,7 +61,7 @@ public class Act {
         packageContext.startActivityForResult(intent, requestCode);
     }
 
-    public void gotoIntentLoginForResult(Activity packageContext, Class<?> className, int requestCode) {
+    public void gotoLoginForResult(Activity packageContext, Class<?> className, int requestCode) {
 
         if (!PublicData.getInstance().loginFlag
                 && !TextUtils.isEmpty(PublicData.getInstance().userID)) {
@@ -74,6 +74,18 @@ public class Act {
     }
 
     public void gotoLoginByIntent(Context packageContext, Class<?> className, Intent intent) {
+        if (PublicData.getInstance().loginFlag
+                && !TextUtils.isEmpty(PublicData.getInstance().userID)) {
+            intent.setClass(packageContext, className);
+            packageContext.startActivity(intent);
+        } else {
+            PublicData.getInstance().className = className;
+            intent.setClass(packageContext, LoginActivity.class);
+            packageContext.startActivity(intent);
+        }
+    }
+
+    public void gotoLoginForResult(Context packageContext, Class<?> className, Intent intent) {
         if (PublicData.getInstance().loginFlag
                 && !TextUtils.isEmpty(PublicData.getInstance().userID)) {
             intent.setClass(packageContext, className);

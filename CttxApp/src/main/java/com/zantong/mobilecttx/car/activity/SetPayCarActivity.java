@@ -1,19 +1,24 @@
 package com.zantong.mobilecttx.car.activity;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
+import android.view.View;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.presenter.SetPayCarPresenter;
+import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.car.fragment.SetPayCarFragment;
 
-public class SetPayCarActivity extends BaseMvpActivity<IBaseView, SetPayCarPresenter> implements IBaseView {
+import cn.qqtheme.framework.util.ui.FragmentUtils;
+
+public class SetPayCarActivity extends BaseJxActivity {
+
+    private int mCurBottomPosition;
+    private SetPayCarFragment mSetPayCarFragment;
 
     @Override
-    public SetPayCarPresenter initPresenter() {
-        return new SetPayCarPresenter(SetPayCarActivity.this);
+    protected void bundleIntent(Bundle savedInstanceState) {
+        mCurBottomPosition = 1;
     }
 
     @Override
@@ -22,26 +27,38 @@ public class SetPayCarActivity extends BaseMvpActivity<IBaseView, SetPayCarPrese
     }
 
     @Override
-    public void initView() {
-        setTitleText("更改已绑定车辆");
+    protected void initFragmentView(View view) {
+        initTitleContent("更改已绑定车辆");
+
+        initFragment();
     }
 
-    @Override
-    public void initData() {
+    private void initFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        SetPayCarFragment mFragment = new SetPayCarFragment();
-        transaction.replace(R.id.activity_set_paycar_layout, mFragment);
-        transaction.commit();
+        switch (mCurBottomPosition) {
+            case 1:
+                if (mSetPayCarFragment == null) {
+                    mSetPayCarFragment = SetPayCarFragment.newInstance();
+                }
+                FragmentUtils.replaceFragment(
+                        fragmentManager, mSetPayCarFragment, R.id.activity_set_paycar_layout, true);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
-    public void showLoading() {
-
+    protected void DestroyViewAndThing() {
+        mSetPayCarFragment = null;
     }
 
     @Override
-    public void hideLoading() {
-
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            closeFragment();
+        }
+        return false;
     }
+
 }

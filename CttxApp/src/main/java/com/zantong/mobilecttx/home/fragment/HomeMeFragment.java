@@ -224,7 +224,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
             mLayDriverOrder.setVisibility(View.GONE);
         }
 
-        if (mPresenter != null) mPresenter.getUnReadMsgCount();
+        if (mPresenter != null) mPresenter.getCouponCount();
         if (mPresenter != null) mPresenter.getUnReadMsgCount();
 
         //畅通卡

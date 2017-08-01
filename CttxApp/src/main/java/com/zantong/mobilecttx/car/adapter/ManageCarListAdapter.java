@@ -9,7 +9,7 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
-import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
+import com.zantong.mobilecttx.utils.rsa.Des3;
 
 import java.util.List;
 
@@ -24,23 +24,23 @@ public class ManageCarListAdapter extends BaseAdapter<VehicleLicenseBean> {
     private static final int ITEM_TYPE_TITLE = 100;
     private static final int ITEM_TYPE_CONTENT = 200;
 
-    private List<UserCarInfoBean> mUserCarInfoBeanList;
+    private List<VehicleLicenseBean> mUserCarInfoBeanList;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, VehicleLicenseBean carInfoBean) {
-        if (carInfoBean != null) {
+    public void showData(BaseRecyclerViewHolder viewHolder,
+                         int position, VehicleLicenseBean vehicleLicenseBean) {
+        if (vehicleLicenseBean != null) {
             switch (viewHolder.getItemViewType()) {
                 case ITEM_TYPE_TITLE:
                     TitleViewHolder holder0 = (TitleViewHolder) viewHolder;
-                    holder0.mTitle.setText(carInfoBean.getCarModel().equals("1")
+                    holder0.mTitle.setText(vehicleLicenseBean.getIsPayable() == -1
                             ? "可缴费车辆" : "仅限违章查询车辆");
                     break;
                 case ITEM_TYPE_CONTENT:
                     ViewHolder holder = (ViewHolder) viewHolder;
-//                    holder.mCarNumber.setText(Des3.decode(carInfoBean.getCarnum()));
-//                    String ispaycar = carInfoBean.getIspaycar();
-//                    holder.mFlag.setVisibility(!TextUtils.isEmpty(ispaycar) && ispaycar.equals("1")
-//                            ? View.VISIBLE : View.INVISIBLE);
+                    holder.mCarNumber.setText(Des3.decode(vehicleLicenseBean.getPlateNo()));
+                    int ispaycar = vehicleLicenseBean.getIsPayable();
+                    holder.mFlag.setVisibility(ispaycar == 1 ? View.VISIBLE : View.INVISIBLE);
                     break;
                 default:
                     break;
@@ -58,10 +58,9 @@ public class ManageCarListAdapter extends BaseAdapter<VehicleLicenseBean> {
     }
 
     private boolean isPayCar(int position) {
-        if (mUserCarInfoBeanList != null && mUserCarInfoBeanList.get(position) != null) {
-            return mUserCarInfoBeanList.get(position).getBuydate().equals("1");
-        }
-        return false;
+        return mUserCarInfoBeanList != null
+                && mUserCarInfoBeanList.get(position) != null
+                && mUserCarInfoBeanList.get(position).getIsPayable() >= 0;
     }
 
     public View createView(ViewGroup viewGroup, int viewType) {
@@ -79,7 +78,7 @@ public class ManageCarListAdapter extends BaseAdapter<VehicleLicenseBean> {
         return itemType == ITEM_TYPE_TITLE ? new TitleViewHolder(view) : new ViewHolder(view);
     }
 
-    public void setDataList(List<UserCarInfoBean> userCarInfoBeen) {
+    public void setDataList(List<VehicleLicenseBean> userCarInfoBeen) {
         mUserCarInfoBeanList = userCarInfoBeen;
     }
 

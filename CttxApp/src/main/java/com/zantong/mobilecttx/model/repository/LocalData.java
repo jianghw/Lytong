@@ -138,8 +138,7 @@ public class LocalData {
 
         OpenQueryBean.RspInfoBean.UserCarsInfoBean mUserCarsInfoBean =
                 (OpenQueryBean.RspInfoBean.UserCarsInfoBean)
-                        UserInfoRememberCtrl.readObject(
-                                PublicData.getInstance().DefaultCarLocalFlag);
+                        UserInfoRememberCtrl.readObject(PublicData.getInstance().DefaultCarLocalFlag);
         if (mUserCarsInfoBean != null) {
             PublicData.getInstance().defaultCar = true;
             PublicData.getInstance().defaultCarNumber = mUserCarsInfoBean.getCarnum();

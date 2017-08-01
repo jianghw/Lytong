@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.car.activity.CarBrandActivity;
@@ -24,17 +25,18 @@ import com.zantong.mobilecttx.car.activity.CarChooseActivity;
 import com.zantong.mobilecttx.car.bean.CarBrandBean;
 import com.zantong.mobilecttx.car.bean.CarStyleInfoBean;
 import com.zantong.mobilecttx.car.bean.CarXiBean;
+import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.CommonListActivity;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
+import com.zantong.mobilecttx.contract.IViolationQueryFtyContract;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrBean;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.eventbus.AddCarInfoEvent;
 import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
-import com.zantong.mobilecttx.contract.IViolationQueryFtyContract;
 import com.zantong.mobilecttx.presenter.weizhang.ViolationQueryFtyPresenter;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
@@ -44,6 +46,7 @@ import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
+import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
@@ -73,11 +76,10 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         implements View.OnClickListener, IViolationQueryFtyContract.IViolationQueryFtyView {
 
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    /**
+     * 用于编辑或删除的标记
+     */
+    private VehicleLicenseBean mParam1 = null;
 
     private ImageView mImgCamera;
     /**
@@ -123,10 +125,13 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
      * 查询
      */
     private Button mBtnQuery;
+    private Button mBtnDelete;
     private RelativeLayout mLayoutBrand;
     private RelativeLayout mLayoutCarSeries;
     private RelativeLayout mLayoutVehicle;
     private RelativeLayout mLayDate;
+    private RelativeLayout mLayoutSave;
+
     /**
      * P
      */
@@ -135,7 +140,6 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
      * 车品牌id
      */
     private int carBrandId;
-
     /**
      * 车系id
      */
@@ -151,11 +155,11 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         return new ViolationQueryFragment();
     }
 
-    public static ViolationQueryFragment newInstance(String param1, String param2) {
+    public static ViolationQueryFragment newInstance(VehicleLicenseBean param1) {
         ViolationQueryFragment fragment = new ViolationQueryFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putParcelable(ARG_PARAM1, param1);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -165,8 +169,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1 = getArguments().getParcelable(ARG_PARAM1);
         }
     }
 
@@ -176,7 +179,6 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onRefreshData() {
-
     }
 
     @Override
@@ -216,11 +218,11 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onFirstDataVisible() {
-
 //        if (!SPUtils.getInstance().getGuideXingShiZheng()) {
 //            PublicData.getInstance().GUIDE_TYPE = 1;
 //            Act.getInstance().gotoIntent(getActivity(), GuideActivity.class);
 //        }
+
 //可添加控件操作
         int size;
         if (PublicData.getInstance().loginFlag)
@@ -230,13 +232,43 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
         mCustomSwitchBtn.setChecked(size < 3);
         mCustomSwitchBtn.setEnabled(size < 3);
+
+        if (mParam1 != null) initBundleData();
+    }
+
+    /**
+     * 用于删除 编辑
+     */
+    private void initBundleData() {
+
+        mBtnDelete.setVisibility(mParam1 != null ? View.VISIBLE : View.GONE);
+        mBtnQuery.setText(mParam1 != null ? "编辑保存" : "查  询");
+
+        mCustomSwitchBtn.setChecked(true);
+        mCustomSwitchBtn.setEnabled(false);
+
+        String carNum = Des3.decode(mParam1.getPlateNo());
+
+        setTvProvince(carNum.substring(0, 1));
+        setEditPlate(carNum.substring(1, carNum.length()));
+
+        mLayoutProvince.setEnabled(false);
+        mEditPlate.setEnabled(false);
+
+        setEditEngine(Des3.decode(mParam1.getEngineNo()));
+        setTvType(VehicleTypeTools.switchVehicleType(mParam1.getVehicleType()));
+        setTvData(mParam1.getIssueDate());
+//是否可缴费
+        mBindCarDTO.setIsPay(mParam1.getIsPayable());
     }
 
     @Override
     protected void DestroyViewAndThing() {
         if (mPresenter != null) mPresenter.unSubscribe();
+
         mCarInfoDTO = null;
         mBindCarDTO = null;
+        mParam1 = null;
     }
 
     public void initView(View view) {
@@ -276,8 +308,14 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         mLayoutVehicle.setOnClickListener(this);
         mTvVehicle = (TextView) view.findViewById(R.id.tv_vehicle);
 
+        mLayoutSave = (RelativeLayout) view.findViewById(R.id.lay_save);
         mImgVehicle = (ImageView) view.findViewById(R.id.img_vehicle);
         mCustomSwitchBtn = (UISwitchButton) view.findViewById(R.id.custom_switch_btn);
+
+//用于编辑删除功能作用时
+        mBtnDelete = (Button) view.findViewById(R.id.btn_delete);
+        mBtnDelete.setOnClickListener(this);
+
         mBtnQuery = (Button) view.findViewById(R.id.btn_query);
         mBtnQuery.setOnClickListener(this);
     }
@@ -347,9 +385,36 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
                 break;
             case R.id.btn_query://提交
                 dataFormValidation();
+                updateVehicle();
+                break;
+            case R.id.btn_delete://删除
+                dataFormValidation();
+                deleteCar();
                 break;
             default:
                 break;
+        }
+    }
+
+    protected void deleteCar() {
+        if (mParam1 != null && mParam1.getIsPayable() == 1) {
+            DialogUtils.createDialog(getActivity(),
+                    "该车辆为可缴费车辆不能进行删除操作",
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                        }
+                    });
+        } else {
+            DialogUtils.delDialog(getActivity(),
+                    "删除提示",
+                    "您确定要删除该车辆吗？",
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (mPresenter != null) mPresenter.removeVehicleLicense();
+                        }
+                    });
         }
     }
 
@@ -398,11 +463,16 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         }
 
         String carNum = getTvProvince() + plate;
-        initCarInfoDto(carNum, engine, vehicleCode);
         initBindCarDTO(carNum, engine, vehicleCode);
+    }
 
-        GlobalConfig.getInstance().eventIdByUMeng(13);
-        submitData();
+    private void updateVehicle() {
+        if (mParam1 != null) {//编辑
+            if (mPresenter != null) mPresenter.updateVehicleLicense();
+        } else {
+            GlobalConfig.getInstance().eventIdByUMeng(13);
+            submitData();
+        }
     }
 
     /**
@@ -410,6 +480,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
      * 登录时先提交旧服务器,再提交新服务器
      */
     private void submitData() {
+        //登陆状态
         if (PublicData.getInstance().loginFlag) {
             if (mCustomSwitchBtn.isChecked()) {
                 List<UserCarInfoBean> serverCars = PublicData.getInstance().mServerCars;
@@ -431,7 +502,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
                 doQueryVehicle();
             }
         }
-
+        //未登录状态
         if (!PublicData.getInstance().loginFlag) {
             if (mCustomSwitchBtn.isChecked()) {
                 List<CarInfoDTO> infoDTOList = SPUtils.getInstance().getCarsInfo();
@@ -458,8 +529,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
     }
 
     private void commitCarInfoToServer() {
-        if (mPresenter != null) mPresenter.commitCarInfoToOldServer();
-        if (mPresenter != null) mPresenter.commitCarInfoToNewServer();
+        if (mPresenter != null) mPresenter.addVehicleLicense();
     }
 
     private void doQueryVehicle() {
@@ -535,6 +605,20 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         doQueryVehicle();
     }
 
+    /**
+     * 删除车辆 失败
+     */
+    @Override
+    public void removeVehicleLicenseSucceed(BaseResult responseBean) {
+        getActivity().finish();
+    }
+
+    @Override
+    public void removeVehicleLicenseError(String message) {
+        hideLoadingProgress();
+        ToastUtils.toastShort(message);
+    }
+
     @Override
     public BindCarDTO getBindCarDTO() {
         return mBindCarDTO;
@@ -569,23 +653,43 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
     }
 
     public String getTvProvince() {
-        return mTvProvince.getText().toString();
+        return mTvProvince.getText().toString().trim();
+    }
+
+    public void setTvProvince(String province) {
+        if (mTvProvince != null) mTvProvince.setText(province);
     }
 
     public String getEditPlate() {
         return mEditPlate.getText().toString().trim();
     }
 
+    public void setEditPlate(String editPlate) {
+        if (mEditPlate != null) mEditPlate.setText(editPlate);
+    }
+
     public String getEditEngine() {
         return mEditEngine.getText().toString().trim();
+    }
+
+    public void setEditEngine(String editEngine) {
+        if (mEditEngine != null) mEditEngine.setText(editEngine);
     }
 
     public String getTvType() {
         return mTvType.getText().toString();
     }
 
+    public void setTvType(String tvType) {
+        if (mTvType != null) mTvType.setText(tvType);
+    }
+
     public String getTvData() {
         return mTvDate.getText().toString();
+    }
+
+    public void setTvData(String tvData) {
+        if (mTvDate != null) mTvDate.setText(tvData);
     }
 
     /**
@@ -635,11 +739,12 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 //车牌类型
         if (requestCode == GlobalConstant.requestCode.violation_query_plate
                 && resultCode == GlobalConstant.resultCode.common_list_fty && data != null) {
-            mTvType.setText(data.getStringExtra(GlobalConstant.putExtra.common_list_extra));
+            setTvType(data.getStringExtra(GlobalConstant.putExtra.common_list_extra));
         }
 //拍照回调
         if (requestCode == GlobalConstant.requestCode.violation_query_camera
                 && resultCode == GlobalConstant.resultCode.ocr_camera_license) {
+
             if (OcrCameraActivity.file == null)
                 ToastUtils.toastShort("照片获取失败");
             else if (mPresenter != null)
@@ -702,9 +807,10 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
             String cardNo = bean.getCardNo();
             String provinces = "沪浙苏皖京藏川鄂甘赣贵桂黑吉冀津晋辽鲁蒙闽宁青琼陕湘新渝豫粤云";
 
-            if (!TextUtils.isEmpty(cardNo) && cardNo.length() >= 1) {
+            if (!TextUtils.isEmpty(cardNo) && cardNo.length() >= 1 && mParam1 == null) {
                 String province = cardNo.substring(0, 1);
                 String plateNum = cardNo.substring(1, cardNo.length());
+
                 if (provinces.contains(province)) mTvProvince.setText(province);
                 mEditPlate.setText(plateNum);
             }

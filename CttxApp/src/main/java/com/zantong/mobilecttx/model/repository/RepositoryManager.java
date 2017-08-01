@@ -423,10 +423,10 @@ public class RepositoryManager {
     }
 
     /**
-     * /cttx/addVehiclelicense
+     * 19.同步银行车辆
      */
-    public Observable<VehicleLicenseResult> addVehicleLicense(List<BindCarDTO> dtoList) {
-        return mRemoteData.addVehicleLicense(dtoList);
+    public Observable<VehicleLicenseResult> addOrUpdateVehicleLicense(List<BindCarDTO> dtoList) {
+        return mRemoteData.addOrUpdateVehicleLicense(dtoList);
     }
 
     /**
@@ -434,5 +434,26 @@ public class RepositoryManager {
      */
     public Observable<DriverCoachResult> getDriverCoach(String phone) {
         return mRemoteData.getDriverCoach(phone);
+    }
+
+    /**
+     * 17.新增车辆
+     */
+    public Observable<BaseResult> addVehicleLicense(BindCarDTO bindCarDTO) {
+        return mRemoteData.addVehicleLicense(bindCarDTO);
+    }
+
+    /**
+     * 18.删除车辆
+     */
+    public Observable<BaseResult> removeVehicleLicense(BindCarDTO bindCarDTO) {
+        return mRemoteData.removeVehicleLicense(bindCarDTO);
+    }
+
+    /**
+     * 17.编辑车辆
+     */
+    public Observable<BaseResult> updateVehicleLicense(BindCarDTO bindCarDTO) {
+        return mRemoteData.updateVehicleLicense(bindCarDTO);
     }
 }

@@ -37,6 +37,8 @@ public final class GlobalConstant {
         public static final String fahrschule_position_extra = "fahrschule_position_extra";
         public static final String recharge_coupon_extra = "recharge_coupon_extra";
         public static final String recharge_coupon_bean_extra = "recharge_coupon_bean_extra";
+
+        public static final String car_item_bean_extra = "car_item_bean_extra";
     }
 
     public static final class cameraType {

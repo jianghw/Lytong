@@ -170,8 +170,10 @@ public class CarManageGroupFragment extends BaseListFragment<CarInfoDTO>{
                 onShowContent();
 
                 mServerList = result.getRspInfo().getUserCarsInfo();
+
                 PublicData.getInstance().mCarNum = mServerList.size();
                 PublicData.getInstance().mServerCars = listU(result.getRspInfo().getUserCarsInfo());
+
                 int canPayNum = 0;
                 int notPayNum =  0;
                 for (int i = 0; i < mServerList.size(); i++){

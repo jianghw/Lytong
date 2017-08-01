@@ -405,6 +405,7 @@
         android:textSize="@dimen/fs_14sp"/>
 
     <RelativeLayout
+        android:id="@+id/lay_save"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_120"
         android:background="@color/colorWhite"
@@ -433,15 +434,28 @@
     </RelativeLayout>
 
     <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="@dimen/ds_960"
+        android:layout_height="@dimen/ds_150"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/ds_48"
+        android:background="@drawable/btn_shape_dialog_white"
+        android:enabled="true"
+        android:text="删  除"
+        android:textColor="@color/colorTvBlack_4d"
+        android:textSize="@dimen/fs_18sp"
+        android:visibility="gone"/>
+
+    <Button
         android:id="@+id/btn_query"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/ds_960"
+        android:layout_height="@dimen/ds_150"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/ds_48"
         android:layout_marginTop="@dimen/ds_48"
         android:background="@mipmap/ic_btn_bg"
         android:enabled="true"
-        android:text="查询"
+        android:text="查  询"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/fs_18sp"/>
 

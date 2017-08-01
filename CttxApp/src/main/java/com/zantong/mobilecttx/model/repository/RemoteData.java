@@ -376,9 +376,12 @@ public class RemoteData implements IRemoteSource {
         return initAppUrlRetrofit().create(IBankService.class).getPayCars(msg);
     }
 
+    /**
+     * 19.同步银行车辆
+     */
     @Override
-    public Observable<VehicleLicenseResult> addVehicleLicense(List<BindCarDTO> dtoList) {
-        return initRetrofit().create(ICttxService.class).addVehicleLicense(dtoList);
+    public Observable<VehicleLicenseResult> addOrUpdateVehicleLicense(List<BindCarDTO> dtoList) {
+        return initRetrofit().create(ICttxService.class).addOrUpdateVehicleLicense(dtoList);
     }
 
     /**
@@ -387,5 +390,29 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<DriverCoachResult> getDriverCoach(String phone) {
         return initRetrofit().create(IUserService.class).getDriverCoach(phone);
+    }
+
+    /**
+     * 16.新增车辆
+     */
+    @Override
+    public Observable<BaseResult> addVehicleLicense(BindCarDTO bindCarDTO) {
+        return initRetrofit().create(ICttxService.class).addVehicleLicense(bindCarDTO);
+    }
+
+    /**
+     * 18.删除车辆
+     */
+    @Override
+    public Observable<BaseResult> removeVehicleLicense(BindCarDTO bindCarDTO) {
+        return initRetrofit().create(ICttxService.class).removeVehicleLicense(bindCarDTO);
+    }
+
+    /**
+     * 17.编辑车辆
+     */
+    @Override
+    public Observable<BaseResult> updateVehicleLicense(BindCarDTO bindCarDTO) {
+        return initRetrofit().create(ICttxService.class).updateVehicleLicense(bindCarDTO);
     }
 }

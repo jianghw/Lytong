@@ -37,7 +37,8 @@ import rx.subscriptions.CompositeSubscription;
  * Update by:
  * Update day:
  */
-public class ViolationQueryFtyPresenter implements IViolationQueryFtyContract.IViolationQueryFtyPresenter {
+public class ViolationQueryFtyPresenter
+        implements IViolationQueryFtyContract.IViolationQueryFtyPresenter {
 
     private final RepositoryManager mRepository;
     private final IViolationQueryFtyContract.IViolationQueryFtyView mAtyView;
@@ -116,6 +117,9 @@ public class ViolationQueryFtyPresenter implements IViolationQueryFtyContract.IV
         return OcrCameraActivity.file;
     }
 
+    /**
+     * 添加车俩
+     */
     @Override
     public void commitCarInfoToOldServer() {
         Subscription subscription = mRepository.commitCarInfoToOldServer(initCarInfoDTO())
@@ -169,6 +173,116 @@ public class ViolationQueryFtyPresenter implements IViolationQueryFtyContract.IV
                         } else {
                             mAtyView.commitCarInfoToNewServerError(responseBean != null
                                     ? responseBean.getResponseDesc() : "未知错误(48)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 16.新增车辆
+     */
+    @Override
+    public void addVehicleLicense() {
+        Subscription subscription = mRepository.addVehicleLicense(initBindCarDTO())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResult>() {
+                    @Override
+                    public void doCompleted() {
+
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.commitCarInfoToNewServerError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(BaseResult responseBean) {
+                        if (responseBean != null && responseBean.getResponseCode() == 2000) {
+
+                        } else {
+                            mAtyView.commitCarInfoToNewServerError(responseBean != null
+                                    ? responseBean.getResponseDesc() : "未知错误(48)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 18.删除车辆
+     */
+    @Override
+    public void removeVehicleLicense() {
+        Subscription subscription = mRepository.removeVehicleLicense(initBindCarDTO())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mAtyView.loadingProgress();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResult>() {
+                    @Override
+                    public void doCompleted() {
+                        mAtyView.hideLoadingProgress();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.removeVehicleLicenseError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(BaseResult responseBean) {
+                        if (responseBean != null && responseBean.getResponseCode() == 2000) {
+                            mAtyView.removeVehicleLicenseSucceed(responseBean);
+                        } else {
+                            mAtyView.removeVehicleLicenseError(responseBean != null
+                                    ? responseBean.getResponseDesc() : "未知错误(N18)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 17.编辑车辆
+     */
+    @Override
+    public void updateVehicleLicense() {
+        Subscription subscription = mRepository.updateVehicleLicense(initBindCarDTO())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mAtyView.loadingProgress();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResult>() {
+                    @Override
+                    public void doCompleted() {
+                        mAtyView.hideLoadingProgress();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.removeVehicleLicenseError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(BaseResult responseBean) {
+                        if (responseBean != null && responseBean.getResponseCode() == 2000) {
+                            mAtyView.removeVehicleLicenseSucceed(responseBean);
+                        } else {
+                            mAtyView.removeVehicleLicenseError(responseBean != null
+                                    ? responseBean.getResponseDesc() : "未知错误(N17)");
                         }
                     }
                 });

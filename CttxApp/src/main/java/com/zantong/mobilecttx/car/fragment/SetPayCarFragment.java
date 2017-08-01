@@ -3,29 +3,30 @@ package com.zantong.mobilecttx.car.fragment;
 import android.app.Dialog;
 import android.view.View;
 
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.car.adapter.SetPayCarAdapter;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
-import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
+import com.zantong.mobilecttx.car.adapter.SetPayCarAdapter;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.presenter.SetPayCarFragmentPresenter;
+import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import cn.qqtheme.framework.util.ToastUtils;
-import com.zantong.mobilecttx.contract.ModelView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import cn.qqtheme.framework.util.ToastUtils;
+
 public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> implements ModelView {
 
-    static SetPayCarFragment mSingleFragment;
     private SetPayCarAdapter mSetPayCarAdapter;
     private SetPayCarFragmentPresenter mSetPayCarFragmentPresenter;
     private List<UserCarInfoBean> mRspInfoBean;
     private ArrayList<UserCarInfoBean> noPay = new ArrayList<>();
     private ArrayList<UserCarInfoBean> pay = new ArrayList<>();
+
     private String newPayNumber = "";
     private String oldPayNumber = "";
     private String carnumtype = "";
@@ -35,19 +36,20 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
         mSetPayCarFragmentPresenter = new SetPayCarFragmentPresenter(this);
     }
 
+    public static SetPayCarFragment newInstance() {
+        return new SetPayCarFragment();
+    }
+
     @Override
     protected void onLoadMoreData() {
-
     }
 
     @Override
     protected void onRefreshData() {
-
     }
 
     public HashMap<String, String> mapData() {
         HashMap<String, String> mHashMap = new HashMap<>();
-
         mHashMap.put("addcarnum", newPayNumber);
         mHashMap.put("delcarnum", oldPayNumber);
         mHashMap.put("carnumtype", carnumtype);
@@ -57,25 +59,28 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
     @Override
     protected void onRecyclerItemClick(View view, final Object data) {
         final UserCarInfoBean mUserCarsInfoBean = (UserCarInfoBean) data;
-        DialogUtils.createSelCarDialog(this.getActivity(), pay.get(0).getCarnum(), pay.get(1).getCarnum(), new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                oldPayNumber = pay.get(0).getCarnum();
-                newPayNumber = mUserCarsInfoBean.getCarnum();
-                carnumtype = mUserCarsInfoBean.getCarnumtype();
-                mSetPayCarFragmentPresenter.loadView(1);
-                PublicData.getInstance().isSetPayCar = true;
-            }
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                oldPayNumber = pay.get(1).getCarnum();
-                newPayNumber = mUserCarsInfoBean.getCarnum();
-                carnumtype = mUserCarsInfoBean.getCarnumtype();
-                mSetPayCarFragmentPresenter.loadView(1);
-                PublicData.getInstance().isSetPayCar = true;
-            }
-        });
+
+        DialogUtils.createSelCarDialog(this.getActivity(), pay.get(0).getCarnum(), pay.get(1).getCarnum(),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        oldPayNumber = pay.get(0).getCarnum();
+                        newPayNumber = mUserCarsInfoBean.getCarnum();
+                        carnumtype = mUserCarsInfoBean.getCarnumtype();
+                        mSetPayCarFragmentPresenter.loadView(1);
+                        PublicData.getInstance().isSetPayCar = true;
+                    }
+                },
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        oldPayNumber = pay.get(1).getCarnum();
+                        newPayNumber = mUserCarsInfoBean.getCarnum();
+                        carnumtype = mUserCarsInfoBean.getCarnumtype();
+                        mSetPayCarFragmentPresenter.loadView(1);
+                        PublicData.getInstance().isSetPayCar = true;
+                    }
+                });
 //        IOSpopwindow menuPop = new IOSpopwindow(getActivity(), getView(), pay.get(0).getCarnum(), pay.get(1).getCarnum(), new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -110,7 +115,8 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
     public void initView(View view) {
         super.initView(view);
         mRspInfoBean = PublicData.getInstance().mServerCars;
-        if (mRspInfoBean != null){
+
+        if (mRspInfoBean != null) {
             int size = mRspInfoBean.size();
             for (int i = 0; i < size; i++) {
                 if ("0".equals(mRspInfoBean.get(i).getIspaycar())) {
@@ -126,6 +132,7 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
     @Override
     public void initData() {
         super.initData();
+
         mSetPayCarAdapter.removeAll();
         setDataResult(noPay);
     }
@@ -137,7 +144,8 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
 
     @Override
     public void updateView(Object object, int index) {
-        mRspInfoBean = PublicData.getInstance().mServerCars;;
+        mRspInfoBean = PublicData.getInstance().mServerCars;
+        ;
         int size = mRspInfoBean.size();
         for (int i = 0; i < size; i++) {
             if (oldPayNumber.equals(mRspInfoBean.get(i).getCarnum())) {

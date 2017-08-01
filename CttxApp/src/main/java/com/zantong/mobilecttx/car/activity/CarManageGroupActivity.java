@@ -78,12 +78,10 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
     @Override
     public void showLoading() {
-
     }
 
     @Override
     public void hideLoading() {
-
     }
 
     @Override
@@ -273,12 +271,12 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
         }
 
         DataHolder<CarInfoDTO> holderSimple = new DataHolder<CarInfoDTO>() {
+
             @Override
             public void bind(Context context, SuperViewHolder holder, final CarInfoDTO item, int position) {
 
                 TextView mCarNum = holder.getView(R.id.item_manage_vehicles_num);
                 TextView mCarPayFlag = holder.getView(R.id.item_manage_vehicles_flag);
-
 
                 mCarNum.setText(item.getCarnum());
                 if ("1".equals(item.getIspaycar())) {
@@ -305,6 +303,7 @@ public class CarManageGroupActivity extends BaseMvpActivity<IBaseView, HelpPrese
         List<CarInfoDTO> list1 = new ArrayList<>();
         List<CarInfoDTO> list2 = new ArrayList<>();
 //        if (PublicData.getInstance().mPayCarNum >= 2 && PublicData.getInstance().mNorCarNum > 0){
+
         for (CarInfoDTO dto : list) {
             if ("1".equals(dto.getIspaycar())) {
                 list1.add(dto);

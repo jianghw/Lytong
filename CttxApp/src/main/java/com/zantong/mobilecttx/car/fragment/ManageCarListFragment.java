@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.car.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,17 +10,19 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
+import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.car.adapter.ManageCarListAdapter;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
-import com.zantong.mobilecttx.car.bean.VehicleLicenseResult;
 import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.contract.IManageCarFtyContract;
+import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.presenter.car.ManageCarFtyPresenter;
-import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
+import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
 
 import java.util.List;
 
+import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
@@ -37,6 +40,7 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
 
     private IManageCarFtyContract.IManageCarFtyPresenter mPresenter;
     private ManageCarListAdapter mCarListAdapter;
+    private boolean mFirstInit = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,9 +66,11 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
     }
 
     /**
-     * 获取RecyclerHeader
+     * 获取RecyclerHeader No
+     *
+     * @deprecated
      */
-    protected View customViewHeader() {
+    protected View customViewHeader_No() {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -84,14 +90,23 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
      */
     @Override
     public BaseAdapter<VehicleLicenseBean> createAdapter() {
-        mCarListAdapter =new ManageCarListAdapter();
+        mCarListAdapter = new ManageCarListAdapter();
         return mCarListAdapter;
     }
 
+    /**
+     * 点击事项 可序列化
+     */
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
         if (data instanceof VehicleLicenseBean) {
             VehicleLicenseBean bean = (VehicleLicenseBean) data;
+            if (bean.getIsPayable() < 0) return;
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(GlobalConstant.putExtra.car_item_bean_extra, bean);
+            intent.putExtras(bundle);
+            Act.getInstance().gotoLoginByIntent(getActivity(), ViolationActivity.class, intent);
         }
     }
 
@@ -123,6 +138,15 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mFirstInit) mFirstInit = false;
+        else if (mPresenter != null) mPresenter.getAllVehicles();
+
+    }
+
+    @Override
     public void textNoticeInfoError(String message) {
         setSimpleDataResult(null);
         ToastUtils.toastShort(message);
@@ -130,8 +154,6 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
 
     @Override
     public void textNoticeInfoSucceed(HomeCarResult result) {
-        List<UserCarInfoBean> userCarInfoBeen = result.getData();
-        mCarListAdapter.setDataList(userCarInfoBeen);
     }
 
     /**
@@ -139,20 +161,35 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
      */
     @Override
     public void addVehicleLicenseError(String message) {
+        errorListData(message);
+    }
+
+    protected void errorListData(String message) {
+        setSimpleDataResult(null);
         ToastUtils.toastShort(message);
-        dismissLoadingDialog();
+
+        ManageCarActivity activity = (ManageCarActivity) getActivity();
+        activity.isAddCarTitle(3);
     }
 
     @Override
     public void allVehiclesError(String message) {
-        ToastUtils.toastShort(message);
-        dismissLoadingDialog();
+        errorListData(message);
     }
 
     @Override
-    public void addVehicleLicenseSucceed(VehicleLicenseResult data) {
-        List<VehicleLicenseBean> licenseBeanList = data.getData();
+    public void addVehicleLicenseSucceed(List<VehicleLicenseBean> licenseBeanList) {
+        mCarListAdapter.setDataList(licenseBeanList);
         setSimpleDataResult(licenseBeanList);
+
+        int countCar = 0;
+        for (VehicleLicenseBean bean : licenseBeanList) {
+            if (bean.getIsPayable() >= 0) {
+                countCar = countCar + 1;
+            }
+        }
+        ManageCarActivity activity = (ManageCarActivity) getActivity();
+        activity.isAddCarTitle(countCar);
     }
 
     @Override

@@ -10,11 +10,13 @@ import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCar;
 import com.zantong.mobilecttx.car.bean.PayCarBean;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
+import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseResult;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
-import com.zantong.mobilecttx.home.bean.HomeCarResult;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.IManageCarFtyContract;
+import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
@@ -31,6 +33,7 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
@@ -114,7 +117,6 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
 
                     @Override
                     public void doNext(UserCarsResult result) {
-
                     }
                 });
         mSubscriptions.add(subscription);
@@ -209,7 +211,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
 
                     @Override
                     public void doNext(List<BindCarDTO> result) {
-                        if (result != null && !result.isEmpty()) addVehicleLicense(result);
+                        if (result != null && !result.isEmpty()) addOrUpdateVehicleLicense(result);
                     }
                 });
         mSubscriptions.add(subscription);
@@ -236,6 +238,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     bindCarDTO.setUsrnum(mRepository.getDefaultRASUserID());
                     bindCarDTO.setIsPay(!TextUtils.isEmpty(userCarInfoBean.getIspaycar())
                             ? Integer.valueOf(userCarInfoBean.getIspaycar()) : 0);
+                    bindCarDTO.setIssueDate(userCarInfoBean.getInspectdate());
 
                     bindCarDTOList.add(bindCarDTO);
                 }
@@ -398,11 +401,11 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
     }
 
     /**
-     * 全部车辆上传
+     * 19.同步银行车辆
      */
     @Override
-    public void addVehicleLicense(List<BindCarDTO> result) {
-        Subscription subscription = mRepository.addVehicleLicense(result)
+    public void addOrUpdateVehicleLicense(List<BindCarDTO> result) {
+        Subscription subscription = mRepository.addOrUpdateVehicleLicense(result)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<VehicleLicenseResult>() {
@@ -419,15 +422,114 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     @Override
                     public void doNext(VehicleLicenseResult result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.addVehicleLicenseSucceed(result);
+                            if (result.getData().isEmpty())
+                                mAtyView.addVehicleLicenseError("车辆数据为空，请添加车辆");
+                            else
+                                sortCarListData(result);
                         } else {
                             mAtyView.addVehicleLicenseError(result != null
                                     ? result.getResponseDesc()
-                                    : "未知错误(VehicleLicense)");
+                                    : "未知错误(N19)");
                         }
                     }
                 });
         mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 数据分开处理
+     */
+    public void sortCarListData(VehicleLicenseResult result) {
+        List<VehicleLicenseBean> resultData = result.getData();
+        Observable<List<VehicleLicenseBean>> isPay = Observable.from(resultData)
+                .filter(new Func1<VehicleLicenseBean, Boolean>() {
+                    @Override
+                    public Boolean call(VehicleLicenseBean vehicleLicenseBean) {
+                        return null != vehicleLicenseBean;
+                    }
+                })
+                .filter(new Func1<VehicleLicenseBean, Boolean>() {
+                    @Override
+                    public Boolean call(VehicleLicenseBean vehicleLicenseBean) {
+                        return vehicleLicenseBean.getIsPayable() == 1;
+                    }
+                })
+                .toList();
+
+        Observable<List<VehicleLicenseBean>> unPay = Observable.from(resultData)
+                .filter(new Func1<VehicleLicenseBean, Boolean>() {
+                    @Override
+                    public Boolean call(VehicleLicenseBean vehicleLicenseBean) {
+                        return null != vehicleLicenseBean;
+                    }
+                })
+                .filter(new Func1<VehicleLicenseBean, Boolean>() {
+                    @Override
+                    public Boolean call(VehicleLicenseBean vehicleLicenseBean) {
+                        return vehicleLicenseBean.getIsPayable() == 0;
+                    }
+                })
+                .toList();
+
+        Subscription subscription = Observable.zip(isPay, unPay,
+                new Func2<List<VehicleLicenseBean>, List<VehicleLicenseBean>, List<VehicleLicenseBean>>() {
+                    @Override
+                    public List<VehicleLicenseBean> call(
+                            List<VehicleLicenseBean> beanList, List<VehicleLicenseBean> licenseBeanList) {
+
+                        List<VehicleLicenseBean> zipFunction = new ArrayList<>();
+                        int payCarCount = 0;
+                        if (beanList != null && !beanList.isEmpty()) {
+                            VehicleLicenseBean vehicleLicenseBean = new VehicleLicenseBean(-1);
+                            zipFunction.add(vehicleLicenseBean);
+                            zipFunction.addAll(beanList);
+
+                            toServerCar(beanList);
+                            payCarCount = beanList.size();
+                        }
+                        int unPayCarCount = 0;
+                        if (licenseBeanList != null && !licenseBeanList.isEmpty()) {
+                            VehicleLicenseBean vehicleLicenseBean = new VehicleLicenseBean(-2);
+                            zipFunction.add(vehicleLicenseBean);
+                            zipFunction.addAll(licenseBeanList);
+
+                            toServerCar(licenseBeanList);
+                            unPayCarCount = licenseBeanList.size();
+                        }
+
+                        PublicData.getInstance().mCarNum = payCarCount + unPayCarCount;
+
+                        return zipFunction;
+                    }
+                })
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        new Action1<List<VehicleLicenseBean>>() {
+                            @Override
+                            public void call(List<VehicleLicenseBean> result) {
+                                mAtyView.addVehicleLicenseSucceed(result);
+                            }
+                        },
+                        new Action1<Throwable>() {
+                            @Override
+                            public void call(Throwable throwable) {
+                                mAtyView.addVehicleLicenseError(throwable.getMessage());
+                            }
+                        });
+        mSubscriptions.add(subscription);
+    }
+
+    private void toServerCar(List<VehicleLicenseBean> licenseBeen) {
+
+        List<UserCarInfoBean> beanArrayList = new ArrayList<>();
+        for (VehicleLicenseBean bean : licenseBeen) {
+            UserCarInfoBean userCarInfoBean = new UserCarInfoBean();
+            userCarInfoBean.setCarnum(Des3.decode(bean.getPlateNo()));
+            userCarInfoBean.setEnginenum(Des3.decode(bean.getEngineNo()));
+            beanArrayList.add(userCarInfoBean);
+        }
+        PublicData.getInstance().mServerCars.addAll(beanArrayList);
     }
 
 }

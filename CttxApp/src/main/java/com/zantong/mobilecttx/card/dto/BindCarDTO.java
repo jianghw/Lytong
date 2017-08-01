@@ -34,9 +34,11 @@ public class BindCarDTO {
     private String overallDimesion;//外廓尺寸
     private String memo;//备注
     private String inspectionRecord;//检验记录
+
     private String brandId;//品牌_id
     private String seriesId;//车系_id
     private String carModelId;//车型_id
+
     private String gasolineType;//汽油类型
     private String engineOilType;//机油类型
     private String usrnum;//用户ID

@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.contract;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import com.zantong.mobilecttx.car.bean.VehicleLicenseResult;
+import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
 
@@ -25,11 +25,13 @@ public interface IManageCarFtyContract {
 
         void addVehicleLicenseError(String message);
 
-        void addVehicleLicenseSucceed(VehicleLicenseResult data);
+        void addVehicleLicenseSucceed(List<VehicleLicenseBean> data);
+
         /**
          * 显示loading框
          */
         void showLoadingDialog();
+
         /**
          * 隐藏loading框
          */
@@ -54,7 +56,7 @@ public interface IManageCarFtyContract {
 
         void getAllVehicles();
 
-        void addVehicleLicense(List<BindCarDTO> result);
+        void addOrUpdateVehicleLicense(List<BindCarDTO> result);
 
     }
 

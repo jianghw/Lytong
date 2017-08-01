@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.weizhang.adapter;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.zantong.mobilecttx.weizhang.bean.RspInfoBean;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobilecttx.widght.UISwitchButton;
 
+import cn.qqtheme.framework.util.CustomDialog;
 import cn.qqtheme.framework.util.DateTools;
 
 /**
@@ -25,6 +27,7 @@ public class LicenseDetailAdapter extends BaseAdapter<RspInfoBean.ViolationInfoB
 
     private ItemClickListener mClickListener;
     private LicenseFileNumDTO mLicenseFileNumDTO;
+    private Context mAdapterContext;
 
     @Override
     public void showData(BaseRecyclerViewHolder viewHolder, int position, RspInfoBean.ViolationInfoBean violationInfoBean) {
@@ -55,7 +58,8 @@ public class LicenseDetailAdapter extends BaseAdapter<RspInfoBean.ViolationInfoB
         holder.mTvTitlePeriod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {//小问号
-
+                String scoringCycle = mAdapterContext.getResources().getString(R.string.tv_custom_scoring_cycle);
+                CustomDialog.customContentDialog(mAdapterContext,"计分统计周期",scoringCycle);
             }
         });
 
@@ -86,7 +90,8 @@ public class LicenseDetailAdapter extends BaseAdapter<RspInfoBean.ViolationInfoB
 
     @Override
     public View createView(ViewGroup viewGroup, int i) {
-        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        mAdapterContext=viewGroup.getContext();
+        LayoutInflater inflater = LayoutInflater.from(mAdapterContext);
         return inflater.inflate(R.layout.recycle_list_item_license_det, viewGroup, false);
     }
 

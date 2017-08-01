@@ -31,6 +31,27 @@ public interface ICttxService {
     @POST("cttx/bindingVehicle")
     Observable<BaseResult> commitCarInfoToNewServer(@Body BindCarDTO bindCarDTO);
 
+    /**
+     * 19.同步银行车辆
+     */
+    @POST("cttx/addOrUpdateVehiclelicense")
+    Observable<VehicleLicenseResult> addOrUpdateVehicleLicense(@Body List<BindCarDTO> dtoList);
+
+    /**
+     * 16.新增车辆
+     */
     @POST("cttx/addVehiclelicense")
-    Observable<VehicleLicenseResult> addVehicleLicense(@Body List<BindCarDTO> dtoList);
+    Observable<BaseResult> addVehicleLicense(@Body BindCarDTO bindCarDTO);
+
+    /**
+     * 18.删除车辆
+     */
+    @POST("cttx/removeVehiclelicense")
+    Observable<BaseResult> removeVehicleLicense(@Body BindCarDTO bindCarDTO);
+
+    /**
+     * 17.编辑车辆
+     */
+    @POST("cttx/updateVehiclelicense")
+    Observable<BaseResult> updateVehicleLicense(@Body BindCarDTO bindCarDTO);
 }

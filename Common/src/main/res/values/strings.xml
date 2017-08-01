@@ -122,6 +122,11 @@
        4.畅通卡车友会公众号内回复“驾校返现”按照提示信息即可完成提现流程;\n
        5.自发起提现之日起2-3个工作日内到账;\n
     </string>
+    <string name="tv_custom_scoring_cycle">
+       为了保证您的车辆违法计分准确，\n
+       可在核算车辆违法指定周期之外的，\n
+       计分统计自助选择开启或关闭。\n
+    </string>
 
     <string name="tv_bind_rules">
         我已阅读并同意<font color='#0f536f'>《用户隐私保密说明》</font>&#160;

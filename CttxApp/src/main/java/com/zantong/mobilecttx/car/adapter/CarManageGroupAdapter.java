@@ -77,6 +77,7 @@ public class CarManageGroupAdapter extends BaseAdapter<CarInfoDTO> {
     public View createView(ViewGroup viewGroup, int viewType) {
         mContext = viewGroup.getContext();
         LayoutInflater inflate = LayoutInflater.from(mContext);
+
         if (viewType == TYPE_TITLE) {
             return inflate.inflate(R.layout.item_manage_vehicles_group, viewGroup, false);
         } else {

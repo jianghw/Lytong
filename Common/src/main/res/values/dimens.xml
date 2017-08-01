@@ -125,10 +125,12 @@
     <dimen name="ds_540">180dp</dimen>
     <dimen name="ds_582">194dp</dimen>
     <dimen name="ds_600">200dp</dimen>
+    <dimen name="ds_720">240dp</dimen>
     <dimen name="ds_800">266.67dp</dimen>
     <dimen name="ds_900">280dp</dimen>
     <dimen name="ds_960">320dp</dimen>
-    <dimen name="ds_720">240dp</dimen>
+    <dimen name="ds_1080">360dp</dimen>
+    <dimen name="ds_1440">480dp</dimen>
 
     <dimen name="fs_10sp">10sp</dimen>
     <dimen name="fs_12sp">12sp</dimen>

@@ -115,16 +115,16 @@ public class CustomDialog {
     }
 
     /**
-     * 显示提示文本
+     * 默认提示信息
      */
-    public static void customContentDialog(Context context, String content) {
+    public static void createCustomDialogHint(Context context) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.CustomImageDialog);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.custom_dialog_popup_area, null);
-
+        View layout = inflater.inflate(R.layout.custom_dialog_image_content, null);
         ImageView imageClose = (ImageView) layout.findViewById(R.id.img_close);
+        TextView tvTitle = (TextView) layout.findViewById(R.id.tv_title);
+        TextView tvContent = (TextView) layout.findViewById(R.id.tv_content);
         dialog.setView(layout);
-
         final AlertDialog alertDialog = dialog.create();
         alertDialog.show();
         imageClose.setOnClickListener(new View.OnClickListener() {
@@ -133,5 +133,29 @@ public class CustomDialog {
                 alertDialog.dismiss();
             }
         });
+    }
+
+    /**
+     * 显示提示文本
+     */
+    public static void customContentDialog(Context context, String title, String content) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(context, R.style.CustomImageDialog);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.custom_dialog_image_content, null);
+        ImageView imageClose = (ImageView) layout.findViewById(R.id.img_close);
+        TextView tvTitle = (TextView) layout.findViewById(R.id.tv_title);
+        TextView tvContent = (TextView) layout.findViewById(R.id.tv_content);
+        dialog.setView(layout);
+        final AlertDialog alertDialog = dialog.create();
+        alertDialog.show();
+        imageClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+        tvTitle.setText(title);
+        tvContent.setText(content);
     }
 }
