@@ -138,11 +138,11 @@
                 tools:text="4545"/>
         </RelativeLayout>
 
-        <TextView
+       <!-- <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_30"
             android:background="@color/colorBgGray_f8"/>
-        <!--优惠劵-->
+        &lt;!&ndash;优惠劵&ndash;&gt;
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_135"
@@ -184,7 +184,7 @@
                 android:textColor="@color/colorTvBlack_4d"
                 android:textSize="@dimen/fs_16sp"
                 tools:text="4545"/>
-        </RelativeLayout>
+        </RelativeLayout>-->
 
         <TextView
             android:layout_width="match_parent"

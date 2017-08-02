@@ -14,6 +14,7 @@ import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.car.adapter.ManageCarListAdapter;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
 import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.IManageCarFtyContract;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.presenter.car.ManageCarFtyPresenter;
@@ -143,13 +144,10 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
 
         if (mFirstInit) mFirstInit = false;
         else if (mPresenter != null) mPresenter.getAllVehicles();
-
     }
 
     @Override
     public void textNoticeInfoError(String message) {
-        setSimpleDataResult(null);
-        ToastUtils.toastShort(message);
     }
 
     @Override
@@ -182,14 +180,9 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
         mCarListAdapter.setDataList(licenseBeanList);
         setSimpleDataResult(licenseBeanList);
 
-        int countCar = 0;
-        for (VehicleLicenseBean bean : licenseBeanList) {
-            if (bean.getIsPayable() >= 0) {
-                countCar = countCar + 1;
-            }
-        }
         ManageCarActivity activity = (ManageCarActivity) getActivity();
-        activity.isAddCarTitle(countCar);
+        PublicData.getInstance().mCarNum = PublicData.getInstance().mServerCars.size();
+        activity.isAddCarTitle(PublicData.getInstance().mCarNum);
     }
 
     @Override

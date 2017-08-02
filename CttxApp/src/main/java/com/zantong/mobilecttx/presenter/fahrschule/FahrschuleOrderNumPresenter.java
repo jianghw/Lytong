@@ -48,6 +48,7 @@ public class FahrschuleOrderNumPresenter
 
     /**
      * 54.充值接口  加油旧接口 不用
+     * @deprecated
      */
     @Override
     public void onPayOrderByCoupon(String orderId, String orderPrice, String payType) {
@@ -117,7 +118,7 @@ public class FahrschuleOrderNumPresenter
                             mAtyView.onPayOrderByCouponSucceed(result);
                         } else {
                             mAtyView.onPayOrderByCouponError(result != null
-                                    ? result.getResponseDesc() : "未知错误(54)");
+                                    ? result.getResponseDesc() : "未知错误(N5)");
                         }
                     }
                 });

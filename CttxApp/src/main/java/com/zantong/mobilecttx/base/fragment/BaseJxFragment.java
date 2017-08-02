@@ -119,7 +119,7 @@ public abstract class BaseJxFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        LogUtils.d("onActivityCreated=="+this.getClass().getSimpleName());
         onFirstUserVisible();
     }
 
@@ -143,6 +143,7 @@ public abstract class BaseJxFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        LogUtils.d("onDestroyView=="+this.getClass().getSimpleName());
     }
 
     @Override
@@ -167,7 +168,7 @@ public abstract class BaseJxFragment extends Fragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        LogUtils.e("onHiddenChanged==" + this.getClass().getSimpleName() + "==" + hidden);
+        LogUtils.d("onHiddenChanged==" + this.getClass().getSimpleName() + "==" + hidden);
     }
 
     /**

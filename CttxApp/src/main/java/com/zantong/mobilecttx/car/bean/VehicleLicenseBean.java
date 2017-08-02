@@ -12,19 +12,20 @@ import android.os.Parcelable;
 
 public class VehicleLicenseBean implements Parcelable {
 
+
     /**
-     * id : 1213
-     * plateNo : BPw8Vh+nG4BtLS5GmcT8gg==
-     * fileNum : 310010152836
+     * id : 1171
+     * plateNo : GRL2Q7kwZRMUVimxk9q7zg==
+     * fileNum : null
      * vehicleType : 02
-     * usrnum : 00090018811095999
+     * usrnum : 00022515400010001
      * address : null
      * useCharacter : null
      * carModel : null
-     * vin :
-     * engineNo : akFQ+XVv048=
+     * vin : null
+     * engineNo : vjMiJjX2HFA=
      * registerDate : null
-     * issueDate : null
+     * issueDate : 
      * approvedPeople : null
      * totalMass : null
      * tractionMass : null
@@ -39,9 +40,11 @@ public class VehicleLicenseBean implements Parcelable {
      * gasolineType : null
      * engineOilType : null
      * ownerName : null
-     * userId : 5272
+     * userId : 5419
      * image : null
      * isPayable : 0
+     * brand : null
+     * series : null
      */
 
     private int id;
@@ -73,11 +76,9 @@ public class VehicleLicenseBean implements Parcelable {
     private int userId;
     private String image;
     private int isPayable;
+    private String brand;
+    private String series;
 
-    /**
-     * 自定义 -1 可缴费 -2 不可缴费 title
-     * @param isPayable
-     */
     public VehicleLicenseBean(int isPayable) {
         this.isPayable = isPayable;
     }
@@ -314,6 +315,22 @@ public class VehicleLicenseBean implements Parcelable {
         this.isPayable = isPayable;
     }
 
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getSeries() {
+        return series;
+    }
+
+    public void setSeries(String series) {
+        this.series = series;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -350,6 +367,8 @@ public class VehicleLicenseBean implements Parcelable {
         dest.writeInt(this.userId);
         dest.writeString(this.image);
         dest.writeInt(this.isPayable);
+        dest.writeString(this.brand);
+        dest.writeString(this.series);
     }
 
     protected VehicleLicenseBean(Parcel in) {
@@ -382,6 +401,8 @@ public class VehicleLicenseBean implements Parcelable {
         this.userId = in.readInt();
         this.image = in.readString();
         this.isPayable = in.readInt();
+        this.brand = in.readString();
+        this.series = in.readString();
     }
 
     public static final Parcelable.Creator<VehicleLicenseBean> CREATOR = new Parcelable.Creator<VehicleLicenseBean>() {

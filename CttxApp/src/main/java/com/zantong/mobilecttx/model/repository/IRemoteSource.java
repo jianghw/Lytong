@@ -15,6 +15,9 @@ import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
 import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
+import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
+import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
+import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.DriverCoachResult;
@@ -22,13 +25,13 @@ import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
+import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
 import com.zantong.mobilecttx.order.bean.OrderListResult;
-import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
-import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.user.dto.MegDTO;
@@ -256,4 +259,16 @@ public interface IRemoteSource {
      * 17.编辑车辆
      */
     Observable<BaseResult> updateVehicleLicense(BindCarDTO bindCarDTO);
+
+    /**
+     * 22.获取商品
+     */
+    Observable<SubjectGoodsResult> getGoods(String type);
+
+    Observable<SparringGoodsResult> getGoodsFive(String type);
+
+    /**
+     * 20.新手陪练获取服务地区
+     */
+    Observable<SparringAreaResult> getServiceArea();
 }

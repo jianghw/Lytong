@@ -4,8 +4,14 @@ package com.zantong.mobilecttx.presenter.fahrschule;
 import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectIntensifyContract;
+import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
+import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -40,5 +46,42 @@ public class SubjectIntensifyPresenter
         mSubscriptions.clear();
     }
 
+    /**
+     * 22.获取商品
+     */
+    @Override
+    public void getGoods() {
+        Subscription subscription = mRepository.getGoods("4")
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mAtyView.showLoadingDialog();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<SubjectGoodsResult>() {
+                    @Override
+                    public void doCompleted() {
+                        mAtyView.dismissLoadingDialog();
+                    }
 
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.getGoodsError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(SubjectGoodsResult result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.getGoodsSucceed(result);
+                        } else {
+                            mAtyView.getGoodsError(result != null
+                                    ? result.getResponseDesc() : "未知错误(N22)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
 }

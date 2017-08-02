@@ -260,6 +260,28 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         setTvData(mParam1.getIssueDate());
 //是否可缴费
         mBindCarDTO.setIsPay(mParam1.getIsPayable());
+//品牌
+        String brand = mParam1.getBrand();
+        if (!TextUtils.isEmpty(brand)) {
+            mTvBrand.setText(brand);
+            carBrandId = Integer.valueOf(mParam1.getBrandId());
+            mBindCarDTO.setBrandId(mParam1.getBrandId());
+            initLayEnable(true, mLayoutCarSeries);
+        }
+//车系
+        String series = mParam1.getSeries();
+        if (!TextUtils.isEmpty(series)) {
+            mTvCarSeries.setText(series);
+            carSeriesId = Integer.valueOf(mParam1.getSeriesId());
+            mBindCarDTO.setSeriesId(mParam1.getSeriesId());
+            initLayEnable(true, mLayoutVehicle);
+        }
+//车型
+        String carModel = mParam1.getCarModel();
+        if (!TextUtils.isEmpty(carModel)) {
+            mTvVehicle.setText(carModel);
+            mBindCarDTO.setCarModelId(mParam1.getCarModelId());
+        }
     }
 
     @Override
@@ -463,6 +485,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         }
 
         String carNum = getTvProvince() + plate;
+        initCarInfoDto(carNum, engine, vehicleCode);
         initBindCarDTO(carNum, engine, vehicleCode);
     }
 
@@ -530,6 +553,8 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
     private void commitCarInfoToServer() {
         if (mPresenter != null) mPresenter.addVehicleLicense();
+
+        doQueryVehicle();
     }
 
     private void doQueryVehicle() {
@@ -761,6 +786,11 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
                 mBindCarDTO.setBrandId(String.valueOf(carBrandId));
 
                 initLayEnable(true, mLayoutCarSeries);
+//滞空处理
+                mTvCarSeries.setText("");
+                mBindCarDTO.setSeriesId("");
+                mTvVehicle.setText("");
+                mBindCarDTO.setCarModelId("");
             }
         }
 //车系
@@ -774,6 +804,9 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
                 mBindCarDTO.setSeriesId(String.valueOf(carSeriesId));
 
                 initLayEnable(true, mLayoutVehicle);
+//滞空处理
+                mTvVehicle.setText("");
+                mBindCarDTO.setCarModelId("");
             }
         }
 //车型

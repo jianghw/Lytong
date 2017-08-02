@@ -6,7 +6,7 @@ import android.widget.Toast;
 /**
  * 吐司显示
  */
-public class ToastUtils {
+public final class ToastUtils {
 
     public static void showShort(Context context, String message) {
         initToast(context, message, Toast.LENGTH_SHORT);

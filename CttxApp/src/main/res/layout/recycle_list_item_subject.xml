@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/item_subject"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
+        android:layout_margin="@dimen/ds_18"
+        android:gravity="center"
+        android:textColor="@color/colorTvBlack_b3"
+        android:textSize="@dimen/fs_18sp"
+        tools:text="自动挡（工作日）"/>
+</RelativeLayout>

@@ -4,8 +4,15 @@ package com.zantong.mobilecttx.presenter.fahrschule;
 import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.contract.fahrschule.ISparringSubscribeContract;
+import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
+import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
+import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -40,5 +47,81 @@ public class SparringSubscribePresenter
         mSubscriptions.clear();
     }
 
+    /**
+     * 20.新手陪练获取服务地区
+     */
+    @Override
+    public void getServiceArea() {
+        Subscription subscription = mRepository.getServiceArea()
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mAtyView.showLoadingDialog();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<SparringAreaResult>() {
+                    @Override
+                    public void doCompleted() {
+                        mAtyView.dismissLoadingDialog();
+                    }
 
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.serviceAreaError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(SparringAreaResult result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.serviceAreaSucceed(result);
+                        } else {
+                            mAtyView.serviceAreaError(result != null
+                                    ? result.getResponseDesc() : "未知错误(N20)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 22.获取商品
+     */
+    @Override
+    public void getGoods() {
+        Subscription subscription = mRepository.getGoodsFive("5")
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mAtyView.showLoadingDialog();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<SparringGoodsResult>() {
+                    @Override
+                    public void doCompleted() {
+                        mAtyView.dismissLoadingDialog();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.goodsError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(SparringGoodsResult result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.goodsSucceed(result);
+                        } else {
+                            mAtyView.goodsError(result != null
+                                    ? result.getResponseDesc() : "未知错误(N22)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
 }

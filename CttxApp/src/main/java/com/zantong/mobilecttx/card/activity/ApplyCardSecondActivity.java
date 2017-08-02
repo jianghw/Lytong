@@ -243,7 +243,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             applyCTCardDTO.setDtofbrth(mYear + "-" + mMonth + "-" + mDay);
             mUserBirth.setRightText(mYear + "-" + mMonth + "-" + mDay);
         } else if (idCard.length() == 18) {
-            int temp = Integer.valueOf(idCard.substring(16, 17))  % 2;
+            int temp = Integer.valueOf(idCard.substring(16, 17)) % 2;
             applyCTCardDTO.setGnd(temp == 0 ? "2" : "1");
             mYear = idCard.substring(6, 10);
             mMonth = idCard.substring(10, 12);
@@ -690,7 +690,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         String userPhone = mUserPhone.getContentText();
         if (checkIsEmpty(userPhone, "手机号不可为空")) return;
         if (!RegexUtils.isMobileExact(userPhone)) {
-            ToastUtils.showShort(getApplicationContext(), "请确保手机号真实准确");
+            ToastUtils.toastShort("请确保手机号真实准确");
             return;
         }
         applyCTCardDTO.setPhoenum(RSAUtils.strByEncryption(userPhone, true));
@@ -706,7 +706,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         String tel = mTel.getContentText();
         if (checkIsEmpty(tel, "固定电话不可为空")) return;
         if (tel.length() != 8) {
-            ToastUtils.showShort(getApplicationContext(), "请确保固定座机8位有效");
+            ToastUtils.toastShort("请确保固定座机8位有效");
             return;
         }
         applyCTCardDTO.setHmphoe(tel);
@@ -789,7 +789,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      */
     private boolean checkIsEmpty(String msg, String toast) {
         if (TextUtils.isEmpty(msg) || msg.length() <= 0) {
-            ToastUtils.showShort(getApplicationContext(), toast);
+            ToastUtils.toastShort(toast);
             return true;
         }
         return false;

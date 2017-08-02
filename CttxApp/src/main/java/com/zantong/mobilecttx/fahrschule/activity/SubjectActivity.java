@@ -5,13 +5,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.fahrschule.fragment.FahrschuleApplyFragment;
-import com.zantong.mobilecttx.fahrschule.fragment.FahrschuleApplySucceedFragment;
-import com.zantong.mobilecttx.fahrschule.fragment.FahrschuleOrderNumFragment;
+import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
+import com.zantong.mobilecttx.fahrschule.fragment.SubjectCommitFragment;
+import com.zantong.mobilecttx.fahrschule.fragment.SubjectIntensifyFragment;
+import com.zantong.mobilecttx.fahrschule.fragment.SubjectOrderFragment;
+import com.zantong.mobilecttx.fahrschule.fragment.SubjectSucceedFragment;
 import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
 
 import cn.qqtheme.framework.global.GlobalConstant;
@@ -27,11 +28,10 @@ public class SubjectActivity extends BaseJxActivity {
     /**
      * 三个页面
      */
-    private FahrschuleApplyFragment mFahrschuleApplyFragment = null;
-    private FahrschuleOrderNumFragment mFahrschuleOrderNumFragment = null;
-    private FahrschuleApplySucceedFragment mFahrschuleApplySucceedFragment = null;
-    private ImageView mImgBack;
-    private ImageView mImgHome;
+    private SubjectIntensifyFragment mSubjectIntensifyFragment = null;
+    private SubjectCommitFragment mSubjectCommitFragment = null;
+    private SubjectOrderFragment mSubjectOrderFragment = null;
+    private SubjectSucceedFragment mSubjectSucceedFragment = null;
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
@@ -55,32 +55,51 @@ public class SubjectActivity extends BaseJxActivity {
 
     @Override
     protected void DestroyViewAndThing() {
-        mFahrschuleApplyFragment = null;
-        mFahrschuleOrderNumFragment = null;
-        mFahrschuleApplySucceedFragment = null;
+        mSubjectIntensifyFragment = null;
+        mSubjectCommitFragment = null;
+        mSubjectOrderFragment = null;
+        mSubjectSucceedFragment = null;
     }
 
     private void initFragment(int position) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position) {
-            case 0://套餐选择页面
-                if (mFahrschuleApplyFragment == null) {
-                    mFahrschuleApplyFragment = FahrschuleApplyFragment.newInstance();
-                    FragmentUtils.replaceFragment(fragmentManager, mFahrschuleApplyFragment, R.id.content, true);
+            case 0://科目强化选择页面
+                if (mSubjectIntensifyFragment == null) {
+                    mSubjectIntensifyFragment = SubjectIntensifyFragment.newInstance();
                 }
+                FragmentUtils.addFragment(fragmentManager, mSubjectIntensifyFragment, R.id.lay_base_frame, false, true);
+                mSubjectIntensifyFragment.setSwitcherListener(new ISubjectSwitcherListener() {
+                    @Override
+                    public void setCurPosition(int position) {
+                        initFragment(position);
+                    }
+                });
 
                 break;
-            case 1://驾校订单页面
-                if (mFahrschuleOrderNumFragment == null) {
-                    mFahrschuleOrderNumFragment = FahrschuleOrderNumFragment.newInstance();
-                    FragmentUtils.replaceFragment(fragmentManager, mFahrschuleOrderNumFragment, R.id.content, true);
+            case 1://科目强化生成订单
+                if (mSubjectCommitFragment == null) {
+                    mSubjectCommitFragment = SubjectCommitFragment.newInstance();
                 }
+                FragmentUtils.addFragment(fragmentManager, mSubjectCommitFragment, R.id.lay_base_frame, false, true);
+                mSubjectCommitFragment.setSwitcherListener(new ISubjectSwitcherListener() {
+                    @Override
+                    public void setCurPosition(int position) {
+                        initFragment(position);
+                    }
+                });
                 break;
-            case 2:
-                if (mFahrschuleApplySucceedFragment == null) {
-                    mFahrschuleApplySucceedFragment = FahrschuleApplySucceedFragment.newInstance();
-                    FragmentUtils.replaceFragment(fragmentManager, mFahrschuleApplySucceedFragment, R.id.content, true);
+            case 2://科目强化去支付页面
+                if (mSubjectOrderFragment == null) {
+                    mSubjectOrderFragment = SubjectOrderFragment.newInstance();
                 }
+                FragmentUtils.addFragment(fragmentManager, mSubjectOrderFragment, R.id.lay_base_frame, false, true);
+                break;
+            case 3://科目强化去支付页面
+                if (mSubjectSucceedFragment == null) {
+                    mSubjectSucceedFragment = SubjectSucceedFragment.newInstance();
+                }
+                FragmentUtils.addFragment(fragmentManager, mSubjectSucceedFragment, R.id.lay_base_frame, false, true);
                 break;
             default:
                 break;
@@ -95,7 +114,7 @@ public class SubjectActivity extends BaseJxActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
                 && resultCode == GlobalConstant.resultCode.web_order_id_succeed) {
-            mCurPosition = 2;
+            mCurPosition = 3;
             initFragment(mCurPosition);
         } else if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
                 && resultCode == GlobalConstant.resultCode.web_order_id_error && data != null) {
@@ -112,7 +131,7 @@ public class SubjectActivity extends BaseJxActivity {
      * 回退监听功能
      */
     protected void backClickListener() {
-        if (mCurPosition == 2)
+        if (mCurPosition == 3)
             finish();
         else
             closeFragment();
@@ -128,7 +147,7 @@ public class SubjectActivity extends BaseJxActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mCurPosition == 2)
+            if (mCurPosition == 3)
                 finish();
             else
                 closeFragment();
@@ -136,7 +155,4 @@ public class SubjectActivity extends BaseJxActivity {
         return false;
     }
 
-    public interface SwitcherListener {
-        void setCurPosition(int position);
-    }
 }

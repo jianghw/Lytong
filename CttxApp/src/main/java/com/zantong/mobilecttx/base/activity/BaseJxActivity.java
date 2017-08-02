@@ -165,12 +165,15 @@ public abstract class BaseJxActivity extends AppCompatActivity {
     }
 
     protected void setImageRightVisible(int imgRed) {
+        if (imgRed < 0 && mImgHome != null) {
+            mImgHome.setVisibility(View.GONE);
+            return;
+        }
+
         if (mImgHome != null && mImgHome.getVisibility() != View.VISIBLE) {
             mImgHome.setVisibility(View.VISIBLE);
             mImgHome.setImageResource(imgRed != 0 ? imgRed : R.mipmap.btn_homepage);
         }
-
-        if (imgRed < 0 && mImgHome != null) mImgHome.setVisibility(View.GONE);
 
         if (mTvRight != null && mTvRight.getVisibility() != View.GONE) {
             mTvRight.setVisibility(View.GONE);
@@ -312,7 +315,7 @@ public abstract class BaseJxActivity extends AppCompatActivity {
     public void closeFragment(int count) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragmentManager.getBackStackEntryCount() > count) {
-            fragmentManager.popBackStack();
+            fragmentManager.popBackStackImmediate();
         } else {
             finish();
         }

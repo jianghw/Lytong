@@ -67,13 +67,10 @@ public class CttxEditText extends LinearLayout {
             mContent.setInputType(InputType.TYPE_CLASS_NUMBER);
         } else if (inputType == 2) {//字母或数字
             mContent.setInputType(InputType.TYPE_NUMBER_VARIATION_NORMAL);
-            //            mContent.setKeyListener(DigitsKeyListener.getInstance("1234567890qwertyuiopasdfghjklzxcvbnm"));
         } else if (inputType == 3) {//数字或X（身份证号）
             mContent.setInputType(InputType.TYPE_NUMBER_VARIATION_NORMAL);
-//            mContent.setKeyListener(DigitsKeyListener.getInstance("1234567890Xx"));
         } else if (inputType == 4) {//纯字母
             mContent.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-//            mContent.setKeyListener(DigitsKeyListener.getInstance("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLXCVBNM"));
         }
         //设置限制字符、
         mContent.setFilters(new InputFilter[]{new InputFilter.LengthFilter(typedArray.getInt(R.styleable.CttxEditText_contentlength, 16))});

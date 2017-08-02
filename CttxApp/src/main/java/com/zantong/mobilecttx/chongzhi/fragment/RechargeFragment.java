@@ -49,6 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
 
@@ -262,7 +263,7 @@ public class RechargeFragment extends PullableBaseFragment
 
     @Override
     protected void loadingData() {
-        GridLayoutManager manager = new GridLayoutManager(getContext().getApplicationContext(), 3);
+        GridLayoutManager manager = new GridLayoutManager(ContextUtils.getContext(), 3);
         mXRecyclerView.setLayoutManager(manager);
         mXRecyclerView.setPullRefreshEnabled(false);
         mXRecyclerView.setLoadingMoreEnabled(false);
@@ -653,7 +654,7 @@ public class RechargeFragment extends PullableBaseFragment
     public void onCouponByTypeError(String message) {
         displayCouponState("获取失败,点击加载");
 
-        ToastUtils.showShort(getContext().getApplicationContext(), message);
+        ToastUtils.toastShort(message);
         dismissLoadingDialog();
     }
 

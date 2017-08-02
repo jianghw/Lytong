@@ -428,6 +428,18 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
+        <!-- 活动页面;科目强化-->
+        <activity
+            android:name=".fahrschule.activity.SubjectActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+
+        <!-- 活动页面;陪练预约-->
+        <activity
+            android:name=".fahrschule.activity.SparringActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+
         <!-- ===================分享模块=========================================-->
         <!-- 分享模块页面-->
         <activity

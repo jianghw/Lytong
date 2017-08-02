@@ -429,8 +429,8 @@ public class ConvertUtils {
     /**
      * px转换为sp
      */
-    public static int toSp(Context context, float pxValue) {
-        float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+    public static int toSp(float pxValue) {
+        float fontScale = ContextUtils.getContext().getResources().getDisplayMetrics().scaledDensity;
         int spValue = (int) (pxValue / fontScale + 0.5f);
         LogUtils.v(pxValue + " px == " + spValue + " sp");
         return spValue;

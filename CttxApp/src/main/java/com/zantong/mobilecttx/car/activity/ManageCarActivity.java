@@ -59,7 +59,6 @@ public class ManageCarActivity extends BaseJxActivity {
      */
     protected void imageClickListener() {
         //TODO 确保每次能添加
-
         Act.getInstance().gotoIntent(this, ViolationActivity.class);
     }
 

@@ -14,12 +14,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.qqtheme.framework.R;
 import cn.qqtheme.framework.adapter.PopupCarTypeAdapter;
-import cn.qqtheme.framework.entity.Province;
-import cn.qqtheme.framework.picker.AreaPicker;
+import cn.qqtheme.framework.contract.bean.SparringGoodsBean;
+import cn.qqtheme.framework.contract.custom.IAreaDialogListener;
+import cn.qqtheme.framework.picker.LinkagePicker;
+import cn.qqtheme.framework.picker.SparringAreaPicker;
 import cn.qqtheme.framework.util.ui.DensityUtils;
 
 /**
@@ -34,7 +37,7 @@ public class CustomDialog {
     /**
      * 车辆类型、变速箱 选择器
      */
-    public static void popupBottomCarType(Context context, List<String> aresBeanList) {
+    public static void popupBottomCarType(Context context, List<SparringGoodsBean> aresBeanList) {
         final Dialog dialog = new Dialog(context, R.style.CustomDialog_Popup);
         //填充对话框的布局
         View inflate = LayoutInflater.from(context).inflate(R.layout.custom_dialog_popup_car_type, null);
@@ -53,7 +56,7 @@ public class CustomDialog {
     /**
      * 子控件初始化
      */
-    protected static void initCarTypeView(Context context, List<String> aresBeanList,
+    protected static void initCarTypeView(Context context, List<SparringGoodsBean> aresBeanList,
                                           final Dialog dialog, View inflate) {
         //初始化控件
         TextView tvClose = (TextView) inflate.findViewById(R.id.tv_close);
@@ -87,7 +90,11 @@ public class CustomDialog {
 
             }
         });
-        PopupCarTypeAdapter boxAdapter = new PopupCarTypeAdapter(context, aresBeanList);
+        List<SparringGoodsBean> speedList = new ArrayList<>();
+        speedList.add(new SparringGoodsBean("手动挡", true));
+        speedList.add(new SparringGoodsBean("自动挡", false));
+
+        PopupCarTypeAdapter boxAdapter = new PopupCarTypeAdapter(context, speedList);
         lvGearBox.setAdapter(boxAdapter);
     }
 
@@ -104,12 +111,20 @@ public class CustomDialog {
     }
 
     /**
-     * 车辆类型、变速箱 选择器
+     * 地区选择
      */
-    public static void popupBottomArea(Activity context, List<Province> aresBeanList) {
-        AreaPicker areaPicker = new AreaPicker(context);
-        areaPicker.initListData(aresBeanList);
-        areaPicker.setOffset(2);
+    public static void popupBottomArea(Activity context, ArrayList<String> firstList,
+                                       ArrayList<ArrayList<String>> secondList,
+                                       final IAreaDialogListener dialogListener) {
+
+        SparringAreaPicker areaPicker = new SparringAreaPicker(context, firstList, secondList);
+        areaPicker.setOnLinkageListener(new LinkagePicker.OnLinkageListener() {
+            @Override
+            public void onPicked(String first, String second, String third) {
+                if (dialogListener != null) dialogListener.setCurPosition(second);
+            }
+        });
+        areaPicker.setOffset(1);
         areaPicker.setHalfScreen(true);
         areaPicker.show();
     }

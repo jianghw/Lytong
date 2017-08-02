@@ -35,6 +35,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;
+import cn.qqtheme.framework.util.ViewUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -71,6 +72,14 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     @Override
     public void initView() {
         setTitleText("申办畅通卡");
+
+        noSpacesText();
+    }
+
+    protected void noSpacesText() {
+        ViewUtils.editTextInputSpace(mDriverFileNum);
+        ViewUtils.editTextInputSpace(mName);
+        ViewUtils.editTextInputSpace(mIdCard);
     }
 
     @Override
@@ -237,13 +246,13 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
                     checkApplyCardRecord();
                 } else {
                     hideDialogLoading();
-                    ToastUtils.showShort(getApplicationContext(), "七天之内不能重复办卡");
+                    ToastUtils.toastShort("七天之内不能重复办卡");
                 }
             }
 
             @Override
             public void onError(String errorCode, String msg) {
-                ToastUtils.showShort(getApplicationContext(), "请求失败，请再次点击");
+                ToastUtils.toastShort("请求失败，请再次点击");
             }
         });
     }

@@ -96,7 +96,6 @@ public class FahrschuleBrowserPresenter
                 .subscribe(new BaseSubscriber<OrderDetailResult>() {
                     @Override
                     public void doCompleted() {
-
                     }
 
                     @Override

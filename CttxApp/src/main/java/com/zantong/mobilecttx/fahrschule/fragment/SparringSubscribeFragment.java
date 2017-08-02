@@ -1,26 +1,32 @@
 package com.zantong.mobilecttx.fahrschule.fragment;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
-import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.contract.fahrschule.ISparringSubscribeContract;
+import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
+import com.zantong.mobilecttx.fahrschule.bean.SparringAreaBean;
+import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
+import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
+import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
 import com.zantong.mobilecttx.presenter.fahrschule.SparringSubscribePresenter;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 
+import cn.qqtheme.framework.contract.bean.SparringGoodsBean;
+import cn.qqtheme.framework.contract.custom.IAreaDialogListener;
+import cn.qqtheme.framework.util.CustomDialog;
 import cn.qqtheme.framework.util.ToastUtils;
+import cn.qqtheme.framework.util.ViewUtils;
 
 /**
  * 陪练预约 页面
@@ -30,73 +36,59 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private FahrschuleActivity.SwitcherListener mSwitcherListener;
+    private ISubjectSwitcherListener mSwitcherListener;
 
     private String mParam1;
     private String mParam2;
 
     /**
-     * 上课地点
+     * mPresenter
      */
-    private TextView mTvAddress;
+    private ISparringSubscribeContract.ISparringSubscribePresenter mPresenter;
+
+    private ImageView mImgDate;
     /**
-     * 请选择上课地点
+     * 请选择地区
      */
-    private TextView mTvAddressSel;
+    private TextView mTvCourseTitle;
     /**
-     * 课程名称
+     * 请填写详细的服务地址
      */
-    private TextView mTvCourse;
+    private EditText mEditAddress;
+    private ImageView mImgMotorcycleType;
     /**
-     * 请选择课程
+     * 请选择车型
      */
-    private TextView mTvCourseSel;
+    private TextView mTvMotorcycleType;
+    private ImageView mImgTime;
     /**
-     * 来往交通
+     * 请选择时间段
      */
-    private TextView mTvTrafficTitle;
-    private TextView mTvTraffic;
-    /**
-     * 课程价格
-     */
-    private TextView mTvPriceTitle;
-    private TextView mTvPrice;
-    /**
-     * 课程礼包
-     */
-    private TextView mTvGiftTitle;
-    private TextView mTvGift;
-    /**
-     * 课程详情
-     */
-    private TextView mTvInfoTitle;
-    private TextView mTvInfo;
-    /**
-     * 课程介绍
-     */
-    private TextView mTvIntroduce;
-    private Button mBtnCommint;
+    private TextView mTvTime;
     /**
      * 请输入姓名
      */
     private EditText mEditName;
     /**
-     * 请输入手机号
+     * 请输入手机号码
      */
     private EditText mEditPhone;
     /**
-     * 请输入身份证号
+     * 请输入驾驶证号
      */
-    private EditText mEditIdentityCard;
+    private EditText mEditLicense;
     /**
-     * P
+     * 可备注需要男教练或女教练等信息
      */
-    private ISparringSubscribeContract.ISparringSubscribePresenter mPresenter;
+    private EditText mEditRemark;
+    private TextView mTvCoupon;
+    private RelativeLayout mLayCoupon;
     /**
-     * 地区code
+     * 立即预约
      */
-    private int mAreaCode;
-    private int mGoodsId;
+    private TextView mTvCommit;
+    private RelativeLayout mLayArea;
+    private RelativeLayout mLayMotorcycleType;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -127,7 +119,6 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onRefreshData() {
-
     }
 
     @Override
@@ -141,6 +132,8 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
 
         SparringSubscribePresenter mPresenter = new SparringSubscribePresenter(
                 Injection.provideRepository(getActivity().getApplicationContext()), this);
+
+        ViewUtils.editTextInputSpace(mEditAddress);
     }
 
     @Override
@@ -148,16 +141,14 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
         mPresenter = presenter;
     }
 
-    public void setSwitcherListener(FahrschuleActivity.SwitcherListener switcherListener) {
+    public void setSwitcherListener(ISubjectSwitcherListener switcherListener) {
         mSwitcherListener = switcherListener;
     }
 
     @Override
     protected void onFirstDataVisible() {
         if (BuildConfig.DEBUG) {
-            mEditName.setText("测试人员" + new Random().nextInt(10));
-            mEditPhone.setText("1525252552" + new Random().nextInt(10));
-            mEditIdentityCard.setText("342628198004160012");
+
         }
     }
 
@@ -167,43 +158,37 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
     }
 
     public void initView(View view) {
-        mTvAddress = (TextView) view.findViewById(R.id.tv_address);
-        mTvAddressSel = (TextView) view.findViewById(R.id.tv_address_sel);
-        mTvAddressSel.setOnClickListener(this);
-        mTvCourse = (TextView) view.findViewById(R.id.tv_course);
-        mTvCourseSel = (TextView) view.findViewById(R.id.tv_course_sel);
-        mTvCourseSel.setOnClickListener(this);
-        mTvTrafficTitle = (TextView) view.findViewById(R.id.tv_traffic_title);
-        mTvTraffic = (TextView) view.findViewById(R.id.tv_traffic);
-        mTvPriceTitle = (TextView) view.findViewById(R.id.tv_price_title);
-        mTvPrice = (TextView) view.findViewById(R.id.tv_price);
-        mTvGiftTitle = (TextView) view.findViewById(R.id.tv_gift_title);
-        mTvGift = (TextView) view.findViewById(R.id.tv_gift);
-        mTvInfoTitle = (TextView) view.findViewById(R.id.tv_info_title);
-        mTvInfo = (TextView) view.findViewById(R.id.tv_info);
-        mTvInfo.setOnClickListener(this);
-        mTvIntroduce = (TextView) view.findViewById(R.id.tv_introduce);
-        mBtnCommint = (Button) view.findViewById(R.id.btn_commit);
-        mBtnCommint.setOnClickListener(this);
-
+        mLayArea = (RelativeLayout) view.findViewById(R.id.lay_area);
+        mLayArea.setOnClickListener(this);
+        mImgDate = (ImageView) view.findViewById(R.id.img_date);
+        mTvCourseTitle = (TextView) view.findViewById(R.id.tv_course_title);
+        mEditAddress = (EditText) view.findViewById(R.id.edit_address);
+        mLayMotorcycleType = (RelativeLayout) view.findViewById(R.id.lay_motorcycle_type);
+        mLayMotorcycleType.setOnClickListener(this);
+        mImgMotorcycleType = (ImageView) view.findViewById(R.id.img_motorcycle_type);
+        mTvMotorcycleType = (TextView) view.findViewById(R.id.tv_motorcycle_type);
+        mImgTime = (ImageView) view.findViewById(R.id.img_time);
+        mTvTime = (TextView) view.findViewById(R.id.tv_time);
         mEditName = (EditText) view.findViewById(R.id.edit_name);
         mEditPhone = (EditText) view.findViewById(R.id.edit_phone);
-        mEditIdentityCard = (EditText) view.findViewById(R.id.edit_identity_card);
+        mEditLicense = (EditText) view.findViewById(R.id.edit_license);
+        mEditRemark = (EditText) view.findViewById(R.id.edit_remark);
+        mTvCoupon = (TextView) view.findViewById(R.id.tv_coupon);
+        mLayCoupon = (RelativeLayout) view.findViewById(R.id.lay_coupon);
+        mTvCommit = (TextView) view.findViewById(R.id.tv_commit);
+        mTvCommit.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_address_sel://地点
-
-            case R.id.tv_info://官网
-                PublicData.getInstance().webviewUrl = "http://www.antingjx.com/jianjie/";
-                PublicData.getInstance().webviewTitle = "驾校报名官网";
-                PublicData.getInstance().isCheckLogin = true;
-                Act.getInstance().gotoIntent(getActivity(), BrowserActivity.class);
+            case R.id.lay_area:
+                if (mPresenter != null) mPresenter.getServiceArea();
                 break;
-            case R.id.btn_commit:
-                dataFormValidation();
+            case R.id.lay_motorcycle_type://车型 变速
+                if (mPresenter != null) mPresenter.getGoods();
+                break;
+            case R.id.tv_commit:
                 break;
             default:
                 break;
@@ -214,35 +199,84 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
      * 数据验证
      */
     private void dataFormValidation() {
-        String addressSel = getTvAddressSel();
-        if (TextUtils.isEmpty(addressSel)) {
-            ToastUtils.toastShort("请选择上课地点");
-            return;
-        }
-        String tvCourseSel = getTvCourseSel();
-        if (TextUtils.isEmpty(tvCourseSel)) {
-            ToastUtils.toastShort("请选择课程内容");
-            return;
-        }
-
     }
-
-    public String getTvAddressSel() {
-        return mTvAddressSel.getText().toString().trim();
-    }
-
-    public String getTvCourseSel() {
-        return mTvCourseSel.getText().toString().trim();
-    }
-
 
     @Override
     public void showLoadingDialog() {
-
+        showDialogLoading();
     }
 
     @Override
     public void dismissLoadingDialog() {
+        hideDialogLoading();
+    }
+
+    /**
+     * 地区接口
+     */
+    @Override
+    public void serviceAreaError(String message) {
+        serverError(message);
+    }
+
+    protected void serverError(String message) {
+        dismissLoadingDialog();
+        ToastUtils.toastShort(message);
+    }
+
+    @Override
+    public void serviceAreaSucceed(SparringAreaResult result) {
+        final List<SparringAreaBean> beanList = result.getData();
+
+        final ArrayList<String> areaList = new ArrayList<>();
+        for (SparringAreaBean areaBean : beanList) {
+            areaList.add(areaBean.getFullName());
+        }
+
+        ArrayList<String> firstList = new ArrayList<>();
+        firstList.add("上海市");
+        ArrayList<ArrayList<String>> secondList = new ArrayList<>();
+        secondList.add(areaList);
+
+        CustomDialog.popupBottomArea(getActivity(),
+                firstList, secondList, new IAreaDialogListener() {
+                    @Override
+                    public void setCurPosition(String area) {
+                        for (SparringAreaBean areaBean : beanList) {
+                            if (areaBean.getFullName().equals(area)) {
+                                mTvCourseTitle.setText(area);
+                            }
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 地区
+     */
+    @Override
+    public void getGoodsError(String message) {
+        serverError(message);
+    }
+
+    @Override
+    public void getGoodsSucceed(SubjectGoodsResult result) {
 
     }
+
+    /**
+     * 车型
+     */
+    @Override
+    public void goodsSucceed(SparringGoodsResult result) {
+        List<SparringGoodsBean> beanList = result.getData();
+        CustomDialog.popupBottomCarType(getActivity(),beanList);
+    }
+
+    @Override
+    public void goodsError(String message) {
+        serverError(message);
+    }
+
+
 }

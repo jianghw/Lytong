@@ -4,6 +4,8 @@ import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
 import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
+import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
+import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -56,4 +58,15 @@ public interface IGoodsService {
     @FormUrlEncoded
     @POST("goods/getGoodsDetail")
     Observable<GoodsDetailResult> getGoodsDetail(@Field("goodsId") String goodsId);
+
+    /**
+     * 22.获取商品
+     */
+    @FormUrlEncoded
+    @POST("goods/getGoods")
+    Observable<SubjectGoodsResult> getGoods(@Field("type") String type);
+
+    @FormUrlEncoded
+    @POST("goods/getGoods")
+    Observable<SparringGoodsResult> getGoodsFive(@Field("type") String type);
 }

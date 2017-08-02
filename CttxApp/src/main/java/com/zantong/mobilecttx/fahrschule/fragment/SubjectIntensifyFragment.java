@@ -1,33 +1,28 @@
 package com.zantong.mobilecttx.fahrschule.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.zantong.mobilecttx.BuildConfig;
+import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
-import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
-import com.zantong.mobilecttx.fahrschule.adapter.FahrschulePopupAresAdapter;
-import com.zantong.mobilecttx.fahrschule.bean.MerchantAresBean;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectIntensifyContract;
+import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
+import com.zantong.mobilecttx.eventbus.SubjectCommitEvent;
+import com.zantong.mobilecttx.fahrschule.adapter.SubjectGoodsAdapter;
+import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsBean;
+import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
 import com.zantong.mobilecttx.presenter.fahrschule.SubjectIntensifyPresenter;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
@@ -40,83 +35,24 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private FahrschuleActivity.SwitcherListener mSwitcherListener;
-
     private String mParam1;
     private String mParam2;
 
-    /**
-     * 上课地点
-     */
-    private TextView mTvAddress;
-    /**
-     * 请选择上课地点
-     */
-    private TextView mTvAddressSel;
-    /**
-     * 课程名称
-     */
-    private TextView mTvCourse;
-    /**
-     * 请选择课程
-     */
-    private TextView mTvCourseSel;
-    /**
-     * 来往交通
-     */
-    private TextView mTvTrafficTitle;
-    private TextView mTvTraffic;
-    /**
-     * 课程价格
-     */
-    private TextView mTvPriceTitle;
+    private XRecyclerView mCustomRecycler;
+    private TextView mTvContent;
     private TextView mTvPrice;
     /**
-     * 课程礼包
+     * 选择套餐
      */
-    private TextView mTvGiftTitle;
-    private TextView mTvGift;
+    private TextView mTvCommit;
+
     /**
-     * 课程详情
-     */
-    private TextView mTvInfoTitle;
-    private TextView mTvInfo;
-    /**
-     * 课程介绍
-     */
-    private TextView mTvIntroduce;
-    private Button mBtnCommint;
-    /**
-     * 请输入姓名
-     */
-    private EditText mEditName;
-    /**
-     * 请输入手机号
-     */
-    private EditText mEditPhone;
-    /**
-     * 请输入身份证号
-     */
-    private EditText mEditIdentityCard;
-    /**
-     * P
+     * mPresenter
      */
     private ISubjectIntensifyContract.ISubjectIntensifyPresenter mPresenter;
-    /**
-     * 地区code
-     */
-    private int mAreaCode;
-    private int mGoodsId;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private ISubjectSwitcherListener mSwitcherListener;
+    private SubjectGoodsAdapter mAdapter;
 
     public static SubjectIntensifyFragment newInstance() {
         return new SubjectIntensifyFragment();
@@ -131,12 +67,19 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
         return fragment;
     }
 
-    protected boolean isRefresh() {
-        return false;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
     protected void onRefreshData() {
+        onFirstDataVisible();
     }
 
     @Override
@@ -150,6 +93,40 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
 
         SubjectIntensifyPresenter mPresenter = new SubjectIntensifyPresenter(
                 Injection.provideRepository(getActivity().getApplicationContext()), this);
+
+        GridLayoutManager manager = new GridLayoutManager(ContextUtils.getContext(), 2);
+        mCustomRecycler.setLayoutManager(manager);
+        mCustomRecycler.setPullRefreshEnabled(false);
+        mCustomRecycler.setLoadingMoreEnabled(false);
+        mCustomRecycler.noMoreLoadings();
+
+        mAdapter = new SubjectGoodsAdapter();
+        mCustomRecycler.setAdapter(mAdapter);
+//点击事件
+        mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, Object data) {
+                if (data instanceof SubjectGoodsBean) {
+                    dataListShow(data);
+                }
+            }
+        });
+    }
+
+    protected void dataListShow(Object data) {
+        SubjectGoodsBean goodsBean = (SubjectGoodsBean) data;
+        ArrayList<SubjectGoodsBean> beanArrayList = mAdapter.getAll();
+        for (SubjectGoodsBean bean : beanArrayList) {
+            bean.setChiose(goodsBean.getGoodsId() == bean.getGoodsId());
+
+            if (goodsBean.getGoodsId() == bean.getGoodsId()) {
+                mTvContent.setText(goodsBean.getDescription());
+
+                String valueString = new DecimalFormat("#0.00").format(goodsBean.getPrice());
+                mTvPrice.setText(valueString);
+            }
+        }
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -157,17 +134,13 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
         mPresenter = presenter;
     }
 
-    public void setSwitcherListener(FahrschuleActivity.SwitcherListener switcherListener) {
+    public void setSwitcherListener(ISubjectSwitcherListener switcherListener) {
         mSwitcherListener = switcherListener;
     }
 
     @Override
     protected void onFirstDataVisible() {
-        if (BuildConfig.DEBUG) {
-            mEditName.setText("测试人员" + new Random().nextInt(10));
-            mEditPhone.setText("1525252552" + new Random().nextInt(10));
-            mEditIdentityCard.setText("342628198004160012");
-        }
+        if (mPresenter != null) mPresenter.getGoods();
     }
 
     @Override
@@ -176,40 +149,17 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
     }
 
     public void initView(View view) {
-        mTvAddress = (TextView) view.findViewById(R.id.tv_address);
-        mTvAddressSel = (TextView) view.findViewById(R.id.tv_address_sel);
-        mTvAddressSel.setOnClickListener(this);
-        mTvCourse = (TextView) view.findViewById(R.id.tv_course);
-        mTvCourseSel = (TextView) view.findViewById(R.id.tv_course_sel);
-        mTvCourseSel.setOnClickListener(this);
-        mTvTrafficTitle = (TextView) view.findViewById(R.id.tv_traffic_title);
-        mTvTraffic = (TextView) view.findViewById(R.id.tv_traffic);
-        mTvPriceTitle = (TextView) view.findViewById(R.id.tv_price_title);
+        mCustomRecycler = (XRecyclerView) view.findViewById(R.id.custom_recycler);
+        mTvContent = (TextView) view.findViewById(R.id.tv_content);
         mTvPrice = (TextView) view.findViewById(R.id.tv_price);
-        mTvGiftTitle = (TextView) view.findViewById(R.id.tv_gift_title);
-        mTvGift = (TextView) view.findViewById(R.id.tv_gift);
-        mTvInfoTitle = (TextView) view.findViewById(R.id.tv_info_title);
-        mTvInfo = (TextView) view.findViewById(R.id.tv_info);
-        mTvInfo.setOnClickListener(this);
-        mTvIntroduce = (TextView) view.findViewById(R.id.tv_introduce);
-        mBtnCommint = (Button) view.findViewById(R.id.btn_commit);
-        mBtnCommint.setOnClickListener(this);
-
-        mEditName = (EditText) view.findViewById(R.id.edit_name);
-        mEditPhone = (EditText) view.findViewById(R.id.edit_phone);
-        mEditIdentityCard = (EditText) view.findViewById(R.id.edit_identity_card);
+        mTvCommit = (TextView) view.findViewById(R.id.tv_commit);
+        mTvCommit.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_info://官网
-                PublicData.getInstance().webviewUrl = "http://www.antingjx.com/jianjie/";
-                PublicData.getInstance().webviewTitle = "驾校报名官网";
-                PublicData.getInstance().isCheckLogin = true;
-                Act.getInstance().gotoIntent(getActivity(), BrowserActivity.class);
-                break;
-            case R.id.btn_commit:
+            case R.id.tv_commit:
                 dataFormValidation();
                 break;
             default:
@@ -221,26 +171,18 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
      * 数据验证
      */
     private void dataFormValidation() {
-        String addressSel = getTvAddressSel();
-        if (TextUtils.isEmpty(addressSel)) {
-            ToastUtils.toastShort("请选择上课地点");
-            return;
+        ArrayList<SubjectGoodsBean> beanArrayList = mAdapter.getAll();
+
+        for (SubjectGoodsBean bean : beanArrayList) {
+            if (bean.isChiose()) {
+                EventBus.getDefault().postSticky(new SubjectCommitEvent(bean));
+                if (mSwitcherListener != null) mSwitcherListener.setCurPosition(1);
+                return;
+            }
         }
-        String tvCourseSel = getTvCourseSel();
-        if (TextUtils.isEmpty(tvCourseSel)) {
-            ToastUtils.toastShort("请选择课程内容");
-            return;
-        }
-
+        ToastUtils.toastShort("请选择套餐~");
     }
 
-    public String getTvAddressSel() {
-        return mTvAddressSel.getText().toString().trim();
-    }
-
-    public String getTvCourseSel() {
-        return mTvCourseSel.getText().toString().trim();
-    }
 
     @Override
     public void showLoadingDialog() {
@@ -252,47 +194,21 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
         hideDialogLoading();
     }
 
-    /*
-     * 下拉选择框
+    /**
+     * 获取商品失败
      */
-    protected void selectArea(final List<MerchantAresBean> aresBeanList, final TextView textView) {
-        final PopupWindow popupWindow = new PopupWindow(getActivity());
-        popupWindow.setWidth(textView.getMeasuredWidth());
-
-        View inflate = LayoutInflater.from(getActivity()).inflate(R.layout.custom_listview_tv, null);
-        ListView mListView = (ListView) inflate.findViewById(R.id.lv_list);
-        mListView.setDivider(null);
-        mListView.setItemsCanFocus(true);
-
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MerchantAresBean bean = aresBeanList.get(position);
-                popupWindow.dismiss();
-                if (bean == null) return;
-                textView.setText(bean.getFullName());
-                mAreaCode = bean.getCode();
-            }
-        });
-        FahrschulePopupAresAdapter adapter = new FahrschulePopupAresAdapter(getActivity(), aresBeanList);
-        mListView.setAdapter(adapter);
-
-        popupShowAs(textView, popupWindow, mListView);
+    @Override
+    public void getGoodsError(String message) {
+        dismissLoadingDialog();
+        ToastUtils.toastShort("获取数据失败，请下拉刷新" + message);
     }
 
-    private void popupShowAs(TextView textView, PopupWindow popupWindow, ListView mListView) {
-        popupWindow.setContentView(mListView);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setFocusable(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            popupWindow.setElevation(16);
-            popupWindow.setBackgroundDrawable(
-                    ContextCompat.getDrawable(ContextUtils.getContext(), R.drawable.shape_bg_popu_white));
-        } else {
-            popupWindow.setBackgroundDrawable(ContextCompat.getDrawable(ContextUtils.getContext(),
-                    R.drawable.shape_bg_popu_white));
-        }
-        popupWindow.showAsDropDown(textView, 0, 30);
+    @Override
+    public void getGoodsSucceed(SubjectGoodsResult result) {
+        List<SubjectGoodsBean> subjectGoodsBeen = result.getData();
+
+        mAdapter.removeAllOnly();
+        mAdapter.append(subjectGoodsBeen);
     }
 
 }

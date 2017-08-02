@@ -4,6 +4,7 @@ import com.zantong.mobilecttx.api.IAddOilService;
 import com.zantong.mobilecttx.api.IBankService;
 import com.zantong.mobilecttx.api.IBannerService;
 import com.zantong.mobilecttx.api.ICttxService;
+import com.zantong.mobilecttx.api.IDriverTrainService;
 import com.zantong.mobilecttx.api.IDrivingImageService;
 import com.zantong.mobilecttx.api.IFebruaryService;
 import com.zantong.mobilecttx.api.IGoodsService;
@@ -23,12 +24,16 @@ import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
+import com.zantong.mobilecttx.contract.CTTXHttpPOSTInterface;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
 import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
+import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
+import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
+import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.DriverCoachResult;
@@ -36,7 +41,6 @@ import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
-import com.zantong.mobilecttx.contract.CTTXHttpPOSTInterface;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
@@ -414,5 +418,26 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<BaseResult> updateVehicleLicense(BindCarDTO bindCarDTO) {
         return initRetrofit().create(ICttxService.class).updateVehicleLicense(bindCarDTO);
+    }
+
+    /**
+     * 22.获取商品
+     */
+    @Override
+    public Observable<SubjectGoodsResult> getGoods(String type) {
+        return initRetrofit().create(IGoodsService.class).getGoods(type);
+    }
+
+    @Override
+    public Observable<SparringGoodsResult> getGoodsFive(String type) {
+        return initRetrofit().create(IGoodsService.class).getGoodsFive(type);
+    }
+
+    /**
+     * 20.新手陪练获取服务地区
+     */
+    @Override
+    public Observable<SparringAreaResult> getServiceArea() {
+        return initRetrofit().create(IDriverTrainService.class).getServiceArea();
     }
 }

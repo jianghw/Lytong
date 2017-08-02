@@ -3,24 +3,30 @@ package com.zantong.mobilecttx.fahrschule.fragment;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
-import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectCommitContract;
+import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
+import com.zantong.mobilecttx.eventbus.SubjectCommitEvent;
+import com.zantong.mobilecttx.eventbus.SubjectOrderEvent;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderBean;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
+import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsBean;
 import com.zantong.mobilecttx.presenter.fahrschule.SubjectCommitPresenter;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 
-import java.util.Random;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
+import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;
+import cn.qqtheme.framework.util.ViewUtils;
 
 /**
  * 科目强化提交订单
@@ -30,73 +36,35 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private FahrschuleActivity.SwitcherListener mSwitcherListener;
-
     private String mParam1;
     private String mParam2;
+    /**
+     * mPresenter
+     */
+    private ISubjectCommitContract.ISubjectCommitPresenter mPresenter;
+    private ISubjectSwitcherListener mSwitcherListener;
 
-    /**
-     * 上课地点
-     */
-    private TextView mTvAddress;
-    /**
-     * 请选择上课地点
-     */
-    private TextView mTvAddressSel;
-    /**
-     * 课程名称
-     */
-    private TextView mTvCourse;
-    /**
-     * 请选择课程
-     */
-    private TextView mTvCourseSel;
-    /**
-     * 来往交通
-     */
-    private TextView mTvTrafficTitle;
-    private TextView mTvTraffic;
-    /**
-     * 课程价格
-     */
-    private TextView mTvPriceTitle;
-    private TextView mTvPrice;
-    /**
-     * 课程礼包
-     */
-    private TextView mTvGiftTitle;
-    private TextView mTvGift;
-    /**
-     * 课程详情
-     */
-    private TextView mTvInfoTitle;
-    private TextView mTvInfo;
-    /**
-     * 课程介绍
-     */
-    private TextView mTvIntroduce;
-    private Button mBtnCommint;
+    private TextView mTvCourseTitle;
+    private TextView mTvCourseTime;
     /**
      * 请输入姓名
      */
     private EditText mEditName;
     /**
-     * 请输入手机号
+     * 请输入手机号码
      */
     private EditText mEditPhone;
     /**
-     * 请输入身份证号
+     * 提交订单
      */
-    private EditText mEditIdentityCard;
+    private TextView mTvCommit;
     /**
-     * P
+     * 优惠卷
      */
-    private ISubjectCommitContract.ISubjectCommitPresenter mPresenter;
-    /**
-     * 地区code
-     */
-    private int mAreaCode;
-    private int mGoodsId;
+    private TextView mTvCoupon;
+    private RelativeLayout mLayCoupon;
+    private SubjectGoodsBean goodsBean;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -127,7 +95,6 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onRefreshData() {
-
     }
 
     @Override
@@ -141,6 +108,14 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
 
         SubjectCommitPresenter mPresenter = new SubjectCommitPresenter(
                 Injection.provideRepository(getActivity().getApplicationContext()), this);
+
+        ViewUtils.editTextInputSpace(mEditName);
+        ViewUtils.editTextInputSpace(mEditPhone);
+
+        if (BuildConfig.DEBUG) {
+            mEditName.setText("小姐哦啊金粉世家");
+            mEditPhone.setText("15252525569");
+        }
     }
 
     @Override
@@ -148,60 +123,51 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
         mPresenter = presenter;
     }
 
-    public void setSwitcherListener(FahrschuleActivity.SwitcherListener switcherListener) {
+    public void setSwitcherListener(ISubjectSwitcherListener switcherListener) {
         mSwitcherListener = switcherListener;
     }
 
     @Override
     protected void onFirstDataVisible() {
-        if (BuildConfig.DEBUG) {
-            mEditName.setText("测试人员" + new Random().nextInt(10));
-            mEditPhone.setText("1525252552" + new Random().nextInt(10));
-            mEditIdentityCard.setText("342628198004160012");
-        }
+        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void DestroyViewAndThing() {
+        EventBus.getDefault().removeStickyEvent(SubjectCommitEvent.class);
+        EventBus.getDefault().unregister(this);
         if (mPresenter != null) mPresenter.unSubscribe();
+
+        goodsBean = null;
     }
 
-    public void initView(View view) {
-        mTvAddress = (TextView) view.findViewById(R.id.tv_address);
-        mTvAddressSel = (TextView) view.findViewById(R.id.tv_address_sel);
-        mTvAddressSel.setOnClickListener(this);
-        mTvCourse = (TextView) view.findViewById(R.id.tv_course);
-        mTvCourseSel = (TextView) view.findViewById(R.id.tv_course_sel);
-        mTvCourseSel.setOnClickListener(this);
-        mTvTrafficTitle = (TextView) view.findViewById(R.id.tv_traffic_title);
-        mTvTraffic = (TextView) view.findViewById(R.id.tv_traffic);
-        mTvPriceTitle = (TextView) view.findViewById(R.id.tv_price_title);
-        mTvPrice = (TextView) view.findViewById(R.id.tv_price);
-        mTvGiftTitle = (TextView) view.findViewById(R.id.tv_gift_title);
-        mTvGift = (TextView) view.findViewById(R.id.tv_gift);
-        mTvInfoTitle = (TextView) view.findViewById(R.id.tv_info_title);
-        mTvInfo = (TextView) view.findViewById(R.id.tv_info);
-        mTvInfo.setOnClickListener(this);
-        mTvIntroduce = (TextView) view.findViewById(R.id.tv_introduce);
-        mBtnCommint = (Button) view.findViewById(R.id.btn_commit);
-        mBtnCommint.setOnClickListener(this);
-
+    private void initView(View view) {
+        mTvCourseTitle = (TextView) view.findViewById(R.id.tv_course_title);
+        mTvCourseTime = (TextView) view.findViewById(R.id.tv_course_time);
         mEditName = (EditText) view.findViewById(R.id.edit_name);
         mEditPhone = (EditText) view.findViewById(R.id.edit_phone);
-        mEditIdentityCard = (EditText) view.findViewById(R.id.edit_identity_card);
+        mTvCommit = (TextView) view.findViewById(R.id.tv_commit);
+        mTvCommit.setOnClickListener(this);
+
+        mTvCoupon = (TextView) view.findViewById(R.id.tv_coupon);
+        mLayCoupon = (RelativeLayout) view.findViewById(R.id.lay_coupon);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onMainEvent(SubjectCommitEvent event) {
+        if (event != null) initData(event);
+    }
+
+    private void initData(SubjectCommitEvent event) {
+        goodsBean = event.getSubjectGoodsBean();
+        mTvCourseTitle.setText(goodsBean.getName());
+        mTvCourseTime.setText(goodsBean.getDataValue());
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
-            case R.id.tv_info://官网
-                PublicData.getInstance().webviewUrl = "http://www.antingjx.com/jianjie/";
-                PublicData.getInstance().webviewTitle = "驾校报名官网";
-                PublicData.getInstance().isCheckLogin = true;
-                Act.getInstance().gotoIntent(getActivity(), BrowserActivity.class);
-                break;
-            case R.id.btn_commit:
+            case R.id.tv_commit:
                 dataFormValidation();
                 break;
             default:
@@ -213,35 +179,59 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
      * 数据验证
      */
     private void dataFormValidation() {
-        String addressSel = getTvAddressSel();
-        if (TextUtils.isEmpty(addressSel)) {
-            ToastUtils.toastShort("请选择上课地点");
+        if (TextUtils.isEmpty(getEditName())) {
+            ToastUtils.toastShort("请填写姓名");
             return;
         }
-        String tvCourseSel = getTvCourseSel();
-        if (TextUtils.isEmpty(tvCourseSel)) {
-            ToastUtils.toastShort("请选择课程内容");
+        if (TextUtils.isEmpty(getEditPhone()) || !RegexUtils.isMobileExact(getEditPhone())) {
+            ToastUtils.toastShort("请填写正确手机号");
             return;
         }
-
+        if (mPresenter != null) mPresenter.createOrder();
     }
 
-    public String getTvAddressSel() {
-        return mTvAddressSel.getText().toString().trim();
+    public String getEditName() {
+        return mEditName.getText().toString().trim();
     }
 
-    public String getTvCourseSel() {
-        return mTvCourseSel.getText().toString().trim();
+    public String getEditPhone() {
+        return mEditPhone.getText().toString().trim();
     }
-
 
     @Override
     public void showLoadingDialog() {
-
+        showDialogLoading();
     }
 
     @Override
     public void dismissLoadingDialog() {
-
+        hideDialogLoading();
     }
+
+    @Override
+    public void createOrderError(String s) {
+        dismissLoadingDialog();
+        ToastUtils.toastShort(s);
+    }
+
+    @Override
+    public void createOrderSucceed(CreateOrderResult result) {
+        CreateOrderBean resultData = result.getData();
+        String orderId = resultData.getOrderId();
+
+        if (mSwitcherListener != null) mSwitcherListener.setCurPosition(2);
+        EventBus.getDefault().postSticky(
+                new SubjectOrderEvent(orderId, goodsBean, getEditName(), getEditPhone()));
+    }
+
+    @Override
+    public String getGoodsId() {
+        return String.valueOf(goodsBean.getGoodsId());
+    }
+
+    @Override
+    public String getPriceValue() {
+        return String.valueOf(goodsBean.getPrice());
+    }
+
 }

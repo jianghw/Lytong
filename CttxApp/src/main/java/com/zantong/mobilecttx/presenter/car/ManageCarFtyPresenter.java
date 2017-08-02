@@ -29,6 +29,7 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.util.log.LogUtils;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -206,6 +207,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
 
                     @Override
                     public void doError(Throwable e) {
+                        LogUtils.e("========="+e.getMessage());
                         mAtyView.allVehiclesError(e.getMessage());
                     }
 
@@ -416,6 +418,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
 
                     @Override
                     public void doError(Throwable e) {
+                        LogUtils.e("========="+e.getMessage());
                         mAtyView.addVehicleLicenseError(e.getMessage());
                     }
 
@@ -440,6 +443,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
      * 数据分开处理
      */
     public void sortCarListData(VehicleLicenseResult result) {
+
         List<VehicleLicenseBean> resultData = result.getData();
         Observable<List<VehicleLicenseBean>> isPay = Observable.from(resultData)
                 .filter(new Func1<VehicleLicenseBean, Boolean>() {
@@ -471,37 +475,34 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                 })
                 .toList();
 
-        Subscription subscription = Observable.zip(isPay, unPay,
-                new Func2<List<VehicleLicenseBean>, List<VehicleLicenseBean>, List<VehicleLicenseBean>>() {
-                    @Override
-                    public List<VehicleLicenseBean> call(
-                            List<VehicleLicenseBean> beanList, List<VehicleLicenseBean> licenseBeanList) {
+        Subscription subscription = Observable
+                .zip(isPay, unPay,
+                        new Func2<List<VehicleLicenseBean>, List<VehicleLicenseBean>, List<VehicleLicenseBean>>() {
+                            @Override
+                            public List<VehicleLicenseBean> call(List<VehicleLicenseBean> beanList,
+                                                                 List<VehicleLicenseBean> licenseBeanList) {
 
-                        List<VehicleLicenseBean> zipFunction = new ArrayList<>();
-                        int payCarCount = 0;
-                        if (beanList != null && !beanList.isEmpty()) {
-                            VehicleLicenseBean vehicleLicenseBean = new VehicleLicenseBean(-1);
-                            zipFunction.add(vehicleLicenseBean);
-                            zipFunction.addAll(beanList);
+                                List<VehicleLicenseBean> zipFunction = new ArrayList<>();
+                                PublicData.getInstance().mServerCars.clear();
 
-                            toServerCar(beanList);
-                            payCarCount = beanList.size();
-                        }
-                        int unPayCarCount = 0;
-                        if (licenseBeanList != null && !licenseBeanList.isEmpty()) {
-                            VehicleLicenseBean vehicleLicenseBean = new VehicleLicenseBean(-2);
-                            zipFunction.add(vehicleLicenseBean);
-                            zipFunction.addAll(licenseBeanList);
+                                if (beanList != null && !beanList.isEmpty()) {
+                                    VehicleLicenseBean vehicleLicenseBean = new VehicleLicenseBean(-1);
+                                    zipFunction.add(vehicleLicenseBean);
+                                    zipFunction.addAll(beanList);
 
-                            toServerCar(licenseBeanList);
-                            unPayCarCount = licenseBeanList.size();
-                        }
+                                    toServerCar(beanList);
+                                }
 
-                        PublicData.getInstance().mCarNum = payCarCount + unPayCarCount;
+                                if (licenseBeanList != null && !licenseBeanList.isEmpty()) {
+                                    VehicleLicenseBean vehicleLicenseBean = new VehicleLicenseBean(-2);
+                                    zipFunction.add(vehicleLicenseBean);
+                                    zipFunction.addAll(licenseBeanList);
 
-                        return zipFunction;
-                    }
-                })
+                                    toServerCar(licenseBeanList);
+                                }
+                                return zipFunction;
+                            }
+                        })
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -514,6 +515,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                         new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
+                                LogUtils.e("========="+throwable.getMessage());
                                 mAtyView.addVehicleLicenseError(throwable.getMessage());
                             }
                         });

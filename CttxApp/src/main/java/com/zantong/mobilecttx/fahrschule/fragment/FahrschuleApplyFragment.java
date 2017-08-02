@@ -153,7 +153,6 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onRefreshData() {
-
     }
 
     @Override

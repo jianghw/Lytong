@@ -19,6 +19,9 @@ import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
 import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
+import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
+import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
+import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.DriverCoachResult;
@@ -455,5 +458,26 @@ public class RepositoryManager {
      */
     public Observable<BaseResult> updateVehicleLicense(BindCarDTO bindCarDTO) {
         return mRemoteData.updateVehicleLicense(bindCarDTO);
+    }
+
+    /**
+     * 22.获取商品
+     */
+    public Observable<SubjectGoodsResult> getGoods(String type) {
+        return mRemoteData.getGoods(type);
+    }
+
+    /**
+     * 22.获取商品
+     */
+    public Observable<SparringGoodsResult> getGoodsFive(String type) {
+        return mRemoteData.getGoodsFive(type);
+    }
+
+    /**
+     * 20.新手陪练获取服务地区
+     */
+    public Observable<SparringAreaResult> getServiceArea() {
+        return mRemoteData.getServiceArea();
     }
 }

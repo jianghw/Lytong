@@ -3,334 +3,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorBgGray_f8"
-                android:orientation="vertical">
-    <!--时间地点-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/ds_30"
-        android:background="@color/colorWhite"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_135"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="时间地点"
-            android:textColor="@color/colorTvBlue_59b"
-            android:textSize="@dimen/fs_16sp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_1"
-            android:layout_marginLeft="@dimen/ds_45"
-            android:layout_marginRight="@dimen/ds_45"
-            android:background="@color/colorLineGray_e6"/>
-        <!--服务地区-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_135">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:text="服务地区"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"/>
-
-            <ImageView
-                android:id="@+id/img_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/ds_45"
-                android:src="@mipmap/btn_rightarrow"/>
-
-            <TextView
-                android:id="@+id/tv_course_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/ds_30"
-                android:layout_toLeftOf="@+id/img_date"
-                android:hint="请选择地区"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textColorHint="@color/colorLineGray_e6"
-                android:textSize="@dimen/fs_16sp"/>
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_1"
-            android:layout_marginLeft="@dimen/ds_45"
-            android:layout_marginRight="@dimen/ds_45"
-            android:background="@color/colorLineGray_e6"/>
-
-        <!--服务地址-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_135"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:text="服务地址"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"/>
-
-            <EditText
-                android:id="@+id/edit_address"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:layout_marginRight="@dimen/ds_45"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right|center_vertical"
-                android:hint="请填写详细的服务地址"
-                android:maxLines="1"
-                android:minWidth="@dimen/ds_180"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textColorHint="@color/colorLineGray_e6"
-                android:textSize="@dimen/fs_16sp"/>
-
-        </LinearLayout>
-
-        <!--车型/变速箱-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_135">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:text="车型/变速箱"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"/>
-
-            <ImageView
-                android:id="@+id/img_motorcycle_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/ds_45"
-                android:src="@mipmap/btn_rightarrow"/>
-
-            <TextView
-                android:id="@+id/tv_motorcycle_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/ds_30"
-                android:layout_toLeftOf="@+id/img_motorcycle_type"
-                android:hint="请选择车型"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textColorHint="@color/colorLineGray_e6"
-                android:textSize="@dimen/fs_16sp"/>
-
-        </RelativeLayout>
-        <!--服务时间段-->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_135">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:text="服务时间段"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"/>
-
-            <ImageView
-                android:id="@+id/img_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/ds_45"
-                android:src="@mipmap/btn_rightarrow"/>
-
-            <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/ds_30"
-                android:layout_toLeftOf="@+id/img_time"
-                android:hint="请选择时间段"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textColorHint="@color/colorLineGray_e6"
-                android:textSize="@dimen/fs_16sp"/>
-
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_30"
-            android:background="@color/colorBgGray_f8"/>
-        <!--个人信息-->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_135"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="个人信息"
-            android:textColor="@color/colorTvBlue_59b"
-            android:textSize="@dimen/fs_16sp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_1"
-            android:layout_marginLeft="@dimen/ds_45"
-            android:layout_marginRight="@dimen/ds_45"
-            android:background="@color/colorLineGray_e6"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_135"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:text="姓名"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"/>
-
-            <EditText
-                android:id="@+id/edit_name"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:layout_marginRight="@dimen/ds_45"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right|center_vertical"
-                android:hint="请输入姓名"
-                android:maxLines="1"
-                android:minWidth="@dimen/ds_180"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textColorHint="@color/colorLineGray_e6"
-                android:textSize="@dimen/fs_16sp"/>
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_1"
-            android:layout_marginLeft="@dimen/ds_45"
-            android:layout_marginRight="@dimen/ds_45"
-            android:background="@color/colorLineGray_e6"/>
-        <!--手机-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_135"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:text="手机"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"/>
-
-            <EditText
-                android:id="@+id/edit_phone"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:layout_marginRight="@dimen/ds_45"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right|center_vertical"
-                android:hint="请输入手机号码"
-                android:maxLines="1"
-                android:minWidth="@dimen/ds_180"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textColorHint="@color/colorLineGray_e6"
-                android:textSize="@dimen/fs_16sp"/>
-        </LinearLayout>
-        <!--驾驶证号-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_135"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:text="驾驶证号"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"/>
-
-            <EditText
-                android:id="@+id/edit_license"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:layout_marginRight="@dimen/ds_45"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right|center_vertical"
-                android:hint="请输入驾驶证号"
-                android:maxLines="1"
-                android:minWidth="@dimen/ds_180"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textColorHint="@color/colorLineGray_e6"
-                android:textSize="@dimen/fs_16sp"/>
-        </LinearLayout>
-        <!--备注-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_135"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:text="备注"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"/>
-
-            <EditText
-                android:id="@+id/edit_remark"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:layout_marginRight="@dimen/ds_45"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right|center_vertical"
-                android:hint="可备注需要男教练或女教练等信息"
-                android:maxLines="1"
-                android:minWidth="@dimen/ds_180"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textColorHint="@color/colorLineGray_e6"
-                android:textSize="@dimen/fs_16sp"/>
-        </LinearLayout>
-    </LinearLayout>
+                android:background="@color/colorBgGray_f8">
 
     <TextView
         android:id="@+id/tv_commit"
@@ -343,4 +16,392 @@
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/fs_18sp"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tv_commit"
+        android:layout_alignParentTop="true"
+        android:scrollbars="none">
+
+        <!--时间地点-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ds_30"
+            android:background="@color/colorWhite"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/ds_90">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_135"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="时间地点"
+                android:textColor="@color/colorTvBlue_59b"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_1"
+                android:layout_marginLeft="@dimen/ds_45"
+                android:layout_marginRight="@dimen/ds_45"
+                android:background="@color/colorLineGray_e6"/>
+            <!--服务地区-->
+            <RelativeLayout
+                android:id="@+id/lay_area"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_135">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/ds_45"
+                    android:text="服务地区"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textSize="@dimen/fs_16sp"/>
+
+                <ImageView
+                    android:id="@+id/img_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/ds_45"
+                    android:src="@mipmap/btn_rightarrow"/>
+
+                <TextView
+                    android:id="@+id/tv_course_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/ds_30"
+                    android:layout_toLeftOf="@+id/img_date"
+                    android:gravity="right|center_vertical"
+                    android:hint="请选择地区"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textColorHint="@color/colorLineGray_e6"
+                    android:textSize="@dimen/fs_16sp"/>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_1"
+                android:layout_marginLeft="@dimen/ds_45"
+                android:layout_marginRight="@dimen/ds_45"
+                android:background="@color/colorLineGray_e6"/>
+
+            <!--服务地址-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_135"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/ds_45"
+                    android:text="服务地址"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textSize="@dimen/fs_16sp"/>
+
+                <EditText
+                    android:id="@+id/edit_address"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/ds_45"
+                    android:layout_marginRight="@dimen/ds_45"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请填写详细的服务地址"
+                    android:maxLines="1"
+                    android:minWidth="@dimen/ds_180"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textColorHint="@color/colorLineGray_e6"
+                    android:textSize="@dimen/fs_16sp"/>
+
+            </LinearLayout>
+
+            <!--车型/变速箱-->
+            <RelativeLayout
+                android:id="@+id/lay_motorcycle_type"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_135">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/ds_45"
+                    android:text="车型/变速箱"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textSize="@dimen/fs_16sp"/>
+
+                <ImageView
+                    android:id="@+id/img_motorcycle_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/ds_45"
+                    android:src="@mipmap/btn_rightarrow"/>
+
+                <TextView
+                    android:id="@+id/tv_motorcycle_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/ds_30"
+                    android:layout_toLeftOf="@+id/img_motorcycle_type"
+                    android:gravity="right|center_vertical"
+                    android:hint="请选择车型"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textColorHint="@color/colorLineGray_e6"
+                    android:textSize="@dimen/fs_16sp"/>
+
+            </RelativeLayout>
+            <!--服务时间段-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_135">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/ds_45"
+                    android:text="服务时间段"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textSize="@dimen/fs_16sp"/>
+
+                <ImageView
+                    android:id="@+id/img_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/ds_45"
+                    android:src="@mipmap/btn_rightarrow"/>
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/ds_30"
+                    android:layout_toLeftOf="@+id/img_time"
+                    android:gravity="right|center_vertical"
+                    android:hint="请选择时间段"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textColorHint="@color/colorLineGray_e6"
+                    android:textSize="@dimen/fs_16sp"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_30"
+                android:background="@color/colorBgGray_f8"/>
+            <!--个人信息-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_135"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="个人信息"
+                android:textColor="@color/colorTvBlue_59b"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_1"
+                android:layout_marginLeft="@dimen/ds_45"
+                android:layout_marginRight="@dimen/ds_45"
+                android:background="@color/colorLineGray_e6"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_135"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ds_45"
+                    android:text="姓名"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textSize="@dimen/fs_16sp"/>
+
+                <EditText
+                    android:id="@+id/edit_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/ds_45"
+                    android:layout_marginRight="@dimen/ds_45"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请输入姓名"
+                    android:maxLines="1"
+                    android:minWidth="@dimen/ds_180"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textColorHint="@color/colorLineGray_e6"
+                    android:textSize="@dimen/fs_16sp"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_1"
+                android:layout_marginLeft="@dimen/ds_45"
+                android:layout_marginRight="@dimen/ds_45"
+                android:background="@color/colorLineGray_e6"/>
+            <!--手机-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_135"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ds_45"
+                    android:text="手机"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textSize="@dimen/fs_16sp"/>
+
+                <EditText
+                    android:id="@+id/edit_phone"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/ds_45"
+                    android:layout_marginRight="@dimen/ds_45"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请输入手机号码"
+                    android:maxLines="1"
+                    android:minWidth="@dimen/ds_180"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textColorHint="@color/colorLineGray_e6"
+                    android:textSize="@dimen/fs_16sp"/>
+            </LinearLayout>
+            <!--驾驶证号-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_135"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ds_45"
+                    android:text="驾驶证号"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textSize="@dimen/fs_16sp"/>
+
+                <EditText
+                    android:id="@+id/edit_license"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/ds_45"
+                    android:layout_marginRight="@dimen/ds_45"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请输入驾驶证号"
+                    android:maxLines="1"
+                    android:minWidth="@dimen/ds_180"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textColorHint="@color/colorLineGray_e6"
+                    android:textSize="@dimen/fs_16sp"/>
+            </LinearLayout>
+            <!--备注-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_135"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/ds_45"
+                    android:text="备注"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textSize="@dimen/fs_16sp"/>
+
+                <EditText
+                    android:id="@+id/edit_remark"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/ds_45"
+                    android:layout_marginRight="@dimen/ds_45"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="可备注需要男教练或女教练等信息"
+                    android:maxLines="1"
+                    android:minWidth="@dimen/ds_180"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textColorHint="@color/colorLineGray_e6"
+                    android:textSize="@dimen/fs_16sp"/>
+            </LinearLayout>
+
+            <!--优惠劵-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_30"
+                android:background="@color/colorBgGray_f8"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_135"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="优惠劵"
+                android:textColor="@color/colorTvBlue_59b"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_1"
+                android:layout_marginLeft="@dimen/ds_45"
+                android:layout_marginRight="@dimen/ds_45"
+                android:background="@color/colorLineGray_e6"/>
+
+            <RelativeLayout
+                android:id="@+id/lay_coupon"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_120">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/ds_45"
+                    android:text="优惠劵"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textSize="@dimen/fs_16sp"/>
+
+                <TextView
+                    android:id="@+id/tv_coupon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/ds_45"
+                    android:textColor="@color/colorTvBlack_4d"
+                    android:textSize="@dimen/fs_16sp"
+                    tools:text="4545"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

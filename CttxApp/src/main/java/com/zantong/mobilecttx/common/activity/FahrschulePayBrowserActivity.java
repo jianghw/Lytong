@@ -139,7 +139,6 @@ public class FahrschulePayBrowserActivity extends BaseJxActivity
         }
         orderDetail();
         return false;
-//        return super.onKeyDown(keyCode, event);
     }
 
     protected void orderDetail() {

@@ -18,13 +18,15 @@ import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
+import com.zantong.mobilecttx.contract.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
+import com.zantong.mobilecttx.fahrschule.activity.SparringActivity;
+import com.zantong.mobilecttx.fahrschule.activity.SubjectActivity;
 import com.zantong.mobilecttx.home.adapter.FavorableBannerImgHolderView;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.bean.BannerBean;
 import com.zantong.mobilecttx.home.bean.BannersBean;
-import com.zantong.mobilecttx.contract.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.presenter.home.HomeFavorableFtyPresenter;
 import com.zantong.mobilecttx.share.activity.CarBeautyActivity;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
@@ -69,6 +71,8 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
     private ImageView mImgBanner;
     private LinearLayout mLayAdmissions;
     private TextView mTvAdmissions;
+    private LinearLayout mLaySparring;
+    private LinearLayout mLaySubject;
 
     public static HomeFavorableFragment newInstance() {
         return new HomeFavorableFragment();
@@ -211,7 +215,6 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
      */
     @Override
     public void getRewardSucceed(BannerBean bannerBean) {
-
     }
 
     public void initView(View view) {
@@ -227,6 +230,10 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
         mLayAdmissions = (LinearLayout) view.findViewById(R.id.lay_admissions);
         mLayAdmissions.setOnClickListener(this);
         mTvAdmissions = (TextView) view.findViewById(R.id.tv_admissions);
+        mLaySparring = (LinearLayout) view.findViewById(R.id.lay_sparring);
+        mLaySparring.setOnClickListener(this);
+        mLaySubject = (LinearLayout) view.findViewById(R.id.lay_subject);
+        mLaySubject.setOnClickListener(this);
 
         mImgBanner = (ImageView) view.findViewById(R.id.img_banner);
         mImgBanner.setOnClickListener(this);
@@ -267,6 +274,12 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
                 GlobalConfig.getInstance().eventIdByUMeng(28);
 
                 Act.getInstance().gotoIntentLogin(getActivity(), FahrschuleActivity.class);
+                break;
+            case R.id.lay_sparring://驾校陪练
+                Act.getInstance().gotoIntentLogin(getActivity(), SparringActivity.class);
+                break;
+            case R.id.lay_subject://科目强化
+                Act.getInstance().gotoIntentLogin(getActivity(), SubjectActivity.class);
                 break;
             default:
                 break;

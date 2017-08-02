@@ -5,21 +5,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import cn.qqtheme.framework.R;
+import cn.qqtheme.framework.contract.bean.SparringGoodsBean;
 
 /**
  * 底部弹出框 列表显示
  */
 public class PopupCarTypeAdapter extends BaseAdapter {
 
-    private final List<String> mDataList;
+    private final List<SparringGoodsBean> mDataList;
     private final Context activityContext;
 
-    public PopupCarTypeAdapter(Context context, List<String> aresBeanList) {
+    public PopupCarTypeAdapter(Context context, List<SparringGoodsBean> aresBeanList) {
         activityContext = context;
         mDataList = aresBeanList;
     }
@@ -45,10 +47,19 @@ public class PopupCarTypeAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_lv_car_type, null);
-
+            holder.mTextName = (TextView) convertView.findViewById(R.id.tv_title);
+            holder.mTextTime = (TextView) convertView.findViewById(R.id.tv_time);
+            holder.mImageChoice = (ImageView) convertView.findViewById(R.id.img_choice);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
+        }
+
+        SparringGoodsBean sparringGoodsBean = mDataList.get(position);
+        if (sparringGoodsBean != null) {
+            holder.mTextName.setText(sparringGoodsBean.getName());
+            holder.mTextTime.setText(sparringGoodsBean.getDescription());
+            holder.mImageChoice.setVisibility(sparringGoodsBean.isChoice() ? View.VISIBLE : View.GONE);
         }
 
         return convertView;
@@ -56,5 +67,7 @@ public class PopupCarTypeAdapter extends BaseAdapter {
 
     class ViewHolder {
         TextView mTextName;
+        TextView mTextTime;
+        ImageView mImageChoice;
     }
 }

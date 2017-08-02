@@ -120,7 +120,6 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onRefreshData() {
-
     }
 
     @Override

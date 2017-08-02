@@ -30,7 +30,6 @@ import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.County;
 import cn.qqtheme.framework.entity.Province;
 import cn.qqtheme.framework.global.GlobalConfig;
-import cn.qqtheme.framework.util.CustomDialog;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -112,8 +111,6 @@ public class LicenseCheckGradeActivity extends BaseJxActivity implements View.On
             province.setCities(cities);
             aresBeanList.add(province);
         }
-
-        CustomDialog.popupBottomArea(this, aresBeanList);
     }
 
     @Override

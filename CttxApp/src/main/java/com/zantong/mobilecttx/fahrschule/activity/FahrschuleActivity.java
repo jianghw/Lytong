@@ -73,8 +73,9 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
             case 0://驾校报名页面
                 if (mFahrschuleApplyFragment == null) {
                     mFahrschuleApplyFragment = FahrschuleApplyFragment.newInstance();
-                    FragmentUtils.replaceFragment(fragmentManager, mFahrschuleApplyFragment, R.id.content, true);
                 }
+                FragmentUtils.addFragment(
+                        fragmentManager, mFahrschuleApplyFragment, R.id.content, false, true);
                 mFahrschuleApplyFragment.setSwitcherListener(new SwitcherListener() {
                     @Override
                     public void setCurPosition(int position) {
@@ -85,14 +86,16 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
             case 1://驾校订单页面
                 if (mFahrschuleOrderNumFragment == null) {
                     mFahrschuleOrderNumFragment = FahrschuleOrderNumFragment.newInstance();
-                    FragmentUtils.replaceFragment(fragmentManager, mFahrschuleOrderNumFragment, R.id.content, true);
                 }
+                FragmentUtils.addFragment(
+                        fragmentManager, mFahrschuleOrderNumFragment, R.id.content, false, true);
                 break;
             case 2:
                 if (mFahrschuleApplySucceedFragment == null) {
                     mFahrschuleApplySucceedFragment = FahrschuleApplySucceedFragment.newInstance();
-                    FragmentUtils.replaceFragment(fragmentManager, mFahrschuleApplySucceedFragment, R.id.content, true);
                 }
+                FragmentUtils.addFragment(
+                        fragmentManager, mFahrschuleApplySucceedFragment, R.id.content, false, true);
                 break;
             default:
                 break;

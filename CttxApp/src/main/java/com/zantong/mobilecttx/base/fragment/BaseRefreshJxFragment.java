@@ -42,7 +42,7 @@ public abstract class BaseRefreshJxFragment extends BaseJxFragment {
         if (parent != null) {
             parent.removeView(rootView);
         }
-        linearLayout.addView(rootView, new LinearLayout.LayoutParams(
+        linearLayout.addView(rootView, new ViewGroup.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
 

@@ -49,8 +49,8 @@ public class OilPriceAdapter extends BaseAdapter<RechargeBean> {
             holder.mAmount.setBackgroundResource(data.isCheckd()
                     ? R.drawable.shape_keyboard_btn : R.drawable.shape_clean_btn);
             holder.mAmount.setTextColor(data.isCheckd()
-                    ? mContext.getResources().getColor(R.color.white)
-                    : mContext.getResources().getColor(R.color.gray_25));
+                    ? mContext.getResources().getColor(R.color.colorWhite)
+                    : mContext.getResources().getColor(R.color.colorTvBlack_b3));
         }
     }
 
