@@ -74,6 +74,7 @@ android {
             buildConfigField "String", "SHARE_APP_URL_2", "\"http://dev.liyingtong.com:8080/h5/share2/share.html\""
             buildConfigField "String", "SHARE_APP_URL_3", "\"http://dev.liyingtong.com:8080/h5/share3/share.html\""
             buildConfigField "String", "SHARE_APP_URL_4", "\"http://dev.liyingtong.com:8080/h5/share4/share.html\""
+            buildConfigField "String", "SHARE_APP_URL_5", "\"http://dev.liyingtong.com:8080/h5/share5/share.html\""
             //图片下载地址（正式地址）
             signingConfig signingConfigs.debug
         }
@@ -99,6 +100,7 @@ android {
             buildConfigField "String", "SHARE_APP_URL_2", "\"http://api.liyingtong.com/h5/share2/share.html\""
             buildConfigField "String", "SHARE_APP_URL_3", "\"http://api.liyingtong.com/h5/share3/share.html\""
             buildConfigField "String", "SHARE_APP_URL_4", "\"http://api.liyingtong.com/h5/share4/share.html\""
+            buildConfigField "String", "SHARE_APP_URL_5", "\"http://api.liyingtong.com/h5/share5/share.html\""
 
             //混淆
             minifyEnabled false

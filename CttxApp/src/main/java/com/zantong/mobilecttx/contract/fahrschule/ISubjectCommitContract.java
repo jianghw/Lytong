@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.contract.fahrschule;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 
@@ -28,6 +29,14 @@ public interface ISubjectCommitContract {
         String getEditName();
 
         String getEditPhone();
+
+        void couponByTypeError(String message);
+
+        void couponByTypeSucceed(RechargeCouponResult result);
+
+        String getCouponId();
+
+        boolean getUseCoupon();
     }
 
     interface ISubjectCommitPresenter extends IMvpPresenter {
@@ -35,6 +44,10 @@ public interface ISubjectCommitContract {
         void createOrder();
 
         CreateOrderDTO getCreateOrder();
+
+        void getCouponByType();
+
+        String initUserId();
     }
 
 }

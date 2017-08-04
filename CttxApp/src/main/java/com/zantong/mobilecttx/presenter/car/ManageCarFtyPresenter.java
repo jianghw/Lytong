@@ -418,7 +418,6 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
 
                     @Override
                     public void doError(Throwable e) {
-                        LogUtils.e("========="+e.getMessage());
                         mAtyView.addVehicleLicenseError(e.getMessage());
                     }
 

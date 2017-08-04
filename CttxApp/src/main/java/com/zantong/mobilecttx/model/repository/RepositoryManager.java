@@ -19,6 +19,7 @@ import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
 import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
+import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
 import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
@@ -37,6 +38,7 @@ import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
+import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
@@ -201,10 +203,8 @@ public class RepositoryManager {
 
     /**
      * 获取登录信息
-     *
-     * @return LoginInfoBean.RspInfoBean
      */
-    public LoginInfoBean.RspInfoBean readObjectLoginInfoBean() {
+    public RspInfoBean readObjectLoginInfoBean() {
         return mLocalData.readObjectLoginInfoBean();
     }
 
@@ -213,7 +213,7 @@ public class RepositoryManager {
      *
      * @param rspInfoBean
      */
-    public void initGlobalLoginInfo(LoginInfoBean.RspInfoBean rspInfoBean) {
+    public void initGlobalLoginInfo(RspInfoBean rspInfoBean) {
         mLocalData.initGlobalLoginInfo(rspInfoBean);
     }
 
@@ -479,5 +479,12 @@ public class RepositoryManager {
      */
     public Observable<SparringAreaResult> getServiceArea() {
         return mRemoteData.getServiceArea();
+    }
+
+    /**
+     * 21.获取服务器时间
+     */
+    public Observable<ServerTimeResult> getServerTime() {
+        return mRemoteData.getServerTime();
     }
 }

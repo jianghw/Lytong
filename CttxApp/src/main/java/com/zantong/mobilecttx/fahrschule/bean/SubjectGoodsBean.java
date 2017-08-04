@@ -9,43 +9,38 @@ package com.zantong.mobilecttx.fahrschule.bean;
 
 public class SubjectGoodsBean {
 
-
     /**
      * goodsId : 12
      * merchantId : 5
      * name : 自动挡 (工作日)
      * type : 4
-     * price : 1.0
+     * price : 100
      * description : 课程介绍课程介绍\n课程介绍课程介绍
      * status : 1
      * createTime : 1499756090
      * expiredTime : 86400
-     * discount : 1.0
-     * keyName : class_time
-     * dataValue : 4课时/8小时
+     * discount : 1
      */
 
     private int goodsId;
     private int merchantId;
     private String name;
     private int type;
-    private double price;
+    private int price;
     private String description;
     private int status;
     private int createTime;
     private int expiredTime;
-    private double discount;
-    private String keyName;
-    private String dataValue;
+    private int discount;
 
-    private boolean isChiose;
+    private boolean isChoice;
 
-    public boolean isChiose() {
-        return isChiose;
+    public boolean isChoice() {
+        return isChoice;
     }
 
-    public void setChiose(boolean chiose) {
-        isChiose = chiose;
+    public void setChoice(boolean choice) {
+        isChoice = choice;
     }
 
     public int getGoodsId() {
@@ -80,11 +75,11 @@ public class SubjectGoodsBean {
         this.type = type;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -120,27 +115,11 @@ public class SubjectGoodsBean {
         this.expiredTime = expiredTime;
     }
 
-    public double getDiscount() {
+    public int getDiscount() {
         return discount;
     }
 
-    public void setDiscount(double discount) {
+    public void setDiscount(int discount) {
         this.discount = discount;
-    }
-
-    public String getKeyName() {
-        return keyName;
-    }
-
-    public void setKeyName(String keyName) {
-        this.keyName = keyName;
-    }
-
-    public String getDataValue() {
-        return dataValue;
-    }
-
-    public void setDataValue(String dataValue) {
-        this.dataValue = dataValue;
     }
 }

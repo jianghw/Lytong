@@ -58,7 +58,8 @@ public class PopupCarTypeAdapter extends BaseAdapter {
         SparringGoodsBean sparringGoodsBean = mDataList.get(position);
         if (sparringGoodsBean != null) {
             holder.mTextName.setText(sparringGoodsBean.getName());
-            holder.mTextTime.setText(sparringGoodsBean.getDescription());
+            if (sparringGoodsBean.getPrice() > 0)
+                holder.mTextTime.setText(sparringGoodsBean.getPrice() + "元/小时");
             holder.mImageChoice.setVisibility(sparringGoodsBean.isChoice() ? View.VISIBLE : View.GONE);
         }
 

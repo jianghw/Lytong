@@ -146,8 +146,6 @@ public abstract class BaseAutoScrollUpTextView<T> extends ListView implements
 
     /**
      * 广告条适配器
-     *
-     * @author 顾林海
      */
     private class AutoScrollAdapter extends BaseAdapter {
 

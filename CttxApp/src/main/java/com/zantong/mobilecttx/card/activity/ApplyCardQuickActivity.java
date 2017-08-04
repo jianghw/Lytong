@@ -24,7 +24,6 @@ import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.card.bean.YingXiaoResult;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
 import com.zantong.mobilecttx.card.dto.QuickApplyCardDTO;
-import com.zantong.mobilecttx.card.dto.YingXiaoDataDTO;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
@@ -258,16 +257,17 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
     private void commitInfo() {
         showDialogLoading();
         HandleCTCardApiClient.htmlLocal(this, "cip.cfc.u010.01", quickApplyCardDTO, this);
+
+        commitYingXiaoDataForLYT(quickApplyCardDTO);
     }
 
     @Override
     public void resultSuccess(Result result) {
         hideDialogLoading();
         if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
-            commitYingXiaoDataForLYT();
             startActivity(ApplySuccessActvity.getIntent(this, wangdianAdress));
-        }else{
-            ToastUtils.showShort(getApplicationContext(),result.getSYS_HEAD().getReturnMessage());
+        } else {
+            ToastUtils.showShort(getApplicationContext(), result.getSYS_HEAD().getReturnMessage());
         }
     }
 
@@ -300,17 +300,12 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
     /**
      * 办卡申请成功后，提交营销代码
+     *
+     * @param quickApplyCardDTO
      */
-    private void commitYingXiaoDataForLYT() {
-        YingXiaoDataDTO dto = new YingXiaoDataDTO();
-        dto.setUsrnum(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
-        if (TextUtils.isEmpty(mYingXiaoCode.getContentText())) {
-            dto.setEmpNum(mEmpNum);
-        } else {
-            dto.setEmpNum(mYingXiaoCode.getContentText());
-        }
+    private void commitYingXiaoDataForLYT(QuickApplyCardDTO quickApplyCardDTO) {
 
-        CarApiClient.commitYingXiaoData(this, dto, new CallBack<BaseResult>() {
+        CarApiClient.commitYingXiaoData(this, quickApplyCardDTO, new CallBack<BaseResult>() {
             @Override
             public void onSuccess(BaseResult result) {
                 if (result.getResponseCode() == 2000) {

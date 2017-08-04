@@ -2,9 +2,14 @@ package com.zantong.mobilecttx.contract.fahrschule;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
-import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
+import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * 驾校陪练订单页面
@@ -22,13 +27,28 @@ public interface ISparringSubscribeContract {
 
         void serviceAreaSucceed(SparringAreaResult result);
 
-        void getGoodsError(String message);
-
-        void getGoodsSucceed(SubjectGoodsResult result);
-
         void goodsSucceed(SparringGoodsResult result);
 
         void goodsError(String s);
+
+        void serverTimeError(String message);
+
+        void serverTimeSucceed(ArrayList<String> dateList, Date dateString);
+
+        void couponByTypeSucceed(RechargeCouponResult result);
+
+        void couponByTypeError(String message);
+
+        CreateOrderDTO getCreateOrderDTO();
+
+        void createOrderError(String message);
+
+        void createOrderSucceed(CreateOrderResult result);
+
+        boolean getUseCoupon();
+
+        String getCouponId();
+
     }
 
     interface ISparringSubscribePresenter extends IMvpPresenter {
@@ -37,6 +57,15 @@ public interface ISparringSubscribeContract {
 
         void getGoods();
 
+        void getServerTime();
+
+        void getCouponByType();
+
+        String initUserId();
+
+        void createOrder();
+
+        CreateOrderDTO getCreateOrder();
     }
 
 }

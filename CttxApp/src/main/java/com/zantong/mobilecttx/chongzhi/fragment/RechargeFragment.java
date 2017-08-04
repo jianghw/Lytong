@@ -227,7 +227,6 @@ public class RechargeFragment extends PullableBaseFragment
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.onSubscribe();
     }
 
     @Override
@@ -452,7 +451,7 @@ public class RechargeFragment extends PullableBaseFragment
                 }
             }
             if (couponBean == null) {
-                ToastUtils.showShort(getActivity().getApplicationContext(), "请选择优惠劵");
+                ToastUtils.toastShort("请选择优惠劵");
                 return;
             }
             CouponFragmentBean couponFragmentBean = null;
@@ -654,14 +653,12 @@ public class RechargeFragment extends PullableBaseFragment
     public void onCouponByTypeError(String message) {
         displayCouponState("获取失败,点击加载");
 
-        ToastUtils.toastShort(message);
         dismissLoadingDialog();
+        ToastUtils.toastShort(message);
     }
 
     /**
      * 优惠劵错误状态
-     *
-     * @param msg
      */
     private void displayCouponState(String msg) {
         mCouponType = 2;
@@ -723,7 +720,7 @@ public class RechargeFragment extends PullableBaseFragment
 
     @Override
     public void addOilCreateOrderError(String msg) {
-        ToastUtils.showShort(getContext().getApplicationContext(), msg);
+        ToastUtils.toastShort(msg);
         dismissLoadingDialog();
     }
 
@@ -732,7 +729,7 @@ public class RechargeFragment extends PullableBaseFragment
      */
     @Override
     public void addOilCreateOrderSucceed(final RechargeResult result) {
-        ToastUtils.showShort(getContext().getApplicationContext(), result.getResponseDesc());
+        ToastUtils.toastShort(result.getResponseDesc());
 
         DialogUtils.createRechargeDialog(getActivity(),
                 result.getData().getOrderId(),

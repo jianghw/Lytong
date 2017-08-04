@@ -9,6 +9,7 @@ import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
+import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
@@ -86,7 +87,7 @@ public class LocalData {
     /**
      * 登陆用户信息
      */
-    public LoginInfoBean.RspInfoBean getDefaultUser() {
+    public RspInfoBean getDefaultUser() {
         return PublicData.getInstance().mLoginInfoBean;
     }
 
@@ -114,11 +115,10 @@ public class LocalData {
     /**
      * 获取登录信息
      *
-     * @return LoginInfoBean.RspInfoBean
      */
-    public LoginInfoBean.RspInfoBean readObjectLoginInfoBean() {
-        LoginInfoBean.RspInfoBean rspInfoBean;
-        rspInfoBean = (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject();
+    public RspInfoBean readObjectLoginInfoBean() {
+        RspInfoBean rspInfoBean;
+        rspInfoBean = (RspInfoBean) UserInfoRememberCtrl.readObject();
         return rspInfoBean;
     }
 
@@ -127,7 +127,7 @@ public class LocalData {
      *
      * @param rspInfoBean
      */
-    public void initGlobalLoginInfo(LoginInfoBean.RspInfoBean rspInfoBean) {
+    public void initGlobalLoginInfo(RspInfoBean rspInfoBean) {
         if (rspInfoBean == null) return;
         PublicData.getInstance().mLoginInfoBean = rspInfoBean;
         PublicData.getInstance().userID = rspInfoBean.getUsrid();

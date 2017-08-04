@@ -24,7 +24,6 @@ import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.card.bean.YingXiaoResult;
 import com.zantong.mobilecttx.card.dto.ApplyCTCardDTO;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
-import com.zantong.mobilecttx.card.dto.YingXiaoDataDTO;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.CommonTwoLevelMenuActivity;
@@ -58,6 +57,7 @@ import javax.xml.parsers.SAXParserFactory;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.picker.DatePicker;
+import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;
@@ -689,7 +689,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
 //手机号码
         String userPhone = mUserPhone.getContentText();
         if (checkIsEmpty(userPhone, "手机号不可为空")) return;
-        if (!RegexUtils.isMobileExact(userPhone)) {
+        if (!RegexUtils.isMobileSimple(userPhone)) {
             ToastUtils.toastShort("请确保手机号真实准确");
             return;
         }
@@ -749,7 +749,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
 
         String contactMobile = mContactMobile.getContentText();
         if (checkIsEmpty(contactMobile, "联系人手机号不可为空")) return;
-        if (!RegexUtils.isMobileExact(contactMobile)) {
+        if (!RegexUtils.isMobileSimple(contactMobile)) {
             ToastUtils.showShort(getApplicationContext(), "请确保联系人手机号真实准确");
             return;
         }
@@ -782,6 +782,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         }
 
         commitInfo();
+        commitYingXiaoDataForLYT(applyCTCardDTO);
     }
 
     /**
@@ -811,7 +812,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     public void resultSuccess(Result result) {
         hideDialogLoading();
         if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
-            commitYingXiaoDataForLYT();
+
             if (TextUtils.isEmpty(wangdianAdress)) {
                 ToastUtils.toastShort("请选择领卡网点");
             } else {
@@ -830,23 +831,22 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
 
     /**
      * 办卡申请成功后，提交营销代码
+     *
+     * @param applyCTCardDTO
      */
-    private void commitYingXiaoDataForLYT() {
-        YingXiaoDataDTO dto = new YingXiaoDataDTO();
-        dto.setUsrnum(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
+    private void commitYingXiaoDataForLYT(ApplyCTCardDTO applyCTCardDTO) {
+//        YingXiaoDataDTO dto = new YingXiaoDataDTO();
+//        dto.setUsrnum(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
+//
+//        if (TextUtils.isEmpty(mYingXiaoCode.getContentText())) {
+//            dto.setEmpNum(mMarketingCode);
+//        } else {
+//            dto.setEmpNum(mYingXiaoCode.getContentText());
+//        }
 
-        if (TextUtils.isEmpty(mYingXiaoCode.getContentText())) {
-            dto.setEmpNum(mMarketingCode);
-        } else {
-            dto.setEmpNum(mYingXiaoCode.getContentText());
-        }
-
-        CarApiClient.commitYingXiaoData(getApplicationContext(), dto, new CallBack<BaseResult>() {
+        CarApiClient.commitYingXiaoData(ContextUtils.getContext(), applyCTCardDTO, new CallBack<BaseResult>() {
             @Override
             public void onSuccess(BaseResult result) {
-                if (result.getResponseCode() == 2000) {
-                    ToastUtils.toastShort("已提交营销代码");
-                }
             }
         });
     }

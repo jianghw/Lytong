@@ -8,12 +8,15 @@ public class SubjectOrderEvent {
     private final SubjectGoodsBean mGoodsBean;
     private final String mEditName;
     private final String mPhone;
+    private final String mPrice;
 
-    public SubjectOrderEvent(String orderId, SubjectGoodsBean goodsBean, String editName, String phone) {
+    public SubjectOrderEvent(String orderId, SubjectGoodsBean goodsBean,
+                             String editName, String editPhone, String priceValue) {
         mOrderId = orderId;
         mGoodsBean = goodsBean;
         mEditName = editName;
-        mPhone = phone;
+        mPhone = editPhone;
+        mPrice = priceValue;
     }
 
     public String getOrderId() {
@@ -30,5 +33,9 @@ public class SubjectOrderEvent {
 
     public String getPhone() {
         return mPhone;
+    }
+
+    public String getPrice() {
+        return mPrice;
     }
 }

@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.presenter.browser;
 
 import android.support.annotation.NonNull;
 
-import com.zantong.mobilecttx.contract.IFahrschuleBrowserFtyContract;
+import com.zantong.mobilecttx.contract.browser.IPayBrowserFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
@@ -23,15 +23,15 @@ import rx.subscriptions.CompositeSubscription;
  * Update by:
  * Update day:
  */
-public class FahrschuleBrowserPresenter
-        implements IFahrschuleBrowserFtyContract.IFahrschuleBrowserFtyPresenter {
+public class PayBrowserPresenter
+        implements IPayBrowserFtyContract.IPayBrowserFtyPresenter {
 
     private final RepositoryManager mRepository;
-    private final IFahrschuleBrowserFtyContract.IFahrschuleBrowserFtyView mAtyView;
+    private final IPayBrowserFtyContract.IPayBrowserFtyView mAtyView;
     private final CompositeSubscription mSubscriptions;
 
-    public FahrschuleBrowserPresenter(@NonNull RepositoryManager repositoryManager,
-                                      @NonNull IFahrschuleBrowserFtyContract.IFahrschuleBrowserFtyView view) {
+    public PayBrowserPresenter(@NonNull RepositoryManager repositoryManager,
+                               @NonNull IPayBrowserFtyContract.IPayBrowserFtyView view) {
         mRepository = repositoryManager;
         mAtyView = view;
         mSubscriptions = new CompositeSubscription();
@@ -54,9 +54,9 @@ public class FahrschuleBrowserPresenter
      */
     @Override
     public void orderDetail() {
-        Subscription subscription = Observable.interval(5, 3000, TimeUnit.MILLISECONDS)
-                .take(3)
-                .subscribeOn(Schedulers.computation())
+        Subscription subscription = Observable.interval(2, 3000, TimeUnit.MILLISECONDS)
+                .take(4)
+                .subscribeOn(Schedulers.newThread())
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {

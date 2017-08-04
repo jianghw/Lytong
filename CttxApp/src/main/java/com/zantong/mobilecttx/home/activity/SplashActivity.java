@@ -137,8 +137,6 @@ public class SplashActivity extends AppCompatActivity
 
     /**
      * 广告图片显示
-     *
-     * @param result
      */
     @Override
     public void displayAdsImage(StartPicResult result) {

@@ -7,7 +7,7 @@ import com.zantong.mobilecttx.base.bean.Result;
  */
 public class LoginResult extends Result {
 
-    private LoginInfoBean.RspInfoBean RspInfo;
+    private RspInfoBean RspInfo;
 //
 //    public Login getRspInfo() {
 //        return RspInfo;
@@ -18,11 +18,11 @@ public class LoginResult extends Result {
 //    }
 
 
-    public void setRspInfo(LoginInfoBean.RspInfoBean rspInfo) {
+    public void setRspInfo(RspInfoBean rspInfo) {
         RspInfo = rspInfo;
     }
 
-    public LoginInfoBean.RspInfoBean getRspInfo() {
+    public RspInfoBean getRspInfo() {
         return RspInfo;
     }
 }

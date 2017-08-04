@@ -1,21 +1,21 @@
 package com.zantong.mobilecttx.presenter;
 
-import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.base.MessageFormat;
-import com.zantong.mobilecttx.user.bean.CTTXInsurancePayBean;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
+import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.cordova.hwidget.CTTXInsurancePay;
 import com.zantong.mobilecttx.model.InsurancePayModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.zantong.mobilecttx.user.bean.CTTXInsurancePayBean;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
-import com.zantong.mobilecttx.cordova.hwidget.CTTXInsurancePay;
+import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * Created by 王海洋 on 2016/5/5.
@@ -33,7 +33,6 @@ public class InsurancePayPresenterImp implements SimplePresenter, OnLoadServiceB
     public InsurancePayPresenterImp(CTTXInsurancePay mCTTXInsurancePay) {
         this.mCTTXInsurancePay = mCTTXInsurancePay;
         mInsurancePayModelImp = new InsurancePayModelImp();
-//        mRspInfoBean = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(mConsummateInfo, PublicData.getInstance().CarLocaelFlag);
     }
 
 
@@ -58,7 +57,7 @@ public class InsurancePayPresenterImp implements SimplePresenter, OnLoadServiceB
                 break;
         }
         msg = MessageFormat.getInstance().getMessageFormat();
-//        Log.e("why",msg);
+
         mInsurancePayModelImp.loadUpdate(this, msg, index);
     }
 
@@ -68,19 +67,14 @@ public class InsurancePayPresenterImp implements SimplePresenter, OnLoadServiceB
         if(PublicData.getInstance().success.equals(((CTTXInsurancePayBean) clazz).getSYS_HEAD().getReturnCode())){
             mCTTXInsurancePay.updateView(clazz, index);
         }else{
-           ToastUtils.showShort(mCTTXInsurancePay.cordova.getActivity(), ((CTTXInsurancePayBean) clazz).getSYS_HEAD().getReturnMessage());
+           ToastUtils.toastShort(((CTTXInsurancePayBean) clazz).getSYS_HEAD().getReturnMessage());
         }
-//        OpenQueryBean.RspInfoBean.UserCarsInfoBean mUserCarsInfoBean = new OpenQueryBean.RspInfoBean.UserCarsInfoBean();
-//        mUserCarsInfoBean.setCarmodel("");
-//        mUserCarsInfoBean.setCarnumtype(mAddVehicle.mapData().get("carnumtype"));
-//        mUserCarsInfoBean.setCarnum(mAddVehicle.mapData().get("carnum"));
-//        mRspInfoBean.getUserCarsInfo().add(mUserCarsInfoBean);
     }
 
     @Override
     public void onFailed() {
         mCTTXInsurancePay.hideProgress();
-        ToastUtils.showShort(mCTTXInsurancePay.cordova.getActivity(), Config.getErrMsg("1"));
+        ToastUtils.toastShort(Config.getErrMsg("1"));
     }
 
 }

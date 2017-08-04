@@ -16,7 +16,6 @@ import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
@@ -30,7 +29,6 @@ public class SubjectSucceedFragment extends BaseRefreshJxFragment implements Vie
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private FahrschuleActivity.SwitcherListener mSwitcherListener;
 
     private String mParam1;
     private String mParam2;
@@ -75,7 +73,6 @@ public class SubjectSucceedFragment extends BaseRefreshJxFragment implements Vie
 
     @Override
     protected void onRefreshData() {
-
     }
 
     @Override
@@ -86,10 +83,6 @@ public class SubjectSucceedFragment extends BaseRefreshJxFragment implements Vie
     @Override
     protected void initFragmentView(View view) {
         initView(view);
-    }
-
-    public void setSwitcherListener(FahrschuleActivity.SwitcherListener switcherListener) {
-        mSwitcherListener = switcherListener;
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
 import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
+import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
 import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
@@ -271,4 +272,9 @@ public interface IRemoteSource {
      * 20.新手陪练获取服务地区
      */
     Observable<SparringAreaResult> getServiceArea();
+
+    /**
+     * 21.获取服务器时间
+     */
+    Observable<ServerTimeResult> getServerTime();
 }

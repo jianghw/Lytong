@@ -136,4 +136,52 @@ public class CreateOrderDTO {
     public void setIdCard(String idCard) {
         this.idCard = idCard;
     }
+
+    public String getServiceArea() {
+        return serviceArea;
+    }
+
+    public void setServiceArea(String serviceArea) {
+        this.serviceArea = serviceArea;
+    }
+
+    public String getServiceAddress() {
+        return serviceAddress;
+    }
+
+    public void setServiceAddress(String serviceAddress) {
+        this.serviceAddress = serviceAddress;
+    }
+
+    public String getSpeedType() {
+        return speedType;
+    }
+
+    public void setSpeedType(String speedType) {
+        this.speedType = speedType;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getDriveNum() {
+        return driveNum;
+    }
+
+    public void setDriveNum(String driveNum) {
+        this.driveNum = driveNum;
+    }
 }

@@ -97,7 +97,6 @@ public class ViolationListFragment extends BaseRecyclerListJxFragment<ViolationB
 
     @Override
     protected void DestroyViewAndThing() {
-
     }
 
     /**

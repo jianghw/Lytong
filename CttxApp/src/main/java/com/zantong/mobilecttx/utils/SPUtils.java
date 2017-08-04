@@ -7,7 +7,7 @@ import android.content.SharedPreferences.Editor;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
-import com.zantong.mobilecttx.user.bean.LoginInfoBean;
+import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
@@ -312,7 +312,7 @@ public class SPUtils {
      *
      * @param mLoginInfoBean
      */
-    public void setLoginInfoBean(LoginInfoBean.RspInfoBean mLoginInfoBean) {
+    public void setLoginInfoBean(RspInfoBean mLoginInfoBean) {
         String str = "";
         try {
             str = SerializableUtils.obj2Str(mLoginInfoBean);
@@ -323,14 +323,14 @@ public class SPUtils {
         this.mEditor.commit();
     }
 
-    public LoginInfoBean.RspInfoBean getLoginInfoBean() {
+    public RspInfoBean getLoginInfoBean() {
 
-        LoginInfoBean.RspInfoBean mLoginInfoBean = null;
+        RspInfoBean mLoginInfoBean = null;
         // 获取序列化的数据
         String str = this.mSharedPreferences.getString(LOGIN_INFO_BEAN, "");
         try {
             Object obj = SerializableUtils.str2Obj(str);
-            if (obj != null) mLoginInfoBean = (LoginInfoBean.RspInfoBean) obj;
+            if (obj != null) mLoginInfoBean = (RspInfoBean) obj;
         } catch (Exception e) {
             e.printStackTrace();
         }

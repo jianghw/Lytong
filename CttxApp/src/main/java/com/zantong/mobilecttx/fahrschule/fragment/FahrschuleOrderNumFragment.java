@@ -13,7 +13,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.FahrschulePayBrowserActivity;
+import com.zantong.mobilecttx.common.activity.PayBrowserActivity;
 import com.zantong.mobilecttx.eventbus.FahrschuleApplyEvent;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.contract.IFahrschuleOrderNumFtyContract;
@@ -249,7 +249,7 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             getActivity().startActivity(intent);
         } else {
-            Intent intent = new Intent(getActivity(), FahrschulePayBrowserActivity.class);
+            Intent intent = new Intent(getActivity(), PayBrowserActivity.class);
             intent.putExtra(GlobalConstant.putExtra.web_title_extra, "支付");
             intent.putExtra(GlobalConstant.putExtra.web_url_extra, result.getData());
             intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, mTvOrder.getText().toString());

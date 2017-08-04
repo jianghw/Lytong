@@ -5,8 +5,8 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.eventbus.GetUserEvent;
+import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 
@@ -69,7 +69,7 @@ public class CTTXGetUserMessage extends CordovaPlugin {
 
     private void sendData(CallbackContext callbackContext){
         try {
-            LoginInfoBean.RspInfoBean user = (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject();
+            RspInfoBean user = (RspInfoBean) UserInfoRememberCtrl.readObject();
             if(user == null){
 //                CTTXGetUserMessage.this.errorEcho("ERROR", callbackContext);
                 callbackContext.error("ERROR");

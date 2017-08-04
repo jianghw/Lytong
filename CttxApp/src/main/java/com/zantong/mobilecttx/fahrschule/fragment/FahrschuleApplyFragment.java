@@ -261,7 +261,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
             return;
         }
         String editPhone = getEditPhone();
-        if (TextUtils.isEmpty(editPhone) || !RegexUtils.isMobileExact(editPhone)) {
+        if (TextUtils.isEmpty(editPhone) || !RegexUtils.isMobileSimple(editPhone)) {
             ToastUtils.toastShort("请输入正确手机号码");
             return;
         }

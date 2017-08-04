@@ -16,7 +16,7 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.fragment.HomeFavorableFragment;
 import com.zantong.mobilecttx.home.fragment.HomeMeFragment;
 import com.zantong.mobilecttx.home.fragment.HomeUnimpededFragment;
-import com.zantong.mobilecttx.user.bean.LoginInfoBean;
+import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.utils.AccountRememberCtrl;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
@@ -93,8 +93,8 @@ public class HomeMainActivity extends BaseJxActivity {
      * 登陆信息
      */
     public void initLoginInfo() {
-        LoginInfoBean.RspInfoBean user =
-                (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject();
+        RspInfoBean user =
+                (RspInfoBean) UserInfoRememberCtrl.readObject();
         if (null != user) {
             PublicData.getInstance().userID = user.getUsrid();
             PublicData.getInstance().loginFlag = true;

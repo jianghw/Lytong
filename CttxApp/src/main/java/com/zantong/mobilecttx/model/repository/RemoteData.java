@@ -1,5 +1,7 @@
 package com.zantong.mobilecttx.model.repository;
 
+import android.text.TextUtils;
+
 import com.zantong.mobilecttx.api.IAddOilService;
 import com.zantong.mobilecttx.api.IBankService;
 import com.zantong.mobilecttx.api.IBannerService;
@@ -31,6 +33,7 @@ import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
 import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
+import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
 import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
@@ -58,7 +61,9 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MultipartBody;
 import retrofit2.Retrofit;
@@ -276,11 +281,59 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<CreateOrderResult> createOrder(CreateOrderDTO createOrder) {
-        return initRetrofit().create(IGoodsService.class).createOrder(
-                createOrder.getType(), createOrder.getUserNum(),
-                createOrder.getGoodsId(), createOrder.getPrice(),
-                createOrder.getUserName(), createOrder.getPhone(),
-                createOrder.getIdCard(), createOrder.getPayType());
+        Map<String, String> options = new HashMap<>();
+        if (!TextUtils.isEmpty(createOrder.getType()))
+            options.put("type", createOrder.getType());
+
+        if (!TextUtils.isEmpty(createOrder.getUserNum()))
+            options.put("userNum", createOrder.getUserNum());
+
+        if (!TextUtils.isEmpty(createOrder.getGoodsId()))
+            options.put("goodsId", createOrder.getGoodsId());
+
+        if (!TextUtils.isEmpty(createOrder.getPrice()))
+            options.put("price", createOrder.getPrice());
+
+        if (!TextUtils.isEmpty(createOrder.getRemark()))
+            options.put("remark", createOrder.getRemark());
+
+        if (!TextUtils.isEmpty(createOrder.getOilCardNum()))
+            options.put("oilCardNum", createOrder.getOilCardNum());
+
+        if (!TextUtils.isEmpty(createOrder.getPayType()))
+            options.put("payType", createOrder.getPayType());
+
+        if (!TextUtils.isEmpty(createOrder.getCouponId()))
+            options.put("couponId", createOrder.getCouponId());
+
+        if (!TextUtils.isEmpty(createOrder.getSpeedType()))
+            options.put("speedType", createOrder.getSpeedType());
+
+        if (!TextUtils.isEmpty(createOrder.getUserName()))
+            options.put("userName", createOrder.getUserName());
+
+        if (!TextUtils.isEmpty(createOrder.getPhone()))
+            options.put("phone", createOrder.getPhone());
+
+        if (!TextUtils.isEmpty(createOrder.getIdCard()))
+            options.put("idCard", createOrder.getIdCard());
+
+        if (!TextUtils.isEmpty(createOrder.getServiceArea()))
+            options.put("serviceArea", createOrder.getServiceArea());
+
+        if (!TextUtils.isEmpty(createOrder.getServiceAddress()))
+            options.put("serviceAddress", createOrder.getServiceAddress());
+
+        if (!TextUtils.isEmpty(createOrder.getStartTime()))
+            options.put("startTime", createOrder.getStartTime());
+
+        if (!TextUtils.isEmpty(createOrder.getEndTime()))
+            options.put("endTime", createOrder.getEndTime());
+
+        if (!TextUtils.isEmpty(createOrder.getDriveNum()))
+            options.put("driveNum", createOrder.getDriveNum());
+
+        return initRetrofit().create(IGoodsService.class).createOrder(options);
     }
 
     /**
@@ -439,5 +492,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<SparringAreaResult> getServiceArea() {
         return initRetrofit().create(IDriverTrainService.class).getServiceArea();
+    }
+
+    /**
+     * 21.获取服务器时间
+     */
+    @Override
+    public Observable<ServerTimeResult> getServerTime() {
+        return initRetrofit().create(IDriverTrainService.class).getServerTime();
     }
 }

@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * 优惠页面 广告
  */
-
 public class BannerResult extends BaseResult {
 
     private List<BannerBean> data;

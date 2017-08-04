@@ -89,7 +89,6 @@ public class QueryResultActivity extends AppCompatActivity
     private IllegalViolationPresenter mIllegalViolationPresenter;
     private OpenQueryBean.RspInfoBean mRspInfoBean;
     private boolean JumpFlag = true;
-//    private OpenQueryBean.RspInfoBean mRspInfoBean = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(this, PublicData.getInstance().CarLocaelFlag);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,7 +102,7 @@ public class QueryResultActivity extends AppCompatActivity
         title = (String) PublicData.getInstance().mHashMap.get("IllegalViolationName");
 //
         TitleSetting.getInstance().initTitle(QueryResultActivity.this, title, 0, "取消", null, "缴费须知");
-//        TitleSetting.getInstance().initTitle(IllegalViolation.this, title, 0, "取消", null, "");
+
         mIllegalViolations = (Map<String, List<String>>) UserInfoRememberCtrl.readObject(PublicData.getInstance().IllegalViolationFlag);
         mRspInfoBean = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(PublicData.getInstance().CarLocalFlag);
 

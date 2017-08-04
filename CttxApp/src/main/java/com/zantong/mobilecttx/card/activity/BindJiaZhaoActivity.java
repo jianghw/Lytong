@@ -22,7 +22,7 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
-import com.zantong.mobilecttx.user.bean.LoginInfoBean;
+import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.ValidateUtils;
@@ -213,7 +213,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
                             }
                         });
                         PublicData.getInstance().filenum = fileNum;
-                        LoginInfoBean.RspInfoBean user = (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject();
+                        RspInfoBean user = (RspInfoBean) UserInfoRememberCtrl.readObject();
                         user.setFilenum(fileNum);
 
                         UserInfoRememberCtrl.saveObject(user);

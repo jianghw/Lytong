@@ -15,7 +15,6 @@ import com.zantong.mobilecttx.card.bean.YingXiaoResult;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.card.dto.BindDrivingDTO;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
-import com.zantong.mobilecttx.card.dto.YingXiaoDataDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeOrderDetailResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeOrderResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
@@ -45,9 +44,9 @@ import com.zantong.mobilecttx.map.bean.WachCarPlaceDetailResult;
 import com.zantong.mobilecttx.map.bean.WachCarPlaceResult;
 import com.zantong.mobilecttx.map.bean.YearCheckDetailResult;
 import com.zantong.mobilecttx.map.bean.YearCheckResult;
+import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.BonusResult;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
-import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
 import com.zantong.mobilecttx.user.dto.BonusDTO;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;
@@ -167,12 +166,7 @@ public class CarApiClient extends BaseApiClient {
     }
 
     /**
-     * /**
      * 统计广告点击次数
-     *
-     * @param context
-     * @param id
-     * @param callback
      */
     public static void commitAdClick(Context context, int id, CallBack<BaseResult> callback) {
         BaseCallBack<BaseResult> baseCallBack = new BaseCallBack<BaseResult>(
@@ -313,6 +307,7 @@ public class CarApiClient extends BaseApiClient {
 //        post(context, "http://139.196.183.121:8081/daijia/nearByInfo", dto,result);
         post(context, getUrl("daijia/nearByInfo"), dto, result);
     }
+
     public static void huJiaoDaiJia(Context context, DaiJiaCreateDTO dto, CallBack<DaiJiaCreateResult> callback) {
         BaseCallBack<DaiJiaCreateResult> result = new BaseCallBack<DaiJiaCreateResult>(
                 context, callback, DaiJiaCreateResult.class);
@@ -328,22 +323,16 @@ public class CarApiClient extends BaseApiClient {
 
     /**
      * 代驾中详情
-     *
-     * @param context
-     * @param dto
-     * @param callback
      */
     public static void getDaiJiaOrderDetail(Context context, DaiJiaOrderDetailDTO dto, CallBack<DaiJiaOrderDetailResult> callback) {
         BaseCallBack<DaiJiaOrderDetailResult> result = new BaseCallBack<DaiJiaOrderDetailResult>(
                 context, callback, DaiJiaOrderDetailResult.class);
-//        post(context, "http://139.196.183.121:8081/daijia/queryOrderDetail", dto,result);
         post(context, getUrl("daijia/queryOrderDetail"), dto, result);
     }
 
     public static void cancelDaiJiaOrderDetail(Context context, DaiJiaOrderDetailDTO dto, CallBack<BaseResult> callback) {
         BaseCallBack<BaseResult> result = new BaseCallBack<BaseResult>(
                 context, callback, BaseResult.class);
-//        post(context, "http://139.196.183.121:8081/daijia/cancelOrder", dto,result);
         post(context, getUrl("daijia/cancelOrder"), dto, result);
 
     }
@@ -351,33 +340,31 @@ public class CarApiClient extends BaseApiClient {
     public static void getDaiJiaOrderList(Context context, DaiJiaOrderListDTO dto, CallBack<DaiJiaOrderListResult> callback) {
         BaseCallBack<DaiJiaOrderListResult> result = new BaseCallBack<DaiJiaOrderListResult>(
                 context, callback, DaiJiaOrderListResult.class);
-//        post(context, "http://139.196.183.121:8081/daijia/findAll", dto,result);
         post(context, getUrl("daijia/findAll"), dto, result);
     }
 
     public static void getMsgTypeList(Context context, BaseDTO dto, CallBack<MessageTypeResult> callback) {
         BaseCallBack<MessageTypeResult> result = new BaseCallBack<MessageTypeResult>(
                 context, callback, MessageTypeResult.class);
-//        post(context, "http://139.196.183.121:8081/message/findAll", dto,result);
         post(context, getUrl("message/findAll"), dto, result);
     }
 
     public static void getMsgList(Context context, MegDTO dto, CallBack<MessageResult> callback) {
         BaseCallBack<MessageResult> result = new BaseCallBack<MessageResult>(
                 context, callback, MessageResult.class);
-//        post(context, "http://139.196.183.121:8081/message/findMessageDetailByMessageId", dto,result);
         post(context, getUrl("message/findMessageDetailByMessageId"), dto, result);
     }
+
     public static void getUnReadMsgCount(Context context, BaseDTO dto, CallBack<MessageCountResult> callback) {
         BaseCallBack<MessageCountResult> result = new BaseCallBack<>(
                 context, callback, MessageCountResult.class);
-//        post(context, "http://139.196.183.121:8081/message/countMessageDetail", dto,result);
         post(context, getUrl("message/countMessageDetail"), dto, result);
     }
-    public static void commitYingXiaoData(Context context, YingXiaoDataDTO dto, CallBack<BaseResult> callback) {
-        BaseCallBack<BaseResult> result = new BaseCallBack<BaseResult>(
+
+    public static void commitYingXiaoData(Context context, Object dto, CallBack<BaseResult> callback) {
+        BaseCallBack<BaseResult> result = new BaseCallBack<>(
                 context, callback, BaseResult.class);
-        post(context, getUrl("cttx/employeeRateUser"), dto, result);
+        post(context, getUrl("applyRecord/add"), dto, result);
     }
 
     public static void getPayOrderSn(Context context, String params, CallBack<PayOrderResult> callback) {
@@ -391,16 +378,19 @@ public class CarApiClient extends BaseApiClient {
         Config.OCR_TYPE = 0;
         post(context, "http://liyingtong.com:8080/PIM_DRIVING/SrvXMLAPI", file, result);
     }
+
     public static void uploadDriverImg(Context context, File file, CallBack<DriverOcrResult> callback) {
         OcrCallBack<DriverOcrResult> result = new OcrCallBack<>(context, callback, DriverOcrResult.class);
         Config.OCR_TYPE = 1;
         post(context, "http://liyingtong.com:8080/PIM_DRIVER/SrvXMLAPI", file, result);
     }
+
     public static void getViolationHistory(Context context, ViolationSearchDTO params, CallBack<ViolationHistoryBean> callback) {
         BaseCallBack<ViolationHistoryBean> result = new BaseCallBack<ViolationHistoryBean>(
                 context, callback, ViolationHistoryBean.class);
         post(context, getUrl("payment/getPayCar"), params, result);
     }
+
     public static void getViolationHistoryByCar(Context context, ViolationSearchDTO params, CallBack<ViolationItemBean> callback) {
         BaseCallBack<ViolationItemBean> result = new BaseCallBack<ViolationItemBean>(
                 context, callback, ViolationItemBean.class);

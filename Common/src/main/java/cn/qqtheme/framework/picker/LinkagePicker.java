@@ -40,6 +40,21 @@ public class LinkagePicker extends WheelPicker {
     private double firstColumnWeight = 0;//第一级显示的宽度比
     private double secondColumnWeight = 0;//第二级显示的宽度比
     private double thirdColumnWeight = 0;//第三级显示的宽度比
+    /**
+     * 是否联动
+     */
+    private boolean mFirstLinkage = true;
+    private boolean mSecondLinkage = true;
+    private boolean mThirdLinkage = true;
+    /**
+     * 控件布局对象
+     */
+    private WheelView thirdView;
+    private WheelView secondView;
+    /**
+     * 滑动监听
+     */
+    private WheelViewListener wheelViewListener;
 
     public LinkagePicker(Activity activity) {
         super(activity);
@@ -50,6 +65,7 @@ public class LinkagePicker extends WheelPicker {
      */
     public LinkagePicker(Activity activity, ArrayList<String> firstList,
                          ArrayList<ArrayList<String>> secondList) {
+
         this(activity, firstList, secondList, null);
     }
 
@@ -109,6 +125,17 @@ public class LinkagePicker extends WheelPicker {
             }
         }
     }
+
+    /**
+     * @param thirdArrayLists
+     * @see SparringTimePicker 专用方法
+     */
+    public void updateSelThirdItem(ArrayList<ArrayList<ArrayList<String>>> thirdArrayLists) {
+        this.thirdList = thirdArrayLists;
+        selectedThirdIndex = 0;
+        thirdView.setItems(this.thirdList.get(0).get(0), selectedThirdIndex);
+    }
+
 
     public String getSelectedFirstText() {
         return selectedFirstText;
@@ -204,7 +231,7 @@ public class LinkagePicker extends WheelPicker {
         firstView.setOffset(offset);
         layout.addView(firstView);
 
-        final WheelView secondView = new WheelView(activity);
+        secondView = new WheelView(activity);
         secondView.setLayoutParams(new LinearLayout.LayoutParams(widths[1], WRAP_CONTENT));
         secondView.setTextSize(textSize);
         secondView.setTextColor(textColorNormal, textColorFocus);
@@ -213,7 +240,7 @@ public class LinkagePicker extends WheelPicker {
         secondView.setOffset(offset);
         layout.addView(secondView);
 
-        final WheelView thirdView = new WheelView(activity);
+        thirdView = new WheelView(activity);
         thirdView.setLayoutParams(new LinearLayout.LayoutParams(widths[2], WRAP_CONTENT));
         thirdView.setTextSize(textSize);
         thirdView.setTextColor(textColorNormal, textColorFocus);
@@ -225,48 +252,66 @@ public class LinkagePicker extends WheelPicker {
         if (onlyTwo) {
             thirdView.setVisibility(View.GONE);
         }
+
         firstView.setItems(firstList, selectedFirstIndex);
         firstView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
             @Override
             public void onSelected(boolean isUserScroll, int selectedIndex, String item) {
                 selectedFirstText = item;
                 selectedFirstIndex = selectedIndex;
-                ArrayList<String> secondData = secondList.get(selectedFirstIndex);
-                if (secondData.size() < selectedSecondIndex) {
-                    //上一次的第二级选择的项的索引超出了第二级的数据数
-                    selectedSecondIndex = 0;
+
+                if (mSecondLinkage) {
+                    ArrayList<String> secondData = secondList.get(selectedFirstIndex);
+                    if (secondData.size() < selectedSecondIndex) {
+                        //上一次的第二级选择的项的索引超出了第二级的数据数
+                        selectedSecondIndex = 0;
+                    }
+                    selectedThirdIndex = 0;
+                    //根据第一级数据获取第二级数据。若不是用户手动滚动，说明联动需要指定默认项
+                    secondView.setItems(secondData, selectedSecondIndex);
                 }
-                selectedThirdIndex = 0;
-                //根据第一级数据获取第二级数据。若不是用户手动滚动，说明联动需要指定默认项
-                secondView.setItems(secondData, selectedSecondIndex);
+
                 if (thirdList.size() == 0) {
                     return;//仅仅二级联动
                 }
                 //根据第二级数据获取第三级数据
-                thirdView.setItems(thirdList.get(selectedFirstIndex).get(selectedSecondIndex), selectedThirdIndex);
+                if (mThirdLinkage) {
+                    thirdView.setItems(
+                            thirdList.get(selectedFirstIndex).get(selectedSecondIndex), selectedThirdIndex);
+                }
             }
         });
+
         secondView.setItems(secondList.get(selectedFirstIndex), selectedSecondIndex);
         secondView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
             @Override
             public void onSelected(boolean isUserScroll, int selectedIndex, String item) {
                 selectedSecondText = item;
                 selectedSecondIndex = selectedIndex;
+
+                if (wheelViewListener != null)
+                    wheelViewListener.onSelected(isUserScroll, selectedIndex, item);
+
                 if (thirdList.size() == 0) {
                     return;//仅仅二级联动
                 }
-                ArrayList<String> thirdData = thirdList.get(selectedFirstIndex).get(selectedSecondIndex);
-                if (thirdData.size() < selectedThirdIndex) {
-                    //上一次的第三级选择的项的索引超出了第三级的数据数
-                    selectedThirdIndex = 0;
+
+                if (mThirdLinkage) {
+                    ArrayList<String> thirdData = thirdList.get(selectedFirstIndex).get(selectedSecondIndex);
+                    if (thirdData.size() < selectedThirdIndex) {
+                        //上一次的第三级选择的项的索引超出了第三级的数据数
+                        selectedThirdIndex = 0;
+                    }
+                    //根据第二级数据获取第三级数据
+                    thirdView.setItems(thirdData, selectedThirdIndex);
                 }
-                //根据第二级数据获取第三级数据
-                thirdView.setItems(thirdData, selectedThirdIndex);
             }
         });
+
         if (thirdList.size() == 0) {
             return layout;//仅仅二级联动
         }
+
         thirdView.setItems(thirdList.get(selectedFirstIndex).get(selectedSecondIndex), selectedThirdIndex);
         thirdView.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
             @Override
@@ -289,8 +334,29 @@ public class LinkagePicker extends WheelPicker {
         }
     }
 
+    public void setFirstLinkage(boolean firstLinkage) {
+        mFirstLinkage = firstLinkage;
+    }
+
+    public void setSecondLinkage(boolean secondLinkage) {
+        mSecondLinkage = secondLinkage;
+    }
+
+    public void setThirdLinkage(boolean thirdLinkage) {
+        mThirdLinkage = thirdLinkage;
+    }
+
     public interface OnLinkageListener {
         void onPicked(String first, String second, String third);
     }
+
+    public void setWheelViewListener(WheelViewListener wheelViewListener) {
+        this.wheelViewListener = wheelViewListener;
+    }
+
+    public interface WheelViewListener {
+        void onSelected(boolean isUserScroll, int selectedIndex, String item);
+    }
+
 
 }

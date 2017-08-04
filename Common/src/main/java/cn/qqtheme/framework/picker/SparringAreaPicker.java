@@ -83,10 +83,9 @@ public class SparringAreaPicker extends LinkagePicker {
         textView.setLayoutParams(params);
         textView.setText("确  认");
         textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(ConvertUtils.toSp(48f));
+        textView.setTextSize(ConvertUtils.toSp(54f));
         textView.setBackgroundColor(ContextUtils.getContext().getResources().getColor(R.color.colorTvBlue_59b));
         textView.setTextColor(ContextUtils.getContext().getResources().getColor(R.color.colorWhite));
-
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override

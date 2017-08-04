@@ -64,7 +64,7 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
     protected void webProcessingService(HomeAdvertisement data) {
         PublicData.getInstance().webviewUrl = data.getAdvertisementSkipUrl();
         PublicData.getInstance().mHashMap.put("htmlUrl", PublicData.getInstance().webviewUrl);
-        PublicData.getInstance().webviewTitle = "广告";
+        PublicData.getInstance().webviewTitle = "优惠";
         PublicData.getInstance().isCheckLogin = false;
 
         if (PublicData.getInstance().webviewUrl.contains("discount")

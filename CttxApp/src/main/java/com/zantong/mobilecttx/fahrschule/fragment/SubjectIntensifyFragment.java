@@ -107,26 +107,29 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
             @Override
             public void onItemClick(View view, Object data) {
                 if (data instanceof SubjectGoodsBean) {
-                    dataListShow(data);
+                    dataListShow((SubjectGoodsBean) data);
                 }
             }
         });
     }
 
-    protected void dataListShow(Object data) {
-        SubjectGoodsBean goodsBean = (SubjectGoodsBean) data;
+    protected void dataListShow(SubjectGoodsBean goodsBean ) {
+
         ArrayList<SubjectGoodsBean> beanArrayList = mAdapter.getAll();
         for (SubjectGoodsBean bean : beanArrayList) {
-            bean.setChiose(goodsBean.getGoodsId() == bean.getGoodsId());
+            bean.setChoice(goodsBean.getGoodsId() == bean.getGoodsId());
 
             if (goodsBean.getGoodsId() == bean.getGoodsId()) {
-                mTvContent.setText(goodsBean.getDescription());
-
-                String valueString = new DecimalFormat("#0.00").format(goodsBean.getPrice());
-                mTvPrice.setText(valueString);
+                displayDescription(goodsBean);
             }
         }
         mAdapter.notifyDataSetChanged();
+    }
+
+    private void displayDescription(SubjectGoodsBean goodsBean) {
+        mTvContent.setText(goodsBean.getDescription());
+        String valueString = new DecimalFormat("#0.00").format(goodsBean.getPrice());
+        mTvPrice.setText(valueString);
     }
 
     @Override
@@ -174,7 +177,7 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
         ArrayList<SubjectGoodsBean> beanArrayList = mAdapter.getAll();
 
         for (SubjectGoodsBean bean : beanArrayList) {
-            if (bean.isChiose()) {
+            if (bean.isChoice()) {
                 EventBus.getDefault().postSticky(new SubjectCommitEvent(bean));
                 if (mSwitcherListener != null) mSwitcherListener.setCurPosition(1);
                 return;
@@ -205,10 +208,15 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
 
     @Override
     public void getGoodsSucceed(SubjectGoodsResult result) {
-        List<SubjectGoodsBean> subjectGoodsBeen = result.getData();
+        List<SubjectGoodsBean> beanList = result.getData();
+
+        if (beanList != null && !beanList.isEmpty()) {
+            beanList.get(0).setChoice(true);
+            displayDescription(beanList.get(0));
+        }
 
         mAdapter.removeAllOnly();
-        mAdapter.append(subjectGoodsBeen);
+        mAdapter.append(beanList);
     }
 
 }

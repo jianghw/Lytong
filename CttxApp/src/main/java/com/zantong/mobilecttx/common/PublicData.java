@@ -2,9 +2,9 @@ package com.zantong.mobilecttx.common;
 
 import android.content.Context;
 
-import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.map.bean.NetLocationBean;
 import com.zantong.mobilecttx.card.bean.ProvinceModel;
+import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.weizhang.bean.QueryHistoryBean;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
@@ -64,7 +64,7 @@ public class PublicData {
     public int mNorCarNum = 0;
     public int isPayCar = 0;
     public int mCarNum = 0;
-    public LoginInfoBean.RspInfoBean mLoginInfoBean;//用户Bean对象
+    public RspInfoBean mLoginInfoBean;//用户Bean对象
     public NetLocationBean mNetLocationBean;
     public HashMap<String, Object> mHashMap = new HashMap<>();//界面信息传递工具
     public QueryHistoryBean mQueryHistoryBean;//查询历史缓存

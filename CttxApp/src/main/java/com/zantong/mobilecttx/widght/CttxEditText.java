@@ -15,10 +15,11 @@ import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
 
+import cn.qqtheme.framework.util.ViewUtils;
+
 /**
  * 办卡输入框样式
  */
-
 public class CttxEditText extends LinearLayout {
 
     private TextView mTitle;
@@ -99,6 +100,8 @@ public class CttxEditText extends LinearLayout {
             strContent = "";
         }
         mContent.setText(strContent);
+
+        ViewUtils.editTextInputSpace(mContent);
     }
 
     public void setImgFlag(boolean isVisible) {

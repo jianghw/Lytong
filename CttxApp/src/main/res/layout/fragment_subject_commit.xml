@@ -50,7 +50,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/ds_300"
                 android:layout_marginRight="@dimen/ds_45"
+                android:singleLine="true"
                 android:textColor="@color/colorTvBlack_4d"
                 android:textSize="@dimen/fs_16sp"
                 tools:text="4545"/>
@@ -83,10 +85,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/ds_300"
                 android:layout_marginRight="@dimen/ds_45"
+                android:singleLine="true"
                 android:textColor="@color/colorTvBlack_4d"
                 android:textSize="@dimen/fs_16sp"
-                tools:text="4545"/>
+                tools:text="454峰大厦附近就是佛i是防守反击手机方法设计覅哦睡觉的5"/>
         </RelativeLayout>
 
         <TextView
@@ -204,9 +208,10 @@
         <RelativeLayout
             android:id="@+id/lay_coupon"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_120">
+            android:layout_height="@dimen/ds_135">
 
             <TextView
+                android:id="@+id/tv_coupon_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -222,10 +227,13 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/ds_45"
                 android:layout_marginRight="@dimen/ds_45"
+                android:layout_toRightOf="@+id/tv_coupon_title"
+                android:gravity="right|center_vertical"
                 android:textColor="@color/colorTvBlack_4d"
                 android:textSize="@dimen/fs_16sp"
-                tools:text="4545"/>
+                tools:text="4545接送接受对方就覅时间覅手机哦仅仅是地方手机上的方式解决"/>
         </RelativeLayout>
     </LinearLayout>
 

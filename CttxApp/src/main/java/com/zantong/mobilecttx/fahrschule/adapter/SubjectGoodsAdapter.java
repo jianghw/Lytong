@@ -28,9 +28,9 @@ public class SubjectGoodsAdapter extends BaseAdapter<SubjectGoodsBean> {
         if (goodsBean != null) {
             holder.mAmount.setText(goodsBean.getName());
 
-            holder.mAmount.setBackgroundResource(goodsBean.isChiose()
+            holder.mAmount.setBackgroundResource(goodsBean.isChoice()
                     ? R.drawable.shape_keyboard_btn : R.drawable.shape_clean_btn);
-            holder.mAmount.setTextColor(goodsBean.isChiose()
+            holder.mAmount.setTextColor(goodsBean.isChoice()
                     ? mContext.getResources().getColor(R.color.colorWhite)
                     : mContext.getResources().getColor(R.color.colorTvBlack_b3));
         }

@@ -7,7 +7,10 @@ import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
 import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
 
+import java.util.Map;
+
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 import rx.Observable;
@@ -34,23 +37,10 @@ public interface IGoodsService {
 
     /**
      * 2.创建订单
-     *
-     * @param type
-     * @param userNum
-     * @param goodsId
-     * @param price
-     * @param userName
-     * @param phone
-     * @param idCard
-     * @return
      */
     @FormUrlEncoded
     @POST("order/createOrder")
-    Observable<CreateOrderResult> createOrder(
-            @Field("type") String type, @Field("userNum") String userNum,
-            @Field("goodsId") String goodsId, @Field("price") String price,
-            @Field("userName") String userName, @Field("phone") String phone,
-            @Field("idCard") String idCard, @Field("payType") String payType);
+    Observable<CreateOrderResult> createOrder(@FieldMap Map<String, String> map);
 
     /**
      * 6.获取商品详情
@@ -63,10 +53,10 @@ public interface IGoodsService {
      * 22.获取商品
      */
     @FormUrlEncoded
-    @POST("goods/getGoods")
+    @POST("goods/getGoodsByType")
     Observable<SubjectGoodsResult> getGoods(@Field("type") String type);
 
     @FormUrlEncoded
-    @POST("goods/getGoods")
+    @POST("goods/getGoodsByType")
     Observable<SparringGoodsResult> getGoodsFive(@Field("type") String type);
 }

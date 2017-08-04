@@ -15,11 +15,11 @@ import android.webkit.WebViewClient;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.contract.IFahrschuleBrowserFtyContract;
+import com.zantong.mobilecttx.contract.browser.IPayBrowserFtyContract;
 import com.zantong.mobilecttx.contract.InterfaceForJS;
 import com.zantong.mobilecttx.order.bean.OrderDetailBean;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
-import com.zantong.mobilecttx.presenter.browser.FahrschuleBrowserPresenter;
+import com.zantong.mobilecttx.presenter.browser.PayBrowserPresenter;
 
 import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
@@ -28,11 +28,11 @@ import cn.qqtheme.framework.util.log.LogUtils;
 /**
  * 支付浏览器
  */
-public class FahrschulePayBrowserActivity extends BaseJxActivity
-        implements IFahrschuleBrowserFtyContract.IFahrschuleBrowserFtyView {
+public class PayBrowserActivity extends BaseJxActivity
+        implements IPayBrowserFtyContract.IPayBrowserFtyView {
 
     WebView mWebView;
-    private IFahrschuleBrowserFtyContract.IFahrschuleBrowserFtyPresenter mPresenter;
+    private IPayBrowserFtyContract.IPayBrowserFtyPresenter mPresenter;
 
     private String mTitleWeb;
     private String mUrl;
@@ -51,7 +51,7 @@ public class FahrschulePayBrowserActivity extends BaseJxActivity
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     @Override
     protected void initFragmentView(View view) {
-        FahrschuleBrowserPresenter presenter = new FahrschuleBrowserPresenter(
+        PayBrowserPresenter presenter = new PayBrowserPresenter(
                 Injection.provideRepository(getApplicationContext()), this);
 
         Intent intent = getIntent();
@@ -93,7 +93,7 @@ public class FahrschulePayBrowserActivity extends BaseJxActivity
     }
 
     @Override
-    public void setPresenter(IFahrschuleBrowserFtyContract.IFahrschuleBrowserFtyPresenter presenter) {
+    public void setPresenter(IPayBrowserFtyContract.IPayBrowserFtyPresenter presenter) {
         mPresenter = presenter;
     }
 
@@ -154,6 +154,9 @@ public class FahrschulePayBrowserActivity extends BaseJxActivity
         }
     }
 
+    /**
+     * 只显示失败
+     */
     @Override
     public void getOrderDetailError(String message) {
         dismissLoadingDialog();
@@ -165,11 +168,8 @@ public class FahrschulePayBrowserActivity extends BaseJxActivity
         OrderDetailBean resultData = result.getData();
         if (resultData != null) {
             int orderStatus = resultData.getOrderStatus();
-            if (orderStatus == 1) {//成功页面
-                succeedStatus();
-            } else {//失败页面
-                errorStatus();
-            }
+            //成功页面
+            if (orderStatus == 1) succeedStatus();
         }
     }
 

@@ -9,10 +9,9 @@ import android.view.View;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
+import com.zantong.mobilecttx.fahrschule.fragment.SparringOrderFragment;
 import com.zantong.mobilecttx.fahrschule.fragment.SparringSubscribeFragment;
-import com.zantong.mobilecttx.fahrschule.fragment.SubjectCommitFragment;
-import com.zantong.mobilecttx.fahrschule.fragment.SubjectOrderFragment;
-import com.zantong.mobilecttx.fahrschule.fragment.SubjectSucceedFragment;
+import com.zantong.mobilecttx.fahrschule.fragment.SparringSucceedFragment;
 import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
 
 import cn.qqtheme.framework.global.GlobalConstant;
@@ -29,9 +28,8 @@ public class SparringActivity extends BaseJxActivity {
      * 三个页面
      */
     private SparringSubscribeFragment mSparringSubscribeFragment = null;
-    private SubjectCommitFragment mSubjectCommitFragment = null;
-    private SubjectOrderFragment mSubjectOrderFragment = null;
-    private SubjectSucceedFragment mSubjectSucceedFragment = null;
+    private SparringOrderFragment mSparringOrderFragment = null;
+    private SparringSucceedFragment mSparringSucceedFragment = null;
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
@@ -56,9 +54,8 @@ public class SparringActivity extends BaseJxActivity {
     @Override
     protected void DestroyViewAndThing() {
         mSparringSubscribeFragment = null;
-        mSubjectCommitFragment = null;
-        mSubjectOrderFragment = null;
-        mSubjectSucceedFragment = null;
+        mSparringOrderFragment = null;
+        mSparringSucceedFragment = null;
     }
 
     private void initFragment(int position) {
@@ -75,31 +72,18 @@ public class SparringActivity extends BaseJxActivity {
                         initFragment(position);
                     }
                 });
-
                 break;
-            case 1://科目强化生成订单
-                if (mSubjectCommitFragment == null) {
-                    mSubjectCommitFragment = SubjectCommitFragment.newInstance();
+            case 1://陪练预约页面订单
+                if (mSparringOrderFragment == null) {
+                    mSparringOrderFragment = SparringOrderFragment.newInstance();
                 }
-                FragmentUtils.addFragment(fragmentManager, mSubjectCommitFragment, R.id.lay_base_frame, false, true);
-                mSubjectCommitFragment.setSwitcherListener(new ISubjectSwitcherListener() {
-                    @Override
-                    public void setCurPosition(int position) {
-                        initFragment(position);
-                    }
-                });
+                FragmentUtils.addFragment(fragmentManager, mSparringOrderFragment, R.id.lay_base_frame, false, true);
                 break;
-            case 2://科目强化去支付页面
-                if (mSubjectOrderFragment == null) {
-                    mSubjectOrderFragment = SubjectOrderFragment.newInstance();
+            case 2://陪练预约成功
+                if (mSparringSucceedFragment == null) {
+                    mSparringSucceedFragment = SparringSucceedFragment.newInstance();
                 }
-                FragmentUtils.addFragment(fragmentManager, mSubjectOrderFragment, R.id.lay_base_frame, false, true);
-                break;
-            case 3://科目强化去支付页面
-                if (mSubjectSucceedFragment == null) {
-                    mSubjectSucceedFragment = SubjectSucceedFragment.newInstance();
-                }
-                FragmentUtils.addFragment(fragmentManager, mSubjectSucceedFragment, R.id.lay_base_frame, false, true);
+                FragmentUtils.addFragment(fragmentManager, mSparringSucceedFragment, R.id.lay_base_frame, false, true);
                 break;
             default:
                 break;
@@ -114,7 +98,7 @@ public class SparringActivity extends BaseJxActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
                 && resultCode == GlobalConstant.resultCode.web_order_id_succeed) {
-            mCurPosition = 3;
+            mCurPosition = 2;
             initFragment(mCurPosition);
         } else if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
                 && resultCode == GlobalConstant.resultCode.web_order_id_error && data != null) {
@@ -131,7 +115,7 @@ public class SparringActivity extends BaseJxActivity {
      * 回退监听功能
      */
     protected void backClickListener() {
-        if (mCurPosition == 3)
+        if (mCurPosition == 2)
             finish();
         else
             closeFragment();
@@ -147,7 +131,7 @@ public class SparringActivity extends BaseJxActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mCurPosition == 3)
+            if (mCurPosition == 2)
                 finish();
             else
                 closeFragment();

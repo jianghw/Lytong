@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.api;
 
+import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
 
 import retrofit2.http.GET;
@@ -16,4 +17,11 @@ public interface IDriverTrainService {
      */
     @GET("driverTrain/getServiceArea")
     Observable<SparringAreaResult> getServiceArea();
+
+    /**
+     * 21.获取服务器时间
+     */
+    @GET("driverTrain/getServerTime")
+    Observable<ServerTimeResult> getServerTime();
+
 }

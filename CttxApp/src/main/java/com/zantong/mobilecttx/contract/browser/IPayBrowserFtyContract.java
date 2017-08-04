@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.contract;
+package com.zantong.mobilecttx.contract.browser;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
@@ -8,9 +8,9 @@ import com.zantong.mobilecttx.order.bean.OrderDetailResult;
  * 报名支付页面
  */
 
-public interface IFahrschuleBrowserFtyContract {
+public interface IPayBrowserFtyContract {
 
-    interface IFahrschuleBrowserFtyView extends IMvpView<IFahrschuleBrowserFtyPresenter> {
+    interface IPayBrowserFtyView extends IMvpView<IPayBrowserFtyPresenter> {
 
         void showLoadingDialog();
 
@@ -27,7 +27,7 @@ public interface IFahrschuleBrowserFtyContract {
         String getOrderId();
     }
 
-    interface IFahrschuleBrowserFtyPresenter extends IMvpPresenter {
+    interface IPayBrowserFtyPresenter extends IMvpPresenter {
 
         void getOrderDetail();
 

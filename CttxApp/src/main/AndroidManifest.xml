@@ -461,7 +461,7 @@
             android:name=".common.activity.BrowserForPayActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".common.activity.FahrschulePayBrowserActivity"
+            android:name=".common.activity.PayBrowserActivity"
             android:screenOrientation="portrait"/>
 
         <!-- ===================优惠模块=========================================-->

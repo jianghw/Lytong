@@ -27,7 +27,6 @@ import com.zantong.mobilecttx.card.bean.YingXiaoResult;
 import com.zantong.mobilecttx.card.dto.ApplyCTCardDTO;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
 import com.zantong.mobilecttx.card.dto.QuickApplyCardDTO;
-import com.zantong.mobilecttx.card.dto.YingXiaoDataDTO;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.CommonTwoLevelMenuActivity;
@@ -35,7 +34,6 @@ import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;
 import com.zantong.mobilecttx.utils.ReadFfile;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.dialog.NetLocationDialog;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.widght.SettingItemView;
@@ -49,6 +47,7 @@ import java.io.InputStream;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.FileUtils;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -341,6 +340,8 @@ public class ApplyCardFourStepActvity extends BaseMvpActivity<IBaseView, HelpPre
         } else {
             HandleCTCardApiClient.htmlLocal(this, "cip.cfc.u007.01", applyCTCardDTO, this);
         }
+
+        commitYingXiaoDataForLYT(applyCTCardDTO);
     }
 
     /**
@@ -374,7 +375,6 @@ public class ApplyCardFourStepActvity extends BaseMvpActivity<IBaseView, HelpPre
     public void resultSuccess(Result result) {
         hideDialogLoading();
         if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
-            commitYingXiaoDataForLYT();
             checkCtkDate();
             startActivity(ApplySuccessActvity.getIntent(this, wangdianAdress));
         }
@@ -406,18 +406,11 @@ public class ApplyCardFourStepActvity extends BaseMvpActivity<IBaseView, HelpPre
 
     /**
      * 办卡申请成功后，提交营销代码
+     * @param applyCTCardDTO
      */
-    private void commitYingXiaoDataForLYT(){
+    private void commitYingXiaoDataForLYT(ApplyCTCardDTO applyCTCardDTO){
 
-        YingXiaoDataDTO dto = new YingXiaoDataDTO();
-        dto.setUsrnum(RSAUtils.strByEncryption(PublicData.getInstance().userID,true));
-        if (TextUtils.isEmpty(mYingxiao.getText().toString())){
-            dto.setEmpNum(mEmpNum);
-        }else{
-            dto.setEmpNum(mYingxiao.getText().toString());
-        }
-
-        CarApiClient.commitYingXiaoData(this, dto, new CallBack<BaseResult>() {
+        CarApiClient.commitYingXiaoData(this, applyCTCardDTO, new CallBack<BaseResult>() {
             @Override
             public void onSuccess(BaseResult result) {
                 if (result.getResponseCode() == 2000){

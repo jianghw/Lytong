@@ -10,13 +10,14 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.FahrschulePayBrowserActivity;
+import com.zantong.mobilecttx.common.activity.PayBrowserActivity;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectOrderContract;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobilecttx.eventbus.SubjectOrderEvent;
 import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsBean;
 import com.zantong.mobilecttx.presenter.fahrschule.SubjectOrderPresenter;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
+import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 
 import org.greenrobot.eventbus.EventBus;
@@ -143,13 +144,31 @@ public class SubjectOrderFragment extends BaseRefreshJxFragment
         if (event != null) initData(event);
     }
 
+    /**
+     * 优惠卷 type  优惠券类型：1 无；2 折扣；3 代金券
+     */
     private void initData(SubjectOrderEvent event) {
         mTvOrderNum.setText(event.getOrderId());
         SubjectGoodsBean goodsBean = event.getGoodsBean();
-        if (goodsBean != null) mTvCourseName.setText(goodsBean.getName());
-        mTvUser.setText(event.getEditName());
-        mTvPhone.setText(event.getPhone());
-        if (goodsBean != null) mTvPrice.setText(String.valueOf(goodsBean.getPrice()));
+
+        if (goodsBean != null) {
+            mTvCourseName.setText(goodsBean.getName());
+            mTvUser.setText(event.getEditName());
+            mTvPhone.setText(event.getPhone());
+        }
+
+        mTvPrice.setText(event.getPrice());
+    }
+
+    private String displayPriceValue(double discount, int couponType, int price) {
+        if (couponType == 2) {
+            return StringUtils.getPriceDouble(price * discount);
+        } else if (couponType == 3) {
+            double value = discount * 100.00d;
+            double submitPrice = (price - value) <= 0 ? 0 : (price - value);
+            return StringUtils.getPriceDouble(submitPrice);
+        }
+        return StringUtils.getPriceDouble(price);
     }
 
     @Override
@@ -203,7 +222,7 @@ public class SubjectOrderFragment extends BaseRefreshJxFragment
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             getActivity().startActivity(intent);
         } else {
-            Intent intent = new Intent(getActivity(), FahrschulePayBrowserActivity.class);
+            Intent intent = new Intent(getActivity(), PayBrowserActivity.class);
             intent.putExtra(GlobalConstant.putExtra.web_title_extra, "支付");
             intent.putExtra(GlobalConstant.putExtra.web_url_extra, result.getData());
             intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, mTvOrderNum.getText().toString());

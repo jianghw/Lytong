@@ -39,8 +39,8 @@ import okhttp3.RequestBody;
 
 public class BaseApiClient {
 
-    public static final MediaType JSON = MediaType
-            .parse("application/raw; charset=utf-8");
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
     public static OkHttpClient client = new OkHttpClient();
     public static final OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
 
@@ -141,7 +141,7 @@ public class BaseApiClient {
     public static <T> void htmlpost(Context context, String url, String jsonParams,
                                     AsyncCallBack<T> asyncCallBack) {
         FormBody.Builder builder = new FormBody.Builder();
-//        String data = asyncCallBack.getGson().toJson(jsonParams);
+
         if (jsonParams != null) {
             builder.add("msg", jsonParams);
         }
@@ -240,6 +240,10 @@ public class BaseApiClient {
         return BuildConfig.APP_DOWNLOD + relativeUrl;
     }
 
+    /**
+     * TODO
+     * parse("application/json; charset=utf-8");<--application/raw
+     */
     public static <T> void post(Context context, String url, Object jsonParams,
                                 BaseCallBack<T> baseCallBack) {
         String data = baseCallBack.getGson().toJson(jsonParams);

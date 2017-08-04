@@ -14,7 +14,7 @@ import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserForPayActivity;
-import com.zantong.mobilecttx.common.activity.FahrschulePayBrowserActivity;
+import com.zantong.mobilecttx.common.activity.PayBrowserActivity;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
@@ -272,7 +272,7 @@ public class OrderParentActivity extends BaseJxActivity
     @Override
     public void getBankPayHtmlSucceed(PayOrderResult result, String orderId) {
 
-        Intent intent = new Intent(this, FahrschulePayBrowserActivity.class);
+        Intent intent = new Intent(this, PayBrowserActivity.class);
         intent.putExtra(GlobalConstant.putExtra.web_title_extra, "支付");
         intent.putExtra(GlobalConstant.putExtra.web_url_extra, result.getData());
         intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, orderId);

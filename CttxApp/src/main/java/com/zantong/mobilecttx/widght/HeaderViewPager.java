@@ -284,7 +284,7 @@ public class HeaderViewPager extends FrameLayout {
                     MobclickAgent.onEvent(context, Config.getUMengID(10));
                     PublicData.getInstance().webviewUrl = imageUrls.get(currentPosition).getAdvertisementSkipUrl();
                     PublicData.getInstance().mHashMap.put("htmlUrl", PublicData.getInstance().webviewUrl);
-                    PublicData.getInstance().webviewTitle = "广告";
+                    PublicData.getInstance().webviewTitle = "优惠";
                     PublicData.getInstance().isCheckLogin = false;
 
                     if (PublicData.getInstance().webviewUrl.contains("discount") || PublicData.getInstance().webviewUrl.contains("happysend")) {

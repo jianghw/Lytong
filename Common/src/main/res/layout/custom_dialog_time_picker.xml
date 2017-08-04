@@ -10,12 +10,11 @@
         android:id="@+id/tv_close"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_135"
-        android:layout_gravity="center_horizontal"
         android:drawableRight="@mipmap/ic_tv_close"
         android:gravity="center"
-        android:paddingLeft="@dimen/ds_30"
+        android:paddingLeft="@dimen/ds_90"
         android:paddingRight="@dimen/ds_45"
-        android:text="请选择车型"
+        android:text="请选择训练时长"
         android:textColor="@color/colorTvBlue_59b"
         android:textSize="@dimen/fs_16sp"/>
 
@@ -28,9 +27,9 @@
 
     <ListView
         android:id="@+id/lv_type"
+        android:divider="@null"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@null"
         android:scrollbars="none"/>
 
     <TextView
@@ -40,22 +39,19 @@
         android:layout_marginRight="@dimen/ds_45"
         android:background="@color/colorLineGray_e6"/>
 
-    <ListView
-        android:id="@+id/lv_gearbox"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:scrollbars="none"/>
+        android:layout_height="@dimen/ds_135"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:text="请选择时间段"
+        android:textColor="@color/colorTvBlue_59b"
+        android:textSize="@dimen/fs_16sp"/>
 
     <TextView
-        android:id="@+id/tv_commit"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_180"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorTvBlue_59b"
-        android:gravity="center"
-        android:text="确  认"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/fs_18sp"/>
-
+        android:layout_height="@dimen/ds_1"
+        android:layout_marginLeft="@dimen/ds_45"
+        android:layout_marginRight="@dimen/ds_45"
+        android:background="@color/colorLineGray_e6"/>
 </LinearLayout>

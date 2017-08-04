@@ -19,7 +19,6 @@ import java.util.List;
 import cn.qqtheme.framework.R;
 
 /**
- * 页面翻转控件，极方便的广告栏
  * 支持无限循环，自动翻页，翻页特效
  *
  * @author Sai 支持自动翻页

@@ -19,6 +19,7 @@ import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
+import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
@@ -89,7 +90,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
      */
     @Override
     public void readObjectLoginInfoBean() {
-        LoginInfoBean.RspInfoBean rspInfoBean = mRepository.readObjectLoginInfoBean();
+        RspInfoBean rspInfoBean = mRepository.readObjectLoginInfoBean();
         if (rspInfoBean == null) return;
         mRepository.initGlobalLoginInfo(rspInfoBean);
 

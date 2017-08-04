@@ -1,25 +1,28 @@
 package com.zantong.mobilecttx.fahrschule.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
-import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
+import com.zantong.mobilecttx.common.activity.PayBrowserActivity;
 import com.zantong.mobilecttx.contract.fahrschule.ISparringOrderContract;
+import com.zantong.mobilecttx.eventbus.SparringOrderEvent;
+import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.presenter.fahrschule.SparringOrderPresenter;
-import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.user.activity.LoginActivity;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 
-import java.util.Random;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
+import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -30,73 +33,32 @@ public class SparringOrderFragment extends BaseRefreshJxFragment
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private FahrschuleActivity.SwitcherListener mSwitcherListener;
-
     private String mParam1;
     private String mParam2;
+    private TextView mTvOrderNum;
+
+    private TextView mTvLocale;
+    private TextView mTvAddress;
+    private TextView mTvMotorcycleType;
+    private TextView mTvTime;
+    private TextView mTvUser;
+    private TextView mTvPhone;
+    private TextView mTvLicense;
+    private TextView mTvRemark;
 
     /**
-     * 上课地点
+     * 订单金额
      */
-    private TextView mTvAddress;
-    /**
-     * 请选择上课地点
-     */
-    private TextView mTvAddressSel;
-    /**
-     * 课程名称
-     */
-    private TextView mTvCourse;
-    /**
-     * 请选择课程
-     */
-    private TextView mTvCourseSel;
-    /**
-     * 来往交通
-     */
-    private TextView mTvTrafficTitle;
-    private TextView mTvTraffic;
-    /**
-     * 课程价格
-     */
-    private TextView mTvPriceTitle;
     private TextView mTvPrice;
+
     /**
-     * 课程礼包
+     * 提交订单
      */
-    private TextView mTvGiftTitle;
-    private TextView mTvGift;
+    private TextView mTvCommit;
     /**
-     * 课程详情
-     */
-    private TextView mTvInfoTitle;
-    private TextView mTvInfo;
-    /**
-     * 课程介绍
-     */
-    private TextView mTvIntroduce;
-    private Button mBtnCommint;
-    /**
-     * 请输入姓名
-     */
-    private EditText mEditName;
-    /**
-     * 请输入手机号
-     */
-    private EditText mEditPhone;
-    /**
-     * 请输入身份证号
-     */
-    private EditText mEditIdentityCard;
-    /**
-     * P
+     * mPresenter
      */
     private ISparringOrderContract.ISparringOrderPresenter mPresenter;
-    /**
-     * 地区code
-     */
-    private int mAreaCode;
-    private int mGoodsId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -127,7 +89,6 @@ public class SparringOrderFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onRefreshData() {
-
     }
 
     @Override
@@ -148,60 +109,62 @@ public class SparringOrderFragment extends BaseRefreshJxFragment
         mPresenter = presenter;
     }
 
-    public void setSwitcherListener(FahrschuleActivity.SwitcherListener switcherListener) {
-        mSwitcherListener = switcherListener;
-    }
-
     @Override
     protected void onFirstDataVisible() {
-        if (BuildConfig.DEBUG) {
-            mEditName.setText("测试人员" + new Random().nextInt(10));
-            mEditPhone.setText("1525252552" + new Random().nextInt(10));
-            mEditIdentityCard.setText("342628198004160012");
-        }
+        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void DestroyViewAndThing() {
+        EventBus.getDefault().removeStickyEvent(SparringOrderEvent.class);
+        EventBus.getDefault().unregister(this);
+
         if (mPresenter != null) mPresenter.unSubscribe();
     }
 
     public void initView(View view) {
-        mTvAddress = (TextView) view.findViewById(R.id.tv_address);
-        mTvAddressSel = (TextView) view.findViewById(R.id.tv_address_sel);
-        mTvAddressSel.setOnClickListener(this);
-        mTvCourse = (TextView) view.findViewById(R.id.tv_course);
-        mTvCourseSel = (TextView) view.findViewById(R.id.tv_course_sel);
-        mTvCourseSel.setOnClickListener(this);
-        mTvTrafficTitle = (TextView) view.findViewById(R.id.tv_traffic_title);
-        mTvTraffic = (TextView) view.findViewById(R.id.tv_traffic);
-        mTvPriceTitle = (TextView) view.findViewById(R.id.tv_price_title);
-        mTvPrice = (TextView) view.findViewById(R.id.tv_price);
-        mTvGiftTitle = (TextView) view.findViewById(R.id.tv_gift_title);
-        mTvGift = (TextView) view.findViewById(R.id.tv_gift);
-        mTvInfoTitle = (TextView) view.findViewById(R.id.tv_info_title);
-        mTvInfo = (TextView) view.findViewById(R.id.tv_info);
-        mTvInfo.setOnClickListener(this);
-        mTvIntroduce = (TextView) view.findViewById(R.id.tv_introduce);
-        mBtnCommint = (Button) view.findViewById(R.id.btn_commit);
-        mBtnCommint.setOnClickListener(this);
 
-        mEditName = (EditText) view.findViewById(R.id.edit_name);
-        mEditPhone = (EditText) view.findViewById(R.id.edit_phone);
-        mEditIdentityCard = (EditText) view.findViewById(R.id.edit_identity_card);
+        mTvOrderNum = (TextView) view.findViewById(R.id.tv_order_num);
+        mTvLocale = (TextView) view.findViewById(R.id.tv_locale);
+        mTvAddress = (TextView) view.findViewById(R.id.tv_address);
+        mTvMotorcycleType = (TextView) view.findViewById(R.id.tv_motorcycle_type);
+
+        mTvTime = (TextView) view.findViewById(R.id.tv_time);
+        mTvUser = (TextView) view.findViewById(R.id.tv_user);
+        mTvPhone = (TextView) view.findViewById(R.id.tv_phone);
+        mTvLicense = (TextView) view.findViewById(R.id.tv_license);
+        mTvRemark = (TextView) view.findViewById(R.id.tv_remark);
+
+        mTvPrice = (TextView) view.findViewById(R.id.tv_price);
+        mTvCommit = (TextView) view.findViewById(R.id.tv_commit);
+        mTvCommit.setOnClickListener(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onMainEvent(SparringOrderEvent event) {
+        if (event != null) initData(event);
+    }
+
+    private void initData(SparringOrderEvent event) {
+        mTvOrderNum.setText(event.getOrderId());
+        CreateOrderDTO bean = event.getGoodsBean();
+        if (bean == null) return;
+        mTvLocale.setText(bean.getServiceArea());
+        mTvAddress.setText(bean.getServiceAddress());
+        mTvTime.setText(event.getTextTime());
+        mTvMotorcycleType.setText(event.getCarType());
+        mTvUser.setText(bean.getUserName());
+        mTvPhone.setText(bean.getPhone());
+        mTvLicense.setText(bean.getDriveNum());
+        mTvRemark.setText(bean.getRemark());
+        mTvPrice.setText(bean.getPrice());
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.tv_info://官网
-                PublicData.getInstance().webviewUrl = "http://www.antingjx.com/jianjie/";
-                PublicData.getInstance().webviewTitle = "驾校报名官网";
-                PublicData.getInstance().isCheckLogin = true;
-                Act.getInstance().gotoIntent(getActivity(), BrowserActivity.class);
-                break;
-            case R.id.btn_commit:
+            case R.id.tv_commit:
                 dataFormValidation();
                 break;
             default:
@@ -213,35 +176,47 @@ public class SparringOrderFragment extends BaseRefreshJxFragment
      * 数据验证
      */
     private void dataFormValidation() {
-        String addressSel = getTvAddressSel();
-        if (TextUtils.isEmpty(addressSel)) {
-            ToastUtils.toastShort("请选择上课地点");
-            return;
-        }
-        String tvCourseSel = getTvCourseSel();
-        if (TextUtils.isEmpty(tvCourseSel)) {
-            ToastUtils.toastShort("请选择课程内容");
-            return;
-        }
+        String moneyString = mTvPrice.getText().toString();
 
+        double money = Double.parseDouble(moneyString);
+        int intMoney = (int) money * 100;
+        String stringMoney = String.valueOf(intMoney);
+        if (mPresenter != null) mPresenter.getBankPayHtml(
+                mTvOrderNum.getText().toString().trim(),
+                stringMoney);
     }
-
-    public String getTvAddressSel() {
-        return mTvAddressSel.getText().toString().trim();
-    }
-
-    public String getTvCourseSel() {
-        return mTvCourseSel.getText().toString().trim();
-    }
-
 
     @Override
     public void showLoadingDialog() {
-
+        showDialogLoading();
     }
 
     @Override
     public void dismissLoadingDialog() {
-
+        hideDialogLoading();
     }
+
+    /**
+     * 支付页面
+     */
+    @Override
+    public void bankPayHtmlError(String message) {
+        dismissLoadingDialog();
+        ToastUtils.toastShort(message);
+    }
+
+    @Override
+    public void bankPayHtmlSucceed(PayOrderResult result) {
+        if (!PublicData.getInstance().loginFlag && !TextUtils.isEmpty(PublicData.getInstance().userID)) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            getActivity().startActivity(intent);
+        } else {
+            Intent intent = new Intent(getActivity(), PayBrowserActivity.class);
+            intent.putExtra(GlobalConstant.putExtra.web_title_extra, "支付");
+            intent.putExtra(GlobalConstant.putExtra.web_url_extra, result.getData());
+            intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, mTvOrderNum.getText().toString());
+            getActivity().startActivityForResult(intent, GlobalConstant.requestCode.fahrschule_order_num_web);
+        }
+    }
+
 }

@@ -45,9 +45,9 @@ import com.zantong.mobilecttx.user.activity.MegTypeActivity;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.user.activity.SettingActivity;
 import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
-import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
+import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.utils.ImageOptions;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -257,7 +257,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         mTvCar.setText(Html.fromHtml(stringBuffer.toString()));
 
         if (PublicData.getInstance().loginFlag) {
-            LoginInfoBean.RspInfoBean infoBean = PublicData.getInstance().mLoginInfoBean;
+            RspInfoBean infoBean = PublicData.getInstance().mLoginInfoBean;
 
             if (infoBean == null || TextUtils.isEmpty(infoBean.getPortrait())) {
                 getHeadImageFile();

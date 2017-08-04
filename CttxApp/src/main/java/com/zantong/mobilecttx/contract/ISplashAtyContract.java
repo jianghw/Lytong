@@ -29,8 +29,6 @@ public interface ISplashAtyContract {
 
         /**
          * 显示广告页面
-         *
-         * @param result
          */
         void displayAdsImage(StartPicResult result);
 

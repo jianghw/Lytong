@@ -15,7 +15,7 @@ import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.fragment.HomeMvpFragment;
 import com.zantong.mobilecttx.user.activity.MegTypeActivity;
-import com.zantong.mobilecttx.user.bean.LoginInfoBean;
+import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.utils.AccountRememberCtrl;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.Tools;
@@ -65,7 +65,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        LoginInfoBean.RspInfoBean user = (LoginInfoBean.RspInfoBean) UserInfoRememberCtrl.readObject();
+        RspInfoBean user = (RspInfoBean) UserInfoRememberCtrl.readObject();
         if (null != user) {
             PublicData.getInstance().userID = user.getUsrid();
             PublicData.getInstance().loginFlag = true;
