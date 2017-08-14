@@ -4,7 +4,7 @@ package com.zantong.mobilecttx.presenter.fahrschule;
 import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectIntensifyContract;
-import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 

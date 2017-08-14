@@ -16,7 +16,7 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.user.dto.ChangePwdDTO;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;

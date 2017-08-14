@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.home.bean;
 
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 
 /**
  * 判断是否为司机

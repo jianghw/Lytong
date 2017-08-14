@@ -38,7 +38,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import cn.qqtheme.framework.contract.bean.SparringGoodsBean;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsData;
 import cn.qqtheme.framework.contract.custom.IAreaDialogListener;
 import cn.qqtheme.framework.contract.custom.ISpeedDialogListener;
 import cn.qqtheme.framework.contract.custom.ITimeDialogListener;
@@ -451,17 +452,17 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
      */
     @Override
     public void goodsSucceed(SparringGoodsResult result) {
+        SubjectGoodsData resultData = result.getData();
 
-        List<SparringGoodsBean> beanList = result.getData();
-        CustomDialog.popupBottomCarType(getActivity(), beanList, new ISpeedDialogListener() {
+        CustomDialog.popupBottomCarType(getActivity(), resultData, new ISpeedDialogListener() {
             @Override
             public void setCurPosition(
-                    SparringGoodsBean goodsBean, SparringGoodsBean sparringGoodsBean) {
+                    SubjectGoodsBean goodsBean, SubjectGoodsBean sparringGoodsBean) {
 
-                mTvMotorcycleType.setText(goodsBean.getName() + "-" + sparringGoodsBean.getName());
-                mPrice = goodsBean.getPrice();
-                getCreateOrderDTO().setGoodsId(String.valueOf(goodsBean.getGoodsId()));
-                getCreateOrderDTO().setSpeedType(sparringGoodsBean.getName());
+                mTvMotorcycleType.setText(goodsBean.getGoods().getName() + "-" + sparringGoodsBean.getGoods().getName());
+                mPrice = goodsBean.getGoods().getPrice();
+                getCreateOrderDTO().setGoodsId(String.valueOf(goodsBean.getGoods().getGoodsId()));
+                getCreateOrderDTO().setSpeedType(sparringGoodsBean.getGoods().getName());
             }
         });
     }

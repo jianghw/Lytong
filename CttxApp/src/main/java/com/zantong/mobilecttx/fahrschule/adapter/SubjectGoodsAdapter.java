@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsBean;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,7 +26,7 @@ public class SubjectGoodsAdapter extends BaseAdapter<SubjectGoodsBean> {
         ViewHolder holder = (ViewHolder) viewHolder;
 
         if (goodsBean != null) {
-            holder.mAmount.setText(goodsBean.getName());
+            holder.mAmount.setText(goodsBean.getGoods().getName());
 
             holder.mAmount.setBackgroundResource(goodsBean.isChoice()
                     ? R.drawable.shape_keyboard_btn : R.drawable.shape_clean_btn);

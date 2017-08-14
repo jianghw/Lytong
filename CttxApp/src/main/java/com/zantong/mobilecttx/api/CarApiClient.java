@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.api;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.CouponResult;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.CarLinkageResult;

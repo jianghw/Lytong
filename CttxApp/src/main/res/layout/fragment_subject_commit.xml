@@ -5,8 +5,21 @@
                 android:layout_height="match_parent"
                 android:background="@color/colorBgGray_f8"
                 android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_commit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_180"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorTvBlue_59b"
+        android:gravity="center"
+        android:text="提交订单"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/fs_18sp"/>
+
     <!--套餐确认-->
     <LinearLayout
+        android:id="@+id/lay_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -238,14 +251,13 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_commit"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_180"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorTvBlue_59b"
-        android:gravity="center"
-        android:text="提交订单"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/fs_18sp"/>
+        android:id="@+id/tv_remark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lay_content"
+        android:layout_margin="@dimen/ds_45"
+        android:textColor="@color/colorTvBlack_b3"
+        android:textSize="@dimen/fs_14sp"
+        tools:text="优惠劵fdfdfdfdfdfdfd"/>
 
 </RelativeLayout>

@@ -11,7 +11,6 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.fragment.HomeFavorableFragment;
 import com.zantong.mobilecttx.home.fragment.HomeMeFragment;
@@ -25,6 +24,7 @@ import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.ui.FragmentUtils;

@@ -25,7 +25,7 @@ import com.zantong.mobilecttx.alicloudpush.PushBean;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.fragment.BaseFragment;
 import com.zantong.mobilecttx.base.fragment.PullableBaseFragment;

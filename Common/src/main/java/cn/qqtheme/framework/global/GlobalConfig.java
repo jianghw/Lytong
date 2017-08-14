@@ -81,4 +81,5 @@ public final class GlobalConfig {
     public void eventIdByUMeng(int position) {
         MobclickAgent.onEvent(ContextUtils.getContext(), getgetUMengEventID(position));
     }
+
 }

@@ -19,7 +19,8 @@ import java.util.List;
 
 import cn.qqtheme.framework.R;
 import cn.qqtheme.framework.adapter.PopupCarTypeAdapter;
-import cn.qqtheme.framework.contract.bean.SparringGoodsBean;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsData;
 import cn.qqtheme.framework.contract.custom.IAreaDialogListener;
 import cn.qqtheme.framework.contract.custom.ISpeedDialogListener;
 import cn.qqtheme.framework.contract.custom.ITimeDialogListener;
@@ -40,13 +41,13 @@ public class CustomDialog {
     /**
      * 车辆类型、变速箱 选择器
      */
-    public static void popupBottomCarType(Context context, List<SparringGoodsBean> aresBeanList,
+    public static void popupBottomCarType(Context context, SubjectGoodsData goodsData,
                                           ISpeedDialogListener listener) {
         final Dialog dialog = new Dialog(context, R.style.CustomDialog_Popup);
         //填充对话框的布局
         View inflate = LayoutInflater.from(context).inflate(R.layout.custom_dialog_popup_car_type, null);
 
-        initCarTypeView(context, aresBeanList, dialog, inflate, listener);
+        initCarTypeView(context, goodsData, dialog, inflate, listener);
 
         //将布局设置给Dialog
         dialog.setContentView(inflate);
@@ -60,10 +61,12 @@ public class CustomDialog {
     /**
      * 子控件初始化
      */
-    protected static void initCarTypeView(Context context, final List<SparringGoodsBean> aresBeanList,
+    protected static void initCarTypeView(Context context, SubjectGoodsData goodsData,
                                           final Dialog dialog, View inflate, final ISpeedDialogListener listener) {
+        final List<SubjectGoodsBean> beanList = goodsData.getGoodsList();
+        final List<SubjectGoodsBean> speedList = new ArrayList<>();
 
-        if (aresBeanList != null && aresBeanList.size() > 0) aresBeanList.get(0).setChoice(true);
+        updateStopData(beanList.get(0), speedList);
         //初始化控件
         TextView tvClose = (TextView) inflate.findViewById(R.id.tv_close);
         tvClose.setOnClickListener(new View.OnClickListener() {
@@ -74,28 +77,29 @@ public class CustomDialog {
         });
         TextView tvCommit = (TextView) inflate.findViewById(R.id.tv_commit);
         ListView lvType = (ListView) inflate.findViewById(R.id.lv_type);
-        final PopupCarTypeAdapter typeAdapter = new PopupCarTypeAdapter(context, aresBeanList);
+        final PopupCarTypeAdapter typeAdapter = new PopupCarTypeAdapter(context, beanList);
+
+        ListView lvGearBox = (ListView) inflate.findViewById(R.id.lv_gearbox);
+        final PopupCarTypeAdapter boxAdapter = new PopupCarTypeAdapter(context, speedList);
+
         lvType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                for (SparringGoodsBean bean : aresBeanList) {
+                for (SubjectGoodsBean bean : beanList) {
                     bean.setChoice(false);
                 }
-                aresBeanList.get(position).setChoice(true);
+
+                updateStopData(beanList.get(position), speedList);
                 typeAdapter.notifyDataSetChanged();
+                boxAdapter.notifyDataSetChanged();
             }
         });
         lvType.setAdapter(typeAdapter);
 
-        ListView lvGearBox = (ListView) inflate.findViewById(R.id.lv_gearbox);
-        final List<SparringGoodsBean> speedList = new ArrayList<>();
-        speedList.add(new SparringGoodsBean("手动挡", true));
-        speedList.add(new SparringGoodsBean("自动挡", false));
-        final PopupCarTypeAdapter boxAdapter = new PopupCarTypeAdapter(context, speedList);
         lvGearBox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                for (SparringGoodsBean bean : speedList) {
+                for (SubjectGoodsBean bean : speedList) {
                     bean.setChoice(false);
                 }
                 speedList.get(position).setChoice(true);
@@ -107,15 +111,15 @@ public class CustomDialog {
         tvCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SparringGoodsBean goodsBean = null;
-                for (SparringGoodsBean bean : aresBeanList) {
+                SubjectGoodsBean goodsBean = null;
+                for (SubjectGoodsBean bean : beanList) {
                     if (bean.isChoice()) {
                         goodsBean = bean;
                         break;
                     }
                 }
-                SparringGoodsBean sparringGoodsBean = null;
-                for (SparringGoodsBean bean : speedList) {
+                SubjectGoodsBean sparringGoodsBean = null;
+                for (SubjectGoodsBean bean : speedList) {
                     if (bean.isChoice()) {
                         sparringGoodsBean = bean;
                         break;
@@ -126,6 +130,16 @@ public class CustomDialog {
                 dialog.dismiss();
             }
         });
+    }
+
+    private static void updateStopData(SubjectGoodsBean subjectGoodsBean, List<SubjectGoodsBean> speedList) {
+        subjectGoodsBean.setChoice(true);
+        if (!speedList.isEmpty()) speedList.clear();
+
+        for (String type : subjectGoodsBean.getDetails()) {
+            SubjectGoodsBean.GoodsBean bean = new SubjectGoodsBean.GoodsBean(type.equals("01") ? "手动挡" : "自动挡");
+            speedList.add(new SubjectGoodsBean(bean, type.equals("01")));
+        }
     }
 
     private static void initWinBottomDialogParams(Context context, Dialog dialog) {
@@ -179,7 +193,7 @@ public class CustomDialog {
         timePicker.setThirdLinkage(false);
         timePicker.setColumnWeight(0.5, 0.25, 0.25);
         timePicker.setTopLineVisible(false);
-        timePicker.setHeight(ScreenUtils.heightPixels(context) * 3/ 4);
+        timePicker.setHeight(ScreenUtils.heightPixels(context) * 3 / 4);
         timePicker.show();
     }
 

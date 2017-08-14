@@ -140,8 +140,8 @@ public class CouponFragment extends BaseRecyclerListJxFragment<CouponFragmentBea
 
     @Override
     public void delUsrCouponError(String message) {
-        ToastUtils.toastShort(message);
         dismissLoadingDialog();
+        ToastUtils.toastShort(message);
     }
 
     @Override
@@ -161,8 +161,6 @@ public class CouponFragment extends BaseRecyclerListJxFragment<CouponFragmentBea
 
     /**
      * 页面标记
-     *
-     * @return
      */
     @Override
     public String getCouponStatus() {

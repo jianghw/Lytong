@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qqtheme.framework.R;
-import cn.qqtheme.framework.adapter.PopupCarTypeAdapter;
+import cn.qqtheme.framework.adapter.PopupCarTimeAdapter;
 import cn.qqtheme.framework.contract.bean.SparringGoodsBean;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ConvertUtils;
@@ -78,7 +78,8 @@ public class SparringTimePicker extends LinkagePicker {
         final List<SparringGoodsBean> speedList = new ArrayList<>();
         speedList.add(new SparringGoodsBean("2小时", true));
         speedList.add(new SparringGoodsBean("3小时", false));
-        final PopupCarTypeAdapter boxAdapter = new PopupCarTypeAdapter(activity, speedList);
+
+        final PopupCarTimeAdapter boxAdapter = new PopupCarTimeAdapter(activity, speedList);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

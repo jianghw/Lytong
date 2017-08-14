@@ -18,6 +18,8 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
 import com.zantong.mobilecttx.utils.ImageOptions;
 
+import java.text.DecimalFormat;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -51,7 +53,7 @@ public class CouponAdapter extends BaseAdapter<CouponFragmentBean> {
     @SuppressLint("SetTextI18n")
     @Override
     public void showData(BaseRecyclerViewHolder viewHolder, int position,
-                         final CouponFragmentBean couponFragmentBean) {
+                          CouponFragmentBean couponFragmentBean) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (couponFragmentBean != null) {
             //TODO 靠~Glide
@@ -66,12 +68,24 @@ public class CouponAdapter extends BaseAdapter<CouponFragmentBean> {
             holder.mTvPrice.setText(couponFragmentBean.getCouponContent());
             holder.mTvRemark.setText(couponFragmentBean.getCouponUse());
 
+            int couponType = couponFragmentBean.getCouponType();
+            int value = couponFragmentBean.getCouponValue();
+
+            if (couponType == 2) {
+                holder.mTvPrice.setText(new DecimalFormat("#0.0#").format(value / 100));
+                holder.mTvUnit.setText("折");
+            } else if (couponType == 3) {
+                holder.mTvPrice.setText(String.valueOf(value));
+                holder.mTvUnit.setText("元");
+            }
+            holder.mTvRemark.setText(couponFragmentBean.getCouponUse());
+
             holder.mStuta.setBackground(mAdapterContext.getResources().getDrawable(mCouponStatus.equals("1")
                     ? R.mipmap.coupon_bg_r : R.mipmap.coupon_bg_r_d));
 
             holder.mInvalidCoupon.setVisibility(mCouponStatus.equals("1") ? View.GONE : View.VISIBLE);
 
-            holder.mImg.setImageAlpha(mCouponStatus.equals("1") ? 0 : 30);
+            holder.mImg.setImageAlpha(mCouponStatus.equals("1") ? 255 : 30);
 
             holder.mTitle.setTextColor(mAdapterContext.getResources().getColor(
                     mCouponStatus.equals("1") ? R.color.colorTvBlack_4d : R.color.colorTvBlack_b3));
@@ -95,6 +109,8 @@ public class CouponAdapter extends BaseAdapter<CouponFragmentBean> {
         TextView mTvRemark;
         @Bind(R.id.tv_price)
         TextView mTvPrice;
+        @Bind(R.id.tv_unit)
+        TextView mTvUnit;
         @Bind(R.id.coupon_stuta)
         RelativeLayout mStuta;
         @Bind(R.id.coupon_invalid)

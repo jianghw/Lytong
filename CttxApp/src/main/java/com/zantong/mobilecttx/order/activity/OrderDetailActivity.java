@@ -183,6 +183,14 @@ public class OrderDetailActivity extends BaseJxActivity
                 tvPayStatus.setTextColor(getResources().getColor(R.color.colorTvGreen_80));
                 tvPayStatus.setText("已支付");
                 break;
+            case 3:
+                tvPayStatus.setTextColor(getResources().getColor(R.color.colorTvGreen_80));
+                tvPayStatus.setText("进行中");
+                break;
+            case 4:
+                tvPayStatus.setTextColor(getResources().getColor(R.color.colorTvGreen_80));
+                tvPayStatus.setText("已完成");
+                break;
             case 2:
                 tvPayStatus.setTextColor(getResources().getColor(R.color.colorTvBlack_b2));
                 tvPayStatus.setText("已取消");

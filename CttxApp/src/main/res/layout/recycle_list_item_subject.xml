@@ -11,6 +11,6 @@
         android:layout_margin="@dimen/ds_18"
         android:gravity="center"
         android:textColor="@color/colorTvBlack_b3"
-        android:textSize="@dimen/fs_18sp"
+        android:textSize="@dimen/fs_14sp"
         tools:text="自动挡（工作日）"/>
 </RelativeLayout>

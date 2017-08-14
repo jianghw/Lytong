@@ -1,7 +1,10 @@
-package com.zantong.mobilecttx.base.bean;
+package cn.qqtheme.framework.contract.bean;
 
 /**
  * Created by zhengyingbing on 16/9/13.
+ * Description:
+ * Update by:
+ * Update day:
  */
 public class BaseResult {
     int responseCode;

@@ -1,6 +1,5 @@
 package com.zantong.mobilecttx.order.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,8 @@ import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponBean;
 
+import java.text.DecimalFormat;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -22,8 +23,9 @@ import butterknife.ButterKnife;
  */
 public class RechargCouponAdapter extends BaseAdapter<RechargeCouponBean> {
 
-    private Context mContext;
-
+    /**
+     * 优惠卷 type  优惠券类型：1 无；2 折扣；3 代金券
+     */
     @Override
     public void showData(BaseRecyclerViewHolder viewHolder, final int position, RechargeCouponBean couponBean) {
         ViewHolder holder = (ViewHolder) viewHolder;
@@ -32,7 +34,17 @@ public class RechargCouponAdapter extends BaseAdapter<RechargeCouponBean> {
             holder.mTitle.setText(couponBean.getCouponName());
             holder.mContent.setText("有效时间 " + couponBean.getCouponValidityEnd());
 
-            holder.mTvPrice.setText(couponBean.getCouponContent());
+            int couponType = couponBean.getCouponType();
+            int value = couponBean.getCouponValue();
+
+            if (couponType == 2) {
+                holder.mTvPrice.setText(new DecimalFormat("#0.0#").format(value / 100));
+                holder.mTvUnit.setText("折");
+            } else if (couponType == 3) {
+                holder.mTvPrice.setText(String.valueOf(value));
+                holder.mTvUnit.setText("元");
+            }
+
             holder.mTvRemark.setText(couponBean.getCouponUse());
 
             holder.mImg.setImageResource(couponBean.isChoice() ? R.mipmap.coupon_s : R.mipmap.coupon_d);
@@ -41,8 +53,8 @@ public class RechargCouponAdapter extends BaseAdapter<RechargeCouponBean> {
 
     @Override
     public View createView(ViewGroup viewGroup, int i) {
-        mContext = viewGroup.getContext();
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         return inflater.inflate(R.layout.recycle_list_item_recharg_coupon, viewGroup, false);
     }
 
@@ -66,6 +78,8 @@ public class RechargCouponAdapter extends BaseAdapter<RechargeCouponBean> {
         TextView mTvRemark;
         @Bind(R.id.tv_price)
         TextView mTvPrice;
+        @Bind(R.id.tv_unit)
+        TextView mTvUnit;
         @Bind(R.id.coupon_stuta)
         RelativeLayout mStuta;
         @Bind(R.id.coupon_invalid)

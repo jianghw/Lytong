@@ -186,7 +186,6 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     @Override
                     public List<BindCarDTO> call(UserCarsResult userCarsResult,
                                                  PayCarResult payCarResult) {
-
                         return getBindCarDTOList(userCarsResult, payCarResult);
                     }
                 })

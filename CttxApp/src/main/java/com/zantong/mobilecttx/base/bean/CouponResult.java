@@ -5,11 +5,13 @@ import com.zantong.mobilecttx.user.bean.CouponBean;
 
 import java.util.List;
 
+import cn.qqtheme.framework.contract.bean.BaseResult;
+
 /**
  * Created by zhoujie on 2017/2/16.
  */
 
-public class CouponResult extends BaseResult{
+public class CouponResult extends BaseResult {
     @SerializedName("data")
     private List<CouponBean> couponList;
 

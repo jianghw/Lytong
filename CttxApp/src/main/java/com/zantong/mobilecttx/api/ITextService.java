@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.api;
 
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 

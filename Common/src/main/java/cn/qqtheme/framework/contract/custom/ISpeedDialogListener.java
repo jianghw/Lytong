@@ -1,6 +1,6 @@
 package cn.qqtheme.framework.contract.custom;
 
-import cn.qqtheme.framework.contract.bean.SparringGoodsBean;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
 
 /**
  * Created by jianghw on 2017/8/2.
@@ -11,5 +11,5 @@ import cn.qqtheme.framework.contract.bean.SparringGoodsBean;
 
 public interface ISpeedDialogListener {
 
-    void setCurPosition(SparringGoodsBean goodsBean, SparringGoodsBean sparringGoodsBean);
+    void setCurPosition(SubjectGoodsBean goodsBean, SubjectGoodsBean sparringGoodsBean);
 }

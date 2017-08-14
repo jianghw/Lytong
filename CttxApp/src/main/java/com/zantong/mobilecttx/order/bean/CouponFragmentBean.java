@@ -8,15 +8,24 @@ import android.os.Parcelable;
  */
 
 public class CouponFragmentBean implements Parcelable {
+
     /**
-     * couponId : 2
-     * couponName : 分享赢蛋糕
-     * couponContent : 分享就有蛋糕
-     * couponValidityEnd : 2017-04-27
+     * couponId : 1623
+     * couponName : 加油充值181元抵用券
+     * couponContent : 1.此加油充值抵用券不可兑现，不可转赠，不参与其他优惠活动；
+     * 2.此加油充值抵用券仅可在畅通车友会APP内使用；
+     * 3.此加油充值抵用券使用时，充值金额不得低于抵用券金额；
+     * 4.畅通车友会APP拥有本次活动最终解释权。
+     * couponValidityEnd : 2017-10-11
      * couponStatus : 1
-     * couponImage : http://139.196.183.121:8011/admin/uploads/20170427/20170427173451882.jpeg
-     * couponCode : NJ6ZAURI4F7W6IHG
-     * couponUse : 123
+     * couponImage : http://liyingtong.com:8011/admin/uploads/20170810/20170810185543941.png
+     * couponCode : RNMG21GMCFK16IYC
+     * couponUse : 1.此加油充值抵用券不可兑现，不可转赠，不参与其他优惠活动；
+     * 2.此加油充值抵用券仅可在畅通车友会APP内使用；
+     * 3.此加油充值抵用券使用时，充值金额不得低于抵用券金额；
+     * 4.畅通车友会APP拥有本次活动最终解释权。
+     * couponType : 3
+     * couponValue : 181
      */
 
     private String couponId;
@@ -27,6 +36,8 @@ public class CouponFragmentBean implements Parcelable {
     private String couponImage;
     private String couponCode;
     private String couponUse;
+    private int couponType;
+    private int couponValue;
 
     public String getCouponId() {
         return couponId;
@@ -92,6 +103,22 @@ public class CouponFragmentBean implements Parcelable {
         this.couponUse = couponUse;
     }
 
+    public int getCouponType() {
+        return couponType;
+    }
+
+    public void setCouponType(int couponType) {
+        this.couponType = couponType;
+    }
+
+    public int getCouponValue() {
+        return couponValue;
+    }
+
+    public void setCouponValue(int couponValue) {
+        this.couponValue = couponValue;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -107,6 +134,8 @@ public class CouponFragmentBean implements Parcelable {
         dest.writeString(this.couponImage);
         dest.writeString(this.couponCode);
         dest.writeString(this.couponUse);
+        dest.writeInt(this.couponType);
+        dest.writeInt(this.couponValue);
     }
 
     public CouponFragmentBean() {
@@ -121,9 +150,11 @@ public class CouponFragmentBean implements Parcelable {
         this.couponImage = in.readString();
         this.couponCode = in.readString();
         this.couponUse = in.readString();
+        this.couponType = in.readInt();
+        this.couponValue = in.readInt();
     }
 
-    public static final Creator<CouponFragmentBean> CREATOR = new Creator<CouponFragmentBean>() {
+    public static final Parcelable.Creator<CouponFragmentBean> CREATOR = new Parcelable.Creator<CouponFragmentBean>() {
         @Override
         public CouponFragmentBean createFromParcel(Parcel source) {
             return new CouponFragmentBean(source);

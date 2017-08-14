@@ -8,7 +8,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.daijia.activity.DrivingOrderActivity;

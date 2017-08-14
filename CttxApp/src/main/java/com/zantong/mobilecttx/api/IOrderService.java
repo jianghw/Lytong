@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.api;
 
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
 import com.zantong.mobilecttx.order.bean.OrderListResult;
 
@@ -36,4 +36,11 @@ public interface IOrderService {
     @FormUrlEncoded
     @POST("order/updateOrderStatus")
     Observable<BaseResult> updateOrderStatus(@Field("orderId") String orderId, @Field("orderStatus") String orderStatus);
+
+    /**
+     * 10.取消订单
+     */
+    @FormUrlEncoded
+    @POST("order/cancelOrder")
+    Observable<BaseResult> cancelOrder(@Field("orderId") String orderId, @Field("userNum") String userNum);
 }

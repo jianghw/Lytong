@@ -97,12 +97,10 @@ public class OrderAllStatusFragment extends BaseRecyclerListJxFragment<OrderList
 
     @Override
     protected void onFirstDataVisible() {
-
     }
 
     @Override
     protected void DestroyViewAndThing() {
-
     }
 
     public void setPayOrderListData(List<OrderListBean> data) {

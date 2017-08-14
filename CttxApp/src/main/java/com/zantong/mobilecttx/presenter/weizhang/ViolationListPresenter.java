@@ -4,7 +4,7 @@ package com.zantong.mobilecttx.presenter.weizhang;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;

@@ -73,6 +73,8 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
     private TextView mTvAdmissions;
     private LinearLayout mLaySparring;
     private LinearLayout mLaySubject;
+    private TextView mTvSparring;
+    private TextView mTvSubject;
 
     public static HomeFavorableFragment newInstance() {
         return new HomeFavorableFragment();
@@ -135,15 +137,24 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
                 .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
                 .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
 
+        String buffer = getStringBuffer(5120);
+        mTvAdmissions.setText(Html.fromHtml(buffer));
+
+        mTvSparring.setText(Html.fromHtml(getStringBuffer(1000)));
+        mTvSubject.setText(Html.fromHtml(getStringBuffer(2000)));
+    }
+
+    @NonNull
+    private String getStringBuffer(int price) {
         StringBuffer buffer = new StringBuffer();
         buffer.append("￥");
         buffer.append("&#160;");
-        buffer.append(5120);
+        buffer.append(price);
         buffer.append("&#160;");
         buffer.append("<font color=\"#b3b3b3\">");
         buffer.append("起");
         buffer.append("</font>");
-        mTvAdmissions.setText(Html.fromHtml(buffer.toString()));
+        return buffer.toString();
     }
 
     @Override
@@ -230,6 +241,8 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
         mLayAdmissions = (LinearLayout) view.findViewById(R.id.lay_admissions);
         mLayAdmissions.setOnClickListener(this);
         mTvAdmissions = (TextView) view.findViewById(R.id.tv_admissions);
+        mTvSparring = (TextView) view.findViewById(R.id.tv_sparring);
+        mTvSubject = (TextView) view.findViewById(R.id.tv_subject);
         mLaySparring = (LinearLayout) view.findViewById(R.id.lay_sparring);
         mLaySparring.setOnClickListener(this);
         mLaySubject = (LinearLayout) view.findViewById(R.id.lay_subject);

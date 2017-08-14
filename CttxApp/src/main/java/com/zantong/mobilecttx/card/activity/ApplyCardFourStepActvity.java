@@ -20,7 +20,7 @@ import com.zantong.mobilecttx.api.FileDownloadApi;
 import com.zantong.mobilecttx.api.HandleCTCardApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.card.bean.YingXiaoResult;

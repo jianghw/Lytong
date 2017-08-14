@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.eventbus;
 
-import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsBean;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
 
 public class SubjectOrderEvent {
 

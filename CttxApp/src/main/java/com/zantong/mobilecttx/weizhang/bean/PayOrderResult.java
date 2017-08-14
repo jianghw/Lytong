@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.weizhang.bean;
 
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 
 /**
  * 支付订单返回实体类

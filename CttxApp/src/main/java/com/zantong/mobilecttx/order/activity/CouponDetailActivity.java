@@ -13,6 +13,8 @@ import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
 import com.zantong.mobilecttx.utils.ImageOptions;
 
+import java.text.DecimalFormat;
+
 /**
  * 优惠券详情页面
  */
@@ -73,17 +75,23 @@ public class CouponDetailActivity extends BaseJxActivity {
                 mImgBrand,
                 ImageOptions.getMessageOptions());
 
-        mImgInvalid.setVisibility(
-                fragmentBean.getCouponStatus().equals("1") ? View.VISIBLE : View.GONE);
-
         mTvBrand.setText(fragmentBean.getCouponName());
+        mImgInvalid.setVisibility(
+                fragmentBean.getCouponStatus().equals("1") ? View.GONE : View.VISIBLE);
+
+        int couponType = fragmentBean.getCouponType();
+        int value = fragmentBean.getCouponValue();
+        if (couponType == 2) {
+            mTvPrice.setText(new DecimalFormat("#0.0#").format(value / 100) + "折");
+        } else if (couponType == 3) {
+            mTvPrice.setText(String.valueOf(value) + "元");
+        }
+
         mTvCode.setText(fragmentBean.getCouponCode() == null
                 ? "暂时无优惠码" : fragmentBean.getCouponCode().equals("null")
                 ? "暂时无优惠码" : fragmentBean.getCouponCode());
 
         mTvDate.setText("到期时间：" + fragmentBean.getCouponValidityEnd());
-
-        mTvPrice.setText(fragmentBean.getCouponContent());
 
         mTvContent.setText(fragmentBean.getCouponUse());
     }

@@ -1,9 +1,8 @@
 package com.zantong.mobilecttx.weizhang.bean;
 
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by zhengyingbing on 17/5/5.

@@ -137,9 +137,8 @@
         再赠送您免费陪练2小时课程
     </string>
     <string name="tv_sparring_prompt_un_card">
-        <!--<font color='#f3362b'>-->
-            <!--<u>在线办理牡丹畅通卡</u>-->
-        <!--</font>-->
         \n可再获得免费陪练2小时课程
     </string>
+
+    <string name="tv_subject_time">%1$s课时/%2$s小时</string>
 </resources>

@@ -7,11 +7,14 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.fahrschule.fragment.FahrschuleShareFragment;
 import com.zantong.mobilecttx.share.fragment.CreditShareFragment;
 import com.zantong.mobilecttx.share.fragment.FriendShareFragment;
+import com.zantong.mobilecttx.share.fragment.SparringShareFragment;
+import com.zantong.mobilecttx.share.fragment.SubjectShareFragment;
 
 import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
@@ -28,12 +31,16 @@ public class ShareParentActivity extends BaseJxActivity implements View.OnClickL
     private ImageView mImgViolation;
     private ImageView mImgShare;
     private FrameLayout mContent;
+    private ImageView mImgSparring;
+    private ImageView mImgSubject;
 
     private int mCurPosition;
 
     private FahrschuleShareFragment mFahrschuleShareFragment = null;
     private CreditShareFragment mCreditShareFragment = null;
     private FriendShareFragment mFriendShareFragment = null;
+    private SparringShareFragment mSparringShareFragment = null;
+    private SubjectShareFragment mSubjectShareFragment = null;
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
@@ -71,6 +78,14 @@ public class ShareParentActivity extends BaseJxActivity implements View.OnClickL
             case 3:
                 initTitleContent("分享返现");
                 break;
+            case 4:
+                initTitleContent("教练陪练");
+                break;
+            case 5:
+                initTitleContent("科目强化");
+                break;
+            default:
+                break;
 
         }
     }
@@ -87,6 +102,8 @@ public class ShareParentActivity extends BaseJxActivity implements View.OnClickL
         mFahrschuleShareFragment = null;
         mCreditShareFragment = null;
         mFriendShareFragment = null;
+        mSparringShareFragment = null;
+        mSubjectShareFragment = null;
     }
 
     private void initFragment() {
@@ -129,6 +146,30 @@ public class ShareParentActivity extends BaseJxActivity implements View.OnClickL
                     }
                 });
                 break;
+            case 4:
+                if (mSparringShareFragment == null) {
+                    mSparringShareFragment = SparringShareFragment.newInstance();
+                }
+                FragmentUtils.replaceFragment(fragmentManager, mSparringShareFragment, R.id.content, true);
+                mSparringShareFragment.setCloseListener(new FragmentDestroy() {
+                    @Override
+                    public void closeListener(int position) {
+                        initTitle(position);
+                    }
+                });
+                break;
+            case 5:
+                if (mSubjectShareFragment == null) {
+                    mSubjectShareFragment = SubjectShareFragment.newInstance();
+                }
+                FragmentUtils.replaceFragment(fragmentManager, mSubjectShareFragment, R.id.content, true);
+                mSubjectShareFragment.setCloseListener(new FragmentDestroy() {
+                    @Override
+                    public void closeListener(int position) {
+                        initTitle(position);
+                    }
+                });
+                break;
             default:
                 break;
         }
@@ -141,6 +182,10 @@ public class ShareParentActivity extends BaseJxActivity implements View.OnClickL
         mImgViolation.setOnClickListener(this);
         mImgShare = (ImageView) view.findViewById(R.id.img_share);
         mImgShare.setOnClickListener(this);
+        mImgSparring = (ImageView) view.findViewById(R.id.img_sparring);
+        mImgSparring.setOnClickListener(this);
+        mImgSubject = (ImageView) view.findViewById(R.id.img_subject);
+        mImgSubject.setOnClickListener(this);
         mContent = (FrameLayout) view.findViewById(R.id.content);
     }
 
@@ -159,6 +204,14 @@ public class ShareParentActivity extends BaseJxActivity implements View.OnClickL
                 mCurPosition = 3;
                 initFragment();
                 break;
+            case R.id.img_sparring:
+                mCurPosition = 4;
+                initFragment();
+                break;
+            case R.id.img_subject:
+                mCurPosition = 5;
+                initFragment();
+                break;
             default:
                 break;
         }
@@ -167,6 +220,11 @@ public class ShareParentActivity extends BaseJxActivity implements View.OnClickL
 
     public interface FragmentDestroy {
         void closeListener(int position);
+    }
+
+    public static String getShareAppUrl(int postion) {
+
+        return BuildConfig.CAR_MANGER_URL + "h5/share" + postion + "/share.html";
     }
 
 }

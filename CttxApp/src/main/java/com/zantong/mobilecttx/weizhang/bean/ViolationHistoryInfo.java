@@ -1,7 +1,5 @@
 package com.zantong.mobilecttx.weizhang.bean;
 
-import com.zantong.mobilecttx.base.bean.BaseResult;
-
 import java.util.List;
 
 /**

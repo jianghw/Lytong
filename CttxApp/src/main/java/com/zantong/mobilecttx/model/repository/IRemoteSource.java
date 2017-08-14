@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.model.repository;
 
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -18,7 +18,7 @@ import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
 import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
-import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.DriverCoachResult;
@@ -277,4 +277,9 @@ public interface IRemoteSource {
      * 21.获取服务器时间
      */
     Observable<ServerTimeResult> getServerTime();
+
+    /**
+     * 10.取消订单
+     */
+    Observable<BaseResult> cancelOrder(String orderId, String userNum);
 }

@@ -17,7 +17,6 @@ import com.zantong.mobilecttx.api.ISplashService;
 import com.zantong.mobilecttx.api.ITextService;
 import com.zantong.mobilecttx.api.IUserService;
 import com.zantong.mobilecttx.api.IViolationService;
-import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -36,7 +35,6 @@ import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
 import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
-import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.DriverCoachResult;
@@ -65,6 +63,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
 import okhttp3.MultipartBody;
 import retrofit2.Retrofit;
 import rx.Observable;
@@ -500,5 +500,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<ServerTimeResult> getServerTime() {
         return initRetrofit().create(IDriverTrainService.class).getServerTime();
+    }
+
+    /**
+     * 10.取消订单
+     */
+    @Override
+    public Observable<BaseResult> cancelOrder(String orderId, String userNum) {
+        return initRetrofit().create(IOrderService.class).cancelOrder(orderId,userNum);
     }
 }

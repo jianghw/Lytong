@@ -3,7 +3,6 @@ package com.zantong.mobilecttx.model.repository;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.zantong.mobilecttx.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
@@ -22,7 +21,6 @@ import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
 import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
-import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.DriverCoachResult;
@@ -51,6 +49,8 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import java.util.List;
 
+import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
 import okhttp3.MultipartBody;
 import rx.Observable;
 
@@ -486,5 +486,12 @@ public class RepositoryManager {
      */
     public Observable<ServerTimeResult> getServerTime() {
         return mRemoteData.getServerTime();
+    }
+
+    /**
+     * 10.取消订单
+     */
+    public Observable<BaseResult> cancelOrder(String orderId, String userNum) {
+        return mRemoteData.cancelOrder(orderId, userNum);
     }
 }

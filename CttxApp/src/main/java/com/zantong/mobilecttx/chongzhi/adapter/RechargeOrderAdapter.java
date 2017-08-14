@@ -13,7 +13,7 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeOrderBean;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;

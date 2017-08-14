@@ -13,12 +13,12 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.card.activity.ApplyCardFirstActivity;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
+import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -163,7 +163,7 @@ public class SparringSucceedFragment extends BaseRefreshJxFragment implements Vi
 
         WXWebpageObject webpage = new WXWebpageObject();
         if (PublicData.getInstance().loginFlag) {
-            webpage.webpageUrl = BuildConfig.SHARE_APP_URL_4 + "?phoneNum="
+            webpage.webpageUrl = ShareParentActivity.getShareAppUrl(4) + "?phoneNum="
                     + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";

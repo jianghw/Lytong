@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserForPayActivity;
@@ -104,9 +104,12 @@ public class OrderParentActivity extends BaseJxActivity
                 if (mPresenter != null) mPresenter.getOrderList();
             }
 
+            /**
+             * 取消
+             */
             @Override
             public void doClickCancel(OrderListBean bean) {
-                if (mPresenter != null) mPresenter.updateOrderStatus(bean);
+                if (mPresenter != null) mPresenter.cancelOrder(bean);
             }
 
             @Override
@@ -127,6 +130,13 @@ public class OrderParentActivity extends BaseJxActivity
         };
     }
 
+    /**
+     * 0--待支付
+     * 1--已支付
+     * 2--已取消
+     * 3--进行中
+     * 4--完成
+     */
     private void initViewPager() {
         String[] title = new String[]{"全部订单", "待支付", "已取消", "已支付"};
         OrderFragmentAdapter mainFragmentAdapter =
@@ -206,7 +216,7 @@ public class OrderParentActivity extends BaseJxActivity
         if (orderStatus == 0) {
             if (orderUnStatusFragment != null)
                 orderUnStatusFragment.setPayOrderListData(null);
-        } else if (orderStatus == 1) {
+        } else if (orderStatus == 1 || orderStatus == 3 || orderStatus == 4) {
             if (orderPayStatusFragment != null)
                 orderPayStatusFragment.setPayOrderListData(null);
         } else if (orderStatus == 2) {

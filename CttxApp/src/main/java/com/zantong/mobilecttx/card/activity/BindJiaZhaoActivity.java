@@ -14,7 +14,7 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.card.bean.BindCardResult;
 import com.zantong.mobilecttx.card.dto.BindCardDTO;
 import com.zantong.mobilecttx.card.dto.BindDrivingDTO;

@@ -14,7 +14,7 @@ import com.zantong.mobilecttx.common.activity.PayBrowserActivity;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectOrderContract;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobilecttx.eventbus.SubjectOrderEvent;
-import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsBean;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
 import com.zantong.mobilecttx.presenter.fahrschule.SubjectOrderPresenter;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.utils.StringUtils;
@@ -152,7 +152,7 @@ public class SubjectOrderFragment extends BaseRefreshJxFragment
         SubjectGoodsBean goodsBean = event.getGoodsBean();
 
         if (goodsBean != null) {
-            mTvCourseName.setText(goodsBean.getName());
+            mTvCourseName.setText(goodsBean.getGoods().getName());
             mTvUser.setText(event.getEditName());
             mTvPhone.setText(event.getPhone());
         }

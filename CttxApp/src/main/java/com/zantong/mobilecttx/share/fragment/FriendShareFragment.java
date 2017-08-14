@@ -14,14 +14,13 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.contract.IFahrschuleShareFtyContract;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountBean;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
-import com.zantong.mobilecttx.contract.IFahrschuleShareFtyContract;
 import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleSharePresenter;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
@@ -125,7 +124,7 @@ public class FriendShareFragment extends BaseRefreshJxFragment
 
         String contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         if (PublicData.getInstance().loginFlag && PublicData.getInstance().mLoginInfoBean != null)
-            contentString = BuildConfig.SHARE_APP_URL_1 + "?phoneNum="
+            contentString = ShareParentActivity.getShareAppUrl(1) + "?phoneNum="
                     + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
         else
             contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
@@ -240,7 +239,7 @@ public class FriendShareFragment extends BaseRefreshJxFragment
 
         WXWebpageObject webpage = new WXWebpageObject();
         if (PublicData.getInstance().loginFlag) {
-            webpage.webpageUrl = BuildConfig.SHARE_APP_URL_1 + "?phoneNum="
+            webpage.webpageUrl = ShareParentActivity.getShareAppUrl(1) + "?phoneNum="
                     + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";

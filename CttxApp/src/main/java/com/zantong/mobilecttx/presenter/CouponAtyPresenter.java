@@ -49,6 +49,7 @@ public class CouponAtyPresenter implements ICouponAtyContract.ICouponAtyPresente
 
     @Override
     public void unSubscribe() {
+        mView.dismissLoadingDialog();
         mSubscriptions.clear();
     }
 

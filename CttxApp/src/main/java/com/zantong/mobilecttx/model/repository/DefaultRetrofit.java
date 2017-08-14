@@ -79,7 +79,9 @@ public class DefaultRetrofit implements IRetrofitUrl {
         client = new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .retryOnConnectionFailure(true)
-                .connectTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(30*1000, TimeUnit.MILLISECONDS)
+                .writeTimeout(30*1000, TimeUnit.MILLISECONDS)
+                .readTimeout(30*1000, TimeUnit.MILLISECONDS)
                 .addInterceptor(mTokenInterceptor)
 //                .authenticator(mAuthenticator)
                 .build();

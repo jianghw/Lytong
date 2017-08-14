@@ -483,11 +483,11 @@ public class RechargeFragment extends PullableBaseFragment
     private void submitFormValidation() {
         String card = mEditCardnum.getText().toString().trim();
         if (TextUtils.isEmpty(card)) {
-            ToastUtils.showShort(getContext().getApplicationContext(), "请填写正确的卡号");
+            ToastUtils.toastShort("请填写正确的卡号");
         } else if (mProviderType == 1 && card.length() != 19) {
-            ToastUtils.showShort(getContext().getApplicationContext(), "请填写正确的19位卡号");
+            ToastUtils.toastShort("请填写正确的19位卡号");
         } else if (mProviderType == 2 && card.length() != 16) {
-            ToastUtils.showShort(getContext().getApplicationContext(), "请填写正确的16位卡号");
+            ToastUtils.toastShort("请填写正确的16位卡号");
         } else {
             if (mPresenter != null) mPresenter.addOilCreateOrder();
         }

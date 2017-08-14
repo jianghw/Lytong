@@ -14,8 +14,9 @@ import com.zantong.mobilecttx.contract.fahrschule.ISubjectIntensifyContract;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobilecttx.eventbus.SubjectCommitEvent;
 import com.zantong.mobilecttx.fahrschule.adapter.SubjectGoodsAdapter;
-import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsBean;
-import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsResult;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsData;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
 import com.zantong.mobilecttx.presenter.fahrschule.SubjectIntensifyPresenter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -53,6 +54,7 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
 
     private ISubjectSwitcherListener mSwitcherListener;
     private SubjectGoodsAdapter mAdapter;
+    private SubjectGoodsData.RemarkBean mRemarkBean;
 
     public static SubjectIntensifyFragment newInstance() {
         return new SubjectIntensifyFragment();
@@ -75,6 +77,13 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    /**
+     * 不下拉刷新
+     */
+    protected boolean isRefresh() {
+        return false;
     }
 
     @Override
@@ -113,13 +122,14 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
         });
     }
 
-    protected void dataListShow(SubjectGoodsBean goodsBean ) {
-
+    protected void dataListShow(SubjectGoodsBean goodsBean) {
         ArrayList<SubjectGoodsBean> beanArrayList = mAdapter.getAll();
-        for (SubjectGoodsBean bean : beanArrayList) {
-            bean.setChoice(goodsBean.getGoodsId() == bean.getGoodsId());
+        SubjectGoodsBean.GoodsBean goodsBeanGoods = goodsBean.getGoods();
 
-            if (goodsBean.getGoodsId() == bean.getGoodsId()) {
+        for (SubjectGoodsBean bean : beanArrayList) {
+            bean.setChoice(goodsBeanGoods.getGoodsId() == bean.getGoods().getGoodsId());
+
+            if (goodsBeanGoods.getGoodsId() == bean.getGoods().getGoodsId()) {
                 displayDescription(goodsBean);
             }
         }
@@ -127,8 +137,8 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
     }
 
     private void displayDescription(SubjectGoodsBean goodsBean) {
-        mTvContent.setText(goodsBean.getDescription());
-        String valueString = new DecimalFormat("#0.00").format(goodsBean.getPrice());
+        mTvContent.setText(goodsBean.getGoods().getDescription());
+        String valueString = new DecimalFormat("#0.00").format(goodsBean.getGoods().getPrice());
         mTvPrice.setText(valueString);
     }
 
@@ -178,7 +188,7 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
 
         for (SubjectGoodsBean bean : beanArrayList) {
             if (bean.isChoice()) {
-                EventBus.getDefault().postSticky(new SubjectCommitEvent(bean));
+                EventBus.getDefault().postSticky(new SubjectCommitEvent(bean,mRemarkBean));
                 if (mSwitcherListener != null) mSwitcherListener.setCurPosition(1);
                 return;
             }
@@ -208,7 +218,10 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
 
     @Override
     public void getGoodsSucceed(SubjectGoodsResult result) {
-        List<SubjectGoodsBean> beanList = result.getData();
+        SubjectGoodsData subjectGoodsData = result.getData();
+        if (subjectGoodsData == null) return;
+        mRemarkBean =subjectGoodsData.getRemark();
+        List<SubjectGoodsBean> beanList = subjectGoodsData.getGoodsList();
 
         if (beanList != null && !beanList.isEmpty()) {
             beanList.get(0).setChoice(true);

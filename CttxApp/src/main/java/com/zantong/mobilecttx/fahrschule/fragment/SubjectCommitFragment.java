@@ -20,7 +20,7 @@ import com.zantong.mobilecttx.eventbus.SubjectCommitEvent;
 import com.zantong.mobilecttx.eventbus.SubjectOrderEvent;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderBean;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
-import com.zantong.mobilecttx.fahrschule.bean.SubjectGoodsBean;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
 import com.zantong.mobilecttx.order.activity.CouponListActivity;
 import com.zantong.mobilecttx.presenter.fahrschule.SubjectCommitPresenter;
 import com.zantong.mobilecttx.utils.StringUtils;
@@ -72,8 +72,9 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
      */
     private TextView mTvCoupon;
     private RelativeLayout mLayCoupon;
-    private SubjectGoodsBean goodsBean;
+    private TextView mTvRemark;
 
+    private SubjectGoodsBean goodsBean;
     /**
      * 优惠券 弹出框布局
      */
@@ -177,6 +178,7 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
         mLayCoupon = (RelativeLayout) view.findViewById(R.id.lay_coupon);
         mLayCoupon.setOnClickListener(this);
         mTvCoupon = (TextView) view.findViewById(R.id.tv_coupon);
+        mTvRemark = (TextView) view.findViewById(R.id.tv_remark);
     }
 
     /**
@@ -189,8 +191,17 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
 
     private void initData(SubjectCommitEvent event) {
         goodsBean = event.getSubjectGoodsBean();
-        mTvCourseTitle.setText(goodsBean.getName());
-        mTvCourseTime.setText(goodsBean.getDescription());
+        mTvCourseTitle.setText(goodsBean.getGoods().getName());
+
+        String timeFormat = getResources().getString(R.string.tv_subject_time);
+        List<String> details = goodsBean.getDetails();
+        String textTime = "数据出错";
+        if (details.size() > 1) {
+            textTime = String.format(timeFormat, details.get(0), details.get(1));
+        }
+        mTvCourseTime.setText(textTime);
+
+        mTvRemark.setText(event.getRemarkBean().getRemark2());
     }
 
     @Override
@@ -337,12 +348,12 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
 
     @Override
     public String getGoodsId() {
-        return String.valueOf(goodsBean.getGoodsId());
+        return String.valueOf(goodsBean.getGoods().getGoodsId());
     }
 
     @Override
     public String getPriceValue() {
-        int price = goodsBean.getPrice();
+        int price = goodsBean.getGoods().getPrice();
         String finalPrice = String.valueOf(price);
         if (isChoiceCoupon) {
             for (RechargeCouponBean bean : mCouponBeanList) {

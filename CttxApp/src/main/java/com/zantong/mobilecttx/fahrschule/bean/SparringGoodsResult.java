@@ -1,23 +1,21 @@
 package com.zantong.mobilecttx.fahrschule.bean;
 
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 
-import java.util.List;
-
-import cn.qqtheme.framework.contract.bean.SparringGoodsBean;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsData;
 
 /**
  * 科目强化商品列表
  */
 public class SparringGoodsResult extends BaseResult {
 
-    private List<SparringGoodsBean> data;
+    private SubjectGoodsData data;
 
-    public void setData(List<SparringGoodsBean> data) {
-        this.data = data;
+    public SubjectGoodsData getData() {
+        return data;
     }
 
-    public List<SparringGoodsBean> getData() {
-        return data;
+    public void setData(SubjectGoodsData data) {
+        this.data = data;
     }
 }

@@ -3,46 +3,80 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/img_admissions"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_447"
-        android:layout_marginLeft="@dimen/ds_48"
-        android:layout_marginRight="@dimen/ds_48"
-        android:layout_marginTop="@dimen/ds_48"
-        android:background="@drawable/shape_edit_apply"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_banner1"/>
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
-    <ImageView
-        android:id="@+id/img_violation"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_447"
-        android:layout_below="@+id/img_admissions"
-        android:layout_marginLeft="@dimen/ds_48"
-        android:layout_marginRight="@dimen/ds_48"
-        android:layout_marginTop="@dimen/ds_48"
-        android:background="@drawable/shape_edit_apply"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_banner2"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:paddingBottom="@dimen/ds_48"
+            android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/img_share"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_447"
-        android:layout_below="@+id/img_violation"
-        android:layout_marginLeft="@dimen/ds_48"
-        android:layout_marginRight="@dimen/ds_48"
-        android:layout_marginTop="@dimen/ds_48"
-        android:background="@drawable/shape_edit_apply"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_banner3"/>
+            <ImageView
+                android:id="@+id/img_admissions"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_447"
+                android:layout_marginLeft="@dimen/ds_48"
+                android:layout_marginRight="@dimen/ds_48"
+                android:layout_marginTop="@dimen/ds_48"
+                android:background="@drawable/shape_edit_apply"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_banner1"/>
+
+            <ImageView
+                android:id="@+id/img_violation"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_447"
+                android:layout_below="@+id/img_admissions"
+                android:layout_marginLeft="@dimen/ds_48"
+                android:layout_marginRight="@dimen/ds_48"
+                android:layout_marginTop="@dimen/ds_48"
+                android:background="@drawable/shape_edit_apply"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_banner2"/>
+
+            <ImageView
+                android:id="@+id/img_share"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_447"
+                android:layout_below="@+id/img_violation"
+                android:layout_marginLeft="@dimen/ds_48"
+                android:layout_marginRight="@dimen/ds_48"
+                android:layout_marginTop="@dimen/ds_48"
+                android:background="@drawable/shape_edit_apply"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_banner3"/>
+
+            <ImageView
+                android:id="@+id/img_sparring"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_447"
+                android:layout_below="@+id/img_share"
+                android:layout_marginLeft="@dimen/ds_48"
+                android:layout_marginRight="@dimen/ds_48"
+                android:layout_marginTop="@dimen/ds_48"
+                android:background="@drawable/shape_edit_apply"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_banner4"/>
+
+            <ImageView
+                android:id="@+id/img_subject"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ds_447"
+                android:layout_below="@+id/img_sparring"
+                android:layout_marginLeft="@dimen/ds_48"
+                android:layout_marginRight="@dimen/ds_48"
+                android:layout_marginTop="@dimen/ds_48"
+                android:background="@drawable/shape_edit_apply"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_banner5"/>
+        </RelativeLayout>
+    </ScrollView>
 
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

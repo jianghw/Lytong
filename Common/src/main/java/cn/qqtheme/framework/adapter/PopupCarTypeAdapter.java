@@ -11,17 +11,17 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.qqtheme.framework.R;
-import cn.qqtheme.framework.contract.bean.SparringGoodsBean;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
 
 /**
  * 底部弹出框 列表显示
  */
 public class PopupCarTypeAdapter extends BaseAdapter {
 
-    private final List<SparringGoodsBean> mDataList;
+    private final List<SubjectGoodsBean> mDataList;
     private final Context activityContext;
 
-    public PopupCarTypeAdapter(Context context, List<SparringGoodsBean> aresBeanList) {
+    public PopupCarTypeAdapter(Context context, List<SubjectGoodsBean> aresBeanList) {
         activityContext = context;
         mDataList = aresBeanList;
     }
@@ -55,11 +55,11 @@ public class PopupCarTypeAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        SparringGoodsBean sparringGoodsBean = mDataList.get(position);
+        SubjectGoodsBean sparringGoodsBean = mDataList.get(position);
         if (sparringGoodsBean != null) {
-            holder.mTextName.setText(sparringGoodsBean.getName());
-            if (sparringGoodsBean.getPrice() > 0)
-                holder.mTextTime.setText(sparringGoodsBean.getPrice() + "元/小时");
+            holder.mTextName.setText(sparringGoodsBean.getGoods().getName());
+            if (sparringGoodsBean.getGoods().getPrice() > 0)
+                holder.mTextTime.setText(sparringGoodsBean.getGoods().getPrice() + "元/小时");
             holder.mImageChoice.setVisibility(sparringGoodsBean.isChoice() ? View.VISIBLE : View.GONE);
         }
 

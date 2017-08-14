@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.presenter.order;
 
 import android.support.annotation.NonNull;
 
-import com.zantong.mobilecttx.base.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
@@ -96,7 +96,11 @@ public class OrderParentPresenter
     }
 
     /**
-     * 订单状态,0未至付，1已支付,2取消或过期，3已锁定
+     * 0--待支付
+     * 1--已支付
+     * 2--已取消
+     * 3--进行中
+     * 4--完成
      */
     private void dataDistribution(OrderListResult result, final int orderStatus) {
         Subscription subscription = Observable.just(result)
@@ -127,6 +131,10 @@ public class OrderParentPresenter
                 .filter(new Func1<OrderListBean, Boolean>() {
                     @Override
                     public Boolean call(OrderListBean orderListBean) {
+                        if (orderStatus == 1)
+                            return orderListBean.getOrderStatus() == 1
+                                    || orderListBean.getOrderStatus() == 3
+                                    || orderListBean.getOrderStatus() == 4;
                         return orderListBean.getOrderStatus() == orderStatus;
                     }
                 })
@@ -136,19 +144,18 @@ public class OrderParentPresenter
                 .subscribe(new BaseSubscriber<List<OrderListBean>>() {
                     @Override
                     public void doCompleted() {
-
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.dataDistribution(e.getMessage(),orderStatus);
+                        mAtyView.dataDistribution(e.getMessage(), orderStatus);
                     }
 
                     @Override
                     public void doNext(List<OrderListBean> orderList) {
                         if (orderStatus == 0)
                             mAtyView.nonPaymentData(orderList);
-                        else if (orderStatus == 1)
+                        else if (orderStatus == 1 || orderStatus == 3 || orderStatus == 4)
                             mAtyView.havePaymentData(orderList);
                         else if (orderStatus == 2)
                             mAtyView.cancelPaymentData(orderList);
@@ -168,6 +175,46 @@ public class OrderParentPresenter
     @Override
     public void updateOrderStatus(OrderListBean bean) {
         Subscription subscription = mRepository.updateOrderStatus(bean.getOrderId(), 2)
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mAtyView.showLoadingDialog();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResult>() {
+                    @Override
+                    public void doCompleted() {
+                        mAtyView.dismissLoadingDialog();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.updateOrderStatusError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(BaseResult result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.updateOrderStatusSucceed(result);
+
+                        } else {
+                            mAtyView.updateOrderStatusError(result != null
+                                    ? result.getResponseDesc() : "未知错误(N10)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 10.取消订单
+     */
+    @Override
+    public void cancelOrder(OrderListBean bean) {
+        Subscription subscription = mRepository.cancelOrder(bean.getOrderId(), mRepository.getDefaultRASUserID())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -271,7 +318,7 @@ public class OrderParentPresenter
                     @Override
                     public void doNext(PayOrderResult result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.getBankPayHtmlSucceed(result,orderId);
+                            mAtyView.getBankPayHtmlSucceed(result, orderId);
                         } else {
                             mAtyView.onPayOrderByCouponError(result != null
                                     ? result.getResponseDesc() : "未知错误(N5)");
