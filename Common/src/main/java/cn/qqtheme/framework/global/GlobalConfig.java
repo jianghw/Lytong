@@ -68,7 +68,7 @@ public final class GlobalConfig {
         simpleArrayMap.put(33, "shareNumber_money");//分享数据_返还现金
     }
 
-    public String getgetUMengEventID(int position) {
+    public String getUMengEventID(int position) {
         if (simpleArrayMap != null && simpleArrayMap.size() >= position) {
             return simpleArrayMap.get(position);
         }
@@ -79,7 +79,11 @@ public final class GlobalConfig {
      * 自定义友盟事件
      */
     public void eventIdByUMeng(int position) {
-        MobclickAgent.onEvent(ContextUtils.getContext(), getgetUMengEventID(position));
+        MobclickAgent.onEvent(ContextUtils.getContext(), getUMengEventID(position));
+    }
+
+    public void customUrlUMeng(String url) {
+        MobclickAgent.onEvent(ContextUtils.getContext(), url);
     }
 
 }

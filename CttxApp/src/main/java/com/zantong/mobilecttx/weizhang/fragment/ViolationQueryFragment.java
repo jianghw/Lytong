@@ -17,7 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.car.activity.CarBrandActivity;
@@ -60,6 +59,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
@@ -155,10 +155,10 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         return new ViolationQueryFragment();
     }
 
-    public static ViolationQueryFragment newInstance(VehicleLicenseBean param1) {
+    public static ViolationQueryFragment newInstance(VehicleLicenseBean licenseBean) {
         ViolationQueryFragment fragment = new ViolationQueryFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_PARAM1, param1);
+        args.putParcelable(ARG_PARAM1, licenseBean);
 
         fragment.setArguments(args);
         return fragment;
@@ -241,7 +241,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
      */
     private void initBundleData() {
 
-        mBtnDelete.setVisibility(mParam1 != null ? View.VISIBLE : View.GONE);
+        mBtnDelete.setVisibility(mParam1 != null && mParam1.getIsPayable() == 1 ? View.GONE : View.VISIBLE);
         mBtnQuery.setText(mParam1 != null ? "编辑保存" : "查  询");
 
         mCustomSwitchBtn.setChecked(true);

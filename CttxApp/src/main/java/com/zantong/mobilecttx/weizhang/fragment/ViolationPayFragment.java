@@ -19,7 +19,7 @@ import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.NetUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.PayWebActivity;
-import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
+import com.zantong.mobilecttx.weizhang.activity.ViolationPayActivity;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 
 import butterknife.Bind;
@@ -48,10 +48,10 @@ public class ViolationPayFragment extends BaseJxFragment {
         return new ViolationPayFragment();
     }
 
-    public static ViolationPayFragment newInstance(ViolationBean param1) {
+    public static ViolationPayFragment newInstance(ViolationBean violationBean) {
         ViolationPayFragment fragment = new ViolationPayFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_PARAM1, param1);
+        args.putParcelable(ARG_PARAM1, violationBean);
         fragment.setArguments(args);
         return fragment;
     }
@@ -72,12 +72,10 @@ public class ViolationPayFragment extends BaseJxFragment {
 
     @Override
     protected void onForceRefresh() {
-
     }
 
     @Override
     protected void initViewsAndEvents(View view) {
-
     }
 
     @Override
@@ -90,9 +88,10 @@ public class ViolationPayFragment extends BaseJxFragment {
                 mVioNum.setText(violationBean.getViolationnum());
             }
         }
+
         FragmentActivity activity = getActivity();
-        if (activity instanceof ViolationListActivity) {
-            ViolationListActivity violationListActivity = (ViolationListActivity) activity;
+        if (activity instanceof ViolationPayActivity) {
+            ViolationPayActivity violationListActivity = (ViolationPayActivity) activity;
             int payType = violationListActivity.getPayType();
             if (payType == 1) {
                 remark = "3|";
@@ -115,17 +114,16 @@ public class ViolationPayFragment extends BaseJxFragment {
             case R.id.fragment_violation_paytype_layout:
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 ViolationPayTypeFragment payTypeFragment = ViolationPayTypeFragment.newInstance();
-                FragmentUtils.replaceFragment(
-                        fragmentManager, payTypeFragment, R.id.lay_content, true);
+                FragmentUtils.replaceFragment(fragmentManager, payTypeFragment, R.id.lay_base_frame, true);
                 break;
             case R.id.fragment_violation_commit:
                 searchViolation();
                 break;
             case R.id.fragment_violation_close:
                 FragmentActivity activity = getActivity();
-                if (activity instanceof ViolationListActivity) {
-                    ViolationListActivity violationListActivity = (ViolationListActivity) activity;
-                    violationListActivity.closeFragment();
+                if (activity instanceof ViolationPayActivity) {
+                    ViolationPayActivity payActivity = (ViolationPayActivity) activity;
+                    payActivity.closeFragment();
                 }
                 break;
             default:
@@ -185,11 +183,11 @@ public class ViolationPayFragment extends BaseJxFragment {
         }
     }
 
-    public ViolationListActivity getParentActivity() {
+    public ViolationPayActivity getParentActivity() {
         FragmentActivity activity = getActivity();
-        ViolationListActivity violationListActivity = null;
-        if (activity instanceof ViolationListActivity) {
-            violationListActivity = (ViolationListActivity) activity;
+        ViolationPayActivity violationListActivity = null;
+        if (activity instanceof ViolationPayActivity) {
+            violationListActivity = (ViolationPayActivity) activity;
         }
         return violationListActivity;
     }

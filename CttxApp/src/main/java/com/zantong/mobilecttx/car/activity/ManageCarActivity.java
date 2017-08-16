@@ -9,9 +9,12 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.car.fragment.ManageCarListFragment;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
 
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
@@ -40,7 +43,15 @@ public class ManageCarActivity extends BaseJxActivity {
         tvCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Act.getInstance().gotoIntent(ManageCarActivity.this, SetPayCarActivity.class);
+                int count = 0;
+                for (UserCarInfoBean bean : PublicData.getInstance().mServerCars) {
+                    if (bean.getIspaycar().equals("1")) count = count + 1;
+                }
+                if (count < 2) {
+                    ToastUtils.toastShort("你绑定车辆小于2辆,现任意车辆均可缴费无需改邦操作");
+                } else {
+                    Act.getInstance().gotoIntent(ManageCarActivity.this, SetPayCarActivity.class);
+                }
             }
         });
 

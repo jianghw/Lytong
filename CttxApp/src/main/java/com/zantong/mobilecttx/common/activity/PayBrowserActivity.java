@@ -40,7 +40,6 @@ public class PayBrowserActivity extends BaseJxActivity
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
-
     }
 
     @Override

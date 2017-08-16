@@ -116,7 +116,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
         dto.setSYS_HEAD(requestHeadDTO);
 
         LogoutDTO params = new LogoutDTO();
-        params.setUsrid(mRepository.getDefaultRASUserID());
+        params.setUsrid(mRepository.getDefaultUserID());
 
         dto.setReqInfo(params);
         return new Gson().toJson(dto);

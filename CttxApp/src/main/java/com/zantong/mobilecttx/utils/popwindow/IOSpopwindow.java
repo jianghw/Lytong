@@ -30,7 +30,7 @@ public class IOSpopwindow extends PopupWindow{
         LinearLayout ll_popup = (LinearLayout) view
                 .findViewById(R.id.ll_popup);
         ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
-                R.anim.push_bottom_in_2));
+                R.anim.push_bottom_in));
 
         setWidth(ViewGroup.LayoutParams.FILL_PARENT);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -68,7 +68,7 @@ public class IOSpopwindow extends PopupWindow{
         final LinearLayout ll_popup = (LinearLayout) view
                 .findViewById(R.id.ll_popup);
         ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
-                R.anim.push_bottom_in_2));
+                R.anim.push_bottom_in));
 
         setWidth(ViewGroup.LayoutParams.FILL_PARENT);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -133,7 +133,7 @@ public class IOSpopwindow extends PopupWindow{
         final LinearLayout ll_popup = (LinearLayout) view
                 .findViewById(R.id.ll_popup);
         ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
-                R.anim.push_bottom_in_2));
+                R.anim.push_bottom_in));
 
         setWidth(ViewGroup.LayoutParams.FILL_PARENT);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -210,7 +210,7 @@ public class IOSpopwindow extends PopupWindow{
         final LinearLayout ll_popup = (LinearLayout) view
                 .findViewById(R.id.ll_popup);
         ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
-                R.anim.push_bottom_in_2));
+                R.anim.push_bottom_in));
 
         setWidth(ViewGroup.LayoutParams.FILL_PARENT);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -295,7 +295,7 @@ public class IOSpopwindow extends PopupWindow{
         final LinearLayout ll_popup = (LinearLayout) view
                 .findViewById(R.id.ll_popup);
         ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
-                R.anim.push_bottom_in_2));
+                R.anim.push_bottom_in));
 
         setWidth(ViewGroup.LayoutParams.FILL_PARENT);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);

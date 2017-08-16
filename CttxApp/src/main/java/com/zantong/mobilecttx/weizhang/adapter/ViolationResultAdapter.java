@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -56,23 +57,22 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
             holder.mAmount.setText(StringUtils.getPriceString(violationamt) + "元");
             holder.mCount.setText(violationcent + "分");
 
-            if (processte == 0 || processte == 2) {
-                holder.mPay.setVisibility(View.VISIBLE);
-                holder.mFlagImg.setBackgroundResource(R.mipmap.icon_weichuli);
-            } else if (processte == 1 || processte == 3) {
-                holder.mPay.setVisibility(View.GONE);
-                holder.mFlagImg.setBackgroundResource(R.mipmap.icon_yichuli);
-            } else {
-                holder.mPay.setVisibility(View.GONE);
-                holder.mFlagImg.setBackgroundResource(R.mipmap.icon_yichuli);
-            }
-
-            holder.mPay.setOnClickListener(new View.OnClickListener() {
+            holder.mPayBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mClickListener != null) mClickListener.doClickPay(violationBean);
                 }
             });
+            if (processte == 0 || processte == 2) {
+                holder.mPayBtn.setVisibility(View.VISIBLE);
+                holder.mFlagImg.setBackgroundResource(R.mipmap.icon_weichuli);
+            } else if (processte == 1 || processte == 3) {
+                holder.mPayBtn.setVisibility(View.GONE);
+                holder.mFlagImg.setBackgroundResource(R.mipmap.icon_yichuli);
+            } else {
+                holder.mPayBtn.setVisibility(View.GONE);
+                holder.mFlagImg.setBackgroundResource(R.mipmap.icon_yichuli);
+            }
         }
     }
 
@@ -117,7 +117,7 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
         @Bind(R.id.item_violation_result_flag)
         ImageView mFlagImg;//标签
         @Bind(R.id.item_violation_result_pay)
-        TextView mPay;//去处理
+        Button mPayBtn;//去处理
 
         public ViewHolder(View view) {
             super(view);

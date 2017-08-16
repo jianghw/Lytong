@@ -82,16 +82,19 @@ public abstract class BaseJxFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mLoadingLayout = view.findViewById(R.id.base_loading_bg);
-        mLoadingSucceedLayout = view.findViewById(R.id.lay_base_content);
-        mLoadingFailedLayout = view.findViewById(R.id.base_loading_failed_layout);
-        View mLoadingFailedRefresh = view.findViewById(R.id.base_loading_failed_refresh);
-        mLoadingFailedRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onForceRefresh();
-            }
-        });
+        if (getContentViewLayoutID() == 0) {
+            mLoadingLayout = view.findViewById(R.id.base_loading_bg);
+            mLoadingSucceedLayout = view.findViewById(R.id.lay_base_content);
+            mLoadingFailedLayout = view.findViewById(R.id.base_loading_failed_layout);
+            View mLoadingFailedRefresh = view.findViewById(R.id.base_loading_failed_refresh);
+
+            mLoadingFailedRefresh.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onForceRefresh();
+                }
+            });
+        }
 
         initViewsAndEvents(view);
         if (isNeedKnife()) ButterKnife.bind(this, view);
@@ -119,7 +122,7 @@ public abstract class BaseJxFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        LogUtils.d("onActivityCreated=="+this.getClass().getSimpleName());
+        LogUtils.d("onActivityCreated==" + this.getClass().getSimpleName());
         onFirstUserVisible();
     }
 
@@ -134,6 +137,7 @@ public abstract class BaseJxFragment extends Fragment {
         // 统计页面
         MobclickAgent.onPageStart(this.getClass().getSimpleName());
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -143,7 +147,7 @@ public abstract class BaseJxFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        LogUtils.d("onDestroyView=="+this.getClass().getSimpleName());
+        LogUtils.d("onDestroyView==" + this.getClass().getSimpleName());
     }
 
     @Override
@@ -158,8 +162,6 @@ public abstract class BaseJxFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        LogUtils.e("setUserVisibleHint==" +
-                this.getClass().getSimpleName() + "==" + isVisibleToUser);
     }
 
     /**
@@ -221,9 +223,12 @@ public abstract class BaseJxFragment extends Fragment {
      * @param index
      */
     private void showViewByStatus(int index) {
-        mLoadingLayout.setVisibility(index == LOADING ? View.VISIBLE : View.GONE);
-        mLoadingFailedLayout.setVisibility(index == LOADING_FAILED ? View.VISIBLE : View.GONE);
-        mLoadingSucceedLayout.setVisibility(index == LOADING_SUCCESS ? View.VISIBLE : View.GONE);
+        if (mLoadingLayout != null)
+            mLoadingLayout.setVisibility(index == LOADING ? View.VISIBLE : View.GONE);
+        if (mLoadingFailedLayout != null)
+            mLoadingFailedLayout.setVisibility(index == LOADING_FAILED ? View.VISIBLE : View.GONE);
+        if (mLoadingSucceedLayout != null)
+            mLoadingSucceedLayout.setVisibility(index == LOADING_SUCCESS ? View.VISIBLE : View.GONE);
     }
 
     /**

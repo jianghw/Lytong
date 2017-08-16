@@ -63,6 +63,9 @@ public class ViolationListFragment extends BaseRecyclerListJxFragment<ViolationB
         return mCurAdapter;
     }
 
+    /**
+     * @deprecated sb
+     */
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
         if (data instanceof OrderListBean) {
@@ -82,6 +85,7 @@ public class ViolationListFragment extends BaseRecyclerListJxFragment<ViolationB
 
     @Override
     protected void initFragmentView(View view) {
+
         mCurAdapter.setItemPayListener(new ViolationResultAdapter.ItemPayListener() {
             @Override
             public void doClickPay(ViolationBean bean) {
@@ -92,7 +96,6 @@ public class ViolationListFragment extends BaseRecyclerListJxFragment<ViolationB
 
     @Override
     protected void onFirstDataVisible() {
-
     }
 
     @Override

@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseJxFragment;
-import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
+import com.zantong.mobilecttx.weizhang.activity.ViolationPayActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -38,19 +38,17 @@ public class ViolationPayTypeFragment extends BaseJxFragment {
 
     @Override
     protected void onForceRefresh() {
-
     }
 
     @Override
     protected void initViewsAndEvents(View view) {
-
     }
 
     @Override
     protected void onFirstUserVisible() {
-        ViolationListActivity violationListActivity = getParentActivity();
-        if (violationListActivity != null) {
-            int payType = violationListActivity.getPayType();
+        ViolationPayActivity payActivity = getParentActivity();
+        if (payActivity != null) {
+            int payType = payActivity.getPayType();
             if (payType == 1) {
                 mImg2.setVisibility(View.GONE);
                 mImg1.setVisibility(View.VISIBLE);
@@ -61,11 +59,11 @@ public class ViolationPayTypeFragment extends BaseJxFragment {
         }
     }
 
-    public ViolationListActivity getParentActivity() {
+    public ViolationPayActivity getParentActivity() {
         FragmentActivity activity = getActivity();
-        ViolationListActivity violationListActivity = null;
-        if (activity instanceof ViolationListActivity) {
-            violationListActivity = (ViolationListActivity) activity;
+        ViolationPayActivity violationListActivity = null;
+        if (activity instanceof ViolationPayActivity) {
+            violationListActivity = (ViolationPayActivity) activity;
         }
         return violationListActivity;
     }
@@ -101,17 +99,17 @@ public class ViolationPayTypeFragment extends BaseJxFragment {
     protected void choicePayType(int gone, int visible, int payType) {
         mImg2.setVisibility(gone);
         mImg1.setVisibility(visible);
-        ViolationListActivity violationListActivity = getParentActivity();
-        if (violationListActivity != null) {
-            violationListActivity.setPayType(payType);
+        ViolationPayActivity payActivity = getParentActivity();
+        if (payActivity != null) {
+            payActivity.setPayType(payType);
         }
         closeFragment();
     }
 
     private void closeFragment() {
-        ViolationListActivity violationListActivity = getParentActivity();
-        if (violationListActivity != null) {
-            violationListActivity.closeFragment();
+        ViolationPayActivity payActivity = getParentActivity();
+        if (payActivity != null) {
+            payActivity.closeFragment();
         }
     }
 

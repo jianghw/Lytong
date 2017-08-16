@@ -71,7 +71,7 @@ public class SetPayCarFragmentPresenter extends BasePresenter<IBaseView> impleme
                 if (PublicData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())) {
                     mSetPayCarFragment.updateView(clazz, index);
                 } else {
-                    ToastUtils.showShort(mSetPayCarFragment.getContext(), mUpdateInfo.getSYS_HEAD().getReturnMessage());
+                    ToastUtils.toastShort( mUpdateInfo.getSYS_HEAD().getReturnMessage());
                 }
                 break;
         }
@@ -80,6 +80,6 @@ public class SetPayCarFragmentPresenter extends BasePresenter<IBaseView> impleme
     @Override
     public void onFailed() {
         mSetPayCarFragment.hideProgress();
-        ToastUtils.showShort(mSetPayCarFragment.getContext(), Config.getErrMsg("1"));
+        ToastUtils.toastShort( Config.getErrMsg("1"));
     }
 }

@@ -27,6 +27,7 @@ import com.zantong.mobilecttx.common.bean.CommonProblem;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResult;
 import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
+import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.user.bean.BonusResult;
 import com.zantong.mobilecttx.user.dto.BonusDTO;
 import com.zantong.mobilecttx.utils.DialogMgr;
@@ -141,7 +142,7 @@ public class GetBonusActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
     private void getCode() {
         String contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         if (PublicData.getInstance().loginFlag) {
-            contentString = "http://api.liyingtong.com/h5/share/share.html?phoneNum="
+            contentString = ShareParentActivity.getOldShareAppUrl()+"?phoneNum="
                     + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
@@ -218,7 +219,7 @@ public class GetBonusActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
 
         WXWebpageObject webpage = new WXWebpageObject();
         if (PublicData.getInstance().loginFlag) {
-            webpage.webpageUrl = "http://api.liyingtong.com/h5/share/share.html?phoneNum="
+            webpage.webpageUrl = ShareParentActivity.getOldShareAppUrl()+"?phoneNum="
                     + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";

@@ -4,7 +4,6 @@ package com.zantong.mobilecttx.presenter.weizhang;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -20,6 +19,7 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.util.List;
 
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -236,7 +236,6 @@ public class ViolationListPresenter
                 .subscribe(new BaseSubscriber<PayCarResult>() {
                     @Override
                     public void doCompleted() {
-
                     }
 
                     @Override
@@ -265,7 +264,7 @@ public class ViolationListPresenter
         dto.setSYS_HEAD(requestHeadDTO);
 
         LogoutDTO params = new LogoutDTO();
-        params.setUsrid(mRepository.getDefaultRASUserID());
+        params.setUsrid(mRepository.getDefaultUserID());
 
         dto.setReqInfo(params);
         return new Gson().toJson(dto);

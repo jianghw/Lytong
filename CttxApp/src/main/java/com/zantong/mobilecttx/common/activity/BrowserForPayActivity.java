@@ -88,8 +88,6 @@ public class BrowserForPayActivity extends BaseActivity {
 
     @Override
     public void initData() {
-
-
     }
 
     @OnClick({R.id.activity_browser_pay_back})

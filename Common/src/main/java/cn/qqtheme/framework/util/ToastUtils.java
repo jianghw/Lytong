@@ -27,4 +27,8 @@ public final class ToastUtils {
     public static void toastShort(String message) {
         initToast(ContextUtils.getContext(), message, Toast.LENGTH_SHORT);
     }
+
+    public static void toastLong(String message) {
+        initToast(ContextUtils.getContext(), message, Toast.LENGTH_LONG);
+    }
 }

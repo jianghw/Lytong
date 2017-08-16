@@ -22,7 +22,6 @@
         android:id="@+id/lay_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_marginTop="@dimen/ds_30"
         android:background="@color/colorWhite"
         android:orientation="vertical">
@@ -250,14 +249,20 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_remark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lay_content"
-        android:layout_margin="@dimen/ds_45"
-        android:textColor="@color/colorTvBlack_b3"
-        android:textSize="@dimen/fs_14sp"
-        tools:text="优惠劵fdfdfdfdfdfdfd"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tv_commit"
+        android:layout_below="@+id/lay_content">
+
+        <TextView
+            android:id="@+id/tv_remark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/ds_45"
+            android:textColor="@color/colorTvBlack_b3"
+            android:textSize="@dimen/fs_14sp"
+            tools:text="优惠劵fdfdfdfdfdfdfd"/>
+    </ScrollView>
 
 </RelativeLayout>

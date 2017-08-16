@@ -3,7 +3,6 @@ package com.zantong.mobilecttx.api;
 import android.content.Context;
 import android.text.TextUtils;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.CouponResult;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.CarLinkageResult;
@@ -60,6 +59,8 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationItemBean;
 import com.zantong.mobilecttx.weizhang.dto.ViolationSearchDTO;
 
 import java.io.File;
+
+import cn.qqtheme.framework.contract.bean.BaseResult;
 
 public class CarApiClient extends BaseApiClient {
 
@@ -297,21 +298,18 @@ public class CarApiClient extends BaseApiClient {
     public static void getActivityCar(Context context, ActivityCarDTO dto, CallBack<ActivityCarResult> callback) {
         BaseCallBack<ActivityCarResult> result = new BaseCallBack<ActivityCarResult>(
                 context, callback, ActivityCarResult.class);
-//        post(context, "http://139.196.183.121:8081/february/carCheckActivity", dto, result);
         post(context, getUrl("february/carCheckActivity"), dto, result);
     }
 
     public static void getDaiJiaToken(Context context, DaiJiaDTO dto, CallBack<DJTokenResult> callback) {
         BaseCallBack<DJTokenResult> result = new BaseCallBack<DJTokenResult>(
                 context, callback, DJTokenResult.class);
-//        post(context, "http://139.196.183.121:8081/daijia/nearByInfo", dto,result);
         post(context, getUrl("daijia/nearByInfo"), dto, result);
     }
 
     public static void huJiaoDaiJia(Context context, DaiJiaCreateDTO dto, CallBack<DaiJiaCreateResult> callback) {
         BaseCallBack<DaiJiaCreateResult> result = new BaseCallBack<DaiJiaCreateResult>(
                 context, callback, DaiJiaCreateResult.class);
-//        post(context, "http://139.196.183.121:8081/daijia/addOrder", dto,result);
         post(context, getUrl("daijia/addOrder"), dto, result);
     }
 

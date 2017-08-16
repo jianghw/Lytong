@@ -147,6 +147,6 @@
         android:layout_margin="@dimen/ds_30"
         android:background="@drawable/shape_red"
         android:text="去处理"
-        android:textColor="@color/white"
+        android:textColor="@color/colorWhite"
         android:textSize="@dimen/fs_42"/>
 </RelativeLayout>

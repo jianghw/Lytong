@@ -122,7 +122,7 @@ public class FriendShareFragment extends BaseRefreshJxFragment
     protected void onFirstDataVisible() {
         if (mPresenter != null) mPresenter.getRecordCount();
 
-        String contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
+        String contentString;
         if (PublicData.getInstance().loginFlag && PublicData.getInstance().mLoginInfoBean != null)
             contentString = ShareParentActivity.getShareAppUrl(1) + "?phoneNum="
                     + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());

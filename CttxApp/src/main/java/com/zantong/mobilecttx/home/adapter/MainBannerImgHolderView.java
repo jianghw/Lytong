@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
@@ -22,7 +21,9 @@ import com.zantong.mobilecttx.utils.ImageOptions;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.global.GlobalConfig;
+import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.widght.banner.CBPageAdapter;
 
 /**
@@ -32,13 +33,13 @@ import cn.qqtheme.framework.widght.banner.CBPageAdapter;
 public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdvertisement> {
 
     private ImageView imageView;
-    private Context mContext;
+    private Context mAdapterContext;
 
     @Override
     public View createView(Context context) {
-        mContext = context;
+        mAdapterContext = context;
         //你可以通过layout文件来创建，也可以像我一样用代码创建，不一定是Image，任何控件都可以进行翻页
-        imageView = new ImageView(context);
+        imageView = new ImageView(mAdapterContext);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         return imageView;
@@ -69,20 +70,20 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
 
         if (PublicData.getInstance().webviewUrl.contains("discount")
                 || PublicData.getInstance().webviewUrl.contains("happysend")) {//保险
-            Act.getInstance().gotoIntent(mContext, CustomCordovaActivity.class);
+            Act.getInstance().gotoIntent(mAdapterContext, CustomCordovaActivity.class);
         } else if (PublicData.getInstance().webviewUrl.contains("localActivity")) {//百日无违章
             if (PublicData.getInstance().loginFlag) {
                 GlobalConfig.getInstance().eventIdByUMeng(1);
                 getSignStatus();
             } else {
-                Act.getInstance().gotoIntent(mContext, LoginActivity.class);
+                Act.getInstance().gotoIntent(mAdapterContext, LoginActivity.class);
             }
         } else if (PublicData.getInstance().webviewUrl.contains("fahrschule")) {//驾校报名
-            Act.getInstance().gotoIntentLogin(mContext, FahrschuleActivity.class);
+            Act.getInstance().gotoIntentLogin(mAdapterContext, FahrschuleActivity.class);
         } else {
-            Act.getInstance().gotoIntent(mContext, BrowserActivity.class);
+            Act.getInstance().gotoIntent(mAdapterContext, BrowserActivity.class);
 
-            CarApiClient.commitAdClick(mContext, data.getId(), new CallBack<BaseResult>() {
+            CarApiClient.commitAdClick(mAdapterContext, data.getId(), new CallBack<BaseResult>() {
                 @Override
                 public void onSuccess(BaseResult result) {
                 }
@@ -93,7 +94,7 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
     private void getSignStatus() {
         ActivityCarDTO activityCarDTO = new ActivityCarDTO();
         activityCarDTO.setUsrnum(PublicData.getInstance().userID);
-        CarApiClient.getActivityCar(mContext, activityCarDTO, new CallBack<ActivityCarResult>() {
+        CarApiClient.getActivityCar(ContextUtils.getContext(), activityCarDTO, new CallBack<ActivityCarResult>() {
             @Override
             public void onSuccess(ActivityCarResult result) {
                 if (result.getResponseCode() == 2000 && !TextUtils.isEmpty(result.getData().getPlateNo())) {
@@ -101,12 +102,12 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
                     SPUtils.getInstance().setSignCarPlate(result.getData().getPlateNo());
                     PublicData.getInstance().webviewUrl = Config.HUNDRED_PLAN_HOME;
                     PublicData.getInstance().webviewTitle = "百日无违章";
-                    Act.getInstance().gotoIntentLogin(mContext, BrowserActivity.class);
+                    Act.getInstance().gotoIntentLogin(mAdapterContext, BrowserActivity.class);
                 } else if (result.getResponseCode() == 4000) {
                     SPUtils.getInstance().setSignStatus(false);
                     PublicData.getInstance().webviewUrl = Config.HUNDRED_PLAN_DEADLINE;
                     PublicData.getInstance().webviewTitle = "百日无违章";
-                    Act.getInstance().gotoIntentLogin(mContext, BrowserActivity.class);
+                    Act.getInstance().gotoIntentLogin(mAdapterContext, BrowserActivity.class);
                 }
             }
 

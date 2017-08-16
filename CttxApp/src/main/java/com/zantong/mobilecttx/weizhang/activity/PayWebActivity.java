@@ -30,6 +30,7 @@ import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.presenter.InsurancePayPresenterImp;
+import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.ScreenManager;
@@ -164,7 +165,7 @@ public class PayWebActivity extends AppCompatActivity implements ModelView{
 
         WXWebpageObject webpage = new WXWebpageObject();
         if(PublicData.getInstance().loginFlag){
-            webpage.webpageUrl = "http://api.liyingtong.com/h5/share/share.html?phoneNum="
+            webpage.webpageUrl = ShareParentActivity.getOldShareAppUrl()+"?phoneNum="
                     + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
         }else{
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
@@ -199,17 +200,14 @@ public class PayWebActivity extends AppCompatActivity implements ModelView{
 
     @Override
     public void showProgress() {
-
     }
 
     @Override
     public void updateView(Object object, int index) {
-
     }
 
     @Override
     public void hideProgress() {
-
     }
 
     /**

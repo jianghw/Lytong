@@ -68,7 +68,7 @@ public class CarManageFragment extends BaseListFragment<CarInfoDTO> {
     public void onResume() {
         super.onResume();
 
-        if (PublicData.getInstance().isSetPayCar == true) {
+        if (PublicData.getInstance().isSetPayCar) {
             PublicData.getInstance().isSetPayCar = false;
             mCarManageAdapter.removeAll();
             initListData();

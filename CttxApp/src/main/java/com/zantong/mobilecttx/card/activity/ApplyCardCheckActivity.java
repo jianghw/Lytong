@@ -20,7 +20,6 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.HandleCTCardApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.card.dto.BidCTCardDTO;
@@ -40,6 +39,7 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.util.ToastUtils;
 
@@ -112,8 +112,6 @@ public class ApplyCardCheckActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 break;
             case R.id.bid_ct_card_next:
                 valueCheck();
-//                startActivity(ApplyCardFristStepActvity.getIntent(this, "111111111111", "周杰",
-//                        "321321199303115493", "2099-10-31"));
                 break;
         }
     }
@@ -205,7 +203,6 @@ public class ApplyCardCheckActivity extends BaseMvpActivity<IBaseView, HelpPrese
                     licenseno, youxiaoDate));
         }
         hideDialogLoading();
-//        ToastUtils.showShort(ApplyCardCheckActivity.this, result.getSYS_HEAD().getReturnMessage());
     }
 
     @Override

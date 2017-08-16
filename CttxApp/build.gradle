@@ -58,9 +58,9 @@ android {
             // 显示Log
             buildConfigField "boolean", "LOG_DEBUG", "true"
             //下载地址  分享
-            buildConfigField "String", "APP_DOWNLOD", "\"http://dev.liyingtong.com:8080/download/\""
+            buildConfigField "String", "APP_DOWNLOD", "\"http://dev.liyingtong.com/download/\""
 
-            buildConfigField "String", "CAR_MANGER_URL", "\"http://dev.liyingtong.com:8080/\""
+            buildConfigField "String", "CAR_MANGER_URL", "\"http://dev.liyingtong.com/\""
             //新接口正式地址
             buildConfigField "String", "BASE_URL", "\"https://ctkapptest.icbc-axa.com/ecip/mobilecall_call\""
             //老接口正式地址

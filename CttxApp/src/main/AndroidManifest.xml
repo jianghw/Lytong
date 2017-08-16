@@ -207,10 +207,6 @@
         <activity
             android:name=".card.activity.OpenCardWebActivity"
             android:screenOrientation="portrait"/>
-        <!-- 浏览器 -->
-        <activity
-            android:name=".common.activity.BrowserActivity"
-            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -409,6 +405,10 @@
         <activity
             android:name=".weizhang.activity.ViolationListActivity"
             android:screenOrientation="portrait"/>
+        <!-- 违章缴费页面 -->
+        <activity
+            android:name=".weizhang.activity.ViolationPayActivity"
+            android:screenOrientation="portrait"/>
         <!--违章查询页面-->
         <activity
             android:name=".weizhang.activity.ViolationQueryAcitvity"
@@ -455,6 +455,13 @@
             android:name=".order.activity.OrderDetailActivity"
             android:screenOrientation="portrait"/>
 
+        <!-- ====================================浏览器================================ -->
+        <activity
+            android:name=".common.activity.BrowserActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".common.activity.HtmlBrowserActivity"
+            android:screenOrientation="portrait"/>
         <!-- ===================付款web模块=========================================-->
         <!-- 付款web模块页面-->
         <activity

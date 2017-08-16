@@ -160,8 +160,8 @@ public abstract class BaseJxActivity extends AppCompatActivity {
             mImgHome.setVisibility(View.GONE);
         if (mTvRight != null && mTvRight.getVisibility() != View.VISIBLE) {
             mTvRight.setVisibility(View.VISIBLE);
-            mTvRight.setText(msg);
         }
+        if (mTvRight != null) mTvRight.setText(msg);
     }
 
     protected void setImageRightVisible(int imgRed) {
@@ -293,10 +293,9 @@ public abstract class BaseJxActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         hideDialogLoading();
-
-        if (isNeedKnife()) ButterKnife.unbind(this);
         DestroyViewAndThing();
 
+        if (isNeedKnife()) ButterKnife.unbind(this);
         super.onDestroy();
     }
 

@@ -227,4 +227,9 @@ public class ShareParentActivity extends BaseJxActivity implements View.OnClickL
         return BuildConfig.CAR_MANGER_URL + "h5/share" + postion + "/share.html";
     }
 
+    public static String getOldShareAppUrl() {
+
+        return BuildConfig.CAR_MANGER_URL + "h5/share" + "/share.html";
+    }
+
 }

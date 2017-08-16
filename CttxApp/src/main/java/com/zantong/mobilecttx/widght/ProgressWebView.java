@@ -4,13 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.zantong.mobilecttx.R;
-
 
 @SuppressLint("SetJavaScriptEnabled")
 public class ProgressWebView extends LinearLayout {
@@ -29,6 +29,7 @@ public class ProgressWebView extends LinearLayout {
         inflater.inflate(R.layout.widget_progress_webview, this);
         mProgressBar = (ProgressBar) findViewById(R.id.widget_progress_webview_pb);
         mWebView = (WebView) findViewById(R.id.widget_progress_webview);
+
 //        // 如需支持h5统计，需要将 assets/mobstat.js 拷贝到工程目录下
 //        StatService.bindJSInterface(context, mWebView);
         mWebView.setWebChromeClient(new WebChromeClient());
@@ -41,11 +42,15 @@ public class ProgressWebView extends LinearLayout {
         mWebView.getSettings().setAppCacheEnabled(true);
     }
 
+    public WebSettings getSettings() {
+        return mWebView.getSettings();
+    }
+
     public void setWebViewClient(WebViewClient client) {
         mWebView.setWebViewClient(client);
     }
 
-    public class WebChromeClient extends android.webkit.WebChromeClient {
+    private class WebChromeClient extends android.webkit.WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             if (newProgress == 100) {
@@ -87,7 +92,7 @@ public class ProgressWebView extends LinearLayout {
     }
 
     public interface onReceivedTitleListener {
-        public void onReceivedTitle(WebView view, String title);
+        void onReceivedTitle(WebView view, String title);
     }
 
     @SuppressLint({"AddJavascriptInterface", "JavascriptInterface"})
@@ -99,7 +104,7 @@ public class ProgressWebView extends LinearLayout {
         return this.isLoadCompleted;
     }
 
-    public void destroyWebview() {
+    public void destroyWebView() {
         mWebView.destroy();
     }
 }

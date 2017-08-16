@@ -168,7 +168,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
         dto.setSYS_HEAD(requestHeadDTO);
 
         LogoutDTO params = new LogoutDTO();
-        params.setUsrid(mRepository.getDefaultRASUserID());
+        params.setUsrid(mRepository.getDefaultUserID());
 
         dto.setReqInfo(params);
         return new Gson().toJson(dto);
@@ -206,7 +206,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
 
                     @Override
                     public void doError(Throwable e) {
-                        LogUtils.e("========="+e.getMessage());
+                        LogUtils.e("=========" + e.getMessage());
                         mAtyView.allVehiclesError(e.getMessage());
                     }
 
@@ -472,6 +472,8 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     }
                 })
                 .toList();
+//清空车辆数据
+        PublicData.getInstance().mServerCars.clear();
 
         Subscription subscription = Observable
                 .zip(isPay, unPay,
@@ -481,7 +483,6 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                                                                  List<VehicleLicenseBean> licenseBeanList) {
 
                                 List<VehicleLicenseBean> zipFunction = new ArrayList<>();
-                                PublicData.getInstance().mServerCars.clear();
 
                                 if (beanList != null && !beanList.isEmpty()) {
                                     VehicleLicenseBean vehicleLicenseBean = new VehicleLicenseBean(-1);
@@ -513,7 +514,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                         new Action1<Throwable>() {
                             @Override
                             public void call(Throwable throwable) {
-                                LogUtils.e("========="+throwable.getMessage());
+                                LogUtils.e("=========" + throwable.getMessage());
                                 mAtyView.addVehicleLicenseError(throwable.getMessage());
                             }
                         });
@@ -527,6 +528,8 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
             UserCarInfoBean userCarInfoBean = new UserCarInfoBean();
             userCarInfoBean.setCarnum(Des3.decode(bean.getPlateNo()));
             userCarInfoBean.setEnginenum(Des3.decode(bean.getEngineNo()));
+            userCarInfoBean.setIspaycar(String.valueOf(bean.getIsPayable()));
+            userCarInfoBean.setCarnumtype(bean.getVehicleType());
             beanArrayList.add(userCarInfoBean);
         }
         PublicData.getInstance().mServerCars.addAll(beanArrayList);

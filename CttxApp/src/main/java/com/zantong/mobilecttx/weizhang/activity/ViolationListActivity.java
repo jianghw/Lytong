@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,9 +19,9 @@ import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.contract.IViolationListFtyContract;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.home.activity.Codequery;
-import com.zantong.mobilecttx.contract.IViolationListFtyContract;
 import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.presenter.weizhang.ViolationListPresenter;
@@ -36,7 +35,6 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationResult;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 import com.zantong.mobilecttx.weizhang.fragment.ViolationListFragment;
-import com.zantong.mobilecttx.weizhang.fragment.ViolationPayFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +42,6 @@ import java.util.List;
 import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
  * 违章信息列表页面
@@ -75,10 +72,6 @@ public class ViolationListActivity extends BaseJxActivity
      * 是否获取已绑车辆 标记
      */
     private boolean mPayCarOk;
-    /**
-     * 支付类型
-     */
-    private int mPayType = 1;
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
@@ -119,6 +112,7 @@ public class ViolationListActivity extends BaseJxActivity
 
     private void initFragment() {
         if (mFragmentList != null && !mFragmentList.isEmpty()) mFragmentList.clear();
+
         orderAllStatusFragment = ViolationListFragment.newInstance();
         orderAllStatusFragment.setRefreshListener(getRefreshListener());
         mFragmentList.add(orderAllStatusFragment);
@@ -190,19 +184,24 @@ public class ViolationListActivity extends BaseJxActivity
                 for (PayCar payCar : mPayCarList) {
                     if (payCar.getCarnum().equals(bean.getCarnum())) {
                         showPayFragment(bean);
-                        break;
+                        return;
                     }
                 }
-                ToastUtils.toastShort("当前车辆为非绑定车辆，可去车辆管理进行改绑");
+                ToastUtils.toastLong("当前车辆为非绑定车辆，但你已绑定另2辆车，请先去车辆管理进行改绑");
             }
         }
     }
 
+    /**
+     * 支付弹出框
+     */
     private void showPayFragment(ViolationBean bean) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        ViolationPayFragment payFragment = ViolationPayFragment.newInstance(bean);
-        FragmentUtils.replaceFragment(
-                fragmentManager, payFragment, R.id.lay_content, true);
+        Intent intent = new Intent(this, ViolationPayActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(GlobalConstant.putExtra.violation_pay_bean_extra, bean);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        overridePendingTransition(R.anim.push_bottom_in,0);
     }
 
     /**
@@ -266,14 +265,6 @@ public class ViolationListActivity extends BaseJxActivity
         mTabLayout.setupWithViewPager(mViewPager);
 
         mViewPager.setCurrentItem(1);
-    }
-
-    /**
-     * 刷新
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -365,6 +356,7 @@ public class ViolationListActivity extends BaseJxActivity
     @Override
     public ViolationDTO getViolationDTO() {
         mViolationDTO.setProcessste("2");
+
         if (!TextUtils.isEmpty(PublicData.getInstance().userID)) {
             mViolationDTO.setToken(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
         } else if (!TextUtils.isEmpty(PublicData.getInstance().imei)) {
@@ -429,17 +421,6 @@ public class ViolationListActivity extends BaseJxActivity
             intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, orderId);
             startActivity(intent);
         }
-    }
-
-    /**
-     * 注意 支付类型
-     */
-    public int getPayType() {
-        return mPayType;
-    }
-
-    public void setPayType(int payType) {
-        mPayType = payType;
     }
 
     /**

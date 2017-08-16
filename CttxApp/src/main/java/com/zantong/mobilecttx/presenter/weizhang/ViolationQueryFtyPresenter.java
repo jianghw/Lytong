@@ -4,7 +4,6 @@ package com.zantong.mobilecttx.presenter.weizhang;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
@@ -12,14 +11,15 @@ import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
-import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.contract.IViolationQueryFtyContract;
+import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import java.io.File;
 
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -299,6 +299,7 @@ public class ViolationQueryFtyPresenter
         carDTO.setVehicleType(bindCarDTO.getVehicleType());
         carDTO.setUsrnum(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
         carDTO.setIssueDate(bindCarDTO.getIssueDate());
+        carDTO.setIsPay(bindCarDTO.getIsPay());
 
         carDTO.setBrandId(bindCarDTO.getBrandId());
         carDTO.setSeriesId(bindCarDTO.getSeriesId());

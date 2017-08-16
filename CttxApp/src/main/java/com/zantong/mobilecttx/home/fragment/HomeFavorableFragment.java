@@ -140,8 +140,8 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
         String buffer = getStringBuffer(5120);
         mTvAdmissions.setText(Html.fromHtml(buffer));
 
-        mTvSparring.setText(Html.fromHtml(getStringBuffer(1000)));
-        mTvSubject.setText(Html.fromHtml(getStringBuffer(2000)));
+        mTvSparring.setText(Html.fromHtml(getStringBuffer(960)));
+        mTvSubject.setText(Html.fromHtml(getStringBuffer(100)));
     }
 
     @NonNull
