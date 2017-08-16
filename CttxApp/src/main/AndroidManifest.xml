@@ -506,6 +506,11 @@
         <activity
             android:name=".map.activity.BaiduMapActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".map.activity.BaiduMapParentActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="E6lDRqyaSjj8jR8O5wdz5jpgiT0LOuQn"/>

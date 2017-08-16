@@ -120,11 +120,13 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
     @Override
     public void initView(View view) {
         super.initView(view);
+
         mRspInfoBean = PublicData.getInstance().mServerCars;
         LogUtils.jsonObject(mRspInfoBean);
 
         if (mRspInfoBean != null) {
             int size = mRspInfoBean.size();
+
             for (int i = 0; i < size; i++) {
                 if ("0".equals(mRspInfoBean.get(i).getIspaycar())) {
                     noPay.add(mRspInfoBean.get(i));

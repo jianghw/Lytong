@@ -23,6 +23,7 @@ import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
+import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
@@ -38,8 +39,8 @@ import com.zantong.mobilecttx.home.bean.HomeBean;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.home.bean.HomeResult;
-import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
 import com.zantong.mobilecttx.map.activity.BaiduMapActivity;
+import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.presenter.home.UnimpededFtyPresenter;
 import com.zantong.mobilecttx.user.activity.MegTypeActivity;
 import com.zantong.mobilecttx.user.bean.MessageCountBean;
@@ -631,7 +632,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_PHONE_STATE});
         } else {
-            Act.getInstance().gotoIntentLogin(getActivity(), BaiduMapActivity.class);
+            Act.getInstance().gotoIntentLogin(getActivity(), BaiduMapParentActivity.class);
         }
     }
 
@@ -673,7 +674,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
     @PermissionSuccess(requestCode = 2000)
     public void doDrivingSuccess() {
-        Act.getInstance().gotoIntentLogin(getActivity(), BaiduMapActivity.class);
+        Act.getInstance().gotoIntentLogin(getActivity(), BaiduMapParentActivity.class);
     }
 
     @PermissionFail(requestCode = 2000)
