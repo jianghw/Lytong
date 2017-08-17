@@ -63,6 +63,7 @@ import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
+import cn.qqtheme.framework.util.ViewUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -189,6 +190,8 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
     @Override
     protected void initFragmentView(View view) {
         initView(view);
+        ViewUtils.editTextInputSpace(mEditPlate);
+        ViewUtils.editTextInputSpace(mEditEngine);
 
         ViolationQueryFtyPresenter mPresenter = new ViolationQueryFtyPresenter(
                 Injection.provideRepository(getActivity().getApplicationContext()), this);
@@ -218,10 +221,6 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onFirstDataVisible() {
-//        if (!SPUtils.getInstance().getGuideXingShiZheng()) {
-//            PublicData.getInstance().GUIDE_TYPE = 1;
-//            Act.getInstance().gotoIntent(getActivity(), GuideActivity.class);
-//        }
 
 //可添加控件操作
         int size;
@@ -406,12 +405,10 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
                 startActivityForResult(intentX, CarChooseActivity.REQUEST_X_CODE);
                 break;
             case R.id.btn_query://提交
-                dataFormValidation();
-                updateVehicle();
+                if (dataFormValidation()) updateVehicle();
                 break;
             case R.id.btn_delete://删除
-                dataFormValidation();
-                deleteCar();
+                if (dataFormValidation()) deleteCar();
                 break;
             default:
                 break;
@@ -443,7 +440,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
     /**
      * 数据表单验证
      */
-    private void dataFormValidation() {
+    private boolean dataFormValidation() {
         String plate = mEditPlate.getTransformationMethod().getTransformation(getEditPlate(), mEditPlate).toString();
 
         String engine = getEditEngine();
@@ -451,16 +448,16 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
         if (TextUtils.isEmpty(plate)) {
             ToastUtils.toastShort("请输入正确的车牌号");
-            return;
+            return false;
         }
         if (TextUtils.isEmpty(plate) || engine.length() != 5) {
             ToastUtils.toastShort("请输入正确的发动机号");
-            return;
+            return false;
         }
 
         if (TextUtils.isEmpty(carType)) {
             ToastUtils.toastShort("请选择车辆类型");
-            return;
+            return false;
         }
 
         String vehicleCode = VehicleTypeTools.switchVehicleCode(carType);
@@ -482,11 +479,13 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
                         }
                     });
+            return false;
         }
 
         String carNum = getTvProvince() + plate;
         initCarInfoDto(carNum, engine, vehicleCode);
         initBindCarDTO(carNum, engine, vehicleCode);
+        return true;
     }
 
     private void updateVehicle() {

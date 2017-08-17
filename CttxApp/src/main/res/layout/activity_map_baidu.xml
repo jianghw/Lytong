@@ -11,6 +11,7 @@
 
     <!--头部控件指标-->
     <RadioGroup
+        android:id="@+id/lay_rg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_120"
         android:layout_alignParentTop="true"
@@ -53,5 +54,33 @@
             android:textSize="@dimen/fs_16sp"
             tools:text="92#优惠"/>
     </RadioGroup>
+
+    <ImageView
+        android:id="@+id/img_location"
+        android:layout_width="@dimen/ds_120"
+        android:layout_height="@dimen/ds_120"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/lay_rg"
+        android:layout_margin="@dimen/ds_30"
+        android:src="@mipmap/btn_locate"/>
+
+    <ImageView
+        android:id="@+id/img_blowUp"
+        android:layout_width="@dimen/ds_120"
+        android:layout_height="@dimen/ds_120"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/img_location"
+        android:layout_marginRight="@dimen/ds_30"
+        android:src="@mipmap/btn_zoomout"/>
+
+    <ImageView
+        android:id="@+id/img_zoomOut"
+        android:layout_width="@dimen/ds_120"
+        android:layout_height="@dimen/ds_120"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/img_blowUp"
+        android:layout_marginRight="@dimen/ds_30"
+        android:layout_marginTop="@dimen/ds_30"
+        android:src="@mipmap/btn_zoomin"/>
 
 </RelativeLayout>

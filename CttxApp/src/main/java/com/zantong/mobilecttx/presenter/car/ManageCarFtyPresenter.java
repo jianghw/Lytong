@@ -254,6 +254,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     BindCarDTO bindCarDTO = new BindCarDTO();
                     bindCarDTO.setPlateNo(RSAUtils.strByEncryption(
                             Des3.decode(userCarInfoBean.getCarnum()), true));
+
                     bindCarDTO.setEngineNo(RSAUtils.strByEncryption(
                             Des3.decode(userCarInfoBean.getEnginenum()), true));
                     bindCarDTO.setVehicleType(userCarInfoBean.getCarnumtype());

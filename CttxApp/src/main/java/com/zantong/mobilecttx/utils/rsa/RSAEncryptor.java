@@ -73,6 +73,7 @@ public class RSAEncryptor {
 
     public String encryptWithBase64(String string) throws Exception {
         byte[] binaryData = encrypt(getPublicKey(), string.getBytes("UTF-8"));
+
         return new BASE64Encoder().encodeBuffer(binaryData);
     }
 

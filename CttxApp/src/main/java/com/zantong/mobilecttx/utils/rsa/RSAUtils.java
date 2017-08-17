@@ -17,18 +17,18 @@ public class RSAUtils {
 
     /**
      * 通过加密的字符串
-     *
-     * @return
      */
     public static String strByEncryption(String source, boolean isEncryp) {
+
         String strEncryption = source;
         if (isEncryption && isEncryp) {
             try {
                 RSAEncryptor rsaEncryptor = new RSAEncryptor();
-                InputStream inPublic = ContextUtils.getContext()
-                        .getResources().getAssets().open("rsa_public_key.pem");
+                InputStream inPublic = ContextUtils.getContext().getResources()
+                        .getAssets().open("rsa_public_key.pem");
                 rsaEncryptor.loadPublicKey(inPublic);
                 strEncryption = rsaEncryptor.encryptWithBase64(source);
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (Exception e) {

@@ -9,12 +9,12 @@ android {
         targetSdkVersion 25
         versionCode 35
         versionName "3.1.0"
-        aaptOptions.cruncherEnabled = false //禁止gradle检查png的合法性
-        aaptOptions.useNewCruncher = false //关闭androidstudio的png的合法性检查
-        // dex突破65535的限制
+        //禁止gradle检查png的合法性
+        aaptOptions.useNewCruncher = false
+        //关闭androidstudio的png的合法性检查
+        aaptOptions.cruncherEnabled = false
+        //dex突破65535的限制
         multiDexEnabled true
-//        // AndroidManifest.xml 里面UMENG_CHANNEL的value为 ${UMENG_CHANNEL_VALUE}
-//        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "channel_name"]
     }
 
     sourceSets {
@@ -22,9 +22,14 @@ android {
             jniLibs.srcDirs = ['libs']
             assets.srcDirs = ['assets']
         }
-
+        // Move the tests to tests/java, tests/res, etc...
         instrumentTest.setRoot('tests')
-
+        // Move the build types to build-types/<type>
+        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
+        // This moves them out of them default location under src/<type>/... which would
+        // conflict with src/ being used by the main source set.
+        // Adding new build types or product flavors should be accompanied
+        // by a similar customization.
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
@@ -54,7 +59,8 @@ android {
     }
 
     buildTypes {
-        debug {
+        //release
+        release {
             // 显示Log
             buildConfigField "boolean", "LOG_DEBUG", "true"
             //下载地址  分享
@@ -74,7 +80,7 @@ android {
             signingConfig signingConfigs.debug
         }
 
-        release {
+        debug {
             // 不显示Log
             buildConfigField "boolean", "LOG_DEBUG", "false"
             //下载地址   分享
@@ -129,22 +135,14 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':CordovaLib')
     compile project(':Common')
-
     //阿里云推送
     compile(name: 'huawei-xiaomi-support-3.0.0', ext: 'aar')
-
     compile files('libs/zxing.jar')
     compile files('libs/sun.misc.BASE64Decoder.jar')
     compile files('libs/libammsdk.jar')
     compile files('libs/pinyin4j-2.5.0.jar')
-    compile files('libs/baidumapapi_map_v4_2_0.jar')
-    compile files('libs/baidumapapi_base_v4_2_0.jar')
-    compile files('libs/locSDK_6.13.jar')
     compile files('libs/universal-image-loader-1.9.4.jar')
-    compile files('libs/baidumapapi_search_v4_2_0.jar')
-
     compile 'com.android.support:multidex:1.0.1'
-
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.15'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:0.9.9'
@@ -157,4 +155,5 @@ dependencies {
     compile 'com.github.florent37:viewanimator:1.0.3'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile files('libs/BaiduLBS_Android.jar')
 }
