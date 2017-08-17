@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -44,9 +44,9 @@ public class BaiduMapParentActivity extends BaseJxActivity
     private RadioButton mRbCenter;
     private RadioButton mRbEnd;
     private RadioGroup mLayRg;
-    private ImageView mImgLocation;
-    private ImageView mImgBlowUp;
-    private ImageView mImgZoomOut;
+    private ImageButton mImgLocation;
+    private ImageButton mImgBlowUp;
+    private ImageButton mImgZoomOut;
 
     private SensorManager mSensorManager;
     private MyLocationConfiguration.LocationMode mCurrentMode;
@@ -98,11 +98,11 @@ public class BaiduMapParentActivity extends BaseJxActivity
         mRbStart = (RadioButton) findViewById(R.id.rb_start);
         mRbCenter = (RadioButton) findViewById(R.id.rb_center);
         mRbEnd = (RadioButton) findViewById(R.id.rb_end);
-        mImgLocation = (ImageView) findViewById(R.id.img_location);
+        mImgLocation = (ImageButton) findViewById(R.id.img_location);
         mImgLocation.setOnClickListener(this);
-        mImgBlowUp = (ImageView) findViewById(R.id.img_blowUp);
+        mImgBlowUp = (ImageButton) findViewById(R.id.img_blowUp);
         mImgBlowUp.setOnClickListener(this);
-        mImgZoomOut = (ImageView) findViewById(R.id.img_zoomOut);
+        mImgZoomOut = (ImageButton) findViewById(R.id.img_zoomOut);
         mImgZoomOut.setOnClickListener(this);
     }
 

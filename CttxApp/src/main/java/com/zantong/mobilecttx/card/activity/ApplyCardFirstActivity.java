@@ -15,7 +15,6 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.HandleCTCardApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.card.dto.BidCTCardDTO;
@@ -33,6 +32,7 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ViewUtils;
@@ -86,9 +86,12 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     public void initData() {
         //测试数据下
         if (BuildConfig.DEBUG) {
-            mName.setText("遇紫紫");
-            mIdCard.setText("301364198811040740");
-            mDriverFileNum.setText("310002038631");
+//            mName.setText("遇紫紫");
+//            mIdCard.setText("301364198811040740");
+//            mDriverFileNum.setText("310002038631");
+            mName.setText("毛乾帅");
+            mIdCard.setText("310109198503162039");
+            mDriverFileNum.setText("310010007285");
         }
     }
 
