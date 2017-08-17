@@ -17,7 +17,6 @@ import javax.crypto.spec.IvParameterSpec;
 public class Des3 {
     private static boolean isDecode = true;
     // 密钥
-    //private final static String secretKey = "zhangtong-cttx&changtong-gongyinansheng";
     private final static String secretKey = "liuyunqiang@lx100$#365#$";
     // 向量
     private final static String mIV = "01234567";
