@@ -10,13 +10,12 @@ import android.view.View;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserForPayActivity;
 import com.zantong.mobilecttx.common.activity.PayBrowserActivity;
-import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
+import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
 import com.zantong.mobilecttx.order.fragment.OrderAllStatusFragment;
@@ -27,6 +26,7 @@ import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
 
@@ -123,7 +123,8 @@ public class OrderParentActivity extends BaseJxActivity
                 if (mPresenter != null && bean.getType() == 1) {
                     mPresenter.onPayOrderByCoupon(orderId, String.valueOf(price), payType);
                 }
-                if (mPresenter != null && bean.getType() == 3) {
+                if (mPresenter != null
+                        && (bean.getType() == 3 || bean.getType() == 4 || bean.getType() == 5)) {
                     mPresenter.getBankPayHtml(orderId, String.valueOf(price));
                 }
             }

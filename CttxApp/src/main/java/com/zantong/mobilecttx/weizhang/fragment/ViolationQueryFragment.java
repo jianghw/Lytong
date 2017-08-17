@@ -191,7 +191,6 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
     protected void initFragmentView(View view) {
         initView(view);
         ViewUtils.editTextInputSpace(mEditPlate);
-        ViewUtils.editTextInputSpace(mEditEngine);
 
         ViolationQueryFtyPresenter mPresenter = new ViolationQueryFtyPresenter(
                 Injection.provideRepository(getActivity().getApplicationContext()), this);

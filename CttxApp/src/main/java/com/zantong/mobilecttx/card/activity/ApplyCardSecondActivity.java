@@ -737,7 +737,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         String companyTel = mCompanyTel.getContentText();
         if (checkIsEmpty(companyTel, "单位电话不可为空")) return;
         if (companyTel.length() != 8) {
-            ToastUtils.showShort(getApplicationContext(), "请确保单位固定座机8位有效");
+            ToastUtils.toastShort("请确保单位固定座机8位有效");
             return;
         }
         applyCTCardDTO.setCophoe(companyTel);
@@ -750,7 +750,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         String contactMobile = mContactMobile.getContentText();
         if (checkIsEmpty(contactMobile, "联系人手机号不可为空")) return;
         if (!RegexUtils.isMobileSimple(contactMobile)) {
-            ToastUtils.showShort(getApplicationContext(), "请确保联系人手机号真实准确");
+            ToastUtils.toastShort("请确保联系人手机号真实准确");
             return;
         }
         applyCTCardDTO.setCtcphoenum1(contactMobile);
