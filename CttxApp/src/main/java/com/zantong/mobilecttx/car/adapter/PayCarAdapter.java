@@ -9,10 +9,6 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.car.bean.PayCar;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,8 +22,6 @@ public class PayCarAdapter extends BaseAdapter<PayCar> {
     public void showData(BaseRecyclerViewHolder viewHolder, int position, PayCar data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         holder.mNum.setText(data.getCarnum());
-
-        List<UserCarInfoBean> userCars = PublicData.getInstance().mServerCars;
     }
 
     @Override

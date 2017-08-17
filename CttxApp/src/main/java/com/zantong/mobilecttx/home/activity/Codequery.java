@@ -71,10 +71,12 @@ public class Codequery extends BaseJxActivity implements ModelView {
     protected void initFragmentView(View view) {
         initTitleContent("扫描单查询");
 
-        if (!TextUtils.isEmpty(mType) && mType.equals("type=finish")) {
-            pay_code_number.setText(mType);
-        }
         mCodeQueryPresenter = new CodeQueryPresenter(this);
+    }
+
+    @Override
+    protected void initViewStatus() {
+        if (!TextUtils.isEmpty(mType)) pay_code_number.setText(mType);
     }
 
     @Override
@@ -121,9 +123,7 @@ public class Codequery extends BaseJxActivity implements ModelView {
 
         Act.getInstance().lauchIntent(this, ViolationDetails.class);
 
-        if (!TextUtils.isEmpty(mType) && mType.equals("type=finish")) {
-            finish();
-        }
+        if (!TextUtils.isEmpty(mType)) finish();
     }
 
     @Override
@@ -132,11 +132,8 @@ public class Codequery extends BaseJxActivity implements ModelView {
             mDialog.dismiss();
             mDialog = null;
         }
-        if (!TextUtils.isEmpty(mType) && mType.equals("type=finish")) {
-            ToastUtils.toastShort("违章编号查询失败");
-            finish();
-        }
 
+        ToastUtils.toastShort("违章编号查询失败");
     }
 
     /**

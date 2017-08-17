@@ -52,29 +52,17 @@ public class NetLocationDialog extends Dialog {
         @Override
         public void onClick(View v) {
             try {
-//                int month = Integer.parseInt(mCityPicker.getMonth());
-//                int day = Integer.parseInt(mCityPicker.getDay());
-//                String tempMonth = String.valueOf(month);
-//                String tempDay = String.valueOf(day);
-//                if (month < 10) {
-//                    tempMonth = "0" + tempMonth;
-//                }
-//                if (day < 10) {
-//                    tempDay = "0" + tempDay;
-//                }
                 String[] data = new String[5];
                 data[0] = mNetlocationPicker.getProvince();
                 data[1] = mNetlocationPicker.getDataBean().getNetLocationCode();
                 data[2] = mNetlocationPicker.getCity();
                 data[3] = mNetlocationPicker.getDataBean().getNetLocationXiang();
                 data[4] = mNetlocationPicker.getDataBean().getNetLocationNumber();
-//                data[2] = mCityPicker.getDistrinc();
                 if (chooseDialogListener != null) chooseDialogListener.back(data);
                 NetLocationDialog.this.dismiss();
             } catch (Exception e) {
 
             }
-
         }
     };
 
