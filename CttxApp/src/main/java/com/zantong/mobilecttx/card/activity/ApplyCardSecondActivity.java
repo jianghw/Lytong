@@ -835,15 +835,6 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      * @param applyCTCardDTO
      */
     private void commitYingXiaoDataForLYT(ApplyCTCardDTO applyCTCardDTO) {
-//        YingXiaoDataDTO dto = new YingXiaoDataDTO();
-//        dto.setUsrnum(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
-//
-//        if (TextUtils.isEmpty(mYingXiaoCode.getContentText())) {
-//            dto.setEmpNum(mMarketingCode);
-//        } else {
-//            dto.setEmpNum(mYingXiaoCode.getContentText());
-//        }
-
         CarApiClient.commitYingXiaoData(ContextUtils.getContext(), applyCTCardDTO, new CallBack<BaseResult>() {
             @Override
             public void onSuccess(BaseResult result) {

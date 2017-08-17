@@ -125,7 +125,7 @@ public class LicenseDetailFragment extends BaseRefreshJxFragment
         mAdapter.setItemClickListener(new LicenseDetailAdapter.ItemClickListener() {
             @Override
             public void doClickViolation(String num) {//违章查询页面
-                Act.getInstance().gotoIntent(getActivity(), Codequery.class, "type=finish");
+                Act.getInstance().gotoIntent(getActivity(), Codequery.class, num);
             }
 
             /**

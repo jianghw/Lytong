@@ -37,7 +37,7 @@
             android:layout_marginRight="@dimen/ds_30"
             android:layout_toLeftOf="@+id/img_right"
             android:gravity="center"
-            android:text="违章查询"
+            android:text="缴费车辆"
             android:textColor="@color/colorTvRed_f33"
             android:textSize="@dimen/fs_16sp"/>
     </RelativeLayout>

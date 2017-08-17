@@ -54,7 +54,8 @@ android {
     }
 
     buildTypes {
-        debug {
+        //release
+        release {
             // 显示Log
             buildConfigField "boolean", "LOG_DEBUG", "true"
             //下载地址  分享
@@ -74,7 +75,7 @@ android {
             signingConfig signingConfigs.debug
         }
 
-        release {
+        debug {
             // 不显示Log
             buildConfigField "boolean", "LOG_DEBUG", "false"
             //下载地址   分享

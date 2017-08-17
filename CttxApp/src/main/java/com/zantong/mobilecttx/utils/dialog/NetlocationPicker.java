@@ -12,7 +12,6 @@ import com.zantong.mobilecttx.map.bean.NetLocationBean;
 import com.zantong.mobilecttx.utils.dialog.WheelView.OnSelectListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,13 +35,10 @@ public class NetlocationPicker extends LinearLayout {
     private int mTemCityIndex = -1;
     private int mDistrincIndex = -1;
 
-    Calendar calendar = Calendar.getInstance();
-    //    private int currentYear= Calendar.getInstance().get(Calendar.YEAR);
-//    private int currentMonth= Calendar.getInstance().get(Calendar.MONTH);
-//    private int currentDay= Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
     private String selectProvince = "上海市长宁区";
     private String selectCity = "上海市长宁区延安西路支行";
     private String selectDistrinc = "宝山区";
+
     private Map<String, List<NetLocationBean.NetLocationElement.NetQuBean>> cityMap = new HashMap<>();
     private NetLocationBean.NetLocationElement.NetQuBean mNetQuBean;
     private Map<String, List<DistrictModel>> disTrincMap = new HashMap<>();
@@ -91,6 +87,7 @@ public class NetlocationPicker extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+
         LayoutInflater.from(getContext()).inflate(R.layout.netlocation_picker, this);
         mWheelYear = (WheelView) findViewById(R.id.year);
         mWheelMonth = (WheelView) findViewById(R.id.month);
@@ -105,8 +102,7 @@ public class NetlocationPicker extends LinearLayout {
         dataList = cityMap.get(selectProvince);
         mNetQuBean = cityMap.get(selectProvince).get(0);
         mWheelMonth.setDefault(0);
-//        mWheelDay.setData(getDisTrincData(curWheelCity));
-//        mWheelDay.setDefault(0);
+
         mWheelYear.setOnSelectListener(new OnSelectListener() {
 
             @Override
@@ -128,11 +124,7 @@ public class NetlocationPicker extends LinearLayout {
                     dataList = cityMap.get(selectProvince);
                     mWheelMonth.setDefault(0);
                     selectCity = mWheelMonth.getSelectedText();
-//	                    mWheelDay.resetData(getDisTrincData(selectCity));
-//						mWheelDay.setDefault(0);
-//						selectDistrinc = mWheelDay.getSelectedText();
                 }
-
             }
         });
         mWheelMonth.setOnSelectListener(new OnSelectListener() {
@@ -140,7 +132,6 @@ public class NetlocationPicker extends LinearLayout {
             @Override
             public void selecting(int id, String text) {
                 // TODO Auto-generated method stub
-
             }
 
             @Override
@@ -152,13 +143,9 @@ public class NetlocationPicker extends LinearLayout {
                     selectProvince = mWheelYear.getSelectedText();
                     selectCity = mWheelMonth.getSelectedText();
                     mNetQuBean = dataList.get(id);
-//						selectDistrinc = mWheelDay.getSelectedText();
                     if (selectCity == null || selectCity.equals(""))
                         return;
-//	                    mWheelDay.resetData(getDisTrincData(selectCity));
-//						mWheelDay.setDefault(0);
                 }
-
             }
         });
 //        mWheelDay.setOnSelectListener(new OnSelectListener() {
@@ -188,7 +175,7 @@ public class NetlocationPicker extends LinearLayout {
     }
 
     private ArrayList<String> getProvinceData() {
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         if (PublicData.getInstance().mNetLocationBean.getNetLocationlist() != null) {
             for (int i = 0; i < PublicData.getInstance().mNetLocationBean.getNetLocationlist().size(); i++) {
 
@@ -208,13 +195,11 @@ public class NetlocationPicker extends LinearLayout {
         ArrayList<String> list = new ArrayList<String>();
         for (int i = 0; i < cityMap.get(province).size(); i++) {
             list.add(cityMap.get(province).get(i).getNetLocationName());
-//			disTrincMap.put(cityMap.get(province).get(i).getNetLocationName(), cityMap.get(province).get(i).getDistrictList());
         }
         return list;
     }
 
     private ArrayList<String> getDisTrincData(String city) {
-        //ignore condition
 
         ArrayList<String> list = new ArrayList<String>();
         for (int i = 0; i < disTrincMap.get(city).size(); i++) {
