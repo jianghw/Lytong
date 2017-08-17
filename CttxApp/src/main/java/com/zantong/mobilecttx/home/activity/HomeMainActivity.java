@@ -18,7 +18,6 @@ import com.zantong.mobilecttx.home.fragment.HomeUnimpededFragment;
 import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.utils.AccountRememberCtrl;
-import com.zantong.mobilecttx.utils.ReadFfile;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.Tools;
@@ -53,7 +52,6 @@ public class HomeMainActivity extends BaseJxActivity {
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
-        ReadFfile.readNetLocationFile(getApplicationContext());
     }
 
     @Override

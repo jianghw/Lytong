@@ -31,15 +31,13 @@ public class ReadFfile {
             BufferedReader reader = new BufferedReader(inputStreamReader);
 
             List<NetLocationBean.NetLocationElement> list = new ArrayList<>();
+//第一行读取
+            String mimeTypeLine = reader.readLine().trim();
+            do {
+                if (!TextUtils.isEmpty(mimeTypeLine) && mimeTypeLine.length() > 3) {
+                    NetLocationBean.NetLocationElement element = new NetLocationBean.NetLocationElement();
+                    NetLocationBean.NetLocationElement.NetQuBean mNetQuBean = new NetLocationBean.NetLocationElement.NetQuBean();
 
-            String mimeTypeLine;
-            while ((mimeTypeLine = reader.readLine()) != null) {
-
-                NetLocationBean.NetLocationElement element = new NetLocationBean.NetLocationElement();
-                NetLocationBean.NetLocationElement.NetQuBean mNetQuBean = new NetLocationBean.NetLocationElement.NetQuBean();
-                mimeTypeLine = mimeTypeLine.trim();
-
-                if (!TextUtils.isEmpty(mimeTypeLine)) {
                     String[] demo = mimeTypeLine.split("\\|");
                     mNetQuBean.setNetLocationNumber(demo[4]);
                     mNetQuBean.setNetLocationXiang(demo[3]);
@@ -51,7 +49,6 @@ public class ReadFfile {
                             flag = true;
                         }
                     }
-
                     if (!flag) {
                         List<NetLocationBean.NetLocationElement.NetQuBean> listNetQuBean = new ArrayList<>();
                         historyStr = demo[0];
@@ -65,11 +62,19 @@ public class ReadFfile {
                         flag = false;
                     }
                 }
-            }
+            } while (!isEmpty(mimeTypeLine = reader.readLine().trim()));
+
             bean.setNetLocationlist(list);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return bean;
+    }
+
+    public static boolean isEmpty(CharSequence str) {
+        if (str == null || str.length() < 3)
+            return true;
+        else
+            return false;
     }
 }
