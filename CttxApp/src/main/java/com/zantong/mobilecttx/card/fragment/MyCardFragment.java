@@ -178,7 +178,10 @@ public class MyCardFragment extends BaseExtraFragment implements ModelView {
                     ToastUtils.toastShort("请确认sim卡是否插入或者sim卡暂时不可用！");
                 } else {
                     //用intent启动拨打电话
-                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:95588"));
+                    Intent intent = new Intent(); // 意图对象：动作 + 数据
+                    intent.setAction(Intent.ACTION_DIAL); // 设置动作
+                    Uri data = Uri.parse("tel:" + "95588"); // 设置数据
+                    intent.setData(data);
                     startActivity(intent);
                 }
                 break;

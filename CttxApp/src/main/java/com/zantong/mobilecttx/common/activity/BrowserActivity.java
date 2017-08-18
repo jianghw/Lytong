@@ -163,7 +163,7 @@ public class BrowserActivity extends BaseJxActivity {
 
     @Override
     protected void DestroyViewAndThing() {
-        mWebView.destroyWebView();
+        if (mWebView != null) mWebView.destroyWebView();
     }
 
     /**

@@ -15,15 +15,14 @@ import android.webkit.WebViewClient;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.contract.browser.IPayBrowserFtyContract;
 import com.zantong.mobilecttx.contract.InterfaceForJS;
+import com.zantong.mobilecttx.contract.browser.IPayBrowserFtyContract;
 import com.zantong.mobilecttx.order.bean.OrderDetailBean;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
 import com.zantong.mobilecttx.presenter.browser.PayBrowserPresenter;
 
 import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * 支付浏览器
@@ -40,6 +39,15 @@ public class PayBrowserActivity extends BaseJxActivity
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            mTitleWeb = intent.getStringExtra(GlobalConstant.putExtra.web_title_extra);
+            mUrl = intent.getStringExtra(GlobalConstant.putExtra.web_url_extra);
+            mOrderId = intent.getStringExtra(GlobalConstant.putExtra.web_order_id_extra);
+        }
+        PayBrowserPresenter presenter = new PayBrowserPresenter(
+                Injection.provideRepository(getApplicationContext()), this);
     }
 
     @Override
@@ -50,15 +58,6 @@ public class PayBrowserActivity extends BaseJxActivity
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     @Override
     protected void initFragmentView(View view) {
-        PayBrowserPresenter presenter = new PayBrowserPresenter(
-                Injection.provideRepository(getApplicationContext()), this);
-
-        Intent intent = getIntent();
-        if (intent != null) {
-            mTitleWeb = intent.getStringExtra(GlobalConstant.putExtra.web_title_extra);
-            mUrl = intent.getStringExtra(GlobalConstant.putExtra.web_url_extra);
-            mOrderId = intent.getStringExtra(GlobalConstant.putExtra.web_order_id_extra);
-        }
 
         initTitleContent(mTitleWeb);
         mWebView = (WebView) view.findViewById(R.id.webView);
@@ -67,8 +66,6 @@ public class PayBrowserActivity extends BaseJxActivity
                 "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\" http://www.w3.org/TR/html4/loose.dtd\">" +
                 "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\">" +
                 "<title>表单提交</title></head><body>" + mUrl + "</body></html>";
-
-        LogUtils.xml(url);
 
         WebSettings settings = mWebView.getSettings();
         //设置支持Javascript
