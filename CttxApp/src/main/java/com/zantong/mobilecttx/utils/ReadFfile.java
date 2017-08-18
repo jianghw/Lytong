@@ -32,17 +32,18 @@ public class ReadFfile {
 
             List<NetLocationBean.NetLocationElement> list = new ArrayList<>();
 //第一行读取
-            String mimeTypeLine = reader.readLine().trim();
+            String mimeTypeLine = reader.readLine();
             do {
                 if (!TextUtils.isEmpty(mimeTypeLine) && mimeTypeLine.length() > 3) {
                     NetLocationBean.NetLocationElement element = new NetLocationBean.NetLocationElement();
                     NetLocationBean.NetLocationElement.NetQuBean mNetQuBean = new NetLocationBean.NetLocationElement.NetQuBean();
-
+                    mimeTypeLine = mimeTypeLine.trim();
                     String[] demo = mimeTypeLine.split("\\|");
                     mNetQuBean.setNetLocationNumber(demo[4]);
                     mNetQuBean.setNetLocationXiang(demo[3]);
                     mNetQuBean.setNetLocationName(demo[2]);
                     mNetQuBean.setNetLocationCode(demo[1]);
+
                     for (int i = 0; i < list.size(); i++) {
                         if (list.get(i).getNetLocationQu().equals(demo[0])) {
                             list.get(i).getListNet().add(mNetQuBean);
@@ -62,7 +63,8 @@ public class ReadFfile {
                         flag = false;
                     }
                 }
-            } while (!isEmpty(mimeTypeLine = reader.readLine().trim()));
+            }
+            while (!TextUtils.isEmpty(mimeTypeLine = reader.readLine()) && mimeTypeLine.length() > 3);
 
             bean.setNetLocationlist(list);
         } catch (Exception e) {

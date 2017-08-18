@@ -7,7 +7,7 @@ android {
         applicationId "com.zantong.mobilecttx"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 36
+        versionCode 37
         versionName "3.1.0"
         aaptOptions.cruncherEnabled = false //禁止gradle检查png的合法性
         aaptOptions.useNewCruncher = false //关闭androidstudio的png的合法性检查
