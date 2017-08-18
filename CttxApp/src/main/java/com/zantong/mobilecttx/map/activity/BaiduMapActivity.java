@@ -50,7 +50,6 @@ import com.zantong.mobilecttx.map.bean.YearCheckDetail;
 import com.zantong.mobilecttx.map.bean.YearCheckDetailResult;
 import com.zantong.mobilecttx.map.bean.YearCheckResult;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
-import cn.qqtheme.framework.util.ui.DensityUtils;
 import com.zantong.mobilecttx.utils.DistanceUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
@@ -60,6 +59,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.util.ToastUtils;
+import cn.qqtheme.framework.util.ui.DensityUtils;
 
 /**
  * 地图
@@ -474,7 +474,6 @@ public class BaiduMapActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
 
     @Override
     public void onMapClick(LatLng latLng) {
-
     }
 
     @Override

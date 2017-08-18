@@ -1,6 +1,5 @@
 package com.zantong.mobilecttx.map.activity;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -54,6 +53,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
     private BaiduMap mBaiduMap;
     private LocationClient mLocClient;
     private BaiduMapOptions baiduMapOptions;
+    boolean isFirstLoc = true; // 是否首次定位
 
     private Double lastX = 0.0;
     private int mCurrentDirection = 0;
@@ -61,30 +61,25 @@ public class BaiduMapParentActivity extends BaseJxActivity
     private double mCurrentLon = 0.0;
     private float mCurrentAccracy;
 
-    boolean isFirstLoc = true; // 是否首次定位
     private MyLocationData locData;
     private SupportMapFragment mapFragment;
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
-        Intent intent = getIntent();
-        MapStatus.Builder builder = new MapStatus.Builder();
-
-        if (intent.hasExtra("x") && intent.hasExtra("y")) {
-            // 当用intent参数时，设置中心点为指定点
-            Bundle bundle = intent.getExtras();
-            LatLng latLng = new LatLng(bundle.getDouble("y"), bundle.getDouble("x"));
-            builder.target(latLng);
-        }
-
-        builder.overlook(-20).zoom(15);
-        baiduMapOptions = new BaiduMapOptions()
-                .mapStatus(builder.build())
-                .compassEnabled(false)
-                .zoomControlsEnabled(false);
-        //获取传感器管理服务
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
+//        Intent intent = getIntent();
+//        MapStatus.Builder builder = new MapStatus.Builder();
+//        if (intent.hasExtra("x") && intent.hasExtra("y")) {
+//            // 当用intent参数时，设置中心点为指定点
+//            Bundle bundle = intent.getExtras();
+//            LatLng latLng = new LatLng(bundle.getDouble("y"), bundle.getDouble("x"));
+//            builder.target(latLng);
+//        }
+//        //设置缩放级别，默认级别为12
+//        builder.overlook(-20).zoom(15);
+//        baiduMapOptions = new BaiduMapOptions()
+//                .mapStatus(builder.build())
+//                .compassEnabled(false)
+//                .zoomControlsEnabled(false);
     }
 
     @Override
@@ -114,6 +109,10 @@ public class BaiduMapParentActivity extends BaseJxActivity
         mapFragment = SupportMapFragment.newInstance(baiduMapOptions);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.lay_map, mapFragment, "map_fragment").commit();
+
+        //获取传感器管理服务
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
     }
 
     /**
@@ -125,12 +124,16 @@ public class BaiduMapParentActivity extends BaseJxActivity
         // 地图初始化
         mMapView = mapFragment.getMapView();
         mBaiduMap = mapFragment.getBaiduMap();
+        //默认是true，显示缩放按钮
+        mMapView.showScaleControl(true);
+        //默认是true，显示比例尺
+        mMapView.showZoomControls(false);
         // 开启定位图层
         mBaiduMap.setMyLocationEnabled(true);
         // 定位初始化
         mLocClient = new LocationClient(this);
-
         mLocClient.registerLocationListener(new MyLocationListenner());
+
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true); // 打开gps
         option.setCoorType("bd09ll"); // 设置坐标类型
@@ -185,12 +188,8 @@ public class BaiduMapParentActivity extends BaseJxActivity
         switch (v.getId()) {
             case R.id.img_location:
                 //定位图标设置
-                mCurrentMode = MyLocationConfiguration.LocationMode.FOLLOWING;
-                mBaiduMap.setMyLocationConfiguration(
-                        new MyLocationConfiguration(mCurrentMode, true, null));
-                MapStatus.Builder builder = new MapStatus.Builder();
-                builder.overlook(0);
-                mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+                isFirstLoc = true;
+                mLocClient.start();
                 break;
             case R.id.img_blowUp:
                 break;
@@ -244,9 +243,9 @@ public class BaiduMapParentActivity extends BaseJxActivity
             mBaiduMap.setMyLocationData(locData);
             if (isFirstLoc) {
                 isFirstLoc = false;
-                LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
+                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                 MapStatus.Builder builder = new MapStatus.Builder();
-                builder.target(ll).zoom(18.0f);
+                builder.target(latLng).zoom(18.0f);
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
             }
         }

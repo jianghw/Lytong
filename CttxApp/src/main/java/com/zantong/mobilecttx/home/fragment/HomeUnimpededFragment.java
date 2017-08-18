@@ -24,7 +24,6 @@ import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
-import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
 import com.zantong.mobilecttx.eventbus.GetMsgAgainEvent;
@@ -402,7 +401,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
         if (result != null && result.getData() != null) {
             List<UserCarInfoBean> infoBeanList = result.getData();
-//TODO 车辆数据保存处理
+            //车辆数据保存处理
             PublicData.getInstance().payData.clear();
             PublicData.getInstance().mCarNum = infoBeanList.size();
             PublicData.getInstance().mServerCars = decodeCarInfo(infoBeanList);
@@ -410,10 +409,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
             mUserCarInfoBeanList.addAll(infoBeanList);
         }
         //违章车辆
-//        HorizontalCarViolationAdapter carViolationAdapter =
-//                new HorizontalCarViolationAdapter(getContext(), mUserCarInfoBeanList);
-//        mCustomViolation.setAdapter(carViolationAdapter);
-
         mCarViolationAdapter.notifyDataSetChanged(mUserCarInfoBeanList);
         mCustomViolation.notifyDataSetChanged();
     }
@@ -474,9 +469,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         mCarViolationAdapter.notifyDataSetChanged(mUserCarInfoBeanList);
         mCustomViolation.notifyDataSetChanged();
 
-//        HorizontalCarViolationAdapter carViolationAdapter =
-//                new HorizontalCarViolationAdapter(getContext(), mUserCarInfoBeanList);
-//        mCustomViolation.setAdapter(carViolationAdapter);
         PublicData.getInstance().mLocalCars = list;
         PublicData.getInstance().mCarNum = list != null ? list.size() : 0;
     }
@@ -624,7 +616,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
      */
     public void enterDrivingActivity() {
         if (!PublicData.getInstance().loginFlag) {
-            Act.getInstance().gotoIntentLogin(getActivity(), DrivingActivity.class);
+            Act.getInstance().gotoIntentLogin(getActivity(), BaiduMapParentActivity.class);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             PermissionGen.needPermission(this, 2000, new String[]{
                     Manifest.permission.ACCESS_COARSE_LOCATION,
