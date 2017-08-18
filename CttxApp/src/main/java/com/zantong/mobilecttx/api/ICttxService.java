@@ -1,13 +1,15 @@
 package com.zantong.mobilecttx.api;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseResult;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+import com.zantong.mobilecttx.map.bean.YearCheckResult;
+import com.zantong.mobilecttx.map.dto.AnnualDTO;
 
 import java.util.List;
 
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import rx.Observable;
@@ -54,4 +56,10 @@ public interface ICttxService {
      */
     @POST("cttx/updateVehiclelicense")
     Observable<BaseResult> updateVehicleLicense(@Body BindCarDTO bindCarDTO);
+
+    /**
+     * 24.获取年检网点
+     */
+    @POST("cttx/annualinspectionList")
+    Observable<YearCheckResult> annualInspectionList(@Body AnnualDTO annualDTO);
 }

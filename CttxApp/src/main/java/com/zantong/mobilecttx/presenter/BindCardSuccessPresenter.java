@@ -1,21 +1,22 @@
 package com.zantong.mobilecttx.presenter;
 
-import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.base.BasePresenter;
-import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.base.MessageFormat;
+import com.zantong.mobilecttx.base.interf.IBaseView;
+import com.zantong.mobilecttx.card.activity.BindCardSuccess;
+import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.model.UpdateNickNameModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
-import cn.qqtheme.framework.util.ToastUtils;
-import com.zantong.mobilecttx.card.activity.BindCardSuccess;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+
+import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * Created by 王海洋 on 16/6/1.
@@ -30,8 +31,6 @@ public class BindCardSuccessPresenter extends BasePresenter<IBaseView> implement
     public BindCardSuccessPresenter(BindCardSuccess mBindCardSuccess) {
         this.mBindCardSuccess = mBindCardSuccess;
         mUpdateNickNameModelImp = new UpdateNickNameModelImp();
-
-
     }
 
 
@@ -42,7 +41,6 @@ public class BindCardSuccessPresenter extends BasePresenter<IBaseView> implement
             case 1:
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.u003.01");
                 masp = new JSONObject() ;
-//
                 try {
                     masp.put("usrid", PublicData.getInstance().userID);
                     masp.put("getdate", PublicData.getInstance().mHashMap.get("getdate"));

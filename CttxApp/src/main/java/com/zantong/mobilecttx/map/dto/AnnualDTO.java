@@ -1,10 +1,10 @@
 package com.zantong.mobilecttx.map.dto;
 
 /**
- * Created by zhoujie on 2016/9/22.
+ * 年检
  */
 
-public class CarManagerDTO {
+public class AnnualDTO {
     private String lng;	   //经度
     private String lat;	   //维度
     private String scope;  //范围(单位为km，不传默认为3km)

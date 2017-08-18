@@ -212,7 +212,7 @@ public abstract class BaseMvpActivity<V, T extends BasePresenter<V>> extends Bas
     }
 
     public void setEnsureEnable(boolean flag) {
-        mBaseEnsure.setTextColor(flag ? getResources().getColor(R.color.civory) : getResources().getColor(R.color.colorGray));
+        mBaseEnsure.setTextColor(flag ? getResources().getColor(R.color.colorWhite) : getResources().getColor(R.color.colorGray));
         mBaseEnsure.setClickable(flag);
         mBaseEnsure.setEnabled(flag);
     }

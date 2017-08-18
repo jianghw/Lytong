@@ -42,9 +42,12 @@ public final class GlobalConstant {
         public static final String browser_title_extra = "browser_title_extra";
         public static final String browser_url_extra = "browser_url_extra";
         public static final String violation_pay_bean_extra = "violation_pay_bean_extra";
+        public static final String map_type_extra = "map_type_extra";
     }
 
-    public static final class cameraType {
-        public static final int common_list_fty = 0;
+    public static final class MapType {
+        public static final int annual_inspection_map = -1;
+        public static final int annual_site_service = 1;
+        public static final int annual_led_service = 2;
     }
 }

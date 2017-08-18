@@ -211,6 +211,7 @@ public class BaiduMapActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
         dto = new CarManagerDTO();
         dto.setLng(String.valueOf(longitude));
         dto.setLat(String.valueOf(latitude));
+
         switch (PublicData.getInstance().mapType) {
             case TYPE_JIAYOU:
                 setTitleText("加油优惠");
@@ -302,6 +303,7 @@ public class BaiduMapActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
             mYearCheckList = list;
             for (int i = 0; i < list.size(); i++) {
                 LatLng l = new LatLng(list.get(i).getLat(), list.get(i).getLng());
+
                 LayoutInflater inflater = LayoutInflater.from(this);
                 View view = inflater.inflate(R.layout.map_mark_view, null);
                 TextView mText = (TextView) view.findViewById(R.id.map_mark_text);

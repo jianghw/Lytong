@@ -1,14 +1,14 @@
 package com.zantong.mobilecttx.map.bean;
 
 /**
- * Created by zhoujie on 2016/9/19.
+ * 年检
  */
 public class YearCheck {
-    private int id;	             //年检地点ID
-    private String name;	     //年检地点名称
+    private int id;                 //年检地点ID
+    private String name;         //年检地点名称
     private String businessDate; //年检地点营业时间
-    private double lng;	         //经度
-    private double lat;	         //纬度
+    private double lng;             //经度
+    private double lat;             //纬度
 
     public int getId() {
         return id;

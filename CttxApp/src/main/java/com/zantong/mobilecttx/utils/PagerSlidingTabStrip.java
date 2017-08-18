@@ -310,10 +310,9 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		mOnPageChangeListenerMain.listener(pager.getCurrentItem());
 		int temp = 0;
 		if( v instanceof RelativeLayout){
-//			v = ((RelativeLayout) v).getChildAt(0);
 			setChangTitleColor(v);
 			TextView fontText = (TextView) ((RelativeLayout) v).getChildAt(0);
-			fontText.setTextColor(getResources().getColor(R.color.civory));
+			fontText.setTextColor(getResources().getColor(R.color.colorWhite));
 			temp = v.getLeft()+((RelativeLayout) v).getChildAt(0).getLeft();
 		}
 		int newScrollX = temp + offset;

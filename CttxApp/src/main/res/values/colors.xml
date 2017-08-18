@@ -8,8 +8,7 @@
     <color name="line_blue">#00B6FF</color>
     <!-- 顶部标题 -->
     <!-- app透明主色 -->
-    <!-- app主色 -->
-    <color name="appmain">#F53E2A</color>
+
     <!-- app灰色 -->
     <color name="colorGray">#FFE6E6E6</color>
     <!-- app背景灰色 -->
@@ -24,16 +23,11 @@
     <color name="colorLine">#FFE6E6E6</color>
     <!-- 虚线线的颜色 -->
     <color name="colorXuLine">#FFD9D9D9</color>
-    <!-- 透明灰色字体 -->
-    <color name="colorTranFontGray">#B3FFFFFF</color>
-    <!-- 透明红色字体 -->
-    <color name="colorTranFontRed">#FFF53E2A</color>
-    <!-- 透明红色按钮背景 -->
-    <color name="colorTranFontRedBack">#C9FFFFFF</color>
+
     <!-- 灰色分割单线 -->
     <!-- 主页上面三个导航未选中的颜色 -->
     <!-- 主页上面三个导航未选中的颜色 -->
-    <color name="colorGrayFontSmmall">#FFA6A6A6</color>
+
     <!-- 畅通页的三个button -->
     <color name="colorOpenFont">#FF595959</color>
     <!-- 畅通页绑定车牌号的字体颜色 -->
@@ -47,8 +41,7 @@
     <color name="colorNoticeGrayNumberFont">#FFF5F2F2</color>
     <color name="colorAddCarGrayNumberFont">#FF666666</color>
     <color name="userAgreeColor">#13B1F5</color>
-    <color name="addVechiclesGray">#FFBBBBBF</color>
-    <color name="vechiclesDetailsStates">#FFF6422C</color>
+
     <color name="surePayPopupBackground">#4D000000</color>
     <color name="payRecordTimePopBack">#4D000000</color>
     <color name="mineGray">#FFC8C8CC</color>
@@ -118,7 +111,7 @@
     <color name="gray_6e">#6E6E6E</color>
     <color name="gray_e3">#e3e3e3</color>
     <color name="gray_cd">#cdcdcd</color>
-    <color name="trans_white">#afffffff</color>
+
     <color name="popup_main_background">#af000000</color>
     <color name="civory">#ffffff</color>
 

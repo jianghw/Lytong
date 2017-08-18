@@ -1,11 +1,11 @@
 package com.zantong.mobilecttx.map.bean;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
-
 import java.util.List;
 
+import cn.qqtheme.framework.contract.bean.BaseResult;
+
 /**
- * Created by zhoujie on 2016/9/19.
+ * 年检
  */
 public class YearCheckResult extends BaseResult {
     private List<YearCheck> data;

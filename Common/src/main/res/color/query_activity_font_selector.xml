@@ -4,5 +4,5 @@
            android:color="@color/appmain" /> <!-- focused -->
      <item android:state_selected="true"
            android:color="@color/appmain" /> <!-- focused -->
-     <item android:color="@color/civory" /> <!-- default -->
+     <item android:color="@color/colorWhite" /> <!-- default -->
 </selector> 

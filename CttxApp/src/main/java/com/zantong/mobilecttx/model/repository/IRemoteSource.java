@@ -1,6 +1,5 @@
 package com.zantong.mobilecttx.model.repository;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -18,7 +17,6 @@ import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
 import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.DriverCoachResult;
@@ -26,6 +24,8 @@ import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+import com.zantong.mobilecttx.map.bean.YearCheckResult;
+import com.zantong.mobilecttx.map.dto.AnnualDTO;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
@@ -45,6 +45,8 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import java.util.List;
 
+import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
 import okhttp3.MultipartBody;
 import rx.Observable;
 
@@ -282,4 +284,9 @@ public interface IRemoteSource {
      * 10.取消订单
      */
     Observable<BaseResult> cancelOrder(String orderId, String userNum);
+
+    /**
+     * 24.获取年检网点
+     */
+    Observable<YearCheckResult> annualInspectionList(AnnualDTO annualDTO);
 }

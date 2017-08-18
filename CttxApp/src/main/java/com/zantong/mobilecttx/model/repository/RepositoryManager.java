@@ -28,6 +28,8 @@ import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+import com.zantong.mobilecttx.map.bean.YearCheckResult;
+import com.zantong.mobilecttx.map.dto.AnnualDTO;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
@@ -493,5 +495,12 @@ public class RepositoryManager {
      */
     public Observable<BaseResult> cancelOrder(String orderId, String userNum) {
         return mRemoteData.cancelOrder(orderId, userNum);
+    }
+
+    /**
+     * 24.获取年检网点
+     */
+    public Observable<YearCheckResult> annualInspectionList(AnnualDTO annualDTO) {
+        return mRemoteData.annualInspectionList(annualDTO);
     }
 }
