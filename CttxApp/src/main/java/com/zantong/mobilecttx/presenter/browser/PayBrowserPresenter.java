@@ -74,7 +74,8 @@ public class PayBrowserPresenter
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.intervalOrderDetailError(e.getMessage());
+                        mAtyView.intervalOrderDetailError(
+                                e.getMessage() != null ? e.getMessage() : "未知错误(interval)");
                     }
 
                     @Override
@@ -100,7 +101,7 @@ public class PayBrowserPresenter
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.getOrderDetailError(e.getMessage());
+                        mAtyView.getOrderDetailError(e.getMessage()!=null?e.getMessage():"未知错误(N9)");
                     }
 
                     @Override

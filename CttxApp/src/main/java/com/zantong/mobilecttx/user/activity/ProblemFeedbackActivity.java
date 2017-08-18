@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.widget.Toast;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
@@ -16,6 +15,7 @@ import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.DialogUtils;
 
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 问题反馈
@@ -63,7 +63,7 @@ public class ProblemFeedbackActivity extends BaseMvpActivity<IBaseView, HelpPres
 
     private void playTel() {
         Intent intent = new Intent(); // 意图对象：动作 + 数据
-        intent.setAction(Intent.ACTION_CALL); // 设置动作
+        intent.setAction(Intent.ACTION_DIAL); // 设置动作
         Uri data = Uri.parse("tel:" + "95588"); // 设置数据
         intent.setData(data);
         startActivity(intent);
@@ -75,7 +75,7 @@ public class ProblemFeedbackActivity extends BaseMvpActivity<IBaseView, HelpPres
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 playTel();
             } else {
-                Toast.makeText(this, "权限未开启", Toast.LENGTH_SHORT).show();
+                ToastUtils.toastShort("请开启电话权限");
             }
         }
     }

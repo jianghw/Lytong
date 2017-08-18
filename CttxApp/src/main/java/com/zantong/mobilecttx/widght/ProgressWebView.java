@@ -20,11 +20,16 @@ public class ProgressWebView extends LinearLayout {
     private boolean isLoadCompleted;
 
     public ProgressWebView(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public ProgressWebView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
+    }
+
+    public ProgressWebView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.widget_progress_webview, this);
         mProgressBar = (ProgressBar) findViewById(R.id.widget_progress_webview_pb);
@@ -32,6 +37,7 @@ public class ProgressWebView extends LinearLayout {
 
 //        // 如需支持h5统计，需要将 assets/mobstat.js 拷贝到工程目录下
 //        StatService.bindJSInterface(context, mWebView);
+
         mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDomStorageEnabled(true);
