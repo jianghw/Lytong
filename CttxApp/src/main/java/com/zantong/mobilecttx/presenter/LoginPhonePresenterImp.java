@@ -41,16 +41,10 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
     private LoginInfoBean mLoginInfoBean;
     private JSONObject masp = null;
     private String onlyflag;
-//    private CTTXHttpQueryPOSTInterface cttxHttpQueryPOSTInterface;
 
     public LoginPhonePresenterImp(LoginActivity mLoginActivity) {
         this.mLoginActivity = mLoginActivity;
         mLoginInfoModel = new LoginInfoModelImp();
-    }
-
-
-    private void init() {
-//        mLoginPhone.
     }
 
     @Override
@@ -60,8 +54,6 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
             return;
         }
         if ("".equals(PublicData.getInstance().imei)) {
-//            Toast.makeText(mLoginPhone, "请从设置-应用权限管理中设置允许获取应用识别码后重试", Toast.LENGTH_SHORT).show();
-//            return;
             PublicData.getInstance().imei = "00000000";
         }
         mLoginActivity.showProgress();
@@ -69,7 +61,6 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
             case 1:
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.p001.01");
                 masp = new JSONObject();
-//
                 try {
                     masp.put("phoenum", mLoginActivity.mapData().get("phoenum"));
                     masp.put("smsscene", "001");
