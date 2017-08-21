@@ -22,7 +22,6 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BaiduMapOptions;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
@@ -30,7 +29,6 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.zantong.mobilecttx.R;
@@ -66,11 +64,9 @@ public class BaiduMapParentActivity extends BaseJxActivity
     private CardView mImgZoomOut;
 
     private SensorManager mSensorManager;
-    private MyLocationConfiguration.LocationMode mCurrentMode;
     private MapView mMapView;
     private BaiduMap mBaiduMap;
     private LocationClient mLocClient;
-    private BaiduMapOptions baiduMapOptions;
     boolean isFirstLoc = true; // 是否首次定位
 
     private Double lastX = 0.0;
@@ -98,16 +94,16 @@ public class BaiduMapParentActivity extends BaseJxActivity
             mMapType = intent.getIntExtra(GlobalConstant.putExtra.map_type_extra, 0);
         }
 
-        MapStatus.Builder builder = new MapStatus.Builder();
-        if (intent != null && intent.hasExtra("x") && intent.hasExtra("y")) {
-            // 当用intent参数时，设置中心点为指定点
-            Bundle b = intent.getExtras();
-            LatLng latLng = new LatLng(b.getDouble("y"), b.getDouble("x"));
-            builder.target(latLng);
-        }
-        builder.overlook(-20).zoom(mCurZoom);
-        baiduMapOptions = new BaiduMapOptions().mapStatus(builder.build())
-                .compassEnabled(false).zoomControlsEnabled(false);
+//        MapStatus.Builder builder = new MapStatus.Builder();
+//        if (intent != null && intent.hasExtra("x") && intent.hasExtra("y")) {
+//            // 当用intent参数时，设置中心点为指定点
+//            Bundle b = intent.getExtras();
+//            LatLng latLng = new LatLng(b.getDouble("y"), b.getDouble("x"));
+//            builder.target(latLng);
+//        }
+//        builder.overlook(-20).zoom(mCurZoom);
+//        baiduMapOptions = new BaiduMapOptions().mapStatus(builder.build())
+//                .compassEnabled(false).zoomControlsEnabled(false);
     }
 
     @Override
@@ -155,31 +151,6 @@ public class BaiduMapParentActivity extends BaseJxActivity
             }
         });
 
-//        mLayRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-//                switch (checkedId) {
-//                    case R.id.rb_start:
-//                        if (mPresenter != null
-//                                && mMapType == GlobalConstant.MapType.annual_inspection_map) {
-//                            mServiceType = String.valueOf(GlobalConstant.MapType.annual_led_service);
-//                            mPresenter.annualInspectionList();
-//                        }
-//                        break;
-//                    case R.id.rb_center:
-//                        if (mPresenter != null
-//                                && mMapType == GlobalConstant.MapType.annual_inspection_map) {
-//                            mServiceType = String.valueOf(GlobalConstant.MapType.annual_site_service);
-//                            mPresenter.annualInspectionList();
-//                        }
-//                        break;
-//                    case R.id.rb_end:
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//        });
     }
 
     @Override
@@ -189,35 +160,9 @@ public class BaiduMapParentActivity extends BaseJxActivity
         BaiduMapPresenter presenter = new BaiduMapPresenter(
                 Injection.provideRepository(ContextUtils.getContext()), this);
 
-//        if (mapFragment == null) {
-//            mapFragment = SupportMapFragment.newInstance(baiduMapOptions);
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            fragmentManager.beginTransaction().add(R.id.lay_map, mapFragment, "map_fragment").commit();
-//        }
-
         //获取传感器管理服务
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-//        mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
-    }
 
-    @Override
-    protected void initViewStatus() {
-        if (mMapType == GlobalConstant.MapType.annual_inspection_map) {
-            initTitleContent("年检");
-            mRbStart.setText("免检领标");
-            mRbCenter.setText("年检站点");
-            mRbEnd.setText("外牌代办点");
-
-            mRbStart.setChecked(true);
-        }
-    }
-
-    /**
-     * 控制mBaiduMap 不为空
-     */
-    @Override
-    protected void onStart() {
-        super.onStart();
         // 地图初始化
         mBaiduMap = mMapView.getMap();
 
@@ -237,6 +182,18 @@ public class BaiduMapParentActivity extends BaseJxActivity
         option.setScanSpan(1000);
         mLocClient.setLocOption(option);
         mLocClient.start();
+    }
+
+    @Override
+    protected void initViewStatus() {
+        if (mMapType == GlobalConstant.MapType.annual_inspection_map) {
+            initTitleContent("年检");
+            mRbStart.setText("免检领标");
+            mRbCenter.setText("年检站点");
+            mRbEnd.setText("外牌代办点");
+
+            mRbStart.setChecked(true);
+        }
     }
 
     @Override
@@ -282,7 +239,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
         super.onConfigurationChanged(newConfig);
     }
 
-    private int mCurZoom = 16;
+    private int mCurZoom = 15;
 
     /**
      * 地图控制点击事件
@@ -326,7 +283,6 @@ public class BaiduMapParentActivity extends BaseJxActivity
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
 
     /**
@@ -356,6 +312,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
                 builder.target(latLng).zoom(mCurZoom);
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
             }
+            mLocClient.stop();
         }
 
         public void onReceivePoi(BDLocation poiLocation) {
@@ -383,8 +340,8 @@ public class BaiduMapParentActivity extends BaseJxActivity
     @Override
     public AnnualDTO getAnnualDTO() {
         AnnualDTO annualDTO = new AnnualDTO();
-        annualDTO.setLat(String.valueOf(mCurrentLat));
-        annualDTO.setLng(String.valueOf(mCurrentLon));
+        annualDTO.setLat(String.valueOf(mCurrentLat == 0.0 ? 31.230372 : mCurrentLat));
+        annualDTO.setLng(String.valueOf(mCurrentLon == 0.0 ? 121.473662 : mCurrentLon));
         annualDTO.setType(mMapType == GlobalConstant.MapType.annual_inspection_map
                 ? mServiceType : "-1");
         annualDTO.setScope("200");
@@ -438,16 +395,15 @@ public class BaiduMapParentActivity extends BaseJxActivity
         if (yearCheckList == null || yearCheckList.isEmpty()) return;
 
         for (YearCheck yearCheck : yearCheckList) {
-            LatLng latLng = new LatLng(yearCheck.getLng(), yearCheck.getLat());
+            LatLng latLng = new LatLng(yearCheck.getLat(), yearCheck.getLng());
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng).icon(getCustomOverView("免"))
-                    .zIndex(9).draggable(true);
+                    .zIndex(5).draggable(false);
 
             markerOptions.animateType(MarkerOptions.MarkerAnimateType.drop);
             //在地图上添加Marker，并显示
             mBaiduMap.addOverlay(markerOptions);
         }
-
 
         mBaiduMap.setOnMarkerDragListener(new BaiduMap.OnMarkerDragListener() {
             public void onMarkerDrag(Marker marker) {

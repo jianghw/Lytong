@@ -59,7 +59,7 @@ android {
     }
 
     buildTypes {
-
+//release
         debug {
             // 显示Log
             buildConfigField "boolean", "LOG_DEBUG", "true"
