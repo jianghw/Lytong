@@ -5,9 +5,37 @@ package com.zantong.mobilecttx.map.bean;
  * 加油站详情
  */
 public class GasStationDetail {
+
+    /**
+     * id : 170
+     * name : 中石化万荣加油站
+     * telephone :
+     * address : 上海市闸北区万荣路969号
+     * cityId : 上海市闸北区万荣路969号
+     * lng : 121.442230
+     * lat : 31.288465
+     * preferentialPeriod : 限时19点至次日7点
+     * effectiveDate :
+     * zeroNum :
+     * minusTenNum :
+     * minusTwentyNum :
+     * eightyNineNum :
+     * ninetyTwoNum : 优惠0.20元/升
+     * ninetyFiveNum : 无优惠
+     * ninetyEightNum :
+     * zeroStandard : 5.85元/升
+     * minusTenStandard : 6.20元/升
+     * minusTwentyStandard :
+     * eightyNineStandard : 0.00元/升
+     * ninetyTwoStandard : 6.04元/升
+     * ninetyFiveStandard : 6.64元/升
+     * ninetyEightStandard :
+     */
+
     private String id;
     private String name;
     private String telephone;
+    private String address;
     private String cityId;
     private String lng;
     private String lat;
@@ -15,17 +43,18 @@ public class GasStationDetail {
     private String effectiveDate;
     private String zeroNum;
     private String minusTenNum;
+    private String minusTwentyNum;
     private String eightyNineNum;
     private String ninetyTwoNum;
     private String ninetyFiveNum;
     private String ninetyEightNum;
-    private String address;   //加油站地址
+    private String zeroStandard;
     private String minusTenStandard;
     private String minusTwentyStandard;
-    private String eightyNieStandard;
+    private String eightyNineStandard;
     private String ninetyTwoStandard;
     private String ninetyFiveStandard;
-    private String ninnetyEightStandard;
+    private String ninetyEightStandard;
 
     public String getId() {
         return id;
@@ -49,6 +78,14 @@ public class GasStationDetail {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getCityId() {
@@ -107,6 +144,14 @@ public class GasStationDetail {
         this.minusTenNum = minusTenNum;
     }
 
+    public String getMinusTwentyNum() {
+        return minusTwentyNum;
+    }
+
+    public void setMinusTwentyNum(String minusTwentyNum) {
+        this.minusTwentyNum = minusTwentyNum;
+    }
+
     public String getEightyNineNum() {
         return eightyNineNum;
     }
@@ -139,12 +184,12 @@ public class GasStationDetail {
         this.ninetyEightNum = ninetyEightNum;
     }
 
-    public String getAddress() {
-        return address;
+    public String getZeroStandard() {
+        return zeroStandard;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setZeroStandard(String zeroStandard) {
+        this.zeroStandard = zeroStandard;
     }
 
     public String getMinusTenStandard() {
@@ -163,12 +208,12 @@ public class GasStationDetail {
         this.minusTwentyStandard = minusTwentyStandard;
     }
 
-    public String getEightyNieStandard() {
-        return eightyNieStandard;
+    public String getEightyNineStandard() {
+        return eightyNineStandard;
     }
 
-    public void setEightyNieStandard(String eightyNieStandard) {
-        this.eightyNieStandard = eightyNieStandard;
+    public void setEightyNineStandard(String eightyNineStandard) {
+        this.eightyNineStandard = eightyNineStandard;
     }
 
     public String getNinetyTwoStandard() {
@@ -187,11 +232,11 @@ public class GasStationDetail {
         this.ninetyFiveStandard = ninetyFiveStandard;
     }
 
-    public String getNinnetyEightStandard() {
-        return ninnetyEightStandard;
+    public String getNinetyEightStandard() {
+        return ninetyEightStandard;
     }
 
-    public void setNinnetyEightStandard(String ninnetyEightStandard) {
-        this.ninnetyEightStandard = ninnetyEightStandard;
+    public void setNinetyEightStandard(String ninetyEightStandard) {
+        this.ninetyEightStandard = ninetyEightStandard;
     }
 }

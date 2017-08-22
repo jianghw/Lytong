@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
@@ -22,6 +21,7 @@ import com.zantong.mobilecttx.utils.ImageOptions;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.global.GlobalConfig;
 import cn.qqtheme.framework.widght.banner.CBPageAdapter;
 
@@ -39,7 +39,7 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
         mContext = context;
         //你可以通过layout文件来创建，也可以像我一样用代码创建，不一定是Image，任何控件都可以进行翻页
         imageView = new ImageView(context);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         return imageView;
     }
 

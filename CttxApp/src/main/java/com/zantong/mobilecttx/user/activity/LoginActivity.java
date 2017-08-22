@@ -2,7 +2,6 @@ package com.zantong.mobilecttx.user.activity;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -31,16 +30,15 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.contract.LoginPhoneView;
 import com.zantong.mobilecttx.eventbus.CarInfoEvent;
 import com.zantong.mobilecttx.eventbus.GetUserEvent;
-import com.zantong.mobilecttx.contract.LoginPhoneView;
 import com.zantong.mobilecttx.presenter.LoginPhonePresenterImp;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
@@ -73,6 +71,7 @@ import java.util.TimerTask;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
@@ -127,8 +126,6 @@ public class LoginActivity extends Activity
     private boolean phoneFlag = false;
     private Timer timer;
     private int iTime = -1;
-    private final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
-    private Dialog mLodingDialog;
 
     @Bind(R.id.activity_numkeyboard)
     CustomNumKeyBoard mNumKeyBoard;
@@ -396,7 +393,6 @@ public class LoginActivity extends Activity
 
     @Override
     public void showProgress() {
-//        mLodingDialog = DialogUtils.showLoading(this);
         loginBtn.setText("正在验证...");
         loginBtn.setClickable(false);
     }
@@ -413,10 +409,12 @@ public class LoginActivity extends Activity
         SPUtils.getInstance().setUserPwd(mapData().get("pswd"));
 
         liyingreg(mLoginInfoBean.getRspInfo().getUsrid());
+
         setJiaoYiDaiMa(Des3.decode(mLoginInfoBean.getRspInfo().getFilenum()));
 
         if (!"0".equals(AccountRememberCtrl.getLoginAD(LoginActivity.this)) && Tools.isStrEmpty(PublicData.getInstance().filenum)) {
-            new DialogMgr(LoginActivity.this, "登录成功", "畅通车友会欢迎您，赶快去注册您的牡丹卡吧！", "添加畅通卡", "继续",
+            new DialogMgr(LoginActivity.this,
+                    "登录成功", "畅通车友会欢迎您，赶快去注册您的牡丹卡吧！", "添加畅通卡", "继续",
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

@@ -9,24 +9,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
+import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.contract.IOrderView;
+import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.user.dto.ChangePwdDTO;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
-import com.zantong.mobilecttx.presenter.OrderPresenter;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.TextWatchUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
-import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.widght.CustomCharKeyBoard;
 import com.zantong.mobilecttx.widght.CustomNumKeyBoard;
 
@@ -34,7 +32,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
-public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresenter> implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
+import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.util.ToastUtils;
+public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresenter>
+        implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
 
     @Bind(R.id.register_next_btn)
     Button mCommit;
@@ -67,7 +68,6 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
             mListChar.get(i).setOnClickListener(this);
         }
 
-
         mOldPwd.setOnTouchListener(this);// 对输入框增加触摸事件，让其显示自定义输入框
         mNewPwd.setOnTouchListener(this);// 对输入框增加触摸事件，让其显示自定义输入框
         mNewRePwd.setOnTouchListener(this);// 对输入框增加触摸事件，让其显示自定义输入框
@@ -84,7 +84,6 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
         mCharKeyBoard.getCharTabView().setOnClickListener(this);
         mCharKeyBoard.getChangeNumView().setOnClickListener(this);
         mCharKeyBoard.getCharHideView().setOnClickListener(this);
-
     }
 
     @Override

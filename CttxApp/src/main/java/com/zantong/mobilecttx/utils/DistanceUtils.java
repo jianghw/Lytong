@@ -14,6 +14,7 @@ public class DistanceUtils {
     /**
      * 根据两个位置的经纬度，来计算两地的距离（单位为KM）
      * 参数为String类型
+     *
      * @param lat1Str 用户经度
      * @param lng1Str 用户纬度
      * @param lat2Str 商家经度
@@ -36,10 +37,10 @@ public class DistanceUtils {
                     * Math.pow(Math.sin(mdifference / 2), 2)));
             distance = distance * EARTH_RADIUS;
             distance = Math.round(distance * 10000) / 10000;
-            distanceStr = distance+"";
+            distanceStr = distance + "";
             distanceStr = "距您" + distanceStr.
                     substring(0, distanceStr.indexOf(".")) + "公里";
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

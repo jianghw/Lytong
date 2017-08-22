@@ -20,8 +20,8 @@ import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.card.activity.ChangTongCard;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.contract.ModelView;
+import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.presenter.ViolationDetailsPresenterImp;
 import com.zantong.mobilecttx.utils.AmountUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
@@ -30,7 +30,6 @@ import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.TitleSetting;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.popwindow.SurePayPopupWindows;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
 import com.zantong.mobilecttx.weizhang.fragment.PayTypeFragment;
@@ -49,7 +48,11 @@ import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
 
+/**
+ * 违章详情
+ */
 public class ViolationDetails extends FragmentActivity implements ModelView {
+
     @Bind(R.id.next_btn)
     Button nextBtn;
     @Bind(R.id.violation_location_text)
@@ -83,8 +86,6 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
     @Bind(R.id.viloation_detail_commit_desc)
     TextView mDesc;
 
-    private SurePayPopupWindows mSurePayPopupWindows;
-    private SurePayPopupWindows mSurePayPopupWindows2;
     private SurePayFragment mSurePayFragment;
     private PayTypeFragment mPayTypeFragment;
     private FragmentManager mFragmentManager;

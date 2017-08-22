@@ -117,7 +117,7 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
                     MobclickAgent.onEvent(this, Config.getUMengID(17));
                     huJiaoDriving();
                 } else {
-                    ToastUtils.showShort(this, "亲，您点的太快了");
+                    ToastUtils.toastShort( "亲，您点的太快了");
                 }
                 break;
             case R.id.driving_price:
@@ -163,28 +163,6 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         hashMap.put("usrId", PublicData.getInstance().userID);
         String hashStr = HashUtils.getSignature(hashMap);
         dto.setHash(hashStr);
-
-//        dto.setUsrId(RSAUtils.strByEncryption(this, PublicData.getInstance().userID, true));
-//        dto.setName("18811025033");
-//        dto.setMobile("18811025033");
-//        dto.setAddress("嘉定区塔城路388号");
-//        dto.setAddressLat(31.2295612784);
-//        dto.setAddressLng(121.472966309);
-//        dto.setDriverNum("1");
-//        dto.setTime("1488253689");
-//
-//        HashMap<String, String> hashMap = new HashMap<String, String>();
-//        hashMap.put("mobile", "18811025033");
-//        hashMap.put("address", "嘉定区塔城路388号");
-//        hashMap.put("time", "1488253689");
-//        hashMap.put("addressLng", String.valueOf("121.472966309"));
-//        hashMap.put("addressLat", String.valueOf("31.2295612784"));
-//        hashMap.put("name", "18811025033");
-//        hashMap.put("driverNum", "1");
-//        hashMap.put("usrId", PublicData.getInstance().userID);
-//
-//        String hashStr = HashUtils.getSignature(hashMap);
-//        dto.setHash(hashStr);
 
         GlobalConfig.getInstance().eventIdByUMeng(26);
 

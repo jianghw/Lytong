@@ -14,7 +14,6 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.card.bean.BindCardResult;
 import com.zantong.mobilecttx.card.dto.BindCardDTO;
 import com.zantong.mobilecttx.card.dto.BindDrivingDTO;
@@ -31,6 +30,7 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
@@ -229,12 +229,14 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
                     } else if (result.getRspInfo().getMobileflag() == 0) {
                         ToastUtils.showShort(BindJiaZhaoActivity.this, "您的预留手机号码不正确");
                     }
+                } else {
+                    ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
                 }
             }
 
             @Override
             public void onError(String errorCode, String msg) {
-                super.onError(errorCode, msg);
+                ToastUtils.toastShort(msg + "&&" + errorCode);
                 hideDialogLoading();
             }
         });

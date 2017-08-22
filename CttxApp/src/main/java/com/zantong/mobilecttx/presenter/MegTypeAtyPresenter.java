@@ -42,7 +42,6 @@ public class MegTypeAtyPresenter implements IMegTypeAtyContract.IMegTypeAtyPrese
     @Override
     public void onSubscribe() {
         //TODO 缓存操作 暂时先就这样
-
     }
 
     @Override

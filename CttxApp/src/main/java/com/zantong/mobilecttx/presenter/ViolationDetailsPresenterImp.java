@@ -11,7 +11,6 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.model.ViolationDetailsModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
@@ -21,6 +20,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
@@ -34,16 +34,10 @@ public class ViolationDetailsPresenterImp implements SimplePresenter, OnLoadServ
     private HashMap<String, Object> oMap = new HashMap<>();
     private ViolationDetailsBean mViolationDetailsBean;
     private JSONObject masp = null;
-//    private CTTXHttpQueryPOSTInterface cttxHttpQueryPOSTInterface;
 
     public ViolationDetailsPresenterImp(ViolationDetails mViolationDetails) {
         this.mViolationDetails = mViolationDetails;
         mViolationDetailsModelImp = new ViolationDetailsModelImp();
-    }
-
-
-    private void init() {
-//        mLoginPhone.
     }
 
     @Override
@@ -56,9 +50,9 @@ public class ViolationDetailsPresenterImp implements SimplePresenter, OnLoadServ
                 masp = new JSONObject();
                 try {
                     masp.put("violationnum", mViolationDetails.mapData().get("violationnum"));
-                    if(TextUtils.isEmpty(PublicData.getInstance().imei)){
+                    if (TextUtils.isEmpty(PublicData.getInstance().imei)) {
                         masp.put("token", RSAUtils.strByEncryption("00000000", true));
-                    }else{
+                    } else {
                         masp.put("token", RSAUtils.strByEncryption(PublicData.getInstance().imei, true));
                     }
                     LogUtils.i(masp.get("token").toString());
@@ -90,9 +84,7 @@ public class ViolationDetailsPresenterImp implements SimplePresenter, OnLoadServ
                 }
                 break;
         }
-
         msg = MessageFormat.getInstance().getMessageFormat();
-//        Log.e("why",mslog);
         mViolationDetailsModelImp.loadUpdate(this, msg, index);
     }
 
@@ -109,44 +101,16 @@ public class ViolationDetailsPresenterImp implements SimplePresenter, OnLoadServ
                 } else {
                     mViolationDetails.loadFaildProgress();
                     if (mViolationDetailsBean.getSYS_HEAD().getReturnMessage().contains("处罚决定书")) {
-
-//                        LogUtils.i("Processste--" + this.mViolationDetailsBean.getRspInfo().getProcessste());
-//                        String title = "该条违章为现场处罚违章，请使用罚单进行缴费！";
-//                        String option = "去缴费";
-//                        if (!(PublicData.getInstance().mHashMap.get("Processste")).equals("0")) {
-//                            option = "看详情";
-//                            title = "该条违章为现场处罚违章,请使用罚单缴费功能查看详情!";
-//                        }
-                        DialogUtils.createDialog(mViolationDetails, "请使用处罚决定书编号进行缴纳", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mViolationDetails.finish();
-                            }
-                        });
-
-//                        new DialogMgr(mViolationDetails, "温馨提示", title, "取消", option,
-//                                new View.OnClickListener() {
-//
-//                                    @Override
-//                                    public void onClick(View arg0) {
-//                                        mViolationDetails.finish();
-//                                    }
-//                                }, new View.OnClickListener() {
-//
-//                            @Override
-//                            public void onClick(View view) {
-//                                PermissionGen.needPermission(mViolationDetails, 100,
-//                                        new String[]{
-//                                                Manifest.permission.CAMERA,
-////                                Manifest.permission.RECEIVE_SMS,
-////                                Manifest.permission.WRITE_CONTACTS
-//                                        }
-//                                );
-//                            }
-//                        }, "1");
-
+                        DialogUtils.createDialog(mViolationDetails,
+                                "请使用处罚决定书编号进行缴纳",
+                                new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        mViolationDetails.finish();
+                                    }
+                                });
                     } else {
-                        ToastUtils.showShort(mViolationDetails, mViolationDetailsBean.getSYS_HEAD().getReturnMessage());
+                        ToastUtils.toastShort(mViolationDetailsBean.getSYS_HEAD().getReturnMessage());
                     }
                 }
                 break;
@@ -155,7 +119,7 @@ public class ViolationDetailsPresenterImp implements SimplePresenter, OnLoadServ
 
     @Override
     public void onFailed() {
-        ToastUtils.showShort(mViolationDetails, Config.getErrMsg("1"));
+        ToastUtils.toastShort(Config.getErrMsg("1"));
         mViolationDetails.loadFaildProgress();
     }
 }

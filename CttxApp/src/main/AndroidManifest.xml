@@ -305,6 +305,7 @@
         <activity
             android:name=".huodong.activity.HundredPlanActivity"
             android:screenOrientation="portrait"/>
+        <!--========================================代驾模块===================================-->
         <activity
             android:name=".daijia.activity.DrivingActivity"
             android:screenOrientation="portrait"/>

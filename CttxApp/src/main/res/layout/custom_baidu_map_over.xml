@@ -6,19 +6,19 @@
 
     <ImageView
         android:id="@+id/img_location"
-        android:layout_width="@dimen/ds_120"
+        android:layout_width="@dimen/ds_130"
         android:layout_height="@dimen/ds_160"
         android:layout_centerInParent="true"
-        android:src="@mipmap/icon_location"/>
+        android:src="@drawable/bg_sel_map_landmark"/>
 
     <TextView
         android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/ds_40"
+        android:layout_marginTop="@dimen/ds_36"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/fs_14sp"
+        android:textSize="@dimen/fs_12sp"
         tools:text="-0.2"/>
 
 </RelativeLayout>

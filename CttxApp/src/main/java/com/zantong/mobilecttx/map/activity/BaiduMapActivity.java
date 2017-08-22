@@ -221,6 +221,7 @@ public class BaiduMapActivity extends BaseMvpActivity<IBaseView, HelpPresenter>
                 setTitleText("年检");
                 setEnsureText("年检须知");
                 dto.setType("2");
+
                 FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
                         DensityUtils.getScreenWidth(this) * 618 / 750, DensityUtils.getScreenWidth(this) * 144 / 1334);
                 layoutParams.setMargins(24, 24, 24, 24);

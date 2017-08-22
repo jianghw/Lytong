@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_225"
+        android:padding="@dimen/ds_45">
+
+        <ImageView
+            android:id="@+id/img_navigation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/btn_go"/>
+
+        <TextView
+            android:id="@+id/tv_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/img_navigation"
+            android:layout_marginLeft="@dimen/ds_30"
+            android:layout_marginRight="@dimen/ds_30"
+            android:layout_toLeftOf="@+id/img_navigation"
+            android:textColor="@color/colorTvRed_f33"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="14.KM"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="@dimen/ds_30"
+            android:layout_toLeftOf="@+id/img_navigation"
+            android:singleLine="true"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_18sp"
+            tools:text="附件四副书记of数据都"/>
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_name"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/tv_distance"
+            android:textColor="@color/colorTvGray_7f"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="附件四副书记of数据都"/>
+
+    </RelativeLayout>
+</merge>

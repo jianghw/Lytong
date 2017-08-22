@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/ds_45">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="联系电话"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ds_90"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="020-1898731"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="营业时间"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ds_90"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="020-1898731"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/ds_45">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="备        注"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_scope"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/ds_90"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="020-1898731"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_commission"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_150"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/ds_45"
+        android:background="@mipmap/ic_btn_bg"
+        android:enabled="true"
+        android:text="一键代办"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/fs_18sp"/>
+
+</merge>

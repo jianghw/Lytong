@@ -1,19 +1,22 @@
 package com.zantong.mobilecttx.chongzhi.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.view.View;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
+import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.chongzhi.fragment.RechargeFragment;
 import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.map.activity.BaiduMapActivity;
+import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.presenter.chongzhi.RechargePresenter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import cn.qqtheme.framework.global.GlobalConfig;
+import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.AtyUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
@@ -25,7 +28,11 @@ import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_COD
 /**
  * 加油充值
  */
-public class RechargeActivity extends MvpBaseActivity {
+public class RechargeActivity extends BaseJxActivity {
+
+    @Override
+    protected void bundleIntent(Bundle savedInstanceState) {
+    }
 
     @Override
     protected int getContentResId() {
@@ -33,14 +40,25 @@ public class RechargeActivity extends MvpBaseActivity {
     }
 
     @Override
-    protected void setTitleView() {
-        setTitleText("油卡充值");
-        setEnsureText("加油充值");
+    protected void initFragmentView(View view) {
+        initTitleContent("油卡充值");
+        setTvRightVisible("加油充值");
 
         GlobalConfig.getInstance().eventIdByUMeng(22);
+
+        initMvPresenter();
+    }
+
+    protected void rightClickListener() {
+        GlobalConfig.getInstance().eventIdByUMeng(3);
+
+        showContacts();
     }
 
     @Override
+    protected void DestroyViewAndThing() {
+    }
+
     protected void initMvPresenter() {
         RechargeFragment fragment =
                 (RechargeFragment) getSupportFragmentManager().findFragmentById(R.id.lay_base_frame);
@@ -49,17 +67,8 @@ public class RechargeActivity extends MvpBaseActivity {
             AtyUtils.addFragmentToActivity(
                     getSupportFragmentManager(), fragment, R.id.lay_base_frame);
         }
-
         RechargePresenter mPresenter = new RechargePresenter(
                 Injection.provideRepository(getApplicationContext()), fragment);
-    }
-
-    @Override
-    protected void baseGoEnsure() {
-        GlobalConfig.getInstance().eventIdByUMeng(3);
-
-        PublicData.getInstance().mapType = BaiduMapActivity.TYPE_JIAYOU;
-        showContacts();
     }
 
     public void showContacts() {
@@ -70,7 +79,9 @@ public class RechargeActivity extends MvpBaseActivity {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_PHONE_STATE});
         } else {
-            Act.getInstance().gotoIntent(this, BaiduMapActivity.class);
+            Intent intent = new Intent();
+            intent.putExtra(GlobalConstant.putExtra.map_type_extra, GlobalConstant.MapType.annual_oil_map);
+            Act.getInstance().gotoLoginByIntent(this, BaiduMapParentActivity.class, intent);
         }
     }
 
@@ -85,7 +96,9 @@ public class RechargeActivity extends MvpBaseActivity {
      */
     @PermissionSuccess(requestCode = PER_REQUEST_CODE)
     public void doPermissionSuccess() {
-        Act.getInstance().gotoIntent(this, BaiduMapActivity.class);
+        Intent intent = new Intent();
+        intent.putExtra(GlobalConstant.putExtra.map_type_extra, GlobalConstant.MapType.annual_oil_map);
+        Act.getInstance().gotoLoginByIntent(this, BaiduMapParentActivity.class, intent);
     }
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)

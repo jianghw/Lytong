@@ -282,13 +282,6 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 }
             }
         } else {
-//            StringBuffer buffer = new StringBuffer();
-//            buffer.append("<font color=\"#b3b3b3\">");
-//            buffer.append(0);
-//            buffer.append("</font>");
-//            buffer.append("&#160;");
-//            buffer.append("张牡丹畅通卡");
-//            mTvCard.setText(Html.fromHtml(buffer.toString()));
 
             mTvCard.setText("未绑定牡丹畅通卡");
             mTvCard.setTextColor(getResources().getColor(R.color.colorTvGray_b2));

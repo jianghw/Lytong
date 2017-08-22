@@ -42,6 +42,9 @@ import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+import com.zantong.mobilecttx.map.bean.GasStationDetailResult;
+import com.zantong.mobilecttx.map.bean.GasStationResult;
+import com.zantong.mobilecttx.map.bean.YearCheckDetailResult;
 import com.zantong.mobilecttx.map.bean.YearCheckResult;
 import com.zantong.mobilecttx.map.dto.AnnualDTO;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
@@ -518,5 +521,29 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<YearCheckResult> annualInspectionList(AnnualDTO annualDTO) {
         return initRetrofit().create(ICttxService.class).annualInspectionList(annualDTO);
+    }
+
+    /**
+     * 获取年检一条信息
+     */
+    @Override
+    public Observable<YearCheckDetailResult> annualInspection(int id) {
+        return initRetrofit().create(ICttxService.class).annualInspection(id);
+    }
+
+    /**
+     * 获得加油站地点详情
+     */
+    @Override
+    public Observable<GasStationDetailResult> gasStation(int id) {
+        return initRetrofit().create(ICttxService.class).gasStation(id);
+    }
+
+    /**
+     * 23.获取加油网点
+     */
+    @Override
+    public Observable<GasStationResult> gasStationList(AnnualDTO annualDTO) {
+        return initRetrofit().create(ICttxService.class).gasStationList(annualDTO);
     }
 }

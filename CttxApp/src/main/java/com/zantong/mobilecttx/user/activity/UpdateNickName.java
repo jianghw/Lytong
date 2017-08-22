@@ -6,26 +6,27 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import cn.qqtheme.framework.contract.bean.BaseResult;
-import com.zantong.mobilecttx.home.bean.UpdateInfo;
-import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
-import com.zantong.mobilecttx.presenter.UpdateNickNamePresenter;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
-import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.ModelView;
+import com.zantong.mobilecttx.home.bean.UpdateInfo;
+import com.zantong.mobilecttx.presenter.UpdateNickNamePresenter;
+import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
+import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 
-public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePresenter> implements View.OnClickListener, IBaseView, ModelView {
+public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePresenter>
+        implements View.OnClickListener, IBaseView, ModelView {
     @Bind(R.id.nick_name_edit)
     EditText nickNameEdit;
     @Bind(R.id.image_delete)
@@ -48,18 +49,15 @@ public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePre
         nickNameEdit.setText(PublicData.getInstance().mLoginInfoBean.getNickname());
     }
 
-
     @Override
     public void initData() {
         nickNameEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -83,7 +81,6 @@ public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePre
     @Override
     protected void baseGoBack() {
         finish();
-//        super.baseGoBack();
     }
 
     @Override
@@ -93,16 +90,10 @@ public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePre
 
     @Override
     public void showLoading() {
-
     }
 
     @Override
     public void hideLoading() {
-
-    }
-
-    private void init() {
-
     }
 
     @OnClick({R.id.nick_name_edit, R.id.image_delete})
@@ -118,7 +109,6 @@ public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePre
 
     @Override
     public void showProgress() {
-
     }
 
     @Override
@@ -131,7 +121,6 @@ public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePre
                     UserInfoRememberCtrl.saveObject(PublicData.getInstance().mLoginInfoBean);
                     finish();
                 }
-
                 break;
         }
     }
@@ -151,6 +140,5 @@ public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePre
 
     @Override
     public void hideProgress() {
-
     }
 }

@@ -64,33 +64,13 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView,HelpPres
         setTitleText("违章处理记录");
         mRecyclerView.setPullRefreshEnabled(false);
         mRecyclerView.setLoadingMoreEnabled(false);
-
     }
 
     @Override
     public void initData() {
-
-//        ArrayList<ViolationItemInfo> arrayList = new ArrayList<>();
-//        ViolationItemInfo item = new ViolationItemInfo();
-//        item.setCarnum("AA98981");
-//        item.setCreatedate("2017-05-05");
-//        item.setCreatetime("14:59:33");
-//        item.setOrderprice("200元");
-//        arrayList.add(item);
-//        arrayList.add(item);
-//        arrayList.add(item);
-//        arrayList.add(item);
-//        arrayList.add(item);
-//        ViolationCarInfo info = new ViolationCarInfo();
-//        info.setCarnum("AA7289");
-//        info.setEnginenum("12345");
-//        info.setTotalPrice("1000");
-//        sectionedExpandableLayoutHelper.addSection(info, arrayList);
-
         sectionedExpandableLayoutHelper = new SectionedExpandableLayoutHelper(this,
                 mRecyclerView, this, 3);
         getViolationHistory();
-
     }
 
     private void getViolationHistory(){
@@ -174,15 +154,9 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView,HelpPres
         // 设置popWindow弹出窗体可点击，这句话必须添加，并且是true
         window.setFocusable(true);
 
-
         // 实例化一个ColorDrawable颜色为半透明
         ColorDrawable dw = new ColorDrawable(0xb0000000);
         window.setBackgroundDrawable(dw);
-//        window.setContentView(view);
-//        window.setWidth(R.dimen.ds_450);
-//        window.setHeight(R.dimen.ds_290);
-        // 设置popWindow的显示和消失动画
-//        window.setAnimationStyle(R.style.mypopwindow_anim_style);
         // 在底部显示
         window.showAsDropDown(mDownLayout,0,0);
 

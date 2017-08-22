@@ -3,6 +3,9 @@ package com.zantong.mobilecttx.presenter.map;
 import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.contract.IBaiduMapContract;
+import com.zantong.mobilecttx.map.bean.GasStationDetailResult;
+import com.zantong.mobilecttx.map.bean.GasStationResult;
+import com.zantong.mobilecttx.map.bean.YearCheckDetailResult;
 import com.zantong.mobilecttx.map.bean.YearCheckResult;
 import com.zantong.mobilecttx.map.dto.AnnualDTO;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
@@ -82,5 +85,98 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
     public AnnualDTO getAnnualDTO() {
 
         return mAtyView.getAnnualDTO();
+    }
+
+    /**
+     * 获得年检地点详情
+     */
+    @Override
+    public void annualInspection(int id) {
+        Subscription subscription = mRepository.annualInspection(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<YearCheckDetailResult>() {
+                    @Override
+                    public void doCompleted() {
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.annualInspectionError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(YearCheckDetailResult result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.annualInspectionSucceed(result);
+                        } else {
+                            mAtyView.annualInspectionError(
+                                    result != null ? result.getResponseDesc() : "未知错误(年检地点详情)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 获得加油站地点详情
+     */
+    @Override
+    public void gasStation(int id) {
+        Subscription subscription = mRepository.gasStation(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<GasStationDetailResult>() {
+                    @Override
+                    public void doCompleted() {
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.gasStationError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(GasStationDetailResult result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.gasStationSucceed(result);
+                        } else {
+                            mAtyView.gasStationError(
+                                    result != null ? result.getResponseDesc() : "未知错误(加油站地点)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 23.获取加油网点
+     */
+    @Override
+    public void gasStationList() {
+        Subscription subscription = mRepository.gasStationList(getAnnualDTO())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<GasStationResult>() {
+                    @Override
+                    public void doCompleted() {
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.gasStationListError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(GasStationResult result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.gasStationListSucceed(result);
+                        } else {
+                            mAtyView.gasStationListError(
+                                    result != null ? result.getResponseDesc() : "未知错误(N23)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 }

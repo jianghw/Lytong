@@ -30,6 +30,8 @@ import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
+import java.util.Random;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.contract.bean.BaseResult;
@@ -85,10 +87,13 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     @Override
     public void initData() {
         //测试数据下
-        if (BuildConfig.DEBUG) {
-//            mName.setText("遇紫紫");
-//            mIdCard.setText("301364198811040740");
-//            mDriverFileNum.setText("310002038631");
+
+        boolean positon = new Random().nextBoolean();
+        if (BuildConfig.DEBUG && positon) {
+            mName.setText("遇紫紫");
+            mIdCard.setText("301364198811040740");
+            mDriverFileNum.setText("310002038631");
+        } else if (BuildConfig.DEBUG && !positon) {
             mName.setText("毛乾帅");
             mIdCard.setText("310109198503162039");
             mDriverFileNum.setText("310010007285");
@@ -255,6 +260,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
             @Override
             public void onError(String errorCode, String msg) {
+                hideDialogLoading();
                 ToastUtils.toastShort("请求失败，请再次点击");
             }
         });

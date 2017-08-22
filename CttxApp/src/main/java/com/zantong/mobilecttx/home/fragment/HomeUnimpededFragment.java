@@ -38,7 +38,6 @@ import com.zantong.mobilecttx.home.bean.HomeBean;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.home.bean.HomeResult;
-import com.zantong.mobilecttx.map.activity.BaiduMapActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.presenter.home.UnimpededFtyPresenter;
 import com.zantong.mobilecttx.user.activity.MegTypeActivity;
@@ -571,7 +570,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
             case R.id.tv_check://年检
                 GlobalConfig.getInstance().eventIdByUMeng(4);
 
-                PublicData.getInstance().mapType = BaiduMapActivity.TYPE_NIANJIAN;
                 enterDrivingActivity();
                 break;
             case R.id.tv_carwash://驾驶证查分

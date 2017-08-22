@@ -445,7 +445,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                         if (data != null) {
                             reqZoom();
                         } else {
-                            ToastUtils.showShort(getApplicationContext(), "选择图片发生错误，图片可能已经移位或删除");
+                            ToastUtils.toastShort( "选择图片发生错误，图片可能已经移位或删除");
                         }
                         break;
                 }
@@ -473,21 +473,19 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
 
     /**
      * 选择相册中的图片>7.0
-     *
-     * @param data
      */
     private void startPhotoZoomByN(Intent data) {
 
         String url = FileUtils.getPath(getApplicationContext(), data.getData());
         if (TextUtils.isEmpty(url)) {
-            ToastUtils.showShort(getApplicationContext(), "选择图片发生错误，图片可能已经移位或删除");
+            ToastUtils.toastShort("选择图片发生错误，图片可能已经移位或删除");
             return;
         }
         File imgUri = new File(url);
         Uri dataUri = getUriForFileByN(imgUri);
 
         if (dataUri == null) {
-            ToastUtils.showShort(getApplicationContext(), "选择图片发生错误，图片可能已经移位或删除");
+            ToastUtils.toastShort("选择图片发生错误，图片可能已经移位或删除");
         } else {
             FileUtils.startPhotoZoom(dataUri, this, REQ_ZOOM);
         }

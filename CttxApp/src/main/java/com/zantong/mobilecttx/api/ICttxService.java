@@ -4,6 +4,9 @@ import com.zantong.mobilecttx.car.bean.VehicleLicenseResult;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+import com.zantong.mobilecttx.map.bean.GasStationDetailResult;
+import com.zantong.mobilecttx.map.bean.GasStationResult;
+import com.zantong.mobilecttx.map.bean.YearCheckDetailResult;
 import com.zantong.mobilecttx.map.bean.YearCheckResult;
 import com.zantong.mobilecttx.map.dto.AnnualDTO;
 
@@ -11,7 +14,9 @@ import java.util.List;
 
 import cn.qqtheme.framework.contract.bean.BaseResult;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -62,4 +67,22 @@ public interface ICttxService {
      */
     @POST("cttx/annualinspectionList")
     Observable<YearCheckResult> annualInspectionList(@Body AnnualDTO annualDTO);
+
+    /**
+     * 获取年检一条信息
+     */
+    @GET("cttx/annualinspection/{id}")
+    Observable<YearCheckDetailResult> annualInspection(@Path("id") int id);
+
+    /**
+     * 获得加油站地点详情
+     */
+    @GET("cttx/gasStation/{id}")
+    Observable<GasStationDetailResult> gasStation(@Path("id") int id);
+
+    /**
+     * 23.获取加油网点
+     */
+    @POST("cttx/gasStationList")
+    Observable<GasStationResult> gasStationList(@Body AnnualDTO annualDTO);
 }

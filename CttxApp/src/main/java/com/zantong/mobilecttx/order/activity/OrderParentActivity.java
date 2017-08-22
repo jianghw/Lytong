@@ -16,6 +16,8 @@ import com.zantong.mobilecttx.common.activity.BrowserForPayActivity;
 import com.zantong.mobilecttx.common.activity.PayBrowserActivity;
 import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
+import com.zantong.mobilecttx.fahrschule.activity.SparringActivity;
+import com.zantong.mobilecttx.fahrschule.activity.SubjectActivity;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
 import com.zantong.mobilecttx.order.fragment.OrderAllStatusFragment;
@@ -46,6 +48,10 @@ public class OrderParentActivity extends BaseJxActivity
     private OrderAllStatusFragment orderUnStatusFragment = null;
     private OrderAllStatusFragment orderCancleStatusFragment = null;
     private OrderAllStatusFragment orderPayStatusFragment = null;
+    /**
+     * 支付类型 判断回调成功页面是哪个
+     */
+    private int mPayType;
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
@@ -120,11 +126,13 @@ public class OrderParentActivity extends BaseJxActivity
                 float orderPrice = bean.getAmount();
                 int price = (int) (orderPrice * 100);
 
-                if (mPresenter != null && bean.getType() == 1) {
+                mPayType = bean.getPayType();
+                if (mPresenter != null && mPayType == 1) {
                     mPresenter.onPayOrderByCoupon(orderId, String.valueOf(price), payType);
                 }
+
                 if (mPresenter != null
-                        && (bean.getType() == 3 || bean.getType() == 4 || bean.getType() == 5)) {
+                        && (mPayType == 3 || mPayType == 4 || mPayType == 5)) {
                     mPresenter.getBankPayHtml(orderId, String.valueOf(price));
                 }
             }
@@ -302,8 +310,16 @@ public class OrderParentActivity extends BaseJxActivity
                 && resultCode == GlobalConstant.resultCode.web_order_id_succeed) {
 
             Intent intent = new Intent();
-            intent.putExtra(GlobalConstant.putExtra.fahrschule_position_extra, 2);
-            Act.getInstance().gotoLoginByIntent(this, FahrschuleActivity.class, intent);
+            if (mPayType == 3) {
+                intent.putExtra(GlobalConstant.putExtra.fahrschule_position_extra, 2);
+                Act.getInstance().gotoLoginByIntent(this, FahrschuleActivity.class, intent);
+            } else if (mPayType == 4) {
+                intent.putExtra(GlobalConstant.putExtra.fahrschule_position_extra, 3);
+                Act.getInstance().gotoLoginByIntent(this, SubjectActivity.class, intent);
+            } else if (mPayType == 5) {
+                intent.putExtra(GlobalConstant.putExtra.fahrschule_position_extra, 2);
+                Act.getInstance().gotoLoginByIntent(this, SparringActivity.class, intent);
+            }
 
         } else if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
                 && resultCode == GlobalConstant.resultCode.web_order_id_error && data != null) {

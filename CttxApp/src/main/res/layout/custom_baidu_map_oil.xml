@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ds_45"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="92#"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_92"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="020-1898731"/>
+
+        <TextView
+            android:id="@+id/tv_92_discounts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="020-1898731"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_92_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ds_45"
+        android:layout_marginRight="@dimen/ds_45"
+        android:layout_marginTop="@dimen/ds_30"
+        android:textColor="@color/colorTvGray_7f"
+        android:textSize="@dimen/fs_16sp"
+        tools:text="优惠时间段："/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ds_45"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="95#"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_95"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="020-1898731"/>
+
+        <TextView
+            android:id="@+id/tv_95_discounts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="020-1898731"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_95_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ds_45"
+        android:layout_marginRight="@dimen/ds_45"
+        android:layout_marginTop="@dimen/ds_30"
+        android:textColor="@color/colorTvGray_7f"
+        android:textSize="@dimen/fs_16sp"
+        tools:text="优惠时间段："/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ds_45"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0#"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="020-1898731"/>
+
+        <TextView
+            android:id="@+id/tv_0_discounts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="020-1898731"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_0_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ds_45"
+        android:layout_marginRight="@dimen/ds_45"
+        android:layout_marginTop="@dimen/ds_30"
+        android:textColor="@color/colorTvGray_7f"
+        android:textSize="@dimen/fs_16sp"
+        tools:text="优惠时间段："/>
+
+</LinearLayout>

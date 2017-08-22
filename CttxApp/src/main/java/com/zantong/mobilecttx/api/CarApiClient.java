@@ -111,7 +111,7 @@ public class CarApiClient extends BaseApiClient {
      * @param callback
      */
     public static void getGasStationDetail(Context context, CarMarnagerDetailDTO params, CallBack<GasStationDetailResult> callback) {
-        BaseCallBack<GasStationDetailResult> baseCallBack = new BaseCallBack<GasStationDetailResult>(
+        BaseCallBack<GasStationDetailResult> baseCallBack = new BaseCallBack<>(
                 context, callback, GasStationDetailResult.class);
         get(context, getUrl("cttx/gasStation/" + params.getId()), baseCallBack);
     }
@@ -141,17 +141,6 @@ public class CarApiClient extends BaseApiClient {
                 context, callback, YearCheckDetailResult.class);
         get(context, getUrl("cttx/annualinspection/" + params.getId()), baseCallBack);
     }
-//    /**
-//     * 获得年检地点详情
-//     * @param context
-//     * @param params
-//     * @param callback
-//     */
-//    public static void getLatAndLng(Context context, String params, CallBack<YearCheckDetailResult> callback){
-//        BaseCallBack<YearCheckDetailResult> baseCallBack = new BaseCallBack<YearCheckDetailResult>(
-//                context, callback, YearCheckDetailResult.class);
-//        get(context, getAUrl(params+"&type=1"), baseCallBack);
-//    }
 
     /**
      * 首页接口
@@ -248,16 +237,13 @@ public class CarApiClient extends BaseApiClient {
     public static void queryOrders(Context context, RechargeOrderDTO dto, CallBack<RechargeOrderResult> callback) {
         BaseCallBack<RechargeOrderResult> result = new BaseCallBack<RechargeOrderResult>(
                 context, callback, RechargeOrderResult.class);
-//        post(context, "http://139.196.183.121:8081/addOil/findAllOrder", dto, result);
         post(context, getUrl("addOil/findAllOrder"), dto, result);
     }
 
     public static void cancelOrder(Context context, CancelRechargeOrderDTO dto, CallBack<BaseResult> callback) {
         BaseCallBack<BaseResult> result = new BaseCallBack<BaseResult>(
                 context, callback, BaseResult.class);
-//        post(context, "http://139.196.183.121:8081/addOil/cancleOrder", dto, result);
         post(context, getUrl("addOil/cancleOrder"), dto, result);
-
     }
 
     public static void queryOrderDetail(Context context, CancelRechargeOrderDTO dto, CallBack<RechargeOrderDetailResult> callback) {
@@ -270,28 +256,24 @@ public class CarApiClient extends BaseApiClient {
     public static void getYingXiaoCode(Context context, CancelRechargeOrderDTO dto, CallBack<YingXiaoResult> callback) {
         BaseCallBack<YingXiaoResult> result = new BaseCallBack<YingXiaoResult>(
                 context, callback, YingXiaoResult.class);
-//        post(context, "http://139.196.183.121:8081/cttx/employeeRate", dto, result);
         post(context, getUrl("cttx/employeeRate"), dto, result);
     }
 
     public static void commitHundredPlan(Context context, HundredPlanDTO dto, CallBack<BaseResult> callback) {
         BaseCallBack<BaseResult> result = new BaseCallBack<BaseResult>(
                 context, callback, BaseResult.class);
-//        post(context, "http://139.196.183.121:8081/february/signUpActivity", dto, result);
         post(context, getUrl("february/signUpActivity"), dto, result);
     }
 
     public static void getCouponList(Context context, CouponDTO dto, CallBack<CouponResult> callback) {
         BaseCallBack<CouponResult> result = new BaseCallBack<CouponResult>(
                 context, callback, CouponResult.class);
-//        post(context, "http://139.196.183.121:8081/february/usrCouponInfo", dto, result);
         post(context, getUrl("february/usrCouponInfo"), dto, result);
     }
 
     public static void checkCtk(Context context, CheckCtkDTO dto, CallBack<BaseResult> callback) {
         BaseCallBack<BaseResult> result = new BaseCallBack<BaseResult>(
                 context, callback, BaseResult.class);
-//        post(context, "http://139.196.183.121:8081/february/applyCardCheck", dto, result);
         post(context, getUrl("february/applyCardCheck"), dto, result);
     }
 

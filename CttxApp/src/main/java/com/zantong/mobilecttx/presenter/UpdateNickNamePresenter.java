@@ -1,21 +1,22 @@
 package com.zantong.mobilecttx.presenter;
 
-import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.base.BasePresenter;
-import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.base.MessageFormat;
+import com.zantong.mobilecttx.base.interf.IBaseView;
+import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.model.UpdateNickNameModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.user.activity.UpdateNickName;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+
+import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * Created by 王海洋 on 16/6/1.
@@ -42,14 +43,11 @@ public class UpdateNickNamePresenter extends BasePresenter<IBaseView> implements
             case 1:
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.u003.01");
                 masp = new JSONObject() ;
-//
                 try {
                     masp.put("usrid", PublicData.getInstance().userID);
                     masp.put("nickname", mUpdateNickName.mapData().get("nickname"));
-//                    masp.put("phoenum", PublicData.getInstance().mLoginInfoBean.getPhoenum());
                     masp.put("devicetoken", PublicData.getInstance().imei);
                     masp.put("pushswitch", 0);
-//            masp.put("usrid","000160180 6199 2851");
                     MessageFormat.getInstance().setMessageJSONObject(masp);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -57,9 +55,7 @@ public class UpdateNickNamePresenter extends BasePresenter<IBaseView> implements
                 break;
         }
         msg = MessageFormat.getInstance().getMessageFormat();
-//        Log.e("why",msg);
         mUpdateNickNameModelImpc.loadUpdate(this, msg, index);
-
     }
 
     @Override
@@ -71,7 +67,7 @@ public class UpdateNickNamePresenter extends BasePresenter<IBaseView> implements
                 if(PublicData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())){
                     mUpdateNickName.updateView(clazz, index);
                 }else{
-                    ToastUtils.showShort(mUpdateNickName, mUpdateInfo.getSYS_HEAD().getReturnMessage());
+                    ToastUtils.toastShort(mUpdateInfo.getSYS_HEAD().getReturnMessage());
                 }
                 break;
 

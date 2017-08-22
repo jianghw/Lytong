@@ -1,7 +1,6 @@
 package com.zantong.mobilecttx.home.activity;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.presenter.CodeQueryPresenter;
 import com.zantong.mobilecttx.utils.DialogMgr;
-import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 
@@ -46,8 +44,6 @@ public class Codequery extends BaseJxActivity implements ModelView {
     ImageView imgCamera;
 
     private CodeQueryPresenter mCodeQueryPresenter;
-
-    private Dialog mDialog;
     private String mType;
 
     @Override
@@ -111,7 +107,7 @@ public class Codequery extends BaseJxActivity implements ModelView {
 
     @Override
     public void showProgress() {
-        mDialog = DialogUtils.showLoading(this);
+        showDialogLoading();
     }
 
     /**
@@ -128,12 +124,7 @@ public class Codequery extends BaseJxActivity implements ModelView {
 
     @Override
     public void hideProgress() {
-        if (mDialog != null) {
-            mDialog.dismiss();
-            mDialog = null;
-        }
-
-        ToastUtils.toastShort("违章编号查询失败");
+        hideDialogLoading();
     }
 
     /**

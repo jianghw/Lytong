@@ -28,6 +28,9 @@ import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+import com.zantong.mobilecttx.map.bean.GasStationDetailResult;
+import com.zantong.mobilecttx.map.bean.GasStationResult;
+import com.zantong.mobilecttx.map.bean.YearCheckDetailResult;
 import com.zantong.mobilecttx.map.bean.YearCheckResult;
 import com.zantong.mobilecttx.map.dto.AnnualDTO;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
@@ -502,5 +505,25 @@ public class RepositoryManager {
      */
     public Observable<YearCheckResult> annualInspectionList(AnnualDTO annualDTO) {
         return mRemoteData.annualInspectionList(annualDTO);
+    }
+
+    /**
+     * 获取年检一条信息
+     */
+    public Observable<YearCheckDetailResult> annualInspection(int id) {
+        return mRemoteData.annualInspection(id);
+    }
+
+    /**
+     * 获得加油站地点详情
+     */
+    public Observable<GasStationDetailResult> gasStation(int id) {
+        return mRemoteData.gasStation(id);
+    }
+    /**
+     * 23.获取加油网点
+     */
+    public Observable<GasStationResult> gasStationList(AnnualDTO annualDTO) {
+        return mRemoteData.gasStationList(annualDTO);
     }
 }

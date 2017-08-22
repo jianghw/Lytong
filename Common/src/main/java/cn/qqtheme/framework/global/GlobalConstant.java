@@ -47,7 +47,18 @@ public final class GlobalConstant {
 
     public static final class MapType {
         public static final int annual_inspection_map = -1;
-        public static final int annual_site_service = 1;
+        public static final int annual_oil_map = -2;
+        /**
+         * 免检领标
+         */
         public static final int annual_led_service = 2;
+        /**
+         * 年检站点
+         */
+        public static final int annual_site_service = 1;
+
+        public static final int annual_0_service = 1;
+        public static final int annual_92_service = 5;
+        public static final int annual_95_service = 6;
     }
 }

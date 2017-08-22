@@ -320,6 +320,8 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
             masp.put("devicetoken", PublicData.getInstance().imei);
             masp.put("pushswitch", "0");
             masp.put("pushmode", "1");
+            String token = RSAUtils.strByEncryption(PublicData.getInstance().deviceId, true);
+            masp.put("token", token);
             MessageFormat.getInstance().setMessageJSONObject(masp);
         } catch (JSONException | NoSuchAlgorithmException e) {
             e.printStackTrace();
