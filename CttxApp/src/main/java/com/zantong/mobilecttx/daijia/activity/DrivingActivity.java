@@ -29,7 +29,6 @@ import com.zantong.mobilecttx.daijia.bean.DaiJiaCreateResult;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaCreateDTO;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
-import com.zantong.mobilecttx.user.activity.DODetailBeingActivity;
 import com.zantong.mobilecttx.utils.HashUtils;
 import com.zantong.mobilecttx.utils.OnClickUtils;
 import com.zantong.mobilecttx.utils.StringUtils;

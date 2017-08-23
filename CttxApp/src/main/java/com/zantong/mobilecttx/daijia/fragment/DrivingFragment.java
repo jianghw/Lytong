@@ -14,7 +14,7 @@ import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderListDTO;
 import com.zantong.mobilecttx.eventbus.DrivingCancelEvent;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.user.activity.DODetailActivity;
+import com.zantong.mobilecttx.daijia.activity.DODetailActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

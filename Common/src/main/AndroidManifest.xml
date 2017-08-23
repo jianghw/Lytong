@@ -6,6 +6,5 @@
     <uses-sdk
         android:minSdkVersion="14"
         tools:overrideLibrary="com.orhanobut.logger" />
-
     <application />
 </manifest>

@@ -29,11 +29,10 @@ import rx.Observable;
 public interface CTTXHttpPOSTInterface {
     @FormUrlEncoded
     @POST("mobilecall_call")
-//        Call<JSONObject> loadPost(@Field("msg") String msg);
     Observable<LoginInfoBean> loadPost(@Field("msg") String msg);
+
     @FormUrlEncoded
     @POST("mobilecall_call")
-//        Call<JSONObject> loadPost(@Field("msg") String msg);
     Observable<SmsBean> loadSmsPost(@Field("msg") String msg);
 
     @FormUrlEncoded

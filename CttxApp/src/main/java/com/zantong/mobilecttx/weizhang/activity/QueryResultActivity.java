@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.card.activity.ChangTongCard;
+import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.ModelView;
@@ -295,7 +295,7 @@ public class QueryResultActivity extends AppCompatActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_vechiclies_text:
-                Act.getInstance().lauchIntent(QueryResultActivity.this, ChangTongCard.class);
+                Act.getInstance().lauchIntent(QueryResultActivity.this, MyCardActivity.class);
                 break;
             case R.id.text_right:
                 Act.getInstance().gotoIntent(this, PaymentActivity.class);

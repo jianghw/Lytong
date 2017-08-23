@@ -63,7 +63,6 @@ public class CanPayCarFragment extends BaseListFragment<OpenQueryBean.RspInfoBea
 
     @Override
     public void initData() {
-//        mBindCardPresenter.loadView(1);
         getData();
     }
 

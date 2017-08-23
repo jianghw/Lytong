@@ -229,11 +229,9 @@ public abstract class ExpandableRecyclerAdapter<T extends ExpandableRecyclerAdap
                     newIndexList.add(allItemsPosition);
                 }
             }
-
             int val = indexList.get(i);
             newIndexList.add(val < allItemsPosition ? val : val + direction);
         }
-
         indexList = newIndexList;
     }
 

@@ -802,7 +802,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     private void commitInfo() {
         showDialogLoading();
 
-        HandleCTCardApiClient.htmlLocal(this, "cip.cfc.u007.01", applyCTCardDTO, this);
+        HandleCTCardApiClient.htmlLocal(ContextUtils.getContext(), "cip.cfc.u007.01", applyCTCardDTO, this);
     }
 
     /**
@@ -816,7 +816,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             if (TextUtils.isEmpty(wangdianAdress)) {
                 ToastUtils.toastShort("请选择领卡网点");
             } else {
-                startActivity(ApplySuccessActvity.getIntent(this, wangdianAdress));
+                commitYingXiaoDataForLYT(applyCTCardDTO);
             }
         } else {
             ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
@@ -835,11 +835,18 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      * @param applyCTCardDTO
      */
     private void commitYingXiaoDataForLYT(ApplyCTCardDTO applyCTCardDTO) {
-        CarApiClient.commitYingXiaoData(ContextUtils.getContext(), applyCTCardDTO, new CallBack<BaseResult>() {
-            @Override
-            public void onSuccess(BaseResult result) {
-            }
-        });
+        CarApiClient.commitYingXiaoData(ContextUtils.getContext(), applyCTCardDTO,
+                new CallBack<BaseResult>() {
+                    @Override
+                    public void onSuccess(BaseResult result) {
+                        startActivity(ApplySuccessActvity.getIntent(ApplyCardSecondActivity.this, wangdianAdress));
+                    }
+
+                    @Override
+                    public void onError(String errorCode, String msg) {
+                        startActivity(ApplySuccessActvity.getIntent(ApplyCardSecondActivity.this, wangdianAdress));
+                    }
+                });
     }
 
     /**

@@ -80,32 +80,6 @@
                     android:textSize="@dimen/fs_44"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/share_qr_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/share_hint"
-                android:layout_marginLeft="@dimen/ds_30"
-                android:layout_toRightOf="@+id/share_wx_penyouquan"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <ImageView
-                    android:layout_width="@dimen/ds_120"
-                    android:layout_height="@dimen/ds_120"
-                    android:background="@mipmap/icon_res_qrcode"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/ds_30"
-                    android:layout_marginTop="@dimen/ds_30"
-                    android:text="二维码"
-                    android:textColor="@color/gray_55"
-                    android:textSize="@dimen/fs_44"/>
-            </LinearLayout>
-
         </RelativeLayout>
 
         <TextView

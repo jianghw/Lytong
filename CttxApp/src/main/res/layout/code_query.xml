@@ -44,7 +44,6 @@
     <include layout="@layout/view_line1"/>
 
     <RelativeLayout
-        android:id="@+id/code_query_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_120"
         android:background="@color/colorWhite"

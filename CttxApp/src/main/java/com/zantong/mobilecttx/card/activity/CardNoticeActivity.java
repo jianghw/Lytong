@@ -16,8 +16,6 @@ public class CardNoticeActivity extends BaseMvpActivity<IBaseView, HelpPresenter
         setTitleText("办卡须知");
     }
 
-
-
     @Override
     public HelpPresenter initPresenter() {
         return new HelpPresenter();

@@ -14,7 +14,6 @@ import com.zantong.mobilecttx.model.IllegalViolationModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
 import com.zantong.mobilecttx.utils.AccountRememberCtrl;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.QueryResultActivity;
@@ -27,6 +26,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
@@ -48,10 +48,7 @@ public class IllegalViolationPresenter extends BasePresenter<IBaseView> implemen
     public IllegalViolationPresenter(QueryResultActivity mQueryResultActivity) {
         this.mQueryResultActivity = mQueryResultActivity;
         mIllegalViolationModelImp = new IllegalViolationModelImp();
-
-
     }
-
 
     @Override
     public void loadView(int index) {
@@ -60,7 +57,6 @@ public class IllegalViolationPresenter extends BasePresenter<IBaseView> implemen
             case 1:
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.v002.01");
                 masp = new JSONObject() ;
-//
                 try {
                     if(TextUtils.isEmpty(PublicData.getInstance().imei)){
                         masp.put("token", RSAUtils.strByEncryption("00000000", true));

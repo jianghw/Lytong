@@ -29,7 +29,6 @@ import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.ModelView;
-import com.zantong.mobilecttx.presenter.InsurancePayPresenterImp;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
 import com.zantong.mobilecttx.utils.DialogMgr;
@@ -38,8 +37,6 @@ import com.zantong.mobilecttx.utils.StateBarSetting;
 import com.zantong.mobilecttx.utils.TitleSetting;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
-
-import org.apache.cordova.engine.SystemWebViewEngine;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -55,21 +52,24 @@ public class PayWebActivity extends AppCompatActivity implements ModelView{
     ProgressBar myProgressBar;
     @Bind(R.id.text_right)
     TextView mRightText;
-    private SystemWebViewEngine mSystemWebViewEngine;
+
     private String payUrl;
     private int resultCode = 1;
-    private InsurancePayPresenterImp mInsurancePayPresenterImp;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pay_web_view);
+
         ButterKnife.bind(this);
+
         StateBarSetting.settingBar(this);
         TitleSetting.getInstance().initTitle(this, "支付", R.mipmap.back_btn_image, "返回", null, null);
 
         payUrl = (String) PublicData.getInstance().mHashMap.get("PayWebActivity");
         mRightText.setText("分享");
         Log.e("why", payUrl);
+
         webview_about.getSettings().setJavaScriptEnabled(true);
         webview_about.getSettings().setUseWideViewPort(true);
         webview_about.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);

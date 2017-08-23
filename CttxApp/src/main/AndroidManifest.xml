@@ -95,7 +95,7 @@
         <activity
             android:name=".home.activity.GuideCTActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+            android:theme="@style/FullscreenTheme"/>
         <!-- 主页，这个很吊呀 -->
         <activity
             android:name=".home.activity.HomeMainActivity"
@@ -127,9 +127,7 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden"/>
 
-        <activity
-            android:name=".car.activity.SelectCarTypeActivity"
-            android:screenOrientation="portrait"/>
+
         <!-- 设置页面 -->
         <activity
             android:name=".user.activity.SettingActivity"
@@ -150,30 +148,15 @@
         <activity
             android:name=".user.activity.UpdatePhoneNumber"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".card.activity.ChangTongCard"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".user.activity.OrderActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".card.activity.BindCardSuccess"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".car.activity.CanPayCar"
-            android:screenOrientation="portrait"/>
+
+
         <activity
             android:name=".user.activity.FeedbackActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.AboutActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".user.activity.RequestCodeActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".user.activity.RequestSuccActivity"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".user.activity.RegisterActivity"
             android:screenOrientation="portrait"/>
@@ -186,9 +169,7 @@
         <activity
             android:name=".user.activity.ChangePwdActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".user.activity.OrderDetailActivity"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".weizhang.activity.PayWebActivity"
             android:screenOrientation="portrait"/>
@@ -198,14 +179,11 @@
 
         <!-- 选a择城市 -->
         <activity
-            android:name=".user.activity.AddrActivity"
+            android:name=".daijia.activity.AddrActivity"
             android:screenOrientation="portrait"/>
         <!-- 公共列表类 -->
         <activity
             android:name=".common.activity.CommonListActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".card.activity.OpenCardWebActivity"
             android:screenOrientation="portrait"/>
 
         <activity
@@ -228,19 +206,11 @@
             android:name=".map.activity.NavActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent"/>
-        <activity
-            android:name=".home.activity.GuideActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"/>
-        <activity
-            android:name=".user.activity.UserQrCodeActivity"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".home.activity.CustomCordovaActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".user.activity.GetBonusActivity"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".common.activity.CommonProblemActivity"
             android:screenOrientation="portrait"/>
@@ -251,38 +221,17 @@
             android:name=".user.activity.ProblemFeedbackActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".card.activity.ApplyCardCheckActivity"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name=".common.activity.CommonTwoLevelMenuActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".card.activity.ApplyCardFristStepActvity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".card.activity.ApplyCardSecondStepActvity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".card.activity.ApplyCardThirdStepActvity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".card.activity.ApplyCardFourStepActvity"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".chongzhi.activity.RechargeAgreementActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".chongzhi.activity.CheXiangKaActivity"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".card.activity.ApplySuccessActvity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".user.activity.OrderRechargeActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".user.activity.OrderRechargeDetailActivity"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".user.activity.MegTypeActivity"
             android:screenOrientation="portrait"/>
@@ -319,10 +268,10 @@
             android:name=".chongzhi.activity.ChooseAddressActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.DODetailActivity"
+            android:name=".daijia.activity.DODetailActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.DODetailBeingActivity"
+            android:name=".daijia.activity.DODetailBeingActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.MegSecondLevelActivity"
@@ -341,10 +290,11 @@
             android:screenOrientation="landscape"/>
 
         <!-- ======================畅通卡相关业务集合=========================== -->
-        <!-- 我的畅通卡 有绑定卡页面 -->
+        <!-- 我的畅通卡 已有绑定卡页面 -->
         <activity
             android:name=".card.activity.MyCardActivity"
             android:screenOrientation="portrait"/>
+
         <!-- 我的办畅通卡 无绑定卡页面 -->
         <activity
             android:name=".card.activity.UnblockedCardActivity"
@@ -354,6 +304,10 @@
             android:name=".card.activity.BindJiaZhaoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <!--邦卡成功-->
+        <activity
+            android:name=".card.activity.BindCardSuccess"
+            android:screenOrientation="portrait"/>
         <!-- 办卡信息 -->
         <activity
             android:name=".card.activity.ApplyCardSecondActivity"
@@ -367,10 +321,12 @@
         <activity
             android:name=".card.activity.CardFlowActivity"
             android:screenOrientation="portrait"/>
+
         <!-- 快捷办卡 -->
         <activity
             android:name=".card.activity.ApplyCardQuickActivity"
             android:screenOrientation="portrait"/>
+        <!--办卡须知-->
         <activity
             android:name=".card.activity.CardNoticeActivity"
             android:screenOrientation="portrait"/>
@@ -477,10 +433,6 @@
         <activity
             android:name=".share.activity.CarBeautyActivity"
             android:screenOrientation="portrait"/>
-
-        <meta-data
-            android:name="com.zantong.mobilecttx.utils.imagetools.UnsafeOkHttpGlideModule"
-            android:value="GlideModule"/>
 
         <service android:name=".utils.DateService">
             <intent-filter>

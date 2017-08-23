@@ -28,15 +28,10 @@ public class InsurancePayPresenterImp implements SimplePresenter, OnLoadServiceB
     private HashMap<String, Object> oMap = new HashMap<>();
     private JSONObject masp = null;
     private OpenQueryBean.RspInfoBean mRspInfoBean;
-//    private CTTXHttpQueryPOSTInterface cttxHttpQueryPOSTInterface;
 
     public InsurancePayPresenterImp(CTTXInsurancePay mCTTXInsurancePay) {
         this.mCTTXInsurancePay = mCTTXInsurancePay;
         mInsurancePayModelImp = new InsurancePayModelImp();
-    }
-
-
-    private void init(){
     }
 
     @Override
@@ -46,7 +41,6 @@ public class InsurancePayPresenterImp implements SimplePresenter, OnLoadServiceB
             case 1:
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.i006.01");
                 masp = new JSONObject() ;
-//
                 try {
                     masp.put("origtranserlnum", mCTTXInsurancePay.mapData().get("origtranserlnum"));
                     masp.put("polcyprignum", mCTTXInsurancePay.mapData().get("polcyprignum"));

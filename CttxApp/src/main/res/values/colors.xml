@@ -29,7 +29,6 @@
     <!-- 主页上面三个导航未选中的颜色 -->
 
     <!-- 畅通页的三个button -->
-    <color name="colorOpenFont">#FF595959</color>
     <!-- 畅通页绑定车牌号的字体颜色 -->
     <color name="colorOpenBindCarFont">#FF333333</color>
     <!-- 畅通页未绑定的提示颜色 -->
@@ -67,7 +66,6 @@
     <!-- 二维码 -->
     <color name="dark_red">#F50E0A</color>
     <color name="light_gray">#ffe6e6e6</color>
-    <color name="product_options_active">#ffff9900</color>
     <color name="contents_text">#ff000000</color>
     <color name="encode_view">#ffffffff</color>
     <color name="possible_result_points">#c0ffff00</color>
@@ -107,7 +105,6 @@
     <color name="gray_4a">#4A4A4A</color>
     <color name="gray_cc">#CCCCCC</color>
     <color name="gray_d3">#d3d3d3</color>
-    <color name="gray_d9">#d9d9d9</color>
     <color name="gray_6e">#6E6E6E</color>
     <color name="gray_e3">#e3e3e3</color>
     <color name="gray_cd">#cdcdcd</color>
@@ -116,7 +113,6 @@
     <color name="civory">#ffffff</color>
 
     <color name="common_base_color">#fff5f2f2</color>
-    <color name="black_tv_title">#FF272725</color>
 
     <color name="red_normal">#F53E2A</color>
     <color name="red_pressed">#FF6666</color>

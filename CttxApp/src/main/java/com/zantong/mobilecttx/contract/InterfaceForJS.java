@@ -18,7 +18,6 @@ import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
-import com.zantong.mobilecttx.user.activity.GetBonusActivity;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -138,7 +137,6 @@ public class InterfaceForJS {
     //分享领积分
     @JavascriptInterface
     public void shareActivity() {
-        context.startActivity(new Intent(context, GetBonusActivity.class));
     }
 
     //获取用户ID

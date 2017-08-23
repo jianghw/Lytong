@@ -3,10 +3,11 @@
 
     <!--首页导航栏名称-->
     <string name="recharge">加油充值</string>
-    <string name="annual">年检</string>
-    <string name="car_wash">驾驶证查分</string>
+    <string name="annual">年检服务</string>
     <string name="designated_driver">代驾</string>
-    <string name="designated_wash">洗车</string>
+    <string name="car_evaluate">爱车估价</string>
+    <string name="car_wash">驾驶证查分</string>
+    <string name="designated_wash">国际驾照</string>
 
     <string name="tv_pay_type_prompt">
         <font color='#ffffff'>银联卡支付&#160;&#160;</font>

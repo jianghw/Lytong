@@ -78,13 +78,6 @@ public class HomeMainActivity extends BaseJxActivity {
 
         initLoginInfo();
         initBottomTable();
-
-        //是否显示引导页面
-//        if (!SPUtils.getInstance().getGuideSaoFaDan()) {
-//            PublicData.getInstance().GUIDE_TYPE = 0;
-//            Act.getInstance().gotoIntent(this, GuideActivity.class);
-//        }
-
         //登录信息
         if (PublicData.getInstance().loginFlag) liyingreg();
     }

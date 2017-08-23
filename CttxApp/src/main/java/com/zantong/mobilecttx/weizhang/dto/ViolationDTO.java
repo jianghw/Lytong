@@ -13,15 +13,6 @@ public class ViolationDTO implements Serializable {
     private String processste;//0未处理，1已处理，2全部
     private String token;
 
-//    private String version;
-//    public String getVersion() {
-//        return version;
-//    }
-//
-//    public void setVersion(String version) {
-//        this.version = version;
-//    }
-
     public String getCarnum() {
         return carnum;
     }
@@ -45,7 +36,6 @@ public class ViolationDTO implements Serializable {
     public void setCarnumtype(String carnumtype) {
         this.carnumtype = carnumtype;
     }
-
 
     public void setToken(String token) {
         this.token = token;

@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
-import com.zantong.mobilecttx.card.activity.ChangTongCard;
+import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.ModelView;
@@ -292,7 +292,7 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
                                 .replace(R.id.sure_pay_frame, mSurePayFragment).commit();
                         break;
                     case 1://绑卡
-                        Act.getInstance().gotoIntentLogin(this, ChangTongCard.class);
+                        Act.getInstance().gotoIntentLogin(this, MyCardActivity.class);
                         break;
                     case 2:
                         Act.getInstance().gotoIntentLogin(this, ManageCarActivity.class);

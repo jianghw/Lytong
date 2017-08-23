@@ -2,20 +2,12 @@ package com.zantong.mobilecttx.wxapi;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
-import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
-import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
-import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -57,7 +49,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-		Log.i(TAG, "onNewIntent");
 		setIntent(intent);
 		api.handleIntent(intent, this);
 	}
@@ -95,7 +86,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 				finish();
 				break;
 		}
-
 		Toast.makeText(this, result, Toast.LENGTH_LONG).show();
 	}
 	

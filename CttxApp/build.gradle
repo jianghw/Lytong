@@ -61,8 +61,6 @@ android {
     buildTypes {
 //release
         debug {
-            // 显示Log
-            buildConfigField "boolean", "LOG_DEBUG", "true"
             //下载地址  分享
             buildConfigField "String", "APP_DOWNLOD", "\"http://dev.liyingtong.com/download/\""
 
@@ -81,8 +79,6 @@ android {
         }
 
         release {
-            // 不显示Log
-            buildConfigField "boolean", "LOG_DEBUG", "false"
             //下载地址   分享
             buildConfigField "String", "APP_DOWNLOD", "\"http://biz.liyingtong.com/download/\""
 
@@ -137,23 +133,23 @@ dependencies {
     compile project(':Common')
     //阿里云推送
     compile(name: 'huawei-xiaomi-support-3.0.0', ext: 'aar')
+
     compile files('libs/zxing.jar')
     compile files('libs/sun.misc.BASE64Decoder.jar')
     compile files('libs/libammsdk.jar')
     compile files('libs/pinyin4j-2.5.0.jar')
     compile files('libs/universal-image-loader-1.9.4.jar')
+    compile files('libs/BaiduLBS_Android.jar')
+
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.jakewharton:butterknife:7.0.1'
+    //动画使用gif
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.15'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:0.9.9'
-    compile 'com.j256.ormlite:ormlite-core:4.48'
-    compile 'com.j256.ormlite:ormlite-android:4.48'
+
     compile 'com.aliyun.ams:alicloud-android-push:3.0.6@aar'
     compile 'com.aliyun.ams:alicloud-android-utdid:1.1.5.3'
     compile 'com.aliyun.ams:alicloud-android-ut:5.0.0'
     compile 'com.alibaba:fastjson:1.1.54.android'
-    compile 'com.github.florent37:viewanimator:1.0.3'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile files('libs/BaiduLBS_Android.jar')
+
 }

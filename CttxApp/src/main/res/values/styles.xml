@@ -8,21 +8,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="FullscreenTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
     <style name="TopBar">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:background">@color/appmain</item>
     </style>
-
-    <!--<style name="TopBarButton">-->
-        <!--<item name="android:layout_width">wrap_content</item>-->
-        <!--<item name="android:layout_height">wrap_content</item>-->
-        <!--<item name="android:src">@drawable/title_back_selctor</item>-->
-        <!--<item name="android:layout_centerVertical">true</item>-->
-        <!--<item name="android:textColor">@color/white</item>-->
-        <!--<item name="android:background">@color/trans</item>-->
-    <!--</style>-->
 
     <style name="TopBarTexttitle">
         <item name="android:layout_width">wrap_content</item>
@@ -106,14 +102,6 @@
         <item name="android:textColor">@color/colorGrayFontSmmall</item>
     </style>
 
-    <style name="TextSmallInfoStyleBlue">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:textColor">@color/colorQueryOtherCar</item>
-        <item name="android:layout_centerVertical">true</item>
-    </style>
-
     <style name="KeyLineV">
         <item name="android:layout_width">0.5dip</item>
         <item name="android:layout_height">52dip</item>
@@ -145,12 +133,6 @@
         <item name="android:textColor">@color/colorGrayFontSmmall</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:layout_marginTop">4.5dip</item>
-    </style>
-    <style name="TextOpenTitleFont">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/colorOpenFont</item>
     </style>
     <!-- 界面上的提示text -->
     <style name="TextSmallNoticeInfoStyleWhite">
@@ -413,7 +395,7 @@
         <!-- 是否允许有标题栏 -->
         <item name="android:windowNoTitle">true</item>
         <!-- 提示背景图片 -->
-        <item name="android:windowBackground">@color/trans</item>
+        <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
         <!-- 是否允许背景灰暗 -->
         <item name="android:backgroundDimEnabled">false</item>

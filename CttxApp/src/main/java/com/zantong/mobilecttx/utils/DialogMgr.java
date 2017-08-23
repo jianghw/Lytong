@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnKeyListener;
-import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.user.activity.UserQrCodeActivity;
 
 import cn.qqtheme.framework.util.ui.DensityUtils;
 
@@ -169,14 +167,12 @@ public class DialogMgr {
         btn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-//            	alg.dismiss();
                 onclick(v);
             }
         });
         alg.show();
         alg.getWindow().setContentView(view);
         alg.setCanceledOnTouchOutside(false);
-//        alg.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
         alg.setOnKeyListener(new OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
@@ -196,7 +192,6 @@ public class DialogMgr {
 
     public static void selectBaseDlg(Context ctx, final String[] items, final DialogInterface.OnClickListener listener2) {
         new AlertDialog.Builder(ctx)
-//                .setTitle("请点击选择")
                 .setItems(items, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog,
@@ -233,7 +228,6 @@ public class DialogMgr {
     public DialogMgr(Context ctx, String title, String msg, String btn1,
                      String btn2, OnClickListener listener1, OnClickListener listener2, OnClickListener listener3) {
         popDlg2(ctx, title, msg, btn1, btn2, listener1, listener2, listener3);
-//		popDlgUpdate(ctx, title ,"" , msg, btn1, btn2, listener1, listener2);
     }
 
     /**
@@ -296,19 +290,6 @@ public class DialogMgr {
         alg.show();
         alg.getWindow().setContentView(view);
         alg.setCanceledOnTouchOutside(false);
-//		alg.getWindow()
-//				.setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
-//		alg.setOnKeyListener(new OnKeyListener() {
-//			@Override
-//			public boolean onKey(DialogInterface dialog, int keyCode,
-//					KeyEvent event) {
-//				if (keyCode == KeyEvent.KEYCODE_HOME) {
-//					ExitPro.exit(ctx);
-//					return true;
-//				}
-//				return false;
-//			}
-//		});
         return alg;
     }
 
@@ -474,7 +455,7 @@ public class DialogMgr {
         View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.activity_wx_share, null);
         LinearLayout haoYouLayout = (LinearLayout) view.findViewById(R.id.share_wx_haoyou);
         LinearLayout penYouQuanLayout = (LinearLayout) view.findViewById(R.id.share_wx_penyouquan);
-        LinearLayout qrCodeLayout = (LinearLayout) view.findViewById(R.id.share_qr_code);
+
         TextView titleCancel = (TextView) view.findViewById(R.id.share_cancel);
         haoYouLayout.setOnClickListener(new OnClickListener() {
             @Override
@@ -490,14 +471,7 @@ public class DialogMgr {
                 oncancel(v);
             }
         });
-        qrCodeLayout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ctx, UserQrCodeActivity.class);
-                ctx.startActivity(intent);
-                oncancel(v);
-            }
-        });
+
         titleCancel.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -508,9 +482,6 @@ public class DialogMgr {
         alg.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         alg.getWindow().setContentView(view);
         alg.setCanceledOnTouchOutside(false);
-//		WindowManager.LayoutParams params = alg.getWindow().getAttributes();
-//		params.width = DensityUtils.getScreenWidth(ctx);
-//		alg.getWindow().setAttributes(params);
     }
 
     protected void onclick(View v) {
@@ -527,6 +498,5 @@ public class DialogMgr {
 
     public void dismiss() {
         alg.dismiss();
-        // alg.cancel();
     }
 }

@@ -30,6 +30,7 @@ public class CustomCordovaActivity extends CordovaActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bind_open_card_web_activity);
+
         setStatusBarColor();
         setStatusBarSpace();
         loadUrl(PublicData.getInstance().webviewUrl);

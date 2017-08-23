@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/colorWhite"
+              android:orientation="vertical">
+
+    <!-- 优惠页面 导向本地页面-->
+
+    <!--加油充值-->
+    <LinearLayout
+        android:id="@+id/lay_order"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_225"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/lay_locality_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/img_oil"
+                android:layout_width="@dimen/ds_168"
+                android:layout_height="@dimen/ds_168"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/ds_45"
+                android:scaleType="center"
+                android:src="@mipmap/icon_oil_favorable"/>
+
+            <TextView
+                android:id="@+id/tv_oil"
+                android:layout_width="@dimen/ds_230"
+                android:layout_height="@dimen/ds_78"
+                android:layout_alignTop="@+id/img_oil"
+                android:layout_marginLeft="@dimen/ds_45"
+                android:gravity="center"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="加油充值"/>
+
+            <TextView
+                android:id="@+id/tv_oil_click"
+                android:layout_width="@dimen/ds_230"
+                android:layout_height="@dimen/ds_78"
+                android:layout_alignBottom="@+id/img_oil"
+                android:layout_marginLeft="@dimen/ds_45"
+                android:background="@drawable/shape_tv_favorable_red"
+                android:gravity="center"
+                android:textColor="@color/colorTvRed_f33"
+                android:textSize="@dimen/fs_14sp"
+                tools:text="9折优惠"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/colorLineGray_e6"/>
+
+        <RelativeLayout
+            android:id="@+id/lay_locality_2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/img_insurance"
+                android:layout_width="@dimen/ds_168"
+                android:layout_height="@dimen/ds_168"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/ds_45"
+                android:scaleType="center"
+                android:src="@mipmap/icon_oil_favorable"/>
+
+            <TextView
+                android:id="@+id/tv_insurance"
+                android:layout_width="@dimen/ds_230"
+                android:layout_height="@dimen/ds_78"
+                android:layout_alignTop="@+id/img_insurance"
+                android:layout_marginLeft="@dimen/ds_45"
+                android:gravity="center"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="加油充值"/>
+
+            <TextView
+                android:id="@+id/tv_insurance_click"
+                android:layout_width="@dimen/ds_230"
+                android:layout_height="@dimen/ds_78"
+                android:layout_alignBottom="@+id/img_insurance"
+                android:layout_marginLeft="@dimen/ds_45"
+                android:background="@drawable/shape_tv_favorable_red"
+                android:gravity="center"
+                android:textColor="@color/colorTvRed_f33"
+                android:textSize="@dimen/fs_14sp"
+                tools:text="9 折起"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorLineGray_e6"/>
+    <!--第二列表-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_320"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_locality_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/icon_oil_favorable"
+            android:gravity="center"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="购车贷款"/>
+
+        <LinearLayout
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/colorLineGray_e6"/>
+
+        <TextView
+            android:id="@+id/tv_locality_2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/icon_oil_favorable"
+            android:gravity="center"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="购车贷款"/>
+
+        <LinearLayout
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/colorLineGray_e6"/>
+
+        <TextView
+            android:id="@+id/tv_locality_3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/icon_oil_favorable"
+            android:gravity="center"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="购车贷款"/>
+
+        <LinearLayout
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/colorLineGray_e6"/>
+
+        <TextView
+            android:id="@+id/tv_locality_4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/icon_oil_favorable"
+            android:gravity="center"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"
+            tools:text="购车贷款"/>
+    </LinearLayout>
+
+</LinearLayout>

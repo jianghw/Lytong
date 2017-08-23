@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_111"/>
     </RelativeLayout>
+
     <!--导航控件-->
     <TableLayout
         android:layout_width="match_parent"
@@ -42,17 +43,8 @@
                 android:drawablePadding="@dimen/ds_18"
                 android:drawableTop="@mipmap/icon_oil"
                 android:gravity="center"
-                android:text="@string/recharge"/>
-
-            <TextView
-                android:id="@+id/tv_check"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:drawablePadding="@dimen/ds_18"
-                android:drawableTop="@mipmap/icon_check"
-                android:gravity="center"
-                android:text="@string/annual"/>
+                android:text="@string/recharge"
+                android:textColor="@color/colorTvBlack_4d"/>
 
             <TextView
                 android:id="@+id/tv_carwash"
@@ -62,7 +54,29 @@
                 android:drawablePadding="@dimen/ds_18"
                 android:drawableTop="@mipmap/icon_license"
                 android:gravity="center"
-                android:text="@string/car_wash"/>
+                android:text="@string/car_wash"
+                android:textColor="@color/colorTvBlack_4d"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/ds_18"
+                android:drawableTop="@mipmap/icon_2hand"
+                android:gravity="center"
+                android:text="@string/car_evaluate"
+                android:textColor="@color/colorTvBlack_4d"/>
+
+            <TextView
+                android:id="@+id/tv_check"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/ds_18"
+                android:drawableTop="@mipmap/icon_check"
+                android:gravity="center"
+                android:text="@string/annual"
+                android:textColor="@color/colorTvBlack_4d"/>
 
             <TextView
                 android:id="@+id/tv_drive"
@@ -72,7 +86,8 @@
                 android:drawablePadding="@dimen/ds_18"
                 android:drawableTop="@mipmap/ic_carwash"
                 android:gravity="center"
-                android:text="@string/designated_wash"/>
+                android:text="@string/designated_wash"
+                android:textColor="@color/colorTvBlack_4d"/>
         </TableRow>
     </TableLayout>
     <!--小广播-->

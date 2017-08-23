@@ -56,6 +56,7 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 import com.zantong.mobilecttx.weizhang.bean.ViolationHistoryBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationItemBean;
+import com.zantong.mobilecttx.weizhang.dto.ViolationOrderDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationSearchDTO;
 
 import java.io.File;
@@ -229,9 +230,17 @@ public class CarApiClient extends BaseApiClient {
     }
 
     public static void createOrder(Context context, RechargeDTO dto, CallBack<RechargeResult> callback) {
-        BaseCallBack<RechargeResult> result = new BaseCallBack<RechargeResult>(
+        BaseCallBack<RechargeResult> result = new BaseCallBack<>(
                 context, callback, RechargeResult.class);
         post(context, getUrl("addOil/createOrder"), dto, result);
+    }
+
+    /**
+     * 43.生成违章缴费订单
+     */
+    public static void createOrder(Context context, ViolationOrderDTO dto, CallBack<BaseResult> callback) {
+        BaseCallBack<BaseResult> result = new BaseCallBack<>(context, callback, BaseResult.class);
+        post(context, getUrl("payment/createOrder"), dto, result);
     }
 
     public static void queryOrders(Context context, RechargeOrderDTO dto, CallBack<RechargeOrderResult> callback) {

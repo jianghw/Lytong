@@ -29,12 +29,10 @@ public class AboutActivity extends BaseMvpActivity<IBaseView, HelpPresenter> imp
 
     @Override
     public void showLoading() {
-
     }
 
     @Override
     public void hideLoading() {
-
     }
 
     @Override

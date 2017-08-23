@@ -23,7 +23,6 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.car.bean.CarBrandBean;
@@ -70,6 +69,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.global.GlobalConstant;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
@@ -136,7 +136,6 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
     private static final String SHOWCASE_ID = "cttx_addcaractivity";
     public static boolean isFrom = false;
 
-    private static final int MY_PERMISSIONS_REQUEST_CALL_CAMERA = 1;  //请求码，自己定义
 
     /* 新接口传值*/
     BindCarDTO params = new BindCarDTO();
@@ -165,22 +164,14 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
 
     @Override
     public void showLoading() {
-
     }
 
     @Override
     public void hideLoading() {
-
     }
 
     @Override
     public void initView() {
-
-//        if (!SPUtils.getInstance().getGuideXingShiZheng()) {
-//            PublicData.getInstance().GUIDE_TYPE = 1;
-//            Act.getInstance().gotoIntent(this, GuideActivity.class);
-//        }
-
         mPlateNum.setTransformationMethod(new AllCapTransformationMethod());
         mPlateNum.setSelection(mPlateNum.getText().toString().length());
 

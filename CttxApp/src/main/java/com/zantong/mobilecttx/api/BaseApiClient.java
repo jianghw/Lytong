@@ -2,7 +2,6 @@ package com.zantong.mobilecttx.api;
 
 import android.content.Context;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
@@ -70,7 +69,6 @@ public class BaseApiClient {
             sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
             // Create an ssl socket factory with our all-trusting manager
             final javax.net.ssl.SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-//            builder.sslSocketFactory(sslSocketFactory);
             builder.sslSocketFactory(sslSocketFactory)
                     .hostnameVerifier(new HostnameVerifier() {
                         @Override
@@ -78,8 +76,8 @@ public class BaseApiClient {
                             return true;
                         }
                     }).connectTimeout(60, TimeUnit.SECONDS)
-                    .addInterceptor(new RequestInterceptor())
-                    .addNetworkInterceptor(new StethoInterceptor());
+                    .addInterceptor(new RequestInterceptor());
+
             builder.hostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String hostname, SSLSession session) {

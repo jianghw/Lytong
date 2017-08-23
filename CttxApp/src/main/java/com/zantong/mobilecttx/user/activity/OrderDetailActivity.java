@@ -6,26 +6,26 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
+import com.zantong.mobilecttx.base.bean.Result;
+import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.contract.IOrderView;
+import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.user.bean.CheckOrderResult;
 import com.zantong.mobilecttx.user.bean.OrderItem;
-import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.user.dto.CheckOrderDTO;
 import com.zantong.mobilecttx.user.dto.InsOrderDTO;
-import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.utils.NetUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.PayWebActivity;
-import com.zantong.mobilecttx.contract.IOrderView;
 
 import butterknife.Bind;
+import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 我的订单
@@ -69,7 +69,6 @@ public class OrderDetailActivity extends BaseMvpActivity<IOrderView, OrderPresen
     @Override
     public void initView() {
         setTitleText("订单详情");
-
     }
 
     private String mPolcyprignum;
@@ -145,7 +144,6 @@ public class OrderDetailActivity extends BaseMvpActivity<IOrderView, OrderPresen
         switch (v.getId()) {
             case R.id.order_detail_commit:
                 if (orderState == 1) {
-//                    String url = "https://211.103.143.163:13143/ecip/payment_payForInsurance";
                     String url = "https://ctkapptest.icbc-axa.com/ecip/payment_payForInsurance";
                     StringBuilder sb = new StringBuilder();
                     sb.append(url).

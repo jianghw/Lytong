@@ -18,7 +18,6 @@ public class UnblockedCardActivity extends BaseJxActivity {
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
-
     }
 
     @Override

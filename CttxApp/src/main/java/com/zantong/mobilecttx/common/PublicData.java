@@ -45,25 +45,24 @@ public class PublicData {
     public String defaultCarNumber = "";//默认车牌号
     public String filenum = "";//档案号(驾照号)
     public String getdate = "";//初次领证号
-    public String loginAD = "1";//登录是否弹出对话框
-    public String NewDefaultCarNumber = "";//设置新的默认车辆号
+
     public String CarLocalFlag = "userCarInfo";//本地缓存车辆信息的key
     public String DefaultCarLocalFlag = "defaultCarInfo";//本地缓存默认车辆信息的key
     public String IllegalViolationFlag = "IllegalViolationcChcek";//本地缓存违章信息的key
-    public String ImageFileUrl = "https://192.9.200.131";//服务器图片地址
+
     public String onlyflag = "";//短信验证码唯一标识
     public boolean TitleFlag = false;//短信验证码唯一标识
     public boolean updateMsg = false;//设置-更新通知开启状态
     public final String NOTICE_STATE = "notice_state";//积分周期提醒key
     public boolean DialogCarNotice = false;//查询车辆是否添加的标志
-    public boolean isOpenCheckPush = true;//是否打开车辆年检提醒
+
     public String bitmap;
     public Class<?> className;
 
     public int mPayCarNum = 0;
     public int mNorCarNum = 0;
-    public int isPayCar = 0;
     public int mCarNum = 0;
+
     public RspInfoBean mLoginInfoBean;//用户Bean对象
     public NetLocationBean mNetLocationBean;
     public HashMap<String, Object> mHashMap = new HashMap<>();//界面信息传递工具
@@ -71,7 +70,6 @@ public class PublicData {
     public List<UserCarInfoBean> payData = new ArrayList<>();//可缴费车辆集合
     public List<UserCarInfoBean> mServerCars = new ArrayList<>();//我的车辆集合
     public List<CarInfoDTO> mLocalCars = new ArrayList<>();//我的车辆集合
-    public List<UserCarInfoBean> noPayData = new ArrayList<>();//不可缴费车辆集合
     public List<ProvinceModel> provinceModel;//城市三级联动数据列表
 
     public int mapType = 0;//地图类型  0 加油 , 1 洗车 , 2 年检
@@ -81,8 +79,6 @@ public class PublicData {
     public String webviewTitle = "";//h5标题
     public boolean isDelCar = false;//是否操作了删除车辆操作
     public boolean isSetPayCar = false;//是否操作了更改可缴费车辆
-
-    public int GUIDE_TYPE = 0;//引导页面
 
     public void clearData(Context mContext) {
         userID = "";

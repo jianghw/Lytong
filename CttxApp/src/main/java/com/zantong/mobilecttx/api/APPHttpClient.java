@@ -4,7 +4,6 @@ import android.content.Context;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.zantong.mobilecttx.BuildConfig;
 
 import java.util.concurrent.TimeUnit;
@@ -133,8 +132,7 @@ public class APPHttpClient {
                     })
 
                     .connectTimeout(60, TimeUnit.SECONDS)
-                    .addInterceptor(new RequestInterceptor())
-                    .addNetworkInterceptor(new StethoInterceptor());
+                    .addInterceptor(new RequestInterceptor());
 
             OkHttpClient okHttpClient = builder.build();
             return okHttpClient;

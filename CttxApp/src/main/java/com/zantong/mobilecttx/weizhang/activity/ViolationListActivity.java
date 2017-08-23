@@ -201,7 +201,7 @@ public class ViolationListActivity extends BaseJxActivity
         bundle.putParcelable(GlobalConstant.putExtra.violation_pay_bean_extra, bean);
         intent.putExtras(bundle);
         startActivity(intent);
-        overridePendingTransition(R.anim.push_bottom_in,0);
+        overridePendingTransition(R.anim.push_bottom_in, 0);
     }
 
     /**

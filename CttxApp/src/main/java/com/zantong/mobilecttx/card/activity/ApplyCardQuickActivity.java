@@ -18,7 +18,6 @@ import com.zantong.mobilecttx.api.FileDownloadApi;
 import com.zantong.mobilecttx.api.HandleCTCardApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.card.bean.YingXiaoResult;
@@ -45,7 +44,9 @@ import java.io.InputStream;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.picker.DatePicker;
+import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
@@ -224,7 +225,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
         String kahao = mZhuanChuKaHao.getContentText();
         String email = mEmail.getContentText();
         if (TextUtils.isEmpty(kahao)) {
-            ToastUtils.showShort(this, "转出卡号不可为空");
+            ToastUtils.toastShort("转出卡号不可为空");
             return;
         }
         if ("".equals(email)) {
@@ -233,11 +234,11 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
         String bankData = mZhuanChuKaHao.getContentText();
         //autcrepymtmth 0是开通提醒 9是不开通
         if ("0".equals(quickApplyCardDTO.getAutcrepymtmth()) && TextUtils.isEmpty(bankData)) {
-            ToastUtils.showShort(this, "自动还款转出卡号不可为空");
+            ToastUtils.toastShort("自动还款转出卡号不可为空");
             return;
         }
         if (TextUtils.isEmpty(quickApplyCardDTO.getGetbrno())) {
-            ToastUtils.showShort(this, "请选择领卡网点");
+            ToastUtils.toastShort("请选择领卡网点");
             return;
         }
 
@@ -256,25 +257,24 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
      */
     private void commitInfo() {
         showDialogLoading();
-        HandleCTCardApiClient.htmlLocal(this, "cip.cfc.u010.01", quickApplyCardDTO, this);
-
-        commitYingXiaoDataForLYT(quickApplyCardDTO);
+        HandleCTCardApiClient.htmlLocal(ContextUtils.getContext(), "cip.cfc.u010.01", quickApplyCardDTO, this);
     }
 
     @Override
     public void resultSuccess(Result result) {
         hideDialogLoading();
         if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
-            startActivity(ApplySuccessActvity.getIntent(this, wangdianAdress));
+
+            commitYingXiaoDataForLYT(quickApplyCardDTO);
         } else {
-            ToastUtils.showShort(getApplicationContext(), result.getSYS_HEAD().getReturnMessage());
+            ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
         }
     }
 
     @Override
     public void resultError(String msg) {
         hideDialogLoading();
-        ToastUtils.showShort(getApplicationContext(), Config.getErrMsg("1"));
+        ToastUtils.toastShort(Config.getErrMsg("1"));
     }
 
     /**
@@ -292,7 +292,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 if (result.getResponseCode() == 2000) {
                     commitInfo();
                 } else {
-                    ToastUtils.showShort(ApplyCardQuickActivity.this, "七天之内不能重复办卡");
+                    ToastUtils.toastShort("七天之内不能重复办卡");
                 }
             }
         });
@@ -304,13 +304,15 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
      * @param quickApplyCardDTO
      */
     private void commitYingXiaoDataForLYT(QuickApplyCardDTO quickApplyCardDTO) {
-
         CarApiClient.commitYingXiaoData(this, quickApplyCardDTO, new CallBack<BaseResult>() {
             @Override
             public void onSuccess(BaseResult result) {
-                if (result.getResponseCode() == 2000) {
-                    ToastUtils.showShort(ApplyCardQuickActivity.this, "已提交营销代码");
-                }
+                startActivity(ApplySuccessActvity.getIntent(ApplyCardQuickActivity.this, wangdianAdress));
+            }
+
+            @Override
+            public void onError(String errorCode, String msg) {
+                startActivity(ApplySuccessActvity.getIntent(ApplyCardQuickActivity.this, wangdianAdress));
             }
         });
     }

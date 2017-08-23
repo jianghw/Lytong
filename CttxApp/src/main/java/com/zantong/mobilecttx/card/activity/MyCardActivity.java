@@ -11,6 +11,9 @@ import com.zantong.mobilecttx.card.fragment.MyCardFragment;
 
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 
+/**
+ * 我的畅通卡 已有绑定卡页面
+ */
 public class MyCardActivity extends BaseJxActivity {
 
     private int mCurBottomPosition;

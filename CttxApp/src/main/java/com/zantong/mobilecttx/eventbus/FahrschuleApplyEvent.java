@@ -4,7 +4,6 @@ import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 
 public class FahrschuleApplyEvent {
 
-
     private final String mOrderId;
     private final CreateOrderDTO mCreateOrder;
     private final String mCourseSel;

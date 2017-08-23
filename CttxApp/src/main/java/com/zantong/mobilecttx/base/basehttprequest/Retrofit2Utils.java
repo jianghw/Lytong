@@ -3,8 +3,6 @@ package com.zantong.mobilecttx.base.basehttprequest;
 import android.content.Context;
 import android.os.Environment;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
-
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
@@ -133,9 +131,7 @@ public class Retrofit2Utils {
                             return true;
                         }
                     })
-//            builder.interceptors().add(new LoggingInterceptor());
-                    .connectTimeout(30, TimeUnit.SECONDS)
-                    .addNetworkInterceptor(new StethoInterceptor());
+                    .connectTimeout(30, TimeUnit.SECONDS);
 
             return builder.build();
         } catch (Exception e) {

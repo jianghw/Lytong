@@ -1,9 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="48dip"
-    android:background="@color/white"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="48dip"
+                android:background="@color/white"
     >
+
     <RelativeLayout
         android:id="@+id/title_kong"
         android:layout_width="fill_parent"
@@ -12,91 +13,96 @@
         android:visibility="gone">
 
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/title"
         style="@style/TopBar"
-        android:layout_below="@id/title_kong"
-        android:layout_height="48dip" >
+        android:layout_height="48dip"
+        android:layout_below="@id/title_kong">
+
         <RelativeLayout
             android:id="@+id/back"
             android:layout_width="match_parent"
             android:layout_height="48dip"
             android:background="@color/trans">
 
-        <LinearLayout
-            android:id="@+id/linear_title"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_centerVertical="true"
-            android:orientation="horizontal" >
+            <LinearLayout
+                android:id="@+id/linear_title"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_back"
-                android:layout_width="@dimen/ds_180"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                style="@style/TopBarText"
-                android:layout_gravity="center"
-                android:text="取消" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_back"
+                    style="@style/TopBarText"
+                    android:layout_width="@dimen/ds_180"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="取消"/>
+            </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true">
-
-            <TextView
-                android:id="@+id/titleTv"
-                style="@style/TopBarTexttitle"
-                android:text="@string/app_name"
-                android:layout_centerHorizontal="true" />
-            <TextView
-                android:id="@+id/subtitle"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/titleTv"
-                android:layout_marginTop="4dip"
-                android:textSize="10sp"
-                android:textColor="@color/civory"
-                android:text="欢迎加入畅通车友会"/>
+                android:layout_centerInParent="true">
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/titleTv"
+                    style="@style/TopBarTexttitle"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/app_name"/>
 
-        <Button
-            android:id="@+id/btn_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="5dip"
-            android:text=""
-            android:layout_centerVertical="true"
-            android:textSize="16sp"
-            android:visibility="gone"/>
-        <RelativeLayout
-            android:id="@+id/rl_image_right"
-            android:layout_width="45dip"
-            android:layout_height="40dip"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" >
-            <ImageView
-                android:id="@+id/image_right"
-                android:layout_width="20dip"
-                android:layout_height="20dip"
-                android:layout_centerInParent="true"
-                android:visibility="visible" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/titleTv"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="4dip"
+                    android:text="欢迎加入畅通车友会"
+                    android:textColor="@color/civory"
+                    android:textSize="10sp"/>
 
-        <TextView
-            android:id="@+id/text_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dip"
-            android:textSize="16sp"
-            android:textColor="@color/text_fabu_selector"
-            android:visibility="gone"/>
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dip"
+                android:text=""
+                android:textSize="16sp"
+                android:visibility="gone"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_image_right"
+                android:layout_width="45dip"
+                android:layout_height="40dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+
+                <ImageView
+                    android:id="@+id/image_right"
+                    android:layout_width="20dip"
+                    android:layout_height="20dip"
+                    android:layout_centerInParent="true"
+                    android:visibility="visible"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/text_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dip"
+                android:textColor="@color/text_fabu_selector"
+                android:textSize="16sp"
+                android:visibility="gone"/>
         </RelativeLayout>
     </RelativeLayout>
 

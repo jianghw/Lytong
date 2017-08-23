@@ -16,11 +16,8 @@ import com.zantong.mobilecttx.utils.Tools;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import cn.qqtheme.framework.util.log.LogUtils;
@@ -42,6 +39,7 @@ public class LytMessageReceiver extends MessageReceiver {
     public void onNotification(Context context, String title,
                                String summary, Map<String, String> extraMap) {
         LogUtils.e(title + "onNotification" + summary);
+
         PushBean pushBean = new PushBean();
         if (null != extraMap) {
             for (Map.Entry<String, String> entry : extraMap.entrySet()) {
@@ -72,7 +70,8 @@ public class LytMessageReceiver extends MessageReceiver {
     protected void onNotificationReceivedInApp(Context context, String title, String summary,
                                                Map<String, String> extraMap, int openType,
                                                String openActivity, String openUrl) {
-        LogUtils.e("onNotificationReceivedInApp ====： " + " : " + title + " : " + summary + "  " + extraMap + " : " + openType + " : " + openActivity + " : " + openUrl);
+        LogUtils.e("onNotificationReceivedInApp ====： "
+                + " : " + title + " : " + summary + "  " + extraMap + " : " + openType + " : " + openActivity + " : " + openUrl);
     }
 
     /**
@@ -86,9 +85,7 @@ public class LytMessageReceiver extends MessageReceiver {
         try {
             LogUtils.i("收到一条推送消息 ====： " + cPushMessage.getTitle());
             // 持久化推送的消息到数据库
-            new MessageDao(context).add(new MessageEntity(cPushMessage.getMessageId().substring(6, 16),
-                    Integer.valueOf(cPushMessage.getAppId()), cPushMessage.getTitle(),
-                    cPushMessage.getContent(), new SimpleDateFormat("HH:mm:ss", Locale.SIMPLIFIED_CHINESE).format(new Date())));
+
         } catch (Exception e) {
             Log.i(REC_TAG, e.toString());
         }
@@ -100,6 +97,7 @@ public class LytMessageReceiver extends MessageReceiver {
     @Override
     public void onNotificationOpened(Context context, String title, String summary, String extraMap) {
         LogUtils.e("onNotificationOpened");
+
         AliPushExtBean pushExtBean = new Gson().fromJson(extraMap, AliPushExtBean.class);
         if (pushExtBean != null) {
             String type = pushExtBean.getType();

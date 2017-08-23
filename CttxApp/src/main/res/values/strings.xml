@@ -139,7 +139,6 @@
     <string name="errcode_unknown">分享返回</string>
 
 
-    <string name="rule_desc"><u>活动规则说明</u></string>
     <string name="phone_num"><u>95588</u></string>
 
     <string name="recharge_agreement_content">\n&#160;&#160;&#160;&#160;本协议是使用畅通车友会的车主（以下简称车主）和畅通车友会就账户充值等相关事宜所订立的油卡充值服务协议，请您仔细阅读本协议，您勾选“我已阅读并同意《油卡充值协议》”复选框后，即表示完全接受本协议项下的全部条款，本协议即构成对双方有约束力的法律文件。
@@ -182,7 +181,6 @@
 &lt;br/>&lt;br/>&lt;font color=#F53E2A>*&lt;/font>  累计等候15分钟免费，以后每等候1分钟加收&lt;font color=#FFB700>1元&lt;/font>。
 &lt;br/>&lt;br/>&lt;font color=#F53E2A>*&lt;/font>  除代驾费用外，用户需额外支付&lt;font color=#FFB700>1元&lt;/font>代驾附加险。</string>
 
-    <string name="getbouns_share_desc">每成功推荐1人注册app，即可获得&lt;font color=#F53E2A>200&lt;/font>活动积分，&lt;br/>若其中有人完成绑卡，再送推荐者&lt;font color=#F53E2A>500&lt;/font>活动积分。</string>
     <string name="hundred_agreement_content">
     活动时间：\n
     活动报名时间：2017.3.16-2017.4.15\n

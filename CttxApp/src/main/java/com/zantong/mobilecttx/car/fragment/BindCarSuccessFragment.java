@@ -50,7 +50,6 @@ public class BindCarSuccessFragment extends BaseExtraFragment {
 
     @Override
     public void initView(View view) {
-
     }
 
     @Override
@@ -72,6 +71,7 @@ public class BindCarSuccessFragment extends BaseExtraFragment {
         LogoutDTO dto = new LogoutDTO();
         dto.setUsrid(PublicData.getInstance().userID);
         onShowLoading();
+
         UserApiClient.getPayCars(this.getActivity(), dto, new CallBack<PayCarResult>() {
             @Override
             public void onSuccess(PayCarResult result) {

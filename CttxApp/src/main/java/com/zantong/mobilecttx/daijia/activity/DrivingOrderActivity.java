@@ -24,7 +24,7 @@ public class DrivingOrderActivity extends BaseMvpActivity<IBaseView, HelpPresent
     public void initData() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         DrivingFragment orderFragment = new DrivingFragment();
-        transaction.replace(R.id.mine_order_layout, orderFragment);
+        transaction.replace(R.id.lay_base_frame, orderFragment);
         transaction.commit();
     }
 
@@ -35,6 +35,6 @@ public class DrivingOrderActivity extends BaseMvpActivity<IBaseView, HelpPresent
 
     @Override
     protected int getContentResId() {
-        return R.layout.mine_order_activity ;
+        return R.layout.activity_base_frame ;
     }
 }

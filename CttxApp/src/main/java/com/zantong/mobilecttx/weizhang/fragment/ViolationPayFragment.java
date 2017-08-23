@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
+import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.fragment.BaseJxFragment;
@@ -18,12 +19,15 @@ import com.zantong.mobilecttx.utils.AmountUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.NetUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.PayWebActivity;
 import com.zantong.mobilecttx.weizhang.activity.ViolationPayActivity;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
+import com.zantong.mobilecttx.weizhang.dto.ViolationOrderDTO;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
@@ -40,9 +44,10 @@ public class ViolationPayFragment extends BaseJxFragment {
     TextView mVioNum;
 
     private String remark = "3|";
-    private ViolationBean violationBean;
+    private static final String ARG_PARAM1 = "mViolationBean";
+    private static final String ARG_PARAM2 = "enginenum";
 
-    private static final String ARG_PARAM1 = "violationBean";
+    private ViolationBean mViolationBean;
 
     public static ViolationPayFragment newInstance() {
         return new ViolationPayFragment();
@@ -81,11 +86,11 @@ public class ViolationPayFragment extends BaseJxFragment {
     @Override
     protected void onFirstUserVisible() {
         if (getArguments() != null) {
-            violationBean = getArguments().getParcelable(ARG_PARAM1);
-            if (violationBean != null) {
-                String violationamt = violationBean.getViolationamt();
+            mViolationBean = getArguments().getParcelable(ARG_PARAM1);
+            if (mViolationBean != null) {
+                String violationamt = mViolationBean.getViolationamt();
                 mAmount.setText(AmountUtils.changeF2Y(violationamt) + "元");
-                mVioNum.setText(violationBean.getViolationnum());
+                mVioNum.setText(mViolationBean.getViolationnum());
             }
         }
 
@@ -116,8 +121,8 @@ public class ViolationPayFragment extends BaseJxFragment {
                 ViolationPayTypeFragment payTypeFragment = ViolationPayTypeFragment.newInstance();
                 FragmentUtils.replaceFragment(fragmentManager, payTypeFragment, R.id.lay_base_frame, true);
                 break;
-            case R.id.fragment_violation_commit:
-                searchViolation();
+            case R.id.fragment_violation_commit://提交
+                createOrder();
                 break;
             case R.id.fragment_violation_close:
                 FragmentActivity activity = getActivity();
@@ -132,24 +137,32 @@ public class ViolationPayFragment extends BaseJxFragment {
     }
 
     /**
-     * 跳转到缴费页面
+     * 43.生成违章缴费订单
      */
-    private void gotoPay() {
-        String merCustomIp = NetUtils.getPhontIP(ContextUtils.getContext());
+    private void createOrder() {
+        getParentActivity().showLoadingDialog();
+        ViolationOrderDTO dto = new ViolationOrderDTO();
 
-        String violationnum = violationBean.getViolationnum();
-        String violationamt = violationBean.getViolationamt();
-        String merCustomId = PublicData.getInstance().filenum;//畅通卡档案编号
+        dto.setCarnum(String.valueOf(PublicData.getInstance().mHashMap.get("carnum")));
+        dto.setEnginenum(String.valueOf(PublicData.getInstance().mHashMap.get("enginenum")));
 
-        String payUrl = BuildConfig.APP_URL
-                + "payment_payForViolation?orderid=" + violationnum
-                + "&amount=" + violationamt
-                + "&merCustomIp=" + merCustomIp
-                + "&merCustomId=" + merCustomId
-                + "&remark=" + remark;
+        dto.setOrderprice(mViolationBean.getViolationamt());
+        dto.setPeccancydate(mViolationBean.getViolationdate());
+        dto.setPeccancynum(mViolationBean.getViolationnum());
+        dto.setUsernum(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
 
-        PublicData.getInstance().mHashMap.put("PayWebActivity", payUrl);
-        Act.getInstance().lauchIntent(getActivity(), PayWebActivity.class);
+        CarApiClient.createOrder(ContextUtils.getContext(), dto, new CallBack<BaseResult>() {
+            @Override
+            public void onSuccess(BaseResult result) {
+                searchViolation();
+            }
+
+            @Override
+            public void onError(String errorCode, String msg) {
+                getParentActivity().dismissLoadingDialog();
+                ToastUtils.toastShort(msg);
+            }
+        });
     }
 
     /**
@@ -157,7 +170,6 @@ public class ViolationPayFragment extends BaseJxFragment {
      */
     private void searchViolation() {
         if (!TextUtils.isEmpty(PublicData.getInstance().filenum)) {
-            getParentActivity().showLoadingDialog();
             UserApiClient.setJiaoYiDaiMa(ContextUtils.getContext(),
                     PublicData.getInstance().filenum, new CallBack<Result>() {
                         @Override
@@ -181,6 +193,27 @@ public class ViolationPayFragment extends BaseJxFragment {
         } else {
             ToastUtils.toastShort("出错档案编号为空，请重新登录试试");
         }
+    }
+
+    /**
+     * 跳转到缴费页面
+     */
+    private void gotoPay() {
+        String merCustomIp = NetUtils.getPhontIP(ContextUtils.getContext());
+
+        String violationnum = mViolationBean.getViolationnum();
+        String violationamt = mViolationBean.getViolationamt();
+        String merCustomId = PublicData.getInstance().filenum;//畅通卡档案编号
+
+        String payUrl = BuildConfig.APP_URL
+                + "payment_payForViolation?orderid=" + violationnum
+                + "&amount=" + violationamt
+                + "&merCustomIp=" + merCustomIp
+                + "&merCustomId=" + merCustomId
+                + "&remark=" + remark;
+
+        PublicData.getInstance().mHashMap.put("PayWebActivity", payUrl);
+        Act.getInstance().lauchIntent(getActivity(), PayWebActivity.class);
     }
 
     public ViolationPayActivity getParentActivity() {

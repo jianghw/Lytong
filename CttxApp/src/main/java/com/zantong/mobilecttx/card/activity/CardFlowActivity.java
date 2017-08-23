@@ -16,10 +16,8 @@ import butterknife.OnClick;
  */
 public class CardFlowActivity extends BaseJxActivity {
 
-
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
-
     }
 
     @Override

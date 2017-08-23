@@ -1,10 +1,7 @@
 package com.zantong.mobilecttx.home.activity;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,11 +9,10 @@ import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.BaseActivity;
+import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
 import com.zantong.mobilecttx.utils.SPUtils;
-import com.zantong.mobilecttx.utils.SystemBarTintManager;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.widght.GuideHeaderViewPager;
 
@@ -30,7 +26,7 @@ import cn.qqtheme.framework.util.AppUtils;
 /**
  * 引导页面
  */
-public class GuideCTActivity extends BaseActivity implements GuideHeaderViewPager.GuideInterface {
+public class GuideCTActivity extends BaseJxActivity implements GuideHeaderViewPager.GuideInterface {
 
     @Bind(R.id.guide_headerview)
     GuideHeaderViewPager mGuideHeaderview;
@@ -41,26 +37,31 @@ public class GuideCTActivity extends BaseActivity implements GuideHeaderViewPage
     int mVersionCode;
 
     @Override
-    public void initView() {
-        setStatusBarColor();
+    protected void bundleIntent(Bundle savedInstanceState) {
+    }
+
+    protected boolean isNeedCustomTitle() {
+        return true;
     }
 
     @Override
-    protected int getLayoutResId() {
+    protected int getContentResId() {
         return R.layout.activity_ct_guide;
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    protected void setStatusBarColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintColor(getResources().getColor(R.color.trans));
-        }
+    protected boolean isNeedKnife() {
+        return true;
     }
 
     @Override
+    protected void initFragmentView(View view) {
+    }
+
+    @Override
+    protected void initViewStatus() {
+        initData();
+    }
+
     public void initData() {
         UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
         int appCode = AppUtils.getAppVersionCode();//当前手机的
@@ -96,9 +97,7 @@ public class GuideCTActivity extends BaseActivity implements GuideHeaderViewPage
     }
 
     @OnClick({R.id.guide_open})
-    @Override
     public void onClick(View v) {
-        super.onClick(v);
         switch (v.getId()) {
             case R.id.guide_open:
                 gotoActivity();
@@ -113,4 +112,7 @@ public class GuideCTActivity extends BaseActivity implements GuideHeaderViewPage
         finish();
     }
 
+    @Override
+    protected void DestroyViewAndThing() {
+    }
 }

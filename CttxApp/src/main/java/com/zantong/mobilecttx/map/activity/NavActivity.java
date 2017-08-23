@@ -25,8 +25,6 @@ import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * 导航
- * @author Sandy
- * create at 16/11/25 下午2:43
  */
 public class NavActivity extends BaseActivity {
 

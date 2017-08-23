@@ -29,18 +29,14 @@ public class HelpActivity extends BaseMvpActivity<IBaseView,HelpPresenter> imple
 
     @Override
     public void showLoading() {
-
     }
 
     @Override
     public void hideLoading() {
-
     }
 
     @Override
     public void onClick(View v) {
-
-
     }
 
     @Override

@@ -24,8 +24,6 @@ import okhttp3.Response;
 
 public class AsyncCallBack<T> implements Callback {
     private Gson gson;
-
-
     private Context context;
     private Object tag;
     private Class<T> clazz;
