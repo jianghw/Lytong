@@ -5,12 +5,12 @@
 
     <include layout="@layout/base_loading_failed" />
 
-    <com.zantong.mobilecttx.utils.PullToRefreshLayout
+    <com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout
         android:id="@+id/driving_order_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.zantong.mobilecttx.utils.PullableScrollView
+        <com.zantong.mobilecttx.utils.PullRefreshableScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
@@ -225,6 +225,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </com.zantong.mobilecttx.utils.PullableScrollView>
-    </com.zantong.mobilecttx.utils.PullToRefreshLayout>
+        </com.zantong.mobilecttx.utils.PullRefreshableScrollView>
+    </com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout>
 </FrameLayout>

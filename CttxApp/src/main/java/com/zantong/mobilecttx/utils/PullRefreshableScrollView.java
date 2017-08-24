@@ -5,17 +5,19 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ScrollView;
 
-public class PullableScrollView extends ScrollView implements Pullable {
+import com.zantong.mobilecttx.widght.refresh.PullRefreshable;
 
-    public PullableScrollView(Context context) {
-        super(context);
+public class PullRefreshableScrollView extends ScrollView implements PullRefreshable {
+
+    public PullRefreshableScrollView(Context context) {
+        this(context, null);
     }
 
-    public PullableScrollView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public PullRefreshableScrollView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
-    public PullableScrollView(Context context, AttributeSet attrs, int defStyle) {
+    public PullRefreshableScrollView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

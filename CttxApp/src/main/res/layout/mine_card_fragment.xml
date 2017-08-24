@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zantong.mobilecttx.utils.PullToRefreshLayout
+<com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/refresh_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.zantong.mobilecttx.utils.PullableScrollView
+    <com.zantong.mobilecttx.utils.PullRefreshableScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
@@ -97,5 +97,5 @@
                     android:src="@mipmap/btn_rightarrow"/>
             </LinearLayout>
         </LinearLayout>
-    </com.zantong.mobilecttx.utils.PullableScrollView>
-</com.zantong.mobilecttx.utils.PullToRefreshLayout>
+    </com.zantong.mobilecttx.utils.PullRefreshableScrollView>
+</com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout>

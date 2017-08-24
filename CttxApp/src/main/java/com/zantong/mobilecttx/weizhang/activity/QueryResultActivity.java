@@ -21,8 +21,8 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.presenter.IllegalViolationPresenter;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.PullToRefreshLayout;
-import com.zantong.mobilecttx.utils.PullableRecyclerView;
+import com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout;
+import com.zantong.mobilecttx.utils.PullRefreshableRecyclerView;
 import com.zantong.mobilecttx.utils.RefreshNewTools.BaseRecyclerAdapter;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.RefreshNewTools.WrapAdapter;
@@ -53,7 +53,7 @@ public class QueryResultActivity extends AppCompatActivity
         implements BaseRecyclerAdapter.OnRecyclerViewListener, ModelView, View.OnClickListener {
 
     @Bind(R.id.open_view_recyclerview)
-    PullableRecyclerView openViewRecyclerview;
+    PullRefreshableRecyclerView openViewRecyclerview;
     @Bind(R.id.open_view_pullrefresh)
     PullToRefreshLayout openViewPullrefresh;
     @Bind(R.id.add_vechiclies_text)

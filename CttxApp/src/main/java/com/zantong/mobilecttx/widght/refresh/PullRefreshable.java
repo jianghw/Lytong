@@ -1,6 +1,6 @@
-package com.zantong.mobilecttx.utils;
+package com.zantong.mobilecttx.widght.refresh;
 
-public interface Pullable {
+public interface PullRefreshable {
     /**
      * 判断是否可以下拉，如果不需要下拉功能可以直接return false
      *

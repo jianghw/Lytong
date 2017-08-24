@@ -9,27 +9,28 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.zantong.mobilecttx.utils.RefreshNewTools.WrapRecyclerView;
+import com.zantong.mobilecttx.widght.refresh.PullRefreshable;
 
 
-public class PullableRecyclerView extends WrapRecyclerView implements Pullable
+public class PullRefreshableRecyclerView extends WrapRecyclerView implements PullRefreshable
 {
-    public static final String TAG = PullableRecyclerView.class.getSimpleName();
+    public static final String TAG = PullRefreshableRecyclerView.class.getSimpleName();
     public int mFirstVisiblePosition = -1;
     public int mLastVisiblePosition = -1;
     private OnScrollUpListener mOnScrollUpListener;
     private int mTempLastVisiblePosition = -1;
 
-    public PullableRecyclerView(Context context)
+    public PullRefreshableRecyclerView(Context context)
     {
         this(context, null, 0);
     }
 
-    public PullableRecyclerView(Context context, AttributeSet attrs)
+    public PullRefreshableRecyclerView(Context context, AttributeSet attrs)
     {
         this(context, attrs, 0);
     }
 
-    public PullableRecyclerView(Context context, AttributeSet attrs, int defStyle)
+    public PullRefreshableRecyclerView(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
         setOnScrollListener(new RecyclerView.OnScrollListener()

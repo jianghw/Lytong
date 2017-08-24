@@ -20,7 +20,7 @@ import com.zantong.mobilecttx.card.bean.BindCardBean;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
-import com.zantong.mobilecttx.utils.PullToRefreshLayout;
+import com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 

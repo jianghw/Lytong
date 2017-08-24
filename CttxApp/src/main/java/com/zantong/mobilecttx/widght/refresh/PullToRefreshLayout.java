@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.utils;
+package com.zantong.mobilecttx.widght.refresh;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.utils.GifHeadView;
 
 import java.lang.ref.WeakReference;
 import java.util.Timer;
@@ -31,6 +32,7 @@ import pl.droidsonroids.gif.GifDrawable;
  * @author 陈靖
  */
 public class PullToRefreshLayout extends RelativeLayout {
+
     public static final String TAG = "PullToRefreshLayout";
     // 初始状态
     public static final int INIT = 0;
@@ -146,6 +148,7 @@ public class PullToRefreshLayout extends RelativeLayout {
 
     public PullToRefreshLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+
         initView(context, attrs, defStyle);
     }
 
@@ -153,12 +156,11 @@ public class PullToRefreshLayout extends RelativeLayout {
 
         updateHandler = new UpdateHandler(this);
         timer = new MyTimer(updateHandler);
-        reverseUpAnimation = (RotateAnimation) AnimationUtils.loadAnimation(
-                context, R.anim.reverse_up_anim);
-        reverseDownAnimation = (RotateAnimation) AnimationUtils.loadAnimation(
-                context, R.anim.reverse_down_anim);
-        refreshingAnimation = (RotateAnimation) AnimationUtils.loadAnimation(
-                context, R.anim.rotating_anim);
+
+        reverseUpAnimation = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.reverse_up_anim);
+        reverseDownAnimation = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.reverse_down_anim);
+        refreshingAnimation = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.rotating_anim);
+
         // 添加匀速转动动画
         LinearInterpolator lir = new LinearInterpolator();
         reverseUpAnimation.setInterpolator(lir);
@@ -182,7 +184,7 @@ public class PullToRefreshLayout extends RelativeLayout {
     public View getPullableView() {
         for (int i = 0; i < getChildCount(); i++) {
             View v = getChildAt(i);
-            if (v instanceof Pullable) {
+            if (v instanceof PullRefreshable) {
                 pullableView = v;
                 return pullableView;
             }
@@ -569,7 +571,7 @@ public class PullToRefreshLayout extends RelativeLayout {
                             OnPullProcessListener.LOADMORE);
                 }
                 if (mEvents == 0) {
-                    if (pullDownY > 0 || (((Pullable) pullableView).canPullDown()
+                    if (pullDownY > 0 || (((PullRefreshable) pullableView).canPullDown()
                             && mCanPullDown && mPullDownEnable && state != LOADING)) {
                         // 可以下拉，正在加载时不能下拉
                         // 对实际滑动距离做缩小，造成用力拉的感觉
@@ -585,7 +587,7 @@ public class PullToRefreshLayout extends RelativeLayout {
                             // 正在刷新的时候触摸移动
                             isTouch = true;
                         }
-                    } else if (pullUpY < 0 || (((Pullable) pullableView).canPullUp()
+                    } else if (pullUpY < 0 || (((PullRefreshable) pullableView).canPullUp()
                             && mCanPullUp && mPullUpEnable && state != REFRESHING)) {
                         // 可以上拉，正在刷新时不能上拉
                         pullUpY = pullUpY + (ev.getY() - lastY) / radio;
@@ -778,17 +780,17 @@ public class PullToRefreshLayout extends RelativeLayout {
                         + loadmoreView.getMeasuredHeight());
     }
 
-    class MyTimer {
+    private class MyTimer {
         private Handler handler;
         private Timer timer;
         private MyTask mTask;
 
-        public MyTimer(Handler handler) {
+        MyTimer(Handler handler) {
             this.handler = handler;
             timer = new Timer();
         }
 
-        public void schedule(long period) {
+        void schedule(long period) {
             if (mTask != null) {
                 mTask.cancel();
                 mTask = null;
@@ -807,7 +809,7 @@ public class PullToRefreshLayout extends RelativeLayout {
         class MyTask extends TimerTask {
             private Handler handler;
 
-            public MyTask(Handler handler) {
+            MyTask(Handler handler) {
                 this.handler = handler;
             }
 
@@ -816,26 +818,6 @@ public class PullToRefreshLayout extends RelativeLayout {
                 handler.obtainMessage().sendToTarget();
             }
 
-        }
-    }
-
-    /**
-     * 刷新结果停留的handler
-     */
-    static class RemainHandler extends Handler {
-        private WeakReference<PullToRefreshLayout> mLayout;
-
-        public RemainHandler(PullToRefreshLayout layout) {
-            mLayout = new WeakReference<>(layout);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            PullToRefreshLayout layout = mLayout.get();
-            if (null != layout) {
-                layout.changeState(DONE);
-                layout.hide();
-            }
         }
     }
 
@@ -908,6 +890,26 @@ public class PullToRefreshLayout extends RelativeLayout {
                     layout.timer.cancel();
             }
         }
+    }
+    /**
+     * 刷新结果停留的handler
+     */
+    static class RemainHandler extends Handler {
+
+        private WeakReference<PullToRefreshLayout> mLayout;
+
+        public RemainHandler(PullToRefreshLayout layout) {
+            mLayout = new WeakReference<>(layout);
+        }
+        @Override
+        public void handleMessage(Message msg) {
+            PullToRefreshLayout layout = mLayout.get();
+            if (null != layout) {
+                layout.changeState(DONE);
+                layout.hide();
+            }
+        }
+
     }
 
     public void setOnPullListener(OnPullListener listener) {

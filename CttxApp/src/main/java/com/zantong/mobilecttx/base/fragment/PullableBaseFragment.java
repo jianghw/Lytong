@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.utils.PullToRefreshLayout;
+import com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout;
 
 import butterknife.Bind;
 
