@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.zantong.mobilecttx.utils.PullRefreshableScrollView
+        <com.zantong.mobilecttx.widght.refresh.PullRefreshableScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
@@ -225,6 +225,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </com.zantong.mobilecttx.utils.PullRefreshableScrollView>
+        </com.zantong.mobilecttx.widght.refresh.PullRefreshableScrollView>
     </com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout>
 </FrameLayout>

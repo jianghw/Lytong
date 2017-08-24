@@ -1,11 +1,9 @@
-package com.zantong.mobilecttx.utils;
+package com.zantong.mobilecttx.widght.refresh;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ScrollView;
-
-import com.zantong.mobilecttx.widght.refresh.PullRefreshable;
 
 public class PullRefreshableScrollView extends ScrollView implements PullRefreshable {
 

@@ -1,57 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/head_view"
-    android:layout_width="match_parent"
-    android:layout_height="56dip"
-    android:background="@color/colorNoticeGrayNumberFont" >
+                android:id="@+id/head_view"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/colorNoticeGrayNumberFont">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/pull_icon"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="60dp"
+        android:src="@mipmap/pull_icon_big"
+        android:visibility="visible"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" >
+    <TextView
+        android:id="@+id/state_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/refreshing_nomal"
+        android:textColor="@color/colorGrayFontSmmall"
+        android:textSize="12sp"/>
 
-            <ImageView
-                android:id="@+id/pull_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="60dp"
-                android:visibility="gone"
-                android:background="@mipmap/pull_icon_big" />
+    <ImageView
+        android:id="@+id/refreshing_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@+id/state_tv"
+        android:src="@mipmap/loading"
+        android:visibility="visible"/>
 
-            <TextView
-                android:id="@+id/state_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/refreshing_nomal"
-                android:textColor="@color/colorGrayFontSmmall"
-                android:textSize="12sp" />
+    <ImageView
+        android:id="@+id/state_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:src="@mipmap/load_succeed"
+        android:layout_toLeftOf="@id/state_tv"
+        android:visibility="visible"/>
 
-            <ImageView
-                android:id="@+id/refreshing_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dip"
-                android:layout_toLeftOf="@id/state_tv"
-                android:background="@mipmap/loading"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/state_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="8dp"
-                android:layout_toLeftOf="@id/state_tv"
-                android:visibility="gone" />
-        </RelativeLayout>
-    </RelativeLayout>
 
 </RelativeLayout>

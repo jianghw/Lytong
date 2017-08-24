@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.widght.refresh.OnPullListener;
 import com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout;
 
 import butterknife.Bind;
@@ -50,7 +51,7 @@ public abstract class PullableBaseFragment extends BaseFragment {
         mPullRefreshView.setPullDownEnable(isRefresh());
         mPullRefreshView.setPullUpEnable(isLoadMore());
 
-        mPullRefreshView.setOnPullListener(new PullToRefreshLayout.OnPullListener() {
+        mPullRefreshView.setOnPullListener(new OnPullListener() {
             @Override
             public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
                 if (mPullRefreshView != null) mPullRefreshView.postDelayed(new Runnable() {

@@ -122,7 +122,7 @@
         android:layout_above="@id/add_vechiclies_text"
         android:layout_below="@id/refreshing_title_notice">
 
-        <com.zantong.mobilecttx.utils.PullRefreshableRecyclerView
+        <com.zantong.mobilecttx.widght.refresh.PullRefreshableRecyclerView
             android:id="@+id/open_view_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -130,7 +130,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true">
 
-        </com.zantong.mobilecttx.utils.PullRefreshableRecyclerView>
+        </com.zantong.mobilecttx.widght.refresh.PullRefreshableRecyclerView>
 
     </com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout>
 

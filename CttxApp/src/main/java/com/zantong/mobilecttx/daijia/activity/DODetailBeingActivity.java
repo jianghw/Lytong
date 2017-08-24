@@ -16,6 +16,7 @@ import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderDetailDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.HashUtils;
+import com.zantong.mobilecttx.widght.refresh.OnPullListener;
 import com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -224,7 +225,7 @@ public class DODetailBeingActivity extends BaseMvpActivity<IBaseView, HelpPresen
      */
     private void initRefreshView() {
         mDrivingOrderLayout.setPullUpEnable(false);
-        mDrivingOrderLayout.setOnPullListener(new PullToRefreshLayout.OnPullListener() {
+        mDrivingOrderLayout.setOnPullListener(new OnPullListener() {
             @Override
             public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
                 getOrderDetail();

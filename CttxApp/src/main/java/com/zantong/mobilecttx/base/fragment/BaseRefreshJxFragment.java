@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.widght.refresh.OnPullListener;
 import com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout;
 
 /**
@@ -54,29 +55,31 @@ public abstract class BaseRefreshJxFragment extends BaseJxFragment {
         mPullRefreshView.setPullDownEnable(isRefresh());
         mPullRefreshView.setPullUpEnable(isLoadMore());
 
-        mPullRefreshView.setOnPullListener(new PullToRefreshLayout.OnPullListener() {
+        mPullRefreshView.setOnPullListener(new OnPullListener() {
             @Override
             public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-                if (mPullRefreshView != null) mPullRefreshView.postDelayed(new Runnable() {
-                    public void run() {
-                        onRefreshData();
-                        if (mPullRefreshView != null)
-                            mPullRefreshView.refreshFinish(PullToRefreshLayout.SUCCEED);
-                    }
+                if (mPullRefreshView != null) mPullRefreshView.postDelayed(
+                        new Runnable() {
+                            public void run() {
+                                onRefreshData();
+                                if (mPullRefreshView != null)
+                                    mPullRefreshView.refreshFinish(PullToRefreshLayout.SUCCEED);
+                            }
 
-                }, 2000);
+                        }, 2000);
             }
 
             @Override
             public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-                if (mPullRefreshView != null) mPullRefreshView.postDelayed(new Runnable() {
-                    public void run() {
-                        onLoadMoreData();
-                        if (mPullRefreshView != null)
-                            mPullRefreshView.refreshFinish(PullToRefreshLayout.SUCCEED);
-                    }
+                if (mPullRefreshView != null) mPullRefreshView.postDelayed(
+                        new Runnable() {
+                            public void run() {
+                                onLoadMoreData();
+                                if (mPullRefreshView != null)
+                                    mPullRefreshView.refreshFinish(PullToRefreshLayout.SUCCEED);
+                            }
 
-                }, 2000);
+                        }, 2000);
             }
         });
         onFirstDataVisible();
@@ -132,13 +135,12 @@ public abstract class BaseRefreshJxFragment extends BaseJxFragment {
         return false;
     }
 
-
     protected void setPullDownEnable(boolean isRefresh) {
         mPullRefreshView.setPullDownEnable(isRefresh);
         mPullRefreshView.setEnabled(isRefresh);
     }
 
-    protected PullToRefreshLayout getPullRefreshView(){
+    protected PullToRefreshLayout getPullRefreshView() {
         return mPullRefreshView;
     }
 }

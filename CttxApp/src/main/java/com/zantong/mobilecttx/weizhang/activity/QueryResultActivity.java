@@ -21,8 +21,9 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.presenter.IllegalViolationPresenter;
 import com.zantong.mobilecttx.utils.DialogUtils;
+import com.zantong.mobilecttx.widght.refresh.OnPullListener;
 import com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout;
-import com.zantong.mobilecttx.utils.PullRefreshableRecyclerView;
+import com.zantong.mobilecttx.widght.refresh.PullRefreshableRecyclerView;
 import com.zantong.mobilecttx.utils.RefreshNewTools.BaseRecyclerAdapter;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.RefreshNewTools.WrapAdapter;
@@ -114,7 +115,7 @@ public class QueryResultActivity extends AppCompatActivity
         }
         mIllegalViolationPresenter.loadView(1);
         openViewPullrefresh.setPullUpEnable(false);
-        openViewPullrefresh.setOnPullListener(new PullToRefreshLayout.OnPullListener() {
+        openViewPullrefresh.setOnPullListener(new OnPullListener() {
             @Override
             public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
                 mIllegalViolationPresenter.loadView(1);
@@ -122,28 +123,18 @@ public class QueryResultActivity extends AppCompatActivity
 
             @Override
             public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-                pullToRefreshLayout.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                pullToRefreshLayout.uploadMoreFinish(PullToRefreshLayout.SUCCEED);
             }
         });
 
-//        if (mLinkedList == null || mLinkedList.size() == 0) {
-//            loading_empty_content.setVisibility(View.VISIBLE);
-//        } else {
-//            loading_empty_content.setVisibility(View.GONE);
-//        }
         mIllegalViolationAdapter = new IllegalViolationAdapter(this, mLinkedList, mIllegalViolation);
         mIllegalViolationAdapter.setOnRecyclerViewListener(this);
-        openViewWrapRecyclerview = (WrapRecyclerView) openViewPullrefresh.getPullableView();
+        openViewWrapRecyclerview = (WrapRecyclerView) openViewPullrefresh.getPullRefreshableView();
 
 
         mWrapAdapter = new WrapAdapter(mIllegalViolationAdapter);
         openViewWrapRecyclerview.setAdapter(mWrapAdapter);
         openViewWrapRecyclerview.setLayoutManager(new LinearLayoutManager(this));
-//        headView = getLayoutInflater().inflate(R.layout.illegal_violation_head, null);
-
-//        headView.setVisibility(View.GONE);
-//        openViewWrapRecyclerview.addHeaderView(headView);
-//        openViewWrapRecyclerview.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL));
 
         if (PublicData.getInstance().loginFlag && Tools.isStrEmpty(PublicData.getInstance().filenum)) {
             Toast.makeText(this, "当前未绑定畅通卡，需要在线缴费的请进行绑卡操作。", Toast.LENGTH_LONG).show();

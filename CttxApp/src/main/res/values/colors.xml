@@ -36,9 +36,11 @@
     <color name="colorQueryOtherCar">#FF13B1F5</color>
     <!-- 畅通页未绑定的提示颜色 -->
     <color name="colorQueryNumberFont">#FFCCCCCC</color>
+
     <!-- 提示背景灰色 -->
     <color name="colorNoticeGrayNumberFont">#FFF5F2F2</color>
     <color name="colorAddCarGrayNumberFont">#FF666666</color>
+
     <color name="userAgreeColor">#13B1F5</color>
 
     <color name="surePayPopupBackground">#4D000000</color>

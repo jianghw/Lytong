@@ -20,6 +20,7 @@ import com.zantong.mobilecttx.card.bean.BindCardBean;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
+import com.zantong.mobilecttx.widght.refresh.OnPullListener;
 import com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.rsa.Des3;
@@ -58,9 +59,10 @@ public class MyCardFragment extends BaseExtraFragment implements ModelView {
 
     @Override
     public void initView(View view) {
+        refresh_view.setPullDownEnable(true);
         refresh_view.setPullUpEnable(false);
-        refresh_view.autoRefresh();
-        refresh_view.setOnPullListener(new PullToRefreshLayout.OnPullListener() {
+
+        refresh_view.setOnPullListener(new OnPullListener() {
             @Override
             public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
                 mPayCarAdapter.removeAll();
@@ -137,6 +139,7 @@ public class MyCardFragment extends BaseExtraFragment implements ModelView {
                     refresh_view.refreshFinish(PullToRefreshLayout.SUCCEED);
                     if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
                         refreshing_title_notice.setVisibility(View.GONE);
+
                         List<PayCar> list = jieMi(result.getRspInfo().getUserCarsInfo());
                         mPayCarAdapter.append(list);
                     } else {

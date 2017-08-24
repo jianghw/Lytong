@@ -6,11 +6,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.alicloudpush.PushBean;
 import com.zantong.mobilecttx.api.CallBack;
@@ -67,7 +67,6 @@ import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
-import cn.qqtheme.framework.widght.HorizontalCarViewPager;
 import cn.qqtheme.framework.widght.banner.CBViewHolderCreator;
 import cn.qqtheme.framework.widght.banner.ConvenientBanner;
 
@@ -77,8 +76,7 @@ import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_COD
  * 畅通主页面
  */
 public class HomeUnimpededFragment extends BaseRefreshJxFragment
-        implements View.OnClickListener,
-        IUnimpededFtyContract.IUnimpededFtyView {
+        implements View.OnClickListener, IUnimpededFtyContract.IUnimpededFtyView {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -123,7 +121,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     private ImageView mImgLabel;
 
     private MainScrollUpAdvertisementView mCustomGrapevine;
-    private HorizontalCarViewPager mCustomViolation;
+    private HorizontalInfiniteCycleViewPager mCustomViolation;
     /**
      * P 指示器
      */
@@ -227,26 +225,8 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         mImgTrumpet = (ImageView) view.findViewById(R.id.img_trumpet);
         mImgLabel = (ImageView) view.findViewById(R.id.img_label);
         mCustomGrapevine = (MainScrollUpAdvertisementView) view.findViewById(R.id.custom_grapevine);
-        mCustomViolation = (HorizontalCarViewPager) view.findViewById(R.id.custom_violation);
+        mCustomViolation = (HorizontalInfiniteCycleViewPager) view.findViewById(R.id.custom_violation);
 
-        //简单滑动冲突解决
-        mCustomViolation.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                getPullRefreshView().setPullDownEnable(false);
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        break;
-                    case MotionEvent.ACTION_CANCEL:
-                    case MotionEvent.ACTION_UP:
-                        getPullRefreshView().setPullDownEnable(true);
-                        break;
-                }
-                return false;
-            }
-        });
     }
 
     @Override

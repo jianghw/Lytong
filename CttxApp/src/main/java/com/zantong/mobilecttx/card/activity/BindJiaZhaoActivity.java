@@ -199,13 +199,19 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
             @Override
             public void onSuccess(BindCardResult result) {
                 hideDialogLoading();
+
                 if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
-                    if (result.getRspInfo().getCardflag() != 0 && result.getRspInfo().getCustcodeflag() == 1 && result.getRspInfo().getMobileflag() == 1) {
+
+                    if (result.getRspInfo().getCardflag() != 0
+                            && result.getRspInfo().getCustcodeflag() == 1
+                            && result.getRspInfo().getMobileflag() == 1) {
+
                         if ("男".equals(params.getSex())) {
                             params.setSex("0");
                         } else {
                             params.setSex("1");
                         }
+
                         CarApiClient.commitDriving(ContextUtils.getContext(), params, new CallBack<BaseResult>() {
                             @Override
                             public void onSuccess(BaseResult result) {
@@ -223,11 +229,11 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
                         BindJiaZhaoActivity.this.finish();
 
                     } else if (result.getRspInfo().getCardflag() == 0) {
-                        ToastUtils.showShort(BindJiaZhaoActivity.this, "您还没有畅通卡");
+                        ToastUtils.toastShort("您还没有畅通卡");
                     } else if (result.getRspInfo().getCustcodeflag() == 0) {
-                        ToastUtils.showShort(BindJiaZhaoActivity.this, "您的身份证号与驾照号码不一致");
+                        ToastUtils.toastShort("您的身份证号与驾照号码不一致");
                     } else if (result.getRspInfo().getMobileflag() == 0) {
-                        ToastUtils.showShort(BindJiaZhaoActivity.this, "您的预留手机号码不正确");
+                        ToastUtils.toastShort("您的预留手机号码不正确");
                     }
                 } else {
                     ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());

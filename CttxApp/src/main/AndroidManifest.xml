@@ -127,7 +127,6 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden"/>
 
-
         <!-- 设置页面 -->
         <activity
             android:name=".user.activity.SettingActivity"
