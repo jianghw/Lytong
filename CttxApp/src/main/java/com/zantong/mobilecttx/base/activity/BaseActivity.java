@@ -2,7 +2,6 @@ package com.zantong.mobilecttx.base.activity;
 
 import android.annotation.TargetApi;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -13,11 +12,10 @@ import android.view.WindowManager;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.BaseApiClient;
+import com.zantong.mobilecttx.contract.IBaseActivity;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
 import com.zantong.mobilecttx.eventbus.ExitAppEvent;
-import com.zantong.mobilecttx.contract.IBaseActivity;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.InspectService;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,7 +24,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * 基类
@@ -42,7 +39,6 @@ public abstract class BaseActivity extends FragmentActivity implements OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        AndroidBottomBarUtils.assistActivity(findViewById(android.R.id.content));
         setStatusBarColor();
         onBeforeSetContentLayout();
 
@@ -170,15 +166,8 @@ public abstract class BaseActivity extends FragmentActivity implements OnClickLi
 
     /**
      * 网络请求或请求数据失败的信息提示
-     *
-     * @param status
-     * @param message
      */
     protected void onFailure(String status, String message) {
-        if (status.equals(NO_LOGIN)) {
-//            PrefUtils.getInstance(this).setIsLogin(false);
-//            UserUiGoto.login(this);
-        }
         ToastUtils.showShort(this, message);
     }
 
@@ -190,22 +179,5 @@ public abstract class BaseActivity extends FragmentActivity implements OnClickLi
     protected void onDestroy() {
         BaseApiClient.cancelCall(this);
         super.onDestroy();
-    }
-
-    public void showMsg(String msg) {
-        ToastUtils.showShort(this, msg);
-    }
-
-    public void showMsg(int resid) {
-        ToastUtils.showShort(this, resid);
-    }
-
-    Intent intent;
-
-    protected Intent getInspectService() {
-        if (intent == null)
-            intent = new Intent(this, InspectService.class);
-        LogUtils.i("new了个intent");
-        return intent;
     }
 }

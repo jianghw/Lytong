@@ -3,9 +3,10 @@ package com.zantong.mobilecttx.presenter.home;
 
 import android.support.annotation.NonNull;
 
+import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.home.bean.BannerBean;
 import com.zantong.mobilecttx.home.bean.BannerResult;
-import com.zantong.mobilecttx.contract.IHomeFavorableFtyContract;
+import com.zantong.mobilecttx.home.bean.ModuleResult;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 
@@ -57,7 +58,6 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
                 .subscribe(new BaseSubscriber<BannerResult>() {
                     @Override
                     public void doCompleted() {
-
                     }
 
                     @Override
@@ -67,11 +67,11 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
 
                     @Override
                     public void doNext(BannerResult result) {
-                        if (result.getResponseCode() == 2000) {
+                        if (result != null && result.getResponseCode() == 2000) {
                             distributeByType(result, "2");
                             distributeByType(result, "3");
                         } else
-                            mAtyView.getBannerError(result.getResponseDesc());
+                            mAtyView.getBannerError(result != null ? result.getResponseDesc() : "未知错误(N1)");
                     }
                 });
         mSubscriptions.add(subscription);
@@ -92,7 +92,6 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
                 .subscribe(new BaseSubscriber<BannerBean>() {
                     @Override
                     public void doCompleted() {
-
                     }
 
                     @Override
@@ -106,6 +105,37 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
                             mAtyView.getBannerSucceed(bannerBean);
                         else if (type.equals("3"))
                             mAtyView.getRewardSucceed(bannerBean);
+                        else
+                            mAtyView.getBannerError("未知错误,图片类型不存在");
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 25.模块化接口
+     */
+    @Override
+    public void moduleTree() {
+        Subscription subscription = mRepository.moduleTree()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<ModuleResult>() {
+                    @Override
+                    public void doCompleted() {
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.moduleTreeError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(ModuleResult result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.moduleTreeSucceed(result);
+                        } else
+                            mAtyView.moduleTreeError(result != null ? result.getResponseDesc() : "未知错误(N25)");
                     }
                 });
         mSubscriptions.add(subscription);

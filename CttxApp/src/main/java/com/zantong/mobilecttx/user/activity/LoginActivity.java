@@ -425,7 +425,6 @@ public class LoginActivity extends Activity
                                     imm.hideSoftInputFromWindow(LoginActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                                 }
                             }
-
                             finish();
                         }
                     },

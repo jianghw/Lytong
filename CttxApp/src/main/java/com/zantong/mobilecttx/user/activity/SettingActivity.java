@@ -29,15 +29,14 @@ import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
 import com.zantong.mobilecttx.contract.ILoginView;
+import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
 import com.zantong.mobilecttx.presenter.LogoutPresenter;
 import com.zantong.mobilecttx.user.dto.PersonInfoDTO;
 import com.zantong.mobilecttx.user.dto.UpdateUserHeadImgDTO;
 import com.zantong.mobilecttx.utils.DateService;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.InspectService;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
@@ -179,7 +178,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                     SPUtils.getInstance().setWeizhangPush(isChecked);
                     mBreakRulesNotice.setChecked(isChecked);
                     if (!isChecked) {
-                        ToastUtils.showShort(getApplicationContext(), "违章主动通知已关闭");
+                        ToastUtils.toastShort("违章主动通知已关闭");
                     }
                 } else {
                     mBreakRulesNotice.setChecked(false);
@@ -202,7 +201,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                     } else {
                         UserInfoRememberCtrl.saveObject(PublicData.getInstance().NOTICE_STATE, false);//已关闭
                         stopService(intent);
-                        ToastUtils.showShort(getApplicationContext(), "记分周期提醒已关闭");
+                        ToastUtils.toastShort("记分周期提醒已关闭");
                     }
                 } else {
                     Intent intent2 = new Intent(SettingActivity.this, LoginActivity.class);
@@ -220,12 +219,10 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
 
     @Override
     public void showLoading() {
-
     }
 
     @Override
     public void hideLoading() {
-
     }
 
     @Override
@@ -445,7 +442,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                         if (data != null) {
                             reqZoom();
                         } else {
-                            ToastUtils.toastShort( "选择图片发生错误，图片可能已经移位或删除");
+                            ToastUtils.toastShort("选择图片发生错误，图片可能已经移位或删除");
                         }
                         break;
                 }
@@ -643,10 +640,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
 
                     mLogout.setVisibility(View.GONE);
 
-                    Intent intent = new Intent(SettingActivity.this, InspectService.class);
-                    stopService(intent);
                     EventBus.getDefault().post(new BenDiCarInfoEvent(true, null));
-
                     finish();
                 } else {
                     ToastUtils.toastShort("退出失败");

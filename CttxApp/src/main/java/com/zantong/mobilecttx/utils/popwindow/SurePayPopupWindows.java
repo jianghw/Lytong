@@ -24,8 +24,7 @@ public class SurePayPopupWindows extends PopupWindow {
 				.inflate(mContext, R.layout.sure_pay_popupwindows, null);
 		view.startAnimation(AnimationUtils.loadAnimation(mContext,
 				R.anim.fade_ins));
-		LinearLayout ll_popup = (LinearLayout) view
-				.findViewById(R.id.ll_popup);
+		LinearLayout ll_popup = (LinearLayout) view.findViewById(R.id.ll_popup);
 //		ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
 //				R.anim.left_to_right));
 //		ll_popup.setAnimation(AnimationUtils.loadAnimation(mContext,

@@ -1,9 +1,11 @@
 package com.zantong.mobilecttx.home.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.util.ArrayMap;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -12,7 +14,7 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.home.fragment.HomeFavorableFragment;
+import com.zantong.mobilecttx.home.fragment.HomeDiscountsFragment;
 import com.zantong.mobilecttx.home.fragment.HomeMeFragment;
 import com.zantong.mobilecttx.home.fragment.HomeUnimpededFragment;
 import com.zantong.mobilecttx.user.bean.RspInfoBean;
@@ -26,6 +28,7 @@ import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 
 import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.global.GlobalConfig;
+import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 import cn.qqtheme.framework.util.ui.StatusBarUtils;
@@ -47,7 +50,7 @@ public class HomeMainActivity extends BaseJxActivity {
      * 三个页面
      */
     private HomeUnimpededFragment mHomeUnimpededFragment = null;
-    private HomeFavorableFragment mHomeFavorableFragment = null;
+    private HomeDiscountsFragment mHomeDiscountsFragment = null;
     private HomeMeFragment mHomeMeFragment = null;
 
     @Override
@@ -86,8 +89,7 @@ public class HomeMainActivity extends BaseJxActivity {
      * 登陆信息
      */
     public void initLoginInfo() {
-        RspInfoBean user =
-                (RspInfoBean) UserInfoRememberCtrl.readObject();
+        RspInfoBean user = (RspInfoBean) UserInfoRememberCtrl.readObject();
         if (null != user) {
             PublicData.getInstance().userID = user.getUsrid();
             PublicData.getInstance().loginFlag = true;
@@ -138,7 +140,7 @@ public class HomeMainActivity extends BaseJxActivity {
             case 0:
                 if (mHomeUnimpededFragment == null) {
                     mHomeUnimpededFragment = HomeUnimpededFragment.newInstance();
-                    FragmentUtils.addFragment(fragmentManager, mHomeUnimpededFragment, R.id.content);
+                    FragmentUtils.addFragment(fragmentManager, mHomeUnimpededFragment, R.id.content, false, true);
                 }
                 mHomeUnimpededFragment.setMessageListener(new MessageListener() {
                     @Override
@@ -153,19 +155,19 @@ public class HomeMainActivity extends BaseJxActivity {
                 GlobalConfig.getInstance().eventIdByUMeng(18);
                 break;
             case 1:
-                if (mHomeFavorableFragment == null) {
-                    mHomeFavorableFragment = HomeFavorableFragment.newInstance();
-                    FragmentUtils.addFragment(fragmentManager, mHomeFavorableFragment, R.id.content);
+                if (mHomeDiscountsFragment == null) {
+                    mHomeDiscountsFragment = HomeDiscountsFragment.newInstance();
+                    FragmentUtils.addFragment(fragmentManager, mHomeDiscountsFragment, R.id.content, false, true);
                 }
-                if (mHomeFavorableFragment != null)
-                    FragmentUtils.hideAllShowFragment(fragmentManager, mHomeFavorableFragment);
+                if (mHomeDiscountsFragment != null)
+                    FragmentUtils.hideAllShowFragment(fragmentManager, mHomeDiscountsFragment);
 
                 GlobalConfig.getInstance().eventIdByUMeng(19);
                 break;
             case 2:
                 if (mHomeMeFragment == null) {
                     mHomeMeFragment = HomeMeFragment.newInstance();
-                    FragmentUtils.addFragment(fragmentManager, mHomeMeFragment, R.id.content);
+                    FragmentUtils.addFragment(fragmentManager, mHomeMeFragment, R.id.content, false, true);
                 }
                 mHomeMeFragment.setMessageListener(new MessageListener() {
                     @Override
@@ -210,7 +212,7 @@ public class HomeMainActivity extends BaseJxActivity {
     @Override
     protected void DestroyViewAndThing() {
         mHomeUnimpededFragment = null;
-        mHomeFavorableFragment = null;
+        mHomeDiscountsFragment = null;
         mHomeMeFragment = null;
     }
 
@@ -218,4 +220,28 @@ public class HomeMainActivity extends BaseJxActivity {
         void setTipOfNumber(int position, int number);
     }
 
+    private long exitTime;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                ToastUtils.toastShort("请再点击一次,退出应用");
+                exitTime = System.currentTimeMillis();
+            } else {
+                return super.onKeyDown(keyCode, event);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //实现Home键效果
+        //super.onBackPressed();这句话一定要注掉,不然又去调用默认的back处理方式了
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        startActivity(intent);
+    }
 }

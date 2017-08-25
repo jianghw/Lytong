@@ -18,7 +18,7 @@ import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.BrowserActivity;
-import com.zantong.mobilecttx.contract.IHomeFavorableFtyContract;
+import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.fahrschule.activity.SparringActivity;
@@ -27,6 +27,7 @@ import com.zantong.mobilecttx.home.adapter.FavorableBannerImgHolderView;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.bean.BannerBean;
 import com.zantong.mobilecttx.home.bean.BannersBean;
+import com.zantong.mobilecttx.home.bean.ModuleResult;
 import com.zantong.mobilecttx.presenter.home.HomeFavorableFtyPresenter;
 import com.zantong.mobilecttx.share.activity.CarBeautyActivity;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
@@ -113,8 +114,10 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
     protected void initFragmentView(View view) {
         initView(view);
 
-        HomeFavorableFtyPresenter mPresenter = new HomeFavorableFtyPresenter(
+        HomeFavorableFtyPresenter presenter = new HomeFavorableFtyPresenter(
                 Injection.provideRepository(getActivity().getApplicationContext()), this);
+
+        if(mPresenter!=null) mPresenter.moduleTree();
     }
 
     @Override
@@ -226,6 +229,19 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
      */
     @Override
     public void getRewardSucceed(BannerBean bannerBean) {
+    }
+
+    /**
+     * 获取模块
+     */
+    @Override
+    public void moduleTreeError(String message) {
+
+    }
+
+    @Override
+    public void moduleTreeSucceed(ModuleResult result) {
+
     }
 
     public void initView(View view) {

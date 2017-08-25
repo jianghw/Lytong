@@ -234,7 +234,6 @@ public abstract class BaseMvpActivity<V, T extends BasePresenter<V>> extends Bas
      * 右侧的按钮事件
      */
     protected void baseGoEnsure() {
-
     }
 
     /**

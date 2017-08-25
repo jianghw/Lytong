@@ -3,13 +3,15 @@ package com.zantong.mobilecttx.home.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
-import com.zantong.mobilecttx.utils.rsa.Des3;
+import com.zantong.mobilecttx.home.bean.ModuleBean;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ import butterknife.ButterKnife;
 /**
  * 优惠页面复杂页面
  */
-public class HomeDiscountsAdapter extends BaseAdapter<VehicleLicenseBean> {
+public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
 
     private static final int ITEM_TYPE_BANNER = 1;
     private static final int ITEM_TYPE_LOCALITY = 2;
@@ -46,21 +48,15 @@ public class HomeDiscountsAdapter extends BaseAdapter<VehicleLicenseBean> {
     }
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder,
-                         int position, VehicleLicenseBean vehicleLicenseBean) {
+    public void showData(BaseRecyclerViewHolder viewHolder, int position, ModuleBean moduleBean) {
 
-        if (vehicleLicenseBean != null) {
+        if (moduleBean != null) {
             switch (viewHolder.getItemViewType()) {
                 case ITEM_TYPE_BANNER:
                     TitleViewHolder holder0 = (TitleViewHolder) viewHolder;
-                    holder0.mTitle.setText(vehicleLicenseBean.getIsPayable() == -1
-                            ? "可缴费车辆" : "仅限违章查询车辆");
                     break;
                 case ITEM_TYPE_LOCALITY:
                     ViewHolder holder = (ViewHolder) viewHolder;
-                    holder.mCarNumber.setText(Des3.decode(vehicleLicenseBean.getPlateNo()));
-                    int ispaycar = vehicleLicenseBean.getIsPayable();
-                    holder.mFlag.setVisibility(ispaycar == 1 ? View.VISIBLE : View.INVISIBLE);
                     break;
                 default:
                     break;
@@ -107,6 +103,22 @@ public class HomeDiscountsAdapter extends BaseAdapter<VehicleLicenseBean> {
         TextView mTitle;
 
         public TitleViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    public static class ServiceViewHolder extends BaseRecyclerViewHolder {
+        @Bind(R.id.tv_service_title)
+        TextView mTvTitle;
+        @Bind(R.id.custom_recycler)
+        XRecyclerView mRvRecycler;
+        @Bind(R.id.lay_fold)
+        RelativeLayout mLayFold;
+        @Bind(R.id.tv_fold)
+        TextView mTvFold;
+
+        public ServiceViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }

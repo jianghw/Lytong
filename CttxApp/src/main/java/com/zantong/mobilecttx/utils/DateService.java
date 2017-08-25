@@ -19,7 +19,6 @@ import java.util.Date;
  */
 public class DateService extends Service {
 
-
     private Handler mHandler;
     private static final int MSG_UPDATE_CURRENT_TIME = 1;
 

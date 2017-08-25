@@ -32,28 +32,18 @@ public class ScreenManager {
         }
     }
 
-    // 退出栈顶Activity
-    public void popActivity(Activity activity) {
-        if (activity != null) {
-            activity.finish();
-            activityStack.remove(activity);
-            activity = null;
-        }
-    }
-
     // 获得当前栈顶Activity
     public Activity currentActivity() {
         if (activityStack.size() == 0) {
             return null;
         }
-        Activity activity = activityStack.lastElement();
-        return activity;
+        return activityStack.lastElement();
     }
 
     // 将当前Activity推入栈中
     public static void pushActivity(Activity activity) {
         if (activityStack == null) {
-            activityStack = new Stack<Activity>();
+            activityStack = new Stack<>();
         }
         activityStack.add(activity);
     }
@@ -89,6 +79,15 @@ public class ScreenManager {
                 break;
             }
             popActivity(activity);
+        }
+    }
+
+    // 退出栈顶Activity
+    public void popActivity(Activity activity) {
+        if (activity != null) {
+            activity.finish();
+            activityStack.remove(activity);
+            activity = null;
         }
     }
 }

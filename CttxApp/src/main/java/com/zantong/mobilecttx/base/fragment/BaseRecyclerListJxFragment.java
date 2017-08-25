@@ -110,6 +110,7 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
 
         mAdapter = createAdapter();
         if (mAdapter == null) throw new IllegalArgumentException("adapter is must not null");
+        if(isNeedItemClick())
         mAdapter.setOnItemClickListener(onItemClickListener);
         mCustomRecycler.setAdapter(mAdapter);
 
@@ -177,6 +178,13 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
             onSwipeItemClickListener(adapterPosition, menuPosition, direction);
         }
     };
+
+    /**
+     * 是否有点击效果
+     */
+    protected boolean isNeedItemClick() {
+        return true;
+    }
 
     private BaseAdapter.OnRecyclerViewItemClickListener onItemClickListener =
             new BaseAdapter.OnRecyclerViewItemClickListener() {

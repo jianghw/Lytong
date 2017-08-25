@@ -440,19 +440,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </service>
-        <service android:name=".utils.InspectService">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </service>
-
-        <receiver android:name=".utils.MyReceiver">
-            <intent-filter>
-                <action android:name="com.zantong.mobilecttx.USER_ACTION"/>
-            </intent-filter>
-        </receiver>
 
         <!--=================================百度地图=============================================-->
         <activity

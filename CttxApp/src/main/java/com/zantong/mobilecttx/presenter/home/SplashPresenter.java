@@ -95,7 +95,6 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
         mRepository.initGlobalLoginInfo(rspInfoBean);
 
         getAllVehicles();
-        loadLoginPost();
     }
 
     public String initUserCarsDTO() {

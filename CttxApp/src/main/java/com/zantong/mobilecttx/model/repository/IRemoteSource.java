@@ -22,6 +22,7 @@ import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.DriverCoachResult;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
+import com.zantong.mobilecttx.home.bean.ModuleResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.map.bean.GasStationDetailResult;
@@ -307,4 +308,9 @@ public interface IRemoteSource {
      * 23.获取加油网点
      */
     Observable<GasStationResult> gasStationList(AnnualDTO annualDTO);
+
+    /**
+     * 25.模块化接口
+     */
+    Observable<ModuleResult> moduleTree();
 }

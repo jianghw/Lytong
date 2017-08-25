@@ -34,7 +34,6 @@ public class StateBarSetting {
         }
         View view = mContext.findViewById(R.id.tv_back);
         View text_right = mContext.findViewById(R.id.text_right);
-//        View viewTitle = mContext.findViewById(R.id.title);
         if(view != null){
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -75,7 +74,6 @@ public class StateBarSetting {
         }else{
             tintManager.setStatusBarTintResource(res);//通知栏所需颜色
 //            viewTitle.setBackgroundColor(mContext.getResources().getColor(res));
-
         }
     }
 

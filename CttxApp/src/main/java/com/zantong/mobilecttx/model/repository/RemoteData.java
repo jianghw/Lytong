@@ -11,6 +11,7 @@ import com.zantong.mobilecttx.api.IDrivingImageService;
 import com.zantong.mobilecttx.api.IFebruaryService;
 import com.zantong.mobilecttx.api.IGoodsService;
 import com.zantong.mobilecttx.api.IMessageService;
+import com.zantong.mobilecttx.api.IModuleService;
 import com.zantong.mobilecttx.api.IOrderService;
 import com.zantong.mobilecttx.api.IPayService;
 import com.zantong.mobilecttx.api.ISplashService;
@@ -40,6 +41,7 @@ import com.zantong.mobilecttx.home.bean.BannerResult;
 import com.zantong.mobilecttx.home.bean.DriverCoachResult;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
+import com.zantong.mobilecttx.home.bean.ModuleResult;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.map.bean.GasStationDetailResult;
@@ -545,5 +547,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<GasStationResult> gasStationList(AnnualDTO annualDTO) {
         return initRetrofit().create(ICttxService.class).gasStationList(annualDTO);
+    }
+    /**
+     * 25.模块化接口
+     */
+    @Override
+    public Observable<ModuleResult> moduleTree() {
+
+        return initRetrofit().create(IModuleService.class).moduleTree();
     }
 }

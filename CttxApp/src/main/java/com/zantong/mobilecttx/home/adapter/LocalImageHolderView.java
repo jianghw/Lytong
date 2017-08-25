@@ -15,7 +15,7 @@ public class LocalImageHolderView implements CBPageAdapter.Holder<Integer>{
     @Override
     public View createView(Context context) {
         imageView = new ImageView(context);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         return imageView;
     }
 

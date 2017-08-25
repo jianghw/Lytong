@@ -309,6 +309,7 @@ public class PullToRefreshLayout extends RelativeLayout {
     /**
      * true-->onTouchEvent
      * false,super--> 下层处理
+     * 下滑为正slideY 上滑为负
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
@@ -325,14 +326,22 @@ public class PullToRefreshLayout extends RelativeLayout {
                 mMyTimer.cancel();
                 mEvents = 0;
                 releasePull();
+                LogUtils.i("onInterceptTouchEvent==" + mLastY);
                 break;
             case MotionEvent.ACTION_MOVE:
                 float deltaX = Math.abs(x - mLastMotionX);
-                float deltaY = Math.abs(y - mLastMotionY);
+                float slideY = y - mLastMotionY;
+                float deltaY = Math.abs(slideY);
 
-                // 当下拉时去处理下拉逻辑，否去处理子类业务逻辑
+                if (mPullDownEnable && !((PullRefreshable) mPullRefreshable).canPullDown())
+                    return false;
+                if (mPullUpEnable && !((PullRefreshable) mPullRefreshable).canPullUp())
+                    return false;
+
+                // 当下拉时或上拉时，否去处理子类业务逻辑
                 if (deltaX < deltaY - 6 && deltaY >= 6) {
-                    return true;
+
+                    return mPullDownEnable && slideY > 0 || mPullUpEnable && slideY < 0;
                 }
             case MotionEvent.ACTION_UP:
                 break;
@@ -434,12 +443,13 @@ public class PullToRefreshLayout extends RelativeLayout {
      */
     protected void slidingDistanceOperation(MotionEvent event) {
         LogUtils.i("onTouchEvent=1=" + "pullDownY==" + pullDownY + "pullUpY==" + pullUpY);
+
         if (pullDownY > 0 ||
                 (((PullRefreshable) mPullRefreshable).canPullDown()
                         && mCanPullDown && mPullDownEnable && mViewState != LOADING)) {
             // 可以下拉，正在加载时不能下拉 对实际滑动距离做缩小，造成用力拉的感觉
             pullDownY = pullDownY + (event.getY() - mLastY) / mRadio;
-
+            LogUtils.i("onTouchEvent=2=" + "pullDownY==" + pullDownY + "pullUpY==" + pullUpY);
             if (pullDownY < 0) {
                 pullDownY = 0;
                 mCanPullDown = false;
