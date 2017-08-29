@@ -28,7 +28,7 @@ public class CanPayCarAdapter extends BaseAdapter<OpenQueryBean.RspInfoBean.User
 
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, OpenQueryBean.RspInfoBean.UserCarsInfoBean data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, OpenQueryBean.RspInfoBean.UserCarsInfoBean data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         holder.query_listory_car_number.setText(data.getCarnum());
         if(Tools.isStrEmpty(data.getUntreatamt())){

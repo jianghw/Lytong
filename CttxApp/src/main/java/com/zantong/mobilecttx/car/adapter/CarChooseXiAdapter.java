@@ -23,7 +23,7 @@ public class CarChooseXiAdapter  extends BaseAdapter<CarXiBean> {
     private Context mContext;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, CarXiBean data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, CarXiBean data) {
         ViewHolder holder = (ViewHolder)viewHolder;
         if (data != null){
             holder.mText.setText(data.getSeriesName());

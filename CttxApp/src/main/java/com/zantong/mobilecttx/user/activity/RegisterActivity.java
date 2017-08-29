@@ -23,13 +23,13 @@ import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.user.bean.VcodeResult;
 import com.zantong.mobilecttx.user.dto.VcodeDTO;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
+import cn.qqtheme.framework.util.ToastUtils;
 
 public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter> {
 
@@ -109,7 +109,6 @@ public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter
                         mVcodeBtn.setText("重发验证码");
                         break;
                 }
-//				}
 
                 super.handleMessage(msg);
             }
@@ -272,7 +271,6 @@ public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter
 
                     @Override
                     public void onError(String errorCode, String msg) {
-                        super.onError(errorCode, msg);
                         hideDialogLoading();
                     }
                 }

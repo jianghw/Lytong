@@ -3,6 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:background="@color/colorWhite"
               android:orientation="vertical">
 
     <TextView
@@ -14,6 +15,11 @@
         android:textColor="@color/colorTvBlack_4d"
         android:textSize="@dimen/fs_18sp"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_1"
+        android:background="@color/colorLineGray_e6"/>
+
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/custom_recycler"
         android:layout_width="match_parent"
@@ -21,7 +27,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_3"
+        android:layout_height="@dimen/ds_1"
         android:background="@color/colorLineGray_e6"/>
 
     <RelativeLayout
@@ -41,5 +47,10 @@
             android:textColor="@color/colorTvBlack_b3"
             android:textSize="@dimen/fs_16sp"/>
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_45"
+        android:background="@color/colorBgGray_f8"/>
 
 </LinearLayout>

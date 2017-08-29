@@ -26,7 +26,7 @@ import android.widget.Toast;
 import com.zantong.mobilecttx.R;
 import cn.qqtheme.framework.util.ui.DensityUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.ImageTools;
+import cn.qqtheme.framework.util.image.ImageTools;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
 import com.zantong.mobilecttx.widght.Viewfinder;
 

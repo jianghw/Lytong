@@ -22,7 +22,7 @@ public class CommonTwoLevelMenuAdapter extends BaseAdapter<CommonTwoLevelMenuBea
     private Context mContext;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, CommonTwoLevelMenuBean data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, CommonTwoLevelMenuBean data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
             holder.mText.setText(data.getContext());

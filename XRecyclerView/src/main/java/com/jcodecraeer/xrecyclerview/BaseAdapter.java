@@ -53,6 +53,10 @@ public abstract class BaseAdapter<ItemDataType> extends
         notifyDataSetChanged();
     }
 
+    public void appendOnly(List<ItemDataType> itemDataTypes) {
+        mItemDataList.addAll(itemDataTypes);
+    }
+
     /**
      * 替换全部数据
      *
@@ -62,6 +66,11 @@ public abstract class BaseAdapter<ItemDataType> extends
         if (!mItemDataList.isEmpty()) mItemDataList.clear();
         mItemDataList.addAll(itemDataTypes);
         notifyDataSetChanged();
+    }
+
+    public void replaceOnly(List<ItemDataType> itemDataTypes) {
+        if (!mItemDataList.isEmpty()) mItemDataList.clear();
+        mItemDataList.addAll(itemDataTypes);
     }
 
     /**
@@ -162,7 +171,7 @@ public abstract class BaseAdapter<ItemDataType> extends
             }
         }
 
-        showData(viewHolder, position, mItemDataList.get(position));
+        bindViewData(viewHolder, position, mItemDataList.get(position));
         viewHolder.itemView.setTag(mItemDataList.get(position));
     }
 
@@ -190,7 +199,7 @@ public abstract class BaseAdapter<ItemDataType> extends
      * @param position   位置
      * @param data       数据集合
      */
-    public abstract void showData(BaseRecyclerViewHolder viewHolder, int position, ItemDataType data);
+    public abstract void bindViewData(BaseRecyclerViewHolder viewHolder, int position, ItemDataType data);
 
     @Override
     public void onClick(View v) {

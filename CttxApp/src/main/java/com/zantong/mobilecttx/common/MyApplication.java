@@ -11,7 +11,7 @@ import com.alibaba.sdk.android.push.register.MiPushRegister;
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
@@ -75,16 +75,20 @@ public class MyApplication extends MultiDexApplication {
      * @param context 上下文对象
      */
     private void initImageLoader(Context context) {
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                context).threadPriority(Thread.NORM_PRIORITY - 2)
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .build();
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+                .defaultDisplayImageOptions(defaultOptions)
+                .threadPriority(Thread.NORM_PRIORITY - 2)
                 .denyCacheImageMultipleSizesInMemory()
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())
                 .diskCacheSize(50 * 1024 * 1024)
                 .tasksProcessingOrder(QueueProcessingType.LIFO)
                 .writeDebugLogs()
-                // Remove for release app
-                .memoryCache(new LruMemoryCache(4 * 1024 * 1024))
-                .memoryCacheSize(4 * 1024 * 1024).build();
+                .build();
         // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config);
     }

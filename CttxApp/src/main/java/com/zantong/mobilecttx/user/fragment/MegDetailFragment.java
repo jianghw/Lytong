@@ -24,7 +24,7 @@ import com.zantong.mobilecttx.contract.IMegDetailAtyContract;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.user.bean.Meg;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
-import com.zantong.mobilecttx.utils.ImageOptions;
+import cn.qqtheme.framework.util.image.ImageOptions;
 import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 

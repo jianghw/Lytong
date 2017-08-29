@@ -32,7 +32,7 @@ import com.zantong.mobilecttx.huodong.bean.ActivityCarResult;
 import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.utils.DateUtils;
-import com.zantong.mobilecttx.utils.ImageOptions;
+import cn.qqtheme.framework.util.image.ImageOptions;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 

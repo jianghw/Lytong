@@ -25,7 +25,7 @@ public class NavAdapter extends BaseAdapter<AppInfo> {
     private Context mContext;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, AppInfo data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, AppInfo data) {
         ViewHolder holder = (ViewHolder)viewHolder;
         if (data != null){
             holder.mName.setText(data.getAppLabel());

@@ -33,7 +33,7 @@ public class OilPriceAdapter extends BaseAdapter<RechargeBean> {
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, final int position, final RechargeBean data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, final int position, final RechargeBean data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
             holder.mAmount.setText(data.getAmount());

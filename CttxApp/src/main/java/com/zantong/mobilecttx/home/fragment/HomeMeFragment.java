@@ -50,7 +50,6 @@ import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
 import com.zantong.mobilecttx.user.bean.MessageCountBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.user.bean.RspInfoBean;
-import com.zantong.mobilecttx.utils.ImageOptions;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationHistoryAcitvity;
@@ -63,6 +62,7 @@ import cn.qqtheme.framework.util.AppUtils;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.ToastUtils;
+import cn.qqtheme.framework.util.image.ImageOptions;
 
 import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 

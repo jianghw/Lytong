@@ -40,7 +40,7 @@ public class RechargeOrderAdapter extends BaseAdapter<RechargeOrderBean> {
     private int mTag;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, final int position, final RechargeOrderBean data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, final int position, final RechargeOrderBean data) {
         final ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
             holder.mOrderAmount.setText("￥" + data.getRechargeMoney());

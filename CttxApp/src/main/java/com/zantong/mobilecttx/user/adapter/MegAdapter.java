@@ -18,7 +18,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.qqtheme.framework.util.DateTools;
 
-import static com.zantong.mobilecttx.utils.ImageOptions.getMessageOptions;
+import static cn.qqtheme.framework.util.image.ImageOptions.getMessageOptions;
 
 /**
  * Created by zhoujie on 2017/2/13.
@@ -55,7 +55,7 @@ public class MegAdapter extends BaseAdapter<MessageType> {
      * @param data       数据集合
      */
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, MessageType data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, MessageType data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
             holder.mTitle.setText(data.getMessageName());

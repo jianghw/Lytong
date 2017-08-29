@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 public class CommonProblemAdapter extends BaseAdapter<CommonProblem> {
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, CommonProblem data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, CommonProblem data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
             holder.mTextPositon.setText(data.getProblemId() + "、");

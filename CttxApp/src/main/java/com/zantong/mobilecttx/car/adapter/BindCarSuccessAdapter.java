@@ -26,7 +26,7 @@ public class BindCarSuccessAdapter extends BaseAdapter<CanPayCarBean.RspInfoBean
 
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, CanPayCarBean.RspInfoBean.UserCarsInfoBean data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, CanPayCarBean.RspInfoBean.UserCarsInfoBean data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         holder.car_number.setText(data.getCarnum());
         if(data.getEnginenum() != null){

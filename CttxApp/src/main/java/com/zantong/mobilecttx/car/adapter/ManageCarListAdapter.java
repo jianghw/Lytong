@@ -27,8 +27,8 @@ public class ManageCarListAdapter extends BaseAdapter<VehicleLicenseBean> {
     private List<VehicleLicenseBean> mUserCarInfoBeanList;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder,
-                         int position, VehicleLicenseBean vehicleLicenseBean) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder,
+                             int position, VehicleLicenseBean vehicleLicenseBean) {
         if (vehicleLicenseBean != null) {
             switch (viewHolder.getItemViewType()) {
                 case ITEM_TYPE_TITLE:

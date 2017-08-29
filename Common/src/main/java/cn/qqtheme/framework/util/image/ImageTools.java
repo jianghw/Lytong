@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.utils;
+package cn.qqtheme.framework.util.image;
 
 import android.content.Context;
 import android.graphics.Bitmap;

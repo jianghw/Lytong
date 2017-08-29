@@ -79,9 +79,7 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
                     SHATools sha = new SHATools();
                     String pwd = RSAUtils.strByEncryption(
                             SHATools.hexString(sha.eccryptSHA1(mLoginActivity.mapData().get("pswd"))), true);
-//                    String phone = mLoginActivity.mapData().get("phoenum");
-//                    SHAutils sha = new SHAutils();
-//                    String pwd = SHAutils.hexString(sha.eccryptSHA1(mLoginActivity.mapData().get("pswd")));
+
                     masp.put("phoenum", phone);
                     masp.put("pswd", pwd);
                     masp.put("devicetoken", PublicData.getInstance().imei);

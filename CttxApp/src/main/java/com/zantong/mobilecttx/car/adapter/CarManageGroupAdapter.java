@@ -31,7 +31,7 @@ public class CarManageGroupAdapter extends BaseAdapter<CarInfoDTO> {
     private Context mContext;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, CarInfoDTO data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, CarInfoDTO data) {
         switch (viewHolder.getItemViewType()) {
             case TYPE_TITLE:
                 TitleViewHolder holder0 = (TitleViewHolder) viewHolder;

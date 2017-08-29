@@ -24,7 +24,7 @@ public class OrderAdapter extends BaseAdapter<OrderItem> {
     private Context mContext;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, OrderItem data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, OrderItem data) {
         ViewHolder holder = (ViewHolder)viewHolder;
         if (data != null){
             // /* 0-初始 1-核保成功 2-支付完成 3-签单成功  */

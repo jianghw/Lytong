@@ -20,7 +20,7 @@ public class SetPayCarAdapter extends BaseAdapter<UserCarInfoBean> {
     private Object showFlag = 0;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position,UserCarInfoBean data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, UserCarInfoBean data) {
         ViewHolder holder = (ViewHolder)viewHolder;
         if (data != null){
             holder.car_number.setText(data.getCarnum());

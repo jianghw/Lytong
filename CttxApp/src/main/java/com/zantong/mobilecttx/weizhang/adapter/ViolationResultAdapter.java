@@ -25,7 +25,7 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, final ViolationBean violationBean) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, final ViolationBean violationBean) {
         ViewHolder holder = (ViewHolder) viewHolder;
 
         if (violationBean != null) {

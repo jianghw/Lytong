@@ -10,7 +10,6 @@
 
     <!--加油充值-->
     <LinearLayout
-        android:id="@+id/lay_order"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_225"
         android:orientation="horizontal">
@@ -111,67 +110,139 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_320"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_locality_1"
+        <LinearLayout
+            android:id="@+id/lay_native_1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/icon_oil_favorable"
-            android:gravity="center"
-            android:textColor="@color/colorTvBlack_4d"
-            android:textSize="@dimen/fs_16sp"
-            tools:text="购车贷款"/>
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_native_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="center"
+                android:src="@mipmap/icon_oil_favorable"/>
+
+            <TextView
+                android:id="@+id/tv_native_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/ds_30"
+                android:layout_marginTop="@dimen/ds_30"
+                android:gravity="center"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="购车贷款"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="1px"
             android:layout_height="match_parent"
             android:background="@color/colorLineGray_e6"/>
 
-        <TextView
-            android:id="@+id/tv_locality_2"
+        <LinearLayout
+            android:id="@+id/lay_native_2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/icon_oil_favorable"
-            android:gravity="center"
-            android:textColor="@color/colorTvBlack_4d"
-            android:textSize="@dimen/fs_16sp"
-            tools:text="购车贷款"/>
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_native_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="center"
+                android:src="@mipmap/icon_oil_favorable"/>
+
+            <TextView
+                android:id="@+id/tv_native_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/ds_30"
+                android:layout_marginTop="@dimen/ds_30"
+                android:gravity="center"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="购车贷款"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="1px"
             android:layout_height="match_parent"
             android:background="@color/colorLineGray_e6"/>
 
-        <TextView
-            android:id="@+id/tv_locality_3"
+        <LinearLayout
+            android:id="@+id/lay_native_3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/icon_oil_favorable"
-            android:gravity="center"
-            android:textColor="@color/colorTvBlack_4d"
-            android:textSize="@dimen/fs_16sp"
-            tools:text="购车贷款"/>
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_native_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="center"
+                android:src="@mipmap/icon_oil_favorable"/>
+
+            <TextView
+                android:id="@+id/tv_native_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/ds_30"
+                android:layout_marginTop="@dimen/ds_30"
+                android:gravity="center"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="购车贷款"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="1px"
             android:layout_height="match_parent"
             android:background="@color/colorLineGray_e6"/>
 
-        <TextView
-            android:id="@+id/tv_locality_4"
+        <LinearLayout
+            android:id="@+id/lay_native_4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="@mipmap/icon_oil_favorable"
-            android:gravity="center"
-            android:textColor="@color/colorTvBlack_4d"
-            android:textSize="@dimen/fs_16sp"
-            tools:text="购车贷款"/>
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_native_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="center"
+                android:src="@mipmap/icon_oil_favorable"/>
+
+            <TextView
+                android:id="@+id/tv_native_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/ds_30"
+                android:layout_marginTop="@dimen/ds_30"
+                android:gravity="center"
+                android:textColor="@color/colorTvBlack_4d"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="购车贷款"/>
+
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

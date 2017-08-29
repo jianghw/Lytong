@@ -10,7 +10,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.presenter.InsurancePayPresenterImp;
 import com.zantong.mobilecttx.user.bean.CTTXInsurancePayBean;
-import com.zantong.mobilecttx.utils.ImageTools;
+import cn.qqtheme.framework.util.image.ImageTools;
 import com.zantong.mobilecttx.utils.NetUtils;
 
 import org.apache.cordova.CallbackContext;

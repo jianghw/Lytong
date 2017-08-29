@@ -25,7 +25,7 @@ public class ChooseAddressAdapter extends BaseAdapter<PoiInfo>{
     private OnRecyclerviewItemListener mOnRecyclerviewItemListener;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position,PoiInfo data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, PoiInfo data) {
         ViewHolder holder = (ViewHolder)viewHolder;
         if (data != null){
             holder.mText.setText(data.address);

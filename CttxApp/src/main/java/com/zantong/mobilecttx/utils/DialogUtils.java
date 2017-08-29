@@ -43,6 +43,7 @@ import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.util.image.ImageTools;
 import cn.qqtheme.framework.util.ui.DensityUtils;
 
 

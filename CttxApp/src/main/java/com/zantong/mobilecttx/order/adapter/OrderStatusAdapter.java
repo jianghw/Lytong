@@ -19,7 +19,7 @@ import java.text.DecimalFormat;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-import static com.zantong.mobilecttx.utils.ImageOptions.getMessageOptions;
+import static cn.qqtheme.framework.util.image.ImageOptions.getMessageOptions;
 
 /**
  * Created by zhoujie on 2017/2/13.
@@ -51,7 +51,7 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
      * 数据绑定
      */
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, final OrderListBean data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, final OrderListBean data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
             String orderNum = mContext.getResources().getString(R.string.tv_order_num);

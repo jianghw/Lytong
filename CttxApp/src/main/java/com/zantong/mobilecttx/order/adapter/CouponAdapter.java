@@ -16,7 +16,7 @@ import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
-import com.zantong.mobilecttx.utils.ImageOptions;
+import cn.qqtheme.framework.util.image.ImageOptions;
 
 import java.text.DecimalFormat;
 
@@ -52,8 +52,8 @@ public class CouponAdapter extends BaseAdapter<CouponFragmentBean> {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @SuppressLint("SetTextI18n")
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position,
-                          CouponFragmentBean couponFragmentBean) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position,
+                             CouponFragmentBean couponFragmentBean) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (couponFragmentBean != null) {
             //TODO 靠~Glide

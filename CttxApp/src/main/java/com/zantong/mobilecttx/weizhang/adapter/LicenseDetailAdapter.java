@@ -30,7 +30,7 @@ public class LicenseDetailAdapter extends BaseAdapter<RspInfoBean.ViolationInfoB
     private Context mAdapterContext;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, RspInfoBean.ViolationInfoBean violationInfoBean) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, RspInfoBean.ViolationInfoBean violationInfoBean) {
         ViewHolder holder = (ViewHolder) viewHolder;
 
         if (violationInfoBean == null) return;

@@ -26,7 +26,7 @@ public class HundredPlanCarsAdapter extends BaseAdapter<UserCarInfoBean> {
 
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, UserCarInfoBean data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, UserCarInfoBean data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
             holder.mCarNumber.setText(data.getCarnum());

@@ -22,7 +22,7 @@ public class MegSecondLevelAdapter extends BaseAdapter<Meg> {
     private Context mContext;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, Meg data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, Meg data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
             holder.mContent.setText(data.getTitle());

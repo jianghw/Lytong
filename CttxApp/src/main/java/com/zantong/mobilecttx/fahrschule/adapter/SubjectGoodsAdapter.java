@@ -22,7 +22,7 @@ public class SubjectGoodsAdapter extends BaseAdapter<SubjectGoodsBean> {
     private Context mContext;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, final int position, SubjectGoodsBean goodsBean) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, final int position, SubjectGoodsBean goodsBean) {
         ViewHolder holder = (ViewHolder) viewHolder;
 
         if (goodsBean != null) {

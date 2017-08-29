@@ -1,29 +1,25 @@
-package com.zantong.mobilecttx.utils;
+package cn.qqtheme.framework.util.image;
 
 import android.graphics.Bitmap;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.zantong.mobilecttx.R;
+
+import cn.qqtheme.framework.R;
 
 /**
  * 图片显示属性工具类
- *
- * @author Sandy
- *         create at 16/9/18 下午5:58
  */
 public class ImageOptions {
     /**
-     * 默认图片加载
-     *
-     * @return
+     * 默认 banner图片加载
      */
     public static DisplayImageOptions getDefaultOptions() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .resetViewBeforeLoading(true)
-                .showImageForEmptyUri(R.mipmap.ic_default_loading)
-                .showImageOnFail(R.mipmap.ic_default_loading)
-                .showImageOnLoading(R.mipmap.ic_default_loading)
+                .showImageForEmptyUri(R.mipmap.default_330_160)
+                .showImageOnFail(R.mipmap.default_330_160)
+                .showImageOnLoading(R.mipmap.default_330_160)
                 .cacheInMemory(false)
                 .cacheOnDisk(true)
                 .considerExifParams(true)
@@ -64,23 +60,6 @@ public class ImageOptions {
     }
 
     /**
-     * 默认车辆图片
-     */
-    public static DisplayImageOptions getCarOptions() {
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .resetViewBeforeLoading(true)
-                .showImageForEmptyUri(R.mipmap.open_no_car_image)
-                .showImageOnFail(R.mipmap.open_no_car_image)
-                .showImageOnLoading(R.mipmap.open_no_car_image)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
-        return options;
-    }
-
-    /**
      * 默认云键背景图片加载
      *
      * @return
@@ -102,17 +81,64 @@ public class ImageOptions {
      * 获取头像
      */
     public static DisplayImageOptions getAvatarOptions() {
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .resetViewBeforeLoading(true)
-                .cacheInMemory(true)
+        return new DisplayImageOptions.Builder()
                 .showImageForEmptyUri(R.mipmap.icon_portrai)
                 .showImageOnLoading(R.mipmap.icon_portrai)
                 .showImageOnFail(R.mipmap.icon_portrai)
                 .cacheOnDisk(true)
+                .cacheInMemory(true)
                 .displayer(new RoundedBitmapDisplayer(200))
-                .considerExifParams(true)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
-        return options;
+    }
+
+    /**
+     * 优惠 本地模块显示
+     */
+    public static DisplayImageOptions getNativeCircleOptions() {
+        return new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.mipmap.icon_oil_favorable)
+                .showImageForEmptyUri(R.mipmap.icon_oil_favorable)
+                .showImageOnFail(R.mipmap.icon_oil_favorable)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
+    }
+
+    /**
+     * 优惠 分享模块
+     */
+    public static DisplayImageOptions getShareRectangleOptions() {
+        return new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.mipmap.default_750_300)
+                .showImageForEmptyUri(R.mipmap.default_750_300)
+                .showImageOnFail(R.mipmap.default_750_300)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
+    }
+
+    public static DisplayImageOptions getTwoRectangleOptions() {
+        return new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.mipmap.default_330_160)
+                .showImageForEmptyUri(R.mipmap.default_330_160)
+                .showImageOnFail(R.mipmap.default_330_160)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
+    }
+
+    public static DisplayImageOptions getThreeRectangleOptions() {
+        return new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.mipmap.default_220_160)
+                .showImageForEmptyUri(R.mipmap.default_220_160)
+                .showImageOnFail(R.mipmap.default_220_160)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
     }
 }

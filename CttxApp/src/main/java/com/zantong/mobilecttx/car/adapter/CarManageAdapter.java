@@ -26,7 +26,7 @@ public class CarManageAdapter extends BaseAdapter<CarInfoDTO> {
     private int payNumber = 0;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, CarInfoDTO data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, CarInfoDTO data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
             holder.mCarNumber.setText(data.getCarnum());

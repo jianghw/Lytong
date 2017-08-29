@@ -24,7 +24,7 @@ public class MyCarAdapter extends BaseAdapter<MyCarBean> {
     private Context mContext;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, MyCarBean data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, MyCarBean data) {
         ViewHolder holder = (ViewHolder)viewHolder;
         if (data != null){
             holder.mCarName.setText(data.getCar_name());

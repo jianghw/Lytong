@@ -23,7 +23,7 @@ public class CommonListAdapter extends BaseAdapter<String> {
     private Context mContext;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, String data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, String data) {
         ViewHolder holder = (ViewHolder)viewHolder;
         if (data != null){
             holder.mText.setText(data);

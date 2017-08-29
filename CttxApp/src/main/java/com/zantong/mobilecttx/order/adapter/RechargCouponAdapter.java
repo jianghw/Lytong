@@ -27,7 +27,7 @@ public class RechargCouponAdapter extends BaseAdapter<RechargeCouponBean> {
      * 优惠卷 type  优惠券类型：1 无；2 折扣；3 代金券
      */
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, final int position, RechargeCouponBean couponBean) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, final int position, RechargeCouponBean couponBean) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (couponBean != null) {
 

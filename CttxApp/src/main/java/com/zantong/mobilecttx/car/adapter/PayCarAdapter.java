@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 public class PayCarAdapter extends BaseAdapter<PayCar> {
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, PayCar data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, PayCar data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         holder.mNum.setText(data.getCarnum());
     }

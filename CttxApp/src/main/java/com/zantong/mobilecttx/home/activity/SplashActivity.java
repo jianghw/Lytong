@@ -25,7 +25,7 @@ import com.zantong.mobilecttx.contract.ISplashAtyContract;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.presenter.home.SplashPresenter;
-import com.zantong.mobilecttx.utils.ImageOptions;
+import cn.qqtheme.framework.util.image.ImageOptions;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 

@@ -782,7 +782,6 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         }
 
         commitInfo();
-        commitYingXiaoDataForLYT(applyCTCardDTO);
     }
 
     /**

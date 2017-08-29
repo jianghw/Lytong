@@ -25,7 +25,7 @@ public class PayHistoryAdapter extends BaseAdapter<ViolationInfo> {
     private Context mContext;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, ViolationInfo data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, ViolationInfo data) {
         ViewHolder holder = (ViewHolder)viewHolder;
         if (data != null){
             StringBuilder sb = new StringBuilder();

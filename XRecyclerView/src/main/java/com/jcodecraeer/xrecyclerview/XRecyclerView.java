@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.widget.Adapter;
 
 import com.jcodecraeer.xrecyclerview.touch.Closeable;
 import com.jcodecraeer.xrecyclerview.touch.DefaultItemTouchHelper;
@@ -566,6 +565,11 @@ public class XRecyclerView extends RecyclerView {
         mWrapAdapter = new WrapAdapter(mHeaderViews, mFootViews, adapter);
         super.setAdapter(mWrapAdapter);
         mAdapter.registerAdapterDataObserver(mDataObserver);
+    }
+
+    @Override
+    public Adapter getAdapter() {
+        return mAdapter;
     }
 
     private SwipeMenuCreator mDefaultMenuCreator = new SwipeMenuCreator() {

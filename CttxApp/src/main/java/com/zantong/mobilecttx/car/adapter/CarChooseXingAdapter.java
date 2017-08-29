@@ -23,7 +23,7 @@ public class CarChooseXingAdapter extends BaseAdapter<CarStyleInfoBean>{
     private Context mContext;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, int position, CarStyleInfoBean data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, CarStyleInfoBean data) {
         ViewHolder holder = (ViewHolder)viewHolder;
         if (data != null){
             holder.mText.setText(data.getCarModelName());

@@ -25,7 +25,7 @@ public class CommonSelectAdapter extends BaseAdapter<CommonTwoLevelMenuBean> {
     private Context mContext;
 
     @Override
-    public void showData(BaseRecyclerViewHolder viewHolder, final int position, CommonTwoLevelMenuBean data) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, final int position, CommonTwoLevelMenuBean data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
             holder.mName.setText(data.getContext());

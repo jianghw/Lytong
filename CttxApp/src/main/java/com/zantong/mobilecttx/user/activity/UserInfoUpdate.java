@@ -28,7 +28,7 @@ import com.zantong.mobilecttx.presenter.UserInfoUpdatePresenter;
 import com.zantong.mobilecttx.utils.StringUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
-import com.zantong.mobilecttx.utils.imagetools.ImageLoad;
+import cn.qqtheme.framework.util.image.ImageLoadUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.popwindow.IOSpopwindow;
 
@@ -105,7 +105,7 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
     public void initData() {
         File file = getHeadImageFile();
         if (file == null)
-            ImageLoad.loadHead(
+            ImageLoadUtils.loadHead(
                     PublicData.getInstance().mLoginInfoBean.getPortrait(),
                     user_head_image
             );
@@ -137,7 +137,7 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
     public void updateView(Object object, int index) {
         switch (index) {
             case 1:
-                ImageLoad.loadHead(mapData().get("portrait"), user_head_image);
+                ImageLoadUtils.loadHead(mapData().get("portrait"), user_head_image);
                 break;
         }
     }
@@ -437,7 +437,7 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
                             if (Tools.isStrEmpty(PublicData.getInstance().mLoginInfoBean.getPortrait())) {
                                 mUserInfoUpdatePresenter.loadView(1);
                             } else {
-                                ImageLoad.loadHead(PublicData.getInstance().mLoginInfoBean.getPortrait(), user_head_image);
+                                ImageLoadUtils.loadHead(PublicData.getInstance().mLoginInfoBean.getPortrait(), user_head_image);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

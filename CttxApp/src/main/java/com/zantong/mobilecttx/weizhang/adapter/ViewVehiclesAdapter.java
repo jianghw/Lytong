@@ -13,7 +13,6 @@ import com.zantong.mobilecttx.card.bean.OpenQueryBean;
 import com.zantong.mobilecttx.utils.AmountUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.BaseRecyclerAdapter;
 import com.zantong.mobilecttx.utils.Tools;
-import com.zantong.mobilecttx.utils.imagetools.ImageLoad;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -95,8 +94,6 @@ public class ViewVehiclesAdapter extends BaseRecyclerAdapter<OpenQueryBean.RspIn
                     holder.query_history_time.setTextColor(getContext().getResources().getColor(R.color.colorTranFontRed));
                 }
             }
-
-            ImageLoad.load(mItemLists.get(position).getCarimage(), holder.view_vehicles_image_head);
         }
     }
 
@@ -107,7 +104,6 @@ public class ViewVehiclesAdapter extends BaseRecyclerAdapter<OpenQueryBean.RspIn
         }else{
             return ITEM_TYPE.ITEM_TYPE_NORAML.ordinal();
         }
-//        return super.getItemViewType(position);
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
