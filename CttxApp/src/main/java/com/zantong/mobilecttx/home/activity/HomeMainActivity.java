@@ -27,7 +27,7 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 
 import cn.qqtheme.framework.contract.bean.BaseResult;
-import cn.qqtheme.framework.global.GlobalConfig;
+import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
@@ -152,7 +152,7 @@ public class HomeMainActivity extends BaseJxActivity {
                 if (mHomeUnimpededFragment != null)
                     FragmentUtils.hideAllShowFragment(fragmentManager, mHomeUnimpededFragment);
 
-                GlobalConfig.getInstance().eventIdByUMeng(18);
+                JxConfig.getInstance().eventIdByUMeng(18);
                 break;
             case 1:
                 if (mHomeDiscountsFragment == null) {
@@ -162,7 +162,7 @@ public class HomeMainActivity extends BaseJxActivity {
                 if (mHomeDiscountsFragment != null)
                     FragmentUtils.hideAllShowFragment(fragmentManager, mHomeDiscountsFragment);
 
-                GlobalConfig.getInstance().eventIdByUMeng(19);
+                JxConfig.getInstance().eventIdByUMeng(19);
                 break;
             case 2:
                 if (mHomeMeFragment == null) {

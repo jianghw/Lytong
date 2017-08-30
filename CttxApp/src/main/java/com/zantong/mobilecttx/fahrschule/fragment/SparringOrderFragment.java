@@ -10,7 +10,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.PayBrowserActivity;
+import com.zantong.mobilecttx.browser.PayBrowserActivity;
 import com.zantong.mobilecttx.contract.fahrschule.ISparringOrderContract;
 import com.zantong.mobilecttx.eventbus.SparringOrderEvent;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
@@ -22,7 +22,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -212,10 +212,10 @@ public class SparringOrderFragment extends BaseRefreshJxFragment
             getActivity().startActivity(intent);
         } else {
             Intent intent = new Intent(getActivity(), PayBrowserActivity.class);
-            intent.putExtra(GlobalConstant.putExtra.web_title_extra, "支付");
-            intent.putExtra(GlobalConstant.putExtra.web_url_extra, result.getData());
-            intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, mTvOrderNum.getText().toString());
-            getActivity().startActivityForResult(intent, GlobalConstant.requestCode.fahrschule_order_num_web);
+            intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付");
+            intent.putExtra(JxGlobal.putExtra.web_url_extra, result.getData());
+            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, mTvOrderNum.getText().toString());
+            getActivity().startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
         }
     }
 

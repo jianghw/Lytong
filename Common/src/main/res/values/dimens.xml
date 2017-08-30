@@ -94,6 +94,7 @@
     <dimen name="ds_165">55dp</dimen>
     <dimen name="ds_168">56dp</dimen>
     <dimen name="ds_180">60dp</dimen>
+    <dimen name="ds_195">65dp</dimen>
     <dimen name="ds_200">66.67dp</dimen>
     <dimen name="ds_201">67dp</dimen>
     <dimen name="ds_204">68dp</dimen>

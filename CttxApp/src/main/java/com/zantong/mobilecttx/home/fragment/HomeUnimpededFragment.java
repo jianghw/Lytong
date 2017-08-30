@@ -18,11 +18,10 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
-import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
+import com.zantong.mobilecttx.browser.AdvBrowserActivity;
 import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
@@ -62,7 +61,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import cn.qqtheme.framework.global.GlobalConfig;
+import cn.qqtheme.framework.global.JxConfig;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
@@ -218,7 +218,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         mTvOil.setOnClickListener(this);
         mTvCheck = (TextView) view.findViewById(R.id.tv_check);
         mTvCheck.setOnClickListener(this);
-        mTvCarwash = (TextView) view.findViewById(R.id.tv_carwash);
+        mTvCarwash = (TextView) view.findViewById(R.id.tv_license);
         mTvCarwash.setOnClickListener(this);
         mTvDrive = (TextView) view.findViewById(R.id.tv_drive);
         mTvDrive.setOnClickListener(this);
@@ -533,59 +533,77 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         switch (v.getId()) {
             case R.id.img_msg://消息
             case R.id.tv_msg_count:
-                GlobalConfig.getInstance().eventIdByUMeng(15);
+                JxConfig.getInstance().eventIdByUMeng(15);
 
                 Act.getInstance().gotoIntentLogin(getActivity(), MegTypeActivity.class);
                 break;
             case R.id.img_scan://扫描
             case R.id.tv_scan:
-                GlobalConfig.getInstance().eventIdByUMeng(17);
+                JxConfig.getInstance().eventIdByUMeng(17);
                 takeCapture();
                 break;
-            case R.id.tv_oil://加油
-                GlobalConfig.getInstance().eventIdByUMeng(2);
+            case R.id.tv_oil://优惠加油
+                showContacts();
+                break;
+            case R.id.tv_license://驾驶证查分
+                JxConfig.getInstance().eventIdByUMeng(7);
 
-                Act.getInstance().gotoIntentLogin(this.getActivity(), RechargeActivity.class);
+                licenseCheckGrade();
                 break;
             case R.id.tv_check://年检
-                GlobalConfig.getInstance().eventIdByUMeng(4);
+            JxConfig.getInstance().eventIdByUMeng(4);
 
-                enterDrivingActivity();
-                break;
-            case R.id.tv_carwash://驾驶证查分
-                GlobalConfig.getInstance().eventIdByUMeng(7);
-
-                LicenseFileNumDTO bean = SPUtils.getInstance(
-                ).getLicenseFileNumDTO();
-                if (!PublicData.getInstance().loginFlag ||
-                        bean == null && TextUtils.isEmpty(PublicData.getInstance().filenum)) {
-                    Act.getInstance().gotoIntentLogin(getActivity(), LicenseCheckGradeActivity.class);
-                } else if (bean != null || !TextUtils.isEmpty(PublicData.getInstance().filenum)
-                        && !TextUtils.isEmpty(PublicData.getInstance().getdate)) {
-                    LicenseFileNumDTO loginBean = new LicenseFileNumDTO();
-                    loginBean.setFilenum(PublicData.getInstance().filenum);
-                    loginBean.setStrtdt(PublicData.getInstance().getdate);
-
-                    Intent intent = new Intent(getActivity(), LicenseDetailActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable(LicenseCheckGradeActivity.KEY_BUNDLE, bean != null ? bean : loginBean);
-                    bundle.putBoolean(LicenseCheckGradeActivity.KEY_BUNDLE_FINISH, true);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                } else {
-                    Act.getInstance().gotoIntentLogin(getActivity(), LicenseCheckGradeActivity.class);
-                }
-                break;
+            enterDrivingActivity();
+            break;
             case R.id.tv_drive://洗车
-                GlobalConfig.getInstance().eventIdByUMeng(9);
+                JxConfig.getInstance().eventIdByUMeng(9);
 
-                PublicData.getInstance().webviewUrl = Config.HOME_CAR_WASH_URL;
-                PublicData.getInstance().webviewTitle = "洗车";
-                PublicData.getInstance().isCheckLogin = true;
-                Act.getInstance().gotoIntent(this.getActivity(), BrowserActivity.class);
+                Intent intent = new Intent();
+                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "洗车");
+                intent.putExtra(JxGlobal.putExtra.browser_url_extra, Config.HOME_CAR_WASH_URL);
+                Act.getInstance().gotoLoginByIntent(getActivity(), AdvBrowserActivity.class, intent);
                 break;
             default:
                 break;
+        }
+    }
+
+    protected void licenseCheckGrade() {
+        LicenseFileNumDTO bean = SPUtils.getInstance().getLicenseFileNumDTO();
+        if (!PublicData.getInstance().loginFlag ||
+                bean == null && TextUtils.isEmpty(PublicData.getInstance().filenum)) {
+            Act.getInstance().gotoIntentLogin(getActivity(), LicenseCheckGradeActivity.class);
+        } else if (bean != null || !TextUtils.isEmpty(PublicData.getInstance().filenum)
+                && !TextUtils.isEmpty(PublicData.getInstance().getdate)) {
+            LicenseFileNumDTO loginBean = new LicenseFileNumDTO();
+            loginBean.setFilenum(PublicData.getInstance().filenum);
+            loginBean.setStrtdt(PublicData.getInstance().getdate);
+
+            Intent intent = new Intent(getActivity(), LicenseDetailActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(LicenseCheckGradeActivity.KEY_BUNDLE, bean != null ? bean : loginBean);
+            bundle.putBoolean(LicenseCheckGradeActivity.KEY_BUNDLE_FINISH, true);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        } else {
+            Act.getInstance().gotoIntentLogin(getActivity(), LicenseCheckGradeActivity.class);
+        }
+    }
+
+    /**
+     * 加油地图
+     */
+    public void showContacts() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, 3000, new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE});
+        } else {
+            Intent intent = new Intent();
+            intent.putExtra(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
+            Act.getInstance().gotoLoginByIntent(getActivity(), BaiduMapParentActivity.class, intent);
         }
     }
 
@@ -650,5 +668,20 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     @PermissionFail(requestCode = 2000)
     public void doDrivingFail() {
         ToastUtils.toastShort("您已关闭定位权限,请手机设置中打开");
+    }
+
+    /**
+     * 申请拍照运行时权限
+     */
+    @PermissionSuccess(requestCode = 3000)
+    public void doMapPermissionSuccess() {
+        Intent intent = new Intent();
+        intent.putExtra(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
+        Act.getInstance().gotoLoginByIntent(getActivity(), BaiduMapParentActivity.class, intent);
+    }
+
+    @PermissionFail(requestCode = 3000)
+    public void doMapPermissionFail() {
+        ToastUtils.toastShort("此功能需要打开相关的地图权限");
     }
 }

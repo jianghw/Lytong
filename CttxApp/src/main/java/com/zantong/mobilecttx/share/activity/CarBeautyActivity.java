@@ -7,12 +7,11 @@ import android.widget.ImageView;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
+import com.zantong.mobilecttx.browser.AdvBrowserActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
-import cn.qqtheme.framework.global.GlobalConfig;
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxConfig;
+import cn.qqtheme.framework.global.JxGlobal;
 
 /**
  * Created by jianghw on 2017/7/7.
@@ -31,7 +30,7 @@ public class CarBeautyActivity extends BaseJxActivity implements View.OnClickLis
     protected void bundleIntent(Bundle savedInstanceState) {
         Intent intent = getIntent();
         if (intent != null) {
-            mCurPosition = intent.getIntExtra(GlobalConstant.putExtra.share_position_extra, 0);
+            mCurPosition = intent.getIntExtra(JxGlobal.putExtra.share_position_extra, 0);
         }
     }
 
@@ -46,7 +45,7 @@ public class CarBeautyActivity extends BaseJxActivity implements View.OnClickLis
 
         initView(view);
 
-        GlobalConfig.getInstance().eventIdByUMeng(24);
+        JxConfig.getInstance().eventIdByUMeng(24);
     }
 
     @Override
@@ -66,17 +65,17 @@ public class CarBeautyActivity extends BaseJxActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.img_admissions:
                 mCurPosition = 1;
-                PublicData.getInstance().webviewUrl = "http://m.hiservice.com.cn/activity/freekongtiaoyanghu?source=gonghangcx";
-                PublicData.getInstance().webviewTitle = "车内空调养护";
-                PublicData.getInstance().isCheckLogin = true;
-                Act.getInstance().gotoIntent(this, BrowserActivity.class);
+                Intent i = new Intent();
+                i.putExtra(JxGlobal.putExtra.browser_title_extra, "车内空调养护");
+                i.putExtra(JxGlobal.putExtra.browser_url_extra, "http://m.hiservice.com.cn/activity/freekongtiaoyanghu?source=gonghangcx");
+                Act.getInstance().gotoLoginByIntent(this, AdvBrowserActivity.class, i);
                 break;
             case R.id.img_violation:
                 mCurPosition = 2;
-                PublicData.getInstance().webviewUrl = "http://m.hiservice.com.cn/market/icbc58";
-                PublicData.getInstance().webviewTitle = "汽车冰蜡";
-                PublicData.getInstance().isCheckLogin = true;
-                Act.getInstance().gotoIntent(this, BrowserActivity.class);
+                Intent intent = new Intent();
+                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "汽车冰蜡");
+                intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://m.hiservice.com.cn/market/icbc58");
+                Act.getInstance().gotoLoginByIntent(this, AdvBrowserActivity.class, intent);
                 break;
             default:
                 break;

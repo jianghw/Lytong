@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.user.activity;
+package com.zantong.mobilecttx.order.activity;
 
 import android.content.Intent;
 import android.view.Gravity;
@@ -25,15 +25,13 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.PayWebActivity;
 
 import butterknife.Bind;
+import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 我的订单
- *
- * @author Sandy
- *         create at 16/6/6 上午11:35
  */
-public class OrderDetailActivity extends BaseMvpActivity<IOrderView, OrderPresenter> {
+public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPresenter> {
     @Bind(R.id.order_detail_insname)
     TextView mInsName; //保险名称
     @Bind(R.id.order_detail_appnum)
@@ -76,6 +74,7 @@ public class OrderDetailActivity extends BaseMvpActivity<IOrderView, OrderPresen
     private String mOrigtranserlnum;
     OrderItem item;
     private boolean isFirst = true;
+
     @Override
     public void initData() {
 
@@ -96,10 +95,10 @@ public class OrderDetailActivity extends BaseMvpActivity<IOrderView, OrderPresen
             String startTm = item.getInsInfo().get(0).getStrtdt();
             String endTm = item.getInsInfo().get(0).getTmtdt();
             mInsTm.setText(startTm.substring(0, 4) + "-" + startTm.substring(4, 6) + "-" + startTm.substring(6, 8) + "至" +
-                    endTm.substring(0, 4) + "-" + endTm.substring(4, 6) + "-" + endTm.substring(6,8));
+                    endTm.substring(0, 4) + "-" + endTm.substring(4, 6) + "-" + endTm.substring(6, 8));
 
-            mInsPrem.setText(StringUtils.getPriceString(item.getInsInfo().get(0).getInsdamt())+"元");
-            mInsDamt.setText(StringUtils.getPriceString(item.getInsInfo().get(0).getInsprem())+"元");
+            mInsPrem.setText(StringUtils.getPriceString(item.getInsInfo().get(0).getInsdamt()) + "元");
+            mInsDamt.setText(StringUtils.getPriceString(item.getInsInfo().get(0).getInsprem()) + "元");
 
             orderState = item.getOrderste();
             switch (orderState) {
@@ -146,13 +145,13 @@ public class OrderDetailActivity extends BaseMvpActivity<IOrderView, OrderPresen
                 if (orderState == 1) {
                     String url = "https://ctkapptest.icbc-axa.com/ecip/payment_payForInsurance";
                     StringBuilder sb = new StringBuilder();
-                    sb.append(url).
-                            append("?orderNo=").append(item.getPolcyprignum()).     //投保单号
-                            append("&payAmount=").append(item.getTotinsprem()).     //总保费
-                            append("&productCode=").append(item.getCastinspolcycode()).  //保单号
-                            append("&userName=").append(PublicData.getInstance().userID).  //用户ID
-                            append("&clientIP=").append(NetUtils.getPhontIP(this)).
-                            append("&clientType=").append(CLIENT_TYPE_0);             //启动类型
+                    sb.append(url)
+                            .append("?orderNo=").append(item.getPolcyprignum())
+                            .append("&payAmount=").append(item.getTotinsprem())
+                            .append("&productCode=").append(item.getCastinspolcycode())
+                            .append("&userName=").append(PublicData.getInstance().userID)
+                            .append("&clientIP=").append(NetUtils.getPhontIP(this))
+                            .append("&clientType=").append(CLIENT_TYPE_0);
 
                     PublicData.getInstance().mHashMap.put("PayWebActivity", sb.toString());
                     Act.getInstance().gotoIntent(this, PayWebActivity.class);
@@ -179,26 +178,13 @@ public class OrderDetailActivity extends BaseMvpActivity<IOrderView, OrderPresen
                     mState.setText("已签单");
                     mCommit.setVisibility(View.GONE);
                 } else {
-                    ToastUtils.showShort(OrderDetailActivity.this, result.getSYS_HEAD().getReturnMessage());
+                    ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
                 }
             }
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (isFirst){
-            CheckOrderDTO dto = new CheckOrderDTO();
-            dto.setOrigtranserlnum(mOrigtranserlnum);
-            dto.setPolcyprignum(mPolcyprignum);
-            UserApiClient.checkOrder(this, dto, new CallBack<CheckOrderResult>() {
-                @Override
-                public void onSuccess(CheckOrderResult result) {
-                    if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
-
-                        switch (result.getRspInfo().getPymtste()){
-//                            0 未支付
+    //                            0 未支付
 //                            1 支付成功
 //                            2 未支付的已撤单
 //                            3 支付中
@@ -206,56 +192,55 @@ public class OrderDetailActivity extends BaseMvpActivity<IOrderView, OrderPresen
 //                            5 支付失败
 //                            6 支付成功且退款成功的已撤单
 //                            7 退款中(退款接收成功，退款处理中，退款可疑)
-                            case 0:
-//                                mState.setText("未支付");
-//                                mCommit.setText("继续支付");
-                                showToast("订单尚未支付,请继续!");
-                                break;
-                            case 1:
-//                                mState.setText("支付成功");
-//                                mCommit.setText("去签单");
-                                break;
-                            case 2:
-//                                mState.setText("支付中");
-//                                mCommit.setVisibility(View.GONE);
-                                showToast("该订单已被撤销!");
-                                break;
-                            case 3:
-//                                mState.setText("未支付");
-//                                mCommit.setText("继续支付");
-                                showToast("该订单正在支付中,请稍后继续!");
-                                break;
-                            case 4:
-//                                mState.setText("交易可疑");
-//                                mCommit.setText("继续支付");
-                                showToast("该订单为可疑订单,请和投保公司联系确认!");
-                                break;
-                            case 5:
-//                                mState.setText("支付失败");
-//                                mCommit.setText("继续支付");
-                                showToast("该订单支付失败,请继续支付!");
-                                break;
-                            case 6:
-//                                mState.setText("未支付");
-//                                mCommit.setText("继续支付");
-                                showToast("该订单已被撤销!");
-                                break;
-                            case 7:
-//                                mState.setText("退款中");
-//                                mCommit.setText("继续支付");
-                                showToast("该订单正在退款中,请耐心等待!");
-                                break;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isFirst) {
+            CheckOrderDTO dto = new CheckOrderDTO();
+            dto.setOrigtranserlnum(mOrigtranserlnum);
+            dto.setPolcyprignum(mPolcyprignum);
+            UserApiClient.checkOrder(ContextUtils.getContext(), dto,
+                    new CallBack<CheckOrderResult>() {
+                        @Override
+                        public void onSuccess(CheckOrderResult result) {
+                            if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
+                                switch (result.getRspInfo().getPymtste()) {
+                                    case 0:
+                                        showToast("订单尚未支付,请继续!");
+                                        break;
+                                    case 1:
+                                        showToast("支付成功");
+                                        break;
+                                    case 2:
+                                        showToast("该订单已被撤销!");
+                                        break;
+                                    case 3:
+                                        showToast("该订单正在支付中,请稍后继续!");
+                                        break;
+                                    case 4:
+                                        showToast("该订单为可疑订单,请和投保公司联系确认!");
+                                        break;
+                                    case 5:
+                                        showToast("该订单支付失败,请继续支付!");
+                                        break;
+                                    case 6:
+                                        showToast("该订单已被撤销!");
+                                        break;
+                                    case 7:
+                                        showToast("该订单正在退款中,请耐心等待!");
+                                        break;
+                                }
+                            } else {
+                                ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
+                            }
                         }
-                    } else {
-                        ToastUtils.showShort(OrderDetailActivity.this, result.getSYS_HEAD().getReturnMessage());
-                    }
-                }
-            });
+                    });
         }
         isFirst = false;
     }
-    private void showToast(String msg){
-        Toast toast = Toast.makeText(getApplicationContext(),msg, Toast.LENGTH_LONG);
+
+    private void showToast(String msg) {
+        Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }

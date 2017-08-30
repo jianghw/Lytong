@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.fahrschule.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -18,9 +19,9 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
+import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
 import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
+import com.zantong.mobilecttx.contract.IFahrschuleApplyFtyContract;
 import com.zantong.mobilecttx.eventbus.FahrschuleApplyEvent;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.fahrschule.adapter.FahrschulePopupAresAdapter;
@@ -33,7 +34,6 @@ import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailBean;
 import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresBean;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
-import com.zantong.mobilecttx.contract.IFahrschuleApplyFtyContract;
 import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleApplyPresenter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
@@ -42,7 +42,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.List;
 import java.util.Random;
 
-import cn.qqtheme.framework.global.GlobalConfig;
+import cn.qqtheme.framework.global.JxConfig;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;
@@ -228,10 +229,10 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
                 } else if (mPresenter != null) mPresenter.getAreaGoods();
                 break;
             case R.id.tv_info://官网
-                PublicData.getInstance().webviewUrl = "http://www.antingjx.com/jianjie/";
-                PublicData.getInstance().webviewTitle = "驾校报名官网";
-                PublicData.getInstance().isCheckLogin = true;
-                Act.getInstance().gotoIntent(getActivity(), BrowserActivity.class);
+                Intent intent = new Intent();
+                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "驾校报名官网");
+                intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://www.antingjx.com/jianjie/");
+                Act.getInstance().gotoLoginByIntent(getActivity(), HtmlBrowserActivity.class, intent);
                 break;
             case R.id.btn_commit:
                 dataFormValidation();
@@ -271,7 +272,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
             ToastUtils.toastShort("请输入正确身份证号码");
             return;
         }
-        GlobalConfig.getInstance().eventIdByUMeng(29);
+        JxConfig.getInstance().eventIdByUMeng(29);
 
         if (mPresenter != null) mPresenter.createOrder();
     }

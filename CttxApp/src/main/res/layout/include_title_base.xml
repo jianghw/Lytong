@@ -21,6 +21,19 @@
             android:src="@mipmap/btn_back"/>
 
         <TextView
+            android:id="@+id/tv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_48"
+            android:layout_toRightOf="@+id/img_back"
+            android:gravity="center"
+            android:text="关闭"
+            android:textColor="@color/colorTvBlack_4c"
+            android:textSize="@dimen/fs_16sp"
+            android:visibility="gone"/>
+
+        <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

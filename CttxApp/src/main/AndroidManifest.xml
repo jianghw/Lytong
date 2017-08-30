@@ -413,18 +413,18 @@
 
         <!-- ====================================浏览器================================ -->
         <activity
-            android:name=".common.activity.BrowserActivity"
+            android:name=".browser.AdvBrowserActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".common.activity.HtmlBrowserActivity"
+            android:name=".browser.HtmlBrowserActivity"
             android:screenOrientation="portrait"/>
         <!-- ===================付款web模块=========================================-->
         <!-- 付款web模块页面-->
         <activity
-            android:name=".common.activity.BrowserForPayActivity"
+            android:name=".browser.BrowserForPayActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".common.activity.PayBrowserActivity"
+            android:name=".browser.PayBrowserActivity"
             android:screenOrientation="portrait"/>
 
         <!-- ===================优惠模块=========================================-->
@@ -442,9 +442,6 @@
         </service>
 
         <!--=================================百度地图=============================================-->
-        <activity
-            android:name=".map.activity.BaiduMapActivity"
-            android:screenOrientation="portrait"/>
         <activity
             android:name=".map.activity.BaiduMapParentActivity"
             android:configChanges="orientation|keyboardHidden"

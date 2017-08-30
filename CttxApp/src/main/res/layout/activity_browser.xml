@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zantong.mobilecttx.widght.ProgressWebView
+<com.zantong.mobilecttx.browser.ProgressWebView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/webView"
     android:layout_width="match_parent"

@@ -185,10 +185,10 @@ public class ViolationListPresenter
                     public void doNext(List<ViolationBean> beanList) {
                         if (value == 0) {
                             mAtyView.nonPaymentData(beanList);
-
-                            if (beanList != null && !beanList.isEmpty()) handleViolations(beanList);
-                        } else if (value == 1)
+                        } else if (value == 1) {
                             mAtyView.havePaymentData(beanList);
+                        }
+                        if (beanList != null && !beanList.isEmpty()) handleViolations(beanList);
                     }
                 });
         mSubscriptions.add(subscription);

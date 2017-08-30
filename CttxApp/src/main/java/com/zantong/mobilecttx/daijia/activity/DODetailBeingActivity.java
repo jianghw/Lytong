@@ -26,7 +26,7 @@ import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 
 /**
  * 代驾派单中详情页面
@@ -100,7 +100,7 @@ public class DODetailBeingActivity extends BaseMvpActivity<IBaseView, HelpPresen
                 }
                 dto.setTime(time);
                 Intent intent = getIntent();
-                String orderId = intent.getStringExtra(GlobalConstant.putExtra.common_extra);
+                String orderId = intent.getStringExtra(JxGlobal.putExtra.common_extra);
                 dto.setOrderId(orderId);
                 dto.setUsrId(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
 
@@ -147,7 +147,7 @@ public class DODetailBeingActivity extends BaseMvpActivity<IBaseView, HelpPresen
         DaiJiaOrderDetailDTO dto = new DaiJiaOrderDetailDTO();
 
         Intent intent = getIntent();
-        String orderId = intent.getStringExtra(GlobalConstant.putExtra.common_extra);
+        String orderId = intent.getStringExtra(JxGlobal.putExtra.common_extra);
         dto.setOrderId(orderId);
         dto.setTime(time);
         dto.setUsrId(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));

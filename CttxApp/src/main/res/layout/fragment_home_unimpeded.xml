@@ -47,7 +47,7 @@
                 android:textColor="@color/colorTvBlack_4d"/>
 
             <TextView
-                android:id="@+id/tv_carwash"
+                android:id="@+id/tv_license"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

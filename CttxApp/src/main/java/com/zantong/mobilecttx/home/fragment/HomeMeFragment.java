@@ -17,21 +17,19 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
+import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.common.activity.CommonProblemActivity;
-import com.zantong.mobilecttx.common.activity.HtmlBrowserActivity;
 import com.zantong.mobilecttx.contract.IHomeMeFtyContract;
 import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 import com.zantong.mobilecttx.home.bean.DriverCoachResult;
@@ -57,12 +55,12 @@ import com.zantong.mobilecttx.weizhang.activity.ViolationHistoryAcitvity;
 import java.io.File;
 import java.util.List;
 
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.AppUtils;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.image.ImageOptions;
+import cn.qqtheme.framework.util.image.ImageLoadUtils;
 
 import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 
@@ -232,16 +230,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
 
         //畅通卡
         boolean isUnBound = TextUtils.isEmpty(PublicData.getInstance().filenum);
-//        StringBuffer sb = new StringBuffer();
-//        if (isUnBound)
-//            sb.append("<font color=\"#b3b3b3\">");
-//        else
-//            sb.append("<font color=\"#f3362b\">");
-//        sb.append(isUnBound ? 0 : 1);
-//        sb.append("</font>");
-//        sb.append("&#160;");
-//        sb.append("张牡丹畅通卡");
-//        mTvCard.setText(Html.fromHtml(sb.toString()));
+
         mTvCard.setText(isUnBound ? "未绑定牡丹畅通卡" : "已绑定牡丹畅通卡");
         mTvCard.setTextColor(isUnBound
                 ? getResources().getColor(R.color.colorTvGray_b2)
@@ -262,13 +251,10 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         if (PublicData.getInstance().loginFlag) {
             RspInfoBean infoBean = PublicData.getInstance().mLoginInfoBean;
 
-            if (infoBean == null || TextUtils.isEmpty(infoBean.getPortrait())) {
-                getHeadImageFile();
-            } else {
-                ImageLoader.getInstance().displayImage(
-                        infoBean.getPortrait(),
-                        mImgHead,
-                        ImageOptions.getAvatarOptions()
+            File file = getHeadImageFile();
+            if (file == null) {
+                ImageLoadUtils.loadHead(
+                        PublicData.getInstance().mLoginInfoBean.getPortrait(), mImgHead
                 );
             }
 
@@ -282,7 +268,6 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 }
             }
         } else {
-
             mTvCard.setText("未绑定牡丹畅通卡");
             mTvCard.setTextColor(getResources().getColor(R.color.colorTvGray_b2));
 
@@ -407,10 +392,10 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 break;
             case R.id.lay_driver_order://司机订单
                 Intent intent = new Intent();
-                intent.putExtra(GlobalConstant.putExtra.browser_title_extra, "司机订单");
-                intent.putExtra(GlobalConstant.putExtra.browser_url_extra,
+                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "司机订单");
+                intent.putExtra(JxGlobal.putExtra.browser_url_extra,
                         "http://biz.liyingtong.com/h5/driver/index.html");
-                Act.getInstance().gotoLoginByIntent(getActivity(), HtmlBrowserActivity.class,intent);
+                Act.getInstance().gotoLoginByIntent(getActivity(), HtmlBrowserActivity.class, intent);
                 break;
             case R.id.tv_card://我的畅通卡
                 if (Tools.isStrEmpty(PublicData.getInstance().filenum))
@@ -451,10 +436,11 @@ public class HomeMeFragment extends BaseRefreshJxFragment
             case R.id.lay_update:
                 Beta.checkUpgrade();
                 break;
-            case R.id.about_advertising:
-                PublicData.getInstance().webviewUrl = "file:///android_asset/bindcard_agreement.html";
-                PublicData.getInstance().webviewTitle = "隐私声明";
-                Act.getInstance().gotoIntent(getActivity(), BrowserActivity.class);
+            case R.id.about_advertising://隐私说明
+                Intent i = new Intent();
+                i.putExtra(JxGlobal.putExtra.browser_title_extra, "隐私声明");
+                i.putExtra(JxGlobal.putExtra.browser_url_extra, "file:///android_asset/bindcard_agreement.html");
+                Act.getInstance().gotoLoginByIntent(getActivity(), HtmlBrowserActivity.class, i);
                 break;
             default:
                 break;

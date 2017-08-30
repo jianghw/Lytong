@@ -13,7 +13,7 @@ import com.zantong.mobilecttx.order.bean.OrderListBean;
 
 import java.util.List;
 
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 
 /**
  * 所有订单
@@ -70,7 +70,7 @@ public class OrderAllStatusFragment extends BaseRecyclerListJxFragment<OrderList
             String orderId = bean.getOrderId();
             //前往 订单详情页面
             Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
-            intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, orderId);
+            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
             startActivity(intent);
         }
     }

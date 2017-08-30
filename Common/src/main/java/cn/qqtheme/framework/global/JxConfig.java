@@ -13,19 +13,19 @@ import cn.qqtheme.framework.util.ContextUtils;
  * Update day:
  */
 
-public final class GlobalConfig {
+public final class JxConfig {
 
     private SimpleArrayMap<Integer, String> simpleArrayMap;
 
     private static class Singleton {
-        public static final GlobalConfig INSTANCE = new GlobalConfig();
+        public static final JxConfig INSTANCE = new JxConfig();
     }
 
-    public static GlobalConfig getInstance() {
+    public static JxConfig getInstance() {
         return Singleton.INSTANCE;
     }
 
-    private GlobalConfig() {
+    private JxConfig() {
         if (simpleArrayMap == null)
             simpleArrayMap = new SimpleArrayMap<>();
 

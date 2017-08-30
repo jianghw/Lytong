@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+       android:shape="rectangle">
+    <!--边线-->
+    <stroke
+        android:width="@dimen/ds_6"
+        android:color="@color/colorWhite"/>
+
+    <!-- 填充的颜色：这里设置背景透明 -->
+    <solid android:color="#e5FFFFFF"/>
+
+    <padding
+        android:bottom="@dimen/ds_30"
+        android:left="@dimen/ds_30"
+        android:right="@dimen/ds_30"
+        android:top="@dimen/ds_30"
+        />
+</shape>
+
+
+

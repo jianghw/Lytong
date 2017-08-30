@@ -72,11 +72,9 @@ public class PublicData {
     public List<CarInfoDTO> mLocalCars = new ArrayList<>();//我的车辆集合
     public List<ProvinceModel> provinceModel;//城市三级联动数据列表
 
-    public int mapType = 0;//地图类型  0 加油 , 1 洗车 , 2 年检
     public int commonListType = 0;//1、驾照有效期限 2、准驾车型
     public String commonListData = "小型汽车";//
-    public String webviewUrl = "";//h5链接
-    public String webviewTitle = "";//h5标题
+
     public boolean isDelCar = false;//是否操作了删除车辆操作
     public boolean isSetPayCar = false;//是否操作了更改可缴费车辆
 

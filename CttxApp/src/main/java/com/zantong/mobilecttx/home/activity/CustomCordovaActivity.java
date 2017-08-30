@@ -1,13 +1,13 @@
 package com.zantong.mobilecttx.home.activity;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
 
@@ -16,6 +16,8 @@ import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaWebViewImpl;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
+
+import cn.qqtheme.framework.global.JxGlobal;
 
 
 /**
@@ -33,7 +35,12 @@ public class CustomCordovaActivity extends CordovaActivity {
 
         setStatusBarColor();
         setStatusBarSpace();
-        loadUrl(PublicData.getInstance().webviewUrl);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            String url = intent.getStringExtra(JxGlobal.putExtra.common_extra);
+            loadUrl(url);
+        }
     }
 
     public boolean mStatusBarHeight = true;

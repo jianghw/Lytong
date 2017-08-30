@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 
 /**
  * Created by Administrator on 2016/5/4.
@@ -36,7 +36,7 @@ public class Act {
 
     public void gotoIntent(Context packageContext, Class<?> className, String str) {
         Intent intent = new Intent(packageContext, className);
-        intent.putExtra(GlobalConstant.putExtra.common_extra, str);
+        intent.putExtra(JxGlobal.putExtra.common_extra, str);
         packageContext.startActivity(intent);
     }
 

@@ -39,7 +39,7 @@ import com.zantong.mobilecttx.weizhang.fragment.ViolationListFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
@@ -198,7 +198,7 @@ public class ViolationListActivity extends BaseJxActivity
     private void showPayFragment(ViolationBean bean) {
         Intent intent = new Intent(this, ViolationPayActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putParcelable(GlobalConstant.putExtra.violation_pay_bean_extra, bean);
+        bundle.putParcelable(JxGlobal.putExtra.violation_pay_bean_extra, bean);
         intent.putExtras(bundle);
         startActivity(intent);
         overridePendingTransition(R.anim.push_bottom_in, 0);
@@ -406,19 +406,19 @@ public class ViolationListActivity extends BaseJxActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
-                && resultCode == GlobalConstant.resultCode.web_order_id_succeed) {
+        if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
+                && resultCode == JxGlobal.resultCode.web_order_id_succeed) {
 
             Intent intent = new Intent();
-            intent.putExtra(GlobalConstant.putExtra.fahrschule_position_extra, 2);
+            intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 2);
             Act.getInstance().gotoLoginByIntent(this, FahrschuleActivity.class, intent);
 
-        } else if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
-                && resultCode == GlobalConstant.resultCode.web_order_id_error && data != null) {
+        } else if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
+                && resultCode == JxGlobal.resultCode.web_order_id_error && data != null) {
             //前往 订单详情页面
-            String orderId = data.getStringExtra(GlobalConstant.putExtra.web_order_id_extra);
+            String orderId = data.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
             Intent intent = new Intent(this, OrderDetailActivity.class);
-            intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, orderId);
+            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
             startActivity(intent);
         }
     }

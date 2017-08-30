@@ -14,11 +14,11 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
+import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
 import com.zantong.mobilecttx.card.bean.BindCardResult;
 import com.zantong.mobilecttx.card.dto.BindCardDTO;
 import com.zantong.mobilecttx.card.dto.BindDrivingDTO;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
 import com.zantong.mobilecttx.user.bean.RspInfoBean;
@@ -31,6 +31,7 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
@@ -120,10 +121,10 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
                         });
                 break;
             case R.id.activity_bind_jia_zhao_agreement://保密隐私条例
-                PublicData.getInstance().webviewUrl = "file:///android_asset/www/bindcard_agreement.html";
-                PublicData.getInstance().webviewTitle = "《用户隐私保密协议》";
-                PublicData.getInstance().isCheckLogin = false;
-                Act.getInstance().gotoIntent(this, BrowserActivity.class);
+                Intent intent = new Intent();
+                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "《用户隐私保密协议》");
+                intent.putExtra(JxGlobal.putExtra.browser_url_extra, "file:///android_asset/www/bindcard_agreement.html");
+                Act.getInstance().gotoLoginByIntent(this, HtmlBrowserActivity.class, intent);
                 break;
             case R.id.bind_jia_zhao_commit://提交信息
                 bindChangTongKa();

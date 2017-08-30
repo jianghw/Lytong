@@ -18,6 +18,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:background="@drawable/bg_tv_white_shade"
+        android:gravity="center"
+        android:singleLine="true"
         android:textColor="@color/colorTvBlack_4d"
         android:textSize="@dimen/fs_16sp"
         tools:text="窃车玫红"/>

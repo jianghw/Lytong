@@ -1,9 +1,10 @@
-package com.zantong.mobilecttx.widght;
+package com.zantong.mobilecttx.browser;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -12,11 +13,11 @@ import android.widget.ProgressBar;
 
 import com.zantong.mobilecttx.R;
 
-@SuppressLint("SetJavaScriptEnabled")
+
 public class ProgressWebView extends LinearLayout {
     private ProgressBar mProgressBar;
     private WebView mWebView;
-    private onReceivedTitleListener listener;
+    private onReceivedTitleListener mTitleListener;
     private boolean isLoadCompleted;
 
     public ProgressWebView(Context context) {
@@ -27,23 +28,25 @@ public class ProgressWebView extends LinearLayout {
         this(context, attrs, 0);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     public ProgressWebView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.widget_progress_webview, this);
+
         mProgressBar = (ProgressBar) findViewById(R.id.widget_progress_webview_pb);
         mWebView = (WebView) findViewById(R.id.widget_progress_webview);
-
-//        // 如需支持h5统计，需要将 assets/mobstat.js 拷贝到工程目录下
-//        StatService.bindJSInterface(context, mWebView);
+        // 如需支持h5统计，需要将 assets/mobstat.js 拷贝到工程目录下
 
         mWebView.setWebChromeClient(new WebChromeClient());
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setDomStorageEnabled(true);
-        mWebView.getSettings().setAppCacheMaxSize(1024 * 1024 * 8);
+        getSettings().setJavaScriptEnabled(true);
+        getSettings().setDomStorageEnabled(true);
+        getSettings().setAppCacheMaxSize(1024 * 1024 * 8);
+
         String appCachePath = context.getApplicationContext().getCacheDir().getAbsolutePath();
         mWebView.getSettings().setAppCachePath(appCachePath);
+
         mWebView.getSettings().setAllowFileAccess(true);
         mWebView.getSettings().setAppCacheEnabled(true);
     }
@@ -56,33 +59,36 @@ public class ProgressWebView extends LinearLayout {
         mWebView.setWebViewClient(client);
     }
 
+    public void loadUrl(String url) {
+        mWebView.loadUrl(url);
+    }
+
+    public void loadDataWithBaseURL(String baseUrl, String data, String mimeType, String encoding, String historyUrl) {
+        mWebView.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl);
+    }
+
+    public void setWebChromeClient(WebChromeClient webChromeClient) {
+        mWebView.setWebChromeClient(webChromeClient);
+    }
+
     private class WebChromeClient extends android.webkit.WebChromeClient {
+
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
-            if (newProgress == 100) {
-                mProgressBar.setVisibility(GONE);
-                isLoadCompleted = true;
-            } else {
-                if (mProgressBar.getVisibility() == GONE) {
-                    mProgressBar.setVisibility(VISIBLE);
-                    isLoadCompleted = false;
-                }
-                mProgressBar.setProgress(newProgress);
-            }
+            if (newProgress != 100) mProgressBar.setProgress(newProgress);
+
+            mProgressBar.setVisibility(newProgress < 100 ? View.VISIBLE : View.GONE);
+            isLoadCompleted = (newProgress == 100);
+
             super.onProgressChanged(view, newProgress);
         }
 
         @Override
         public void onReceivedTitle(WebView view, String title) {
-            if (listener != null) {
-                listener.onReceivedTitle(view, title);
-            }
+            if (mTitleListener != null) mTitleListener.onReceivedTitle(view, title);
+
             super.onReceivedTitle(view, title);
         }
-    }
-
-    public void loadUrl(String url) {
-        mWebView.loadUrl(url);
     }
 
     public boolean canGoBack() {
@@ -94,7 +100,7 @@ public class ProgressWebView extends LinearLayout {
     }
 
     public void setOnReceivedTitleListener(onReceivedTitleListener listener) {
-        this.listener = listener;
+        this.mTitleListener = listener;
     }
 
     public interface onReceivedTitleListener {

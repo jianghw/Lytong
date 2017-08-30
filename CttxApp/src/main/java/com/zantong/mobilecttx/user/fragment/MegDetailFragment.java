@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.user.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
@@ -17,15 +18,12 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.PullableBaseFragment;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
-import com.zantong.mobilecttx.eventbus.GetMsgAgainEvent;
+import com.zantong.mobilecttx.browser.AdvBrowserActivity;
 import com.zantong.mobilecttx.contract.IMegDetailAtyContract;
+import com.zantong.mobilecttx.eventbus.GetMsgAgainEvent;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.user.bean.Meg;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
-import cn.qqtheme.framework.util.image.ImageOptions;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,6 +33,10 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import cn.qqtheme.framework.global.JxGlobal;
+import cn.qqtheme.framework.util.ToastUtils;
+import cn.qqtheme.framework.util.image.ImageOptions;
 
 /**
  * 消息详情
@@ -209,10 +211,12 @@ public class MegDetailFragment extends PullableBaseFragment
      * 跳转应用内部浏览器
      */
     private void internalBrowser(String contentHrefLine) {
-        PublicData.getInstance().webviewUrl = contentHrefLine;
-        PublicData.getInstance().webviewTitle = titleTv.getText().toString();
-        PublicData.getInstance().isCheckLogin = true;
-        Act.getInstance().gotoIntent(getActivity(), BrowserActivity.class);
+        String title = "未知信息";
+        if (titleTv != null) title = titleTv.getText().toString().trim();
+        Intent intent = new Intent();
+        intent.putExtra(JxGlobal.putExtra.browser_title_extra, title);
+        intent.putExtra(JxGlobal.putExtra.browser_url_extra, contentHrefLine);
+        Act.getInstance().gotoLoginByIntent(getActivity(), AdvBrowserActivity.class, intent);
     }
 
     /**

@@ -1,6 +1,11 @@
 package com.zantong.mobilecttx.home.fragment;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,21 +14,38 @@ import android.widget.LinearLayout;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
+import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
+import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
+import com.zantong.mobilecttx.contract.home.INativeItemListener;
+import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
+import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
+import com.zantong.mobilecttx.fahrschule.activity.SparringActivity;
+import com.zantong.mobilecttx.fahrschule.activity.SubjectActivity;
 import com.zantong.mobilecttx.home.adapter.FavorableBannerImgHolderView;
 import com.zantong.mobilecttx.home.adapter.HomeDiscountsAdapter;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.bean.BannerBean;
 import com.zantong.mobilecttx.home.bean.BannersBean;
+import com.zantong.mobilecttx.home.bean.ChildrenBean;
 import com.zantong.mobilecttx.home.bean.ModuleBean;
 import com.zantong.mobilecttx.home.bean.ModuleResult;
 import com.zantong.mobilecttx.presenter.home.HomeFavorableFtyPresenter;
+import com.zantong.mobilecttx.share.activity.CarBeautyActivity;
+import com.zantong.mobilecttx.share.activity.ShareParentActivity;
+import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.global.JxConfig;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
+import cn.qqtheme.framework.util.primission.PermissionFail;
+import cn.qqtheme.framework.util.primission.PermissionGen;
+import cn.qqtheme.framework.util.primission.PermissionSuccess;
 import cn.qqtheme.framework.widght.banner.CBViewHolderCreator;
 import cn.qqtheme.framework.widght.banner.ConvenientBanner;
 
@@ -40,6 +62,7 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
      * mPresenter
      */
     private IHomeFavorableFtyContract.IHomeFavorableFtyPresenter mPresenter;
+    private HomeDiscountsAdapter mDiscountsAdapter;
 
     public static HomeDiscountsFragment newInstance() {
         return new HomeDiscountsFragment();
@@ -47,7 +70,8 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
 
     @Override
     public BaseAdapter<ModuleBean> createAdapter() {
-        return new HomeDiscountsAdapter();
+        mDiscountsAdapter = new HomeDiscountsAdapter();
+        return mDiscountsAdapter;
     }
 
     /**
@@ -102,6 +126,52 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
     protected void initFragmentView(View view) {
         HomeFavorableFtyPresenter presenter = new HomeFavorableFtyPresenter(
                 Injection.provideRepository(getActivity().getApplicationContext()), this);
+
+        if (mDiscountsAdapter != null)
+            mDiscountsAdapter.setNativeItemListener(new INativeItemListener() {
+                @Override
+                public void onItemClick(ChildrenBean childrenBean) {
+                    gotoPageByTargetPath(childrenBean);
+                }
+            });
+    }
+
+    /**
+     * 本地控件点击事件
+     */
+    public void gotoPageByTargetPath(ChildrenBean childrenBean) {
+        if (childrenBean != null && !TextUtils.isEmpty(childrenBean.getTargetPath())) {
+            String path = childrenBean.getTargetPath();
+            if (path.contains("http")) {//启动公司自己html
+                Intent intent = new Intent();
+                intent.putExtra(JxGlobal.putExtra.browser_title_extra, childrenBean.getTitle());
+                intent.putExtra(JxGlobal.putExtra.browser_url_extra, path);
+                Act.getInstance().gotoLoginByIntent(getActivity(), HtmlBrowserActivity.class, intent);
+            } else if (path.equals("native_app_recharge")) {//加油充值
+                Act.getInstance().gotoIntentLogin(getActivity(), RechargeActivity.class);
+            } else if (path.equals("native_app_loan")) {
+
+            } else if (path.equals("native_app_daijia")) {//代驾
+                JxConfig.getInstance().eventIdByUMeng(25);
+                enterDrivingActivity();
+            } else if (path.equals("native_app_enhancement")) {//科目强化
+                Act.getInstance().gotoIntentLogin(getActivity(), SubjectActivity.class);
+            } else if (path.equals("native_app_sparring")) {//陪练
+                Act.getInstance().gotoIntentLogin(getActivity(), SparringActivity.class);
+            } else if (path.equals("native_app_drive_share")) {//分享
+                Intent intent = new Intent();
+                intent.putExtra(JxGlobal.putExtra.share_position_extra, 1);
+                Act.getInstance().gotoLoginByIntent(getActivity(), ShareParentActivity.class, intent);
+            } else if (path.equals("native_app_car_beauty")) {//汽车美容
+                JxConfig.getInstance().eventIdByUMeng(27);
+                Act.getInstance().gotoIntentLogin(getActivity(), CarBeautyActivity.class);
+            } else if (path.equals("native_app_driver")) {//驾校报名
+                JxConfig.getInstance().eventIdByUMeng(28);
+                Act.getInstance().gotoIntentLogin(getActivity(), FahrschuleActivity.class);
+            } else {//其他
+
+            }
+        }
     }
 
     @Override
@@ -184,6 +254,7 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
      */
     @Override
     public void moduleTreeError(String message) {
+        setSimpleDataResult(null);
         ToastUtils.toastShort(message + "请下拉刷新");
     }
 
@@ -196,5 +267,39 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
     @Override
     protected void DestroyViewAndThing() {
         if (mPresenter != null) mPresenter.unSubscribe();
+    }
+
+
+    /**
+     * 进入代驾页面
+     */
+    public void enterDrivingActivity() {
+        if (!PublicData.getInstance().loginFlag) {
+            Act.getInstance().gotoIntentLogin(getActivity(), DrivingActivity.class);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, 2000, new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE});
+        } else {
+            Act.getInstance().gotoIntentLogin(getActivity(), DrivingActivity.class);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @PermissionSuccess(requestCode = 2000)
+    public void doDrivingSuccess() {
+        Act.getInstance().gotoIntentLogin(getActivity(), DrivingActivity.class);
+    }
+
+    @PermissionFail(requestCode = 2000)
+    public void doDrivingFail() {
+        ToastUtils.toastShort("您已关闭定位权限,请手机设置中打开");
     }
 }

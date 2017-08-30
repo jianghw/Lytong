@@ -7,7 +7,7 @@ package cn.qqtheme.framework.global;
  * Update day:
  */
 
-public final class GlobalConstant {
+public final class JxGlobal {
 
     public static final class requestCode {
         public static final int violation_query_plate = 1000;

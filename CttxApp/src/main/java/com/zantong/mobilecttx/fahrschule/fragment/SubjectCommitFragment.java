@@ -32,7 +32,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ViewUtils;
@@ -219,9 +219,9 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
 
                     ArrayList<RechargeCouponBean> arrayList = new ArrayList<>();
                     arrayList.addAll(mCouponBeanList);
-                    bundle.putParcelableArrayList(GlobalConstant.putExtra.recharge_coupon_extra, arrayList);
+                    bundle.putParcelableArrayList(JxGlobal.putExtra.recharge_coupon_extra, arrayList);
                     intent.putExtras(bundle);
-                    startActivityForResult(intent, GlobalConstant.requestCode.recharge_coupon_list);
+                    startActivityForResult(intent, JxGlobal.requestCode.recharge_coupon_list);
                 }
                 break;
             default:
@@ -389,14 +389,14 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (data != null && requestCode == GlobalConstant.requestCode.recharge_coupon_list
-                && resultCode == GlobalConstant.resultCode.recharge_coupon_choice) {
+        if (data != null && requestCode == JxGlobal.requestCode.recharge_coupon_list
+                && resultCode == JxGlobal.resultCode.recharge_coupon_choice) {
             Bundle bundle = data.getExtras();
             RechargeCouponBean couponBean = bundle.getParcelable(
-                    GlobalConstant.putExtra.recharge_coupon_bean_extra);
+                    JxGlobal.putExtra.recharge_coupon_bean_extra);
             couponActivityResult(couponBean);
-        } else if (data != null && requestCode == GlobalConstant.requestCode.recharge_coupon_list
-                && resultCode == GlobalConstant.resultCode.recharge_coupon_unchoice) {
+        } else if (data != null && requestCode == JxGlobal.requestCode.recharge_coupon_list
+                && resultCode == JxGlobal.resultCode.recharge_coupon_unchoice) {
 
             couponActivityResult(null);
         }

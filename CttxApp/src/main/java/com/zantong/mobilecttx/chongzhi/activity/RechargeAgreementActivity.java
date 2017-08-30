@@ -37,7 +37,6 @@ public class RechargeAgreementActivity extends BaseMvpActivity<IBaseView, HelpPr
 
     @Override
     public void showLoading() {
-
     }
 
     @Override

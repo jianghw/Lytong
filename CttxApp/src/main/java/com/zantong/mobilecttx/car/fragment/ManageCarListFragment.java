@@ -23,7 +23,7 @@ import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
 
 import java.util.List;
 
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
@@ -105,7 +105,7 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
             if (bean.getIsPayable() < 0) return;
             Intent intent = new Intent();
             Bundle bundle = new Bundle();
-            bundle.putParcelable(GlobalConstant.putExtra.car_item_bean_extra, bean);
+            bundle.putParcelable(JxGlobal.putExtra.car_item_bean_extra, bean);
             intent.putExtras(bundle);
             Act.getInstance().gotoLoginByIntent(getActivity(), ViolationActivity.class, intent);
         }

@@ -39,7 +39,7 @@ import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.global.GlobalConfig;
+import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -163,7 +163,7 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         String hashStr = HashUtils.getSignature(hashMap);
         dto.setHash(hashStr);
 
-        GlobalConfig.getInstance().eventIdByUMeng(26);
+        JxConfig.getInstance().eventIdByUMeng(26);
 
         CarApiClient.huJiaoDaiJia(this, dto, new CallBack<DaiJiaCreateResult>() {
             @Override

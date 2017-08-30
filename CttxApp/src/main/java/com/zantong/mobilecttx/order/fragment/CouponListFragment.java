@@ -18,7 +18,7 @@ import com.zantong.mobilecttx.widght.SpaceItemDecoration;
 
 import java.util.ArrayList;
 
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 
 /**
  * 选择优惠劵 页面 加油
@@ -47,9 +47,9 @@ public class CouponListFragment extends BaseRecyclerListJxFragment<RechargeCoupo
 
             Intent intent = new Intent();
             Bundle bundle = new Bundle();
-            bundle.putParcelable(GlobalConstant.putExtra.recharge_coupon_bean_extra, couponBean);
+            bundle.putParcelable(JxGlobal.putExtra.recharge_coupon_bean_extra, couponBean);
             intent.putExtras(bundle);
-            getActivity().setResult(GlobalConstant.resultCode.recharge_coupon_choice, intent);
+            getActivity().setResult(JxGlobal.resultCode.recharge_coupon_choice, intent);
             getActivity().finish();
 
 //            if (getArguments() != null) {
@@ -83,7 +83,7 @@ public class CouponListFragment extends BaseRecyclerListJxFragment<RechargeCoupo
             public void onClick(View v) {
 
                 getActivity().setResult(
-                        GlobalConstant.resultCode.recharge_coupon_unchoice, new Intent());
+                        JxGlobal.resultCode.recharge_coupon_unchoice, new Intent());
                 getActivity().finish();
             }
         });

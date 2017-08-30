@@ -5,16 +5,17 @@ import com.zantong.mobilecttx.base.BasePresenter;
 import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.contract.UserInfoUpdateView;
+import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.model.UserInfoUpdateModel;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
 import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import cn.qqtheme.framework.util.ToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 作者：王海洋
@@ -67,7 +68,7 @@ public class UserInfoUpdatePresenter extends BasePresenter<UserInfoUpdateView> i
                     UserInfoRememberCtrl.saveObject(PublicData.getInstance().mLoginInfoBean);
                 } else {
                     mUserInfoUpdate.setUserHeadImage();
-                    ToastUtils.showShort(mUserInfoUpdate, mUpdateInfo.getSYS_HEAD().getReturnMessage());
+                    ToastUtils.toastShort(mUpdateInfo.getSYS_HEAD().getReturnMessage());
                 }
                 break;
         }
@@ -77,7 +78,7 @@ public class UserInfoUpdatePresenter extends BasePresenter<UserInfoUpdateView> i
     public void onFailed() {
         mUserInfoUpdate.hideDialogLoading();
         mUserInfoUpdate.setUserHeadImage();
-        ToastUtils.showShort(mUserInfoUpdate, Config.getErrMsg("1"));
+        ToastUtils.toastShort(Config.getErrMsg("1"));
     }
 
 }

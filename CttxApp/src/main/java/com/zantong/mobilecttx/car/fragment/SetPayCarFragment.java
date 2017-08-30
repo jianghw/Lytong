@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
 
 public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> implements ModelView {
 
@@ -122,7 +121,7 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
         super.initView(view);
 
         mRspInfoBean = PublicData.getInstance().mServerCars;
-        LogUtils.jsonObject(mRspInfoBean);
+//        LogUtils.jsonObject(mRspInfoBean);
 
         if (mRspInfoBean != null) {
             int size = mRspInfoBean.size();
@@ -164,7 +163,7 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
             }
         }
         UserInfoRememberCtrl.saveObject("userCarInfo", mRspInfoBean);
-        ToastUtils.showShort(getActivity(), "修改成功");
+        ToastUtils.toastShort("修改成功");
         getActivity().finish();
     }
 

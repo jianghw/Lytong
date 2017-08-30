@@ -10,10 +10,9 @@ import android.view.View;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
+import com.zantong.mobilecttx.browser.BrowserForPayActivity;
+import com.zantong.mobilecttx.browser.PayBrowserActivity;
 import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserForPayActivity;
-import com.zantong.mobilecttx.common.activity.PayBrowserActivity;
 import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.fahrschule.activity.SparringActivity;
@@ -29,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qqtheme.framework.contract.bean.BaseResult;
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -283,19 +282,20 @@ public class OrderParentActivity extends BaseJxActivity
 
     @Override
     public void onPayOrderByCouponSucceed(PayOrderResult result) {
-        PublicData.getInstance().webviewTitle = "支付";
-        PublicData.getInstance().webviewUrl = result.getData();
-        Act.getInstance().gotoIntentLogin(this, BrowserForPayActivity.class);
+        Intent intent = new Intent();
+        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
+        intent.putExtra(JxGlobal.putExtra.browser_url_extra, result.getData());
+        Act.getInstance().gotoLoginByIntent(this, BrowserForPayActivity.class, intent);
     }
 
     @Override
     public void getBankPayHtmlSucceed(PayOrderResult result, String orderId) {
 
         Intent intent = new Intent(this, PayBrowserActivity.class);
-        intent.putExtra(GlobalConstant.putExtra.web_title_extra, "支付");
-        intent.putExtra(GlobalConstant.putExtra.web_url_extra, result.getData());
-        intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, orderId);
-        startActivityForResult(intent, GlobalConstant.requestCode.fahrschule_order_num_web);
+        intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付");
+        intent.putExtra(JxGlobal.putExtra.web_url_extra, result.getData());
+        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
+        startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
     }
 
     /**
@@ -306,27 +306,27 @@ public class OrderParentActivity extends BaseJxActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
-                && resultCode == GlobalConstant.resultCode.web_order_id_succeed) {
+        if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
+                && resultCode == JxGlobal.resultCode.web_order_id_succeed) {
 
             Intent intent = new Intent();
             if (mPayType == 3) {
-                intent.putExtra(GlobalConstant.putExtra.fahrschule_position_extra, 2);
+                intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 2);
                 Act.getInstance().gotoLoginByIntent(this, FahrschuleActivity.class, intent);
             } else if (mPayType == 4) {
-                intent.putExtra(GlobalConstant.putExtra.fahrschule_position_extra, 3);
+                intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 3);
                 Act.getInstance().gotoLoginByIntent(this, SubjectActivity.class, intent);
             } else if (mPayType == 5) {
-                intent.putExtra(GlobalConstant.putExtra.fahrschule_position_extra, 2);
+                intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 2);
                 Act.getInstance().gotoLoginByIntent(this, SparringActivity.class, intent);
             }
 
-        } else if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
-                && resultCode == GlobalConstant.resultCode.web_order_id_error && data != null) {
+        } else if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
+                && resultCode == JxGlobal.resultCode.web_order_id_error && data != null) {
             //前往 订单详情页面
-            String orderId = data.getStringExtra(GlobalConstant.putExtra.web_order_id_extra);
+            String orderId = data.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
             Intent intent = new Intent(this, OrderDetailActivity.class);
-            intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, orderId);
+            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
             startActivity(intent);
         }
     }

@@ -22,11 +22,10 @@ import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
- * 订单详情页面
+ * 年检订单详情页面
  */
-public class OrderDetailActivity extends BaseJxActivity
+public class AnnualOrderDetailActivity extends BaseJxActivity
         implements View.OnClickListener, IOrderDetailContract.IOrderDetailView {
-
 
     private TextView mTvPrice;
     private LinearLayout mLayPrice;
@@ -75,7 +74,7 @@ public class OrderDetailActivity extends BaseJxActivity
 
     @Override
     protected int getContentResId() {
-        return R.layout.activity_order_detail;
+        return R.layout.activity_annual_order_detail;
     }
 
     @Override

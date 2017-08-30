@@ -1,15 +1,16 @@
 package com.zantong.mobilecttx.card.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
+import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import butterknife.OnClick;
+import cn.qqtheme.framework.global.JxGlobal;
 
 /**
  * 办卡进度
@@ -40,10 +41,10 @@ public class CardFlowActivity extends BaseJxActivity {
 
     @OnClick(R.id.tv_web)
     public void onClick(View v) {
-        PublicData.getInstance().webviewUrl = "http://www.sh.icbc.com.cn";
-        PublicData.getInstance().webviewTitle = "办卡进度查询";
-        PublicData.getInstance().isCheckLogin = false;
-        Act.getInstance().gotoIntent(this, BrowserActivity.class);
+        Intent intent = new Intent();
+        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "办卡进度查询");
+        intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://www.sh.icbc.com.cn");
+        Act.getInstance().gotoLoginByIntent(this, HtmlBrowserActivity.class, intent);
     }
 
 

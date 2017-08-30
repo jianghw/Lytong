@@ -29,7 +29,7 @@ import java.util.Locale;
 import cn.qqtheme.framework.entity.City;
 import cn.qqtheme.framework.entity.County;
 import cn.qqtheme.framework.entity.Province;
-import cn.qqtheme.framework.global.GlobalConfig;
+import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -183,7 +183,7 @@ public class LicenseCheckGradeActivity extends BaseJxActivity implements View.On
         } else if (TextUtils.isEmpty(getTvDate())) {
             ToastUtils.toastShort("请选择初次领证日期");
         } else {
-            GlobalConfig.getInstance().eventIdByUMeng(8);
+            JxConfig.getInstance().eventIdByUMeng(8);
 
             LicenseFileNumDTO dto = new LicenseFileNumDTO();
             dto.setFilenum(getArchivesNumber());

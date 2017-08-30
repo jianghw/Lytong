@@ -17,11 +17,11 @@ import com.zantong.mobilecttx.api.HandleCTCardApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.interf.IBaseView;
+import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
 import com.zantong.mobilecttx.card.dto.BidCTCardDTO;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
@@ -35,6 +35,7 @@ import java.util.Random;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ViewUtils;
@@ -108,9 +109,10 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 new DialogMgr(this, R.mipmap.code_query_notice_iamge);
                 break;
             case R.id.apply_card_first_desc:   //说明
-                PublicData.getInstance().webviewUrl = "file:///android_asset/bindcard_agreement.html";
-                PublicData.getInstance().webviewTitle = "隐私声明";
-                Act.getInstance().gotoIntent(this, BrowserActivity.class);
+                Intent intent = new Intent();
+                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "隐私声明");
+                intent.putExtra(JxGlobal.putExtra.browser_url_extra, "file:///android_asset/bindcard_agreement.html");
+                Act.getInstance().gotoLoginByIntent(this, HtmlBrowserActivity.class, intent);
                 break;
             case R.id.apply_card_first_commit://下一步
                 commitValue();

@@ -11,7 +11,7 @@ import com.zantong.mobilecttx.common.adapter.CommonListAdapter;
 
 import java.util.Arrays;
 
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 
 /**
  * 公共列表类
@@ -32,10 +32,10 @@ public class CommonListFragment extends BaseListFragment<String> {
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
         Intent intent = new Intent();
-        intent.putExtra(GlobalConstant.putExtra.common_list_extra, data.toString());
+        intent.putExtra(JxGlobal.putExtra.common_list_extra, data.toString());
 
         PublicData.getInstance().commonListData = data.toString();
-        getActivity().setResult(GlobalConstant.resultCode.common_list_fty, intent);
+        getActivity().setResult(JxGlobal.resultCode.common_list_fty, intent);
 
         getActivity().finish();
     }

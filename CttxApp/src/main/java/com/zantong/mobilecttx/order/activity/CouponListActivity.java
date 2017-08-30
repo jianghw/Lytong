@@ -13,7 +13,7 @@ import com.zantong.mobilecttx.order.fragment.CouponListFragment;
 
 import java.util.ArrayList;
 
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
@@ -35,7 +35,7 @@ public class CouponListActivity extends BaseJxActivity {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             rechargeCouponBeen =
-                    bundle.getParcelableArrayList(GlobalConstant.putExtra.recharge_coupon_extra);
+                    bundle.getParcelableArrayList(JxGlobal.putExtra.recharge_coupon_extra);
             if (rechargeCouponBeen != null) mCurBottomPosition = 1;
         }
     }

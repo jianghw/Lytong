@@ -16,7 +16,7 @@ import com.zantong.mobilecttx.share.fragment.FriendShareFragment;
 import com.zantong.mobilecttx.share.fragment.SparringShareFragment;
 import com.zantong.mobilecttx.share.fragment.SubjectShareFragment;
 
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
@@ -46,7 +46,7 @@ public class ShareParentActivity extends BaseJxActivity implements View.OnClickL
     protected void bundleIntent(Bundle savedInstanceState) {
         Intent intent = getIntent();
         if (intent != null) {
-            mCurPosition = intent.getIntExtra(GlobalConstant.putExtra.share_position_extra, 0);
+            mCurPosition = intent.getIntExtra(JxGlobal.putExtra.share_position_extra, 0);
         }
     }
 

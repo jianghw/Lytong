@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/ds_105"
+        android:layout_marginTop="@dimen/ds_45">
+
+        <TextView
+            android:id="@+id/tv_paid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="已付款"
+            android:textColor="@color/colorTvGreen_80"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_line_paid"
+            android:layout_width="@dimen/ds_1"
+            android:layout_height="@dimen/ds_45"
+            android:layout_below="@+id/tv_paid"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/ds_15"
+            android:layout_marginTop="@dimen/ds_15"
+            android:background="@color/colorTvGreen_80"/>
+
+        <TextView
+            android:id="@+id/tv_taken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_line_paid"
+            android:layout_centerHorizontal="true"
+            android:text="已付款"
+            android:textColor="@color/colorTvGreen_80"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_line_taken"
+            android:layout_width="@dimen/ds_1"
+            android:layout_height="@dimen/ds_45"
+            android:layout_below="@+id/tv_taken"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/ds_15"
+            android:background="@color/colorTvGreen_80"/>
+
+        <!--左边 300高度-->
+        <RelativeLayout
+            android:layout_width="@dimen/ds_390"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/tv_line_taken"
+            android:layout_below="@+id/tv_line_taken">
+
+            <TextView
+                android:id="@+id/tv_transverse_line_taken_left"
+                android:layout_width="@dimen/ds_195"
+                android:layout_height="@dimen/ds_1"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/colorTvGreen_80"/>
+
+            <TextView
+                android:id="@+id/tv_line_complete_up"
+                android:layout_width="@dimen/ds_1"
+                android:layout_height="@dimen/ds_105"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/ds_15"
+                android:background="@color/colorTvGreen_80"/>
+
+            <TextView
+                android:id="@+id/tv_complete"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/ds_60"
+                android:layout_below="@+id/tv_line_complete_up"
+                android:layout_centerHorizontal="true"
+                android:text="证件齐全"
+                android:textColor="@color/colorTvGreen_80"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_line_complete_down"
+                android:layout_width="@dimen/ds_1"
+                android:layout_height="@dimen/ds_105"
+                android:layout_below="@+id/tv_complete"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/ds_15"
+                android:background="@color/colorTvGreen_80"/>
+
+            <TextView
+                android:id="@+id/tv_transverse_line_complete_left"
+                android:layout_width="@dimen/ds_195"
+                android:layout_height="@dimen/ds_1"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tv_line_complete_down"
+                android:background="@color/colorTvGreen_80"/>
+        </RelativeLayout>
+
+        <!--右边 300高度-->
+        <RelativeLayout
+            android:layout_width="@dimen/ds_390"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_line_taken"
+            android:layout_below="@+id/tv_line_taken">
+
+            <TextView
+                android:id="@+id/tv_transverse_line_taken_right"
+                android:layout_width="@dimen/ds_195"
+                android:layout_height="@dimen/ds_1"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/colorTvGreen_80"/>
+
+            <TextView
+                android:id="@+id/tv_line_unComplete_up"
+                android:layout_width="@dimen/ds_1"
+                android:layout_height="@dimen/ds_40"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/ds_15"
+                android:background="@color/colorTvGreen_80"/>
+
+            <TextView
+                android:id="@+id/tv_unComplete"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/ds_60"
+                android:layout_below="@+id/tv_line_unComplete_up"
+                android:layout_centerHorizontal="true"
+                android:text="证件不全"
+                android:textColor="@color/colorTvGreen_80"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_line_unComplete_down"
+                android:layout_width="@dimen/ds_1"
+                android:layout_height="@dimen/ds_40"
+                android:layout_below="@+id/tv_unComplete"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/ds_15"
+                android:layout_marginTop="@dimen/ds_15"
+                android:background="@color/colorTvGreen_80"/>
+
+            <TextView
+                android:id="@+id/tv_completing"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/ds_60"
+                android:layout_below="@+id/tv_line_unComplete_down"
+                android:layout_centerHorizontal="true"
+                android:text="证件补全中"
+                android:textColor="@color/colorTvGreen_80"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_line_completing"
+                android:layout_width="@dimen/ds_1"
+                android:layout_height="@dimen/ds_40"
+                android:layout_below="@+id/tv_completing"
+                android:layout_centerHorizontal="true"
+
+                android:layout_marginTop="@dimen/ds_15"
+                android:background="@color/colorTvGreen_80"/>
+
+            <TextView
+                android:id="@+id/tv_transverse_line_completing_right"
+                android:layout_width="@dimen/ds_195"
+                android:layout_height="@dimen/ds_1"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/tv_line_completing"
+                android:background="@color/colorTvGreen_80"/>
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_line_down"
+            android:layout_width="@dimen/ds_1"
+            android:layout_height="@dimen/ds_45"
+            android:layout_below="@+id/tv_line_taken"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/ds_15"
+            android:layout_marginTop="@dimen/ds_300"
+            android:background="@color/colorTvGreen_80"/>
+
+        <TextView
+            android:id="@+id/tv_commission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_line_down"
+            android:layout_centerHorizontal="true"
+            android:text="代办成功资料送达中"
+            android:textColor="@color/colorTvGreen_80"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_line_commission"
+            android:layout_width="@dimen/ds_1"
+            android:layout_height="@dimen/ds_45"
+            android:layout_below="@+id/tv_commission"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/ds_15"
+            android:layout_marginTop="@dimen/ds_15"
+            android:background="@color/colorTvGreen_80"/>
+
+        <TextView
+            android:id="@+id/tv_accomplish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_line_commission"
+            android:layout_centerHorizontal="true"
+            android:text="订单完成"
+            android:textColor="@color/colorTvGreen_80"
+            android:textSize="@dimen/fs_16sp"/>
+    </RelativeLayout>
+</merge>

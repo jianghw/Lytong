@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.home.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,22 +9,23 @@ import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
+import com.zantong.mobilecttx.browser.AdvBrowserActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.home.activity.CustomCordovaActivity;
 import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResult;
 import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
-import cn.qqtheme.framework.util.image.ImageOptions;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import cn.qqtheme.framework.contract.bean.BaseResult;
-import cn.qqtheme.framework.global.GlobalConfig;
+import cn.qqtheme.framework.global.JxConfig;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ContextUtils;
+import cn.qqtheme.framework.util.image.ImageOptions;
 import cn.qqtheme.framework.widght.banner.CBPageAdapter;
 
 /**
@@ -63,27 +65,28 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
     }
 
     protected void webProcessingService(HomeAdvertisement data) {
-        PublicData.getInstance().webviewUrl = data.getAdvertisementSkipUrl();
-        PublicData.getInstance().mHashMap.put("htmlUrl", PublicData.getInstance().webviewUrl);
-        PublicData.getInstance().webviewTitle = "优惠";
-        PublicData.getInstance().isCheckLogin = false;
 
-        if (PublicData.getInstance().webviewUrl.contains("discount")
-                || PublicData.getInstance().webviewUrl.contains("happysend")) {//保险
-            Act.getInstance().gotoIntent(mAdapterContext, CustomCordovaActivity.class);
-        } else if (PublicData.getInstance().webviewUrl.contains("localActivity")) {//百日无违章
+        String url = data.getAdvertisementSkipUrl();
+        PublicData.getInstance().mHashMap.put("htmlUrl", url);
+        if (url.contains("discount")
+                || url.contains("happysend")) {//保险
+            Act.getInstance().gotoIntent(mAdapterContext, CustomCordovaActivity.class, url);
+        } else if (url.contains("localActivity")) {//百日无违章
             if (PublicData.getInstance().loginFlag) {
-                GlobalConfig.getInstance().eventIdByUMeng(1);
+                JxConfig.getInstance().eventIdByUMeng(1);
                 getSignStatus();
             } else {
                 Act.getInstance().gotoIntent(mAdapterContext, LoginActivity.class);
             }
-        } else if (PublicData.getInstance().webviewUrl.contains("fahrschule")) {//驾校报名
+        } else if (url.contains("fahrschule")) {//驾校报名
             Act.getInstance().gotoIntentLogin(mAdapterContext, FahrschuleActivity.class);
         } else {
-            Act.getInstance().gotoIntent(mAdapterContext, BrowserActivity.class);
+            Intent intent = new Intent();
+            intent.putExtra(JxGlobal.putExtra.browser_title_extra, "优惠");
+            intent.putExtra(JxGlobal.putExtra.browser_url_extra, url);
+            Act.getInstance().gotoLoginByIntent(mAdapterContext, AdvBrowserActivity.class, intent);
 
-            CarApiClient.commitAdClick(mAdapterContext, data.getId(), new CallBack<BaseResult>() {
+            CarApiClient.commitAdClick(ContextUtils.getContext(), data.getId(), new CallBack<BaseResult>() {
                 @Override
                 public void onSuccess(BaseResult result) {
                 }
@@ -97,18 +100,18 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
         CarApiClient.getActivityCar(ContextUtils.getContext(), activityCarDTO, new CallBack<ActivityCarResult>() {
             @Override
             public void onSuccess(ActivityCarResult result) {
+                Intent intent = new Intent();
+
                 if (result.getResponseCode() == 2000 && !TextUtils.isEmpty(result.getData().getPlateNo())) {
                     SPUtils.getInstance().setSignStatus(true);
                     SPUtils.getInstance().setSignCarPlate(result.getData().getPlateNo());
-                    PublicData.getInstance().webviewUrl = Config.HUNDRED_PLAN_HOME;
-                    PublicData.getInstance().webviewTitle = "百日无违章";
-                    Act.getInstance().gotoIntentLogin(mAdapterContext, BrowserActivity.class);
+                    intent.putExtra(JxGlobal.putExtra.browser_url_extra, Config.HUNDRED_PLAN_HOME);
                 } else if (result.getResponseCode() == 4000) {
                     SPUtils.getInstance().setSignStatus(false);
-                    PublicData.getInstance().webviewUrl = Config.HUNDRED_PLAN_DEADLINE;
-                    PublicData.getInstance().webviewTitle = "百日无违章";
-                    Act.getInstance().gotoIntentLogin(mAdapterContext, BrowserActivity.class);
+                    intent.putExtra(JxGlobal.putExtra.browser_url_extra, Config.HUNDRED_PLAN_DEADLINE);
                 }
+                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "百日无违章");
+                Act.getInstance().gotoLoginByIntent(mAdapterContext, AdvBrowserActivity.class, intent);
             }
 
             @Override

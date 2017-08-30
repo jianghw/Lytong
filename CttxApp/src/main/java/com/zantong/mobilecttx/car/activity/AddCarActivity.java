@@ -70,7 +70,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.contract.bean.BaseResult;
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
@@ -252,7 +252,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
             case R.id.add_car_type_layout://选车型
 
                 PublicData.getInstance().commonListType = 3;
-                startActivityForResult(new Intent(this, CommonListActivity.class), GlobalConstant.requestCode.add_car_aty);
+                startActivityForResult(new Intent(this, CommonListActivity.class), JxGlobal.requestCode.add_car_aty);
                 break;
             case R.id.add_car_date_layout://选日期
                 String temp = mRegisterDate.getText().toString().trim();
@@ -569,15 +569,15 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                 e.printStackTrace();
             }
         }
-        if (requestCode == GlobalConstant.requestCode.add_car_aty
-                && resultCode == GlobalConstant.resultCode.common_list_fty) {
+        if (requestCode == JxGlobal.requestCode.add_car_aty
+                && resultCode == JxGlobal.resultCode.common_list_fty) {
             if (data != null) {
                 switch (PublicData.getInstance().commonListType) {
                     case 3://车辆类型
-                        mType.setText(data.getStringExtra(GlobalConstant.putExtra.common_list_extra));
+                        mType.setText(data.getStringExtra(JxGlobal.putExtra.common_list_extra));
                         String[] strs = this.getResources().getStringArray(R.array.car_type);
                         for (int i = 0; i < strs.length; i++) {
-                            if (strs[i].equals(data.getStringExtra(GlobalConstant.putExtra.common_list_extra))) {
+                            if (strs[i].equals(data.getStringExtra(JxGlobal.putExtra.common_list_extra))) {
                                 pos = i;
                             }
                         }

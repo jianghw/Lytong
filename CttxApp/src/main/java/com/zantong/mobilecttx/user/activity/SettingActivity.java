@@ -547,8 +547,6 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
 
     /**
      * 更新用户头像信息
-     *
-     * @param strUrl
      */
     private void updateUserImg(final String strUrl) {
         showDialogLoading();
@@ -601,7 +599,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         PersonInfoDTO dto = new PersonInfoDTO();
         dto.setGetdate(date.replace("-", ""));
         showDialogLoading();
-        UserApiClient.commitPersonInfo(SettingActivity.this, dto, new CallBack<Result>() {
+        UserApiClient.commitPersonInfo(ContextUtils.getContext(), dto, new CallBack<Result>() {
             @Override
             public void onSuccess(Result result) {
                 mSelDate.setText(date);

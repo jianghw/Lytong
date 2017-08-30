@@ -2,8 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorLineGray_e6">
+            android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,52 +10,29 @@
         android:background="@color/colorBgGray_f8"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/lay_price"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_330">
-
-            <LinearLayout
-                android:id="@+id/lay_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/ds_90"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tv_price_china"
-                    android:textSize="@dimen/fs_14sp"/>
-
-                <TextView
-                    android:id="@+id/tv_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorTvRed_f33"
-                    android:textSize="@dimen/fs_24sp"
-                    tools:text="99.00"/>
-            </LinearLayout>
+            android:layout_height="@dimen/ds_180"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tv_pay_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lay_price"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/ds_45"
-                android:textColor="@color/colorTvGreen_18"
-                android:textSize="@dimen/fs_16sp"
-                tools:text="已付款"/>
-        </RelativeLayout>
+                android:text="@string/tv_price_china"
+                android:textSize="@dimen/fs_14sp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_1"
-            android:layout_marginBottom="@dimen/ds_24"
-            android:layout_marginLeft="@dimen/ds_45"
-            android:layout_marginRight="@dimen/ds_45"
-            android:background="@color/colorLineGray_e6"/>
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTvRed_f33"
+                android:textSize="@dimen/fs_24sp"
+                tools:text="99.00"/>
+        </LinearLayout>
+
+        <include layout="@layout/include_order_detail_flow"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -87,38 +63,14 @@
                 android:textColor="@color/colorTvBlack_4c"
                 android:textSize="@dimen/fs_16sp"
                 tools:text="商品内容"/>
-            <!--供应商-->
-            <TextView
-                android:id="@+id/tv_supplier_title"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/ds_90"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/tv_content_title"
-                android:gravity="center"
-                android:text="供应商"
-                android:textColor="@color/colorTvBlack_4c"
-                android:textSize="@dimen/fs_16sp"/>
 
-            <TextView
-                android:id="@+id/tv_supplier"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/ds_90"
-                android:layout_alignBaseline="@+id/tv_supplier_title"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:gravity="center"
-                android:singleLine="true"
-                android:textColor="@color/colorTvBlack_4c"
-                android:textSize="@dimen/fs_16sp"
-                tools:text="商品内容"/>
             <!--订单编号-->
             <TextView
                 android:id="@+id/tv_order_num_title"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/ds_90"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/tv_supplier_title"
+                android:layout_below="@+id/tv_content_title"
                 android:gravity="center"
                 android:text="订单编号"
                 android:textColor="@color/colorTvBlack_4c"
@@ -188,7 +140,60 @@
                 android:textColor="@color/colorTvBlack_4c"
                 android:textSize="@dimen/fs_16sp"
                 tools:text="商品内容"/>
+
+            <!--寄出快递单号-->
+            <TextView
+                android:id="@+id/tv_send_off_title"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/ds_90"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/tv_pay_type_title"
+                android:gravity="center"
+                android:text="寄出快递单号"
+                android:textColor="@color/colorTvBlack_4c"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_send_off"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/ds_90"
+                android:layout_alignBaseline="@+id/tv_send_off_title"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@color/colorTvBlack_4c"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="商品内容"/>
+
+            <!--寄回快递单号-->
+            <TextView
+                android:id="@+id/tv_send_back_title"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/ds_90"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/tv_send_off_title"
+                android:gravity="center"
+                android:text="寄回快递单号"
+                android:textColor="@color/colorTvBlack_4c"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_send_back"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/ds_90"
+                android:layout_alignBaseline="@+id/tv_send_back_title"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@color/colorTvBlack_4c"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="商品内容"/>
         </RelativeLayout>
+
 
         <TextView
             android:layout_width="match_parent"
@@ -205,8 +210,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/ds_45"
             android:layout_marginRight="@dimen/ds_45"
-            tools:text="发生的哈佛i石佛粉红丝和发挥
-是放假哦啊释迦佛放假暑假放假啊"/>
+            tools:text="发生的哈佛i石佛粉红丝和发挥是放假哦啊释迦佛放假暑假放假啊"/>
 
         <TextView
             android:id="@+id/tv_query"
@@ -219,6 +223,6 @@
             android:text="对订单有疑问?"
             android:textColor="@color/colorTvRed_f33"
             android:textSize="@dimen/fs_14sp"/>
-
     </LinearLayout>
+
 </ScrollView>

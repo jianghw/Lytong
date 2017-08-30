@@ -2,7 +2,7 @@
 <resources>
 
     <!--首页导航栏名称-->
-    <string name="recharge">加油充值</string>
+    <string name="recharge">优惠加油</string>
     <string name="annual">年检服务</string>
     <string name="designated_driver">代驾</string>
     <string name="car_evaluate">爱车估价</string>

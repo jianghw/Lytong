@@ -47,7 +47,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -198,7 +198,7 @@ public class QueryFragment extends Fragment implements ModelView {
             case R.id.car_type_choose_rl:
 
                 PublicData.getInstance().commonListType = 3;
-                startActivityForResult(new Intent(this.getActivity(), CommonListActivity.class), GlobalConstant.requestCode.add_car_aty);
+                startActivityForResult(new Intent(this.getActivity(), CommonListActivity.class), JxGlobal.requestCode.add_car_aty);
 
                 break;
             case R.id.next_btn:

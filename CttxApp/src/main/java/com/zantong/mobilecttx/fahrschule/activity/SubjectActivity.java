@@ -15,7 +15,7 @@ import com.zantong.mobilecttx.fahrschule.fragment.SubjectOrderFragment;
 import com.zantong.mobilecttx.fahrschule.fragment.SubjectSucceedFragment;
 import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
 
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
@@ -37,7 +37,7 @@ public class SubjectActivity extends BaseJxActivity {
     protected void bundleIntent(Bundle savedInstanceState) {
         Intent intent = getIntent();
         if (intent != null)
-            mCurPosition = intent.getIntExtra(GlobalConstant.putExtra.fahrschule_position_extra, 0);
+            mCurPosition = intent.getIntExtra(JxGlobal.putExtra.fahrschule_position_extra, 0);
     }
 
     @Override
@@ -112,16 +112,16 @@ public class SubjectActivity extends BaseJxActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
-                && resultCode == GlobalConstant.resultCode.web_order_id_succeed) {
+        if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
+                && resultCode == JxGlobal.resultCode.web_order_id_succeed) {
             mCurPosition = 3;
             initFragment(mCurPosition);
-        } else if (requestCode == GlobalConstant.requestCode.fahrschule_order_num_web
-                && resultCode == GlobalConstant.resultCode.web_order_id_error && data != null) {
+        } else if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
+                && resultCode == JxGlobal.resultCode.web_order_id_error && data != null) {
             //前往 订单详情页面
-            String orderId = data.getStringExtra(GlobalConstant.putExtra.web_order_id_extra);
+            String orderId = data.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
             Intent intent = new Intent(this, OrderDetailActivity.class);
-            intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, orderId);
+            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
             startActivity(intent);
             finish();
         }

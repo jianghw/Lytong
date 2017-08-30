@@ -34,6 +34,7 @@ public abstract class BaseJxActivity extends AppCompatActivity {
      */
     private TextView mTvTitle;
     private ImageView mImgHome;
+    private TextView mTvClose;
     private TextView mTvRight;
     private TextView mTvLine;
     private RelativeLayout mBackgroundLay;
@@ -133,6 +134,13 @@ public abstract class BaseJxActivity extends AppCompatActivity {
                 backClickListener();
             }
         });
+        mTvClose = (TextView) view.findViewById(R.id.tv_close);
+        mTvClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeClickListener();
+            }
+        });
         mTvTitle = (TextView) view.findViewById(R.id.tv_title);
         mImgHome = (ImageView) view.findViewById(R.id.img_home);
         mImgHome.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +168,20 @@ public abstract class BaseJxActivity extends AppCompatActivity {
             mImgHome.setVisibility(View.GONE);
         if (mTvRight != null && mTvRight.getVisibility() != View.VISIBLE) {
             mTvRight.setVisibility(View.VISIBLE);
+        }
+        if (mTvRight != null) mTvRight.setText(msg);
+    }
+
+    /**
+     * 关闭控件
+     */
+    protected void setTvCloseVisible() {
+        setTvCloseVisible("关闭");
+    }
+
+    protected void setTvCloseVisible(String msg) {
+        if (mTvClose != null && mTvClose.getVisibility() != View.VISIBLE) {
+            mTvClose.setVisibility(View.VISIBLE);
         }
         if (mTvRight != null) mTvRight.setText(msg);
     }
@@ -210,6 +232,13 @@ public abstract class BaseJxActivity extends AppCompatActivity {
      */
     protected void backClickListener() {
         closeFragment();
+    }
+
+    /**
+     * 页面关闭
+     */
+    protected void closeClickListener() {
+        finish();
     }
 
     protected void imageClickListener() {

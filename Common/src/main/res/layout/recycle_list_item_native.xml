@@ -122,8 +122,8 @@
 
             <ImageView
                 android:id="@+id/img_native_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/ds_168"
+                android:layout_height="@dimen/ds_168"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="center"
                 android:src="@mipmap/icon_oil_favorable"/>
@@ -156,8 +156,8 @@
 
             <ImageView
                 android:id="@+id/img_native_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/ds_168"
+                android:layout_height="@dimen/ds_168"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="center"
                 android:src="@mipmap/icon_oil_favorable"/>
@@ -190,8 +190,8 @@
 
             <ImageView
                 android:id="@+id/img_native_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/ds_168"
+                android:layout_height="@dimen/ds_168"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="center"
                 android:src="@mipmap/icon_oil_favorable"/>
@@ -224,8 +224,8 @@
 
             <ImageView
                 android:id="@+id/img_native_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/ds_168"
+                android:layout_height="@dimen/ds_168"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="center"
                 android:src="@mipmap/icon_oil_favorable"/>

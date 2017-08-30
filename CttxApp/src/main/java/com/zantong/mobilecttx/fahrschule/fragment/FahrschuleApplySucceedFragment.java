@@ -21,7 +21,7 @@ import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 
-import cn.qqtheme.framework.global.GlobalConfig;
+import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -112,7 +112,7 @@ public class FahrschuleApplySucceedFragment extends BaseRefreshJxFragment implem
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_pay:
-                GlobalConfig.getInstance().eventIdByUMeng(31);
+                JxConfig.getInstance().eventIdByUMeng(31);
 
                 new DialogMgr(getActivity(),
                         new View.OnClickListener() {

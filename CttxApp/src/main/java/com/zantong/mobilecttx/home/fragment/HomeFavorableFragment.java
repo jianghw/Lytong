@@ -14,10 +14,8 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
-import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserActivity;
 import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
@@ -36,8 +34,8 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.global.GlobalConfig;
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxConfig;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
@@ -273,34 +271,29 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
         switch (v.getId()) {
             case R.id.img_banner:
                 Intent intent = new Intent();
-                intent.putExtra(GlobalConstant.putExtra.share_position_extra, 1);
+                intent.putExtra(JxGlobal.putExtra.share_position_extra, 1);
                 Act.getInstance().gotoLoginByIntent(getActivity(), ShareParentActivity.class, intent);
                 break;
             case R.id.lay_order://加油
-                GlobalConfig.getInstance().eventIdByUMeng(21);
+                JxConfig.getInstance().eventIdByUMeng(21);
 
                 Act.getInstance().gotoIntentLogin(getActivity(), RechargeActivity.class);
                 break;
             case R.id.lay_repair://害羞
-                GlobalConfig.getInstance().eventIdByUMeng(23);
-
-                PublicData.getInstance().webviewUrl = Config.HOME_CAR_WASH_URL;
-                PublicData.getInstance().webviewTitle = "洗车";
-                PublicData.getInstance().isCheckLogin = true;
-                Act.getInstance().gotoIntent(getActivity(), BrowserActivity.class);
+                JxConfig.getInstance().eventIdByUMeng(23);
                 break;
             case R.id.lay_beauty://美容
-                GlobalConfig.getInstance().eventIdByUMeng(27);
+                JxConfig.getInstance().eventIdByUMeng(27);
 
                 Act.getInstance().gotoIntentLogin(getActivity(), CarBeautyActivity.class);
                 break;
             case R.id.lay_river://代驾
-                GlobalConfig.getInstance().eventIdByUMeng(25);
+                JxConfig.getInstance().eventIdByUMeng(25);
 
                 enterDrivingActivity();
                 break;
             case R.id.lay_admissions://驾校招生
-                GlobalConfig.getInstance().eventIdByUMeng(28);
+                JxConfig.getInstance().eventIdByUMeng(28);
 
                 Act.getInstance().gotoIntentLogin(getActivity(), FahrschuleActivity.class);
                 break;

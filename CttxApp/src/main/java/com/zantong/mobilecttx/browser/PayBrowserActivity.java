@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.common.activity;
+package com.zantong.mobilecttx.browser;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -21,7 +20,8 @@ import com.zantong.mobilecttx.order.bean.OrderDetailBean;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
 import com.zantong.mobilecttx.presenter.browser.PayBrowserPresenter;
 
-import cn.qqtheme.framework.global.GlobalConstant;
+import butterknife.Bind;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -30,21 +30,23 @@ import cn.qqtheme.framework.util.ToastUtils;
 public class PayBrowserActivity extends BaseJxActivity
         implements IPayBrowserFtyContract.IPayBrowserFtyView {
 
-    WebView mWebView;
-    private IPayBrowserFtyContract.IPayBrowserFtyPresenter mPresenter;
+    @Bind(R.id.webView)
+    ProgressWebView mWebView;
 
     private String mTitleWeb;
     private String mUrl;
     private String mOrderId;
+
+    private IPayBrowserFtyContract.IPayBrowserFtyPresenter mPresenter;
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
 
         Intent intent = getIntent();
         if (intent != null) {
-            mTitleWeb = intent.getStringExtra(GlobalConstant.putExtra.web_title_extra);
-            mUrl = intent.getStringExtra(GlobalConstant.putExtra.web_url_extra);
-            mOrderId = intent.getStringExtra(GlobalConstant.putExtra.web_order_id_extra);
+            mTitleWeb = intent.getStringExtra(JxGlobal.putExtra.web_title_extra);
+            mUrl = intent.getStringExtra(JxGlobal.putExtra.web_url_extra);
+            mOrderId = intent.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
         }
         PayBrowserPresenter presenter = new PayBrowserPresenter(
                 Injection.provideRepository(getApplicationContext()), this);
@@ -52,7 +54,11 @@ public class PayBrowserActivity extends BaseJxActivity
 
     @Override
     protected int getContentResId() {
-        return R.layout.activity_fahrschule_pay_browser;
+        return R.layout.activity_browser;
+    }
+
+    protected boolean isNeedKnife() {
+        return true;
     }
 
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
@@ -60,8 +66,11 @@ public class PayBrowserActivity extends BaseJxActivity
     protected void initFragmentView(View view) {
 
         initTitleContent(mTitleWeb);
-        mWebView = (WebView) view.findViewById(R.id.webView);
+        setTvCloseVisible();
+    }
 
+    @SuppressLint("SetJavaScriptEnabled")
+    protected void initViewStatus() {
         String url = "<%@ page language=\"java\" contentType=\"text/html; charset=GBK\" pageEncoding=\"GBK\"%>" +
                 "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\" http://www.w3.org/TR/html4/loose.dtd\">" +
                 "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\">" +
@@ -75,12 +84,12 @@ public class PayBrowserActivity extends BaseJxActivity
 
         mWebView.loadDataWithBaseURL(null, url, "text/html", "utf-8", null);
         mWebView.setWebViewClient(new MyWebViewClient());
-        mWebView.setWebChromeClient(new MyWebViewChromeClient());
         mWebView.addJavascriptInterface(new InterfaceForJS(this), "CTTX");
 
         //触摸焦点起作用.
         //如果不设置，则在点击网页文本输入框时，不能弹出软键盘及不响应其他的一些事件。
         mWebView.requestFocus();
+
     }
 
     @Override
@@ -108,7 +117,7 @@ public class PayBrowserActivity extends BaseJxActivity
         // 重写shouldOverrideUrlLoading方法，使点击链接后不使用其他的浏览器打开。
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//            mWebView.loadUrl(url);
+            mWebView.loadUrl(url);
             // 如果不需要其他对点击链接事件的处理返回true，否则返回false
             return true;
         }
@@ -120,18 +129,11 @@ public class PayBrowserActivity extends BaseJxActivity
         }
     }
 
-    private class MyWebViewChromeClient extends WebChromeClient {
-        @Override
-        public void onProgressChanged(WebView view, int newProgress) {
-            super.onProgressChanged(view, newProgress);
-        }
-    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
             mWebView.goBack();//返回webView的上一页面
-            return false;
+            return true;
         }
         orderDetail();
         return false;
@@ -171,15 +173,15 @@ public class PayBrowserActivity extends BaseJxActivity
 
     protected void succeedStatus() {
         Intent intent = new Intent();
-        intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, mOrderId);
-        setResult(GlobalConstant.resultCode.web_order_id_succeed, intent);
+        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, mOrderId);
+        setResult(JxGlobal.resultCode.web_order_id_succeed, intent);
         finish();
     }
 
     protected void errorStatus() {
         Intent intent = new Intent();
-        intent.putExtra(GlobalConstant.putExtra.web_order_id_extra, mOrderId);
-        setResult(GlobalConstant.resultCode.web_order_id_error, intent);
+        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, mOrderId);
+        setResult(JxGlobal.resultCode.web_order_id_error, intent);
         finish();
     }
 

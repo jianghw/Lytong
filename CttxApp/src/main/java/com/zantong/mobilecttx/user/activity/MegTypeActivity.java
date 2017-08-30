@@ -6,7 +6,7 @@ import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.presenter.MegTypeAtyPresenter;
 import com.zantong.mobilecttx.user.fragment.MegTypeFragment;
 
-import cn.qqtheme.framework.global.GlobalConfig;
+import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.util.AtyUtils;
 
 /**
@@ -39,6 +39,6 @@ public class MegTypeActivity extends MvpBaseActivity {
         MegTypeAtyPresenter mPresenter = new MegTypeAtyPresenter(
                 Injection.provideRepository(getApplicationContext()), megTypeFragment);
 
-        GlobalConfig.getInstance().eventIdByUMeng(16);
+        JxConfig.getInstance().eventIdByUMeng(16);
     }
 }

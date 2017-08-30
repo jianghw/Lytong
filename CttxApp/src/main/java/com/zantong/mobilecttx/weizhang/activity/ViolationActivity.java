@@ -11,7 +11,7 @@ import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
 import com.zantong.mobilecttx.weizhang.fragment.ViolationQueryFragment;
 
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
@@ -38,7 +38,7 @@ public class ViolationActivity extends BaseJxActivity {
         Intent intent = getIntent();
         if (intent != null && intent.getExtras() != null) {
             mVehicleLicenseBean =
-                    intent.getExtras().getParcelable(GlobalConstant.putExtra.car_item_bean_extra);
+                    intent.getExtras().getParcelable(JxGlobal.putExtra.car_item_bean_extra);
         }
     }
 

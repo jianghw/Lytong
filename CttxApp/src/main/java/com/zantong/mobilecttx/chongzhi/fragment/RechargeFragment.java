@@ -22,6 +22,7 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.PullableBaseFragment;
+import com.zantong.mobilecttx.browser.BrowserForPayActivity;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeAgreementActivity;
 import com.zantong.mobilecttx.chongzhi.adapter.OilPriceAdapter;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeBean;
@@ -29,8 +30,6 @@ import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponBean;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserForPayActivity;
 import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
 import com.zantong.mobilecttx.contract.IRechargeAtyContract;
 import com.zantong.mobilecttx.order.activity.CouponDetailActivity;
@@ -48,7 +47,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
@@ -361,9 +360,9 @@ public class RechargeFragment extends PullableBaseFragment
                     ArrayList<RechargeCouponBean> arrayList = new ArrayList<>();
                     arrayList.addAll(list);
 
-                    bundle.putParcelableArrayList(GlobalConstant.putExtra.recharge_coupon_extra, arrayList);
+                    bundle.putParcelableArrayList(JxGlobal.putExtra.recharge_coupon_extra, arrayList);
                     intent.putExtras(bundle);
-                    startActivityForResult(intent, GlobalConstant.requestCode.recharge_coupon_list);
+                    startActivityForResult(intent, JxGlobal.requestCode.recharge_coupon_list);
                 }
                 break;
             case R.id.tv_agreement://充值协议
@@ -382,14 +381,14 @@ public class RechargeFragment extends PullableBaseFragment
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (data != null && requestCode == GlobalConstant.requestCode.recharge_coupon_list
-                && resultCode == GlobalConstant.resultCode.recharge_coupon_choice) {
+        if (data != null && requestCode == JxGlobal.requestCode.recharge_coupon_list
+                && resultCode == JxGlobal.resultCode.recharge_coupon_choice) {
             Bundle bundle = data.getExtras();
             RechargeCouponBean couponBean = bundle.getParcelable(
-                    GlobalConstant.putExtra.recharge_coupon_bean_extra);
+                    JxGlobal.putExtra.recharge_coupon_bean_extra);
             couponActivityResult(couponBean);
-        } else if (data != null && requestCode == GlobalConstant.requestCode.recharge_coupon_list
-                && resultCode == GlobalConstant.resultCode.recharge_coupon_unchoice) {
+        } else if (data != null && requestCode == JxGlobal.requestCode.recharge_coupon_list
+                && resultCode == JxGlobal.resultCode.recharge_coupon_unchoice) {
 
             couponActivityResult(null);
         }
@@ -775,9 +774,10 @@ public class RechargeFragment extends PullableBaseFragment
      */
     @Override
     public void onPayOrderByCouponSucceed(PayOrderResult result) {
-        PublicData.getInstance().webviewTitle = "支付";
-        PublicData.getInstance().webviewUrl = result.getData();
-        Act.getInstance().gotoIntentLogin(getActivity(), BrowserForPayActivity.class);
+        Intent intent = new Intent();
+        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
+        intent.putExtra(JxGlobal.putExtra.browser_url_extra, result.getData());
+        Act.getInstance().gotoLoginByIntent(getActivity(), BrowserForPayActivity.class, intent);
         //TODO 保存卡号
         SPUtils.getInstance().setOilCard(mRechargeDTO.getOilCardNum());
         //TODO 确保优惠劵的使用状态

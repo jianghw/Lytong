@@ -60,8 +60,8 @@ import java.util.List;
 import java.util.Locale;
 
 import cn.qqtheme.framework.contract.bean.BaseResult;
-import cn.qqtheme.framework.global.GlobalConfig;
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxConfig;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ViewUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
@@ -366,7 +366,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
             case R.id.tv_type://车牌类型
                 PublicData.getInstance().commonListType = 3;
                 Intent intent = new Intent(getActivity(), CommonListActivity.class);
-                startActivityForResult(intent, GlobalConstant.requestCode.violation_query_plate);
+                startActivityForResult(intent, JxGlobal.requestCode.violation_query_plate);
                 break;
             case R.id.lay_date://日期
                 String temp = mTvDate.getText().toString().trim();
@@ -491,7 +491,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         if (mParam1 != null) {//编辑
             if (mPresenter != null) mPresenter.updateVehicleLicense();
         } else {
-            GlobalConfig.getInstance().eventIdByUMeng(13);
+            JxConfig.getInstance().eventIdByUMeng(13);
             submitData();
         }
     }
@@ -745,9 +745,9 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
     protected void goToCamera() {
         Intent intentOcr = new Intent(getActivity(), OcrCameraActivity.class);
-        intentOcr.putExtra(GlobalConstant.putExtra.ocr_camera_extra, 0);
+        intentOcr.putExtra(JxGlobal.putExtra.ocr_camera_extra, 0);
 //        startActivityForResult(intentOcr, 1201);
-        startActivityForResult(intentOcr, GlobalConstant.requestCode.violation_query_camera);
+        startActivityForResult(intentOcr, JxGlobal.requestCode.violation_query_camera);
     }
 
 
@@ -760,13 +760,13 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 //车牌类型
-        if (requestCode == GlobalConstant.requestCode.violation_query_plate
-                && resultCode == GlobalConstant.resultCode.common_list_fty && data != null) {
-            setTvType(data.getStringExtra(GlobalConstant.putExtra.common_list_extra));
+        if (requestCode == JxGlobal.requestCode.violation_query_plate
+                && resultCode == JxGlobal.resultCode.common_list_fty && data != null) {
+            setTvType(data.getStringExtra(JxGlobal.putExtra.common_list_extra));
         }
 //拍照回调
-        if (requestCode == GlobalConstant.requestCode.violation_query_camera
-                && resultCode == GlobalConstant.resultCode.ocr_camera_license) {
+        if (requestCode == JxGlobal.requestCode.violation_query_camera
+                && resultCode == JxGlobal.resultCode.ocr_camera_license) {
 
             if (OcrCameraActivity.file == null)
                 ToastUtils.toastShort("照片获取失败");

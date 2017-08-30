@@ -8,10 +8,12 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
+
 import cn.qqtheme.framework.contract.bean.BaseResult;
+
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.common.activity.BrowserForPayActivity;
+import com.zantong.mobilecttx.browser.BrowserForPayActivity;
 import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderDetailResult;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderDetailDTO;
 import com.zantong.mobilecttx.eventbus.DrivingCancelEvent;
@@ -30,7 +32,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.HashMap;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
+import cn.qqtheme.framework.util.ContextUtils;
 
 /**
  * 代驾订单详情页面
@@ -89,7 +92,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
             @Override
             public void onClick(View v) {
                 DialogUtils.createRechargeDialog(DODetailActivity.this, mOrderId,
-                        mPrice.getText().toString(), "",new View.OnClickListener() {
+                        mPrice.getText().toString(), "", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
 
@@ -102,13 +105,14 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
                                 String payUrl = "http://139.196.183.121:8081/payment/payForWapb2cPay?orderid=" +
                                         mOrderId + "&amount=" +
                                         orderPrice + "&payType=0";
-                                CarApiClient.getPayOrderSn(DODetailActivity.this, payUrl, new CallBack<PayOrderResult>() {
+                                CarApiClient.getPayOrderSn(ContextUtils.getContext(), payUrl, new CallBack<PayOrderResult>() {
                                     @Override
                                     public void onSuccess(PayOrderResult result) {
                                         if (result.getResponseCode() == 2000) {
-                                            PublicData.getInstance().webviewTitle = "支付";
-                                            PublicData.getInstance().webviewUrl = result.getData();
-                                            Act.getInstance().gotoIntentLogin(DODetailActivity.this, BrowserForPayActivity.class);
+                                            Intent intent = new Intent();
+                                            intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
+                                            intent.putExtra(JxGlobal.putExtra.browser_url_extra, result.getData());
+                                            Act.getInstance().gotoLoginByIntent(DODetailActivity.this, BrowserForPayActivity.class, intent);
                                         }
                                     }
                                 });
@@ -148,7 +152,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
         DaiJiaOrderDetailDTO dto = new DaiJiaOrderDetailDTO();
         dto.setUsrId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
         Intent intent = getIntent();
-        mOrderId = intent.getStringExtra(GlobalConstant.putExtra.common_extra);
+        mOrderId = intent.getStringExtra(JxGlobal.putExtra.common_extra);
         dto.setOrderId(mOrderId);
         String time = "1488253689";
         try {

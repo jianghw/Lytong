@@ -11,7 +11,7 @@ import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 import com.zantong.mobilecttx.weizhang.fragment.ViolationPayFragment;
 
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
@@ -32,9 +32,9 @@ public class ViolationPayActivity extends BaseJxActivity {
     protected void bundleIntent(Bundle savedInstanceState) {
         Intent intent = getIntent();
         if (intent != null) {
-            mCurPosition = intent.getIntExtra(GlobalConstant.putExtra.fahrschule_position_extra, 0);
+            mCurPosition = intent.getIntExtra(JxGlobal.putExtra.fahrschule_position_extra, 0);
             Bundle bundle = intent.getExtras();
-            violationBean = bundle.getParcelable(GlobalConstant.putExtra.violation_pay_bean_extra);
+            violationBean = bundle.getParcelable(JxGlobal.putExtra.violation_pay_bean_extra);
         }
     }
 

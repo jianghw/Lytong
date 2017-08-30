@@ -1,7 +1,9 @@
 package com.zantong.mobilecttx.home.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.GridLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.contract.home.INativeItemListener;
 import com.zantong.mobilecttx.home.bean.ChildrenBean;
 import com.zantong.mobilecttx.home.bean.ModuleBean;
 
@@ -38,6 +41,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
     private static final int ITEM_TYPE_TWO_PIC = 3;
     private static final int ITEM_TYPE_THREE_PIC = 4;
     private Context mAdapterContext;
+    private INativeItemListener mNativieItemListener;
 
     /**
      * 自定义类型布局
@@ -136,13 +140,21 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         final List<ChildrenBean> temporaryList = new ArrayList<>(childrenBeanList.size());
 
         arrayProcessingList(row, childrenBeanList, temporaryList);
-
         redefineLayoutParams(serviceViewHolder, row, temporaryList);
 
         final ServiceDiscountsAdapter discountsAdapter = new ServiceDiscountsAdapter();
+        discountsAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, Object data) {
+                if (data instanceof ChildrenBean) {
+                    ChildrenBean childrenBean = (ChildrenBean) data;
+                    if (mNativieItemListener != null)
+                        mNativieItemListener.onItemClick(childrenBean);
+                }
+            }
+        });
         discountsAdapter.replaceOnly(temporaryList);
         serviceViewHolder.mRvRecycler.setAdapter(discountsAdapter);
-
 
         serviceViewHolder.mLayFold.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +175,12 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
 
                 int count = temporaryList.size();
                 serviceViewHolder.mTvFold.setText(row == 2 && count > 4 || row == 3 && count > 6 ? "收起更多" : "展开更多");
+
+
+                Drawable nav_up = mAdapterContext.getResources().getDrawable(
+                        serviceViewHolder.mTvFold.getText().toString().contains("收起") ? R.mipmap.arrow_up : R.mipmap.arrow_down);
+                nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
+                serviceViewHolder.mTvFold.setCompoundDrawables(null, null, nav_up, null);
             }
         });
 
@@ -184,6 +202,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
 
     /**
      * 重新定义recyclerView 高宽
+     * 改数值时还请改@ServiceDiscountsAdapter
      */
     private void redefineLayoutParams(ServiceViewHolder serviceViewHolder, int row, List<ChildrenBean> temporaryList) {
 
@@ -195,17 +214,34 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         //高度的计算需要自己好好理解，否则会产生嵌套recyclerView可以滑动的现象
         int width = (ScreenUtils.widthPixels(mAdapterContext) -
                 (row == 2 ? ConvertUtils.toPx(7.33f) * 2 : ConvertUtils.toPx(10f) * 2)) / row;
-        layoutParams.height = (row == 2 ? width / 2 : (int) (width * 1.2)) * lineNumber
+        layoutParams.height = (row == 2 ? width / 2 : (int) (width * 1.1)) * lineNumber
                 + (row == 2 ? ConvertUtils.toPx(7.33f) * 2 : ConvertUtils.toPx(10f) * 2);
 
         serviceViewHolder.mRvRecycler.setLayoutParams(layoutParams);
     }
 
     /**
-     * 分享模块
+     * 分享模块 方法继续走下去
      */
     private void shareTransactionProcessing(ShareViewHolder shareViewHolder, ModuleBean moduleBean) {
-        ImageLoadUtils.loadShareRectangle(moduleBean.getImg(), shareViewHolder.mImageShare);
+        List<ChildrenBean> childrenBeanList = moduleBean.getChildren();
+        ChildrenBean bean = null;
+        for (ChildrenBean childrenBean : childrenBeanList) {
+            if (!TextUtils.isEmpty(childrenBean.getImg())) {
+                bean = childrenBean;
+                break;
+            }
+        }
+        if (bean != null) {
+            ImageLoadUtils.loadShareRectangle(bean.getImg(), shareViewHolder.mImageShare);
+            final ChildrenBean finalBean = bean;
+            shareViewHolder.mImageShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mNativieItemListener != null) mNativieItemListener.onItemClick(finalBean);
+                }
+            });
+        }
     }
 
     /**
@@ -215,72 +251,79 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         List<ChildrenBean> childrenBeanList = moduleBean.getChildren();
 
         if (childrenBeanList.size() <= 0 || childrenBeanList.get(0) == null) return;
+        final ChildrenBean bean_0 = childrenBeanList.get(0);
         nativeViewHolder.mLayLocality1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (mNativieItemListener != null) mNativieItemListener.onItemClick(bean_0);
             }
         });
-        ChildrenBean bean_0 = childrenBeanList.get(0);
         nativeViewHolder.mTvOil.setText(bean_0.getTitle());
         nativeViewHolder.mTvOilClick.setText(bean_0.getSubTitle());
         ImageLoadUtils.loadNativeCircle(bean_0.getImg(), nativeViewHolder.mImgOil);
 
         if (childrenBeanList.size() <= 1 || childrenBeanList.get(1) == null) return;
+        final ChildrenBean bean_1 = childrenBeanList.get(1);
         nativeViewHolder.mLayLocality2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (mNativieItemListener != null) mNativieItemListener.onItemClick(bean_1);
             }
         });
-        ChildrenBean bean_1 = childrenBeanList.get(1);
         nativeViewHolder.mTvInsurance.setText(bean_1.getTitle());
         nativeViewHolder.mTvInsuranceClick.setText(bean_1.getSubTitle());
         ImageLoadUtils.loadNativeCircle(bean_1.getImg(), nativeViewHolder.mImgInsurance);
 
         if (childrenBeanList.size() <= 2 || childrenBeanList.get(2) == null) return;
+        final ChildrenBean bean_2 = childrenBeanList.get(2);
         nativeViewHolder.mLayNative1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (mNativieItemListener != null) mNativieItemListener.onItemClick(bean_2);
             }
         });
-        ChildrenBean bean_2 = childrenBeanList.get(2);
         nativeViewHolder.mTvNative1.setText(bean_2.getTitle());
         ImageLoadUtils.loadNativeCircle(bean_2.getImg(), nativeViewHolder.mImgNative1);
 
         if (childrenBeanList.size() <= 3 || childrenBeanList.get(3) == null) return;
+        final ChildrenBean bean_3 = childrenBeanList.get(3);
         nativeViewHolder.mLayNative2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (mNativieItemListener != null) mNativieItemListener.onItemClick(bean_3);
             }
         });
-        ChildrenBean bean_3 = childrenBeanList.get(3);
         nativeViewHolder.mTvNative2.setText(bean_3.getTitle());
         ImageLoadUtils.loadNativeCircle(bean_3.getImg(), nativeViewHolder.mImgNative2);
 
         if (childrenBeanList.size() <= 4 || childrenBeanList.get(4) == null) return;
+        final ChildrenBean bean_4 = childrenBeanList.get(4);
         nativeViewHolder.mLayNative3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (mNativieItemListener != null) mNativieItemListener.onItemClick(bean_4);
             }
         });
-        ChildrenBean bean_4 = childrenBeanList.get(4);
         nativeViewHolder.mTvNative3.setText(bean_4.getTitle());
         ImageLoadUtils.loadNativeCircle(bean_4.getImg(), nativeViewHolder.mImgNative3);
 
         if (childrenBeanList.size() <= 5 || childrenBeanList.get(5) == null) return;
+        final ChildrenBean bean_5 = childrenBeanList.get(5);
         nativeViewHolder.mLayNative4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (mNativieItemListener != null) mNativieItemListener.onItemClick(bean_5);
             }
         });
-        ChildrenBean bean_5 = childrenBeanList.get(5);
         nativeViewHolder.mTvNative4.setText(bean_5.getTitle());
         ImageLoadUtils.loadNativeCircle(bean_5.getImg(), nativeViewHolder.mImgNative4);
+    }
+
+    /**
+     * 监听事件
+     */
+    public void setNativeItemListener(INativeItemListener itemListener) {
+        mNativieItemListener = itemListener;
     }
 
     /**
@@ -363,7 +406,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
             int row = (itemType == ITEM_TYPE_TWO_PIC) ? 2 : 3;
             //每行显示3个，水平显示
             GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), row, GridLayoutManager.VERTICAL, false);
-//            layoutManager.setAutoMeasureEnabled(true);
+
             mRvRecycler.setLayoutManager(layoutManager);
 //动态设置其内边距 多种状态布局时
             float padding = itemType == ITEM_TYPE_TWO_PIC ? 7.33f : 10f;

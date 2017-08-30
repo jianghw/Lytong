@@ -21,7 +21,7 @@ import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
@@ -50,7 +50,7 @@ public class Codequery extends BaseJxActivity implements ModelView {
     protected void bundleIntent(Bundle savedInstanceState) {
         Intent intent = getIntent();
         if (intent != null) {
-            mType = intent.getStringExtra(GlobalConstant.putExtra.common_extra);
+            mType = intent.getStringExtra(JxGlobal.putExtra.common_extra);
         }
     }
 

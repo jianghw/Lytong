@@ -32,7 +32,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -169,7 +169,7 @@ public class ViolationQueryAcitvity extends BaseMvpActivity<IBaseView, HelpPrese
                 break;
             case R.id.violation_query_cartype_layout:
                 PublicData.getInstance().commonListType = 3;
-                startActivityForResult(new Intent(this, CommonListActivity.class), GlobalConstant.requestCode.violation_query_plate);
+                startActivityForResult(new Intent(this, CommonListActivity.class), JxGlobal.requestCode.violation_query_plate);
                 break;
             case R.id.aviolation_query_btn:
                 ViolationDTO dto = new ViolationDTO();

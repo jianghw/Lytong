@@ -15,8 +15,8 @@ import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.presenter.chongzhi.RechargePresenter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
-import cn.qqtheme.framework.global.GlobalConfig;
-import cn.qqtheme.framework.global.GlobalConstant;
+import cn.qqtheme.framework.global.JxConfig;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.AtyUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
@@ -44,13 +44,13 @@ public class RechargeActivity extends BaseJxActivity {
         initTitleContent("油卡充值");
         setTvRightVisible("加油充值");
 
-        GlobalConfig.getInstance().eventIdByUMeng(22);
+        JxConfig.getInstance().eventIdByUMeng(22);
 
         initMvPresenter();
     }
 
     protected void rightClickListener() {
-        GlobalConfig.getInstance().eventIdByUMeng(3);
+        JxConfig.getInstance().eventIdByUMeng(3);
 
         showContacts();
     }
@@ -80,7 +80,7 @@ public class RechargeActivity extends BaseJxActivity {
                     Manifest.permission.READ_PHONE_STATE});
         } else {
             Intent intent = new Intent();
-            intent.putExtra(GlobalConstant.putExtra.map_type_extra, GlobalConstant.MapType.annual_oil_map);
+            intent.putExtra(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
             Act.getInstance().gotoLoginByIntent(this, BaiduMapParentActivity.class, intent);
         }
     }
@@ -97,7 +97,7 @@ public class RechargeActivity extends BaseJxActivity {
     @PermissionSuccess(requestCode = PER_REQUEST_CODE)
     public void doPermissionSuccess() {
         Intent intent = new Intent();
-        intent.putExtra(GlobalConstant.putExtra.map_type_extra, GlobalConstant.MapType.annual_oil_map);
+        intent.putExtra(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
         Act.getInstance().gotoLoginByIntent(this, BaiduMapParentActivity.class, intent);
     }
 

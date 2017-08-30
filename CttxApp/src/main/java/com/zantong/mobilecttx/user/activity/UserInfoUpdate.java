@@ -26,9 +26,7 @@ import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.UserInfoUpdateView;
 import com.zantong.mobilecttx.presenter.UserInfoUpdatePresenter;
 import com.zantong.mobilecttx.utils.StringUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.Tools;
-import cn.qqtheme.framework.util.image.ImageLoadUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.popwindow.IOSpopwindow;
 
@@ -41,6 +39,8 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.FileUtils;
+import cn.qqtheme.framework.util.ToastUtils;
+import cn.qqtheme.framework.util.image.ImageLoadUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
@@ -59,8 +59,7 @@ import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_COD
 /**
  * 个人中心页面
  */
-public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfoUpdatePresenter>
-        implements UserInfoUpdateView {
+public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfoUpdatePresenter> implements UserInfoUpdateView {
     @Bind(R.id.user_info_head_rl)
     RelativeLayout userInfoHeadRl;
     @Bind(R.id.user_info_name_rl)
@@ -130,7 +129,6 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
 
     @Override
     public void showProgress() {
-//        mDialog = DialogUtils.showLoading(this,)
     }
 
     @Override
@@ -179,12 +177,6 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
                 Act.getInstance().lauchIntent(UserInfoUpdate.this, UpdateNickName.class);
                 break;
             case R.id.user_info_phone_rl:
-//                IOSpopwindow menuWindow1 = new IOSpopwindow(UserInfoUpdate.this, content_all, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Act.getInstance().lauchIntent(UserInfoUpdate.this, UpdatePhoneNumber.class);
-//                    }
-//                });
                 break;
             case R.id.user_info_change_pwd:
                 Act.getInstance().lauchIntent(UserInfoUpdate.this, ChangePwdActivity.class);

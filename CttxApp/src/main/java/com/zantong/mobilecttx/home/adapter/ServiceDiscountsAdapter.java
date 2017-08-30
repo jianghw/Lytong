@@ -88,21 +88,22 @@ public class ServiceDiscountsAdapter extends BaseAdapter<ChildrenBean> {
         int width = ((ScreenUtils.widthPixels(mAdapterContext) - ConvertUtils.toPx(7.33f) * 2) / (itemType == ITEM_TYPE_TWO_PIC ? 2 : 3));
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.width = width;
-        layoutParams.height = (itemType == ITEM_TYPE_TWO_PIC) ? width / 2 : (int) (width * 1.2);
+        layoutParams.height = (itemType == ITEM_TYPE_TWO_PIC) ? width / 2 : (int) (width * 1.1);
         view.setLayoutParams(layoutParams);
     }
 
     @Override
-    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, ChildrenBean moduleBean) {
-        if (moduleBean == null) return;
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, ChildrenBean childrenBean) {
+        if (childrenBean == null) return;
+
         switch (viewHolder.getItemViewType()) {
             case ITEM_TYPE_TWO_PIC:
                 ImageViewHolder imageViewHolder = (ImageViewHolder) viewHolder;
-                imageTransactionProcessing(imageViewHolder, moduleBean);
+                imageTransactionProcessing(imageViewHolder, childrenBean);
                 break;
             case ITEM_TYPE_THREE_PIC:
                 ImageTextViewHolder imageTextViewHolder = (ImageTextViewHolder) viewHolder;
-                imageTextTransactionProcessing(imageTextViewHolder, moduleBean);
+                imageTextTransactionProcessing(imageTextViewHolder, childrenBean);
                 break;
             default:
                 break;
@@ -110,8 +111,9 @@ public class ServiceDiscountsAdapter extends BaseAdapter<ChildrenBean> {
     }
 
     private void imageTransactionProcessing(ImageViewHolder imageViewHolder,
-                                            ChildrenBean moduleBean) {
-        ImageLoadUtils.loadTwoRectangle(moduleBean.getImg(), imageViewHolder.mImageView);
+                                            ChildrenBean childrenBean) {
+        ImageLoadUtils.loadTwoRectangle(childrenBean.getImg(), imageViewHolder.mImageView);
+        imageViewHolder.mTvBoby.setText(childrenBean.getSubTitle());
     }
 
     private void imageTextTransactionProcessing(ImageTextViewHolder imageTextViewHolder,

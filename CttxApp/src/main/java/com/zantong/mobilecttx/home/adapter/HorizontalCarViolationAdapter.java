@@ -31,7 +31,7 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.global.GlobalConfig;
+import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.widght.popup.MoreWindow;
 import cn.qqtheme.framework.util.ScreenUtils;
 
@@ -113,7 +113,7 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GlobalConfig.getInstance().eventIdByUMeng(11);
+                JxConfig.getInstance().eventIdByUMeng(11);
 
                 showMoreWindow(v);
             }
@@ -131,13 +131,13 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
         mMoreWindow.initClickListener(new MoreWindow.onClickListener() {
             @Override
             public void clickInquire() {//违章查询
-                GlobalConfig.getInstance().eventIdByUMeng(12);
+                JxConfig.getInstance().eventIdByUMeng(12);
                 Act.getInstance().gotoIntent(mContext, ViolationActivity.class);
             }
 
             @Override
             public void clickScan() {
-                GlobalConfig.getInstance().eventIdByUMeng(14);
+                JxConfig.getInstance().eventIdByUMeng(14);
                 Act.getInstance().gotoIntent(mContext, Codequery.class);
             }
         });

@@ -190,11 +190,11 @@ public class PayWebActivity extends AppCompatActivity implements ModelView{
     //网页回退
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (webview_about.canGoBack() && event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+        if (webview_about.canGoBack()
+                && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
             webview_about.goBack();
             return true;
         }
-
         return super.onKeyDown(keyCode, event);
     }
 
