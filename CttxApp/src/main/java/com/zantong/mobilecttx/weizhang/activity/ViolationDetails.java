@@ -116,8 +116,7 @@ public class ViolationDetails extends FragmentActivity implements ModelView {
         mSurePayFragment = new SurePayFragment();
         mPayTypeFragment = new PayTypeFragment();
         mFragmentManager = getSupportFragmentManager();
-        refreshingAnimation = (RotateAnimation) AnimationUtils.loadAnimation(
-                this, R.anim.rotating_anim);
+        refreshingAnimation = (RotateAnimation) AnimationUtils.loadAnimation(this, R.anim.rotating_anim);
         LinearInterpolator lir = new LinearInterpolator();
         refreshingAnimation.setInterpolator(lir);
     }

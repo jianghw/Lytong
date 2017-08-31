@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.SslErrorHandler;
@@ -68,7 +67,6 @@ public class PayWebActivity extends AppCompatActivity implements ModelView{
 
         payUrl = (String) PublicData.getInstance().mHashMap.get("PayWebActivity");
         mRightText.setText("分享");
-        Log.e("why", payUrl);
 
         webview_about.getSettings().setJavaScriptEnabled(true);
         webview_about.getSettings().setUseWideViewPort(true);

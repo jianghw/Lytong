@@ -169,7 +169,7 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
                 JxConfig.getInstance().eventIdByUMeng(28);
                 Act.getInstance().gotoIntentLogin(getActivity(), FahrschuleActivity.class);
             } else {//其他
-
+                ToastUtils.toastShort("此版本暂无此状态页面,请更新最新版本");
             }
         }
     }

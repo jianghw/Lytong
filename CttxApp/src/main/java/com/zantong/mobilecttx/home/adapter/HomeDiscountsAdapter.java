@@ -226,8 +226,8 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
     /**
      * 创建动画
      */
-    private ValueAnimator createAnimators(final ServiceViewHolder serviceViewHolder, int from, int height) {
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(from, height);
+    private ValueAnimator createAnimators(final ServiceViewHolder serviceViewHolder, int from, int to) {
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(from, to);
         valueAnimator.setDuration(500);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override

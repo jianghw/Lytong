@@ -154,7 +154,6 @@
                 android:textSize="@dimen/fs_16sp"/>
 
             <TextView
-                android:id="@+id/tv_send_off"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/ds_90"
                 android:layout_alignBaseline="@+id/tv_send_off_title"
@@ -180,7 +179,6 @@
                 android:textSize="@dimen/fs_16sp"/>
 
             <TextView
-                android:id="@+id/tv_send_back"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/ds_90"
                 android:layout_alignBaseline="@+id/tv_send_back_title"

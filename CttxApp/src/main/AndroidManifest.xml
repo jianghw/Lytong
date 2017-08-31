@@ -112,9 +112,7 @@
             android:name=".common.Demo"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity
-            android:name=".weizhang.activity.QueryResultActivity"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".weizhang.activity.ViolationDetails"
             android:screenOrientation="portrait"/>
@@ -171,9 +169,6 @@
 
         <activity
             android:name=".weizhang.activity.PayWebActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".weizhang.activity.PaymentActivity"
             android:screenOrientation="portrait"/>
 
         <!-- 选a择城市 -->
@@ -353,6 +348,7 @@
             android:screenOrientation="portrait"/>
 
         <!--========================违章查询页面=================================-->
+        <!--违法查询页面 输入-->
         <activity
             android:name=".weizhang.activity.ViolationActivity"
             android:screenOrientation="portrait"
@@ -365,16 +361,17 @@
         <activity
             android:name=".weizhang.activity.ViolationPayActivity"
             android:screenOrientation="portrait"/>
-        <!--违章查询页面-->
-        <activity
-            android:name=".weizhang.activity.ViolationQueryAcitvity"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".weizhang.activity.LicenseCheckGradeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".weizhang.activity.LicenseDetailActivity"
+            android:screenOrientation="portrait"/>
+        <!--缴费须知-->
+        <activity
+            android:name=".weizhang.activity.PaymentActivity"
             android:screenOrientation="portrait"/>
 
         <!-- ===================活动模块=========================================-->

@@ -16,7 +16,6 @@
             android:text="拍照扫描行驶证" />
 
         <LinearLayout
-            android:id="@+id/car_number_rl"
             android:layout_width="match_parent"
             android:layout_height="48dip"
             android:background="@color/white"
@@ -80,7 +79,6 @@
         <include layout="@layout/view_line1" />
 
         <LinearLayout
-            android:id="@+id/engine_number_rl"
             android:layout_width="match_parent"
             android:layout_height="48dip"
             android:background="@color/white"

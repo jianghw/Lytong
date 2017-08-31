@@ -15,7 +15,7 @@ import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
- * 违章页面 母页面
+ * 违法查询页面 输入
  */
 public class ViolationActivity extends BaseJxActivity {
 

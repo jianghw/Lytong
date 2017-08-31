@@ -44,7 +44,7 @@ import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
- * 违章信息列表页面
+ * 违法信息列表页面
  */
 public class ViolationListActivity extends BaseJxActivity
         implements IViolationListFtyContract.IViolationListFtyView {

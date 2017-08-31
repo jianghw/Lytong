@@ -41,8 +41,6 @@
     <color name="colorNoticeGrayNumberFont">#FFF5F2F2</color>
     <color name="colorAddCarGrayNumberFont">#FF666666</color>
 
-    <color name="userAgreeColor">#13B1F5</color>
-
     <color name="surePayPopupBackground">#4D000000</color>
     <color name="payRecordTimePopBack">#4D000000</color>
     <color name="mineGray">#FFC8C8CC</color>
@@ -91,7 +89,6 @@
     <color name="black_27">#272727</color>
 
     <!-- 灰色 -->
-    <color name="gray_ee">#eeeeee</color>
     <color name="gray_c9">#c9c9c9</color>
     <color name="gray_66">#666666</color>
     <color name="gray_25">#3A3A3A</color>

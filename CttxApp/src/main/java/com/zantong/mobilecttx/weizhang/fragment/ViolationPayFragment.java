@@ -32,6 +32,9 @@ import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 
+/**
+ * 违章支付页面
+ */
 public class ViolationPayFragment extends BaseJxFragment {
 
     @Bind(R.id.fragment_violation_paytype_layout)

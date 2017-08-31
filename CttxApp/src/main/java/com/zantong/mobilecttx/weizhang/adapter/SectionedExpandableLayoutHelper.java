@@ -23,20 +23,17 @@ public class SectionedExpandableLayoutHelper implements SectionStateChangeListen
     private ViolationHistoryAcitvity mActivity;
     //data list
     private LinkedHashMap<ViolationCarInfo, ArrayList<ViolationItemInfo>> mSectionDataMap = new LinkedHashMap<ViolationCarInfo, ArrayList<ViolationItemInfo>>();
-    private ArrayList<Object> mDataArrayList = new ArrayList<Object>();
+    private ArrayList<Object> mDataArrayList = new ArrayList<>();
 
     //section map
     //TODO : look for a way to avoid this
-    private HashMap<String, ViolationCarInfo> mSectionMap = new HashMap<String, ViolationCarInfo>();
+    private HashMap<String, ViolationCarInfo> mSectionMap = new HashMap<>();
 
     //adapter
     private SectionedExpandableListAdapter mSectionedExpandableGridAdapter;
 
-    public SectionedExpandableLayoutHelper(Context context, RecyclerView recyclerView, ItemClickListener itemClickListener,
-                                           int gridSpanCount) {
+    public SectionedExpandableLayoutHelper(Context context, RecyclerView recyclerView, ItemClickListener itemClickListener, int gridSpanCount) {
         mActivity = (ViolationHistoryAcitvity)context;
-        //setting the recycler view
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, gridSpanCount);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         mSectionedExpandableGridAdapter = new SectionedExpandableListAdapter(context, mDataArrayList,

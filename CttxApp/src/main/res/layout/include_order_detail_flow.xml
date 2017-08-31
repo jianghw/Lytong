@@ -55,7 +55,6 @@
             android:layout_below="@+id/tv_line_taken">
 
             <TextView
-                android:id="@+id/tv_transverse_line_taken_left"
                 android:layout_width="@dimen/ds_195"
                 android:layout_height="@dimen/ds_1"
                 android:layout_alignParentRight="true"
@@ -90,7 +89,6 @@
                 android:background="@color/colorTvGreen_80"/>
 
             <TextView
-                android:id="@+id/tv_transverse_line_complete_left"
                 android:layout_width="@dimen/ds_195"
                 android:layout_height="@dimen/ds_1"
                 android:layout_alignParentRight="true"
@@ -106,7 +104,6 @@
             android:layout_below="@+id/tv_line_taken">
 
             <TextView
-                android:id="@+id/tv_transverse_line_taken_right"
                 android:layout_width="@dimen/ds_195"
                 android:layout_height="@dimen/ds_1"
                 android:layout_alignParentLeft="true"
@@ -162,7 +159,6 @@
                 android:background="@color/colorTvGreen_80"/>
 
             <TextView
-                android:id="@+id/tv_transverse_line_completing_right"
                 android:layout_width="@dimen/ds_195"
                 android:layout_height="@dimen/ds_1"
                 android:layout_alignParentLeft="true"
@@ -202,7 +198,6 @@
             android:background="@color/colorTvGreen_80"/>
 
         <TextView
-            android:id="@+id/tv_accomplish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_line_commission"

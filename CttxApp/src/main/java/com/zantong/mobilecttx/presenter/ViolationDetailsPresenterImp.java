@@ -18,8 +18,6 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 
@@ -31,7 +29,6 @@ public class ViolationDetailsPresenterImp implements SimplePresenter, OnLoadServ
     private ViolationDetails mViolationDetails;
     private ViolationDetailsModelImp mViolationDetailsModelImp;
     private String msg = "";
-    private HashMap<String, Object> oMap = new HashMap<>();
     private ViolationDetailsBean mViolationDetailsBean;
     private JSONObject masp = null;
 
@@ -56,7 +53,6 @@ public class ViolationDetailsPresenterImp implements SimplePresenter, OnLoadServ
                         masp.put("token", RSAUtils.strByEncryption(PublicData.getInstance().imei, true));
                     }
                     LogUtils.i(masp.get("token").toString());
-//            masp.put("usrid","000160180 6199 2851");
                     MessageFormat.getInstance().setMessageJSONObject(masp);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -67,13 +63,11 @@ public class ViolationDetailsPresenterImp implements SimplePresenter, OnLoadServ
 
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.c001.01");
                 masp = new JSONObject();
-//
                 try {
-                    OpenQueryBean.RspInfoBean.UserCarsInfoBean mUserCarsInfoBeans = (OpenQueryBean.RspInfoBean.UserCarsInfoBean) PublicData.getInstance().mHashMap.get("ConsummateInfo");
+                    OpenQueryBean.RspInfoBean.UserCarsInfoBean mUserCarsInfoBeans = (OpenQueryBean.RspInfoBean.UserCarsInfoBean)
+                            PublicData.getInstance().mHashMap.get("ConsummateInfo");
                     masp.put("usrid", PublicData.getInstance().userID);
                     masp.put("opertype", 3);
-//                    masp.put("carnumtype", mConsummateInfo.mapData().get("carnumtype"));
-//                    masp.put("carnum", mConsummateInfo.mapData().get("carnum"));
                     masp.put("ispaycar", mUserCarsInfoBeans.getIspaycar());
                     masp.put("defaultflag", mUserCarsInfoBeans.getDefaultflag());
                     masp.put("inspectflag", "0");
