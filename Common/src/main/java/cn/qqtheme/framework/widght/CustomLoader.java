@@ -1,5 +1,6 @@
 package cn.qqtheme.framework.widght;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -12,7 +13,6 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
 
 import cn.qqtheme.framework.R;
@@ -25,7 +25,7 @@ public class CustomLoader extends View {
     private String text;
     private int textSize;
     private int textColor;
-    private int imageId;
+    private int mImageId;
     private int imageHeight;
     private int spacing;//图片和文字的间距
     private int backgroundColor;
@@ -36,10 +36,11 @@ public class CustomLoader extends View {
     private int paddingRight;
     private int paddingBottom;
     //运行时
-    private int currentdegrees;
+    private float currentdegrees;
     private Bitmap bitmap;
 
-    RotateAnimation animation;
+    //    RotateAnimation animation;
+    private ValueAnimator valueAnimator;
 
     public CustomLoader(Context context) {
         super(context);
@@ -58,7 +59,7 @@ public class CustomLoader extends View {
             textColor = typedArray.getResourceId(R.styleable.customLoader_textColor, 0);
         if (textColor == 0)
             textColor = 0xFF000000;
-        imageId = typedArray.getResourceId(R.styleable.customLoader_image, 0);
+        mImageId = typedArray.getResourceId(R.styleable.customLoader_image, 0);
         imageHeight = (int) typedArray.getDimension(R.styleable.customLoader_imageHeight, dip2px(this.getContext(), 50));
 
         backgroundColor = typedArray.getColor(R.styleable.customLoader_backgroundColor, 0);
@@ -132,7 +133,7 @@ public class CustomLoader extends View {
             paint.setTextSize(this.textSize);
             width = (int) this.paint.measureText(this.text);
         }
-        if (this.imageId != 0) {
+        if (this.mImageId != 0) {
             width = this.imageHeight > width ? this.imageHeight : width;
         }
         width += this.paddingLeft;
@@ -152,7 +153,7 @@ public class CustomLoader extends View {
             height += txtHeight;
             height += this.spacing;
         }
-        if (this.imageId != 0) {
+        if (this.mImageId != 0) {
             height += this.imageHeight;
         }
         height += this.paddingTop;
@@ -190,7 +191,7 @@ public class CustomLoader extends View {
      */
     private void drawImage(Canvas canvas) {
         if (this.bitmap == null) {
-            bitmap = BitmapFactory.decodeResource(this.getResources(), this.imageId);
+            bitmap = BitmapFactory.decodeResource(this.getResources(), this.mImageId);
             bitmap = resizeBitmap_Height(bitmap, this.imageHeight);
         }
         if (this.bitmap == null)
@@ -248,8 +249,7 @@ public class CustomLoader extends View {
             float scaleSize = ((float) h) / height;
             Matrix matrix = new Matrix();
             matrix.postScale(scaleSize, scaleSize);
-            Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
-            return resizedBitmap;
+            return Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
         } else {
             return null;
         }
@@ -274,18 +274,47 @@ public class CustomLoader extends View {
     /**
      * 开启动画
      */
+//    public void startAnimation() {
+//        animation = new RotateAnimation();
+//        animation.setInterpolator(new LinearInterpolator());
+//        animation.setDuration(this.cycle);
+//        animation.setRepeatCount(-1);
+//        startAnimation(animation);
+//    }
+
+    /**
+     * ValueAnimation.RESTART时,表示正序重新开始，
+     * 当取值为ValueAnimation.REVERSE表示倒序重新开始
+     * setRepeatCount(int value)用于设置动画循环次数,设置为0表示不循环，
+     * 设置为ValueAnimation.INFINITE表示无限循环。
+     */
     public void startAnimation() {
-        animation = new RotateAnimation();
-        animation.setInterpolator(new LinearInterpolator());
-        animation.setDuration(this.cycle);
-        animation.setRepeatCount(-1);
-        startAnimation(animation);
+        if (valueAnimator != null && valueAnimator.isRunning()) cancelAnimation();
+        valueAnimator = ValueAnimator.ofFloat(0, 360);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                currentdegrees = (float) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        valueAnimator.setRepeatMode(ValueAnimator.RESTART);
+        valueAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        valueAnimator.setDuration(this.cycle);
+        valueAnimator.start();
     }
 
-    public void cancelAnimation() {
+/*    public void cancelAnimation() {
         if (animation != null) {
             animation.cancel();
             clearAnimation();
+        }
+    }*/
+
+    public void cancelAnimation() {
+        if (valueAnimator != null) {
+            valueAnimator.removeAllUpdateListeners();
+            valueAnimator.cancel();
         }
     }
 

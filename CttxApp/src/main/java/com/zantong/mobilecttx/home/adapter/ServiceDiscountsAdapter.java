@@ -41,7 +41,7 @@ public class ServiceDiscountsAdapter extends BaseAdapter<ChildrenBean> {
             case 4:
                 return ITEM_TYPE_THREE_PIC;
             default:
-                return 0;
+                return 3;
         }
     }
 
@@ -61,7 +61,7 @@ public class ServiceDiscountsAdapter extends BaseAdapter<ChildrenBean> {
                 resource = R.layout.adapter_discounts_item_3_url;
                 break;
             default:
-                resource = 0;
+                resource = R.layout.adapter_discounts_item_2_url;
                 break;
         }
         return inflater.inflate(resource, viewGroup, false);

@@ -1,5 +1,7 @@
 package com.zantong.mobilecttx.home.adapter;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.GridLayoutManager;
@@ -20,7 +22,6 @@ import com.zantong.mobilecttx.contract.home.INativeItemListener;
 import com.zantong.mobilecttx.home.bean.ChildrenBean;
 import com.zantong.mobilecttx.home.bean.ModuleBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -59,7 +60,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
             case 4:
                 return ITEM_TYPE_THREE_PIC;
             default:
-                return 0;
+                return 2;
         }
     }
 
@@ -128,59 +129,47 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
     }
 
     /**
-     * 服务模块
-     * recyclerView 边距测量绘制
+     * 服务模块recyclerView 边距测量绘制
+     * row-->2时
      */
     private void serviceTransactionProcessing(final ServiceViewHolder serviceViewHolder, ModuleBean moduleBean) {
         serviceViewHolder.mTvTitle.setText(moduleBean.getTitle());
 
-        final int row = (serviceViewHolder.getItemViewType() == ITEM_TYPE_TWO_PIC) ? 2 : 3;
-        final List<ChildrenBean> childrenBeanList = moduleBean.getChildren();
-        //临时拷贝list，初始化时只显示部分数据
-        final List<ChildrenBean> temporaryList = new ArrayList<>(childrenBeanList.size());
+        int row = (serviceViewHolder.getItemViewType() == ITEM_TYPE_TWO_PIC) ? 2 : 3;
+        List<ChildrenBean> childrenBeanList = moduleBean.getChildren();
 
-        arrayProcessingList(row, childrenBeanList, temporaryList);
-        redefineLayoutParams(serviceViewHolder, row, temporaryList);
+        final int maxHeight = maxHeight(childrenBeanList, row);
+        final int minHeight = minHeight(childrenBeanList, row);
 
-        final ServiceDiscountsAdapter discountsAdapter = new ServiceDiscountsAdapter();
-        discountsAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, Object data) {
-                if (data instanceof ChildrenBean) {
-                    ChildrenBean childrenBean = (ChildrenBean) data;
-                    if (mNativieItemListener != null)
-                        mNativieItemListener.onItemClick(childrenBean);
+        ViewGroup.LayoutParams layoutParams = serviceViewHolder.mRvRecycler.getLayoutParams();
+        layoutParams.height = minHeight;
+        serviceViewHolder.mRvRecycler.setLayoutParams(layoutParams);
+
+        if (serviceViewHolder.mRvRecycler.getAdapter() == null) {
+            ServiceDiscountsAdapter discountsAdapter = new ServiceDiscountsAdapter();
+            discountsAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+                @Override
+                public void onItemClick(View view, Object data) {
+                    if (data instanceof ChildrenBean) {
+                        ChildrenBean childrenBean = (ChildrenBean) data;
+                        if (mNativieItemListener != null)
+                            mNativieItemListener.onItemClick(childrenBean);
+                    }
                 }
-            }
-        });
-        discountsAdapter.replaceOnly(temporaryList);
-        serviceViewHolder.mRvRecycler.setAdapter(discountsAdapter);
+            });
+            discountsAdapter.appendOnly(childrenBeanList);
+            serviceViewHolder.mRvRecycler.setAdapter(discountsAdapter);
+        } else {
+            serviceViewHolder.mRvRecycler.getAdapter().notifyDataSetChanged();
+        }
 
         serviceViewHolder.mLayFold.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (serviceViewHolder.mLayFold.getVisibility() != View.VISIBLE) return;
 
-                if (!temporaryList.isEmpty()) temporaryList.clear();
-
-                if (serviceViewHolder.mTvFold.getText().toString().contains("收起")) {
-                    for (int i = 0; i < (row == 2 ? 4 : 6); i++) {
-                        temporaryList.add(childrenBeanList.get(i));
-                    }
-                } else {
-                    temporaryList.addAll(childrenBeanList);
-                }
-                redefineLayoutParams(serviceViewHolder, row, temporaryList);
-                discountsAdapter.replace(temporaryList);
-
-                int count = temporaryList.size();
-                serviceViewHolder.mTvFold.setText(row == 2 && count > 4 || row == 3 && count > 6 ? "收起更多" : "展开更多");
-
-
-                Drawable nav_up = mAdapterContext.getResources().getDrawable(
-                        serviceViewHolder.mTvFold.getText().toString().contains("收起") ? R.mipmap.arrow_up : R.mipmap.arrow_down);
-                nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
-                serviceViewHolder.mTvFold.setCompoundDrawables(null, null, nav_up, null);
+                if (maxHeight > minHeight)
+                    runItemAnimation(serviceViewHolder, maxHeight, minHeight);
             }
         });
 
@@ -190,34 +179,95 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
                 || row == 3 && childrenBeanList.size() > 6 ? View.VISIBLE : View.GONE);
     }
 
-    private void arrayProcessingList(int row, List<ChildrenBean> childrenBeanList, List<ChildrenBean> temporaryList) {
-        if (row == 2 && childrenBeanList.size() > 4 || row == 3 && childrenBeanList.size() > 6) {
-            for (int i = 0; i < (row == 2 ? 4 : 6); i++) {
-                temporaryList.add(childrenBeanList.get(i));
-            }
-        } else {
-            temporaryList.addAll(childrenBeanList);
-        }
+    private void runItemAnimation(ServiceViewHolder serviceViewHolder, int maxHeight, int minHeight) {
+        String title = serviceViewHolder.mTvFold.getText().toString();
+        ValueAnimator valueAnimator = title.contains("收起")
+                ? createAnimators(serviceViewHolder, maxHeight, minHeight)
+                : createAnimators(serviceViewHolder, minHeight, maxHeight);
+        valueAnimator.start();
     }
 
     /**
-     * 重新定义recyclerView 高宽
-     * 改数值时还请改@ServiceDiscountsAdapter
+     * item 可以显示的最高高度
      */
-    private void redefineLayoutParams(ServiceViewHolder serviceViewHolder, int row, List<ChildrenBean> temporaryList) {
-
-        ViewGroup.LayoutParams layoutParams = serviceViewHolder.mRvRecycler.getLayoutParams();
+    private int maxHeight(List<ChildrenBean> childrenBeanList, int row) {
         //计算行数
-        int lineNumber = temporaryList.size() % row == 0
-                ? temporaryList.size() / row : temporaryList.size() / row + 1;
+        int lineNumber = childrenBeanList.size() % row == 0
+                ? childrenBeanList.size() / row : childrenBeanList.size() / row + 1;
 
         //高度的计算需要自己好好理解，否则会产生嵌套recyclerView可以滑动的现象
         int width = (ScreenUtils.widthPixels(mAdapterContext) -
                 (row == 2 ? ConvertUtils.toPx(7.33f) * 2 : ConvertUtils.toPx(10f) * 2)) / row;
-        layoutParams.height = (row == 2 ? width / 2 : (int) (width * 1.1)) * lineNumber
-                + (row == 2 ? ConvertUtils.toPx(7.33f) * 2 : ConvertUtils.toPx(10f) * 2);
 
-        serviceViewHolder.mRvRecycler.setLayoutParams(layoutParams);
+        return (row == 2 ? width / 2 : (int) (width * 1.1)) * lineNumber
+                + (row == 2 ? ConvertUtils.toPx(7.33f) * 2 : ConvertUtils.toPx(10f) * 2);
+    }
+
+    /**
+     * item 可以显示的最小高度
+     */
+    private int minHeight(List<ChildrenBean> childrenBeanList, int row) {
+        //计算行数
+        int lineNumber = childrenBeanList.size() % row == 0
+                ? childrenBeanList.size() / row : childrenBeanList.size() / row + 1;
+
+        //高度的计算需要自己好好理解，否则会产生嵌套recyclerView可以滑动的现象
+        int width = (ScreenUtils.widthPixels(mAdapterContext) -
+                (row == 2 ? ConvertUtils.toPx(7.33f) * 2 : ConvertUtils.toPx(10f) * 2)) / row;
+
+        lineNumber = (row == 2)
+                ? childrenBeanList.size() >= 4 ? 2 : lineNumber
+                : childrenBeanList.size() >= 6 ? 2 : lineNumber;
+
+        return (row == 2 ? width / 2 : (int) (width * 1.1)) * lineNumber
+                + (row == 2 ? ConvertUtils.toPx(7.33f) * 2 : ConvertUtils.toPx(10f) * 2);
+    }
+
+    /**
+     * 创建动画
+     */
+    private ValueAnimator createAnimators(final ServiceViewHolder serviceViewHolder, int from, int height) {
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(from, height);
+        valueAnimator.setDuration(500);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                ViewGroup.LayoutParams params = serviceViewHolder.mRvRecycler.getLayoutParams();
+                params.height = (int) animation.getAnimatedValue();
+                serviceViewHolder.mRvRecycler.setLayoutParams(params);
+            }
+        });
+
+        valueAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                String title = serviceViewHolder.mTvFold.getText().toString();
+                serviceViewHolder.mTvFold.setText(title.contains("展开") ? "收起更多" : "展开更多");
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                String title = serviceViewHolder.mTvFold.getText().toString();
+                Drawable nav_up = mAdapterContext.getResources().getDrawable(title.contains("收起")
+                        ? R.mipmap.arrow_up : R.mipmap.arrow_down);
+                nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
+                serviceViewHolder.mTvFold.setCompoundDrawables(null, null, nav_up, null);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                String title = serviceViewHolder.mTvFold.getText().toString();
+                Drawable nav_up = mAdapterContext.getResources().getDrawable(title.contains("收起")
+                        ? R.mipmap.arrow_up : R.mipmap.arrow_down);
+                nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
+                serviceViewHolder.mTvFold.setCompoundDrawables(null, null, nav_up, null);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+        return valueAnimator;
     }
 
     /**
@@ -247,7 +297,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
     /**
      * 本地模块
      */
-    private void nativeTransactionProcessing(final NativeViewHolder nativeViewHolder, ModuleBean moduleBean) {
+    private void nativeTransactionProcessing(NativeViewHolder nativeViewHolder, ModuleBean moduleBean) {
         List<ChildrenBean> childrenBeanList = moduleBean.getChildren();
 
         if (childrenBeanList.size() <= 0 || childrenBeanList.get(0) == null) return;
