@@ -75,8 +75,6 @@ public class TextPopupKeyboardUtil {
         @Override
         public void onClick(View v) {
             showSoftKeyboard();
-//            editText1.setFocusable(true);
-
         }
     };
     View.OnFocusChangeListener onFocusChangeListener1 = new View.OnFocusChangeListener() {

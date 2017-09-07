@@ -9,20 +9,20 @@ package com.zantong.mobilecttx.order.bean;
 
 public class OrderDetailBean {
 
-
     /**
-     * orderId : 17070715562186
-     * type : 3
-     * amount : 10000
-     * payType : 0
-     * orderStatus : 2
-     * remark :
-     * createDate : 2017-07-07 15:56:18
-     * goodsName : 100元油卡
-     * icon : https://www.showdoc.cc/home.png
-     * merchantName : 中石化
-     * detail : 订单已生成，客服将在24小时内电话和您联系确认订单信息请保持手机通畅。
-     * 若有其它问题可拨打安亭驾校客服电话: 13062595466
+     * orderId	string	订单ID
+     * type	int	订单类型：1 加油充值，2 代驾，3 学车，4 科目强化，5 陪练
+     * amount	int	付款金额
+     * payType	int	付款方式
+     * orderStatus	int	订单状态,0未至付，1已支付,2取消或过期
+     * remark	string	订单备注
+     * createDate	string	创建时间
+     * goodsName	string	商品名称
+     * icon	string	供应商图标
+     * merchantName	string	供应商名称
+     * detail	string	订单详情
+     * sendOffExpress	string	发出单号
+     * sendBackExpress	string	发回单号
      */
 
     private String orderId;
@@ -36,6 +36,24 @@ public class OrderDetailBean {
     private String icon;
     private String merchantName;
     private String detail;
+    private String sendOffExpress;
+    private String sendBackExpress;
+
+    public String getSendOffExpress() {
+        return sendOffExpress;
+    }
+
+    public void setSendOffExpress(String sendOffExpress) {
+        this.sendOffExpress = sendOffExpress;
+    }
+
+    public String getSendBackExpress() {
+        return sendBackExpress;
+    }
+
+    public void setSendBackExpress(String sendBackExpress) {
+        this.sendBackExpress = sendBackExpress;
+    }
 
     public String getOrderId() {
         return orderId;

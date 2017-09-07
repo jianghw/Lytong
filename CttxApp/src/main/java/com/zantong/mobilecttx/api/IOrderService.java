@@ -1,9 +1,11 @@
 package com.zantong.mobilecttx.api;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
 import com.zantong.mobilecttx.order.bean.OrderListResult;
+import com.zantong.mobilecttx.order.dto.ExpressDTO;
 
+import cn.qqtheme.framework.contract.bean.BaseResult;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -43,4 +45,10 @@ public interface IOrderService {
     @FormUrlEncoded
     @POST("order/cancelOrder")
     Observable<BaseResult> cancelOrder(@Field("orderId") String orderId, @Field("userNum") String userNum);
+
+    /**
+     * 29.填写快递信息
+     */
+    @POST("order/addExpressInfo")
+    Observable<BaseResult> addExpressInfo(@Body ExpressDTO expressDTO);
 }

@@ -138,13 +138,14 @@ dependencies {
     compile files('libs/libammsdk.jar')
     compile files('libs/pinyin4j-2.5.0.jar')
     compile files('libs/BaiduLBS_Android.jar')
+    //动画使用gif
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.jakewharton:butterknife:7.0.1'
-    //动画使用gif
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.15'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:0.9.9'
     compile 'com.aliyun.ams:alicloud-android-push:3.0.6@aar'
     compile 'com.aliyun.ams:alicloud-android-utdid:1.1.5.3'
     compile 'com.aliyun.ams:alicloud-android-ut:5.0.0'
     compile 'com.alibaba:fastjson:1.1.54.android'
+
 }

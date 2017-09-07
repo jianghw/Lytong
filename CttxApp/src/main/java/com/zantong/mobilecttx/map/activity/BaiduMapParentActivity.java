@@ -69,8 +69,8 @@ import cn.qqtheme.framework.util.ui.DensityUtils;
  * Update day:
  */
 public class BaiduMapParentActivity extends BaseJxActivity
-        implements View.OnClickListener, SensorEventListener, IBaiduMapContract.IBaiduMapView,
-        BaiduMap.OnMarkerClickListener {
+        implements View.OnClickListener, SensorEventListener,
+        IBaiduMapContract.IBaiduMapView, BaiduMap.OnMarkerClickListener {
 
     private RadioButton mRbStart;
     private RadioButton mRbCenter;
@@ -216,6 +216,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
         if (mMapType == JxGlobal.MapType.annual_inspection_map) {
             initTitleContent("年检");
             setTvRightVisible("年检须知");
+
             mRbStart.setText("免检领标");
             mRbCenter.setText("年检站点");
             mRbEnd.setText("外牌代办点");
@@ -428,7 +429,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
      */
     @Override
     public void annualInspectionSucceed(YearCheckDetailResult result) {
-        popupAnnualBottom(BaiduMapParentActivity.this, result.getData());
+        popupAnnualBottom(this, result.getData());
     }
 
     @Override
@@ -446,7 +447,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
 
     @Override
     public void gasStationSucceed(GasStationDetailResult result) {
-        popupStationBottom(BaiduMapParentActivity.this, result.getData());
+        popupStationBottom(this, result.getData());
     }
 
     /**
@@ -659,7 +660,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
      * 导航功能
      */
     protected void goToNav(Object object) {
-        Intent intent = new Intent(BaiduMapParentActivity.this, NavActivity.class);
+        Intent intent = new Intent(this, NavActivity.class);
         if (object instanceof YearCheckDetail) {
             YearCheckDetail bean = (YearCheckDetail) object;
             intent.putExtra("nav_name", bean.getName());

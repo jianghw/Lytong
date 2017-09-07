@@ -46,7 +46,6 @@
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
-
     <!-- unavailable in API 23 -->
     <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -107,12 +106,10 @@
         <activity
             android:name=".user.activity.LoginActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".common.Demo"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
-
         <activity
             android:name=".weizhang.activity.ViolationDetails"
             android:screenOrientation="portrait"/>
@@ -145,15 +142,12 @@
         <activity
             android:name=".user.activity.UpdatePhoneNumber"
             android:screenOrientation="portrait"/>
-
-
         <activity
             android:name=".user.activity.FeedbackActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.AboutActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".user.activity.RegisterActivity"
             android:screenOrientation="portrait"/>
@@ -166,7 +160,6 @@
         <activity
             android:name=".user.activity.ChangePwdActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".weizhang.activity.PayWebActivity"
             android:screenOrientation="portrait"/>
@@ -179,7 +172,6 @@
         <activity
             android:name=".common.activity.CommonListActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
@@ -200,11 +192,9 @@
             android:name=".map.activity.NavActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent"/>
-
         <activity
             android:name=".home.activity.CustomCordovaActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".common.activity.CommonProblemActivity"
             android:screenOrientation="portrait"/>
@@ -217,29 +207,26 @@
         <activity
             android:name=".common.activity.CommonTwoLevelMenuActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".chongzhi.activity.RechargeAgreementActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".card.activity.ApplySuccessActvity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".user.activity.MegTypeActivity"
             android:screenOrientation="portrait"/>
 
         <!-- ======================优惠劵模块=========================== -->
-        <!--优惠劵-->
+        <!-- 优惠劵 -->
         <activity
             android:name=".order.activity.CouponActivity"
             android:screenOrientation="portrait"/>
-        <!--优惠劵详情-->
+        <!-- 优惠劵详情 -->
         <activity
             android:name=".order.activity.CouponDetailActivity"
             android:screenOrientation="portrait"/>
-        <!--加油优惠劵选择-->
+        <!-- 加油优惠劵选择 -->
         <activity
             android:name=".order.activity.CouponListActivity"
             android:screenOrientation="portrait"/>
@@ -248,7 +235,7 @@
         <activity
             android:name=".huodong.activity.HundredPlanActivity"
             android:screenOrientation="portrait"/>
-        <!--========================================代驾模块===================================-->
+        <!-- ========================================代驾模块=================================== -->
         <activity
             android:name=".daijia.activity.DrivingActivity"
             android:screenOrientation="portrait"/>
@@ -298,7 +285,7 @@
             android:name=".card.activity.BindJiaZhaoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <!--邦卡成功-->
+        <!-- 邦卡成功 -->
         <activity
             android:name=".card.activity.BindCardSuccess"
             android:screenOrientation="portrait"/>
@@ -320,13 +307,13 @@
         <activity
             android:name=".card.activity.ApplyCardQuickActivity"
             android:screenOrientation="portrait"/>
-        <!--办卡须知-->
+        <!-- 办卡须知 -->
         <activity
             android:name=".card.activity.CardNoticeActivity"
             android:screenOrientation="portrait"/>
 
-        <!--========================车辆管理模块================================-->
-        <!--车辆管理-->
+        <!-- ========================车辆管理模块================================ -->
+        <!-- 车辆管理 -->
         <activity
             android:name=".car.activity.ManageCarActivity"
             android:screenOrientation="portrait"/>
@@ -335,11 +322,10 @@
             android:name=".car.activity.AddCarActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <!--绑定车辆-->
+        <!-- 绑定车辆 -->
         <activity
             android:name=".car.activity.SetPayCarActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".weizhang.activity.ViolationHistoryAcitvity"
             android:screenOrientation="portrait"/>
@@ -347,8 +333,8 @@
             android:name=".car.activity.CarManageActivity"
             android:screenOrientation="portrait"/>
 
-        <!--========================违章查询页面=================================-->
-        <!--违法查询页面 输入-->
+        <!-- ========================违章查询页面================================= -->
+        <!-- 违法查询页面 输入 -->
         <activity
             android:name=".weizhang.activity.ViolationActivity"
             android:screenOrientation="portrait"
@@ -361,7 +347,6 @@
         <activity
             android:name=".weizhang.activity.ViolationPayActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".weizhang.activity.LicenseCheckGradeActivity"
             android:launchMode="singleTask"
@@ -369,43 +354,50 @@
         <activity
             android:name=".weizhang.activity.LicenseDetailActivity"
             android:screenOrientation="portrait"/>
-        <!--缴费须知-->
+        <!-- 缴费须知 -->
         <activity
             android:name=".weizhang.activity.PaymentActivity"
             android:screenOrientation="portrait"/>
 
-        <!-- ===================活动模块=========================================-->
-        <!-- 活动页面;驾校报名-->
+        <!-- ===================活动模块========================================= -->
+        <!-- 活动页面;驾校报名 -->
         <activity
             android:name=".fahrschule.activity.FahrschuleActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
-        <!-- 活动页面;科目强化-->
+        <!-- 活动页面;科目强化 -->
         <activity
             android:name=".fahrschule.activity.SubjectActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
-        <!-- 活动页面;陪练预约-->
+        <!-- 活动页面;陪练预约 -->
         <activity
             android:name=".fahrschule.activity.SparringActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
-        <!-- ===================分享模块=========================================-->
-        <!-- 分享模块页面-->
+        <!-- ===================分享模块========================================= -->
+        <!-- 分享模块页面 -->
         <activity
             android:name=".share.activity.ShareParentActivity"
             android:screenOrientation="portrait"/>
 
-        <!-- ===================订单模块=========================================-->
-        <!-- 订单模块列表页面-->
+        <!-- ===================订单模块========================================= -->
+        <!-- 订单模块列表页面 -->
         <activity
             android:name=".order.activity.OrderParentActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".order.activity.OrderDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".order.activity.AnnualOrderDetailActivity"
+            android:screenOrientation="portrait"/>
+        <!--呼叫快递-->
+        <activity
+            android:name=".order.activity.OrderExpressActivity"
             android:screenOrientation="portrait"/>
 
         <!-- ====================================浏览器================================ -->
@@ -415,8 +407,8 @@
         <activity
             android:name=".browser.HtmlBrowserActivity"
             android:screenOrientation="portrait"/>
-        <!-- ===================付款web模块=========================================-->
-        <!-- 付款web模块页面-->
+        <!-- ===================付款web模块========================================= -->
+        <!-- 付款web模块页面 -->
         <activity
             android:name=".browser.BrowserForPayActivity"
             android:screenOrientation="portrait"/>
@@ -424,8 +416,8 @@
             android:name=".browser.PayBrowserActivity"
             android:screenOrientation="portrait"/>
 
-        <!-- ===================优惠模块=========================================-->
-        <!-- 优惠模块-->
+        <!-- ===================优惠模块========================================= -->
+        <!-- 优惠模块 -->
         <activity
             android:name=".share.activity.CarBeautyActivity"
             android:screenOrientation="portrait"/>
@@ -438,7 +430,7 @@
             </intent-filter>
         </service>
 
-        <!--=================================百度地图=============================================-->
+        <!-- =================================百度地图============================================= -->
         <activity
             android:name=".map.activity.BaiduMapParentActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -465,6 +457,7 @@
         <!-- <service android:name="com.amap.api.location.APSService"></service>&lt;!&ndash; ATTENTION: This was auto-generated -->
         <!-- to add、 See https://g.co/AppIndexing/AndroidStudio for more information. &ndash;&gt; -->
 
+
         <!-- 阿里推送 -->
         <meta-data
             android:name="com.alibaba.app.appkey"
@@ -472,6 +465,7 @@
         <meta-data
             android:name="com.alibaba.app.appsecret"
             android:value="a51ce60b119cf15b9ab220ed70d8078c"/> <!-- 请填写你自己的appSecret  在应用证书中 -->
+
 
         <!-- 通道保持服务（幽灵进程自动保活该服务） -->
         <service
@@ -631,6 +625,7 @@
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
+
             <!-- 元数据 -->
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
@@ -638,9 +633,9 @@
         </provider>
 
         <!-- 友盟+适配 appkey 代码控制 -->
-        <!--<meta-data-->
-        <!--android:name="UMENG_APPKEY"-->
-        <!--android:value="5964328782b6357ca70006df"/>-->
+        <!-- <meta-data -->
+        <!-- android:name="UMENG_APPKEY" -->
+        <!-- android:value="5964328782b6357ca70006df"/> -->
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}"/>

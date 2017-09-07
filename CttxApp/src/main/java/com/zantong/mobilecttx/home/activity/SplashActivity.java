@@ -25,7 +25,6 @@ import com.zantong.mobilecttx.contract.ISplashAtyContract;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
 import com.zantong.mobilecttx.home.bean.StartPicResult;
 import com.zantong.mobilecttx.presenter.home.SplashPresenter;
-import cn.qqtheme.framework.util.image.ImageOptions;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
@@ -33,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qqtheme.framework.util.AppUtils;
+import cn.qqtheme.framework.util.image.ImageOptions;
 
 import static com.zantong.mobilecttx.home.activity.GuideCTActivity.GUIDE_PIC;
 

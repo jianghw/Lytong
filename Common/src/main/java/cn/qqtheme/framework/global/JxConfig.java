@@ -66,6 +66,12 @@ public final class JxConfig {
         simpleArrayMap.put(31, "share_shareA");// 分享_朋友圈或好友
         simpleArrayMap.put(32, "shareA_shareNumber");//分享_分享数量
         simpleArrayMap.put(33, "shareNumber_money");//分享数据_返还现金
+
+        simpleArrayMap.put(34, "home_unblocked_guzhi");//首页_畅_爱车估值
+        simpleArrayMap.put(35, "home_unblocked_IDL");//首页_畅_国际驾照
+        simpleArrayMap.put(36, "discount_gouchedaikuan");//优惠_购车贷款
+        simpleArrayMap.put(37, "discount_kemuqianghua");//优惠_科目强化
+        simpleArrayMap.put(38, "discount_peilian");//优惠_陪练
     }
 
     public String getUMengEventID(int position) {

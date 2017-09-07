@@ -33,7 +33,9 @@ import com.zantong.mobilecttx.map.dto.AnnualDTO;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
+import com.zantong.mobilecttx.order.bean.OrderExpressResult;
 import com.zantong.mobilecttx.order.bean.OrderListResult;
+import com.zantong.mobilecttx.order.dto.ExpressDTO;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
@@ -313,4 +315,14 @@ public interface IRemoteSource {
      * 25.模块化接口
      */
     Observable<ModuleResult> moduleTree();
+
+    /**
+     * 32.获取地区列表
+     */
+    Observable<OrderExpressResult> getAllAreas();
+
+    /**
+     * 29.填写快递信息
+     */
+    Observable<BaseResult> addExpressInfo(ExpressDTO expressDTO);
 }

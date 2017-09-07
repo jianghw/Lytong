@@ -14,6 +14,7 @@ import com.zantong.mobilecttx.api.IMessageService;
 import com.zantong.mobilecttx.api.IModuleService;
 import com.zantong.mobilecttx.api.IOrderService;
 import com.zantong.mobilecttx.api.IPayService;
+import com.zantong.mobilecttx.api.IRegionService;
 import com.zantong.mobilecttx.api.ISplashService;
 import com.zantong.mobilecttx.api.ITextService;
 import com.zantong.mobilecttx.api.IUserService;
@@ -52,7 +53,9 @@ import com.zantong.mobilecttx.map.dto.AnnualDTO;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
+import com.zantong.mobilecttx.order.bean.OrderExpressResult;
 import com.zantong.mobilecttx.order.bean.OrderListResult;
+import com.zantong.mobilecttx.order.dto.ExpressDTO;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
@@ -548,6 +551,7 @@ public class RemoteData implements IRemoteSource {
     public Observable<GasStationResult> gasStationList(AnnualDTO annualDTO) {
         return initRetrofit().create(ICttxService.class).gasStationList(annualDTO);
     }
+
     /**
      * 25.模块化接口
      */
@@ -555,5 +559,21 @@ public class RemoteData implements IRemoteSource {
     public Observable<ModuleResult> moduleTree() {
 
         return initRetrofit().create(IModuleService.class).moduleTree();
+    }
+
+    /**
+     * 32.获取地区列表
+     */
+    @Override
+    public Observable<OrderExpressResult> getAllAreas() {
+        return initRetrofit().create(IRegionService.class).getAllAreas();
+    }
+
+    /**
+     * 29.填写快递信息
+     */
+    @Override
+    public Observable<BaseResult> addExpressInfo(ExpressDTO expressDTO) {
+        return initRetrofit().create(IOrderService.class).addExpressInfo(expressDTO);
     }
 }

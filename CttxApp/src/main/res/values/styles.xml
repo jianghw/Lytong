@@ -26,6 +26,7 @@
         <item name="android:textSize">17sp</item>
         <item name="android:textColor">@color/civory</item>
     </style>
+
     <style name="TopBarText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -34,6 +35,7 @@
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/civory</item>
     </style>
+
     <style name="EditextNormalStyle">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/black</item>
@@ -42,6 +44,7 @@
         <item name="android:layout_height">35dip</item>
         <item name="android:singleLine">true</item>
     </style>
+
     <style name="EditextNormalNoStyle">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/colorOpenBindCarFont</item>
@@ -68,6 +71,7 @@
 
         <item name="android:layout_centerVertical">true</item>
     </style>
+
     <style name="TextInfoStyleNoVertical">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -85,6 +89,7 @@
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:gravity">right</item>
     </style>
+
     <style name="TextInfoRightStyleNoVertical">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -107,11 +112,13 @@
         <item name="android:layout_height">52dip</item>
         <item name="android:background">@color/light_gray</item>
     </style>
+
     <style name="KeyLineH">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.5dip</item>
         <item name="android:background">@color/light_gray</item>
     </style>
+
     <style name="TextKeyWordTitle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -119,6 +126,7 @@
         <item name="android:textColor">@color/font_black</item>
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
+
     <style name="LinerKeyWorkStyle">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_height">52dip</item>
@@ -126,6 +134,7 @@
         <item name="android:orientation">vertical</item>
         <item name="android:gravity">center</item>
     </style>
+
     <style name="TextKeyWordSmallTitle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -168,11 +177,13 @@
         <item name="android:textSize">13sp</item>
         <item name="android:textColorHint">@color/hintColor</item>
     </style>
+
     <style name="white_title_word">
         <item name="android:textColor">@color/civory</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColorHint">@color/hintColor</item>
     </style>
+
     <style name="white_word">
         <item name="android:textColor">@color/colorTranFontGray</item>
         <item name="android:textSize">16sp</item>
@@ -196,6 +207,7 @@
         <item name="android:textSize">13sp</item>
         <item name="android:textColorHint">@color/hintColor</item>
     </style>
+
     <style name="open_no_bind_notice">
         <item name="android:textColor">@color/civory</item>
         <item name="android:textSize">10sp</item>
@@ -210,6 +222,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/colorOpenBindCarFont</item>
     </style>
+
     <style name="payRecordTime">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -217,6 +230,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/colorOpenBindCarFont</item>
     </style>
+
     <style name="setPayCar">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -224,6 +238,7 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/mineGray</item>
     </style>
+
     <style name="open_three_number_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -238,7 +253,7 @@
         <item name="android:layout_height">45dip</item>
         <item name="android:background">@color/dialogLine</item>
     </style>
-    
+
     <style name="appmain_color_text_font">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -253,6 +268,7 @@
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:textColor">@color/colorGrayFontSmmall</item>
     </style>
+
     <style name="gray_color_text_vertical_font">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -268,12 +284,14 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:textColor">@color/colorGrayFontSmmall</item>
     </style>
+
     <style name="mine_user_font">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/colorGrayFontSmmall</item>
     </style>
+
     <style name="mine_gray_color_text_vertical_font">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -281,9 +299,11 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:textColor">@color/gray_66</item>
     </style>
+
     <style name="consum_gray_color_text_vertical_font" parent="mine_gray_color_text_vertical_font">
         <item name="android:textSize">14sp</item>
     </style>
+
     <style name="gray_color_time_text_font">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -291,18 +311,21 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:textColor">@color/colorAddCarGrayNumberFont</item>
     </style>
+
     <style name="mine_invitation_code_title">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/colorAddCarGrayNumberFont</item>
     </style>
+
     <style name="grayColorTextFont">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/colorGrayFontSmmall</item>
     </style>
+
     <style name="redColorTextFont">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -317,6 +340,7 @@
         <item name="android:layout_marginLeft">15dip</item>
         <item name="android:layout_alignParentRight">true</item>
     </style>
+
     <style name="line_splite_dashed">
         <item name="android:layerType">software</item>
         <item name="android:layout_width">match_parent</item>
@@ -325,6 +349,7 @@
         <item name="android:layout_marginRight">16dip</item>
         <item name="android:layout_marginLeft">16dip</item>
     </style>
+
     <style name="pay_type_choose_style">
         <item name="android:layout_width">12dip</item>
         <item name="android:layout_height">9dip</item>
@@ -339,25 +364,29 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
     </style>
+
     <style name="ShareButton" parent="@android:style/Widget.Holo.Button.Borderless.Small">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-    <style name="mineItemHead" >
+
+    <style name="mineItemHead">
         <item name="android:layout_width">@dimen/ds_60</item>
         <item name="android:layout_height">@dimen/ds_60</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:layout_marginLeft">17dip</item>
     </style>
-    <style name="mineItemArrow" >
+
+    <style name="mineItemArrow">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_marginRight">16dip</item>
     </style>
-    <style name="arrowLeftStyle" >
+
+    <style name="arrowLeftStyle">
         <item name="android:layout_width">7.1dip</item>
         <item name="android:layout_height">12dip</item>
         <item name="android:layout_alignParentRight">true</item>
@@ -379,7 +408,7 @@
     </style>
 
 
-    <style name="WheelView" >
+    <style name="WheelView">
         <item name="lineColor">@color/gray_33</item>
         <item name="lineHeight">0.5dp</item>
         <item name="normalTextColor">@color/hintColor</item>
@@ -414,4 +443,8 @@
         <item name="android:textSize">@dimen/fs_66</item>
         <item name="android:textColor">@color/gray_33</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 </resources>

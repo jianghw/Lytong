@@ -254,8 +254,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
             File file = getHeadImageFile();
             if (file == null) {
                 ImageLoadUtils.loadHead(
-                        PublicData.getInstance().mLoginInfoBean.getPortrait(), mImgHead
-                );
+                        PublicData.getInstance().mLoginInfoBean.getPortrait(), mImgHead);
             }
 
             if (infoBean != null) {

@@ -50,11 +50,10 @@ public class OrderParentActivity extends BaseJxActivity
     /**
      * 支付类型 判断回调成功页面是哪个
      */
-    private int mPayType;
+    private int mItemType;
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
-
     }
 
     @Override
@@ -104,6 +103,9 @@ public class OrderParentActivity extends BaseJxActivity
     @NonNull
     private RefreshListener getRefreshListener() {
         return new RefreshListener() {
+            /**
+             * 刷新
+             */
             @Override
             public void refreshListData(int position) {
                 if (mPresenter != null) mPresenter.getOrderList();
@@ -117,6 +119,9 @@ public class OrderParentActivity extends BaseJxActivity
                 if (mPresenter != null) mPresenter.cancelOrder(bean);
             }
 
+            /**
+             * 支付 订单类型：1 加油充值，2 代驾，3 学车，4 科目强化，5 陪练
+             */
             @Override
             public void doClickPay(OrderListBean bean) {
                 String orderId = bean.getOrderId();
@@ -125,15 +130,31 @@ public class OrderParentActivity extends BaseJxActivity
                 float orderPrice = bean.getAmount();
                 int price = (int) (orderPrice * 100);
 
-                mPayType = bean.getPayType();
-                if (mPresenter != null && mPayType == 1) {
+                mItemType = bean.getType();
+                if (mPresenter != null && mItemType == 1) {
                     mPresenter.onPayOrderByCoupon(orderId, String.valueOf(price), payType);
                 }
 
                 if (mPresenter != null
-                        && (mPayType == 3 || mPayType == 4 || mPayType == 5)) {
+                        && (mItemType == 3 || mItemType == 4 || mItemType == 5)) {
                     mPresenter.getBankPayHtml(orderId, String.valueOf(price));
                 }
+            }
+
+            /**
+             * 自驾办理
+             */
+            @Override
+            public void doClickDriving(OrderListBean bean) {
+
+            }
+
+            /**
+             * 呼叫快递
+             */
+            @Override
+            public void doClickCourier(OrderListBean bean) {
+                Act.getInstance().gotoIntent(OrderParentActivity.this, OrderExpressActivity.class, bean.getOrderId());
             }
         };
     }
@@ -224,12 +245,12 @@ public class OrderParentActivity extends BaseJxActivity
         if (orderStatus == 0) {
             if (orderUnStatusFragment != null)
                 orderUnStatusFragment.setPayOrderListData(null);
-        } else if (orderStatus == 1 || orderStatus == 3 || orderStatus == 4) {
-            if (orderPayStatusFragment != null)
-                orderPayStatusFragment.setPayOrderListData(null);
         } else if (orderStatus == 2) {
             if (orderCancleStatusFragment != null)
                 orderCancleStatusFragment.setPayOrderListData(null);
+        } else {
+            if (orderPayStatusFragment != null)
+                orderPayStatusFragment.setPayOrderListData(null);
         }
     }
 
@@ -302,6 +323,7 @@ public class OrderParentActivity extends BaseJxActivity
      * 页面回调
      * 1、驾校报名成功页面
      * 2、订单详情页面
+     * 订单类型：1 加油充值，2 代驾，3 学车，4 科目强化，5 陪练
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -310,13 +332,13 @@ public class OrderParentActivity extends BaseJxActivity
                 && resultCode == JxGlobal.resultCode.web_order_id_succeed) {
 
             Intent intent = new Intent();
-            if (mPayType == 3) {
+            if (mItemType == 3) {
                 intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 2);
                 Act.getInstance().gotoLoginByIntent(this, FahrschuleActivity.class, intent);
-            } else if (mPayType == 4) {
+            } else if (mItemType == 4) {
                 intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 3);
                 Act.getInstance().gotoLoginByIntent(this, SubjectActivity.class, intent);
-            } else if (mPayType == 5) {
+            } else if (mItemType == 5) {
                 intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 2);
                 Act.getInstance().gotoLoginByIntent(this, SparringActivity.class, intent);
             }
@@ -339,5 +361,9 @@ public class OrderParentActivity extends BaseJxActivity
         void doClickCancel(OrderListBean bean);
 
         void doClickPay(OrderListBean bean);
+
+        void doClickDriving(OrderListBean bean);
+
+        void doClickCourier(OrderListBean bean);
     }
 }

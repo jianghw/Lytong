@@ -326,7 +326,6 @@ public class PullToRefreshLayout extends RelativeLayout {
                 mMyTimer.cancel();
                 mEvents = 0;
                 releasePull();
-                LogUtils.i("onInterceptTouchEvent==" + mLastY);
                 break;
             case MotionEvent.ACTION_MOVE:
                 float deltaX = Math.abs(x - mLastMotionX);

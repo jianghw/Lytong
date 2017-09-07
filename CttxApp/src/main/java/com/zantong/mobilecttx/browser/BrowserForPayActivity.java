@@ -66,7 +66,6 @@ public class BrowserForPayActivity extends BaseJxActivity {
         mWebView.getSettings().setJavaScriptEnabled(true); //设置支持Javascript
         //触摸焦点起作用.如果不设置，则在点击网页文本输入框时，不能弹出软键盘及不响应其他的一些事件。
         mWebView.requestFocus();
-
     }
 
     /**

@@ -39,7 +39,6 @@ public class ProgressWebView extends LinearLayout {
         mWebView = (WebView) findViewById(R.id.widget_progress_webview);
         // 如需支持h5统计，需要将 assets/mobstat.js 拷贝到工程目录下
 
-        mWebView.setWebChromeClient(new WebChromeClient());
         getSettings().setJavaScriptEnabled(true);
         getSettings().setDomStorageEnabled(true);
         getSettings().setAppCacheMaxSize(1024 * 1024 * 8);
@@ -49,6 +48,8 @@ public class ProgressWebView extends LinearLayout {
 
         mWebView.getSettings().setAllowFileAccess(true);
         mWebView.getSettings().setAppCacheEnabled(true);
+
+        mWebView.setWebChromeClient(new WebChromeClient());
     }
 
     public WebSettings getSettings() {

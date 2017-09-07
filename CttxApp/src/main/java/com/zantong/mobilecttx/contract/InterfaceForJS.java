@@ -17,48 +17,48 @@ import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
+import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
+import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
+import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import cn.qqtheme.framework.util.ToastUtils;
+import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * @author Sandy
  *         create at 16/6/1 下午5:54
  */
 public class InterfaceForJS {
-    Context mContext;
+    Context mJSContext;
 
     public InterfaceForJS(Context context) {
-        this.mContext = context;
+        this.mJSContext = context;
     }
 
     @JavascriptInterface
     public void ToastMsg(String msg) {
-        ToastUtils.showShort(mContext, msg);
+        ToastUtils.showShort(mJSContext, msg);
     }
 
     @JavascriptInterface
     public boolean isLogin() {
-        if (!PublicData.getInstance().loginFlag) {
-            return false;
-        } else {
-            return true;
-        }
+        return PublicData.getInstance().loginFlag;
     }
 
     @JavascriptInterface
     public void gotoLogin() {
-        mContext.startActivity(new Intent(mContext, LoginActivity.class));
+        mJSContext.startActivity(new Intent(mJSContext, LoginActivity.class));
     }
 
     @JavascriptInterface
     public Location getLocaltion() {
-        LocationManager locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        LocationManager locationManager = (LocationManager) mJSContext.getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(mJSContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(mJSContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return null;
         }
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -106,23 +106,22 @@ public class InterfaceForJS {
     @JavascriptInterface
     public void bindCard() {
         if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {
-            Act.getInstance().gotoIntentLogin(mContext, UnblockedCardActivity.class);
+            Act.getInstance().gotoIntentLogin(mJSContext, UnblockedCardActivity.class);
         } else {
-            Act.getInstance().gotoIntentLogin(mContext, MyCardActivity.class);
+            Act.getInstance().gotoIntentLogin(mJSContext, MyCardActivity.class);
         }
     }
 
     //加油充值
     @JavascriptInterface
     public void addOil() {
-        mContext.startActivity(new Intent(mContext, RechargeActivity.class));
+        mJSContext.startActivity(new Intent(mJSContext, RechargeActivity.class));
     }
 
     //代驾
     @JavascriptInterface
     public void chaser() {
-        mContext.startActivity(new Intent(mContext, DrivingActivity.class));
-
+        mJSContext.startActivity(new Intent(mJSContext, DrivingActivity.class));
     }
 
     //分享领积分
@@ -145,7 +144,6 @@ public class InterfaceForJS {
     //查询违章
     @JavascriptInterface
     public void queryViolations() {
-
     }
 
     //获取用户ID
@@ -157,7 +155,38 @@ public class InterfaceForJS {
     //跳转到积分规则页面
     @JavascriptInterface
     public void popAttention() {
-        mContext.startActivity(new Intent(mContext, HundredRuleActivity.class));
+        mJSContext.startActivity(new Intent(mJSContext, HundredRuleActivity.class));
     }
 
+    @JavascriptInterface
+    public void getSource(String html) {
+        LogUtils.e("------" + html);
+    }
+
+    //去年检地图地址
+    @JavascriptInterface
+    public void goNianjianMap() {
+        Act.getInstance().gotoIntentLogin(mJSContext, BaiduMapParentActivity.class);
+    }
+
+    //去往违章列表页面
+    @JavascriptInterface
+    public void searchViolationList(String carnum, String enginenum, String carnumtype) {
+        PublicData.getInstance().mHashMap.put("IllegalViolationName", carnum);
+        PublicData.getInstance().mHashMap.put("carnum", carnum);
+        PublicData.getInstance().mHashMap.put("enginenum", enginenum);
+        PublicData.getInstance().mHashMap.put("carnumtype", carnumtype);
+
+        ViolationDTO dto = new ViolationDTO();
+        dto.setCarnum(RSAUtils.strByEncryption(carnum, true));
+        dto.setEnginenum(RSAUtils.strByEncryption(enginenum, true));
+        dto.setCarnumtype(carnumtype);
+
+        Intent intent = new Intent(mJSContext, ViolationListActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("params", dto);
+        intent.putExtras(bundle);
+        intent.putExtra("plateNum", carnum);
+        mJSContext.startActivity(intent);
+    }
 }

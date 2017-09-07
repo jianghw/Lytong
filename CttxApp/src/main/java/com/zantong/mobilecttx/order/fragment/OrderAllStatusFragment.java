@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
+import com.zantong.mobilecttx.order.activity.AnnualOrderDetailActivity;
 import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
 import com.zantong.mobilecttx.order.activity.OrderParentActivity;
 import com.zantong.mobilecttx.order.adapter.OrderStatusAdapter;
@@ -69,7 +70,8 @@ public class OrderAllStatusFragment extends BaseRecyclerListJxFragment<OrderList
             OrderListBean bean = (OrderListBean) data;
             String orderId = bean.getOrderId();
             //前往 订单详情页面
-            Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
+            Intent intent = new Intent(getActivity(), bean.getType() == 6
+                    ? AnnualOrderDetailActivity.class : OrderDetailActivity.class);
             intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
             startActivity(intent);
         }
@@ -91,6 +93,16 @@ public class OrderAllStatusFragment extends BaseRecyclerListJxFragment<OrderList
             @Override
             public void doClickPay(OrderListBean bean) {
                 if (mRefreshListener != null) mRefreshListener.doClickPay(bean);
+            }
+
+            @Override
+            public void doClickDriving(OrderListBean bean) {
+                if (mRefreshListener != null) mRefreshListener.doClickDriving(bean);
+            }
+
+            @Override
+            public void doClickCourier(OrderListBean bean) {
+                if (mRefreshListener != null) mRefreshListener.doClickCourier(bean);
             }
         });
     }

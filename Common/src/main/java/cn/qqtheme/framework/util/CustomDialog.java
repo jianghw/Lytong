@@ -173,6 +173,25 @@ public class CustomDialog {
         areaPicker.show();
     }
 
+    public static void popupBottomAllArea(Activity context, ArrayList<String> firstList,
+                                          ArrayList<ArrayList<String>> secondList,
+                                          ArrayList<ArrayList<ArrayList<String>>> thirdList,
+                                          final IAreaDialogListener dialogListener) {
+
+        SparringAreaPicker areaPicker =
+                new SparringAreaPicker(context, firstList, secondList, thirdList);
+        areaPicker.setOnLinkageListener(new LinkagePicker.OnLinkageListener() {
+            @Override
+            public void onPicked(String first, String second, String third) {
+                if (dialogListener != null)
+                    dialogListener.setCurPosition(first + "/" + second + "/" + third);
+            }
+        });
+        areaPicker.setOffset(1);
+        areaPicker.setHalfScreen(true);
+        areaPicker.show();
+    }
+
     /**
      * 时间段选择
      */

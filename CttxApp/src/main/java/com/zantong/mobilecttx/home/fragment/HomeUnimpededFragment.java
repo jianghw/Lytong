@@ -137,6 +137,35 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     private HorizontalCarViolationAdapter mCarViolationAdapter;
     private HomeMainActivity.MessageListener mHomeMainListener;
     private List<UserCarInfoBean> mUserCarInfoBeanList = new ArrayList<>();
+    private TextView mTvAppraisement;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
+
+    /**
+     * 会多次刷新数据 ^3^
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        resumeDataVisible();
+
+        startCampaignCustom(false);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        startCampaignCustom(true);
+    }
 
     public static HomeUnimpededFragment newInstance() {
         return new HomeUnimpededFragment();
@@ -149,16 +178,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -216,6 +235,8 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         mTvScan.setOnClickListener(this);
         mTvOil = (TextView) view.findViewById(R.id.tv_oil);
         mTvOil.setOnClickListener(this);
+        mTvAppraisement = (TextView) view.findViewById(R.id.tv_appraisement);
+        mTvAppraisement.setOnClickListener(this);
         mTvCheck = (TextView) view.findViewById(R.id.tv_check);
         mTvCheck.setOnClickListener(this);
         mTvCarwash = (TextView) view.findViewById(R.id.tv_license);
@@ -226,7 +247,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         mImgLabel = (ImageView) view.findViewById(R.id.img_label);
         mCustomGrapevine = (MainScrollUpAdvertisementView) view.findViewById(R.id.custom_grapevine);
         mCustomViolation = (HorizontalInfiniteCycleViewPager) view.findViewById(R.id.custom_violation);
-
     }
 
     @Override
@@ -258,24 +278,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         }
         mCustomGrapevine.setTextSize(12);
         mCustomGrapevine.setTimer(5000);
-    }
-
-    /**
-     * 会多次刷新数据 ^3^
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        resumeDataVisible();
-
-        startCampaignCustom(false);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        startCampaignCustom(true);
     }
 
     @Override
@@ -547,19 +549,22 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                 break;
             case R.id.tv_license://驾驶证查分
                 JxConfig.getInstance().eventIdByUMeng(7);
-
                 licenseCheckGrade();
                 break;
+            case R.id.tv_appraisement://爱车估值
+                JxConfig.getInstance().eventIdByUMeng(34);
+                //TODO
+                break;
             case R.id.tv_check://年检
-            JxConfig.getInstance().eventIdByUMeng(4);
-
-            enterDrivingActivity();
-            break;
-            case R.id.tv_drive://洗车
-                JxConfig.getInstance().eventIdByUMeng(9);
+                JxConfig.getInstance().eventIdByUMeng(4);
+                enterDrivingActivity();
+                break;
+            case R.id.tv_drive://国际驾照
+                //TODO
+                JxConfig.getInstance().eventIdByUMeng(35);
 
                 Intent intent = new Intent();
-                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "洗车");
+                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "国际驾照");
                 intent.putExtra(JxGlobal.putExtra.browser_url_extra, Config.HOME_CAR_WASH_URL);
                 Act.getInstance().gotoLoginByIntent(getActivity(), AdvBrowserActivity.class, intent);
                 break;

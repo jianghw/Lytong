@@ -37,7 +37,9 @@ import com.zantong.mobilecttx.map.dto.AnnualDTO;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
 import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
+import com.zantong.mobilecttx.order.bean.OrderExpressResult;
 import com.zantong.mobilecttx.order.bean.OrderListResult;
+import com.zantong.mobilecttx.order.dto.ExpressDTO;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
@@ -534,5 +536,19 @@ public class RepositoryManager {
      */
     public Observable<ModuleResult> moduleTree() {
         return mRemoteData.moduleTree();
+    }
+
+    /**
+     * 32.获取地区列表
+     */
+    public Observable<OrderExpressResult> getAllAreas() {
+        return mRemoteData.getAllAreas();
+    }
+
+    /**
+     * 29.填写快递信息
+     */
+    public Observable<BaseResult> addExpressInfo(ExpressDTO expressDTO) {
+        return mRemoteData.addExpressInfo(expressDTO);
     }
 }

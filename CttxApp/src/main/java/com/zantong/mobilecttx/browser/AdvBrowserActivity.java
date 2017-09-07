@@ -34,12 +34,14 @@ import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
+import static com.zantong.mobilecttx.R.id.webView;
+
 /**
  * 公用浏览器 第三方广告
  */
 public class AdvBrowserActivity extends BaseJxActivity {
 
-    @Bind(R.id.webView)
+    @Bind(webView)
     ProgressWebView mWebView;
 
     protected String mStrTitle;
@@ -76,12 +78,12 @@ public class AdvBrowserActivity extends BaseJxActivity {
     protected void initViewStatus() {
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.addJavascriptInterface(new InterfaceForJS(this), "CTTX");
+//        mStrUrl = "http://139.196.183.121:8080/myCar";
         mWebView.loadUrl(mStrUrl);
 
         WebSettings settings = mWebView.getSettings();
         //设置支持Javascript
         settings.setDefaultTextEncodingName("utf-8");
-
         //触摸焦点起作用.
         //如果不设置，则在点击网页文本输入框时，不能弹出软键盘及不响应其他的一些事件。
         mWebView.requestFocus();
@@ -170,6 +172,15 @@ public class AdvBrowserActivity extends BaseJxActivity {
                 initTitleContent(mStrTitle);
                 setTvRightVisible("分享");
             }
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+//            view.loadUrl("javascript:window.CTTX.getSource('<head>'+" +
+//                    "document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+
+//            view.loadUrl("javascript:CTTX.getSource(document.documentElement.outerHTML);");
+            super.onPageFinished(view, url);
         }
 
         @Override

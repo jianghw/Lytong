@@ -127,7 +127,6 @@ public class LinkagePicker extends WheelPicker {
     }
 
     /**
-     * @param thirdArrayLists
      * @see SparringTimePicker 专用方法
      */
     public void updateSelThirdItem(ArrayList<ArrayList<ArrayList<String>>> thirdArrayLists) {

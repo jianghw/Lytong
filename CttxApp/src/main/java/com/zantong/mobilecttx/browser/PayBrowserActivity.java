@@ -143,6 +143,9 @@ public class PayBrowserActivity extends BaseJxActivity
         if (mPresenter != null) mPresenter.orderDetail();
     }
 
+    /**
+     * 回退
+     */
     @Override
     protected void backClickListener() {
         if (mWebView.canGoBack()) {
@@ -150,6 +153,14 @@ public class PayBrowserActivity extends BaseJxActivity
         } else {
             orderDetail();
         }
+    }
+
+    /**
+     * 关闭
+     */
+    @Override
+    protected void closeClickListener() {
+        orderDetail();
     }
 
     /**

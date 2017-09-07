@@ -27,7 +27,7 @@ import static cn.qqtheme.framework.util.image.ImageOptions.getMessageOptions;
  */
 
 public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
-    private Context mContext;
+    private Context mAdapterContext;
     private ItemClickListener mClickListener;
 
     /**
@@ -37,8 +37,8 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
      */
     @Override
     public View createView(ViewGroup viewGroup, int i) {
-        mContext = viewGroup.getContext();
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+        mAdapterContext = viewGroup.getContext();
+        LayoutInflater inflater = LayoutInflater.from(mAdapterContext);
         return inflater.inflate(R.layout.recycle_list_item_order, viewGroup, false);
     }
 
@@ -49,12 +49,13 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
 
     /**
      * 数据绑定
+     * orderStatus : 2 	订单状态,0未至付，1已支付,2取消或过期，3进行中 4已完成
      */
     @Override
     public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, final OrderListBean data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (data != null) {
-            String orderNum = mContext.getResources().getString(R.string.tv_order_num);
+            String orderNum = mAdapterContext.getResources().getString(R.string.tv_order_num);
             holder.mOrderNum.setText(String.format(orderNum, data.getOrderId()));
 
             int orderStatus = data.getOrderStatus();
@@ -69,23 +70,60 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
             DecimalFormat decimalFormat = new DecimalFormat("0.00");
             String format = decimalFormat.format(price);
             holder.mOrderPrice.setText("￥" + format);
-
+            //旧
             holder.mOrderPayLine.setVisibility(orderStatus == 0 ? View.VISIBLE : View.GONE);
             holder.mLayPay.setVisibility(orderStatus == 0 ? View.VISIBLE : View.GONE);
 
-            if (holder.mLayPay.getVisibility() == View.GONE) return;
-            holder.mOrderCanclePay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mClickListener != null) mClickListener.doClickCancel(data);
-                }
-            });
-            holder.mOrderPay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mClickListener != null) mClickListener.doClickPay(data);
-                }
-            });
+            int itemType = data.getType();
+            holder.mOrderPayLine.setVisibility(itemType == 6
+                    && (orderStatus == 1 || orderStatus == 3
+                    || orderStatus == 4 || orderStatus == 11 || orderStatus == 12 || orderStatus == 13)
+                    ? View.VISIBLE : View.GONE);
+            holder.mLayPay.setVisibility(itemType == 6 ? View.GONE : View.VISIBLE);
+            holder.mLayAnnual.setVisibility(itemType == 6
+                    && (orderStatus == 1 || orderStatus == 3
+                    || orderStatus == 4 || orderStatus == 11 || orderStatus == 12 || orderStatus == 13)
+                    ? View.VISIBLE : View.GONE);
+
+            holder.mOrderDriving.setVisibility(itemType == 6 && (orderStatus == 11 || orderStatus == 12)
+                    ? View.VISIBLE : View.GONE);
+
+            holder.mOrderCourier.setVisibility(itemType == 6 &&
+                    (orderStatus == 1 || orderStatus == 3 || orderStatus == 4) ? View.VISIBLE : View.GONE);
+            holder.mOrderUnCourier.setVisibility(itemType == 6 && orderStatus == 13 ? View.VISIBLE : View.GONE);
+
+            if (holder.mLayPay.getVisibility() != View.GONE) {
+                holder.mOrderCanclePay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mClickListener != null) mClickListener.doClickCancel(data);
+                    }
+                });
+                holder.mOrderPay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mClickListener != null) mClickListener.doClickPay(data);
+                    }
+                });
+            }
+
+            if (holder.mOrderDriving.getVisibility() != View.GONE) {
+                holder.mOrderDriving.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mClickListener != null) mClickListener.doClickDriving(data);
+                    }
+                });
+            }
+            if (holder.mOrderCourier.getVisibility() != View.GONE) {
+                holder.mOrderCourier.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mClickListener != null) mClickListener.doClickCourier(data);
+                    }
+                });
+            }
+
         }
     }
 
@@ -95,27 +133,35 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
     private void changeTextColorByStatus(int status, TextView tvPayStatus) {
         switch (status) {
             case 0:
-                tvPayStatus.setTextColor(mContext.getResources().getColor(R.color.colorTvOrange_ef));
+                tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvOrange_ef));
                 tvPayStatus.setText("待支付");
                 break;
             case 1:
-                tvPayStatus.setTextColor(mContext.getResources().getColor(R.color.colorTvGreen_80));
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+            case 11:
+            case 12:
+                tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvGreen_80));
                 tvPayStatus.setText("已支付");
                 break;
             case 3:
-                tvPayStatus.setTextColor(mContext.getResources().getColor(R.color.colorTvGreen_80));
+                tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvGreen_80));
                 tvPayStatus.setText("进行中");
                 break;
             case 4:
-                tvPayStatus.setTextColor(mContext.getResources().getColor(R.color.colorTvGreen_80));
+                tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvGreen_80));
                 tvPayStatus.setText("已完成");
                 break;
             case 2:
-                tvPayStatus.setTextColor(mContext.getResources().getColor(R.color.colorTvBlack_b2));
+                tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvBlack_b2));
                 tvPayStatus.setText("已取消");
                 break;
             default:
-                tvPayStatus.setTextColor(mContext.getResources().getColor(R.color.colorTvBlack_b2));
+                tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvBlack_b2));
                 tvPayStatus.setText("未知状态");
                 break;
         }
@@ -146,6 +192,14 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
         TextView mOrderPayLine;
         @Bind(R.id.lay_pay)
         RelativeLayout mLayPay;
+        @Bind(R.id.lay_annual)
+        RelativeLayout mLayAnnual;
+        @Bind(R.id.tv_driving)
+        TextView mOrderDriving;
+        @Bind(R.id.tv_courier)
+        TextView mOrderCourier;
+        @Bind(R.id.tv_uncourier)
+        TextView mOrderUnCourier;
 
         public ViewHolder(View view) {
             super(view);
@@ -162,6 +216,10 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
         void doClickCancel(OrderListBean bean);
 
         void doClickPay(OrderListBean bean);
+
+        void doClickDriving(OrderListBean bean);
+
+        void doClickCourier(OrderListBean bean);
     }
 
 }
