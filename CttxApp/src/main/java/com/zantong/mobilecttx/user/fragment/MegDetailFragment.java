@@ -20,13 +20,10 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.PullableBaseFragment;
 import com.zantong.mobilecttx.browser.AdvBrowserActivity;
 import com.zantong.mobilecttx.contract.IMegDetailAtyContract;
-import com.zantong.mobilecttx.eventbus.GetMsgAgainEvent;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.user.bean.Meg;
 import com.zantong.mobilecttx.user.bean.MessageDetailResult;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -137,8 +134,6 @@ public class MegDetailFragment extends PullableBaseFragment
         } else {
             onShowContent();
             setResultForRefresh();
-
-            EventBus.getDefault().postSticky(new GetMsgAgainEvent(messageResult.getResponseCode() == 2000));
 
             if (!TextUtils.isEmpty(message.getImage()) && message.getImage() != null)
                 ImageLoader.getInstance().displayImage(

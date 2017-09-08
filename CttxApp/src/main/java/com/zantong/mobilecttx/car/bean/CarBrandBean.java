@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by zhoujie on 2016/11/14.
  */
 
-public class CarBrandBean implements Serializable{
+public class CarBrandBean implements Serializable {
     private int id;
     private String brandName;
     private String brandPinYin;

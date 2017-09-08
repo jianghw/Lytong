@@ -21,7 +21,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.functions.Func3;
+import rx.functions.Func6;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -111,7 +111,22 @@ public class OrderExpressPresenter
                 .map(new Func1<OrderExpressBean, String>() {
                     @Override
                     public String call(OrderExpressBean orderExpressBean) {
-                        return orderExpressBean.getName() + "(" + orderExpressBean.getCode() + ")";
+                        return orderExpressBean.getName();
+                    }
+                })
+                .toList();
+
+        Observable<List<String>> firstCode = Observable.from(data)
+                .filter(new Func1<OrderExpressBean, Boolean>() {
+                    @Override
+                    public Boolean call(OrderExpressBean orderExpressBean) {
+                        return null != orderExpressBean;
+                    }
+                })
+                .map(new Func1<OrderExpressBean, String>() {
+                    @Override
+                    public String call(OrderExpressBean orderExpressBean) {
+                        return String.valueOf(orderExpressBean.getCode());
                     }
                 })
                 .toList();
@@ -136,7 +151,35 @@ public class OrderExpressPresenter
                                 .map(new Func1<ChildrenBeanX, String>() {
                                     @Override
                                     public String call(ChildrenBeanX childrenBeanX) {
-                                        return childrenBeanX.getName() + "(" + childrenBeanX.getCode() + ")";
+                                        return childrenBeanX.getName();
+                                    }
+                                })
+                                .toList();
+                    }
+                })
+                .toList();
+
+        Observable<List<List<String>>> secondCode = Observable.from(data)
+                .filter(new Func1<OrderExpressBean, Boolean>() {
+                    @Override
+                    public Boolean call(OrderExpressBean orderExpressBean) {
+                        return null != orderExpressBean;
+                    }
+                })
+                .map(new Func1<OrderExpressBean, List<ChildrenBeanX>>() {
+                    @Override
+                    public List<ChildrenBeanX> call(OrderExpressBean orderExpressBean) {
+                        return orderExpressBean.getChildren();
+                    }
+                })
+                .flatMap(new Func1<List<ChildrenBeanX>, Observable<List<String>>>() {
+                    @Override
+                    public Observable<List<String>> call(List<ChildrenBeanX> childrenBeanXes) {
+                        return Observable.from(childrenBeanXes)
+                                .map(new Func1<ChildrenBeanX, String>() {
+                                    @Override
+                                    public String call(ChildrenBeanX childrenBeanX) {
+                                        return String.valueOf(childrenBeanX.getCode());
                                     }
                                 })
                                 .toList();
@@ -174,7 +217,47 @@ public class OrderExpressPresenter
                                                 .map(new Func1<ChildrenBean, String>() {
                                                     @Override
                                                     public String call(ChildrenBean childrenBean) {
-                                                        return childrenBean.getName() + "(" + childrenBean.getCode() + ")";
+                                                        return childrenBean.getName();
+                                                    }
+                                                })
+                                                .toList();
+                                    }
+                                })
+                                .toList();
+                    }
+                })
+                .toList();
+        Observable<List<List<List<String>>>> thirdCode = Observable.from(data)
+                .filter(new Func1<OrderExpressBean, Boolean>() {
+                    @Override
+                    public Boolean call(OrderExpressBean orderExpressBean) {
+                        return null != orderExpressBean;
+                    }
+                })
+                .map(new Func1<OrderExpressBean, List<ChildrenBeanX>>() {
+                    @Override
+                    public List<ChildrenBeanX> call(OrderExpressBean orderExpressBean) {
+                        return orderExpressBean.getChildren();
+                    }
+                })
+                .flatMap(new Func1<List<ChildrenBeanX>, Observable<List<List<String>>>>() {
+                    @Override
+                    public Observable<List<List<String>>> call(final List<ChildrenBeanX> childrenBeanXes) {
+                        return Observable.from(childrenBeanXes)
+                                .map(new Func1<ChildrenBeanX, List<ChildrenBean>>() {
+                                    @Override
+                                    public List<ChildrenBean> call(ChildrenBeanX childrenBeanX) {
+                                        return childrenBeanX.getChildren();
+                                    }
+                                })
+                                .flatMap(new Func1<List<ChildrenBean>, Observable<List<String>>>() {
+                                    @Override
+                                    public Observable<List<String>> call(List<ChildrenBean> childrenBeen) {
+                                        return Observable.from(childrenBeen)
+                                                .map(new Func1<ChildrenBean, String>() {
+                                                    @Override
+                                                    public String call(ChildrenBean childrenBean) {
+                                                        return String.valueOf(childrenBean.getCode());
                                                     }
                                                 })
                                                 .toList();
@@ -185,11 +268,14 @@ public class OrderExpressPresenter
                 })
                 .toList();
 
-        Observable.zip(firstList, secondList, thirdList,
-                new Func3<List<String>, List<List<String>>, List<List<List<String>>>, Object[]>() {
+        Observable.zip(firstList, secondList, thirdList, firstCode, secondCode, thirdCode,
+                new Func6<List<String>, List<List<String>>, List<List<List<String>>>,
+                        List<String>, List<List<String>>, List<List<List<String>>>, Object[]>() {
                     @Override
-                    public Object[] call(List<String> strings, List<List<String>> lists, List<List<List<String>>> lists2) {
-                        return new Object[]{strings, lists, lists2};
+                    public Object[] call(List<String> listList1, List<List<String>> listList2, List<List<List<String>>> listList3,
+                                         List<String> listCode1, List<List<String>> listCode2, List<List<List<String>>> listCode3) {
+
+                        return new Object[]{listList1, listList2, listList3, listCode1, listCode2, listCode3};
                     }
                 })
                 .subscribeOn(Schedulers.newThread())
@@ -256,12 +342,13 @@ public class OrderExpressPresenter
         expressDTO.setOrderId(mAtyView.getOrderId());
         expressDTO.setSendName(mAtyView.getUserName());
         expressDTO.setSendPhone(mAtyView.getUserPhone());
+
         String province = mAtyView.getProvince();
         String address[] = province.split("/");
 
-        expressDTO.setSendProvince(address[0].substring(address[0].indexOf("(") + 1, address[0].length() - 1));
-        expressDTO.setSendCity(address[1].substring(address[1].indexOf("(") + 1, address[1].length() - 1));
-        expressDTO.setSendAddress(address[2].substring(address[2].indexOf("(") + 1, address[2].length() - 1) + mAtyView.getAddress());
+        expressDTO.setSendProvince(address[0]);
+        expressDTO.setSendCity(address[1]);
+        expressDTO.setSendAddress(address[2] + mAtyView.getAddress());
         return expressDTO;
     }
 }

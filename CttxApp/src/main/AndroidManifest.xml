@@ -329,9 +329,6 @@
         <activity
             android:name=".weizhang.activity.ViolationHistoryAcitvity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".car.activity.CarManageActivity"
-            android:screenOrientation="portrait"/>
 
         <!-- ========================违章查询页面================================= -->
         <!-- 违法查询页面 输入 -->

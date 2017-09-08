@@ -1,9 +1,12 @@
 package com.zantong.mobilecttx.browser;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.SslErrorHandler;
@@ -11,23 +14,42 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.google.gson.Gson;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
+import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.contract.InterfaceForJS;
+import com.zantong.mobilecttx.contract.browser.IHtmlBrowserContract;
+import com.zantong.mobilecttx.daijia.bean.DrivingOcrBean;
+import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
+import com.zantong.mobilecttx.eventbus.DriveLicensePhotoEvent;
+import com.zantong.mobilecttx.presenter.browser.HtmlBrowserPresenter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 import cn.qqtheme.framework.global.JxGlobal;
+import cn.qqtheme.framework.util.ToastUtils;
+import cn.qqtheme.framework.util.primission.PermissionFail;
+import cn.qqtheme.framework.util.primission.PermissionGen;
+import cn.qqtheme.framework.util.primission.PermissionSuccess;
+
+import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 公用浏览器 html页面显示
  */
-public class HtmlBrowserActivity extends BaseJxActivity {
+public class HtmlBrowserActivity extends BaseJxActivity implements IHtmlBrowserContract.IHtmlBrowserView {
 
     protected String mStrTitle;
     protected String mStrUrl;
 
     @Bind(R.id.webView)
     ProgressWebView mWebView;
+    private IHtmlBrowserContract.IHtmlBrowserPresenter mPresenter;
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
@@ -49,8 +71,12 @@ public class HtmlBrowserActivity extends BaseJxActivity {
 
     @Override
     protected void initFragmentView(View view) {
+        EventBus.getDefault().register(this);
         initTitleContent(mStrTitle);
         setTvCloseVisible();
+
+        HtmlBrowserPresenter presenter = new HtmlBrowserPresenter(
+                Injection.provideRepository(getApplicationContext()), this);
     }
 
     protected void initViewStatus() {
@@ -74,6 +100,40 @@ public class HtmlBrowserActivity extends BaseJxActivity {
         // 返回前一个页面
         if (mWebView.canGoBack()) mWebView.goBack();
         else finish();
+    }
+
+    @Override
+    public void setPresenter(IHtmlBrowserContract.IHtmlBrowserPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void showLoadingDialog() {
+        showDialogLoading();
+    }
+
+    @Override
+    public void dismissLoadingDialog() {
+        hideDialogLoading();
+    }
+
+    @Override
+    public void uploadDrivingImgError(String message) {
+        ToastUtils.toastShort(message);
+        dismissLoadingDialog();
+    }
+
+    /**
+     * 55.行驶证扫描接口
+     */
+    @Override
+    public void uploadDrivingImgSucceed(DrivingOcrResult result) {
+        DrivingOcrBean bean = result.getContent();
+        if (bean != null) {
+            mWebView.loadUrl("javascript:callbackCamera(" + new Gson().toJson(bean) + ");");
+        } else {
+            ToastUtils.toastShort("行驶证图片解析失败(55)，请重试");
+        }
     }
 
     private class MyWebViewClient extends WebViewClient {
@@ -103,12 +163,15 @@ public class HtmlBrowserActivity extends BaseJxActivity {
 
     @Override
     protected void DestroyViewAndThing() {
+        EventBus.getDefault().unregister(this);
         mWebView.destroyWebView();
+        if (mPresenter != null) mPresenter.unSubscribe();
     }
 
     /**
      * 当返回true时，表示已经完整地处理了这个事件，并不希望其他的回调方法再次进行处理，
      * 当返回false时，表示并没有完全处理完该事件，更希望其他回调方法继续对其进行处理，例如Activity中的回调方法。
+     *
      * @param keyCode
      * @param event
      * @return
@@ -120,6 +183,63 @@ public class HtmlBrowserActivity extends BaseJxActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDataSynEvent(DriveLicensePhotoEvent event) {
+        takePhoto();
+    }
+
+    /**
+     * 拍照
+     */
+    public void takePhoto() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, PER_REQUEST_CODE, new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE});
+        } else {
+            goToCamera();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    /**
+     * 行驶证 拍照前权限调用
+     */
+    @PermissionSuccess(requestCode = PER_REQUEST_CODE)
+    public void doPermissionSuccess() {
+        goToCamera();
+    }
+
+    protected void goToCamera() {
+        Intent intentOcr = new Intent(this, OcrCameraActivity.class);
+        intentOcr.putExtra(JxGlobal.putExtra.ocr_camera_extra, 0);
+        startActivityForResult(intentOcr, JxGlobal.requestCode.violation_query_camera);
+    }
+
+    @PermissionFail(requestCode = PER_REQUEST_CODE)
+    public void doPermissionFail() {
+        ToastUtils.toastShort("您已关闭摄像头权限,请设置中打开");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+//拍照回调
+        if (requestCode == JxGlobal.requestCode.violation_query_camera
+                && resultCode == JxGlobal.resultCode.ocr_camera_license) {
+            if (OcrCameraActivity.file == null)
+                ToastUtils.toastShort("照片获取失败");
+            else if (mPresenter != null)
+                mPresenter.uploadDrivingImg();
+        }
     }
 
 }

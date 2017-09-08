@@ -155,8 +155,10 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
                 JxConfig.getInstance().eventIdByUMeng(25);
                 enterDrivingActivity();
             } else if (path.equals("native_app_enhancement")) {//科目强化
+                JxConfig.getInstance().eventIdByUMeng(37);
                 Act.getInstance().gotoIntentLogin(getActivity(), SubjectActivity.class);
             } else if (path.equals("native_app_sparring")) {//陪练
+                JxConfig.getInstance().eventIdByUMeng(38);
                 Act.getInstance().gotoIntentLogin(getActivity(), SparringActivity.class);
             } else if (path.equals("native_app_drive_share")) {//分享
                 Intent intent = new Intent();

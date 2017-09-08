@@ -172,7 +172,15 @@ public class BaiduMapParentActivity extends BaseJxActivity
         mRbEnd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
+                if (mPresenter != null && isChecked
+                        && mMapType == JxGlobal.MapType.annual_inspection_map) {
+                    mServiceType = String.valueOf(JxGlobal.MapType.annual_agent_service);
+                    mPresenter.annualInspectionList();
+                } else if (mPresenter != null && isChecked
+                        && mMapType == JxGlobal.MapType.annual_oil_map) {
+                    mServiceType = String.valueOf(JxGlobal.MapType.annual_0_service);
+                    mPresenter.gasStationList();
+                }
             }
         });
 
@@ -520,6 +528,12 @@ public class BaiduMapParentActivity extends BaseJxActivity
         TextView tvDate = (TextView) inflate.findViewById(R.id.tv_date);
         TextView tvScope = (TextView) inflate.findViewById(R.id.tv_scope);
         TextView btnCommission = (TextView) inflate.findViewById(R.id.btn_commission);
+        btnCommission.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                annualInspection();
+            }
+        });
 
         tvName.setText(checkDetail.getName());
         tvAddress.setText(checkDetail.getAddress());
@@ -539,6 +553,13 @@ public class BaiduMapParentActivity extends BaseJxActivity
         initWinBottomDialogParams(context, dialog);
         //显示对话框
         dialog.show();
+    }
+
+    protected void annualInspection() {
+        Intent intent = new Intent();
+        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "年检服务");
+        intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://139.196.183.121:8080/myCar");
+        Act.getInstance().gotoLoginByIntent(this, HtmlBrowserActivity.class, intent);
     }
 
     /**

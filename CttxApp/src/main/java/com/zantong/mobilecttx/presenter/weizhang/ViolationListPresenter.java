@@ -91,6 +91,9 @@ public class ViolationListPresenter
                     public void doNext(ViolationResultParent result) {
                         if (result != null && "000000".equals(result.getSYS_HEAD().getReturnCode())) {
                             mAtyView.allPaymentData(result.getRspInfo());
+                            List<ViolationBean> beanList = result.getRspInfo().getViolationInfo();
+                            if (beanList != null && !beanList.isEmpty()) handleViolations(beanList);
+
                             dataDistribution(result, 0);
                             dataDistribution(result, 1);
                         } else {
@@ -188,7 +191,6 @@ public class ViolationListPresenter
                         } else if (value == 1) {
                             mAtyView.havePaymentData(beanList);
                         }
-                        if (beanList != null && !beanList.isEmpty()) handleViolations(beanList);
                     }
                 });
         mSubscriptions.add(subscription);

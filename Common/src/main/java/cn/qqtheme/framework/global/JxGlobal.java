@@ -57,6 +57,10 @@ public final class JxGlobal {
          * 年检站点
          */
         public static final int annual_site_service = 1;
+        /**
+         * 外牌代办点
+         */
+        public static final int annual_agent_service = 3;
 
         public static final int annual_0_service = 1;
         public static final int annual_92_service = 5;

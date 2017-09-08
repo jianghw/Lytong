@@ -38,9 +38,7 @@ import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrBean;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.eventbus.AddCarInfoEvent;
-import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
 import com.zantong.mobilecttx.eventbus.EditCarInfoEvent;
-import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
@@ -420,7 +418,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                 }
                 mCommit.setClickable(true);
                 hideDialogLoading();
-                EventBus.getDefault().post(new BenDiCarInfoEvent(true, dto));
+
                 hideKeyBord();
             } else {
                 LogUtils.i("老服务器");
@@ -466,7 +464,6 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                     PublicData.getInstance().mHashMap.put("IllegalViolationName", carNum);//标题
 
                     PublicData.getInstance().mCarNum++;//车辆数+1
-                    EventBus.getDefault().post(new UpdateCarInfoEvent(true));
 
                     dto.setCarnum(carNum);
                     dto.setEnginenum(carEngineNum);
@@ -765,10 +762,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
         List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
         list.remove(infoBean);
         PublicData.getInstance().mCarNum--;
-        EventBus.getDefault().post(
-                new BenDiCarInfoEvent(true, infoBean));
         hideKeyBord();
-
     }
 
     private void dialogForDelCar() {
@@ -839,7 +833,6 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                 mCommit.setClickable(true);
                 hideDialogLoading();
                 if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
-                    EventBus.getDefault().post(new UpdateCarInfoEvent(true));
                     dto.setCarnum(carNum);
                     dto.setEnginenum(carEngineNum);
                     if (dto.getOpertype().equals("2")) {

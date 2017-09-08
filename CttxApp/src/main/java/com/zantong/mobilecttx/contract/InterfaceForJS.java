@@ -16,6 +16,7 @@ import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
+import com.zantong.mobilecttx.eventbus.DriveLicensePhotoEvent;
 import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
@@ -25,6 +26,8 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
+import org.greenrobot.eventbus.EventBus;
+
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 
@@ -33,7 +36,8 @@ import cn.qqtheme.framework.util.log.LogUtils;
  *         create at 16/6/1 下午5:54
  */
 public class InterfaceForJS {
-    Context mJSContext;
+
+    private Context mJSContext;
 
     public InterfaceForJS(Context context) {
         this.mJSContext = context;
@@ -189,4 +193,11 @@ public class InterfaceForJS {
         intent.putExtra("plateNum", carnum);
         mJSContext.startActivity(intent);
     }
+
+    //js调摄像机
+    @JavascriptInterface
+    public void callCamera() {
+        EventBus.getDefault().post(new DriveLicensePhotoEvent());
+    }
+
 }

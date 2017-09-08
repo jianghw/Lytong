@@ -78,7 +78,6 @@
     <color name="viewfinder_mask">#60000000</color>
     <color name="color_white">#ffffffff</color>
     <color name="color_blue_light">#4169E1</color>
-    <color name="blue_light">#000078a0</color>
     <color name="common_blue">#4169E1</color>
     <color name="light_blue">#13B1F5</color>
 

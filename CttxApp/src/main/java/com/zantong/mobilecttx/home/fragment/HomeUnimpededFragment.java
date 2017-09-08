@@ -17,16 +17,13 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
+import com.zantong.mobilecttx.browser.AdvBrowserActivity;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
-import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.browser.AdvBrowserActivity;
 import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
-import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
 import com.zantong.mobilecttx.eventbus.GetMsgAgainEvent;
-import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
 import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 import com.zantong.mobilecttx.home.adapter.HorizontalCarViolationAdapter;
@@ -77,9 +74,6 @@ import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_COD
  */
 public class HomeUnimpededFragment extends BaseRefreshJxFragment
         implements View.OnClickListener, IUnimpededFtyContract.IUnimpededFtyView {
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -139,14 +133,8 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     private List<UserCarInfoBean> mUserCarInfoBeanList = new ArrayList<>();
     private TextView mTvAppraisement;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public static HomeUnimpededFragment newInstance() {
+        return new HomeUnimpededFragment();
     }
 
     /**
@@ -167,19 +155,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         startCampaignCustom(true);
     }
 
-    public static HomeUnimpededFragment newInstance() {
-        return new HomeUnimpededFragment();
-    }
-
-    public static HomeUnimpededFragment newInstance(String param1, String param2) {
-        HomeUnimpededFragment fragment = new HomeUnimpededFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     protected int getFragmentLayoutResId() {
         return R.layout.fragment_home_unimpeded;
@@ -195,29 +170,17 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
     @Override
     protected void initFragmentView(View view) {
+        EventBus.getDefault().register(this);
+
         initView(view);
 
         UnimpededFtyPresenter mPresenter = new UnimpededFtyPresenter(
                 Injection.provideRepository(getActivity().getApplicationContext()), this);
+    }
 
-        //广告页本地加载
-        List<Integer> localImages = new ArrayList<>();
-        localImages.add(R.mipmap.banner);
-        mCustomConvenientBanner.setPages(
-                new CBViewHolderCreator<LocalImageHolderView>() {
-                    @Override
-                    public LocalImageHolderView createHolder() {
-                        return new LocalImageHolderView();
-                    }
-                }, localImages)
-                .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
-                .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
-
-        //小喇叭
-        initScrollUp(mHomeNotices);
-        //违章车辆
-        mCarViolationAdapter = new HorizontalCarViolationAdapter(getContext(), mUserCarInfoBeanList);
-        mCustomViolation.setAdapter(mCarViolationAdapter);
+    @Override
+    public void setPresenter(IUnimpededFtyContract.IUnimpededFtyPresenter presenter) {
+        mPresenter = presenter;
     }
 
     private void initView(View view) {
@@ -250,12 +213,25 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void setPresenter(IUnimpededFtyContract.IUnimpededFtyPresenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
     protected void onFirstDataVisible() {
+        //广告页本地加载
+        List<Integer> localImages = new ArrayList<>();
+        localImages.add(R.mipmap.banner);
+        mCustomConvenientBanner.setPages(
+                new CBViewHolderCreator<LocalImageHolderView>() {
+                    @Override
+                    public LocalImageHolderView createHolder() {
+                        return new LocalImageHolderView();
+                    }
+                }, localImages)
+                .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
+                .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
+
+        //小喇叭
+        initScrollUp(mHomeNotices);
+        //违章车辆
+        mCarViolationAdapter = new HorizontalCarViolationAdapter(getContext(), mUserCarInfoBeanList);
+        mCustomViolation.setAdapter(mCarViolationAdapter);
     }
 
     private void resumeDataVisible() {
@@ -310,8 +286,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
         EventBus.getDefault().removeStickyEvent(AddPushTrumpetEvent.class);
         EventBus.getDefault().removeStickyEvent(GetMsgAgainEvent.class);
-        EventBus.getDefault().removeStickyEvent(UpdateCarInfoEvent.class);
-        EventBus.getDefault().removeStickyEvent(BenDiCarInfoEvent.class);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -345,7 +320,8 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
             mHomeMainListener.setTipOfNumber(2, bean != null ? bean.getMsgNum() : 0);
         //小喇叭通知
         if (bean != null && bean.getNotices() != null) {
-            mCustomGrapevine.setData(bean.getNotices());
+            if (!bean.getNotices().isEmpty())
+                mCustomGrapevine.setData(bean.getNotices());
 
             if (!mHomeNotices.isEmpty()) mHomeNotices.clear();
             mHomeNotices.addAll(bean.getNotices());
@@ -479,18 +455,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         mHomeNotices.addAll(notices);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onDataSynEvent(UpdateCarInfoEvent event) {
-        if (event.isStatus() && mPresenter != null) {
-            mPresenter.getTextNoticeInfo();
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onDataSynEvent(BenDiCarInfoEvent event) {
-        if (event.isStatus()) getLocalCarInfo();
-    }
-
     /**
      * 标记小喇叭
      */
@@ -553,24 +517,33 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                 break;
             case R.id.tv_appraisement://爱车估值
                 JxConfig.getInstance().eventIdByUMeng(34);
-                //TODO
+                carValuation();
                 break;
             case R.id.tv_check://年检
                 JxConfig.getInstance().eventIdByUMeng(4);
                 enterDrivingActivity();
                 break;
             case R.id.tv_drive://国际驾照
-                //TODO
                 JxConfig.getInstance().eventIdByUMeng(35);
-
-                Intent intent = new Intent();
-                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "国际驾照");
-                intent.putExtra(JxGlobal.putExtra.browser_url_extra, Config.HOME_CAR_WASH_URL);
-                Act.getInstance().gotoLoginByIntent(getActivity(), AdvBrowserActivity.class, intent);
+                InternationalDrivingDocument();
                 break;
             default:
                 break;
         }
+    }
+
+    protected void carValuation() {
+        Intent intent = new Intent();
+        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "爱车估值");
+        intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://m.jingzhengu.com/xiansuo/sellcar-changtongcheyouhui.html");
+        Act.getInstance().gotoLoginByIntent(getActivity(), AdvBrowserActivity.class, intent);
+    }
+
+    protected void InternationalDrivingDocument() {
+        Intent intent = new Intent();
+        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "国际驾照");
+        intent.putExtra(JxGlobal.putExtra.browser_url_extra, "https://m.huizuche.com/Cdl/Intro3/ctcyh");
+        Act.getInstance().gotoLoginByIntent(getActivity(), AdvBrowserActivity.class, intent);
     }
 
     protected void licenseCheckGrade() {

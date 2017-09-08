@@ -58,6 +58,10 @@ public class OrderExpressActivity extends BaseJxActivity
      * 订单号
      */
     private String mOrderId;
+    private String mFirstCode;
+    private String mSecondCode;
+    private String mThirdCode;
+
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
@@ -117,20 +121,30 @@ public class OrderExpressActivity extends BaseJxActivity
 
     @Override
     public void allAreasSucceed(Object[] result) {
+        if (result.length < 6) return;
+        final ArrayList<String> first = (ArrayList<String>) result[3];
+        final ArrayList<ArrayList<String>> second = (ArrayList<ArrayList<String>>) result[4];
+        final ArrayList<ArrayList<ArrayList<String>>> third = (ArrayList<ArrayList<ArrayList<String>>>) result[5];
 
-        ArrayList<String> firstList = new ArrayList<>();
+        final ArrayList<String> firstList = new ArrayList<>();
         firstList.addAll((ArrayList<String>) result[0]);
-
-        ArrayList<ArrayList<String>> secondList = new ArrayList<>();
+        final ArrayList<ArrayList<String>> secondList = new ArrayList<>();
         secondList.addAll((ArrayList<ArrayList<String>>) result[1]);
-
-        ArrayList<ArrayList<ArrayList<String>>> thirdList = new ArrayList<>();
+        final ArrayList<ArrayList<ArrayList<String>>> thirdList = new ArrayList<>();
         thirdList.addAll((ArrayList<ArrayList<ArrayList<String>>>) result[2]);
 
         CustomDialog.popupBottomAllArea(this, firstList, secondList, thirdList, new IAreaDialogListener() {
             @Override
             public void setCurPosition(String position) {
-                mTvArea.setText(position);
+                String[] postions = position.split("/");
+                int f = Integer.valueOf(postions[0]);
+                int s = Integer.valueOf(postions[1]);
+                int t = Integer.valueOf(postions[2]);
+                mTvArea.setText(firstList.get(f) + "/" + secondList.get(f).get(s) + "/" + thirdList.get(f).get(s).get(t));
+
+                mFirstCode = first.get(f);
+                mSecondCode = second.get(f).get(s);
+                mThirdCode = third.get(f).get(s).get(t);
             }
         });
     }
@@ -171,7 +185,7 @@ public class OrderExpressActivity extends BaseJxActivity
 
     @Override
     public String getProvince() {
-        return mTvArea.getText().toString().trim();
+        return mFirstCode + "/" + mSecondCode + "/" + mThirdCode;
     }
 
     public void initView() {
@@ -215,7 +229,9 @@ public class OrderExpressActivity extends BaseJxActivity
             return;
         }
         String province = getProvince();
-        if (TextUtils.isEmpty(province) && province.length() < 1) {
+        if (TextUtils.isEmpty(province) && province.length() < 1
+                || TextUtils.isEmpty(mFirstCode)
+                || TextUtils.isEmpty(mSecondCode) || TextUtils.isEmpty(mThirdCode)) {
             ToastUtils.toastShort("请输入正确地区地址");
             return;
         }

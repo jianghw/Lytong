@@ -30,7 +30,6 @@ import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.ILoginView;
-import com.zantong.mobilecttx.eventbus.BenDiCarInfoEvent;
 import com.zantong.mobilecttx.presenter.LogoutPresenter;
 import com.zantong.mobilecttx.user.dto.PersonInfoDTO;
 import com.zantong.mobilecttx.user.dto.UpdateUserHeadImgDTO;
@@ -45,7 +44,6 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.popwindow.IOSpopwindow;
 import com.zantong.mobilecttx.widght.UISwitchButton;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -534,13 +532,13 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                         updateUserImg(url);
                     }
                 } else if (response != null) {
-                    ToastUtils.showShort(getApplicationContext(), response.message());
+                    ToastUtils.toastShort(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                ToastUtils.showShort(getApplicationContext(), Config.getErrMsg("1"));
+                ToastUtils.toastShort(Config.getErrMsg("1"));
             }
         });
     }
@@ -570,7 +568,6 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
 
             @Override
             public void onError(String errorCode, String msg) {
-                super.onError(errorCode, msg);
                 getBaseBack().setEnabled(true);
                 hideDialogLoading();
             }
@@ -637,8 +634,6 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                     CleanUtils.cleanCustomCache(FileUtils.photoImageDirectory(getApplicationContext()));
 
                     mLogout.setVisibility(View.GONE);
-
-                    EventBus.getDefault().post(new BenDiCarInfoEvent(true, null));
                     finish();
                 } else {
                     ToastUtils.toastShort("退出失败");

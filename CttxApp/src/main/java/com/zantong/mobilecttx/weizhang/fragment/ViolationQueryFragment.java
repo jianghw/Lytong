@@ -35,7 +35,6 @@ import com.zantong.mobilecttx.contract.IViolationQueryFtyContract;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrBean;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.eventbus.AddCarInfoEvent;
-import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
 import com.zantong.mobilecttx.presenter.weizhang.ViolationQueryFtyPresenter;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
@@ -387,8 +386,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
                 break;
             case R.id.lay_brand://品牌
                 startActivityForResult(
-                        new Intent(getActivity(), CarBrandActivity.class),
-                        CarBrandActivity.REQUEST_CODE);
+                        new Intent(getActivity(), CarBrandActivity.class), CarBrandActivity.REQUEST_CODE);
                 break;
             case R.id.lay_car_series://车系
                 Intent intentL = new Intent(getActivity(), CarChooseActivity.class);
@@ -542,7 +540,6 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
                 }
                 SPUtils.getInstance().getCarsInfo().add(getCarInfoDTO());
                 PublicData.getInstance().mCarNum++;//车辆数+1
-                EventBus.getDefault().post(new UpdateCarInfoEvent(true));
                 EventBus.getDefault().post(new AddCarInfoEvent(true, getCarInfoDTO()));
             }
             doQueryVehicle();
@@ -622,7 +619,6 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
     @Override
     public void commitCarInfoToOldServerSucceed(Result responseBean) {
         PublicData.getInstance().mCarNum++;//车辆数+1
-        EventBus.getDefault().post(new UpdateCarInfoEvent(true));
         EventBus.getDefault().post(new AddCarInfoEvent(true, getCarInfoDTO()));
 
         doQueryVehicle();

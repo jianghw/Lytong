@@ -6,7 +6,6 @@ import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
 import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
 import com.zantong.mobilecttx.model.LoginInfoModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
@@ -19,7 +18,6 @@ import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 
-import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -136,8 +134,6 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
 
                 PublicData.getInstance().loginFlag = true;
                 mLoginActivity.addLoginInfo(this.mLoginInfoBean);
-                EventBus.getDefault().post(new UpdateCarInfoEvent(true));
-
                 break;
         }
     }

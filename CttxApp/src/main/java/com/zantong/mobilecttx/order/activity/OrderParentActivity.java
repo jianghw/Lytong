@@ -17,6 +17,7 @@ import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.fahrschule.activity.SparringActivity;
 import com.zantong.mobilecttx.fahrschule.activity.SubjectActivity;
+import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
 import com.zantong.mobilecttx.order.fragment.OrderAllStatusFragment;
@@ -146,7 +147,7 @@ public class OrderParentActivity extends BaseJxActivity
              */
             @Override
             public void doClickDriving(OrderListBean bean) {
-
+                Act.getInstance().gotoIntentLogin(OrderParentActivity.this, BaiduMapParentActivity.class);
             }
 
             /**

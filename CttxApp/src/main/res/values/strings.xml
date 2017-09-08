@@ -242,7 +242,6 @@
         注：可手动刷新新查看订单状态；\n
         代驾完成后可提醒司机上传订单完成，可查看消费价格。
     </string>
-    <string name="title_activity_order_express">OrderExpressActivity</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 

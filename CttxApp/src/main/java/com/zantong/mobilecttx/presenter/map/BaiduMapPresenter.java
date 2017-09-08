@@ -50,13 +50,6 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
     public void annualInspectionList() {
         Subscription subscription = mRepository.annualInspectionList(getAnnualDTO())
                 .subscribeOn(Schedulers.io())
-//                .doOnSubscribe(new Action0() {
-//                    @Override
-//                    public void call() {
-//                        mAtyView.showLoadingDialog();
-//                    }
-//                })
-//                .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<YearCheckResult>() {
                     @Override

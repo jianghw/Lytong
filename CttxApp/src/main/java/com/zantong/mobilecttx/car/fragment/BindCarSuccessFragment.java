@@ -15,12 +15,9 @@ import com.zantong.mobilecttx.car.adapter.PayCarAdapter;
 import com.zantong.mobilecttx.car.bean.PayCar;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.eventbus.UpdateCarInfoEvent;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.Des3;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,8 +72,7 @@ public class BindCarSuccessFragment extends BaseExtraFragment {
         UserApiClient.getPayCars(this.getActivity(), dto, new CallBack<PayCarResult>() {
             @Override
             public void onSuccess(PayCarResult result) {
-                EventBus.getDefault().post(
-                        new UpdateCarInfoEvent(true));
+
                 onShowContent();
                 List<PayCar> list = new ArrayList<PayCar>();
                 list = result.getRspInfo().getUserCarsInfo();

@@ -78,7 +78,6 @@ public class AdvBrowserActivity extends BaseJxActivity {
     protected void initViewStatus() {
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.addJavascriptInterface(new InterfaceForJS(this), "CTTX");
-//        mStrUrl = "http://139.196.183.121:8080/myCar";
         mWebView.loadUrl(mStrUrl);
 
         WebSettings settings = mWebView.getSettings();

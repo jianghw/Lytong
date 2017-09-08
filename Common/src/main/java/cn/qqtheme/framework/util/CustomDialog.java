@@ -178,13 +178,15 @@ public class CustomDialog {
                                           ArrayList<ArrayList<ArrayList<String>>> thirdList,
                                           final IAreaDialogListener dialogListener) {
 
-        SparringAreaPicker areaPicker =
+        final SparringAreaPicker areaPicker =
                 new SparringAreaPicker(context, firstList, secondList, thirdList);
         areaPicker.setOnLinkageListener(new LinkagePicker.OnLinkageListener() {
             @Override
             public void onPicked(String first, String second, String third) {
                 if (dialogListener != null)
-                    dialogListener.setCurPosition(first + "/" + second + "/" + third);
+                    dialogListener.setCurPosition(areaPicker.getSelectedFirstIndex() +
+                            "/" + areaPicker.getSelectedSecondIndex() +
+                            "/" + areaPicker.getSelectedThirdIndex());
             }
         });
         areaPicker.setOffset(1);
