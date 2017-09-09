@@ -131,10 +131,10 @@ public class OrderParentPresenter
                 .filter(new Func1<OrderListBean, Boolean>() {
                     @Override
                     public Boolean call(OrderListBean orderListBean) {
-                        if (orderStatus == 1)
-                            return orderListBean.getOrderStatus() != 0 || orderListBean.getOrderStatus() != 2;
-
-                        return orderListBean.getOrderStatus() == orderStatus;
+                        if (orderStatus == 1)//0,1,2
+                            return orderListBean.getOrderStatus() != 0 && orderListBean.getOrderStatus() != 2;
+                        else
+                            return orderListBean.getOrderStatus() == orderStatus;
                     }
                 })
                 .toList()
@@ -154,10 +154,10 @@ public class OrderParentPresenter
                     public void doNext(List<OrderListBean> orderList) {
                         if (orderStatus == 0)
                             mAtyView.nonPaymentData(orderList);
-                        else if (orderStatus == 1 || orderStatus == 3 || orderStatus == 4)
-                            mAtyView.havePaymentData(orderList);
                         else if (orderStatus == 2)
                             mAtyView.cancelPaymentData(orderList);
+                        else
+                            mAtyView.havePaymentData(orderList);
                     }
                 });
         mSubscriptions.add(subscription);

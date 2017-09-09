@@ -2,13 +2,16 @@ package com.zantong.mobilecttx.api;
 
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
 import com.zantong.mobilecttx.order.bean.OrderListResult;
+import com.zantong.mobilecttx.order.bean.ReceiveInfoResult;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
 
 import cn.qqtheme.framework.contract.bean.BaseResult;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -51,4 +54,10 @@ public interface IOrderService {
      */
     @POST("order/addExpressInfo")
     Observable<BaseResult> addExpressInfo(@Body ExpressDTO expressDTO);
+
+    /**
+     * 33.获取收件人信息
+     */
+    @GET("order/getReceiveInfo")
+    Observable<ReceiveInfoResult> getReceiveInfo(@Query("orderId") String orderId);
 }

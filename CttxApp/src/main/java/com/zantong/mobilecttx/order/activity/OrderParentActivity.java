@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.order.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -11,6 +12,7 @@ import android.view.View;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.browser.BrowserForPayActivity;
+import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
 import com.zantong.mobilecttx.browser.PayBrowserActivity;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
@@ -51,7 +53,8 @@ public class OrderParentActivity extends BaseJxActivity
     /**
      * 支付类型 判断回调成功页面是哪个
      */
-    private int mItemType;
+
+    private OrderListBean mOrderListBean;
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
@@ -125,19 +128,16 @@ public class OrderParentActivity extends BaseJxActivity
              */
             @Override
             public void doClickPay(OrderListBean bean) {
-                String orderId = bean.getOrderId();
-                String payType = String.valueOf(bean.getPayType());
+                mOrderListBean = bean;
 
-                float orderPrice = bean.getAmount();
+                String orderId = mOrderListBean.getOrderId();
+                String payType = String.valueOf(mOrderListBean.getPayType());
+                float orderPrice = mOrderListBean.getAmount();
                 int price = (int) (orderPrice * 100);
 
-                mItemType = bean.getType();
-                if (mPresenter != null && mItemType == 1) {
+                if (mPresenter != null && mOrderListBean.getType() == 1) {
                     mPresenter.onPayOrderByCoupon(orderId, String.valueOf(price), payType);
-                }
-
-                if (mPresenter != null
-                        && (mItemType == 3 || mItemType == 4 || mItemType == 5)) {
+                } else if (mPresenter != null) {
                     mPresenter.getBankPayHtml(orderId, String.valueOf(price));
                 }
             }
@@ -156,6 +156,29 @@ public class OrderParentActivity extends BaseJxActivity
             @Override
             public void doClickCourier(OrderListBean bean) {
                 Act.getInstance().gotoIntent(OrderParentActivity.this, OrderExpressActivity.class, bean.getOrderId());
+            }
+
+            /**
+             * 预约服务
+             */
+            @Override
+            public void doClickSubscribe(OrderListBean bean) {
+                Intent intent = new Intent();
+                intent.putExtra(JxGlobal.putExtra.browser_title_extra, bean.getGoodsName());
+                intent.putExtra(JxGlobal.putExtra.browser_url_extra, bean.getTargetUrl());
+                Act.getInstance().gotoLoginByIntent(OrderParentActivity.this, HtmlBrowserActivity.class, intent);
+            }
+
+            /**
+             * 取消预约服务
+             */
+            @Override
+            public void doClickUnSubscribe(OrderListBean bean) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:" + bean.getPhone());
+                intent.setData(data);
+                startActivity(intent);
             }
         };
     }
@@ -333,13 +356,13 @@ public class OrderParentActivity extends BaseJxActivity
                 && resultCode == JxGlobal.resultCode.web_order_id_succeed) {
 
             Intent intent = new Intent();
-            if (mItemType == 3) {
+            if (mOrderListBean.getType() == 3) {
                 intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 2);
                 Act.getInstance().gotoLoginByIntent(this, FahrschuleActivity.class, intent);
-            } else if (mItemType == 4) {
+            } else if (mOrderListBean.getType() == 4) {
                 intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 3);
                 Act.getInstance().gotoLoginByIntent(this, SubjectActivity.class, intent);
-            } else if (mItemType == 5) {
+            } else if (mOrderListBean.getType() == 5) {
                 intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 2);
                 Act.getInstance().gotoLoginByIntent(this, SparringActivity.class, intent);
             }
@@ -348,12 +371,20 @@ public class OrderParentActivity extends BaseJxActivity
                 && resultCode == JxGlobal.resultCode.web_order_id_error && data != null) {
             //前往 订单详情页面
             String orderId = data.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
-            Intent intent = new Intent(this, OrderDetailActivity.class);
-            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
-            startActivity(intent);
+            String targetType = mOrderListBean.getTargetType();
+            if (targetType.equals("0")) {//前往 订单详情页面
+                Intent intent = new Intent(this, mOrderListBean.getType() == 6
+                        ? AnnualOrderDetailActivity.class : OrderDetailActivity.class);
+                intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent();
+                intent.putExtra(JxGlobal.putExtra.browser_title_extra, mOrderListBean.getGoodsName());
+                intent.putExtra(JxGlobal.putExtra.browser_url_extra, mOrderListBean.getTargetUrl() + "?orderId=" + orderId);
+                Act.getInstance().gotoLoginByIntent(this, HtmlBrowserActivity.class, intent);
+            }
         }
     }
-
 
     public interface RefreshListener {
 
@@ -366,5 +397,9 @@ public class OrderParentActivity extends BaseJxActivity
         void doClickDriving(OrderListBean bean);
 
         void doClickCourier(OrderListBean bean);
+
+        void doClickSubscribe(OrderListBean bean);
+
+        void doClickUnSubscribe(OrderListBean bean);
     }
 }

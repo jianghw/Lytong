@@ -558,7 +558,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
     protected void annualInspection() {
         Intent intent = new Intent();
         intent.putExtra(JxGlobal.putExtra.browser_title_extra, "年检服务");
-        intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://139.196.183.121:8080/myCar");
+        intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://nianjian.liyingtong.com/myCar");
         Act.getInstance().gotoLoginByIntent(this, HtmlBrowserActivity.class, intent);
     }
 

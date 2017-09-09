@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_120"
@@ -19,7 +20,127 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="上门取件联系方式"
+            android:text="收件人信息"
+            android:textColor="@color/colorTvRed_f33"
+            android:textSize="@dimen/fs_16sp"/>
+    </RelativeLayout>
+
+    <!--receiver-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
+        android:background="@drawable/bg_sel_item_gray"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="接收人"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_receiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_45"
+            android:hint="收件人"
+            android:singleLine="true"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textColorHint="@color/colorLineGray_e6"
+            android:textSize="@dimen/fs_16sp"/>
+
+    </RelativeLayout>
+
+    <TextView style="@style/line_splite_gray"/>
+
+    <!--phone-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
+        android:background="@drawable/bg_sel_item_gray"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="手机号"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/ds_45"
+            android:hint="手机号"
+            android:singleLine="true"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textColorHint="@color/colorLineGray_e6"
+            android:textSize="@dimen/fs_16sp"/>
+
+    </RelativeLayout>
+
+    <TextView style="@style/line_splite_gray"/>
+
+    <!--address-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_sel_item_gray"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
+
+        <TextView
+            android:id="@+id/tv_address_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="@dimen/ds_45"
+            android:text="详细地址"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp"/>
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/ds_45"
+            android:layout_marginLeft="@dimen/ds_45"
+            android:layout_marginTop="@dimen/ds_45"
+            android:layout_toRightOf="@+id/tv_address_title"
+            android:gravity="right"
+            android:hint="地址"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textColorHint="@color/colorLineGray_e6"
+            android:textSize="@dimen/fs_16sp"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
+        android:layout_marginTop="@dimen/ds_30"
+        android:background="@color/colorWhite"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="寄件人信息"
             android:textColor="@color/colorTvRed_f33"
             android:textSize="@dimen/fs_16sp"/>
     </RelativeLayout>

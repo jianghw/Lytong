@@ -4,32 +4,37 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.zantong.mobilecttx.car.adapter.CarChooseXiAdapter;
+import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
-import com.jcodecraeer.xrecyclerview.BaseAdapter;
-import com.zantong.mobilecttx.base.fragment.BaseListFragment;
+import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
+import com.zantong.mobilecttx.car.activity.CarChooseActivity;
+import com.zantong.mobilecttx.car.adapter.CarChooseXiAdapter;
 import com.zantong.mobilecttx.car.bean.CarLinkageResult;
 import com.zantong.mobilecttx.car.bean.CarXiBean;
 import com.zantong.mobilecttx.car.dto.CarLinkageDTO;
-import com.zantong.mobilecttx.car.activity.AddCarActivity;
-import com.zantong.mobilecttx.car.activity.CarChooseActivity;
 
-public class CarChooseXiFragment extends BaseListFragment<CarXiBean> {
+import cn.qqtheme.framework.util.ContextUtils;
 
-    public static CarChooseXiFragment newInstance(int typeId) {
-        CarChooseXiFragment f = new CarChooseXiFragment();
-        Bundle args = new Bundle();
-        args.putInt("id", typeId);
-        f.setArguments(args);
-        return f;
-    }
+public class CarChooseXiFragment extends BaseRecyclerListJxFragment<CarXiBean> {
 
     private int id;
 
+    public static CarChooseXiFragment newInstance(int typeId) {
+        CarChooseXiFragment fragment = new CarChooseXiFragment();
+        Bundle args = new Bundle();
+        args.putInt("id", typeId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
-    public void initData() {
-        super.initData();
+    public BaseAdapter<CarXiBean> createAdapter() {
+        return new CarChooseXiAdapter();
+    }
+
+    @Override
+    protected void initFragmentView(View view) {
         Bundle bundle = getArguments();
         id = bundle.getInt("id", 0);
         carXingList(id);
@@ -40,19 +45,19 @@ public class CarChooseXiFragment extends BaseListFragment<CarXiBean> {
         carLinkageDTO.setModelsId("");
         carLinkageDTO.setSeriesId("");
         carLinkageDTO.setBrandId(String.valueOf(id));
-        CarApiClient.liYingCarLinkage(getActivity(), carLinkageDTO, new CallBack<CarLinkageResult>() {
-            @Override
-            public void onSuccess(CarLinkageResult result) {
-                if(result.getResponseCode() == 2000) {
-                    setDataResult(result.getData().getSeries());
-                }
-            }
-        });
+        CarApiClient.liYingCarLinkage(ContextUtils.getContext(), carLinkageDTO,
+                new CallBack<CarLinkageResult>() {
+                    @Override
+                    public void onSuccess(CarLinkageResult result) {
+                        if (result.getResponseCode() == 2000) {
+                            setDataResult(result.getData().getSeries());
+                        }
+                    }
+                });
     }
 
     @Override
-    protected void onLoadMoreData() {
-
+    protected void onFirstDataVisible() {
     }
 
     @Override
@@ -63,7 +68,7 @@ public class CarChooseXiFragment extends BaseListFragment<CarXiBean> {
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
         CarXiBean carXiBean = (CarXiBean) data;
-        Intent intent = new Intent(getActivity(), AddCarActivity.class);
+        Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable(CarChooseActivity.CAR_LINE_BEAN, carXiBean);
         intent.putExtras(bundle);
@@ -72,7 +77,7 @@ public class CarChooseXiFragment extends BaseListFragment<CarXiBean> {
     }
 
     @Override
-    public BaseAdapter<CarXiBean> createAdapter() {
-        return new CarChooseXiAdapter();
+    protected void DestroyViewAndThing() {
+
     }
 }

@@ -19,6 +19,9 @@ public class OrderListBean {
      * goodsName	string	商品名称
      * icon	string	供应商图标
      * merchantName	string	供应商名称
+     * targetType	string	跳转类型:0-native,1-web
+     * targetUrl	string	web地址
+     * phone
      */
 
     private String orderId;
@@ -31,6 +34,33 @@ public class OrderListBean {
     private String goodsName;
     private String icon;
     private String merchantName;
+    private String targetType;
+    private String targetUrl;
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getTargetType() {
+        return targetType;
+    }
+
+    public void setTargetType(String targetType) {
+        this.targetType = targetType;
+    }
+
+    public String getTargetUrl() {
+        return targetUrl;
+    }
+
+    public void setTargetUrl(String targetUrl) {
+        this.targetUrl = targetUrl;
+    }
 
     public String getGoodsName() {
         return goodsName;

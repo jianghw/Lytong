@@ -39,6 +39,7 @@ import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
 import com.zantong.mobilecttx.order.bean.OrderExpressResult;
 import com.zantong.mobilecttx.order.bean.OrderListResult;
+import com.zantong.mobilecttx.order.bean.ReceiveInfoResult;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
@@ -550,5 +551,12 @@ public class RepositoryManager {
      */
     public Observable<BaseResult> addExpressInfo(ExpressDTO expressDTO) {
         return mRemoteData.addExpressInfo(expressDTO);
+    }
+
+    /**
+     * 33.获取收件人信息
+     */
+    public Observable<ReceiveInfoResult> getReceiveInfo(String orderId) {
+        return mRemoteData.getReceiveInfo(orderId);
     }
 }

@@ -35,6 +35,7 @@ import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
 import com.zantong.mobilecttx.order.bean.OrderExpressResult;
 import com.zantong.mobilecttx.order.bean.OrderListResult;
+import com.zantong.mobilecttx.order.bean.ReceiveInfoResult;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResult;
@@ -325,4 +326,9 @@ public interface IRemoteSource {
      * 29.填写快递信息
      */
     Observable<BaseResult> addExpressInfo(ExpressDTO expressDTO);
+
+    /**
+     * 33.获取收件人信息
+     */
+    Observable<ReceiveInfoResult> getReceiveInfo(String orderId);
 }

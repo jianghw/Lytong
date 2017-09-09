@@ -10,6 +10,7 @@ import com.zantong.mobilecttx.order.bean.ChildrenBean;
 import com.zantong.mobilecttx.order.bean.ChildrenBeanX;
 import com.zantong.mobilecttx.order.bean.OrderExpressBean;
 import com.zantong.mobilecttx.order.bean.OrderExpressResult;
+import com.zantong.mobilecttx.order.bean.ReceiveInfoResult;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
 
 import java.util.List;
@@ -350,5 +351,44 @@ public class OrderExpressPresenter
         expressDTO.setSendCity(address[1]);
         expressDTO.setSendAddress(address[2] + mAtyView.getAddress());
         return expressDTO;
+    }
+
+    /**
+     * 33.获取收件人信息
+     */
+    @Override
+    public void getReceiveInfo() {
+        Subscription subscription = mRepository.getReceiveInfo(mAtyView.getOrderId())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mAtyView.showLoadingDialog();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<ReceiveInfoResult>() {
+                    @Override
+                    public void doCompleted() {
+                        mAtyView.dismissLoadingDialog();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.getReceiveInfoError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(ReceiveInfoResult result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.getReceiveInfoSucceed(result);
+                        } else {
+                            mAtyView.getReceiveInfoError(result != null
+                                    ? result.getResponseDesc() : "未知错误(N33)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 }

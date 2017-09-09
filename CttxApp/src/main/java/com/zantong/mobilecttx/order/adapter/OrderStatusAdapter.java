@@ -75,22 +75,32 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
             holder.mLayPay.setVisibility(orderStatus == 0 ? View.VISIBLE : View.GONE);
 
             int itemType = data.getType();
-            holder.mOrderPayLine.setVisibility(itemType == 6
-                    && (orderStatus == 1 || orderStatus == 3
-                    || orderStatus == 4 || orderStatus == 11 || orderStatus == 12 || orderStatus == 13)
-                    ? View.VISIBLE : View.GONE);
-            holder.mLayPay.setVisibility(itemType == 6 ? View.GONE : View.VISIBLE);
-            holder.mLayAnnual.setVisibility(itemType == 6
-                    && (orderStatus == 1 || orderStatus == 3
-                    || orderStatus == 4 || orderStatus == 11 || orderStatus == 12 || orderStatus == 13)
-                    ? View.VISIBLE : View.GONE);
-
-            holder.mOrderDriving.setVisibility(itemType == 6 && (orderStatus == 11 || orderStatus == 12)
-                    ? View.VISIBLE : View.GONE);
-
-            holder.mOrderCourier.setVisibility(itemType == 6 &&
-                    (orderStatus == 1 || orderStatus == 3 || orderStatus == 4) ? View.VISIBLE : View.GONE);
+// 待支付/自驾办理/呼叫快递
+            holder.mOrderPayLine.setVisibility(
+                    orderStatus == 0 ||
+                            itemType == 6 && (orderStatus == 1 || orderStatus == 3 || orderStatus == 4 || orderStatus == 11 || orderStatus == 12 || orderStatus == 13)
+                            || itemType == 7 && (orderStatus == 14 || orderStatus == 1 || orderStatus == 3 || orderStatus == 4)
+                            ? View.VISIBLE : View.GONE);
+            holder.mLayPay.setVisibility(orderStatus == 0 ? View.VISIBLE : View.GONE);
+            holder.mLayAnnual.setVisibility(
+                    itemType == 6 && (orderStatus == 1 || orderStatus == 3 || orderStatus == 4 || orderStatus == 11 || orderStatus == 12 || orderStatus == 13)
+                            ? View.VISIBLE : View.GONE);
+            holder.mLaySubsribe.setVisibility(
+                    itemType == 7 && (orderStatus == 14 || orderStatus == 1 || orderStatus == 3 || orderStatus == 4)
+                            ? View.VISIBLE : View.GONE);
+//年检模块按钮
+            holder.mOrderDriving.setVisibility(
+                    itemType == 6 && (orderStatus == 11 || orderStatus == 12)
+                            ? View.VISIBLE : View.GONE);
+            holder.mOrderCourier.setVisibility(
+                    itemType == 6 && (orderStatus == 1 || orderStatus == 3 || orderStatus == 4) ? View.VISIBLE : View.GONE);
             holder.mOrderUnCourier.setVisibility(itemType == 6 && orderStatus == 13 ? View.VISIBLE : View.GONE);
+//预约模块按钮
+            holder.mTvSubscribe.setVisibility(
+                    itemType == 7 && (orderStatus == 1 || orderStatus == 3 || orderStatus == 4)
+                            ? View.VISIBLE : View.GONE);
+            holder.mTvSubscribeCancel.setVisibility(
+                    itemType == 7 && orderStatus == 14 ? View.VISIBLE : View.GONE);
 
             if (holder.mLayPay.getVisibility() != View.GONE) {
                 holder.mOrderCanclePay.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +134,23 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
                 });
             }
 
+            if (holder.mTvSubscribe.getVisibility() != View.GONE) {
+                holder.mTvSubscribe.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mClickListener != null) mClickListener.doClickSubscribe(data);
+                    }
+                });
+            }
+            if (holder.mTvSubscribeCancel.getVisibility() != View.GONE) {
+                holder.mTvSubscribeCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mClickListener != null) mClickListener.doClickUnSubscribe(data);
+                    }
+                });
+            }
+
         }
     }
 
@@ -145,6 +172,8 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
             case 10:
             case 11:
             case 12:
+            case 13:
+            case 14:
                 tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvGreen_80));
                 tvPayStatus.setText("已支付");
                 break;
@@ -201,6 +230,13 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
         @Bind(R.id.tv_uncourier)
         TextView mOrderUnCourier;
 
+        @Bind(R.id.lay_subscribe)
+        RelativeLayout mLaySubsribe;
+        @Bind(R.id.tv_subscribe)
+        TextView mTvSubscribe;
+        @Bind(R.id.tv_cancel_subscribe)
+        TextView mTvSubscribeCancel;
+
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -220,6 +256,10 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
         void doClickDriving(OrderListBean bean);
 
         void doClickCourier(OrderListBean bean);
+
+        void doClickSubscribe(OrderListBean bean);
+
+        void doClickUnSubscribe(OrderListBean bean);
     }
 
 }

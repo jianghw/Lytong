@@ -168,7 +168,7 @@ public class OrderDetailActivity extends BaseJxActivity
         mTvSupplier.setText(bean.getMerchantName());
         mTvOrderNum.setText(bean.getOrderId());
         mTvDate.setText(bean.getCreateDate());
-        mTvPayType.setText(bean.getPayType() == 0 ? "牡丹畅通卡" : "其他银行");
+        mTvPayType.setText(bean.getPayType() == 0 ? "牡丹畅通卡" : "其他支付");
 
         mTvContentBottom.setText(bean.getDetail());
     }

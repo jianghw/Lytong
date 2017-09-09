@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.contract;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
+import com.zantong.mobilecttx.order.bean.ReceiveInfoResult;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
 
 import cn.qqtheme.framework.contract.bean.BaseResult;
@@ -35,6 +36,10 @@ public interface IOrderExpressContract {
         String getOrderId();
 
         String getProvince();
+
+        void getReceiveInfoError(String message);
+
+        void getReceiveInfoSucceed(ReceiveInfoResult result);
     }
 
     interface IOrderExpressPresenter extends IMvpPresenter {
@@ -44,6 +49,9 @@ public interface IOrderExpressContract {
         void addExpressInfo();
 
         ExpressDTO initExpressDTO();
+
+        void getReceiveInfo();
+
     }
 
 }
