@@ -458,12 +458,12 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         }
 
         String vehicleCode = VehicleTypeTools.switchVehicleCode(carType);
-        if (plate.length() >= 7 && (vehicleCode.equals("51") || vehicleCode.equals("52"))) {
+        if (plate.length() < 7 && (vehicleCode.equals("51") || vehicleCode.equals("52"))) {
             DialogUtils.createDialog(getActivity(),
                     "温馨提示",
-                    "如果您的汽车为新能源汽车,车牌类型请选择新能源汽车",
+                    "如果您的汽车为新能源汽车,车牌类型请选择相应新能源车型",
                     "取消",
-                    "继续查询",
+                    "修改车牌或车型",
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

@@ -11,7 +11,15 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/ds_225"
-        android:background="@mipmap/splash_bg"/>
+        android:src="@mipmap/splash_bg"/>
+
+    <ImageView
+        android:id="@+id/img_huawei"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/ds_180"
+        android:layout_height="wrap_content"/>
 
     <ImageView
         android:id="@+id/img_advert"
@@ -40,7 +48,6 @@
         android:layout_margin="@dimen/ds_96"
         android:textColor="@color/red_normal"
         android:textSize="@dimen/fs_14sp"
-
         android:visibility="gone"
         android:text="跳过"/>
 

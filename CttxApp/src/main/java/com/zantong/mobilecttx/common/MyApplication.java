@@ -16,6 +16,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tencent.bugly.Bugly;
+import com.tencent.bugly.BuglyStrategy;
+import com.tencent.bugly.beta.Beta;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.BuildConfig;
 
@@ -38,12 +40,13 @@ public class MyApplication extends MultiDexApplication {
      * 第三方工具类
      */
     private void initThirdTools() {
+        String channel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
 //有盟+统计初始化
         MobclickAgent.UMAnalyticsConfig umAnalyticsConfig =
                 new MobclickAgent.UMAnalyticsConfig(
                         getApplicationContext(), BuildConfig.DEBUG
                         ? "592544d7b27b0a65a200069e" : "58b3880304e20581760018e7",
-                        AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL"));
+                        channel);
 
         MobclickAgent.startWithConfigure(umAnalyticsConfig);
         MobclickAgent.setDebugMode(BuildConfig.DEBUG);
@@ -62,9 +65,19 @@ public class MyApplication extends MultiDexApplication {
         //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
         SDKInitializer.setCoordType(CoordType.BD09LL);
 //bugly初始化
+        BuglyStrategy strategy = new BuglyStrategy();
+        //设置渠道
+        strategy.setAppChannel(channel);
+        String version = AppUtils.getAppVersionName()
+                + "." + AppUtils.getAppVersionCode();
+        //App的版本
+        strategy.setAppVersion(version);
+        Beta.autoInit = false;
         Bugly.init(getApplicationContext(),
                 BuildConfig.DEBUG ? "b7b596e1eb"
-                        : "62323a33e6", BuildConfig.DEBUG);
+                        : "62323a33e6", BuildConfig.DEBUG, strategy);
+        //自动检查更新开关
+        Beta.autoCheckUpgrade = false;
 //Log环境初始化
         LogUtils.initLogUtils(BuildConfig.DEBUG);
     }

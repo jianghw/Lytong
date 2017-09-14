@@ -17,6 +17,7 @@ import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.eventbus.DriveLicensePhotoEvent;
+import com.zantong.mobilecttx.eventbus.PayMotoOrderEvent;
 import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
@@ -198,6 +199,12 @@ public class InterfaceForJS {
     @JavascriptInterface
     public void callCamera() {
         EventBus.getDefault().post(new DriveLicensePhotoEvent());
+    }
+
+    //跳转支付页面
+    @JavascriptInterface
+    public void payMOTOrder(String orderId, String amount) {
+        EventBus.getDefault().post(new PayMotoOrderEvent(orderId,amount));
     }
 
 }

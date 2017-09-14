@@ -23,7 +23,6 @@
                 android:text="付款详情" />
 
             <ImageView
-                android:id="@+id/close_sure_pay"
                 android:layout_width="14.1dip"
                 android:layout_height="14.1dip"
                 android:layout_alignParentLeft="true"
@@ -52,7 +51,6 @@
                 android:textColor="@color/colorGrayFontSmmall" />
 
             <TextView
-                android:id="@+id/order_number_text"
                 style="@style/TextInfoRightStyle"
                 android:text="10000000078965" />
         </RelativeLayout>
@@ -107,7 +105,6 @@
                     android:src="@mipmap/arrow_province_car" />
 
                 <TextView
-                    android:id="@+id/pay_type_choose"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -139,7 +136,6 @@
 
 
             <TextView
-                android:id="@+id/pay_money_text"
                 style="@style/TextInfoRightStyle"
                 android:textColor="@color/colorOpenBindCarFont" />
 
@@ -163,7 +159,6 @@
                 android:textColor="@color/colorOpenBindCarFont" />
 
             <ImageView
-                android:id="@+id/pay_doubt_img"
                 android:layout_width="@dimen/ds_150"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/pay_late_fee_money_text_s"
@@ -171,7 +166,6 @@
                 android:src="@drawable/illegal_query_notice_selector" />
 
             <TextView
-                android:id="@+id/pay_late_fee_money_text"
                 style="@style/TextInfoRightStyle"
                 android:text="0.00元"
                 android:textColor="@color/colorOpenBindCarFont" />
@@ -195,7 +189,6 @@
 
 
             <TextView
-                android:id="@+id/pay_all_money_text"
                 style="@style/TextInfoRightStyle"
                 android:textColor="@color/colorOpenBindCarFont" />
 

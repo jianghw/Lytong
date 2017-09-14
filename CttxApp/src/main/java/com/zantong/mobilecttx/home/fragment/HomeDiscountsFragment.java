@@ -151,6 +151,8 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
                 Act.getInstance().gotoIntentLogin(getActivity(), RechargeActivity.class);
             } else if (path.equals("native_app_loan")) {
 
+            } else if (path.equals("native_app_toast")) {
+                ToastUtils.toastShort("此功能开发中,敬请期待~");
             } else if (path.equals("native_app_daijia")) {//代驾
                 JxConfig.getInstance().eventIdByUMeng(25);
                 enterDrivingActivity();

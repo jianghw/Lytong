@@ -12,16 +12,12 @@ import android.widget.ImageView;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.contract.ModelView;
-import com.zantong.mobilecttx.presenter.CodeQueryPresenter;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
@@ -32,7 +28,7 @@ import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_COD
 /**
  * 输入编码查询违章页面
  */
-public class Codequery extends BaseJxActivity implements ModelView {
+public class Codequery extends BaseJxActivity {
 
     @Bind(R.id.citation_notice_image)
     ImageView citationNoticeImage;
@@ -43,15 +39,9 @@ public class Codequery extends BaseJxActivity implements ModelView {
     @Bind(R.id.img_camera)
     ImageView imgCamera;
 
-    private CodeQueryPresenter mCodeQueryPresenter;
-    private String mType;
-
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
         Intent intent = getIntent();
-        if (intent != null) {
-            mType = intent.getStringExtra(JxGlobal.putExtra.common_extra);
-        }
     }
 
     @Override
@@ -66,18 +56,14 @@ public class Codequery extends BaseJxActivity implements ModelView {
     @Override
     protected void initFragmentView(View view) {
         initTitleContent("扫描单查询");
-
-        mCodeQueryPresenter = new CodeQueryPresenter(this);
     }
 
     @Override
     protected void initViewStatus() {
-        if (!TextUtils.isEmpty(mType)) pay_code_number.setText(mType);
     }
 
     @Override
     protected void DestroyViewAndThing() {
-        hideProgress();
     }
 
     @OnClick({R.id.citation_notice_image, R.id.next_btn, R.id.img_camera})
@@ -90,7 +76,7 @@ public class Codequery extends BaseJxActivity implements ModelView {
                 if (TextUtils.isEmpty(getEditNumber())) {
                     ToastUtils.toastShort("请输入正确罚单编号");
                 } else {
-                    mCodeQueryPresenter.loadView(1);
+                    Act.getInstance().gotoIntent(this, ViolationDetails.class, getEditNumber());
                 }
                 break;
             case R.id.img_camera:
@@ -103,28 +89,6 @@ public class Codequery extends BaseJxActivity implements ModelView {
 
     public String getEditNumber() {
         return pay_code_number.getText().toString().trim();
-    }
-
-    @Override
-    public void showProgress() {
-        showDialogLoading();
-    }
-
-    /**
-     * 查询成功
-     */
-    @Override
-    public void updateView(Object object, int index) {
-        PublicData.getInstance().mHashMap.put("ViolationDetailsStr", getEditNumber());
-
-        Act.getInstance().lauchIntent(this, ViolationDetails.class);
-
-        if (!TextUtils.isEmpty(mType)) finish();
-    }
-
-    @Override
-    public void hideProgress() {
-        hideDialogLoading();
     }
 
     /**

@@ -7,7 +7,7 @@ android {
         applicationId "com.zantong.mobilecttx"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 40
+        versionCode 43
         versionName "3.2.0"
         //禁止gradle检查png的合法性
         aaptOptions.useNewCruncher = false
@@ -114,6 +114,13 @@ android {
         CM {}
         //官方
         official {}
+        //华为
+        huawei {}
+        //地推
+        DT_FIRM {
+            versionCode 43
+            versionName "3.2.d"
+        }
 
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]

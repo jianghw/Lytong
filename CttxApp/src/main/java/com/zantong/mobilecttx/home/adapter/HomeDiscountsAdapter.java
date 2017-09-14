@@ -42,7 +42,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
     private static final int ITEM_TYPE_TWO_PIC = 3;
     private static final int ITEM_TYPE_THREE_PIC = 4;
     private Context mAdapterContext;
-    private INativeItemListener mNativieItemListener;
+    private INativeItemListener mINativeItemListener;
 
     /**
      * 自定义类型布局
@@ -152,8 +152,8 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
                 public void onItemClick(View view, Object data) {
                     if (data instanceof ChildrenBean) {
                         ChildrenBean childrenBean = (ChildrenBean) data;
-                        if (mNativieItemListener != null)
-                            mNativieItemListener.onItemClick(childrenBean);
+                        if (mINativeItemListener != null)
+                            mINativeItemListener.onItemClick(childrenBean);
                     }
                 }
             });
@@ -199,7 +199,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         int width = (ScreenUtils.widthPixels(mAdapterContext) -
                 (row == 2 ? ConvertUtils.toPx(7.33f) * 2 : ConvertUtils.toPx(10f) * 2)) / row;
 
-        return (row == 2 ? width / 2 : (int) (width * 1.1)) * lineNumber
+        return (row == 2 ? width / 2 : (int) (width * 1.2)) * lineNumber
                 + (row == 2 ? ConvertUtils.toPx(7.33f) * 2 : ConvertUtils.toPx(10f) * 2);
     }
 
@@ -219,7 +219,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
                 ? childrenBeanList.size() >= 4 ? 2 : lineNumber
                 : childrenBeanList.size() >= 6 ? 2 : lineNumber;
 
-        return (row == 2 ? width / 2 : (int) (width * 1.1)) * lineNumber
+        return (row == 2 ? width / 2 : (int) (width * 1.2)) * lineNumber
                 + (row == 2 ? ConvertUtils.toPx(7.33f) * 2 : ConvertUtils.toPx(10f) * 2);
     }
 
@@ -288,7 +288,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
             shareViewHolder.mImageShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mNativieItemListener != null) mNativieItemListener.onItemClick(finalBean);
+                    if (mINativeItemListener != null) mINativeItemListener.onItemClick(finalBean);
                 }
             });
         }
@@ -305,7 +305,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         nativeViewHolder.mLayLocality1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mNativieItemListener != null) mNativieItemListener.onItemClick(bean_0);
+                if (mINativeItemListener != null) mINativeItemListener.onItemClick(bean_0);
             }
         });
         nativeViewHolder.mTvOil.setText(bean_0.getTitle());
@@ -317,7 +317,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         nativeViewHolder.mLayLocality2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mNativieItemListener != null) mNativieItemListener.onItemClick(bean_1);
+                if (mINativeItemListener != null) mINativeItemListener.onItemClick(bean_1);
             }
         });
         nativeViewHolder.mTvInsurance.setText(bean_1.getTitle());
@@ -329,7 +329,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         nativeViewHolder.mLayNative1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mNativieItemListener != null) mNativieItemListener.onItemClick(bean_2);
+                if (mINativeItemListener != null) mINativeItemListener.onItemClick(bean_2);
             }
         });
         nativeViewHolder.mTvNative1.setText(bean_2.getTitle());
@@ -340,7 +340,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         nativeViewHolder.mLayNative2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mNativieItemListener != null) mNativieItemListener.onItemClick(bean_3);
+                if (mINativeItemListener != null) mINativeItemListener.onItemClick(bean_3);
             }
         });
         nativeViewHolder.mTvNative2.setText(bean_3.getTitle());
@@ -351,7 +351,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         nativeViewHolder.mLayNative3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mNativieItemListener != null) mNativieItemListener.onItemClick(bean_4);
+                if (mINativeItemListener != null) mINativeItemListener.onItemClick(bean_4);
             }
         });
         nativeViewHolder.mTvNative3.setText(bean_4.getTitle());
@@ -362,7 +362,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         nativeViewHolder.mLayNative4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mNativieItemListener != null) mNativieItemListener.onItemClick(bean_5);
+                if (mINativeItemListener != null) mINativeItemListener.onItemClick(bean_5);
             }
         });
         nativeViewHolder.mTvNative4.setText(bean_5.getTitle());
@@ -373,7 +373,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
      * 监听事件
      */
     public void setNativeItemListener(INativeItemListener itemListener) {
-        mNativieItemListener = itemListener;
+        mINativeItemListener = itemListener;
     }
 
     /**

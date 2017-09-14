@@ -8,6 +8,7 @@ import com.zantong.mobilecttx.contract.browser.IHtmlBrowserContract;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 
 import java.io.File;
 
@@ -105,6 +106,45 @@ public class HtmlBrowserPresenter
     @Override
     public File getImageFile() {
         return OcrCameraActivity.file;
+    }
+
+    /**
+     * N 5.获取工行支付页面
+     */
+    @Override
+    public void getBankPayHtml(final String orderId, String orderPrice) {
+        Subscription subscription = mRepository.getBankPayHtml(orderId, orderPrice)
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mAtyView.showLoadingDialog();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<PayOrderResult>() {
+                    @Override
+                    public void doCompleted() {
+                        mAtyView.dismissLoadingDialog();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.getBankPayHtmlError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(PayOrderResult result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.getBankPayHtmlSucceed(result, orderId);
+                        } else {
+                            mAtyView.getBankPayHtmlError(result != null
+                                    ? result.getResponseDesc() : "未知错误(N5)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 
 }

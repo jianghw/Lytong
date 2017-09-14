@@ -48,6 +48,7 @@ public class SplashActivity extends AppCompatActivity
     private ImageView mImgAdvert;
     private TextView mTvCount;
     private TextView mTvSkip;
+    private ImageView mImgHuawei;
     /**
      * 引导页图片地址
      */
@@ -72,6 +73,12 @@ public class SplashActivity extends AppCompatActivity
         mTvCount = (TextView) findViewById(R.id.tv_count);
         mTvSkip = (TextView) findViewById(R.id.tv_skip);
         if (mTvSkip != null) mTvSkip.setOnClickListener(this);
+
+        mImgHuawei = (ImageView) findViewById(R.id.img_huawei);
+        String umengChannel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
+        if (umengChannel.equals("huawei")) {
+            mImgHuawei.setImageResource(R.mipmap.ic_huawei);
+        }
     }
 
     private void initPresenter() {

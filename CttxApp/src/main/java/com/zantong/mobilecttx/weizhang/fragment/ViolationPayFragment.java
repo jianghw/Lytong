@@ -106,7 +106,7 @@ public class ViolationPayFragment extends BaseJxFragment {
                 mPayTypeText.setText("使用畅通卡缴费");
             } else {
                 remark = "4|";
-                mPayTypeText.setText("使用其他工行银行卡缴费");
+                mPayTypeText.setText("使用其他银行卡缴费");
             }
         }
     }
@@ -125,7 +125,11 @@ public class ViolationPayFragment extends BaseJxFragment {
                 FragmentUtils.replaceFragment(fragmentManager, payTypeFragment, R.id.lay_base_frame, true);
                 break;
             case R.id.fragment_violation_commit://提交
-                createOrder();
+                if (PublicData.getInstance().mHashMap.isEmpty()) {
+                    getParentActivity().showLoadingDialog();
+                    searchViolation();
+                } else
+                    createOrder();
                 break;
             case R.id.fragment_violation_close:
                 FragmentActivity activity = getActivity();
@@ -217,6 +221,8 @@ public class ViolationPayFragment extends BaseJxFragment {
 
         PublicData.getInstance().mHashMap.put("PayWebActivity", payUrl);
         Act.getInstance().lauchIntent(getActivity(), PayWebActivity.class);
+
+        getActivity().finish();
     }
 
     public ViolationPayActivity getParentActivity() {

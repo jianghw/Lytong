@@ -175,8 +175,8 @@ public class AdvBrowserActivity extends BaseJxActivity {
 
         @Override
         public void onPageFinished(WebView view, String url) {
-//            view.loadUrl("javascript:window.CTTX.getSource('<head>'+" +
-//                    "document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+//            view.loadUrl("javascript:window.CTTX.getSource('<head>'+"
+//                    + "document.getElementsByTagName('html')[0].innerHTML+'</head>');");
 
 //            view.loadUrl("javascript:CTTX.getSource(document.documentElement.outerHTML);");
             super.onPageFinished(view, url);

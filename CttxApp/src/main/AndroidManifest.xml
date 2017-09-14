@@ -611,11 +611,6 @@
             </intent-filter>
         </receiver>
 
-        <!-- bugly配置APP版本号 -->
-        <meta-data
-            android:name="BUGLY_APP_VERSION"
-            android:value="3.2.0.1"/>
-
         <!-- 7.0拍照适配 -->
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -123,8 +123,7 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView,HelpPres
 
     @Override
     public void itemClicked(ViolationItemInfo item) {
-        PublicData.getInstance().mHashMap.put("ViolationDetailsStr",item.getPeccancynum());
-        Act.getInstance().gotoIntent(this,ViolationDetails.class);
+        Act.getInstance().gotoIntent(this,ViolationDetails.class,item.getPeccancynum());
     }
 
     @OnClick({(R.id.activity_violation_history_layout)})

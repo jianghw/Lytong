@@ -142,7 +142,6 @@
                 android:textColor="@color/colorOpenBindCarFont"/>
 
             <ImageView
-                android:id="@+id/pay_doubt_img"
                 android:layout_width="@dimen/ds_150"
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/pay_late_fee_money_text_s"
@@ -150,7 +149,6 @@
                 android:src="@drawable/illegal_query_notice_selector"/>
 
             <TextView
-                android:id="@+id/pay_late_fee_money_text"
                 style="@style/TextInfoRightStyle"
                 android:text="0.00元"
                 android:textColor="@color/colorOpenBindCarFont"/>

@@ -39,7 +39,6 @@ public class PublicData {
     public String imei = "00000000";//手机IMEI
     public String deviceId = "";//阿里云DeviceId
     public boolean loginFlag = false;//登录状态标志
-    public boolean isCheckLogin = false;//是否验证登录状态
     public String userID = "";//用户ID
     public boolean defaultCar = false;//默认车标志
     public String defaultCarNumber = "";//默认车牌号
@@ -54,13 +53,10 @@ public class PublicData {
     public boolean TitleFlag = false;//短信验证码唯一标识
     public boolean updateMsg = false;//设置-更新通知开启状态
     public final String NOTICE_STATE = "notice_state";//积分周期提醒key
-    public boolean DialogCarNotice = false;//查询车辆是否添加的标志
 
     public String bitmap;
     public Class<?> className;
 
-    public int mPayCarNum = 0;
-    public int mNorCarNum = 0;
     public int mCarNum = 0;
 
     public RspInfoBean mLoginInfoBean;//用户Bean对象

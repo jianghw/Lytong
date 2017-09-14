@@ -213,7 +213,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     @Override
                     public void doNext(List<BindCarDTO> result) {
                         if (result != null && !result.isEmpty()) addOrUpdateVehicleLicense(result);
-                        else mAtyView.addVehicleLicenseError("车辆数据为空，请添加车辆");
+                        else mAtyView.addVehicleLicenseError("银行获取车辆数据为空，请添加车辆");
                     }
                 });
         mSubscriptions.add(subscription);

@@ -24,7 +24,9 @@ import com.zantong.mobilecttx.contract.browser.IHtmlBrowserContract;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrBean;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.eventbus.DriveLicensePhotoEvent;
+import com.zantong.mobilecttx.eventbus.PayMotoOrderEvent;
 import com.zantong.mobilecttx.presenter.browser.HtmlBrowserPresenter;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -119,8 +121,7 @@ public class HtmlBrowserActivity extends BaseJxActivity implements IHtmlBrowserC
 
     @Override
     public void uploadDrivingImgError(String message) {
-        ToastUtils.toastShort(message);
-        dismissLoadingDialog();
+        errorToast(message);
     }
 
     /**
@@ -134,6 +135,28 @@ public class HtmlBrowserActivity extends BaseJxActivity implements IHtmlBrowserC
         } else {
             ToastUtils.toastShort("行驶证图片解析失败(55)，请重试");
         }
+    }
+
+    /**
+     * 支付回调
+     */
+    @Override
+    public void getBankPayHtmlError(String message) {
+        errorToast(message);
+    }
+
+    protected void errorToast(String message) {
+        ToastUtils.toastShort(message);
+        dismissLoadingDialog();
+    }
+
+    @Override
+    public void getBankPayHtmlSucceed(PayOrderResult result, String orderId) {
+        Intent intent = new Intent(this, PayBrowserActivity.class);
+        intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付");
+        intent.putExtra(JxGlobal.putExtra.web_url_extra, result.getData());
+        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
+        startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
     }
 
     private class MyWebViewClient extends WebViewClient {
@@ -190,6 +213,14 @@ public class HtmlBrowserActivity extends BaseJxActivity implements IHtmlBrowserC
         takePhoto();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDataSynEvent(PayMotoOrderEvent event) {
+        String orderId = event.getOrderId();
+        float orderPrice = Float.valueOf(event.getAmount());
+        int price = (int) (orderPrice * 100);
+        mPresenter.getBankPayHtml(orderId, String.valueOf(price));
+    }
+
     /**
      * 拍照
      */
@@ -240,6 +271,14 @@ public class HtmlBrowserActivity extends BaseJxActivity implements IHtmlBrowserC
             else if (mPresenter != null)
                 mPresenter.uploadDrivingImg();
         }
+//TODO
+        if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
+                && resultCode == JxGlobal.resultCode.web_order_id_succeed) {
+
+        } else if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
+                && resultCode == JxGlobal.resultCode.web_order_id_error && data != null) {
+        }
     }
+
 
 }

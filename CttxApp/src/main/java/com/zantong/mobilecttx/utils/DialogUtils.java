@@ -163,46 +163,35 @@ public class DialogUtils {
 
     /**
      * 版本更新
-     *
-     * @param context
-     * @param message
-     * @param listener1
      */
-    public static void updateDialog(final Context context, String title, String message, final View.OnClickListener listener1, final View.OnClickListener listener2) {
+    public static void updateDialog(Context context, String title, String msg,
+                                    final View.OnClickListener leftListener,
+                                    final View.OnClickListener rightListener) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
-        View view = ((Activity) context).getLayoutInflater().inflate(
-                R.layout.dialog_update, null);
+        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_update, null);
         TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
         TextView mContent = (TextView) view.findViewById(R.id.dialog_msg);
         Button btn1 = (Button) view.findViewById(R.id.dialog_btn1);
         Button btn2 = (Button) view.findViewById(R.id.dialog_btn2);
         mTitle.setText(title);
-        mContent.setText(message);
-        btn1.setText("暂不升级");
+        mContent.setText(msg);
+
+        btn1.setText("直接下载更新");
         btn1.setTextColor(context.getResources().getColor(R.color.gray_99));
-        btn2.setText("立即更新");
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener1.onClick(v);
-                dialog.dismiss();
-            }
-        });
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener2.onClick(v);
+                if (leftListener != null) leftListener.onClick(v);
                 dialog.dismiss();
             }
         });
 
-        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+        btn2.setText("应用市场更新");
+        btn2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    return true;
-                }
-                return false;
+            public void onClick(View v) {
+                if (rightListener != null) rightListener.onClick(v);
+                dialog.dismiss();
             }
         });
 

@@ -54,8 +54,8 @@ public class CarBeautyActivity extends BaseJxActivity implements View.OnClickLis
     }
 
     public void initView(View view) {
-        mImgAdmissions = (ImageView) view.findViewById(R.id.img_admissions);
-        mImgAdmissions.setOnClickListener(this);
+//        mImgAdmissions = (ImageView) view.findViewById(R.id.img_admissions);
+//        mImgAdmissions.setOnClickListener(this);
         mImgViolation = (ImageView) view.findViewById(R.id.img_violation);
         mImgViolation.setOnClickListener(this);
     }
@@ -63,13 +63,13 @@ public class CarBeautyActivity extends BaseJxActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.img_admissions:
-                mCurPosition = 1;
-                Intent i = new Intent();
-                i.putExtra(JxGlobal.putExtra.browser_title_extra, "车内空调养护");
-                i.putExtra(JxGlobal.putExtra.browser_url_extra, "http://m.hiservice.com.cn/activity/freekongtiaoyanghu?source=gonghangcx");
-                Act.getInstance().gotoLoginByIntent(this, AdvBrowserActivity.class, i);
-                break;
+//            case R.id.img_admissions:
+//                mCurPosition = 1;
+//                Intent i = new Intent();
+//                i.putExtra(JxGlobal.putExtra.browser_title_extra, "车内空调养护");
+//                i.putExtra(JxGlobal.putExtra.browser_url_extra, "http://m.hiservice.com.cn/activity/freekongtiaoyanghu?source=gonghangcx");
+//                Act.getInstance().gotoLoginByIntent(this, AdvBrowserActivity.class, i);
+//                break;
             case R.id.img_violation:
                 mCurPosition = 2;
                 Intent intent = new Intent();

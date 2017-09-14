@@ -154,12 +154,12 @@ public class ViolationListActivity extends BaseJxActivity
 
     protected void doItemClickPay(ViolationBean bean) {
         String violationnum = bean.getViolationnum();
-        int processste = bean.getProcessste();
+        int processste = bean.getProcessste();//处理状态
 
         if (!PublicData.getInstance().loginFlag) {
             Act.getInstance().gotoIntent(this, LoginActivity.class);
         } else if (processste == 2 || processste == 3) {
-            showDialogToCodequery();
+            showDialogToCodequery(bean);
         } else {
             goToPayFragment(bean, violationnum);
         }
@@ -169,7 +169,9 @@ public class ViolationListActivity extends BaseJxActivity
      * 付款fragment
      */
     private void goToPayFragment(ViolationBean bean, String violationnum) {
-        if ("1".equals(violationnum) || "2".equals(violationnum)) {//是否处罚决定书
+        String penaltyNum = violationnum.substring(6, 7);
+
+        if ("1".equals(penaltyNum) || "2".equals(penaltyNum)) {//是否处罚决定书
             showPayFragment(bean);
         } else if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {//未綁卡
             byCardHome();
@@ -227,7 +229,7 @@ public class ViolationListActivity extends BaseJxActivity
     /**
      * 罚单号
      */
-    public void showDialogToCodequery() {
+    public void showDialogToCodequery(final ViolationBean bean) {
         DialogUtils.remindDialog(this, "温馨提示", "请使用处罚决定书编号进行缴纳", "取消", "罚单编号",
                 new View.OnClickListener() {
                     @Override

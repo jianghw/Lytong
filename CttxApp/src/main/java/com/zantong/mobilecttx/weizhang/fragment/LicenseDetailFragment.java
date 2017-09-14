@@ -11,10 +11,10 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobilecttx.home.activity.Codequery;
 import com.zantong.mobilecttx.contract.ILicenseGradeAtyContract;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
+import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 import com.zantong.mobilecttx.weizhang.adapter.LicenseDetailAdapter;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.RspInfoBean;
@@ -127,7 +127,7 @@ public class LicenseDetailFragment extends BaseRefreshJxFragment
         mAdapter.setItemClickListener(new LicenseDetailAdapter.ItemClickListener() {
             @Override
             public void doClickViolation(String num) {//违章查询页面
-                Act.getInstance().gotoIntent(getActivity(), Codequery.class, num);
+                Act.getInstance().gotoIntent(getActivity(), ViolationDetails.class, num);
             }
 
             /**

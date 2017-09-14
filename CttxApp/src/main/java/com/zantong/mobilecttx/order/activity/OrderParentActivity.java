@@ -335,7 +335,6 @@ public class OrderParentActivity extends BaseJxActivity
 
     @Override
     public void getBankPayHtmlSucceed(PayOrderResult result, String orderId) {
-
         Intent intent = new Intent(this, PayBrowserActivity.class);
         intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付");
         intent.putExtra(JxGlobal.putExtra.web_url_extra, result.getData());

@@ -114,7 +114,6 @@ public class ImageOptions {
                 .showImageOnLoading(R.mipmap.default_750_300)
                 .showImageForEmptyUri(R.mipmap.default_750_300)
                 .showImageOnFail(R.mipmap.default_750_300)
-                .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
@@ -125,7 +124,6 @@ public class ImageOptions {
                 .showImageOnLoading(R.mipmap.default_330_160)
                 .showImageForEmptyUri(R.mipmap.default_330_160)
                 .showImageOnFail(R.mipmap.default_330_160)
-                .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
@@ -136,7 +134,6 @@ public class ImageOptions {
                 .showImageOnLoading(R.mipmap.default_220_160)
                 .showImageForEmptyUri(R.mipmap.default_220_160)
                 .showImageOnFail(R.mipmap.default_220_160)
-                .cacheInMemory(true)
                 .cacheOnDisk(true)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
