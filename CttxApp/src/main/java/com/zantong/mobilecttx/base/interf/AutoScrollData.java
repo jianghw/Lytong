@@ -5,12 +5,12 @@ package com.zantong.mobilecttx.base.interf;
  */
 public interface AutoScrollData<T> {
 
-	/**
-	 * 获取内容
-	 * 
-	 * @param data
-	 * @return
-	 */
-	public String getTextInfo(T data);
+    /**
+     * 获取内容
+     *
+     * @param data
+     * @return
+     */
+    public String getTextInfo(T data);
 
 }
