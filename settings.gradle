@@ -1,4 +1,4 @@
-include ':CttxApp'
+include ':CttxApp', ':reslib', ':baselib'
 include ':CordovaLib'
 include ':XRecyclerView'
 include ':Common'

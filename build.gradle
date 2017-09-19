@@ -1,5 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
+apply from: "config.gradle"
 buildscript {
     repositories {
         jcenter()
@@ -15,7 +15,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-//阿里云推送 用
+        //阿里云推送 用
         maven {
             url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
         }

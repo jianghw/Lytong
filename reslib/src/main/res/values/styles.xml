@@ -1,0 +1,29 @@
+<resources>
+
+    <!-- Base text theme. -->
+    <style name="ResTextTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:textSize">@dimen/res_fs_16</item>
+    </style>
+
+    <!--16sp大小字体-->
+    <style name="ResTextTheme.16">
+        <!-- Customize your theme here. -->
+        <item name="android:textSize">@dimen/res_fs_16</item>
+    </style>
+    <!--白色字体-->
+    <style name="ResTextTheme.16.White">
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/res_color_white</item>
+    </style>
+    <!--小标题-->
+    <style name="ResTextTheme.16.Subtitle">
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/res_color_black_4d</item>
+    </style>
+
+    <style name="MenuItemStyle">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
+</resources>

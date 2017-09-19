@@ -1,20 +1,20 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.3'
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     defaultConfig {
         applicationId "com.zantong.mobilecttx"
-        minSdkVersion 14
-        targetSdkVersion 25
-        versionCode 43
-        versionName "3.2.0"
-        //禁止gradle检查png的合法性
-        aaptOptions.useNewCruncher = false
-        //关闭androidstudio的png的合法性检查
-        aaptOptions.cruncherEnabled = false
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
         //dex突破65535的限制
         multiDexEnabled true
+   /*     //禁止gradle检查png的合法性
+        aaptOptions.useNewCruncher = false
+        //关闭androidstudio的png的合法性检查
+        aaptOptions.cruncherEnabled = false*/
     }
 
     sourceSets {
@@ -145,8 +145,8 @@ dependencies {
     compile files('libs/libammsdk.jar')
     compile files('libs/pinyin4j-2.5.0.jar')
     compile files('libs/BaiduLBS_Android.jar')
+
     //动画使用gif
-    compile 'com.android.support:multidex:1.0.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.15'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:0.9.9'

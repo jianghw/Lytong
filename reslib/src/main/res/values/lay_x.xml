@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--适配没有的尺寸 水平方向-->
+    <dimen name="x1">6.39px</dimen>
+    <dimen name="x10">6.39px</dimen>
+    <dimen name="x88">6.39px</dimen>
+    <dimen name="x130">6.39px</dimen>
+</resources>
