@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.map.bean;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 
 /**
  * Created by zhoujie on 2016/9/19.

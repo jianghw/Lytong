@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.home.bean;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 
 import java.util.List;

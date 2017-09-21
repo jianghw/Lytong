@@ -15,12 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tzly.annual.base.util.StatusBarUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.utils.DialogUtils;
 
 import butterknife.ButterKnife;
-import cn.qqtheme.framework.util.ui.StatusBarUtils;
 
 /**
  * activity 基类
@@ -98,7 +98,7 @@ public abstract class BaseJxActivity extends AppCompatActivity {
      * 状态栏颜色
      */
     protected void initStatusBarColor() {
-        StatusBarUtils.setColor(this, iniStatusColor(), 38);
+        StatusBarUtils.setColor(this, iniStatusColor(), StatusBarUtils.DEFAULT_BAR_ALPHA);
     }
 
     /**

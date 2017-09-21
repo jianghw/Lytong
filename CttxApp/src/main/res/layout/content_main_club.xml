@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:showIn="@layout/activity_main_club">
+
+    <!--多余控件，充当statusbar-->
+   <!-- <RelativeLayout
+        android:id="@+id/lay_re"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>-->
+
+    <include layout="@layout/base_custom_base_title"/>
+
+    <com.tzly.annual.base.custom.banner.ConvenientBanner
+        android:id="@+id/custom_banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y300"/>
+
+    <com.tzly.annual.base.custom.trumpet.MainScrollUpAdvertisementView
+        android:id="@+id/custom_trumpet"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y80"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true"/>
+
+    <include
+        layout="@layout/content_main_club_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y20"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y200"
+        android:layout_marginBottom="@dimen/y20"
+        android:layout_marginTop="@dimen/y20"/>
+
+    <include
+        layout="@layout/content_main_club_down"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.order.bean;
 
 import java.util.List;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 
 /**
  * 32.获取地区列表

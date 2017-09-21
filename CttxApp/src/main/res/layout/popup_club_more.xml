@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="@dimen/x220"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_scan"
+        style="@style/ResTextTheme.16.Subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y80"
+        android:background="?attr/selectableItemBackground"
+        android:drawableLeft="@mipmap/icon_scan"
+        android:drawablePadding="@dimen/x20"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/x20"
+        android:paddingRight="@dimen/x20"
+        android:text="扫一扫"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginRight="@dimen/x20"
+        android:background="@color/res_color_gray_e6"/>
+
+    <TextView
+        android:id="@+id/tv_order_receiving"
+        style="@style/ResTextTheme.16.Subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y80"
+        android:background="?attr/selectableItemBackground"
+        android:drawableLeft="@mipmap/icon_jiedan"
+        android:drawablePadding="@dimen/x20"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/x20"
+        android:paddingRight="@dimen/x20"
+        android:text="我的接单"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/x20"
+        android:layout_marginRight="@dimen/x20"
+        android:background="@color/res_color_gray_e6"/>
+
+    <TextView
+        android:id="@+id/tv_order"
+        style="@style/ResTextTheme.16.Subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y80"
+        android:background="?attr/selectableItemBackground"
+        android:drawableLeft="@mipmap/icon_scan"
+        android:drawablePadding="@dimen/x20"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/x20"
+        android:paddingRight="@dimen/x20"
+        android:text="我的订单"/>
+
+</LinearLayout>

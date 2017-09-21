@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.contract;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.order.bean.OrderListBean;

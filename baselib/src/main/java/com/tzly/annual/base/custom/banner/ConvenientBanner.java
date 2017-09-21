@@ -27,7 +27,7 @@ public class ConvenientBanner<T> extends LinearLayout {
     private CBViewHolderCreator holderCreator;
     private List<T> mDatas;
     private int[] page_indicatorId;
-    private ArrayList<ImageView> mPointViews = new ArrayList<ImageView>();
+    private ArrayList<ImageView> mPointViews = new ArrayList<>();
     private CBPageChangeListener pageChangeListener;
     private CBPageAdapter pageAdapter;
     private CBLoopViewPager viewPager;
@@ -206,7 +206,7 @@ public class ConvenientBanner<T> extends LinearLayout {
         try {
             viewPager.setPageTransformer(
                     true,
-                    (PageTransformer) Class.forName("cn.qqtheme.framework.widght.banner.transforms."
+                    (PageTransformer) Class.forName("com.tzly.annual.base.custom.banner.transforms"
                             + transformer.getClassName()).newInstance());
         } catch (InstantiationException e) {
             e.printStackTrace();

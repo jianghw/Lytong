@@ -14,7 +14,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         //避免资源id冲突
-        resourcePrefix "res_"
+//        resourcePrefix "res_"
     }
 
     buildTypes {

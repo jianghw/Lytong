@@ -32,7 +32,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 import cn.qqtheme.framework.util.ToastUtils;
 public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresenter>
         implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {

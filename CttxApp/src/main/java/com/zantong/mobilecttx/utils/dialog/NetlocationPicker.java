@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
+import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.daijia.bean.DistrictModel;
@@ -16,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * container 3 wheelView implement timePicker

@@ -62,7 +62,6 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                 .subscribe(new BaseSubscriber<HomeResult>() {
                     @Override
                     public void doCompleted() {
-
                     }
 
                     @Override
@@ -108,7 +107,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                     @Override
                     public void doNext(UserCarsResult result) {
                         if (result != null && "000000".equals(result.getSYS_HEAD().getReturnCode())) {
-                            mAtyView.getRemoteCarInfoSucceed(result);
+                            mAtyView.remoteCarInfoSucceed(result);
                         } else {
                             mAtyView.remoteCarInfoError(result != null
                                     ? result.getSYS_HEAD().getReturnMessage()
@@ -143,7 +142,6 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                 .subscribe(new BaseSubscriber<HomeCarResult>() {
                     @Override
                     public void doCompleted() {
-
                     }
 
                     @Override

@@ -12,7 +12,7 @@ import com.zantong.mobilecttx.map.dto.AnnualDTO;
 
 import java.util.List;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;

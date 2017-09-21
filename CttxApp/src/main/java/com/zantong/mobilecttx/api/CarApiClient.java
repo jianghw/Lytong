@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.api;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.tzly.annual.base.bean.BaseResult;
 import com.zantong.mobilecttx.base.bean.CouponResult;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.CarLinkageResult;
@@ -60,8 +61,6 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationOrderDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationSearchDTO;
 
 import java.io.File;
-
-import cn.qqtheme.framework.contract.bean.BaseResult;
 
 public class CarApiClient extends BaseApiClient {
 
@@ -190,8 +189,10 @@ public class CarApiClient extends BaseApiClient {
         params.setUserId(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
         params.setFileNum(RSAUtils.strByEncryptionLiYing(params.getFileNum(), true));
         params.setLicenseno(RSAUtils.strByEncryptionLiYing(params.getLicenseno(), true));
-        BaseCallBack<BaseResult> baseCallBack = new BaseCallBack<BaseResult>(
+
+        BaseCallBack<BaseResult> baseCallBack = new BaseCallBack<>(
                 context, callback, BaseResult.class);
+
         post(context, getUrl("cttx/bindingDriving"), params, baseCallBack);
     }
 

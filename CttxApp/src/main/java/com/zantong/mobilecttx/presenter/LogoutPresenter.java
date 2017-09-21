@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.presenter;
 
 import android.content.Context;
 
+import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.BasePresenter;
@@ -9,7 +10,6 @@ import com.zantong.mobilecttx.contract.ILoginView;
 import com.zantong.mobilecttx.user.bean.LoginResult;
 import com.zantong.mobilecttx.user.dto.LoginDTO;
 
-import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * Created by zhengyingbing on 16/6/1.

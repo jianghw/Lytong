@@ -50,7 +50,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/ds_36"
                     android:layout_marginTop="@dimen/bar_marginTop"
-                    android:src="@mipmap/icon_setting"/>
+                    android:src="@mipmap/res_ic_setting"/>
 
                 <ImageView
                     android:id="@+id/img_head"

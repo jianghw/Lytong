@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.tzly.annual.base.bean.BaseResult;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -30,7 +31,6 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;

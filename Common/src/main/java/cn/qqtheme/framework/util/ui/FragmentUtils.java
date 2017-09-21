@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import cn.qqtheme.framework.util.log.LogUtils;
-
 /**
  * Created by jianghw on 2017/6/26.
  * Description:Fragment相关工具类
@@ -514,7 +512,6 @@ public class FragmentUtils {
                                             SharedElement... sharedElements) {
         if (srcFragment == destFragment) return null;
         if (srcFragment != null && srcFragment.isRemoving()) {
-            LogUtils.e(srcFragment.getClass().getName() + " is isRemoving");
             return null;
         }
         String name = destFragment.getClass().getName();

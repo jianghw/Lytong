@@ -48,19 +48,23 @@ public abstract class RefreshBaseActivity extends JxBaseActivity {
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        startRefreshData();
                         mRefreshHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                mRefreshHandler.sendEmptyMessage(200);
+                                mRefreshHandler.sendEmptyMessage(100);
                             }
-                        }, 3000);
+                        }, 100);
                     }
                 });
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View childView = inflater.inflate(initChildView(), mSwipeRefreshLayout, true);
         bindChildView(childView);
+    }
+
+    @Override
+    protected void userRefreshData() {
+        startRefreshData();
     }
 
     private RefreshHandler mRefreshHandler = new RefreshHandler(this);
@@ -79,7 +83,13 @@ public abstract class RefreshBaseActivity extends JxBaseActivity {
                 RefreshBaseActivity activity = (RefreshBaseActivity) weakReference.get();
                 if (activity != null) {
                     switch (msg.what) {
+                        case 100:
+                            activity.startRefreshData();
+                            break;
                         case 200:
+                            activity.delayTime();
+                            break;
+                        case 300:
                             activity.endRefreshData();
                             break;
                         default:
@@ -91,21 +101,34 @@ public abstract class RefreshBaseActivity extends JxBaseActivity {
     }
 
     /**
+     * 延迟刷新结果
+     */
+    protected void delayTime() {
+        mRefreshHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mRefreshHandler.sendEmptyMessage(300);
+            }
+        }, 3000);
+    }
+
+    /**
      * 刷新数据
      */
     protected void startRefreshData() {
         mSwipeRefreshLayout.setRefreshing(true);
+        mRefreshHandler.sendEmptyMessage(200);
+        userRefreshContentData();
     }
 
     protected void endRefreshData() {
         mSwipeRefreshLayout.setRefreshing(false);
-        userRefreshData();
     }
 
     /**
      * 用户刷新动作操作
      */
-    protected abstract void userRefreshData();
+    protected abstract void userRefreshContentData();
 
 
     /**

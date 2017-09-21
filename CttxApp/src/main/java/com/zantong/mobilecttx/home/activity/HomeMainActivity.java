@@ -12,6 +12,8 @@ import android.widget.FrameLayout;
 
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
+import com.tzly.annual.base.bean.BaseResult;
+import com.tzly.annual.base.util.StatusBarUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -30,15 +32,15 @@ import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.util.AppUtils;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
-import cn.qqtheme.framework.util.ui.StatusBarUtils;
 import cn.qqtheme.framework.widght.tablebottom.UiTableBottom;
+
+import static com.tzly.annual.base.util.StatusBarUtils.DEFAULT_BAR_ALPHA;
 
 
 /**
@@ -65,7 +67,7 @@ public class HomeMainActivity extends BaseJxActivity {
 
     @Override
     protected void initStatusBarColor() {
-        StatusBarUtils.setTranslucentForImageViewInFragment(this, 38, null);
+        StatusBarUtils.setTranslucentForImageViewInFragment(this, StatusBarUtils.DEFAULT_BAR_ALPHA, null);
     }
 
     /**

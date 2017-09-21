@@ -20,7 +20,7 @@
             android:layout_width="@dimen/ds_300"
             android:layout_height="@dimen/ds_600"
             android:layout_centerInParent="true"
-            android:src="@mipmap/common_empty_icom"/>
+            android:src="@mipmap/ic_layout_empty"/>
 
         <TextView
             android:id="@+id/tv_empty"

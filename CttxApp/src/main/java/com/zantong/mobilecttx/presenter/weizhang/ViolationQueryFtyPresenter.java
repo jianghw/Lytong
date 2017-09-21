@@ -19,7 +19,7 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import java.io.File;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;

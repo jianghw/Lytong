@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.cordova.hwidget;
 import android.content.Intent;
 import android.view.Window;
 
+import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobilecttx.utils.dialog.NetLocationDialog;
 
 import org.apache.cordova.CallbackContext;
@@ -11,7 +12,6 @@ import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * Created by Administrator on 2016/5/24.

@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.chongzhi.bean;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 
 /**
  * 加油充值返回实体

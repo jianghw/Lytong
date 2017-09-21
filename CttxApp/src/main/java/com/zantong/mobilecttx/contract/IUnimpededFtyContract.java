@@ -32,7 +32,7 @@ public interface IUnimpededFtyContract {
 
         void getTextNoticeInfo(HomeCarResult result);
 
-        void getRemoteCarInfoSucceed(UserCarsResult result);
+        void remoteCarInfoSucceed(UserCarsResult result);
     }
 
     interface IUnimpededFtyPresenter extends IMvpPresenter {

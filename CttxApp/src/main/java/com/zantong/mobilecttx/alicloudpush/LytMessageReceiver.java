@@ -7,9 +7,10 @@ import android.util.Log;
 import com.alibaba.sdk.android.push.MessageReceiver;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.google.gson.Gson;
+import com.tzly.annual.base.bean.HomeNotice;
+import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.home.activity.HomeMainActivity;
-import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.Tools;
@@ -19,8 +20,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * 用于接收推送的通知和消息

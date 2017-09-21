@@ -5,7 +5,7 @@ import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.order.bean.ReceiveInfoResult;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 
 /**
  * 快递会叫页面

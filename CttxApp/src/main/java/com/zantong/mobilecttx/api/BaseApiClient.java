@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.api;
 
 import android.content.Context;
 
+import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
@@ -24,7 +25,6 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.FormBody;

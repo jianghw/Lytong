@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.fahrschule.bean;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 
 /**
  * 4.获取区域商品列表

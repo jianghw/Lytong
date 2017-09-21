@@ -3,6 +3,8 @@ package com.zantong.mobilecttx.model.repository;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.tzly.annual.base.bean.BaseResult;
+import com.tzly.annual.base.bean.response.CattleOrderResponse;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
@@ -58,7 +60,6 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import java.util.List;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
 import okhttp3.MultipartBody;
 import rx.Observable;
@@ -558,5 +559,12 @@ public class RepositoryManager {
      */
     public Observable<ReceiveInfoResult> getReceiveInfo(String orderId) {
         return mRemoteData.getReceiveInfo(orderId);
+    }
+
+    /**
+     * 2 获取订单列表
+     */
+    public Observable<CattleOrderResponse> queryOrderList() {
+        return mRemoteData.queryOrderList();
     }
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jianghw.multi.state.layout.MultiStateLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:state="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lay_state"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    state:animDuration="500"
+    state:animEnable="true"
+    state:layoutEmpty="@layout/base_activity_empty"
+    state:layoutLoading="@layout/base_activity_loading"
+    state:layoutNetError="@layout/base_activity_net_error">
+
+</com.jianghw.multi.state.layout.MultiStateLayout>

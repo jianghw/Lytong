@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.tzly.annual.base.bean.BaseResult;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.browser.BrowserForPayActivity;
@@ -30,7 +31,6 @@ import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 

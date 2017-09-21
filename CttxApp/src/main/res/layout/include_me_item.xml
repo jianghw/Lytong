@@ -14,7 +14,7 @@
 
         <ImageView
             style="@style/mineItemHead"
-            android:src="@mipmap/icon_list"/>
+            android:src="@mipmap/res_ic_list"/>
 
         <TextView
             style="@style/payRecordTime"
@@ -157,7 +157,7 @@
 
         <ImageView
             style="@style/mineItemHead"
-            android:src="@mipmap/icon_server"/>
+            android:src="@mipmap/res_ic_server"/>
 
         <TextView
             style="@style/payRecordTime"
@@ -236,7 +236,7 @@
 
         <ImageView
             style="@style/mineItemHead"
-            android:src="@mipmap/icon_privacy"/>
+            android:src="@mipmap/res_ic_privacy"/>
 
         <TextView
             style="@style/payRecordTime"

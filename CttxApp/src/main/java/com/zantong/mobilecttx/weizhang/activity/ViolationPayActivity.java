@@ -60,7 +60,7 @@ public class ViolationPayActivity extends BaseJxActivity {
     private void initFragment(int position) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         switch (position) {
-            case 0://科目强化选择页面
+            case 0://支付选择页面
                 if (mViolationPayFragment == null) {
                     mViolationPayFragment = ViolationPayFragment.newInstance(violationBean);
                 }

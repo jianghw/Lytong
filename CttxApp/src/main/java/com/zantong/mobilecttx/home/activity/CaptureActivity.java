@@ -42,6 +42,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.utils.StateBarSetting;
 import com.zantong.mobilecttx.utils.TitleSetting;
@@ -555,8 +556,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
     // Put up our own UI for how to handle the decoded contents.
     private void handleDecodeInternally(Result rawResult, ResultHandler resultHandler, Bitmap barcode) {
-
-        String displayContents = resultHandler.getDisplayContents().toString();
+        String displayContents = resultHandler.getDisplayContents().toString().trim();
+        LogUtils.e("==========="+displayContents);
 
         if ("http".equals(displayContents.substring(0, 4))) {
             continuePreview();

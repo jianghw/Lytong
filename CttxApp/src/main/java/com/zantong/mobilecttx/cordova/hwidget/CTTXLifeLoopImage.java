@@ -10,11 +10,11 @@ import android.view.View;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobilecttx.api.APPHttpClient;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.presenter.InsurancePayPresenterImp;
 import com.zantong.mobilecttx.user.bean.CTTXInsurancePayBean;
-import cn.qqtheme.framework.util.image.ImageTools;
 import com.zantong.mobilecttx.utils.Tools;
 
 import org.apache.cordova.CallbackContext;
@@ -30,7 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-import cn.qqtheme.framework.util.log.LogUtils;
+import cn.qqtheme.framework.util.image.ImageTools;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

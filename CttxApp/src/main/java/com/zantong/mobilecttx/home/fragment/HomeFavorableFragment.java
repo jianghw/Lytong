@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tzly.annual.base.custom.banner.CBViewHolderCreator;
+import com.tzly.annual.base.custom.banner.ConvenientBanner;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
@@ -40,8 +42,6 @@ import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
-import cn.qqtheme.framework.widght.banner.CBViewHolderCreator;
-import cn.qqtheme.framework.widght.banner.ConvenientBanner;
 
 /**
  * 优惠页面

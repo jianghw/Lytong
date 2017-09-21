@@ -13,7 +13,7 @@
         android:textColor="@color/colorTvRed_f33"
         android:textSize="@dimen/fs_18sp"/>
 
-    <cn.qqtheme.framework.widght.banner.ConvenientBanner
+    <com.tzly.annual.base.custom.banner.ConvenientBanner
         android:id="@+id/custom_convenientBanner"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_480"/>

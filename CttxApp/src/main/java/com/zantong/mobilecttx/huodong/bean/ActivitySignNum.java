@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.huodong.bean;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 
 /**
  * Created by zhengyingbing on 17/2/23.

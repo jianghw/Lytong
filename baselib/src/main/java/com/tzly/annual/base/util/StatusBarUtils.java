@@ -11,7 +11,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
@@ -23,6 +22,7 @@ import com.tzly.annual.base.R;
 
 public class StatusBarUtils {
 
+    public static final int DEFAULT_BAR_ALPHA = 40;
     public static final int DEFAULT_STATUS_BAR_ALPHA = 112;
     private static final int FAKE_STATUS_BAR_VIEW_ID = R.id.statusbarutil_fake_status_bar_view;
     private static final int FAKE_TRANSLUCENT_VIEW_ID = R.id.statusbarutil_translucent_view;
@@ -47,21 +47,13 @@ public class StatusBarUtils {
      */
 
     public static void setColor(Activity activity, @ColorInt int color, @IntRange(from = 0, to = 255) int statusBarAlpha) {
-        if (activity == null) return;
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = activity.getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            //5.0及以上，不设置透明状态栏，设置会有半透明阴影
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            //设置statusBar的背景色
-            window.setStatusBarColor(calculateStatusColor(color, statusBarAlpha));
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            activity.getWindow().setStatusBarColor(calculateStatusColor(color, statusBarAlpha));
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = activity.getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            //添加 statusView 到布局中
-            ViewGroup decorView = (ViewGroup) window.getDecorView();
-            // 生成一个状态栏大小的矩形
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
             View fakeStatusBarView = decorView.findViewById(FAKE_STATUS_BAR_VIEW_ID);
             if (fakeStatusBarView != null) {
                 if (fakeStatusBarView.getVisibility() == View.GONE) {
@@ -74,7 +66,6 @@ public class StatusBarUtils {
             setRootView(activity);
         }
     }
-
 
     /**
      * 为滑动返回界面设置状态栏颜色
@@ -189,7 +180,6 @@ public class StatusBarUtils {
         addTranslucentView(activity, statusBarAlpha);
     }
 
-
     /**
      * 针对根布局是 CoordinatorLayout, 使状态栏半透明
      * <p>
@@ -256,7 +246,6 @@ public class StatusBarUtils {
     public static void setColorNoTranslucentForDrawerLayout(Activity activity, DrawerLayout drawerLayout, @ColorInt int color) {
         setColorForDrawerLayout(activity, drawerLayout, color, 0);
     }
-
 
     /**
      * 为DrawerLayout 布局设置状态栏变色
@@ -450,23 +439,20 @@ public class StatusBarUtils {
      * @param statusBarAlpha 状态栏透明度
      * @param needOffsetView 需要向下偏移的 View
      */
-    public static void setTranslucentForImageView(Activity activity,
-                                                  @IntRange(from = 0, to = 255) int statusBarAlpha,
+    public static void setTranslucentForImageView(Activity activity, @IntRange(from = 0, to = 255) int statusBarAlpha,
                                                   View needOffsetView) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
             return;
         }
         setTransparentForWindow(activity);
         addTranslucentView(activity, statusBarAlpha);
-
         if (needOffsetView != null) {
             Object haveSetOffset = needOffsetView.getTag(TAG_KEY_HAVE_SET_OFFSET);
             if (haveSetOffset != null && (Boolean) haveSetOffset) {
                 return;
             }
             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) needOffsetView.getLayoutParams();
-            layoutParams.setMargins(layoutParams.leftMargin,
-                    layoutParams.topMargin + getStatusBarHeight(activity),
+            layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin + getStatusBarHeight(activity),
                     layoutParams.rightMargin, layoutParams.bottomMargin);
             needOffsetView.setTag(TAG_KEY_HAVE_SET_OFFSET, true);
         }
@@ -499,13 +485,10 @@ public class StatusBarUtils {
      * @param statusBarAlpha 状态栏透明度
      * @param needOffsetView 需要向下偏移的 View
      */
-    public static void setTranslucentForImageViewInFragment(Activity activity,
-                                                            @IntRange(from = 0, to = 255) int statusBarAlpha,
+    public static void setTranslucentForImageViewInFragment(Activity activity, @IntRange(from = 0, to = 255) int statusBarAlpha,
                                                             View needOffsetView) {
         setTranslucentForImageView(activity, statusBarAlpha, needOffsetView);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-                && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             clearPreviousSetting(activity);
         }
     }
@@ -549,9 +532,8 @@ public class StatusBarUtils {
     private static void addTranslucentView(Activity activity, @IntRange(from = 0, to = 255) int statusBarAlpha) {
         ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
         View fakeTranslucentView = contentView.findViewById(FAKE_TRANSLUCENT_VIEW_ID);
-
         if (fakeTranslucentView != null) {
-            if (fakeTranslucentView.getVisibility() != View.VISIBLE) {
+            if (fakeTranslucentView.getVisibility() == View.GONE) {
                 fakeTranslucentView.setVisibility(View.VISIBLE);
             }
             fakeTranslucentView.setBackgroundColor(Color.argb(statusBarAlpha, 0, 0, 0));
@@ -598,7 +580,6 @@ public class StatusBarUtils {
         for (int i = 0, count = parent.getChildCount(); i < count; i++) {
             View childView = parent.getChildAt(i);
             if (childView instanceof ViewGroup) {
-                //如果不是设置参数，会使内容显示到状态栏上
                 childView.setFitsSystemWindows(true);
                 ((ViewGroup) childView).setClipToPadding(true);
             }
@@ -654,8 +635,12 @@ public class StatusBarUtils {
 
     /**
      * 获取状态栏高度
+     *
+     * @param context context
+     * @return 状态栏高度
      */
     public static int getStatusBarHeight(Context context) {
+        // 获得状态栏高度
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         return context.getResources().getDimensionPixelSize(resourceId);
     }

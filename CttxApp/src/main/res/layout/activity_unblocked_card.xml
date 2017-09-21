@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawablePadding="@dimen/ds_30"
-            android:drawableTop="@mipmap/btn_add"
+            android:drawableTop="@mipmap/res_ic_add"
             android:gravity="center_horizontal"
             android:text="申办畅通卡"
             android:textColor="@color/colorTvBlack_4d"

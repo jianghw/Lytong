@@ -23,7 +23,7 @@ import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 
 public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePresenter>
         implements View.OnClickListener, IBaseView, ModelView {

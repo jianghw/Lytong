@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
@@ -39,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import cn.qqtheme.framework.util.log.LogUtils;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;

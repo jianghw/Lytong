@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.cattle.MainClubActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.contract.ISplashAtyContract;
@@ -214,7 +215,7 @@ public class SplashActivity extends AppCompatActivity
 
         if (appCode <= versionCode) {
             MobclickAgent.onEvent(this, Config.getUMengID(0));
-            Act.getInstance().gotoIntent(this, HomeMainActivity.class);
+            Act.getInstance().gotoIntent(this, MainClubActivity.class);
             finish();
         } else {
             Intent intent = new Intent(this, GuideCTActivity.class);

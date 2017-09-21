@@ -5,7 +5,7 @@ import com.zantong.mobilecttx.user.bean.CouponBean;
 
 import java.util.List;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 
 /**
  * Created by zhoujie on 2017/2/16.

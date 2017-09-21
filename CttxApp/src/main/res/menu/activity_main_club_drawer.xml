@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_order"
+            android:icon="@mipmap/res_ic_list"
+            android:title="我的订单"/>
+        <item
+            android:id="@+id/nav_msg"
+            android:icon="@mipmap/res_ic_msg"
+            android:title="我的消息"/>
+    </group>
+
+    <group
+        android:id="@+id/group_setting"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_questions"
+            android:icon="@mipmap/res_ic_question"
+            android:title="常见问题"/>
+        <item
+            android:id="@+id/nav_service"
+            android:icon="@mipmap/res_ic_server"
+            android:title="联系客服"/>
+        <item
+            android:id="@+id/nav_us"
+            android:icon="@mipmap/res_ic_info"
+            android:title="关于我们"/>
+        <item
+            android:id="@+id/nav_advertising"
+            android:icon="@mipmap/res_ic_privacy"
+            android:title="用户协议与隐私说明"/>
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@mipmap/res_ic_setting"
+            android:title="设置"/>
+    </group>
+
+</menu>

@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.presenter.order;
 
 import android.support.annotation.NonNull;
 
+import com.tzly.annual.base.bean.BaseResult;
 import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
@@ -12,7 +13,6 @@ import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 
 import java.util.List;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

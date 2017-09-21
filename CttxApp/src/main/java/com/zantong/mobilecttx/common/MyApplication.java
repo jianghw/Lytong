@@ -18,12 +18,12 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.BuglyStrategy;
 import com.tencent.bugly.beta.Beta;
+import com.tzly.annual.base.util.LogUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.BuildConfig;
 
 import cn.qqtheme.framework.util.AppUtils;
 import cn.qqtheme.framework.util.ContextUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
 
 
 /**

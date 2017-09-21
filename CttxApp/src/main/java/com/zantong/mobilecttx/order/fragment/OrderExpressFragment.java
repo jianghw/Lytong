@@ -19,7 +19,7 @@ import com.zantong.mobilecttx.presenter.order.OrderExpressPresenter;
 
 import java.util.ArrayList;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 import cn.qqtheme.framework.contract.custom.IAreaDialogListener;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.CustomDialog;

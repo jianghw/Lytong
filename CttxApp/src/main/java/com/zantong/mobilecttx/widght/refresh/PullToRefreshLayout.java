@@ -13,10 +13,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.utils.GifHeadView;
 
-import cn.qqtheme.framework.util.log.LogUtils;
 import pl.droidsonroids.gif.GifDrawable;
 
 

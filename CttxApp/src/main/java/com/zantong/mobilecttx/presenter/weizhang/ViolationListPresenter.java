@@ -19,7 +19,7 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.util.List;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

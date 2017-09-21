@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.home.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 
 import java.util.ArrayList;
 import java.util.List;

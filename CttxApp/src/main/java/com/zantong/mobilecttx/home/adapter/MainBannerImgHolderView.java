@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tzly.annual.base.custom.banner.CBPageAdapter;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.browser.AdvBrowserActivity;
@@ -21,12 +22,11 @@ import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.image.ImageOptions;
-import cn.qqtheme.framework.widght.banner.CBPageAdapter;
 
 /**
  * Created by Sai on 15/8/4.

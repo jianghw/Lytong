@@ -11,7 +11,7 @@
         android:layout_height="0dp"
         android:layout_weight="46">
 
-        <cn.qqtheme.framework.widght.banner.ConvenientBanner
+        <com.tzly.annual.base.custom.banner.ConvenientBanner
             android:id="@+id/custom_convenientBanner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
@@ -117,7 +117,7 @@
             android:src="@mipmap/icon_dot_sel"
             android:visibility="gone"/>
 
-        <com.zantong.mobilecttx.widght.MainScrollUpAdvertisementView
+        <com.tzly.annual.base.custom.trumpet.MainScrollUpAdvertisementView
             android:id="@+id/custom_grapevine"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -12,7 +12,7 @@
         android:layout_marginLeft="@dimen/ds_36"
         android:layout_marginRight="@dimen/ds_36"
         android:layout_marginTop="@dimen/bar_marginTop"
-        android:src="@mipmap/icon_msg"/>
+        android:src="@mipmap/res_ic_msg"/>
 
     <TextView
         android:id="@+id/tv_msg_count"

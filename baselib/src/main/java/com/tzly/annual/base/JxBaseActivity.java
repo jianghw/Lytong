@@ -7,15 +7,16 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jianghw.multi.state.layout.MultiState;
+import com.jianghw.multi.state.layout.MultiStateLayout;
+import com.jianghw.multi.state.layout.OnStateViewCreatedListener;
 import com.tzly.annual.base.util.StatusBarUtils;
 
-import java.util.List;
 
 /**
  * Created by jianghw on 2017/9/12.
@@ -33,6 +34,7 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     private ImageView mImgHome;
     private TextView mTvRight;
     private TextView mTvLine;
+    private MultiStateLayout multiStateLayout;
 
     /**
      * 1、当root不为null，attachToRoot为true时，
@@ -53,21 +55,74 @@ public abstract class JxBaseActivity extends AppCompatActivity {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //Title
         if (!isCustomTitle()) {
-            View titleView = inflater.inflate(initTitleView(), null);
-            parentLayout.addView(titleView, new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT));
+            View titleView = inflater.inflate(initTitleView(), parentLayout, true);
             bindTitleView(titleView);
         }
-
-        View contentView = inflater.inflate(initContentView(), null);
-        parentLayout.addView(contentView, new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT));
+        //multi
+        View multiStateView = inflater.inflate(R.layout.base_activity_jx_content, parentLayout, true);
+        multiStateLayout = (MultiStateLayout) multiStateView.findViewById(R.id.lay_state);
+        multiStateLayout.setOnStateViewCreatedListener(new OnStateViewCreatedListener() {
+            @Override
+            public void onViewCreated(View view, int state) {
+                if (state == MultiState.CONTENT) {
+                    enhanceContentView(view, state);
+                } else if (state == MultiState.LOADING) {
+                    enhanceLoadingView(view, state);
+                } else if (state == MultiState.EMPTY) {
+                    enhanceEmptyView(view, state);
+                } else if (state == MultiState.ERROR) {
+                    enhanceErrorView(view, state);
+                } else if (state == MultiState.NET_ERROR) {
+                    enhanceNetErrorView(view, state);
+                }
+            }
+        });
+        //content
+        View contentView = inflater.inflate(initContentView(), multiStateLayout, true);
         bindContentView(contentView);
+        //注入控件布局
+        multiStateLayout.customChildAt();
+        multiStateLayout.setState(initMultiState());
 
-        showViewByState(initViewState());
+        initContentData();
+        userRefreshData();
     }
+
+    /**
+     * 页面布局 增强控制
+     */
+    private void enhanceEmptyView(View view, int state) {
+        View tvEmpty = view.findViewById(R.id.tv_empty);
+        tvEmpty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userRefreshData();
+            }
+        });
+    }
+
+    /**
+     * 用户手动刷新数据
+     */
+    protected abstract void userRefreshData();
+
+    private void enhanceErrorView(View view, int state) {
+    }
+
+    private void enhanceNetErrorView(View view, int state) {
+    }
+
+    private void enhanceLoadingView(View view, int state) {
+    }
+
+    private void enhanceContentView(View view, int state) {
+    }
+
+    protected void showContentView() {
+        if (multiStateLayout != null) multiStateLayout.setState(MultiState.CONTENT);
+    }
+
+    protected abstract void initContentData();
 
     @Override
     protected void onRestart() {
@@ -107,6 +162,7 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
 
+        if (isStatusBar()) initStatusBarColor();
     }
 
     @Override
@@ -127,7 +183,7 @@ public abstract class JxBaseActivity extends AppCompatActivity {
      * 状态栏颜色
      */
     protected void initStatusBarColor() {
-        StatusBarUtils.setColor(this, iniStatusColor(), 38);
+        StatusBarUtils.setColor(this, iniStatusColor(), StatusBarUtils.DEFAULT_BAR_ALPHA);
     }
 
     /**
@@ -175,7 +231,6 @@ public abstract class JxBaseActivity extends AppCompatActivity {
                 imageClickListener();
             }
         });
-
         mTvRight = (TextView) view.findViewById(R.id.tv_right);
         mTvRight.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,6 +274,14 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     }
 
     /**
+     * 默认第一次显示状态
+     */
+    @MultiState
+    protected int initMultiState() {
+        return MultiState.LOADING;
+    }
+
+    /**
      * 显示内容
      */
     protected int initContentView() {
@@ -229,61 +292,6 @@ public abstract class JxBaseActivity extends AppCompatActivity {
      * 绑定子控件
      */
     protected void bindContentView(View childView) {
-
-    }
-
-    /**
-     * @param defaultView 默认布局
-     * @param replaceView 替代布局
-     */
-    protected void transView(final View defaultView, View replaceView) {
-        final int index = ((ViewGroup) defaultView.getParent()).indexOfChild(defaultView);
-        ViewGroup.LayoutParams params = defaultView.getLayoutParams();
-        ViewGroup parent = (ViewGroup) defaultView.getParent();
-        parent.removeView(defaultView);
-        parent.addView(replaceView, index, params);
-    }
-
-    private void errorView(List<View> viewList, View errorView) {
-        for (View view : viewList) {
-            if (view == null) {
-                continue;
-            }
-            transView(view, errorView);
-            break;
-        }
-    }
-
-    private void succeedView(List<View> viewList, View noNetView) {
-        for (View view : viewList) {
-            if (view == null) {
-                continue;
-            }
-            transView(noNetView, view);
-            break;
-        }
-    }
-
-    /**
-     * 默认为 LOADING 状态
-     */
-    protected BaseViewState initViewState() {
-        return BaseViewState.LOADING;
-    }
-
-    protected void showViewByState(BaseViewState currentState) {
-        switch (currentState) {
-            case LOADING:
-                break;
-            case SUCCEED:
-                break;
-            case ERROR:
-                break;
-            case EMPTY:
-                break;
-            default:
-                break;
-        }
     }
 
     @Override

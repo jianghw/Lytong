@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ds_45"
+        android:layout_marginRight="@dimen/ds_45"
+        android:layout_marginTop="@dimen/ds_45"
+        android:background="@drawable/shape_bg_popu_white"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_120">
+
+            <TextView
+                android:id="@+id/tv_order_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="@string/tv_order_num"
+                android:textColor="@color/colorTvBlack_4c"
+                android:textSize="@dimen/fs_16sp"/>
+
+            <TextView
+                android:id="@+id/tv_order_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="@string/tv_order_num"
+                android:textColor="@color/colorTvBlack_4c"
+                android:textSize="@dimen/fs_14sp"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_1"
+            android:background="@color/colorGray"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_210">
+
+            <ImageView
+                android:id="@+id/img_brand"
+                android:layout_width="@dimen/ds_120"
+                android:layout_height="@dimen/ds_120"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/app_icon"/>
+
+            <TextView
+                android:id="@+id/tv_brand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/img_brand"
+                android:layout_marginLeft="@dimen/ds_35"
+                android:layout_toLeftOf="@+id/tv_price"
+                android:layout_toRightOf="@+id/img_brand"
+                android:singleLine="true"
+                android:textColor="@color/colorTvBlack_4c"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="中石油加油聚会i地fdfdf"/>
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/img_brand"
+                android:layout_below="@+id/tv_brand"
+                android:layout_marginLeft="@dimen/ds_35"
+                android:layout_toRightOf="@+id/img_brand"
+                android:singleLine="true"
+                android:textColor="@color/colorTvBlack_b2"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="2017-02-21 09:12"/>
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:singleLine="true"
+                android:textColor="@color/colorTvRed_f33"
+                android:textSize="@dimen/fs_16sp"
+                tools:text="2017-02-21 09:12"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_pay_line"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_1"
+            android:background="@color/colorGray"/>
+
+        <RelativeLayout
+            android:id="@+id/lay_pay"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ds_150">
+
+            <TextView
+                android:id="@+id/tv_pay"
+                android:layout_width="@dimen/ds_240"
+                android:layout_height="@dimen/ds_90"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/shape_tv_favorable_red"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="支付"
+                android:textColor="@color/colorTvRed_f33"
+                android:textSize="@dimen/fs_14sp"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

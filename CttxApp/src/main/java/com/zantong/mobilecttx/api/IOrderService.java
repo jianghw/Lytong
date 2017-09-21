@@ -1,11 +1,13 @@
 package com.zantong.mobilecttx.api;
 
+import com.tzly.annual.base.bean.response.CattleOrderResponse;
 import com.zantong.mobilecttx.order.bean.OrderDetailResult;
 import com.zantong.mobilecttx.order.bean.OrderListResult;
 import com.zantong.mobilecttx.order.bean.ReceiveInfoResult;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
+
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -60,4 +62,10 @@ public interface IOrderService {
      */
     @GET("order/getReceiveInfo")
     Observable<ReceiveInfoResult> getReceiveInfo(@Query("orderId") String orderId);
+
+    /**
+     * 2.获取订单列表
+     */
+    @GET("order/queryOrderList")
+    Observable<CattleOrderResponse> queryOrderList();
 }

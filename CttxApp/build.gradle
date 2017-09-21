@@ -5,16 +5,17 @@ android {
 
     defaultConfig {
         applicationId "com.zantong.mobilecttx"
+
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         //dex突破65535的限制
         multiDexEnabled true
-   /*     //禁止gradle检查png的合法性
-        aaptOptions.useNewCruncher = false
-        //关闭androidstudio的png的合法性检查
-        aaptOptions.cruncherEnabled = false*/
+        /*     //禁止gradle检查png的合法性
+             aaptOptions.useNewCruncher = false
+             //关闭androidstudio的png的合法性检查
+             aaptOptions.cruncherEnabled = false*/
     }
 
     sourceSets {
@@ -25,11 +26,6 @@ android {
         // Move the tests to tests/java, tests/res, etc...
         instrumentTest.setRoot('tests')
         // Move the build types to build-types/<type>
-        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
-        // This moves them out of them default location under src/<type>/... which would
-        // conflict with src/ being used by the main source set.
-        // Adding new build types or product flavors should be accompanied
-        // by a similar customization.
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
@@ -74,8 +70,17 @@ android {
             //领卡网点文件（正式地址）
             buildConfigField "String", "ImageLoadUrl", "\"https://ctkapp.icbc-axa.com/\""
 
-            //图片下载地址（正式地址）
             signingConfig signingConfigs.debug
+            //apk的后缀
+            applicationIdSuffix ".debug"
+            //混淆
+            minifyEnabled false
+            //Zipalign优化
+            zipAlignEnabled false
+            // 移除无用的resource文件
+            shrinkResources false
+            //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         release {
@@ -95,7 +100,7 @@ android {
             //混淆
             minifyEnabled false
             //Zipalign优化
-            zipAlignEnabled true
+            zipAlignEnabled false
             // 移除无用的resource文件
             shrinkResources false
             //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明
@@ -106,21 +111,18 @@ android {
     }
 
     productFlavors {
-        //应用宝
-        YYB {}
-        //360应用市场
-        ZS_360 {}
-        //崇明区
-        CM {}
-        //官方
-        official {}
-        //华为
-        huawei {}
-        //地推
-        DT_FIRM {
-            versionCode 43
-            versionName "3.2.d"
+        //开发者版本
+        dve {
+            minSdkVersion 21
         }
+        //应用宝
+        tzly_yyb {}
+        //360应用市场
+        tzly_360 {}
+        //华为市场
+        tzly_huawei {}
+        //小米市场
+        tzly_xiaomi {}
 
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
@@ -131,6 +133,7 @@ android {
 repositories {
     flatDir {
         dirs 'libs' //this way we can find the .aar file in libs folder
+        dirs project(':baselib').file('libs')//此包中有aar
     }
 }
 
@@ -138,6 +141,8 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':CordovaLib')
     compile project(':Common')
+    compile project(':baselib')
+
     //阿里云推送
     compile(name: 'huawei-xiaomi-support-3.0.0', ext: 'aar')
     compile files('libs/zxing.jar')
@@ -145,7 +150,6 @@ dependencies {
     compile files('libs/libammsdk.jar')
     compile files('libs/pinyin4j-2.5.0.jar')
     compile files('libs/BaiduLBS_Android.jar')
-
     //动画使用gif
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.15'
@@ -154,5 +158,4 @@ dependencies {
     compile 'com.aliyun.ams:alicloud-android-utdid:1.1.5.3'
     compile 'com.aliyun.ams:alicloud-android-ut:5.0.0'
     compile 'com.alibaba:fastjson:1.1.54.android'
-
 }

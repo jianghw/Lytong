@@ -11,6 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
+import com.tzly.annual.base.bean.HomeNotice;
+import com.tzly.annual.base.custom.banner.CBViewHolderCreator;
+import com.tzly.annual.base.custom.banner.ConvenientBanner;
+import com.tzly.annual.base.custom.trumpet.MainScrollUpAdvertisementView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.alicloudpush.PushBean;
 import com.zantong.mobilecttx.api.CallBack;
@@ -32,7 +36,6 @@ import com.zantong.mobilecttx.home.adapter.MainBannerImgHolderView;
 import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.home.bean.HomeBean;
 import com.zantong.mobilecttx.home.bean.HomeCarResult;
-import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.presenter.home.UnimpededFtyPresenter;
@@ -48,7 +51,6 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.LicenseCheckGradeActivity;
 import com.zantong.mobilecttx.weizhang.activity.LicenseDetailActivity;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
-import com.zantong.mobilecttx.widght.MainScrollUpAdvertisementView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -64,8 +66,6 @@ import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
-import cn.qqtheme.framework.widght.banner.CBViewHolderCreator;
-import cn.qqtheme.framework.widght.banner.ConvenientBanner;
 
 import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
 
@@ -374,7 +374,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
      * @deprecated 旧方法遗弃
      */
     @Override
-    public void getRemoteCarInfoSucceed(UserCarsResult result) {
+    public void remoteCarInfoSucceed(UserCarsResult result) {
         if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
         if (result != null && result.getRspInfo() != null) {
             List<UserCarInfoBean> infoBeanList = result.getRspInfo().getUserCarsInfo();
@@ -401,8 +401,8 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
             if (!TextUtils.isEmpty(userCarInfoBean.getIspaycar())
                     && userCarInfoBean.getIspaycar().equals("1"))
-
                 PublicData.getInstance().payData.add(userCarInfoBean);
+
             arrayList.add(userCarInfoBean);
         }
         return arrayList;

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:toools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y360"
+    android:background="@drawable/side_nav_bar"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <com.tzly.annual.base.custom.image.CircleImageView
+        android:id="@+id/img_user"
+        android:layout_width="@dimen/x130"
+        android:layout_height="@dimen/x130"
+        android:layout_marginTop="@dimen/y120"
+        app:civ_border_color="@color/res_color_white"
+        app:civ_border_width="2dp"
+        app:srcCompat="@mipmap/ic_user_portrait"/>
+
+    <TextView
+        android:id="@+id/tv_user"
+        style="@style/ResTextTheme.16.White"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y30"
+        android:text="未登录"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+</LinearLayout>

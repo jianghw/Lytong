@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.chongzhi.bean;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 
 /**
  * 充值订单详情实体

@@ -2,6 +2,8 @@ package com.zantong.mobilecttx.model.repository;
 
 import android.text.TextUtils;
 
+import com.tzly.annual.base.bean.BaseResult;
+import com.tzly.annual.base.bean.response.CattleOrderResponse;
 import com.zantong.mobilecttx.api.IAddOilService;
 import com.zantong.mobilecttx.api.IBankService;
 import com.zantong.mobilecttx.api.IBannerService;
@@ -74,7 +76,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
 import okhttp3.MultipartBody;
 import retrofit2.Retrofit;
@@ -584,5 +585,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<ReceiveInfoResult> getReceiveInfo(String orderId) {
         return initRetrofit().create(IOrderService.class).getReceiveInfo(orderId);
+    }
+
+    /**
+     * 获取订单列表
+     */
+    @Override
+    public Observable<CattleOrderResponse> queryOrderList() {
+        return initRetrofit().create(IOrderService.class).queryOrderList();
     }
 }

@@ -34,7 +34,7 @@ import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;

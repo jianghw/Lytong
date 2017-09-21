@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import com.tzly.annual.base.util.StatusBarUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.common.Injection;
@@ -19,7 +20,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import cn.qqtheme.framework.util.ui.FragmentUtils;
-import cn.qqtheme.framework.util.ui.StatusBarUtils;
 
 import static com.zantong.mobilecttx.weizhang.activity.LicenseCheckGradeActivity.KEY_BUNDLE;
 

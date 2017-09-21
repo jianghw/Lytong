@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCar;
@@ -29,7 +30,6 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.util.log.LogUtils;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

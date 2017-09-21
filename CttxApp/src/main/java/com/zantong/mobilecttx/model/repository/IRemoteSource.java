@@ -1,5 +1,7 @@
 package com.zantong.mobilecttx.model.repository;
 
+import com.tzly.annual.base.bean.BaseResult;
+import com.tzly.annual.base.bean.response.CattleOrderResponse;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -52,7 +54,6 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import java.util.List;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
 import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
 import okhttp3.MultipartBody;
 import rx.Observable;
@@ -331,4 +332,9 @@ public interface IRemoteSource {
      * 33.获取收件人信息
      */
     Observable<ReceiveInfoResult> getReceiveInfo(String orderId);
+
+    /**
+     * 2.获取订单列表
+     */
+    Observable<CattleOrderResponse> queryOrderList();
 }

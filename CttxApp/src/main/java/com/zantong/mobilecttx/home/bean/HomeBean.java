@@ -1,5 +1,7 @@
 package com.zantong.mobilecttx.home.bean;
 
+import com.tzly.annual.base.bean.HomeNotice;
+
 import java.util.List;
 
 /**

@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.home.bean;
 
 import java.util.List;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 
 /**
  * 25.模块化接口

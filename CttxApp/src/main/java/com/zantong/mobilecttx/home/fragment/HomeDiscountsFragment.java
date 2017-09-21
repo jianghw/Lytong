@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.annual.base.custom.banner.CBViewHolderCreator;
+import com.tzly.annual.base.custom.banner.ConvenientBanner;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
@@ -46,8 +48,6 @@ import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
-import cn.qqtheme.framework.widght.banner.CBViewHolderCreator;
-import cn.qqtheme.framework.widght.banner.ConvenientBanner;
 
 
 /**

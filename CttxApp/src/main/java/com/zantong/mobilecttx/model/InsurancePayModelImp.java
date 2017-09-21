@@ -2,12 +2,12 @@ package com.zantong.mobilecttx.model;
 
 import android.util.Log;
 
+import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobilecttx.api.APPHttpClient;
 import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
 import com.zantong.mobilecttx.model.modelinterface.SimpleModel;
 import com.zantong.mobilecttx.user.bean.CTTXInsurancePayBean;
 
-import cn.qqtheme.framework.util.log.LogUtils;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

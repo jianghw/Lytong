@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.daijia.bean;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 
 /**
  * Created by zhoujie on 2017/2/21.

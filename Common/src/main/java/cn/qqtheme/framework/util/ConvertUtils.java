@@ -42,7 +42,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import cn.qqtheme.framework.util.log.LogUtils;
 import cn.qqtheme.framework.widght.popup.DateUtils;
 
 /**
@@ -86,10 +85,8 @@ public class ConvertUtils {
         String colorString;
         if (includeAlpha) {
             colorString = alpha + red + green + blue;
-            LogUtils.verbose(String.format(Locale.CHINA, "%d to color string is %s", color, colorString));
         } else {
             colorString = red + green + blue;
-            LogUtils.verbose(String.format(Locale.CHINA, "%d to color string is %s%s%s%s, exclude alpha is %s", color, alpha, red, green, blue, colorString));
         }
         return colorString;
     }
@@ -177,7 +174,6 @@ public class ConvertUtils {
             is.close();
             return bytes;
         } catch (IOException e) {
-            LogUtils.warn(e);
         }
         return null;
     }
@@ -193,7 +189,6 @@ public class ConvertUtils {
         try {
             os.close();
         } catch (IOException e) {
-            LogUtils.warn(e);
         }
         return bytes;
     }
@@ -213,7 +208,6 @@ public class ConvertUtils {
                 }
                 bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
             } catch (Exception e) {
-                LogUtils.error(e);
             }
         }
         return bitmap;
@@ -258,10 +252,8 @@ public class ConvertUtils {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static String toPath(Context context, Uri uri) {
         if (uri == null) {
-            LogUtils.verbose("uri is null");
             return "";
         }
-        LogUtils.verbose("uri: " + uri.toString());
         String path = uri.getPath();
         String scheme = uri.getScheme();
         String authority = uri.getAuthority();
@@ -313,7 +305,6 @@ public class ConvertUtils {
                 return uri.getPath();
             }
         }
-        LogUtils.verbose("uri to path: " + path);
         return path;
     }
 
@@ -329,7 +320,6 @@ public class ConvertUtils {
                 cursor.close();
             }
         } catch (Exception e) {
-            LogUtils.error(e);
         }
         return filePath;
     }
@@ -378,7 +368,6 @@ public class ConvertUtils {
         canvas.save(Canvas.ALL_SAVE_FLAG);
         canvas.restore();
         if (!bitmap.isRecycled()) {
-            LogUtils.verbose("recycle bitmap: " + bitmap.toString());
             bitmap.recycle();
         }
         // Restore the view
@@ -406,7 +395,6 @@ public class ConvertUtils {
     public static int toPx(float dpValue) {
         final float scale = ContextUtils.getContext().getResources().getDisplayMetrics().density;
         int pxValue = (int) (dpValue * scale + 0.5f);
-        LogUtils.v(dpValue + " dp == " + pxValue + " px");
         return pxValue;
     }
 
@@ -422,7 +410,6 @@ public class ConvertUtils {
     public static int toDp(float pxValue) {
         float scale = ContextUtils.getContext().getResources().getDisplayMetrics().density;
         int dpValue = (int) (pxValue / scale + 0.5f);
-        LogUtils.v(pxValue + " px == " + dpValue + " dp");
         return dpValue;
     }
 
@@ -432,7 +419,6 @@ public class ConvertUtils {
     public static int toSp(float pxValue) {
         float fontScale = ContextUtils.getContext().getResources().getDisplayMetrics().scaledDensity;
         int spValue = (int) (pxValue / fontScale + 0.5f);
-        LogUtils.v(pxValue + " px == " + spValue + " sp");
         return spValue;
     }
 
@@ -440,7 +426,6 @@ public class ConvertUtils {
         try {
             return new String(str.getBytes("utf-8"), "gbk");
         } catch (UnsupportedEncodingException e) {
-            LogUtils.warn(e.getMessage());
             return str;
         }
     }
@@ -471,7 +456,6 @@ public class ConvertUtils {
             reader.close();
             is.close();
         } catch (IOException e) {
-            LogUtils.error(e);
         }
         return sb.toString();
     }

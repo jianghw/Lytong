@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.user.bean;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import com.tzly.annual.base.bean.BaseResult;
 
 /**
  * 红包实体
