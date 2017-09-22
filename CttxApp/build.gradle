@@ -12,10 +12,6 @@ android {
         versionName rootProject.ext.android.versionName
         //dex突破65535的限制
         multiDexEnabled true
-        /*     //禁止gradle检查png的合法性
-             aaptOptions.useNewCruncher = false
-             //关闭androidstudio的png的合法性检查
-             aaptOptions.cruncherEnabled = false*/
     }
 
     sourceSets {
@@ -38,7 +34,7 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("/Users/tzly.jks")
+            storeFile file("/Users/cattle_debug.jks")
             storePassword "123456"
             keyAlias "jianghw"
             keyPassword "123456"

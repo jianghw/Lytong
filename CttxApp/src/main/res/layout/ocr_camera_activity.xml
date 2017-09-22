@@ -77,7 +77,7 @@
 
     </RelativeLayout>
 
-    <com.zantong.mobilecttx.widght.Viewfinder
+    <com.zantong.mobile.widght.Viewfinder
         android:id="@+id/ocr_viewfinder"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

@@ -207,7 +207,7 @@
             android:textColor="@color/status_text"
       android:visibility="gone"/>
 
-  <com.zantong.mobilecttx.zxing.client.android.ViewfinderView
+  <com.zantong.mobile.zxing.client.android.ViewfinderView
       android:id="@+id/viewfinder_view"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"

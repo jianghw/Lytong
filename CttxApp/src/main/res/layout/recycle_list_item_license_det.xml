@@ -130,7 +130,7 @@
                 android:textColor="@color/colorTvBlack_4d"
                 android:textSize="@dimen/fs_16sp"/>
 
-            <com.zantong.mobilecttx.widght.UISwitchButton
+            <com.zantong.mobile.widght.UISwitchButton
                 android:id="@+id/custom_switch_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

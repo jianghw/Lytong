@@ -16,14 +16,14 @@ import android.widget.TextView;
 
 import com.tzly.annual.base.R;
 import com.tzly.annual.base.adapter.PopupCarTypeAdapter;
-import com.tzly.annual.base.contract.bean.SubjectGoodsBean;
-import com.tzly.annual.base.contract.bean.SubjectGoodsData;
-import com.tzly.annual.base.contract.custom.IAreaDialogListener;
-import com.tzly.annual.base.contract.custom.ISpeedDialogListener;
-import com.tzly.annual.base.contract.custom.ITimeDialogListener;
-import com.tzly.annual.base.picker.LinkagePicker;
-import com.tzly.annual.base.picker.SparringAreaPicker;
-import com.tzly.annual.base.picker.SparringTimePicker;
+import com.tzly.annual.base.bean.response.SubjectGoodsBean;
+import com.tzly.annual.base.bean.response.SubjectGoodsData;
+import com.tzly.annual.base.imple.IAreaDialogListener;
+import com.tzly.annual.base.imple.ISpeedDialogListener;
+import com.tzly.annual.base.imple.ITimeDialogListener;
+import com.tzly.annual.base.custom.picker.LinkagePicker;
+import com.tzly.annual.base.custom.picker.SparringAreaPicker;
+import com.tzly.annual.base.custom.picker.SparringTimePicker;
 import com.tzly.annual.base.util.ui.DensityUtils;
 
 import java.util.ArrayList;

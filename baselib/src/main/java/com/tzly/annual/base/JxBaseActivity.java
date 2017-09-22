@@ -78,8 +78,10 @@ public abstract class JxBaseActivity extends AppCompatActivity {
             }
         });
         //content
-        View contentView = inflater.inflate(initContentView(), multiStateLayout, true);
-        bindContentView(contentView);
+        if (initContentView() != 0) {
+            View contentView = inflater.inflate(initContentView(), multiStateLayout, true);
+            bindContentView(contentView);
+        }
         //注入控件布局
         multiStateLayout.customChildAt();
         multiStateLayout.setState(initMultiState());
@@ -101,11 +103,6 @@ public abstract class JxBaseActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * 用户手动刷新数据
-     */
-    protected abstract void userRefreshData();
-
     private void enhanceErrorView(View view, int state) {
     }
 
@@ -121,8 +118,6 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     protected void showContentView() {
         if (multiStateLayout != null) multiStateLayout.setState(MultiState.CONTENT);
     }
-
-    protected abstract void initContentData();
 
     @Override
     protected void onRestart() {
@@ -244,8 +239,7 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     /**
      * 回退监听功能
      */
-    protected void backClickListener() {
-    }
+    protected void backClickListener() {}
 
     /**
      * 页面关闭
@@ -257,20 +251,24 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     /**
      * 右边图片点击
      */
-    protected void imageClickListener() {
-    }
+    protected void imageClickListener() {}
 
     /**
      * 右边文字点击
      */
-    protected void rightClickListener() {
-    }
+    protected void rightClickListener() {}
 
     /**
      * 标题栏
      */
     protected void titleContent(String title) {
         if (mTvTitle != null) mTvTitle.setText(title);
+    }
+
+    protected void titleContent(String title, String right) {
+        if (mTvTitle != null) mTvTitle.setText(title);
+        mTvRight.setVisibility(View.VISIBLE);
+        if (mTvRight != null) mTvRight.setText(right);
     }
 
     /**
@@ -284,19 +282,52 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     /**
      * 显示内容
      */
-    protected int initContentView() {
-        return R.layout.base_custom_base_content;
-    }
+    protected abstract int initContentView();
 
     /**
      * 绑定子控件
      */
-    protected void bindContentView(View childView) {
-    }
+    protected abstract void bindContentView(View childView);
+
+    protected abstract void initContentData();
+
+    /**
+     * 用户手动刷新数据
+     */
+    protected void userRefreshData() {}
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+    }
+
+    /**
+     * 加载中效果
+     */
+    public synchronized void showDialogLoading() {
+        hideDialogLoading();
+//        mLoadingDialog = DialogUtils.showLoading(this);
+    }
+
+    /**
+     * 加载中效果
+     *
+     * @param msg 提示信息
+     */
+    public synchronized void showDialogLoading(String msg) {
+//        if (mLoadingDialog == null || !mLoadingDialog.isShowing())
+//            mLoadingDialog = TextUtils.isEmpty(msg)
+//                    ? DialogUtils.showLoading(this) : DialogUtils.showLoading(this, msg);
+    }
+
+    /**
+     * 隐藏遮罩的dialog
+     */
+    public synchronized void hideDialogLoading() {
+//        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+//            mLoadingDialog.dismiss();
+//            mLoadingDialog = null;
+//        }
     }
 
 }

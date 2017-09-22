@@ -12,7 +12,7 @@
 
         <EditText
             android:id="@+id/register_pwd"
-            style="@style/EditextNormalStyle"
+            style="@style/EdtNormalStyle"
             android:layout_width="match_parent"
             android:layout_height="48dip"
             android:layout_below="@id/underline"
@@ -29,7 +29,7 @@
 
         <EditText
             android:id="@+id/register_repwd"
-            style="@style/EditextNormalStyle"
+            style="@style/EdtNormalStyle"
             android:layout_width="match_parent"
             android:layout_height="48dip"
             android:layout_below="@id/underline"
@@ -52,13 +52,13 @@
 
     </LinearLayout>
 
-    <com.zantong.mobilecttx.widght.CustomNumKeyBoard
+    <com.zantong.mobile.widght.CustomNumKeyBoard
         android:id="@+id/mine_register_numkeyboard"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:visibility="gone" />
-    <com.zantong.mobilecttx.widght.CustomCharKeyBoard
+    <com.zantong.mobile.widght.CustomCharKeyBoard
         android:id="@+id/mine_register_charkeyboard"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

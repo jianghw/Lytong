@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tzly.annual.base.R;
-import com.tzly.annual.base.contract.bean.SubjectGoodsBean;
+import com.tzly.annual.base.bean.response.SubjectGoodsBean;
 
 import java.util.List;
 

@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.zantong.mobilecttx.widght.MyViewPager
+    <com.zantong.mobile.widght.MyViewPager
         android:id="@+id/mine_msg_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

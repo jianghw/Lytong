@@ -14,7 +14,7 @@
 
         <EditText
             android:id="@+id/changepwd_old_pwd"
-            style="@style/EditextNormalStyle"
+            style="@style/EdtNormalStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
             android:layout_toLeftOf="@id/image_delete"
@@ -31,7 +31,7 @@
 
         <EditText
             android:id="@+id/changepwd_new_pwd"
-            style="@style/EditextNormalStyle"
+            style="@style/EdtNormalStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
             android:layout_toLeftOf="@id/image_delete"
@@ -46,7 +46,7 @@
 
         <EditText
             android:id="@+id/changepwd_new_repwd"
-            style="@style/EditextNormalStyle"
+            style="@style/EdtNormalStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
             android:layout_toLeftOf="@id/image_delete"
@@ -68,13 +68,13 @@
 
     </LinearLayout>
 
-    <com.zantong.mobilecttx.widght.CustomNumKeyBoard
+    <com.zantong.mobile.widght.CustomNumKeyBoard
         android:id="@+id/mine_changepwd_numkeyboard"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:visibility="gone" />
-    <com.zantong.mobilecttx.widght.CustomCharKeyBoard
+    <com.zantong.mobile.widght.CustomCharKeyBoard
         android:id="@+id/mine_changepwd_charkeyboard"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -33,7 +33,7 @@
 
             <EditText
                 android:id="@+id/register_phone"
-                style="@style/EditextNormalStyle"
+                style="@style/EdtNormalStyle"
                 android:layout_height="@dimen/ds_144"
                 android:paddingLeft="16dip"
                 android:layout_centerVertical="true"
@@ -65,7 +65,7 @@
 
         <EditText
             android:id="@+id/register_vcode"
-            style="@style/EditextNormalStyle"
+            style="@style/EdtNormalStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
             android:layout_toLeftOf="@id/image_delete"

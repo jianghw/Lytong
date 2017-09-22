@@ -7,7 +7,7 @@
 
     <EditText
         android:id="@+id/edit_old_phone"
-        style="@style/EditextNormalStyle"
+        style="@style/EdtNormalStyle"
         android:layout_below="@id/underline"
         android:layout_width="match_parent"
         android:layout_height="48dip"
@@ -47,8 +47,8 @@
                 style="@style/EdittextDeleteImage"
                 android:layout_toLeftOf="@+id/btn_number"/>
             <EditText
-                android:id="@+id/edit_phone_number"
-                style="@style/EditextNormalStyle"
+                android:id="@+id/edt_phone"
+                style="@style/EdtNormalStyle"
                 android:inputType="number"
                 android:maxLength="11"
                 android:hint="请输入新手机号"
@@ -66,8 +66,8 @@
             android:layout_below="@id/phone_number_edittext" />
 
         <EditText
-            android:id="@+id/edit_code_number"
-            style="@style/EditextNormalStyle"
+            android:id="@+id/edt_code"
+            style="@style/EdtNormalStyle"
             android:layout_below="@id/underline"
             android:layout_width="match_parent"
             android:layout_height="48dip"
@@ -86,7 +86,7 @@
         android:layout_below="@id/all_rela" />
 
     <Button
-        android:id="@+id/login_btn"
+        android:id="@+id/btn_login"
         style="@style/ButtonBigStyle"
         android:layout_below="@id/underline1"
         android:layout_marginTop="50dip"

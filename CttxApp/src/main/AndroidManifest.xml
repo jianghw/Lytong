@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.zantong.mobilecttx"
+          package="com.zantong.mobile"
           android:installLocation="auto">
 
     <!-- 小米通道相关权限 -->
     <permission
-        android:name="com.zantong.mobilecttx.permission.MIPUSH_RECEIVE"
+        android:name="com.zantong.mobile.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signatureOrSystem"/>
 
     <uses-permission android:name="com.zantong.mobilecttx.permission.MIPUSH_RECEIVE"/>
@@ -62,7 +62,7 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
 
     <application
-        android:name=".common.MyApplication"
+        android:name="com.zantong.mobile.common.MyApplication"
         android:allowBackup="true"
         android:configChanges="keyboardHidden|orientation|screenLayout"
         android:icon="@mipmap/app_icon"
@@ -73,7 +73,7 @@
 
         <!-- 启动页面 -->
         <activity
-            android:name=".home.activity.SplashActivity"
+            android:name="com.zantong.mobile.splash_v.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.SpalshActivity">
             <intent-filter>
@@ -92,254 +92,254 @@
         </activity>
         <!-- 引导页面 -->
         <activity
-            android:name=".home.activity.GuideCTActivity"
+            android:name="com.zantong.mobile.splash_v.GuideCTActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme"/>
 
         <!-- 主页，这个很吊呀 -->
         <activity
-            android:name=".cattle.MainClubActivity"
+            android:name="com.zantong.mobile.cattle.MainClubActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <!--扫描页面-->
         <activity
-            android:name=".cattle.QRCodeScanActivity"
+            android:name="com.zantong.mobile.cattle.QRCodeScanActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
         <!-- 登陆页面 -->
         <activity
-            android:name=".user.activity.LoginActivity"
+            android:name="com.zantong.mobile.login_v.OldLoginActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".weizhang.activity.ViolationDetails"
+            android:name="com.zantong.mobile.weizhang.activity.ViolationDetails"
             android:screenOrientation="portrait"/>
         <!-- =======================输入编码查询违章页面===================================== -->
         <activity
-            android:name=".home.activity.Codequery"
+            android:name="com.zantong.mobile.home.activity.Codequery"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".home.activity.CaptureActivity"
+            android:name="com.zantong.mobile.home.activity.CaptureActivity"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden"/>
 
         <!-- 设置页面 -->
         <activity
-            android:name=".user.activity.SettingActivity"
+            android:name="com.zantong.mobile.user.activity.SettingActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.HelpActivity"
+            android:name="com.zantong.mobile.user.activity.HelpActivity"
             android:screenOrientation="portrait"/>
         <!-- 个人中心页面 -->
         <activity
-            android:name=".user.activity.UserInfoUpdate"
+            android:name="com.zantong.mobile.user.activity.UserInfoUpdate"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.MsgActivity"
+            android:name="com.zantong.mobile.user.activity.MsgActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.UpdateNickName"
+            android:name="com.zantong.mobile.user.activity.UpdateNickName"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.UpdatePhoneNumber"
+            android:name="com.zantong.mobile.user.activity.UpdatePhoneNumber"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.FeedbackActivity"
+            android:name="com.zantong.mobile.user.activity.FeedbackActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.AboutActivity"
+            android:name="com.zantong.mobile.user.activity.AboutActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.RegisterActivity"
+            android:name="com.zantong.mobile.user.activity.RegisterActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.Register2Activity"
+            android:name="com.zantong.mobile.user.activity.Register2Activity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.ResetActivity"
+            android:name="com.zantong.mobile.user.activity.ResetActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.ChangePwdActivity"
+            android:name="com.zantong.mobile.user.activity.ChangePwdActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".weizhang.activity.PayWebActivity"
+            android:name="com.zantong.mobile.weizhang.activity.PayWebActivity"
             android:screenOrientation="portrait"/>
 
         <!-- 公共列表类 -->
         <activity
-            android:name=".common.activity.CommonListActivity"
+            android:name="com.zantong.mobile.common.activity.CommonListActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".wxapi.WXEntryActivity"
+            android:name="com.zantong.mobile.wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".car.activity.CarBrandActivity"
+            android:name="com.zantong.mobile.car.activity.CarBrandActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".car.activity.CarChooseActivity"
+            android:name="com.zantong.mobile.car.activity.CarChooseActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".chongzhi.activity.RechargeActivity"
+            android:name="com.zantong.mobile.chongzhi.activity.RechargeActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".map.activity.NavActivity"
+            android:name="com.zantong.mobile.map.activity.NavActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent"/>
 
         <activity
-            android:name=".common.activity.CommonProblemActivity"
+            android:name="com.zantong.mobile.common.activity.CommonProblemActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".common.activity.CommonProblemDetailActivity"
+            android:name="com.zantong.mobile.common.activity.CommonProblemDetailActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.ProblemFeedbackActivity"
+            android:name="com.zantong.mobile.user.activity.ProblemFeedbackActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".common.activity.CommonTwoLevelMenuActivity"
+            android:name="com.zantong.mobile.common.activity.CommonTwoLevelMenuActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".chongzhi.activity.RechargeAgreementActivity"
+            android:name="com.zantong.mobile.chongzhi.activity.RechargeAgreementActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".user.activity.MegTypeActivity"
+            android:name="com.zantong.mobile.user.activity.MegTypeActivity"
             android:screenOrientation="portrait"/>
 
         <!-- ======================优惠劵模块=========================== -->
         <!-- 优惠劵 -->
         <activity
-            android:name=".order.activity.CouponActivity"
+            android:name="com.zantong.mobile.order.activity.CouponActivity"
             android:screenOrientation="portrait"/>
         <!-- 优惠劵详情 -->
         <activity
-            android:name=".order.activity.CouponDetailActivity"
+            android:name="com.zantong.mobile.order.activity.CouponDetailActivity"
             android:screenOrientation="portrait"/>
         <!-- 加油优惠劵选择 -->
         <activity
-            android:name=".order.activity.CouponListActivity"
+            android:name="com.zantong.mobile.order.activity.CouponListActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".user.activity.MegSecondLevelActivity"
+            android:name="com.zantong.mobile.user.activity.MegSecondLevelActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.MegDetailActivity"
+            android:name="com.zantong.mobile.user.activity.MegDetailActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".common.activity.OcrCameraActivity"
+            android:name="com.zantong.mobile.common.activity.OcrCameraActivity"
             android:screenOrientation="landscape"/>
 
         <!-- ========================车辆管理模块================================ -->
         <!-- 车辆管理 -->
         <activity
-            android:name=".car.activity.ManageCarActivity"
+            android:name="com.zantong.mobile.car.activity.ManageCarActivity"
             android:screenOrientation="portrait"/>
 
         <!-- 绑定车辆 -->
         <activity
-            android:name=".car.activity.SetPayCarActivity"
+            android:name="com.zantong.mobile.car.activity.SetPayCarActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".weizhang.activity.ViolationHistoryAcitvity"
+            android:name="com.zantong.mobile.weizhang.activity.ViolationHistoryAcitvity"
             android:screenOrientation="portrait"/>
 
         <!-- ========================违章查询页面================================= -->
         <!-- 违法查询页面 输入 -->
         <activity
-            android:name=".weizhang.activity.ViolationActivity"
+            android:name="com.zantong.mobile.weizhang.activity.ViolationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <!-- 违章列表信息显示页面 -->
         <activity
-            android:name=".weizhang.activity.ViolationListActivity"
+            android:name="com.zantong.mobile.weizhang.activity.ViolationListActivity"
             android:screenOrientation="portrait"/>
         <!-- 违章缴费页面 -->
         <activity
-            android:name=".weizhang.activity.ViolationPayActivity"
+            android:name="com.zantong.mobile.weizhang.activity.ViolationPayActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".weizhang.activity.LicenseCheckGradeActivity"
+            android:name="com.zantong.mobile.weizhang.activity.LicenseCheckGradeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".weizhang.activity.LicenseDetailActivity"
+            android:name="com.zantong.mobile.weizhang.activity.LicenseDetailActivity"
             android:screenOrientation="portrait"/>
         <!-- 缴费须知 -->
         <activity
-            android:name=".weizhang.activity.PaymentActivity"
+            android:name="com.zantong.mobile.weizhang.activity.PaymentActivity"
             android:screenOrientation="portrait"/>
 
         <!-- ===================活动模块========================================= -->
         <!-- 活动页面;驾校报名 -->
         <activity
-            android:name=".fahrschule.activity.FahrschuleActivity"
+            android:name="com.zantong.mobile.fahrschule.activity.FahrschuleActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
         <!-- 活动页面;科目强化 -->
         <activity
-            android:name=".fahrschule.activity.SubjectActivity"
+            android:name="com.zantong.mobile.fahrschule.activity.SubjectActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
         <!-- 活动页面;陪练预约 -->
         <activity
-            android:name=".fahrschule.activity.SparringActivity"
+            android:name="com.zantong.mobile.fahrschule.activity.SparringActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
         <!-- ===================分享模块========================================= -->
         <!-- 分享模块页面 -->
         <activity
-            android:name=".share.activity.ShareParentActivity"
+            android:name="com.zantong.mobile.share.activity.ShareParentActivity"
             android:screenOrientation="portrait"/>
 
         <!-- ===================订单模块========================================= -->
         <!-- 订单模块列表页面 -->
         <activity
-            android:name=".order.activity.OrderParentActivity"
+            android:name="com.zantong.mobile.order.activity.OrderParentActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".order.activity.OrderDetailActivity"
+            android:name="com.zantong.mobile.order.activity.OrderDetailActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".order.activity.AnnualOrderDetailActivity"
+            android:name="com.zantong.mobile.order.activity.AnnualOrderDetailActivity"
             android:screenOrientation="portrait"/>
         <!--呼叫快递-->
         <activity
-            android:name=".order.activity.OrderExpressActivity"
+            android:name="com.zantong.mobile.order.activity.OrderExpressActivity"
             android:screenOrientation="portrait"/>
 
         <!-- ====================================浏览器================================ -->
         <activity
-            android:name=".browser.AdvBrowserActivity"
+            android:name="com.zantong.mobile.browser.AdvBrowserActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".browser.HtmlBrowserActivity"
+            android:name="com.zantong.mobile.browser.HtmlBrowserActivity"
             android:screenOrientation="portrait"/>
         <!-- ===================付款web模块========================================= -->
         <!-- 付款web模块页面 -->
         <activity
-            android:name=".browser.BrowserForPayActivity"
+            android:name="com.zantong.mobile.browser.BrowserForPayActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".browser.PayBrowserActivity"
+            android:name="com.zantong.mobile.browser.PayBrowserActivity"
             android:screenOrientation="portrait"/>
 
         <!-- ===================优惠模块========================================= -->
         <!-- 优惠模块 -->
         <activity
-            android:name=".share.activity.CarBeautyActivity"
+            android:name="com.zantong.mobile.share.activity.CarBeautyActivity"
             android:screenOrientation="portrait"/>
 
-        <service android:name=".utils.DateService">
+        <service android:name="com.zantong.mobile.utils.DateService">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -349,7 +349,7 @@
 
         <!-- =================================百度地图============================================= -->
         <activity
-            android:name=".map.activity.BaiduMapParentActivity"
+            android:name="com.zantong.mobile.map.activity.BaiduMapParentActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"/>
 
@@ -419,7 +419,7 @@
 
         <!-- 消息接收监听器 （用户可自主扩展） -->
         <receiver
-            android:name=".alicloudpush.LytMessageReceiver"
+            android:name="com.zantong.mobile.push.LytMessageReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED"/>
@@ -521,6 +521,7 @@
                 <action android:name="com.xiaomi.mipush.ERROR"/>
             </intent-filter>
         </receiver>
+
         <receiver
             android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
             android:exported="true">

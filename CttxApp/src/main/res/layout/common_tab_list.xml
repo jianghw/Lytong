@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <com.zantong.mobilecttx.widght.SlidingTabLayout
+    <com.zantong.mobile.widght.SlidingTabLayout
         android:id="@+id/common_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         android:layout_height="@dimen/ds_1"
         android:background="@color/common_base_color"/>
 
-    <com.zantong.mobilecttx.widght.PagingEnabledViewPager
+    <com.zantong.mobile.widght.PagingEnabledViewPager
         android:id="@+id/common_tab_content"
         android:layout_width="match_parent"
         android:layout_height="0px"

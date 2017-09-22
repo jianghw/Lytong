@@ -1,4 +1,3 @@
 include ':CttxApp', ':reslib', ':baselib', ':layout'
 include ':XRecyclerView'
-include ':Common'
 
