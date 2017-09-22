@@ -15,15 +15,15 @@ import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.presenter.chongzhi.RechargePresenter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
-import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.AtyUtils;
-import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
+import com.tzly.annual.base.global.JxConfig;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.AtyUtils;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.primission.PermissionFail;
+import com.tzly.annual.base.util.primission.PermissionGen;
+import com.tzly.annual.base.util.primission.PermissionSuccess;
 
-import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.annual.base.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 加油充值

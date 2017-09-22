@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.contract.fahrschule;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
+import com.tzly.annual.base.contract.bean.SubjectGoodsResult;
 
 /**
  * 畅通页面

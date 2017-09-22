@@ -27,24 +27,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponBean;
 import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.adapter.CommonSelectAdapter;
 import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
-import com.zantong.mobilecttx.huodong.activity.HundredPlanActivity;
-import com.zantong.mobilecttx.huodong.adapter.HundredPlanCarsAdapter;
 import com.zantong.mobilecttx.model.AppInfo;
-import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.util.image.ImageTools;
-import cn.qqtheme.framework.util.ui.DensityUtils;
+import com.tzly.annual.base.util.image.ImageTools;
+import com.tzly.annual.base.util.ui.DensityUtils;
 
 
 /**
@@ -706,62 +701,6 @@ public class DialogUtils {
         dialog.setCanceledOnTouchOutside(true);
     }
 
-    /**
-     * 百日活动 车辆列表
-     *
-     * @author zyb
-     * <p>
-     * <p>
-     * *  *   *  *
-     * *      *      *
-     * *             *
-     * *           *
-     * *     *
-     * *
-     * <p>
-     * <p>
-     * create at 17/1/16 下午3:12
-     */
-    public static void createCarsDialog(final Context context, final TextView textview) {
-
-        final AlertDialog dialog = new AlertDialog.Builder(context).create();
-        View view = ((Activity) context).getLayoutInflater().inflate(
-                R.layout.dialog_cars, null);
-        XRecyclerView mRecyclerView = (XRecyclerView) view.findViewById(R.id.dialog_cars_recyclerview);
-        HundredPlanCarsAdapter mAdapter = new HundredPlanCarsAdapter();
-        mAdapter.append(PublicData.getInstance().mServerCars);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-        mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
-        mRecyclerView.setArrowImageView(R.mipmap.loading);
-        mRecyclerView.setLoadingMoreEnabled(false);
-        mRecyclerView.setPullRefreshEnabled(false);
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, Object data) {
-                UserCarInfoBean bean = (UserCarInfoBean) data;
-                HundredPlanActivity.isSelCar = true;
-                textview.setText(bean.getCarnum());
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-        //获得dialog的window窗口
-        Window window = dialog.getWindow();
-        //设置dialog在屏幕底部
-        window.setGravity(Gravity.BOTTOM);
-        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
-        params.width = DensityUtils.getScreenWidth(context);
-        window.setAttributes(params);
-
-        window.setBackgroundDrawableResource(R.color.trans);
-        window.setContentView(view);
-        dialog.setCanceledOnTouchOutside(true);
-    }
 
     /**
      * 定位失败提醒  提示title 提示内容 两个自定义按钮内容及事件

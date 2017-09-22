@@ -20,7 +20,7 @@ import com.zantong.mobilecttx.eventbus.SubjectCommitEvent;
 import com.zantong.mobilecttx.eventbus.SubjectOrderEvent;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderBean;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
+import com.tzly.annual.base.contract.bean.SubjectGoodsBean;
 import com.zantong.mobilecttx.order.activity.CouponListActivity;
 import com.zantong.mobilecttx.presenter.fahrschule.SubjectCommitPresenter;
 import com.zantong.mobilecttx.utils.StringUtils;
@@ -32,10 +32,10 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.RegexUtils;
-import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.ViewUtils;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.RegexUtils;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.ViewUtils;
 
 /**
  * 科目强化提交订单

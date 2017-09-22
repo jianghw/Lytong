@@ -12,17 +12,12 @@ import android.support.v4.app.ActivityCompat;
 import android.webkit.JavascriptInterface;
 
 import com.tzly.annual.base.util.LogUtils;
-import com.zantong.mobilecttx.card.activity.MyCardActivity;
-import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.eventbus.DriveLicensePhotoEvent;
 import com.zantong.mobilecttx.eventbus.PayMotoOrderEvent;
-import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
-import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
@@ -30,7 +25,7 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import org.greenrobot.eventbus.EventBus;
 
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * @author Sandy
@@ -107,26 +102,10 @@ public class InterfaceForJS {
         }
     }
 
-    //绑畅通卡
-    @JavascriptInterface
-    public void bindCard() {
-        if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {
-            Act.getInstance().gotoIntentLogin(mJSContext, UnblockedCardActivity.class);
-        } else {
-            Act.getInstance().gotoIntentLogin(mJSContext, MyCardActivity.class);
-        }
-    }
-
     //加油充值
     @JavascriptInterface
     public void addOil() {
         mJSContext.startActivity(new Intent(mJSContext, RechargeActivity.class));
-    }
-
-    //代驾
-    @JavascriptInterface
-    public void chaser() {
-        mJSContext.startActivity(new Intent(mJSContext, DrivingActivity.class));
     }
 
     //分享领积分
@@ -155,12 +134,6 @@ public class InterfaceForJS {
     @JavascriptInterface
     public String getEncreptUserId() {
         return RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true);
-    }
-
-    //跳转到积分规则页面
-    @JavascriptInterface
-    public void popAttention() {
-        mJSContext.startActivity(new Intent(mJSContext, HundredRuleActivity.class));
     }
 
     @JavascriptInterface
@@ -204,7 +177,7 @@ public class InterfaceForJS {
     //跳转支付页面
     @JavascriptInterface
     public void payMOTOrder(String orderId, String amount) {
-        EventBus.getDefault().post(new PayMotoOrderEvent(orderId,amount));
+        EventBus.getDefault().post(new PayMotoOrderEvent(orderId, amount));
     }
 
 }

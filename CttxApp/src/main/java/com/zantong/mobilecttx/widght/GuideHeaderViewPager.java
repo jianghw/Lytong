@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
-import cn.qqtheme.framework.util.image.ImageOptions;
+import com.tzly.annual.base.util.image.ImageOptions;
 
 import java.util.ArrayList;
 import java.util.List;

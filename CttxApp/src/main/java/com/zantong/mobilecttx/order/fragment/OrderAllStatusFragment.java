@@ -16,7 +16,7 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.util.List;
 
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.annual.base.global.JxGlobal;
 
 /**
  * 所有订单

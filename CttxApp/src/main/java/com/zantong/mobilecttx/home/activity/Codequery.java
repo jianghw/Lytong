@@ -18,12 +18,12 @@ import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.primission.PermissionFail;
+import com.tzly.annual.base.util.primission.PermissionGen;
+import com.tzly.annual.base.util.primission.PermissionSuccess;
 
-import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.annual.base.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 输入编码查询违章页面

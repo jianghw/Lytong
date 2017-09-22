@@ -2,7 +2,6 @@ package com.zantong.mobilecttx.presenter;
 
 import android.content.Context;
 
-import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.BasePresenter;
@@ -30,8 +29,7 @@ public class LogoutPresenter extends BasePresenter<ILoginView>{
             @Override
             public void onSuccess(LoginResult result) {
                 String usrid = result.getRspInfo().getUsrid();
-                LogUtils.i("RspInfo:"+result.getRspInfo().toString());
-                LogUtils.i("usrid:"+usrid);
+
             }
         });
     }

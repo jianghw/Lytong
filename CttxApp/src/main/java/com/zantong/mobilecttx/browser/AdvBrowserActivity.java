@@ -22,17 +22,14 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.InterfaceForJS;
-import com.zantong.mobilecttx.huodong.activity.HundredAgreementActivity;
-import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.global.JxConfig;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.ToastUtils;
 
 import static com.zantong.mobilecttx.R.id.webView;
 
@@ -104,12 +101,6 @@ public class AdvBrowserActivity extends BaseJxActivity {
      */
     protected void rightClickListener() {
         switch (mRightBtnStatus) {
-            case 0:
-                Act.getInstance().gotoIntent(this, HundredAgreementActivity.class);
-                break;
-            case 1:
-                Act.getInstance().gotoIntent(this, HundredRuleActivity.class);
-                break;
             case -1:
                 new DialogMgr(this,
                         new View.OnClickListener() {

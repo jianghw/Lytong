@@ -39,12 +39,12 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.FileUtils;
-import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.image.ImageLoadUtils;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
+import com.tzly.annual.base.util.FileUtils;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.image.ImageLoadUtils;
+import com.tzly.annual.base.util.primission.PermissionFail;
+import com.tzly.annual.base.util.primission.PermissionGen;
+import com.tzly.annual.base.util.primission.PermissionSuccess;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -54,7 +54,7 @@ import retrofit2.Response;
 
 import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
-import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.annual.base.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 个人中心页面
@@ -392,7 +392,6 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
         //TODO 如果是拍照的,删除临时文件
         File temFile = getHeadImageFile();
         if (temFile == null) return;
-//            String scaleImgPath = FileUtils.saveBitmapByQuality(bitmap, 80, getApplicationContext());//进行压缩
 //            进行上传，上传成功后显示新图片,上传的逻辑就是将scaleImgPath这个路径下的图片上传，此处不做演示，这里只是显示到iv上
 //                                ivPhoto.setImageBitmap(bitmap);
 

@@ -31,9 +31,9 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.image.ImageOptions;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.image.ImageOptions;
 
 /**
  * 消息详情

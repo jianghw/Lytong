@@ -10,6 +10,7 @@ import com.tencent.bugly.beta.UpgradeInfo;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
+import com.zantong.mobilecttx.cattle.MainClubActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
 import com.zantong.mobilecttx.utils.SPUtils;
@@ -21,7 +22,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.AppUtils;
+import com.tzly.annual.base.util.AppUtils;
 
 /**
  * 引导页面
@@ -107,7 +108,7 @@ public class GuideCTActivity extends BaseJxActivity implements GuideHeaderViewPa
 
     private void gotoActivity() {
         MobclickAgent.onEvent(this, Config.getUMengID(0));
-        Act.getInstance().gotoIntent(this, HomeMainActivity.class);
+        Act.getInstance().gotoIntent(this, MainClubActivity.class);
         SPUtils.getInstance().setIsGuide(String.valueOf(mVersionCode));
         finish();
     }

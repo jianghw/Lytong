@@ -21,8 +21,8 @@ import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 
-import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.global.JxConfig;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 驾校支付成功页面

@@ -2,8 +2,7 @@ package com.zantong.mobilecttx.utils;
 
 import android.app.Activity;
 
-import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
-import com.zantong.mobilecttx.home.activity.HomeMainActivity;
+import com.zantong.mobilecttx.cattle.MainClubActivity;
 
 import java.util.Stack;
 
@@ -74,8 +73,7 @@ public class ScreenManager {
             if (activity == null) {
                 break;
             }
-            if (activity.getClass().equals(UnblockedCardActivity.class)
-                    || activity.getClass().equals(HomeMainActivity.class)) {
+            if ( activity.getClass().equals(MainClubActivity.class)) {
                 break;
             }
             popActivity(activity);

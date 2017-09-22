@@ -16,8 +16,8 @@ import com.zantong.mobilecttx.share.fragment.FriendShareFragment;
 import com.zantong.mobilecttx.share.fragment.SparringShareFragment;
 import com.zantong.mobilecttx.share.fragment.SubjectShareFragment;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ui.FragmentUtils;
 
 /**
  * Created by jianghw on 2017/7/7.

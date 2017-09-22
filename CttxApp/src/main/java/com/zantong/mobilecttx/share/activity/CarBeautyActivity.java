@@ -10,8 +10,8 @@ import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.browser.AdvBrowserActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
-import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.annual.base.global.JxConfig;
+import com.tzly.annual.base.global.JxGlobal;
 
 /**
  * Created by jianghw on 2017/7/7.

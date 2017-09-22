@@ -10,8 +10,6 @@ import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
-import com.zantong.mobilecttx.card.bean.BindCardResult;
-import com.zantong.mobilecttx.card.dto.BindCardDTO;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.bean.VersionResult;
 import com.zantong.mobilecttx.home.dto.VersionDTO;
@@ -344,15 +342,6 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
 
         t.setSYS_HEAD(getBean("cip.cfc.u005.01"));
-        t.setReqInfo(dto);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
-    }
-
-    public static void bindCard(Context context, BindCardDTO dto, CallBack<BindCardResult> callback) {
-        AsyncCallBack<BindCardResult> asyncCallBack = new AsyncCallBack<BindCardResult>(
-                context, callback, BindCardResult.class);
-        RequestDTO t = new RequestDTO();
-        t.setSYS_HEAD(getBean("cip.cfc.u004.01"));
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }

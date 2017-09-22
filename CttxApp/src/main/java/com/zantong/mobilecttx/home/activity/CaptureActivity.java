@@ -77,7 +77,7 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Map;
 
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * This activity opens the camera and does the actual scanning on a background thread. It draws a
@@ -369,40 +369,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         }
         return super.onKeyDown(keyCode, event);
     }
-
-//  @Override
-//  public boolean onCreateOptionsMenu(Menu menu) {
-//    MenuInflater menuInflater = getMenuInflater();
-//    menuInflater.inflate(R.menu.capture, menu);
-//    return super.onCreateOptionsMenu(menu);
-//  }
-//
-//  @Override
-//  public boolean onOptionsItemSelected(MenuItem item) {
-//    Intent intent = new Intent(Intent.ACTION_VIEW);
-//    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-//    switch (item.getItemId()) {
-//      case R.id.menu_share:
-//        intent.setClassName(this, ShareActivity.class.getName());
-//        startActivity(intent);
-//        break;
-//      case R.id.menu_history:
-//        intent.setClassName(this, HistoryActivity.class.getName());
-//        startActivityForResult(intent, HISTORY_REQUEST_CODE);
-//        break;
-//      case R.id.menu_settings:
-//        intent.setClassName(this, PreferencesActivity.class.getName());
-//        startActivity(intent);
-//        break;
-//      case R.id.menu_help:
-//        intent.setClassName(this, HelpActivity.class.getName());
-//        startActivity(intent);
-//        break;
-//      default:
-//        return super.onOptionsItemSelected(item);
-//    }
-//    return true;
-//  }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {

@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import cn.qqtheme.framework.util.ContextUtils;
+import com.tzly.annual.base.util.ContextUtils;
 
 /**
  * Created by Administrator on 2016/5/25.
@@ -34,7 +34,6 @@ public class UserInfoRememberCtrl {
     public static Object readObject() {
         return readObject(USERINFO);
     }
-
 
     public static void clearObject(Context context, String key) {
         // 保存对象
@@ -106,9 +105,6 @@ public class UserInfoRememberCtrl {
 
     /**
      * desc:获取保存的Object对象
-     *
-     * @param key
-     * @return modified:
      */
     public static Object readObject(String key) {
         SharedPreferences sharedPreferences = ContextUtils.getContext().getSharedPreferences(FILENAME, 0);

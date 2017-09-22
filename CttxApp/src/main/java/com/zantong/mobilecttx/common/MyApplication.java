@@ -22,8 +22,8 @@ import com.tzly.annual.base.util.LogUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.BuildConfig;
 
-import cn.qqtheme.framework.util.AppUtils;
-import cn.qqtheme.framework.util.ContextUtils;
+import com.tzly.annual.base.util.AppUtils;
+import com.tzly.annual.base.util.ContextUtils;
 
 
 /**

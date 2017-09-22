@@ -33,8 +33,8 @@ import com.zantong.mobilecttx.zxing.EncodingUtils;
 
 import java.util.List;
 
-import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.global.JxConfig;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 驾校报名分享页面

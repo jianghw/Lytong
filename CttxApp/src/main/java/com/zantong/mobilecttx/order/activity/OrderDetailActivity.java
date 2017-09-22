@@ -18,8 +18,8 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.text.DecimalFormat;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 订单详情页面

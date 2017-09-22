@@ -32,8 +32,8 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.util.AppUtils;
-import cn.qqtheme.framework.util.image.ImageOptions;
+import com.tzly.annual.base.util.AppUtils;
+import com.tzly.annual.base.util.image.ImageOptions;
 
 import static com.zantong.mobilecttx.home.activity.GuideCTActivity.GUIDE_PIC;
 
@@ -64,6 +64,7 @@ public class SplashActivity extends AppCompatActivity
         setContentView(R.layout.common_splash_activity);
 
         initView();
+        umengChannel();
         initPresenter();
         initThirdPartyData();
     }
@@ -74,7 +75,9 @@ public class SplashActivity extends AppCompatActivity
         mTvCount = (TextView) findViewById(R.id.tv_count);
         mTvSkip = (TextView) findViewById(R.id.tv_skip);
         if (mTvSkip != null) mTvSkip.setOnClickListener(this);
+    }
 
+    private void umengChannel() {
         mImgHuawei = (ImageView) findViewById(R.id.img_huawei);
         String umengChannel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
         if (umengChannel.equals("huawei")) {
@@ -105,7 +108,6 @@ public class SplashActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.onSubscribe();
     }
 
     /**

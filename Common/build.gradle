@@ -3,20 +3,8 @@ apply plugin: 'com.android.library'
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
     compile 'junit:junit:4.12'
-    //其中latest.release指代最新Bugly SDK版本号
-    //    compile 'com.tencent.bugly:crashreport:latest.release'
-    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
-    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
-    //第三方测试开发工具 不用
-    //    compile 'com.facebook.stetho:stetho-okhttp3:1.3.1'
-    //eventbus
-    compile 'org.greenrobot:eventbus:3.0.0'
-    //第三方控件车辆滑动图
-    compile 'com.github.devlight:infinitecycleviewpager:1.0.2'
-    //友盟+
-    compile 'com.umeng.analytics:analytics:latest.integration'
-    compile files('libs/universal-image-loader-1.9.4.jar')
-    compile project(':XRecyclerView')
+
+
 }
 
 android {

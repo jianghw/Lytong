@@ -14,7 +14,7 @@ import com.zantong.mobilecttx.browser.PayBrowserActivity;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectOrderContract;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobilecttx.eventbus.SubjectOrderEvent;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
+import com.tzly.annual.base.contract.bean.SubjectGoodsBean;
 import com.zantong.mobilecttx.presenter.fahrschule.SubjectOrderPresenter;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.utils.StringUtils;
@@ -24,8 +24,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 科目强化订单确认页面

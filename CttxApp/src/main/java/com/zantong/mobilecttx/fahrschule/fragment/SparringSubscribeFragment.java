@@ -38,16 +38,16 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsData;
-import cn.qqtheme.framework.contract.custom.IAreaDialogListener;
-import cn.qqtheme.framework.contract.custom.ISpeedDialogListener;
-import cn.qqtheme.framework.contract.custom.ITimeDialogListener;
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.CustomDialog;
-import cn.qqtheme.framework.util.RegexUtils;
-import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.ViewUtils;
+import com.tzly.annual.base.contract.bean.SubjectGoodsBean;
+import com.tzly.annual.base.contract.bean.SubjectGoodsData;
+import com.tzly.annual.base.contract.custom.IAreaDialogListener;
+import com.tzly.annual.base.contract.custom.ISpeedDialogListener;
+import com.tzly.annual.base.contract.custom.ITimeDialogListener;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.CustomDialog;
+import com.tzly.annual.base.util.RegexUtils;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.ViewUtils;
 
 /**
  * 陪练预约 页面

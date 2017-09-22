@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+import com.tzly.annual.base.bean.BaseResult;
 import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -34,7 +35,6 @@ import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
-import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.LoginPhoneView;
@@ -72,11 +72,10 @@ import java.util.TimerTask;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.tzly.annual.base.bean.BaseResult;
-import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.primission.PermissionFail;
+import com.tzly.annual.base.util.primission.PermissionGen;
+import com.tzly.annual.base.util.primission.PermissionSuccess;
 
 /**
  * 登陆界面
@@ -418,7 +417,7 @@ public class LoginActivity extends Activity
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Act.getInstance().lauchIntent(LoginActivity.this, UnblockedCardActivity.class);
+
                             InputMethodManager imm = (InputMethodManager) LoginActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
                             if (imm.isActive() && LoginActivity.this.getCurrentFocus() != null) {
                                 if (LoginActivity.this.getCurrentFocus().getWindowToken() != null) {

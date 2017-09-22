@@ -11,7 +11,7 @@ import com.zantong.mobilecttx.car.fragment.CarChooseXiFragment;
 import com.zantong.mobilecttx.car.fragment.CarChooseXingFragment;
 
 /**
- * 车辆选择
+ * 违章查询 车辆选择
  */
 public class CarChooseActivity extends BaseJxActivity {
 

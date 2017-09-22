@@ -38,7 +38,6 @@ import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.adapter.MainBannerImgHolderView;
 import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.home.bean.HomeBean;
-import com.zantong.mobilecttx.home.bean.HomeCarResult;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.order.activity.OrderParentActivity;
 import com.zantong.mobilecttx.presenter.home.UnimpededFtyPresenter;
@@ -46,7 +45,6 @@ import com.zantong.mobilecttx.user.activity.AboutActivity;
 import com.zantong.mobilecttx.user.activity.MegTypeActivity;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.user.activity.SettingActivity;
-import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
 
@@ -54,9 +52,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 畅通卡车友会
@@ -464,15 +462,4 @@ public class MainClubActivity extends RefreshBaseActivity
         }
     }
 
-    @Override
-    public void remoteCarInfoError(String message) {
-    }
-
-    @Override
-    public void getTextNoticeInfo(HomeCarResult result) {
-    }
-
-    @Override
-    public void remoteCarInfoSucceed(UserCarsResult result) {
-    }
 }

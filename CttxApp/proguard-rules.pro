@@ -266,7 +266,7 @@
 #}
 #接口不混淆
 -keep interface com.zantong.mobilecttx.base.interf.IBaseView{*;}
--keep interface com.zantong.mobilecttx.api.ActBackToUI{*;}
+
 -keep interface com.zantong.mobilecttx.api.CTTXHttpPOSTInterface{*;}
 -keep interface com.zantong.mobilecttx.api.OnLoadServiceBackUI{*;}
 -keep interface com.zantong.mobilecttx.api.FileDownloadApi{*;}

@@ -13,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tzly.annual.base.global.JxConfig;
+import com.tzly.annual.base.util.ScreenUtils;
+import com.tzly.annual.base.widght.popup.MoreWindow;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.common.Config;
@@ -30,10 +33,6 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.widght.popup.MoreWindow;
-import cn.qqtheme.framework.util.ScreenUtils;
 
 /**
  * Created by jianghw on 2017/6/27.

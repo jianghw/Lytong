@@ -29,7 +29,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.util.ToastUtils;
 
 public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter> {
 

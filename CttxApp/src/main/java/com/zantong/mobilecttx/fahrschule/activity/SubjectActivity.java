@@ -15,8 +15,8 @@ import com.zantong.mobilecttx.fahrschule.fragment.SubjectOrderFragment;
 import com.zantong.mobilecttx.fahrschule.fragment.SubjectSucceedFragment;
 import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ui.FragmentUtils;
 
 /**
  * 科目强化页面

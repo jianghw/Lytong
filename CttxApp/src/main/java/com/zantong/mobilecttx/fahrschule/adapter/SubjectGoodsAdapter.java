@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.zantong.mobilecttx.R;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
+import com.tzly.annual.base.contract.bean.SubjectGoodsBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

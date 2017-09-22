@@ -31,8 +31,8 @@ import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 订单列表页面

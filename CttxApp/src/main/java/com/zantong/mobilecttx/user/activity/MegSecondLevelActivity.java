@@ -8,7 +8,7 @@ import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.presenter.MegSecondLevelAtyPresenter;
 import com.zantong.mobilecttx.user.fragment.MegSecondLevelFragment;
 
-import cn.qqtheme.framework.util.AtyUtils;
+import com.tzly.annual.base.util.AtyUtils;
 
 import static com.zantong.mobilecttx.user.fragment.MegTypeFragment.MESSAGE_RESULT_CODE;
 

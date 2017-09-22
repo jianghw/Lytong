@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import java.io.IOException;
 import java.io.InputStream;
 
-import cn.qqtheme.framework.util.ContextUtils;
+import com.tzly.annual.base.util.ContextUtils;
 
 /**
  * Created by zhoujie on 2016/11/25.

@@ -20,7 +20,7 @@ import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 科目强化订单 成功

@@ -14,9 +14,9 @@ import com.zantong.mobilecttx.home.bean.ChildrenBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.qqtheme.framework.util.ConvertUtils;
-import cn.qqtheme.framework.util.ScreenUtils;
-import cn.qqtheme.framework.util.image.ImageLoadUtils;
+import com.tzly.annual.base.util.ConvertUtils;
+import com.tzly.annual.base.util.ScreenUtils;
+import com.tzly.annual.base.util.image.ImageLoadUtils;
 
 /**
  * 优惠页面复杂页面

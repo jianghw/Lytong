@@ -34,9 +34,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.image.ImageTools;
-import cn.qqtheme.framework.util.ui.DensityUtils;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.image.ImageTools;
+import com.tzly.annual.base.util.ui.DensityUtils;
 
 /**
  * 拍照扫描

@@ -23,9 +23,9 @@ import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
 
 import java.util.List;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 车辆列表

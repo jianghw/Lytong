@@ -16,7 +16,7 @@ import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
-import cn.qqtheme.framework.util.image.ImageOptions;
+import com.tzly.annual.base.util.image.ImageOptions;
 
 import java.text.DecimalFormat;
 

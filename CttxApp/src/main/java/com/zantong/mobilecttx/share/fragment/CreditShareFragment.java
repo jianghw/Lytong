@@ -30,7 +30,7 @@ import com.zantong.mobilecttx.zxing.EncodingUtils;
 
 import java.util.List;
 
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 百日分享页面

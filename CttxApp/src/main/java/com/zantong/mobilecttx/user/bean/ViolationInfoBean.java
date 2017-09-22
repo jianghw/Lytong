@@ -6,6 +6,7 @@ package com.zantong.mobilecttx.user.bean;
  */
 
 public class ViolationInfoBean {
+
     private String updtime;//
     private String violationtime;//
     private Object carnumtype;//

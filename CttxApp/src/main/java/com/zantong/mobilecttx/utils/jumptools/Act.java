@@ -8,7 +8,7 @@ import android.text.TextUtils;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.user.activity.LoginActivity;
 
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.annual.base.global.JxGlobal;
 
 /**
  * Created by Administrator on 2016/5/4.

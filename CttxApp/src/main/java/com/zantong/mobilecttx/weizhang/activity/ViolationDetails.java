@@ -13,7 +13,6 @@ import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
-import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.ModelView;
@@ -34,7 +33,7 @@ import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.annual.base.global.JxGlobal;
 
 import static com.zantong.mobilecttx.R.id.viloation_detail_commit_desc;
 import static com.zantong.mobilecttx.R.id.violation_money_text;
@@ -264,9 +263,6 @@ public class ViolationDetails extends BaseJxActivity implements ModelView {
                 violationBean.setViolationdate(rspInfo.getViolationdate());
                 violationBean.setViolationnum(rspInfo.getViolationnum());
                 showPayFragment(violationBean);
-                break;
-            case 1://绑卡
-                Act.getInstance().gotoIntentLogin(this, MyCardActivity.class);
                 break;
             case 2:
                 Act.getInstance().gotoIntentLogin(this, ManageCarActivity.class);

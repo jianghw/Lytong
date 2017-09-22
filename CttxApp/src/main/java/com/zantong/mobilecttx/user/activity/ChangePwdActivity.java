@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import com.tzly.annual.base.bean.BaseResult;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.util.ToastUtils;
 public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresenter>
         implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
 

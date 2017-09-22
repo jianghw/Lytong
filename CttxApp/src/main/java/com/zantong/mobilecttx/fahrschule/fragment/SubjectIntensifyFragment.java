@@ -14,9 +14,9 @@ import com.zantong.mobilecttx.contract.fahrschule.ISubjectIntensifyContract;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobilecttx.eventbus.SubjectCommitEvent;
 import com.zantong.mobilecttx.fahrschule.adapter.SubjectGoodsAdapter;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsData;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
+import com.tzly.annual.base.contract.bean.SubjectGoodsBean;
+import com.tzly.annual.base.contract.bean.SubjectGoodsData;
+import com.tzly.annual.base.contract.bean.SubjectGoodsResult;
 import com.zantong.mobilecttx.presenter.fahrschule.SubjectIntensifyPresenter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -25,8 +25,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.util.ContextUtils;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 科目强化页面

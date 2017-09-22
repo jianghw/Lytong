@@ -15,7 +15,6 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.car.bean.PayCar;
 import com.zantong.mobilecttx.car.bean.PayCarBean;
-import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
@@ -39,9 +38,9 @@ import com.zantong.mobilecttx.weizhang.fragment.ViolationListFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 违法信息列表页面
@@ -221,7 +220,6 @@ public class ViolationListActivity extends BaseJxActivity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Act.getInstance().gotoIntentLogin(ViolationListActivity.this, UnblockedCardActivity.class);
                     }
                 });
     }

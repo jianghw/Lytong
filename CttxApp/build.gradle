@@ -97,12 +97,14 @@ android {
             //领卡网点文件（正式地址）
             buildConfigField "String", "ImageLoadUrl", "\"https://ctkapp.icbc-axa.com/\""
 
+            //apk的后缀
+            applicationIdSuffix ".cattle"
             //混淆
             minifyEnabled false
             //Zipalign优化
-            zipAlignEnabled false
+            zipAlignEnabled true
             // 移除无用的resource文件
-            shrinkResources false
+            shrinkResources true
             //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名
@@ -139,23 +141,18 @@ repositories {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':CordovaLib')
-    compile project(':Common')
     compile project(':baselib')
-
     //阿里云推送
     compile(name: 'huawei-xiaomi-support-3.0.0', ext: 'aar')
-    compile files('libs/zxing.jar')
-    compile files('libs/sun.misc.BASE64Decoder.jar')
-    compile files('libs/libammsdk.jar')
-    compile files('libs/pinyin4j-2.5.0.jar')
-    compile files('libs/BaiduLBS_Android.jar')
-    //动画使用gif
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.15'
-    compile 'com.github.chrisbanes.actionbarpulltorefresh:library:0.9.9'
     compile 'com.aliyun.ams:alicloud-android-push:3.0.6@aar'
     compile 'com.aliyun.ams:alicloud-android-utdid:1.1.5.3'
     compile 'com.aliyun.ams:alicloud-android-ut:5.0.0'
-    compile 'com.alibaba:fastjson:1.1.54.android'
+    compile files('libs/zxing.jar')
+    compile files('libs/sun.misc.BASE64Decoder.jar')
+    //微信分享
+    compile files('libs/libammsdk.jar')
+    compile files('libs/pinyin4j-2.5.0.jar')
+    //百度地图
+    compile files('libs/BaiduLBS_Android.jar')
+    compile 'com.jakewharton:butterknife:7.0.1'
 }

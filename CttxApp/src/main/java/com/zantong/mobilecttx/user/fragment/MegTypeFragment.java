@@ -17,7 +17,7 @@ import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.MessageType;
 import com.zantong.mobilecttx.user.bean.MessageTypeBean;
 import com.zantong.mobilecttx.user.bean.MessageTypeResult;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import java.util.ArrayList;

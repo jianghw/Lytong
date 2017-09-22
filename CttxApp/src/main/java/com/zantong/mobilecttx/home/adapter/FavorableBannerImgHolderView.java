@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tzly.annual.base.bean.BaseResult;
 import com.tzly.annual.base.custom.banner.CBPageAdapter;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -14,19 +15,15 @@ import com.zantong.mobilecttx.browser.AdvBrowserActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
-import com.zantong.mobilecttx.home.activity.CustomCordovaActivity;
 import com.zantong.mobilecttx.home.bean.BannersBean;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResult;
 import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
-import com.zantong.mobilecttx.user.activity.LoginActivity;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
-import com.tzly.annual.base.bean.BaseResult;
-import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
-import cn.qqtheme.framework.util.image.ImageOptions;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.image.ImageOptions;
 
 
 /**
@@ -67,17 +64,7 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
         String url = data.getAdvertisementSkipUrl();
         PublicData.getInstance().mHashMap.put("htmlUrl", url);
 
-        if (url.contains("discount")
-                || url.contains("happysend")) {//保险
-            Act.getInstance().gotoIntent(mAdapterContext, CustomCordovaActivity.class, url);
-        } else if (url.contains("localActivity")) {//百日无违章
-            if (PublicData.getInstance().loginFlag) {
-                JxConfig.getInstance().eventIdByUMeng(1);
-                getSignStatus();
-            } else {
-                Act.getInstance().gotoIntent(mAdapterContext, LoginActivity.class);
-            }
-        } else if (url.contains("fahrschule")) {//驾校报名
+        if (url.contains("fahrschule")) {//驾校报名
             Act.getInstance().gotoIntentLogin(mAdapterContext, FahrschuleActivity.class);
         } else {
             Intent intent = new Intent();

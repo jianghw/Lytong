@@ -76,7 +76,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
+import com.tzly.annual.base.contract.bean.SubjectGoodsResult;
 import okhttp3.MultipartBody;
 import retrofit2.Retrofit;
 import rx.Observable;

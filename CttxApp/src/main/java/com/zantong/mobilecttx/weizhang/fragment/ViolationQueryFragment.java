@@ -59,15 +59,15 @@ import java.util.List;
 import java.util.Locale;
 
 import com.tzly.annual.base.bean.BaseResult;
-import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.ViewUtils;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
+import com.tzly.annual.base.global.JxConfig;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.ViewUtils;
+import com.tzly.annual.base.util.primission.PermissionFail;
+import com.tzly.annual.base.util.primission.PermissionGen;
+import com.tzly.annual.base.util.primission.PermissionSuccess;
 
-import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.annual.base.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 违法查询页面

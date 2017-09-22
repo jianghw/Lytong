@@ -13,8 +13,8 @@ import com.zantong.mobilecttx.order.fragment.CouponListFragment;
 
 import java.util.ArrayList;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ui.FragmentUtils;
 
 /**
  * 优惠券 列表

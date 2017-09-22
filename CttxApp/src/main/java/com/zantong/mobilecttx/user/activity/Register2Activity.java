@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.tzly.annual.base.bean.BaseResult;
 import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -20,13 +21,12 @@ import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
-import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
+import com.zantong.mobilecttx.cattle.MainClubActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.eventbus.CarInfoEvent;
-import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.user.bean.LoginResult;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
@@ -37,7 +37,6 @@ import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ScreenManager;
 import com.zantong.mobilecttx.utils.ValidateUtils;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
@@ -53,9 +52,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.Bind;
-import com.tzly.annual.base.bean.BaseResult;
-import cn.qqtheme.framework.util.ContextUtils;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.ToastUtils;
 
 public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresenter> implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
 
@@ -305,7 +303,6 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                                         new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                Act.getInstance().lauchIntent(Register2Activity.this, UnblockedCardActivity.class);
                                                 ScreenManager.getScreenManager().specialMethod();
                                             }
                                         },
@@ -313,7 +310,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
 
                                             @Override
                                             public void onClick(View v) {
-                                                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeMainActivity.class);
+                                                ScreenManager.getScreenManager().popAllActivityExceptOne(MainClubActivity.class);
                                             }
                                         },
                                         new View.OnClickListener() {
@@ -321,7 +318,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                                             @Override
                                             public void onClick(View v) {
                                                 AccountRememberCtrl.saveLoginAD(Register2Activity.this, "0");
-                                                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeMainActivity.class);
+                                                ScreenManager.getScreenManager().popAllActivityExceptOne(MainClubActivity.class);
                                             }
                                         });
                                 EventBus.getDefault().post(new CarInfoEvent(true));

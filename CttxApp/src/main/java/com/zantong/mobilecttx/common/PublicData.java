@@ -24,9 +24,6 @@ public class PublicData {
 
     private static PublicData instance;
 
-    private PublicData() {
-    }
-
     public static synchronized PublicData getInstance() {
         if (instance == null) {
             instance = new PublicData();
@@ -34,32 +31,32 @@ public class PublicData {
         return instance;
     }
 
+    public String userID = "";//用户ID
+    public RspInfoBean mLoginInfoBean; //用户Bean对象
+    public String filenum = "";//档案号(驾照号)
+    public String getdate = "";//初次领证号
+    public boolean loginFlag = false;//登录状态标志
+
     public String success = "000000";//交易返回成功标志
     public int smCtrlTime = 60;//验证码时间
     public String imei = "00000000";//手机IMEI
     public String deviceId = "";//阿里云DeviceId
-    public boolean loginFlag = false;//登录状态标志
-    public String userID = "";//用户ID
     public boolean defaultCar = false;//默认车标志
+
     public String defaultCarNumber = "";//默认车牌号
-    public String filenum = "";//档案号(驾照号)
-    public String getdate = "";//初次领证号
-
     public String CarLocalFlag = "userCarInfo";//本地缓存车辆信息的key
-    public String DefaultCarLocalFlag = "defaultCarInfo";//本地缓存默认车辆信息的key
-    public String IllegalViolationFlag = "IllegalViolationcChcek";//本地缓存违章信息的key
 
+    public String DefaultCarLocalFlag = "defaultCarInfo";//本地缓存默认车辆信息的key
     public String onlyflag = "";//短信验证码唯一标识
     public boolean TitleFlag = false;//短信验证码唯一标识
     public boolean updateMsg = false;//设置-更新通知开启状态
-    public final String NOTICE_STATE = "notice_state";//积分周期提醒key
 
+    public final String NOTICE_STATE = "notice_state";//积分周期提醒key
     public String bitmap;
+
     public Class<?> className;
 
     public int mCarNum = 0;
-
-    public RspInfoBean mLoginInfoBean;//用户Bean对象
     public NetLocationBean mNetLocationBean;
     public HashMap<String, Object> mHashMap = new HashMap<>();//界面信息传递工具
     public QueryHistoryBean mQueryHistoryBean;//查询历史缓存

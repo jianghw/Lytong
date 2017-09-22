@@ -26,11 +26,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import cn.qqtheme.framework.entity.City;
-import cn.qqtheme.framework.entity.County;
-import cn.qqtheme.framework.entity.Province;
-import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.entity.City;
+import com.tzly.annual.base.entity.County;
+import com.tzly.annual.base.entity.Province;
+import com.tzly.annual.base.global.JxConfig;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * Created by jianghw on 2017/5/4.

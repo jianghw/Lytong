@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFFFFF</color>
     <!-- colorPrimaryDark（状态栏底色）-->
     <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorAccent">#F3362B</color>
@@ -44,16 +43,13 @@
     <color name="colorNoticeGrayNumberFont">#FFF5F2F2</color>
     <color name="colorAddCarGrayNumberFont">#FF666666</color>
 
-    <color name="surePayPopupBackground">#4D000000</color>
     <color name="payRecordTimePopBack">#4D000000</color>
     <color name="mineGray">#FFC8C8CC</color>
-    <color name="noticeBackText">#FFFFEDED</color>
     <color name="changtongtitle">#11F43E29</color>
 
     <!-- hint颜色 -->
     <color name="hintColor">#7a8089</color>
     <!-- 浅hint颜色 -->
-    <color name="lowhintColor">#bcbfc4</color>
 
     <color name="dialogLine">#c2c3c6</color>
     <!-- 蒙版颜色 -->
@@ -67,7 +63,6 @@
     <!-- 红色 -->
 
     <!-- 二维码 -->
-    <color name="dark_red">#F50E0A</color>
     <color name="light_gray">#ffe6e6e6</color>
     <color name="contents_text">#ff000000</color>
     <color name="encode_view">#ffffffff</color>
@@ -104,7 +99,6 @@
     <color name="black_80">#3d3d3d</color>
     <color name="gray_4d">#4d4d4d</color>
     <color name="gray_4a">#4A4A4A</color>
-    <color name="gray_cc">#CCCCCC</color>
     <color name="gray_d3">#d3d3d3</color>
     <color name="gray_6e">#6E6E6E</color>
     <color name="gray_e3">#e3e3e3</color>

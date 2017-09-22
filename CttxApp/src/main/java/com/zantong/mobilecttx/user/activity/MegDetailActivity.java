@@ -9,7 +9,7 @@ import com.zantong.mobilecttx.presenter.MegDetailAtyPresenter;
 import com.zantong.mobilecttx.user.fragment.MegDetailFragment;
 import com.zantong.mobilecttx.user.fragment.MegTypeFragment;
 
-import cn.qqtheme.framework.util.AtyUtils;
+import com.tzly.annual.base.util.AtyUtils;
 
 /**
  * 消息详情页面

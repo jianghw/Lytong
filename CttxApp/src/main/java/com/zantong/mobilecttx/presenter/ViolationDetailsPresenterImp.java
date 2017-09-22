@@ -17,7 +17,7 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * Created by Administrator on 2016/5/5.

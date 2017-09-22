@@ -14,7 +14,7 @@ import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.contract.InterfaceForJS;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.annual.base.global.JxGlobal;
 
 /**
  * 加油支付浏览器

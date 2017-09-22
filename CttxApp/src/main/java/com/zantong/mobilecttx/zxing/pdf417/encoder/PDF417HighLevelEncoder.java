@@ -178,7 +178,6 @@ final class PDF417HighLevelEncoder {
     int p = 0;
     int textSubMode = SUBMODE_ALPHA;
 
-    // User selected encoding mode
     if (compaction == Compaction.TEXT) {
       encodeText(msg, p, len, sb, textSubMode);
 

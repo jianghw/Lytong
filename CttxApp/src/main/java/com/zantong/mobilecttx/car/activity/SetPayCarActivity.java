@@ -9,7 +9,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.car.fragment.SetPayCarFragment;
 
-import cn.qqtheme.framework.util.ui.FragmentUtils;
+import com.tzly.annual.base.util.ui.FragmentUtils;
 
 public class SetPayCarActivity extends BaseJxActivity {
 

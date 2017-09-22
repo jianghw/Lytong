@@ -133,7 +133,6 @@ public class LocalData {
         PublicData.getInstance().userID = rspInfoBean.getUsrid();
         PublicData.getInstance().filenum = rspInfoBean.getFilenum();
         PublicData.getInstance().getdate = rspInfoBean.getGetdate();
-        PublicData.getInstance().filenum = rspInfoBean.getFilenum();
         PublicData.getInstance().loginFlag = true;
 
         OpenQueryBean.RspInfoBean.UserCarsInfoBean mUserCarsInfoBean =

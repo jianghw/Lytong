@@ -9,6 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.widght.CustomLoader;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.contract.ILicenseGradeAtyContract;
@@ -21,9 +23,6 @@ import com.zantong.mobilecttx.weizhang.bean.RspInfoBean;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.util.List;
-
-import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.widght.CustomLoader;
 
 
 /**

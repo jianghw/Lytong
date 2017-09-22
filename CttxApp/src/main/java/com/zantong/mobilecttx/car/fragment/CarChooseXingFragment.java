@@ -1,19 +1,16 @@
 package com.zantong.mobilecttx.car.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.zantong.mobilecttx.car.adapter.CarChooseXingAdapter;
+import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
-import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
+import com.zantong.mobilecttx.car.adapter.CarChooseXingAdapter;
 import com.zantong.mobilecttx.car.bean.CarLinkageResult;
 import com.zantong.mobilecttx.car.bean.CarStyleInfoBean;
 import com.zantong.mobilecttx.car.dto.CarLinkageDTO;
-import com.zantong.mobilecttx.car.activity.AddCarActivity;
-import com.zantong.mobilecttx.car.activity.CarChooseActivity;
 
 public class CarChooseXingFragment extends BaseListFragment<CarStyleInfoBean> {
 
@@ -65,13 +62,7 @@ public class CarChooseXingFragment extends BaseListFragment<CarStyleInfoBean> {
 
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
-        CarStyleInfoBean carStyleBean = (CarStyleInfoBean) data;
-        Intent intent = new Intent(getActivity(), AddCarActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(CarChooseActivity.CAR_XING_BEAN, carStyleBean);
-        intent.putExtras(bundle);
-        getActivity().setResult(CarChooseActivity.RESULT_X_CODE, intent);
-        getActivity().finish();
+
     }
 
     @Override

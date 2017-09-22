@@ -27,7 +27,7 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.annual.base.global.JxGlobal;
 
 /**
  * 黄牛订单列表页面

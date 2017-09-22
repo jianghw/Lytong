@@ -37,7 +37,6 @@ public class ProgressWebView extends LinearLayout {
 
         mProgressBar = (ProgressBar) findViewById(R.id.widget_progress_webview_pb);
         mWebView = (WebView) findViewById(R.id.widget_progress_webview);
-        // 如需支持h5统计，需要将 assets/mobstat.js 拷贝到工程目录下
 
         getSettings().setJavaScriptEnabled(true);
         getSettings().setDomStorageEnabled(true);

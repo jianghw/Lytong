@@ -11,8 +11,8 @@ import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 import com.zantong.mobilecttx.weizhang.fragment.ViolationPayFragment;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ui.FragmentUtils;
 
 /**
  * 违章支付页面

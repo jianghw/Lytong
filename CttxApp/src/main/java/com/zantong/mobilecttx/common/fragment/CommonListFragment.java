@@ -11,7 +11,7 @@ import com.zantong.mobilecttx.common.adapter.CommonListAdapter;
 
 import java.util.Arrays;
 
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.annual.base.global.JxGlobal;
 
 /**
  * 公共列表类

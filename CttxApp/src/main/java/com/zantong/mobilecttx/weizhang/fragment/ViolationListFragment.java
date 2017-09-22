@@ -14,7 +14,7 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 
 import java.util.List;
 
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.annual.base.global.JxGlobal;
 
 /**
  * 所有订单

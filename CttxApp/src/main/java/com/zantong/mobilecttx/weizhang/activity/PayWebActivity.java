@@ -40,7 +40,7 @@ import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.util.ToastUtils;
 
 public class PayWebActivity extends AppCompatActivity implements ModelView{
     @Bind(R.id.webview_about)

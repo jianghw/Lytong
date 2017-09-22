@@ -14,8 +14,8 @@ import com.zantong.mobilecttx.fahrschule.fragment.SparringSubscribeFragment;
 import com.zantong.mobilecttx.fahrschule.fragment.SparringSucceedFragment;
 import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ui.FragmentUtils;
 
 /**
  * 陪练页面

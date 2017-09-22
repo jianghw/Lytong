@@ -57,10 +57,10 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.util.List;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
-import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.ui.DensityUtils;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.ui.DensityUtils;
 
 /**
  * Created by jianghw on 2017/7/7.

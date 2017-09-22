@@ -6,8 +6,8 @@ import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.presenter.MegTypeAtyPresenter;
 import com.zantong.mobilecttx.user.fragment.MegTypeFragment;
 
-import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.util.AtyUtils;
+import com.tzly.annual.base.global.JxConfig;
+import com.tzly.annual.base.util.AtyUtils;
 
 /**
  * 消息页面

@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * Created by 王海洋 on 16/6/1.
@@ -31,10 +31,7 @@ public class UpdateNickNamePresenter extends BasePresenter<IBaseView> implements
     public UpdateNickNamePresenter(UpdateNickName mUpdateNickName) {
         this.mUpdateNickName = mUpdateNickName;
         mUpdateNickNameModelImpc = new UpdateNickNameModelImp();
-
-
     }
-
 
     @Override
     public void loadView(int index) {
@@ -70,7 +67,6 @@ public class UpdateNickNamePresenter extends BasePresenter<IBaseView> implements
                     ToastUtils.toastShort(mUpdateInfo.getSYS_HEAD().getReturnMessage());
                 }
                 break;
-
         }
     }
 

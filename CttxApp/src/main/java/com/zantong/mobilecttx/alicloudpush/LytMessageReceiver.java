@@ -9,8 +9,8 @@ import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.google.gson.Gson;
 import com.tzly.annual.base.bean.HomeNotice;
 import com.tzly.annual.base.util.LogUtils;
+import com.zantong.mobilecttx.cattle.MainClubActivity;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
-import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.Tools;
@@ -101,7 +101,7 @@ public class LytMessageReceiver extends MessageReceiver {
         if (pushExtBean != null) {
             String type = pushExtBean.getType();
             if (type.equals("1")) {//小喇叭页面
-                Intent intent = new Intent(context, HomeMainActivity.class);
+                Intent intent = new Intent(context, MainClubActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             } else if (type.equals("2")) {
@@ -147,33 +147,10 @@ public class LytMessageReceiver extends MessageReceiver {
         }
     }
 
-    private void saveDataOpen(Context context, PushBean pushBean, String key) {
-        try {
-            List<HomeNotice> list;
-            list = (List<HomeNotice>) UserInfoRememberCtrl.readObject(key);
-            for (HomeNotice item : list) {
-                if (item.getId().equals(pushBean.getId())) {
-                    item.setNewMeg(false);
-                }
-            }
-            UserInfoRememberCtrl.saveObject(key, list);
-            try {
-                // 刷新下消息列表
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
     @Override
     public void onNotificationRemoved(Context context, String messageId) {
         LogUtils.i("onNotificationRemoved=== ： " + messageId);
     }
-
 
     @Override
     protected void onNotificationClickedWithNoAction(Context context, String title, String summary, String extraMap) {

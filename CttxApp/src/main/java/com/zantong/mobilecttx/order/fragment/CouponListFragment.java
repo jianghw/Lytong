@@ -18,7 +18,7 @@ import com.zantong.mobilecttx.widght.SpaceItemDecoration;
 
 import java.util.ArrayList;
 
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.annual.base.global.JxGlobal;
 
 /**
  * 选择优惠劵 页面 加油

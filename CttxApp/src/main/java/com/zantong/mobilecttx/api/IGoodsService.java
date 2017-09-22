@@ -5,7 +5,7 @@ import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
 import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
 import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
+import com.tzly.annual.base.contract.bean.SubjectGoodsResult;
 
 import java.util.Map;
 

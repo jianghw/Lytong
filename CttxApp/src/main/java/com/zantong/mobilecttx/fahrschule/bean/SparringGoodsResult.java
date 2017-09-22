@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.fahrschule.bean;
 
 import com.tzly.annual.base.bean.BaseResult;
 
-import cn.qqtheme.framework.contract.bean.SubjectGoodsData;
+import com.tzly.annual.base.contract.bean.SubjectGoodsData;
 
 /**
  * 科目强化商品列表

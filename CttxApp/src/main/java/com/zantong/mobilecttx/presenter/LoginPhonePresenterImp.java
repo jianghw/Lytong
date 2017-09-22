@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.util.ToastUtils;
 
 
 /**

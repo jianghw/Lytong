@@ -19,7 +19,7 @@ import java.text.DecimalFormat;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-import static cn.qqtheme.framework.util.image.ImageOptions.getMessageOptions;
+import static com.tzly.annual.base.util.image.ImageOptions.getMessageOptions;
 
 /**
  * Created by zhoujie on 2017/2/13.

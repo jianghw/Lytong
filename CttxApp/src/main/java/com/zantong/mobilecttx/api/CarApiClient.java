@@ -13,8 +13,6 @@ import com.zantong.mobilecttx.car.dto.CarMarnagerDetailDTO;
 import com.zantong.mobilecttx.car.dto.LiYingCarManageDTO;
 import com.zantong.mobilecttx.card.bean.YingXiaoResult;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
-import com.zantong.mobilecttx.card.dto.BindDrivingDTO;
-import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeOrderDetailResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeOrderResult;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
@@ -22,16 +20,8 @@ import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeOrderDTO;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.daijia.bean.DJTokenResult;
-import com.zantong.mobilecttx.daijia.bean.DaiJiaCreateResult;
-import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderDetailResult;
-import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderListResult;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
-import com.zantong.mobilecttx.daijia.dto.DaiJiaCreateDTO;
-import com.zantong.mobilecttx.daijia.dto.DaiJiaDTO;
-import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderDetailDTO;
-import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderListDTO;
 import com.zantong.mobilecttx.home.bean.HomeResult;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResult;
@@ -185,17 +175,6 @@ public class CarApiClient extends BaseApiClient {
         post(context, getUrl("cttx/bindingVehicle"), params, baseCallBack);
     }
 
-    public static void commitDriving(Context context, BindDrivingDTO params, CallBack<BaseResult> callback) {
-        params.setUserId(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
-        params.setFileNum(RSAUtils.strByEncryptionLiYing(params.getFileNum(), true));
-        params.setLicenseno(RSAUtils.strByEncryptionLiYing(params.getLicenseno(), true));
-
-        BaseCallBack<BaseResult> baseCallBack = new BaseCallBack<>(
-                context, callback, BaseResult.class);
-
-        post(context, getUrl("cttx/bindingDriving"), params, baseCallBack);
-    }
-
     public static void liYingReg(Context context, LiYingRegDTO params, CallBack<BaseResult> callback) {
         params.setToken(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().deviceId, true));
         params.setPushmode("2");
@@ -281,11 +260,6 @@ public class CarApiClient extends BaseApiClient {
         post(context, getUrl("february/usrCouponInfo"), dto, result);
     }
 
-    public static void checkCtk(Context context, CheckCtkDTO dto, CallBack<BaseResult> callback) {
-        BaseCallBack<BaseResult> result = new BaseCallBack<BaseResult>(
-                context, callback, BaseResult.class);
-        post(context, getUrl("february/applyCardCheck"), dto, result);
-    }
 
     public static void getActivityCar(Context context, ActivityCarDTO dto, CallBack<ActivityCarResult> callback) {
         BaseCallBack<ActivityCarResult> result = new BaseCallBack<ActivityCarResult>(
@@ -293,17 +267,6 @@ public class CarApiClient extends BaseApiClient {
         post(context, getUrl("february/carCheckActivity"), dto, result);
     }
 
-    public static void getDaiJiaToken(Context context, DaiJiaDTO dto, CallBack<DJTokenResult> callback) {
-        BaseCallBack<DJTokenResult> result = new BaseCallBack<DJTokenResult>(
-                context, callback, DJTokenResult.class);
-        post(context, getUrl("daijia/nearByInfo"), dto, result);
-    }
-
-    public static void huJiaoDaiJia(Context context, DaiJiaCreateDTO dto, CallBack<DaiJiaCreateResult> callback) {
-        BaseCallBack<DaiJiaCreateResult> result = new BaseCallBack<DaiJiaCreateResult>(
-                context, callback, DaiJiaCreateResult.class);
-        post(context, getUrl("daijia/addOrder"), dto, result);
-    }
 
     public static void getSignNum(Context context, CallBack<ActivitySignNum> callback) {
         BaseCallBack<ActivitySignNum> result = new BaseCallBack<ActivitySignNum>(
@@ -311,27 +274,6 @@ public class CarApiClient extends BaseApiClient {
         post(context, getUrl("february/activityCount"), new Object(), result);
     }
 
-    /**
-     * 代驾中详情
-     */
-    public static void getDaiJiaOrderDetail(Context context, DaiJiaOrderDetailDTO dto, CallBack<DaiJiaOrderDetailResult> callback) {
-        BaseCallBack<DaiJiaOrderDetailResult> result = new BaseCallBack<DaiJiaOrderDetailResult>(
-                context, callback, DaiJiaOrderDetailResult.class);
-        post(context, getUrl("daijia/queryOrderDetail"), dto, result);
-    }
-
-    public static void cancelDaiJiaOrderDetail(Context context, DaiJiaOrderDetailDTO dto, CallBack<BaseResult> callback) {
-        BaseCallBack<BaseResult> result = new BaseCallBack<BaseResult>(
-                context, callback, BaseResult.class);
-        post(context, getUrl("daijia/cancelOrder"), dto, result);
-
-    }
-
-    public static void getDaiJiaOrderList(Context context, DaiJiaOrderListDTO dto, CallBack<DaiJiaOrderListResult> callback) {
-        BaseCallBack<DaiJiaOrderListResult> result = new BaseCallBack<DaiJiaOrderListResult>(
-                context, callback, DaiJiaOrderListResult.class);
-        post(context, getUrl("daijia/findAll"), dto, result);
-    }
 
     public static void getMsgTypeList(Context context, BaseDTO dto, CallBack<MessageTypeResult> callback) {
         BaseCallBack<MessageTypeResult> result = new BaseCallBack<MessageTypeResult>(

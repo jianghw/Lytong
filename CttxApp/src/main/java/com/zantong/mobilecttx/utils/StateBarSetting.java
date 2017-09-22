@@ -10,7 +10,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.home.activity.HomeMainActivity;
+import com.zantong.mobilecttx.cattle.MainClubActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 /**
@@ -29,9 +29,10 @@ public class StateBarSetting {
         settingBar(mContext, 0, clazz, popFlag);
     }
     public static void settingBar(final Activity mContext, int res, final Class<?> clazz, final boolean popFlag){
-        if(!(mContext instanceof HomeMainActivity)){
+        if(!(mContext instanceof MainClubActivity)){
             ScreenManager.pushActivity(mContext);
         }
+
         View view = mContext.findViewById(R.id.tv_back);
         View text_right = mContext.findViewById(R.id.text_right);
         if(view != null){

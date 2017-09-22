@@ -24,14 +24,11 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
-import com.zantong.mobilecttx.card.activity.MyCardActivity;
-import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.CommonProblemActivity;
 import com.zantong.mobilecttx.contract.IHomeMeFtyContract;
-import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 import com.zantong.mobilecttx.home.bean.DriverCoachResult;
 import com.zantong.mobilecttx.order.activity.CouponActivity;
 import com.zantong.mobilecttx.order.activity.OrderParentActivity;
@@ -55,12 +52,12 @@ import com.zantong.mobilecttx.weizhang.activity.ViolationHistoryAcitvity;
 import java.io.File;
 import java.util.List;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.AppUtils;
-import cn.qqtheme.framework.util.ContextUtils;
-import cn.qqtheme.framework.util.FileUtils;
-import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.image.ImageLoadUtils;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.AppUtils;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.FileUtils;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.image.ImageLoadUtils;
 
 import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 
@@ -123,7 +120,6 @@ public class HomeMeFragment extends BaseRefreshJxFragment
      * mPresenter
      */
     private IHomeMeFtyContract.IHomeMeFtyPresenter mPresenter;
-    private HomeMainActivity.MessageListener mHomeListener;
 
     public static HomeMeFragment newInstance() {
         return new HomeMeFragment();
@@ -389,19 +385,6 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(30));
                 Act.getInstance().gotoIntentLogin(getActivity(), OrderParentActivity.class);
                 break;
-            case R.id.lay_driver_order://司机订单
-                Intent intent = new Intent();
-                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "司机订单");
-                intent.putExtra(JxGlobal.putExtra.browser_url_extra,
-                        "http://biz.liyingtong.com/h5/driver/index.html");
-                Act.getInstance().gotoLoginByIntent(getActivity(), HtmlBrowserActivity.class, intent);
-                break;
-            case R.id.tv_card://我的畅通卡
-                if (Tools.isStrEmpty(PublicData.getInstance().filenum))
-                    Act.getInstance().gotoIntentLogin(getActivity(), UnblockedCardActivity.class);
-                else
-                    Act.getInstance().gotoIntentLogin(getActivity(), MyCardActivity.class);
-                break;
             case R.id.tv_car:
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(28));
                 Act.getInstance().gotoIntentLogin(getActivity(), ManageCarActivity.class);
@@ -494,9 +477,6 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         MessageCountBean resultData = result.getData();
         if (mImgMsg != null) mImgMsg.setVisibility(
                 resultData != null && resultData.getCount() > 0 ? View.VISIBLE : View.GONE);
-
-        if (mHomeListener != null)
-            mHomeListener.setTipOfNumber(2, resultData != null ? resultData.getCount() : 0);
     }
 
     @Override
@@ -518,7 +498,4 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         mLayDriverOrder.setVisibility(result.getData() ? View.VISIBLE : View.GONE);
     }
 
-    public void setMessageListener(HomeMainActivity.MessageListener messageListener) {
-        mHomeListener = messageListener;
-    }
 }

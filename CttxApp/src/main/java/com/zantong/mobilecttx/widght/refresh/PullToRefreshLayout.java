@@ -15,9 +15,6 @@ import android.widget.TextView;
 
 import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.utils.GifHeadView;
-
-import pl.droidsonroids.gif.GifDrawable;
 
 
 /**
@@ -754,28 +751,6 @@ public class PullToRefreshLayout extends RelativeLayout {
         // 加载操作
         if (mOnPullListener != null)
             mOnPullListener.onLoadMore(this);
-    }
-
-    /**
-     * 设置下拉刷新gif动画头
-     */
-    public void setGifRefreshView(GifDrawable headGifDrawable) {
-        // 设置下拉头
-        GifHeadView headView = new GifHeadView(getContext());
-        headView.setGifAnim(headGifDrawable);
-        setCustomRefreshView(headView);
-        setOnRefreshProcessListener(new GifOnPullProcessListener(headView.getDrawable()));
-    }
-
-    /**
-     * 设置上拉加载更多gif动画头
-     */
-    public void setGifLoadmoreView(GifDrawable footGifDrawable) {
-        // 设置上拉头
-        GifHeadView footView = new GifHeadView(getContext());
-        footView.setGifAnim(footGifDrawable);
-        setCustomUploadMoreView(footView);
-        setOnLoadmoreProcessListener(new GifOnPullProcessListener(footView.getDrawable()));
     }
 
     /**

@@ -18,6 +18,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tzly.annual.base.picker.DatePicker;
+import com.tzly.annual.base.util.CleanUtils;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.FileUtils;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.primission.PermissionFail;
+import com.tzly.annual.base.util.primission.PermissionGen;
+import com.tzly.annual.base.util.primission.PermissionSuccess;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
@@ -51,14 +59,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.picker.DatePicker;
-import cn.qqtheme.framework.util.CleanUtils;
-import cn.qqtheme.framework.util.ContextUtils;
-import cn.qqtheme.framework.util.FileUtils;
-import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -68,7 +68,7 @@ import retrofit2.Response;
 
 import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
-import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.annual.base.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 设置页面

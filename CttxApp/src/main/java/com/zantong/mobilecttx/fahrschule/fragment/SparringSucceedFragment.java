@@ -15,17 +15,15 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobilecttx.card.activity.ApplyCardFirstActivity;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.Tools;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 
-import cn.qqtheme.framework.util.ToastUtils;
+import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 陪练支付 成功
@@ -125,7 +123,6 @@ public class SparringSucceedFragment extends BaseRefreshJxFragment implements Vi
         switch (v.getId()) {
             case R.id.tv_prompt://绑卡去
                 if (Tools.isStrEmpty(PublicData.getInstance().filenum))
-                    Act.getInstance().gotoIntent(getActivity(), ApplyCardFirstActivity.class);
                 break;
             case R.id.tv_commit:
                 new DialogMgr(getActivity(),

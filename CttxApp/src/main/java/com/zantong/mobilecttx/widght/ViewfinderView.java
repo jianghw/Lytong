@@ -20,7 +20,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.zantong.mobilecttx.R;
-import cn.qqtheme.framework.util.ui.DensityUtils;
+import com.tzly.annual.base.util.ui.DensityUtils;
 
 /**
  * 自定义拍照扫描框
