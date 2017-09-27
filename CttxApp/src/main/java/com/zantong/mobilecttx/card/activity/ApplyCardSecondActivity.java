@@ -574,7 +574,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         } catch (Exception e) {
             e.printStackTrace();
             downloadTxt();
-            ToastUtils.showShort(this, "获取网点失败,正在为你重新获取");
+            ToastUtils.toastShort("获取网点失败,正在为你重新获取");
         }
     }
 
@@ -765,7 +765,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         String bankData = mZhuanChuKaHao.getContentText();
         //autcrepymtmth 0是开通提醒 9是不开通
         if ("0".equals(applyCTCardDTO.getAutcrepymtmth()) && TextUtils.isEmpty(bankData)) {
-            ToastUtils.showShort(this, "自动还款转出卡号不可为空");
+            ToastUtils.toastShort("自动还款转出卡号不可为空");
             return;
         }
         applyCTCardDTO.setTurnoutacnum(bankData);
@@ -863,7 +863,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
                 if (result.getResponseCode() == 2000) {
                     commitInfo();
                 } else {
-                    ToastUtils.showShort(getApplicationContext(), "七天之内不能重复办卡");
+                    ToastUtils.toastShort("七天之内不能重复办卡");
                 }
             }
         });

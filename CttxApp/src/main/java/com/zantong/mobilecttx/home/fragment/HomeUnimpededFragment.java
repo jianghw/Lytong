@@ -17,7 +17,7 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobilecttx.browser.AdvBrowserActivity;
+import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
@@ -536,14 +536,14 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         Intent intent = new Intent();
         intent.putExtra(JxGlobal.putExtra.browser_title_extra, "爱车估值");
         intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://m.jingzhengu.com/xiansuo/sellcar-changtongcheyouhui.html");
-        Act.getInstance().gotoLoginByIntent(getActivity(), AdvBrowserActivity.class, intent);
+        Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
     }
 
     protected void InternationalDrivingDocument() {
         Intent intent = new Intent();
         intent.putExtra(JxGlobal.putExtra.browser_title_extra, "国际驾照");
         intent.putExtra(JxGlobal.putExtra.browser_url_extra, "https://m.huizuche.com/Cdl/Intro3/ctcyh");
-        Act.getInstance().gotoLoginByIntent(getActivity(), AdvBrowserActivity.class, intent);
+        Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
     }
 
     protected void licenseCheckGrade() {

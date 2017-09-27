@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
-import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
+import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.order.activity.AnnualOrderDetailActivity;
 import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
 import com.zantong.mobilecttx.order.activity.OrderParentActivity;
@@ -81,7 +81,7 @@ public class OrderAllStatusFragment extends BaseRecyclerListJxFragment<OrderList
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.browser_title_extra, bean.getGoodsName());
                 intent.putExtra(JxGlobal.putExtra.browser_url_extra, bean.getTargetUrl() + "?orderId=" + orderId);
-                Act.getInstance().gotoLoginByIntent(getActivity(), HtmlBrowserActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
             }
         }
     }

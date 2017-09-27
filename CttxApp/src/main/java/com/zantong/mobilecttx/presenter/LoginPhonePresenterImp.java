@@ -102,7 +102,7 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
     public void onSuccess(Object mLoginInfoBean, int index) {
         mLoginActivity.hideProgress();
         if (index == 2 && !PublicData.getInstance().success.equals(((LoginInfoBean) mLoginInfoBean).getSYS_HEAD().getReturnCode())) {
-            ToastUtils.showShort(mLoginActivity, ((LoginInfoBean) mLoginInfoBean).getSYS_HEAD().getReturnMessage());
+            ToastUtils.toastShort(((LoginInfoBean) mLoginInfoBean).getSYS_HEAD().getReturnMessage());
             return;
         }
         switch (index) {
@@ -141,6 +141,6 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
     @Override
     public void onFailed() {
         mLoginActivity.hideProgress();
-        ToastUtils.showShort(mLoginActivity, Config.getErrMsg("1"));
+        ToastUtils.toastShort(Config.getErrMsg("1"));
     }
 }

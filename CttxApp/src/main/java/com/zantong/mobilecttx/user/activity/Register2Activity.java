@@ -237,19 +237,19 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                 final String pwd = mPwd.getText().toString().replace(" ", "");
                 String pwd2 = mPwd2.getText().toString().replace(" ", "");
                 if (pwd.length() < 6 || pwd.length() > 20) {
-                    ToastUtils.showShort(this, "密码位数不对");
+                    ToastUtils.toastShort("密码位数不对");
                     return;
                 } else if (!ValidateUtils.checkPwd(pwd)) {
-                    ToastUtils.showShort(this, "密码存在非法字符");
+                    ToastUtils.toastShort("密码存在非法字符");
                     return;
                 } else if (ValidateUtils.checkNum(pwd)) {
-                    ToastUtils.showShort(this, "密码不能为纯数字");
+                    ToastUtils.toastShort("密码不能为纯数字");
                     return;
                 } else if (ValidateUtils.checkChar(pwd)) {
-                    ToastUtils.showShort(this, "密码不能为纯字母");
+                    ToastUtils.toastShort("密码不能为纯字母");
                     return;
                 } else if (!pwd.equals(pwd2)) {
-                    ToastUtils.showShort(this, "两次输入的密码不一致");
+                    ToastUtils.toastShort("两次输入的密码不一致");
                     return;
                 }
                 SPUtils.getInstance().setUserPwd(pwd);
@@ -354,7 +354,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                         public void onSuccess(LoginResult result) {
                             hideDialogLoading();
                             if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
-                                ToastUtils.showShort(Register2Activity.this, "密码已重置");
+                                ToastUtils.toastShort("密码已重置");
                                 finish();
                             }
                         }

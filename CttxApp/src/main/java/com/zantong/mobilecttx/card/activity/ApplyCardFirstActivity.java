@@ -17,7 +17,7 @@ import com.zantong.mobilecttx.api.HandleCTCardApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
+import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.card.dto.BidCTCardDTO;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
 import com.zantong.mobilecttx.common.Config;
@@ -112,7 +112,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.browser_title_extra, "隐私声明");
                 intent.putExtra(JxGlobal.putExtra.browser_url_extra, "file:///android_asset/bindcard_agreement.html");
-                Act.getInstance().gotoLoginByIntent(this, HtmlBrowserActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
                 break;
             case R.id.apply_card_first_commit://下一步
                 commitValue();
@@ -188,7 +188,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
     @PermissionFail(requestCode = 100)
     public void doFailSomething() {
-        ToastUtils.showShort(getApplicationContext(), "您已关闭内存卡读写权限");
+        ToastUtils.toastShort("您已关闭内存卡读写权限");
     }
 
     /**
@@ -196,24 +196,24 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
      */
     private void valueFormValidation() {
         if (TextUtils.isEmpty(getUserName())) {
-            ToastUtils.showShort(getApplicationContext(), "姓名不可为空");
+            ToastUtils.toastShort("姓名不可为空");
             return;
         }
         if (TextUtils.isEmpty(getUserIdCard())) {
-            ToastUtils.showShort(getApplicationContext(), "驾档编号不能为空");
+            ToastUtils.toastShort("驾档编号不能为空");
             return;
         }
         if (TextUtils.isEmpty(getDriverFileNum())) {
-            ToastUtils.showShort(getApplicationContext(), "驾驶证号不能为空");
+            ToastUtils.toastShort("驾驶证号不能为空");
             return;
         }
 
         if (getDriverFileNum().length() != 12) {
-            ToastUtils.showShort(getApplicationContext(), "请输入12位驾档编号");
+            ToastUtils.toastShort("请输入12位驾档编号");
             return;
         }
         if (!RegexUtils.isIDCard15(getUserIdCard()) && !RegexUtils.isIDCard18(getUserIdCard())) {
-            ToastUtils.showShort(this, "身份证号码不正确");
+            ToastUtils.toastShort("身份证号码不正确");
             return;
         }
 //TODO 什么贵

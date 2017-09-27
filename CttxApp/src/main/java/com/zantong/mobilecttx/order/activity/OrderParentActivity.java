@@ -11,8 +11,8 @@ import android.view.View;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.browser.BrowserForPayActivity;
-import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
+import com.zantong.mobilecttx.browser.PayHtmlActivity;
+import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.browser.PayBrowserActivity;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
@@ -166,7 +166,7 @@ public class OrderParentActivity extends BaseJxActivity
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.browser_title_extra, bean.getGoodsName());
                 intent.putExtra(JxGlobal.putExtra.browser_url_extra, bean.getTargetUrl());
-                Act.getInstance().gotoLoginByIntent(OrderParentActivity.this, HtmlBrowserActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(OrderParentActivity.this, BrowserHtmlActivity.class, intent);
             }
 
             /**
@@ -330,7 +330,7 @@ public class OrderParentActivity extends BaseJxActivity
         Intent intent = new Intent();
         intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
         intent.putExtra(JxGlobal.putExtra.browser_url_extra, result.getData());
-        Act.getInstance().gotoLoginByIntent(this, BrowserForPayActivity.class, intent);
+        Act.getInstance().gotoLoginByIntent(this, PayHtmlActivity.class, intent);
     }
 
     @Override
@@ -380,7 +380,7 @@ public class OrderParentActivity extends BaseJxActivity
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.browser_title_extra, mOrderListBean.getGoodsName());
                 intent.putExtra(JxGlobal.putExtra.browser_url_extra, mOrderListBean.getTargetUrl() + "?orderId=" + orderId);
-                Act.getInstance().gotoLoginByIntent(this, HtmlBrowserActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
             }
         }
     }

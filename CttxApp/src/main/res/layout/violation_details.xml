@@ -17,6 +17,31 @@
             android:padding="16dip">
 
             <TextView
+                android:id="@+id/tv_carNum_title"
+                style="@style/TextInfoStyleNoVertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="20dip"
+                android:text="车牌信息"/>
+
+            <TextView
+                android:id="@+id/tv_carNum"
+                style="@style/TextInfoRightStyleNoVertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_carNum_title"
+                tools:text="不按规定停车"/>
+        </RelativeLayout>
+
+        <TextView style="@style/line_splite_dashed"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dip">
+
+            <TextView
                 android:id="@+id/violation_location_title"
                 style="@style/TextInfoStyleNoVertical"
                 android:layout_width="wrap_content"
@@ -225,10 +250,10 @@
             android:id="@+id/viloation_detail_commit_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dip"
+            android:layout_marginTop="45dip"
             android:gravity="center"
             android:textColor="@color/gray_66"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/next_btn"

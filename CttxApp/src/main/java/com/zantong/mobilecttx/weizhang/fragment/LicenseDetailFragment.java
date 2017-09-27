@@ -222,8 +222,6 @@ public class LicenseDetailFragment extends BaseRefreshJxFragment
      */
     @Override
     public void driverLicenseCheckGradeSucceed(LicenseResponseBean result) {
-//        mTvScore.setText(rspInfo != null ? String.valueOf(rspInfo.getTotcent()) : "0");
-
         RspInfoBean rspInfo = result.getRspInfo();
         List<RspInfoBean.ViolationInfoBean> infoBeanList = rspInfo.getViolationInfo();
         setDataResult(infoBeanList);

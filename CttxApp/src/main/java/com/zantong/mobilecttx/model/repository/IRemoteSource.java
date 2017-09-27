@@ -46,9 +46,12 @@ import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
+import com.zantong.mobilecttx.weizhang.bean.ViolationNumBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
+import com.zantong.mobilecttx.weizhang.dto.ViolationUpdateDTO;
 
 import java.util.List;
 
@@ -145,7 +148,10 @@ public interface IRemoteSource {
      */
     Observable<PayOrderResult> paymentCreateOrder(ViolationPayDTO payDTO);
 
-    Observable<LicenseResponseBean> loadLoginPostTest(String msg);
+    /**
+     * cip.cfc.v003.01
+     */
+    Observable<ViolationNumBean> numberedQuery(String msg);
 
     /**
      * 1.首页信息
@@ -331,4 +337,11 @@ public interface IRemoteSource {
      * 33.获取收件人信息
      */
     Observable<ReceiveInfoResult> getReceiveInfo(String orderId);
+
+    /**
+     * 46.更新违章缴费状态
+     *
+     * @param json
+     */
+    Observable<BaseResult> updateState(List<ViolationNum> json);
 }

@@ -211,7 +211,7 @@ public class ResetActivity extends BaseMvpActivity<IOrderView,OrderPresenter> {
                         onlyflag = result.getRspInfo().getOnlyflag();
                     } else {
                         iTime = 0;
-                        ToastUtils.showShort(ResetActivity.this, "该用户暂未注册");
+                        ToastUtils.toastShort("该用户暂未注册");
                         mPhone.setText("");
                     }
                 }
@@ -238,11 +238,11 @@ public class ResetActivity extends BaseMvpActivity<IOrderView,OrderPresenter> {
 
         String vcode = mVCode.getText().toString();
         if (TextUtils.isEmpty(vcode)) {
-            ToastUtils.showShort(this, "验证码不能为空");
+            ToastUtils.toastShort("验证码不能为空");
             return;
         }
         if (TextUtils.isEmpty(onlyflag)) {
-            ToastUtils.showShort(this, "onlyflag字段不能为空");
+            ToastUtils.toastShort("onlyflag字段不能为空");
             return;
         }
         VcodeDTO dto = new VcodeDTO();

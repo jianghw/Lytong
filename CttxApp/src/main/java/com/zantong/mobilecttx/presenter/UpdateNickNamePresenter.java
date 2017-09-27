@@ -77,6 +77,6 @@ public class UpdateNickNamePresenter extends BasePresenter<IBaseView> implements
     @Override
     public void onFailed() {
         mUpdateNickName.hideDialogLoading();
-        ToastUtils.showShort(mUpdateNickName, Config.getErrMsg("1"));
+        ToastUtils.toastShort(Config.getErrMsg("1"));
     }
 }

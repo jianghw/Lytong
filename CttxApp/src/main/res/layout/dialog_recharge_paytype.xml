@@ -68,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="工行其它银行卡支付"
+            android:text="其它银行卡支付"
             android:textColor="@color/gray_99"
             android:textSize="@dimen/fs_51" />
     </LinearLayout>

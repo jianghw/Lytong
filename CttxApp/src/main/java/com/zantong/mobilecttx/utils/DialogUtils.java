@@ -607,13 +607,8 @@ public class DialogUtils {
         Button mCommit = (Button) view.findViewById(R.id.dialog_one_btn_commit);
         mSn.setText(ordId);
         mAmount.setText(amount);
-        mPayTypeText.setText(payType.equals("0") ? "畅通卡支付" : "工行其它银行卡支付");
-//		mPayTypeLayout.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				selRechargeTypeDialog(context,mPayTypeText);
-//			}
-//		});
+        mPayTypeText.setText(payType.equals("0") ? "畅通卡支付" : "其它银行卡支付");
+
         mCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

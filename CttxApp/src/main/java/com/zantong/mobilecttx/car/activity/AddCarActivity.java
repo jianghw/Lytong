@@ -330,11 +330,11 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
         getCarInfoDto();
 
         if (plateNum.length() < 4) {
-            ToastUtils.showShort(this, "请输入正确的车牌号");
+            ToastUtils.toastShort("请输入正确的车牌号");
             return;
         }
         if (Tools.isStrEmpty(engineNum) || engineNum.length() != 5) {
-            ToastUtils.showShort(this, "请输入正确的发动机号");
+            ToastUtils.toastShort("请输入正确的发动机号");
             return;
         }
 
@@ -388,7 +388,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                     }
                     for (int i = 0; i < list.size(); i++) {
                         if (list.get(i).getCarnum().equals(dto.getCarnum())) {
-                            ToastUtils.showShort(this.getApplication(), "该车辆已存在，请不要重复添加");
+                            ToastUtils.toastShort("该车辆已存在，请不要重复添加");
                             return;
                         }
                     }
@@ -432,7 +432,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                     if (list1.size() > 0) {
                         for (int i = 0; i < list1.size(); i++) {
                             if (list1.get(i).getCarnum().equals(dto.getCarnum())) {
-                                ToastUtils.showShort(this.getApplication(), "该车辆已存在，请不要重复添加");
+                                ToastUtils.toastShort("该车辆已存在，请不要重复添加");
                                 return;
                             }
                         }
@@ -655,7 +655,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
 
     @PermissionFail(requestCode = 100)
     public void doFailSomething() {
-        ToastUtils.showShort(this, "您已关闭摄像头权限");
+        ToastUtils.toastShort("您已关闭摄像头权限");
     }
 
     private void toByteArray(File file) throws IOException {
@@ -795,11 +795,11 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
         String plateNum = mPlateNum.getText().toString();
         String engineNum = mEngineNum.getText().toString();
         if (TextUtils.isEmpty(plateNum)) {
-            ToastUtils.showShort(this, "请输入正确的车牌号");
+            ToastUtils.toastShort("请输入正确的车牌号");
             return;
         }
         if (Tools.isStrEmpty(engineNum)) {
-            ToastUtils.showShort(this, "请输入发动机号");
+            ToastUtils.toastShort("请输入发动机号");
             return;
         }
         dto.setOpertype("3");
@@ -812,11 +812,11 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
         String plateNum = mPlateNum.getText().toString();
         String engineNum = mEngineNum.getText().toString();
         if (TextUtils.isEmpty(plateNum)) {
-            ToastUtils.showShort(this, "请输入正确的车牌号");
+            ToastUtils.toastShort("请输入正确的车牌号");
             return;
         }
         if (Tools.isStrEmpty(engineNum)) {
-            ToastUtils.showShort(this, "请输入发动机号");
+            ToastUtils.toastShort("请输入发动机号");
             return;
         }
         dto.setOpertype("2");
@@ -930,7 +930,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
         showDialogLoading();
         if (OcrCameraActivity.file == null) {
             hideDialogLoading();
-            ToastUtils.showShort(this, "照片获取失败");
+            ToastUtils.toastShort("照片获取失败");
             return;
         }
         CarApiClient.uploadDrivingImg(this, OcrCameraActivity.file, new CallBack<DrivingOcrResult>() {
@@ -962,7 +962,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                         dto.setCarnumtype(VehicleTypeTools.switchVehicleCode(mType.getText().toString()));
                     }
                 } else {
-                    ToastUtils.showShort(AddCarActivity.this, "解析失败，请重试");
+                    ToastUtils.toastShort("解析失败，请重试");
                 }
             }
 

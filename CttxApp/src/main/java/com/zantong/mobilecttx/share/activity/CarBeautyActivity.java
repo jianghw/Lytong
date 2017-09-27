@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.browser.AdvBrowserActivity;
+import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import cn.qqtheme.framework.global.JxConfig;
@@ -68,14 +68,13 @@ public class CarBeautyActivity extends BaseJxActivity implements View.OnClickLis
 //                Intent i = new Intent();
 //                i.putExtra(JxGlobal.putExtra.browser_title_extra, "车内空调养护");
 //                i.putExtra(JxGlobal.putExtra.browser_url_extra, "http://m.hiservice.com.cn/activity/freekongtiaoyanghu?source=gonghangcx");
-//                Act.getInstance().gotoLoginByIntent(this, AdvBrowserActivity.class, i);
 //                break;
             case R.id.img_violation:
                 mCurPosition = 2;
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.browser_title_extra, "汽车冰蜡");
                 intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://m.hiservice.com.cn/market/icbc58");
-                Act.getInstance().gotoLoginByIntent(this, AdvBrowserActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
                 break;
             default:
                 break;

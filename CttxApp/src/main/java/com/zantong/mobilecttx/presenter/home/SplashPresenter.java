@@ -28,7 +28,6 @@ import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
-import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.dto.LicenseTestDTO;
 
 import org.json.JSONException;
@@ -264,24 +263,6 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
 
     @Override
     public void loadLoginPostTest() {
-        Subscription subscription = mRepository.loadLoginPostTest(initLicenseFileNumDTO())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<LicenseResponseBean>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onNext(LicenseResponseBean result) {
-
-                    }
-                });
-        mSubscriptions.add(subscription);
     }
 
     public String initLicenseFileNumDTO() {
@@ -289,12 +270,9 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
 
         RequestHeadDTO requestHeadDTO = mRepository.initLicenseFileNumDTO("cip.cfc.v003.01");
         dto.setSYS_HEAD(requestHeadDTO);
-
         LicenseTestDTO bean = new LicenseTestDTO();
 
-//        String fileNum = "3101057013022704";
         String fileNum = "3101147014160528";
-
         bean.setViolationnum(fileNum);
         bean.setToken(mRepository.getDefaultRASUserID());
 

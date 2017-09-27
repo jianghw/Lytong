@@ -131,7 +131,7 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
     private void huJiaoDriving() {
         String phone = mDrivingPhone.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
-            ToastUtils.showShort(this, "手机号不能为空");
+            ToastUtils.toastShort("手机号不能为空");
             return;
         }
         String time = "1488253689";
@@ -169,12 +169,12 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
             @Override
             public void onSuccess(DaiJiaCreateResult result) {
                 if (result.getResponseCode() == 2000) {
-                    ToastUtils.showShort(DrivingActivity.this, "呼叫成功");
+                    ToastUtils.toastShort("呼叫成功");
                     String orderId = result.getData().getOrderId();
                     Act.getInstance().gotoIntent(DrivingActivity.this, DODetailBeingActivity.class, orderId);
                     finish();
                 } else {
-                    ToastUtils.showShort(DrivingActivity.this, result.getResponseDesc());
+                    ToastUtils.toastShort(result.getResponseDesc());
                 }
             }
         });

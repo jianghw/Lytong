@@ -168,7 +168,7 @@ public abstract class BaseActivity extends FragmentActivity implements OnClickLi
      * 网络请求或请求数据失败的信息提示
      */
     protected void onFailure(String status, String message) {
-        ToastUtils.showShort(this, message);
+        ToastUtils.toastShort(message);
     }
 
     @Override

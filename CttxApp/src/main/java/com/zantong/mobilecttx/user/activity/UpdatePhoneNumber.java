@@ -196,12 +196,12 @@ public class UpdatePhoneNumber extends BaseMvpActivity<IBaseView, UpdatePhoneNum
                 String oldPhone = edit_old_phone.getText().toString();
                 if(ValidateUtils.isMobile(oldPhone) &&
                         !PublicData.getInstance().mLoginInfoBean.getPhoenum().equals(oldPhone)){
-                    ToastUtils.showShort(this,"您输入的原手机号不正确");
+                    ToastUtils.toastShort("您输入的原手机号不正确");
                 }else if(ValidateUtils.isMobile(edit_phone_number.getText().toString())){
                     //presenter.loadView(2);
                     presenter.loadView(3);
                 }else{
-                    ToastUtils.showShort(this,"您输入的手机号格式不正确");
+                    ToastUtils.toastShort("您输入的手机号格式不正确");
                 }
 
                 break;

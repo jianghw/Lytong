@@ -11,6 +11,7 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.bean.Result;
+import com.zantong.mobilecttx.browser.PayHtmlActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.IOrderView;
@@ -22,9 +23,9 @@ import com.zantong.mobilecttx.user.dto.InsOrderDTO;
 import com.zantong.mobilecttx.utils.NetUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.weizhang.activity.PayWebActivity;
 
 import butterknife.Bind;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
@@ -143,9 +144,9 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
         switch (v.getId()) {
             case R.id.order_detail_commit:
                 if (orderState == 1) {
-                    String url = "https://ctkapptest.icbc-axa.com/ecip/payment_payForInsurance";
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(url)
+                    String url = "https://ctkapp.icbc-axa.com/ecip/payment_payForInsurance";
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(url)
                             .append("?orderNo=").append(item.getPolcyprignum())
                             .append("&payAmount=").append(item.getTotinsprem())
                             .append("&productCode=").append(item.getCastinspolcycode())
@@ -153,8 +154,10 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
                             .append("&clientIP=").append(NetUtils.getPhontIP(this))
                             .append("&clientType=").append(CLIENT_TYPE_0);
 
-                    PublicData.getInstance().mHashMap.put("PayWebActivity", sb.toString());
-                    Act.getInstance().gotoIntent(this, PayWebActivity.class);
+                    Intent intent = new Intent();
+                    intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
+                    intent.putExtra(JxGlobal.putExtra.browser_url_extra, stringBuilder.toString());
+                    Act.getInstance().gotoLoginByIntent(this, PayHtmlActivity.class, intent);
                 } else {
                     commitInsOrder();
                 }
@@ -185,13 +188,13 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
     }
 
     //                            0 未支付
-//                            1 支付成功
-//                            2 未支付的已撤单
-//                            3 支付中
-//                            4 交易可疑
-//                            5 支付失败
-//                            6 支付成功且退款成功的已撤单
-//                            7 退款中(退款接收成功，退款处理中，退款可疑)
+    //                            1 支付成功
+    //                            2 未支付的已撤单
+    //                            3 支付中
+    //                            4 交易可疑
+    //                            5 支付失败
+    //                            6 支付成功且退款成功的已撤单
+    //                            7 退款中(退款接收成功，退款处理中，退款可疑)
     @Override
     protected void onResume() {
         super.onResume();

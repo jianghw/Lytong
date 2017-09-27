@@ -70,7 +70,6 @@ public class ViolationDetailsPresenterImp implements SimplePresenter, OnLoadServ
                 if (PublicData.getInstance().success.equals(detailsBean.getSYS_HEAD().getReturnCode())) {
                     mViolationDetailsView.hideProgress();
                     mViolationDetailsView.updateView(detailsBean, index);
-
                 } else {
                     mViolationDetailsView.loadFaildProgress();
                     if (detailsBean.getSYS_HEAD().getReturnMessage().contains("处罚决定书")) {

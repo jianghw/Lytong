@@ -203,7 +203,7 @@ public class MegTypeFragment extends BaseListFragment<MessageType>
     @Override
     public void findAllMessageError(String message) {
         onShowFailed();
-        ToastUtils.showShort(getContext().getApplicationContext(), message);
+        ToastUtils.toastShort(message);
     }
 
 
@@ -220,14 +220,14 @@ public class MegTypeFragment extends BaseListFragment<MessageType>
     @Override
     public void deleteMessageDetailSucceed(MessageResult messageResult, int position) {
         mAdapter.remove(position);
-        ToastUtils.showShort(getContext().getApplicationContext(), messageResult.getResponseDesc());
+        ToastUtils.toastShort(messageResult.getResponseDesc());
 
         if (position == 0 && mAdapter.getAll().isEmpty()) getData();
     }
 
     @Override
     public void deleteMessageDetailError(String message) {
-        ToastUtils.showShort(getContext().getApplicationContext(), message);
+        ToastUtils.toastShort(message);
         dismissLoadingDialog();
     }
 

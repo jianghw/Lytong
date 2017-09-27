@@ -214,7 +214,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
         } catch (Exception e) {
             e.printStackTrace();
             downloadTxt();
-            ToastUtils.showShort(this, "获取网点失败,正在为你重新获取");
+            ToastUtils.toastShort("获取网点失败,正在为你重新获取");
         }
     }
 

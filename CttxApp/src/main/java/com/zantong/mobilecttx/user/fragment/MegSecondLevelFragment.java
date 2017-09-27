@@ -225,20 +225,20 @@ public class MegSecondLevelFragment extends BaseListFragment<Meg>
     @Override
     public void findMessageDetailByMessageIdError(String message) {
         onShowFailed();
-        ToastUtils.showShort(getContext().getApplicationContext(), message);
+        ToastUtils.toastShort(message);
     }
 
     @Override
     public void deleteMessageDetailSucceed(MessageResult messageResult, int position) {
         mAdapter.remove(position);
-        ToastUtils.showShort(getContext().getApplicationContext(), messageResult.getResponseDesc());
+        ToastUtils.toastShort(messageResult.getResponseDesc());
 
         if (position == 0 && mAdapter.getAll().isEmpty()) getData();
     }
 
     @Override
     public void deleteMessageDetailError(String message) {
-        ToastUtils.showShort(getContext().getApplicationContext(), message);
+        ToastUtils.toastShort(message);
         dismissLoadingDialog();
     }
 }

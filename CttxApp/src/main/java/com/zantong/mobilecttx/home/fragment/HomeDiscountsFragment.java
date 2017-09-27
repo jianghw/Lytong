@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
-import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
+import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.common.PublicData;
@@ -146,7 +146,7 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.browser_title_extra, childrenBean.getTitle());
                 intent.putExtra(JxGlobal.putExtra.browser_url_extra, path);
-                Act.getInstance().gotoLoginByIntent(getActivity(), HtmlBrowserActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
             } else if (path.equals("native_app_recharge")) {//加油充值
                 Act.getInstance().gotoIntentLogin(getActivity(), RechargeActivity.class);
             } else if (path.equals("native_app_loan")) {

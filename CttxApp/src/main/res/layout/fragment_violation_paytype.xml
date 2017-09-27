@@ -74,7 +74,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="使用其他工行银行卡缴费"
+                android:text="使用其他银行卡缴费"
                 android:textColor="@color/colorGrayFontSmmall" />
 
             <ImageView

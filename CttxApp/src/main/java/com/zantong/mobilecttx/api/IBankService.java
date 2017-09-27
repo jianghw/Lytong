@@ -4,6 +4,7 @@ import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
+import com.zantong.mobilecttx.weizhang.bean.ViolationNumBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 
 import retrofit2.http.Field;
@@ -24,7 +25,7 @@ public interface IBankService {
 
     @FormUrlEncoded
     @POST("mobilecall_call")
-    Observable<LicenseResponseBean> loadLoginPostTest(@Field("msg") String msg);
+    Observable<ViolationNumBean> numberedQuery(@Field("msg") String msg);
 
     @FormUrlEncoded
     @POST("mobilecall_call")

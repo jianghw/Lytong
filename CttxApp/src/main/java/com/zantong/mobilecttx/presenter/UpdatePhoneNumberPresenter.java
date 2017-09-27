@@ -109,7 +109,7 @@ public class UpdatePhoneNumberPresenter extends BasePresenter<IBaseView> impleme
                     onlyflag = smsBean.getRspInfo().getOnlyflag();
                     mUpdatePhoneNumber.updateView(clazz, index);
                 }else{
-                    ToastUtils.showShort(mUpdatePhoneNumber, smsBean.getSYS_HEAD().getReturnMessage());
+                    ToastUtils.toastShort(smsBean.getSYS_HEAD().getReturnMessage());
                 }
                 break;
             case 2:
@@ -117,7 +117,7 @@ public class UpdatePhoneNumberPresenter extends BasePresenter<IBaseView> impleme
                 if(PublicData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())){
                     mUpdatePhoneNumber.updateView(mUpdateInfo, index);
                 }else{
-                    ToastUtils.showShort(mUpdatePhoneNumber, mUpdateInfo.getSYS_HEAD().getReturnMessage());
+                    ToastUtils.toastShort(mUpdateInfo.getSYS_HEAD().getReturnMessage());
                 }
                 break;
             case 3:
@@ -125,7 +125,7 @@ public class UpdatePhoneNumberPresenter extends BasePresenter<IBaseView> impleme
                 if(PublicData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())){
                     loadView(2);
                 }else{
-                    ToastUtils.showShort(mUpdatePhoneNumber, mUpdateInfo.getSYS_HEAD().getReturnMessage());
+                    ToastUtils.toastShort(mUpdateInfo.getSYS_HEAD().getReturnMessage());
                 }
 //                Gson gson = new Gson();
 //                String json = gson.toJson(mLoginInfoBean);
@@ -138,6 +138,6 @@ public class UpdatePhoneNumberPresenter extends BasePresenter<IBaseView> impleme
     @Override
     public void onFailed() {
         mUpdatePhoneNumber.hideDialogLoading();
-        ToastUtils.showShort(mUpdatePhoneNumber, Config.getErrMsg("1"));
+        ToastUtils.toastShort(Config.getErrMsg("1"));
     }
 }

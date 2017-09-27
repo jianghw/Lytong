@@ -31,7 +31,7 @@ public class HelpFragment extends BaseListFragment<String>{
 
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
-        ToastUtils.showShort(this.getActivity(),data.toString());
+        ToastUtils.toastShort(data.toString());
     }
 
     @Override

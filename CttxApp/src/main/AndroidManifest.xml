@@ -160,9 +160,6 @@
         <activity
             android:name=".user.activity.ChangePwdActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".weizhang.activity.PayWebActivity"
-            android:screenOrientation="portrait"/>
 
         <!-- 选a择城市 -->
         <activity
@@ -398,16 +395,14 @@
             android:screenOrientation="portrait"/>
 
         <!-- ====================================浏览器================================ -->
+
         <activity
-            android:name=".browser.AdvBrowserActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".browser.HtmlBrowserActivity"
+            android:name=".browser.BrowserHtmlActivity"
             android:screenOrientation="portrait"/>
         <!-- ===================付款web模块========================================= -->
         <!-- 付款web模块页面 -->
         <activity
-            android:name=".browser.BrowserForPayActivity"
+            android:name=".browser.PayHtmlActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".browser.PayBrowserActivity"

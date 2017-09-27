@@ -131,7 +131,7 @@ public class HundredPlanActivity extends BaseMvpActivity {
             case R.id.hundred_plan_commit:
                 MobclickAgent.onEvent(this, Config.getUMengID(20));
                 if (!isSelCar) {
-                    ToastUtils.showShort(this, "请先选择您要报名的车辆");
+                    ToastUtils.toastShort("请先选择您要报名的车辆");
                     return;
                 }
 
@@ -216,7 +216,7 @@ public class HundredPlanActivity extends BaseMvpActivity {
         api.registerApp(WXEntryActivity.APP_ID);
 
         if (!api.isWXAppInstalled()) {
-            ToastUtils.showShort(this, "您还未安装微信客户端");
+            ToastUtils.toastShort("您还未安装微信客户端");
             return;
         }
 

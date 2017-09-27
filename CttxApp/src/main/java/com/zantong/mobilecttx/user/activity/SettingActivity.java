@@ -494,7 +494,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         String ImgPath = FileUtils.photoImagePath(getApplicationContext(), FileUtils.CROP_DIR);
         File mCropFile = new File(ImgPath);
         if (!mCropFile.exists()) {
-            ToastUtils.showShort(getApplicationContext(), "头像图片可能未生成或删除");
+            ToastUtils.toastShort("头像图片可能未生成或删除");
             return;
         }
 
@@ -562,7 +562,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 getBaseBack().setEnabled(true);
                 if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
                     PublicData.getInstance().mLoginInfoBean.setPortrait(strUrl);
-                    ToastUtils.showShort(SettingActivity.this, "修改头像成功");
+                    ToastUtils.toastShort("修改头像成功");
                 }
             }
 

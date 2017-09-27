@@ -46,6 +46,7 @@
                 android:id="@+id/image_delete"
                 style="@style/EdittextDeleteImage"
                 android:layout_toLeftOf="@+id/btn_number"/>
+
             <EditText
                 android:id="@+id/edit_phone_number"
                 style="@style/EditextNormalStyle"

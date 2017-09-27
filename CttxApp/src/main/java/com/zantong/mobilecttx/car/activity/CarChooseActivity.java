@@ -31,8 +31,8 @@ public class CarChooseActivity extends BaseJxActivity {
         Intent intent = getIntent();
         if (intent != null) {
             if (intent.hasExtra("type")) mType = getIntent().getIntExtra("type", 1);
-            if (intent.hasExtra("id")) mId = getIntent().getIntExtra("type", 0);
-            if (intent.hasExtra("idB")) mIdB = getIntent().getIntExtra("type", 0);
+            if (intent.hasExtra("id")) mId = getIntent().getIntExtra("id", 0);
+            if (intent.hasExtra("idB")) mIdB = getIntent().getIntExtra("idB", 0);
         }
     }
 

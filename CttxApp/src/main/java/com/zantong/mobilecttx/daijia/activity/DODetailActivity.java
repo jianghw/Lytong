@@ -13,7 +13,7 @@ import cn.qqtheme.framework.contract.bean.BaseResult;
 
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.browser.BrowserForPayActivity;
+import com.zantong.mobilecttx.browser.PayHtmlActivity;
 import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderDetailResult;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderDetailDTO;
 import com.zantong.mobilecttx.eventbus.DrivingCancelEvent;
@@ -91,20 +91,20 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
         mPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogUtils.createRechargeDialog(DODetailActivity.this, mOrderId,
-                        mPrice.getText().toString(), "", new View.OnClickListener() {
+                DialogUtils.createRechargeDialog(ContextUtils.getContext(),
+                        mOrderId,
+                        mPrice.getText().toString(),
+                        "",
+                        new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
 
-                                int orderPrice = 0;
-                                try {
-                                    orderPrice = Integer.valueOf((int) (Double.valueOf(mOrderPrice) * 100));
-                                } catch (Exception e) {
+                                double orderPrice = Double.valueOf(mOrderPrice) ;
+                                int price = (int) (orderPrice * 100);
 
-                                }
-                                String payUrl = "http://139.196.183.121:8081/payment/payForWapb2cPay?orderid=" +
-                                        mOrderId + "&amount=" +
-                                        orderPrice + "&payType=0";
+                                String payUrl = "http://139.196.183.121:8081/payment/payForWapb2cPay?orderid=" + mOrderId
+                                        + "&amount=" + price + "&payType=0";
+
                                 CarApiClient.getPayOrderSn(ContextUtils.getContext(), payUrl, new CallBack<PayOrderResult>() {
                                     @Override
                                     public void onSuccess(PayOrderResult result) {
@@ -112,7 +112,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
                                             Intent intent = new Intent();
                                             intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
                                             intent.putExtra(JxGlobal.putExtra.browser_url_extra, result.getData());
-                                            Act.getInstance().gotoLoginByIntent(DODetailActivity.this, BrowserForPayActivity.class, intent);
+                                            Act.getInstance().gotoLoginByIntent(DODetailActivity.this, PayHtmlActivity.class, intent);
                                         }
                                     }
                                 });
@@ -162,7 +162,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
         }
         dto.setTime(time);
         showDialogLoading();
-        CarApiClient.getDaiJiaOrderDetail(this, dto, new CallBack<DaiJiaOrderDetailResult>() {
+        CarApiClient.getDaiJiaOrderDetail(ContextUtils.getContext(), dto, new CallBack<DaiJiaOrderDetailResult>() {
             @Override
             public void onSuccess(DaiJiaOrderDetailResult result) {
                 hideDialogLoading();

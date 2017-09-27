@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
+import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import butterknife.OnClick;
@@ -44,7 +44,7 @@ public class CardFlowActivity extends BaseJxActivity {
         Intent intent = new Intent();
         intent.putExtra(JxGlobal.putExtra.browser_title_extra, "办卡进度查询");
         intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://www.sh.icbc.com.cn");
-        Act.getInstance().gotoLoginByIntent(this, HtmlBrowserActivity.class, intent);
+        Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
     }
 
 

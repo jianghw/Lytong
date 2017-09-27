@@ -41,7 +41,6 @@ public class PayBrowserActivity extends BaseJxActivity
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
-
         Intent intent = getIntent();
         if (intent != null) {
             mTitleWeb = intent.getStringExtra(JxGlobal.putExtra.web_title_extra);
@@ -89,7 +88,6 @@ public class PayBrowserActivity extends BaseJxActivity
         //触摸焦点起作用.
         //如果不设置，则在点击网页文本输入框时，不能弹出软键盘及不响应其他的一些事件。
         mWebView.requestFocus();
-
     }
 
     @Override
@@ -117,14 +115,13 @@ public class PayBrowserActivity extends BaseJxActivity
         // 重写shouldOverrideUrlLoading方法，使点击链接后不使用其他的浏览器打开。
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            mWebView.loadUrl(url);
+            view.loadUrl(url);
             // 如果不需要其他对点击链接事件的处理返回true，否则返回false
             return true;
         }
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            super.onReceivedSslError(view, handler, error);
             handler.proceed();
         }
     }

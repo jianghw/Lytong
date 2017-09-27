@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
-import com.zantong.mobilecttx.browser.AdvBrowserActivity;
+import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.common.Config;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
@@ -82,7 +82,7 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
             Intent intent = new Intent();
             intent.putExtra(JxGlobal.putExtra.browser_title_extra, "优惠");
             intent.putExtra(JxGlobal.putExtra.browser_url_extra, url);
-            Act.getInstance().gotoLoginByIntent(mAdapterContext, AdvBrowserActivity.class, intent);
+            Act.getInstance().gotoLoginByIntent(mAdapterContext, BrowserHtmlActivity.class, intent);
 
             CarApiClient.commitAdClick(ContextUtils.getContext(), data.getId(), new CallBack<BaseResult>() {
                 @Override
@@ -108,7 +108,7 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
                     intent.putExtra(JxGlobal.putExtra.browser_url_extra, Config.HUNDRED_PLAN_DEADLINE);
                 }
                 intent.putExtra(JxGlobal.putExtra.browser_title_extra, "百日无违章");
-                Act.getInstance().gotoLoginByIntent(mAdapterContext, AdvBrowserActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(mAdapterContext, BrowserHtmlActivity.class, intent);
             }
 
             @Override

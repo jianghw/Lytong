@@ -181,16 +181,16 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
         String newPwd = mNewPwd.getText().toString();
         String newRePwd = mNewRePwd.getText().toString();
         if (!ValidateUtils.checkPwd(newPwd)) {
-            ToastUtils.showShort(this, "密码位数不对或存在非法字符");
+            ToastUtils.toastShort("密码位数不对或存在非法字符");
             return;
         } else if (ValidateUtils.checkNum(newPwd)) {
-            ToastUtils.showShort(this, "密码不能为纯数字");
+            ToastUtils.toastShort("密码不能为纯数字");
             return;
         } else if (ValidateUtils.checkChar(newPwd)) {
-            ToastUtils.showShort(this, "密码不能为纯字母");
+            ToastUtils.toastShort("密码不能为纯字母");
             return;
         } else if (!newPwd.equals(newRePwd)) {
-            ToastUtils.showShort(this, "两次输入的密码不一致");
+            ToastUtils.toastShort("两次输入的密码不一致");
             return;
         }
         ChangePwdDTO dto = new ChangePwdDTO();
@@ -214,7 +214,7 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
                         PublicData.getInstance().clearData(ChangePwdActivity.this);
                         finish();
                     } else {
-                        ToastUtils.showShort(ChangePwdActivity.this, result.getSYS_HEAD().getReturnMessage());
+                        ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
                     }
                 }
 

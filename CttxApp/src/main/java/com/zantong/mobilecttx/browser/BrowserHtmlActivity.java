@@ -3,6 +3,8 @@ package com.zantong.mobilecttx.browser;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,9 +17,15 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.google.gson.Gson;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.contract.InterfaceForJS;
 import com.zantong.mobilecttx.contract.browser.IHtmlBrowserContract;
@@ -25,8 +33,13 @@ import com.zantong.mobilecttx.daijia.bean.DrivingOcrBean;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.eventbus.DriveLicensePhotoEvent;
 import com.zantong.mobilecttx.eventbus.PayMotoOrderEvent;
+import com.zantong.mobilecttx.huodong.activity.HundredAgreementActivity;
+import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
 import com.zantong.mobilecttx.presenter.browser.HtmlBrowserPresenter;
+import com.zantong.mobilecttx.utils.DialogMgr;
+import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,6 +47,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 import cn.qqtheme.framework.global.JxGlobal;
+import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
@@ -44,14 +58,17 @@ import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_COD
 /**
  * 公用浏览器 html页面显示
  */
-public class HtmlBrowserActivity extends BaseJxActivity implements IHtmlBrowserContract.IHtmlBrowserView {
-
-    protected String mStrTitle;
-    protected String mStrUrl;
+public class BrowserHtmlActivity extends BaseJxActivity implements IHtmlBrowserContract.IHtmlBrowserView {
 
     @Bind(R.id.webView)
     ProgressWebView mWebView;
+
+    protected String mStrTitle;
+    protected String mStrUrl;
     private IHtmlBrowserContract.IHtmlBrowserPresenter mPresenter;
+
+    //浏览器右上角菜单的状态 0：活动说明  1：活动规则
+    private int mRightBtnStatus = -1;
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
@@ -76,6 +93,7 @@ public class HtmlBrowserActivity extends BaseJxActivity implements IHtmlBrowserC
         EventBus.getDefault().register(this);
         initTitleContent(mStrTitle);
         setTvCloseVisible();
+        setTvRightVisible("分享");
 
         HtmlBrowserPresenter presenter = new HtmlBrowserPresenter(
                 Injection.provideRepository(getApplicationContext()), this);
@@ -99,7 +117,6 @@ public class HtmlBrowserActivity extends BaseJxActivity implements IHtmlBrowserC
      * 回退建
      */
     protected void backClickListener() {
-        // 返回前一个页面
         if (mWebView.canGoBack()) mWebView.goBack();
         else finish();
     }
@@ -159,17 +176,78 @@ public class HtmlBrowserActivity extends BaseJxActivity implements IHtmlBrowserC
         startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
     }
 
+    /**
+     * 右侧点击
+     */
+    protected void rightClickListener() {
+        switch (mRightBtnStatus) {
+            case 0:
+                Act.getInstance().gotoIntent(this, HundredAgreementActivity.class);
+                break;
+            case 1:
+                Act.getInstance().gotoIntent(this, HundredRuleActivity.class);
+                break;
+            case -1:
+                new DialogMgr(this,
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                wechatShare(0);
+                            }
+                        },
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                wechatShare(1);
+                            }
+                        });
+                break;
+            default:
+                break;
+        }
+    }
+
     private class MyWebViewClient extends WebViewClient {
         // 重写shouldOverrideUrlLoading方法，使点击链接后不使用其他的浏览器打开。
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            mWebView.loadUrl(url);
+            Intent intent = new Intent();
+            if (url.startsWith("tel:")) {
+                intent.setAction(Intent.ACTION_DIAL);
+                Uri data = Uri.parse(url);
+                intent.setData(data);
+                startActivity(intent);
+            } else if (url.startsWith("alipays:")) {//阿里支付
+                intent.setData(Uri.parse(url));
+                try {
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ToastUtils.toastShort("请确认手机安装支付宝app");
+                }
+            } else {
+                view.loadUrl(url);
+            }
             return true;
         }
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
+
+            if (url.contains("detail")) {
+                mRightBtnStatus = 1;
+                initTitleContent("积分明细");
+                setTvRightVisible("积分规则");
+            } else if (url.contains("index")) {
+                mRightBtnStatus = 0;
+                initTitleContent("百日无违章");
+                setTvRightVisible("活动说明");
+            } else {
+                mRightBtnStatus = -1;
+                initTitleContent(mStrTitle);
+                setTvRightVisible("分享");
+            }
         }
 
         @Override
@@ -179,7 +257,6 @@ public class HtmlBrowserActivity extends BaseJxActivity implements IHtmlBrowserC
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            super.onReceivedSslError(view, handler, error);
             handler.proceed();
         }
     }
@@ -263,7 +340,7 @@ public class HtmlBrowserActivity extends BaseJxActivity implements IHtmlBrowserC
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//拍照回调
+        //拍照回调
         if (requestCode == JxGlobal.requestCode.violation_query_camera
                 && resultCode == JxGlobal.resultCode.ocr_camera_license) {
             if (OcrCameraActivity.file == null)
@@ -271,13 +348,47 @@ public class HtmlBrowserActivity extends BaseJxActivity implements IHtmlBrowserC
             else if (mPresenter != null)
                 mPresenter.uploadDrivingImg();
         }
-//TODO
+        //TODO
         if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
                 && resultCode == JxGlobal.resultCode.web_order_id_succeed) {
 
         } else if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
                 && resultCode == JxGlobal.resultCode.web_order_id_error && data != null) {
         }
+    }
+
+    /**
+     * 微信分享
+     *
+     * @param flag (0 分享到微信好友 1 分享到微信朋友圈)
+     */
+    private void wechatShare(int flag) {
+        IWXAPI api = WXAPIFactory.createWXAPI(ContextUtils.getContext(), WXEntryActivity.APP_ID, true);
+        api.registerApp(WXEntryActivity.APP_ID);
+
+        if (!api.isWXAppInstalled()) {
+            ToastUtils.toastShort("您还未安装微信客户端");
+            return;
+        }
+
+        WXWebpageObject webpage = new WXWebpageObject();
+        if (PublicData.getInstance().loginFlag) {
+            webpage.webpageUrl = mStrUrl;
+        } else {
+            webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
+        }
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = mStrTitle;
+        msg.description = "优惠活动推荐";
+        //这里替换一张自己工程里的图片资源
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_sharelogo);
+        msg.setThumbImage(thumb);
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = String.valueOf(System.currentTimeMillis());
+        req.message = msg;
+        req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+        api.sendReq(req);
     }
 
 

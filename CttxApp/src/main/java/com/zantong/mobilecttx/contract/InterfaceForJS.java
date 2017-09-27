@@ -46,7 +46,7 @@ public class InterfaceForJS {
 
     @JavascriptInterface
     public void ToastMsg(String msg) {
-        ToastUtils.showShort(mJSContext, msg);
+        ToastUtils.toastShort(msg);
     }
 
     @JavascriptInterface

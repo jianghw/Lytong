@@ -66,6 +66,8 @@ import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
+import com.zantong.mobilecttx.weizhang.bean.ViolationNumBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
@@ -227,8 +229,8 @@ public class RemoteData implements IRemoteSource {
     }
 
     @Override
-    public Observable<LicenseResponseBean> loadLoginPostTest(String msg) {
-        return initAppUrlRetrofit().create(IBankService.class).loadLoginPostTest(msg);
+    public Observable<ViolationNumBean> numberedQuery(String msg) {
+        return initAppUrlRetrofit().create(IBankService.class).numberedQuery(msg);
     }
 
     /**
@@ -584,5 +586,14 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<ReceiveInfoResult> getReceiveInfo(String orderId) {
         return initRetrofit().create(IOrderService.class).getReceiveInfo(orderId);
+    }
+
+    /**
+     * 46.更新违章缴费状态
+     * @param json
+     */
+    @Override
+    public Observable<BaseResult> updateState(List<ViolationNum> json) {
+        return initRetrofit().create(IPayService.class).updateState(json);
     }
 }

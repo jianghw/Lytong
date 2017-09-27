@@ -14,7 +14,7 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
+import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.card.bean.BindCardResult;
 import com.zantong.mobilecttx.card.dto.BindCardDTO;
 import com.zantong.mobilecttx.card.dto.BindDrivingDTO;
@@ -124,7 +124,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.browser_title_extra, "《用户隐私保密协议》");
                 intent.putExtra(JxGlobal.putExtra.browser_url_extra, "file:///android_asset/www/bindcard_agreement.html");
-                Act.getInstance().gotoLoginByIntent(this, HtmlBrowserActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
                 break;
             case R.id.bind_jia_zhao_commit://提交信息
                 bindChangTongKa();

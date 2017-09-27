@@ -39,7 +39,7 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
+import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.contract.IBaiduMapContract;
 import com.zantong.mobilecttx.map.bean.GasStation;
@@ -243,7 +243,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
             Intent intent = new Intent();
             intent.putExtra(JxGlobal.putExtra.browser_title_extra, "年检须知");
             intent.putExtra(JxGlobal.putExtra.browser_url_extra, "file:///android_asset/www/nianjian_desc.html");
-            Act.getInstance().gotoLoginByIntent(this, HtmlBrowserActivity.class, intent);
+            Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
         }
     }
 
@@ -559,7 +559,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
         Intent intent = new Intent();
         intent.putExtra(JxGlobal.putExtra.browser_title_extra, "年检服务");
         intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://nianjian.liyingtong.com/myCar");
-        Act.getInstance().gotoLoginByIntent(this, HtmlBrowserActivity.class, intent);
+        Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
     }
 
     /**

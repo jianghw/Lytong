@@ -56,7 +56,7 @@ public class FeedbackActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
         if (v.getId() == R.id.mine_feedback_commit) {
             String content = mInputContent.getText().toString().trim();
             if ("".equals(content)) {
-                ToastUtils.showShort(this, "内容不能为空");
+                ToastUtils.toastShort("内容不能为空");
                 return;
             }
             showDialogLoading();

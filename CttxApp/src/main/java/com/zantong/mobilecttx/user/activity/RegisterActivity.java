@@ -209,7 +209,7 @@ public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter
                         onlyflag = result.getRspInfo().getOnlyflag();
                     } else {
                         iTime = 0;
-                        ToastUtils.showShort(RegisterActivity.this, "该用户已注册");
+                        ToastUtils.toastShort("该用户已注册");
                         mPhone.setText("");
                     }
                 }
@@ -243,11 +243,11 @@ public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter
     private void onCheckVerifyCode() {
         String vcode = mVCode.getText().toString();
         if (TextUtils.isEmpty(vcode)) {
-            ToastUtils.showShort(this, "验证码不能为空");
+            ToastUtils.toastShort("验证码不能为空");
             return;
         }
         if (TextUtils.isEmpty(onlyflag)) {
-            ToastUtils.showShort(this, "请先获取验证码");
+            ToastUtils.toastShort("请先获取验证码");
             return;
         }
         VcodeDTO dto = new VcodeDTO();

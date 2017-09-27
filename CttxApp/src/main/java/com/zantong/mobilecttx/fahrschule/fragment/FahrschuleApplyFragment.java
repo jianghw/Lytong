@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
+import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.common.Injection;
 import com.zantong.mobilecttx.contract.IFahrschuleApplyFtyContract;
 import com.zantong.mobilecttx.eventbus.FahrschuleApplyEvent;
@@ -232,7 +232,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.browser_title_extra, "驾校报名官网");
                 intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://www.antingjx.com/jianjie/");
-                Act.getInstance().gotoLoginByIntent(getActivity(), HtmlBrowserActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
                 break;
             case R.id.btn_commit:
                 dataFormValidation();

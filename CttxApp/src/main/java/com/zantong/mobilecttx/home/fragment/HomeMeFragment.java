@@ -22,7 +22,7 @@ import com.tencent.bugly.beta.UpgradeInfo;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobilecttx.browser.HtmlBrowserActivity;
+import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
@@ -153,9 +153,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    protected void onRefreshData() {
-
-    }
+    protected void onRefreshData() {}
 
     @Override
     protected int getFragmentLayoutResId() {
@@ -248,43 +246,36 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         stringBuffer.append("车辆");
         mTvCar.setText(Html.fromHtml(stringBuffer.toString()));
 
-        if (PublicData.getInstance().loginFlag) {
-            RspInfoBean infoBean = PublicData.getInstance().mLoginInfoBean;
+        RspInfoBean infoBean = PublicData.getInstance().mLoginInfoBean;
+        File file = getHeadImageFile(mImgHead);
+        if (file == null && infoBean != null) {
+            ImageLoadUtils.loadHead(infoBean.getPortrait(), mImgHead);
+        }
 
-            File file = getHeadImageFile();
-            if (file == null) {
-                ImageLoadUtils.loadHead(
-                        PublicData.getInstance().mLoginInfoBean.getPortrait(), mImgHead);
-            }
-
-            if (infoBean != null) {
-                if (!Tools.isStrEmpty(infoBean.getNickname())) {
-                    mTvLogin.setText(infoBean.getNickname());
-                } else {
-                    String phoenum = infoBean.getPhoenum();
-                    if (!TextUtils.isEmpty(phoenum) && phoenum.length() >= 7)
-                        mTvLogin.setText(infoBean.getPhoenum().substring(7));
-                }
-            }
+        if (infoBean != null && !Tools.isStrEmpty(infoBean.getNickname())) {
+            mTvLogin.setText(infoBean.getNickname());
+        } else if (infoBean != null) {
+            String phoenum = infoBean.getPhoenum();
+            if (!TextUtils.isEmpty(phoenum) && phoenum.length() >= 7)
+                mTvLogin.setText(infoBean.getPhoenum().substring(7));
         } else {
             mTvCard.setText("未绑定牡丹畅通卡");
             mTvCard.setTextColor(getResources().getColor(R.color.colorTvGray_b2));
 
-            mTvLogin.setText("您还未登录");
             mImgHead.setImageResource(R.mipmap.portrait);
+            mTvLogin.setText("您还未登录");
         }
+
         mTvToolbar.setText(mTvLogin.getText().toString());
     }
-
     /**
      * 头像
      */
-    private File getHeadImageFile() {
-        String ImgPath = FileUtils.photoImagePath(getActivity().getApplicationContext(), FileUtils.CROP_DIR);
+    private File getHeadImageFile(ImageView userImage) {
+        String ImgPath = FileUtils.photoImagePath(ContextUtils.getContext(), FileUtils.CROP_DIR);
 
         File mCropFile = new File(ImgPath);
         if (!mCropFile.exists()) {
-//            ToastUtils.toastShort("头像图片未生成或丢失");
             return null;
         }
         Uri outputUri;
@@ -294,15 +285,15 @@ public class HomeMeFragment extends BaseRefreshJxFragment
             outputUri = Uri.fromFile(mCropFile);
         }
 
-        Bitmap bitmap = FileUtils.decodeUriAsBitmap(outputUri, getActivity().getApplicationContext());
-        if (bitmap != null) mImgHead.setImageBitmap(bitmap);
+        Bitmap bitmap = FileUtils.decodeUriAsBitmap(outputUri, ContextUtils.getContext());
+        if (bitmap != null) userImage.setImageBitmap(bitmap);
 
         return mCropFile;
     }
 
     private Uri getUriForFileByN(File mCameraFile) {
         try {
-            return FileProvider.getUriForFile(getActivity().getApplicationContext(),
+            return FileProvider.getUriForFile(ContextUtils.getContext(),
                     getApplication().getPackageName() + ".fileprovider", mCameraFile);
         } catch (Exception e) {
             e.printStackTrace();
@@ -359,7 +350,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         mAboutAdvertising = (RelativeLayout) view.findViewById(R.id.about_advertising);
         mAboutAdvertising.setOnClickListener(this);
 
-//动态调整标题透明度
+        //动态调整标题透明度
         mAppbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -394,7 +385,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 intent.putExtra(JxGlobal.putExtra.browser_title_extra, "司机订单");
                 intent.putExtra(JxGlobal.putExtra.browser_url_extra,
                         "http://biz.liyingtong.com/h5/driver/index.html");
-                Act.getInstance().gotoLoginByIntent(getActivity(), HtmlBrowserActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
                 break;
             case R.id.tv_card://我的畅通卡
                 if (Tools.isStrEmpty(PublicData.getInstance().filenum))
@@ -439,7 +430,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 Intent i = new Intent();
                 i.putExtra(JxGlobal.putExtra.browser_title_extra, "隐私声明");
                 i.putExtra(JxGlobal.putExtra.browser_url_extra, "file:///android_asset/bindcard_agreement.html");
-                Act.getInstance().gotoLoginByIntent(getActivity(), HtmlBrowserActivity.class, i);
+                Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, i);
                 break;
             default:
                 break;

@@ -51,6 +51,8 @@ import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
+import com.zantong.mobilecttx.weizhang.bean.ViolationNumBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
@@ -287,8 +289,11 @@ public class RepositoryManager {
         return mRemoteData.paymentCreateOrder(payDTO);
     }
 
-    public Observable<LicenseResponseBean> loadLoginPostTest(String msg) {
-        return mRemoteData.loadLoginPostTest(msg);
+    /**
+     * cip.cfc.v003.01
+     */
+    public Observable<ViolationNumBean> numberedQuery(String msg) {
+        return mRemoteData.numberedQuery(msg);
     }
 
     /**
@@ -558,5 +563,13 @@ public class RepositoryManager {
      */
     public Observable<ReceiveInfoResult> getReceiveInfo(String orderId) {
         return mRemoteData.getReceiveInfo(orderId);
+    }
+
+    /**
+     * 46.更新违章缴费状态
+     * @param json
+     */
+    public Observable<BaseResult> updateState(List<ViolationNum> json) {
+        return mRemoteData.updateState(json);
     }
 }

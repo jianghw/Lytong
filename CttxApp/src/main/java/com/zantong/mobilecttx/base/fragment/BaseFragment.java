@@ -268,14 +268,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
      * @param message
      */
     public void showMsg(String message){
-        ToastUtils.showShort(getActivity(), message);
+        ToastUtils.toastShort(message);
     }
 
-    /**
-     * Toast提示信息
-     * @param resId
-     */
-    public void showMsg(int resId){
-        ToastUtils.showShort(getActivity(), resId);
-    }
 }

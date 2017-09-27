@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.weizhang.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -14,13 +15,13 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.bean.Result;
 import com.zantong.mobilecttx.base.fragment.BaseJxFragment;
+import com.zantong.mobilecttx.browser.PayHtmlActivity;
 import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.utils.AmountUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.NetUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
-import com.zantong.mobilecttx.weizhang.activity.PayWebActivity;
 import com.zantong.mobilecttx.weizhang.activity.ViolationPayActivity;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 import com.zantong.mobilecttx.weizhang.dto.ViolationOrderDTO;
@@ -28,6 +29,7 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationOrderDTO;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
@@ -153,7 +155,10 @@ public class ViolationPayFragment extends BaseJxFragment {
         dto.setCarnum(String.valueOf(PublicData.getInstance().mHashMap.get("carnum")));
         dto.setEnginenum(String.valueOf(PublicData.getInstance().mHashMap.get("enginenum")));
 
-        dto.setOrderprice(mViolationBean.getViolationamt());
+        int price = Integer.valueOf(mViolationBean.getViolationamt());
+        int orderPrice = price / 100;
+        dto.setOrderprice(String.valueOf(orderPrice));
+
         dto.setPeccancydate(mViolationBean.getViolationdate());
         dto.setPeccancynum(mViolationBean.getViolationnum());
         dto.setUsernum(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
@@ -194,6 +199,7 @@ public class ViolationPayFragment extends BaseJxFragment {
 
                         @Override
                         public void onError(String errorCode, String msg) {
+                            ToastUtils.toastShort(msg);
                             getParentActivity().dismissLoadingDialog();
                         }
                     });
@@ -219,8 +225,11 @@ public class ViolationPayFragment extends BaseJxFragment {
                 + "&merCustomId=" + merCustomId
                 + "&remark=" + remark;
 
-        PublicData.getInstance().mHashMap.put("PayWebActivity", payUrl);
-        Act.getInstance().lauchIntent(getActivity(), PayWebActivity.class);
+        Intent intent = new Intent();
+        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
+        intent.putExtra(JxGlobal.putExtra.browser_url_extra, payUrl);
+        intent.putExtra(JxGlobal.putExtra.violation_num_extra, violationnum);
+        Act.getInstance().gotoLoginByIntent(getActivity(), PayHtmlActivity.class, intent);
 
         getActivity().finish();
     }

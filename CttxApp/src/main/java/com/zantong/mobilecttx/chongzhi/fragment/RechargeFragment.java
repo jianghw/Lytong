@@ -22,7 +22,7 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.PullableBaseFragment;
-import com.zantong.mobilecttx.browser.BrowserForPayActivity;
+import com.zantong.mobilecttx.browser.PayHtmlActivity;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeAgreementActivity;
 import com.zantong.mobilecttx.chongzhi.adapter.OilPriceAdapter;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeBean;
@@ -269,10 +269,10 @@ public class RechargeFragment extends PullableBaseFragment
 
         mAdapter = new OilPriceAdapter(mRechargeDTO);
         mXRecyclerView.setAdapter(mAdapter);
-//优惠劵
+        //优惠劵
         if (mPresenter != null) mPresenter.getCouponByType();
 
-//价格刷新
+        //价格刷新
         mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, Object data) {
@@ -777,7 +777,7 @@ public class RechargeFragment extends PullableBaseFragment
         Intent intent = new Intent();
         intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
         intent.putExtra(JxGlobal.putExtra.browser_url_extra, result.getData());
-        Act.getInstance().gotoLoginByIntent(getActivity(), BrowserForPayActivity.class, intent);
+        Act.getInstance().gotoLoginByIntent(getActivity(), PayHtmlActivity.class, intent);
         //TODO 保存卡号
         SPUtils.getInstance().setOilCard(mRechargeDTO.getOilCardNum());
         //TODO 确保优惠劵的使用状态
@@ -787,7 +787,7 @@ public class RechargeFragment extends PullableBaseFragment
     @Override
     public void onPayOrderByCouponError(String msg) {
         dismissLoadingDialog();
-        ToastUtils.showShort(getContext().getApplicationContext(), msg);
+        ToastUtils.toastShort(msg);
     }
 
     /**

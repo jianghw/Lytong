@@ -47,7 +47,7 @@ public class MsgUserFragment extends BaseListFragment<MsgBean> {
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
         MsgBean msg = (MsgBean)data;
-        ToastUtils.showShort(this.getActivity(),msg.getMsg_title());
+        ToastUtils.toastShort(msg.getMsg_title());
     }
 
     @Override
