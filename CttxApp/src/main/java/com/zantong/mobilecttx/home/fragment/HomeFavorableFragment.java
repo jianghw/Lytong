@@ -127,7 +127,7 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
     protected void onFirstDataVisible() {
         //广告页本地加载
         List<Integer> localImages = new ArrayList<>();
-        localImages.add(R.mipmap.banner);
+        localImages.add(R.mipmap.default_330_160);
         mCustomConvenientBanner.setPages(
                 new CBViewHolderCreator<LocalImageHolderView>() {
                     @Override

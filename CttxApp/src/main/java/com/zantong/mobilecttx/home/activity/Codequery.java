@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -105,6 +106,12 @@ public class Codequery extends BaseJxActivity {
         } else {
             Act.getInstance().gotoIntent(this, CaptureActivity.class);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @PermissionSuccess(requestCode = PER_REQUEST_CODE)

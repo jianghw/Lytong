@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.browser;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -99,7 +100,9 @@ public class BrowserHtmlActivity extends BaseJxActivity implements IHtmlBrowserC
                 Injection.provideRepository(getApplicationContext()), this);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     protected void initViewStatus() {
+        mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.addJavascriptInterface(new InterfaceForJS(this), "CTTX");
         mWebView.loadUrl(mStrUrl);
