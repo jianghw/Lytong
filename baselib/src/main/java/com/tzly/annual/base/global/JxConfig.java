@@ -2,10 +2,6 @@ package com.tzly.annual.base.global;
 
 import android.support.v4.util.SimpleArrayMap;
 
-import com.umeng.analytics.MobclickAgent;
-
-import com.tzly.annual.base.util.ContextUtils;
-
 /**
  * Created by jianghw on 2017/7/5.
  * Description:
@@ -79,17 +75,6 @@ public final class JxConfig {
             return simpleArrayMap.get(position);
         }
         return "unKnow_tab_" + position;
-    }
-
-    /**
-     * 自定义友盟事件
-     */
-    public void eventIdByUMeng(int position) {
-        MobclickAgent.onEvent(ContextUtils.getContext(), getUMengEventID(position));
-    }
-
-    public void customUrlUMeng(String url) {
-        MobclickAgent.onEvent(ContextUtils.getContext(), url);
     }
 
 }

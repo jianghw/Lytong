@@ -56,7 +56,7 @@ public class AboutActivity extends BaseMvpActivity<IBaseView, HelpPresenter> imp
             PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
             String version = "  " + info.versionName;
             String tag = "";
-            if (BuildConfig.DEBUG) tag = "debug";
+            if (BuildConfig.LOG_DEBUG) tag = "debug";
             return getResources().getString(R.string.version_name) + version + tag;
         } catch (Exception e) {
             e.printStackTrace();

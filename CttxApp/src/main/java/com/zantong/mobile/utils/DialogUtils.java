@@ -50,9 +50,6 @@ import java.util.List;
 public class DialogUtils {
     /**
      * 加载中遮罩层
-     *
-     * @param context
-     * @return
      */
     public static Dialog showLoading(Context context, String messge) {
         Dialog dialog = null;
@@ -161,6 +158,12 @@ public class DialogUtils {
     public static void updateDialog(Context context, String title, String msg,
                                     final View.OnClickListener leftListener,
                                     final View.OnClickListener rightListener) {
+        updateDialog(context, title, msg, "直接下载更新", "应用市场更新", leftListener, rightListener);
+    }
+
+    public static void updateDialog(Context context, String title, String msg, String left, String right,
+                                    final View.OnClickListener leftListener,
+                                    final View.OnClickListener rightListener) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
         View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_update, null);
         TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
@@ -170,7 +173,7 @@ public class DialogUtils {
         mTitle.setText(title);
         mContent.setText(msg);
 
-        btn1.setText("直接下载更新");
+        btn1.setText(left);
         btn1.setTextColor(context.getResources().getColor(R.color.gray_99));
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,7 +183,7 @@ public class DialogUtils {
             }
         });
 
-        btn2.setText("应用市场更新");
+        btn2.setText(right);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -201,8 +204,6 @@ public class DialogUtils {
 
     /**
      * 创建选择框
-     *
-     * @param context
      */
     public static void createSelectDialog(Context context, String title,
                                           List<CommonTwoLevelMenuBean> list,
@@ -866,7 +867,7 @@ public class DialogUtils {
         SystemBarTintManager tintManager = new SystemBarTintManager((Activity) context);
         WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
         params.width = DensityUtils.getScreenWidth(context);
-//		params.height = DensityUtils.getScreenHeight(context) - tintManager.getConfig().getStatusBarHeight();
+        //		params.height = DensityUtils.getScreenHeight(context) - tintManager.getConfig().getStatusBarHeight();
         dialog.getWindow().setAttributes(params);
         dialog.getWindow().setContentView(view);
         dialog.getWindow().setGravity(Gravity.BOTTOM);

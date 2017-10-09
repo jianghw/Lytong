@@ -1,5 +1,6 @@
 package com.zantong.mobile.order.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,116 +11,197 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
-import com.tzly.annual.base.bean.response.CattleOrderBean;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tzly.annual.base.imple.CattleOrderItemListener;
 import com.zantong.mobile.R;
+import com.tzly.annual.base.bean.response.OrderListBean;
 
 import java.text.DecimalFormat;
+
+import static com.tzly.annual.base.util.image.ImageOptions.getMessageOptions;
 
 /**
  * 消息页面
  */
-public class CattleOrderStatusAdapter extends BaseAdapter<CattleOrderBean> {
+public class CattleOrderStatusAdapter extends BaseAdapter<OrderListBean> {
+
+    private static final int TYPE_HAVE = 1;
+    private static final int TYPE_AUDIT = 2;
+    private static final int TYPE_PROCESS = 3;
+    private static final int TYPE_COMPLETED = 4;
 
     private Context mAdapterContext;
     private CattleOrderItemListener mClickListener;
 
     /**
-     * 自定义类型布局
-     * 订单状态,0未至付，1已支付,2取消或过期，3进行中 4已完成
-     * 5-已取件,6-证件齐全,7-证件不全,8-证件不全中,9-代办成功资料送达(6过来),
-     * 10-代办成功资料送达(8过来),11-订单完成(6过来),12-订单完成(8过来),13-取件中
+     * 1--"已接单" 0,1,3,5,13
+     * 2--资料审核中 7,8
+     * 3--办理中 6
+     * 4--完成 9,10,11,12,4
      */
+    @Override
+    public int getItemViewType(int position) {
+        OrderListBean bean = getAll().get(position);
+        int status = bean.getOrderStatus();
+
+        if (status == 0 || status == 1 || status == 3 || status == 5 || status == 13) {
+            return TYPE_HAVE;
+        } else if (status == 7 || status == 8) {
+            return TYPE_AUDIT;
+        } else if (status == 6) {
+            return TYPE_PROCESS;
+        } else if (status == 9 || status == 10 || status == 11 || status == 12 || status == 4) {
+            return TYPE_COMPLETED;
+        } else {
+            return TYPE_HAVE;
+        }
+    }
 
     /**
      * 布局创建
      */
     @Override
-    public View createView(ViewGroup viewGroup, int i) {
+    public View createView(ViewGroup viewGroup, int viewType) {
         mAdapterContext = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(mAdapterContext);
-        return inflater.inflate(R.layout.recycle_list_item_order, viewGroup, false);
+
+        int resource;
+        switch (viewType) {
+            case TYPE_HAVE:
+                resource = R.layout.rv_item_order_cattle;
+                break;
+            case TYPE_AUDIT:
+                resource = R.layout.rv_item_order_cattle;
+                break;
+            case TYPE_PROCESS:
+                resource = R.layout.rv_item_order_cattle;
+                break;
+            case TYPE_COMPLETED:
+                resource = R.layout.rv_item_order_cancel;
+                break;
+            default:
+                resource = R.layout.rv_item_order_cancel;
+                break;
+        }
+        return inflater.inflate(resource, viewGroup, false);
     }
 
     @Override
     public BaseRecyclerViewHolder createViewHolder(View view, int itemType) {
-        return new ViewHolder(view);
+        switch (itemType) {
+            case TYPE_HAVE:
+                return new HaveViewHolder(view);
+            case TYPE_AUDIT:
+                return new AuditViewHolder(view);
+            case TYPE_PROCESS:
+                return new ProcessViewHolder(view);
+            case TYPE_COMPLETED:
+                return new CompletedViewHolder(view);
+            default:
+                return new CompletedViewHolder(view);//未知版本处理
+        }
     }
 
     /**
      * 数据绑定
-     * orderStatus : 2 	订单状态,0未至付，1已支付,2取消或过期，3进行中 4已完成
      */
     @Override
-    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, final CattleOrderBean data) {
-        ViewHolder holder = (ViewHolder) viewHolder;
-        if (data != null) {
-            String orderNum = mAdapterContext.getResources().getString(R.string.tv_order_num);
-            holder.mTvOrderNum.setText(String.format(orderNum, data.getOrderNum()));
-
-            int orderStatus = data.getState();
-            changeTextColorByStatus(orderStatus, holder.mTvOrderStatus);
-
-//            ImageLoader.getInstance().displayImage(data.getIcon(), holder.mOrderBrand, getMessageOptions());
-
-//            holder.mTvBrand.setText(data.getGoodsName());
-            holder.mTvDate.setText(data.getCreateTime());
-
-            float price = data.getPayableAmount();
-            DecimalFormat decimalFormat = new DecimalFormat("0.00");
-            String format = decimalFormat.format(price);
-            holder.mTvPrice.setText("￥" + format);
-            //旧
-            holder.mTvPayLine.setVisibility(orderStatus == 0 ? View.VISIBLE : View.GONE);
-            holder.mLayPay.setVisibility(orderStatus == 0 ? View.VISIBLE : View.GONE);
-
-//            int itemType = data.getType();
-
-            if (holder.mLayPay.getVisibility() != View.GONE) {
-                holder.mTvPay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mClickListener != null) mClickListener.doClickHave(data);
-                    }
-                });
-            }
-
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, final OrderListBean data) {
+        if (data == null) return;
+        switch (viewHolder.getItemViewType()) {
+            case TYPE_HAVE:
+                HaveViewHolder haveViewHolder = (HaveViewHolder) viewHolder;
+                completedProcessing(haveViewHolder, data);
+                haveProcessing(haveViewHolder, data);
+                break;
+            case TYPE_AUDIT:
+                AuditViewHolder auditViewHolder = (AuditViewHolder) viewHolder;
+                completedProcessing(auditViewHolder, data);
+                auditProcessing(auditViewHolder, data);
+                break;
+            case TYPE_PROCESS:
+                ProcessViewHolder processViewHolder = (ProcessViewHolder) viewHolder;
+                completedProcessing(processViewHolder, data);
+                processProcessing(processViewHolder, data);
+                break;
+            case TYPE_COMPLETED:
+                CompletedViewHolder completedViewHolder = (CompletedViewHolder) viewHolder;
+                completedProcessing(completedViewHolder, data);
+                break;
+            default:
+                break;
         }
+    }
+
+    private void haveProcessing(HaveViewHolder haveViewHolder, final OrderListBean data) {
+        haveViewHolder.mTvCattle.setText("资料审核");
+        haveViewHolder.mTvCattle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mClickListener != null) mClickListener.doClickHave(data);
+            }
+        });
+    }
+
+    private void auditProcessing(AuditViewHolder auditViewHolder, final OrderListBean data) {
+        auditViewHolder.mTvCattle.setText("办    理");
+        auditViewHolder.mTvCattle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mClickListener != null) mClickListener.doClickAudit(data);
+            }
+        });
+    }
+
+    private void processProcessing(ProcessViewHolder processViewHolder, final OrderListBean data) {
+        processViewHolder.mTvCattle.setText("完成订单");
+        processViewHolder.mTvCattle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mClickListener != null) mClickListener.doClickAudit(data);
+            }
+        });
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void completedProcessing(BaseViewHolder holder, OrderListBean data) {
+        String orderNum = mAdapterContext.getResources().getString(R.string.tv_order_num);
+        holder.mTvOrderNum.setText(String.format(orderNum, data.getOrderId()));
+
+        int orderStatus = data.getOrderStatus();
+        changeTextColorByStatus(orderStatus, holder.mTvOrderStatus);
+
+        ImageLoader.getInstance().displayImage(data.getIcon(), holder.mImgBrand, getMessageOptions());
+
+        holder.mTvBrand.setText(data.getGoodsName());
+        holder.mTvDate.setText(data.getCreateDate());
+
+        float price = data.getAmount();
+        DecimalFormat decimalFormat = new DecimalFormat("0.00");
+        String format = decimalFormat.format(price);
+        holder.mTvPrice.setText("￥" + format);
     }
 
     /**
      * orderStatus : 2 	订单状态,0未至付，1已支付,2取消或过期，3已锁定
      */
     private void changeTextColorByStatus(int status, TextView tvPayStatus) {
-        switch (status) {
-            case 0:
-                tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvOrange_ef));
-                tvPayStatus.setText("待支付");
-                break;
-            case 14:
-                tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvGreen_80));
-                tvPayStatus.setText("已接单");
-                break;
-            case 3:
-                tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvGreen_80));
-                tvPayStatus.setText("资料审核中");
-                break;
-            case 32:
-                tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvGreen_80));
-                tvPayStatus.setText("办理中");
-                break;
-            case 4:
-                tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvBlack_b2));
-                tvPayStatus.setText("已完成");
-                break;
-            case 2:
-                tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvBlack_b2));
-                tvPayStatus.setText("已取消");
-                break;
-            default:
-                tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvBlack_b2));
-                tvPayStatus.setText("未知状态");
-                break;
+
+        if (status == 0 || status == 1 || status == 3 || status == 5 || status == 13) {
+            tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvGreen_80));
+            tvPayStatus.setText("已接单");
+        } else if (status == 7 || status == 8) {
+            tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvGreen_80));
+            tvPayStatus.setText("资料审核中");
+        } else if (status == 6) {
+            tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvGreen_80));
+            tvPayStatus.setText("办理中");
+        } else if (status == 9 || status == 10 || status == 11 || status == 12 || status == 4) {
+            tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvBlack_b2));
+            tvPayStatus.setText("已完成");
+        } else {
+            tvPayStatus.setTextColor(mAdapterContext.getResources().getColor(R.color.colorTvBlack_b2));
+            tvPayStatus.setText("未知状态");
         }
     }
 
@@ -127,7 +209,7 @@ public class CattleOrderStatusAdapter extends BaseAdapter<CattleOrderBean> {
         mClickListener = listener;
     }
 
-    public static class ViewHolder extends BaseRecyclerViewHolder {
+    private static class BaseViewHolder extends BaseRecyclerViewHolder {
         TextView mTvOrderNum;
         TextView mTvOrderStatus;
         ImageView mImgBrand;
@@ -135,20 +217,11 @@ public class CattleOrderStatusAdapter extends BaseAdapter<CattleOrderBean> {
         TextView mTvDate;
         TextView mTvPrice;
         TextView mTvPayLine;
-        TextView mTvPay;
-        TextView mTvCancelOrder;
-        RelativeLayout mLayPay;
-        TextView mTvDriving;
-        TextView mTvCourier;
-        TextView mTvUncourier;
-        RelativeLayout mLayAnnual;
-        TextView mTvSubscribe;
-        TextView mTvCancelSubscribe;
-        RelativeLayout mLaySubscribe;
+        TextView mTvCattle;
+        RelativeLayout mLayCattle;
 
-        ViewHolder(View view) {
+        BaseViewHolder(View view) {
             super(view);
-
             this.mTvOrderNum = (TextView) view.findViewById(R.id.tv_order_num);
             this.mTvOrderStatus = (TextView) view.findViewById(R.id.tv_order_status);
             this.mImgBrand = (ImageView) view.findViewById(R.id.img_brand);
@@ -156,16 +229,26 @@ public class CattleOrderStatusAdapter extends BaseAdapter<CattleOrderBean> {
             this.mTvDate = (TextView) view.findViewById(R.id.tv_date);
             this.mTvPrice = (TextView) view.findViewById(R.id.tv_price);
             this.mTvPayLine = (TextView) view.findViewById(R.id.tv_pay_line);
-            this.mTvPay = (TextView) view.findViewById(R.id.tv_pay);
-            this.mTvCancelOrder = (TextView) view.findViewById(R.id.tv_cancel_order);
-            this.mLayPay = (RelativeLayout) view.findViewById(R.id.lay_pay);
-            this.mTvDriving = (TextView) view.findViewById(R.id.tv_driving);
-            this.mTvCourier = (TextView) view.findViewById(R.id.tv_courier);
-            this.mTvUncourier = (TextView) view.findViewById(R.id.tv_uncourier);
-            this.mLayAnnual = (RelativeLayout) view.findViewById(R.id.lay_annual);
-            this.mTvSubscribe = (TextView) view.findViewById(R.id.tv_subscribe);
-            this.mTvCancelSubscribe = (TextView) view.findViewById(R.id.tv_cancel_subscribe);
-            this.mLaySubscribe = (RelativeLayout) view.findViewById(R.id.lay_subscribe);
+            this.mTvCattle = (TextView) view.findViewById(R.id.tv_cattle);
+            this.mLayCattle = (RelativeLayout) view.findViewById(R.id.lay_cattle);
         }
+    }
+
+    private static class HaveViewHolder extends BaseViewHolder {
+        public HaveViewHolder(View view) {
+            super(view);
+        }
+    }
+
+    private class AuditViewHolder extends BaseViewHolder {
+        public AuditViewHolder(View view) {super(view);}
+    }
+
+    private class ProcessViewHolder extends BaseViewHolder {
+        public ProcessViewHolder(View view) {super(view);}
+    }
+
+    private class CompletedViewHolder extends BaseViewHolder {
+        public CompletedViewHolder(View view) {super(view);}
     }
 }

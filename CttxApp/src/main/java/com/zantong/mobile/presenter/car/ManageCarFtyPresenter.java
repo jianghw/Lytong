@@ -15,7 +15,7 @@ import com.zantong.mobile.car.bean.VehicleLicenseBean;
 import com.zantong.mobile.car.bean.VehicleLicenseResult;
 import com.zantong.mobile.car.dto.UserCarsDTO;
 import com.zantong.mobile.card.dto.BindCarDTO;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.contract.IManageCarFtyContract;
 import com.zantong.mobile.home.bean.HomeCarResult;
 import com.zantong.mobile.model.repository.BaseSubscriber;
@@ -475,7 +475,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                 })
                 .toList();
 //清空车辆数据
-        PublicData.getInstance().mServerCars.clear();
+        MemoryData.getInstance().mServerCars.clear();
 
         Subscription subscription = Observable
                 .zip(isPay, unPay,
@@ -534,7 +534,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
             userCarInfoBean.setCarnumtype(bean.getVehicleType());
             beanArrayList.add(userCarInfoBean);
         }
-        PublicData.getInstance().mServerCars.addAll(beanArrayList);
+        MemoryData.getInstance().mServerCars.addAll(beanArrayList);
     }
 
 }

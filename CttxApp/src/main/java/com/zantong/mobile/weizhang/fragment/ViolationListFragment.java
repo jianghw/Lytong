@@ -7,7 +7,7 @@ import android.view.View;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobile.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobile.order.activity.OrderDetailActivity;
-import com.zantong.mobile.order.bean.OrderListBean;
+import com.tzly.annual.base.bean.response.OrderListBean;
 import com.zantong.mobile.weizhang.activity.ViolationListActivity;
 import com.zantong.mobile.weizhang.adapter.ViolationResultAdapter;
 import com.zantong.mobile.weizhang.bean.ViolationBean;

@@ -13,7 +13,7 @@ import com.zantong.mobile.user.fragment.HelpFragment;
 /**
  * 帮助与反馈
  */
-public class HelpActivity extends BaseMvpActivity<IBaseView,HelpPresenter> implements View.OnClickListener, IBaseView{
+public class HelpActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements View.OnClickListener, IBaseView {
 
     private FragmentManager fragmentManager;
 

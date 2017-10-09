@@ -9,18 +9,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.tzly.annual.base.bean.BaseResult;
+import com.tzly.annual.base.bean.Result;
+import com.tzly.annual.base.bean.request.RegisterDTO;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.R;
 import com.zantong.mobile.api.CallBack;
 import com.zantong.mobile.api.CarApiClient;
 import com.zantong.mobile.api.UserApiClient;
 import com.zantong.mobile.base.activity.BaseMvpActivity;
-import com.zantong.mobile.base.bean.Result;
 import com.zantong.mobile.common.Config;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.contract.IOrderView;
 import com.zantong.mobile.presenter.OrderPresenter;
 import com.zantong.mobile.user.dto.ChangePwdDTO;
-import com.zantong.mobile.user.dto.LiYingRegDTO;
 import com.zantong.mobile.utils.TextWatchUtils;
 import com.zantong.mobile.utils.ValidateUtils;
 import com.zantong.mobile.utils.rsa.RSAUtils;
@@ -32,8 +34,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
-import com.tzly.annual.base.bean.BaseResult;
-import com.tzly.annual.base.util.ToastUtils;
 public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresenter>
         implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
 
@@ -181,20 +181,20 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
         String newPwd = mNewPwd.getText().toString();
         String newRePwd = mNewRePwd.getText().toString();
         if (!ValidateUtils.checkPwd(newPwd)) {
-            ToastUtils.showShort(this, "密码位数不对或存在非法字符");
+            ToastUtils.toastShort("密码位数不对或存在非法字符");
             return;
         } else if (ValidateUtils.checkNum(newPwd)) {
-            ToastUtils.showShort(this, "密码不能为纯数字");
+            ToastUtils.toastShort("密码不能为纯数字");
             return;
         } else if (ValidateUtils.checkChar(newPwd)) {
-            ToastUtils.showShort(this, "密码不能为纯字母");
+            ToastUtils.toastShort("密码不能为纯字母");
             return;
         } else if (!newPwd.equals(newRePwd)) {
-            ToastUtils.showShort(this, "两次输入的密码不一致");
+            ToastUtils.toastShort("两次输入的密码不一致");
             return;
         }
         ChangePwdDTO dto = new ChangePwdDTO();
-        dto.setUsrid(PublicData.getInstance().userID);
+        dto.setUsrid(MemoryData.getInstance().userID);
         try {
             SHATools sha = new SHATools();
             String newPassword = SHATools.hexString(sha.eccryptSHA1(newPwd));
@@ -211,10 +211,10 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
                     hideDialogLoading();
                     if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
                         liyingreg(newPwdLi);
-                        PublicData.getInstance().clearData(ChangePwdActivity.this);
+                        MemoryData.getInstance().clearData(ChangePwdActivity.this);
                         finish();
                     } else {
-                        ToastUtils.showShort(ChangePwdActivity.this, result.getSYS_HEAD().getReturnMessage());
+                        ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
                     }
                 }
 
@@ -231,14 +231,14 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
 
     private void liyingreg(String pwd) {
         try {
-            String phone = RSAUtils.strByEncryptionLiYing(PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
+            String phone = RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().mLoginInfoBean.getPhoenum(), true);
             SHATools sha = new SHATools();
             String newPassword = RSAUtils.strByEncryptionLiYing(SHATools.hexString(sha.eccryptSHA1(pwd)), true);
-            LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
-            liYingRegDTO.setPhoenum(phone);
-            liYingRegDTO.setPswd(newPassword);
-            liYingRegDTO.setUsrid(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
-            CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResult>() {
+            RegisterDTO registerDTO = new RegisterDTO();
+            registerDTO.setPhoenum(phone);
+            registerDTO.setPswd(newPassword);
+            registerDTO.setUsrid(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
+            CarApiClient.liYingReg(getApplicationContext(), registerDTO, new CallBack<BaseResult>() {
                 @Override
                 public void onSuccess(BaseResult result) {
                 }

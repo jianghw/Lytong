@@ -1,21 +1,20 @@
 package com.zantong.mobile.presenter;
 
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.api.OnLoadServiceBackUI;
 import com.zantong.mobile.base.BasePresenter;
 import com.zantong.mobile.base.MessageFormat;
 import com.zantong.mobile.common.Config;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.contract.UserInfoUpdateView;
 import com.zantong.mobile.home.bean.UpdateInfo;
+import com.zantong.mobile.login_v.LoginUserSPreference;
 import com.zantong.mobile.model.UserInfoUpdateModel;
 import com.zantong.mobile.presenter.presenterinterface.SimplePresenter;
 import com.zantong.mobile.user.activity.UserInfoUpdate;
-import com.zantong.mobile.utils.RefreshNewTools.UserInfoRememberCtrl;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 作者：王海洋
@@ -31,7 +30,6 @@ public class UserInfoUpdatePresenter extends BasePresenter<UserInfoUpdateView> i
     public UserInfoUpdatePresenter(UserInfoUpdate mUserInfoUpdate) {
         this.mUserInfoUpdate = mUserInfoUpdate;
         mUserInfoUpdateModel = new UserInfoUpdateModel();
-
     }
 
     @Override
@@ -42,9 +40,9 @@ public class UserInfoUpdatePresenter extends BasePresenter<UserInfoUpdateView> i
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.u003.01");
                 masp = new JSONObject();
                 try {
-                    masp.put("usrid", PublicData.getInstance().userID);
+                    masp.put("usrid", MemoryData.getInstance().userID);
                     masp.put("portrait", mUserInfoUpdate.mapData().get("portrait"));
-                    masp.put("devicetoken", PublicData.getInstance().imei);
+                    masp.put("devicetoken", MemoryData.getInstance().imei);
                     masp.put("pushswitch", 0);
                     MessageFormat.getInstance().setMessageJSONObject(masp);
                 } catch (JSONException e) {
@@ -62,10 +60,10 @@ public class UserInfoUpdatePresenter extends BasePresenter<UserInfoUpdateView> i
         UpdateInfo mUpdateInfo = (UpdateInfo) clazz;
         switch (index) {
             case 1:
-                if (PublicData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())) {
+                if (MemoryData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())) {
                     mUserInfoUpdate.updateView(clazz, index);
-                    PublicData.getInstance().mLoginInfoBean.setPortrait(mUserInfoUpdate.mapData().get("portrait"));
-                    UserInfoRememberCtrl.saveObject(PublicData.getInstance().mLoginInfoBean);
+                    MemoryData.getInstance().mLoginInfoBean.setPortrait(mUserInfoUpdate.mapData().get("portrait"));
+                    LoginUserSPreference.saveObject(MemoryData.getInstance().mLoginInfoBean);
                 } else {
                     mUserInfoUpdate.setUserHeadImage();
                     ToastUtils.toastShort(mUpdateInfo.getSYS_HEAD().getReturnMessage());

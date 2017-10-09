@@ -3,7 +3,7 @@ package com.zantong.mobile.contract;
 import com.tzly.annual.base.bean.BaseResult;
 import com.zantong.mobile.base.interf.IMvpPresenter;
 import com.zantong.mobile.base.interf.IMvpView;
-import com.zantong.mobile.order.bean.OrderListBean;
+import com.tzly.annual.base.bean.response.OrderListBean;
 import com.zantong.mobile.weizhang.bean.PayOrderResult;
 
 import java.util.List;

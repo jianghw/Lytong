@@ -14,9 +14,6 @@ import android.widget.TextView;
 
 /**
  * 兼容旧版&新版
- *
- * @author 李玉江[QQ:1032694760]
- * @since 2015/10/19
  */
 public class CompatUtils {
 

@@ -4,7 +4,7 @@ android {
     buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.zantong.mobilecttx"
+        applicationId "com.zantong.mobile"
 
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
@@ -12,6 +12,11 @@ android {
         versionName rootProject.ext.android.versionName
         //dex突破65535的限制
         multiDexEnabled true
+
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'arm64-v8a', 'armeabi', 'armeabi-v7a', 'x86', 'x86_64'
+        }
     }
 
     sourceSets {
@@ -19,7 +24,7 @@ android {
             jniLibs.srcDirs = ['libs']
             assets.srcDirs = ['assets']
         }
-        // Move the tests to tests/java, tests/res, etc...
+        //百度地图抄来 Move the tests to tests/java, tests/res, etc...
         instrumentTest.setRoot('tests')
         // Move the build types to build-types/<type>
         debug.setRoot('build-types/debug')
@@ -32,6 +37,27 @@ android {
         disable 'MissingTranslation'
     }
 
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/dependencies'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/license'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/notice'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/README.txt'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude '!META-INF/MANIFEST.MF'
+        exclude 'META-INF/MANIFEST.MF'
+    }
+
     signingConfigs {
         debug {
             storeFile file("/Users/cattle_debug.jks")
@@ -42,17 +68,83 @@ android {
         }
 
         release {
-            storeFile file("/Users/CTTX.jks")
+            storeFile file("/Users/cattle_release.jks")
             storePassword "zantong"
-            keyAlias "CTTX"
+            keyAlias "cttx"
             keyPassword "zantong"
             v2SigningEnabled false
         }
     }
 
     buildTypes {
-//release
+
         debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            //下载地址   分享
+            buildConfigField "String", "APP_DOWNLOD", "\"http://biz.liyingtong.com/download/\""
+
+            buildConfigField "String", "CAR_MANGER_URL", "\"http://biz.liyingtong.com/\""
+            //新接口正式地址
+            buildConfigField "String", "BASE_URL", "\"https://ctkapp.icbc-axa.com/ecip/mobilecall_call\""
+            //老接口正式地址
+            buildConfigField "String", "APP_URL", "\"https://ctkapp.icbc-axa.com/ecip/\""
+            //老接口海洋正式地址
+            buildConfigField "String", "APPFileUrl", "\"https://ctkapp.icbc-axa.com:9000/\""
+            //领卡网点文件（正式地址）
+            buildConfigField "String", "ImageLoadUrl", "\"https://ctkapp.icbc-axa.com/\""
+
+            signingConfig signingConfigs.debug
+            //apk的后缀
+            applicationIdSuffix ".debug"
+            //混淆
+            minifyEnabled false
+            //Zipalign优化
+            zipAlignEnabled false
+            // 移除无用的resource文件
+            shrinkResources false
+            //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            manifestPlaceholders = [baidu_API_KEY: "KmfeAyYOscG1rEGjBpfjGiyPErGsqxqy",
+                                    alibaba_API_KEY: "24642970",
+                                    alibaba_APP_SECRET: "1e85b8940c06d13f1fb7a7047d13da0e"]
+        }
+
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            //下载地址   分享
+            buildConfigField "String", "APP_DOWNLOD", "\"http://biz.liyingtong.com/download/\""
+
+            buildConfigField "String", "CAR_MANGER_URL", "\"http://biz.liyingtong.com/\""
+            //新接口正式地址
+            buildConfigField "String", "BASE_URL", "\"https://ctkapp.icbc-axa.com/ecip/mobilecall_call\""
+            //老接口正式地址
+            buildConfigField "String", "APP_URL", "\"https://ctkapp.icbc-axa.com/ecip/\""
+            //老接口海洋正式地址
+            buildConfigField "String", "APPFileUrl", "\"https://ctkapp.icbc-axa.com:9000/\""
+            //领卡网点文件（正式地址）
+            buildConfigField "String", "ImageLoadUrl", "\"https://ctkapp.icbc-axa.com/\""
+
+            //apk的后缀
+            applicationIdSuffix ".release"
+            //签名
+            signingConfig signingConfigs.release
+            //混淆
+            minifyEnabled false
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            manifestPlaceholders = [baidu_API_KEY: "MZeGiXrDe4pB5tzVKFUd2UfwV981YlYS",
+                                    alibaba_API_KEY: "24643719",
+                                    alibaba_APP_SECRET: "3b709b3a0697c348774bf0dba400008d"]
+        }
+
+        develop {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
             //下载地址  分享
             buildConfigField "String", "APP_DOWNLOD", "\"http://dev.liyingtong.com/download/\""
 
@@ -77,40 +169,16 @@ android {
             shrinkResources false
             //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
 
-        release {
-            //下载地址   分享
-            buildConfigField "String", "APP_DOWNLOD", "\"http://biz.liyingtong.com/download/\""
-
-            buildConfigField "String", "CAR_MANGER_URL", "\"http://biz.liyingtong.com/\""
-            //新接口正式地址
-            buildConfigField "String", "BASE_URL", "\"https://ctkapp.icbc-axa.com/ecip/mobilecall_call\""
-            //老接口正式地址
-            buildConfigField "String", "APP_URL", "\"https://ctkapp.icbc-axa.com/ecip/\""
-            //老接口海洋正式地址
-            buildConfigField "String", "APPFileUrl", "\"https://ctkapp.icbc-axa.com:9000/\""
-            //领卡网点文件（正式地址）
-            buildConfigField "String", "ImageLoadUrl", "\"https://ctkapp.icbc-axa.com/\""
-
-            //apk的后缀
-            applicationIdSuffix ".cattle"
-            //混淆
-            minifyEnabled false
-            //Zipalign优化
-            zipAlignEnabled true
-            // 移除无用的resource文件
-            shrinkResources true
-            //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            //签名
-            signingConfig signingConfigs.release
+            manifestPlaceholders = [baidu_API_KEY: "KmfeAyYOscG1rEGjBpfjGiyPErGsqxqy",
+                                    alibaba_API_KEY: "24642970",
+                                    alibaba_APP_SECRET: "1e85b8940c06d13f1fb7a7047d13da0e"]
         }
     }
 
     productFlavors {
         //开发者版本
-        dve {
+        dev {
             minSdkVersion 21
         }
         //应用宝
@@ -121,6 +189,8 @@ android {
         tzly_huawei {}
         //小米市场
         tzly_xiaomi {}
+        //百度市场
+        tzly_baidu {}
 
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
@@ -139,10 +209,11 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':baselib')
     //阿里云推送
-    compile(name: 'huawei-xiaomi-support-3.0.0', ext: 'aar')
-    compile 'com.aliyun.ams:alicloud-android-push:3.0.6@aar'
+    compile 'com.aliyun.ams:alicloud-android-third-push:3.0.5@aar'
+    compile 'com.aliyun.ams:alicloud-android-push:3.0.11@aar'
     compile 'com.aliyun.ams:alicloud-android-utdid:1.1.5.3'
-    compile 'com.aliyun.ams:alicloud-android-ut:5.0.0'
+    compile 'com.aliyun.ams:alicloud-android-ut:5.1.0'
+    //扫描
     compile files('libs/zxing.jar')
     compile files('libs/sun.misc.BASE64Decoder.jar')
     //微信分享
@@ -151,4 +222,7 @@ dependencies {
     //百度地图
     compile files('libs/BaiduLBS_Android.jar')
     compile 'com.jakewharton:butterknife:7.0.1'
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+    compile 'com.tencent.bugly:nativecrashreport:latest.release'
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
 }

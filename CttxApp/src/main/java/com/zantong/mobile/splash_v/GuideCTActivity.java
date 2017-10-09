@@ -12,10 +12,8 @@ import com.tzly.annual.base.bean.response.StartPicBean;
 import com.tzly.annual.base.custom.viewpager.GuideViewPager;
 import com.tzly.annual.base.custom.viewpager.IGuideViewPager;
 import com.tzly.annual.base.util.AppUtils;
-import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobile.R;
-import com.zantong.mobile.cattle.MainClubActivity;
-import com.zantong.mobile.common.Config;
+import com.zantong.mobile.main_v.MainClubActivity;
 import com.zantong.mobile.utils.SPUtils;
 import com.zantong.mobile.utils.jumptools.Act;
 
@@ -115,7 +113,6 @@ public class GuideCTActivity extends JxBaseActivity
     }
 
     private void gotoActivity() {
-        MobclickAgent.onEvent(this, Config.getUMengID(0));
         Act.getInstance().gotoIntent(this, MainClubActivity.class);
         SPUtils.getInstance().setIsGuide(String.valueOf(mVersionCode));
         finish();

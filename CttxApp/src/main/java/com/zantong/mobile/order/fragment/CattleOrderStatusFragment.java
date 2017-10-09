@@ -5,25 +5,23 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
-import com.tzly.annual.base.bean.response.CattleOrderBean;
+import com.tzly.annual.base.bean.response.OrderListBean;
+import com.tzly.annual.base.global.JxGlobal;
 import com.tzly.annual.base.imple.CattleOrderItemListener;
 import com.tzly.annual.base.imple.CattleOrderListener;
 import com.zantong.mobile.base.fragment.BaseRecyclerListJxFragment;
-import com.zantong.mobile.browser.HtmlBrowserActivity;
-import com.zantong.mobile.order.activity.AnnualOrderDetailActivity;
+import com.zantong.mobile.browser.BrowserHtmlActivity;
+import com.zantong.mobile.order.activity.AnnualDetailActivity;
 import com.zantong.mobile.order.activity.OrderDetailActivity;
 import com.zantong.mobile.order.adapter.CattleOrderStatusAdapter;
-import com.zantong.mobile.order.bean.OrderListBean;
 import com.zantong.mobile.utils.jumptools.Act;
 
 import java.util.List;
 
-import com.tzly.annual.base.global.JxGlobal;
-
 /**
  * 所有订单
  */
-public class CattleOrderStatusFragment extends BaseRecyclerListJxFragment<CattleOrderBean> {
+public class CattleOrderStatusFragment extends BaseRecyclerListJxFragment<OrderListBean> {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -62,7 +60,7 @@ public class CattleOrderStatusFragment extends BaseRecyclerListJxFragment<Cattle
      * adapter
      */
     @Override
-    public BaseAdapter<CattleOrderBean> createAdapter() {
+    public BaseAdapter<OrderListBean> createAdapter() {
         mCurAdapter = new CattleOrderStatusAdapter();
         return mCurAdapter;
     }
@@ -75,14 +73,14 @@ public class CattleOrderStatusFragment extends BaseRecyclerListJxFragment<Cattle
             String targetType = bean.getTargetType();
             if (targetType.equals("0")) {//前往 订单详情页面
                 Intent intent = new Intent(getActivity(), bean.getType() == 6
-                        ? AnnualOrderDetailActivity.class : OrderDetailActivity.class);
+                        ? AnnualDetailActivity.class : OrderDetailActivity.class);
                 intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
                 startActivity(intent);
             } else {
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.browser_title_extra, bean.getGoodsName());
                 intent.putExtra(JxGlobal.putExtra.browser_url_extra, bean.getTargetUrl() + "?orderId=" + orderId);
-                Act.getInstance().gotoLoginByIntent(getActivity(), HtmlBrowserActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
             }
         }
     }
@@ -96,22 +94,22 @@ public class CattleOrderStatusFragment extends BaseRecyclerListJxFragment<Cattle
     protected void initFragmentView(View view) {
         mCurAdapter.setItemClickListener(new CattleOrderItemListener() {
             @Override
-            public void doClickHave(CattleOrderBean bean) {
+            public void doClickHave(OrderListBean bean) {
                 if (mRefreshListener != null) mRefreshListener.doClickHave(bean);
             }
 
             @Override
-            public void doClickAudit(CattleOrderBean bean) {
+            public void doClickAudit(OrderListBean bean) {
                 if (mRefreshListener != null) mRefreshListener.doClickAudit(bean);
             }
 
             @Override
-            public void doClickProcess(CattleOrderBean bean) {
+            public void doClickProcess(OrderListBean bean) {
                 if (mRefreshListener != null) mRefreshListener.doClickProcess(bean);
             }
 
             @Override
-            public void doClickCompleted(CattleOrderBean bean) {
+            public void doClickCompleted(OrderListBean bean) {
                 if (mRefreshListener != null) mRefreshListener.doClickCompleted(bean);
             }
         });
@@ -125,7 +123,7 @@ public class CattleOrderStatusFragment extends BaseRecyclerListJxFragment<Cattle
     protected void DestroyViewAndThing() {
     }
 
-    public void setPayOrderListData(List<CattleOrderBean> data) {
+    public void setPayOrderListData(List<OrderListBean> data) {
         setSimpleDataResult(data);
     }
 

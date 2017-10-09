@@ -20,9 +20,12 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.R;
 import com.zantong.mobile.base.fragment.PullableBaseFragment;
-import com.zantong.mobile.browser.BrowserForPayActivity;
+import com.zantong.mobile.browser.PayHtmlActivity;
 import com.zantong.mobile.chongzhi.activity.RechargeAgreementActivity;
 import com.zantong.mobile.chongzhi.adapter.OilPriceAdapter;
 import com.zantong.mobile.chongzhi.bean.RechargeBean;
@@ -32,7 +35,6 @@ import com.zantong.mobile.chongzhi.bean.RechargeResult;
 import com.zantong.mobile.chongzhi.dto.RechargeDTO;
 import com.zantong.mobile.common.bean.CommonTwoLevelMenuBean;
 import com.zantong.mobile.contract.IRechargeAtyContract;
-import com.zantong.mobile.order.activity.CouponDetailActivity;
 import com.zantong.mobile.order.activity.CouponListActivity;
 import com.zantong.mobile.order.bean.CouponFragmentBean;
 import com.zantong.mobile.user.activity.ProblemFeedbackActivity;
@@ -46,10 +48,6 @@ import com.zantong.mobile.weizhang.bean.PayOrderResult;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.tzly.annual.base.global.JxGlobal;
-import com.tzly.annual.base.util.ContextUtils;
-import com.tzly.annual.base.util.ToastUtils;
 
 
 /**
@@ -269,10 +267,11 @@ public class RechargeFragment extends PullableBaseFragment
 
         mAdapter = new OilPriceAdapter(mRechargeDTO);
         mXRecyclerView.setAdapter(mAdapter);
-//优惠劵
+        //优惠劵
         if (mPresenter != null) mPresenter.getCouponByType();
+        mRayDiscountCoupon.setVisibility(View.GONE);
 
-//价格刷新
+        //价格刷新
         mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, Object data) {
@@ -364,7 +363,6 @@ public class RechargeFragment extends PullableBaseFragment
                     intent.putExtras(bundle);
                     startActivityForResult(intent, JxGlobal.requestCode.recharge_coupon_list);
                 }
-                break;
             case R.id.tv_agreement://充值协议
                 Act.getInstance().gotoIntent(getActivity(), RechargeAgreementActivity.class);
                 break;
@@ -468,11 +466,6 @@ public class RechargeFragment extends PullableBaseFragment
                 e.printStackTrace();
             }
 
-            Intent intent = new Intent(getActivity(), CouponDetailActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("CouponFragmentBean", couponFragmentBean);
-            intent.putExtras(bundle);
-            startActivity(intent);
         }
     }
 
@@ -579,7 +572,7 @@ public class RechargeFragment extends PullableBaseFragment
 
             priceStateList(mProviderType);
             //优惠劵控件隐藏
-            mRayDiscountCoupon.setVisibility(mPayType == 0 ? View.VISIBLE : View.GONE);
+            //            mRayDiscountCoupon.setVisibility(mPayType == 0 ? View.VISIBLE : View.GONE);
 
             if (bean.getId() == 1) {
                 initTvPayStyleDrawable(bean);
@@ -777,7 +770,7 @@ public class RechargeFragment extends PullableBaseFragment
         Intent intent = new Intent();
         intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
         intent.putExtra(JxGlobal.putExtra.browser_url_extra, result.getData());
-        Act.getInstance().gotoLoginByIntent(getActivity(), BrowserForPayActivity.class, intent);
+        Act.getInstance().gotoLoginByIntent(getActivity(), PayHtmlActivity.class, intent);
         //TODO 保存卡号
         SPUtils.getInstance().setOilCard(mRechargeDTO.getOilCardNum());
         //TODO 确保优惠劵的使用状态
@@ -787,7 +780,7 @@ public class RechargeFragment extends PullableBaseFragment
     @Override
     public void onPayOrderByCouponError(String msg) {
         dismissLoadingDialog();
-        ToastUtils.showShort(getContext().getApplicationContext(), msg);
+        ToastUtils.toastShort(msg);
     }
 
     /**

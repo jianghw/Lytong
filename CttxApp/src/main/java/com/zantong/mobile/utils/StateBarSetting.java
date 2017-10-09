@@ -10,7 +10,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.zantong.mobile.R;
-import com.zantong.mobile.cattle.MainClubActivity;
+import com.zantong.mobile.main_v.MainClubActivity;
 import com.zantong.mobile.utils.jumptools.Act;
 
 /**

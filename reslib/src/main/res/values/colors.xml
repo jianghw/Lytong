@@ -3,11 +3,13 @@
     <color name="res_color_white">#FFFFFF</color>
     <!--字体 用-->
     <color name="res_color_black_4d">#4D4D4D</color>
+    <color name="res_color_black_b3">#B3B3B3</color>
     <!--字体 用-->
     <color name="res_color_red_f3">#F3362B</color>
     <color name="res_color_red_ef">#EF8E3D</color>
     <!--下划线用-->
     <color name="res_color_gray_e6">#E6E6E6</color>
+    <color name="res_color_gray_33">#333333</color>
 
 
     <color name="colorWhite">#FFFFFF</color>

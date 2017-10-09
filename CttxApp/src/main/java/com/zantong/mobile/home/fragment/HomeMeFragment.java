@@ -19,26 +19,27 @@ import android.widget.TextView;
 
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
-import com.umeng.analytics.MobclickAgent;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.AppUtils;
+import com.tzly.annual.base.util.FileUtils;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.image.ImageLoadUtils;
 import com.zantong.mobile.R;
+import com.zantong.mobile.application.MemoryData;
+import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobile.browser.HtmlBrowserActivity;
+import com.zantong.mobile.browser.BrowserHtmlActivity;
 import com.zantong.mobile.car.activity.ManageCarActivity;
-import com.zantong.mobile.common.Config;
-import com.zantong.mobile.common.Injection;
-import com.zantong.mobile.common.PublicData;
 import com.zantong.mobile.common.activity.CommonProblemActivity;
 import com.zantong.mobile.contract.IHomeMeFtyContract;
 import com.zantong.mobile.home.bean.DriverCoachResult;
-import com.zantong.mobile.order.activity.CouponActivity;
-import com.zantong.mobile.order.activity.OrderParentActivity;
+import com.zantong.mobile.order.activity.MyOrderActivity;
 import com.zantong.mobile.order.bean.CouponFragmentBean;
 import com.zantong.mobile.order.bean.CouponFragmentLBean;
 import com.zantong.mobile.order.bean.CouponFragmentResult;
 import com.zantong.mobile.presenter.home.HomeMeFtyPresenter;
 import com.zantong.mobile.share.activity.ShareParentActivity;
 import com.zantong.mobile.user.activity.AboutActivity;
-import com.zantong.mobile.user.activity.MegTypeActivity;
 import com.zantong.mobile.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobile.user.activity.SettingActivity;
 import com.zantong.mobile.user.activity.UserInfoUpdate;
@@ -47,17 +48,9 @@ import com.zantong.mobile.user.bean.MessageCountResult;
 import com.zantong.mobile.user.bean.RspInfoBean;
 import com.zantong.mobile.utils.Tools;
 import com.zantong.mobile.utils.jumptools.Act;
-import com.zantong.mobile.weizhang.activity.ViolationHistoryAcitvity;
 
 import java.io.File;
 import java.util.List;
-
-import com.tzly.annual.base.global.JxGlobal;
-import com.tzly.annual.base.util.AppUtils;
-import com.tzly.annual.base.util.ContextUtils;
-import com.tzly.annual.base.util.FileUtils;
-import com.tzly.annual.base.util.ToastUtils;
-import com.tzly.annual.base.util.image.ImageLoadUtils;
 
 import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 
@@ -225,7 +218,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         if (mPresenter != null) mPresenter.getUnReadMsgCount();
 
         //畅通卡
-        boolean isUnBound = TextUtils.isEmpty(PublicData.getInstance().filenum);
+        boolean isUnBound = TextUtils.isEmpty(MemoryData.getInstance().filenum);
 
         mTvCard.setText(isUnBound ? "未绑定牡丹畅通卡" : "已绑定牡丹畅通卡");
         mTvCard.setTextColor(isUnBound
@@ -234,23 +227,23 @@ public class HomeMeFragment extends BaseRefreshJxFragment
 
         //车辆
         StringBuffer stringBuffer = new StringBuffer();
-        if (PublicData.getInstance().mCarNum == 0)
+        if (MemoryData.getInstance().mCarNum == 0)
             stringBuffer.append("<font color=\"#b3b3b3\">");
         else
             stringBuffer.append("<font color=\"#f3362b\">");
-        stringBuffer.append(PublicData.getInstance().mCarNum);
+        stringBuffer.append(MemoryData.getInstance().mCarNum);
         stringBuffer.append("</font>");
         stringBuffer.append("&#160;");
         stringBuffer.append("车辆");
         mTvCar.setText(Html.fromHtml(stringBuffer.toString()));
 
-        if (PublicData.getInstance().loginFlag) {
-            RspInfoBean infoBean = PublicData.getInstance().mLoginInfoBean;
+        if (MemoryData.getInstance().loginFlag) {
+            RspInfoBean infoBean = MemoryData.getInstance().mLoginInfoBean;
 
             File file = getHeadImageFile();
             if (file == null) {
                 ImageLoadUtils.loadHead(
-                        PublicData.getInstance().mLoginInfoBean.getPortrait(), mImgHead);
+                        MemoryData.getInstance().mLoginInfoBean.getPortrait(), mImgHead);
             }
 
             if (infoBean != null) {
@@ -375,41 +368,26 @@ public class HomeMeFragment extends BaseRefreshJxFragment
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_setting://设置
-                MobclickAgent.onEvent(getActivity(), Config.getUMengID(26));
                 Act.getInstance().gotoIntentLogin(getActivity(), SettingActivity.class);
                 break;
             case R.id.img_head:
                 Act.getInstance().gotoIntentLogin(getActivity(), UserInfoUpdate.class);
                 break;
             case R.id.lay_order://我的订单
-                MobclickAgent.onEvent(getActivity(), Config.getUMengID(30));
-                Act.getInstance().gotoIntentLogin(getActivity(), OrderParentActivity.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), MyOrderActivity.class);
                 break;
             case R.id.tv_car:
-                MobclickAgent.onEvent(getActivity(), Config.getUMengID(28));
                 Act.getInstance().gotoIntentLogin(getActivity(), ManageCarActivity.class);
                 break;
             case R.id.tv_coupon:
-                MobclickAgent.onEvent(getActivity(), Config.getUMengID(27));
-                Act.getInstance().gotoIntentLogin(getActivity(), CouponActivity.class);
-                break;
-            case R.id.lay_query://违章缴费查询
-                MobclickAgent.onEvent(getActivity(), Config.getUMengID(34));
-                Act.getInstance().gotoIntentLogin(getActivity(), ViolationHistoryAcitvity.class);
-                break;
-            case R.id.lay_msg://消息
-                MobclickAgent.onEvent(ContextUtils.getContext(), Config.getUMengID(24));
-                Act.getInstance().gotoIntentLogin(getActivity(), MegTypeActivity.class);
                 break;
             case R.id.lay_recommend://推荐送豪礼
                 Act.getInstance().gotoIntentLogin(getActivity(), ShareParentActivity.class);
                 break;
             case R.id.lay_problem://常见问题
-                MobclickAgent.onEvent(getActivity(), Config.getUMengID(32));
                 Act.getInstance().gotoIntent(getActivity(), CommonProblemActivity.class);
                 break;
             case R.id.lay_service://联系客服
-                MobclickAgent.onEvent(getActivity(), Config.getUMengID(33));
                 Act.getInstance().gotoIntent(getActivity(), ProblemFeedbackActivity.class);
                 break;
             case R.id.about_us://关于我们
@@ -422,7 +400,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 Intent i = new Intent();
                 i.putExtra(JxGlobal.putExtra.browser_title_extra, "隐私声明");
                 i.putExtra(JxGlobal.putExtra.browser_url_extra, "file:///android_asset/bindcard_agreement.html");
-                Act.getInstance().gotoLoginByIntent(getActivity(), HtmlBrowserActivity.class, i);
+                Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, i);
                 break;
             default:
                 break;

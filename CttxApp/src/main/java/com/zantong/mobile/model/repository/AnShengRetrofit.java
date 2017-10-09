@@ -5,7 +5,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.zantong.mobile.BuildConfig;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -49,10 +49,10 @@ public class AnShengRetrofit implements IRetrofitUrl {
                 new HttpLoggingInterceptor.Logger() {
                     @Override
                     public void log(String message) {
-                        Log.d("AnShengRetrofit", message);
+                        Log.d("bankRetrofit", message);
                     }
                 })
-                .setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY
+                .setLevel(BuildConfig.LOG_DEBUG ? HttpLoggingInterceptor.Level.BODY
                         : HttpLoggingInterceptor.Level.NONE);
 
         //拦截 Token添加器
@@ -63,7 +63,7 @@ public class AnShengRetrofit implements IRetrofitUrl {
                 Request.Builder requestBuilder = oldRequest.newBuilder();
                 // 添加head
                 Headers.Builder headBuilder = oldRequest.headers().newBuilder();
-                headBuilder.add("DvcToken", PublicData.getInstance().imei);
+                headBuilder.add("DvcToken", MemoryData.getInstance().imei);
                 requestBuilder.headers(headBuilder.build());
 
                 CacheControl.Builder builder = new CacheControl.Builder();

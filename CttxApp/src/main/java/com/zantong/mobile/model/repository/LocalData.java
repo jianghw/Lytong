@@ -6,13 +6,12 @@ import android.support.annotation.Nullable;
 
 import com.zantong.mobile.base.dto.BaseDTO;
 import com.zantong.mobile.base.dto.RequestHeadDTO;
-import com.zantong.mobile.card.bean.OpenQueryBean;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
+import com.zantong.mobile.login_v.LoginUserSPreference;
 import com.zantong.mobile.user.bean.LoginInfoBean;
 import com.zantong.mobile.user.bean.RspInfoBean;
 import com.zantong.mobile.user.dto.MessageDetailDTO;
-import com.zantong.mobile.utils.DateUtils;
-import com.zantong.mobile.utils.RefreshNewTools.UserInfoRememberCtrl;
+import com.tzly.annual.base.util.DateUtils;
 import com.zantong.mobile.utils.SPUtils;
 import com.zantong.mobile.utils.StringUtils;
 import com.zantong.mobile.utils.Tools;
@@ -46,13 +45,13 @@ public class LocalData {
 
     BaseDTO initBaseDTO() {
         BaseDTO dto = new BaseDTO();
-        dto.setUsrId(strByEncryption(PublicData.getInstance().userID, true));
+        dto.setUsrId(strByEncryption(MemoryData.getInstance().userID, true));
         return dto;
     }
 
     public MessageDetailDTO initMessageDetailDTO() {
         MessageDetailDTO dto = new MessageDetailDTO();
-        dto.setUsrId(strByEncryption(PublicData.getInstance().userID, true));
+        dto.setUsrId(strByEncryption(MemoryData.getInstance().userID, true));
         return dto;
     }
 
@@ -62,7 +61,7 @@ public class LocalData {
      * @return
      */
     public String DefaultUserID() {
-        return PublicData.getInstance().userID;
+        return MemoryData.getInstance().userID;
     }
 
     /**
@@ -88,7 +87,7 @@ public class LocalData {
      * 登陆用户信息
      */
     public RspInfoBean getDefaultUser() {
-        return PublicData.getInstance().mLoginInfoBean;
+        return MemoryData.getInstance().mLoginInfoBean;
     }
 
     /**
@@ -113,35 +112,24 @@ public class LocalData {
     }
 
     /**
-     * 获取登录信息
-     *
+     * 获取登录信息 RspInfoBean
      */
     public RspInfoBean readObjectLoginInfoBean() {
         RspInfoBean rspInfoBean;
-        rspInfoBean = (RspInfoBean) UserInfoRememberCtrl.readObject();
+        rspInfoBean = (RspInfoBean) LoginUserSPreference.readObject();
         return rspInfoBean;
     }
 
     /**
-     * 初始化用户登录信息
-     *
-     * @param rspInfoBean
+     * 初始化用户登录信息 RspInfoBean
      */
     public void initGlobalLoginInfo(RspInfoBean rspInfoBean) {
         if (rspInfoBean == null) return;
-        PublicData.getInstance().mLoginInfoBean = rspInfoBean;
-        PublicData.getInstance().userID = rspInfoBean.getUsrid();
-        PublicData.getInstance().filenum = rspInfoBean.getFilenum();
-        PublicData.getInstance().getdate = rspInfoBean.getGetdate();
-        PublicData.getInstance().loginFlag = true;
-
-        OpenQueryBean.RspInfoBean.UserCarsInfoBean mUserCarsInfoBean =
-                (OpenQueryBean.RspInfoBean.UserCarsInfoBean)
-                        UserInfoRememberCtrl.readObject(PublicData.getInstance().DefaultCarLocalFlag);
-        if (mUserCarsInfoBean != null) {
-            PublicData.getInstance().defaultCar = true;
-            PublicData.getInstance().defaultCarNumber = mUserCarsInfoBean.getCarnum();
-        }
+        MemoryData.getInstance().mLoginInfoBean = rspInfoBean;
+        MemoryData.getInstance().userID = rspInfoBean.getUsrid();
+        MemoryData.getInstance().filenum = rspInfoBean.getFilenum();
+        MemoryData.getInstance().getdate = rspInfoBean.getGetdate();
+        MemoryData.getInstance().loginFlag = true;
     }
 
     /**
@@ -151,18 +139,16 @@ public class LocalData {
      */
     public String readLoginPassword() {
         String pwd;
-        pwd = (String) UserInfoRememberCtrl.readObject(UserInfoRememberCtrl.USERPD);
+        pwd = (String) LoginUserSPreference.readObject(LoginUserSPreference.USERPD);
         return pwd;
     }
 
     /**
      * 登录后重复保存数据
-     *
-     * @param result
      */
     public void saveLoginInfoRepeat(LoginInfoBean result) {
         initGlobalLoginInfo(result.getRspInfo());
-        UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, PublicData.getInstance().imei);
-        UserInfoRememberCtrl.saveObject(result.getRspInfo());
+        LoginUserSPreference.saveObject(LoginUserSPreference.USERDEVICE, MemoryData.getInstance().imei);
+        LoginUserSPreference.saveObject(result.getRspInfo());
     }
 }

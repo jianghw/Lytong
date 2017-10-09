@@ -7,21 +7,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 
-import com.zantong.mobile.R;
-import com.zantong.mobile.base.activity.BaseJxActivity;
-import com.zantong.mobile.chongzhi.fragment.RechargeFragment;
-import com.zantong.mobile.common.Injection;
-import com.zantong.mobile.map.activity.BaiduMapParentActivity;
-import com.zantong.mobile.presenter.chongzhi.RechargePresenter;
-import com.zantong.mobile.utils.jumptools.Act;
-
-import com.tzly.annual.base.global.JxConfig;
 import com.tzly.annual.base.global.JxGlobal;
 import com.tzly.annual.base.util.AtyUtils;
 import com.tzly.annual.base.util.ToastUtils;
 import com.tzly.annual.base.util.primission.PermissionFail;
 import com.tzly.annual.base.util.primission.PermissionGen;
 import com.tzly.annual.base.util.primission.PermissionSuccess;
+import com.zantong.mobile.R;
+import com.zantong.mobile.application.Injection;
+import com.zantong.mobile.base.activity.BaseJxActivity;
+import com.zantong.mobile.chongzhi.fragment.RechargeFragment;
+import com.zantong.mobile.map.activity.BaiduMapParentActivity;
+import com.zantong.mobile.presenter.chongzhi.RechargePresenter;
+import com.zantong.mobile.utils.jumptools.Act;
 
 import static com.tzly.annual.base.util.primission.PermissionGen.PER_REQUEST_CODE;
 
@@ -44,14 +42,10 @@ public class RechargeActivity extends BaseJxActivity {
         initTitleContent("油卡充值");
         setTvRightVisible("加油充值");
 
-        JxConfig.getInstance().eventIdByUMeng(22);
-
         initMvPresenter();
     }
 
     protected void rightClickListener() {
-        JxConfig.getInstance().eventIdByUMeng(3);
-
         showContacts();
     }
 

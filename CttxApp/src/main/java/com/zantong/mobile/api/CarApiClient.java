@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.tzly.annual.base.bean.BaseResult;
+import com.tzly.annual.base.bean.request.RegisterDTO;
 import com.zantong.mobile.base.bean.CouponResult;
 import com.zantong.mobile.base.dto.BaseDTO;
 import com.zantong.mobile.car.bean.CarLinkageResult;
@@ -19,15 +20,11 @@ import com.zantong.mobile.chongzhi.bean.RechargeResult;
 import com.zantong.mobile.chongzhi.dto.RechargeDTO;
 import com.zantong.mobile.chongzhi.dto.RechargeOrderDTO;
 import com.zantong.mobile.common.Config;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.daijia.bean.DriverOcrResult;
 import com.zantong.mobile.daijia.bean.DrivingOcrResult;
 import com.zantong.mobile.home.bean.HomeResult;
 import com.zantong.mobile.home.dto.HomeDataDTO;
-import com.zantong.mobile.huodong.bean.ActivityCarResult;
-import com.zantong.mobile.huodong.bean.ActivitySignNum;
-import com.zantong.mobile.huodong.dto.ActivityCarDTO;
-import com.zantong.mobile.huodong.dto.HundredPlanDTO;
 import com.zantong.mobile.map.bean.GasStationDetailResult;
 import com.zantong.mobile.map.bean.GasStationResult;
 import com.zantong.mobile.map.bean.WachCarPlaceDetailResult;
@@ -41,7 +38,6 @@ import com.zantong.mobile.user.bean.MessageTypeResult;
 import com.zantong.mobile.user.dto.BonusDTO;
 import com.zantong.mobile.user.dto.CancelRechargeOrderDTO;
 import com.zantong.mobile.user.dto.CouponDTO;
-import com.zantong.mobile.user.dto.LiYingRegDTO;
 import com.zantong.mobile.user.dto.MegDTO;
 import com.zantong.mobile.utils.rsa.RSAUtils;
 import com.zantong.mobile.weizhang.bean.PayOrderResult;
@@ -156,7 +152,7 @@ public class CarApiClient extends BaseApiClient {
 
     public static void commitCar(Context context, BindCarDTO params, CallBack<BaseResult> callback) {
 
-        params.setUsrnum(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
+        params.setUsrnum(RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().userID, true));
         params.setEngineNo(RSAUtils.strByEncryptionLiYing(params.getEngineNo(), true));
         params.setPlateNo(RSAUtils.strByEncryptionLiYing(params.getPlateNo(), true));
 
@@ -175,8 +171,8 @@ public class CarApiClient extends BaseApiClient {
         post(context, getUrl("cttx/bindingVehicle"), params, baseCallBack);
     }
 
-    public static void liYingReg(Context context, LiYingRegDTO params, CallBack<BaseResult> callback) {
-        params.setToken(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().deviceId, true));
+    public static void liYingReg(Context context, RegisterDTO params, CallBack<BaseResult> callback) {
+        params.setToken(RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().deviceId, true));
         params.setPushmode("2");
         params.setPushswitch("1");
         BaseCallBack<BaseResult> baseCallBack = new BaseCallBack<BaseResult>(
@@ -185,7 +181,7 @@ public class CarApiClient extends BaseApiClient {
     }
 
     public static void liYingCarManage(Context context, LiYingCarManageDTO params, CallBack<BaseResult> callback) {
-        params.setUsrnum(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
+        params.setUsrnum(RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().userID, true));
         params.setPlateNo(RSAUtils.strByEncryptionLiYing(params.getPlateNo(), true));
         try {
             params.setVehicleType(String.valueOf(Integer.valueOf(params.getVehicleType())));
@@ -248,32 +244,11 @@ public class CarApiClient extends BaseApiClient {
         post(context, getUrl("cttx/employeeRate"), dto, result);
     }
 
-    public static void commitHundredPlan(Context context, HundredPlanDTO dto, CallBack<BaseResult> callback) {
-        BaseCallBack<BaseResult> result = new BaseCallBack<BaseResult>(
-                context, callback, BaseResult.class);
-        post(context, getUrl("february/signUpActivity"), dto, result);
-    }
-
     public static void getCouponList(Context context, CouponDTO dto, CallBack<CouponResult> callback) {
         BaseCallBack<CouponResult> result = new BaseCallBack<CouponResult>(
                 context, callback, CouponResult.class);
         post(context, getUrl("february/usrCouponInfo"), dto, result);
     }
-
-
-    public static void getActivityCar(Context context, ActivityCarDTO dto, CallBack<ActivityCarResult> callback) {
-        BaseCallBack<ActivityCarResult> result = new BaseCallBack<ActivityCarResult>(
-                context, callback, ActivityCarResult.class);
-        post(context, getUrl("february/carCheckActivity"), dto, result);
-    }
-
-
-    public static void getSignNum(Context context, CallBack<ActivitySignNum> callback) {
-        BaseCallBack<ActivitySignNum> result = new BaseCallBack<ActivitySignNum>(
-                context, callback, ActivitySignNum.class);
-        post(context, getUrl("february/activityCount"), new Object(), result);
-    }
-
 
     public static void getMsgTypeList(Context context, BaseDTO dto, CallBack<MessageTypeResult> callback) {
         BaseCallBack<MessageTypeResult> result = new BaseCallBack<MessageTypeResult>(

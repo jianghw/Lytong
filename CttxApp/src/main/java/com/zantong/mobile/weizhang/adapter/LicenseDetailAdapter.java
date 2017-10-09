@@ -17,7 +17,7 @@ import com.zantong.mobile.weizhang.bean.RspInfoBean;
 import com.zantong.mobile.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobile.widght.UISwitchButton;
 
-import com.tzly.annual.base.util.CustomDialog;
+import com.tzly.annual.base.custom.dialog.CustomDialog;
 import com.tzly.annual.base.util.DateTools;
 
 /**

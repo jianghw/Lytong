@@ -9,25 +9,23 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.R;
+import com.zantong.mobile.application.MemoryData;
+import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobile.common.Injection;
-import com.zantong.mobile.common.PublicData;
 import com.zantong.mobile.browser.PayBrowserActivity;
+import com.zantong.mobile.contract.IFahrschuleOrderNumFtyContract;
 import com.zantong.mobile.eventbus.FahrschuleApplyEvent;
 import com.zantong.mobile.fahrschule.dto.CreateOrderDTO;
-import com.zantong.mobile.contract.IFahrschuleOrderNumFtyContract;
+import com.zantong.mobile.login_v.LoginActivity;
 import com.zantong.mobile.presenter.fahrschule.FahrschuleOrderNumPresenter;
-import com.zantong.mobile.login_v.OldLoginActivity;
 import com.zantong.mobile.weizhang.bean.PayOrderResult;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import com.tzly.annual.base.global.JxConfig;
-import com.tzly.annual.base.global.JxGlobal;
-import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 驾校订单确认页面
@@ -214,8 +212,6 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
                     mPresenter.getBankPayHtml(
                             mTvOrder.getText().toString(),
                             stringMoney);
-
-                    JxConfig.getInstance().eventIdByUMeng(30);
                 }
                 break;
             default:
@@ -245,8 +241,8 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
     @Override
     public void onPayOrderByCouponSucceed(PayOrderResult result) {
 
-        if (!PublicData.getInstance().loginFlag && !TextUtils.isEmpty(PublicData.getInstance().userID)) {
-            Intent intent = new Intent(getActivity(), OldLoginActivity.class);
+        if (!MemoryData.getInstance().loginFlag && !TextUtils.isEmpty(MemoryData.getInstance().userID)) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
             getActivity().startActivity(intent);
         } else {
             Intent intent = new Intent(getActivity(), PayBrowserActivity.class);

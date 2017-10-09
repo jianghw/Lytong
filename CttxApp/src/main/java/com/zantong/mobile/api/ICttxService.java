@@ -1,5 +1,7 @@
 package com.zantong.mobile.api;
 
+import com.tzly.annual.base.bean.BaseResult;
+import com.tzly.annual.base.bean.request.RegisterDTO;
 import com.zantong.mobile.car.bean.VehicleLicenseResult;
 import com.zantong.mobile.card.dto.BindCarDTO;
 import com.zantong.mobile.home.bean.HomeResult;
@@ -12,7 +14,6 @@ import com.zantong.mobile.map.dto.AnnualDTO;
 
 import java.util.List;
 
-import com.tzly.annual.base.bean.BaseResult;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -85,4 +86,10 @@ public interface ICttxService {
      */
     @POST("cttx/gasStationList")
     Observable<GasStationResult> gasStationList(@Body AnnualDTO annualDTO);
+
+    /**
+     * 8.用户注册修改接口
+     */
+    @POST("cttx/register")
+    Observable<BaseResult> register(@Body RegisterDTO registerDTO);
 }

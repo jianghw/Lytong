@@ -11,9 +11,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.R;
+import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.base.activity.BaseJxActivity;
-import com.zantong.mobile.common.Injection;
 import com.zantong.mobile.contract.InterfaceForJS;
 import com.zantong.mobile.contract.browser.IPayBrowserFtyContract;
 import com.zantong.mobile.order.bean.OrderDetailBean;
@@ -21,8 +23,6 @@ import com.zantong.mobile.order.bean.OrderDetailResult;
 import com.zantong.mobile.presenter.browser.PayBrowserPresenter;
 
 import butterknife.Bind;
-import com.tzly.annual.base.global.JxGlobal;
-import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 支付浏览器

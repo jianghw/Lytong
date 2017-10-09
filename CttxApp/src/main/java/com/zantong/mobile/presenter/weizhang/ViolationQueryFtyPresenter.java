@@ -4,12 +4,12 @@ package com.zantong.mobile.presenter.weizhang;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.zantong.mobile.base.bean.Result;
+import com.tzly.annual.base.bean.Result;
 import com.zantong.mobile.base.dto.RequestDTO;
 import com.zantong.mobile.base.dto.RequestHeadDTO;
 import com.zantong.mobile.car.dto.CarInfoDTO;
 import com.zantong.mobile.card.dto.BindCarDTO;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.common.activity.OcrCameraActivity;
 import com.zantong.mobile.contract.IViolationQueryFtyContract;
 import com.zantong.mobile.daijia.bean.DrivingOcrResult;
@@ -297,7 +297,7 @@ public class ViolationQueryFtyPresenter
         carDTO.setPlateNo(RSAUtils.strByEncryption(bindCarDTO.getPlateNo(), true));
         carDTO.setEngineNo(RSAUtils.strByEncryption(bindCarDTO.getEngineNo(), true));
         carDTO.setVehicleType(bindCarDTO.getVehicleType());
-        carDTO.setUsrnum(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
+        carDTO.setUsrnum(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
         carDTO.setIssueDate(bindCarDTO.getIssueDate());
         carDTO.setIsPay(bindCarDTO.getIsPay());
 

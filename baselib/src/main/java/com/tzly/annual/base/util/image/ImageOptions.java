@@ -32,9 +32,9 @@ public class ImageOptions {
     public static DisplayImageOptions getSplashOptions() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .resetViewBeforeLoading(true)
-                .showImageOnLoading(R.mipmap.ic_splash_default)
                 .showImageForEmptyUri(R.mipmap.ic_splash_default)
                 .showImageOnFail(R.mipmap.ic_splash_default)
+                .showImageOnLoading(R.mipmap.ic_splash_default)
                 .cacheInMemory(false)
                 .cacheOnDisk(true)
                 .considerExifParams(true)
@@ -60,8 +60,6 @@ public class ImageOptions {
 
     /**
      * 默认云键背景图片加载
-     *
-     * @return
      */
     public static DisplayImageOptions getKeyDefaultOptions(int defiamge) {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -81,9 +79,9 @@ public class ImageOptions {
      */
     public static DisplayImageOptions getAvatarOptions() {
         return new DisplayImageOptions.Builder()
-                .showImageForEmptyUri(R.mipmap.icon_portrai)
-                .showImageOnLoading(R.mipmap.icon_portrai)
-                .showImageOnFail(R.mipmap.icon_portrai)
+                .showImageForEmptyUri(R.mipmap.portrait)
+                .showImageOnLoading(R.mipmap.portrait)
+                .showImageOnFail(R.mipmap.portrait)
                 .cacheOnDisk(true)
                 .cacheInMemory(true)
                 .displayer(new RoundedBitmapDisplayer(200))
@@ -91,50 +89,4 @@ public class ImageOptions {
                 .build();
     }
 
-    /**
-     * 优惠 本地模块显示
-     */
-    public static DisplayImageOptions getNativeCircleOptions() {
-        return new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.icon_oil_favorable)
-                .showImageForEmptyUri(R.mipmap.icon_oil_favorable)
-                .showImageOnFail(R.mipmap.icon_oil_favorable)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
-    }
-
-    /**
-     * 优惠 分享模块
-     */
-    public static DisplayImageOptions getShareRectangleOptions() {
-        return new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.default_750_300)
-                .showImageForEmptyUri(R.mipmap.default_750_300)
-                .showImageOnFail(R.mipmap.default_750_300)
-                .cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
-    }
-
-    public static DisplayImageOptions getTwoRectangleOptions() {
-        return new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.default_330_160)
-                .showImageForEmptyUri(R.mipmap.default_330_160)
-                .showImageOnFail(R.mipmap.default_330_160)
-                .cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
-    }
-
-    public static DisplayImageOptions getThreeRectangleOptions() {
-        return new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.default_220_160)
-                .showImageForEmptyUri(R.mipmap.default_220_160)
-                .showImageOnFail(R.mipmap.default_220_160)
-                .cacheOnDisk(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .build();
-    }
 }

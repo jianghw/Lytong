@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/ds_225"
-        android:src="@mipmap/splash_bg"/>
+        android:src="@mipmap/ic_bg_splash"/>
 
     <ImageView
         android:id="@+id/img_huawei"

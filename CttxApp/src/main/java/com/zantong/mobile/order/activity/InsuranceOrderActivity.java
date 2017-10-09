@@ -6,13 +6,17 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tzly.annual.base.bean.Result;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.R;
 import com.zantong.mobile.api.CallBack;
 import com.zantong.mobile.api.UserApiClient;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.base.activity.BaseMvpActivity;
-import com.zantong.mobile.base.bean.Result;
+import com.zantong.mobile.browser.PayHtmlActivity;
 import com.zantong.mobile.common.Config;
-import com.zantong.mobile.common.PublicData;
 import com.zantong.mobile.contract.IOrderView;
 import com.zantong.mobile.presenter.OrderPresenter;
 import com.zantong.mobile.user.bean.CheckOrderResult;
@@ -22,11 +26,8 @@ import com.zantong.mobile.user.dto.InsOrderDTO;
 import com.zantong.mobile.utils.NetUtils;
 import com.zantong.mobile.utils.StringUtils;
 import com.zantong.mobile.utils.jumptools.Act;
-import com.zantong.mobile.weizhang.activity.PayWebActivity;
 
 import butterknife.Bind;
-import com.tzly.annual.base.util.ContextUtils;
-import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 我的订单
@@ -149,12 +150,14 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
                             .append("?orderNo=").append(item.getPolcyprignum())
                             .append("&payAmount=").append(item.getTotinsprem())
                             .append("&productCode=").append(item.getCastinspolcycode())
-                            .append("&userName=").append(PublicData.getInstance().userID)
+                            .append("&userName=").append(MemoryData.getInstance().userID)
                             .append("&clientIP=").append(NetUtils.getPhontIP(this))
                             .append("&clientType=").append(CLIENT_TYPE_0);
 
-                    PublicData.getInstance().mHashMap.put("PayWebActivity", sb.toString());
-                    Act.getInstance().gotoIntent(this, PayWebActivity.class);
+                    Intent intent = new Intent();
+                    intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
+                    intent.putExtra(JxGlobal.putExtra.browser_url_extra, url);
+                    Act.getInstance().gotoLoginByIntent(this, PayHtmlActivity.class, intent);
                 } else {
                     commitInsOrder();
                 }
@@ -167,7 +170,7 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
      */
     private void commitInsOrder() {
         InsOrderDTO dto = new InsOrderDTO();
-        dto.setUsrid(PublicData.getInstance().userID);
+        dto.setUsrid(MemoryData.getInstance().userID);
         dto.setCastinspolcycode(mCastinspolcycode);
         dto.setOrigtranserlnum(mOrigtranserlnum);
         dto.setPolcyprignum(mPolcyprignum);

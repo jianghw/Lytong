@@ -1,6 +1,6 @@
 package com.tzly.annual.base.imple;
 
-import com.tzly.annual.base.bean.response.CattleOrderBean;
+import com.tzly.annual.base.bean.response.OrderListBean;
 
 /**
  * Created by jianghw on 2017/9/20.
@@ -11,12 +11,12 @@ import com.tzly.annual.base.bean.response.CattleOrderBean;
 
 public interface CattleOrderItemListener {
 
-    void doClickHave(CattleOrderBean bean);
+    void doClickHave(OrderListBean bean);
 
-    void doClickAudit(CattleOrderBean bean);
+    void doClickAudit(OrderListBean bean);
 
-    void doClickProcess(CattleOrderBean bean);
+    void doClickProcess(OrderListBean bean);
 
-    void doClickCompleted(CattleOrderBean bean);
+    void doClickCompleted(OrderListBean bean);
 
 }

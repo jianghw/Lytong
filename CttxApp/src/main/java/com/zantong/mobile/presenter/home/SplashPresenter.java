@@ -7,7 +7,7 @@ import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobile.base.MessageFormat;
 import com.zantong.mobile.base.dto.RequestDTO;
 import com.zantong.mobile.base.dto.RequestHeadDTO;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.contract.ISplashAtyContract;
 import com.zantong.mobile.home.bean.StartPicResult;
 import com.zantong.mobile.model.repository.RepositoryManager;
@@ -54,12 +54,12 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
 
     private String getStartTime() {
         String nowMonth = Tools.getYearDate().substring(4, 6);
-        String oldMonth = PublicData.getInstance().mLoginInfoBean.getGetdate().substring(4, 6);
+        String oldMonth = MemoryData.getInstance().mLoginInfoBean.getGetdate().substring(4, 6);
         String startTime = "";
         if (Integer.parseInt(nowMonth) > Integer.parseInt(oldMonth)) {
-            startTime = Tools.getYearDate().substring(0, 4) + PublicData.getInstance().mLoginInfoBean.getGetdate().substring(4);
+            startTime = Tools.getYearDate().substring(0, 4) + MemoryData.getInstance().mLoginInfoBean.getGetdate().substring(4);
         } else {
-            startTime = PublicData.getInstance().mLoginInfoBean.getGetdate();
+            startTime = MemoryData.getInstance().mLoginInfoBean.getGetdate();
         }
         return startTime;
     }
@@ -81,6 +81,8 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
 
     /**
      * 提交安盛服务器/成功后保存数据
+     *
+     * @deprecated 不用
      */
     @Override
     public void loadLoginPost() {
@@ -101,7 +103,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
                     public void onNext(LoginInfoBean result) {
                         if (result != null &&
                                 result.getSYS_HEAD().getReturnCode().equals(
-                                        PublicData.getInstance().success)) {
+                                        MemoryData.getInstance().success)) {
 
                             mRepository.saveLoginInfoRepeat(result);
                         }
@@ -159,13 +161,13 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
         try {
             String pwd = mRepository.readLoginPassword();
             if (Tools.isStrEmpty(pwd)) throw new IllegalArgumentException("pwd is must not null");
-            masp.put("phoenum", PublicData.getInstance().mLoginInfoBean.getPhoenum());
+            masp.put("phoenum", MemoryData.getInstance().mLoginInfoBean.getPhoenum());
             SHATools sha = new SHATools();
             masp.put("pswd", SHATools.hexString(sha.eccryptSHA1(pwd)));
-            masp.put("devicetoken", PublicData.getInstance().imei);
+            masp.put("devicetoken", MemoryData.getInstance().imei);
             masp.put("pushswitch", "0");
             masp.put("pushmode", "1");
-            String token = RSAUtils.strByEncryption(PublicData.getInstance().deviceId, true);
+            String token = RSAUtils.strByEncryption(MemoryData.getInstance().deviceId, true);
             masp.put("token", token);
             MessageFormat.getInstance().setMessageJSONObject(masp);
         } catch (JSONException | NoSuchAlgorithmException e) {

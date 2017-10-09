@@ -1,6 +1,7 @@
 package com.zantong.mobile.weizhang.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -10,21 +11,22 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
-import com.umeng.analytics.MobclickAgent;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.R;
+import com.zantong.mobile.application.MemoryData;
+import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.base.activity.BaseJxActivity;
 import com.zantong.mobile.car.bean.PayCar;
 import com.zantong.mobile.car.bean.PayCarBean;
-import com.zantong.mobile.common.Config;
-import com.zantong.mobile.common.Injection;
-import com.zantong.mobile.common.PublicData;
 import com.zantong.mobile.contract.IViolationListFtyContract;
 import com.zantong.mobile.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobile.home.activity.Codequery;
+import com.zantong.mobile.login_v.LoginActivity;
 import com.zantong.mobile.order.activity.OrderDetailActivity;
 import com.zantong.mobile.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobile.presenter.weizhang.ViolationListPresenter;
-import com.zantong.mobile.login_v.OldLoginActivity;
 import com.zantong.mobile.utils.DialogUtils;
 import com.zantong.mobile.utils.Tools;
 import com.zantong.mobile.utils.jumptools.Act;
@@ -37,10 +39,6 @@ import com.zantong.mobile.weizhang.fragment.ViolationListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.tzly.annual.base.global.JxGlobal;
-import com.tzly.annual.base.util.ContextUtils;
-import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 违法信息列表页面
@@ -155,12 +153,40 @@ public class ViolationListActivity extends BaseJxActivity
         String violationnum = bean.getViolationnum();
         int processste = bean.getProcessste();//处理状态
 
-        if (!PublicData.getInstance().loginFlag) {
-            Act.getInstance().gotoIntent(this, OldLoginActivity.class);
+        if (!MemoryData.getInstance().loginFlag) {
+            Act.getInstance().gotoIntent(this, LoginActivity.class);
         } else if (processste == 2 || processste == 3) {
             showDialogToCodequery(bean);
         } else {
-            goToPayFragment(bean, violationnum);
+            extendedFunction();
+        }
+    }
+
+    private void extendedFunction() {
+        DialogUtils.updateDialog(this,
+                "扩展功能", "此功能为中国工商银行产品(畅通车友会App)专属,请下载体验",
+                "不用 谢谢", "去应用市场下载",
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                },
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        shareAppShop(ContextUtils.getContext().getPackageName());
+                    }
+                });
+    }
+
+    public void shareAppShop(String packageName) {
+        try {
+            Uri uri = Uri.parse("market://details?id=" + "com.zantong.mobilecttx");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (Exception e) {
+            ToastUtils.toastShort("您没有安装应用市场,请点击立即更新");
         }
     }
 
@@ -172,7 +198,7 @@ public class ViolationListActivity extends BaseJxActivity
 
         if ("1".equals(penaltyNum) || "2".equals(penaltyNum)) {//是否处罚决定书
             showPayFragment(bean);
-        } else if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {//未綁卡
+        } else if (Tools.isStrEmpty(MemoryData.getInstance().filenum)) {//未綁卡
             byCardHome();
         } else {
             if (!mPayCarOk) {
@@ -209,7 +235,6 @@ public class ViolationListActivity extends BaseJxActivity
      * 去绑卡页面
      */
     private void byCardHome() {
-        MobclickAgent.onEvent(ContextUtils.getContext(), Config.getUMengID(11));
         DialogUtils.remindDialog(this,
                 "温馨提示", "您还未绑卡，暂时无法进行缴费", "取消", "立即绑卡",
                 new View.OnClickListener() {
@@ -357,10 +382,10 @@ public class ViolationListActivity extends BaseJxActivity
     public ViolationDTO getViolationDTO() {
         mViolationDTO.setProcessste("2");
 
-        if (!TextUtils.isEmpty(PublicData.getInstance().userID)) {
-            mViolationDTO.setToken(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
-        } else if (!TextUtils.isEmpty(PublicData.getInstance().imei)) {
-            mViolationDTO.setToken(RSAUtils.strByEncryption(PublicData.getInstance().imei, true));
+        if (!TextUtils.isEmpty(MemoryData.getInstance().userID)) {
+            mViolationDTO.setToken(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
+        } else if (!TextUtils.isEmpty(MemoryData.getInstance().imei)) {
+            mViolationDTO.setToken(RSAUtils.strByEncryption(MemoryData.getInstance().imei, true));
         } else {
             mViolationDTO.setToken(RSAUtils.strByEncryption(PushServiceFactory.getCloudPushService().getDeviceId(), true));
         }
@@ -373,8 +398,8 @@ public class ViolationListActivity extends BaseJxActivity
     @Override
     public ViolationCarDTO getViolationCarDTO() {
         ViolationCarDTO violationCarDTO = new ViolationCarDTO();
-        String carnum = (String) PublicData.getInstance().mHashMap.get("carnum");
-        String enginenum = (String) PublicData.getInstance().mHashMap.get("enginenum");
+        String carnum = (String) MemoryData.getInstance().mHashMap.get("carnum");
+        String enginenum = (String) MemoryData.getInstance().mHashMap.get("enginenum");
 
         violationCarDTO.setCarnum(carnum);
         violationCarDTO.setCarnumtype(mViolationDTO.getCarnumtype());

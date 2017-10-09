@@ -9,7 +9,7 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zantong.mobile.R;
 import com.zantong.mobile.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobile.common.Injection;
+import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.contract.fahrschule.ISubjectIntensifyContract;
 import com.zantong.mobile.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobile.eventbus.SubjectCommitEvent;

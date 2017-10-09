@@ -1,8 +1,10 @@
 package com.zantong.mobile.model.repository;
 
 import com.tzly.annual.base.bean.BaseResult;
+import com.tzly.annual.base.bean.request.RegisterDTO;
 import com.tzly.annual.base.bean.response.CattleOrderResponse;
-import com.zantong.mobile.base.bean.Result;
+import com.tzly.annual.base.bean.response.SubjectGoodsResult;
+import com.tzly.annual.base.bean.Result;
 import com.zantong.mobile.base.dto.BaseDTO;
 import com.zantong.mobile.car.bean.PayCarResult;
 import com.zantong.mobile.car.bean.VehicleLicenseResult;
@@ -36,7 +38,7 @@ import com.zantong.mobile.order.bean.CouponFragmentResult;
 import com.zantong.mobile.order.bean.MessageResult;
 import com.zantong.mobile.order.bean.OrderDetailResult;
 import com.zantong.mobile.order.bean.OrderExpressResult;
-import com.zantong.mobile.order.bean.OrderListResult;
+import com.tzly.annual.base.bean.response.OrderListResult;
 import com.zantong.mobile.order.bean.ReceiveInfoResult;
 import com.zantong.mobile.order.dto.ExpressDTO;
 import com.zantong.mobile.user.bean.LoginInfoBean;
@@ -48,13 +50,14 @@ import com.zantong.mobile.user.dto.MegDTO;
 import com.zantong.mobile.user.dto.MessageDetailDTO;
 import com.zantong.mobile.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobile.weizhang.bean.PayOrderResult;
+import com.zantong.mobile.weizhang.bean.ViolationNum;
+import com.zantong.mobile.weizhang.bean.ViolationNumBean;
 import com.zantong.mobile.weizhang.bean.ViolationResultParent;
 import com.zantong.mobile.weizhang.dto.ViolationCarDTO;
 import com.zantong.mobile.weizhang.dto.ViolationPayDTO;
 
 import java.util.List;
 
-import com.tzly.annual.base.bean.response.SubjectGoodsResult;
 import okhttp3.MultipartBody;
 import rx.Observable;
 
@@ -337,4 +340,30 @@ public interface IRemoteSource {
      * 2.获取订单列表
      */
     Observable<CattleOrderResponse> queryOrderList();
+
+    /**
+     * 8.用户注册修改接口
+     */
+    Observable<BaseResult> register(RegisterDTO registerDTO);
+
+    /**
+     * cip.cfc.v004.01
+     */
+    Observable<Result> loginV004(String msg);
+
+    /**
+     * 订单
+     */
+    Observable<OrderListResult> getAnnualInspectionOrders(String id);
+
+    Observable<BaseResult> getAnnualInspectionOrderTargetState(String orderId, String status, String remark, String userNum);
+
+    /**
+     * 输入快递单号
+     */
+    Observable<BaseResult> addBackExpressInfo(String orderId, String expressNo, String userNum);
+
+    Observable<BaseResult> updateState(List<ViolationNum> json);
+
+    Observable<ViolationNumBean> numberedQuery(String msg);
 }

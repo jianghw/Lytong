@@ -1,33 +1,39 @@
 package com.zantong.mobile.order.activity;
 
+import android.app.Instrumentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 
-import com.tzly.annual.base.bean.response.CattleOrderBean;
+import com.tzly.annual.base.bean.BaseResult;
+import com.tzly.annual.base.bean.response.OrderListBean;
+import com.tzly.annual.base.custom.dialog.CustomDialog;
+import com.tzly.annual.base.global.JxGlobal;
 import com.tzly.annual.base.imple.CattleOrderListener;
+import com.tzly.annual.base.imple.IEditTextDialogListener;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.R;
 import com.zantong.mobile.base.activity.BaseJxActivity;
-import com.zantong.mobile.browser.HtmlBrowserActivity;
-import com.zantong.mobile.common.Injection;
+import com.zantong.mobile.browser.BrowserHtmlActivity;
+import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.contract.ICattleOrderContract;
 import com.zantong.mobile.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobile.fahrschule.activity.SparringActivity;
 import com.zantong.mobile.fahrschule.activity.SubjectActivity;
 import com.zantong.mobile.order.adapter.OrderFragmentAdapter;
-import com.zantong.mobile.order.bean.OrderListBean;
 import com.zantong.mobile.order.fragment.CattleOrderStatusFragment;
 import com.zantong.mobile.presenter.order.CattleOrderPresenter;
 import com.zantong.mobile.utils.jumptools.Act;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.tzly.annual.base.global.JxGlobal;
 
 /**
  * 黄牛订单列表页面
@@ -88,7 +94,7 @@ public class CattleOrderActivity extends BaseJxActivity
 
         initViewPager();
 
-        if (mPresenter != null) mPresenter.queryOrderList();
+        if (mPresenter != null) mPresenter.getAnnualInspectionOrders();
     }
 
     @Override
@@ -133,25 +139,53 @@ public class CattleOrderActivity extends BaseJxActivity
              */
             @Override
             public void refreshListData(int position) {
-                if (mPresenter != null) mPresenter.queryOrderList();
+                if (mPresenter != null) mPresenter.getAnnualInspectionOrders();
             }
 
             @Override
-            public void doClickHave(CattleOrderBean bean) {
+            public void doClickHave(OrderListBean bean) {
+                submitRadioBtnData(bean);
             }
 
             @Override
-            public void doClickAudit(CattleOrderBean bean) {
+            public void doClickAudit(OrderListBean bean) {
             }
 
             @Override
-            public void doClickProcess(CattleOrderBean bean) {
+            public void doClickProcess(OrderListBean bean) {
+                submitEditTextData(bean);
             }
 
             @Override
-            public void doClickCompleted(CattleOrderBean bean) {
+            public void doClickCompleted(OrderListBean bean) {
             }
         };
+    }
+
+    /**
+     * 审核资料
+     */
+    private void submitRadioBtnData(final OrderListBean bean) {
+        CustomDialog.radioBtnDialog(this, new IEditTextDialogListener() {
+            @Override
+            public void submitData(String trim) {
+                if (mPresenter != null)
+                    mPresenter.annualOrderTargetState(bean.getOrderId(), TextUtils.isEmpty(trim) ? "6" : "7", trim);
+            }
+        });
+    }
+
+    /**
+     * 输入快递单号
+     */
+    private void submitEditTextData(final OrderListBean bean) {
+        CustomDialog.editTextDialog(this, "请输入快递单号", new IEditTextDialogListener() {
+            @Override
+            public void submitData(String trim) {
+                if (mPresenter != null)
+                    mPresenter.addBackExpressInfo(bean.getOrderId(), trim);
+            }
+        });
     }
 
     /**
@@ -180,7 +214,6 @@ public class CattleOrderActivity extends BaseJxActivity
             public void onPageScrollStateChanged(int state) {
             }
         });
-
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -210,7 +243,10 @@ public class CattleOrderActivity extends BaseJxActivity
      * 加载订单失败状态
      */
     @Override
-    public void queryOrderListError(String message) {
+    public void annualInspectionOrdersError(String message) {
+        dismissLoadingDialog();
+        ToastUtils.toastShort(message);
+
         if (allStatusFragment != null) allStatusFragment.setPayOrderListData(null);
         if (haveStatusFragment != null) haveStatusFragment.setPayOrderListData(null);
         if (auditStatusFragment != null) auditStatusFragment.setPayOrderListData(null);
@@ -218,85 +254,76 @@ public class CattleOrderActivity extends BaseJxActivity
         if (completedStatusFragment != null) completedStatusFragment.setPayOrderListData(null);
     }
 
-//    @Override
-//    public void dataDistribution(String message, int orderStatus) {
-//        ToastUtils.toastShort(message);
-//
-//        if (orderStatus == 0) {
-//            if (haveStatusFragment != null)
-//                haveStatusFragment.setPayOrderListData(null);
-//        } else if (orderStatus == 2) {
-//            if (auditStatusFragment != null)
-//                auditStatusFragment.setPayOrderListData(null);
-//        } else {
-//            if (processStatusFragment != null)
-//                processStatusFragment.setPayOrderListData(null);
-//        }
-//    }
+    @Override
+    public void dataDistribution(String message, int position) {
+        ToastUtils.toastShort(message);
+
+        if (position == 1)
+            haveStatusData(null);
+        else if (position == 2)
+            auditStatusData(null);
+        else if (position == 3)
+            processStatusData(null);
+        else if (position == 4)
+            completedStatusData(null);
+    }
 
     /**
      * 数据分发
      */
-//    @Override
-//    public void allPaymentData(List<OrderListBean> data) {
-//        if (allStatusFragment != null)
-//            allStatusFragment.setPayOrderListData(data);
-//    }
-//
-//    @Override
-//    public void nonPaymentData(List<OrderListBean> orderList) {
-//        if (haveStatusFragment != null)
-//            haveStatusFragment.setPayOrderListData(orderList);
-//    }
-//
-//    @Override
-//    public void havePaymentData(List<OrderListBean> orderList) {
-//        if (processStatusFragment != null)
-//            processStatusFragment.setPayOrderListData(orderList);
-//    }
-//
-//    @Override
-//    public void cancelPaymentData(List<OrderListBean> orderList) {
-//        if (auditStatusFragment != null)
-//            auditStatusFragment.setPayOrderListData(orderList);
-//    }
-//
-//    /**
-//     * 10.更新订单状态
-//     */
-//    @Override
-//    public void updateOrderStatusError(String message) {
-//        dismissLoadingDialog();
-//        ToastUtils.toastShort(message);
-//    }
-//
-//    @Override
-//    public void updateOrderStatusSucceed(BaseResult result) {
-//        if (mPresenter != null) mPresenter.getOrderList();
-//    }
-//
-//    @Override
-//    public void onPayOrderByCouponError(String message) {
-//        dismissLoadingDialog();
-//        ToastUtils.toastShort(message);
-//    }
-//
-//    @Override
-//    public void onPayOrderByCouponSucceed(PayOrderResult result) {
-//        Intent intent = new Intent();
-//        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
-//        intent.putExtra(JxGlobal.putExtra.browser_url_extra, result.getData());
-//        Act.getInstance().gotoLoginByIntent(this, BrowserForPayActivity.class, intent);
-//    }
-//
-//    @Override
-//    public void getBankPayHtmlSucceed(PayOrderResult result, String orderId) {
-//        Intent intent = new Intent(this, PayBrowserActivity.class);
-//        intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付");
-//        intent.putExtra(JxGlobal.putExtra.web_url_extra, result.getData());
-//        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
-//        startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
-//    }
+    @Override
+    public void allStatusData(List<OrderListBean> data) {
+        if (allStatusFragment != null)
+            allStatusFragment.setPayOrderListData(data);
+    }
+
+    @Override
+    public void haveStatusData(List<OrderListBean> orderList) {
+        if (haveStatusFragment != null)
+            haveStatusFragment.setPayOrderListData(orderList);
+    }
+
+    @Override
+    public void auditStatusData(List<OrderListBean> orderList) {
+        if (auditStatusFragment != null)
+            auditStatusFragment.setPayOrderListData(orderList);
+    }
+
+    @Override
+    public void processStatusData(List<OrderListBean> orderList) {
+        if (processStatusFragment != null)
+            processStatusFragment.setPayOrderListData(orderList);
+    }
+
+    @Override
+    public void completedStatusData(List<OrderListBean> orderList) {
+        if (completedStatusFragment != null)
+            completedStatusFragment.setPayOrderListData(orderList);
+    }
+
+    /**
+     * 审核资料 失败
+     */
+    @Override
+    public void annualOrderTargetStateError(String message) {
+        ToastUtils.toastShort(message);
+    }
+
+    @Override
+    public void annualOrderTargetStateSucceed(BaseResult result) {
+        new Thread() {
+            public void run() {
+                try {
+                    Instrumentation inst = new Instrumentation();
+                    inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+                } catch (Exception e) {
+                    Log.e("Exception when onBack", e.toString());
+                }
+            }
+        }.start();
+
+        if (mPresenter != null) mPresenter.getAnnualInspectionOrders();
+    }
 
     /**
      * 页面回调
@@ -329,14 +356,14 @@ public class CattleOrderActivity extends BaseJxActivity
             String targetType = mOrderListBean.getTargetType();
             if (targetType.equals("0")) {//前往 订单详情页面
                 Intent intent = new Intent(this, mOrderListBean.getType() == 6
-                        ? AnnualOrderDetailActivity.class : OrderDetailActivity.class);
+                        ? AnnualDetailActivity.class : OrderDetailActivity.class);
                 intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
                 startActivity(intent);
             } else {
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.browser_title_extra, mOrderListBean.getGoodsName());
                 intent.putExtra(JxGlobal.putExtra.browser_url_extra, mOrderListBean.getTargetUrl() + "?orderId=" + orderId);
-                Act.getInstance().gotoLoginByIntent(this, HtmlBrowserActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
             }
         }
     }

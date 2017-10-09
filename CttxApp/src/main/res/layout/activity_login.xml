@@ -52,8 +52,8 @@
         style="@style/ButtonBigStyle"
         android:layout_below="@+id/edt_code"
         android:layout_marginTop="24dip"
-        android:enabled="false"
-        android:text="登录"
+        android:textSize="@dimen/fs_18sp"
+        android:text="登    录"
         android:textColor="@color/next_btn_selector"/>
 
     <TextView

@@ -1,7 +1,7 @@
 package com.zantong.mobile.weizhang.bean;
 
-import com.zantong.mobile.base.bean.APPHEADBean;
-import com.zantong.mobile.base.bean.SYSHEADBean;
+import com.tzly.annual.base.bean.response.APPHEADBean;
+import com.tzly.annual.base.bean.response.SYSHEADBean;
 
 /**
  * Created by jianghw on 2017/5/5.

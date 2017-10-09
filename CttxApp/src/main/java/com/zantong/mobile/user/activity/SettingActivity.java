@@ -26,7 +26,6 @@ import com.tzly.annual.base.util.ToastUtils;
 import com.tzly.annual.base.util.primission.PermissionFail;
 import com.tzly.annual.base.util.primission.PermissionGen;
 import com.tzly.annual.base.util.primission.PermissionSuccess;
-import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobile.BuildConfig;
 import com.zantong.mobile.R;
 import com.zantong.mobile.api.CallBack;
@@ -34,18 +33,18 @@ import com.zantong.mobile.api.FileUploadApi;
 import com.zantong.mobile.api.UserApiClient;
 import com.zantong.mobile.base.activity.BaseMvpActivity;
 import com.zantong.mobile.base.basehttprequest.Retrofit2Utils;
-import com.zantong.mobile.base.bean.Result;
+import com.tzly.annual.base.bean.Result;
 import com.zantong.mobile.common.Config;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.contract.ILoginView;
-import com.zantong.mobile.login_v.OldLoginActivity;
+import com.zantong.mobile.login_v.LoginActivity;
+import com.zantong.mobile.login_v.LoginUserSPreference;
 import com.zantong.mobile.presenter.LogoutPresenter;
 import com.zantong.mobile.user.dto.PersonInfoDTO;
 import com.zantong.mobile.user.dto.UpdateUserHeadImgDTO;
 import com.zantong.mobile.utils.DateService;
-import com.zantong.mobile.utils.DateUtils;
+import com.tzly.annual.base.util.DateUtils;
 import com.zantong.mobile.utils.DialogUtils;
-import com.zantong.mobile.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobile.utils.SPUtils;
 import com.zantong.mobile.utils.StringUtils;
 import com.zantong.mobile.utils.Tools;
@@ -124,10 +123,10 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         picker = new DatePicker(SettingActivity.this);
         setTitleText("设置");
 
-        if (Tools.isStrEmpty(PublicData.getInstance().userID)) {
+        if (Tools.isStrEmpty(MemoryData.getInstance().userID)) {
             mLogout.setVisibility(View.GONE);
         } else {
-            String date = PublicData.getInstance().mLoginInfoBean.getGetdate();
+            String date = MemoryData.getInstance().mLoginInfoBean.getGetdate();
             try {
                 if (date.contains("-")) {
                     mSelDate.setText(date);
@@ -144,12 +143,12 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
     protected void onResume() {
         super.onResume();
 
-        if (!Tools.isStrEmpty(PublicData.getInstance().mLoginInfoBean.getNickname())) {
-            user_info_name_text.setText(PublicData.getInstance().mLoginInfoBean.getNickname());
+        if (!Tools.isStrEmpty(MemoryData.getInstance().mLoginInfoBean.getNickname())) {
+            user_info_name_text.setText(MemoryData.getInstance().mLoginInfoBean.getNickname());
         } else {
-            user_info_name_text.setText(PublicData.getInstance().mLoginInfoBean.getPhoenum().substring(7));
+            user_info_name_text.setText(MemoryData.getInstance().mLoginInfoBean.getPhoenum().substring(7));
         }
-        String phone = StringUtils.getEncrypPhone(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+        String phone = StringUtils.getEncrypPhone(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
         user_info_phone_text.setText(phone);
     }
 
@@ -163,7 +162,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         userChangePwdRl.setOnClickListener(this);
         userInfoRl.setOnClickListener(this);
 
-        if (!PublicData.getInstance().loginFlag) {
+        if (!MemoryData.getInstance().loginFlag) {
             SPUtils.getInstance().setWeizhangPush(false);
             SPUtils.getInstance().setJifenPush(false);
         }
@@ -173,7 +172,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         mBreakRulesNotice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (PublicData.getInstance().loginFlag) {
+                if (MemoryData.getInstance().loginFlag) {
                     SPUtils.getInstance().setWeizhangPush(isChecked);
                     mBreakRulesNotice.setChecked(isChecked);
                     if (!isChecked) {
@@ -181,29 +180,29 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                     }
                 } else {
                     mBreakRulesNotice.setChecked(false);
-                    Intent intent2 = new Intent(SettingActivity.this, OldLoginActivity.class);
+                    Intent intent2 = new Intent(SettingActivity.this, LoginActivity.class);
                     startActivity(intent2);
                 }
             }
         });
+
         mScoreNotice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
                 Intent intent = new Intent(SettingActivity.this, DateService.class);
-                if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().userID)) {
+                if (MemoryData.getInstance().loginFlag && !"".equals(MemoryData.getInstance().userID)) {
                     SPUtils.getInstance().setJifenPush(isChecked);
-                    PublicData.getInstance().updateMsg = isChecked;
+                    MemoryData.getInstance().updateMsg = isChecked;
                     if (isChecked) {
-                        UserInfoRememberCtrl.saveObject(PublicData.getInstance().NOTICE_STATE, true);//已开启
+                        LoginUserSPreference.saveObject(MemoryData.getInstance().NOTICE_STATE, true);//已开启
                         startService(intent);
                     } else {
-                        UserInfoRememberCtrl.saveObject(PublicData.getInstance().NOTICE_STATE, false);//已关闭
+                        LoginUserSPreference.saveObject(MemoryData.getInstance().NOTICE_STATE, false);//已关闭
                         stopService(intent);
                         ToastUtils.toastShort("记分周期提醒已关闭");
                     }
                 } else {
-                    Intent intent2 = new Intent(SettingActivity.this, OldLoginActivity.class);
+                    Intent intent2 = new Intent(SettingActivity.this, LoginActivity.class);
                     startActivity(intent2);
                     mScoreNotice.setChecked(false);
                 }
@@ -234,10 +233,10 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 Act.getInstance().gotoIntent(this, AboutActivity.class);
                 break;
             case R.id.setting_date_text://选择领证日期
-                if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().userID)) {
+                if (MemoryData.getInstance().loginFlag && !"".equals(MemoryData.getInstance().userID)) {
                     showLicenseDateDialog();
                 } else {
-                    Intent intent = new Intent(this, OldLoginActivity.class);
+                    Intent intent = new Intent(this, LoginActivity.class);
                     startActivity(intent);
                 }
                 break;
@@ -250,7 +249,6 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 Act.getInstance().lauchIntent(this, ChangePwdActivity.class);
                 break;
             case R.id.user_info_head_rl:
-                MobclickAgent.onEvent(this, Config.getUMengID(23));
                 chooseHeadImge();
                 break;
             case R.id.user_info_name_rl:
@@ -282,7 +280,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 picker.setRangeStart(DateUtils.getYear() - 100, DateUtils.getMonth(), DateUtils.getDay());
                 picker.setRangeEnd(DateUtils.getYear(), DateUtils.getMonth(), DateUtils.getDay());
                 try {
-                    String date = PublicData.getInstance().mLoginInfoBean.getGetdate();
+                    String date = MemoryData.getInstance().mLoginInfoBean.getGetdate();
                     if (!"".equals(date)) {
                         date = date.replace("-", "");
                         picker.setSelectedItem(Integer.valueOf(date.substring(0, 4)), Integer.valueOf(date.substring(4, 6)), Integer.valueOf(date.substring(6, 8)));
@@ -495,17 +493,17 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         String ImgPath = FileUtils.photoImagePath(getApplicationContext(), FileUtils.CROP_DIR);
         File mCropFile = new File(ImgPath);
         if (!mCropFile.exists()) {
-            ToastUtils.showShort(getApplicationContext(), "头像图片可能未生成或删除");
+            ToastUtils.toastShort("头像图片可能未生成或删除");
             return;
         }
 
         Map<String, RequestBody> params = new HashMap<>();
         RequestBody body = RequestBody.create(MediaType.parse("image/jpeg"), mCropFile);
         String imagFileName = "";
-        String[] imageUrls = PublicData.getInstance().mLoginInfoBean.getPortrait().split("\\/");
+        String[] imageUrls = MemoryData.getInstance().mLoginInfoBean.getPortrait().split("\\/");
 
-        if (Tools.isStrEmpty(PublicData.getInstance().mLoginInfoBean.getPortrait())) {
-            imagFileName = PublicData.getInstance().userID + ".jpg";
+        if (Tools.isStrEmpty(MemoryData.getInstance().mLoginInfoBean.getPortrait())) {
+            imagFileName = MemoryData.getInstance().userID + ".jpg";
         } else {
             imagFileName = imageUrls[imageUrls.length - 1];
         }
@@ -552,8 +550,8 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         getBaseBack().setEnabled(false);
         UpdateUserHeadImgDTO updateUserHeadImgDTO = new UpdateUserHeadImgDTO();
         updateUserHeadImgDTO.setPortrait(strUrl);
-        updateUserHeadImgDTO.setUsrid(PublicData.getInstance().userID);
-        updateUserHeadImgDTO.setDevicetoken(PublicData.getInstance().imei);
+        updateUserHeadImgDTO.setUsrid(MemoryData.getInstance().userID);
+        updateUserHeadImgDTO.setDevicetoken(MemoryData.getInstance().imei);
         updateUserHeadImgDTO.setPushswitch("0");
         UserApiClient.updateUserHeadImg(this, updateUserHeadImgDTO, new CallBack<Result>() {
             @Override
@@ -562,8 +560,8 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 ImageLoader.getInstance().clearMemoryCache();
                 getBaseBack().setEnabled(true);
                 if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
-                    PublicData.getInstance().mLoginInfoBean.setPortrait(strUrl);
-                    ToastUtils.showShort(SettingActivity.this, "修改头像成功");
+                    MemoryData.getInstance().mLoginInfoBean.setPortrait(strUrl);
+                    ToastUtils.toastShort("修改头像成功");
                 }
             }
 
@@ -591,7 +589,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
      * @param date
      */
     private void commitGetCardDate(final String date) {
-        if (PublicData.getInstance().mLoginInfoBean.getGetdate().equals(date)) {
+        if (MemoryData.getInstance().mLoginInfoBean.getGetdate().equals(date)) {
             return;
         }
         PersonInfoDTO dto = new PersonInfoDTO();
@@ -604,8 +602,8 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 hideDialogLoading();
                 if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
                     picker.dismiss();
-                    PublicData.getInstance().mLoginInfoBean.setGetdate(date);
-                    UserInfoRememberCtrl.saveObject(PublicData.getInstance().mLoginInfoBean);
+                    MemoryData.getInstance().mLoginInfoBean.setGetdate(date);
+                    LoginUserSPreference.saveObject(MemoryData.getInstance().mLoginInfoBean);
                 }
             }
 
@@ -630,7 +628,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
 
                 if ("000000".equals(result.getSYS_HEAD().getReturnCode())) {
 
-                    PublicData.getInstance().clearData(ContextUtils.getContext());
+                    MemoryData.getInstance().clearData(ContextUtils.getContext());
                     SPUtils.getInstance().clear();
                     CleanUtils.cleanCustomCache(FileUtils.photoImageDirectory(getApplicationContext()));
 

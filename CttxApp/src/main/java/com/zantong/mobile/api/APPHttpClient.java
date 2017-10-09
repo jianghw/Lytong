@@ -118,7 +118,7 @@ public class APPHttpClient {
             final javax.net.ssl.SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            if (BuildConfig.DEBUG) {
+            if (BuildConfig.LOG_DEBUG) {
                 HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY);
                 builder.addInterceptor(logging);

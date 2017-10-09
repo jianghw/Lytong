@@ -30,3 +30,6 @@ public class YingXiaoResult extends BaseResult {
         }
     }
 }
+
+
+

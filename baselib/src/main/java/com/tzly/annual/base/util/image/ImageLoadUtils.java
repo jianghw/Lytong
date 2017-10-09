@@ -17,32 +17,4 @@ public class ImageLoadUtils {
                 ImageOptions.getAvatarOptions()
         );
     }
-
-    public static void loadNativeCircle(String imageUrl, ImageView imageView) {
-        ImageLoader.getInstance().displayImage(
-                imageUrl, imageView,
-                ImageOptions.getNativeCircleOptions()
-        );
-    }
-
-    public static void loadShareRectangle(String imageUrl, ImageView imageView) {
-        ImageLoader.getInstance().displayImage(
-                imageUrl, imageView,
-                ImageOptions.getShareRectangleOptions()
-        );
-    }
-
-    public static void loadTwoRectangle(String imageUrl, ImageView imageView) {
-        ImageLoader.getInstance().displayImage(
-                imageUrl, imageView,
-                ImageOptions.getTwoRectangleOptions()
-        );
-    }
-
-    public static void loadThreeRectangle(String imageUrl, ImageView imageView) {
-        ImageLoader.getInstance().displayImage(
-                imageUrl, imageView,
-                ImageOptions.getThreeRectangleOptions()
-        );
-    }
 }

@@ -11,7 +11,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="@dimen/ds_30"
         android:layout_marginRight="@dimen/ds_30"
-        android:background="@drawable/shape_bg_popu_white"
+        android:background="@drawable/bg_shape_popup_white"
         android:gravity="center"
         android:text="不使用优惠劵"
         android:textColor="@color/colorTvBlack_4d"

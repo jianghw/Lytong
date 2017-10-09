@@ -4,13 +4,13 @@ import android.content.Context;
 
 import com.zantong.mobile.BuildConfig;
 import com.zantong.mobile.base.MessageFormat;
-import com.zantong.mobile.base.bean.Result;
+import com.tzly.annual.base.bean.Result;
 import com.zantong.mobile.base.dto.RequestDTO;
 import com.zantong.mobile.base.dto.RequestHeadDTO;
 import com.zantong.mobile.car.bean.PayCarResult;
 import com.zantong.mobile.car.dto.CarInfoDTO;
 import com.zantong.mobile.car.dto.UserCarsDTO;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.home.bean.VersionResult;
 import com.zantong.mobile.home.dto.VersionDTO;
 import com.zantong.mobile.user.bean.CheckOrderResult;
@@ -22,7 +22,7 @@ import com.zantong.mobile.user.dto.ChangePwdDTO;
 import com.zantong.mobile.user.dto.CheckOrderDTO;
 import com.zantong.mobile.user.dto.FeedbackDTO;
 import com.zantong.mobile.user.dto.InsOrderDTO;
-import com.zantong.mobile.user.dto.JiaoYiDaiMaDTO;
+import com.tzly.annual.base.bean.request.FileNumDTO;
 import com.zantong.mobile.user.dto.LoginDTO;
 import com.zantong.mobile.user.dto.LogoutDTO;
 import com.zantong.mobile.user.dto.OrderDTO;
@@ -31,7 +31,7 @@ import com.zantong.mobile.user.dto.RegisterDTO;
 import com.zantong.mobile.user.dto.ShareDTO;
 import com.zantong.mobile.user.dto.UpdateUserHeadImgDTO;
 import com.zantong.mobile.user.dto.VcodeDTO;
-import com.zantong.mobile.utils.DateUtils;
+import com.tzly.annual.base.util.DateUtils;
 import com.zantong.mobile.utils.StringUtils;
 import com.zantong.mobile.utils.Tools;
 import com.zantong.mobile.utils.rsa.RSAUtils;
@@ -104,8 +104,8 @@ public class UserApiClient extends BaseApiClient {
     public static void register(Context context, RegisterDTO params, CallBack<LoginResult> callback) {
         AsyncCallBack<LoginResult> asyncCallBack = new AsyncCallBack<LoginResult>(
                 context, callback, LoginResult.class);
-        if("".equals(PublicData.getInstance().imei)){
-            params.setDevicetoken(PublicData.getInstance().imei);
+        if ("".equals(MemoryData.getInstance().imei)) {
+            params.setDevicetoken(MemoryData.getInstance().imei);
         }
         params.setPushswitch("0");
         params.setPushmode("2");
@@ -205,7 +205,7 @@ public class UserApiClient extends BaseApiClient {
         t.setSYS_HEAD(getBean("cip.cfc.u002.01"));
         LogoutDTO dto = new LogoutDTO();
 
-        dto.setUsrid(PublicData.getInstance().userID);
+        dto.setUsrid(MemoryData.getInstance().userID);
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -283,9 +283,9 @@ public class UserApiClient extends BaseApiClient {
     public static void commitPersonInfo(Context context, PersonInfoDTO dto, CallBack<Result> callback) {
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
-        dto.setDevicetoken(PublicData.getInstance().imei);
+        dto.setDevicetoken(MemoryData.getInstance().imei);
         dto.setPushswitch(0);//不推送
-        dto.setUsrid(PublicData.getInstance().userID);
+        dto.setUsrid(MemoryData.getInstance().userID);
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u003.01"));
         t.setReqInfo(dto);
@@ -413,14 +413,15 @@ public class UserApiClient extends BaseApiClient {
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
 
-    public static void setJiaoYiDaiMa(Context context, String strFileNum,CallBack<Result> callback) {
-        JiaoYiDaiMaDTO jiaoYiDaiMaDTO = new JiaoYiDaiMaDTO();
-        jiaoYiDaiMaDTO.setFilenum(RSAUtils.strByEncryption(strFileNum, true));
+    public static void setJiaoYiDaiMa(Context context, String strFileNum, CallBack<Result> callback) {
+        FileNumDTO fileNumDTO = new FileNumDTO();
+        fileNumDTO.setFilenum(RSAUtils.strByEncryption(strFileNum, true));
+
         AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
                 context, callback, Result.class);
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.v004.01"));
-        t.setReqInfo(jiaoYiDaiMaDTO);
+        t.setReqInfo(fileNumDTO);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
 

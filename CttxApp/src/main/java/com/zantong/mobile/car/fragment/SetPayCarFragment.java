@@ -4,20 +4,19 @@ import android.app.Dialog;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.base.fragment.BaseListFragment;
 import com.zantong.mobile.car.adapter.SetPayCarAdapter;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.contract.ModelView;
+import com.zantong.mobile.login_v.LoginUserSPreference;
 import com.zantong.mobile.presenter.SetPayCarFragmentPresenter;
 import com.zantong.mobile.user.bean.UserCarInfoBean;
 import com.zantong.mobile.utils.DialogUtils;
-import com.zantong.mobile.utils.RefreshNewTools.UserInfoRememberCtrl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.tzly.annual.base.util.ToastUtils;
 
 public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> implements ModelView {
 
@@ -69,7 +68,7 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
                             newPayNumber = mUserCarsInfoBean.getCarnum();
                             carnumtype = mUserCarsInfoBean.getCarnumtype();
                             mSetPayCarFragmentPresenter.loadView(1);
-                            PublicData.getInstance().isSetPayCar = true;
+                            MemoryData.getInstance().isSetPayCar = true;
                         }
                     },
                     new View.OnClickListener() {
@@ -79,25 +78,12 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
                             newPayNumber = mUserCarsInfoBean.getCarnum();
                             carnumtype = mUserCarsInfoBean.getCarnumtype();
                             mSetPayCarFragmentPresenter.loadView(1);
-                            PublicData.getInstance().isSetPayCar = true;
+                            MemoryData.getInstance().isSetPayCar = true;
                         }
                     });
         } else {
             ToastUtils.toastShort("绑定车辆小于2辆,无需改邦操作");
         }
-
-//        IOSpopwindow menuPop = new IOSpopwindow(getActivity(), getView(), pay.get(0).getCarnum(), pay.get(1).getCarnum(), new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        }, new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        }, "提示：车辆改绑成功后12小时才可进行违章缴费");
-
     }
 
     @Override
@@ -120,8 +106,8 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
     public void initView(View view) {
         super.initView(view);
 
-        mRspInfoBean = PublicData.getInstance().mServerCars;
-//        LogUtils.jsonObject(mRspInfoBean);
+        mRspInfoBean = MemoryData.getInstance().mServerCars;
+        //        LogUtils.jsonObject(mRspInfoBean);
 
         if (mRspInfoBean != null) {
             int size = mRspInfoBean.size();
@@ -151,7 +137,7 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
 
     @Override
     public void updateView(Object object, int index) {
-        mRspInfoBean = PublicData.getInstance().mServerCars;
+        mRspInfoBean = MemoryData.getInstance().mServerCars;
         ;
         int size = mRspInfoBean.size();
         for (int i = 0; i < size; i++) {
@@ -162,7 +148,7 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
                 mRspInfoBean.get(i).setIspaycar("1");
             }
         }
-        UserInfoRememberCtrl.saveObject("userCarInfo", mRspInfoBean);
+        LoginUserSPreference.saveObject("userCarInfo", mRspInfoBean);
         ToastUtils.toastShort("修改成功");
         getActivity().finish();
     }

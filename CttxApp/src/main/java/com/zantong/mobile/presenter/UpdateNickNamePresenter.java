@@ -5,7 +5,7 @@ import com.zantong.mobile.base.BasePresenter;
 import com.zantong.mobile.base.MessageFormat;
 import com.zantong.mobile.base.interf.IBaseView;
 import com.zantong.mobile.common.Config;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.home.bean.UpdateInfo;
 import com.zantong.mobile.model.UpdateNickNameModelImp;
 import com.zantong.mobile.presenter.presenterinterface.SimplePresenter;
@@ -41,9 +41,9 @@ public class UpdateNickNamePresenter extends BasePresenter<IBaseView> implements
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.u003.01");
                 masp = new JSONObject() ;
                 try {
-                    masp.put("usrid", PublicData.getInstance().userID);
+                    masp.put("usrid", MemoryData.getInstance().userID);
                     masp.put("nickname", mUpdateNickName.mapData().get("nickname"));
-                    masp.put("devicetoken", PublicData.getInstance().imei);
+                    masp.put("devicetoken", MemoryData.getInstance().imei);
                     masp.put("pushswitch", 0);
                     MessageFormat.getInstance().setMessageJSONObject(masp);
                 } catch (JSONException e) {
@@ -61,7 +61,7 @@ public class UpdateNickNamePresenter extends BasePresenter<IBaseView> implements
         switch (index){
             case 1:
                 UpdateInfo mUpdateInfo = (UpdateInfo) clazz;
-                if(PublicData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())){
+                if(MemoryData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())){
                     mUpdateNickName.updateView(clazz, index);
                 }else{
                     ToastUtils.toastShort(mUpdateInfo.getSYS_HEAD().getReturnMessage());
@@ -73,6 +73,6 @@ public class UpdateNickNamePresenter extends BasePresenter<IBaseView> implements
     @Override
     public void onFailed() {
         mUpdateNickName.hideDialogLoading();
-        ToastUtils.showShort(mUpdateNickName, Config.getErrMsg("1"));
+        ToastUtils.toastShort(Config.getErrMsg("1"));
     }
 }

@@ -9,13 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.R;
 import com.zantong.mobile.base.activity.BaseMvpActivity;
 import com.zantong.mobile.base.interf.IBaseView;
 import com.zantong.mobile.home.bean.UpdateInfo;
 import com.zantong.mobile.presenter.UpdatePhoneNumberPresenter;
-import com.zantong.mobile.utils.RefreshNewTools.UserInfoRememberCtrl;
+import com.zantong.mobile.login_v.LoginUserSPreference;
 import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.utils.ValidateUtils;
 import com.zantong.mobile.contract.ModelView;
@@ -195,13 +195,13 @@ public class UpdatePhoneNumber extends BaseMvpActivity<IBaseView, UpdatePhoneNum
             case R.id.btn_login:
                 String oldPhone = edit_old_phone.getText().toString();
                 if(ValidateUtils.isMobile(oldPhone) &&
-                        !PublicData.getInstance().mLoginInfoBean.getPhoenum().equals(oldPhone)){
-                    ToastUtils.showShort(this,"您输入的原手机号不正确");
+                        !MemoryData.getInstance().mLoginInfoBean.getPhoenum().equals(oldPhone)){
+                    ToastUtils.toastShort("您输入的原手机号不正确");
                 }else if(ValidateUtils.isMobile(edit_phone_number.getText().toString())){
                     //presenter.loadView(2);
                     presenter.loadView(3);
                 }else{
-                    ToastUtils.showShort(this,"您输入的手机号格式不正确");
+                    ToastUtils.toastShort("您输入的手机号格式不正确");
                 }
 
                 break;
@@ -220,7 +220,7 @@ public class UpdatePhoneNumber extends BaseMvpActivity<IBaseView, UpdatePhoneNum
     public void updateView(Object object, int index) {
         switch (index){
             case 1:
-                iTime = PublicData.getInstance().smCtrlTime;
+                iTime = MemoryData.getInstance().smCtrlTime;
                 if(iTime > 0){
 //                    Toast.makeText(LoginPhone.this,"验证码发送成功，请注意查收", Toast.LENGTH_SHORT).show();
                     btnNumber.setEnabled(false);
@@ -228,9 +228,9 @@ public class UpdatePhoneNumber extends BaseMvpActivity<IBaseView, UpdatePhoneNum
                 }
                 break;
             case 2:
-                if(PublicData.getInstance().success.equals(((UpdateInfo) object).getSYS_HEAD().getReturnCode())){
-                    PublicData.getInstance().mLoginInfoBean.setPhoenum(edit_phone_number.getText().toString());
-                    UserInfoRememberCtrl.saveObject(PublicData.getInstance().mLoginInfoBean);
+                if(MemoryData.getInstance().success.equals(((UpdateInfo) object).getSYS_HEAD().getReturnCode())){
+                    MemoryData.getInstance().mLoginInfoBean.setPhoenum(edit_phone_number.getText().toString());
+                    LoginUserSPreference.saveObject(MemoryData.getInstance().mLoginInfoBean);
                     finish();
                 }
                 break;

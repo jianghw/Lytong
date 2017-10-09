@@ -206,7 +206,7 @@ public class ConvenientBanner<T> extends LinearLayout {
         try {
             viewPager.setPageTransformer(
                     true,
-                    (PageTransformer) Class.forName("com.tzly.annual.base.custom.banner.transforms"
+                    (PageTransformer) Class.forName("com.tzly.annual.base.custom.banner.transforms."
                             + transformer.getClassName()).newInstance());
         } catch (InstantiationException e) {
             e.printStackTrace();

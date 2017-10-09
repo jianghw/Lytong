@@ -9,7 +9,7 @@ import java.io.File;
  * Update day:
  */
 
-public class CleanUtils {
+public final class CleanUtils {
 
     private CleanUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");

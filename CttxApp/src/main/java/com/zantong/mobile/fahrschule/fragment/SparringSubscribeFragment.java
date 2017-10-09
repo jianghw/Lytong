@@ -9,12 +9,22 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tzly.annual.base.bean.response.SubjectGoodsBean;
+import com.tzly.annual.base.bean.response.SubjectGoodsData;
+import com.tzly.annual.base.custom.dialog.CustomDialog;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.imple.IAreaDialogListener;
+import com.tzly.annual.base.imple.ISpeedDialogListener;
+import com.tzly.annual.base.imple.ITimeDialogListener;
+import com.tzly.annual.base.util.RegexUtils;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.ViewUtils;
 import com.zantong.mobile.BuildConfig;
 import com.zantong.mobile.R;
+import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobile.chongzhi.bean.RechargeCouponBean;
 import com.zantong.mobile.chongzhi.bean.RechargeCouponResult;
-import com.zantong.mobile.common.Injection;
 import com.zantong.mobile.contract.fahrschule.ISparringSubscribeContract;
 import com.zantong.mobile.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobile.eventbus.SparringOrderEvent;
@@ -37,17 +47,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import com.tzly.annual.base.bean.response.SubjectGoodsBean;
-import com.tzly.annual.base.bean.response.SubjectGoodsData;
-import com.tzly.annual.base.imple.IAreaDialogListener;
-import com.tzly.annual.base.imple.ISpeedDialogListener;
-import com.tzly.annual.base.imple.ITimeDialogListener;
-import com.tzly.annual.base.global.JxGlobal;
-import com.tzly.annual.base.util.CustomDialog;
-import com.tzly.annual.base.util.RegexUtils;
-import com.tzly.annual.base.util.ToastUtils;
-import com.tzly.annual.base.util.ViewUtils;
 
 /**
  * 陪练预约 页面
@@ -191,7 +190,7 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onFirstDataVisible() {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.LOG_DEBUG) {
             setEditAddress("城市车师傅师傅");
             setEditName("测试人员");
             setEditPhone("15252565532");

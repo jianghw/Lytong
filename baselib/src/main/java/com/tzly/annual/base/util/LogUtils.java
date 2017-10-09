@@ -1,5 +1,7 @@
 package com.tzly.annual.base.util;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.LogcatLogStrategy;
@@ -17,16 +19,6 @@ public final class LogUtils {
      * 环境初始化Log显示
      */
     public static void initLogUtils(final boolean isDebug) {
-
-//        if (!isDebug) {
-//            Logger.init().logLevel(LogLevel.NONE);
-//        } else {
-//            Logger.init(TAG)
-//                    .logLevel(LogLevel.FULL)
-//                    .methodCount(2)
-//                    .methodOffset(0)
-//                    .logAdapter(new AndroidLogAdapter());
-//        }
 
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
                 .showThreadInfo(true)  // (Optional) Whether to show thread info or not. Default true
@@ -105,11 +97,11 @@ public final class LogUtils {
     }
 
     public static void jsonObject(Object object) {
-//        Gson gson = new GsonBuilder()
-//                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-//                .create();
-//        String string = gson.toJson(object);
-//        json(string);
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .create();
+        String string = gson.toJson(object);
+        json(string);
     }
 
 }

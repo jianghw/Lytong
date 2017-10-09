@@ -78,12 +78,10 @@ dependencies {
     //ZBar https://github.com/bingoogolapple/BGAQRCode-Android
     compile 'cn.bingoogolapple:bga-qrcodecore:1.1.8@aar'
     compile 'cn.bingoogolapple:bga-zbar:1.1.8@aar'
-    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
-    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
+
     //eventbus
     compile 'org.greenrobot:eventbus:3.0.0'
-    //友盟+
-    compile 'com.umeng.analytics:analytics:latest.integration'
+
     //layout-自定义状态布局
     compile project(':layout')
     compile project(':XRecyclerView')

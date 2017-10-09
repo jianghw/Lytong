@@ -16,14 +16,20 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tzly.annual.base.util.FileUtils;
 import com.tzly.annual.base.util.LogUtils;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.image.ImageLoadUtils;
+import com.tzly.annual.base.util.primission.PermissionFail;
+import com.tzly.annual.base.util.primission.PermissionGen;
+import com.tzly.annual.base.util.primission.PermissionSuccess;
 import com.zantong.mobile.BuildConfig;
 import com.zantong.mobile.R;
 import com.zantong.mobile.api.FileUploadApi;
 import com.zantong.mobile.base.activity.BaseMvpActivity;
 import com.zantong.mobile.base.basehttprequest.Retrofit2Utils;
 import com.zantong.mobile.common.Config;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.contract.UserInfoUpdateView;
 import com.zantong.mobile.presenter.UserInfoUpdatePresenter;
 import com.zantong.mobile.utils.StringUtils;
@@ -39,12 +45,6 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import com.tzly.annual.base.util.FileUtils;
-import com.tzly.annual.base.util.ToastUtils;
-import com.tzly.annual.base.util.image.ImageLoadUtils;
-import com.tzly.annual.base.util.primission.PermissionFail;
-import com.tzly.annual.base.util.primission.PermissionGen;
-import com.tzly.annual.base.util.primission.PermissionSuccess;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -105,7 +105,7 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
         File file = getHeadImageFile();
         if (file == null)
             ImageLoadUtils.loadHead(
-                    PublicData.getInstance().mLoginInfoBean.getPortrait(),
+                    MemoryData.getInstance().mLoginInfoBean.getPortrait(),
                     user_head_image
             );
     }
@@ -113,12 +113,12 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
     @Override
     protected void onResume() {
         super.onResume();
-        if (!Tools.isStrEmpty(PublicData.getInstance().mLoginInfoBean.getNickname())) {
-            user_info_name_text.setText(PublicData.getInstance().mLoginInfoBean.getNickname());
+        if (!Tools.isStrEmpty(MemoryData.getInstance().mLoginInfoBean.getNickname())) {
+            user_info_name_text.setText(MemoryData.getInstance().mLoginInfoBean.getNickname());
         } else {
-            user_info_name_text.setText(PublicData.getInstance().mLoginInfoBean.getPhoenum().substring(7));
+            user_info_name_text.setText(MemoryData.getInstance().mLoginInfoBean.getPhoenum().substring(7));
         }
-        String phone = StringUtils.getEncrypPhone(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+        String phone = StringUtils.getEncrypPhone(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
         user_info_phone_text.setText(phone);
     }
 
@@ -310,7 +310,7 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
                         if (data != null) {
                             reqZoom();
                         } else {
-                            ToastUtils.showShort(getApplicationContext(), "选择图片发生错误，图片可能已经移位或删除");
+                            ToastUtils.toastShort("选择图片发生错误，图片可能已经移位或删除");
                         }
                         break;
                 }
@@ -345,14 +345,14 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
 
         String url = FileUtils.getPath(getApplicationContext(), data.getData());
         if (TextUtils.isEmpty(url)) {
-            ToastUtils.showShort(getApplicationContext(), "选择图片发生错误，图片可能已经移位或删除");
+            ToastUtils.toastShort("选择图片发生错误，图片可能已经移位或删除");
             return;
         }
         File imgUri = new File(url);
         Uri dataUri = getUriForFileByN(imgUri);
 
         if (dataUri == null) {
-            ToastUtils.showShort(getApplicationContext(), "选择图片发生错误，图片可能已经移位或删除");
+            ToastUtils.toastShort("选择图片发生错误，图片可能已经移位或删除");
         } else {
             FileUtils.startPhotoZoom(dataUri, this, REQ_ZOOM);
         }
@@ -376,7 +376,7 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
         Uri uri = data.getData();
         String imgPath = FileUtils.getPath(getApplicationContext(), uri);
         if (TextUtils.isEmpty(imgPath)) {
-            ToastUtils.showShort(getApplicationContext(), "选择图片发生错误，图片可能已经移位或删除");
+            ToastUtils.toastShort("选择图片发生错误，图片可能已经移位或删除");
         } else {
             File srcFile = new File(imgPath);
             File outPutFile = new File(FileUtils.generateImgePath(getApplicationContext()));
@@ -398,10 +398,10 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
         Map<String, RequestBody> params = new HashMap<>();
         RequestBody body = RequestBody.create(MediaType.parse("image/jpeg"), temFile);
         String imagFileName = "";
-        String[] imageUrls = PublicData.getInstance().mLoginInfoBean.getPortrait().split("\\/");
+        String[] imageUrls = MemoryData.getInstance().mLoginInfoBean.getPortrait().split("\\/");
 
-        if (Tools.isStrEmpty(PublicData.getInstance().mLoginInfoBean.getPortrait())) {
-            imagFileName = PublicData.getInstance().userID + ".jpg";
+        if (Tools.isStrEmpty(MemoryData.getInstance().mLoginInfoBean.getPortrait())) {
+            imagFileName = MemoryData.getInstance().userID + ".jpg";
         } else {
             imagFileName = imageUrls[imageUrls.length - 1];
         }
@@ -425,23 +425,23 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
                             url = json.get("url").toString();
 
                             mapData().put("portrait", url);
-                            if (Tools.isStrEmpty(PublicData.getInstance().mLoginInfoBean.getPortrait())) {
+                            if (Tools.isStrEmpty(MemoryData.getInstance().mLoginInfoBean.getPortrait())) {
                                 mUserInfoUpdatePresenter.loadView(1);
                             } else {
-                                ImageLoadUtils.loadHead(PublicData.getInstance().mLoginInfoBean.getPortrait(), user_head_image);
+                                ImageLoadUtils.loadHead(MemoryData.getInstance().mLoginInfoBean.getPortrait(), user_head_image);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 } else if (response != null) {
-                    ToastUtils.showShort(getApplicationContext(), response.message());
+                    ToastUtils.toastShort(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                ToastUtils.showShort(getApplicationContext(), Config.getErrMsg("1"));
+                ToastUtils.toastShort(Config.getErrMsg("1"));
             }
         });
     }
@@ -455,16 +455,16 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
 
         File mCropFile = new File(ImgPath);
         if (!mCropFile.exists()) {
-            ToastUtils.showShort(getApplicationContext(), "头像图片可能未生成或删除");
+            ToastUtils.toastShort("头像图片可能未生成或删除");
             return null;
         }
         Uri outputUri;
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             outputUri = getUriForFileByN(mCropFile);
-            LogUtils.e("2==" + outputUri.toString());
+            LogUtils.e("getUriForFileByN==" + outputUri.toString());
         } else {
             outputUri = Uri.fromFile(mCropFile);
-            LogUtils.e("3==" + outputUri.toString());
+            LogUtils.e("fromFile==" + outputUri.toString());
         }
 
         Bitmap bitmap = FileUtils.decodeUriAsBitmap(outputUri, getApplicationContext());
@@ -478,7 +478,7 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
     }
 
     public void setUserHeadImage() {
-        user_head_image.setImageResource(R.mipmap.icon_portrai);
+        user_head_image.setImageResource(R.mipmap.portrait);
     }
 
 }

@@ -7,10 +7,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Movie;
 import android.os.SystemClock;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.zantong.mobile.R;
 
@@ -21,7 +21,7 @@ import java.lang.reflect.Field;
  * Created by zhengyingbing on 17/2/20.
  */
 
-public class XImageView  extends ImageView implements View.OnClickListener {
+public class XImageView  extends AppCompatImageView implements View.OnClickListener {
     /**
      * 播放GIF动画的关键类  
      */

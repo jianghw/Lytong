@@ -11,7 +11,7 @@
         android:layout_marginLeft="@dimen/ds_45"
         android:layout_marginRight="@dimen/ds_45"
         android:layout_marginTop="@dimen/ds_45"
-        android:background="@drawable/shape_bg_popu_white"
+        android:background="@drawable/bg_shape_popup_white"
         android:padding="@dimen/ds_45">
 
         <TextView

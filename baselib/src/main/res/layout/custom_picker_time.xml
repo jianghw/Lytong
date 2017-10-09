@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_shape_dialog_white">
+
+    <com.tzly.annual.base.custom.dialog.TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"/>
+
+    <RelativeLayout
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/timePicker"
+        android:background="@color/colorLineGray_e6"/>
+
+    <Button
+        android:id="@+id/btn_choose"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:layout_below="@id/line"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="确认"
+        android:textColor="@color/res_color_black_4d"
+        android:textColorHint="@color/res_color_black_b3"
+        android:textSize="14sp"/>
+
+</RelativeLayout>

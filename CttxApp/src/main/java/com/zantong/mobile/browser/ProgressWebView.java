@@ -71,6 +71,10 @@ public class ProgressWebView extends LinearLayout {
         mWebView.setWebChromeClient(webChromeClient);
     }
 
+    public void myRequestFocus() {
+        mWebView.requestFocus();
+    }
+
     private class WebChromeClient extends android.webkit.WebChromeClient {
 
         @Override

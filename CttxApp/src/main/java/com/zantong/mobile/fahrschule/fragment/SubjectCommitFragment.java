@@ -8,19 +8,23 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tzly.annual.base.bean.response.SubjectGoodsBean;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.RegexUtils;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.ViewUtils;
 import com.zantong.mobile.BuildConfig;
 import com.zantong.mobile.R;
+import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobile.chongzhi.bean.RechargeCouponBean;
 import com.zantong.mobile.chongzhi.bean.RechargeCouponResult;
-import com.zantong.mobile.common.Injection;
 import com.zantong.mobile.contract.fahrschule.ISubjectCommitContract;
 import com.zantong.mobile.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobile.eventbus.SubjectCommitEvent;
 import com.zantong.mobile.eventbus.SubjectOrderEvent;
 import com.zantong.mobile.fahrschule.bean.CreateOrderBean;
 import com.zantong.mobile.fahrschule.bean.CreateOrderResult;
-import com.tzly.annual.base.bean.response.SubjectGoodsBean;
 import com.zantong.mobile.order.activity.CouponListActivity;
 import com.zantong.mobile.presenter.fahrschule.SubjectCommitPresenter;
 import com.zantong.mobile.utils.StringUtils;
@@ -31,11 +35,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.tzly.annual.base.global.JxGlobal;
-import com.tzly.annual.base.util.RegexUtils;
-import com.tzly.annual.base.util.ToastUtils;
-import com.tzly.annual.base.util.ViewUtils;
 
 /**
  * 科目强化提交订单
@@ -134,7 +133,7 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
         ViewUtils.editTextInputSpace(mEditName);
         ViewUtils.editTextInputSpace(mEditPhone);
 
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.LOG_DEBUG) {
             mEditName.setText("小姐哦啊金粉世家");
             mEditPhone.setText("15252525569");
         }

@@ -8,7 +8,7 @@ import android.view.View;
 import com.tzly.annual.base.util.StatusBarUtils;
 import com.zantong.mobile.R;
 import com.zantong.mobile.base.activity.BaseJxActivity;
-import com.zantong.mobile.common.Injection;
+import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.presenter.LicenseGradeAtyPresenter;
 import com.zantong.mobile.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobile.weizhang.fragment.LicenseDetailFragment;

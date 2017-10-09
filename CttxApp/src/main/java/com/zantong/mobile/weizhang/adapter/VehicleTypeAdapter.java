@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.R;
 import com.zantong.mobile.utils.RefreshNewTools.BaseRecyclerAdapter;
 
@@ -40,7 +40,7 @@ public class VehicleTypeAdapter extends BaseRecyclerAdapter<String, VehicleTypeA
     public void onBindViewHolder(VehicleTypeAdapter.MyViewHolder holder, int position) {
 //        MyViewHolder viewHolder = (MyViewHolder) holder;
         holder.vehicle_type_text.setText(mItemLists.get(position));
-        if(holder.vehicle_type_text.getText().toString().equals(PublicData.getInstance().mHashMap.get("VehicleType"))){
+        if(holder.vehicle_type_text.getText().toString().equals(MemoryData.getInstance().mHashMap.get("VehicleType"))){
             holder.vehicle_type_choose.setVisibility(View.VISIBLE);
         }else{
             holder.vehicle_type_choose.setVisibility(View.GONE);

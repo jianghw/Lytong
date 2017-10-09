@@ -6,24 +6,23 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.R;
 import com.zantong.mobile.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobile.common.Injection;
-import com.zantong.mobile.common.PublicData;
 import com.zantong.mobile.browser.PayBrowserActivity;
+import com.zantong.mobile.application.Injection;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.contract.fahrschule.ISparringOrderContract;
 import com.zantong.mobile.eventbus.SparringOrderEvent;
 import com.zantong.mobile.fahrschule.dto.CreateOrderDTO;
+import com.zantong.mobile.login_v.LoginActivity;
 import com.zantong.mobile.presenter.fahrschule.SparringOrderPresenter;
-import com.zantong.mobile.login_v.OldLoginActivity;
 import com.zantong.mobile.weizhang.bean.PayOrderResult;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import com.tzly.annual.base.global.JxGlobal;
-import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 驾校陪练 确认页面
@@ -207,8 +206,8 @@ public class SparringOrderFragment extends BaseRefreshJxFragment
 
     @Override
     public void bankPayHtmlSucceed(PayOrderResult result) {
-        if (!PublicData.getInstance().loginFlag && !TextUtils.isEmpty(PublicData.getInstance().userID)) {
-            Intent intent = new Intent(getActivity(), OldLoginActivity.class);
+        if (!MemoryData.getInstance().loginFlag && !TextUtils.isEmpty(MemoryData.getInstance().userID)) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
             getActivity().startActivity(intent);
         } else {
             Intent intent = new Intent(getActivity(), PayBrowserActivity.class);

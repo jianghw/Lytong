@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--适配没有的尺寸 垂直方向-->
-    <dimen name="y19">11.39px</dimen>
-    <dimen name="y20">11.39px</dimen>
-    <dimen name="y30">11.39px</dimen>
-    <dimen name="y80">11.39px</dimen>
-    <dimen name="y88">11.39px</dimen>
-    <dimen name="y120">11.39px</dimen>
-    <dimen name="y200">11.39px</dimen>
-    <dimen name="y240">11.39px</dimen>
-    <dimen name="y300">11.39px</dimen>
+    <dimen name="y20">9.33dp</dimen>
+    <dimen name="y30">13.33dp</dimen>
+    <dimen name="y80">38.33dp</dimen>
+    <dimen name="y88">42dp</dimen>
+    <dimen name="y120">57.33dp</dimen>
+    <dimen name="y200">95.67dp</dimen>
+    <dimen name="y240">115dp</dimen>
+    <dimen name="y300">143.67dp</dimen>
 </resources>

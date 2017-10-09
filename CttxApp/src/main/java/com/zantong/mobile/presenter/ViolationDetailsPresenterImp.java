@@ -6,7 +6,7 @@ import android.view.View;
 import com.zantong.mobile.api.OnLoadServiceBackUI;
 import com.zantong.mobile.base.MessageFormat;
 import com.zantong.mobile.common.Config;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.model.ViolationDetailsModelImp;
 import com.zantong.mobile.presenter.presenterinterface.SimplePresenter;
 import com.zantong.mobile.utils.DialogUtils;
@@ -48,10 +48,10 @@ public class ViolationDetailsPresenterImp implements SimplePresenter, OnLoadServ
         masp = new JSONObject();
         try {
             masp.put("violationnum", number);
-            if (TextUtils.isEmpty(PublicData.getInstance().imei)) {
+            if (TextUtils.isEmpty(MemoryData.getInstance().imei)) {
                 masp.put("token", RSAUtils.strByEncryption("00000000", true));
             } else {
-                masp.put("token", RSAUtils.strByEncryption(PublicData.getInstance().imei, true));
+                masp.put("token", RSAUtils.strByEncryption(MemoryData.getInstance().imei, true));
             }
 
             MessageFormat.getInstance().setMessageJSONObject(masp);
@@ -67,7 +67,7 @@ public class ViolationDetailsPresenterImp implements SimplePresenter, OnLoadServ
         switch (index) {
             case 1:
                 ViolationDetailsBean detailsBean = (ViolationDetailsBean) obj;
-                if (PublicData.getInstance().success.equals(detailsBean.getSYS_HEAD().getReturnCode())) {
+                if (MemoryData.getInstance().success.equals(detailsBean.getSYS_HEAD().getReturnCode())) {
                     mViolationDetailsView.hideProgress();
                     mViolationDetailsView.updateView(detailsBean, index);
 

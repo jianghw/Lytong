@@ -3,7 +3,7 @@ package com.zantong.mobile.common.activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.R;
 import com.zantong.mobile.base.activity.BaseMvpActivity;
 import com.zantong.mobile.base.interf.IBaseView;
@@ -40,7 +40,7 @@ public class CommonListActivity extends BaseMvpActivity<IBaseView, HelpPresenter
     public void initData() {
         Intent intent = getIntent();
         if (intent != null) {
-            switch (PublicData.getInstance().commonListType) {
+            switch (MemoryData.getInstance().commonListType) {
                 case 0:
                     setTitleText("");
                     break;

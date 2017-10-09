@@ -1,8 +1,6 @@
 package com.zantong.mobile.api;
 
-import com.google.gson.Gson;
-import com.tzly.annual.base.util.LogUtils;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 
 import java.io.IOException;
 
@@ -24,7 +22,7 @@ public class RequestInterceptor implements Interceptor {
 
         // 添加head
         Headers.Builder headBuilder=oldRequest.headers().newBuilder();
-        headBuilder.add("DvcToken", PublicData.getInstance().imei);
+        headBuilder.add("DvcToken", MemoryData.getInstance().imei);
         requestBuilder.headers(headBuilder.build());
 
         CacheControl.Builder builder = new CacheControl.Builder();
@@ -37,7 +35,6 @@ public class RequestInterceptor implements Interceptor {
                 .cacheControl(cache)
                 .build();
         Response response=chain.proceed(newRequest);
-        LogUtils.d("response--->" + new Gson().toJson(response.body().toString()));
         return response;
     }
 }

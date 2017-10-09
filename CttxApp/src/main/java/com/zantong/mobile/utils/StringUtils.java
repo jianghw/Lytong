@@ -2,6 +2,8 @@ package com.zantong.mobile.utils;
 
 import android.text.TextUtils;
 
+import com.tzly.annual.base.util.DateUtils;
+
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

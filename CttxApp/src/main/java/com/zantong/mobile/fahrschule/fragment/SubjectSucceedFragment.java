@@ -14,7 +14,7 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zantong.mobile.R;
 import com.zantong.mobile.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.share.activity.ShareParentActivity;
 import com.zantong.mobile.utils.DialogMgr;
 import com.zantong.mobile.utils.rsa.Des3;
@@ -139,9 +139,9 @@ public class SubjectSucceedFragment extends BaseRefreshJxFragment implements Vie
         }
 
         WXWebpageObject webpage = new WXWebpageObject();
-        if (PublicData.getInstance().loginFlag) {
+        if (MemoryData.getInstance().loginFlag) {
             webpage.webpageUrl = ShareParentActivity.getShareAppUrl(4)+ "?phoneNum="
-                    + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+                    + Des3.encode(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         }

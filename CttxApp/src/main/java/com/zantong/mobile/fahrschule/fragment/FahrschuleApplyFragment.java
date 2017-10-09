@@ -16,11 +16,15 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.RegexUtils;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.BuildConfig;
 import com.zantong.mobile.R;
+import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobile.browser.HtmlBrowserActivity;
-import com.zantong.mobile.common.Injection;
+import com.zantong.mobile.browser.BrowserHtmlActivity;
 import com.zantong.mobile.contract.IFahrschuleApplyFtyContract;
 import com.zantong.mobile.eventbus.FahrschuleApplyEvent;
 import com.zantong.mobile.fahrschule.activity.FahrschuleActivity;
@@ -41,12 +45,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 import java.util.Random;
-
-import com.tzly.annual.base.global.JxConfig;
-import com.tzly.annual.base.global.JxGlobal;
-import com.tzly.annual.base.util.ContextUtils;
-import com.tzly.annual.base.util.RegexUtils;
-import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 驾校报名页面
@@ -180,7 +178,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onFirstDataVisible() {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.LOG_DEBUG) {
             mEditName.setText("测试人员" + new Random().nextInt(10));
             mEditPhone.setText("1525252552" + new Random().nextInt(10));
             mEditIdentityCard.setText("342628198004160012");
@@ -232,7 +230,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.browser_title_extra, "驾校报名官网");
                 intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://www.antingjx.com/jianjie/");
-                Act.getInstance().gotoLoginByIntent(getActivity(), HtmlBrowserActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
                 break;
             case R.id.btn_commit:
                 dataFormValidation();
@@ -272,8 +270,6 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
             ToastUtils.toastShort("请输入正确身份证号码");
             return;
         }
-        JxConfig.getInstance().eventIdByUMeng(29);
-
         if (mPresenter != null) mPresenter.createOrder();
     }
 
@@ -366,7 +362,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
         }
 
         popupWindow.setBackgroundDrawable(
-                ContextCompat.getDrawable(ContextUtils.getContext(), R.drawable.shape_bg_popu_white));
+                ContextCompat.getDrawable(ContextUtils.getContext(), R.drawable.bg_shape_popup_white));
 
         popupWindow.showAsDropDown(textView, 0, 30);
     }

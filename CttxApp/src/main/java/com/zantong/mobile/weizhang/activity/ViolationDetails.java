@@ -2,6 +2,7 @@ package com.zantong.mobile.weizhang.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,12 +10,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.umeng.analytics.MobclickAgent;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.R;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.base.activity.BaseJxActivity;
 import com.zantong.mobile.car.activity.ManageCarActivity;
-import com.zantong.mobile.common.Config;
-import com.zantong.mobile.common.PublicData;
 import com.zantong.mobile.contract.ModelView;
 import com.zantong.mobile.presenter.ViolationDetailsPresenterImp;
 import com.zantong.mobile.utils.DialogUtils;
@@ -33,16 +35,6 @@ import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import com.tzly.annual.base.global.JxGlobal;
-
-import static com.zantong.mobile.R.id.viloation_detail_commit_desc;
-import static com.zantong.mobile.R.id.violation_money_text;
-import static com.zantong.mobile.R.id.violation_money_zhinajin_text;
-import static com.zantong.mobile.R.id.violation_pay_rl;
-import static com.zantong.mobile.R.id.violation_pay_text;
-import static com.zantong.mobile.R.id.violation_points_text;
-import static com.zantong.mobile.R.id.violation_state_text;
-import static com.zantong.mobile.R.id.violation_time_text;
 
 /**
  * 违章详情
@@ -59,36 +51,38 @@ public class ViolationDetails extends BaseJxActivity implements ModelView {
     TextView mViolationContentText;
     @Bind(R.id.violation_time_title)
     TextView mViolationTimeTitle;
-    @Bind(violation_time_text)
+    @Bind(R.id.violation_time_text)
     TextView mViolationTimeText;
     @Bind(R.id.violation_state_title)
     TextView mViolationStateTitle;
-    @Bind(violation_state_text)
+    @Bind(R.id.violation_state_text)
     TextView mViolationStateText;
     @Bind(R.id.violation_money_title)
     TextView mViolationMoneyTitle;
-    @Bind(violation_money_text)
+    @Bind(R.id.violation_money_text)
     TextView mViolationMoneyText;
     @Bind(R.id.violation_money_zhinajin)
     TextView mViolationMoneyZhinajin;
     @Bind(R.id.detail_zhinajin_img)
     ImageView mDetailZhinajinImg;
-    @Bind(violation_money_zhinajin_text)
+    @Bind(R.id.violation_money_zhinajin_text)
     TextView mViolationMoneyZhinajinText;
     @Bind(R.id.violation_points_title)
     TextView mViolationPointsTitle;
-    @Bind(violation_points_text)
+    @Bind(R.id.violation_points_text)
     TextView mViolationPointsText;
     @Bind(R.id.violation_pay_title)
     TextView mViolationPayTitle;
-    @Bind(violation_pay_text)
+    @Bind(R.id.violation_pay_text)
     TextView mViolationPayText;
-    @Bind(violation_pay_rl)
+    @Bind(R.id.violation_pay_rl)
     RelativeLayout mViolationPayRl;
-    @Bind(viloation_detail_commit_desc)
+    @Bind(R.id.viloation_detail_commit_desc)
     TextView mDescTextmDescText;
     @Bind(R.id.next_btn)
     Button mNextBtn;
+    @Bind(R.id.tv_carNum)
+    TextView mCarNum;
 
     private ViolationDetailsPresenterImp mViolationDetailsPresenterImp;
     private boolean isPagCar = false;
@@ -140,8 +134,12 @@ public class ViolationDetails extends BaseJxActivity implements ModelView {
     @SuppressLint("SetTextI18n")
     private void initText(ViolationDetailsBean violationDetailsBean) {
 
-        mViolationLocationText.setText(violationDetailsBean.getRspInfo().getViolationplace());
-        mViolationContentText.setText(violationDetailsBean.getRspInfo().getViolationtype());
+        ViolationDetailsBean.RspInfoBean mRspInfo = violationDetailsBean.getRspInfo();
+        String carNum = Des3.decode(mRspInfo.getCarnum());
+        mCarNum.setText(carNum);
+
+        mViolationLocationText.setText(mRspInfo.getViolationplace());
+        mViolationContentText.setText(mRspInfo.getViolationtype());
 
         DateFormat formatDate = new SimpleDateFormat("yyyyMMdd", Locale.SIMPLIFIED_CHINESE);
         DateFormat formatTime = new SimpleDateFormat("HHmm", Locale.SIMPLIFIED_CHINESE);
@@ -154,8 +152,8 @@ public class ViolationDetails extends BaseJxActivity implements ModelView {
         String timeString;
 
         try {
-            dateDate = formatDate.parse(violationDetailsBean.getRspInfo().getViolationdate());
-            dateTime = formatTime.parse(violationDetailsBean.getRspInfo().getViolationtime());
+            dateDate = formatDate.parse(mRspInfo.getViolationdate());
+            dateTime = formatTime.parse(mRspInfo.getViolationtime());
             dateString = yearDate.format(dateDate);
             timeString = timeDate.format(dateTime);
             mViolationTimeText.setText(dateString + " " + timeString);
@@ -163,11 +161,11 @@ public class ViolationDetails extends BaseJxActivity implements ModelView {
             e.printStackTrace();
         }
 
-        if ("1".equals(PublicData.getInstance().mHashMap.get("mRes"))) {
+        if ("1".equals(MemoryData.getInstance().mHashMap.get("mRes"))) {
             mViolationPayRl.setVisibility(View.VISIBLE);
             try {
-                dateDate = formatDate.parse(violationDetailsBean.getRspInfo().getPaydate());
-                dateTime = formatTime.parse(violationDetailsBean.getRspInfo().getPaytime());
+                dateDate = formatDate.parse(mRspInfo.getPaydate());
+                dateTime = formatTime.parse(mRspInfo.getPaytime());
                 dateString = yearDate.format(dateDate);
                 timeString = timeDate.format(dateTime);
                 mViolationPayText.setText(dateString + " " + timeString);
@@ -179,28 +177,28 @@ public class ViolationDetails extends BaseJxActivity implements ModelView {
         }
 
 
-        if ("0".equals(violationDetailsBean.getRspInfo().getProcessste())
-                || "2".equals(violationDetailsBean.getRspInfo().getProcessste())) {
+        if ("0".equals(mRspInfo.getProcessste())
+                || "2".equals(mRspInfo.getProcessste())) {
             mViolationStateText.setText("未缴费");
         } else {
             mViolationStateText.setText("已缴费");
         }
 
         try {
-            mViolationMoneyText.setText(StringUtils.getPriceString(violationDetailsBean.getRspInfo().getViolationamt()) + "元");
-            mViolationMoneyZhinajin.setText(StringUtils.getPriceString(violationDetailsBean.getRspInfo().getZhinajin()) + "元");
+            mViolationMoneyText.setText(StringUtils.getPriceString(mRspInfo.getViolationamt()) + "元");
+            mViolationMoneyZhinajin.setText(StringUtils.getPriceString(mRspInfo.getZhinajin()) + "元");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if ("0".equals(violationDetailsBean.getRspInfo().getViolationcent())) {
+        if ("0".equals(mRspInfo.getViolationcent())) {
             mViolationPointsText.setText("没有扣分");
         } else {
-            mViolationPointsText.setText(violationDetailsBean.getRspInfo().getViolationcent() + "分");
+            mViolationPointsText.setText(mRspInfo.getViolationcent() + "分");
         }
-        String violationNumber = Des3.decode(violationDetailsBean.getRspInfo().getCarnum());
-        for (int i = 0; i < PublicData.getInstance().payData.size(); i++) {
-            if (violationNumber.equals(PublicData.getInstance().payData.get(i).getCarnum())) {
+        String violationNumber = Des3.decode(mRspInfo.getCarnum());
+        for (int i = 0; i < MemoryData.getInstance().payData.size(); i++) {
+            if (violationNumber.equals(MemoryData.getInstance().payData.get(i).getCarnum())) {
                 isPagCar = true;
                 break;
             } else {
@@ -209,20 +207,19 @@ public class ViolationDetails extends BaseJxActivity implements ModelView {
         }
         String bitNumber = mViolationnum.substring(6, 7);
 
-        if ("0".equals(violationDetailsBean.getRspInfo().getProcessste())
-                || "2".equals(violationDetailsBean.getRspInfo().getProcessste())) {//未交费
+        if ("0".equals(mRspInfo.getProcessste())
+                || "2".equals(mRspInfo.getProcessste())) {//未交费
 
             if ("1".equals(bitNumber) || "2".equals(bitNumber)) {//是否处罚决定书
                 mNextBtn.setEnabled(true);
                 mNextBtn.setText("违章缴费");
                 mCommitType = 0;
-            } else if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {
-                MobclickAgent.onEvent(this, Config.getUMengID(11));
+            } else if (Tools.isStrEmpty(MemoryData.getInstance().filenum)) {
                 mDescTextmDescText.setVisibility(View.VISIBLE);
                 mDescTextmDescText.setText("您还未绑定畅通卡，违章缴费需要使用畅通卡");
                 mNextBtn.setText("绑定畅通卡");
                 mCommitType = 1;
-            } else if (isPagCar || PublicData.getInstance().payData.size() < 2) {
+            } else if (isPagCar || MemoryData.getInstance().payData.size() < 2) {
                 mNextBtn.setEnabled(true);
                 mNextBtn.setText("违章缴费");
                 mCommitType = 0;
@@ -255,20 +252,52 @@ public class ViolationDetails extends BaseJxActivity implements ModelView {
     protected void submitData() {
         switch (mCommitType) {
             case 0:
-                PublicData.getInstance().mHashMap.clear();
-                ViolationDetailsBean.RspInfoBean rspInfo = mDetailsBean.getRspInfo();
-                ViolationBean violationBean = new ViolationBean();
-                violationBean.setCarnum(rspInfo.getCarnum());
-                violationBean.setViolationamt(rspInfo.getViolationamt());
-                violationBean.setViolationdate(rspInfo.getViolationdate());
-                violationBean.setViolationnum(rspInfo.getViolationnum());
-                showPayFragment(violationBean);
+                extendedFunction();
                 break;
             case 2:
                 Act.getInstance().gotoIntentLogin(this, ManageCarActivity.class);
                 break;
             default:
                 break;
+        }
+    }
+
+    private void gotoPay() {
+        MemoryData.getInstance().mHashMap.clear();
+        ViolationDetailsBean.RspInfoBean rspInfo = mDetailsBean.getRspInfo();
+        ViolationBean violationBean = new ViolationBean();
+        violationBean.setCarnum(rspInfo.getCarnum());
+        violationBean.setViolationamt(rspInfo.getViolationamt());
+        violationBean.setViolationdate(rspInfo.getViolationdate());
+        violationBean.setViolationnum(rspInfo.getViolationnum());
+        showPayFragment(violationBean);
+    }
+
+    private void extendedFunction() {
+        DialogUtils.updateDialog(this,
+                "扩展功能", "此功能为中国工商银行产品(畅通车友会App)专属,请下载体验",
+                "不用 谢谢", "去应用市场下载",
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                },
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        shareAppShop(ContextUtils.getContext().getPackageName());
+                    }
+                });
+    }
+
+    public void shareAppShop(String packageName) {
+        try {
+            Uri uri = Uri.parse("market://details?id=" + "com.zantong.mobilecttx");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (Exception e) {
+            ToastUtils.toastShort("您没有安装应用市场,请点击立即更新");
         }
     }
 
@@ -309,6 +338,10 @@ public class ViolationDetails extends BaseJxActivity implements ModelView {
 
     public void loadFaildProgress() {
         hideDialogLoading();
+
+        mDescTextmDescText.setVisibility(View.VISIBLE);
+        mDescTextmDescText.setText("获取信息失败，请退出当前页面检查违章单编号");
+        mNextBtn.setVisibility(View.GONE);
     }
 
 }

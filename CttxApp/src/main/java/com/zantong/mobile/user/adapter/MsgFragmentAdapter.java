@@ -50,17 +50,6 @@ public class MsgFragmentAdapter extends PagerAdapter {
 	}
 
 	private void initView() {
-//		mListViews = new ArrayList<View>();
-//		View tabView1 = mInflater.inflate(R.layout.fragment_main_tab1, null);
-//		View tabView2 = mInflater.inflate(R.layout.fragment_main_tab2, null);
-//		mListViews.add(tabView1);
-//		mListViews.add(tabView2);
-
-//		mFragment = new ArrayList<BaseFragment>();
-//		MsgUserFragment mMsgUserFragment = MsgUserFragment.getSingleInstance();
-//		MsgSysFragment mMsgSysFragment = MsgSysFragment.getSingleInstance();
-//		mFragment.add(mMsgUserFragment);
-//		mFragment.add(mMsgSysFragment);
 
 	}
 

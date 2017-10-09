@@ -1,14 +1,25 @@
 package com.zantong.mobile.order.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.R;
+import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.base.activity.BaseJxActivity;
-import com.zantong.mobile.common.Injection;
+import com.zantong.mobile.browser.BrowserHtmlActivity;
 import com.zantong.mobile.contract.IOrderDetailContract;
 import com.zantong.mobile.order.bean.OrderDetailBean;
 import com.zantong.mobile.order.bean.OrderDetailResult;
@@ -17,9 +28,8 @@ import com.zantong.mobile.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobile.utils.jumptools.Act;
 
 import java.text.DecimalFormat;
-
-import com.tzly.annual.base.global.JxGlobal;
-import com.tzly.annual.base.util.ToastUtils;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 订单详情页面
@@ -170,7 +180,107 @@ public class OrderDetailActivity extends BaseJxActivity
         mTvDate.setText(bean.getCreateDate());
         mTvPayType.setText(bean.getPayType() == 0 ? "牡丹畅通卡" : "其他支付");
 
-        mTvContentBottom.setText(bean.getDetail());
+        String beanDetail = bean.getDetail();
+        gotoBrowser(beanDetail, mTvContentBottom);
+    }
+
+    private void gotoBrowser(String beanDetail, TextView tvContent) {
+        if (!TextUtils.isEmpty(beanDetail) && beanDetail.contains("target=\"_self\"")) {
+            customDisplaysHyperlinks(beanDetail,tvContent);
+        } else {
+            CharSequence charSequence = Html.fromHtml(beanDetail);
+            mTvContentBottom.setText(charSequence);
+            mTvContentBottom.setMovementMethod(LinkMovementMethod.getInstance());//设置超链接为可点击状态
+        }
+    }
+
+    private void customDisplaysHyperlinks(String content, TextView tvContent) {
+        Pattern pattern = Pattern.compile("<a href=\\\"(.*?)\\\" target=\\\"(.*?)\\\".*?>(.*?)<\\/a>");
+        Matcher matcher = pattern.matcher(content);
+        int start = 0, end = 0;
+        while (matcher.find()) {
+            start = matcher.start();
+            end = matcher.end();
+        }
+        //超链接文本
+        String lineString = content.substring(start, end);
+        String contentString = matcherContent(lineString);
+        final String contentHrefLine = matcherHrefLine(lineString);
+
+        //显示的新文本
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(content.substring(0, start));
+        stringBuilder.append(contentString);
+        stringBuilder.append(content.substring(end, content.length()));
+        String newContent = stringBuilder.toString();
+
+        SpannableString spannableString = new SpannableString(newContent);
+        ClickableSpan span = new ClickableSpan() {
+            @Override
+            public void updateDrawState(TextPaint textPaint) {
+                super.updateDrawState(textPaint);
+                textPaint.setColor(Color.parseColor("#ff33b5e5"));//设置超链接的颜色
+                textPaint.setUnderlineText(true);
+            }
+
+            @Override
+            public void onClick(View widget) {
+                // 单击事件处理
+                internalBrowser(contentHrefLine);
+            }
+        };
+        spannableString.setSpan(span, start, start + contentString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tvContent.setText(spannableString);
+        tvContent.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    /**
+     * 跳转应用内部浏览器
+     */
+    private void internalBrowser(String contentHrefLine) {
+        String title = "信息";
+        Intent intent = new Intent();
+        intent.putExtra(JxGlobal.putExtra.browser_title_extra, title);
+        intent.putExtra(JxGlobal.putExtra.browser_url_extra, contentHrefLine);
+        Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
+    }
+
+    /**
+     * 超链接文本中的内容
+     */
+    public String matcherContent(String content) {
+        Pattern patternStart = Pattern.compile("<a href=\\\"(.*?)\\\" target=\\\"(.*?)\\\".*?>");
+        Matcher matcherStart = patternStart.matcher(content);
+        int start = 0;
+        while (matcherStart.find()) {
+            start = matcherStart.end();
+        }
+        Pattern patternEnd = Pattern.compile("<\\/a>");
+        Matcher matcherEnd = patternEnd.matcher(content);
+        int end = 0;
+        while (matcherEnd.find()) {
+            end = matcherEnd.start();
+        }
+        return content.substring(start, end);
+    }
+
+    /**
+     * 网址
+     */
+    public static String matcherHrefLine(String content) {
+        Pattern patternStart = Pattern.compile("<a href=\\\"");
+        Matcher matcherStart = patternStart.matcher(content);
+        int start = 0;
+        while (matcherStart.find()) {
+            start = matcherStart.end();
+        }
+        Pattern patternEnd = Pattern.compile("\\\" target=\\\"(.*?)\\\".*?>");
+        Matcher matcherEnd = patternEnd.matcher(content);
+        int end = 0;
+        while (matcherEnd.find()) {
+            end = matcherEnd.start();
+        }
+        return content.substring(start, end);
     }
 
     private void changeTextColorByStatus(int status, TextView tvPayStatus) {

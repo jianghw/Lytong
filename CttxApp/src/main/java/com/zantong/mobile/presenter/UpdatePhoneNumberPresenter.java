@@ -5,7 +5,7 @@ import com.zantong.mobile.base.BasePresenter;
 import com.zantong.mobile.base.MessageFormat;
 import com.zantong.mobile.base.interf.IBaseView;
 import com.zantong.mobile.common.Config;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.home.bean.UpdateInfo;
 import com.zantong.mobile.model.UpdatePhoneNumberModelImp;
 import com.zantong.mobile.presenter.presenterinterface.SimplePresenter;
@@ -60,10 +60,10 @@ public class UpdatePhoneNumberPresenter extends BasePresenter<IBaseView> impleme
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.u003.01");
                 masp = new JSONObject();
                 try {
-                    masp.put("usrid", PublicData.getInstance().userID);
+                    masp.put("usrid", MemoryData.getInstance().userID);
                     String phone = RSAUtils.strByEncryption(mUpdatePhoneNumber.mapData().get("phoenum"), true);
                     masp.put("phoenum", phone);
-                    masp.put("devicetoken", PublicData.getInstance().imei);
+                    masp.put("devicetoken", MemoryData.getInstance().imei);
                     masp.put("pushswitch", 0);
                     MessageFormat.getInstance().setMessageJSONObject(masp);
                 } catch (JSONException e) {
@@ -95,27 +95,27 @@ public class UpdatePhoneNumberPresenter extends BasePresenter<IBaseView> impleme
         switch (index){
             case 1:
                 SmsBean smsBean = (SmsBean) clazz;
-                if(PublicData.getInstance().success.equals(smsBean.getSYS_HEAD().getReturnCode())){
+                if(MemoryData.getInstance().success.equals(smsBean.getSYS_HEAD().getReturnCode())){
                     onlyflag = smsBean.getRspInfo().getOnlyflag();
                     mUpdatePhoneNumber.updateView(clazz, index);
                 }else{
-                    ToastUtils.showShort(mUpdatePhoneNumber, smsBean.getSYS_HEAD().getReturnMessage());
+                    ToastUtils.toastShort(smsBean.getSYS_HEAD().getReturnMessage());
                 }
                 break;
             case 2:
                 this.mUpdateInfo = (UpdateInfo) clazz;
-                if(PublicData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())){
+                if(MemoryData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())){
                     mUpdatePhoneNumber.updateView(mUpdateInfo, index);
                 }else{
-                    ToastUtils.showShort(mUpdatePhoneNumber, mUpdateInfo.getSYS_HEAD().getReturnMessage());
+                    ToastUtils.toastShort(mUpdateInfo.getSYS_HEAD().getReturnMessage());
                 }
                 break;
             case 3:
                 this.mUpdateInfo = (UpdateInfo) clazz;
-                if(PublicData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())){
+                if(MemoryData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())){
                     loadView(2);
                 }else{
-                    ToastUtils.showShort(mUpdatePhoneNumber, mUpdateInfo.getSYS_HEAD().getReturnMessage());
+                    ToastUtils.toastShort(mUpdateInfo.getSYS_HEAD().getReturnMessage());
                 }
                 break;
         }
@@ -124,6 +124,6 @@ public class UpdatePhoneNumberPresenter extends BasePresenter<IBaseView> impleme
     @Override
     public void onFailed() {
         mUpdatePhoneNumber.hideDialogLoading();
-        ToastUtils.showShort(mUpdatePhoneNumber, Config.getErrMsg("1"));
+        ToastUtils.toastShort(Config.getErrMsg("1"));
     }
 }

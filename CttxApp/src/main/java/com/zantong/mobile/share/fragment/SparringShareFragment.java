@@ -16,8 +16,8 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zantong.mobile.R;
 import com.zantong.mobile.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobile.common.Injection;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.Injection;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.contract.IFahrschuleShareFtyContract;
 import com.zantong.mobile.fahrschule.bean.RecordCountBean;
 import com.zantong.mobile.fahrschule.bean.RecordCountResult;
@@ -122,9 +122,9 @@ public class SparringShareFragment extends BaseRefreshJxFragment
         if (mPresenter != null) mPresenter.getRecordCount();
 
         String contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
-        if (PublicData.getInstance().loginFlag && PublicData.getInstance().mLoginInfoBean != null)
+        if (MemoryData.getInstance().loginFlag && MemoryData.getInstance().mLoginInfoBean != null)
             contentString = ShareParentActivity.getShareAppUrl(21) + "?phoneNum="
-                    + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+                    + Des3.encode(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
         else
             contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         if (!TextUtils.isEmpty(contentString)) {
@@ -237,9 +237,9 @@ public class SparringShareFragment extends BaseRefreshJxFragment
         }
 
         WXWebpageObject webpage = new WXWebpageObject();
-        if (PublicData.getInstance().loginFlag) {
+        if (MemoryData.getInstance().loginFlag) {
             webpage.webpageUrl = ShareParentActivity.getShareAppUrl(21) + "?phoneNum="
-                    + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+                    + Des3.encode(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         }

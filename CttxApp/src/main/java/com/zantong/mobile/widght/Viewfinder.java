@@ -8,12 +8,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 import com.zantong.mobile.R;
 
-public class Viewfinder extends ImageView {
+public class Viewfinder extends AppCompatImageView {
 	
 	private Paint mPaint = null;
 	private int mWidth = 0;

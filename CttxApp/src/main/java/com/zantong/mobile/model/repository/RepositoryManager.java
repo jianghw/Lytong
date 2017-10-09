@@ -4,9 +4,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.tzly.annual.base.bean.BaseResult;
+import com.tzly.annual.base.bean.Result;
+import com.tzly.annual.base.bean.request.RegisterDTO;
 import com.tzly.annual.base.bean.response.CattleOrderResponse;
+import com.tzly.annual.base.bean.response.OrderListResult;
 import com.tzly.annual.base.bean.response.SubjectGoodsResult;
-import com.zantong.mobile.base.bean.Result;
 import com.zantong.mobile.base.dto.BaseDTO;
 import com.zantong.mobile.base.dto.RequestHeadDTO;
 import com.zantong.mobile.car.bean.PayCarResult;
@@ -41,7 +43,6 @@ import com.zantong.mobile.order.bean.CouponFragmentResult;
 import com.zantong.mobile.order.bean.MessageResult;
 import com.zantong.mobile.order.bean.OrderDetailResult;
 import com.zantong.mobile.order.bean.OrderExpressResult;
-import com.zantong.mobile.order.bean.OrderListResult;
 import com.zantong.mobile.order.bean.ReceiveInfoResult;
 import com.zantong.mobile.order.dto.ExpressDTO;
 import com.zantong.mobile.user.bean.LoginInfoBean;
@@ -54,6 +55,8 @@ import com.zantong.mobile.user.dto.MegDTO;
 import com.zantong.mobile.user.dto.MessageDetailDTO;
 import com.zantong.mobile.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobile.weizhang.bean.PayOrderResult;
+import com.zantong.mobile.weizhang.bean.ViolationNum;
+import com.zantong.mobile.weizhang.bean.ViolationNumBean;
 import com.zantong.mobile.weizhang.bean.ViolationResultParent;
 import com.zantong.mobile.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobile.weizhang.dto.ViolationCarDTO;
@@ -219,9 +222,7 @@ public class RepositoryManager {
     }
 
     /**
-     * 初始化用户登录信息
-     *
-     * @param rspInfoBean
+     * 初始化用户登录信息 RspInfoBean
      */
     public void initGlobalLoginInfo(RspInfoBean rspInfoBean) {
         mLocalData.initGlobalLoginInfo(rspInfoBean);
@@ -239,13 +240,14 @@ public class RepositoryManager {
 
     /**
      * 获取登录密码
-     *
-     * @return
      */
     public String readLoginPassword() {
         return mLocalData.readLoginPassword();
     }
 
+    /**
+     * 登录后重复保存数据
+     */
     public void saveLoginInfoRepeat(LoginInfoBean result) {
         mLocalData.saveLoginInfoRepeat(result);
     }
@@ -566,5 +568,55 @@ public class RepositoryManager {
      */
     public Observable<CattleOrderResponse> queryOrderList() {
         return mRemoteData.queryOrderList();
+    }
+
+    /**
+     * 8.用户注册修改接口
+     */
+    public Observable<BaseResult> register(RegisterDTO registerDTO) {
+        return mRemoteData.register(registerDTO);
+    }
+
+    /**
+     * cip.cfc.v004.01
+     */
+    public Observable<Result> loginV004(String msg) {
+        return mRemoteData.loginV004(msg);
+    }
+
+    /**
+     * 订单
+     */
+    public Observable<OrderListResult> getAnnualInspectionOrders(String id) {
+        return mRemoteData.getAnnualInspectionOrders(id);
+    }
+
+    /**
+     * 资料审核中
+     */
+    public Observable<BaseResult> getAnnualInspectionOrderTargetState(String orderId, String status, String remark, String userNum) {
+        return mRemoteData.getAnnualInspectionOrderTargetState(orderId, status, remark, userNum);
+    }
+
+    /**
+     * 输入快递单号
+     */
+    public Observable<BaseResult> addBackExpressInfo(String orderId, String expressNo, String userNum) {
+        return mRemoteData.addBackExpressInfo(orderId, expressNo, userNum);
+    }
+
+    /**
+     * 46.更新违章缴费状态
+     * @param json
+     */
+    public Observable<BaseResult> updateState(List<ViolationNum> json) {
+        return mRemoteData.updateState(json);
+    }
+
+    /**
+     * cip.cfc.v003.01
+     */
+    public Observable<ViolationNumBean> numberedQuery(String msg) {
+        return mRemoteData.numberedQuery(msg);
     }
 }

@@ -1,5 +1,6 @@
 package com.zantong.mobile.weizhang.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -8,29 +9,30 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.tzly.annual.base.bean.BaseResult;
+import com.tzly.annual.base.bean.Result;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.ui.FragmentUtils;
 import com.zantong.mobile.BuildConfig;
 import com.zantong.mobile.R;
 import com.zantong.mobile.api.CallBack;
 import com.zantong.mobile.api.CarApiClient;
 import com.zantong.mobile.api.UserApiClient;
-import com.zantong.mobile.base.bean.Result;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.base.fragment.BaseJxFragment;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.browser.PayHtmlActivity;
 import com.zantong.mobile.utils.AmountUtils;
 import com.zantong.mobile.utils.DialogUtils;
 import com.zantong.mobile.utils.NetUtils;
 import com.zantong.mobile.utils.jumptools.Act;
 import com.zantong.mobile.utils.rsa.RSAUtils;
-import com.zantong.mobile.weizhang.activity.PayWebActivity;
 import com.zantong.mobile.weizhang.activity.ViolationPayActivity;
 import com.zantong.mobile.weizhang.bean.ViolationBean;
 import com.zantong.mobile.weizhang.dto.ViolationOrderDTO;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import com.tzly.annual.base.util.ContextUtils;
-import com.tzly.annual.base.util.ToastUtils;
-import com.tzly.annual.base.util.ui.FragmentUtils;
 
 /**
  * 违章支付页面
@@ -125,7 +127,7 @@ public class ViolationPayFragment extends BaseJxFragment {
                 FragmentUtils.replaceFragment(fragmentManager, payTypeFragment, R.id.lay_base_frame, true);
                 break;
             case R.id.fragment_violation_commit://提交
-                if (PublicData.getInstance().mHashMap.isEmpty()) {
+                if (MemoryData.getInstance().mHashMap.isEmpty()) {
                     getParentActivity().showLoadingDialog();
                     searchViolation();
                 } else
@@ -150,13 +152,13 @@ public class ViolationPayFragment extends BaseJxFragment {
         getParentActivity().showLoadingDialog();
         ViolationOrderDTO dto = new ViolationOrderDTO();
 
-        dto.setCarnum(String.valueOf(PublicData.getInstance().mHashMap.get("carnum")));
-        dto.setEnginenum(String.valueOf(PublicData.getInstance().mHashMap.get("enginenum")));
+        dto.setCarnum(String.valueOf(MemoryData.getInstance().mHashMap.get("carnum")));
+        dto.setEnginenum(String.valueOf(MemoryData.getInstance().mHashMap.get("enginenum")));
 
         dto.setOrderprice(mViolationBean.getViolationamt());
         dto.setPeccancydate(mViolationBean.getViolationdate());
         dto.setPeccancynum(mViolationBean.getViolationnum());
-        dto.setUsernum(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
+        dto.setUsernum(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
 
         CarApiClient.createOrder(ContextUtils.getContext(), dto, new CallBack<BaseResult>() {
             @Override
@@ -176,9 +178,9 @@ public class ViolationPayFragment extends BaseJxFragment {
      * cip.cfc.v004.01
      */
     private void searchViolation() {
-        if (!TextUtils.isEmpty(PublicData.getInstance().filenum)) {
+        if (!TextUtils.isEmpty(MemoryData.getInstance().filenum)) {
             UserApiClient.setJiaoYiDaiMa(ContextUtils.getContext(),
-                    PublicData.getInstance().filenum, new CallBack<Result>() {
+                    MemoryData.getInstance().filenum, new CallBack<Result>() {
                         @Override
                         public void onSuccess(Result result) {
                             getParentActivity().dismissLoadingDialog();
@@ -195,6 +197,7 @@ public class ViolationPayFragment extends BaseJxFragment {
                         @Override
                         public void onError(String errorCode, String msg) {
                             getParentActivity().dismissLoadingDialog();
+                            ToastUtils.toastShort(msg);
                         }
                     });
         } else {
@@ -210,7 +213,7 @@ public class ViolationPayFragment extends BaseJxFragment {
 
         String violationnum = mViolationBean.getViolationnum();
         String violationamt = mViolationBean.getViolationamt();
-        String merCustomId = PublicData.getInstance().filenum;//畅通卡档案编号
+        String merCustomId = MemoryData.getInstance().filenum;//畅通卡档案编号
 
         String payUrl = BuildConfig.APP_URL
                 + "payment_payForViolation?orderid=" + violationnum
@@ -219,8 +222,11 @@ public class ViolationPayFragment extends BaseJxFragment {
                 + "&merCustomId=" + merCustomId
                 + "&remark=" + remark;
 
-        PublicData.getInstance().mHashMap.put("PayWebActivity", payUrl);
-        Act.getInstance().lauchIntent(getActivity(), PayWebActivity.class);
+        Intent intent = new Intent();
+        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
+        intent.putExtra(JxGlobal.putExtra.browser_url_extra, payUrl);
+        intent.putExtra(JxGlobal.putExtra.violation_num_extra, violationnum);
+        Act.getInstance().gotoLoginByIntent(getActivity(), PayHtmlActivity.class, intent);
 
         getActivity().finish();
     }

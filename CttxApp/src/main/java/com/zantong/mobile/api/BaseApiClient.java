@@ -5,7 +5,7 @@ import android.content.Context;
 import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobile.BuildConfig;
 import com.zantong.mobile.common.Config;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.eventbus.ErrorEvent;
 import com.zantong.mobile.utils.NetUtils;
 
@@ -128,8 +128,8 @@ public class BaseApiClient {
         if (data != null) {
             builder.add("msg", data);
         }
-        if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().userID)) {
-            builder.add("usrid", PublicData.getInstance().userID);
+        if (MemoryData.getInstance().loginFlag && !"".equals(MemoryData.getInstance().userID)) {
+            builder.add("usrid", MemoryData.getInstance().userID);
         }
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).post(builder.build()).build();
@@ -143,8 +143,8 @@ public class BaseApiClient {
         if (jsonParams != null) {
             builder.add("msg", jsonParams);
         }
-        if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().userID)) {
-            builder.add("usrid", PublicData.getInstance().userID);
+        if (MemoryData.getInstance().loginFlag && !"".equals(MemoryData.getInstance().userID)) {
+            builder.add("usrid", MemoryData.getInstance().userID);
         }
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).post(builder.build()).build();

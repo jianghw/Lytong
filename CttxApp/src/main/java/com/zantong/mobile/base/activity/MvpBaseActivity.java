@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,9 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.umeng.analytics.MobclickAgent;
+import com.tzly.annual.base.custom.dialog.LoadingDialog;
 import com.zantong.mobile.R;
-import com.zantong.mobile.utils.DialogUtils;
 import com.zantong.mobile.utils.SystemBarTintManager;
 import com.zantong.mobile.utils.UiHelpers;
 
@@ -281,42 +279,33 @@ public abstract class MvpBaseActivity extends AppCompatActivity {
     /**
      * 加载中效果
      */
-    public void showDialogLoading() {
-        if (mLoadingDialog == null || !mLoadingDialog.isShowing())
-            mLoadingDialog = DialogUtils.showLoading(this);
+    public synchronized void showDialogLoading() {
+        hideDialogLoading();
+        showDialogLoading("加载中...");
     }
 
     /**
-     * 加载中效果
+     * @param msg 提示信息
      */
-    public void showDialogLoading(String msg) {
-        if (mLoadingDialog == null || !mLoadingDialog.isShowing())
-            mLoadingDialog = TextUtils.isEmpty(msg)
-                    ? DialogUtils.showLoading(this) : DialogUtils.showLoading(this, msg);
+    public synchronized void showDialogLoading(String msg) {
+        mLoadingDialog = LoadingDialog.createLoading(this, msg);
     }
 
     /**
      * 隐藏遮罩的dialog
      */
-    public void hideDialogLoading() {
-        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
-            mLoadingDialog.dismiss();
-            mLoadingDialog = null;
-        }
+    public synchronized void hideDialogLoading() {
+        LoadingDialog.closeDialog(mLoadingDialog);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // 友盟统计开始
-        MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        // 友盟统计结束
-        MobclickAgent.onPause(this);
     }
 
 }

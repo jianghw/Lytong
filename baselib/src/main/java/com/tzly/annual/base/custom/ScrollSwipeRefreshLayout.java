@@ -55,9 +55,6 @@ public class ScrollSwipeRefreshLayout extends SwipeRefreshLayout {
         return super.dispatchTouchEvent(ev);
     }
 
-    float mLastMotionY = 0;
-    float mLastMotionX = 0;
-
     /**
      * true-->onTouchEvent
      * false,super--> 下层处理
@@ -65,7 +62,7 @@ public class ScrollSwipeRefreshLayout extends SwipeRefreshLayout {
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-    /*    float x = event.getX();
+        float x = event.getX();
         float y = event.getY();
 
         switch (event.getAction()) {
@@ -77,12 +74,38 @@ public class ScrollSwipeRefreshLayout extends SwipeRefreshLayout {
                 float deltaX = Math.abs(x - mLastMotionX);
                 float deltaY = Math.abs(y - mLastMotionY);
 
-                if (deltaX  < deltaY) return true;
+                if (deltaX < deltaY-6) return true;
             case MotionEvent.ACTION_UP:
                 break;
             default:
                 break;
-        }*/
+        }
         return super.onInterceptTouchEvent(event);
+    }
+
+    float mLastMotionY = 0;
+    float mLastMotionX = 0;
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        //        float x = event.getX();
+        //        float y = event.getY();
+        //
+        //        switch (event.getAction()) {
+        //            case MotionEvent.ACTION_DOWN:
+        //                mLastMotionX = x;
+        //                mLastMotionY = y;
+        //                break;
+        //            case MotionEvent.ACTION_MOVE:
+        //                float deltaX = Math.abs(x - mLastMotionX);
+        //                float deltaY = Math.abs(y - mLastMotionY);
+        //
+        //                if (deltaX - 6 > deltaY) return false;
+        //            case MotionEvent.ACTION_UP:
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        return super.onTouchEvent(event);
     }
 }

@@ -3,66 +3,59 @@
           package="com.zantong.mobile"
           android:installLocation="auto">
 
+    <!-- 阿里云推送相关权限 Maven库快速集成可跳过 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RESTART_PACKAGES"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.REORDER_TASKS"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <!--bugly-->
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <!--保存资源到SD卡-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- 百度地图相关权限  -->
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+
+    <!-- OpenGLES 2.0 -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
+
     <!-- 小米通道相关权限 -->
     <permission
         android:name="com.zantong.mobile.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signatureOrSystem"/>
-
-    <uses-permission android:name="com.zantong.mobilecttx.permission.MIPUSH_RECEIVE"/>
-
-    <!-- 阿里移动推送相关权限 -->
-    <!-- Android 6.0版本可去除，用于选举信息（通道复用）的同步 -->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <!-- 进行网络访问和网络状态监控相关的权限声明 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!-- 允许对sd卡进行读写操作 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- 网络库使用，当网络操作时需要确保事务完成不被杀掉 -->
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <!-- 用于读取手机硬件信息等，用于机型过滤 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="com.zantong.mobile.permission.MIPUSH_RECEIVE"/>
     <!-- 选举使用，当应用有删除或者更新时需要重新选举，复用推送通道 -->
     <uses-permission android:name="android.permission.BROADCAST_PACKAGE_CHANGED"/>
     <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED"/>
-    <uses-permission android:name="android.permission.RESTART_PACKAGES"/>
-    <!-- 补偿通道小米PUSH使用，不用可去除 -->
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <!-- 补偿通道GCM使用，不使用可去除 -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <!-- 允许监听启动完成事件 -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <!-- 允许访问震动器 -->
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <!-- 允许task重排序 -->
-    <uses-permission android:name="android.permission.REORDER_TASKS"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
-
     <!-- unavailable in API 23 -->
     <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
     <!-- 检测联网方式，区分用户设备使用的是2G、3G或是WiFi -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <!-- 定位包、导航包需要的额外权限（注：基础权限也需要） -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
 
     <application
-        android:name="com.zantong.mobile.common.MyApplication"
+        android:name="com.zantong.mobile.application.MyApplication"
         android:allowBackup="true"
         android:configChanges="keyboardHidden|orientation|screenLayout"
         android:icon="@mipmap/app_icon"
@@ -90,15 +83,10 @@
                 <data android:scheme="geo1"/>
             </intent-filter>
         </activity>
-        <!-- 引导页面 -->
-        <activity
-            android:name="com.zantong.mobile.splash_v.GuideCTActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/FullscreenTheme"/>
 
         <!-- 主页，这个很吊呀 -->
         <activity
-            android:name="com.zantong.mobile.cattle.MainClubActivity"
+            android:name="com.zantong.mobile.main_v.MainClubActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
@@ -109,9 +97,25 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
+        <!-- =======================用户相关页面===================================== -->
         <!-- 登陆页面 -->
         <activity
-            android:name="com.zantong.mobile.login_v.OldLoginActivity"
+            android:name="com.zantong.mobile.login_v.LoginActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 注册页面 -->
+        <activity
+            android:name="com.zantong.mobile.register_v.RegisterActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- 重设密码页面 -->
+        <activity
+            android:name="com.zantong.mobile.reset_v.ResetActivity"
+            android:screenOrientation="portrait"/>
+
+        <!-- ======================消息模块=========================== -->
+        <activity
+            android:name="com.zantong.mobile.msg_v.MegDetailActivity"
             android:screenOrientation="portrait"/>
 
         <activity
@@ -137,9 +141,7 @@
         <activity
             android:name="com.zantong.mobile.user.activity.UserInfoUpdate"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.zantong.mobile.user.activity.MsgActivity"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name="com.zantong.mobile.user.activity.UpdateNickName"
             android:screenOrientation="portrait"/>
@@ -153,19 +155,10 @@
             android:name="com.zantong.mobile.user.activity.AboutActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name="com.zantong.mobile.user.activity.RegisterActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.zantong.mobile.user.activity.Register2Activity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.zantong.mobile.user.activity.ResetActivity"
+            android:name="com.zantong.mobile.register_v.Register2Activity"
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.zantong.mobile.user.activity.ChangePwdActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.zantong.mobile.weizhang.activity.PayWebActivity"
             android:screenOrientation="portrait"/>
 
         <!-- 公共列表类 -->
@@ -208,28 +201,7 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name="com.zantong.mobile.user.activity.MegTypeActivity"
-            android:screenOrientation="portrait"/>
-
-        <!-- ======================优惠劵模块=========================== -->
-        <!-- 优惠劵 -->
-        <activity
-            android:name="com.zantong.mobile.order.activity.CouponActivity"
-            android:screenOrientation="portrait"/>
-        <!-- 优惠劵详情 -->
-        <activity
-            android:name="com.zantong.mobile.order.activity.CouponDetailActivity"
-            android:screenOrientation="portrait"/>
-        <!-- 加油优惠劵选择 -->
-        <activity
-            android:name="com.zantong.mobile.order.activity.CouponListActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name="com.zantong.mobile.user.activity.MegSecondLevelActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.zantong.mobile.user.activity.MegDetailActivity"
+            android:name="com.zantong.mobile.msg_v.MegTypeActivity"
             android:screenOrientation="portrait"/>
 
         <activity
@@ -302,15 +274,18 @@
             android:screenOrientation="portrait"/>
 
         <!-- ===================订单模块========================================= -->
-        <!-- 订单模块列表页面 -->
+        <!-- 我的订单列表页面 -->
         <activity
-            android:name="com.zantong.mobile.order.activity.OrderParentActivity"
+            android:name="com.zantong.mobile.order.activity.MyOrderActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.zantong.mobile.order.activity.CattleOrderActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.zantong.mobile.order.activity.OrderDetailActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name="com.zantong.mobile.order.activity.AnnualOrderDetailActivity"
+            android:name="com.zantong.mobile.order.activity.AnnualDetailActivity"
             android:screenOrientation="portrait"/>
         <!--呼叫快递-->
         <activity
@@ -319,15 +294,12 @@
 
         <!-- ====================================浏览器================================ -->
         <activity
-            android:name="com.zantong.mobile.browser.AdvBrowserActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.zantong.mobile.browser.HtmlBrowserActivity"
+            android:name="com.zantong.mobile.browser.BrowserHtmlActivity"
             android:screenOrientation="portrait"/>
         <!-- ===================付款web模块========================================= -->
         <!-- 付款web模块页面 -->
         <activity
-            android:name="com.zantong.mobile.browser.BrowserForPayActivity"
+            android:name="com.zantong.mobile.browser.PayHtmlActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.zantong.mobile.browser.PayBrowserActivity"
@@ -355,182 +327,37 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="E6lDRqyaSjj8jR8O5wdz5jpgiT0LOuQn"/>
+            android:value="${baidu_API_KEY}"/>
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote">
-            <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2">
-                </action>
-            </intent-filter>
         </service>
 
-        <!-- <meta-data -->
-        <!-- android:name="com.amap.api.v2.apikey" -->
-        <!-- android:value="fdb1c0eb0417f7ee13fe16c6f9b38304" /> -->
-        <!-- 定位需要的服务 -->
-        <!-- <service android:name="com.amap.api.location.APSService"></service>&lt;!&ndash; ATTENTION: This was auto-generated -->
-        <!-- to add、 See https://g.co/AppIndexing/AndroidStudio for more information. &ndash;&gt; -->
-
-
-        <!-- 阿里推送 -->
+        <!-- =================================阿里推送============================================= -->
         <meta-data
             android:name="com.alibaba.app.appkey"
-            android:value="23481202"/> <!-- 请填写你自己的- appKey -->
+            android:value="${alibaba_API_KEY}"/> <!-- 请填写你自己的- appKey -->
         <meta-data
             android:name="com.alibaba.app.appsecret"
-            android:value="a51ce60b119cf15b9ab220ed70d8078c"/> <!-- 请填写你自己的appSecret  在应用证书中 -->
-
-
-        <!-- 通道保持服务（幽灵进程自动保活该服务） -->
-        <service
-            android:name="com.alibaba.sdk.android.push.ChannelService"
-            android:exported="true"
-            android:process=":channel">
-            <intent-filter>
-                <action android:name="com.taobao.accs.intent.action.SERVICE"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="org.agoo.android.intent.action.PING_V4"/>
-
-                <category android:name="taobao"/>
-            </intent-filter>
-        </service>
-
-        <!-- 消息接收服务 -->
-        <service
-            android:name="com.alibaba.sdk.android.push.MsgService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.taobao.accs.intent.action.RECEIVE"/>
-            </intent-filter>
-        </service>
-
-        <!-- 消息接收增强服务（可提高消息/通知到达率） -->
-        <service
-            android:name="com.alibaba.sdk.android.push.channel.TaobaoRecvService"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="org.android.agoo.client.MessageReceiverService"/>
-            </intent-filter>
-        </service>
+            android:value="${alibaba_APP_SECRET}"/> <!-- 请填写你自己的appSecret  在应用证书中 -->
 
         <!-- 消息接收监听器 （用户可自主扩展） -->
         <receiver
             android:name="com.zantong.mobile.push.LytMessageReceiver"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED"/>
             </intent-filter>
             <intent-filter>
-                     
                 <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.taobao.accs.intent.action.COMMAND"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.taobao.taobao.intent.action.COMMAND"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="com.alibaba.sdk.android.push.RECEIVE"/>
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-
-                <data android:scheme="package"/>
-            </intent-filter>
         </receiver>
 
-        <!-- 您从百度网站获取的APP KEY -->
-        <meta-data
-            android:name="BaiduMobAd_STAT_ID"
-            android:value="9f4d50c376"/>
-        <!-- 渠道商编号 -->
-        <meta-data
-            android:name="BaiduMobAd_CHANNEL"
-            android:value="Baidu Market"/>
-
-        <!-- 是否开启错误日志统计，默认为false -->
-        <meta-data
-            android:name="BaiduMobAd_EXCEPTION_LOG"
-            android:value="true"/>
-        <!-- 日志发送策略，可选值：APP_START、ONCE_A_DAY、SET_TIME_INTERVAL，默认为APP_START -->
-        <meta-data
-            android:name="BaiduMobAd_SEND_STRATEGY"
-            android:value="APP_START"/>
-        <!-- 日志发送策略 为SET_TIME_INTERVAL时，需设定时间间隔(取消下行注释)。取值为1-24的整数，默认为1 -->
-        <!-- <meta-data android:name="BaiduMobAd_TIME_INTERVAL" android:value="2" /> -->
-        <!-- 日志仅在wifi网络下发送，默认为false -->
-        <meta-data
-            android:name="BaiduMobAd_ONLY_WIFI"
-            android:value="false"/>
-        <!-- 是否获取基站位置信息 ,默认为true -->
-        <meta-data
-            android:name="BaiduMobAd_CELL_LOCATION"
-            android:value="true"/>
-        <!-- 是否获取GPS位置信息，默认为true -->
-        <meta-data
-            android:name="BaiduMobAd_GPS_LOCATION"
-            android:value="true"/>
-        <!-- 是否获取WIFI位置信息，默认为true -->
-        <meta-data
-            android:name="BaiduMobAd_WIFI_LOCATION"
-            android:value="true"/>
-
-        <!-- 华为通道官方配置 -->
-        <receiver android:name="com.alibaba.sdk.android.push.HuaWeiReceiver">
-            <intent-filter>
-                <action android:name="com.huawei.android.push.intent.REGISTRATION"/>
-                <action android:name="com.huawei.android.push.intent.RECEIVE"/>
-                <action android:name="com.huawei.intent.action.PUSH"/>
-                <action android:name="com.huawei.intent.action.PUSH_STATE"/>
-            </intent-filter>
-        </receiver>
-
-        <!-- 小米通道官方配置 -->
-        <service
-            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
-            android:enabled="true"
-            android:exported="true"/>
-        <service
-            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
-            android:enabled="true"/>
-
-        <receiver
-            android:name="com.alibaba.sdk.android.push.MiPushBroadcastReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.xiaomi.mipush.ERROR"/>
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </receiver>
 
         <!-- 7.0拍照适配 -->
         <provider
@@ -545,10 +372,7 @@
                 android:resource="@xml/file_provider_paths"/>
         </provider>
 
-        <!-- 友盟+适配 appkey 代码控制 -->
-        <!-- <meta-data -->
-        <!-- android:name="UMENG_APPKEY" -->
-        <!-- android:value="5964328782b6357ca70006df"/> -->
+        <!-- =================================友盟+适配 appkey============================================= -->
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}"/>

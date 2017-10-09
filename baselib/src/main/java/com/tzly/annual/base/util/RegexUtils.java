@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * Update day:
  */
 
-public class RegexUtils {
+public final class RegexUtils {
     /******************** 正则相关常量 ********************/
     /**
      * 正则：手机号（简单）

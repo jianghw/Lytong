@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.annual.base.JxBaseActivity;
 import com.tzly.annual.base.util.ContextUtils;
 import com.tzly.annual.base.util.RegexUtils;
@@ -24,12 +25,13 @@ import com.tzly.annual.base.util.primission.PermissionFail;
 import com.tzly.annual.base.util.primission.PermissionGen;
 import com.tzly.annual.base.util.primission.PermissionSuccess;
 import com.zantong.mobile.R;
-import com.zantong.mobile.common.Injection;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.Injection;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.presenter.login_p.ILoginContract;
 import com.zantong.mobile.presenter.login_p.LoginPresenter;
-import com.zantong.mobile.user.activity.RegisterActivity;
-import com.zantong.mobile.user.activity.ResetActivity;
+import com.zantong.mobile.register_v.RegisterActivity;
+import com.zantong.mobile.reset_v.ResetActivity;
+import com.zantong.mobile.user.bean.LoginInfoBean;
 import com.zantong.mobile.utils.Tools;
 import com.zantong.mobile.utils.jumptools.Act;
 import com.zantong.mobile.widght.CustomCharKeyBoard;
@@ -65,9 +67,60 @@ public class LoginActivity extends JxBaseActivity implements
     ArrayList<TextView> mListNum;
     ArrayList<TextView> mListChar;
     private ILoginContract.ILoginPresenter mPresenter;
+    private boolean isDaxie;
 
     @Override
     public void onClick(View view) {
+        Editable editable = mEdtCode.getText();
+        int start = mEdtCode.getSelectionStart();
+
+        for (int i = 0; i < mListNum.size(); i++) {
+            if (view == mListNum.get(i)) {
+                editable.insert(start, mListNum.get(i).getText().toString());
+            }
+        }
+        for (int i = 0; i < mListChar.size(); i++) {
+            if (view == mListChar.get(i)) {
+                editable.insert(start, mListChar.get(i).getText().toString());
+            }
+        }
+        //切换为字母输入
+        if (view == mNumKeyboard.getChangeAbcView()) {
+            mNumKeyboard.setVisibility(View.GONE);
+            mCharKeyboard.setVisibility(View.VISIBLE);
+        }
+        //删除
+        if (view == mNumKeyboard.getNumDelView() || view == mCharKeyboard.getCharDelView()) {
+            if (editable != null && editable.length() > 0) {
+                if (start > 0) editable.delete(start - 1, start);//开始，结束位置
+            }
+        }
+        //完成
+        if (view == mNumKeyboard.getNumFinishView() || view == mCharKeyboard.getCharFinishView()
+                || view == mNumKeyboard.getNumHideView() || view == mCharKeyboard.getCharHideView()) {
+            mNumKeyboard.setVisibility(View.GONE);
+            mCharKeyboard.setVisibility(View.GONE);
+        }
+
+        //切换为数字输入
+        if (view == mCharKeyboard.getChangeNumView()) {
+            mCharKeyboard.setVisibility(View.GONE);
+            mNumKeyboard.setVisibility(View.VISIBLE);
+        }
+
+        //切换大小写输入
+        if (view == mCharKeyboard.getCharTabView()) {
+            if (isDaxie) {
+                isDaxie = false;
+                mCharKeyboard.getCharTabViewImg().setBackgroundResource(R.mipmap.icon_xiaoxie_btn);
+                mCharKeyboard.changeLower();
+            } else {
+                isDaxie = true;
+                mCharKeyboard.getCharTabViewImg().setBackgroundResource(R.mipmap.icon_daxie_btn);
+                mCharKeyboard.changeUpper();
+            }
+        }
+
         switch (view.getId()) {
             case R.id.btn_login:
                 validationSubmitData();
@@ -162,11 +215,16 @@ public class LoginActivity extends JxBaseActivity implements
 
     @Override
     protected void bindContentView(View childView) {
-        titleContent("欢迎加入畅通车友会", "注册");
+        titleContent("欢迎加入熊猫小助手", "注册");
         initView(childView);
 
         LoginPresenter presenter = new LoginPresenter(
                 Injection.provideRepository(ContextUtils.getContext()), this);
+    }
+
+    @MultiState
+    protected int initMultiState() {
+        return MultiState.CONTENT;
     }
 
     @Override
@@ -219,7 +277,7 @@ public class LoginActivity extends JxBaseActivity implements
                     new String[]{Manifest.permission.READ_PHONE_STATE}
             );
         } else {
-            PublicData.getInstance().imei = Tools.getIMEI();
+            MemoryData.getInstance().imei = Tools.getIMEI();
         }
     }
 
@@ -292,7 +350,7 @@ public class LoginActivity extends JxBaseActivity implements
 
     @PermissionSuccess(requestCode = 100)
     public void doPermissionIMEISuccess() {
-        PublicData.getInstance().imei = Tools.getIMEI();
+        MemoryData.getInstance().imei = Tools.getIMEI();
     }
 
     @PermissionFail(requestCode = 100)
@@ -307,17 +365,17 @@ public class LoginActivity extends JxBaseActivity implements
 
     @Override
     public void showLoadingDialog() {
-
+        showDialogLoading();
     }
 
     @Override
     public void dismissLoadingDialog() {
-
+        hideDialogLoading();
     }
 
     @Override
     public void userLoginError(String message) {
-        ToastUtils.toastLong(message);
+        ToastUtils.toastShort(message);
         dismissLoadingDialog();
     }
 
@@ -329,5 +387,24 @@ public class LoginActivity extends JxBaseActivity implements
     @Override
     public String getUserPassword() {
         return mEdtCode.getText().toString().trim();
+    }
+
+    @Override
+    public void userLoginSucceed(LoginInfoBean loginInfoBean) {
+        ToastUtils.toastShort("登录成功!");
+
+        if (MemoryData.getInstance().className != null) {
+            Act.getInstance().lauchIntent(this, MemoryData.getInstance().className);
+        }
+    }
+
+    @Override
+    public void registerSucceed() {
+        finish();
+    }
+
+    @Override
+    public void registerError(String message) {
+        ToastUtils.toastShort("数据同步失败," + message);
     }
 }

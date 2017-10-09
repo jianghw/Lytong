@@ -15,7 +15,7 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zantong.mobile.R;
 import com.zantong.mobile.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobile.share.activity.ShareParentActivity;
 import com.zantong.mobile.utils.DialogMgr;
@@ -89,7 +89,7 @@ public class SparringSucceedFragment extends BaseRefreshJxFragment implements Vi
     protected void onFirstDataVisible() {
 
         //未办卡
-        if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {
+        if (Tools.isStrEmpty(MemoryData.getInstance().filenum)) {
             StringBuffer sb = new StringBuffer();
             sb.append("<font color=\"#f3362b\">");
             sb.append("<u>");
@@ -122,7 +122,7 @@ public class SparringSucceedFragment extends BaseRefreshJxFragment implements Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_prompt://绑卡去
-                if (Tools.isStrEmpty(PublicData.getInstance().filenum))
+                if (Tools.isStrEmpty(MemoryData.getInstance().filenum))
                 break;
             case R.id.tv_commit:
                 new DialogMgr(getActivity(),
@@ -159,9 +159,9 @@ public class SparringSucceedFragment extends BaseRefreshJxFragment implements Vi
         }
 
         WXWebpageObject webpage = new WXWebpageObject();
-        if (PublicData.getInstance().loginFlag) {
+        if (MemoryData.getInstance().loginFlag) {
             webpage.webpageUrl = ShareParentActivity.getShareAppUrl(4) + "?phoneNum="
-                    + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+                    + Des3.encode(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         }

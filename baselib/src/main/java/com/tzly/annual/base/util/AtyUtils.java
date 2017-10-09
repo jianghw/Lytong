@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-public class AtyUtils {
+public final class AtyUtils {
     /**
      * 添加fragment到activity
      *

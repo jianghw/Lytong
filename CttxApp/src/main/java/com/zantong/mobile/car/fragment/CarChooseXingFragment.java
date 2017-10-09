@@ -1,5 +1,6 @@
 package com.zantong.mobile.car.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -7,6 +8,7 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobile.api.CallBack;
 import com.zantong.mobile.api.CarApiClient;
 import com.zantong.mobile.base.fragment.BaseListFragment;
+import com.zantong.mobile.car.activity.CarChooseActivity;
 import com.zantong.mobile.car.adapter.CarChooseXingAdapter;
 import com.zantong.mobile.car.bean.CarLinkageResult;
 import com.zantong.mobile.car.bean.CarStyleInfoBean;
@@ -62,7 +64,13 @@ public class CarChooseXingFragment extends BaseListFragment<CarStyleInfoBean> {
 
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
-
+        CarStyleInfoBean carStyleBean = (CarStyleInfoBean) data;
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(CarChooseActivity.CAR_XING_BEAN, carStyleBean);
+        intent.putExtras(bundle);
+        getActivity().setResult(CarChooseActivity.RESULT_X_CODE, intent);
+        getActivity().finish();
     }
 
     @Override

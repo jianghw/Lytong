@@ -1,8 +1,10 @@
 package com.tzly.annual.base;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.jianghw.multi.state.layout.MultiState;
 import com.jianghw.multi.state.layout.MultiStateLayout;
 import com.jianghw.multi.state.layout.OnStateViewCreatedListener;
+import com.tzly.annual.base.custom.dialog.LoadingDialog;
 import com.tzly.annual.base.util.StatusBarUtils;
 
 
@@ -35,6 +38,10 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     private TextView mTvRight;
     private TextView mTvLine;
     private MultiStateLayout multiStateLayout;
+    /**
+     * 加载等待
+     */
+    private Dialog mLoadingDialog;
 
     /**
      * 1、当root不为null，attachToRoot为true时，
@@ -147,6 +154,8 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        hideDialogLoading();
     }
 
     protected int getRootView() {
@@ -258,6 +267,10 @@ public abstract class JxBaseActivity extends AppCompatActivity {
      */
     protected void rightClickListener() {}
 
+    protected void titleLeftImage(@DrawableRes int resId) {
+        if (mImgBack != null) mImgBack.setImageResource(resId);
+    }
+
     /**
      * 标题栏
      */
@@ -306,28 +319,21 @@ public abstract class JxBaseActivity extends AppCompatActivity {
      */
     public synchronized void showDialogLoading() {
         hideDialogLoading();
-//        mLoadingDialog = DialogUtils.showLoading(this);
+        showDialogLoading("加载中...");
     }
 
     /**
-     * 加载中效果
-     *
      * @param msg 提示信息
      */
     public synchronized void showDialogLoading(String msg) {
-//        if (mLoadingDialog == null || !mLoadingDialog.isShowing())
-//            mLoadingDialog = TextUtils.isEmpty(msg)
-//                    ? DialogUtils.showLoading(this) : DialogUtils.showLoading(this, msg);
+        mLoadingDialog = LoadingDialog.createLoading(this, msg);
     }
 
     /**
      * 隐藏遮罩的dialog
      */
     public synchronized void hideDialogLoading() {
-//        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
-//            mLoadingDialog.dismiss();
-//            mLoadingDialog = null;
-//        }
+        LoadingDialog.closeDialog(mLoadingDialog);
     }
 
 }

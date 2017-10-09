@@ -44,6 +44,8 @@ public final class JxGlobal {
         public static final String violation_pay_bean_extra = "violation_pay_bean_extra";
         public static final String violation_pay_enginenum_extra = "violation_pay_enginenum_extra";
         public static final String map_type_extra = "map_type_extra";
+
+        public static final String violation_num_extra = "violation_num_extra";
     }
 
     public static final class MapType {

@@ -1,6 +1,6 @@
 package com.zantong.mobile.weizhang.bean;
 
-import com.zantong.mobile.base.bean.Result;
+import com.tzly.annual.base.bean.Result;
 
 /**
  *

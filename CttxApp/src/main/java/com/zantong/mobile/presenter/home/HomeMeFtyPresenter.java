@@ -4,7 +4,7 @@ package com.zantong.mobile.presenter.home;
 import android.support.annotation.NonNull;
 
 import com.zantong.mobile.base.dto.BaseDTO;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.home.bean.DriverCoachResult;
 import com.zantong.mobile.contract.IHomeMeFtyContract;
 import com.zantong.mobile.model.repository.BaseSubscriber;
@@ -49,7 +49,7 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
 
     @Override
     public void getCouponCount() {
-        Subscription subscription = mRepository.usrCouponInfo(PublicData.getInstance().userID, "1")
+        Subscription subscription = mRepository.usrCouponInfo(MemoryData.getInstance().userID, "1")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<CouponFragmentResult>() {

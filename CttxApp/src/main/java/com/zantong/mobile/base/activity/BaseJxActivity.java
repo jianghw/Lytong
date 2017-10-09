@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tzly.annual.base.custom.dialog.LoadingDialog;
 import com.tzly.annual.base.util.StatusBarUtils;
-import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobile.R;
-import com.zantong.mobile.utils.DialogUtils;
 
 import butterknife.ButterKnife;
 
@@ -281,42 +279,31 @@ public abstract class BaseJxActivity extends AppCompatActivity {
      */
     public synchronized void showDialogLoading() {
         hideDialogLoading();
-        mLoadingDialog = DialogUtils.showLoading(this);
+        showDialogLoading("加载中...");
     }
 
     /**
-     * 加载中效果
-     *
      * @param msg 提示信息
      */
     public synchronized void showDialogLoading(String msg) {
-        if (mLoadingDialog == null || !mLoadingDialog.isShowing())
-            mLoadingDialog = TextUtils.isEmpty(msg)
-                    ? DialogUtils.showLoading(this) : DialogUtils.showLoading(this, msg);
+        mLoadingDialog = LoadingDialog.createLoading(this, msg);
     }
 
     /**
      * 隐藏遮罩的dialog
      */
     public synchronized void hideDialogLoading() {
-        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
-            mLoadingDialog.dismiss();
-            mLoadingDialog = null;
-        }
+        LoadingDialog.closeDialog(mLoadingDialog);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // 友盟统计开始
-        MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        // 友盟统计结束
-        MobclickAgent.onPause(this);
     }
 
     @Override

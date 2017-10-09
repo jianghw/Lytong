@@ -2,7 +2,7 @@ package com.zantong.mobile.utils;
 
 import android.app.Activity;
 
-import com.zantong.mobile.cattle.MainClubActivity;
+import com.zantong.mobile.main_v.MainClubActivity;
 
 import java.util.Stack;
 
@@ -26,7 +26,6 @@ public class ScreenManager {
             if (activity != null) {
                 activity.finish();
                 activityStack.remove(activity);
-                activity = null;
             }
         }
     }

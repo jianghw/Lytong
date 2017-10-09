@@ -12,20 +12,19 @@ import android.support.v4.app.ActivityCompat;
 import android.webkit.JavascriptInterface;
 
 import com.tzly.annual.base.util.LogUtils;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.chongzhi.activity.RechargeActivity;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.eventbus.DriveLicensePhotoEvent;
 import com.zantong.mobile.eventbus.PayMotoOrderEvent;
+import com.zantong.mobile.login_v.LoginActivity;
 import com.zantong.mobile.map.activity.BaiduMapParentActivity;
-import com.zantong.mobile.login_v.OldLoginActivity;
 import com.zantong.mobile.utils.jumptools.Act;
 import com.zantong.mobile.utils.rsa.RSAUtils;
 import com.zantong.mobile.weizhang.activity.ViolationListActivity;
 import com.zantong.mobile.weizhang.dto.ViolationDTO;
 
 import org.greenrobot.eventbus.EventBus;
-
-import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * @author Sandy
@@ -41,17 +40,17 @@ public class InterfaceForJS {
 
     @JavascriptInterface
     public void ToastMsg(String msg) {
-        ToastUtils.showShort(mJSContext, msg);
+        ToastUtils.toastShort(msg);
     }
 
     @JavascriptInterface
     public boolean isLogin() {
-        return PublicData.getInstance().loginFlag;
+        return MemoryData.getInstance().loginFlag;
     }
 
     @JavascriptInterface
     public void gotoLogin() {
-        mJSContext.startActivity(new Intent(mJSContext, OldLoginActivity.class));
+        mJSContext.startActivity(new Intent(mJSContext, LoginActivity.class));
     }
 
     @JavascriptInterface
@@ -116,13 +115,13 @@ public class InterfaceForJS {
     //获取用户ID
     @JavascriptInterface
     public String getUserId() {
-        return PublicData.getInstance().userID;
+        return MemoryData.getInstance().userID;
     }
 
     //获取绑卡状态 0已绑卡  1未绑卡
     @JavascriptInterface
     public int getBindCardStatus() {
-        return "".equals(PublicData.getInstance().filenum) ? 1 : 0;
+        return "".equals(MemoryData.getInstance().filenum) ? 1 : 0;
     }
 
     //查询违章
@@ -133,7 +132,7 @@ public class InterfaceForJS {
     //获取用户ID
     @JavascriptInterface
     public String getEncreptUserId() {
-        return RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true);
+        return RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().userID, true);
     }
 
     @JavascriptInterface
@@ -150,10 +149,10 @@ public class InterfaceForJS {
     //去往违章列表页面
     @JavascriptInterface
     public void searchViolationList(String carnum, String enginenum, String carnumtype) {
-        PublicData.getInstance().mHashMap.put("IllegalViolationName", carnum);
-        PublicData.getInstance().mHashMap.put("carnum", carnum);
-        PublicData.getInstance().mHashMap.put("enginenum", enginenum);
-        PublicData.getInstance().mHashMap.put("carnumtype", carnumtype);
+        MemoryData.getInstance().mHashMap.put("IllegalViolationName", carnum);
+        MemoryData.getInstance().mHashMap.put("carnum", carnum);
+        MemoryData.getInstance().mHashMap.put("enginenum", enginenum);
+        MemoryData.getInstance().mHashMap.put("carnumtype", carnumtype);
 
         ViolationDTO dto = new ViolationDTO();
         dto.setCarnum(RSAUtils.strByEncryption(carnum, true));

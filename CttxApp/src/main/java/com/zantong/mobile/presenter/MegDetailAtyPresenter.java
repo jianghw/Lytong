@@ -3,11 +3,11 @@ package com.zantong.mobile.presenter;
 import android.support.annotation.NonNull;
 
 import com.zantong.mobile.contract.IMegDetailAtyContract;
+import com.zantong.mobile.model.repository.BaseSubscriber;
 import com.zantong.mobile.model.repository.RepositoryManager;
 import com.zantong.mobile.user.bean.MessageDetailResult;
 import com.zantong.mobile.user.dto.MessageDetailDTO;
 
-import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
@@ -59,19 +59,19 @@ public class MegDetailAtyPresenter implements IMegDetailAtyContract.IMegDetailAt
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<MessageDetailResult>() {
+                .subscribe(new BaseSubscriber<MessageDetailResult>() {
                     @Override
-                    public void onCompleted() {
+                    public void doCompleted() {
                         isRefresh = true;
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void doError(Throwable e) {
                         mView.findMessageDetailError(e.getMessage());
                     }
 
                     @Override
-                    public void onNext(MessageDetailResult result) {
+                    public void doNext(MessageDetailResult result) {
                         if (result != null
                                 && result.getResponseCode() == 2000) {
                             mView.findMessageDetailSucceed(result);

@@ -1,7 +1,7 @@
 package com.zantong.mobile.contract;
 
 import com.tzly.annual.base.bean.BaseResult;
-import com.zantong.mobile.base.bean.Result;
+import com.tzly.annual.base.bean.Result;
 import com.zantong.mobile.base.interf.IMvpPresenter;
 import com.zantong.mobile.base.interf.IMvpView;
 import com.zantong.mobile.car.dto.CarInfoDTO;

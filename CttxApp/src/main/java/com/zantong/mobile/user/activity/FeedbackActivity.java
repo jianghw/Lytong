@@ -5,13 +5,13 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.zantong.mobile.common.Config;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.R;
 import com.zantong.mobile.api.CallBack;
 import com.zantong.mobile.api.UserApiClient;
 import com.zantong.mobile.base.activity.BaseMvpActivity;
 import com.zantong.mobile.base.interf.IBaseView;
-import com.zantong.mobile.base.bean.Result;
+import com.tzly.annual.base.bean.Result;
 import com.zantong.mobile.user.dto.FeedbackDTO;
 import com.zantong.mobile.presenter.HelpPresenter;
 import com.tzly.annual.base.util.ToastUtils;
@@ -20,9 +20,6 @@ import butterknife.Bind;
 
 /**
  * 帮助与反馈
- *
- * @author Sandy
- *         create at 16/6/2 下午12:26
  */
 public class FeedbackActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements View.OnClickListener, IBaseView {
 
@@ -56,13 +53,13 @@ public class FeedbackActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
         if (v.getId() == R.id.mine_feedback_commit) {
             String content = mInputContent.getText().toString().trim();
             if ("".equals(content)) {
-                ToastUtils.showShort(this, "内容不能为空");
+                ToastUtils.toastShort("内容不能为空");
                 return;
             }
             showDialogLoading();
             FeedbackDTO dto = new FeedbackDTO();
             dto.setReqcontent(content);
-            dto.setUsrid(PublicData.getInstance().userID);
+            dto.setUsrid(MemoryData.getInstance().userID);
             UserApiClient.commitFeedback(this, dto, new CallBack<Result>() {
                 @Override
                 public void onSuccess(Result result) {

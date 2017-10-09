@@ -11,26 +11,20 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tzly.annual.base.custom.dialog.MyChooseDialog;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.R;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.base.activity.BaseJxActivity;
-import com.zantong.mobile.common.PublicData;
 import com.zantong.mobile.utils.DialogMgr;
 import com.zantong.mobile.utils.SPUtils;
-import com.zantong.mobile.utils.dialog.MyChooseDialog;
 import com.zantong.mobile.weizhang.dto.LicenseFileNumDTO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
-import com.tzly.annual.base.custom.picker.entity.City;
-import com.tzly.annual.base.custom.picker.entity.County;
-import com.tzly.annual.base.custom.picker.entity.Province;
-import com.tzly.annual.base.global.JxConfig;
-import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * Created by jianghw on 2017/5/4.
@@ -82,50 +76,17 @@ public class LicenseCheckGradeActivity extends BaseJxActivity implements View.On
         initIntentData();
     }
 
-    /**
-     * Test
-     */
-    private void showTestDialog() {
-        ArrayList<Province> aresBeanList = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            Province province = new Province();
-            province.setAreaId(String.valueOf(i));
-            province.setAreaName("province" + i);
-
-            ArrayList<City> cities = new ArrayList<>();
-            for (int j = 0; j < 5; j++) {
-                City city = new City();
-                city.setAreaId(String.valueOf(j));
-                city.setAreaName("city" + j);
-
-                ArrayList<County> counties = new ArrayList<>();
-                for (int k = 0; k < 4; k++) {
-                    County county = new County();
-                    county.setAreaId(String.valueOf(k));
-                    county.setAreaName("county" + k);
-                    counties.add(county);
-                }
-                city.setCounties(counties);
-                cities.add(city);
-            }
-            province.setCities(cities);
-            aresBeanList.add(province);
-        }
-    }
-
     @Override
-    protected void DestroyViewAndThing() {
-
-    }
+    protected void DestroyViewAndThing() {}
 
     /**
      * 初始化填入数据
      */
     private void initIntentData() {
-        String fileNum = PublicData.getInstance().filenum;
+        String fileNum = MemoryData.getInstance().filenum;
         mEditArchivesNumber.setText(fileNum);
 
-        String startDate = PublicData.getInstance().getdate;
+        String startDate = MemoryData.getInstance().getdate;
         String beanStrtdt = removeDateAcross(startDate);
         if (!TextUtils.isEmpty(beanStrtdt)) mTvDate.setText(dateFormat(beanStrtdt));
 
@@ -183,8 +144,6 @@ public class LicenseCheckGradeActivity extends BaseJxActivity implements View.On
         } else if (TextUtils.isEmpty(getTvDate())) {
             ToastUtils.toastShort("请选择初次领证日期");
         } else {
-            JxConfig.getInstance().eventIdByUMeng(8);
-
             LicenseFileNumDTO dto = new LicenseFileNumDTO();
             dto.setFilenum(getArchivesNumber());
             dto.setStrtdt(localDateFormat(getTvDate()));//真时的时间

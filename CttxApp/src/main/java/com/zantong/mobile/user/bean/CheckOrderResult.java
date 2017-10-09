@@ -1,6 +1,6 @@
 package com.zantong.mobile.user.bean;
 
-import com.zantong.mobile.base.bean.Result;
+import com.tzly.annual.base.bean.Result;
 
 /**
  * 我的订单状态返回实体

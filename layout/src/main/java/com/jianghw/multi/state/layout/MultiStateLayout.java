@@ -135,7 +135,7 @@ public class MultiStateLayout extends FrameLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        Log.e("TAG", "=====" + getChildCount());
+        Log.e("onFinishInflate", "=====" + getChildCount());
         if (getChildCount() > 1) {
             throw new IllegalStateException("Expect to have one child.");
         } else if (getChildCount() == 1) {
@@ -146,7 +146,7 @@ public class MultiStateLayout extends FrameLayout {
     }
 
     public void customChildAt() {
-        Log.e("TAG", "=====" + getChildCount());
+        Log.e("customChildAt", "=====" + getChildCount());
         if (getChildCount() > 1) {
             throw new IllegalStateException("Expect to have one child.");
         } else if (getChildCount() == 1) {

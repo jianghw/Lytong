@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.zantong.mobile.R;
 import com.zantong.mobile.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobile.common.Injection;
+import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.contract.IOrderExpressContract;
 import com.zantong.mobile.order.bean.ReceiveInfoBean;
 import com.zantong.mobile.order.bean.ReceiveInfoResult;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import com.tzly.annual.base.bean.BaseResult;
 import com.tzly.annual.base.imple.IAreaDialogListener;
 import com.tzly.annual.base.util.ContextUtils;
-import com.tzly.annual.base.util.CustomDialog;
+import com.tzly.annual.base.custom.dialog.CustomDialog;
 import com.tzly.annual.base.util.RegexUtils;
 import com.tzly.annual.base.util.ToastUtils;
 

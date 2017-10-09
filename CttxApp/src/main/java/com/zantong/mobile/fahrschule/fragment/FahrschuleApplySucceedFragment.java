@@ -13,16 +13,14 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.R;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobile.common.PublicData;
 import com.zantong.mobile.share.activity.ShareParentActivity;
 import com.zantong.mobile.utils.DialogMgr;
 import com.zantong.mobile.utils.rsa.Des3;
 import com.zantong.mobile.wxapi.WXEntryActivity;
-
-import com.tzly.annual.base.global.JxConfig;
-import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 驾校支付成功页面
@@ -112,8 +110,6 @@ public class FahrschuleApplySucceedFragment extends BaseRefreshJxFragment implem
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_pay:
-                JxConfig.getInstance().eventIdByUMeng(31);
-
                 new DialogMgr(getActivity(),
                         new View.OnClickListener() {
                             @Override
@@ -148,9 +144,9 @@ public class FahrschuleApplySucceedFragment extends BaseRefreshJxFragment implem
         }
 
         WXWebpageObject webpage = new WXWebpageObject();
-        if (PublicData.getInstance().loginFlag) {
+        if (MemoryData.getInstance().loginFlag) {
             webpage.webpageUrl = ShareParentActivity.getShareAppUrl(3) + "?phoneNum="
-                    + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+                    + Des3.encode(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         }

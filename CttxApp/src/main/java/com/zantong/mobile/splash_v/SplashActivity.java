@@ -1,7 +1,6 @@
 package com.zantong.mobile.splash_v;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,15 +19,12 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.tzly.annual.base.bean.response.StartPicBean;
 import com.tzly.annual.base.util.AppUtils;
 import com.tzly.annual.base.util.image.ImageOptions;
-import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobile.R;
-import com.zantong.mobile.cattle.MainClubActivity;
-import com.zantong.mobile.common.Config;
-import com.zantong.mobile.common.Injection;
+import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.contract.ISplashAtyContract;
 import com.zantong.mobile.home.bean.StartPicResult;
+import com.zantong.mobile.main_v.MainClubActivity;
 import com.zantong.mobile.presenter.home.SplashPresenter;
-import com.zantong.mobile.utils.SPUtils;
 import com.zantong.mobile.utils.jumptools.Act;
 
 import java.util.ArrayList;
@@ -77,7 +73,7 @@ public class SplashActivity extends AppCompatActivity
     private void umengChannel() {
         mImgHuawei = (ImageView) findViewById(R.id.img_huawei);
         String umengChannel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
-        if (umengChannel.equals("huawei")) {
+        if (umengChannel.equals("tzly_huawei")) {
             mImgHuawei.setImageResource(R.mipmap.ic_huawei);
         }
     }
@@ -202,7 +198,10 @@ public class SplashActivity extends AppCompatActivity
      */
     @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     public void gotoMain() {
-        int appCode = AppUtils.getAppVersionCode();//当前手机的
+        Act.getInstance().gotoIntent(this, MainClubActivity.class);
+        finish();
+
+      /*  int appCode = AppUtils.getAppVersionCode();//当前手机的
 
         String guide = SPUtils.getInstance().getIsGuide();
         int versionCode = 1;//保存版本
@@ -213,7 +212,6 @@ public class SplashActivity extends AppCompatActivity
         }
 
         if (appCode <= versionCode) {
-            MobclickAgent.onEvent(this, Config.getUMengID(0));
             Act.getInstance().gotoIntent(this, MainClubActivity.class);
             finish();
         } else {
@@ -224,7 +222,7 @@ public class SplashActivity extends AppCompatActivity
             startActivity(intent);
             overridePendingTransition(0, 0);
             finish();
-        }
+        }*/
     }
 
     @Override

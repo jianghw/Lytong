@@ -10,19 +10,17 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobile.R;
 import com.zantong.mobile.base.activity.BaseActivity;
 import com.zantong.mobile.base.activity.MvpBaseActivity;
-import com.zantong.mobile.eventbus.ErrorEvent;
 import com.zantong.mobile.contract.IBaseFragment;
+import com.zantong.mobile.eventbus.ErrorEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
-import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * Fragment基类
@@ -164,13 +162,10 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
     @Override
     public void onResume() {
         super.onResume();
-        // 统计页面
-        MobclickAgent.onPageStart(this.getClass().getSimpleName());
     }
     @Override
     public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd(this.getClass().getSimpleName());
     }
 
     @Override
@@ -263,19 +258,5 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
 
         initData();
     }
-    /**
-     * Toast提示信息
-     * @param message
-     */
-    public void showMsg(String message){
-        ToastUtils.showShort(getActivity(), message);
-    }
 
-    /**
-     * Toast提示信息
-     * @param resId
-     */
-    public void showMsg(int resId){
-        ToastUtils.showShort(getActivity(), resId);
-    }
 }

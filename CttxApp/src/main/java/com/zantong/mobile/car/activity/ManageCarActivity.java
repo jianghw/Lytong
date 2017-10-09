@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.zantong.mobile.R;
 import com.zantong.mobile.base.activity.BaseJxActivity;
 import com.zantong.mobile.car.fragment.ManageCarListFragment;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.user.bean.UserCarInfoBean;
 import com.zantong.mobile.utils.jumptools.Act;
 import com.zantong.mobile.weizhang.activity.ViolationActivity;
@@ -44,7 +44,7 @@ public class ManageCarActivity extends BaseJxActivity {
             @Override
             public void onClick(View v) {
                 int count = 0;
-                for (UserCarInfoBean bean : PublicData.getInstance().mServerCars) {
+                for (UserCarInfoBean bean : MemoryData.getInstance().mServerCars) {
                     if (bean.getIspaycar().equals("1")) count = count + 1;
                 }
                 if (count < 2) {

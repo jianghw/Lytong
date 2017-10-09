@@ -18,7 +18,7 @@
         android:layout_marginTop="@dimen/ds_45"
         android:textColor="@color/gray_33"
         android:textSize="@dimen/fs_60"
-        android:text="畅通车友会" />
+        android:text="熊猫小助手" />
 
     <TextView
         android:id="@+id/mine_about_version"

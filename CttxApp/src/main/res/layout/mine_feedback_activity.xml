@@ -21,7 +21,6 @@
     <Button
         android:id="@+id/mine_feedback_commit"
         style="@style/ButtonBigStyle"
-        android:layout_below="@id/underline1"
         android:layout_marginTop="@dimen/ds_144"
         android:textSize="@dimen/ds_54"
         android:textColor="@color/next_btn_selector"

@@ -9,10 +9,10 @@
     tools:showIn="@layout/activity_main_club">
 
     <!--多余控件，充当statusbar-->
-   <!-- <RelativeLayout
-        android:id="@+id/lay_re"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>-->
+    <!-- <RelativeLayout
+         android:id="@+id/lay_re"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"/>-->
 
     <include layout="@layout/base_custom_base_title"/>
 
@@ -21,13 +21,28 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/y300"/>
 
-    <com.tzly.annual.base.custom.trumpet.MainScrollUpAdvertisementView
-        android:id="@+id/custom_trumpet"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y80"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:singleLine="true"/>
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/y20"
+        android:background="@color/res_color_white"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="4dp"
+            android:src="@mipmap/ic_trumpet"/>
+
+        <com.tzly.annual.base.custom.trumpet.TrumpetScrollUpView
+            android:id="@+id/custom_trumpet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"/>
+    </LinearLayout>
 
     <include
         layout="@layout/content_main_club_up"
@@ -35,7 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/y20"/>
 
-    <ImageView
+    <com.tzly.annual.base.custom.banner.ConvenientBanner
+        android:id="@+id/custom_banner_2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y200"
         android:layout_marginBottom="@dimen/y20"

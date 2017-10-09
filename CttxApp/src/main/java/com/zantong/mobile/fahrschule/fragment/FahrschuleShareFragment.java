@@ -17,10 +17,11 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.R;
+import com.zantong.mobile.application.MemoryData;
+import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobile.common.Injection;
-import com.zantong.mobile.common.PublicData;
 import com.zantong.mobile.contract.IFahrschuleShareFtyContract;
 import com.zantong.mobile.fahrschule.bean.RecordCountBean;
 import com.zantong.mobile.fahrschule.bean.RecordCountResult;
@@ -32,9 +33,6 @@ import com.zantong.mobile.wxapi.WXEntryActivity;
 import com.zantong.mobile.zxing.EncodingUtils;
 
 import java.util.List;
-
-import com.tzly.annual.base.global.JxConfig;
-import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 驾校报名分享页面
@@ -127,9 +125,9 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
         if (mPresenter != null) mPresenter.getRecordCount();
 
         String contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
-        if (PublicData.getInstance().loginFlag && PublicData.getInstance().mLoginInfoBean != null)
+        if (MemoryData.getInstance().loginFlag && MemoryData.getInstance().mLoginInfoBean != null)
             contentString = ShareParentActivity.getShareAppUrl(3) + "?phoneNum="
-                    + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+                    + Des3.encode(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
         else
             contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         if (!TextUtils.isEmpty(contentString)) {
@@ -211,12 +209,10 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_prompt:
-                JxConfig.getInstance().eventIdByUMeng(33);
 
                 customImageDialog();
                 break;
             case R.id.btn_pay:
-                JxConfig.getInstance().eventIdByUMeng(32);
 
                 new DialogMgr(getActivity(),
                         new View.OnClickListener() {
@@ -268,9 +264,9 @@ public class FahrschuleShareFragment extends BaseRefreshJxFragment
         }
 
         WXWebpageObject webpage = new WXWebpageObject();
-        if (PublicData.getInstance().loginFlag) {
+        if (MemoryData.getInstance().loginFlag) {
             webpage.webpageUrl = ShareParentActivity.getShareAppUrl(3)+ "?phoneNum="
-                    + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+                    + Des3.encode(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         }

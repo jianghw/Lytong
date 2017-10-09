@@ -2,7 +2,7 @@ package com.zantong.mobile.api;
 
 import com.tzly.annual.base.bean.response.CattleOrderResponse;
 import com.zantong.mobile.order.bean.OrderDetailResult;
-import com.zantong.mobile.order.bean.OrderListResult;
+import com.tzly.annual.base.bean.response.OrderListResult;
 import com.zantong.mobile.order.bean.ReceiveInfoResult;
 import com.zantong.mobile.order.dto.ExpressDTO;
 
@@ -68,4 +68,23 @@ public interface IOrderService {
      */
     @GET("order/queryOrderList")
     Observable<CattleOrderResponse> queryOrderList();
+
+    /**
+     * 订单
+     */
+    @FormUrlEncoded
+    @POST("order/getAnnualInspectionOrders")
+    Observable<OrderListResult> getAnnualInspectionOrders(@Field("userNum") String userId);
+
+    /**
+     * 资料审核中
+     */
+    @FormUrlEncoded
+    @POST("order/getAnnualInspectionOrders")
+    Observable<BaseResult> getAnnualInspectionOrderTargetState(
+            @Field("orderId") String orderId, @Field("state") String status, @Field("remark") String remark, @Field("userNum") String userNum);
+
+    @FormUrlEncoded
+    @POST("order/addBackExpressInfo")
+    Observable<BaseResult> addBackExpressInfo(@Field("orderId") String orderId, @Field("expressNo") String expressNo, @Field("userNum") String userNum);
 }

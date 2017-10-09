@@ -7,7 +7,7 @@ import android.os.IBinder;
 import android.os.Message;
 
 import com.zantong.mobile.user.bean.RspInfoBean;
-import com.zantong.mobile.utils.RefreshNewTools.UserInfoRememberCtrl;
+import com.zantong.mobile.login_v.LoginUserSPreference;
 
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
@@ -69,7 +69,7 @@ public class DateService extends Service {
         Date now = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd HH:mm:ss");
         String currentTm = sdf.format(now).replace("/","").replace(":","").replace(" ","");
-        RspInfoBean b = (RspInfoBean)UserInfoRememberCtrl.readObject();
+        RspInfoBean b = (RspInfoBean) LoginUserSPreference.readObject();
         String date = "";
         if (!Tools.isStrEmpty(b.getGetdate())){
             date = b.getGetdate().replace("-","").substring(4) + "095930";

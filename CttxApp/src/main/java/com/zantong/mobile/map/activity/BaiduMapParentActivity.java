@@ -37,10 +37,14 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.ToastUtils;
+import com.tzly.annual.base.util.ui.DensityUtils;
 import com.zantong.mobile.R;
+import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.base.activity.BaseJxActivity;
-import com.zantong.mobile.browser.HtmlBrowserActivity;
-import com.zantong.mobile.common.Injection;
+import com.zantong.mobile.browser.BrowserHtmlActivity;
 import com.zantong.mobile.contract.IBaiduMapContract;
 import com.zantong.mobile.map.bean.GasStation;
 import com.zantong.mobile.map.bean.GasStationDetail;
@@ -56,11 +60,6 @@ import com.zantong.mobile.utils.DistanceUtils;
 import com.zantong.mobile.utils.jumptools.Act;
 
 import java.util.List;
-
-import com.tzly.annual.base.global.JxGlobal;
-import com.tzly.annual.base.util.ContextUtils;
-import com.tzly.annual.base.util.ToastUtils;
-import com.tzly.annual.base.util.ui.DensityUtils;
 
 /**
  * Created by jianghw on 2017/7/7.
@@ -242,8 +241,8 @@ public class BaiduMapParentActivity extends BaseJxActivity
         if (mMapType == JxGlobal.MapType.annual_inspection_map) {
             Intent intent = new Intent();
             intent.putExtra(JxGlobal.putExtra.browser_title_extra, "年检须知");
-            intent.putExtra(JxGlobal.putExtra.browser_url_extra, "file:///android_asset/www/nianjian_desc.html");
-            Act.getInstance().gotoLoginByIntent(this, HtmlBrowserActivity.class, intent);
+            intent.putExtra(JxGlobal.putExtra.browser_url_extra, "file:///android_asset/nianjian_desc.html");
+            Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
         }
     }
 
@@ -559,7 +558,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
         Intent intent = new Intent();
         intent.putExtra(JxGlobal.putExtra.browser_title_extra, "年检服务");
         intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://nianjian.liyingtong.com/myCar");
-        Act.getInstance().gotoLoginByIntent(this, HtmlBrowserActivity.class, intent);
+        Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
     }
 
     /**

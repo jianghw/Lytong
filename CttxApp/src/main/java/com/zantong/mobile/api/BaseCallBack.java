@@ -8,7 +8,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.tzly.annual.base.util.LogUtils;
 import com.zantong.mobile.common.Config;
-import com.zantong.mobile.common.PublicData;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.eventbus.ErrorEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,7 +45,7 @@ public class BaseCallBack<T> implements Callback {
         if (response.isSuccessful()) {
             try {
                 String reader = response.body().string();
-                PublicData.getInstance().mHashMap.put("htmlResponse", reader);
+                MemoryData.getInstance().mHashMap.put("htmlResponse", reader);
 
                 LogUtils.i("reader===" + reader);
 

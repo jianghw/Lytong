@@ -53,7 +53,7 @@ public class ScrollDrawerLayout extends DrawerLayout {
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        float x = event.getX();
+ /*       float x = event.getX();
         float y = event.getY();
 
         switch (event.getAction()) {
@@ -70,7 +70,7 @@ public class ScrollDrawerLayout extends DrawerLayout {
                 break;
             default:
                 break;
-        }
+        }*/
         return super.onInterceptTouchEvent(event);
     }
 }

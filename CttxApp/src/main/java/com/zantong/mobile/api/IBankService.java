@@ -1,9 +1,10 @@
 package com.zantong.mobile.api;
 
-import com.zantong.mobile.base.bean.Result;
+import com.tzly.annual.base.bean.Result;
 import com.zantong.mobile.car.bean.PayCarResult;
 import com.zantong.mobile.user.bean.UserCarsResult;
 import com.zantong.mobile.weizhang.bean.LicenseResponseBean;
+import com.zantong.mobile.weizhang.bean.ViolationNumBean;
 import com.zantong.mobile.weizhang.bean.ViolationResultParent;
 
 import retrofit2.http.Field;
@@ -41,4 +42,12 @@ public interface IBankService {
     @FormUrlEncoded
     @POST("mobilecall_call")
     Observable<PayCarResult> getPayCars(@Field("msg") String msg);
+
+    @FormUrlEncoded
+    @POST("mobilecall_call")
+    Observable<Result> loginV004(@Field("msg") String msg);
+
+    @FormUrlEncoded
+    @POST("mobilecall_call")
+    Observable<ViolationNumBean> numberedQuery(@Field("msg") String msg);
 }

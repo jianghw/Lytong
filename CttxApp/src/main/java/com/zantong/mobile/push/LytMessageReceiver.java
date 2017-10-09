@@ -2,17 +2,16 @@ package com.zantong.mobile.push;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.alibaba.sdk.android.push.MessageReceiver;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.google.gson.Gson;
 import com.tzly.annual.base.bean.HomeNotice;
 import com.tzly.annual.base.util.LogUtils;
-import com.zantong.mobile.cattle.MainClubActivity;
 import com.zantong.mobile.eventbus.AddPushTrumpetEvent;
-import com.zantong.mobile.user.activity.MegDetailActivity;
-import com.zantong.mobile.utils.RefreshNewTools.UserInfoRememberCtrl;
+import com.zantong.mobile.login_v.LoginUserSPreference;
+import com.zantong.mobile.main_v.MainClubActivity;
+import com.zantong.mobile.msg_v.MegDetailActivity;
 import com.zantong.mobile.utils.Tools;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,9 +25,6 @@ import java.util.Map;
  */
 public class LytMessageReceiver extends MessageReceiver {
 
-    // 消息接收部分的LOG_TAG
-    public static final String REC_TAG = "receiver";
-
     /**
      * 推送通知的回调方法
      * 1是小喇叭
@@ -37,7 +33,8 @@ public class LytMessageReceiver extends MessageReceiver {
     @Override
     public void onNotification(Context context, String title,
                                String summary, Map<String, String> extraMap) {
-        LogUtils.e(title + "onNotification" + summary);
+
+        LogUtils.i(title + "onNotification" + summary);
 
         PushBean pushBean = new PushBean();
         if (null != extraMap) {
@@ -61,23 +58,24 @@ public class LytMessageReceiver extends MessageReceiver {
             }
 
         } else {
-            LogUtils.e("@收到通知 && 自定义消息为空");
+            LogUtils.i("@收到通知 && 自定义消息为空");
         }
     }
 
+    /**
+     * 应用处于前台时通知到达回调。注意:该方法仅对自定义样式通知有效,
+     * 相关详情请参考https://help.aliyun.com/document_detail/30066.html?spm=5176.product30047.6.620.wjcC87#h3-3-4-basiccustompushnotification-api
+     */
     @Override
     protected void onNotificationReceivedInApp(Context context, String title, String summary,
                                                Map<String, String> extraMap, int openType,
                                                String openActivity, String openUrl) {
-        LogUtils.e("onNotificationReceivedInApp ====： "
+        LogUtils.i("onNotificationReceivedInApp ====： "
                 + " : " + title + " : " + summary + "  " + extraMap + " : " + openType + " : " + openActivity + " : " + openUrl);
     }
 
     /**
      * 推送消息的回调方法
-     *
-     * @param context
-     * @param cPushMessage
      */
     @Override
     public void onMessage(Context context, CPushMessage cPushMessage) {
@@ -86,7 +84,7 @@ public class LytMessageReceiver extends MessageReceiver {
             // 持久化推送的消息到数据库
 
         } catch (Exception e) {
-            Log.i(REC_TAG, e.toString());
+            LogUtils.i(e.toString());
         }
     }
 
@@ -117,7 +115,7 @@ public class LytMessageReceiver extends MessageReceiver {
     private void saveData(Context context, PushBean pushBean, String key) {
         List<HomeNotice> list;
         boolean isHave = false;
-        list = (List<HomeNotice>) UserInfoRememberCtrl.readObject(key);
+        list = (List<HomeNotice>) LoginUserSPreference.readObject(key);
         if (list != null) {
             for (HomeNotice item : list) {
                 if (item.getId().equals(pushBean.getId())) {
@@ -132,7 +130,7 @@ public class LytMessageReceiver extends MessageReceiver {
                 homeNotice.setDate(pushBean.getDate());
                 homeNotice.setNewMeg(pushBean.isNewMeg());
                 list.add(homeNotice);
-                UserInfoRememberCtrl.saveObject(key, list);
+                LoginUserSPreference.saveObject(key, list);
             }
         } else {
             list = new ArrayList<>();
@@ -143,15 +141,23 @@ public class LytMessageReceiver extends MessageReceiver {
             homeNotice.setDate(pushBean.getDate());
             homeNotice.setNewMeg(pushBean.isNewMeg());
             list.add(homeNotice);
-            UserInfoRememberCtrl.saveObject(key, list);
+            LoginUserSPreference.saveObject(key, list);
         }
     }
 
+    /**
+     * 通知删除回调
+     */
     @Override
     public void onNotificationRemoved(Context context, String messageId) {
         LogUtils.i("onNotificationRemoved=== ： " + messageId);
     }
 
+    /**
+     * 无动作通知点击回调。
+     * 当在后台或阿里云控制台指定的通知动作为无逻辑跳转时,
+     * 通知点击回调为onNotificationClickedWithNoAction而不是onNotificationOpened
+     */
     @Override
     protected void onNotificationClickedWithNoAction(Context context, String title, String summary, String extraMap) {
         LogUtils.i("onNotificationClickedWithNoAction ====： " + " : " + title + " : " + summary + " : " + extraMap);

@@ -3,7 +3,10 @@ package com.zantong.mobile.model.repository;
 import android.text.TextUtils;
 
 import com.tzly.annual.base.bean.BaseResult;
+import com.tzly.annual.base.bean.Result;
+import com.tzly.annual.base.bean.request.RegisterDTO;
 import com.tzly.annual.base.bean.response.CattleOrderResponse;
+import com.tzly.annual.base.bean.response.OrderListResult;
 import com.tzly.annual.base.bean.response.SubjectGoodsResult;
 import com.zantong.mobile.api.IAddOilService;
 import com.zantong.mobile.api.IBankService;
@@ -22,7 +25,6 @@ import com.zantong.mobile.api.ISplashService;
 import com.zantong.mobile.api.ITextService;
 import com.zantong.mobile.api.IUserService;
 import com.zantong.mobile.api.IViolationService;
-import com.zantong.mobile.base.bean.Result;
 import com.zantong.mobile.base.dto.BaseDTO;
 import com.zantong.mobile.car.bean.PayCarResult;
 import com.zantong.mobile.car.bean.VehicleLicenseResult;
@@ -57,7 +59,6 @@ import com.zantong.mobile.order.bean.CouponFragmentResult;
 import com.zantong.mobile.order.bean.MessageResult;
 import com.zantong.mobile.order.bean.OrderDetailResult;
 import com.zantong.mobile.order.bean.OrderExpressResult;
-import com.zantong.mobile.order.bean.OrderListResult;
 import com.zantong.mobile.order.bean.ReceiveInfoResult;
 import com.zantong.mobile.order.dto.ExpressDTO;
 import com.zantong.mobile.user.bean.LoginInfoBean;
@@ -69,6 +70,8 @@ import com.zantong.mobile.user.dto.MegDTO;
 import com.zantong.mobile.user.dto.MessageDetailDTO;
 import com.zantong.mobile.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobile.weizhang.bean.PayOrderResult;
+import com.zantong.mobile.weizhang.bean.ViolationNum;
+import com.zantong.mobile.weizhang.bean.ViolationNumBean;
 import com.zantong.mobile.weizhang.bean.ViolationResultParent;
 import com.zantong.mobile.weizhang.dto.ViolationCarDTO;
 import com.zantong.mobile.weizhang.dto.ViolationPayDTO;
@@ -593,5 +596,55 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<CattleOrderResponse> queryOrderList() {
         return initRetrofit().create(IOrderService.class).queryOrderList();
+    }
+
+    /**
+     * 8.用户注册修改接口
+     */
+    @Override
+    public Observable<BaseResult> register(RegisterDTO registerDTO) {
+        return initRetrofit().create(ICttxService.class).register(registerDTO);
+    }
+
+    @Override
+    public Observable<Result> loginV004(String msg) {
+        return initAppUrlRetrofit().create(IBankService.class).loginV004(msg);
+    }
+
+    /**
+     * 订单
+     */
+    @Override
+    public Observable<OrderListResult> getAnnualInspectionOrders(String id) {
+        return initRetrofit().create(IOrderService.class).getAnnualInspectionOrders(id);
+    }
+
+    /**
+     * 资料审核中
+     */
+    @Override
+    public Observable<BaseResult> getAnnualInspectionOrderTargetState(String orderId, String status, String remark, String userNum) {
+        return initRetrofit().create(IOrderService.class).getAnnualInspectionOrderTargetState(orderId, status, remark, userNum);
+    }
+
+    /**
+     * 输入快递单号
+     */
+    @Override
+    public Observable<BaseResult> addBackExpressInfo(String orderId, String expressNo, String userNum) {
+        return initRetrofit().create(IOrderService.class).addBackExpressInfo(orderId, expressNo, userNum);
+    }
+
+    /**
+     * 46.更新违章缴费状态
+     */
+    @Override
+    public Observable<BaseResult> updateState(List<ViolationNum> json) {
+        return initRetrofit().create(IPayService.class).updateState(json);
+    }
+
+    @Override
+    public Observable<ViolationNumBean> numberedQuery(String msg) {
+        return initAppUrlRetrofit().create(IBankService.class).numberedQuery(msg);
     }
 }

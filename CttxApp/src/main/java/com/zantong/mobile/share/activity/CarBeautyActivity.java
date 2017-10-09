@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.tzly.annual.base.global.JxGlobal;
 import com.zantong.mobile.R;
 import com.zantong.mobile.base.activity.BaseJxActivity;
-import com.zantong.mobile.browser.AdvBrowserActivity;
+import com.zantong.mobile.browser.BrowserHtmlActivity;
 import com.zantong.mobile.utils.jumptools.Act;
-
-import com.tzly.annual.base.global.JxConfig;
-import com.tzly.annual.base.global.JxGlobal;
 
 /**
  * Created by jianghw on 2017/7/7.
@@ -44,8 +42,6 @@ public class CarBeautyActivity extends BaseJxActivity implements View.OnClickLis
         initTitleContent("汽车保养");
 
         initView(view);
-
-        JxConfig.getInstance().eventIdByUMeng(24);
     }
 
     @Override
@@ -68,14 +64,13 @@ public class CarBeautyActivity extends BaseJxActivity implements View.OnClickLis
 //                Intent i = new Intent();
 //                i.putExtra(JxGlobal.putExtra.browser_title_extra, "车内空调养护");
 //                i.putExtra(JxGlobal.putExtra.browser_url_extra, "http://m.hiservice.com.cn/activity/freekongtiaoyanghu?source=gonghangcx");
-//                Act.getInstance().gotoLoginByIntent(this, AdvBrowserActivity.class, i);
 //                break;
             case R.id.img_violation:
                 mCurPosition = 2;
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.browser_title_extra, "汽车冰蜡");
                 intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://m.hiservice.com.cn/market/icbc58");
-                Act.getInstance().gotoLoginByIntent(this, AdvBrowserActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
                 break;
             default:
                 break;

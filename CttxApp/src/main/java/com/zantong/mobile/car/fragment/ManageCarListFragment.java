@@ -8,13 +8,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.annual.base.global.JxGlobal;
+import com.tzly.annual.base.util.ContextUtils;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.R;
+import com.zantong.mobile.application.MemoryData;
+import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobile.car.activity.ManageCarActivity;
 import com.zantong.mobile.car.adapter.ManageCarListAdapter;
 import com.zantong.mobile.car.bean.VehicleLicenseBean;
-import com.zantong.mobile.common.Injection;
-import com.zantong.mobile.common.PublicData;
 import com.zantong.mobile.contract.IManageCarFtyContract;
 import com.zantong.mobile.home.bean.HomeCarResult;
 import com.zantong.mobile.presenter.car.ManageCarFtyPresenter;
@@ -22,10 +25,6 @@ import com.zantong.mobile.utils.jumptools.Act;
 import com.zantong.mobile.weizhang.activity.ViolationActivity;
 
 import java.util.List;
-
-import com.tzly.annual.base.global.JxGlobal;
-import com.tzly.annual.base.util.ContextUtils;
-import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 车辆列表
@@ -181,8 +180,8 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
         setSimpleDataResult(licenseBeanList);
 
         ManageCarActivity activity = (ManageCarActivity) getActivity();
-        PublicData.getInstance().mCarNum = PublicData.getInstance().mServerCars.size();
-        activity.isAddCarTitle(PublicData.getInstance().mCarNum);
+        MemoryData.getInstance().mCarNum = MemoryData.getInstance().mServerCars.size();
+        activity.isAddCarTitle(MemoryData.getInstance().mCarNum);
     }
 
     @Override

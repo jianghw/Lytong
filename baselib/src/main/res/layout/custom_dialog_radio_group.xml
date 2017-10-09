@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@color/res_color_white"
+              android:orientation="vertical">
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/ds_45"
+        android:layout_marginTop="@dimen/ds_75"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radio_btn_all"
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="资料齐全"/>
+
+        <RadioButton
+            android:id="@+id/radio_btn_un"
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="资料不齐全"/>
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="@dimen/ds_720"
+        android:layout_height="@dimen/ds_150"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/ds_45"
+        android:hint="请输入缺失资料"
+        android:textColorHint="@color/res_color_black_b3"/>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="@dimen/ds_720"
+        android:layout_height="@dimen/ds_150"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/ds_45"
+        android:background="@mipmap/ic_btn_bg"
+        android:enabled="true"
+        android:text="提交完成"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/fs_18sp"/>
+
+</LinearLayout>

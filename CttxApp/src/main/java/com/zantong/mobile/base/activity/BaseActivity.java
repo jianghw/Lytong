@@ -9,13 +9,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 
-import com.umeng.analytics.MobclickAgent;
+import com.tzly.annual.base.custom.dialog.LoadingDialog;
+import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.R;
 import com.zantong.mobile.api.BaseApiClient;
 import com.zantong.mobile.contract.IBaseActivity;
 import com.zantong.mobile.eventbus.ErrorEvent;
 import com.zantong.mobile.eventbus.ExitAppEvent;
-import com.zantong.mobile.utils.DialogUtils;
 import com.zantong.mobile.utils.SystemBarTintManager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -23,7 +23,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
-import com.tzly.annual.base.util.ToastUtils;
 
 /**
  * 基类
@@ -32,7 +31,6 @@ import com.tzly.annual.base.util.ToastUtils;
  *         create at 16/6/2 下午2:14
  */
 public abstract class BaseActivity extends FragmentActivity implements OnClickListener, IBaseActivity {
-    private static final String NO_LOGIN = "109";
     private Dialog mLoadingDialog;
     protected SystemBarTintManager tintManager;
 
@@ -100,41 +98,33 @@ public abstract class BaseActivity extends FragmentActivity implements OnClickLi
     @Override
     protected void onResume() {
         super.onResume();
-        // 友盟统计开始
-        MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        // 友盟统计结束
-        MobclickAgent.onPause(this);
     }
 
     /**
      * 加载中效果
      */
-    public void showDialogLoading() {
-        mLoadingDialog = DialogUtils.showLoading(this);
+    public synchronized void showDialogLoading() {
+        hideDialogLoading();
+        showDialogLoading("加载中...");
     }
 
     /**
-     * 加载中效果
-     *
      * @param msg 提示信息
      */
-    public void showDialogLoading(String msg) {
-        mLoadingDialog = DialogUtils.showLoading(this, msg);
+    public synchronized void showDialogLoading(String msg) {
+        mLoadingDialog = LoadingDialog.createLoading(this, msg);
     }
 
     /**
      * 隐藏遮罩的dialog
      */
-    public void hideDialogLoading() {
-        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
-            mLoadingDialog.dismiss();
-            mLoadingDialog = null;
-        }
+    public synchronized void hideDialogLoading() {
+        LoadingDialog.closeDialog(mLoadingDialog);
     }
 
     @Override
@@ -168,7 +158,7 @@ public abstract class BaseActivity extends FragmentActivity implements OnClickLi
      * 网络请求或请求数据失败的信息提示
      */
     protected void onFailure(String status, String message) {
-        ToastUtils.showShort(this, message);
+        ToastUtils.toastShort(message);
     }
 
     @Override

@@ -25,7 +25,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/fs_57"
-            android:src="@mipmap/icon_portrai"/>
+            android:src="@mipmap/portrait"/>
 
         <ImageView
             style="@style/arrowLeftStyle"/>
