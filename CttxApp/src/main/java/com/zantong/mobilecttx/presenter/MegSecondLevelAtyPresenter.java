@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.zantong.mobilecttx.contract.IMegSecondLevelAtyContract;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.user.bean.Meg;
-import com.zantong.mobilecttx.order.bean.MessageResult;
+import com.zantong.mobilecttx.order.bean.MessageResponse;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 
 import java.util.List;
@@ -65,7 +65,7 @@ public class MegSecondLevelAtyPresenter implements IMegSecondLevelAtyContract.IM
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<MessageResult>() {
+                .subscribe(new Subscriber<MessageResponse>() {
                     @Override
                     public void onCompleted() {
                         isRefresh = true;
@@ -77,7 +77,7 @@ public class MegSecondLevelAtyPresenter implements IMegSecondLevelAtyContract.IM
                     }
 
                     @Override
-                    public void onNext(MessageResult messageResult) {
+                    public void onNext(MessageResponse messageResult) {
                         if (messageResult != null
                                 && messageResult.getResponseCode() == 2000) {
                             mView.findMessageDetailByMessageIdSucceed(messageResult);
@@ -152,7 +152,7 @@ public class MegSecondLevelAtyPresenter implements IMegSecondLevelAtyContract.IM
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<MessageResult>() {
+                .subscribe(new Subscriber<MessageResponse>() {
                     @Override
                     public void onCompleted() {
                         mView.dismissLoadingDialog();
@@ -164,7 +164,7 @@ public class MegSecondLevelAtyPresenter implements IMegSecondLevelAtyContract.IM
                     }
 
                     @Override
-                    public void onNext(MessageResult messageResult) {
+                    public void onNext(MessageResponse messageResult) {
                         if (messageResult != null
                                 && messageResult.getResponseCode() == 2000) {
                             mView.deleteMessageDetailSucceed(messageResult,position);

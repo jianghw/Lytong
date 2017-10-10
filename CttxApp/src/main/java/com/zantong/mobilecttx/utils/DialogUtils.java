@@ -31,8 +31,8 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponBean;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.common.adapter.CommonSelectAdapter;
 import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
 import com.zantong.mobilecttx.huodong.activity.HundredPlanActivity;
@@ -724,7 +724,7 @@ public class DialogUtils {
                 R.layout.dialog_cars, null);
         XRecyclerView mRecyclerView = (XRecyclerView) view.findViewById(R.id.dialog_cars_recyclerview);
         HundredPlanCarsAdapter mAdapter = new HundredPlanCarsAdapter();
-        mAdapter.append(PublicData.getInstance().mServerCars);
+        mAdapter.append(MemoryData.getInstance().mServerCars);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

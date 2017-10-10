@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.api;
 
-import com.zantong.mobilecttx.home.bean.ModuleResult;
+import com.zantong.mobilecttx.home.bean.ModuleResponse;
 
 import retrofit2.http.GET;
 import rx.Observable;
@@ -16,6 +16,6 @@ public interface IModuleService {
      * 25.模块化接口
      */
     @GET("module/moduleTree")
-    Observable<ModuleResult> moduleTree();
+    Observable<ModuleResponse> moduleTree();
 
 }

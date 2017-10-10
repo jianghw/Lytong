@@ -22,7 +22,7 @@ import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.contract.IMegDetailAtyContract;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.user.bean.Meg;
-import com.zantong.mobilecttx.user.bean.MessageDetailResult;
+import com.zantong.mobilecttx.user.bean.MessageDetailResponse;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.text.SimpleDateFormat;
@@ -127,7 +127,7 @@ public class MegDetailFragment extends PullableBaseFragment
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void findMessageDetailSucceed(MessageDetailResult messageResult) {
+    public void findMessageDetailSucceed(MessageDetailResponse messageResult) {
         Meg message = messageResult.getData();
         if (message == null) {
             onShowFailed();

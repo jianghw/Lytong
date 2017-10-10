@@ -16,7 +16,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.card.activity.ApplyCardFirstActivity;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
@@ -91,7 +91,7 @@ public class SparringSucceedFragment extends BaseRefreshJxFragment implements Vi
     protected void onFirstDataVisible() {
 
         //未办卡
-        if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {
+        if (Tools.isStrEmpty(MemoryData.getInstance().filenum)) {
             StringBuffer sb = new StringBuffer();
             sb.append("<font color=\"#f3362b\">");
             sb.append("<u>");
@@ -124,7 +124,7 @@ public class SparringSucceedFragment extends BaseRefreshJxFragment implements Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_prompt://绑卡去
-                if (Tools.isStrEmpty(PublicData.getInstance().filenum))
+                if (Tools.isStrEmpty(MemoryData.getInstance().filenum))
                     Act.getInstance().gotoIntent(getActivity(), ApplyCardFirstActivity.class);
                 break;
             case R.id.tv_commit:
@@ -162,9 +162,9 @@ public class SparringSucceedFragment extends BaseRefreshJxFragment implements Vi
         }
 
         WXWebpageObject webpage = new WXWebpageObject();
-        if (PublicData.getInstance().loginFlag) {
+        if (MemoryData.getInstance().loginFlag) {
             webpage.webpageUrl = ShareParentActivity.getShareAppUrl(4) + "?phoneNum="
-                    + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+                    + Des3.encode(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         }

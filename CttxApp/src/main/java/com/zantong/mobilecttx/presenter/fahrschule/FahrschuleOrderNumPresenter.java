@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import com.zantong.mobilecttx.contract.IFahrschuleOrderNumFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -62,7 +62,7 @@ public class FahrschuleOrderNumPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<PayOrderResult>() {
+                .subscribe(new BaseSubscriber<PayOrderResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -74,7 +74,7 @@ public class FahrschuleOrderNumPresenter
                     }
 
                     @Override
-                    public void doNext(PayOrderResult result) {
+                    public void doNext(PayOrderResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.onPayOrderByCouponSucceed(result);
                         } else {
@@ -101,7 +101,7 @@ public class FahrschuleOrderNumPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<PayOrderResult>() {
+                .subscribe(new BaseSubscriber<PayOrderResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -113,7 +113,7 @@ public class FahrschuleOrderNumPresenter
                     }
 
                     @Override
-                    public void doNext(PayOrderResult result) {
+                    public void doNext(PayOrderResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.onPayOrderByCouponSucceed(result);
                         } else {

@@ -1,62 +1,61 @@
 package com.zantong.mobilecttx.model.repository;
 
-import com.zantong.mobilecttx.base.bean.Result;
+import cn.qqtheme.framework.bean.BankResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
-import com.zantong.mobilecttx.car.bean.VehicleLicenseResult;
+import com.zantong.mobilecttx.car.bean.VehicleLicenseResponse;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
-import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
-import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeResponse;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
-import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
-import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
-import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
-import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
-import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
-import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResult;
-import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
-import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
+import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResponse;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
+import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResponse;
+import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResponse;
+import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
+import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResponse;
+import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResponse;
+import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
-import com.zantong.mobilecttx.home.bean.BannerResult;
-import com.zantong.mobilecttx.home.bean.DriverCoachResult;
-import com.zantong.mobilecttx.home.bean.HomeCarResult;
-import com.zantong.mobilecttx.home.bean.HomeResult;
-import com.zantong.mobilecttx.home.bean.ModuleResult;
-import com.zantong.mobilecttx.home.bean.StartPicResult;
+import com.zantong.mobilecttx.home.bean.BannerResponse;
+import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
+import com.zantong.mobilecttx.home.bean.HomeCarResponse;
+import com.zantong.mobilecttx.home.bean.HomeResponse;
+import com.zantong.mobilecttx.home.bean.ModuleResponse;
+import com.zantong.mobilecttx.home.bean.StartPicResponse;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
-import com.zantong.mobilecttx.map.bean.GasStationDetailResult;
-import com.zantong.mobilecttx.map.bean.GasStationResult;
-import com.zantong.mobilecttx.map.bean.YearCheckDetailResult;
-import com.zantong.mobilecttx.map.bean.YearCheckResult;
+import com.zantong.mobilecttx.map.bean.GasStationDetailResponse;
+import com.zantong.mobilecttx.map.bean.GasStationResponse;
+import com.zantong.mobilecttx.map.bean.YearCheckDetailResponse;
+import com.zantong.mobilecttx.map.bean.YearCheckResponse;
 import com.zantong.mobilecttx.map.dto.AnnualDTO;
-import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
-import com.zantong.mobilecttx.order.bean.MessageResult;
-import com.zantong.mobilecttx.order.bean.OrderDetailResult;
-import com.zantong.mobilecttx.order.bean.OrderExpressResult;
-import com.zantong.mobilecttx.order.bean.OrderListResult;
-import com.zantong.mobilecttx.order.bean.ReceiveInfoResult;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
+import com.zantong.mobilecttx.order.bean.MessageResponse;
+import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
+import com.zantong.mobilecttx.order.bean.OrderExpressResponse;
+import com.zantong.mobilecttx.order.bean.OrderListResponse;
+import com.zantong.mobilecttx.order.bean.ReceiveInfoResponse;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
-import com.zantong.mobilecttx.user.bean.MessageCountResult;
-import com.zantong.mobilecttx.user.bean.MessageDetailResult;
-import com.zantong.mobilecttx.user.bean.MessageTypeResult;
+import com.zantong.mobilecttx.user.bean.MessageCountResponse;
+import com.zantong.mobilecttx.user.bean.MessageDetailResponse;
+import com.zantong.mobilecttx.user.bean.MessageTypeResponse;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNumBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
-import com.zantong.mobilecttx.weizhang.dto.ViolationUpdateDTO;
 
 import java.util.List;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
+import cn.qqtheme.framework.bean.BaseResponse;
+import cn.qqtheme.framework.bean.response.SubjectGoodsResponse;
 import okhttp3.MultipartBody;
 import rx.Observable;
 
@@ -71,7 +70,7 @@ public interface IRemoteSource {
      * @param bean
      * @return
      */
-    Observable<MessageTypeResult> messageFindAll(BaseDTO bean);
+    Observable<MessageTypeResponse> messageFindAll(BaseDTO bean);
 
     /**
      * 2.4.21获取消息详情列表
@@ -79,7 +78,7 @@ public interface IRemoteSource {
      * @param bean
      * @return
      */
-    Observable<MessageResult> findMessageDetailByMessageId(MegDTO bean);
+    Observable<MessageResponse> findMessageDetailByMessageId(MegDTO bean);
 
     /**
      * 2.4.22获取消息详情
@@ -87,12 +86,12 @@ public interface IRemoteSource {
      * @param bean
      * @return
      */
-    Observable<MessageDetailResult> findMessageDetail(MessageDetailDTO bean);
+    Observable<MessageDetailResponse> findMessageDetail(MessageDetailDTO bean);
 
     /**
      * 2.4.2查看优惠券信息
      */
-    Observable<CouponFragmentResult> usrCouponInfo(String usrnum, String couponStatus);
+    Observable<CouponFragmentResponse> usrCouponInfo(String usrnum, String couponStatus);
 
     /**
      * 驾驶证查分 cip.cfc.v001.01
@@ -105,12 +104,12 @@ public interface IRemoteSource {
      * @param megDTO
      * @return
      */
-    Observable<MessageResult> deleteMessageDetail(MegDTO megDTO);
+    Observable<MessageResponse> deleteMessageDetail(MegDTO megDTO);
 
     /**
      * 2.4.27删除用户优惠券
      */
-    Observable<MessageResult> delUsrCoupon(String couponId, String userId);
+    Observable<MessageResponse> delUsrCoupon(String couponId, String userId);
 
     /**
      * https://ctkapptest.icbc-axa.com/ecip/mobilecall_call
@@ -126,27 +125,27 @@ public interface IRemoteSource {
      * @param msg
      * @return
      */
-    Observable<StartPicResult> startGetPic(String msg);
+    Observable<StartPicResponse> startGetPic(String msg);
 
     /**
      * 57.获取指定类型优惠券
      */
-    Observable<RechargeCouponResult> getCouponByType(String userId, String type);
+    Observable<RechargeCouponResponse> getCouponByType(String userId, String type);
 
     /**
      * 10.创建加油订单
      */
-    Observable<RechargeResult> addOilCreateOrder(RechargeDTO rechargeDTO);
+    Observable<RechargeResponse> addOilCreateOrder(RechargeDTO rechargeDTO);
 
     /**
      * 加油充值
      */
-    Observable<PayOrderResult> onPayOrderByCoupon(String payUrl, String orderPrice, String payType);
+    Observable<PayOrderResponse> onPayOrderByCoupon(String payUrl, String orderPrice, String payType);
 
     /**
      * 43.生成违章缴费订单
      */
-    Observable<PayOrderResult> paymentCreateOrder(ViolationPayDTO payDTO);
+    Observable<PayOrderResponse> paymentCreateOrder(ViolationPayDTO payDTO);
 
     /**
      * cip.cfc.v003.01
@@ -156,7 +155,7 @@ public interface IRemoteSource {
     /**
      * 1.首页信息
      */
-    Observable<HomeResult> homePage(HomeDataDTO id);
+    Observable<HomeResponse> homePage(HomeDataDTO id);
 
     /**
      * cip.cfc.c003.01
@@ -166,12 +165,12 @@ public interface IRemoteSource {
     /**
      * 37.获取所有未读消息数量
      */
-    Observable<MessageCountResult> countMessageDetail(BaseDTO baseDTO);
+    Observable<MessageCountResponse> countMessageDetail(BaseDTO baseDTO);
 
     /**
      * 58.获取banner图片
      */
-    Observable<BannerResult> getBanner(String type);
+    Observable<BannerResponse> getBanner(String type);
 
     /**
      * 55.行驶证扫描接口
@@ -181,67 +180,67 @@ public interface IRemoteSource {
     /**
      * 3.获取商户区域列表
      */
-    Observable<MerchantAresResult> getMerchantArea();
+    Observable<MerchantAresResponse> getMerchantArea();
 
     /**
      * 4.获取区域商品列表
      */
-    Observable<AresGoodsResult> getAreaGoods(int areaCode);
+    Observable<AresGoodsResponse> getAreaGoods(int areaCode);
 
     /**
      * 2.创建订单
      */
-    Observable<CreateOrderResult> createOrder(CreateOrderDTO createOrder);
+    Observable<CreateOrderResponse> createOrder(CreateOrderDTO createOrder);
 
     /**
      * 7.获取用户指定活动的统计总数
      */
-    Observable<RecordCountResult> getRecordCount(String type, String phone);
+    Observable<RecordCountResponse> getRecordCount(String type, String phone);
 
     /**
      * 48.绑定行驶证接口
      */
-    Observable<BaseResult> commitCarInfoToNewServer(BindCarDTO bindCarDTO);
+    Observable<BaseResponse> commitCarInfoToNewServer(BindCarDTO bindCarDTO);
 
     /**
      * cip.cfc.u005.01
      */
-    Observable<Result> commitCarInfoToOldServer(String msg);
+    Observable<BankResponse> commitCarInfoToOldServer(String msg);
 
     /**
      * 5.获取工行支付页面
      */
-    Observable<PayOrderResult> getBankPayHtml(String orderId, String orderPrice);
+    Observable<PayOrderResponse> getBankPayHtml(String orderId, String orderPrice);
 
     /**
      * 8.查询订单列表
      */
-    Observable<OrderListResult> getOrderList(String userId);
+    Observable<OrderListResponse> getOrderList(String userId);
 
     /**
      * 9.获取订单详情
      */
-    Observable<OrderDetailResult> getOrderDetail(String orderId);
+    Observable<OrderDetailResponse> getOrderDetail(String orderId);
 
     /**
      * 10.更新订单状态
      */
-    Observable<BaseResult> updateOrderStatus(String orderId, int orderStatus);
+    Observable<BaseResponse> updateOrderStatus(String orderId, int orderStatus);
 
     /**
      * 6.获取商品详情
      */
-    Observable<GoodsDetailResult> getGoodsDetail(String goodsId);
+    Observable<GoodsDetailResponse> getGoodsDetail(String goodsId);
 
     /**
      * 获取违章信息
      */
-    Observable<HomeCarResult> getTextNoticeInfo(String defaultUserID);
+    Observable<HomeCarResponse> getTextNoticeInfo(String defaultUserID);
 
     /**
      * 处理违章信息
      */
-    Observable<BaseResult> handleViolations(ViolationCarDTO violationResult);
+    Observable<BaseResponse> handleViolations(ViolationCarDTO violationResult);
 
     /**
      * 车辆违章查询
@@ -254,94 +253,94 @@ public interface IRemoteSource {
      */
     Observable<PayCarResult> getPayCars(String msg);
 
-    Observable<VehicleLicenseResult> addOrUpdateVehicleLicense(List<BindCarDTO> dtoList);
+    Observable<VehicleLicenseResponse> addOrUpdateVehicleLicense(List<BindCarDTO> dtoList);
 
     /**
      * 13.判断是否为司机
      */
-    Observable<DriverCoachResult> getDriverCoach(String phone);
+    Observable<DriverCoachResponse> getDriverCoach(String phone);
 
     /**
      * 16.新增车辆
      */
-    Observable<BaseResult> addVehicleLicense(BindCarDTO bindCarDTO);
+    Observable<BaseResponse> addVehicleLicense(BindCarDTO bindCarDTO);
 
     /**
      * 18.删除车辆
      */
-    Observable<BaseResult> removeVehicleLicense(BindCarDTO bindCarDTO);
+    Observable<BaseResponse> removeVehicleLicense(BindCarDTO bindCarDTO);
 
     /**
      * 17.编辑车辆
      */
-    Observable<BaseResult> updateVehicleLicense(BindCarDTO bindCarDTO);
+    Observable<BaseResponse> updateVehicleLicense(BindCarDTO bindCarDTO);
 
     /**
      * 22.获取商品
      */
-    Observable<SubjectGoodsResult> getGoods(String type);
+    Observable<SubjectGoodsResponse> getGoods(String type);
 
-    Observable<SparringGoodsResult> getGoodsFive(String type);
+    Observable<SparringGoodsResponse> getGoodsFive(String type);
 
     /**
      * 20.新手陪练获取服务地区
      */
-    Observable<SparringAreaResult> getServiceArea();
+    Observable<SparringAreaResponse> getServiceArea();
 
     /**
      * 21.获取服务器时间
      */
-    Observable<ServerTimeResult> getServerTime();
+    Observable<ServerTimeResponse> getServerTime();
 
     /**
      * 10.取消订单
      */
-    Observable<BaseResult> cancelOrder(String orderId, String userNum);
+    Observable<BaseResponse> cancelOrder(String orderId, String userNum);
 
     /**
      * 24.获取年检网点
      */
-    Observable<YearCheckResult> annualInspectionList(AnnualDTO annualDTO);
+    Observable<YearCheckResponse> annualInspectionList(AnnualDTO annualDTO);
 
     /**
      * 获取年检一条信息
      */
-    Observable<YearCheckDetailResult> annualInspection(int id);
+    Observable<YearCheckDetailResponse> annualInspection(int id);
 
     /**
      * 获得加油站地点详情
      */
-    Observable<GasStationDetailResult> gasStation(int id);
+    Observable<GasStationDetailResponse> gasStation(int id);
 
     /**
      * 23.获取加油网点
      */
-    Observable<GasStationResult> gasStationList(AnnualDTO annualDTO);
+    Observable<GasStationResponse> gasStationList(AnnualDTO annualDTO);
 
     /**
      * 25.模块化接口
      */
-    Observable<ModuleResult> moduleTree();
+    Observable<ModuleResponse> moduleTree();
 
     /**
      * 32.获取地区列表
      */
-    Observable<OrderExpressResult> getAllAreas();
+    Observable<OrderExpressResponse> getAllAreas();
 
     /**
      * 29.填写快递信息
      */
-    Observable<BaseResult> addExpressInfo(ExpressDTO expressDTO);
+    Observable<BaseResponse> addExpressInfo(ExpressDTO expressDTO);
 
     /**
      * 33.获取收件人信息
      */
-    Observable<ReceiveInfoResult> getReceiveInfo(String orderId);
+    Observable<ReceiveInfoResponse> getReceiveInfo(String orderId);
 
     /**
      * 46.更新违章缴费状态
      *
      * @param json
      */
-    Observable<BaseResult> updateState(List<ViolationNum> json);
+    Observable<BaseResponse> updateState(List<ViolationNum> json);
 }

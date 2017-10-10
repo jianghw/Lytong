@@ -1,12 +1,12 @@
 package com.zantong.mobilecttx.weizhang.bean;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 
 /**
  * Created by zhengyingbing on 17/5/5.
  */
 
-public class ViolationHistoryBean extends BaseResult{
+public class ViolationHistoryBean extends BaseResponse {
     private ViolationHistoryInfo data;
 
     public void setData(ViolationHistoryInfo data) {

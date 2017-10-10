@@ -4,9 +4,9 @@ import android.app.Dialog;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.car.adapter.SetPayCarAdapter;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.presenter.SetPayCarFragmentPresenter;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
@@ -69,7 +69,7 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
                             newPayNumber = mUserCarsInfoBean.getCarnum();
                             carnumtype = mUserCarsInfoBean.getCarnumtype();
                             mSetPayCarFragmentPresenter.loadView(1);
-                            PublicData.getInstance().isSetPayCar = true;
+                            MemoryData.getInstance().isSetPayCar = true;
                         }
                     },
                     new View.OnClickListener() {
@@ -79,7 +79,7 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
                             newPayNumber = mUserCarsInfoBean.getCarnum();
                             carnumtype = mUserCarsInfoBean.getCarnumtype();
                             mSetPayCarFragmentPresenter.loadView(1);
-                            PublicData.getInstance().isSetPayCar = true;
+                            MemoryData.getInstance().isSetPayCar = true;
                         }
                     });
         } else {
@@ -120,7 +120,7 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
     public void initView(View view) {
         super.initView(view);
 
-        mRspInfoBean = PublicData.getInstance().mServerCars;
+        mRspInfoBean = MemoryData.getInstance().mServerCars;
 //        LogUtils.jsonObject(mRspInfoBean);
 
         if (mRspInfoBean != null) {
@@ -151,7 +151,7 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
 
     @Override
     public void updateView(Object object, int index) {
-        mRspInfoBean = PublicData.getInstance().mServerCars;
+        mRspInfoBean = MemoryData.getInstance().mServerCars;
         ;
         int size = mRspInfoBean.size();
         for (int i = 0; i < size; i++) {

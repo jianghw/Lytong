@@ -11,12 +11,12 @@ import com.zantong.mobilecttx.car.bean.PayCar;
 import com.zantong.mobilecttx.car.bean.PayCarBean;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
-import com.zantong.mobilecttx.car.bean.VehicleLicenseResult;
+import com.zantong.mobilecttx.car.bean.VehicleLicenseResponse;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.contract.IManageCarFtyContract;
-import com.zantong.mobilecttx.home.bean.HomeCarResult;
+import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
@@ -79,7 +79,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
         Subscription subscription = mRepository.getTextNoticeInfo(mRepository.getDefaultRASUserID())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<HomeCarResult>() {
+                .subscribe(new BaseSubscriber<HomeCarResponse>() {
                     @Override
                     public void doCompleted() {
                     }
@@ -90,7 +90,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     }
 
                     @Override
-                    public void doNext(HomeCarResult result) {
+                    public void doNext(HomeCarResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.textNoticeInfoSucceed(result);
                         } else {
@@ -411,7 +411,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
         Subscription subscription = mRepository.addOrUpdateVehicleLicense(result)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<VehicleLicenseResult>() {
+                .subscribe(new BaseSubscriber<VehicleLicenseResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -423,7 +423,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     }
 
                     @Override
-                    public void doNext(VehicleLicenseResult result) {
+                    public void doNext(VehicleLicenseResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             if (result.getData().isEmpty())
                                 mAtyView.addVehicleLicenseError("车辆数据为空，请添加车辆");
@@ -442,7 +442,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
     /**
      * 数据分开处理
      */
-    public void sortCarListData(VehicleLicenseResult result) {
+    public void sortCarListData(VehicleLicenseResponse result) {
 
         List<VehicleLicenseBean> resultData = result.getData();
         Observable<List<VehicleLicenseBean>> isPay = Observable.from(resultData)
@@ -475,7 +475,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                 })
                 .toList();
 //清空车辆数据
-        PublicData.getInstance().mServerCars.clear();
+        MemoryData.getInstance().mServerCars.clear();
 
         Subscription subscription = Observable
                 .zip(isPay, unPay,
@@ -534,7 +534,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
             userCarInfoBean.setCarnumtype(bean.getVehicleType());
             beanArrayList.add(userCarInfoBean);
         }
-        PublicData.getInstance().mServerCars.addAll(beanArrayList);
+        MemoryData.getInstance().mServerCars.addAll(beanArrayList);
     }
 
 }

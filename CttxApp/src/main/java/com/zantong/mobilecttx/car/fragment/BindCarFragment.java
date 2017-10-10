@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.fragment.BaseExtraFragment;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
@@ -86,10 +86,10 @@ public class BindCarFragment extends BaseExtraFragment {
         switch (v.getId()) {
             case R.id.fragment_bindcar_layout:
                 MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(1));
-                PublicData.getInstance().mHashMap.put("IllegalViolationName", mCarNum);
-                PublicData.getInstance().mHashMap.put("carnum", mCarNum);
-                PublicData.getInstance().mHashMap.put("enginenum", mEngineNum);
-                PublicData.getInstance().mHashMap.put("carnumtype", mCarType);
+                MemoryData.getInstance().mHashMap.put("IllegalViolationName", mCarNum);
+                MemoryData.getInstance().mHashMap.put("carnum", mCarNum);
+                MemoryData.getInstance().mHashMap.put("enginenum", mEngineNum);
+                MemoryData.getInstance().mHashMap.put("carnumtype", mCarType);
 
                 ViolationDTO dto = new ViolationDTO();
                 dto.setCarnum(RSAUtils.strByEncryption(mCarNum, true));

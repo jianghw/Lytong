@@ -11,16 +11,16 @@ import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.IOrderExpressContract;
 import com.zantong.mobilecttx.order.bean.ReceiveInfoBean;
-import com.zantong.mobilecttx.order.bean.ReceiveInfoResult;
+import com.zantong.mobilecttx.order.bean.ReceiveInfoResponse;
 import com.zantong.mobilecttx.presenter.order.OrderExpressPresenter;
 
 import java.util.ArrayList;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
-import cn.qqtheme.framework.contract.custom.IAreaDialogListener;
+import cn.qqtheme.framework.bean.BaseResponse;
+import cn.qqtheme.framework.imple.IAreaDialogListener;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.CustomDialog;
 import cn.qqtheme.framework.util.RegexUtils;
@@ -180,7 +180,7 @@ public class OrderExpressFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void addExpressInfoSucceed(BaseResult result) {
+    public void addExpressInfoSucceed(BaseResponse result) {
         ToastUtils.toastShort("呼叫成功");
         getActivity().finish();
     }
@@ -216,7 +216,7 @@ public class OrderExpressFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void getReceiveInfoSucceed(ReceiveInfoResult result) {
+    public void getReceiveInfoSucceed(ReceiveInfoResponse result) {
         ReceiveInfoBean resultData = result.getData();
         mTvReceiver.setText(TextUtils.isEmpty(resultData.getReceiver()) ? "暂无" : resultData.getReceiver());
         mTvPhone.setText(TextUtils.isEmpty(resultData.getPhone()) ? "暂无" : resultData.getPhone());

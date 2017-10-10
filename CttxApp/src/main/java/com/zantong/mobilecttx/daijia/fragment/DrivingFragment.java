@@ -2,14 +2,14 @@ package com.zantong.mobilecttx.daijia.fragment;
 
 import android.view.View;
 
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.daijia.adapter.DrivingOrderAdapter;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderListBean;
-import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderListResult;
+import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderListResponse;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderListDTO;
 import com.zantong.mobilecttx.eventbus.DrivingCancelEvent;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
@@ -36,11 +36,11 @@ public class DrivingFragment extends BaseListFragment<DaiJiaOrderListBean> {
 
     private void initDaiJiaOrderData() {
         DaiJiaOrderListDTO dto = new DaiJiaOrderListDTO();
-        dto.setUsrId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
+        dto.setUsrId(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
         onShowLoading();
-        CarApiClient.getDaiJiaOrderList(this.getActivity(), dto, new CallBack<DaiJiaOrderListResult>() {
+        CarApiClient.getDaiJiaOrderList(this.getActivity(), dto, new CallBack<DaiJiaOrderListResponse>() {
             @Override
-            public void onSuccess(DaiJiaOrderListResult result) {
+            public void onSuccess(DaiJiaOrderListResponse result) {
                 onShowContent();
                 if (result.getResponseCode() == 2000) {
                     setDataResult(result.getData());

@@ -13,16 +13,16 @@ import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponBean;
-import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
-import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.fahrschule.ISparringSubscribeContract;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobilecttx.eventbus.SparringOrderEvent;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderBean;
-import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
 import com.zantong.mobilecttx.fahrschule.bean.SparringAreaBean;
-import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
-import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
+import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResponse;
+import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.order.activity.CouponListActivity;
 import com.zantong.mobilecttx.presenter.fahrschule.SparringSubscribePresenter;
@@ -38,11 +38,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsData;
-import cn.qqtheme.framework.contract.custom.IAreaDialogListener;
-import cn.qqtheme.framework.contract.custom.ISpeedDialogListener;
-import cn.qqtheme.framework.contract.custom.ITimeDialogListener;
+import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
+import cn.qqtheme.framework.bean.response.SubjectGoodsData;
+import cn.qqtheme.framework.imple.IAreaDialogListener;
+import cn.qqtheme.framework.imple.ISpeedDialogListener;
+import cn.qqtheme.framework.imple.ITimeDialogListener;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.CustomDialog;
 import cn.qqtheme.framework.util.RegexUtils;
@@ -424,7 +424,7 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void serviceAreaSucceed(SparringAreaResult result) {
+    public void serviceAreaSucceed(SparringAreaResponse result) {
         final List<SparringAreaBean> beanList = result.getData();
 
         final ArrayList<String> areaList = new ArrayList<>();
@@ -451,7 +451,7 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
      * 选择车型
      */
     @Override
-    public void goodsSucceed(SparringGoodsResult result) {
+    public void goodsSucceed(SparringGoodsResponse result) {
         SubjectGoodsData resultData = result.getData();
 
         CustomDialog.popupBottomCarType(getActivity(), resultData, new ISpeedDialogListener() {
@@ -530,7 +530,7 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
      * 优惠卷使用
      */
     @Override
-    public void couponByTypeSucceed(RechargeCouponResult result) {
+    public void couponByTypeSucceed(RechargeCouponResponse result) {
         if (result.getData() != null && result.getData().size() > 0) {
             List<RechargeCouponBean> resultData = result.getData();
             if (!mCouponBeanList.isEmpty()) mCouponBeanList.clear();
@@ -566,7 +566,7 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void createOrderSucceed(CreateOrderResult result) {
+    public void createOrderSucceed(CreateOrderResponse result) {
         CreateOrderBean resultData = result.getData();
         String orderId = resultData.getOrderId();
 

@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.contract;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import com.zantong.mobilecttx.user.bean.MessageDetailResult;
+import com.zantong.mobilecttx.user.bean.MessageDetailResponse;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 
 /**
@@ -20,7 +20,7 @@ public interface IMegDetailAtyContract {
          *
          * @param messageResult
          */
-        void findMessageDetailSucceed(MessageDetailResult messageResult);
+        void findMessageDetailSucceed(MessageDetailResponse messageResult);
 
         void findMessageDetailError(String message);
 

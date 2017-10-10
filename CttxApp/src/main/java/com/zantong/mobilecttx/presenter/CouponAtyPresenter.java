@@ -5,8 +5,8 @@ import android.support.annotation.NonNull;
 import com.zantong.mobilecttx.contract.ICouponAtyContract;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
-import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
-import com.zantong.mobilecttx.order.bean.MessageResult;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
+import com.zantong.mobilecttx.order.bean.MessageResponse;
 
 import java.util.List;
 
@@ -68,7 +68,7 @@ public class CouponAtyPresenter implements ICouponAtyContract.ICouponAtyPresente
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<CouponFragmentResult>() {
+                .subscribe(new Subscriber<CouponFragmentResponse>() {
                     @Override
                     public void onCompleted() {
                         mView.dismissLoadingDialog();
@@ -80,7 +80,7 @@ public class CouponAtyPresenter implements ICouponAtyContract.ICouponAtyPresente
                     }
 
                     @Override
-                    public void onNext(CouponFragmentResult couponResult) {
+                    public void onNext(CouponFragmentResponse couponResult) {
                         if (couponResult != null
                                 && couponResult.getResponseCode() == 2000) {
                             mView.usrCouponInfoSucceed(couponResult);
@@ -153,7 +153,7 @@ public class CouponAtyPresenter implements ICouponAtyContract.ICouponAtyPresente
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<MessageResult>() {
+                .subscribe(new Subscriber<MessageResponse>() {
                     @Override
                     public void onCompleted() {
                         mView.dismissLoadingDialog();
@@ -165,7 +165,7 @@ public class CouponAtyPresenter implements ICouponAtyContract.ICouponAtyPresente
                     }
 
                     @Override
-                    public void onNext(MessageResult messageResult) {
+                    public void onNext(MessageResponse messageResult) {
                         if (messageResult != null
                                 && messageResult.getResponseCode() == 2000) {
                             mView.delUsrCouponSucceed(messageResult, position);

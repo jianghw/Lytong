@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.api;
 
-import com.zantong.mobilecttx.home.bean.StartPicResult;
+import com.zantong.mobilecttx.home.bean.StartPicResponse;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -17,5 +17,5 @@ public interface ISplashService {
      * 40.app启动图片获取
      */
     @GET("start/getPic")
-    Observable<StartPicResult> startGetPic(@Query("picNum") String picNum);
+    Observable<StartPicResponse> startGetPic(@Query("picNum") String picNum);
 }

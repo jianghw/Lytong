@@ -23,7 +23,7 @@ import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 import java.util.List;
 
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.widght.CustomLoader;
+import cn.qqtheme.framework.custom.CustomLoader;
 
 
 /**

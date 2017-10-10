@@ -2,8 +2,8 @@ package com.zantong.mobilecttx.contract;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import com.zantong.mobilecttx.home.bean.HomeCarResult;
-import com.zantong.mobilecttx.home.bean.HomeResult;
+import com.zantong.mobilecttx.home.bean.HomeCarResponse;
+import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 
@@ -26,11 +26,11 @@ public interface IUnimpededFtyContract {
 
         void homePageError(String message);
 
-        void homePageSucceed(HomeResult result);
+        void homePageSucceed(HomeResponse result);
 
         void remoteCarInfoError(String message);
 
-        void getTextNoticeInfo(HomeCarResult result);
+        void getTextNoticeInfo(HomeCarResponse result);
 
         void getRemoteCarInfoSucceed(UserCarsResult result);
     }

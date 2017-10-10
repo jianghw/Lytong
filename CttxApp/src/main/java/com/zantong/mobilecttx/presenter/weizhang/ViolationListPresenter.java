@@ -19,7 +19,7 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.util.List;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -208,7 +208,7 @@ public class ViolationListPresenter
         Subscription subscription = mRepository.handleViolations(violationCarDTO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResult>() {
+                .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void doCompleted() {
 
@@ -220,7 +220,7 @@ public class ViolationListPresenter
                     }
 
                     @Override
-                    public void doNext(BaseResult result) {
+                    public void doNext(BaseResponse result) {
 
                     }
                 });

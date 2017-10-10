@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.base;
 
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.utils.Tools;
 
 import org.json.JSONException;
@@ -62,8 +62,8 @@ public class MessageFormat {
         map.put("TransServiceCode", mTransServiceCode);
         map.put("RequestDate", Tools.getYearDate());
         map.put("RequestTime", Tools.getTimeDate());
-        map.put("DvcToken", PublicData.getInstance().imei);
-        map.put("ConsumerSeqNo", PublicData.getInstance().imei + Tools.getYearDate() + Tools.getTimeDateS());
+        map.put("DvcToken", MemoryData.getInstance().imei);
+        map.put("ConsumerSeqNo", MemoryData.getInstance().imei + Tools.getYearDate() + Tools.getTimeDateS());
         return map;
     }
 

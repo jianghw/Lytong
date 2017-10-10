@@ -11,7 +11,7 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderListBean;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderDetailDTO;
 import com.zantong.mobilecttx.utils.DialogUtils;
@@ -100,9 +100,9 @@ public class DrivingOrderAdapter extends BaseAdapter<DaiJiaOrderListBean> {
                 hashMap.put("time", time);
                 hashMap.put("orderId", orderId);
                 dto.setHash(HashUtils.getSignature(hashMap));
-                CarApiClient.cancelDaiJiaOrderDetail(mContext, dto, new CallBack<BaseResult>() {
+                CarApiClient.cancelDaiJiaOrderDetail(mContext, dto, new CallBack<BaseResponse>() {
                     @Override
-                    public void onSuccess(BaseResult result) {
+                    public void onSuccess(BaseResponse result) {
                         if (result.getResponseCode() == 2000) {
                             mStatus.setText("已取消");
                             mStatus.setTextColor(R.color.gray_cc);

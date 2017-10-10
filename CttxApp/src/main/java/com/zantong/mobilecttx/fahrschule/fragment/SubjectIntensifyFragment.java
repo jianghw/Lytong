@@ -9,14 +9,14 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectIntensifyContract;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobilecttx.eventbus.SubjectCommitEvent;
 import com.zantong.mobilecttx.fahrschule.adapter.SubjectGoodsAdapter;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsData;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
+import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
+import cn.qqtheme.framework.bean.response.SubjectGoodsData;
+import cn.qqtheme.framework.bean.response.SubjectGoodsResponse;
 import com.zantong.mobilecttx.presenter.fahrschule.SubjectIntensifyPresenter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -217,7 +217,7 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void getGoodsSucceed(SubjectGoodsResult result) {
+    public void getGoodsSucceed(SubjectGoodsResponse result) {
         SubjectGoodsData subjectGoodsData = result.getData();
         if (subjectGoodsData == null) return;
         mRemarkBean =subjectGoodsData.getRemark();

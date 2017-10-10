@@ -5,7 +5,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.zantong.mobilecttx.BuildConfig;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.MemoryData;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -61,7 +61,7 @@ public class DefaultRetrofit implements IRetrofitUrl {
 
                 // 添加head
                 Headers.Builder headBuilder = oldRequest.headers().newBuilder();
-                headBuilder.add("DvcToken", PublicData.getInstance().imei);
+                headBuilder.add("DvcToken", MemoryData.getInstance().imei);
                 requestBuilder.headers(headBuilder.build());
 
                 CacheControl.Builder builder = new CacheControl.Builder();

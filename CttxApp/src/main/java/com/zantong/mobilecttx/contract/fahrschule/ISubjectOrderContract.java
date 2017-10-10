@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.contract.fahrschule;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 /**
  * 科目强化订单页面
@@ -18,7 +18,7 @@ public interface ISubjectOrderContract {
 
         void bankPayHtmlError(String message);
 
-        void bankPayHtmlSucceed(PayOrderResult result);
+        void bankPayHtmlSucceed(PayOrderResponse result);
     }
 
     interface ISubjectOrderPresenter extends IMvpPresenter {

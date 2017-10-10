@@ -25,8 +25,8 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Injection;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.contract.InterfaceForJS;
 import com.zantong.mobilecttx.contract.browser.IHtmlBrowserContract;
@@ -39,7 +39,7 @@ import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
 import com.zantong.mobilecttx.presenter.browser.HtmlBrowserPresenter;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -92,6 +92,7 @@ public class BrowserHtmlActivity extends BaseJxActivity implements IHtmlBrowserC
     @Override
     protected void initFragmentView(View view) {
         EventBus.getDefault().register(this);
+
         initTitleContent(mStrTitle);
         setTvCloseVisible();
         setTvRightVisible("分享");
@@ -171,7 +172,7 @@ public class BrowserHtmlActivity extends BaseJxActivity implements IHtmlBrowserC
     }
 
     @Override
-    public void getBankPayHtmlSucceed(PayOrderResult result, String orderId) {
+    public void getBankPayHtmlSucceed(PayOrderResponse result, String orderId) {
         Intent intent = new Intent(this, PayBrowserActivity.class);
         intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付");
         intent.putExtra(JxGlobal.putExtra.web_url_extra, result.getData());
@@ -375,7 +376,7 @@ public class BrowserHtmlActivity extends BaseJxActivity implements IHtmlBrowserC
         }
 
         WXWebpageObject webpage = new WXWebpageObject();
-        if (PublicData.getInstance().loginFlag) {
+        if (MemoryData.getInstance().loginFlag) {
             webpage.webpageUrl = mStrUrl;
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";

@@ -3,8 +3,8 @@ package com.zantong.mobilecttx.presenter.fahrschule;
 
 import android.support.annotation.NonNull;
 
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
+import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
 import com.zantong.mobilecttx.contract.IFahrschuleShareFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
@@ -54,7 +54,7 @@ public class FahrschuleSharePresenter
 
     @Override
     public String getPhone() {
-        return PublicData.getInstance().mLoginInfoBean.getPhoenum();
+        return MemoryData.getInstance().mLoginInfoBean.getPhoenum();
     }
     /**
      * 7.获取用户指定活动的统计总数
@@ -71,7 +71,7 @@ public class FahrschuleSharePresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<RecordCountResult>() {
+                .subscribe(new BaseSubscriber<RecordCountResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -83,7 +83,7 @@ public class FahrschuleSharePresenter
                     }
 
                     @Override
-                    public void doNext(RecordCountResult result) {
+                    public void doNext(RecordCountResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.getRecordCountSucceed(result);
                         } else {

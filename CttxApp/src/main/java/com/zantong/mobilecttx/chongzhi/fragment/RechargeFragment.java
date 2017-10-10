@@ -27,8 +27,8 @@ import com.zantong.mobilecttx.chongzhi.activity.RechargeAgreementActivity;
 import com.zantong.mobilecttx.chongzhi.adapter.OilPriceAdapter;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeBean;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponBean;
-import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
-import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeResponse;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
 import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
 import com.zantong.mobilecttx.contract.IRechargeAtyContract;
@@ -41,7 +41,7 @@ import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.UiHelpers;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -673,7 +673,7 @@ public class RechargeFragment extends PullableBaseFragment
      * @param result 折扣值
      */
     @Override
-    public void onCouponByTypeSucceed(RechargeCouponResult result) {
+    public void onCouponByTypeSucceed(RechargeCouponResponse result) {
         if (result.getData() != null) {
 
             List<RechargeCouponBean> resultData = result.getData();
@@ -727,7 +727,7 @@ public class RechargeFragment extends PullableBaseFragment
      * 创建订单成功
      */
     @Override
-    public void addOilCreateOrderSucceed(final RechargeResult result) {
+    public void addOilCreateOrderSucceed(final RechargeResponse result) {
         ToastUtils.toastShort(result.getResponseDesc());
 
         DialogUtils.createRechargeDialog(getActivity(),
@@ -742,7 +742,7 @@ public class RechargeFragment extends PullableBaseFragment
                 });
     }
 
-    private void onPayOrderByCoupon(RechargeResult result) {
+    private void onPayOrderByCoupon(RechargeResponse result) {
         String moneyString = getRechargeMoney();
 
         double money = Double.parseDouble(moneyString) * 100;
@@ -773,7 +773,7 @@ public class RechargeFragment extends PullableBaseFragment
      * 54.充值接口 成功回调
      */
     @Override
-    public void onPayOrderByCouponSucceed(PayOrderResult result) {
+    public void onPayOrderByCouponSucceed(PayOrderResponse result) {
         Intent intent = new Intent();
         intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
         intent.putExtra(JxGlobal.putExtra.browser_url_extra, result.getData());

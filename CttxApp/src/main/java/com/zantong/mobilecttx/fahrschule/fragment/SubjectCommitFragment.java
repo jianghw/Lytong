@@ -12,15 +12,15 @@ import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponBean;
-import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
-import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectCommitContract;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobilecttx.eventbus.SubjectCommitEvent;
 import com.zantong.mobilecttx.eventbus.SubjectOrderEvent;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderBean;
-import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
+import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
 import com.zantong.mobilecttx.order.activity.CouponListActivity;
 import com.zantong.mobilecttx.presenter.fahrschule.SubjectCommitPresenter;
 import com.zantong.mobilecttx.utils.StringUtils;
@@ -272,7 +272,7 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void couponByTypeSucceed(RechargeCouponResult result) {
+    public void couponByTypeSucceed(RechargeCouponResponse result) {
         if (result.getData() != null && result.getData().size() > 0) {
             List<RechargeCouponBean> resultData = result.getData();
             if (!mCouponBeanList.isEmpty()) mCouponBeanList.clear();
@@ -335,7 +335,7 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
      * 创建订单成功
      */
     @Override
-    public void createOrderSucceed(CreateOrderResult result) {
+    public void createOrderSucceed(CreateOrderResponse result) {
         CreateOrderBean resultData = result.getData();
         String orderId = resultData.getOrderId();
 

@@ -3,9 +3,9 @@ package com.zantong.mobilecttx.contract;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import com.zantong.mobilecttx.order.bean.MessageResult;
+import com.zantong.mobilecttx.order.bean.MessageResponse;
 import com.zantong.mobilecttx.user.bean.MessageType;
-import com.zantong.mobilecttx.user.bean.MessageTypeResult;
+import com.zantong.mobilecttx.user.bean.MessageTypeResponse;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 
 /**
@@ -23,7 +23,7 @@ public interface IMegTypeAtyContract {
          *
          * @param messageTypeResult
          */
-        void findAllMessageSucceed(MessageTypeResult messageTypeResult);
+        void findAllMessageSucceed(MessageTypeResponse messageTypeResult);
 
         void findAllMessageError(String message);
 
@@ -31,7 +31,7 @@ public interface IMegTypeAtyContract {
 
         void dismissLoadingDialog();
 
-        void deleteMessageDetailSucceed(MessageResult messageResult, int position);
+        void deleteMessageDetailSucceed(MessageResponse messageResult, int position);
 
         void deleteMessageDetailError(String message);
     }

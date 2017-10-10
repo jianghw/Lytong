@@ -1,10 +1,10 @@
 package com.zantong.mobilecttx.api;
 
 import com.zantong.mobilecttx.base.dto.BaseDTO;
-import com.zantong.mobilecttx.user.bean.MessageCountResult;
-import com.zantong.mobilecttx.user.bean.MessageDetailResult;
-import com.zantong.mobilecttx.order.bean.MessageResult;
-import com.zantong.mobilecttx.user.bean.MessageTypeResult;
+import com.zantong.mobilecttx.user.bean.MessageCountResponse;
+import com.zantong.mobilecttx.user.bean.MessageDetailResponse;
+import com.zantong.mobilecttx.order.bean.MessageResponse;
+import com.zantong.mobilecttx.user.bean.MessageTypeResponse;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 
@@ -25,7 +25,7 @@ public interface IMessageService {
      * @return
      */
     @POST("message/findAllMessage")
-    Observable<MessageTypeResult> messageFindAll(@Body BaseDTO baseDTO);
+    Observable<MessageTypeResponse> messageFindAll(@Body BaseDTO baseDTO);
 
     /**
      * 2.4.21获取消息详情列表
@@ -34,7 +34,7 @@ public interface IMessageService {
      * @return
      */
     @POST("message/findMessageDetailByMessageId")
-    Observable<MessageResult> findMessageDetailByMessageId(@Body MegDTO bean);
+    Observable<MessageResponse> findMessageDetailByMessageId(@Body MegDTO bean);
 
     /**
      * 2.4.22获取消息详情
@@ -43,7 +43,7 @@ public interface IMessageService {
      * @return
      */
     @POST("message/findMessageDetail")
-    Observable<MessageDetailResult> findMessageDetail(@Body MessageDetailDTO bean);
+    Observable<MessageDetailResponse> findMessageDetail(@Body MessageDetailDTO bean);
 
     /**
      * 2.4.24删除消息
@@ -52,11 +52,11 @@ public interface IMessageService {
      * @return
      */
     @POST("message/deleteMessageDetail")
-    Observable<MessageResult> deleteMessageDetail(@Body MegDTO megDTO);
+    Observable<MessageResponse> deleteMessageDetail(@Body MegDTO megDTO);
 
     /**
      * 37.获取所有未读消息数量
      */
     @POST("message/countMessageDetail")
-    Observable<MessageCountResult> countMessageDetail(@Body BaseDTO baseDTO);
+    Observable<MessageCountResponse> countMessageDetail(@Body BaseDTO baseDTO);
 }

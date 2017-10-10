@@ -13,10 +13,10 @@ import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.car.adapter.ManageCarListAdapter;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
-import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Injection;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.contract.IManageCarFtyContract;
-import com.zantong.mobilecttx.home.bean.HomeCarResult;
+import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.presenter.car.ManageCarFtyPresenter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
@@ -151,7 +151,7 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
     }
 
     @Override
-    public void textNoticeInfoSucceed(HomeCarResult result) {
+    public void textNoticeInfoSucceed(HomeCarResponse result) {
     }
 
     /**
@@ -181,8 +181,8 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
         setSimpleDataResult(licenseBeanList);
 
         ManageCarActivity activity = (ManageCarActivity) getActivity();
-        PublicData.getInstance().mCarNum = PublicData.getInstance().mServerCars.size();
-        activity.isAddCarTitle(PublicData.getInstance().mCarNum);
+        MemoryData.getInstance().mCarNum = MemoryData.getInstance().mServerCars.size();
+        activity.isAddCarTitle(MemoryData.getInstance().mCarNum);
     }
 
     @Override

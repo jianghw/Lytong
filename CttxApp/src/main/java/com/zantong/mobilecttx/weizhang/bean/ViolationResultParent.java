@@ -1,8 +1,6 @@
 package com.zantong.mobilecttx.weizhang.bean;
 
-import com.zantong.mobilecttx.base.bean.Result;
-
-import java.util.List;
+import cn.qqtheme.framework.bean.BankResponse;
 
 /**
  *
@@ -20,7 +18,7 @@ import java.util.List;
  *
  * create at 17/5/8 下午5:50
  */
-public class ViolationResultParent extends Result{
+public class ViolationResultParent extends BankResponse {
 
     ViolationResult RspInfo;//违章金额
 

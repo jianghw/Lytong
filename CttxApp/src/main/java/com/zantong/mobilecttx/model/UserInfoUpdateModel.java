@@ -25,18 +25,15 @@ public class UserInfoUpdateModel implements SimpleModel {
                 mSubscriber = new Subscriber<UpdateInfo>() {
                     @Override
                     public void onCompleted() {
-                        Log.e("why","到这儿了！！！！");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("Error",e.toString());
                         listener.onFailed();
                     }
 
                     @Override
                     public void onNext(UpdateInfo mCanPayCar) {
-                        Log.e("why", mCanPayCar+"aaa");
                         listener.onSuccess(mCanPayCar, index);
                     }
 

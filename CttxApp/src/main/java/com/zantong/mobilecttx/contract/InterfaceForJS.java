@@ -11,16 +11,16 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.webkit.JavascriptInterface;
 
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.eventbus.DriveLicensePhotoEvent;
 import com.zantong.mobilecttx.eventbus.PayMotoOrderEvent;
 import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
-import com.zantong.mobilecttx.user.activity.LoginActivity;
+import com.zantong.mobilecttx.login_v.LoginActivity;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
@@ -51,7 +51,7 @@ public class InterfaceForJS {
 
     @JavascriptInterface
     public boolean isLogin() {
-        return PublicData.getInstance().loginFlag;
+        return MemoryData.getInstance().loginFlag;
     }
 
     @JavascriptInterface
@@ -110,7 +110,7 @@ public class InterfaceForJS {
     //绑畅通卡
     @JavascriptInterface
     public void bindCard() {
-        if (Tools.isStrEmpty(PublicData.getInstance().filenum)) {
+        if (Tools.isStrEmpty(MemoryData.getInstance().filenum)) {
             Act.getInstance().gotoIntentLogin(mJSContext, UnblockedCardActivity.class);
         } else {
             Act.getInstance().gotoIntentLogin(mJSContext, MyCardActivity.class);
@@ -137,13 +137,13 @@ public class InterfaceForJS {
     //获取用户ID
     @JavascriptInterface
     public String getUserId() {
-        return PublicData.getInstance().userID;
+        return MemoryData.getInstance().userID;
     }
 
     //获取绑卡状态 0已绑卡  1未绑卡
     @JavascriptInterface
     public int getBindCardStatus() {
-        return "".equals(PublicData.getInstance().filenum) ? 1 : 0;
+        return "".equals(MemoryData.getInstance().filenum) ? 1 : 0;
     }
 
     //查询违章
@@ -154,7 +154,7 @@ public class InterfaceForJS {
     //获取用户ID
     @JavascriptInterface
     public String getEncreptUserId() {
-        return RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true);
+        return RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().userID, true);
     }
 
     //跳转到积分规则页面
@@ -177,10 +177,10 @@ public class InterfaceForJS {
     //去往违章列表页面
     @JavascriptInterface
     public void searchViolationList(String carnum, String enginenum, String carnumtype) {
-        PublicData.getInstance().mHashMap.put("IllegalViolationName", carnum);
-        PublicData.getInstance().mHashMap.put("carnum", carnum);
-        PublicData.getInstance().mHashMap.put("enginenum", enginenum);
-        PublicData.getInstance().mHashMap.put("carnumtype", carnumtype);
+        MemoryData.getInstance().mHashMap.put("IllegalViolationName", carnum);
+        MemoryData.getInstance().mHashMap.put("carnum", carnum);
+        MemoryData.getInstance().mHashMap.put("enginenum", enginenum);
+        MemoryData.getInstance().mHashMap.put("carnumtype", carnumtype);
 
         ViolationDTO dto = new ViolationDTO();
         dto.setCarnum(RSAUtils.strByEncryption(carnum, true));

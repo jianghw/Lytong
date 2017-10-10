@@ -3,13 +3,13 @@ package com.zantong.mobilecttx.presenter.chongzhi;
 
 import android.support.annotation.NonNull;
 
-import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
-import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeResponse;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
 import com.zantong.mobilecttx.contract.IRechargeAtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -64,7 +64,7 @@ public class RechargePresenter implements IRechargeAtyContract.IRechargeAtyPrese
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<RechargeCouponResult>() {
+                .subscribe(new BaseSubscriber<RechargeCouponResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -76,7 +76,7 @@ public class RechargePresenter implements IRechargeAtyContract.IRechargeAtyPrese
                     }
 
                     @Override
-                    public void doNext(RechargeCouponResult result) {
+                    public void doNext(RechargeCouponResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.onCouponByTypeSucceed(result);
                         } else {
@@ -108,7 +108,7 @@ public class RechargePresenter implements IRechargeAtyContract.IRechargeAtyPrese
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<RechargeResult>() {
+                .subscribe(new BaseSubscriber<RechargeResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -120,7 +120,7 @@ public class RechargePresenter implements IRechargeAtyContract.IRechargeAtyPrese
                     }
 
                     @Override
-                    public void doNext(RechargeResult result) {
+                    public void doNext(RechargeResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.addOilCreateOrderSucceed(result);
                         } else {
@@ -154,7 +154,7 @@ public class RechargePresenter implements IRechargeAtyContract.IRechargeAtyPrese
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<PayOrderResult>() {
+                .subscribe(new BaseSubscriber<PayOrderResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -166,7 +166,7 @@ public class RechargePresenter implements IRechargeAtyContract.IRechargeAtyPrese
                     }
 
                     @Override
-                    public void doNext(PayOrderResult result) {
+                    public void doNext(PayOrderResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.onPayOrderByCouponSucceed(result);
                         } else {

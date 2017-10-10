@@ -10,10 +10,12 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.bean.Result;
+
+import cn.qqtheme.framework.bean.BankResponse;
+
 import com.zantong.mobilecttx.browser.PayHtmlActivity;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.user.bean.CheckOrderResult;
@@ -150,7 +152,7 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
                             .append("?orderNo=").append(item.getPolcyprignum())
                             .append("&payAmount=").append(item.getTotinsprem())
                             .append("&productCode=").append(item.getCastinspolcycode())
-                            .append("&userName=").append(PublicData.getInstance().userID)
+                            .append("&userName=").append(MemoryData.getInstance().userID)
                             .append("&clientIP=").append(NetUtils.getPhontIP(this))
                             .append("&clientType=").append(CLIENT_TYPE_0);
 
@@ -170,18 +172,18 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
      */
     private void commitInsOrder() {
         InsOrderDTO dto = new InsOrderDTO();
-        dto.setUsrid(PublicData.getInstance().userID);
+        dto.setUsrid(MemoryData.getInstance().userID);
         dto.setCastinspolcycode(mCastinspolcycode);
         dto.setOrigtranserlnum(mOrigtranserlnum);
         dto.setPolcyprignum(mPolcyprignum);
-        UserApiClient.commitInsOrder(this, dto, new CallBack<Result>() {
+        UserApiClient.commitInsOrder(this, dto, new CallBack<BankResponse>() {
             @Override
-            public void onSuccess(Result result) {
-                if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
+            public void onSuccess(BankResponse bankResponse) {
+                if (Config.OK.equals(bankResponse.getSYS_HEAD().getReturnCode())) {
                     mState.setText("已签单");
                     mCommit.setVisibility(View.GONE);
                 } else {
-                    ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
+                    ToastUtils.toastShort(bankResponse.getSYS_HEAD().getReturnMessage());
                 }
             }
         });

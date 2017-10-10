@@ -16,15 +16,15 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.FileDownloadApi;
 import com.zantong.mobilecttx.api.HandleCTCardApiClient;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
-import com.zantong.mobilecttx.base.bean.Result;
+import cn.qqtheme.framework.bean.BankResponse;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.card.bean.YingXiaoResult;
+import com.zantong.mobilecttx.card.bean.YingXiaoResponse;
 import com.zantong.mobilecttx.card.dto.ApplyCTCardDTO;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.common.activity.CommonTwoLevelMenuActivity;
 import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
@@ -55,8 +55,8 @@ import javax.xml.parsers.SAXParserFactory;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.contract.bean.BaseResult;
-import cn.qqtheme.framework.picker.DatePicker;
+import cn.qqtheme.framework.bean.BaseResponse;
+import cn.qqtheme.framework.custom.picker.DatePicker;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.RegexUtils;
@@ -185,7 +185,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        PublicData.getInstance().filenum = "";
+        MemoryData.getInstance().filenum = "";
     }
 
     @Override
@@ -260,8 +260,8 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         mIdCardNum.setContentText(idCard);
         applyCTCardDTO.setCtfnum(RSAUtils.strByEncryption(idCard, true));
 //手机号
-        mUserPhone.setContentText(PublicData.getInstance().mLoginInfoBean != null ?
-                PublicData.getInstance().mLoginInfoBean.getPhoenum() : "");
+        mUserPhone.setContentText(MemoryData.getInstance().mLoginInfoBean != null ?
+                MemoryData.getInstance().mLoginInfoBean.getPhoenum() : "");
 
 //婚姻状况
         applyCTCardDTO.setMarlst("1");
@@ -599,7 +599,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             e.printStackTrace();
         }
         // 获取解析出来的数据
-        PublicData.getInstance().provinceModel = parserHandler.getDataList();
+        MemoryData.getInstance().provinceModel = parserHandler.getDataList();
 
         CityDialog dialog = new CityDialog(this, null, new CityDialog.OnChooseDialogListener() {
             @Override
@@ -808,9 +808,9 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      * 办卡成功返回
      */
     @Override
-    public void resultSuccess(Result result) {
+    public void resultSuccess(BankResponse bankResponse) {
         hideDialogLoading();
-        if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
+        if (bankResponse.getSYS_HEAD().getReturnCode().equals("000000")) {
 
             if (TextUtils.isEmpty(wangdianAdress)) {
                 ToastUtils.toastShort("请选择领卡网点");
@@ -818,7 +818,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
                 commitYingXiaoDataForLYT(applyCTCardDTO);
             }
         } else {
-            ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
+            ToastUtils.toastShort(bankResponse.getSYS_HEAD().getReturnMessage());
         }
     }
 
@@ -835,9 +835,9 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      */
     private void commitYingXiaoDataForLYT(ApplyCTCardDTO applyCTCardDTO) {
         CarApiClient.commitYingXiaoData(ContextUtils.getContext(), applyCTCardDTO,
-                new CallBack<BaseResult>() {
+                new CallBack<BaseResponse>() {
                     @Override
-                    public void onSuccess(BaseResult result) {
+                    public void onSuccess(BaseResponse result) {
                         startActivity(ApplySuccessActvity.getIntent(ApplyCardSecondActivity.this, wangdianAdress));
                     }
 
@@ -853,12 +853,12 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      */
     private void checkCtkDate() {
         CheckCtkDTO checkCtkDTO = new CheckCtkDTO();
-        checkCtkDTO.setApplyCode(PublicData.getInstance().filenum);
+        checkCtkDTO.setApplyCode(MemoryData.getInstance().filenum);
         checkCtkDTO.setApplyInterface("banka");
         checkCtkDTO.setFlag("1");
-        CarApiClient.checkCtk(getApplicationContext(), checkCtkDTO, new CallBack<BaseResult>() {
+        CarApiClient.checkCtk(getApplicationContext(), checkCtkDTO, new CallBack<BaseResponse>() {
             @Override
-            public void onSuccess(BaseResult result) {
+            public void onSuccess(BaseResponse result) {
                 hideDialogLoading();
                 if (result.getResponseCode() == 2000) {
                     commitInfo();
@@ -885,7 +885,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
-                        PublicData.getInstance().mNetLocationBean
+                        MemoryData.getInstance().mNetLocationBean
                                 = ReadFfile.readNetLocationFile(getApplicationContext());
                     }
 
@@ -943,9 +943,9 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      */
     private void getYingXiaoCode() {
         CancelRechargeOrderDTO dto = new CancelRechargeOrderDTO();
-        CarApiClient.getYingXiaoCode(getApplicationContext(), dto, new CallBack<YingXiaoResult>() {
+        CarApiClient.getYingXiaoCode(getApplicationContext(), dto, new CallBack<YingXiaoResponse>() {
             @Override
-            public void onSuccess(YingXiaoResult result) {
+            public void onSuccess(YingXiaoResponse result) {
                 if (result.getResponseCode() == 2000 && result.getData() != null) {
                     mMarketingCode = result.getData().getEmpNum();
                     //TODO 手动不显示

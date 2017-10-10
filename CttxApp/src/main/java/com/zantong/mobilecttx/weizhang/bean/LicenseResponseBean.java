@@ -1,7 +1,7 @@
 package com.zantong.mobilecttx.weizhang.bean;
 
-import com.zantong.mobilecttx.base.bean.APPHEADBean;
-import com.zantong.mobilecttx.base.bean.SYSHEADBean;
+import cn.qqtheme.framework.bean.APPHEADBean;
+import cn.qqtheme.framework.bean.SYSHEADBean;
 
 /**
  * Created by jianghw on 2017/5/5.

@@ -5,8 +5,8 @@ import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.home.bean.BannerBean;
-import com.zantong.mobilecttx.home.bean.BannerResult;
-import com.zantong.mobilecttx.home.bean.ModuleResult;
+import com.zantong.mobilecttx.home.bean.BannerResponse;
+import com.zantong.mobilecttx.home.bean.ModuleResponse;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 
@@ -55,7 +55,7 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
         Subscription subscription = mRepository.getBanner("2,3")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BannerResult>() {
+                .subscribe(new BaseSubscriber<BannerResponse>() {
                     @Override
                     public void doCompleted() {
                     }
@@ -66,7 +66,7 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
                     }
 
                     @Override
-                    public void doNext(BannerResult result) {
+                    public void doNext(BannerResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             distributeByType(result, "2");
                             distributeByType(result, "3");
@@ -78,7 +78,7 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
     }
 
     @Override
-    public void distributeByType(BannerResult result, final String type) {
+    public void distributeByType(BannerResponse result, final String type) {
         Subscription subscription = Observable
                 .from(result.getData())
                 .filter(new Func1<BannerBean, Boolean>() {
@@ -120,7 +120,7 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
         Subscription subscription = mRepository.moduleTree()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<ModuleResult>() {
+                .subscribe(new BaseSubscriber<ModuleResponse>() {
                     @Override
                     public void doCompleted() {
                     }
@@ -131,7 +131,7 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
                     }
 
                     @Override
-                    public void doNext(ModuleResult result) {
+                    public void doNext(ModuleResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.moduleTreeSucceed(result);
                         } else

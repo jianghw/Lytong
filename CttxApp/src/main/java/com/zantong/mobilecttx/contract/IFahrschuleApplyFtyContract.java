@@ -2,10 +2,10 @@ package com.zantong.mobilecttx.contract;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
-import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
-import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
-import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
+import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResponse;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
+import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResponse;
+import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 
 /**
@@ -22,13 +22,13 @@ public interface IFahrschuleApplyFtyContract {
 
         void getMerchantAreaError(String message);
 
-        void getMerchantAreaSucceed(MerchantAresResult result);
+        void getMerchantAreaSucceed(MerchantAresResponse result);
 
         int getAreaCode();
 
         void getAreaGoodsError(String message);
 
-        void getAreaGoodsSucceed(AresGoodsResult result);
+        void getAreaGoodsSucceed(AresGoodsResponse result);
 
         String getGoodsId();
 
@@ -40,13 +40,13 @@ public interface IFahrschuleApplyFtyContract {
 
         void createOrderError(String message);
 
-        void createOrderSucceed(CreateOrderResult result);
+        void createOrderSucceed(CreateOrderResponse result);
 
         String getPriceValue();
 
         void getGoodsDetailError(String message);
 
-        void getGoodsDetailSucceed(GoodsDetailResult result);
+        void getGoodsDetailSucceed(GoodsDetailResponse result);
     }
 
     interface IFahrschuleApplyFtyPresenter extends IMvpPresenter {

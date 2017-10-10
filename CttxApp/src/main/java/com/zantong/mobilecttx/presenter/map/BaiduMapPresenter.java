@@ -3,10 +3,10 @@ package com.zantong.mobilecttx.presenter.map;
 import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.contract.IBaiduMapContract;
-import com.zantong.mobilecttx.map.bean.GasStationDetailResult;
-import com.zantong.mobilecttx.map.bean.GasStationResult;
-import com.zantong.mobilecttx.map.bean.YearCheckDetailResult;
-import com.zantong.mobilecttx.map.bean.YearCheckResult;
+import com.zantong.mobilecttx.map.bean.GasStationDetailResponse;
+import com.zantong.mobilecttx.map.bean.GasStationResponse;
+import com.zantong.mobilecttx.map.bean.YearCheckDetailResponse;
+import com.zantong.mobilecttx.map.bean.YearCheckResponse;
 import com.zantong.mobilecttx.map.dto.AnnualDTO;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
@@ -51,7 +51,7 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
         Subscription subscription = mRepository.annualInspectionList(getAnnualDTO())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<YearCheckResult>() {
+                .subscribe(new BaseSubscriber<YearCheckResponse>() {
                     @Override
                     public void doCompleted() {
                     }
@@ -62,7 +62,7 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
                     }
 
                     @Override
-                    public void doNext(YearCheckResult result) {
+                    public void doNext(YearCheckResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.annualInspectionListSucceed(result);
                         } else {
@@ -88,7 +88,7 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
         Subscription subscription = mRepository.annualInspection(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<YearCheckDetailResult>() {
+                .subscribe(new BaseSubscriber<YearCheckDetailResponse>() {
                     @Override
                     public void doCompleted() {
                     }
@@ -99,7 +99,7 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
                     }
 
                     @Override
-                    public void doNext(YearCheckDetailResult result) {
+                    public void doNext(YearCheckDetailResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.annualInspectionSucceed(result);
                         } else {
@@ -119,7 +119,7 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
         Subscription subscription = mRepository.gasStation(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<GasStationDetailResult>() {
+                .subscribe(new BaseSubscriber<GasStationDetailResponse>() {
                     @Override
                     public void doCompleted() {
                     }
@@ -130,7 +130,7 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
                     }
 
                     @Override
-                    public void doNext(GasStationDetailResult result) {
+                    public void doNext(GasStationDetailResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.gasStationSucceed(result);
                         } else {
@@ -150,7 +150,7 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
         Subscription subscription = mRepository.gasStationList(getAnnualDTO())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<GasStationResult>() {
+                .subscribe(new BaseSubscriber<GasStationResponse>() {
                     @Override
                     public void doCompleted() {
                     }
@@ -161,7 +161,7 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
                     }
 
                     @Override
-                    public void doNext(GasStationResult result) {
+                    public void doNext(GasStationResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.gasStationListSucceed(result);
                         } else {

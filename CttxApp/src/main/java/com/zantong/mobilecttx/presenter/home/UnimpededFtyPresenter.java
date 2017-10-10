@@ -7,8 +7,8 @@ import com.google.gson.Gson;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
-import com.zantong.mobilecttx.home.bean.HomeCarResult;
-import com.zantong.mobilecttx.home.bean.HomeResult;
+import com.zantong.mobilecttx.home.bean.HomeCarResponse;
+import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
@@ -59,7 +59,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
         Subscription subscription = mRepository.homePage(initHomeDataDTO())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<HomeResult>() {
+                .subscribe(new BaseSubscriber<HomeResponse>() {
                     @Override
                     public void doCompleted() {
 
@@ -71,7 +71,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                     }
 
                     @Override
-                    public void doNext(HomeResult result) {
+                    public void doNext(HomeResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.homePageSucceed(result);
                         } else {
@@ -140,7 +140,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
         Subscription subscription = mRepository.getTextNoticeInfo(mRepository.getDefaultRASUserID())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<HomeCarResult>() {
+                .subscribe(new BaseSubscriber<HomeCarResponse>() {
                     @Override
                     public void doCompleted() {
 
@@ -152,7 +152,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                     }
 
                     @Override
-                    public void doNext(HomeCarResult result) {
+                    public void doNext(HomeCarResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.getTextNoticeInfo(result);
                         } else {

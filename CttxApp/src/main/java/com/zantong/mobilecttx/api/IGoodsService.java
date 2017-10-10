@@ -1,11 +1,11 @@
 package com.zantong.mobilecttx.api;
 
-import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
-import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
-import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
-import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
-import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
+import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResponse;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
+import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResponse;
+import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResponse;
+import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResponse;
+import cn.qqtheme.framework.bean.response.SubjectGoodsResponse;
 
 import java.util.Map;
 
@@ -26,37 +26,37 @@ public interface IGoodsService {
      * 3.获取商户区域列表
      */
     @POST("goods/getMerchantArea")
-    Observable<MerchantAresResult> getMerchantArea();
+    Observable<MerchantAresResponse> getMerchantArea();
 
     /**
      * 4.获取区域商品列表
      */
     @FormUrlEncoded
     @POST("goods/getAreaGoods")
-    Observable<AresGoodsResult> getAreaGoods(@Field("code") int code);
+    Observable<AresGoodsResponse> getAreaGoods(@Field("code") int code);
 
     /**
      * 2.创建订单
      */
     @FormUrlEncoded
     @POST("order/createOrder")
-    Observable<CreateOrderResult> createOrder(@FieldMap Map<String, String> map);
+    Observable<CreateOrderResponse> createOrder(@FieldMap Map<String, String> map);
 
     /**
      * 6.获取商品详情
      */
     @FormUrlEncoded
     @POST("goods/getGoodsDetail")
-    Observable<GoodsDetailResult> getGoodsDetail(@Field("goodsId") String goodsId);
+    Observable<GoodsDetailResponse> getGoodsDetail(@Field("goodsId") String goodsId);
 
     /**
      * 22.获取商品
      */
     @FormUrlEncoded
     @POST("goods/getGoodsByType")
-    Observable<SubjectGoodsResult> getGoods(@Field("type") String type);
+    Observable<SubjectGoodsResponse> getGoods(@Field("type") String type);
 
     @FormUrlEncoded
     @POST("goods/getGoodsByType")
-    Observable<SparringGoodsResult> getGoodsFive(@Field("type") String type);
+    Observable<SparringGoodsResponse> getGoodsFive(@Field("type") String type);
 }

@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.home.activity.Codequery;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.widght.popup.MoreWindow;
+import cn.qqtheme.framework.custom.popup.MoreWindow;
 import cn.qqtheme.framework.util.ScreenUtils;
 
 /**
@@ -184,10 +184,10 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
     private void onClickLayContent(UserCarInfoBean userCarInfoBean) {
         MobclickAgent.onEvent(mContext, Config.getUMengID(1));
 
-        PublicData.getInstance().mHashMap.put("IllegalViolationName", userCarInfoBean.getCarnum());
-        PublicData.getInstance().mHashMap.put("carnum", userCarInfoBean.getCarnum());
-        PublicData.getInstance().mHashMap.put("enginenum", userCarInfoBean.getEnginenum());
-        PublicData.getInstance().mHashMap.put("carnumtype", userCarInfoBean.getCarnumtype());
+        MemoryData.getInstance().mHashMap.put("IllegalViolationName", userCarInfoBean.getCarnum());
+        MemoryData.getInstance().mHashMap.put("carnum", userCarInfoBean.getCarnum());
+        MemoryData.getInstance().mHashMap.put("enginenum", userCarInfoBean.getEnginenum());
+        MemoryData.getInstance().mHashMap.put("carnumtype", userCarInfoBean.getCarnumtype());
 
         ViolationDTO dto = new ViolationDTO();
         dto.setCarnum(RSAUtils.strByEncryption(userCarInfoBean.getCarnum(), true));

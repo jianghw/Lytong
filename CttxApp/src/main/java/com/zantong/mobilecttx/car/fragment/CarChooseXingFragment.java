@@ -4,16 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.zantong.mobilecttx.car.adapter.CarChooseXingAdapter;
+import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
-import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
-import com.zantong.mobilecttx.car.bean.CarLinkageResult;
+import com.zantong.mobilecttx.car.activity.CarChooseActivity;
+import com.zantong.mobilecttx.car.adapter.CarChooseXingAdapter;
+import com.zantong.mobilecttx.car.bean.CarLinkageResponse;
 import com.zantong.mobilecttx.car.bean.CarStyleInfoBean;
 import com.zantong.mobilecttx.car.dto.CarLinkageDTO;
-import com.zantong.mobilecttx.car.activity.AddCarActivity;
-import com.zantong.mobilecttx.car.activity.CarChooseActivity;
 
 public class CarChooseXingFragment extends BaseListFragment<CarStyleInfoBean> {
 
@@ -43,9 +42,9 @@ public class CarChooseXingFragment extends BaseListFragment<CarStyleInfoBean> {
         carLinkageDTO.setModelsId("");
         carLinkageDTO.setBrandId(String.valueOf(idB));
         carLinkageDTO.setSeriesId(String.valueOf(id));
-        CarApiClient.liYingCarLinkage(getActivity(), carLinkageDTO, new CallBack<CarLinkageResult>() {
+        CarApiClient.liYingCarLinkage(getActivity(), carLinkageDTO, new CallBack<CarLinkageResponse>() {
             @Override
-            public void onSuccess(CarLinkageResult result) {
+            public void onSuccess(CarLinkageResponse result) {
                 if(result.getResponseCode() == 2000){
                     setDataResult(result.getData().getCarModels());
                 }
@@ -66,7 +65,7 @@ public class CarChooseXingFragment extends BaseListFragment<CarStyleInfoBean> {
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
         CarStyleInfoBean carStyleBean = (CarStyleInfoBean) data;
-        Intent intent = new Intent(getActivity(), AddCarActivity.class);
+        Intent intent = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable(CarChooseActivity.CAR_XING_BEAN, carStyleBean);
         intent.putExtras(bundle);

@@ -1,7 +1,7 @@
 package com.zantong.mobilecttx.api;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
-import com.zantong.mobilecttx.home.bean.HomeCarResult;
+import cn.qqtheme.framework.bean.BaseResponse;
+import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 
 import retrofit2.http.Body;
@@ -20,11 +20,11 @@ public interface ITextService {
      * 获取违章信息
      */
     @GET("text/getTextNoticeInfo")
-    Observable<HomeCarResult> getTextNoticeInfo(@Query("userId") String usrid);
+    Observable<HomeCarResponse> getTextNoticeInfo(@Query("userId") String usrid);
 
     /**
      * 处理违章信息
      */
     @POST("text/handleViolations")
-    Observable<BaseResult> HandleViolationDTO(@Body ViolationCarDTO violationResult);
+    Observable<BaseResponse> HandleViolationDTO(@Body ViolationCarDTO violationResult);
 }

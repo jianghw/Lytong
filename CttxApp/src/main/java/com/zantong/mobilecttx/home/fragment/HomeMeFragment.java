@@ -21,23 +21,23 @@ import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.common.activity.CommonProblemActivity;
 import com.zantong.mobilecttx.contract.IHomeMeFtyContract;
 import com.zantong.mobilecttx.home.activity.HomeMainActivity;
-import com.zantong.mobilecttx.home.bean.DriverCoachResult;
+import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
 import com.zantong.mobilecttx.order.activity.CouponActivity;
-import com.zantong.mobilecttx.order.activity.OrderParentActivity;
+import com.zantong.mobilecttx.order.activity.MyOrderActivity;
 import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
 import com.zantong.mobilecttx.order.bean.CouponFragmentLBean;
-import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
 import com.zantong.mobilecttx.presenter.home.HomeMeFtyPresenter;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.user.activity.AboutActivity;
@@ -46,7 +46,7 @@ import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.user.activity.SettingActivity;
 import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
 import com.zantong.mobilecttx.user.bean.MessageCountBean;
-import com.zantong.mobilecttx.user.bean.MessageCountResult;
+import com.zantong.mobilecttx.user.bean.MessageCountResponse;
 import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -227,7 +227,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         if (mPresenter != null) mPresenter.getUnReadMsgCount();
 
         //畅通卡
-        boolean isUnBound = TextUtils.isEmpty(PublicData.getInstance().filenum);
+        boolean isUnBound = TextUtils.isEmpty(MemoryData.getInstance().filenum);
 
         mTvCard.setText(isUnBound ? "未绑定牡丹畅通卡" : "已绑定牡丹畅通卡");
         mTvCard.setTextColor(isUnBound
@@ -236,17 +236,17 @@ public class HomeMeFragment extends BaseRefreshJxFragment
 
         //车辆
         StringBuffer stringBuffer = new StringBuffer();
-        if (PublicData.getInstance().mCarNum == 0)
+        if (MemoryData.getInstance().mCarNum == 0)
             stringBuffer.append("<font color=\"#b3b3b3\">");
         else
             stringBuffer.append("<font color=\"#f3362b\">");
-        stringBuffer.append(PublicData.getInstance().mCarNum);
+        stringBuffer.append(MemoryData.getInstance().mCarNum);
         stringBuffer.append("</font>");
         stringBuffer.append("&#160;");
         stringBuffer.append("车辆");
         mTvCar.setText(Html.fromHtml(stringBuffer.toString()));
 
-        RspInfoBean infoBean = PublicData.getInstance().mLoginInfoBean;
+        RspInfoBean infoBean = MemoryData.getInstance().mLoginInfoBean;
         File file = getHeadImageFile(mImgHead);
         if (file == null && infoBean != null) {
             ImageLoadUtils.loadHead(infoBean.getPortrait(), mImgHead);
@@ -378,7 +378,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 break;
             case R.id.lay_order://我的订单
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(30));
-                Act.getInstance().gotoIntentLogin(getActivity(), OrderParentActivity.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), MyOrderActivity.class);
                 break;
             case R.id.lay_driver_order://司机订单
                 Intent intent = new Intent();
@@ -388,7 +388,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
                 break;
             case R.id.tv_card://我的畅通卡
-                if (Tools.isStrEmpty(PublicData.getInstance().filenum))
+                if (Tools.isStrEmpty(MemoryData.getInstance().filenum))
                     Act.getInstance().gotoIntentLogin(getActivity(), UnblockedCardActivity.class);
                 else
                     Act.getInstance().gotoIntentLogin(getActivity(), MyCardActivity.class);
@@ -441,7 +441,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
      * 优惠券
      */
     @Override
-    public void getCouponCountSucceed(CouponFragmentResult result) {
+    public void getCouponCountSucceed(CouponFragmentResponse result) {
         CouponFragmentLBean resultData = result.getData();
         StringBuffer stringBuffer = new StringBuffer();
         List<CouponFragmentBean> couponList = null;
@@ -481,7 +481,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
      * 未读消息
      */
     @Override
-    public void countMessageDetailSucceed(MessageCountResult result) {
+    public void countMessageDetailSucceed(MessageCountResponse result) {
         MessageCountBean resultData = result.getData();
         if (mImgMsg != null) mImgMsg.setVisibility(
                 resultData != null && resultData.getCount() > 0 ? View.VISIBLE : View.GONE);
@@ -505,7 +505,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void driverCoachSucceed(DriverCoachResult result) {
+    public void driverCoachSucceed(DriverCoachResponse result) {
         mLayDriverOrder.setVisibility(result.getData() ? View.VISIBLE : View.GONE);
     }
 

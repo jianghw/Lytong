@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.eventbus;
 
-import com.zantong.mobilecttx.alicloudpush.PushBean;
+import com.zantong.mobilecttx.push.PushBean;
 
 /**
  * 小喇叭推送

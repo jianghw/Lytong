@@ -1,11 +1,11 @@
 package com.zantong.mobilecttx.api;
 
-import com.zantong.mobilecttx.order.bean.OrderDetailResult;
-import com.zantong.mobilecttx.order.bean.OrderListResult;
-import com.zantong.mobilecttx.order.bean.ReceiveInfoResult;
+import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
+import com.zantong.mobilecttx.order.bean.OrderListResponse;
+import com.zantong.mobilecttx.order.bean.ReceiveInfoResponse;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -26,38 +26,38 @@ public interface IOrderService {
      */
     @FormUrlEncoded
     @POST("order/getOrderList")
-    Observable<OrderListResult> getOrderList(@Field("userNum") String userId);
+    Observable<OrderListResponse> getOrderList(@Field("userNum") String userId);
 
     /**
      * 9.获取订单详情
      */
     @FormUrlEncoded
     @POST("order/getOrderDetail")
-    Observable<OrderDetailResult> getOrderDetail(@Field("orderId") String orderId);
+    Observable<OrderDetailResponse> getOrderDetail(@Field("orderId") String orderId);
 
     /**
      * 10.更新订单状态
      */
     @FormUrlEncoded
     @POST("order/updateOrderStatus")
-    Observable<BaseResult> updateOrderStatus(@Field("orderId") String orderId, @Field("orderStatus") String orderStatus);
+    Observable<BaseResponse> updateOrderStatus(@Field("orderId") String orderId, @Field("orderStatus") String orderStatus);
 
     /**
      * 10.取消订单
      */
     @FormUrlEncoded
     @POST("order/cancelOrder")
-    Observable<BaseResult> cancelOrder(@Field("orderId") String orderId, @Field("userNum") String userNum);
+    Observable<BaseResponse> cancelOrder(@Field("orderId") String orderId, @Field("userNum") String userNum);
 
     /**
      * 29.填写快递信息
      */
     @POST("order/addExpressInfo")
-    Observable<BaseResult> addExpressInfo(@Body ExpressDTO expressDTO);
+    Observable<BaseResponse> addExpressInfo(@Body ExpressDTO expressDTO);
 
     /**
      * 33.获取收件人信息
      */
     @GET("order/getReceiveInfo")
-    Observable<ReceiveInfoResult> getReceiveInfo(@Query("orderId") String orderId);
+    Observable<ReceiveInfoResponse> getReceiveInfo(@Query("orderId") String orderId);
 }

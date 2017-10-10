@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.api;
 
-import com.zantong.mobilecttx.home.bean.DriverCoachResult;
+import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -18,5 +18,5 @@ public interface IUserService {
      */
     @FormUrlEncoded
     @POST("user/getDriverCoach")
-    Observable<DriverCoachResult> getDriverCoach(@Field("userPhone") String userPhone);
+    Observable<DriverCoachResponse> getDriverCoach(@Field("userPhone") String userPhone);
 }

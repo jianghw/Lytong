@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.contract;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import com.zantong.mobilecttx.home.bean.StartPicResult;
+import com.zantong.mobilecttx.home.bean.StartPicResponse;
 
 /**
  * Created by jianghw on 2017/4/26.
@@ -30,9 +30,9 @@ public interface ISplashAtyContract {
         /**
          * 显示广告页面
          */
-        void displayAdsImage(StartPicResult result);
+        void displayAdsImage(StartPicResponse result);
 
-        void displayGuideImage(StartPicResult result);
+        void displayGuideImage(StartPicResponse result);
 
         void displayAdsImageError(String message);
     }

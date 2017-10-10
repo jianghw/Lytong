@@ -13,12 +13,12 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.card.bean.BindCardResult;
 import com.zantong.mobilecttx.card.dto.BindCardDTO;
 import com.zantong.mobilecttx.card.dto.BindDrivingDTO;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
 import com.zantong.mobilecttx.user.bean.RspInfoBean;
@@ -30,7 +30,7 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
@@ -183,7 +183,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
             return;
         }
 
-        params.setUserId(PublicData.getInstance().userID);
+        params.setUserId(MemoryData.getInstance().userID);
         params.setLicenseno(licenseno);
         params.setFileNum(fileNum);
 
@@ -193,7 +193,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
         dto.setFilenum(RSAUtils.strByEncryption(fileNum, true));
 
         dto.setRelatedphone(RSAUtils.strByEncryption(phone, true));
-        dto.setUsrid(PublicData.getInstance().userID);
+        dto.setUsrid(MemoryData.getInstance().userID);
         showDialogLoading();
 
         UserApiClient.bindCard(ContextUtils.getContext(), dto, new CallBack<BindCardResult>() {
@@ -213,18 +213,18 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
                             params.setSex("1");
                         }
 
-                        CarApiClient.commitDriving(ContextUtils.getContext(), params, new CallBack<BaseResult>() {
+                        CarApiClient.commitDriving(ContextUtils.getContext(), params, new CallBack<BaseResponse>() {
                             @Override
-                            public void onSuccess(BaseResult result) {
+                            public void onSuccess(BaseResponse result) {
 
                             }
                         });
-                        PublicData.getInstance().filenum = fileNum;
+                        MemoryData.getInstance().filenum = fileNum;
                         RspInfoBean user = (RspInfoBean) UserInfoRememberCtrl.readObject();
                         user.setFilenum(fileNum);
 
                         UserInfoRememberCtrl.saveObject(user);
-                        PublicData.getInstance().mLoginInfoBean.setFilenum(fileNum);
+                        MemoryData.getInstance().mLoginInfoBean.setFilenum(fileNum);
 
                         Act.getInstance().gotoIntent(BindJiaZhaoActivity.this, BindCardSuccess.class);
                         BindJiaZhaoActivity.this.finish();

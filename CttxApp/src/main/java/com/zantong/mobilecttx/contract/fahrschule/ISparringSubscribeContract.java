@@ -2,10 +2,10 @@ package com.zantong.mobilecttx.contract.fahrschule;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
-import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
-import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
-import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
+import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResponse;
+import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 
 import java.util.ArrayList;
@@ -25,9 +25,9 @@ public interface ISparringSubscribeContract {
 
         void serviceAreaError(String message);
 
-        void serviceAreaSucceed(SparringAreaResult result);
+        void serviceAreaSucceed(SparringAreaResponse result);
 
-        void goodsSucceed(SparringGoodsResult result);
+        void goodsSucceed(SparringGoodsResponse result);
 
         void goodsError(String s);
 
@@ -35,7 +35,7 @@ public interface ISparringSubscribeContract {
 
         void serverTimeSucceed(ArrayList<String> dateList, Date dateString);
 
-        void couponByTypeSucceed(RechargeCouponResult result);
+        void couponByTypeSucceed(RechargeCouponResponse result);
 
         void couponByTypeError(String message);
 
@@ -43,7 +43,7 @@ public interface ISparringSubscribeContract {
 
         void createOrderError(String message);
 
-        void createOrderSucceed(CreateOrderResult result);
+        void createOrderSucceed(CreateOrderResponse result);
 
         boolean getUseCoupon();
 

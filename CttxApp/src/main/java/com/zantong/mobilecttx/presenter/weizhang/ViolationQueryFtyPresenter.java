@@ -4,12 +4,14 @@ package com.zantong.mobilecttx.presenter.weizhang;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.zantong.mobilecttx.base.bean.Result;
+import com.zantong.mobilecttx.application.MemoryData;
+
+import cn.qqtheme.framework.bean.BankResponse;
+
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.contract.IViolationQueryFtyContract;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
@@ -19,7 +21,7 @@ import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import java.io.File;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -125,7 +127,7 @@ public class ViolationQueryFtyPresenter
         Subscription subscription = mRepository.commitCarInfoToOldServer(initCarInfoDTO())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<Result>() {
+                .subscribe(new BaseSubscriber<BankResponse>() {
                     @Override
                     public void doCompleted() {
 
@@ -137,7 +139,7 @@ public class ViolationQueryFtyPresenter
                     }
 
                     @Override
-                    public void doNext(Result responseBean) {
+                    public void doNext(BankResponse responseBean) {
                         if (responseBean != null
                                 && responseBean.getSYS_HEAD().getReturnCode().equals("000000")) {
                             mAtyView.commitCarInfoToOldServerSucceed(responseBean);
@@ -155,7 +157,7 @@ public class ViolationQueryFtyPresenter
         Subscription subscription = mRepository.commitCarInfoToNewServer(initBindCarDTO())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResult>() {
+                .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void doCompleted() {
 
@@ -167,7 +169,7 @@ public class ViolationQueryFtyPresenter
                     }
 
                     @Override
-                    public void doNext(BaseResult responseBean) {
+                    public void doNext(BaseResponse responseBean) {
                         if (responseBean != null && responseBean.getResponseCode() == 2000) {
 
                         } else {
@@ -187,7 +189,7 @@ public class ViolationQueryFtyPresenter
         Subscription subscription = mRepository.addVehicleLicense(initBindCarDTO())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResult>() {
+                .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void doCompleted() {
 
@@ -199,7 +201,7 @@ public class ViolationQueryFtyPresenter
                     }
 
                     @Override
-                    public void doNext(BaseResult responseBean) {
+                    public void doNext(BaseResponse responseBean) {
                         if (responseBean != null && responseBean.getResponseCode() == 2000) {
 
                         } else {
@@ -226,7 +228,7 @@ public class ViolationQueryFtyPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResult>() {
+                .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.hideLoadingProgress();
@@ -238,7 +240,7 @@ public class ViolationQueryFtyPresenter
                     }
 
                     @Override
-                    public void doNext(BaseResult responseBean) {
+                    public void doNext(BaseResponse responseBean) {
                         if (responseBean != null && responseBean.getResponseCode() == 2000) {
                             mAtyView.removeVehicleLicenseSucceed(responseBean);
                         } else {
@@ -265,7 +267,7 @@ public class ViolationQueryFtyPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResult>() {
+                .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.hideLoadingProgress();
@@ -277,7 +279,7 @@ public class ViolationQueryFtyPresenter
                     }
 
                     @Override
-                    public void doNext(BaseResult responseBean) {
+                    public void doNext(BaseResponse responseBean) {
                         if (responseBean != null && responseBean.getResponseCode() == 2000) {
                             mAtyView.removeVehicleLicenseSucceed(responseBean);
                         } else {
@@ -297,7 +299,7 @@ public class ViolationQueryFtyPresenter
         carDTO.setPlateNo(RSAUtils.strByEncryption(bindCarDTO.getPlateNo(), true));
         carDTO.setEngineNo(RSAUtils.strByEncryption(bindCarDTO.getEngineNo(), true));
         carDTO.setVehicleType(bindCarDTO.getVehicleType());
-        carDTO.setUsrnum(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
+        carDTO.setUsrnum(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
         carDTO.setIssueDate(bindCarDTO.getIssueDate());
         carDTO.setIsPay(bindCarDTO.getIsPay());
 

@@ -6,15 +6,15 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -45,13 +45,13 @@ public class BaseCallBack<T> implements Callback {
         if (response.isSuccessful()) {
             try {
                 String reader = response.body().string();
-                PublicData.getInstance().mHashMap.put("htmlResponse", reader);
+                MemoryData.getInstance().mHashMap.put("htmlResponse", reader);
 
                 LogUtils.i("reader===" + reader);
 
                 if (!TextUtils.isEmpty(reader)) {
                     T t = gson.fromJson(reader, clazz);
-                    BaseResult result = (BaseResult) t;
+                    BaseResponse result = (BaseResponse) t;
 
                     sendErrorMsg(context, tag, result);
                     callback.sendSuccessMessage(t);
@@ -91,7 +91,7 @@ public class BaseCallBack<T> implements Callback {
      * @param tag       标签
      * @param result    返回结果
      */
-    private void sendErrorMsg(Context context, Object tag, BaseResult result) {
+    private void sendErrorMsg(Context context, Object tag, BaseResponse result) {
         if (result != null) {
             String status = "";
             String returnStatus = String.valueOf(result.getResponseCode());

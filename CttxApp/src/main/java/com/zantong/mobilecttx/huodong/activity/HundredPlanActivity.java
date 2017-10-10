@@ -18,10 +18,10 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.huodong.bean.ActivitySignNum;
 import com.zantong.mobilecttx.huodong.dto.HundredPlanDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
@@ -136,13 +136,13 @@ public class HundredPlanActivity extends BaseMvpActivity {
                 }
 
                 HundredPlanDTO dto = new HundredPlanDTO();
-                dto.setUsrnum(PublicData.getInstance().userID);
-                dto.setPhoneNum(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+                dto.setUsrnum(MemoryData.getInstance().userID);
+                dto.setPhoneNum(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
                 dto.setPlateNo(mSelCar.getText().toString());
 
-                CarApiClient.commitHundredPlan(this, dto, new CallBack<BaseResult>() {
+                CarApiClient.commitHundredPlan(this, dto, new CallBack<BaseResponse>() {
                     @Override
-                    public void onSuccess(BaseResult result) {
+                    public void onSuccess(BaseResponse result) {
                         if (result.getResponseCode() == 2000) {
                             signCount++ ;
                             mCar.setText(mSelCar.getText().toString());
@@ -221,7 +221,7 @@ public class HundredPlanActivity extends BaseMvpActivity {
         }
 
         WXWebpageObject webpage = new WXWebpageObject();
-        if (PublicData.getInstance().loginFlag) {
+        if (MemoryData.getInstance().loginFlag) {
             webpage.webpageUrl = "http://d.eqxiu.com/s/um7rznLE";
         } else {
             webpage.webpageUrl = "http://d.eqxiu.com/s/um7rznLE";

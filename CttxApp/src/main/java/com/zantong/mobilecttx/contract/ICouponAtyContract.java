@@ -3,8 +3,8 @@ package com.zantong.mobilecttx.contract;
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
-import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
-import com.zantong.mobilecttx.order.bean.MessageResult;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
+import com.zantong.mobilecttx.order.bean.MessageResponse;
 
 import java.util.List;
 
@@ -19,11 +19,11 @@ public interface ICouponAtyContract {
         /**
          * 请求响应成功
          */
-        void usrCouponInfoSucceed(CouponFragmentResult result);
+        void usrCouponInfoSucceed(CouponFragmentResponse result);
 
         void usrCouponInfoError(String message);
 
-        void delUsrCouponSucceed(MessageResult result, int position);
+        void delUsrCouponSucceed(MessageResponse result, int position);
 
         void delUsrCouponError(String message);
 

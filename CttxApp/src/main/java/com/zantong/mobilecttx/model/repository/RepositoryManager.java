@@ -3,54 +3,55 @@ package com.zantong.mobilecttx.model.repository;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.zantong.mobilecttx.base.bean.Result;
+import cn.qqtheme.framework.bean.BankResponse;
+
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
-import com.zantong.mobilecttx.car.bean.VehicleLicenseResult;
+import com.zantong.mobilecttx.car.bean.VehicleLicenseResponse;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
-import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
-import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeResponse;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
-import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
-import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
-import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
-import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
-import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
-import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResult;
-import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
-import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
+import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResponse;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
+import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResponse;
+import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResponse;
+import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
+import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResponse;
+import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResponse;
+import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
-import com.zantong.mobilecttx.home.bean.BannerResult;
-import com.zantong.mobilecttx.home.bean.DriverCoachResult;
-import com.zantong.mobilecttx.home.bean.HomeCarResult;
-import com.zantong.mobilecttx.home.bean.HomeResult;
-import com.zantong.mobilecttx.home.bean.ModuleResult;
-import com.zantong.mobilecttx.home.bean.StartPicResult;
+import com.zantong.mobilecttx.home.bean.BannerResponse;
+import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
+import com.zantong.mobilecttx.home.bean.HomeCarResponse;
+import com.zantong.mobilecttx.home.bean.HomeResponse;
+import com.zantong.mobilecttx.home.bean.ModuleResponse;
+import com.zantong.mobilecttx.home.bean.StartPicResponse;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
-import com.zantong.mobilecttx.map.bean.GasStationDetailResult;
-import com.zantong.mobilecttx.map.bean.GasStationResult;
-import com.zantong.mobilecttx.map.bean.YearCheckDetailResult;
-import com.zantong.mobilecttx.map.bean.YearCheckResult;
+import com.zantong.mobilecttx.map.bean.GasStationDetailResponse;
+import com.zantong.mobilecttx.map.bean.GasStationResponse;
+import com.zantong.mobilecttx.map.bean.YearCheckDetailResponse;
+import com.zantong.mobilecttx.map.bean.YearCheckResponse;
 import com.zantong.mobilecttx.map.dto.AnnualDTO;
-import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
-import com.zantong.mobilecttx.order.bean.MessageResult;
-import com.zantong.mobilecttx.order.bean.OrderDetailResult;
-import com.zantong.mobilecttx.order.bean.OrderExpressResult;
-import com.zantong.mobilecttx.order.bean.OrderListResult;
-import com.zantong.mobilecttx.order.bean.ReceiveInfoResult;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
+import com.zantong.mobilecttx.order.bean.MessageResponse;
+import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
+import com.zantong.mobilecttx.order.bean.OrderExpressResponse;
+import com.zantong.mobilecttx.order.bean.OrderListResponse;
+import com.zantong.mobilecttx.order.bean.ReceiveInfoResponse;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
-import com.zantong.mobilecttx.user.bean.MessageCountResult;
-import com.zantong.mobilecttx.user.bean.MessageDetailResult;
-import com.zantong.mobilecttx.user.bean.MessageTypeResult;
+import com.zantong.mobilecttx.user.bean.MessageCountResponse;
+import com.zantong.mobilecttx.user.bean.MessageDetailResponse;
+import com.zantong.mobilecttx.user.bean.MessageTypeResponse;
 import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNumBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
@@ -60,8 +61,8 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import java.util.List;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
+import cn.qqtheme.framework.bean.BaseResponse;
+import cn.qqtheme.framework.bean.response.SubjectGoodsResponse;
 import okhttp3.MultipartBody;
 import rx.Observable;
 
@@ -96,7 +97,7 @@ public class RepositoryManager {
      * @param bean
      * @return
      */
-    public Observable<MessageTypeResult> messageFindAll(BaseDTO bean) {
+    public Observable<MessageTypeResponse> messageFindAll(BaseDTO bean) {
         return mRemoteData.messageFindAll(bean);
     }
 
@@ -150,7 +151,7 @@ public class RepositoryManager {
      * @param bean
      * @return
      */
-    public Observable<MessageResult> findMessageDetailByMessageId(MegDTO bean) {
+    public Observable<MessageResponse> findMessageDetailByMessageId(MegDTO bean) {
         return mRemoteData.findMessageDetailByMessageId(bean);
     }
 
@@ -158,14 +159,14 @@ public class RepositoryManager {
         return mLocalData.initMessageDetailDTO();
     }
 
-    public Observable<MessageDetailResult> findMessageDetail(MessageDetailDTO bean) {
+    public Observable<MessageDetailResponse> findMessageDetail(MessageDetailDTO bean) {
         return mRemoteData.findMessageDetail(bean);
     }
 
     /**
      * 2.4.2查看优惠券信息
      */
-    public Observable<CouponFragmentResult> usrCouponInfo(String usrnum, String couponStatus) {
+    public Observable<CouponFragmentResponse> usrCouponInfo(String usrnum, String couponStatus) {
         return mRemoteData.usrCouponInfo(usrnum, couponStatus);
     }
 
@@ -193,7 +194,7 @@ public class RepositoryManager {
      * @param megDTO
      * @return
      */
-    public Observable<MessageResult> deleteMessageDetail(MegDTO megDTO) {
+    public Observable<MessageResponse> deleteMessageDetail(MegDTO megDTO) {
         return mRemoteData.deleteMessageDetail(megDTO);
     }
 
@@ -204,7 +205,7 @@ public class RepositoryManager {
     /**
      * 2.4.27删除用户优惠券
      */
-    public Observable<MessageResult> delUsrCoupon(String couponId, String userId) {
+    public Observable<MessageResponse> delUsrCoupon(String couponId, String userId) {
         return mRemoteData.delUsrCoupon(couponId, userId);
     }
 
@@ -257,35 +258,35 @@ public class RepositoryManager {
      * @param msg
      * @return
      */
-    public Observable<StartPicResult> startGetPic(String msg) {
+    public Observable<StartPicResponse> startGetPic(String msg) {
         return mRemoteData.startGetPic(msg);
     }
 
     /**
      * 57.获取指定类型优惠券
      */
-    public Observable<RechargeCouponResult> getCouponByType(String userId, String type) {
+    public Observable<RechargeCouponResponse> getCouponByType(String userId, String type) {
         return mRemoteData.getCouponByType(userId, type);
     }
 
     /**
      * 10.创建加油订单
      */
-    public Observable<RechargeResult> addOilCreateOrder(RechargeDTO rechargeDTO) {
+    public Observable<RechargeResponse> addOilCreateOrder(RechargeDTO rechargeDTO) {
         return mRemoteData.addOilCreateOrder(rechargeDTO);
     }
 
     /**
      * 54.充值接口
      */
-    public Observable<PayOrderResult> onPayOrderByCoupon(String payUrl, String orderPrice, String payType) {
+    public Observable<PayOrderResponse> onPayOrderByCoupon(String payUrl, String orderPrice, String payType) {
         return mRemoteData.onPayOrderByCoupon(payUrl, orderPrice, payType);
     }
 
     /**
      * 43.生成违章缴费订单
      */
-    public Observable<PayOrderResult> paymentCreateOrder(ViolationPayDTO payDTO) {
+    public Observable<PayOrderResponse> paymentCreateOrder(ViolationPayDTO payDTO) {
         return mRemoteData.paymentCreateOrder(payDTO);
     }
 
@@ -299,7 +300,7 @@ public class RepositoryManager {
     /**
      * 1.首页信息
      */
-    public Observable<HomeResult> homePage(HomeDataDTO id) {
+    public Observable<HomeResponse> homePage(HomeDataDTO id) {
         return mRemoteData.homePage(id);
     }
 
@@ -313,14 +314,14 @@ public class RepositoryManager {
     /**
      * 37.获取所有未读消息数量
      */
-    public Observable<MessageCountResult> countMessageDetail(BaseDTO baseDTO) {
+    public Observable<MessageCountResponse> countMessageDetail(BaseDTO baseDTO) {
         return mRemoteData.countMessageDetail(baseDTO);
     }
 
     /**
      * 58.获取banner图片
      */
-    public Observable<BannerResult> getBanner(String type) {
+    public Observable<BannerResponse> getBanner(String type) {
         return mRemoteData.getBanner(type);
     }
 
@@ -334,49 +335,49 @@ public class RepositoryManager {
     /**
      * 3.获取商户区域列表
      */
-    public Observable<MerchantAresResult> getMerchantArea() {
+    public Observable<MerchantAresResponse> getMerchantArea() {
         return mRemoteData.getMerchantArea();
     }
 
     /**
      * 4.获取区域商品列表
      */
-    public Observable<AresGoodsResult> getAreaGoods(int areaCode) {
+    public Observable<AresGoodsResponse> getAreaGoods(int areaCode) {
         return mRemoteData.getAreaGoods(areaCode);
     }
 
     /**
      * 2.创建订单
      */
-    public Observable<CreateOrderResult> createOrder(CreateOrderDTO createOrder) {
+    public Observable<CreateOrderResponse> createOrder(CreateOrderDTO createOrder) {
         return mRemoteData.createOrder(createOrder);
     }
 
     /**
      * 7.获取用户指定活动的统计总数
      */
-    public Observable<RecordCountResult> getRecordCount(String type, String phone) {
+    public Observable<RecordCountResponse> getRecordCount(String type, String phone) {
         return mRemoteData.getRecordCount(type, phone);
     }
 
     /**
      * cip.cfc.u005.01
      */
-    public Observable<Result> commitCarInfoToOldServer(String msg) {
+    public Observable<BankResponse> commitCarInfoToOldServer(String msg) {
         return mRemoteData.commitCarInfoToOldServer(msg);
     }
 
     /**
      * 48.绑定行驶证接口
      */
-    public Observable<BaseResult> commitCarInfoToNewServer(BindCarDTO bindCarDTO) {
+    public Observable<BaseResponse> commitCarInfoToNewServer(BindCarDTO bindCarDTO) {
         return mRemoteData.commitCarInfoToNewServer(bindCarDTO);
     }
 
     /**
      * N 5.获取工行支付页面
      */
-    public Observable<PayOrderResult> getBankPayHtml(String orderId, String orderPrice) {
+    public Observable<PayOrderResponse> getBankPayHtml(String orderId, String orderPrice) {
         return mRemoteData.getBankPayHtml(orderId, orderPrice);
     }
 
@@ -385,42 +386,42 @@ public class RepositoryManager {
      *
      * @param userId
      */
-    public Observable<OrderListResult> getOrderList(String userId) {
+    public Observable<OrderListResponse> getOrderList(String userId) {
         return mRemoteData.getOrderList(userId);
     }
 
     /**
      * 9.获取订单详情
      */
-    public Observable<OrderDetailResult> getOrderDetail(String orderId) {
+    public Observable<OrderDetailResponse> getOrderDetail(String orderId) {
         return mRemoteData.getOrderDetail(orderId);
     }
 
     /**
      * 10.更新订单状态 N
      */
-    public Observable<BaseResult> updateOrderStatus(String orderId, int orderStatus) {
+    public Observable<BaseResponse> updateOrderStatus(String orderId, int orderStatus) {
         return mRemoteData.updateOrderStatus(orderId, orderStatus);
     }
 
     /**
      * 6.获取商品详情
      */
-    public Observable<GoodsDetailResult> getGoodsDetail(String goodsId) {
+    public Observable<GoodsDetailResponse> getGoodsDetail(String goodsId) {
         return mRemoteData.getGoodsDetail(goodsId);
     }
 
     /**
      * 新获取违章信息
      */
-    public Observable<HomeCarResult> getTextNoticeInfo(String defaultUserID) {
+    public Observable<HomeCarResponse> getTextNoticeInfo(String defaultUserID) {
         return mRemoteData.getTextNoticeInfo(defaultUserID);
     }
 
     /**
      * 处理违章信息
      */
-    public Observable<BaseResult> handleViolations(ViolationCarDTO violationResult) {
+    public Observable<BaseResponse> handleViolations(ViolationCarDTO violationResult) {
         return mRemoteData.handleViolations(violationResult);
     }
 
@@ -442,126 +443,126 @@ public class RepositoryManager {
     /**
      * 19.同步银行车辆
      */
-    public Observable<VehicleLicenseResult> addOrUpdateVehicleLicense(List<BindCarDTO> dtoList) {
+    public Observable<VehicleLicenseResponse> addOrUpdateVehicleLicense(List<BindCarDTO> dtoList) {
         return mRemoteData.addOrUpdateVehicleLicense(dtoList);
     }
 
     /**
      * 13.判断是否为司机
      */
-    public Observable<DriverCoachResult> getDriverCoach(String phone) {
+    public Observable<DriverCoachResponse> getDriverCoach(String phone) {
         return mRemoteData.getDriverCoach(phone);
     }
 
     /**
      * 17.新增车辆
      */
-    public Observable<BaseResult> addVehicleLicense(BindCarDTO bindCarDTO) {
+    public Observable<BaseResponse> addVehicleLicense(BindCarDTO bindCarDTO) {
         return mRemoteData.addVehicleLicense(bindCarDTO);
     }
 
     /**
      * 18.删除车辆
      */
-    public Observable<BaseResult> removeVehicleLicense(BindCarDTO bindCarDTO) {
+    public Observable<BaseResponse> removeVehicleLicense(BindCarDTO bindCarDTO) {
         return mRemoteData.removeVehicleLicense(bindCarDTO);
     }
 
     /**
      * 17.编辑车辆
      */
-    public Observable<BaseResult> updateVehicleLicense(BindCarDTO bindCarDTO) {
+    public Observable<BaseResponse> updateVehicleLicense(BindCarDTO bindCarDTO) {
         return mRemoteData.updateVehicleLicense(bindCarDTO);
     }
 
     /**
      * 22.获取商品
      */
-    public Observable<SubjectGoodsResult> getGoods(String type) {
+    public Observable<SubjectGoodsResponse> getGoods(String type) {
         return mRemoteData.getGoods(type);
     }
 
     /**
      * 22.获取商品
      */
-    public Observable<SparringGoodsResult> getGoodsFive(String type) {
+    public Observable<SparringGoodsResponse> getGoodsFive(String type) {
         return mRemoteData.getGoodsFive(type);
     }
 
     /**
      * 20.新手陪练获取服务地区
      */
-    public Observable<SparringAreaResult> getServiceArea() {
+    public Observable<SparringAreaResponse> getServiceArea() {
         return mRemoteData.getServiceArea();
     }
 
     /**
      * 21.获取服务器时间
      */
-    public Observable<ServerTimeResult> getServerTime() {
+    public Observable<ServerTimeResponse> getServerTime() {
         return mRemoteData.getServerTime();
     }
 
     /**
      * 10.取消订单
      */
-    public Observable<BaseResult> cancelOrder(String orderId, String userNum) {
+    public Observable<BaseResponse> cancelOrder(String orderId, String userNum) {
         return mRemoteData.cancelOrder(orderId, userNum);
     }
 
     /**
      * 24.获取年检网点
      */
-    public Observable<YearCheckResult> annualInspectionList(AnnualDTO annualDTO) {
+    public Observable<YearCheckResponse> annualInspectionList(AnnualDTO annualDTO) {
         return mRemoteData.annualInspectionList(annualDTO);
     }
 
     /**
      * 获取年检一条信息
      */
-    public Observable<YearCheckDetailResult> annualInspection(int id) {
+    public Observable<YearCheckDetailResponse> annualInspection(int id) {
         return mRemoteData.annualInspection(id);
     }
 
     /**
      * 获得加油站地点详情
      */
-    public Observable<GasStationDetailResult> gasStation(int id) {
+    public Observable<GasStationDetailResponse> gasStation(int id) {
         return mRemoteData.gasStation(id);
     }
 
     /**
      * 23.获取加油网点
      */
-    public Observable<GasStationResult> gasStationList(AnnualDTO annualDTO) {
+    public Observable<GasStationResponse> gasStationList(AnnualDTO annualDTO) {
         return mRemoteData.gasStationList(annualDTO);
     }
 
     /**
      * 25.模块化接口
      */
-    public Observable<ModuleResult> moduleTree() {
+    public Observable<ModuleResponse> moduleTree() {
         return mRemoteData.moduleTree();
     }
 
     /**
      * 32.获取地区列表
      */
-    public Observable<OrderExpressResult> getAllAreas() {
+    public Observable<OrderExpressResponse> getAllAreas() {
         return mRemoteData.getAllAreas();
     }
 
     /**
      * 29.填写快递信息
      */
-    public Observable<BaseResult> addExpressInfo(ExpressDTO expressDTO) {
+    public Observable<BaseResponse> addExpressInfo(ExpressDTO expressDTO) {
         return mRemoteData.addExpressInfo(expressDTO);
     }
 
     /**
      * 33.获取收件人信息
      */
-    public Observable<ReceiveInfoResult> getReceiveInfo(String orderId) {
+    public Observable<ReceiveInfoResponse> getReceiveInfo(String orderId) {
         return mRemoteData.getReceiveInfo(orderId);
     }
 
@@ -569,7 +570,7 @@ public class RepositoryManager {
      * 46.更新违章缴费状态
      * @param json
      */
-    public Observable<BaseResult> updateState(List<ViolationNum> json) {
+    public Observable<BaseResponse> updateState(List<ViolationNum> json) {
         return mRemoteData.updateState(json);
     }
 }

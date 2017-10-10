@@ -1,11 +1,11 @@
 package com.zantong.mobilecttx.api;
 
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
 
 import java.util.List;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -24,12 +24,12 @@ public interface IPayService {
      */
     @FormUrlEncoded
     @POST("pay/getBankPayHtml")
-    Observable<PayOrderResult> getBankPayHtml(@Field("orderId") String orderId, @Field("amount") String orderPrice);
+    Observable<PayOrderResponse> getBankPayHtml(@Field("orderId") String orderId, @Field("amount") String orderPrice);
 
     /**
      * 46.更新违章缴费状态
      * @param json
      */
     @POST("payment/updateState")
-    Observable<BaseResult> updateState(@Body List<ViolationNum> json);
+    Observable<BaseResponse> updateState(@Body List<ViolationNum> json);
 }

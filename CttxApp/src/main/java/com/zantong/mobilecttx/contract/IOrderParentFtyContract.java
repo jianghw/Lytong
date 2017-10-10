@@ -1,10 +1,10 @@
 package com.zantong.mobilecttx.contract;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import java.util.List;
 
@@ -34,13 +34,13 @@ public interface IOrderParentFtyContract {
 
         void updateOrderStatusError(String message);
 
-        void updateOrderStatusSucceed(BaseResult result);
+        void updateOrderStatusSucceed(BaseResponse result);
 
         void onPayOrderByCouponError(String message);
 
-        void onPayOrderByCouponSucceed(PayOrderResult result);
+        void onPayOrderByCouponSucceed(PayOrderResponse result);
 
-        void getBankPayHtmlSucceed(PayOrderResult result, String orderId);
+        void getBankPayHtmlSucceed(PayOrderResponse result, String orderId);
     }
 
     interface IOrderParentFtyPresenter extends IMvpPresenter {

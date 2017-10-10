@@ -4,18 +4,18 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCar;
 import com.zantong.mobilecttx.car.bean.PayCarBean;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
-import com.zantong.mobilecttx.car.bean.VehicleLicenseResult;
+import com.zantong.mobilecttx.car.bean.VehicleLicenseResponse;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.ISplashAtyContract;
-import com.zantong.mobilecttx.home.bean.StartPicResult;
+import com.zantong.mobilecttx.home.bean.StartPicResponse;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
@@ -69,12 +69,12 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
 
     private String getStartTime() {
         String nowMonth = Tools.getYearDate().substring(4, 6);
-        String oldMonth = PublicData.getInstance().mLoginInfoBean.getGetdate().substring(4, 6);
+        String oldMonth = MemoryData.getInstance().mLoginInfoBean.getGetdate().substring(4, 6);
         String startTime = "";
         if (Integer.parseInt(nowMonth) > Integer.parseInt(oldMonth)) {
-            startTime = Tools.getYearDate().substring(0, 4) + PublicData.getInstance().mLoginInfoBean.getGetdate().substring(4);
+            startTime = Tools.getYearDate().substring(0, 4) + MemoryData.getInstance().mLoginInfoBean.getGetdate().substring(4);
         } else {
-            startTime = PublicData.getInstance().mLoginInfoBean.getGetdate();
+            startTime = MemoryData.getInstance().mLoginInfoBean.getGetdate();
         }
         return startTime;
     }
@@ -214,7 +214,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
         Subscription subscription = mRepository.addOrUpdateVehicleLicense(result)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<VehicleLicenseResult>() {
+                .subscribe(new BaseSubscriber<VehicleLicenseResponse>() {
                     @Override
                     public void doCompleted() {
                     }
@@ -224,7 +224,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
                     }
 
                     @Override
-                    public void doNext(VehicleLicenseResult result) {
+                    public void doNext(VehicleLicenseResponse result) {
                     }
                 });
         mSubscriptions.add(subscription);
@@ -252,7 +252,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
                     public void onNext(LoginInfoBean result) {
                         if (result != null &&
                                 result.getSYS_HEAD().getReturnCode().equals(
-                                        PublicData.getInstance().success)) {
+                                        MemoryData.getInstance().success)) {
 
                             mRepository.saveLoginInfoRepeat(result);
                         }
@@ -291,13 +291,13 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
         try {
             String pwd = mRepository.readLoginPassword();
             if (Tools.isStrEmpty(pwd)) throw new IllegalArgumentException("pwd is must not null");
-            masp.put("phoenum", PublicData.getInstance().mLoginInfoBean.getPhoenum());
+            masp.put("phoenum", MemoryData.getInstance().mLoginInfoBean.getPhoenum());
             SHATools sha = new SHATools();
             masp.put("pswd", SHATools.hexString(sha.eccryptSHA1(pwd)));
-            masp.put("devicetoken", PublicData.getInstance().imei);
+            masp.put("devicetoken", MemoryData.getInstance().imei);
             masp.put("pushswitch", "0");
             masp.put("pushmode", "1");
-            String token = RSAUtils.strByEncryption(PublicData.getInstance().deviceId, true);
+            String token = RSAUtils.strByEncryption(MemoryData.getInstance().deviceId, true);
             masp.put("token", token);
             MessageFormat.getInstance().setMessageJSONObject(masp);
         } catch (JSONException | NoSuchAlgorithmException e) {
@@ -314,7 +314,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
         Subscription subscription = mRepository.startGetPic("1")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<StartPicResult>() {
+                .subscribe(new Subscriber<StartPicResponse>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -325,7 +325,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
                     }
 
                     @Override
-                    public void onNext(StartPicResult result) {
+                    public void onNext(StartPicResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mSplashAtyView.displayGuideImage(result);
                         }
@@ -339,7 +339,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
         Subscription subscription = mRepository.startGetPic("0")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<StartPicResult>() {
+                .subscribe(new Subscriber<StartPicResponse>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -350,7 +350,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
                     }
 
                     @Override
-                    public void onNext(StartPicResult result) {
+                    public void onNext(StartPicResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mSplashAtyView.displayAdsImage(result);
                         }

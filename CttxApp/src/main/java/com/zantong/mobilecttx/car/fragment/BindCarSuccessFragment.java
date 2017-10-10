@@ -9,12 +9,12 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.fragment.BaseExtraFragment;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.car.adapter.PayCarAdapter;
 import com.zantong.mobilecttx.car.bean.PayCar;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.rsa.Des3;
@@ -66,7 +66,7 @@ public class BindCarSuccessFragment extends BaseExtraFragment {
         mPayCarAdapter = new PayCarAdapter();
         mCarsRecyclerView.setAdapter(mPayCarAdapter);
         LogoutDTO dto = new LogoutDTO();
-        dto.setUsrid(PublicData.getInstance().userID);
+        dto.setUsrid(MemoryData.getInstance().userID);
         onShowLoading();
 
         UserApiClient.getPayCars(this.getActivity(), dto, new CallBack<PayCarResult>() {

@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
@@ -195,7 +195,7 @@ public class UpdatePhoneNumber extends BaseMvpActivity<IBaseView, UpdatePhoneNum
             case R.id.login_btn:
                 String oldPhone = edit_old_phone.getText().toString();
                 if(ValidateUtils.isMobile(oldPhone) &&
-                        !PublicData.getInstance().mLoginInfoBean.getPhoenum().equals(oldPhone)){
+                        !MemoryData.getInstance().mLoginInfoBean.getPhoenum().equals(oldPhone)){
                     ToastUtils.toastShort("您输入的原手机号不正确");
                 }else if(ValidateUtils.isMobile(edit_phone_number.getText().toString())){
                     //presenter.loadView(2);
@@ -220,7 +220,7 @@ public class UpdatePhoneNumber extends BaseMvpActivity<IBaseView, UpdatePhoneNum
     public void updateView(Object object, int index) {
         switch (index){
             case 1:
-                iTime = PublicData.getInstance().smCtrlTime;
+                iTime = MemoryData.getInstance().smCtrlTime;
                 if(iTime > 0){
 //                    Toast.makeText(LoginPhone.this,"验证码发送成功，请注意查收", Toast.LENGTH_SHORT).show();
                     btnNumber.setEnabled(false);
@@ -228,9 +228,9 @@ public class UpdatePhoneNumber extends BaseMvpActivity<IBaseView, UpdatePhoneNum
                 }
                 break;
             case 2:
-                if(PublicData.getInstance().success.equals(((UpdateInfo) object).getSYS_HEAD().getReturnCode())){
-                    PublicData.getInstance().mLoginInfoBean.setPhoenum(edit_phone_number.getText().toString());
-                    UserInfoRememberCtrl.saveObject(PublicData.getInstance().mLoginInfoBean);
+                if(MemoryData.getInstance().success.equals(((UpdateInfo) object).getSYS_HEAD().getReturnCode())){
+                    MemoryData.getInstance().mLoginInfoBean.setPhoenum(edit_phone_number.getText().toString());
+                    UserInfoRememberCtrl.saveObject(MemoryData.getInstance().mLoginInfoBean);
                     finish();
                 }
                 break;

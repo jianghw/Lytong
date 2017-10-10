@@ -10,7 +10,7 @@ import android.view.View;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.chongzhi.fragment.RechargeFragment;
-import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.presenter.chongzhi.RechargePresenter;
 import com.zantong.mobilecttx.utils.jumptools.Act;

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -149,7 +149,7 @@ public class PayHtmlPresenter
         Subscription subscription = mRepository.updateState(violationUpdateDTO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResult>() {
+                .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -161,7 +161,7 @@ public class PayHtmlPresenter
                     }
 
                     @Override
-                    public void doNext(BaseResult result) {
+                    public void doNext(BaseResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.updateStateSucceed(result);
                         } else {

@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.api;
 
-import com.zantong.mobilecttx.home.bean.BannerResult;
+import com.zantong.mobilecttx.home.bean.BannerResponse;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -18,6 +18,6 @@ public interface IBannerService {
      */
     @FormUrlEncoded
     @POST("banner/getBanner")
-    Observable<BannerResult> getBanner(@Field("type") String type);
+    Observable<BannerResponse> getBanner(@Field("type") String type);
 
 }

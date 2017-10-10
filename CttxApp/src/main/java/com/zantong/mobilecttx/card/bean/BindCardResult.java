@@ -1,11 +1,11 @@
 package com.zantong.mobilecttx.card.bean;
 
-import com.zantong.mobilecttx.base.bean.Result;
+import cn.qqtheme.framework.bean.BankResponse;
 
 /**
  * Created by zhengyingbing on 16/9/13.
  */
-public class BindCardResult extends Result {
+public class BindCardResult extends BankResponse {
 
     private BindCard RspInfo;
 

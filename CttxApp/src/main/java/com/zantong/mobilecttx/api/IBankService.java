@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.api;
 
-import com.zantong.mobilecttx.base.bean.Result;
+import cn.qqtheme.framework.bean.BankResponse;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
@@ -33,7 +33,7 @@ public interface IBankService {
 
     @FormUrlEncoded
     @POST("mobilecall_call")
-    Observable<Result> commitCarInfoToOldServer(@Field("msg") String msg);
+    Observable<BankResponse> commitCarInfoToOldServer(@Field("msg") String msg);
 
     @FormUrlEncoded
     @POST("mobilecall_call")

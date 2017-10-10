@@ -19,14 +19,14 @@ import java.util.List;
 
 import cn.qqtheme.framework.R;
 import cn.qqtheme.framework.adapter.PopupCarTypeAdapter;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsData;
-import cn.qqtheme.framework.contract.custom.IAreaDialogListener;
-import cn.qqtheme.framework.contract.custom.ISpeedDialogListener;
-import cn.qqtheme.framework.contract.custom.ITimeDialogListener;
-import cn.qqtheme.framework.picker.LinkagePicker;
-import cn.qqtheme.framework.picker.SparringAreaPicker;
-import cn.qqtheme.framework.picker.SparringTimePicker;
+import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
+import cn.qqtheme.framework.bean.response.SubjectGoodsData;
+import cn.qqtheme.framework.imple.IAreaDialogListener;
+import cn.qqtheme.framework.imple.ISpeedDialogListener;
+import cn.qqtheme.framework.imple.ITimeDialogListener;
+import cn.qqtheme.framework.custom.picker.LinkagePicker;
+import cn.qqtheme.framework.custom.picker.SparringAreaPicker;
+import cn.qqtheme.framework.custom.picker.SparringTimePicker;
 import cn.qqtheme.framework.util.ui.DensityUtils;
 
 /**

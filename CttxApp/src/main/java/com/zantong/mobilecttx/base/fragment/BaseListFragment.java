@@ -15,7 +15,7 @@ import com.jcodecraeer.xrecyclerview.touch.OnSwipeMenuItemClickListener;
 import com.jcodecraeer.xrecyclerview.touch.SwipeMenu;
 import com.jcodecraeer.xrecyclerview.touch.SwipeMenuCreator;
 import com.jcodecraeer.xrecyclerview.touch.SwipeMenuItem;
-import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.R;
 
 import java.util.List;

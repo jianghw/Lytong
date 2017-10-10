@@ -14,13 +14,13 @@ import android.webkit.WebViewClient;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.InterfaceForJS;
 import com.zantong.mobilecttx.contract.browser.IPayHtmlContract;
 import com.zantong.mobilecttx.presenter.browser.PayHtmlPresenter;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 
@@ -148,7 +148,7 @@ public class PayHtmlActivity extends BaseJxActivity implements IPayHtmlContract.
     }
 
     @Override
-    public void updateStateSucceed(BaseResult result) {
+    public void updateStateSucceed(BaseResponse result) {
         finish();
     }
 

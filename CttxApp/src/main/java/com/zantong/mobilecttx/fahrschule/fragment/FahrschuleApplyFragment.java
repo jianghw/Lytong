@@ -20,20 +20,20 @@ import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
-import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.IFahrschuleApplyFtyContract;
 import com.zantong.mobilecttx.eventbus.FahrschuleApplyEvent;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.fahrschule.adapter.FahrschulePopupAresAdapter;
 import com.zantong.mobilecttx.fahrschule.adapter.FahrschulePopupGoodsAdapter;
 import com.zantong.mobilecttx.fahrschule.bean.AresGoodsBean;
-import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
+import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResponse;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderBean;
-import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
 import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailBean;
-import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
+import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResponse;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresBean;
-import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
+import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResponse;
 import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleApplyPresenter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
@@ -314,7 +314,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
      * 3.获取商户区域列表 成功
      */
     @Override
-    public void getMerchantAreaSucceed(MerchantAresResult result) {
+    public void getMerchantAreaSucceed(MerchantAresResponse result) {
         if (result.getData() != null) {
             List<MerchantAresBean> list = result.getData();
 
@@ -392,7 +392,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void getAreaGoodsSucceed(AresGoodsResult result) {
+    public void getAreaGoodsSucceed(AresGoodsResponse result) {
         if (result != null && result.getData() != null) {
             List<AresGoodsBean> list = result.getData();
             selectGoods(list, mTvCourseSel);
@@ -446,7 +446,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void createOrderSucceed(CreateOrderResult result) {
+    public void createOrderSucceed(CreateOrderResponse result) {
         CreateOrderBean bean = result.getData();
         if (bean != null && mPresenter != null) {
             if (mSwitcherListener != null) mSwitcherListener.setCurPosition(1);
@@ -479,7 +479,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void getGoodsDetailSucceed(GoodsDetailResult result) {
+    public void getGoodsDetailSucceed(GoodsDetailResponse result) {
         GoodsDetailBean bean = result.getData();
         if (bean != null) {
             mTvTraffic.setText(bean.getTraffic());

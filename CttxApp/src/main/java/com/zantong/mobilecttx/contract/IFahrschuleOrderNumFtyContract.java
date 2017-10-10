@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.contract;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 /**
  * 报名支付页面
@@ -18,7 +18,7 @@ public interface IFahrschuleOrderNumFtyContract {
 
         void onPayOrderByCouponError(String message);
 
-        void onPayOrderByCouponSucceed(PayOrderResult result);
+        void onPayOrderByCouponSucceed(PayOrderResponse result);
     }
 
     interface IFahrschuleOrderNumFtyPresenter extends IMvpPresenter {

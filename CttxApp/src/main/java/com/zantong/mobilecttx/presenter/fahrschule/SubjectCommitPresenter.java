@@ -3,9 +3,9 @@ package com.zantong.mobilecttx.presenter.fahrschule;
 
 import android.support.annotation.NonNull;
 
-import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectCommitContract;
-import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
@@ -63,7 +63,7 @@ public class SubjectCommitPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<CreateOrderResult>() {
+                .subscribe(new BaseSubscriber<CreateOrderResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -75,7 +75,7 @@ public class SubjectCommitPresenter
                     }
 
                     @Override
-                    public void doNext(CreateOrderResult result) {
+                    public void doNext(CreateOrderResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.createOrderSucceed(result);
                         } else {
@@ -120,7 +120,7 @@ public class SubjectCommitPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<RechargeCouponResult>() {
+                .subscribe(new BaseSubscriber<RechargeCouponResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -132,7 +132,7 @@ public class SubjectCommitPresenter
                     }
 
                     @Override
-                    public void doNext(RechargeCouponResult result) {
+                    public void doNext(RechargeCouponResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.couponByTypeSucceed(result);
                         } else {

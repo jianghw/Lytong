@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.user.fragment;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
@@ -9,19 +10,20 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.contract.IMegTypeAtyContract;
+import com.zantong.mobilecttx.order.bean.MessageResponse;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.user.adapter.MegAdapter;
-import com.zantong.mobilecttx.order.bean.MessageResult;
 import com.zantong.mobilecttx.user.bean.MessageType;
 import com.zantong.mobilecttx.user.bean.MessageTypeBean;
-import com.zantong.mobilecttx.user.bean.MessageTypeResult;
-import cn.qqtheme.framework.util.ToastUtils;
+import com.zantong.mobilecttx.user.bean.MessageTypeResponse;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 消息类别列表
@@ -92,13 +94,12 @@ public class MegTypeFragment extends BaseListFragment<MessageType>
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
         if (!(data instanceof MessageType)) return;
-//        MessageType megBean = (MessageType) data;
-//        Intent intent = new Intent(getActivity(), MegSecondLevelActivity.class);
-//        intent.putExtra("title", megBean.getTitle());
-//        intent.putExtra("id", String.valueOf(megBean.getId()));
-//        startActivityForResult(intent, MESSAGE_REQUEST_CODE);
 
         MessageType item = (MessageType) data;
+        if (TextUtils.isEmpty(item.getMessageDetailId())) {
+            ToastUtils.toastShort("数据出错,请重新加载~");
+            return;
+        }
         Intent intent = new Intent(getActivity(), MegDetailActivity.class);
         intent.putExtra("messageDetailId", item.getMessageDetailId());
         intent.putExtra("title", item.getTitle());
@@ -155,10 +156,10 @@ public class MegTypeFragment extends BaseListFragment<MessageType>
      */
     private void getMsgTypeList() {
         BaseDTO dto = new BaseDTO();
-        dto.setUsrId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
-        CarApiClient.getMsgTypeList(this.getActivity(), dto, new CallBack<MessageTypeResult>() {
+        dto.setUsrId(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
+        CarApiClient.getMsgTypeList(this.getActivity(), dto, new CallBack<MessageTypeResponse>() {
             @Override
-            public void onSuccess(MessageTypeResult result) {
+            public void onSuccess(MessageTypeResponse result) {
                 if (result.getResponseCode() == 2000) {
                     setDataResult(result.getData().getMessageList());
                 }
@@ -185,7 +186,7 @@ public class MegTypeFragment extends BaseListFragment<MessageType>
      * @param messageTypeResult
      */
     @Override
-    public void findAllMessageSucceed(MessageTypeResult messageTypeResult) {
+    public void findAllMessageSucceed(MessageTypeResponse messageTypeResult) {
         MessageTypeBean messageTypeBean = messageTypeResult.getData();
         if (messageTypeBean != null) {
             List<MessageType> megList = messageTypeBean.getMessageList();
@@ -218,7 +219,7 @@ public class MegTypeFragment extends BaseListFragment<MessageType>
     }
 
     @Override
-    public void deleteMessageDetailSucceed(MessageResult messageResult, int position) {
+    public void deleteMessageDetailSucceed(MessageResponse messageResult, int position) {
         mAdapter.remove(position);
         ToastUtils.toastShort(messageResult.getResponseDesc());
 

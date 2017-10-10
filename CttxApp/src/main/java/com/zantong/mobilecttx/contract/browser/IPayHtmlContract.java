@@ -6,7 +6,7 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
 
 import java.util.List;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 
 /**
  * 支付页面
@@ -26,7 +26,7 @@ public interface IPayHtmlContract {
 
         void updateStateError(String s);
 
-        void updateStateSucceed(BaseResult result);
+        void updateStateSucceed(BaseResponse result);
     }
 
     interface IPayHtmlPresenter extends IMvpPresenter {

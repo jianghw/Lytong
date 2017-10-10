@@ -19,11 +19,11 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.ISplashAtyContract;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
-import com.zantong.mobilecttx.home.bean.StartPicResult;
+import com.zantong.mobilecttx.home.bean.StartPicResponse;
 import com.zantong.mobilecttx.presenter.home.SplashPresenter;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -76,7 +76,7 @@ public class SplashActivity extends AppCompatActivity
 
         mImgHuawei = (ImageView) findViewById(R.id.img_huawei);
         String umengChannel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
-        if (umengChannel.equals("huawei")) {
+        if (umengChannel.equals("tzly_huawei")) {
             mImgHuawei.setImageResource(R.mipmap.ic_huawei);
         }
     }
@@ -146,7 +146,7 @@ public class SplashActivity extends AppCompatActivity
      * 广告图片显示
      */
     @Override
-    public void displayAdsImage(StartPicResult result) {
+    public void displayAdsImage(StartPicResponse result) {
         List<StartPicBean> mList = result.getData();
 
         String url = "";
@@ -188,7 +188,7 @@ public class SplashActivity extends AppCompatActivity
      * 添加引导页面图片
      */
     @Override
-    public void displayGuideImage(StartPicResult result) {
+    public void displayGuideImage(StartPicResponse result) {
         mResultList.addAll(result.getData());
     }
 

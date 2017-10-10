@@ -2,10 +2,10 @@ package com.zantong.mobilecttx.contract;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
-import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeResponse;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 /**
  * Created by jianghw on 2017/4/26.
@@ -29,21 +29,21 @@ public interface IRechargeAtyContract {
          */
         void onCouponByTypeError(String message);
 
-        void onCouponByTypeSucceed(RechargeCouponResult result);
+        void onCouponByTypeSucceed(RechargeCouponResponse result);
 
         /**
          * 10.创建加油订单
          */
         void addOilCreateOrderError(String s);
 
-        void addOilCreateOrderSucceed(RechargeResult result);
+        void addOilCreateOrderSucceed(RechargeResponse result);
 
         RechargeDTO initRechargeDTO();
 
         /**
          * 54.充值接口
          */
-        void onPayOrderByCouponSucceed(PayOrderResult result);
+        void onPayOrderByCouponSucceed(PayOrderResponse result);
 
         void onPayOrderByCouponError(String s);
     }

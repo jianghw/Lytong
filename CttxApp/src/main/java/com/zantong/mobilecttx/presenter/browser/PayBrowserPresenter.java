@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import com.zantong.mobilecttx.contract.browser.IPayBrowserFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
-import com.zantong.mobilecttx.order.bean.OrderDetailResult;
+import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
 
 import java.util.concurrent.TimeUnit;
 
@@ -94,7 +94,7 @@ public class PayBrowserPresenter
         Subscription subscription = mRepository.getOrderDetail(getOrderId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<OrderDetailResult>() {
+                .subscribe(new BaseSubscriber<OrderDetailResponse>() {
                     @Override
                     public void doCompleted() {
                     }
@@ -105,7 +105,7 @@ public class PayBrowserPresenter
                     }
 
                     @Override
-                    public void doNext(OrderDetailResult result) {
+                    public void doNext(OrderDetailResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.getOrderDetailSucceed(result);
                         } else {

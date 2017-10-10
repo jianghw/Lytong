@@ -7,15 +7,15 @@ import android.view.View;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
-import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.ICouponAtyContract;
 import com.zantong.mobilecttx.presenter.CouponAtyPresenter;
 import com.zantong.mobilecttx.order.activity.CouponDetailActivity;
 import com.zantong.mobilecttx.order.adapter.CouponAdapter;
 import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
 import com.zantong.mobilecttx.order.bean.CouponFragmentLBean;
-import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
-import com.zantong.mobilecttx.order.bean.MessageResult;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
+import com.zantong.mobilecttx.order.bean.MessageResponse;
 import com.zantong.mobilecttx.widght.SpaceItemDecoration;
 
 import java.util.ArrayList;
@@ -114,7 +114,7 @@ public class CouponFragment extends BaseRecyclerListJxFragment<CouponFragmentBea
     }
 
     @Override
-    public void usrCouponInfoSucceed(CouponFragmentResult result) {
+    public void usrCouponInfoSucceed(CouponFragmentResponse result) {
         CouponFragmentLBean dateBean = result.getData();
         if (dateBean != null) {
             List<CouponFragmentBean> couponList = dateBean.getCouponList();
@@ -131,7 +131,7 @@ public class CouponFragment extends BaseRecyclerListJxFragment<CouponFragmentBea
     }
 
     @Override
-    public void delUsrCouponSucceed(MessageResult result, int position) {
+    public void delUsrCouponSucceed(MessageResponse result, int position) {
         mAdapter.remove(position);
         ToastUtils.toastShort(result.getResponseDesc());
 

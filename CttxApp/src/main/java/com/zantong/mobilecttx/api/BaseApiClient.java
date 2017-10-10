@@ -3,8 +3,8 @@ package com.zantong.mobilecttx.api;
 import android.content.Context;
 
 import com.zantong.mobilecttx.BuildConfig;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
 import com.zantong.mobilecttx.utils.NetUtils;
 
@@ -128,8 +128,8 @@ public class BaseApiClient {
         if (data != null) {
             builder.add("msg", data);
         }
-        if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().userID)) {
-            builder.add("usrid", PublicData.getInstance().userID);
+        if (MemoryData.getInstance().loginFlag && !"".equals(MemoryData.getInstance().userID)) {
+            builder.add("usrid", MemoryData.getInstance().userID);
         }
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).post(builder.build()).build();
@@ -143,8 +143,8 @@ public class BaseApiClient {
         if (jsonParams != null) {
             builder.add("msg", jsonParams);
         }
-        if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().userID)) {
-            builder.add("usrid", PublicData.getInstance().userID);
+        if (MemoryData.getInstance().loginFlag && !"".equals(MemoryData.getInstance().userID)) {
+            builder.add("usrid", MemoryData.getInstance().userID);
         }
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).post(builder.build()).build();
@@ -235,7 +235,9 @@ public class BaseApiClient {
     }
 
     public static String getDownUrl(String relativeUrl) {
-        return BuildConfig.APP_DOWNLOD + relativeUrl;
+        //http://dev.liyingtong.com/download/
+        //http://biz.liyingtong.com/download/
+        return "BuildConfig.APP_DOWNLOD" + relativeUrl;
     }
 
     /**

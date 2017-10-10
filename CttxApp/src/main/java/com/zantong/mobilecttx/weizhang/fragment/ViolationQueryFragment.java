@@ -17,7 +17,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.bean.Result;
+import com.zantong.mobilecttx.application.MemoryData;
+
+import cn.qqtheme.framework.bean.BankResponse;
+
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.car.activity.CarBrandActivity;
 import com.zantong.mobilecttx.car.activity.CarChooseActivity;
@@ -27,8 +30,7 @@ import com.zantong.mobilecttx.car.bean.CarXiBean;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
-import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.common.activity.CommonListActivity;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.contract.IViolationQueryFtyContract;
@@ -58,7 +60,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
@@ -222,8 +224,8 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
 //可添加控件操作
         int size;
-        if (PublicData.getInstance().loginFlag)
-            size = PublicData.getInstance().mServerCars.size();
+        if (MemoryData.getInstance().loginFlag)
+            size = MemoryData.getInstance().mServerCars.size();
         else
             size = SPUtils.getInstance().getCarsInfo().size();
 
@@ -363,7 +365,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
                 ToastUtils.toastShort("请新能源车辆选择新能源汽车车牌");
                 break;
             case R.id.tv_type://车牌类型
-                PublicData.getInstance().commonListType = 3;
+                MemoryData.getInstance().commonListType = 3;
                 Intent intent = new Intent(getActivity(), CommonListActivity.class);
                 startActivityForResult(intent, JxGlobal.requestCode.violation_query_plate);
                 break;
@@ -500,9 +502,9 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
      */
     private void submitData() {
         //登陆状态
-        if (PublicData.getInstance().loginFlag) {
+        if (MemoryData.getInstance().loginFlag) {
             if (mCustomSwitchBtn.isChecked()) {
-                List<UserCarInfoBean> serverCars = PublicData.getInstance().mServerCars;
+                List<UserCarInfoBean> serverCars = MemoryData.getInstance().mServerCars;
                 if (serverCars != null && serverCars.size() > 0) {
                     int size = serverCars.size();
                     if (size >= 3) {
@@ -522,7 +524,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
             }
         }
         //未登录状态
-        if (!PublicData.getInstance().loginFlag) {
+        if (!MemoryData.getInstance().loginFlag) {
             if (mCustomSwitchBtn.isChecked()) {
                 List<CarInfoDTO> infoDTOList = SPUtils.getInstance().getCarsInfo();
                 if (infoDTOList != null && infoDTOList.size() > 0) {
@@ -539,7 +541,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
                     }
                 }
                 SPUtils.getInstance().getCarsInfo().add(getCarInfoDTO());
-                PublicData.getInstance().mCarNum++;//车辆数+1
+                MemoryData.getInstance().mCarNum++;//车辆数+1
                 EventBus.getDefault().post(new AddCarInfoEvent(true, getCarInfoDTO()));
             }
             doQueryVehicle();
@@ -554,10 +556,10 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
     private void doQueryVehicle() {
 
-        PublicData.getInstance().mHashMap.put("carnum", mCarInfoDTO.getCarnum());
-        PublicData.getInstance().mHashMap.put("enginenum", mCarInfoDTO.getEnginenum());
-        PublicData.getInstance().mHashMap.put("carnumtype", mCarInfoDTO.getCarnumtype());
-        PublicData.getInstance().mHashMap.put("IllegalViolationName", mCarInfoDTO.getCarnum());//标题
+        MemoryData.getInstance().mHashMap.put("carnum", mCarInfoDTO.getCarnum());
+        MemoryData.getInstance().mHashMap.put("enginenum", mCarInfoDTO.getEnginenum());
+        MemoryData.getInstance().mHashMap.put("carnumtype", mCarInfoDTO.getCarnumtype());
+        MemoryData.getInstance().mHashMap.put("IllegalViolationName", mCarInfoDTO.getCarnum());//标题
 
         ViolationDTO violationDTO = new ViolationDTO();
         violationDTO.setCarnum(RSAUtils.strByEncryption(mCarInfoDTO.getCarnum(), true));
@@ -589,7 +591,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
      * enginenum	是	string	发动机号 加密
      */
     private void initCarInfoDto(String carNum, String engine, String vehicleCode) {
-        mCarInfoDTO.setUsrid(PublicData.getInstance().userID);
+        mCarInfoDTO.setUsrid(MemoryData.getInstance().userID);
         mCarInfoDTO.setCarnum(carNum);
         mCarInfoDTO.setEnginenum(engine);
         //数字
@@ -617,8 +619,8 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void commitCarInfoToOldServerSucceed(Result responseBean) {
-        PublicData.getInstance().mCarNum++;//车辆数+1
+    public void commitCarInfoToOldServerSucceed(BankResponse responseBean) {
+        MemoryData.getInstance().mCarNum++;//车辆数+1
         EventBus.getDefault().post(new AddCarInfoEvent(true, getCarInfoDTO()));
 
         doQueryVehicle();
@@ -628,7 +630,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
      * 删除车辆 失败
      */
     @Override
-    public void removeVehicleLicenseSucceed(BaseResult responseBean) {
+    public void removeVehicleLicenseSucceed(BaseResponse responseBean) {
         getActivity().finish();
     }
 
@@ -661,7 +663,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
         mBindCarDTO.setPlateNo(carNum);
         mBindCarDTO.setEngineNo(engine);
         mBindCarDTO.setVehicleType(vehicleCode);
-        mBindCarDTO.setUsrnum(PublicData.getInstance().userID);
+        mBindCarDTO.setUsrnum(MemoryData.getInstance().userID);
         mBindCarDTO.setIssueDate(getTvData());
 
 //        mBindCarDTO.setFileNum("");

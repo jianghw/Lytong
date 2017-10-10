@@ -12,10 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
-import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
@@ -25,7 +25,7 @@ import com.zantong.mobilecttx.home.adapter.FavorableBannerImgHolderView;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.bean.BannerBean;
 import com.zantong.mobilecttx.home.bean.BannersBean;
-import com.zantong.mobilecttx.home.bean.ModuleResult;
+import com.zantong.mobilecttx.home.bean.ModuleResponse;
 import com.zantong.mobilecttx.presenter.home.HomeFavorableFtyPresenter;
 import com.zantong.mobilecttx.share.activity.CarBeautyActivity;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
@@ -40,8 +40,8 @@ import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
-import cn.qqtheme.framework.widght.banner.CBViewHolderCreator;
-import cn.qqtheme.framework.widght.banner.ConvenientBanner;
+import cn.qqtheme.framework.custom.banner.CBViewHolderCreator;
+import cn.qqtheme.framework.custom.banner.ConvenientBanner;
 
 /**
  * 优惠页面
@@ -238,7 +238,7 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void moduleTreeSucceed(ModuleResult result) {
+    public void moduleTreeSucceed(ModuleResponse result) {
 
     }
 
@@ -312,7 +312,7 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
      * 进入年检页面
      */
     public void enterDrivingActivity() {
-        if (!PublicData.getInstance().loginFlag) {
+        if (!MemoryData.getInstance().loginFlag) {
             Act.getInstance().gotoIntentLogin(getActivity(), DrivingActivity.class);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             PermissionGen.needPermission(this, 2000, new String[]{

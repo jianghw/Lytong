@@ -4,13 +4,13 @@ package com.zantong.mobilecttx.presenter.home;
 import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.base.dto.BaseDTO;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.home.bean.DriverCoachResult;
+import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
 import com.zantong.mobilecttx.contract.IHomeMeFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
-import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
-import com.zantong.mobilecttx.user.bean.MessageCountResult;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
+import com.zantong.mobilecttx.user.bean.MessageCountResponse;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -49,10 +49,10 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
 
     @Override
     public void getCouponCount() {
-        Subscription subscription = mRepository.usrCouponInfo(PublicData.getInstance().userID, "1")
+        Subscription subscription = mRepository.usrCouponInfo(MemoryData.getInstance().userID, "1")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<CouponFragmentResult>() {
+                .subscribe(new BaseSubscriber<CouponFragmentResponse>() {
                     @Override
                     public void doCompleted() {
 
@@ -64,7 +64,7 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
                     }
 
                     @Override
-                    public void doNext(CouponFragmentResult result) {
+                    public void doNext(CouponFragmentResponse result) {
                         if (result != null && result.getResponseCode() == 2000)
                             mAtyView.getCouponCountSucceed(result);
                         else
@@ -80,7 +80,7 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
         Subscription subscription = mRepository.countMessageDetail(initBaseDTO())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<MessageCountResult>() {
+                .subscribe(new BaseSubscriber<MessageCountResponse>() {
                     @Override
                     public void doCompleted() {
 
@@ -92,7 +92,7 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
                     }
 
                     @Override
-                    public void doNext(MessageCountResult result) {
+                    public void doNext(MessageCountResponse result) {
                         if (result != null && result.getResponseCode() == 2000)
                             mAtyView.countMessageDetailSucceed(result);
                         else
@@ -118,7 +118,7 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
         Subscription subscription = mRepository.getDriverCoach(initUserPhone())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<DriverCoachResult>() {
+                .subscribe(new BaseSubscriber<DriverCoachResponse>() {
                     @Override
                     public void doCompleted() {
 
@@ -130,7 +130,7 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
                     }
 
                     @Override
-                    public void doNext(DriverCoachResult result) {
+                    public void doNext(DriverCoachResponse result) {
                         if (result != null && result.getResponseCode() == 2000)
                             mAtyView.driverCoachSucceed(result);
                         else

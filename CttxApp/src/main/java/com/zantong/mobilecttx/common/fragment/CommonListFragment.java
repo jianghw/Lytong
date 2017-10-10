@@ -5,8 +5,8 @@ import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.common.adapter.CommonListAdapter;
 
 import java.util.Arrays;
@@ -34,7 +34,7 @@ public class CommonListFragment extends BaseListFragment<String> {
         Intent intent = new Intent();
         intent.putExtra(JxGlobal.putExtra.common_list_extra, data.toString());
 
-        PublicData.getInstance().commonListData = data.toString();
+        MemoryData.getInstance().commonListData = data.toString();
         getActivity().setResult(JxGlobal.resultCode.common_list_fty, intent);
 
         getActivity().finish();
@@ -52,7 +52,7 @@ public class CommonListFragment extends BaseListFragment<String> {
 
     @Override
     public void initData() {
-        switch (PublicData.getInstance().commonListType) {
+        switch (MemoryData.getInstance().commonListType) {
             case 0:
                 break;
             case 1://驾照有效期限

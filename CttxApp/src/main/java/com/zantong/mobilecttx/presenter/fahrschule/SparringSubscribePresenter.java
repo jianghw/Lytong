@@ -3,12 +3,12 @@ package com.zantong.mobilecttx.presenter.fahrschule;
 
 import android.support.annotation.NonNull;
 
-import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
 import com.zantong.mobilecttx.contract.fahrschule.ISparringSubscribeContract;
-import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
-import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResult;
-import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
-import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
+import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResponse;
+import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResponse;
+import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
@@ -74,7 +74,7 @@ public class SparringSubscribePresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<SparringAreaResult>() {
+                .subscribe(new BaseSubscriber<SparringAreaResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -86,7 +86,7 @@ public class SparringSubscribePresenter
                     }
 
                     @Override
-                    public void doNext(SparringAreaResult result) {
+                    public void doNext(SparringAreaResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.serviceAreaSucceed(result);
                         } else {
@@ -113,7 +113,7 @@ public class SparringSubscribePresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<SparringGoodsResult>() {
+                .subscribe(new BaseSubscriber<SparringGoodsResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -125,7 +125,7 @@ public class SparringSubscribePresenter
                     }
 
                     @Override
-                    public void doNext(SparringGoodsResult result) {
+                    public void doNext(SparringGoodsResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.goodsSucceed(result);
                         } else {
@@ -152,7 +152,7 @@ public class SparringSubscribePresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<ServerTimeResult>() {
+                .subscribe(new BaseSubscriber<ServerTimeResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -164,7 +164,7 @@ public class SparringSubscribePresenter
                     }
 
                     @Override
-                    public void doNext(ServerTimeResult result) {
+                    public void doNext(ServerTimeResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             serverTimeSucceed(result);
                         } else {
@@ -192,7 +192,7 @@ public class SparringSubscribePresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<RechargeCouponResult>() {
+                .subscribe(new BaseSubscriber<RechargeCouponResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -204,7 +204,7 @@ public class SparringSubscribePresenter
                     }
 
                     @Override
-                    public void doNext(RechargeCouponResult result) {
+                    public void doNext(RechargeCouponResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.couponByTypeSucceed(result);
                         } else {
@@ -225,7 +225,7 @@ public class SparringSubscribePresenter
      * 日期处理类
      * 明天至年底的时间
      */
-    public void serverTimeSucceed(ServerTimeResult result) {
+    public void serverTimeSucceed(ServerTimeResponse result) {
         String dateString = result.getData();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.SIMPLIFIED_CHINESE);
@@ -280,7 +280,7 @@ public class SparringSubscribePresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<CreateOrderResult>() {
+                .subscribe(new BaseSubscriber<CreateOrderResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -292,7 +292,7 @@ public class SparringSubscribePresenter
                     }
 
                     @Override
-                    public void doNext(CreateOrderResult result) {
+                    public void doNext(CreateOrderResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.createOrderSucceed(result);
                         } else {

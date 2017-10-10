@@ -1,12 +1,12 @@
 package com.zantong.mobilecttx.user.bean;
 
-import com.zantong.mobilecttx.base.bean.Result;
+import cn.qqtheme.framework.bean.BankResponse;
 
 /**
  * 我的订单返回实体
  * Created by zhengyingbing on 16/6/1.
  */
-public class OrderResult extends Result {
+public class OrderResult extends BankResponse {
 
     private OrderBean RspInfo;
 

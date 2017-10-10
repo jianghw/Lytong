@@ -2,8 +2,8 @@ package com.zantong.mobilecttx.contract.fahrschule;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
-import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 
 /**
@@ -20,7 +20,7 @@ public interface ISubjectCommitContract {
 
         void createOrderError(String s);
 
-        void createOrderSucceed(CreateOrderResult result);
+        void createOrderSucceed(CreateOrderResponse result);
 
         String getGoodsId();
 
@@ -32,7 +32,7 @@ public interface ISubjectCommitContract {
 
         void couponByTypeError(String message);
 
-        void couponByTypeSucceed(RechargeCouponResult result);
+        void couponByTypeSucceed(RechargeCouponResponse result);
 
         String getCouponId();
 

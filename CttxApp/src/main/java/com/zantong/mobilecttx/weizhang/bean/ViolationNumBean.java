@@ -1,13 +1,13 @@
 package com.zantong.mobilecttx.weizhang.bean;
 
 
-import com.zantong.mobilecttx.base.bean.Result;
+import cn.qqtheme.framework.bean.BankResponse;
 
 /**
  * Created by zhengyingbing on 17/5/5.
  */
 
-public class ViolationNumBean extends Result {
+public class ViolationNumBean extends BankResponse {
 
     private ViolationNum RspInfo;
 

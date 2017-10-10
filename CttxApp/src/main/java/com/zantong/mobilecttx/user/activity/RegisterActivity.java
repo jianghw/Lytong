@@ -15,10 +15,12 @@ import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.bean.Result;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+
+import cn.qqtheme.framework.bean.BankResponse;
+
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.user.bean.VcodeResult;
@@ -192,7 +194,7 @@ public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter
      * 获取验证码
      */
     private void getVerifyCode() {
-        iTime = PublicData.getInstance().smCtrlTime;
+        iTime = MemoryData.getInstance().smCtrlTime;
         if (iTime > 0) {
             mVcodeBtn.setEnabled(false);
             mVcodeBtn.setText("60s");
@@ -256,11 +258,11 @@ public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter
         dto.setCaptcha(vcode);
         dto.setOnlyflag(onlyflag);
         showDialogLoading();
-        UserApiClient.checkVerifyCode(this, dto, new CallBack<Result>() {
+        UserApiClient.checkVerifyCode(this, dto, new CallBack<BankResponse>() {
                     @Override
-                    public void onSuccess(Result result) {
+                    public void onSuccess(BankResponse bankResponse) {
                         hideDialogLoading();
-                        if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
+                        if (Config.OK.equals(bankResponse.getSYS_HEAD().getReturnCode())) {
                             Intent intent = new Intent(RegisterActivity.this, Register2Activity.class);
                             intent.putExtra(Register2Activity.RES_CODE, 0);
                             intent.putExtra(Register2Activity.PHONE, phone);

@@ -1,12 +1,12 @@
 package com.zantong.mobilecttx.user.bean;
 
-import com.zantong.mobilecttx.base.bean.Result;
+import cn.qqtheme.framework.bean.BankResponse;
 
 /**
  * 我的车辆返回实体
  * Created by zhengyingbing on 16/6/1.
  */
-public class UserCarsResult extends Result {
+public class UserCarsResult extends BankResponse {
 
     private UserCarsBean RspInfo;//我的车辆
 

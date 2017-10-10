@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.contract;
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.user.bean.Meg;
-import com.zantong.mobilecttx.order.bean.MessageResult;
+import com.zantong.mobilecttx.order.bean.MessageResponse;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 
 import java.util.List;
@@ -22,11 +22,11 @@ public interface IMegSecondLevelAtyContract {
          *
          * @param messageResult
          */
-        void findMessageDetailByMessageIdSucceed(MessageResult messageResult);
+        void findMessageDetailByMessageIdSucceed(MessageResponse messageResult);
 
         void findMessageDetailByMessageIdError(String message);
 
-        void deleteMessageDetailSucceed(MessageResult messageResult, int position);
+        void deleteMessageDetailSucceed(MessageResponse messageResult, int position);
 
         void deleteMessageDetailError(String message);
 

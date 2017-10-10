@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cn.qqtheme.framework.R;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
+import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
 
 /**
  * 底部弹出框 列表显示

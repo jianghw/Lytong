@@ -1,11 +1,11 @@
 package com.zantong.mobilecttx.car.bean;
 
-import com.zantong.mobilecttx.base.bean.Result;
+import cn.qqtheme.framework.bean.BankResponse;
 
 /**
  * Created by zhengyingbing on 16/6/1.
  */
-public class PayCarResult extends Result {
+public class PayCarResult extends BankResponse {
 
     private PayCarBean RspInfo;//总笔数
 

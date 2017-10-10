@@ -4,7 +4,7 @@ package com.zantong.mobilecttx.presenter.fahrschule;
 import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectIntensifyContract;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
+import cn.qqtheme.framework.bean.response.SubjectGoodsResponse;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 
@@ -61,7 +61,7 @@ public class SubjectIntensifyPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<SubjectGoodsResult>() {
+                .subscribe(new BaseSubscriber<SubjectGoodsResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -73,7 +73,7 @@ public class SubjectIntensifyPresenter
                     }
 
                     @Override
-                    public void doNext(SubjectGoodsResult result) {
+                    public void doNext(SubjectGoodsResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.getGoodsSucceed(result);
                         } else {

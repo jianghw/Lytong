@@ -20,7 +20,7 @@
             android:layout_height="@dimen/ds_285"
             android:layout_centerInParent="true">
 
-            <cn.qqtheme.framework.widght.CustomLoader
+            <cn.qqtheme.framework.custom.CustomLoader
                 android:id="@+id/img_loader"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

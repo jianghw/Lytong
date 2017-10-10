@@ -1,8 +1,8 @@
 package com.zantong.mobilecttx.api;
 
-import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeResponse;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -20,10 +20,10 @@ public interface IAddOilService {
      * 10.创建加油订单
      */
     @POST("addOil/createOrder")
-    Observable<RechargeResult> addOilCreateOrder(@Body RechargeDTO baseDTO);
+    Observable<RechargeResponse> addOilCreateOrder(@Body RechargeDTO baseDTO);
 
     @GET("payment/payForWapb2cPay")
-    Observable<PayOrderResult> onPayOrderByCoupon(@Query("orderid") String orderid,
-                                                  @Query("amount") String amount,
-                                                  @Query("payType") String payType);
+    Observable<PayOrderResponse> onPayOrderByCoupon(@Query("orderid") String orderid,
+                                                    @Query("amount") String amount,
+                                                    @Query("payType") String payType);
 }

@@ -2,10 +2,10 @@ package com.zantong.mobilecttx.contract;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import com.zantong.mobilecttx.order.bean.ReceiveInfoResult;
+import com.zantong.mobilecttx.order.bean.ReceiveInfoResponse;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 
 /**
  * 快递会叫页面
@@ -25,7 +25,7 @@ public interface IOrderExpressContract {
 
         void addExpressInfoError(String message);
 
-        void addExpressInfoSucceed(BaseResult result);
+        void addExpressInfoSucceed(BaseResponse result);
 
         String getUserName();
 
@@ -39,7 +39,7 @@ public interface IOrderExpressContract {
 
         void getReceiveInfoError(String message);
 
-        void getReceiveInfoSucceed(ReceiveInfoResult result);
+        void getReceiveInfoSucceed(ReceiveInfoResponse result);
     }
 
     interface IOrderExpressPresenter extends IMvpPresenter {

@@ -2,30 +2,11 @@ package com.zantong.mobilecttx.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
 import android.util.Base64;
-import android.util.Log;
-
-import com.zantong.mobilecttx.BuildConfig;
-import com.zantong.mobilecttx.api.FileDownloadApi;
-import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.map.bean.NetLocationBean;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.ResponseBody;
-import retrofit2.Response;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by zhengyingbing on 16/7/8.

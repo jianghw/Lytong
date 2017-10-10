@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.chongzhi.bean;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 
 import java.io.Serializable;
 
@@ -21,7 +21,7 @@ import java.io.Serializable;
  *
  * create at 16/12/30 下午4:15
  */
-public class RechargeOrderBean extends BaseResult implements Serializable {
+public class RechargeOrderBean extends BaseResponse implements Serializable {
 
     private static final long serialVersionUID = -7620435178023928252L;
 

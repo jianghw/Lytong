@@ -1,11 +1,11 @@
 package com.zantong.mobilecttx.user.bean;
 
-import com.zantong.mobilecttx.base.bean.Result;
+import cn.qqtheme.framework.bean.BankResponse;
 
 /**
  * Created by zhengyingbing on 16/6/1.
  */
-public class VcodeResult extends Result {
+public class VcodeResult extends BankResponse {
 
     private VcodeBean RspInfo;
 

@@ -9,14 +9,14 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.contract.IMegSecondLevelAtyContract;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.user.activity.MegSecondLevelActivity;
 import com.zantong.mobilecttx.user.adapter.MegSecondLevelAdapter;
 import com.zantong.mobilecttx.user.bean.Meg;
 import com.zantong.mobilecttx.order.bean.MessageBean;
-import com.zantong.mobilecttx.order.bean.MessageResult;
+import com.zantong.mobilecttx.order.bean.MessageResponse;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
@@ -168,12 +168,12 @@ public class MegSecondLevelFragment extends BaseListFragment<Meg>
      */
     private void getMsgList() {
         MegDTO dto = new MegDTO();
-        dto.setUsrId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
+        dto.setUsrId(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
         String id = getArguments().getString(STR_TYPE);
         dto.setId(id);
-        CarApiClient.getMsgList(this.getActivity(), dto, new CallBack<MessageResult>() {
+        CarApiClient.getMsgList(this.getActivity(), dto, new CallBack<MessageResponse>() {
             @Override
-            public void onSuccess(MessageResult result) {
+            public void onSuccess(MessageResponse result) {
                 if (result.getResponseCode() == 2000) {
                     setDataResult(result.getData().getMessageDetailList());
                 }
@@ -192,7 +192,7 @@ public class MegSecondLevelFragment extends BaseListFragment<Meg>
      * @param messageResult
      */
     @Override
-    public void findMessageDetailByMessageIdSucceed(MessageResult messageResult) {
+    public void findMessageDetailByMessageIdSucceed(MessageResponse messageResult) {
         MessageBean messageBean = messageResult.getData();
         if (messageBean != null) {
             List<Meg> megList = messageBean.getMessageDetailList();
@@ -229,7 +229,7 @@ public class MegSecondLevelFragment extends BaseListFragment<Meg>
     }
 
     @Override
-    public void deleteMessageDetailSucceed(MessageResult messageResult, int position) {
+    public void deleteMessageDetailSucceed(MessageResponse messageResult, int position) {
         mAdapter.remove(position);
         ToastUtils.toastShort(messageResult.getResponseDesc());
 

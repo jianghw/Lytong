@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
-import cn.qqtheme.framework.widght.banner.CBPageAdapter;
+import cn.qqtheme.framework.custom.banner.CBPageAdapter;
 
 /**
  * Created by Sai on 15/8/4.

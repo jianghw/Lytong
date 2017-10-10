@@ -69,7 +69,6 @@ public class APPHttpClient {
 
     /**
      * 上传文件接口
-     * @return
      */
     public CTTXHttpPOSTInterface getCTTXHttpPOSTFileInterface (){
 

@@ -11,7 +11,7 @@
         android:layout_height="0dp"
         android:layout_weight="46">
 
-        <cn.qqtheme.framework.widght.banner.ConvenientBanner
+        <cn.qqtheme.framework.custom.banner.ConvenientBanner
             android:id="@+id/custom_convenientBanner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

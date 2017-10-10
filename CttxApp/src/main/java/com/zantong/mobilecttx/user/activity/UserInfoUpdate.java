@@ -21,8 +21,8 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.FileUploadApi;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.contract.UserInfoUpdateView;
 import com.zantong.mobilecttx.presenter.UserInfoUpdatePresenter;
 import com.zantong.mobilecttx.utils.StringUtils;
@@ -105,7 +105,7 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
         File file = getHeadImageFile();
         if (file == null)
             ImageLoadUtils.loadHead(
-                    PublicData.getInstance().mLoginInfoBean.getPortrait(),
+                    MemoryData.getInstance().mLoginInfoBean.getPortrait(),
                     user_head_image
             );
     }
@@ -113,12 +113,12 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
     @Override
     protected void onResume() {
         super.onResume();
-        if (!Tools.isStrEmpty(PublicData.getInstance().mLoginInfoBean.getNickname())) {
-            user_info_name_text.setText(PublicData.getInstance().mLoginInfoBean.getNickname());
+        if (!Tools.isStrEmpty(MemoryData.getInstance().mLoginInfoBean.getNickname())) {
+            user_info_name_text.setText(MemoryData.getInstance().mLoginInfoBean.getNickname());
         } else {
-            user_info_name_text.setText(PublicData.getInstance().mLoginInfoBean.getPhoenum().substring(7));
+            user_info_name_text.setText(MemoryData.getInstance().mLoginInfoBean.getPhoenum().substring(7));
         }
-        String phone = StringUtils.getEncrypPhone(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+        String phone = StringUtils.getEncrypPhone(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
         user_info_phone_text.setText(phone);
     }
 
@@ -399,10 +399,10 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
         Map<String, RequestBody> params = new HashMap<>();
         RequestBody body = RequestBody.create(MediaType.parse("image/jpeg"), temFile);
         String imagFileName = "";
-        String[] imageUrls = PublicData.getInstance().mLoginInfoBean.getPortrait().split("\\/");
+        String[] imageUrls = MemoryData.getInstance().mLoginInfoBean.getPortrait().split("\\/");
 
-        if (Tools.isStrEmpty(PublicData.getInstance().mLoginInfoBean.getPortrait())) {
-            imagFileName = PublicData.getInstance().userID + ".jpg";
+        if (Tools.isStrEmpty(MemoryData.getInstance().mLoginInfoBean.getPortrait())) {
+            imagFileName = MemoryData.getInstance().userID + ".jpg";
         } else {
             imagFileName = imageUrls[imageUrls.length - 1];
         }
@@ -426,10 +426,10 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
                             url = json.get("url").toString();
 
                             mapData().put("portrait", url);
-                            if (Tools.isStrEmpty(PublicData.getInstance().mLoginInfoBean.getPortrait())) {
+                            if (Tools.isStrEmpty(MemoryData.getInstance().mLoginInfoBean.getPortrait())) {
                                 mUserInfoUpdatePresenter.loadView(1);
                             } else {
-                                ImageLoadUtils.loadHead(PublicData.getInstance().mLoginInfoBean.getPortrait(), user_head_image);
+                                ImageLoadUtils.loadHead(MemoryData.getInstance().mLoginInfoBean.getPortrait(), user_head_image);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

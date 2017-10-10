@@ -1,7 +1,7 @@
 package com.zantong.mobilecttx.contract;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
-import com.zantong.mobilecttx.base.bean.Result;
+import cn.qqtheme.framework.bean.BaseResponse;
+import cn.qqtheme.framework.bean.BankResponse;
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
@@ -39,9 +39,9 @@ public interface IViolationQueryFtyContract {
 
         void commitCarInfoToNewServerError(String message);
 
-        void commitCarInfoToOldServerSucceed(Result responseBean);
+        void commitCarInfoToOldServerSucceed(BankResponse responseBean);
 
-        void removeVehicleLicenseSucceed(BaseResult responseBean);
+        void removeVehicleLicenseSucceed(BaseResponse responseBean);
 
         void removeVehicleLicenseError(String message);
     }

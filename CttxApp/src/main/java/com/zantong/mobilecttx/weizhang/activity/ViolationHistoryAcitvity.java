@@ -13,9 +13,9 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.contract.ItemClickListener;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -77,7 +77,7 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView,HelpPres
         showDialogLoading();
         ViolationSearchDTO dto = new ViolationSearchDTO();
         dto.setDate(mDate);
-        dto.setUsernum(RSAUtils.strByEncryption(PublicData.getInstance().userID,true));
+        dto.setUsernum(RSAUtils.strByEncryption(MemoryData.getInstance().userID,true));
         CarApiClient.getViolationHistory(this, dto, new CallBack<ViolationHistoryBean>() {
             @Override
             public void onSuccess(ViolationHistoryBean result) {
@@ -93,7 +93,7 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView,HelpPres
                     ViolationSearchDTO dto = new ViolationSearchDTO();
                     dto.setCarnum(info.getCarnum());
                     dto.setDate(mDate);
-                    dto.setUsernum(RSAUtils.strByEncryption(PublicData.getInstance().userID,true));
+                    dto.setUsernum(RSAUtils.strByEncryption(MemoryData.getInstance().userID,true));
                     getHistoryByCar(info,dto);
 
                 }

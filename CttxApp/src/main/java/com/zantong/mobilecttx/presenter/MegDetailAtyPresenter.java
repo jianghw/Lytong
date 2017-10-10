@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.contract.IMegDetailAtyContract;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
-import com.zantong.mobilecttx.user.bean.MessageDetailResult;
+import com.zantong.mobilecttx.user.bean.MessageDetailResponse;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 
 import rx.Subscriber;
@@ -59,7 +59,7 @@ public class MegDetailAtyPresenter implements IMegDetailAtyContract.IMegDetailAt
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<MessageDetailResult>() {
+                .subscribe(new Subscriber<MessageDetailResponse>() {
                     @Override
                     public void onCompleted() {
                         isRefresh = true;
@@ -71,7 +71,7 @@ public class MegDetailAtyPresenter implements IMegDetailAtyContract.IMegDetailAt
                     }
 
                     @Override
-                    public void onNext(MessageDetailResult result) {
+                    public void onNext(MessageDetailResponse result) {
                         if (result != null
                                 && result.getResponseCode() == 2000) {
                             mView.findMessageDetailSucceed(result);

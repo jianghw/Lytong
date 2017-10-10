@@ -6,9 +6,9 @@ import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.contract.IMegTypeAtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
-import com.zantong.mobilecttx.order.bean.MessageResult;
+import com.zantong.mobilecttx.order.bean.MessageResponse;
 import com.zantong.mobilecttx.user.bean.MessageType;
-import com.zantong.mobilecttx.user.bean.MessageTypeResult;
+import com.zantong.mobilecttx.user.bean.MessageTypeResponse;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 
 import rx.Subscription;
@@ -61,7 +61,7 @@ public class MegTypeAtyPresenter implements IMegTypeAtyContract.IMegTypeAtyPrese
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<MessageTypeResult>() {
+                .subscribe(new BaseSubscriber<MessageTypeResponse>() {
                     @Override
                     public void doCompleted() {
                         isRefresh = true;
@@ -73,7 +73,7 @@ public class MegTypeAtyPresenter implements IMegTypeAtyContract.IMegTypeAtyPrese
                     }
 
                     @Override
-                    public void doNext(MessageTypeResult messageTypeResult) {
+                    public void doNext(MessageTypeResponse messageTypeResult) {
                         if (messageTypeResult != null
                                 && messageTypeResult.getResponseCode() == 2000) {
                             mView.findAllMessageSucceed(messageTypeResult);
@@ -103,7 +103,7 @@ public class MegTypeAtyPresenter implements IMegTypeAtyContract.IMegTypeAtyPrese
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<MessageResult>() {
+                .subscribe(new BaseSubscriber<MessageResponse>() {
                     @Override
                     public void doCompleted() {
                         mView.dismissLoadingDialog();
@@ -115,7 +115,7 @@ public class MegTypeAtyPresenter implements IMegTypeAtyContract.IMegTypeAtyPrese
                     }
 
                     @Override
-                    public void doNext(MessageResult messageResult) {
+                    public void doNext(MessageResponse messageResult) {
                         if (messageResult != null
                                 && messageResult.getResponseCode() == 2000) {
                             mView.deleteMessageDetailSucceed(messageResult, position);

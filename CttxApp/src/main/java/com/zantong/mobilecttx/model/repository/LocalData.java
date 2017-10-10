@@ -4,10 +4,10 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
@@ -46,13 +46,13 @@ public class LocalData {
 
     BaseDTO initBaseDTO() {
         BaseDTO dto = new BaseDTO();
-        dto.setUsrId(strByEncryption(PublicData.getInstance().userID, true));
+        dto.setUsrId(strByEncryption(MemoryData.getInstance().userID, true));
         return dto;
     }
 
     public MessageDetailDTO initMessageDetailDTO() {
         MessageDetailDTO dto = new MessageDetailDTO();
-        dto.setUsrId(strByEncryption(PublicData.getInstance().userID, true));
+        dto.setUsrId(strByEncryption(MemoryData.getInstance().userID, true));
         return dto;
     }
 
@@ -62,7 +62,7 @@ public class LocalData {
      * @return
      */
     public String DefaultUserID() {
-        return PublicData.getInstance().userID;
+        return MemoryData.getInstance().userID;
     }
 
     /**
@@ -88,7 +88,7 @@ public class LocalData {
      * 登陆用户信息
      */
     public RspInfoBean getDefaultUser() {
-        return PublicData.getInstance().mLoginInfoBean;
+        return MemoryData.getInstance().mLoginInfoBean;
     }
 
     /**
@@ -129,18 +129,18 @@ public class LocalData {
      */
     public void initGlobalLoginInfo(RspInfoBean rspInfoBean) {
         if (rspInfoBean == null) return;
-        PublicData.getInstance().mLoginInfoBean = rspInfoBean;
-        PublicData.getInstance().userID = rspInfoBean.getUsrid();
-        PublicData.getInstance().filenum = rspInfoBean.getFilenum();
-        PublicData.getInstance().getdate = rspInfoBean.getGetdate();
-        PublicData.getInstance().loginFlag = true;
+        MemoryData.getInstance().mLoginInfoBean = rspInfoBean;
+        MemoryData.getInstance().userID = rspInfoBean.getUsrid();
+        MemoryData.getInstance().filenum = rspInfoBean.getFilenum();
+        MemoryData.getInstance().getdate = rspInfoBean.getGetdate();
+        MemoryData.getInstance().loginFlag = true;
 
         OpenQueryBean.RspInfoBean.UserCarsInfoBean mUserCarsInfoBean =
                 (OpenQueryBean.RspInfoBean.UserCarsInfoBean)
-                        UserInfoRememberCtrl.readObject(PublicData.getInstance().DefaultCarLocalFlag);
+                        UserInfoRememberCtrl.readObject(MemoryData.getInstance().DefaultCarLocalFlag);
         if (mUserCarsInfoBean != null) {
-            PublicData.getInstance().defaultCar = true;
-            PublicData.getInstance().defaultCarNumber = mUserCarsInfoBean.getCarnum();
+            MemoryData.getInstance().defaultCar = true;
+            MemoryData.getInstance().defaultCarNumber = mUserCarsInfoBean.getCarnum();
         }
     }
 
@@ -162,7 +162,7 @@ public class LocalData {
      */
     public void saveLoginInfoRepeat(LoginInfoBean result) {
         initGlobalLoginInfo(result.getRspInfo());
-        UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, PublicData.getInstance().imei);
+        UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, MemoryData.getInstance().imei);
         UserInfoRememberCtrl.saveObject(result.getRspInfo());
     }
 }

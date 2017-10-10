@@ -4,7 +4,7 @@ import android.content.Intent;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
-import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.presenter.MegSecondLevelAtyPresenter;
 import com.zantong.mobilecttx.user.fragment.MegSecondLevelFragment;
 

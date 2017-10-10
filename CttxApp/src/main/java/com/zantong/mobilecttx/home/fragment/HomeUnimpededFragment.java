@@ -12,15 +12,15 @@ import android.widget.TextView;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.alicloudpush.PushBean;
+import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.push.PushBean;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
-import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.eventbus.GetMsgAgainEvent;
@@ -31,14 +31,14 @@ import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.adapter.MainBannerImgHolderView;
 import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.home.bean.HomeBean;
-import com.zantong.mobilecttx.home.bean.HomeCarResult;
+import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
-import com.zantong.mobilecttx.home.bean.HomeResult;
+import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.presenter.home.UnimpededFtyPresenter;
 import com.zantong.mobilecttx.user.activity.MegTypeActivity;
 import com.zantong.mobilecttx.user.bean.MessageCountBean;
-import com.zantong.mobilecttx.user.bean.MessageCountResult;
+import com.zantong.mobilecttx.user.bean.MessageCountResponse;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.utils.SPUtils;
@@ -64,8 +64,8 @@ import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
-import cn.qqtheme.framework.widght.banner.CBViewHolderCreator;
-import cn.qqtheme.framework.widght.banner.ConvenientBanner;
+import cn.qqtheme.framework.custom.banner.CBViewHolderCreator;
+import cn.qqtheme.framework.custom.banner.ConvenientBanner;
 
 import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
 
@@ -237,7 +237,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     private void resumeDataVisible() {
         mPresenter.homePage();
 
-        if (PublicData.getInstance().loginFlag) {
+        if (MemoryData.getInstance().loginFlag) {
             mPresenter.getTextNoticeInfo();
         } else {
             getLocalCarInfo();
@@ -308,7 +308,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void homePageSucceed(HomeResult result) {
+    public void homePageSucceed(HomeResponse result) {
         HomeBean bean = result.getData();
         //未读消息
         mTvMsgCount.setText(bean != null ? String.valueOf(bean.getMsgNum()) : "0");
@@ -354,14 +354,14 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void getTextNoticeInfo(HomeCarResult result) {
+    public void getTextNoticeInfo(HomeCarResponse result) {
         if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
         if (result != null && result.getData() != null) {
             List<UserCarInfoBean> infoBeanList = result.getData();
             //车辆数据保存处理
-            PublicData.getInstance().payData.clear();
-            PublicData.getInstance().mCarNum = infoBeanList.size();
-            PublicData.getInstance().mServerCars = decodeCarInfo(infoBeanList);
+            MemoryData.getInstance().payData.clear();
+            MemoryData.getInstance().mCarNum = infoBeanList.size();
+            MemoryData.getInstance().mServerCars = decodeCarInfo(infoBeanList);
 
             mUserCarInfoBeanList.addAll(infoBeanList);
         }
@@ -379,9 +379,9 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         if (result != null && result.getRspInfo() != null) {
             List<UserCarInfoBean> infoBeanList = result.getRspInfo().getUserCarsInfo();
 
-            PublicData.getInstance().payData.clear();
-            PublicData.getInstance().mCarNum = infoBeanList.size();
-            PublicData.getInstance().mServerCars = decodeCarInfo(infoBeanList);
+            MemoryData.getInstance().payData.clear();
+            MemoryData.getInstance().mCarNum = infoBeanList.size();
+            MemoryData.getInstance().mServerCars = decodeCarInfo(infoBeanList);
 
             mUserCarInfoBeanList.addAll(infoBeanList);
         }
@@ -402,7 +402,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
             if (!TextUtils.isEmpty(userCarInfoBean.getIspaycar())
                     && userCarInfoBean.getIspaycar().equals("1"))
 
-                PublicData.getInstance().payData.add(userCarInfoBean);
+                MemoryData.getInstance().payData.add(userCarInfoBean);
             arrayList.add(userCarInfoBean);
         }
         return arrayList;
@@ -426,8 +426,8 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         mCarViolationAdapter.notifyDataSetChanged(mUserCarInfoBeanList);
         mCustomViolation.notifyDataSetChanged();
 
-        PublicData.getInstance().mLocalCars = list;
-        PublicData.getInstance().mCarNum = list != null ? list.size() : 0;
+        MemoryData.getInstance().mLocalCars = list;
+        MemoryData.getInstance().mCarNum = list != null ? list.size() : 0;
     }
 
     /**
@@ -472,10 +472,10 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     public void onDataSynEvent(GetMsgAgainEvent event) {
         if (event != null && event.getStatus()) {
             BaseDTO dto = new BaseDTO();
-            dto.setUsrId(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
-            CarApiClient.getUnReadMsgCount(this.getActivity(), dto, new CallBack<MessageCountResult>() {
+            dto.setUsrId(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
+            CarApiClient.getUnReadMsgCount(this.getActivity(), dto, new CallBack<MessageCountResponse>() {
                 @Override
-                public void onSuccess(MessageCountResult result) {
+                public void onSuccess(MessageCountResponse result) {
                     if (result.getResponseCode() == 2000) {
                         MessageCountBean bean = result.getData();
                         //未读消息
@@ -548,14 +548,14 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
     protected void licenseCheckGrade() {
         LicenseFileNumDTO bean = SPUtils.getInstance().getLicenseFileNumDTO();
-        if (!PublicData.getInstance().loginFlag ||
-                bean == null && TextUtils.isEmpty(PublicData.getInstance().filenum)) {
+        if (!MemoryData.getInstance().loginFlag ||
+                bean == null && TextUtils.isEmpty(MemoryData.getInstance().filenum)) {
             Act.getInstance().gotoIntentLogin(getActivity(), LicenseCheckGradeActivity.class);
-        } else if (bean != null || !TextUtils.isEmpty(PublicData.getInstance().filenum)
-                && !TextUtils.isEmpty(PublicData.getInstance().getdate)) {
+        } else if (bean != null || !TextUtils.isEmpty(MemoryData.getInstance().filenum)
+                && !TextUtils.isEmpty(MemoryData.getInstance().getdate)) {
             LicenseFileNumDTO loginBean = new LicenseFileNumDTO();
-            loginBean.setFilenum(PublicData.getInstance().filenum);
-            loginBean.setStrtdt(PublicData.getInstance().getdate);
+            loginBean.setFilenum(MemoryData.getInstance().filenum);
+            loginBean.setStrtdt(MemoryData.getInstance().getdate);
 
             Intent intent = new Intent(getActivity(), LicenseDetailActivity.class);
             Bundle bundle = new Bundle();
@@ -589,7 +589,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
      * 进入年检页面
      */
     public void enterDrivingActivity() {
-        if (!PublicData.getInstance().loginFlag) {
+        if (!MemoryData.getInstance().loginFlag) {
             Act.getInstance().gotoIntentLogin(getActivity(), BaiduMapParentActivity.class);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             PermissionGen.needPermission(this, 2000, new String[]{

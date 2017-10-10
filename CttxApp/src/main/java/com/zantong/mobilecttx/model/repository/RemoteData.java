@@ -19,53 +19,53 @@ import com.zantong.mobilecttx.api.ISplashService;
 import com.zantong.mobilecttx.api.ITextService;
 import com.zantong.mobilecttx.api.IUserService;
 import com.zantong.mobilecttx.api.IViolationService;
-import com.zantong.mobilecttx.base.bean.Result;
+import cn.qqtheme.framework.bean.BankResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
-import com.zantong.mobilecttx.car.bean.VehicleLicenseResult;
+import com.zantong.mobilecttx.car.bean.VehicleLicenseResponse;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
-import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResult;
-import com.zantong.mobilecttx.chongzhi.bean.RechargeResult;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeResponse;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
 import com.zantong.mobilecttx.contract.CTTXHttpPOSTInterface;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
-import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
-import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
-import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
-import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
-import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
-import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResult;
-import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResult;
-import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResult;
+import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResponse;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
+import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResponse;
+import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResponse;
+import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
+import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResponse;
+import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResponse;
+import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
-import com.zantong.mobilecttx.home.bean.BannerResult;
-import com.zantong.mobilecttx.home.bean.DriverCoachResult;
-import com.zantong.mobilecttx.home.bean.HomeCarResult;
-import com.zantong.mobilecttx.home.bean.HomeResult;
-import com.zantong.mobilecttx.home.bean.ModuleResult;
-import com.zantong.mobilecttx.home.bean.StartPicResult;
+import com.zantong.mobilecttx.home.bean.BannerResponse;
+import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
+import com.zantong.mobilecttx.home.bean.HomeCarResponse;
+import com.zantong.mobilecttx.home.bean.HomeResponse;
+import com.zantong.mobilecttx.home.bean.ModuleResponse;
+import com.zantong.mobilecttx.home.bean.StartPicResponse;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
-import com.zantong.mobilecttx.map.bean.GasStationDetailResult;
-import com.zantong.mobilecttx.map.bean.GasStationResult;
-import com.zantong.mobilecttx.map.bean.YearCheckDetailResult;
-import com.zantong.mobilecttx.map.bean.YearCheckResult;
+import com.zantong.mobilecttx.map.bean.GasStationDetailResponse;
+import com.zantong.mobilecttx.map.bean.GasStationResponse;
+import com.zantong.mobilecttx.map.bean.YearCheckDetailResponse;
+import com.zantong.mobilecttx.map.bean.YearCheckResponse;
 import com.zantong.mobilecttx.map.dto.AnnualDTO;
-import com.zantong.mobilecttx.order.bean.CouponFragmentResult;
-import com.zantong.mobilecttx.order.bean.MessageResult;
-import com.zantong.mobilecttx.order.bean.OrderDetailResult;
-import com.zantong.mobilecttx.order.bean.OrderExpressResult;
-import com.zantong.mobilecttx.order.bean.OrderListResult;
-import com.zantong.mobilecttx.order.bean.ReceiveInfoResult;
+import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
+import com.zantong.mobilecttx.order.bean.MessageResponse;
+import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
+import com.zantong.mobilecttx.order.bean.OrderExpressResponse;
+import com.zantong.mobilecttx.order.bean.OrderListResponse;
+import com.zantong.mobilecttx.order.bean.ReceiveInfoResponse;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
-import com.zantong.mobilecttx.user.bean.MessageCountResult;
-import com.zantong.mobilecttx.user.bean.MessageDetailResult;
-import com.zantong.mobilecttx.user.bean.MessageTypeResult;
+import com.zantong.mobilecttx.user.bean.MessageCountResponse;
+import com.zantong.mobilecttx.user.bean.MessageDetailResponse;
+import com.zantong.mobilecttx.user.bean.MessageTypeResponse;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNumBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
@@ -76,8 +76,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
+import cn.qqtheme.framework.bean.BaseResponse;
+import cn.qqtheme.framework.bean.response.SubjectGoodsResponse;
 import okhttp3.MultipartBody;
 import retrofit2.Retrofit;
 import rx.Observable;
@@ -124,17 +124,17 @@ public class RemoteData implements IRemoteSource {
      * 消息模块
      */
     @Override
-    public Observable<MessageTypeResult> messageFindAll(BaseDTO bean) {
+    public Observable<MessageTypeResponse> messageFindAll(BaseDTO bean) {
         return initRetrofit().create(IMessageService.class).messageFindAll(bean);
     }
 
     @Override
-    public Observable<MessageResult> findMessageDetailByMessageId(MegDTO bean) {
+    public Observable<MessageResponse> findMessageDetailByMessageId(MegDTO bean) {
         return initRetrofit().create(IMessageService.class).findMessageDetailByMessageId(bean);
     }
 
     @Override
-    public Observable<MessageDetailResult> findMessageDetail(MessageDetailDTO bean) {
+    public Observable<MessageDetailResponse> findMessageDetail(MessageDetailDTO bean) {
         return initRetrofit().create(IMessageService.class).findMessageDetail(bean);
     }
 
@@ -142,7 +142,7 @@ public class RemoteData implements IRemoteSource {
      * 2.4.24删除消息
      */
     @Override
-    public Observable<MessageResult> deleteMessageDetail(MegDTO megDTO) {
+    public Observable<MessageResponse> deleteMessageDetail(MegDTO megDTO) {
         return initRetrofit().create(IMessageService.class).deleteMessageDetail(megDTO);
     }
 
@@ -150,7 +150,7 @@ public class RemoteData implements IRemoteSource {
      * 优惠劵模块
      */
     @Override
-    public Observable<CouponFragmentResult> usrCouponInfo(String usrnum, String couponStatus) {
+    public Observable<CouponFragmentResponse> usrCouponInfo(String usrnum, String couponStatus) {
         return initRetrofit().create(IFebruaryService.class).usrCouponInfo(usrnum, couponStatus);
     }
 
@@ -158,7 +158,7 @@ public class RemoteData implements IRemoteSource {
      * 2.4.27删除用户优惠券
      */
     @Override
-    public Observable<MessageResult> delUsrCoupon(String couponId, String userId) {
+    public Observable<MessageResponse> delUsrCoupon(String couponId, String userId) {
         return initRetrofit().create(IFebruaryService.class).delUsrCoupon(couponId, userId);
     }
 
@@ -192,7 +192,7 @@ public class RemoteData implements IRemoteSource {
      * @return
      */
     @Override
-    public Observable<StartPicResult> startGetPic(String msg) {
+    public Observable<StartPicResponse> startGetPic(String msg) {
         return initRetrofit().create(ISplashService.class).startGetPic(msg);
     }
 
@@ -200,7 +200,7 @@ public class RemoteData implements IRemoteSource {
      * 57.获取指定类型优惠券
      */
     @Override
-    public Observable<RechargeCouponResult> getCouponByType(String userId, String type) {
+    public Observable<RechargeCouponResponse> getCouponByType(String userId, String type) {
         return initRetrofit().create(IFebruaryService.class).getConponByType(userId, type);
     }
 
@@ -208,7 +208,7 @@ public class RemoteData implements IRemoteSource {
      * 10.创建加油订单
      */
     @Override
-    public Observable<RechargeResult> addOilCreateOrder(RechargeDTO rechargeDTO) {
+    public Observable<RechargeResponse> addOilCreateOrder(RechargeDTO rechargeDTO) {
         return initRetrofit().create(IAddOilService.class).addOilCreateOrder(rechargeDTO);
     }
 
@@ -216,7 +216,7 @@ public class RemoteData implements IRemoteSource {
      * 54.充值接口
      */
     @Override
-    public Observable<PayOrderResult> onPayOrderByCoupon(String payUrl, String orderPrice, String payType) {
+    public Observable<PayOrderResponse> onPayOrderByCoupon(String payUrl, String orderPrice, String payType) {
         return initRetrofit().create(IAddOilService.class).onPayOrderByCoupon(payUrl, orderPrice, payType);
     }
 
@@ -224,7 +224,7 @@ public class RemoteData implements IRemoteSource {
      * 43.生成违章缴费订单
      */
     @Override
-    public Observable<PayOrderResult> paymentCreateOrder(ViolationPayDTO payDTO) {
+    public Observable<PayOrderResponse> paymentCreateOrder(ViolationPayDTO payDTO) {
         return initRetrofit().create(IViolationService.class).paymentCreateOrder(payDTO);
     }
 
@@ -237,7 +237,7 @@ public class RemoteData implements IRemoteSource {
      * 1.首页信息
      */
     @Override
-    public Observable<HomeResult> homePage(HomeDataDTO id) {
+    public Observable<HomeResponse> homePage(HomeDataDTO id) {
         return initRetrofit().create(ICttxService.class).homePage(id);
     }
 
@@ -253,7 +253,7 @@ public class RemoteData implements IRemoteSource {
      * 37.获取所有未读消息数量
      */
     @Override
-    public Observable<MessageCountResult> countMessageDetail(BaseDTO baseDTO) {
+    public Observable<MessageCountResponse> countMessageDetail(BaseDTO baseDTO) {
         return initRetrofit().create(IMessageService.class).countMessageDetail(baseDTO);
     }
 
@@ -261,7 +261,7 @@ public class RemoteData implements IRemoteSource {
      * 58.获取banner图片
      */
     @Override
-    public Observable<BannerResult> getBanner(String type) {
+    public Observable<BannerResponse> getBanner(String type) {
         return initRetrofit().create(IBannerService.class).getBanner(type);
     }
 
@@ -277,7 +277,7 @@ public class RemoteData implements IRemoteSource {
      * 3.获取商户区域列表
      */
     @Override
-    public Observable<MerchantAresResult> getMerchantArea() {
+    public Observable<MerchantAresResponse> getMerchantArea() {
         return initRetrofit().create(IGoodsService.class).getMerchantArea();
     }
 
@@ -285,7 +285,7 @@ public class RemoteData implements IRemoteSource {
      * 4.获取区域商品列表
      */
     @Override
-    public Observable<AresGoodsResult> getAreaGoods(int areaCode) {
+    public Observable<AresGoodsResponse> getAreaGoods(int areaCode) {
         return initRetrofit().create(IGoodsService.class).getAreaGoods(areaCode);
     }
 
@@ -293,7 +293,7 @@ public class RemoteData implements IRemoteSource {
      * 2.创建订单
      */
     @Override
-    public Observable<CreateOrderResult> createOrder(CreateOrderDTO createOrder) {
+    public Observable<CreateOrderResponse> createOrder(CreateOrderDTO createOrder) {
         Map<String, String> options = new HashMap<>();
         if (!TextUtils.isEmpty(createOrder.getType()))
             options.put("type", createOrder.getType());
@@ -353,7 +353,7 @@ public class RemoteData implements IRemoteSource {
      * 7.获取用户指定活动的统计总数
      */
     @Override
-    public Observable<RecordCountResult> getRecordCount(String type, String phone) {
+    public Observable<RecordCountResponse> getRecordCount(String type, String phone) {
         return initRetrofit().create(IFebruaryService.class).getRecordCount(type, phone);
     }
 
@@ -361,7 +361,7 @@ public class RemoteData implements IRemoteSource {
      * cip.cfc.u005.01
      */
     @Override
-    public Observable<Result> commitCarInfoToOldServer(String msg) {
+    public Observable<BankResponse> commitCarInfoToOldServer(String msg) {
         return initAppUrlRetrofit().create(IBankService.class).commitCarInfoToOldServer(msg);
     }
 
@@ -369,7 +369,7 @@ public class RemoteData implements IRemoteSource {
      * 48.绑定行驶证接口
      */
     @Override
-    public Observable<BaseResult> commitCarInfoToNewServer(BindCarDTO bindCarDTO) {
+    public Observable<BaseResponse> commitCarInfoToNewServer(BindCarDTO bindCarDTO) {
         return initRetrofit().create(ICttxService.class).commitCarInfoToNewServer(bindCarDTO);
     }
 
@@ -377,7 +377,7 @@ public class RemoteData implements IRemoteSource {
      * 5.获取工行支付页面
      */
     @Override
-    public Observable<PayOrderResult> getBankPayHtml(String orderId, String orderPrice) {
+    public Observable<PayOrderResponse> getBankPayHtml(String orderId, String orderPrice) {
         return initRetrofit().create(IPayService.class).getBankPayHtml(orderId, orderPrice);
     }
 
@@ -385,7 +385,7 @@ public class RemoteData implements IRemoteSource {
      * 8.查询订单列表
      */
     @Override
-    public Observable<OrderListResult> getOrderList(String userId) {
+    public Observable<OrderListResponse> getOrderList(String userId) {
         return initRetrofit().create(IOrderService.class).getOrderList(userId);
     }
 
@@ -393,7 +393,7 @@ public class RemoteData implements IRemoteSource {
      * 9.获取订单详情
      */
     @Override
-    public Observable<OrderDetailResult> getOrderDetail(String orderId) {
+    public Observable<OrderDetailResponse> getOrderDetail(String orderId) {
         return initRetrofit().create(IOrderService.class).getOrderDetail(orderId);
     }
 
@@ -401,7 +401,7 @@ public class RemoteData implements IRemoteSource {
      * 10.更新订单状态
      */
     @Override
-    public Observable<BaseResult> updateOrderStatus(String orderId, int orderStatus) {
+    public Observable<BaseResponse> updateOrderStatus(String orderId, int orderStatus) {
         return initRetrofit().create(IOrderService.class).updateOrderStatus(orderId, String.valueOf(orderStatus));
     }
 
@@ -409,7 +409,7 @@ public class RemoteData implements IRemoteSource {
      * 6.获取商品详情
      */
     @Override
-    public Observable<GoodsDetailResult> getGoodsDetail(String goodsId) {
+    public Observable<GoodsDetailResponse> getGoodsDetail(String goodsId) {
         return initRetrofit().create(IGoodsService.class).getGoodsDetail(goodsId);
     }
 
@@ -417,7 +417,7 @@ public class RemoteData implements IRemoteSource {
      * 获取违章信息
      */
     @Override
-    public Observable<HomeCarResult> getTextNoticeInfo(String defaultUserID) {
+    public Observable<HomeCarResponse> getTextNoticeInfo(String defaultUserID) {
         return initRetrofit().create(ITextService.class).getTextNoticeInfo(defaultUserID);
     }
 
@@ -425,7 +425,7 @@ public class RemoteData implements IRemoteSource {
      * 处理违章信息
      */
     @Override
-    public Observable<BaseResult> handleViolations(ViolationCarDTO violationResult) {
+    public Observable<BaseResponse> handleViolations(ViolationCarDTO violationResult) {
         return initRetrofit().create(ITextService.class).HandleViolationDTO(violationResult);
     }
 
@@ -450,7 +450,7 @@ public class RemoteData implements IRemoteSource {
      * 19.同步银行车辆
      */
     @Override
-    public Observable<VehicleLicenseResult> addOrUpdateVehicleLicense(List<BindCarDTO> dtoList) {
+    public Observable<VehicleLicenseResponse> addOrUpdateVehicleLicense(List<BindCarDTO> dtoList) {
         return initRetrofit().create(ICttxService.class).addOrUpdateVehicleLicense(dtoList);
     }
 
@@ -458,7 +458,7 @@ public class RemoteData implements IRemoteSource {
      * 13.判断是否为司机
      */
     @Override
-    public Observable<DriverCoachResult> getDriverCoach(String phone) {
+    public Observable<DriverCoachResponse> getDriverCoach(String phone) {
         return initRetrofit().create(IUserService.class).getDriverCoach(phone);
     }
 
@@ -466,7 +466,7 @@ public class RemoteData implements IRemoteSource {
      * 16.新增车辆
      */
     @Override
-    public Observable<BaseResult> addVehicleLicense(BindCarDTO bindCarDTO) {
+    public Observable<BaseResponse> addVehicleLicense(BindCarDTO bindCarDTO) {
         return initRetrofit().create(ICttxService.class).addVehicleLicense(bindCarDTO);
     }
 
@@ -474,7 +474,7 @@ public class RemoteData implements IRemoteSource {
      * 18.删除车辆
      */
     @Override
-    public Observable<BaseResult> removeVehicleLicense(BindCarDTO bindCarDTO) {
+    public Observable<BaseResponse> removeVehicleLicense(BindCarDTO bindCarDTO) {
         return initRetrofit().create(ICttxService.class).removeVehicleLicense(bindCarDTO);
     }
 
@@ -482,7 +482,7 @@ public class RemoteData implements IRemoteSource {
      * 17.编辑车辆
      */
     @Override
-    public Observable<BaseResult> updateVehicleLicense(BindCarDTO bindCarDTO) {
+    public Observable<BaseResponse> updateVehicleLicense(BindCarDTO bindCarDTO) {
         return initRetrofit().create(ICttxService.class).updateVehicleLicense(bindCarDTO);
     }
 
@@ -490,12 +490,12 @@ public class RemoteData implements IRemoteSource {
      * 22.获取商品
      */
     @Override
-    public Observable<SubjectGoodsResult> getGoods(String type) {
+    public Observable<SubjectGoodsResponse> getGoods(String type) {
         return initRetrofit().create(IGoodsService.class).getGoods(type);
     }
 
     @Override
-    public Observable<SparringGoodsResult> getGoodsFive(String type) {
+    public Observable<SparringGoodsResponse> getGoodsFive(String type) {
         return initRetrofit().create(IGoodsService.class).getGoodsFive(type);
     }
 
@@ -503,7 +503,7 @@ public class RemoteData implements IRemoteSource {
      * 20.新手陪练获取服务地区
      */
     @Override
-    public Observable<SparringAreaResult> getServiceArea() {
+    public Observable<SparringAreaResponse> getServiceArea() {
         return initRetrofit().create(IDriverTrainService.class).getServiceArea();
     }
 
@@ -511,7 +511,7 @@ public class RemoteData implements IRemoteSource {
      * 21.获取服务器时间
      */
     @Override
-    public Observable<ServerTimeResult> getServerTime() {
+    public Observable<ServerTimeResponse> getServerTime() {
         return initRetrofit().create(IDriverTrainService.class).getServerTime();
     }
 
@@ -519,7 +519,7 @@ public class RemoteData implements IRemoteSource {
      * 10.取消订单
      */
     @Override
-    public Observable<BaseResult> cancelOrder(String orderId, String userNum) {
+    public Observable<BaseResponse> cancelOrder(String orderId, String userNum) {
         return initRetrofit().create(IOrderService.class).cancelOrder(orderId, userNum);
     }
 
@@ -527,7 +527,7 @@ public class RemoteData implements IRemoteSource {
      * 24.获取年检网点
      */
     @Override
-    public Observable<YearCheckResult> annualInspectionList(AnnualDTO annualDTO) {
+    public Observable<YearCheckResponse> annualInspectionList(AnnualDTO annualDTO) {
         return initRetrofit().create(ICttxService.class).annualInspectionList(annualDTO);
     }
 
@@ -535,7 +535,7 @@ public class RemoteData implements IRemoteSource {
      * 获取年检一条信息
      */
     @Override
-    public Observable<YearCheckDetailResult> annualInspection(int id) {
+    public Observable<YearCheckDetailResponse> annualInspection(int id) {
         return initRetrofit().create(ICttxService.class).annualInspection(id);
     }
 
@@ -543,7 +543,7 @@ public class RemoteData implements IRemoteSource {
      * 获得加油站地点详情
      */
     @Override
-    public Observable<GasStationDetailResult> gasStation(int id) {
+    public Observable<GasStationDetailResponse> gasStation(int id) {
         return initRetrofit().create(ICttxService.class).gasStation(id);
     }
 
@@ -551,7 +551,7 @@ public class RemoteData implements IRemoteSource {
      * 23.获取加油网点
      */
     @Override
-    public Observable<GasStationResult> gasStationList(AnnualDTO annualDTO) {
+    public Observable<GasStationResponse> gasStationList(AnnualDTO annualDTO) {
         return initRetrofit().create(ICttxService.class).gasStationList(annualDTO);
     }
 
@@ -559,7 +559,7 @@ public class RemoteData implements IRemoteSource {
      * 25.模块化接口
      */
     @Override
-    public Observable<ModuleResult> moduleTree() {
+    public Observable<ModuleResponse> moduleTree() {
 
         return initRetrofit().create(IModuleService.class).moduleTree();
     }
@@ -568,7 +568,7 @@ public class RemoteData implements IRemoteSource {
      * 32.获取地区列表
      */
     @Override
-    public Observable<OrderExpressResult> getAllAreas() {
+    public Observable<OrderExpressResponse> getAllAreas() {
         return initRetrofit().create(IRegionService.class).getAllAreas();
     }
 
@@ -576,7 +576,7 @@ public class RemoteData implements IRemoteSource {
      * 29.填写快递信息
      */
     @Override
-    public Observable<BaseResult> addExpressInfo(ExpressDTO expressDTO) {
+    public Observable<BaseResponse> addExpressInfo(ExpressDTO expressDTO) {
         return initRetrofit().create(IOrderService.class).addExpressInfo(expressDTO);
     }
 
@@ -584,7 +584,7 @@ public class RemoteData implements IRemoteSource {
      * 33.获取收件人信息
      */
     @Override
-    public Observable<ReceiveInfoResult> getReceiveInfo(String orderId) {
+    public Observable<ReceiveInfoResponse> getReceiveInfo(String orderId) {
         return initRetrofit().create(IOrderService.class).getReceiveInfo(orderId);
     }
 
@@ -593,7 +593,7 @@ public class RemoteData implements IRemoteSource {
      * @param json
      */
     @Override
-    public Observable<BaseResult> updateState(List<ViolationNum> json) {
+    public Observable<BaseResponse> updateState(List<ViolationNum> json) {
         return initRetrofit().create(IPayService.class).updateState(json);
     }
 }

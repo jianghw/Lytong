@@ -4,14 +4,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.base.bean.Result;
+
+import cn.qqtheme.framework.bean.BankResponse;
+
 import com.zantong.mobilecttx.user.dto.FeedbackDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import cn.qqtheme.framework.util.ToastUtils;
@@ -62,12 +64,12 @@ public class FeedbackActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
             showDialogLoading();
             FeedbackDTO dto = new FeedbackDTO();
             dto.setReqcontent(content);
-            dto.setUsrid(PublicData.getInstance().userID);
-            UserApiClient.commitFeedback(this, dto, new CallBack<Result>() {
+            dto.setUsrid(MemoryData.getInstance().userID);
+            UserApiClient.commitFeedback(this, dto, new CallBack<BankResponse>() {
                 @Override
-                public void onSuccess(Result result) {
+                public void onSuccess(BankResponse bankResponse) {
                     hideDialogLoading();
-                    if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())){
+                    if (Config.OK.equals(bankResponse.getSYS_HEAD().getReturnCode())){
                         FeedbackActivity.this.finish();
                     }
                 }

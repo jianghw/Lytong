@@ -15,8 +15,8 @@ import com.tencent.bugly.beta.UpgradeInfo;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.home.fragment.HomeDiscountsFragment;
 import com.zantong.mobilecttx.home.fragment.HomeMeFragment;
 import com.zantong.mobilecttx.home.fragment.HomeUnimpededFragment;
@@ -30,7 +30,7 @@ import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.util.AppUtils;
 import cn.qqtheme.framework.util.ContextUtils;
@@ -38,7 +38,7 @@ import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.ui.FragmentUtils;
 import cn.qqtheme.framework.util.ui.StatusBarUtils;
-import cn.qqtheme.framework.widght.tablebottom.UiTableBottom;
+import cn.qqtheme.framework.custom.tablebottom.UiTableBottom;
 
 
 /**
@@ -88,11 +88,10 @@ public class HomeMainActivity extends BaseJxActivity {
         initLoginInfo();
         initBottomTable();
         //登录信息
-        if (PublicData.getInstance().loginFlag) liyingreg();
+        if (MemoryData.getInstance().loginFlag) liyingreg();
 
         //更新检查
         Beta.init(getApplicationContext(), false);
-
         UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
         int appCode = AppUtils.getAppVersionCode();
         int mVersionCode = appCode;
@@ -143,18 +142,18 @@ public class HomeMainActivity extends BaseJxActivity {
     public void initLoginInfo() {
         RspInfoBean user = (RspInfoBean) UserInfoRememberCtrl.readObject();
         if (null != user) {
-            PublicData.getInstance().userID = user.getUsrid();
-            PublicData.getInstance().loginFlag = true;
-            PublicData.getInstance().filenum = user.getFilenum();
-            PublicData.getInstance().getdate = user.getGetdate();
-            PublicData.getInstance().mLoginInfoBean = user;
-            if (UserInfoRememberCtrl.readObject(PublicData.getInstance().NOTICE_STATE) != null) {
-                PublicData.getInstance().updateMsg =
-                        (boolean) UserInfoRememberCtrl.readObject(PublicData.getInstance().NOTICE_STATE);
+            MemoryData.getInstance().userID = user.getUsrid();
+            MemoryData.getInstance().loginFlag = true;
+            MemoryData.getInstance().filenum = user.getFilenum();
+            MemoryData.getInstance().getdate = user.getGetdate();
+            MemoryData.getInstance().mLoginInfoBean = user;
+            if (UserInfoRememberCtrl.readObject(MemoryData.getInstance().NOTICE_STATE) != null) {
+                MemoryData.getInstance().updateMsg =
+                        (boolean) UserInfoRememberCtrl.readObject(MemoryData.getInstance().NOTICE_STATE);
             }
             if (!Tools.isStrEmpty(AccountRememberCtrl.getDefaultNumber(getApplicationContext()))) {
-                PublicData.getInstance().defaultCar = true;
-                PublicData.getInstance().defaultCarNumber =
+                MemoryData.getInstance().defaultCar = true;
+                MemoryData.getInstance().defaultCarNumber =
                         AccountRememberCtrl.getDefaultNumber(getApplicationContext());
             }
         }
@@ -242,20 +241,20 @@ public class HomeMainActivity extends BaseJxActivity {
         LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
         try {
             String phone = RSAUtils.strByEncryptionLiYing(
-                    PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
+                    MemoryData.getInstance().mLoginInfoBean.getPhoenum(), true);
             SHATools sha = new SHATools();
             String pwd = RSAUtils.strByEncryptionLiYing(SHATools.hexString(
                     sha.eccryptSHA1(SPUtils.getInstance().getUserPwd())), true);
             liYingRegDTO.setPhoenum(phone);
             liYingRegDTO.setPswd(pwd);
             liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(
-                    PublicData.getInstance().mLoginInfoBean.getUsrid(), true));
+                    MemoryData.getInstance().mLoginInfoBean.getUsrid(), true));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResult>() {
+        CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResponse>() {
             @Override
-            public void onSuccess(BaseResult result) {
+            public void onSuccess(BaseResponse result) {
 
             }
         });

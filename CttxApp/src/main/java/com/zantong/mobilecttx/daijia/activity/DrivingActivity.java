@@ -19,13 +19,13 @@ import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.chongzhi.activity.ChooseAddressActivity;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.daijia.bean.DJTokenResult;
-import com.zantong.mobilecttx.daijia.bean.DaiJiaCreateResult;
+import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.daijia.bean.DJTokenResponse;
+import com.zantong.mobilecttx.daijia.bean.DaiJiaCreateResponse;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaCreateDTO;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
@@ -86,10 +86,10 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         mLocationClient.setLocOption(option);
         mLocationClient.start();
 
-        mDrivingPhone.setText(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+        mDrivingPhone.setText(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
         setEnsureText("代驾订单");
         mDrivingPhone.requestFocus();
-        mDrivingPhone.setSelection(PublicData.getInstance().mLoginInfoBean.getPhoenum().length());
+        mDrivingPhone.setSelection(MemoryData.getInstance().mLoginInfoBean.getPhoenum().length());
     }
 
     @Override
@@ -142,7 +142,7 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         }
 
         DaiJiaCreateDTO dto = new DaiJiaCreateDTO();
-        dto.setUsrId(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
+        dto.setUsrId(RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().userID, true));
         dto.setName(phone);
         dto.setMobile(phone);
         dto.setAddress(mDrivingAddress.getText().toString());
@@ -159,15 +159,15 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         hashMap.put("addressLat", String.valueOf(latitude));
         hashMap.put("name", phone);
         hashMap.put("driverNum", String.valueOf("1"));
-        hashMap.put("usrId", PublicData.getInstance().userID);
+        hashMap.put("usrId", MemoryData.getInstance().userID);
         String hashStr = HashUtils.getSignature(hashMap);
         dto.setHash(hashStr);
 
         JxConfig.getInstance().eventIdByUMeng(26);
 
-        CarApiClient.huJiaoDaiJia(this, dto, new CallBack<DaiJiaCreateResult>() {
+        CarApiClient.huJiaoDaiJia(this, dto, new CallBack<DaiJiaCreateResponse>() {
             @Override
-            public void onSuccess(DaiJiaCreateResult result) {
+            public void onSuccess(DaiJiaCreateResponse result) {
                 if (result.getResponseCode() == 2000) {
                     ToastUtils.toastShort("呼叫成功");
                     String orderId = result.getData().getOrderId();
@@ -202,9 +202,9 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         dto.setLongitude(String.valueOf(longitude));
         String hashStr = HashUtils.getSignature(hashMap);
         dto.setHash(hashStr);
-        CarApiClient.getDaiJiaToken(this, dto, new CallBack<DJTokenResult>() {
+        CarApiClient.getDaiJiaToken(this, dto, new CallBack<DJTokenResponse>() {
             @Override
-            public void onSuccess(DJTokenResult result) {
+            public void onSuccess(DJTokenResponse result) {
                 if (result.getResponseCode() == 2000) {
                     mDrivingSiJi.setText("在您附近有" + result.getData().getNearByNum()
                             + "名司机在服务，最近的司机离你" + result.getData().getShortestDistance()

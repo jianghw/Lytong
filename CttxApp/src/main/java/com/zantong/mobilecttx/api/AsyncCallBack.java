@@ -6,9 +6,11 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.zantong.mobilecttx.base.bean.Result;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.MemoryData;
+
+import cn.qqtheme.framework.bean.BankResponse;
+
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -102,15 +104,15 @@ public class AsyncCallBack<T> implements Callback {
         if (response.isSuccessful()) {
             try {
                 String reader = response.body().string();
-                PublicData.getInstance().mHashMap.put("htmlResponse", reader);
+                MemoryData.getInstance().mHashMap.put("htmlResponse", reader);
                 LogUtils.i("reader===" + reader);
                 if (!TextUtils.isEmpty(reader)) {
                     T t = gson.fromJson(reader, clazz);
-                    Result result = (Result) t;
+                    BankResponse bankResponse = (BankResponse) t;
 
-                    if (!"CIE999".equals(result.getSYS_HEAD().getReturnCode())
-                            && !"cip.cfc.v001.01".equals(result.getSYS_HEAD().getTransServiceCode())) {
-                        sendErrorMsg(context, tag, result);
+                    if (!"CIE999".equals(bankResponse.getSYS_HEAD().getReturnCode())
+                            && !"cip.cfc.v001.01".equals(bankResponse.getSYS_HEAD().getTransServiceCode())) {
+                        sendErrorMsg(context, tag, bankResponse);
                     }
                     callback.sendSuccessMessage(t);
                 } else {
@@ -146,12 +148,12 @@ public class AsyncCallBack<T> implements Callback {
      *
      * @param context 上下文对象
      * @param tag     标签
-     * @param result  返回结果
+     * @param bankResponse  返回结果
      */
-    private void sendErrorMsg(Context context, Object tag, Result result) {
-        if (result != null) {
+    private void sendErrorMsg(Context context, Object tag, BankResponse bankResponse) {
+        if (bankResponse != null) {
             String status = "";
-            String returnStatus = result.getSYS_HEAD().getReturnCode();
+            String returnStatus = bankResponse.getSYS_HEAD().getReturnCode();
             try {
                 status = returnStatus;
                 LogUtils.i("ErrorMsgCode:" + status);
@@ -160,15 +162,15 @@ public class AsyncCallBack<T> implements Callback {
             }
             String msg = "出错了,请稍后重试";
             if (!status.equals(Config.OK)) {
-                String errMsg = result.getSYS_HEAD().getReturnMessage();
+                String errMsg = bankResponse.getSYS_HEAD().getReturnMessage();
                 msg = TextUtils.isEmpty(errMsg) ? msg : errMsg;
                 LogUtils.i("status:" + status + ",Msg:" + msg);
                 EventBus.getDefault().post(
                         new ErrorEvent(status,
                                 msg, tag, context));
             }
-            if (result.getSYS_HEAD().getTransServiceCode().equals("cip.cfc.v001.01")
-                    && result.getSYS_HEAD().getReturnCode().equals("CIE999")) {
+            if (bankResponse.getSYS_HEAD().getTransServiceCode().equals("cip.cfc.v001.01")
+                    && bankResponse.getSYS_HEAD().getReturnCode().equals("CIE999")) {
 
                 EventBus.getDefault().post(new ErrorEvent(status, msg, tag, context));
             }

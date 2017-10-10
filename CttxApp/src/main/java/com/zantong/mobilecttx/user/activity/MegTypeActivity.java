@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.user.activity;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
-import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.presenter.MegTypeAtyPresenter;
 import com.zantong.mobilecttx.user.fragment.MegTypeFragment;
 

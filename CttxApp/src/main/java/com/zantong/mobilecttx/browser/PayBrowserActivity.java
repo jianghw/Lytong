@@ -13,11 +13,11 @@ import android.webkit.WebViewClient;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.InterfaceForJS;
 import com.zantong.mobilecttx.contract.browser.IPayBrowserFtyContract;
 import com.zantong.mobilecttx.order.bean.OrderDetailBean;
-import com.zantong.mobilecttx.order.bean.OrderDetailResult;
+import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
 import com.zantong.mobilecttx.presenter.browser.PayBrowserPresenter;
 
 import butterknife.Bind;
@@ -170,7 +170,7 @@ public class PayBrowserActivity extends BaseJxActivity
     }
 
     @Override
-    public void getOrderDetailSucceed(OrderDetailResult result) {
+    public void getOrderDetailSucceed(OrderDetailResponse result) {
         OrderDetailBean resultData = result.getData();
         if (resultData != null) {
             int orderStatus = resultData.getOrderStatus();

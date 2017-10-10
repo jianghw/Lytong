@@ -15,12 +15,12 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.IFahrschuleShareFtyContract;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountBean;
-import com.zantong.mobilecttx.fahrschule.bean.RecordCountResult;
+import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
 import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleSharePresenter;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
@@ -123,9 +123,9 @@ public class FriendShareFragment extends BaseRefreshJxFragment
         if (mPresenter != null) mPresenter.getRecordCount();
 
         String contentString;
-        if (PublicData.getInstance().loginFlag && PublicData.getInstance().mLoginInfoBean != null)
+        if (MemoryData.getInstance().loginFlag && MemoryData.getInstance().mLoginInfoBean != null)
             contentString = ShareParentActivity.getShareAppUrl(1) + "?phoneNum="
-                    + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+                    + Des3.encode(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
         else
             contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         if (!TextUtils.isEmpty(contentString)) {
@@ -178,7 +178,7 @@ public class FriendShareFragment extends BaseRefreshJxFragment
      * 1 分享数，2 注册数，3 绑卡数，4 驾校报名数
      */
     @Override
-    public void getRecordCountSucceed(RecordCountResult result) {
+    public void getRecordCountSucceed(RecordCountResponse result) {
         List<RecordCountBean> countBeanList = result.getData();
         if (countBeanList != null && countBeanList.size() > 0) {
             for (RecordCountBean bean : countBeanList) {
@@ -238,9 +238,9 @@ public class FriendShareFragment extends BaseRefreshJxFragment
         }
 
         WXWebpageObject webpage = new WXWebpageObject();
-        if (PublicData.getInstance().loginFlag) {
+        if (MemoryData.getInstance().loginFlag) {
             webpage.webpageUrl = ShareParentActivity.getShareAppUrl(1) + "?phoneNum="
-                    + Des3.encode(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+                    + Des3.encode(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         }

@@ -10,7 +10,7 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.car.activity.CarChooseActivity;
 import com.zantong.mobilecttx.car.adapter.CarChooseXiAdapter;
-import com.zantong.mobilecttx.car.bean.CarLinkageResult;
+import com.zantong.mobilecttx.car.bean.CarLinkageResponse;
 import com.zantong.mobilecttx.car.bean.CarXiBean;
 import com.zantong.mobilecttx.car.dto.CarLinkageDTO;
 
@@ -46,9 +46,9 @@ public class CarChooseXiFragment extends BaseRecyclerListJxFragment<CarXiBean> {
         carLinkageDTO.setSeriesId("");
         carLinkageDTO.setBrandId(String.valueOf(id));
         CarApiClient.liYingCarLinkage(ContextUtils.getContext(), carLinkageDTO,
-                new CallBack<CarLinkageResult>() {
+                new CallBack<CarLinkageResponse>() {
                     @Override
-                    public void onSuccess(CarLinkageResult result) {
+                    public void onSuccess(CarLinkageResponse result) {
                         if (result.getResponseCode() == 2000) {
                             setDataResult(result.getData().getSeries());
                         }

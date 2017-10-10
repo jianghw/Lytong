@@ -7,12 +7,12 @@ import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
-import com.zantong.mobilecttx.order.bean.OrderListResult;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.order.bean.OrderListResponse;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import java.util.List;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -68,7 +68,7 @@ public class OrderParentPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<OrderListResult>() {
+                .subscribe(new BaseSubscriber<OrderListResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -80,7 +80,7 @@ public class OrderParentPresenter
                     }
 
                     @Override
-                    public void doNext(OrderListResult result) {
+                    public void doNext(OrderListResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.allPaymentData(result.getData());
                             dataDistribution(result, 0);
@@ -102,11 +102,11 @@ public class OrderParentPresenter
      * 3--进行中
      * 4--完成
      */
-    private void dataDistribution(OrderListResult result, final int orderStatus) {
+    private void dataDistribution(OrderListResponse result, final int orderStatus) {
         Subscription subscription = Observable.just(result)
-                .map(new Func1<OrderListResult, List<OrderListBean>>() {
+                .map(new Func1<OrderListResponse, List<OrderListBean>>() {
                     @Override
-                    public List<OrderListBean> call(OrderListResult orderListResult) {
+                    public List<OrderListBean> call(OrderListResponse orderListResult) {
                         return orderListResult.getData();
                     }
                 })
@@ -183,7 +183,7 @@ public class OrderParentPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResult>() {
+                .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -195,7 +195,7 @@ public class OrderParentPresenter
                     }
 
                     @Override
-                    public void doNext(BaseResult result) {
+                    public void doNext(BaseResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.updateOrderStatusSucceed(result);
 
@@ -223,7 +223,7 @@ public class OrderParentPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResult>() {
+                .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -235,7 +235,7 @@ public class OrderParentPresenter
                     }
 
                     @Override
-                    public void doNext(BaseResult result) {
+                    public void doNext(BaseResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.updateOrderStatusSucceed(result);
 
@@ -264,7 +264,7 @@ public class OrderParentPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<PayOrderResult>() {
+                .subscribe(new BaseSubscriber<PayOrderResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -276,7 +276,7 @@ public class OrderParentPresenter
                     }
 
                     @Override
-                    public void doNext(PayOrderResult result) {
+                    public void doNext(PayOrderResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.onPayOrderByCouponSucceed(result);
                         } else {
@@ -303,7 +303,7 @@ public class OrderParentPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<PayOrderResult>() {
+                .subscribe(new BaseSubscriber<PayOrderResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -315,7 +315,7 @@ public class OrderParentPresenter
                     }
 
                     @Override
-                    public void doNext(PayOrderResult result) {
+                    public void doNext(PayOrderResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.getBankPayHtmlSucceed(result, orderId);
                         } else {

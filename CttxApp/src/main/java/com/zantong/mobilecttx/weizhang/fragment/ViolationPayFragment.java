@@ -13,10 +13,9 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
-import com.zantong.mobilecttx.base.bean.Result;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.fragment.BaseJxFragment;
 import com.zantong.mobilecttx.browser.PayHtmlActivity;
-import com.zantong.mobilecttx.common.PublicData;
 import com.zantong.mobilecttx.utils.AmountUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.NetUtils;
@@ -28,7 +27,9 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationOrderDTO;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BankResponse;
+import cn.qqtheme.framework.bean.BaseResponse;
+import cn.qqtheme.framework.bean.Result;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
@@ -127,7 +128,7 @@ public class ViolationPayFragment extends BaseJxFragment {
                 FragmentUtils.replaceFragment(fragmentManager, payTypeFragment, R.id.lay_base_frame, true);
                 break;
             case R.id.fragment_violation_commit://提交
-                if (PublicData.getInstance().mHashMap.isEmpty()) {
+                if (MemoryData.getInstance().mHashMap.isEmpty()) {
                     getParentActivity().showLoadingDialog();
                     searchViolation();
                 } else
@@ -152,8 +153,8 @@ public class ViolationPayFragment extends BaseJxFragment {
         getParentActivity().showLoadingDialog();
         ViolationOrderDTO dto = new ViolationOrderDTO();
 
-        dto.setCarnum(String.valueOf(PublicData.getInstance().mHashMap.get("carnum")));
-        dto.setEnginenum(String.valueOf(PublicData.getInstance().mHashMap.get("enginenum")));
+        dto.setCarnum(String.valueOf(MemoryData.getInstance().mHashMap.get("carnum")));
+        dto.setEnginenum(String.valueOf(MemoryData.getInstance().mHashMap.get("enginenum")));
 
         int price = Integer.valueOf(mViolationBean.getViolationamt());
         int orderPrice = price / 100;
@@ -161,11 +162,11 @@ public class ViolationPayFragment extends BaseJxFragment {
 
         dto.setPeccancydate(mViolationBean.getViolationdate());
         dto.setPeccancynum(mViolationBean.getViolationnum());
-        dto.setUsernum(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
+        dto.setUsernum(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
 
-        CarApiClient.createOrder(ContextUtils.getContext(), dto, new CallBack<BaseResult>() {
+        CarApiClient.createOrder(ContextUtils.getContext(), dto, new CallBack<BaseResponse>() {
             @Override
-            public void onSuccess(BaseResult result) {
+            public void onSuccess(BaseResponse result) {
                 searchViolation();
             }
 
@@ -181,18 +182,18 @@ public class ViolationPayFragment extends BaseJxFragment {
      * cip.cfc.v004.01
      */
     private void searchViolation() {
-        if (!TextUtils.isEmpty(PublicData.getInstance().filenum)) {
+        if (!TextUtils.isEmpty(MemoryData.getInstance().filenum)) {
             UserApiClient.setJiaoYiDaiMa(ContextUtils.getContext(),
-                    PublicData.getInstance().filenum, new CallBack<Result>() {
+                    MemoryData.getInstance().filenum, new CallBack<BankResponse>() {
                         @Override
-                        public void onSuccess(Result result) {
+                        public void onSuccess(BankResponse bankResponse) {
                             getParentActivity().dismissLoadingDialog();
-                            if (result != null &&
-                                    result.getSYS_HEAD().getReturnCode().equals("000000")) {
+                            if (bankResponse != null &&
+                                    bankResponse.getSYS_HEAD().getReturnCode().equals("000000")) {
                                 gotoPay();
                             } else {
-                                ToastUtils.toastShort(result != null
-                                        ? result.getSYS_HEAD().getReturnMessage()
+                                ToastUtils.toastShort(bankResponse != null
+                                        ? bankResponse.getSYS_HEAD().getReturnMessage()
                                         : "未知错误(cip.cfc.v004.01)");
                             }
                         }
@@ -216,7 +217,7 @@ public class ViolationPayFragment extends BaseJxFragment {
 
         String violationnum = mViolationBean.getViolationnum();
         String violationamt = mViolationBean.getViolationamt();
-        String merCustomId = PublicData.getInstance().filenum;//畅通卡档案编号
+        String merCustomId = MemoryData.getInstance().filenum;//畅通卡档案编号
 
         String payUrl = BuildConfig.APP_URL
                 + "payment_payForViolation?orderid=" + violationnum

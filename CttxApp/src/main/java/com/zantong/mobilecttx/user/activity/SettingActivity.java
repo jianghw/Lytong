@@ -24,12 +24,15 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.FileUploadApi;
 import com.zantong.mobilecttx.api.UserApiClient;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
-import com.zantong.mobilecttx.base.bean.Result;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+
+import cn.qqtheme.framework.bean.BankResponse;
+
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.contract.ILoginView;
+import com.zantong.mobilecttx.login_v.LoginActivity;
 import com.zantong.mobilecttx.presenter.LogoutPresenter;
 import com.zantong.mobilecttx.user.dto.PersonInfoDTO;
 import com.zantong.mobilecttx.user.dto.UpdateUserHeadImgDTO;
@@ -51,7 +54,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.picker.DatePicker;
+import cn.qqtheme.framework.custom.picker.DatePicker;
 import cn.qqtheme.framework.util.CleanUtils;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.FileUtils;
@@ -123,10 +126,10 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         picker = new DatePicker(SettingActivity.this);
         setTitleText("设置");
 
-        if (Tools.isStrEmpty(PublicData.getInstance().userID)) {
+        if (Tools.isStrEmpty(MemoryData.getInstance().userID)) {
             mLogout.setVisibility(View.GONE);
         } else {
-            String date = PublicData.getInstance().mLoginInfoBean.getGetdate();
+            String date = MemoryData.getInstance().mLoginInfoBean.getGetdate();
             try {
                 if (date.contains("-")) {
                     mSelDate.setText(date);
@@ -143,12 +146,12 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
     protected void onResume() {
         super.onResume();
 
-        if (!Tools.isStrEmpty(PublicData.getInstance().mLoginInfoBean.getNickname())) {
-            user_info_name_text.setText(PublicData.getInstance().mLoginInfoBean.getNickname());
+        if (!Tools.isStrEmpty(MemoryData.getInstance().mLoginInfoBean.getNickname())) {
+            user_info_name_text.setText(MemoryData.getInstance().mLoginInfoBean.getNickname());
         } else {
-            user_info_name_text.setText(PublicData.getInstance().mLoginInfoBean.getPhoenum().substring(7));
+            user_info_name_text.setText(MemoryData.getInstance().mLoginInfoBean.getPhoenum().substring(7));
         }
-        String phone = StringUtils.getEncrypPhone(PublicData.getInstance().mLoginInfoBean.getPhoenum());
+        String phone = StringUtils.getEncrypPhone(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
         user_info_phone_text.setText(phone);
     }
 
@@ -162,7 +165,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         userChangePwdRl.setOnClickListener(this);
         userInfoRl.setOnClickListener(this);
 
-        if (!PublicData.getInstance().loginFlag) {
+        if (!MemoryData.getInstance().loginFlag) {
             SPUtils.getInstance().setWeizhangPush(false);
             SPUtils.getInstance().setJifenPush(false);
         }
@@ -172,7 +175,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         mBreakRulesNotice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (PublicData.getInstance().loginFlag) {
+                if (MemoryData.getInstance().loginFlag) {
                     SPUtils.getInstance().setWeizhangPush(isChecked);
                     mBreakRulesNotice.setChecked(isChecked);
                     if (!isChecked) {
@@ -190,14 +193,14 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 Intent intent = new Intent(SettingActivity.this, DateService.class);
-                if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().userID)) {
+                if (MemoryData.getInstance().loginFlag && !"".equals(MemoryData.getInstance().userID)) {
                     SPUtils.getInstance().setJifenPush(isChecked);
-                    PublicData.getInstance().updateMsg = isChecked;
+                    MemoryData.getInstance().updateMsg = isChecked;
                     if (isChecked) {
-                        UserInfoRememberCtrl.saveObject(PublicData.getInstance().NOTICE_STATE, true);//已开启
+                        UserInfoRememberCtrl.saveObject(MemoryData.getInstance().NOTICE_STATE, true);//已开启
                         startService(intent);
                     } else {
-                        UserInfoRememberCtrl.saveObject(PublicData.getInstance().NOTICE_STATE, false);//已关闭
+                        UserInfoRememberCtrl.saveObject(MemoryData.getInstance().NOTICE_STATE, false);//已关闭
                         stopService(intent);
                         ToastUtils.toastShort("记分周期提醒已关闭");
                     }
@@ -233,7 +236,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 Act.getInstance().gotoIntent(this, AboutActivity.class);
                 break;
             case R.id.setting_date_text://选择领证日期
-                if (PublicData.getInstance().loginFlag && !"".equals(PublicData.getInstance().userID)) {
+                if (MemoryData.getInstance().loginFlag && !"".equals(MemoryData.getInstance().userID)) {
                     showLicenseDateDialog();
                 } else {
                     Intent intent = new Intent(this, LoginActivity.class);
@@ -281,7 +284,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 picker.setRangeStart(DateUtils.getYear() - 100, DateUtils.getMonth(), DateUtils.getDay());
                 picker.setRangeEnd(DateUtils.getYear(), DateUtils.getMonth(), DateUtils.getDay());
                 try {
-                    String date = PublicData.getInstance().mLoginInfoBean.getGetdate();
+                    String date = MemoryData.getInstance().mLoginInfoBean.getGetdate();
                     if (!"".equals(date)) {
                         date = date.replace("-", "");
                         picker.setSelectedItem(Integer.valueOf(date.substring(0, 4)), Integer.valueOf(date.substring(4, 6)), Integer.valueOf(date.substring(6, 8)));
@@ -501,10 +504,10 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         Map<String, RequestBody> params = new HashMap<>();
         RequestBody body = RequestBody.create(MediaType.parse("image/jpeg"), mCropFile);
         String imagFileName = "";
-        String[] imageUrls = PublicData.getInstance().mLoginInfoBean.getPortrait().split("\\/");
+        String[] imageUrls = MemoryData.getInstance().mLoginInfoBean.getPortrait().split("\\/");
 
-        if (Tools.isStrEmpty(PublicData.getInstance().mLoginInfoBean.getPortrait())) {
-            imagFileName = PublicData.getInstance().userID + ".jpg";
+        if (Tools.isStrEmpty(MemoryData.getInstance().mLoginInfoBean.getPortrait())) {
+            imagFileName = MemoryData.getInstance().userID + ".jpg";
         } else {
             imagFileName = imageUrls[imageUrls.length - 1];
         }
@@ -551,17 +554,17 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         getBaseBack().setEnabled(false);
         UpdateUserHeadImgDTO updateUserHeadImgDTO = new UpdateUserHeadImgDTO();
         updateUserHeadImgDTO.setPortrait(strUrl);
-        updateUserHeadImgDTO.setUsrid(PublicData.getInstance().userID);
-        updateUserHeadImgDTO.setDevicetoken(PublicData.getInstance().imei);
+        updateUserHeadImgDTO.setUsrid(MemoryData.getInstance().userID);
+        updateUserHeadImgDTO.setDevicetoken(MemoryData.getInstance().imei);
         updateUserHeadImgDTO.setPushswitch("0");
-        UserApiClient.updateUserHeadImg(this, updateUserHeadImgDTO, new CallBack<Result>() {
+        UserApiClient.updateUserHeadImg(this, updateUserHeadImgDTO, new CallBack<BankResponse>() {
             @Override
-            public void onSuccess(Result result) {
+            public void onSuccess(BankResponse bankResponse) {
                 hideDialogLoading();
                 ImageLoader.getInstance().clearMemoryCache();
                 getBaseBack().setEnabled(true);
-                if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
-                    PublicData.getInstance().mLoginInfoBean.setPortrait(strUrl);
+                if (bankResponse.getSYS_HEAD().getReturnCode().equals("000000")) {
+                    MemoryData.getInstance().mLoginInfoBean.setPortrait(strUrl);
                     ToastUtils.toastShort("修改头像成功");
                 }
             }
@@ -590,21 +593,21 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
      * @param date
      */
     private void commitGetCardDate(final String date) {
-        if (PublicData.getInstance().mLoginInfoBean.getGetdate().equals(date)) {
+        if (MemoryData.getInstance().mLoginInfoBean.getGetdate().equals(date)) {
             return;
         }
         PersonInfoDTO dto = new PersonInfoDTO();
         dto.setGetdate(date.replace("-", ""));
         showDialogLoading();
-        UserApiClient.commitPersonInfo(ContextUtils.getContext(), dto, new CallBack<Result>() {
+        UserApiClient.commitPersonInfo(ContextUtils.getContext(), dto, new CallBack<BankResponse>() {
             @Override
-            public void onSuccess(Result result) {
+            public void onSuccess(BankResponse bankResponse) {
                 mSelDate.setText(date);
                 hideDialogLoading();
-                if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
+                if (Config.OK.equals(bankResponse.getSYS_HEAD().getReturnCode())) {
                     picker.dismiss();
-                    PublicData.getInstance().mLoginInfoBean.setGetdate(date);
-                    UserInfoRememberCtrl.saveObject(PublicData.getInstance().mLoginInfoBean);
+                    MemoryData.getInstance().mLoginInfoBean.setGetdate(date);
+                    UserInfoRememberCtrl.saveObject(MemoryData.getInstance().mLoginInfoBean);
                 }
             }
 
@@ -622,14 +625,14 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
     private void logout() {
         showDialogLoading();
 
-        UserApiClient.logout(this, new CallBack<Result>() {
+        UserApiClient.logout(this, new CallBack<BankResponse>() {
             @Override
-            public void onSuccess(Result result) {
+            public void onSuccess(BankResponse bankResponse) {
                 hideDialogLoading();
 
-                if ("000000".equals(result.getSYS_HEAD().getReturnCode())) {
+                if ("000000".equals(bankResponse.getSYS_HEAD().getReturnCode())) {
 
-                    PublicData.getInstance().clearData(ContextUtils.getContext());
+                    MemoryData.getInstance().clearData(ContextUtils.getContext());
                     SPUtils.getInstance().clear();
                     CleanUtils.cleanCustomCache(FileUtils.photoImageDirectory(getApplicationContext()));
 

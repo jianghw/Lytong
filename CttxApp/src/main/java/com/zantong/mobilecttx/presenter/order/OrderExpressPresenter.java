@@ -9,13 +9,13 @@ import com.zantong.mobilecttx.model.repository.RepositoryManager;
 import com.zantong.mobilecttx.order.bean.ChildrenBean;
 import com.zantong.mobilecttx.order.bean.ChildrenBeanX;
 import com.zantong.mobilecttx.order.bean.OrderExpressBean;
-import com.zantong.mobilecttx.order.bean.OrderExpressResult;
-import com.zantong.mobilecttx.order.bean.ReceiveInfoResult;
+import com.zantong.mobilecttx.order.bean.OrderExpressResponse;
+import com.zantong.mobilecttx.order.bean.ReceiveInfoResponse;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
 
 import java.util.List;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -73,7 +73,7 @@ public class OrderExpressPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<OrderExpressResult>() {
+                .subscribe(new BaseSubscriber<OrderExpressResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -85,7 +85,7 @@ public class OrderExpressPresenter
                     }
 
                     @Override
-                    public void doNext(OrderExpressResult result) {
+                    public void doNext(OrderExpressResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             dataDistributionProcessing(result.getData());
                         } else {
@@ -311,7 +311,7 @@ public class OrderExpressPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResult>() {
+                .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -323,7 +323,7 @@ public class OrderExpressPresenter
                     }
 
                     @Override
-                    public void doNext(BaseResult result) {
+                    public void doNext(BaseResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.addExpressInfoSucceed(result);
                         } else {
@@ -368,7 +368,7 @@ public class OrderExpressPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<ReceiveInfoResult>() {
+                .subscribe(new BaseSubscriber<ReceiveInfoResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -380,7 +380,7 @@ public class OrderExpressPresenter
                     }
 
                     @Override
-                    public void doNext(ReceiveInfoResult result) {
+                    public void doNext(ReceiveInfoResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.getReceiveInfoSucceed(result);
                         } else {

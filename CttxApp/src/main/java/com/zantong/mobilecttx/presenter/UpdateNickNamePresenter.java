@@ -1,11 +1,11 @@
 package com.zantong.mobilecttx.presenter;
 
 import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.BasePresenter;
 import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.model.UpdateNickNameModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
@@ -44,9 +44,9 @@ public class UpdateNickNamePresenter extends BasePresenter<IBaseView> implements
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.u003.01");
                 masp = new JSONObject() ;
                 try {
-                    masp.put("usrid", PublicData.getInstance().userID);
+                    masp.put("usrid", MemoryData.getInstance().userID);
                     masp.put("nickname", mUpdateNickName.mapData().get("nickname"));
-                    masp.put("devicetoken", PublicData.getInstance().imei);
+                    masp.put("devicetoken", MemoryData.getInstance().imei);
                     masp.put("pushswitch", 0);
                     MessageFormat.getInstance().setMessageJSONObject(masp);
                 } catch (JSONException e) {
@@ -64,7 +64,7 @@ public class UpdateNickNamePresenter extends BasePresenter<IBaseView> implements
         switch (index){
             case 1:
                 UpdateInfo mUpdateInfo = (UpdateInfo) clazz;
-                if(PublicData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())){
+                if(MemoryData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())){
                     mUpdateNickName.updateView(clazz, index);
                 }else{
                     ToastUtils.toastShort(mUpdateInfo.getSYS_HEAD().getReturnMessage());

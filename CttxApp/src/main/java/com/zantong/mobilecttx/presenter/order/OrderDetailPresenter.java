@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import com.zantong.mobilecttx.contract.IOrderDetailContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
-import com.zantong.mobilecttx.order.bean.OrderDetailResult;
+import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -61,7 +61,7 @@ public class OrderDetailPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<OrderDetailResult>() {
+                .subscribe(new BaseSubscriber<OrderDetailResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -73,7 +73,7 @@ public class OrderDetailPresenter
                     }
 
                     @Override
-                    public void doNext(OrderDetailResult result) {
+                    public void doNext(OrderDetailResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.getOrderDetailSucceed(result);
                         } else {

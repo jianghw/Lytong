@@ -17,7 +17,7 @@ import com.zantong.mobilecttx.car.adapter.PayCarAdapter;
 import com.zantong.mobilecttx.car.bean.PayCar;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.card.bean.BindCardBean;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
 import com.zantong.mobilecttx.widght.refresh.OnPullListener;
@@ -96,20 +96,20 @@ public class MyCardFragment extends BaseExtraFragment implements ModelView {
 //            @Override
 //            public void onItemClick(View view, Object data) {
 //                PayCar payCar = (PayCar) data;
-//                PublicData.getInstance().mHashMap.put("enginenum", "*****");
+//                MemoryData.getInstance().mHashMap.put("enginenum", "*****");
 //
-//                List<UserCarInfoBean> userCars = PublicData.getInstance().mServerCars;
+//                List<UserCarInfoBean> userCars = MemoryData.getInstance().mServerCars;
 //                for (int i = 0; i < userCars.size(); i++) {
 //                    if (userCars.get(i).getCarnum().equals(payCar.getCarnum())) {
 //                        if (!"".equals(userCars.get(i).getEnginenum())) {
-//                            PublicData.getInstance().mHashMap.put("enginenum", userCars.get(i).getEnginenum());
+//                            MemoryData.getInstance().mHashMap.put("enginenum", userCars.get(i).getEnginenum());
 //                        }
 //                        break;
 //                    }
 //                }
-//                PublicData.getInstance().mHashMap.put("carnum", payCar.getCarnum());
-//                PublicData.getInstance().mHashMap.put("carnumtype", payCar.getCarnumtype());
-//                PublicData.getInstance().mHashMap.put("IllegalViolationName", payCar.getCarnum());
+//                MemoryData.getInstance().mHashMap.put("carnum", payCar.getCarnum());
+//                MemoryData.getInstance().mHashMap.put("carnumtype", payCar.getCarnumtype());
+//                MemoryData.getInstance().mHashMap.put("IllegalViolationName", payCar.getCarnum());
 //
 //                ViolationDTO dto = new ViolationDTO();
 //                dto.setCarnum(RSAUtils.strByEncryption(payCar.getCarnum(), true));
@@ -131,7 +131,7 @@ public class MyCardFragment extends BaseExtraFragment implements ModelView {
      */
     private void getBangDingCar() {
         LogoutDTO dto = new LogoutDTO();
-        dto.setUsrid(PublicData.getInstance().userID);
+        dto.setUsrid(MemoryData.getInstance().userID);
         UserApiClient.getPayCars(ContextUtils.getContext(), dto, new CallBack<PayCarResult>() {
             @Override
             public void onSuccess(PayCarResult result) {

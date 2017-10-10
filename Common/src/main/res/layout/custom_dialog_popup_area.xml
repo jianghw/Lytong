@@ -25,7 +25,7 @@
         android:layout_marginRight="@dimen/ds_45"
         android:background="@color/colorLineGray_e6"/>
 
-    <cn.qqtheme.framework.picker.AddressPicker
+    <cn.qqtheme.framework.custom.picker.AddressPicker
         android:id="@+id/custom_address_picker"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_600"/>

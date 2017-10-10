@@ -7,8 +7,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.zantong.mobilecttx.base.bean.BaseOcrResult;
-import cn.qqtheme.framework.contract.bean.BaseResult;
-import com.zantong.mobilecttx.common.Config;
+import cn.qqtheme.framework.bean.BaseResponse;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -89,7 +89,7 @@ public class OcrCallBack<T> implements Callback {
      * @param tag     标签
      * @param result  返回结果
      */
-    private void sendErrorMsg(Context context, Object tag, BaseResult result) {
+    private void sendErrorMsg(Context context, Object tag, BaseResponse result) {
         if (result != null) {
             String status = "";
             String returnStatus = String.valueOf(result.getResponseCode());

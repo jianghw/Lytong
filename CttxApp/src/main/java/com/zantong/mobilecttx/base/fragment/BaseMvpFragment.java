@@ -11,7 +11,7 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.BasePresenter;
-import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.R;
 
 import java.util.List;

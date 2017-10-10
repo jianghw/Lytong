@@ -40,16 +40,16 @@ import com.baidu.mapapi.model.LatLng;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
-import com.zantong.mobilecttx.common.Injection;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.IBaiduMapContract;
 import com.zantong.mobilecttx.map.bean.GasStation;
 import com.zantong.mobilecttx.map.bean.GasStationDetail;
-import com.zantong.mobilecttx.map.bean.GasStationDetailResult;
-import com.zantong.mobilecttx.map.bean.GasStationResult;
+import com.zantong.mobilecttx.map.bean.GasStationDetailResponse;
+import com.zantong.mobilecttx.map.bean.GasStationResponse;
 import com.zantong.mobilecttx.map.bean.YearCheck;
 import com.zantong.mobilecttx.map.bean.YearCheckDetail;
-import com.zantong.mobilecttx.map.bean.YearCheckDetailResult;
-import com.zantong.mobilecttx.map.bean.YearCheckResult;
+import com.zantong.mobilecttx.map.bean.YearCheckDetailResponse;
+import com.zantong.mobilecttx.map.bean.YearCheckResponse;
 import com.zantong.mobilecttx.map.dto.AnnualDTO;
 import com.zantong.mobilecttx.presenter.map.BaiduMapPresenter;
 import com.zantong.mobilecttx.utils.DistanceUtils;
@@ -413,7 +413,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
      * 年检 网络获取
      */
     @Override
-    public void annualInspectionListSucceed(YearCheckResult result) {
+    public void annualInspectionListSucceed(YearCheckResponse result) {
         List<YearCheck> yearCheckList = result.getData();
 
         clearOverlay(null);
@@ -436,7 +436,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
      * 点击单个年检
      */
     @Override
-    public void annualInspectionSucceed(YearCheckDetailResult result) {
+    public void annualInspectionSucceed(YearCheckDetailResponse result) {
         popupAnnualBottom(this, result.getData());
     }
 
@@ -454,7 +454,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
     }
 
     @Override
-    public void gasStationSucceed(GasStationDetailResult result) {
+    public void gasStationSucceed(GasStationDetailResponse result) {
         popupStationBottom(this, result.getData());
     }
 
@@ -467,7 +467,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
     }
 
     @Override
-    public void gasStationListSucceed(GasStationResult result) {
+    public void gasStationListSucceed(GasStationResponse result) {
         List<GasStation> gasStations = result.getData();
 
         clearOverlay(null);

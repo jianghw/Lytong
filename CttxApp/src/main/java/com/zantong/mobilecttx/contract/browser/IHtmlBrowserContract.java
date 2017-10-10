@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.contract.browser;
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import java.io.File;
 
@@ -25,7 +25,7 @@ public interface IHtmlBrowserContract {
 
         void getBankPayHtmlError(String message);
 
-        void getBankPayHtmlSucceed(PayOrderResult result, String orderId);
+        void getBankPayHtmlSucceed(PayOrderResponse result, String orderId);
     }
 
     interface IHtmlBrowserPresenter extends IMvpPresenter {

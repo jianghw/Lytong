@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
@@ -26,9 +26,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import cn.qqtheme.framework.entity.City;
-import cn.qqtheme.framework.entity.County;
-import cn.qqtheme.framework.entity.Province;
+import cn.qqtheme.framework.custom.picker.entity.City;
+import cn.qqtheme.framework.custom.picker.entity.County;
+import cn.qqtheme.framework.custom.picker.entity.Province;
 import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.util.ToastUtils;
 
@@ -122,10 +122,10 @@ public class LicenseCheckGradeActivity extends BaseJxActivity implements View.On
      * 初始化填入数据
      */
     private void initIntentData() {
-        String fileNum = PublicData.getInstance().filenum;
+        String fileNum = MemoryData.getInstance().filenum;
         mEditArchivesNumber.setText(fileNum);
 
-        String startDate = PublicData.getInstance().getdate;
+        String startDate = MemoryData.getInstance().getdate;
         String beanStrtdt = removeDateAcross(startDate);
         if (!TextUtils.isEmpty(beanStrtdt)) mTvDate.setText(dateFormat(beanStrtdt));
 

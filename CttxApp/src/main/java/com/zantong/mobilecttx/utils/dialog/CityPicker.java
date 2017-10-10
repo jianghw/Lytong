@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.card.bean.CityModel;
 import com.zantong.mobilecttx.daijia.bean.DistrictModel;
@@ -172,9 +172,9 @@ public class CityPicker extends LinearLayout {
 
     private ArrayList<String> getProvinceData() {
         ArrayList<String> list = new ArrayList<String>();
-		for (int i = 0; i < PublicData.getInstance().provinceModel.size(); i++) {
-			list.add(PublicData.getInstance().provinceModel.get(i).getName());
-			cityMap.put(PublicData.getInstance().provinceModel.get(i).getName(), PublicData.getInstance().provinceModel.get(i).getCityList());
+		for (int i = 0; i < MemoryData.getInstance().provinceModel.size(); i++) {
+			list.add(MemoryData.getInstance().provinceModel.get(i).getName());
+			cityMap.put(MemoryData.getInstance().provinceModel.get(i).getName(), MemoryData.getInstance().provinceModel.get(i).getCityList());
 		}
         return list;
     }

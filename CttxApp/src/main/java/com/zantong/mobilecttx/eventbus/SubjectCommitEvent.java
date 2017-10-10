@@ -1,7 +1,7 @@
 package com.zantong.mobilecttx.eventbus;
 
-import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsData;
+import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
+import cn.qqtheme.framework.bean.response.SubjectGoodsData;
 
 public class SubjectCommitEvent {
 

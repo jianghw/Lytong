@@ -1,12 +1,12 @@
 package com.zantong.mobilecttx.huodong.bean;
 
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 
 /**
  * Created by zhengyingbing on 17/2/23.
  */
 
-public class ActivitySignNum extends BaseResult {
+public class ActivitySignNum extends BaseResponse {
 
     private ActivitySignNumBean data;
 

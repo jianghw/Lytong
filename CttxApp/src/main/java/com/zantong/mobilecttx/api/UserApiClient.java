@@ -4,7 +4,9 @@ import android.content.Context;
 
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.base.MessageFormat;
-import com.zantong.mobilecttx.base.bean.Result;
+
+import cn.qqtheme.framework.bean.BankResponse;
+
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -12,8 +14,8 @@ import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.card.bean.BindCardResult;
 import com.zantong.mobilecttx.card.dto.BindCardDTO;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.home.bean.VersionResult;
+import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.home.bean.VersionResponse;
 import com.zantong.mobilecttx.home.dto.VersionDTO;
 import com.zantong.mobilecttx.user.bean.CheckOrderResult;
 import com.zantong.mobilecttx.user.bean.LoginResult;
@@ -106,8 +108,8 @@ public class UserApiClient extends BaseApiClient {
     public static void register(Context context, RegisterDTO params, CallBack<LoginResult> callback) {
         AsyncCallBack<LoginResult> asyncCallBack = new AsyncCallBack<LoginResult>(
                 context, callback, LoginResult.class);
-        if("".equals(PublicData.getInstance().imei)){
-            params.setDevicetoken(PublicData.getInstance().imei);
+        if("".equals(MemoryData.getInstance().imei)){
+            params.setDevicetoken(MemoryData.getInstance().imei);
         }
         params.setPushswitch("0");
         params.setPushmode("2");
@@ -153,9 +155,9 @@ public class UserApiClient extends BaseApiClient {
      * @author Sandy
      * create at 16/6/23 下午4:25
      */
-    public static void checkVerifyCode(Context context, VcodeDTO params, CallBack<Result> callback) {
-        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
-                context, callback, Result.class);
+    public static void checkVerifyCode(Context context, VcodeDTO params, CallBack<BankResponse> callback) {
+        AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<BankResponse>(
+                context, callback, BankResponse.class);
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.p002.01"));
         t.setReqInfo(params);
@@ -186,9 +188,9 @@ public class UserApiClient extends BaseApiClient {
      * @author Sandy
      * create at 16/6/21 下午5:00
      */
-    public static void changePwd(Context context, ChangePwdDTO params, CallBack<Result> callback) {
-        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
-                context, callback, Result.class);
+    public static void changePwd(Context context, ChangePwdDTO params, CallBack<BankResponse> callback) {
+        AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<BankResponse>(
+                context, callback, BankResponse.class);
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u012.01"));
         t.setReqInfo(params);
@@ -201,13 +203,13 @@ public class UserApiClient extends BaseApiClient {
      * @author Sandy
      * create at 16/6/8 下午11:48
      */
-    public static void logout(Context context, CallBack<Result> callback) {
-        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(context, callback, Result.class);
+    public static void logout(Context context, CallBack<BankResponse> callback) {
+        AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<BankResponse>(context, callback, BankResponse.class);
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u002.01"));
         LogoutDTO dto = new LogoutDTO();
 
-        dto.setUsrid(PublicData.getInstance().userID);
+        dto.setUsrid(MemoryData.getInstance().userID);
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -252,9 +254,9 @@ public class UserApiClient extends BaseApiClient {
      * @author Sandy
      * create at 16/6/24 上午11:03
      */
-    public static void commitInsOrder(Context context, InsOrderDTO params, CallBack<Result> callback) {
-        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
-                context, callback, Result.class);
+    public static void commitInsOrder(Context context, InsOrderDTO params, CallBack<BankResponse> callback) {
+        AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<BankResponse>(
+                context, callback, BankResponse.class);
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.i004.01"));
         t.setReqInfo(params);
@@ -282,12 +284,12 @@ public class UserApiClient extends BaseApiClient {
      * @author Sandy
      * create at 16/6/6 下午2:00
      */
-    public static void commitPersonInfo(Context context, PersonInfoDTO dto, CallBack<Result> callback) {
-        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
-                context, callback, Result.class);
-        dto.setDevicetoken(PublicData.getInstance().imei);
+    public static void commitPersonInfo(Context context, PersonInfoDTO dto, CallBack<BankResponse> callback) {
+        AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<BankResponse>(
+                context, callback, BankResponse.class);
+        dto.setDevicetoken(MemoryData.getInstance().imei);
         dto.setPushswitch(0);//不推送
-        dto.setUsrid(PublicData.getInstance().userID);
+        dto.setUsrid(MemoryData.getInstance().userID);
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u003.01"));
         t.setReqInfo(dto);
@@ -300,9 +302,9 @@ public class UserApiClient extends BaseApiClient {
      * @author Sandy
      * create at 16/6/15 下午4:05
      */
-    public static void commitFeedback(Context context, FeedbackDTO dto, CallBack<Result> callback) {
-        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
-                context, callback, Result.class);
+    public static void commitFeedback(Context context, FeedbackDTO dto, CallBack<BankResponse> callback) {
+        AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<BankResponse>(
+                context, callback, BankResponse.class);
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u008.01"));
         t.setReqInfo(dto);
@@ -315,32 +317,29 @@ public class UserApiClient extends BaseApiClient {
      * @author Sandy
      * create at 16/6/15 下午4:05
      */
-    public static void getCurrentVerson(Context context, VersionDTO dto, CallBack<VersionResult> callback) {
-        BaseCallBack<VersionResult> versionCallBack = new BaseCallBack<VersionResult>(
-                context, callback, VersionResult.class);
+    public static void getCurrentVerson(Context context, VersionDTO dto, CallBack<VersionResponse> callback) {
+        BaseCallBack<VersionResponse> versionCallBack = new BaseCallBack<VersionResponse>(
+                context, callback, VersionResponse.class);
         post(context, getDownUrl("versionInfo"), dto, versionCallBack);
     }
 
     /**
      * 分享
-     *
-     * @author Sandy
-     * create at 16/6/15 下午4:05
      */
-    public static void getCurrentShare(Context context, CallBack<VersionResult> callback) {
+    public static void getCurrentShare(Context context, CallBack<VersionResponse> callback) {
         ShareDTO dto = new ShareDTO();
         dto.setUserPhone(RSAUtils.strByEncryption("18410109993", false));
         dto.setAcceptPhone(RSAUtils.strByEncryption("18410109997", false));
-        BaseCallBack<VersionResult> versionCallBack = new BaseCallBack<VersionResult>(
-                context, callback, VersionResult.class);
+        BaseCallBack<VersionResponse> versionCallBack = new BaseCallBack<VersionResponse>(
+                context, callback, VersionResponse.class);
         post(context, getDownUrl("userShare"), dto, versionCallBack);
     }
 
-    public static void addCarInfo(Context context, CarInfoDTO dto, CallBack<Result> callback) {
+    public static void addCarInfo(Context context, CarInfoDTO dto, CallBack<BankResponse> callback) {
         dto.setCarnum(RSAUtils.strByEncryption(dto.getCarnum(), true));
         dto.setEnginenum(RSAUtils.strByEncryption(dto.getEnginenum(), true));
 
-        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(context, callback, Result.class);
+        AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<BankResponse>(context, callback, BankResponse.class);
         RequestDTO t = new RequestDTO();
 
         t.setSYS_HEAD(getBean("cip.cfc.u005.01"));
@@ -357,12 +356,12 @@ public class UserApiClient extends BaseApiClient {
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
 
-    public static void editCarInfo(Context context, CarInfoDTO dto, CallBack<Result> callback) {
+    public static void editCarInfo(Context context, CarInfoDTO dto, CallBack<BankResponse> callback) {
         dto.setCarnum(RSAUtils.strByEncryption(dto.getCarnum(), true));
         dto.setEnginenum(RSAUtils.strByEncryption(dto.getEnginenum(), true));
 
-        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
-                context, callback, Result.class);
+        AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<BankResponse>(
+                context, callback, BankResponse.class);
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.c001.01"));
         t.setReqInfo(dto);
@@ -378,9 +377,9 @@ public class UserApiClient extends BaseApiClient {
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
 
-    public static void html(Context context, String serviceCode, String reqinfo, CallBack<Result> callback) {
-        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
-                context, callback, Result.class);
+    public static void html(Context context, String serviceCode, String reqinfo, CallBack<BankResponse> callback) {
+        AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<BankResponse>(
+                context, callback, BankResponse.class);
         MessageFormat.getInstance().setTransServiceCode(serviceCode);
         try {
             MessageFormat.getInstance().setHtmlMessageJSONObject(reqinfo);
@@ -397,18 +396,18 @@ public class UserApiClient extends BaseApiClient {
      * @author zj
      * create at 16/10/08 下午4:05
      */
-    public static void updateUserHeadImg(Context context, UpdateUserHeadImgDTO dto, CallBack<Result> callback) {
-        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
-                context, callback, Result.class);
+    public static void updateUserHeadImg(Context context, UpdateUserHeadImgDTO dto, CallBack<BankResponse> callback) {
+        AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<BankResponse>(
+                context, callback, BankResponse.class);
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u003.01"));
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
 
-    public static void getViolation(Context context, ViolationDTO dto, CallBack<Result> callback) {
-        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
-                context, callback, Result.class);
+    public static void getViolation(Context context, ViolationDTO dto, CallBack<BankResponse> callback) {
+        AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<BankResponse>(
+                context, callback, BankResponse.class);
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.v002.01"));
         t.setReqInfo(dto);
@@ -424,11 +423,11 @@ public class UserApiClient extends BaseApiClient {
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
 
-    public static void setJiaoYiDaiMa(Context context, String strFileNum,CallBack<Result> callback) {
+    public static void setJiaoYiDaiMa(Context context, String strFileNum,CallBack<BankResponse> callback) {
         JiaoYiDaiMaDTO jiaoYiDaiMaDTO = new JiaoYiDaiMaDTO();
         jiaoYiDaiMaDTO.setFilenum(RSAUtils.strByEncryption(strFileNum, true));
-        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<Result>(
-                context, callback, Result.class);
+        AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<BankResponse>(
+                context, callback, BankResponse.class);
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.v004.01"));
         t.setReqInfo(jiaoYiDaiMaDTO);

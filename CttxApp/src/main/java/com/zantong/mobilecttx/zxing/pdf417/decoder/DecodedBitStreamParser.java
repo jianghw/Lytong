@@ -620,7 +620,7 @@ final class DecodedBitStreamParser {
        1 x 900 power of 5 + 624 x 900 power of 4 + 434 x 900 power of 3 +
      632 x 900 power of 2 + 282 x 900 power of 1 + 200 x 900 power of 0 = 1000213298174000
 
-     Remove leading 1 =>  Result is 000213298174000
+     Remove leading 1 =>  BankResponse is 000213298174000
    */
   private static String decodeBase900toBase10(int[] codewords, int count) throws FormatException {
     BigInteger result = BigInteger.ZERO;

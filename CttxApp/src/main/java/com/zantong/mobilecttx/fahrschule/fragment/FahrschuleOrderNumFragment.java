@@ -10,16 +10,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.browser.PayBrowserActivity;
 import com.zantong.mobilecttx.eventbus.FahrschuleApplyEvent;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.contract.IFahrschuleOrderNumFtyContract;
 import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleOrderNumPresenter;
-import com.zantong.mobilecttx.user.activity.LoginActivity;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.login_v.LoginActivity;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -243,9 +243,9 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void onPayOrderByCouponSucceed(PayOrderResult result) {
+    public void onPayOrderByCouponSucceed(PayOrderResponse result) {
 
-        if (!PublicData.getInstance().loginFlag && !TextUtils.isEmpty(PublicData.getInstance().userID)) {
+        if (!MemoryData.getInstance().loginFlag && !TextUtils.isEmpty(MemoryData.getInstance().userID)) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             getActivity().startActivity(intent);
         } else {

@@ -16,15 +16,15 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.FileDownloadApi;
 import com.zantong.mobilecttx.api.HandleCTCardApiClient;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
-import com.zantong.mobilecttx.base.bean.Result;
+import cn.qqtheme.framework.bean.BankResponse;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.card.bean.YingXiaoResult;
+import com.zantong.mobilecttx.card.bean.YingXiaoResponse;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
 import com.zantong.mobilecttx.card.dto.QuickApplyCardDTO;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
@@ -44,8 +44,8 @@ import java.io.InputStream;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.contract.bean.BaseResult;
-import cn.qqtheme.framework.picker.DatePicker;
+import cn.qqtheme.framework.bean.BaseResponse;
+import cn.qqtheme.framework.custom.picker.DatePicker;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.ToastUtils;
@@ -116,7 +116,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        PublicData.getInstance().filenum = "";
+        MemoryData.getInstance().filenum = "";
     }
 
     @Override
@@ -139,7 +139,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
         quickApplyCardDTO.setUsrid(SPUtils.getInstance().getLoginInfoBean().getUsrid());
         quickApplyCardDTO.setCtfnum(RSAUtils.strByEncryption(getIntent().getStringExtra("idCard"), true));
         quickApplyCardDTO.setFilenum(RSAUtils.strByEncryption(getIntent().getStringExtra("filenum"), true));
-        quickApplyCardDTO.setPhoenum(RSAUtils.strByEncryption(PublicData.getInstance().mLoginInfoBean.getPhoenum(), true));
+        quickApplyCardDTO.setPhoenum(RSAUtils.strByEncryption(MemoryData.getInstance().mLoginInfoBean.getPhoenum(), true));
         quickApplyCardDTO.setCtfvldprd(getIntent().getStringExtra("date"));
         quickApplyCardDTO.setActnotf("0");//默认不开启自动还款
         quickApplyCardDTO.setElecbillsign("0");
@@ -261,13 +261,13 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
     }
 
     @Override
-    public void resultSuccess(Result result) {
+    public void resultSuccess(BankResponse bankResponse) {
         hideDialogLoading();
-        if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
+        if (bankResponse.getSYS_HEAD().getReturnCode().equals("000000")) {
 
             commitYingXiaoDataForLYT(quickApplyCardDTO);
         } else {
-            ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
+            ToastUtils.toastShort(bankResponse.getSYS_HEAD().getReturnMessage());
         }
     }
 
@@ -282,12 +282,12 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
      */
     private void checkCtkDate() {
         CheckCtkDTO checkCtkDTO = new CheckCtkDTO();
-        checkCtkDTO.setApplyCode(PublicData.getInstance().filenum);
+        checkCtkDTO.setApplyCode(MemoryData.getInstance().filenum);
         checkCtkDTO.setApplyInterface("banka");
         checkCtkDTO.setFlag("1");
-        CarApiClient.checkCtk(this, checkCtkDTO, new CallBack<BaseResult>() {
+        CarApiClient.checkCtk(this, checkCtkDTO, new CallBack<BaseResponse>() {
             @Override
-            public void onSuccess(BaseResult result) {
+            public void onSuccess(BaseResponse result) {
                 hideDialogLoading();
                 if (result.getResponseCode() == 2000) {
                     commitInfo();
@@ -304,9 +304,9 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
      * @param quickApplyCardDTO
      */
     private void commitYingXiaoDataForLYT(QuickApplyCardDTO quickApplyCardDTO) {
-        CarApiClient.commitYingXiaoData(this, quickApplyCardDTO, new CallBack<BaseResult>() {
+        CarApiClient.commitYingXiaoData(this, quickApplyCardDTO, new CallBack<BaseResponse>() {
             @Override
-            public void onSuccess(BaseResult result) {
+            public void onSuccess(BaseResponse result) {
                 startActivity(ApplySuccessActvity.getIntent(ApplyCardQuickActivity.this, wangdianAdress));
             }
 
@@ -334,7 +334,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
-                        PublicData.getInstance().mNetLocationBean
+                        MemoryData.getInstance().mNetLocationBean
                                 = ReadFfile.readNetLocationFile(getApplicationContext());
                     }
 
@@ -392,9 +392,9 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
      */
     private void getYingXiaoCode() {
         CancelRechargeOrderDTO dto = new CancelRechargeOrderDTO();
-        CarApiClient.getYingXiaoCode(this, dto, new CallBack<YingXiaoResult>() {
+        CarApiClient.getYingXiaoCode(this, dto, new CallBack<YingXiaoResponse>() {
             @Override
-            public void onSuccess(YingXiaoResult result) {
+            public void onSuccess(YingXiaoResponse result) {
                 if (result.getResponseCode() == 2000 && result.getData() != null) {
                     mEmpNum = result.getData().getEmpNum();
                     //TODO 手动不显示

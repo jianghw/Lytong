@@ -5,7 +5,8 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.base.MessageFormat;
-import com.zantong.mobilecttx.base.bean.Result;
+
+import cn.qqtheme.framework.bean.BankResponse;
 
 /**
  * Created by zhoujie on 2017/1/3.
@@ -22,9 +23,9 @@ public class HandleCTCardApiClient extends BaseApiClient {
 
         String reqinfo = new Gson().toJson(jsonParams);
 
-        AsyncCallBack<Result> asyncCallBack = new AsyncCallBack<>(context, new CallBack<Result>() {
+        AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<>(context, new CallBack<BankResponse>() {
             @Override
-            public void onSuccess(Result result) {
+            public void onSuccess(BankResponse result) {
                 resultInterface.resultSuccess(result);
             }
 
@@ -32,7 +33,7 @@ public class HandleCTCardApiClient extends BaseApiClient {
             public void onError(String errorCode, String msg) {
                 resultInterface.resultError(msg);
             }
-        }, Result.class);
+        }, BankResponse.class);
 
         try {
             MessageFormat.getInstance().setTransServiceCode(serviceCode);
@@ -44,7 +45,7 @@ public class HandleCTCardApiClient extends BaseApiClient {
     }
 
     public interface ResultInterface {
-        void resultSuccess(Result result);
+        void resultSuccess(BankResponse bankResponse);
 
         void resultError(String msg);
     }

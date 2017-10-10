@@ -15,13 +15,13 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.HandleCTCardApiClient;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.bean.Result;
+import cn.qqtheme.framework.bean.BankResponse;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.card.dto.BidCTCardDTO;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
@@ -34,7 +34,7 @@ import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;
@@ -217,7 +217,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
             return;
         }
 //TODO 什么贵
-        PublicData.getInstance().filenum = getDriverFileNum();
+        MemoryData.getInstance().filenum = getDriverFileNum();
 
         if (BuildConfig.DEBUG) {//七天之内不能重复办卡 不用
             showDialogLoading();
@@ -249,9 +249,9 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         checkCtkDTO.setApplyCode(getDriverFileNum());
         checkCtkDTO.setApplyInterface("banka");
         checkCtkDTO.setFlag("0");
-        CarApiClient.checkCtk(this, checkCtkDTO, new CallBack<BaseResult>() {
+        CarApiClient.checkCtk(this, checkCtkDTO, new CallBack<BaseResponse>() {
             @Override
-            public void onSuccess(BaseResult result) {
+            public void onSuccess(BaseResponse result) {
                 if (result.getResponseCode() == 2000 || result.getResponseCode() == 2001) {
                     checkApplyCardRecord();
                 } else {
@@ -286,18 +286,18 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     /**
      * 客户办卡记录校验 响应
      *
-     * @param result
+     * @param bankResponse
      */
     @Override
-    public void resultSuccess(Result result) {
+    public void resultSuccess(BankResponse bankResponse) {
         hideDialogLoading();
-        if (result.getSYS_HEAD().getReturnCode().equals("1")) {//不可快捷办卡
+        if (bankResponse.getSYS_HEAD().getReturnCode().equals("1")) {//不可快捷办卡
             Intent intent = new Intent(this, ApplyCardSecondActivity.class);
             intent.putExtra("filenum", getDriverFileNum());
             intent.putExtra("name", getUserName());
             intent.putExtra("idCard", getUserIdCard());
             startActivity(intent);
-        } else if (result.getSYS_HEAD().getReturnCode().equals("000000")) {
+        } else if (bankResponse.getSYS_HEAD().getReturnCode().equals("000000")) {
             Intent intent = new Intent(this, ApplyCardQuickActivity.class);
             intent.putExtra("filenum", getDriverFileNum());
             intent.putExtra("name", getUserName());
@@ -315,7 +315,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        PublicData.getInstance().filenum = "";
+        MemoryData.getInstance().filenum = "";
     }
 
     @Override

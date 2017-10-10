@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.contract.fahrschule;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsResult;
+import cn.qqtheme.framework.bean.response.SubjectGoodsResponse;
 
 /**
  * 畅通页面
@@ -18,7 +18,7 @@ public interface ISubjectIntensifyContract {
 
         void getGoodsError(String message);
 
-        void getGoodsSucceed(SubjectGoodsResult result);
+        void getGoodsSucceed(SubjectGoodsResponse result);
     }
 
     interface ISubjectIntensifyPresenter extends IMvpPresenter {

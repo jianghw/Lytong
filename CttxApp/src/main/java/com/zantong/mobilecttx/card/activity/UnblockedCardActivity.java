@@ -6,7 +6,7 @@ import android.view.View;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.common.Config;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import butterknife.OnClick;

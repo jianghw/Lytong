@@ -7,11 +7,11 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.common.PublicData;
-import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderDetailResult;
+import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderDetailResponse;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderDetailDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.DialogUtils;
@@ -102,17 +102,17 @@ public class DODetailBeingActivity extends BaseMvpActivity<IBaseView, HelpPresen
                 Intent intent = getIntent();
                 String orderId = intent.getStringExtra(JxGlobal.putExtra.common_extra);
                 dto.setOrderId(orderId);
-                dto.setUsrId(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
+                dto.setUsrId(RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().userID, true));
 
                 HashMap<String, String> hashMap = new HashMap<String, String>();
                 hashMap.put("time",time);
                 hashMap.put("orderId",orderId);
-                hashMap.put("usrId",PublicData.getInstance().userID);
+                hashMap.put("usrId", MemoryData.getInstance().userID);
                 dto.setHash(HashUtils.getSignature(hashMap));
 
-                CarApiClient.cancelDaiJiaOrderDetail(DODetailBeingActivity.this, dto, new CallBack<BaseResult>() {
+                CarApiClient.cancelDaiJiaOrderDetail(DODetailBeingActivity.this, dto, new CallBack<BaseResponse>() {
                     @Override
-                    public void onSuccess(BaseResult result) {
+                    public void onSuccess(BaseResponse result) {
                         if (result.getResponseCode() == 2000) {
                             mState.setText("已取消");
                             mState.setTextColor(R.color.gray_cc);
@@ -150,11 +150,11 @@ public class DODetailBeingActivity extends BaseMvpActivity<IBaseView, HelpPresen
         String orderId = intent.getStringExtra(JxGlobal.putExtra.common_extra);
         dto.setOrderId(orderId);
         dto.setTime(time);
-        dto.setUsrId(RSAUtils.strByEncryptionLiYing(PublicData.getInstance().userID, true));
+        dto.setUsrId(RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().userID, true));
 
-        CarApiClient.getDaiJiaOrderDetail(this, dto, new CallBack<DaiJiaOrderDetailResult>() {
+        CarApiClient.getDaiJiaOrderDetail(this, dto, new CallBack<DaiJiaOrderDetailResponse>() {
             @Override
-            public void onSuccess(DaiJiaOrderDetailResult result) {
+            public void onSuccess(DaiJiaOrderDetailResponse result) {
                 mDrivingOrderLayout.refreshFinish(PullToRefreshLayout.SUCCEED);
                 if (result.getResponseCode() == 2000) {
                     String state = result.getData().getOrderStatus();

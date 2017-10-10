@@ -3,10 +3,10 @@ package com.zantong.mobilecttx.presenter.fahrschule;
 
 import android.support.annotation.NonNull;
 
-import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResult;
-import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResult;
-import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResult;
-import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResult;
+import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResponse;
+import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
+import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResponse;
+import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.contract.IFahrschuleApplyFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
@@ -65,7 +65,7 @@ public class FahrschuleApplyPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<MerchantAresResult>() {
+                .subscribe(new BaseSubscriber<MerchantAresResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -77,7 +77,7 @@ public class FahrschuleApplyPresenter
                     }
 
                     @Override
-                    public void doNext(MerchantAresResult result) {
+                    public void doNext(MerchantAresResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.getMerchantAreaSucceed(result);
                         } else {
@@ -104,7 +104,7 @@ public class FahrschuleApplyPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<AresGoodsResult>() {
+                .subscribe(new BaseSubscriber<AresGoodsResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -116,7 +116,7 @@ public class FahrschuleApplyPresenter
                     }
 
                     @Override
-                    public void doNext(AresGoodsResult result) {
+                    public void doNext(AresGoodsResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.getAreaGoodsSucceed(result);
                         } else {
@@ -143,7 +143,7 @@ public class FahrschuleApplyPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<GoodsDetailResult>() {
+                .subscribe(new BaseSubscriber<GoodsDetailResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -155,7 +155,7 @@ public class FahrschuleApplyPresenter
                     }
 
                     @Override
-                    public void doNext(GoodsDetailResult result) {
+                    public void doNext(GoodsDetailResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.getGoodsDetailSucceed(result);
                         } else {
@@ -187,7 +187,7 @@ public class FahrschuleApplyPresenter
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<CreateOrderResult>() {
+                .subscribe(new BaseSubscriber<CreateOrderResponse>() {
                     @Override
                     public void doCompleted() {
                         mAtyView.dismissLoadingDialog();
@@ -199,7 +199,7 @@ public class FahrschuleApplyPresenter
                     }
 
                     @Override
-                    public void doNext(CreateOrderResult result) {
+                    public void doNext(CreateOrderResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.createOrderSucceed(result);
                         } else {

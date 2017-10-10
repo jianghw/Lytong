@@ -7,18 +7,18 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobilecttx.common.Injection;
-import com.zantong.mobilecttx.common.PublicData;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.browser.PayBrowserActivity;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectOrderContract;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobilecttx.eventbus.SubjectOrderEvent;
-import cn.qqtheme.framework.contract.bean.SubjectGoodsBean;
+import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
 import com.zantong.mobilecttx.presenter.fahrschule.SubjectOrderPresenter;
-import com.zantong.mobilecttx.user.activity.LoginActivity;
+import com.zantong.mobilecttx.login_v.LoginActivity;
 import com.zantong.mobilecttx.utils.StringUtils;
-import com.zantong.mobilecttx.weizhang.bean.PayOrderResult;
+import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -217,8 +217,8 @@ public class SubjectOrderFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    public void bankPayHtmlSucceed(PayOrderResult result) {
-        if (!PublicData.getInstance().loginFlag && !TextUtils.isEmpty(PublicData.getInstance().userID)) {
+    public void bankPayHtmlSucceed(PayOrderResponse result) {
+        if (!MemoryData.getInstance().loginFlag && !TextUtils.isEmpty(MemoryData.getInstance().userID)) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             getActivity().startActivity(intent);
         } else {

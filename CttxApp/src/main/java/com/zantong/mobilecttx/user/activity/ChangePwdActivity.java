@@ -13,10 +13,12 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.bean.Result;
-import com.zantong.mobilecttx.common.Config;
-import com.zantong.mobilecttx.common.PublicData;
+
+import cn.qqtheme.framework.bean.BankResponse;
+
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.user.dto.ChangePwdDTO;
@@ -32,7 +34,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.contract.bean.BaseResult;
+import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.util.ToastUtils;
 public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresenter>
         implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
@@ -194,7 +196,7 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
             return;
         }
         ChangePwdDTO dto = new ChangePwdDTO();
-        dto.setUsrid(PublicData.getInstance().userID);
+        dto.setUsrid(MemoryData.getInstance().userID);
         try {
             SHATools sha = new SHATools();
             String newPassword = SHATools.hexString(sha.eccryptSHA1(newPwd));
@@ -205,16 +207,16 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
             dto.setNewpswd(newPassword);
             dto.setOldpswd(oldPassword);
             showDialogLoading();
-            UserApiClient.changePwd(this, dto, new CallBack<Result>() {
+            UserApiClient.changePwd(this, dto, new CallBack<BankResponse>() {
                 @Override
-                public void onSuccess(Result result) {
+                public void onSuccess(BankResponse bankResponse) {
                     hideDialogLoading();
-                    if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
+                    if (Config.OK.equals(bankResponse.getSYS_HEAD().getReturnCode())) {
                         liyingreg(newPwdLi);
-                        PublicData.getInstance().clearData(ChangePwdActivity.this);
+                        MemoryData.getInstance().clearData(ChangePwdActivity.this);
                         finish();
                     } else {
-                        ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
+                        ToastUtils.toastShort(bankResponse.getSYS_HEAD().getReturnMessage());
                     }
                 }
 
@@ -231,16 +233,16 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
 
     private void liyingreg(String pwd) {
         try {
-            String phone = RSAUtils.strByEncryptionLiYing(PublicData.getInstance().mLoginInfoBean.getPhoenum(), true);
+            String phone = RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().mLoginInfoBean.getPhoenum(), true);
             SHATools sha = new SHATools();
             String newPassword = RSAUtils.strByEncryptionLiYing(SHATools.hexString(sha.eccryptSHA1(pwd)), true);
             LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
             liYingRegDTO.setPhoenum(phone);
             liYingRegDTO.setPswd(newPassword);
-            liYingRegDTO.setUsrid(RSAUtils.strByEncryption(PublicData.getInstance().userID, true));
-            CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResult>() {
+            liYingRegDTO.setUsrid(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
+            CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResponse>() {
                 @Override
-                public void onSuccess(BaseResult result) {
+                public void onSuccess(BaseResponse result) {
                 }
             });
         } catch (NoSuchAlgorithmException e) {
