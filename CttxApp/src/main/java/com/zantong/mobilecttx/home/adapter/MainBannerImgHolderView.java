@@ -42,7 +42,7 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
         mAdapterContext = context;
         //你可以通过layout文件来创建，也可以像我一样用代码创建，不一定是Image，任何控件都可以进行翻页
         imageView = new ImageView(mAdapterContext);
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         return imageView;
     }
@@ -65,6 +65,12 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
     }
 
     protected void webProcessingService(HomeAdvertisement data) {
+        CarApiClient.commitAdClick(ContextUtils.getContext(), data.getId(),"1",
+                new CallBack<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse result) {
+                    }
+                });
 
         String url = data.getAdvertisementSkipUrl();
         MemoryData.getInstance().mHashMap.put("htmlUrl", url);
@@ -85,12 +91,6 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
             intent.putExtra(JxGlobal.putExtra.browser_title_extra, "优惠");
             intent.putExtra(JxGlobal.putExtra.browser_url_extra, url);
             Act.getInstance().gotoLoginByIntent(mAdapterContext, BrowserHtmlActivity.class, intent);
-
-            CarApiClient.commitAdClick(ContextUtils.getContext(), data.getId(), new CallBack<BaseResponse>() {
-                @Override
-                public void onSuccess(BaseResponse result) {
-                }
-            });
         }
     }
 

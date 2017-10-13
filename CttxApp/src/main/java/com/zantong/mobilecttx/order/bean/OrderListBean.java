@@ -37,6 +37,15 @@ public class OrderListBean {
     private String targetType;
     private String targetUrl;
     private String phone;
+    private String canPayType;
+
+    public String getCanPayType() {
+        return canPayType;
+    }
+
+    public void setCanPayType(String canPayType) {
+        this.canPayType = canPayType;
+    }
 
     public String getPhone() {
         return phone;

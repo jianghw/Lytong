@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.browser.PayHtmlActivity;
@@ -31,7 +32,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qqtheme.framework.bean.BaseResponse;
+import cn.qqtheme.framework.custom.popup.CustomDialog;
 import cn.qqtheme.framework.global.JxGlobal;
+import cn.qqtheme.framework.imple.IPayTypeListener;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -129,17 +132,7 @@ public class MyOrderActivity extends BaseJxActivity
             @Override
             public void doClickPay(OrderListBean bean) {
                 mOrderListBean = bean;
-
-                String orderId = mOrderListBean.getOrderId();
-                String payType = String.valueOf(mOrderListBean.getPayType());
-                float orderPrice = mOrderListBean.getAmount();
-                int price = (int) (orderPrice * 100);
-
-                if (mPresenter != null && mOrderListBean.getType() == 1) {
-                    mPresenter.onPayOrderByCoupon(orderId, String.valueOf(price), payType);
-                } else if (mPresenter != null) {
-                    mPresenter.getBankPayHtml(orderId, String.valueOf(price));
-                }
+                payTypeByUser(bean);
             }
 
             /**
@@ -181,6 +174,54 @@ public class MyOrderActivity extends BaseJxActivity
                 startActivity(intent);
             }
         };
+    }
+
+    /**
+     * 支付类型选择
+     * canPayType支付方式:1-工行支付,2-支付宝;例:1,2
+     */
+    private void payTypeByUser(final OrderListBean orderListBean) {
+        if (orderListBean.getCanPayType().contains("1")
+                && orderListBean.getCanPayType().contains("2")) {
+
+            CustomDialog.payTypeDialog(this, new IPayTypeListener() {
+                @Override
+                public void submitPayType(boolean type) {
+                    if (type) gotoPayByCard(orderListBean);
+                    else gotoPayByAlipay(orderListBean);
+                }
+            });
+        } else if (orderListBean.getCanPayType().contains("1")) {
+            gotoPayByCard(orderListBean);
+        } else if (orderListBean.getCanPayType().contains("2")) {
+            gotoPayByAlipay(orderListBean);
+        }
+
+    }
+
+    private void gotoPayByCard(OrderListBean bean) {
+        String orderId = mOrderListBean.getOrderId();
+        String payType = String.valueOf(mOrderListBean.getPayType());
+        float orderPrice = mOrderListBean.getAmount();
+        int price = (int) (orderPrice * 100);
+
+        if (mPresenter != null && mOrderListBean.getType() == 1) {
+            mPresenter.onPayOrderByCoupon(orderId, String.valueOf(price), payType);
+        } else if (mPresenter != null) {
+            mPresenter.getBankPayHtml(orderId, String.valueOf(price));
+        }
+    }
+
+    /**
+     * 支付宝支付
+     */
+    private void gotoPayByAlipay(OrderListBean bean) {
+        Intent intent = new Intent(this, PayBrowserActivity.class);
+        intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付宝支付");
+        intent.putExtra(JxGlobal.putExtra.web_url_extra, BuildConfig.CAR_MANGER_URL + "aliPay/aliPayHtml?orderId=" + bean.getOrderId());
+        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, bean.getOrderId());
+        intent.putExtra(JxGlobal.putExtra.web_single_url_extra, true);
+        startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
     }
 
     /**

@@ -97,8 +97,9 @@
         android:layout_below="@id/underline1"
         android:layout_marginTop="24dip"
         android:enabled="false"
-        android:textColor="@color/next_btn_selector"
+        android:textSize="@dimen/fs_18sp"
         android:text="登录"/>
+
     <TextView
         android:id="@+id/login_forget_password"
         android:layout_width="wrap_content"

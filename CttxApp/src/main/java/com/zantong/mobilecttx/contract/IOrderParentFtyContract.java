@@ -1,12 +1,13 @@
 package com.zantong.mobilecttx.contract;
 
-import cn.qqtheme.framework.bean.BaseResponse;
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import java.util.List;
+
+import cn.qqtheme.framework.bean.BaseResponse;
 
 /**
  * 订单页面
@@ -55,5 +56,7 @@ public interface IOrderParentFtyContract {
         void getBankPayHtml(String orderId, String orderPrice);
 
         void cancelOrder(OrderListBean bean);
+
+        void aliPayHtml(String orderId);
     }
 }

@@ -67,4 +67,8 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
 
+    //执行lint检查，错误或警告会终止构建，将其关掉。
+    lintOptions {
+        abortOnError false
+    }
 }

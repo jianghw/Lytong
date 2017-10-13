@@ -24,13 +24,10 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.FileUploadApi;
 import com.zantong.mobilecttx.api.UserApiClient;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
-
-import cn.qqtheme.framework.bean.BankResponse;
-
-import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.contract.ILoginView;
 import com.zantong.mobilecttx.login_v.LoginActivity;
 import com.zantong.mobilecttx.presenter.LogoutPresenter;
@@ -54,6 +51,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.Bind;
+import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.custom.picker.DatePicker;
 import cn.qqtheme.framework.util.CleanUtils;
 import cn.qqtheme.framework.util.ContextUtils;
@@ -146,13 +144,15 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
     protected void onResume() {
         super.onResume();
 
-        if (!Tools.isStrEmpty(MemoryData.getInstance().mLoginInfoBean.getNickname())) {
-            user_info_name_text.setText(MemoryData.getInstance().mLoginInfoBean.getNickname());
-        } else {
-            user_info_name_text.setText(MemoryData.getInstance().mLoginInfoBean.getPhoenum().substring(7));
+        if (MemoryData.getInstance().mLoginInfoBean != null) {
+            if (!Tools.isStrEmpty(MemoryData.getInstance().mLoginInfoBean.getNickname())) {
+                user_info_name_text.setText(MemoryData.getInstance().mLoginInfoBean.getNickname());
+            } else {
+                user_info_name_text.setText(MemoryData.getInstance().mLoginInfoBean.getPhoenum().substring(7));
+            }
+            String phone = StringUtils.getEncrypPhone(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
+            user_info_phone_text.setText(phone);
         }
-        String phone = StringUtils.getEncrypPhone(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
-        user_info_phone_text.setText(phone);
     }
 
     @Override

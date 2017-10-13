@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--多状态布局-->
+    <declare-styleable name="MultiStateLayout">
+        <attr name="animDuration" format="integer"/>
+        <attr name="animEnable" format="boolean"/>
+
+        <attr name="layoutLoading" format="reference"/>
+        <attr name="layoutEmpty" format="reference"/>
+        <attr name="layoutError" format="reference"/>
+        <attr name="layoutNetError" format="reference"/>
+
+        <attr name="state" format="enum">
+            <enum name="content" value="0"/>
+            <enum name="loading" value="1"/>
+            <enum name="empty" value="2"/>
+            <enum name="error" value="3"/>
+            <enum name="net_error" value="4"/>
+        </attr>
+    </declare-styleable>
+</resources>

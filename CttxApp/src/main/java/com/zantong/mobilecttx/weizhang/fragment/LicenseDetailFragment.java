@@ -101,7 +101,7 @@ public class LicenseDetailFragment extends BaseRefreshJxFragment
         mCustomRecycler.setLayoutManager(layoutManager);
         mCustomRecycler.setPullRefreshEnabled(false);
         mCustomRecycler.setLoadingMoreEnabled(false);
-//ScrollView 去滑动
+        //ScrollView 去滑动
         mCustomRecycler.setNestedScrollingEnabled(false);
 
         mCustomRecycler.setLoadingListener(new XRecyclerView.LoadingListener() {
@@ -197,7 +197,7 @@ public class LicenseDetailFragment extends BaseRefreshJxFragment
     @Override
     protected void DestroyViewAndThing() {
         setLayoutVisibilityByRefresh(false);
-        mPresenter.unSubscribe();
+        if (mPresenter != null) mPresenter.unSubscribe();
     }
 
     /**

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@color/colorWhite"
+              android:orientation="vertical">
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/ds_75"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radio_btn_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="银行卡支付"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_18sp"/>
+
+        <RadioButton
+            android:id="@+id/radio_btn_un"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ds_48"
+            android:text="支付宝支付"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_18sp"/>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_150"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/ds_45"
+        android:layout_marginLeft="@dimen/ds_45"
+        android:layout_marginRight="@dimen/ds_45"
+        android:background="@mipmap/ic_btn_bg"
+        android:enabled="true"
+        android:text="确定支付"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/fs_18sp"/>
+
+</LinearLayout>

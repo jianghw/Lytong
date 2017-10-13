@@ -248,7 +248,6 @@ public class OrderParentPresenter
         mSubscriptions.add(subscription);
     }
 
-
     /**
      * 54.充值接口  加油旧接口 不用
      */
@@ -288,6 +287,7 @@ public class OrderParentPresenter
         mSubscriptions.add(subscription);
     }
 
+
     /**
      * N 5.获取工行支付页面
      */
@@ -326,4 +326,10 @@ public class OrderParentPresenter
                 });
         mSubscriptions.add(subscription);
     }
+
+    /**
+     * 支付宝接口
+     */
+    @Override
+    public void aliPayHtml(String orderId) {}
 }

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -59,12 +60,13 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
     EditText mPhone;
     @Bind(R.id.bind_jia_zhao_commit)
     Button mDownStep;
+    @Bind(R.id.tv_toast)
+    TextView mTvToast;
 
     final BindDrivingDTO params = new BindDrivingDTO();
 
     @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-    }
+    protected void bundleIntent(Bundle savedInstanceState) {}
 
     @Override
     protected int getContentResId() {
@@ -81,8 +83,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
     }
 
     @Override
-    protected void DestroyViewAndThing() {
-    }
+    protected void DestroyViewAndThing() {}
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -96,7 +97,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
         }
     }
 
-    @OnClick({R.id.bind_jia_zhao_file_num_img, R.id.bind_jia_zhao_idcard_img, R.id.bind_jia_zhao_phone_img,
+    @OnClick({R.id.bind_jia_zhao_file_num_img, R.id.bind_jia_zhao_idcard_img, R.id.bind_jia_zhao_phone_img, R.id.tv_toast,
             R.id.bind_jia_zhao_file_camera, R.id.bind_jia_zhao_commit, R.id.activity_bind_jia_zhao_agreement})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -129,6 +130,9 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
             case R.id.bind_jia_zhao_commit://提交信息
                 bindChangTongKa();
                 break;
+            case R.id.tv_toast://信息
+                ToastUtils.toastLong("畅通卡开卡半年内如无消费，会被自动冻结 请去银行柜面办理解冻后才能正常绑卡");
+                break;
             default:
                 break;
         }
@@ -140,21 +144,21 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
      */
     private void bindChangTongKa() {
 
-//        userId;//关联用户ID
-//        name;//驾驶证姓名
-//        licenseno;//证号
-//        sex;//性别
-//        nationality;//国籍
-//        address;//住址
-//        dateOfBirth;//出生日期
-//        dateOfFirstIssue;//初次领
-//        allowType;//准驾车型
-//        validPeriodStart;//有效期
-//        validPeriodEnd;//有效期限截
-//        fileNum;//档案编号
-//        record;//记录
-//        memo;//备注
-//        params.setAllowType("5");
+        //        userId;//关联用户ID
+        //        name;//驾驶证姓名
+        //        licenseno;//证号
+        //        sex;//性别
+        //        nationality;//国籍
+        //        address;//住址
+        //        dateOfBirth;//出生日期
+        //        dateOfFirstIssue;//初次领
+        //        allowType;//准驾车型
+        //        validPeriodStart;//有效期
+        //        validPeriodEnd;//有效期限截
+        //        fileNum;//档案编号
+        //        record;//记录
+        //        memo;//备注
+        //        params.setAllowType("5");
 
         String licenseno = mLicenseno.getText().toString().trim();
         final String fileNum = mFileNum.getText().toString().trim();

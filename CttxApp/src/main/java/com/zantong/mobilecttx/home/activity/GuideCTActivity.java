@@ -37,8 +37,7 @@ public class GuideCTActivity extends BaseJxActivity implements GuideHeaderViewPa
     int mVersionCode;
 
     @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-    }
+    protected void bundleIntent(Bundle savedInstanceState) {}
 
     protected boolean isNeedCustomTitle() {
         return true;
@@ -54,8 +53,7 @@ public class GuideCTActivity extends BaseJxActivity implements GuideHeaderViewPa
     }
 
     @Override
-    protected void initFragmentView(View view) {
-    }
+    protected void initFragmentView(View view) {}
 
     @Override
     protected void initViewStatus() {
@@ -63,6 +61,9 @@ public class GuideCTActivity extends BaseJxActivity implements GuideHeaderViewPa
     }
 
     public void initData() {
+        Beta.checkUpgrade(false, true);
+        Beta.init(getApplicationContext(), false);
+
         UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
         int appCode = AppUtils.getAppVersionCode();//当前手机的
         mVersionCode = appCode;
@@ -71,7 +72,12 @@ public class GuideCTActivity extends BaseJxActivity implements GuideHeaderViewPa
         }
 
         Bundle bundle = getIntent().getExtras();
-        ArrayList<StartPicBean> arrayList = bundle.getParcelableArrayList(GUIDE_PIC);
+        ArrayList<StartPicBean> arrayList;
+        if (bundle != null)
+            arrayList = bundle.getParcelableArrayList(GUIDE_PIC);
+        else
+            arrayList = new ArrayList<>();
+
         List<StartPicBean> mList = new ArrayList<>();
 
         if (arrayList != null && arrayList.size() > 0) {

@@ -79,6 +79,8 @@ public class MemoryData {
         updateMsg = false;
         filenum = "";
         mNetLocationBean = null;
+        mLoginInfoBean=null;
+
         SPUtils.getInstance().setUserPwd("");
 
         UserInfoRememberCtrl.saveObject(null);

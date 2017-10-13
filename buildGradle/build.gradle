@@ -1,0 +1,28 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+dependencies {
+    //设置插件的GAV参数
+    compile 'com.android.tools.build:gradle:2.3.3'
+    compile group: 'org.javassist', name: 'javassist', version: '3.20.0-GA'
+    //gradle sdk
+    compile gradleApi()
+    //groovy sdk
+    compile localGroovy()
+}
+
+repositories {
+    mavenCentral()
+}
+
+group = 'com.jianghw.compile.module'
+version = '0.0.1'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //文件发布到下面目录
+            repository(url: uri('../repo'))
+        }
+    }
+}

@@ -91,6 +91,7 @@ public class HomeMainActivity extends BaseJxActivity {
         if (MemoryData.getInstance().loginFlag) liyingreg();
 
         //更新检查
+        Beta.checkUpgrade(false, true);
         Beta.init(getApplicationContext(), false);
         UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
         int appCode = AppUtils.getAppVersionCode();

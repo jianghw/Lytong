@@ -1,14 +1,17 @@
 apply plugin: 'com.android.application'
+
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     defaultConfig {
         applicationId "com.zantong.mobilecttx"
+
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
+
         //dex突破65535的限制
         multiDexEnabled true
     }
@@ -25,7 +28,7 @@ android {
         release.setRoot('build-types/release')
     }
 
-    //执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关掉。
+    //执行lint检查，错误或警告会终止构建，将其关掉。
     lintOptions {
         abortOnError false
         disable 'MissingTranslation'
@@ -47,9 +50,9 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/README.txt'
-        exclude 'META-INF/services/javax.annotation.processing.Processor'
         exclude '!META-INF/MANIFEST.MF'
         exclude 'META-INF/MANIFEST.MF'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 
     signingConfigs {
@@ -117,9 +120,9 @@ android {
             minSdkVersion 21
         }
         //应用宝
-        YYB {}
+        tzly_yyb {}
         //360应用市场
-        ZS_360 {}
+        tzly_360 {}
         //华为
         tzly_huawei {}
         //小米市场
@@ -152,3 +155,9 @@ dependencies {
     compile 'com.aliyun.ams:alicloud-android-utdid:1.1.5.3'
     compile 'com.aliyun.ams:alicloud-android-ut:5.1.0'
 }
+
+//自定义组件构建
+/*component {
+    isRegisterCompoAuto = true
+    applicationName = 'com.zantong.mobilecttx.application.MyApplication'
+}*/

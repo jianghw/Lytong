@@ -33,6 +33,7 @@ public final class JxGlobal {
         public static final String web_title_extra = "web_title_extra";
         public static final String web_url_extra = "web_url_extra";
         public static final String web_order_id_extra = "web_order_id_extra";
+        public static final String web_single_url_extra = "web_single_url_extra";
         public static final String share_position_extra = "share_position_extra";
         public static final String fahrschule_position_extra = "fahrschule_position_extra";
         public static final String recharge_coupon_extra = "recharge_coupon_extra";

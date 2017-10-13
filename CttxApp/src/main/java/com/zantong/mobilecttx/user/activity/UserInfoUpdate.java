@@ -103,7 +103,7 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
     @Override
     public void initData() {
         File file = getHeadImageFile();
-        if (file == null)
+        if (file == null && MemoryData.getInstance().mLoginInfoBean != null)
             ImageLoadUtils.loadHead(
                     MemoryData.getInstance().mLoginInfoBean.getPortrait(),
                     user_head_image
@@ -263,10 +263,10 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
     public void openAlbum() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-//打开最近图片
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        intent.addCategory(Intent.CATEGORY_OPENABLE);
-//        intent.setType("image/*");
+        //打开最近图片
+        //        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        //        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        //        intent.setType("image/*");
 
         String ImgPath = FileUtils.photoImagePath(getApplicationContext(), FileUtils.GALLERY_DIR);
         File mGalleryFile = new File(ImgPath);
@@ -362,16 +362,16 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
      * 选择照片回调
      */
     private void reqAlbum(Intent data) {
-//        Uri sourceUri = data.getData();
-//        String[] proj = {MediaStore.Images.Media.DATA};
-//        // 好像是android多媒体数据库的封装接口，具体的看Android文档
-//        Cursor cursor = managedQuery(sourceUri, proj, null, null, null);
-//        // 按我个人理解 这个是获得用户选择的图片的索引值
-//        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//        // 将光标移至开头 ，这个很重要，不小心很容易引起越界
-//        cursor.moveToFirst();
+        //        Uri sourceUri = data.getData();
+        //        String[] proj = {MediaStore.Images.Media.DATA};
+        //        // 好像是android多媒体数据库的封装接口，具体的看Android文档
+        //        Cursor cursor = managedQuery(sourceUri, proj, null, null, null);
+        //        // 按我个人理解 这个是获得用户选择的图片的索引值
+        //        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        //        // 将光标移至开头 ，这个很重要，不小心很容易引起越界
+        //        cursor.moveToFirst();
         // 最后根据索引值获取图片路径
-//        String imgPath = cursor.getString(column_index);
+        //        String imgPath = cursor.getString(column_index);
 
         Uri uri = data.getData();
         String imgPath = FileUtils.getPath(getApplicationContext(), uri);
@@ -392,9 +392,9 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
         //TODO 如果是拍照的,删除临时文件
         File temFile = getHeadImageFile();
         if (temFile == null) return;
-//            String scaleImgPath = FileUtils.saveBitmapByQuality(bitmap, 80, getApplicationContext());//进行压缩
-//            进行上传，上传成功后显示新图片,上传的逻辑就是将scaleImgPath这个路径下的图片上传，此处不做演示，这里只是显示到iv上
-//                                ivPhoto.setImageBitmap(bitmap);
+        //            String scaleImgPath = FileUtils.saveBitmapByQuality(bitmap, 80, getApplicationContext());//进行压缩
+        //            进行上传，上传成功后显示新图片,上传的逻辑就是将scaleImgPath这个路径下的图片上传，此处不做演示，这里只是显示到iv上
+        //                                ivPhoto.setImageBitmap(bitmap);
 
         Map<String, RequestBody> params = new HashMap<>();
         RequestBody body = RequestBody.create(MediaType.parse("image/jpeg"), temFile);

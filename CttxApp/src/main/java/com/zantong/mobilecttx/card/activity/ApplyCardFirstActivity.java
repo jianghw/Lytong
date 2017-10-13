@@ -8,20 +8,20 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.HandleCTCardApiClient;
+import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import cn.qqtheme.framework.bean.BankResponse;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.card.dto.BidCTCardDTO;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
-import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
@@ -34,6 +34,7 @@ import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.RegexUtils;
@@ -61,6 +62,8 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     EditText mName;//姓名
     @Bind(R.id.apply_card_first_idcard)
     EditText mIdCard;//身份证
+    @Bind(R.id.tv_toast)
+    TextView mTvToast;
 
     @Override
     public HelpPresenter initPresenter() {
@@ -102,7 +105,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     }
 
     @OnClick({R.id.apply_card_first_img, R.id.apply_card_first_desc, R.id.apply_card_first_commit,
-            R.id.apply_card_idcard_img, R.id.apply_card_first_camera})
+            R.id.apply_card_idcard_img, R.id.apply_card_first_camera, R.id.tv_toast})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.apply_card_first_img:  //驾驶证问号
@@ -122,6 +125,9 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 break;
             case R.id.apply_card_first_camera://扫描驾驶证
                 takePhoto();
+                break;
+            case R.id.tv_toast:
+                ToastUtils.toastLong("只要持外地驾驶证的客户到他现在居住所在地的车管所申请办理，办理时需提交以下资料，客户身份证，暂住证，驾驶证，还需要携带本人近期一寸彩照3张去所属车管所填写机动车驾驶证申请表就可以办理了，正常的话当天就可以换到证，最迟不会超过三个工作日");
                 break;
             default:
                 break;
@@ -216,7 +222,12 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
             ToastUtils.toastShort("身份证号码不正确");
             return;
         }
-//TODO 什么贵
+        if (!getUserIdCard().startsWith("310")) {
+            ToastUtils.toastShort("外地驾照如需办理请先换成上海驾照");
+            return;
+        }
+
+        //TODO 什么贵
         MemoryData.getInstance().filenum = getDriverFileNum();
 
         if (BuildConfig.DEBUG) {//七天之内不能重复办卡 不用

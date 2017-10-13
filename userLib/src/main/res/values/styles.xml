@@ -1,0 +1,9 @@
+<resources>
+
+    <!--自定义键盘-->
+    <style name="UserCustomKeyBoardStyle">
+        <item name="android:textSize">@dimen/res_fs_16</item>
+        <item name="android:textColor">@color/res_color_black_4d</item>
+    </style>
+
+</resources>

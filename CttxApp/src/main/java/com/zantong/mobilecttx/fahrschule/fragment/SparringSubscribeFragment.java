@@ -44,7 +44,7 @@ import cn.qqtheme.framework.imple.IAreaDialogListener;
 import cn.qqtheme.framework.imple.ISpeedDialogListener;
 import cn.qqtheme.framework.imple.ITimeDialogListener;
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.CustomDialog;
+import cn.qqtheme.framework.custom.popup.CustomDialog;
 import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ViewUtils;

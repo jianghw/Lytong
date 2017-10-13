@@ -24,9 +24,6 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-
-import cn.qqtheme.framework.bean.BankResponse;
-
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.car.bean.CarBrandBean;
 import com.zantong.mobilecttx.car.bean.CarStyleInfoBean;
@@ -69,6 +66,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
@@ -482,7 +480,6 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("params", dto1);
                     intent.putExtras(bundle);
-
                     intent.putExtra("plateNum", carNum);
                     startActivity(intent);
                     finish();

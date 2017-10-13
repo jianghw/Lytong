@@ -32,9 +32,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.log.LogUtils;
 
-public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView,HelpPresenter> implements ItemClickListener{
+public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView, HelpPresenter> implements ItemClickListener {
 
     @Bind(R.id.activity_violation_history_num)
     TextView mNum;
@@ -73,40 +74,44 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView,HelpPres
         getViolationHistory();
     }
 
-    private void getViolationHistory(){
+    private void getViolationHistory() {
         showDialogLoading();
         ViolationSearchDTO dto = new ViolationSearchDTO();
         dto.setDate(mDate);
-        dto.setUsernum(RSAUtils.strByEncryption(MemoryData.getInstance().userID,true));
-        CarApiClient.getViolationHistory(this, dto, new CallBack<ViolationHistoryBean>() {
-            @Override
-            public void onSuccess(ViolationHistoryBean result) {
-                hideDialogLoading();
-                mNum.setText("车辆数："+result.getData().getCarSize()+"辆");
-                mAmount.setText(result.getData().getTotalPrice()+"元");
-                violationCarList = result.getData().getData();
-                if (violationCarList != null && violationCarList.size() > 1){
-                    violationCarList.get(0).setExpanded(true);
-                }
-                sectionedExpandableLayoutHelper.removeAll();
-                for (ViolationCarInfo info : violationCarList){
-                    ViolationSearchDTO dto = new ViolationSearchDTO();
-                    dto.setCarnum(info.getCarnum());
-                    dto.setDate(mDate);
-                    dto.setUsernum(RSAUtils.strByEncryption(MemoryData.getInstance().userID,true));
-                    getHistoryByCar(info,dto);
+        dto.setUsernum(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
+        CarApiClient.getViolationHistory(ContextUtils.getContext(), dto,
+                new CallBack<ViolationHistoryBean>() {
+                    @Override
+                    public void onSuccess(ViolationHistoryBean result) {
+                        hideDialogLoading();
+                        if (result == null || result.getData() == null) return;
 
-                }
-            }
+                        mNum.setText("车辆数：" + result.getData().getCarSize() + "辆");
+                        mAmount.setText(result.getData().getTotalPrice() + "元");
+                        violationCarList = result.getData().getData();
+                        if (violationCarList != null && violationCarList.size() > 1) {
+                            violationCarList.get(0).setExpanded(true);
+                        }
+                        sectionedExpandableLayoutHelper.removeAll();
+                        for (ViolationCarInfo info : violationCarList) {
+                            ViolationSearchDTO dto = new ViolationSearchDTO();
+                            dto.setCarnum(info.getCarnum());
+                            dto.setDate(mDate);
+                            dto.setUsernum(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
+                            getHistoryByCar(info, dto);
 
-            @Override
-            public void onError(String errorCode, String msg) {
-                super.onError(errorCode, msg);
-                hideDialogLoading();
-            }
-        });
+                        }
+                    }
+
+                    @Override
+                    public void onError(String errorCode, String msg) {
+                        super.onError(errorCode, msg);
+                        hideDialogLoading();
+                    }
+                });
     }
-    private void getHistoryByCar(final ViolationCarInfo section,ViolationSearchDTO dto){
+
+    private void getHistoryByCar(final ViolationCarInfo section, ViolationSearchDTO dto) {
         CarApiClient.getViolationHistoryByCar(this, dto, new CallBack<ViolationItemBean>() {
             @Override
             public void onSuccess(ViolationItemBean result) {
@@ -115,6 +120,7 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView,HelpPres
             }
         });
     }
+
     @Override
     public HelpPresenter initPresenter() {
         return new HelpPresenter();
@@ -123,14 +129,14 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView,HelpPres
 
     @Override
     public void itemClicked(ViolationItemInfo item) {
-        Act.getInstance().gotoIntent(this,ViolationDetails.class,item.getPeccancynum());
+        Act.getInstance().gotoIntent(this, ViolationDetails.class, item.getPeccancynum());
     }
 
     @OnClick({(R.id.activity_violation_history_layout)})
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.activity_violation_history_layout:
                 showPopwindow();
                 break;
@@ -146,7 +152,7 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView,HelpPres
         View view = inflater.inflate(R.layout.popwindow_date, null);
 
         // 下面是两种方法得到宽度和高度 getWindow().getDecorView().getWidth()
-        LogUtils.i("mDownLayout.getWidth()----"+mDownLayout.getWidth());
+        LogUtils.i("mDownLayout.getWidth()----" + mDownLayout.getWidth());
         final PopupWindow window = new PopupWindow(view, mDownLayout.getWidth(),
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
@@ -157,7 +163,7 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView,HelpPres
         ColorDrawable dw = new ColorDrawable(0xb0000000);
         window.setBackgroundDrawable(dw);
         // 在底部显示
-        window.showAsDropDown(mDownLayout,0,0);
+        window.showAsDropDown(mDownLayout, 0, 0);
 
         // 这里检验popWindow里的button是否可以点击
         Button first = (Button) view.findViewById(R.id.popwindow_first);

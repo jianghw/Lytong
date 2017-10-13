@@ -13,11 +13,13 @@ import android.widget.LinearLayout;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.api.CallBack;
+import com.zantong.mobilecttx.api.CarApiClient;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
-import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.contract.home.INativeItemListener;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
@@ -40,14 +42,16 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.bean.BaseResponse;
+import cn.qqtheme.framework.custom.banner.CBViewHolderCreator;
+import cn.qqtheme.framework.custom.banner.ConvenientBanner;
 import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.global.JxGlobal;
+import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
-import cn.qqtheme.framework.custom.banner.CBViewHolderCreator;
-import cn.qqtheme.framework.custom.banner.ConvenientBanner;
 
 
 /**
@@ -140,6 +144,14 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
      * 本地控件点击事件
      */
     public void gotoPageByTargetPath(ChildrenBean childrenBean) {
+        CarApiClient.commitAdClick(ContextUtils.getContext(),
+                childrenBean != null ? childrenBean.getId() : -1, "2",
+                new CallBack<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse result) {
+                    }
+                });
+
         if (childrenBean != null && !TextUtils.isEmpty(childrenBean.getTargetPath())) {
             String path = childrenBean.getTargetPath();
             if (path.contains("http")) {//启动公司自己html
@@ -250,8 +262,7 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
      * 送豪礼
      */
     @Override
-    public void getRewardSucceed(BannerBean bannerBean) {
-    }
+    public void getRewardSucceed(BannerBean bannerBean) {}
 
     /**
      * 获取模块
@@ -272,7 +283,6 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
     protected void DestroyViewAndThing() {
         if (mPresenter != null) mPresenter.unSubscribe();
     }
-
 
     /**
      * 进入代驾页面

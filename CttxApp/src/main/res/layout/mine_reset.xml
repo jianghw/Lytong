@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorBackGray"
-    android:clipToPadding="true"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorBackGray"
+              android:clipToPadding="true"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_96"
-        android:text="请使用已注册的手机号找回密码"
-        android:paddingLeft="@dimen/ds_42"
+        android:background="@color/colorLine"
         android:gravity="center_vertical"
-        android:background="@color/colorLine" />
+        android:paddingLeft="@dimen/ds_42"
+        android:text="请使用已注册的手机号找回密码"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,9 +25,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="48dip"
+            android:background="@color/civory"
             android:paddingLeft="16dip"
-            android:paddingRight="16dip"
-            android:background="@color/civory">
+            android:paddingRight="16dip">
 
 
             <EditText
@@ -38,7 +38,7 @@
                 android:layout_centerVertical="true"
                 android:hint="请输入您的手机号码"
                 android:inputType="number"
-                android:maxLength="11" />
+                android:maxLength="11"/>
 
             <Button
                 android:id="@+id/reset_vcode_btn"
@@ -46,12 +46,12 @@
                 android:layout_width="92dp"
                 android:layout_height="32dp"
                 android:enabled="false"
-                android:text="获取验证码" />
+                android:text="获取验证码"/>
 
             <ImageView
                 android:id="@+id/reset_del"
                 style="@style/EdittextDeleteImage"
-                android:layout_toLeftOf="@+id/reset_vcode_btn" />
+                android:layout_toLeftOf="@+id/reset_vcode_btn"/>
         </RelativeLayout>
 
         <include layout="@layout/view_line1"/>
@@ -66,7 +66,7 @@
             android:maxLength="6"
             android:paddingLeft="@dimen/ds_48"
             android:paddingRight="@dimen/ds_48"
-            android:singleLine="true" />
+            android:singleLine="true"/>
 
     </LinearLayout>
 
@@ -77,6 +77,6 @@
         android:layout_marginTop="50dip"
         android:enabled="false"
         android:text="下一步"
-        android:textColor="@color/next_btn_selector" />
+        android:textSize="@dimen/fs_18sp"/>
 
 </LinearLayout>

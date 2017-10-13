@@ -357,8 +357,9 @@ public class ViolationListActivity extends BaseJxActivity
      */
     @Override
     public ViolationDTO getViolationDTO() {
-        mViolationDTO.setProcessste("2");
+        if (mViolationDTO == null) return null;
 
+        mViolationDTO.setProcessste("2");
         if (!TextUtils.isEmpty(MemoryData.getInstance().userID)) {
             mViolationDTO.setToken(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
         } else if (!TextUtils.isEmpty(MemoryData.getInstance().imei)) {
@@ -366,6 +367,7 @@ public class ViolationListActivity extends BaseJxActivity
         } else {
             mViolationDTO.setToken(RSAUtils.strByEncryption(PushServiceFactory.getCloudPushService().getDeviceId(), true));
         }
+
         return mViolationDTO;
     }
 

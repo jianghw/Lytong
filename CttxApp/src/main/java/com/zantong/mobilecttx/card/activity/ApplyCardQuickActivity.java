@@ -16,15 +16,14 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.FileDownloadApi;
 import com.zantong.mobilecttx.api.HandleCTCardApiClient;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
-import cn.qqtheme.framework.bean.BankResponse;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.card.bean.YingXiaoResponse;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
 import com.zantong.mobilecttx.card.dto.QuickApplyCardDTO;
-import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
@@ -44,6 +43,7 @@ import java.io.InputStream;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.custom.picker.DatePicker;
 import cn.qqtheme.framework.util.ContextUtils;
@@ -139,7 +139,8 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
         quickApplyCardDTO.setUsrid(SPUtils.getInstance().getLoginInfoBean().getUsrid());
         quickApplyCardDTO.setCtfnum(RSAUtils.strByEncryption(getIntent().getStringExtra("idCard"), true));
         quickApplyCardDTO.setFilenum(RSAUtils.strByEncryption(getIntent().getStringExtra("filenum"), true));
-        quickApplyCardDTO.setPhoenum(RSAUtils.strByEncryption(MemoryData.getInstance().mLoginInfoBean.getPhoenum(), true));
+        if (MemoryData.getInstance().mLoginInfoBean != null)
+            quickApplyCardDTO.setPhoenum(RSAUtils.strByEncryption(MemoryData.getInstance().mLoginInfoBean.getPhoenum(), true));
         quickApplyCardDTO.setCtfvldprd(getIntent().getStringExtra("date"));
         quickApplyCardDTO.setActnotf("0");//默认不开启自动还款
         quickApplyCardDTO.setElecbillsign("0");
@@ -329,7 +330,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
                     }
                 })
                 .subscribeOn(Schedulers.io())
-//                .sample(1, TimeUnit.SECONDS)
+                //                .sample(1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<String>() {
                     @Override
@@ -398,7 +399,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 if (result.getResponseCode() == 2000 && result.getData() != null) {
                     mEmpNum = result.getData().getEmpNum();
                     //TODO 手动不显示
-//                    mYingXiaoCode.setContentText(mEmpNum);
+                    //                    mYingXiaoCode.setContentText(mEmpNum);
                     quickApplyCardDTO.setDscode(mEmpNum);
                     quickApplyCardDTO.setDscodegs(mEmpNum);
                 }

@@ -1,0 +1,64 @@
+<resources>
+
+    <!-- Base text theme. -->
+    <style name="ResTextTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:textSize">@dimen/res_fs_16</item>
+    </style>
+
+    <!--16sp大小字体-->
+    <style name="ResTextTheme.16">
+        <!-- Customize your theme here. -->
+        <item name="android:textSize">@dimen/res_fs_16</item>
+    </style>
+    <!--白色字体-->
+    <style name="ResTextTheme.16.White">
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/res_color_white</item>
+    </style>
+    <!--小标题-->
+    <style name="ResTextTheme.16.Subtitle">
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/res_color_black_4d</item>
+    </style>
+
+    <style name="MenuItemStyle">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <!--loading dialog -->
+    <style name="ResLoadingDialogStyle">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!-- window dialog 显示消失动画-->
+    <style name="ResDialogWindowAnimStyle">
+        <!-- 指定显示的动画xml  -->
+        <item name="android:windowShowAnimation">@anim/anim_dialog_show</item>
+        <!-- 指定消失的动画xml  -->
+        <item name="android:windowHideAnimation">@anim/anim_dialog_dismiss</item>
+    </style>
+
+    <!--button提交控件-->
+    <style name="ResButtonTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/selector_btn_submit</item>
+        <item name="android:textColor">@color/violation_details_state_btn_selector</item>
+        <item name="android:textSize">@dimen/res_fs_18</item>
+    </style>
+    <!--单行提交控件-->
+    <style name="ResButtonTheme.Single">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/res_y_100</item>
+        <item name="android:layout_marginRight">@dimen/res_x_30</item>
+        <item name="android:layout_marginLeft">@dimen/res_x_30</item>
+    </style>
+</resources>

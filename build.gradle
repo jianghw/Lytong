@@ -3,10 +3,16 @@ apply from: "config.gradle"
 buildscript {
     repositories {
         jcenter()
+        //自定义本地仓库
+        maven {
+            url uri('./repo')
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
 
+        //自定义本地仓库依赖
+        classpath 'com.jianghw.compile.module:buildGradle:0.0.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -18,6 +24,14 @@ allprojects {
         //阿里云推送 用
         maven {
             url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+        }
+        //自定义本地仓库
+        maven {
+            url uri('./repo')
+        }
+        //本地存放文件 .aar file
+        flatDir {
+            dirs '../componentRelease'
         }
     }
 }

@@ -35,6 +35,7 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.global.JxGlobal;
+import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 违章详情
@@ -254,13 +255,17 @@ public class ViolationDetails extends BaseJxActivity implements ModelView {
         switch (mCommitType) {
             case 0:
                 MemoryData.getInstance().mHashMap.clear();
-                ViolationDetailsBean.RspInfoBean rspInfo = mDetailsBean.getRspInfo();
-                ViolationBean violationBean = new ViolationBean();
-                violationBean.setCarnum(rspInfo.getCarnum());
-                violationBean.setViolationamt(rspInfo.getViolationamt());
-                violationBean.setViolationdate(rspInfo.getViolationdate());
-                violationBean.setViolationnum(rspInfo.getViolationnum());
-                showPayFragment(violationBean);
+                if (mDetailsBean != null) {
+                    ViolationDetailsBean.RspInfoBean rspInfo = mDetailsBean.getRspInfo();
+                    ViolationBean violationBean = new ViolationBean();
+                    violationBean.setCarnum(rspInfo.getCarnum());
+                    violationBean.setViolationamt(rspInfo.getViolationamt());
+                    violationBean.setViolationdate(rspInfo.getViolationdate());
+                    violationBean.setViolationnum(rspInfo.getViolationnum());
+                    showPayFragment(violationBean);
+                } else {
+                    ToastUtils.toastShort("出现未知错误，mDetailsBean为null");
+                }
                 break;
             case 1://绑卡
                 Act.getInstance().gotoIntentLogin(this, MyCardActivity.class);

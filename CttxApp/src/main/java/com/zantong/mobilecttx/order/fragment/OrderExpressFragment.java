@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.imple.IAreaDialogListener;
 import cn.qqtheme.framework.util.ContextUtils;
-import cn.qqtheme.framework.util.CustomDialog;
+import cn.qqtheme.framework.custom.popup.CustomDialog;
 import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 

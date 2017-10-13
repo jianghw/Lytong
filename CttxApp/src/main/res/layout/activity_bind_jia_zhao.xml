@@ -198,6 +198,18 @@
         android:textColor="@color/colorTvBlack_b3"
         android:textSize="@dimen/fs_14sp"/>
 
+    <TextView
+        android:id="@+id/tv_toast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="@dimen/ds_45"
+        android:drawableRight="@drawable/illegal_query_notice_selector"
+        android:text="畅通卡解冻说明"
+        android:drawablePadding="10dp"
+        android:textColor="@color/colorTvBlack_b3"
+        android:textSize="@dimen/fs_14sp"/>
+
     <Button
         android:id="@+id/bind_jia_zhao_commit"
         android:layout_width="wrap_content"

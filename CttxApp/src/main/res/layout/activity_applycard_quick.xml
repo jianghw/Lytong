@@ -120,7 +120,6 @@
             android:paddingLeft="16dip"
             android:paddingRight="@dimen/ds_60">
 
-
             <TextView
                 style="@style/TextInfoStyle"
                 android:layout_centerVertical="true"

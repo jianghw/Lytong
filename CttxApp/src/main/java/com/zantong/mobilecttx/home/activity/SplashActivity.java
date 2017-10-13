@@ -133,7 +133,7 @@ public class SplashActivity extends AppCompatActivity
 
     @Override
     public void countDownOver() {
-        gotoMain();
+                gotoMain();
     }
 
     @SuppressLint("SetTextI18n")
@@ -249,4 +249,11 @@ public class SplashActivity extends AppCompatActivity
                 break;
         }
     }
+
+    //    private void gotoTest() {
+    //        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+    //        serviceRouter.registerComponent("com.tzly.ctcyh.pay.like.PayAppLike");
+    //
+    //        UiRouter.getInstance().openUri(this, "scheme_pay://host_pay", null);
+    //    }
 }

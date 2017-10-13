@@ -48,7 +48,7 @@
             android:layout_marginTop="@dimen/ds_150"
             android:enabled="false"
             android:text="下一步"
-            android:textColor="@color/next_btn_selector" />
+          android:textSize="@dimen/fs_18sp" />
 
     </LinearLayout>
 

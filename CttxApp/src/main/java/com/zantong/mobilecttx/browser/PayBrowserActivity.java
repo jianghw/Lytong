@@ -36,6 +36,7 @@ public class PayBrowserActivity extends BaseJxActivity
     private String mTitleWeb;
     private String mUrl;
     private String mOrderId;
+    private boolean mSingleUrl;
 
     private IPayBrowserFtyContract.IPayBrowserFtyPresenter mPresenter;
 
@@ -46,6 +47,8 @@ public class PayBrowserActivity extends BaseJxActivity
             mTitleWeb = intent.getStringExtra(JxGlobal.putExtra.web_title_extra);
             mUrl = intent.getStringExtra(JxGlobal.putExtra.web_url_extra);
             mOrderId = intent.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
+
+            mSingleUrl = intent.hasExtra(JxGlobal.putExtra.web_single_url_extra);
         }
         PayBrowserPresenter presenter = new PayBrowserPresenter(
                 Injection.provideRepository(getApplicationContext()), this);
@@ -63,17 +66,21 @@ public class PayBrowserActivity extends BaseJxActivity
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     @Override
     protected void initFragmentView(View view) {
-
         initTitleContent(mTitleWeb);
         setTvCloseVisible();
+
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     protected void initViewStatus() {
-        String url = "<%@ page language=\"java\" contentType=\"text/html; charset=GBK\" pageEncoding=\"GBK\"%>" +
-                "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\" http://www.w3.org/TR/html4/loose.dtd\">" +
-                "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\">" +
-                "<title>表单提交</title></head><body>" + mUrl + "</body></html>";
+        String url;
+        if (mSingleUrl)
+            url = mUrl;
+        else
+            url = "<%@ page language=\"java\" contentType=\"text/html; charset=GBK\" pageEncoding=\"GBK\"%>" +
+                    "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\" http://www.w3.org/TR/html4/loose.dtd\">" +
+                    "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\">" +
+                    "<title>表单提交</title></head><body>" + mUrl + "</body></html>";
 
         WebSettings settings = mWebView.getSettings();
         //设置支持Javascript

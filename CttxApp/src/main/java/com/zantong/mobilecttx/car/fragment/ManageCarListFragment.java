@@ -167,7 +167,7 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
         ToastUtils.toastShort(message);
 
         ManageCarActivity activity = (ManageCarActivity) getActivity();
-        activity.isAddCarTitle(3);
+        if (activity != null) activity.isAddCarTitle(3);
     }
 
     @Override
@@ -182,7 +182,7 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
 
         ManageCarActivity activity = (ManageCarActivity) getActivity();
         MemoryData.getInstance().mCarNum = MemoryData.getInstance().mServerCars.size();
-        activity.isAddCarTitle(MemoryData.getInstance().mCarNum);
+        if (activity != null) activity.isAddCarTitle(MemoryData.getInstance().mCarNum);
     }
 
     @Override

@@ -158,9 +158,17 @@ public class CarApiClient extends BaseApiClient {
 
     /**
      * 统计广告点击次数
+     * type=1 主页广告
+     * type=2 优惠小部件
      */
+    public static void commitAdClick(Context context, int id, String type, CallBack<BaseResponse> callback) {
+        BaseCallBack<BaseResponse> baseCallBack = new BaseCallBack<>(
+                context, callback, BaseResponse.class);
+        get(context, getUrl("cttx/advertisementStatistics/" + id + "?type=" + type), baseCallBack);
+    }
+
     public static void commitAdClick(Context context, int id, CallBack<BaseResponse> callback) {
-        BaseCallBack<BaseResponse> baseCallBack = new BaseCallBack<BaseResponse>(
+        BaseCallBack<BaseResponse> baseCallBack = new BaseCallBack<>(
                 context, callback, BaseResponse.class);
         get(context, getUrl("cttx/advertisementStatistics/" + id), baseCallBack);
     }

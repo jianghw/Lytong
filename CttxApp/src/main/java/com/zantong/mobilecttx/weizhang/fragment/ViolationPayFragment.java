@@ -29,7 +29,6 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.bean.Result;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
@@ -172,7 +171,7 @@ public class ViolationPayFragment extends BaseJxFragment {
 
             @Override
             public void onError(String errorCode, String msg) {
-                getParentActivity().dismissLoadingDialog();
+                if (getParentActivity() != null) getParentActivity().dismissLoadingDialog();
                 ToastUtils.toastShort(msg);
             }
         });
