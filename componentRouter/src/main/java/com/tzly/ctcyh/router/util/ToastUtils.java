@@ -9,7 +9,7 @@ import android.widget.Toast;
 public final class ToastUtils {
 
     public static void toastShort(String message) {
-        initToast(ContextUtils.getContext(), message, Toast.LENGTH_SHORT);
+        initToast(Utils.getContext(), message, Toast.LENGTH_SHORT);
     }
 
     private static void initToast(Context context, String message, int duration) {
@@ -17,6 +17,6 @@ public final class ToastUtils {
     }
 
     public static void toastLong(String message) {
-        initToast(ContextUtils.getContext(), message, Toast.LENGTH_LONG);
+        initToast(Utils.getContext(), message, Toast.LENGTH_LONG);
     }
 }

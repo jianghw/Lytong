@@ -1,7 +1,8 @@
 package com.tzly.ctcyh.router;
 
 /**
- * ui 路由规则注册
+ * ui 路由规则 页面+地址信息
+ * 组合接口
  */
 
 public interface IUiRouter extends IComponentRouter {

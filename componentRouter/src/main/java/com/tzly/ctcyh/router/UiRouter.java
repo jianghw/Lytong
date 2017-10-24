@@ -15,12 +15,14 @@ import java.util.List;
  */
 
 public class UiRouter implements IUiRouter {
-
-    List<IComponentRouter> uiRouters = new ArrayList<>();
+    /**
+     * 地址规则集合
+     */
+    List<IComponentRouter> uiRouterList = new ArrayList<>();
     /**
      * 优先级对应保存
      */
-    HashMap<IComponentRouter, Integer> priorities = new HashMap<>();
+    HashMap<IComponentRouter, Integer> prioritiesMap = new HashMap<>();
 
     /**
      * 单例
@@ -33,6 +35,11 @@ public class UiRouter implements IUiRouter {
         private static final UiRouter INSTANCE = new UiRouter();
     }
 
+    /**
+     * 注册UI 优先级 实现接口逻辑
+     *
+     * @param router 传入定义scheme
+     */
     @Override
     public void registerUI(IComponentRouter router) {
         registerUI(router, PRIORITY_NORMAL);
@@ -40,33 +47,50 @@ public class UiRouter implements IUiRouter {
 
     @Override
     public void registerUI(IComponentRouter router, int priority) {
-        if (priorities.containsKey(router) && priority == priorities.get(router)) {
+        if (prioritiesMap.containsKey(router) && priority == prioritiesMap.get(router)) {
             return;
         }
         removeOldUIRouter(router);
         int i = 0;
-        for (IComponentRouter temp : uiRouters) {
-            Integer tp = priorities.get(temp);
+        for (IComponentRouter temp : uiRouterList) {
+            Integer tp = prioritiesMap.get(temp);
             if (tp == null || tp <= priority) {
                 break;
             }
             i++;
         }
-        uiRouters.add(i, router);
-        priorities.put(router, priority);
+        uiRouterList.add(i, router);
+        prioritiesMap.put(router, priority);
+    }
+
+    /**
+     * 去除旧的地址信息数据
+     */
+    private void removeOldUIRouter(IComponentRouter router) {
+        Iterator<IComponentRouter> iterator = uiRouterList.iterator();
+        while (iterator.hasNext()) {
+            IComponentRouter tmp = iterator.next();
+            if (tmp == router) {
+                iterator.remove();
+                prioritiesMap.remove(tmp);
+            }
+        }
     }
 
     @Override
     public void unregisterUI(IComponentRouter router) {
-        for (int i = 0; i < uiRouters.size(); i++) {
-            if (router == uiRouters.get(i)) {
-                uiRouters.remove(i);
-                priorities.remove(router);
+        for (int i = 0; i < uiRouterList.size(); i++) {
+            if (router == uiRouterList.get(i)) {
+                uiRouterList.remove(i);
+                prioritiesMap.remove(router);
                 break;
             }
         }
     }
 
+    /**
+     * 最先执行方法
+     */
     @Override
     public boolean openUri(Context context, String url, Bundle bundle) {
         url = url.trim();
@@ -87,7 +111,7 @@ public class UiRouter implements IUiRouter {
      */
     @Override
     public boolean openUri(Context context, Uri uri, Bundle bundle) {
-        for (IComponentRouter temp : uiRouters) {
+        for (IComponentRouter temp : uiRouterList) {
             try {
                 if (temp.verifyUri(uri) && temp.openUri(context, uri, bundle)) {
                     return true;
@@ -101,25 +125,11 @@ public class UiRouter implements IUiRouter {
 
     @Override
     public boolean verifyUri(Uri uri) {
-        for (IComponentRouter temp : uiRouters) {
+        for (IComponentRouter temp : uiRouterList) {
             if (temp.verifyUri(uri)) {
                 return true;
             }
         }
         return false;
-    }
-
-    /**
-     * 去除旧的规则数据 用来以防万一
-     */
-    private void removeOldUIRouter(IComponentRouter router) {
-        Iterator<IComponentRouter> iterator = uiRouters.iterator();
-        while (iterator.hasNext()) {
-            IComponentRouter tmp = iterator.next();
-            if (tmp == router) {
-                iterator.remove();
-                priorities.remove(tmp);
-            }
-        }
     }
 }

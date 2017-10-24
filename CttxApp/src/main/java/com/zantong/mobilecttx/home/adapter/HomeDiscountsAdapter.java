@@ -145,23 +145,19 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         layoutParams.height = minHeight;
         serviceViewHolder.mRvRecycler.setLayoutParams(layoutParams);
 
-        if (serviceViewHolder.mRvRecycler.getAdapter() == null) {
-            ServiceDiscountsAdapter discountsAdapter = new ServiceDiscountsAdapter();
-            discountsAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
-                @Override
-                public void onItemClick(View view, Object data) {
-                    if (data instanceof ChildrenBean) {
-                        ChildrenBean childrenBean = (ChildrenBean) data;
-                        if (mINativeItemListener != null)
-                            mINativeItemListener.onItemClick(childrenBean);
-                    }
+        ServiceDiscountsAdapter discountsAdapter = new ServiceDiscountsAdapter();
+        discountsAdapter.setOnItemClickListener(new OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, Object data) {
+                if (data instanceof ChildrenBean) {
+                    ChildrenBean childrenBean = (ChildrenBean) data;
+                    if (mINativeItemListener != null)
+                        mINativeItemListener.onItemClick(childrenBean);
                 }
-            });
-            discountsAdapter.appendOnly(childrenBeanList);
-            serviceViewHolder.mRvRecycler.setAdapter(discountsAdapter);
-        } else {
-            serviceViewHolder.mRvRecycler.getAdapter().notifyDataSetChanged();
-        }
+            }
+        });
+        discountsAdapter.appendOnly(childrenBeanList);
+        serviceViewHolder.mRvRecycler.setAdapter(discountsAdapter);
 
         serviceViewHolder.mLayFold.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -458,7 +454,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
             GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(), row, GridLayoutManager.VERTICAL, false);
 
             mRvRecycler.setLayoutManager(layoutManager);
-//动态设置其内边距 多种状态布局时
+            //动态设置其内边距 多种状态布局时
             float padding = itemType == ITEM_TYPE_TWO_PIC ? 7.33f : 10f;
             mRvRecycler.setPadding(ConvertUtils.toPx(padding), ConvertUtils.toPx(padding),
                     ConvertUtils.toPx(padding), ConvertUtils.toPx(padding));

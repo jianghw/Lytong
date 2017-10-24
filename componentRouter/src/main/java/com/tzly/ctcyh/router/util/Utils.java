@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
  * Update day:
  */
 
-public final class ContextUtils {
+public final class Utils {
 
     /**
      * 增加过滤规则
@@ -19,7 +19,7 @@ public final class ContextUtils {
     @SuppressLint("StaticFieldLeak")
     private static Context context;
 
-    private ContextUtils() {
+    private Utils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
@@ -29,7 +29,7 @@ public final class ContextUtils {
      * @param context 上下文
      */
     public static void init(@NonNull final Context context) {
-        ContextUtils.context = context.getApplicationContext();
+        Utils.context = context.getApplicationContext();
     }
 
     /**

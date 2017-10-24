@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tzly.ctcyh.router.custom.refresh.PullToRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/custom_refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.tzly.ctcyh.router.custom.refresh.PullToRefreshScrollView
+        android:id="@+id/custom_refresh_sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/base_fragment_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:orientation="vertical"/>
+    </com.tzly.ctcyh.router.custom.refresh.PullToRefreshScrollView>
+
+</com.tzly.ctcyh.router.custom.refresh.PullToRefreshLayout>

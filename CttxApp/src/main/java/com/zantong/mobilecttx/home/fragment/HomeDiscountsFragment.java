@@ -89,8 +89,7 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
      * @deprecated 不用
      */
     @Override
-    protected void onRecyclerItemClick(View view, Object data) {
-    }
+    protected void onRecyclerItemClick(View view, Object data) {}
 
     /**
      * 获取RecyclerHeader
@@ -273,6 +272,9 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
         ToastUtils.toastShort(message + "请下拉刷新");
     }
 
+    /**
+     * 数据加载成功
+     */
     @Override
     public void moduleTreeSucceed(ModuleResponse result) {
         List<ModuleBean> moduleBeanList = result.getData();

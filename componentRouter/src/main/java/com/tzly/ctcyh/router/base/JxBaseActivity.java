@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -56,6 +58,7 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        bundleIntent(savedInstanceState);
 
         setContentView(getRootView());
         LinearLayout parentLayout = (LinearLayout) findViewById(R.id.lay_linear);
@@ -99,9 +102,20 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     }
 
     /**
+     * 数据传递过来
+     *
+     * @param savedInstanceState
+     */
+    protected abstract void bundleIntent(Bundle savedInstanceState);
+
+    /**
      * 页面布局 增强控制
      */
     private void enhanceEmptyView(View view, int state) {
+        doClickRefreshView(view, state);
+    }
+
+    private void doClickRefreshView(View view, int state) {
         View tvEmpty = view.findViewById(R.id.tv_empty);
         tvEmpty.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,9 +126,11 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     }
 
     private void enhanceErrorView(View view, int state) {
+        doClickRefreshView(view, state);
     }
 
     private void enhanceNetErrorView(View view, int state) {
+        doClickRefreshView(view, state);
     }
 
     private void enhanceLoadingView(View view, int state) {
@@ -123,8 +139,27 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     private void enhanceContentView(View view, int state) {
     }
 
+    /**
+     * 手动控制布局显示效果
+     */
     protected void showContentView() {
         if (multiStateLayout != null) multiStateLayout.setState(MultiState.CONTENT);
+    }
+
+    protected void showLoadingView() {
+        if (multiStateLayout != null) multiStateLayout.setState(MultiState.LOADING);
+    }
+
+    protected void showEmptyView() {
+        if (multiStateLayout != null) multiStateLayout.setState(MultiState.EMPTY);
+    }
+
+    protected void showNetErrorView() {
+        if (multiStateLayout != null) multiStateLayout.setState(MultiState.NET_ERROR);
+    }
+
+    protected void showErrorView() {
+        if (multiStateLayout != null) multiStateLayout.setState(MultiState.ERROR);
     }
 
     @Override
@@ -255,7 +290,34 @@ public abstract class JxBaseActivity extends AppCompatActivity {
      * 页面关闭
      */
     protected void closeClickListener() {
-        finish();
+        closeFragment();
+    }
+
+    /**
+     * 底部回退按键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            closeFragment();
+        }
+        return true;
+    }
+
+    /**
+     * 关闭Fragment 默认最后只有一个fragment时 关闭页面
+     */
+    public void closeFragment() {
+        closeFragment(1);
+    }
+
+    public void closeFragment(int count) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > count) {
+            fragmentManager.popBackStackImmediate();
+        } else {
+            finish();
+        }
     }
 
     /**
@@ -336,5 +398,6 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     public synchronized void dismissLoading() {
         LoadingDialog.closeDialog(mLoadingDialog);
     }
+
 
 }

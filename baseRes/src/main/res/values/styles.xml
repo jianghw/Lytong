@@ -21,6 +21,12 @@
         <!-- Customize your theme here. -->
         <item name="android:textColor">@color/res_color_black_4d</item>
     </style>
+    <!--使用layout_weight-->
+    <style name="ResTextTheme.16.Subtitle.width">
+        <!-- Customize your theme here. -->
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 
     <style name="MenuItemStyle">
         <item name="android:background">?android:attr/selectableItemBackground</item>

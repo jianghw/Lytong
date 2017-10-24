@@ -5,10 +5,8 @@
     <!-- 设置按钮的四个角为弧形 -->
     <corners android:radius="@dimen/res_x_12"/>
 
-    <!--渐变色-->
-    <gradient
-        android:endColor="@color/res_color_red_f3"
-        android:startColor="@color/res_color_red_ef"/>
+    <!--填充色-->
+    <solid android:color="@color/res_color_red_ef"/>
 </shape>
 
 

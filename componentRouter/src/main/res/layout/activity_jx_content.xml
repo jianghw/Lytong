@@ -8,6 +8,7 @@
     state:animDuration="500"
     state:animEnable="true"
     state:layoutEmpty="@layout/activity_base_empty"
+    state:layoutError="@layout/activity_base_error"
     state:layoutLoading="@layout/activity_base_loading"
     state:layoutNetError="@layout/activity_base_net_error">
 

@@ -16,7 +16,6 @@ import com.tzly.ctcyh.router.IComponentRouter;
 public class PayUiRouter implements IComponentRouter {
 
     private static final String SCHEME_PAY = "scheme_pay";
-
     private static final String HOST_PAY = "host_pay";
 
     private static String[] HOSTS = new String[]{HOST_PAY};

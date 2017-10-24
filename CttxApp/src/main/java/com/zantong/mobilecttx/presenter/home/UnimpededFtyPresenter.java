@@ -143,7 +143,6 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                 .subscribe(new BaseSubscriber<HomeCarResponse>() {
                     @Override
                     public void doCompleted() {
-
                     }
 
                     @Override

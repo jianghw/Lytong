@@ -10,7 +10,12 @@ package com.tzly.ctcyh.user.contract;
 public class LoginPresenter implements ILoginContract.ILoginPresenter {
 
     @Override
-    public void init(ILoginContract.ILoginView view) {
+    public void onSubscribe() {
+
+    }
+
+    @Override
+    public void unSubscribe() {
 
     }
 }

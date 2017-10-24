@@ -1,6 +1,7 @@
 package com.tzly.ctcyh.user.login_v;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -103,15 +104,15 @@ public class LoginActivity extends JxBaseActivity implements
             }
         }
 
-        switch (view.getId()) {
-            case R.id.btn_login:
-                validationSubmitData();
-                break;
-            case R.id.tv_forget_pw:
-                gotoResetActivity();
-                break;
+        if (view.getId() == R.id.btn_login) {
+            validationSubmitData();
+        } else if (view.getId() == R.id.tv_forget_pw) {
+            gotoResetActivity();
         }
     }
+
+    @Override
+    protected void bundleIntent(Bundle savedInstanceState) {}
 
     private void validationSubmitData() {
 //        hitCustomKeyboard();
@@ -201,7 +202,7 @@ public class LoginActivity extends JxBaseActivity implements
         initView(childView);
 
 //        LoginPresenter presenter = new LoginPresenter(
-//                Injection.provideRepository(ContextUtils.getContext()), this);
+//                Injection.provideRepository(Utils.getContext()), this);
     }
 
     @MultiState

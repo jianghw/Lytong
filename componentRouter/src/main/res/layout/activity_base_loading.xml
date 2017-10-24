@@ -4,7 +4,21 @@
                 android:layout_height="match_parent">
 
     <ProgressBar
+        android:id="@+id/pb_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/res_x_250"
+        android:indeterminateBehavior="repeat"
+        android:indeterminateDrawable="@drawable/bg_anim_dialog_loading"
+        android:indeterminateOnly="true"/>
+
+    <TextView
+        style="@style/ResTextTheme.16.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/res_x_40"
+        android:layout_toRightOf="@+id/pb_loading"
+        android:text="努力加载中..."/>
 </RelativeLayout>

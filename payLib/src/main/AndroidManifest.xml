@@ -16,6 +16,7 @@
         android:allowBackup="true"
         android:supportsRtl="true">
 
+        <!-- ***********************银联支付模块*******************************-->
         <activity
             android:name=".JARActivity"
             android:screenOrientation="portrait">

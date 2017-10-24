@@ -21,14 +21,14 @@ import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
-import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.common.activity.CommonProblemActivity;
 import com.zantong.mobilecttx.contract.IHomeMeFtyContract;
 import com.zantong.mobilecttx.home.activity.HomeMainActivity;
@@ -268,6 +268,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
 
         mTvToolbar.setText(mTvLogin.getText().toString());
     }
+
     /**
      * 头像
      */
