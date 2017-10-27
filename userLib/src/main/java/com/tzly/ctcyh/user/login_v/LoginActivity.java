@@ -1,8 +1,13 @@
 package com.tzly.ctcyh.user.login_v;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -15,12 +20,22 @@ import android.widget.TextView;
 
 import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
+import com.tzly.ctcyh.router.util.RegexUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.primission.PermissionFail;
+import com.tzly.ctcyh.router.util.primission.PermissionGen;
+import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
 import com.tzly.ctcyh.user.R;
-import com.tzly.ctcyh.user.contract.ILoginContract;
+import com.tzly.ctcyh.user.bean.response.LoginResponse;
 import com.tzly.ctcyh.user.custom.CustomCharKeyBoard;
 import com.tzly.ctcyh.user.custom.CustomNumKeyBoard;
+import com.tzly.ctcyh.user.data_m.InjectionRepository;
+import com.tzly.ctcyh.user.login_p.ILoginContract;
+import com.tzly.ctcyh.user.login_p.LoginPresenter;
 
 import java.util.ArrayList;
+
+import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
 
 /**
  * 登陆界面
@@ -51,6 +66,20 @@ public class LoginActivity extends JxBaseActivity implements
     ArrayList<TextView> mListChar;
     private ILoginContract.ILoginPresenter mPresenter;
     private boolean isDaxie;
+
+    @Override
+    protected void bundleIntent(Bundle savedInstanceState) {
+        onNewIntent(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        if (intent != null) {
+            Bundle bundle = intent.getExtras();
+        }
+    }
 
     @Override
     public void onClick(View view) {
@@ -111,31 +140,34 @@ public class LoginActivity extends JxBaseActivity implements
         }
     }
 
-    @Override
-    protected void bundleIntent(Bundle savedInstanceState) {}
-
+    /**
+     * 验证数据
+     */
     private void validationSubmitData() {
-//        hitCustomKeyboard();
-//        String userPhone = getUserPhone();
-//        if (TextUtils.isEmpty(userPhone) || !RegexUtils.isMobileSimple(userPhone)) {
-//            ToastUtils.toastLong("请输入正确的手机号码");
-//            return;
-//        }
-//        String userPassword = getUserPassword();
-//        if (TextUtils.isEmpty(userPassword) || !RegexUtils.isMatch("^[A-Za-z0-9]{6,20}$", userPhone)) {
-//            ToastUtils.toastLong("请输入符合规则的密码");
-//            return;
-//        }
-//        if (mPresenter != null) mPresenter.userLogin();
-    }
-
-    private void gotoResetActivity() {
-//        Act.getInstance().lauchIntent(this, ResetActivity.class);
+        hitCustomKeyboard();
+        String userPhone = getUserPhone();
+        if (TextUtils.isEmpty(userPhone) || !RegexUtils.isMobileSimple(userPhone)) {
+            ToastUtils.toastLong("请输入正确的手机号码");
+            return;
+        }
+        String userPassword = getUserPassword();
+        if (TextUtils.isEmpty(userPassword) || !RegexUtils.isMatch("^[A-Za-z0-9]{6,20}$", userPhone)) {
+            ToastUtils.toastLong("请输入符合规则的密码");
+            return;
+        }
+        if (mPresenter != null) mPresenter.userLogin();
     }
 
     private void hitCustomKeyboard() {
         mNumKeyboard.setVisibility(View.GONE);
         mCharKeyboard.setVisibility(View.GONE);
+    }
+
+    /**
+     * 设置密码页面
+     */
+    private void gotoResetActivity() {
+        //        Act.getInstance().lauchIntent(this, ResetActivity.class);
     }
 
     @Override
@@ -185,10 +217,10 @@ public class LoginActivity extends JxBaseActivity implements
     }
 
     /**
-     * 右边文字点击
+     * 右边文字点击 注册页码
      */
     protected void rightClickListener() {
-//        Act.getInstance().lauchIntent(this, RegisterActivity.class);
+        //                Act.getInstance().lauchIntent(this, RegisterActivity.class);
     }
 
     @Override
@@ -198,13 +230,18 @@ public class LoginActivity extends JxBaseActivity implements
 
     @Override
     protected void bindContentView(View childView) {
-        titleContent("欢迎加入熊猫小助手", "注册");
+        titleContent("欢迎加入畅通车友会", "注册");
         initView(childView);
 
-//        LoginPresenter presenter = new LoginPresenter(
-//                Injection.provideRepository(Utils.getContext()), this);
+        LoginPresenter presenter = new LoginPresenter(
+                InjectionRepository.provideRepository(getApplicationContext()), this);
+        //获取设备号
+        takePhoneIMEI();
     }
 
+    /**
+     * 默认显示页面状态页
+     */
     @MultiState
     protected int initMultiState() {
         return MultiState.CONTENT;
@@ -252,16 +289,6 @@ public class LoginActivity extends JxBaseActivity implements
             }
         });
     }
-
-   /* public void takePhoneIMEI() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            PermissionGen.needPermission(this, 100,
-                    new String[]{Manifest.permission.READ_PHONE_STATE}
-            );
-        } else {
-            MemoryData.getInstance().imei = Tools.getIMEI();
-        }
-    }*/
 
     private void initTextListener() {
         mEdtPhone.addTextChangedListener(new TextWatcher() {
@@ -324,41 +351,40 @@ public class LoginActivity extends JxBaseActivity implements
         }
     }
 
- /*   @Override
+    public void takePhoneIMEI() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, PermissionGen.PER_REQUEST_CODE,
+                    new String[]{Manifest.permission.READ_PHONE_STATE}
+            );
+        } else {
+            if (mPresenter != null) mPresenter.initPhoneDeviceId();
+        }
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    @PermissionSuccess(requestCode = 100)
+    @PermissionSuccess(requestCode = PermissionGen.PER_REQUEST_CODE)
     public void doPermissionIMEISuccess() {
-        MemoryData.getInstance().imei = Tools.getIMEI();
+        if (mPresenter != null) mPresenter.initPhoneDeviceId();
     }
 
-    @PermissionFail(requestCode = 100)
+    @PermissionFail(requestCode = PermissionGen.PER_REQUEST_CODE)
     public void doPermissionIMEIFail() {
-        ToastUtils.toastShort("手机识别码权限被拒绝，请手机设置中打开");
+        toastShort("手机识别码权限被拒绝，请手机设置中打开");
     }
-*/
+
     @Override
     public void setPresenter(ILoginContract.ILoginPresenter presenter) {
         mPresenter = presenter;
     }
 
     @Override
-    public void  loadingDialog(){
-        showLoading();
-    }
-
-    @Override
-    public void  dismissDialog(){
-        dismissLoading();
-    }
-
-   /* @Override
     public void userLoginError(String message) {
-        ToastUtils.toastShort(message);
-        dismissLoadingDialog();
+        toastShort(message);
     }
 
     @Override
@@ -372,21 +398,20 @@ public class LoginActivity extends JxBaseActivity implements
     }
 
     @Override
-    public void userLoginSucceed(LoginInfoBean loginInfoBean) {
-        ToastUtils.toastShort("登录成功!");
-
-        if (MemoryData.getInstance().className != null) {
-            Act.getInstance().lauchIntent(this, MemoryData.getInstance().className);
-        }
+    public void userLoginSucceed(LoginResponse loginInfoBean) {
+        toastShort("银行服务器登录成功!");
     }
 
     @Override
     public void registerSucceed() {
+        //        if (MemoryData.getInstance().className != null) {
+        //            Act.getInstance().lauchIntent(this, MemoryData.getInstance().className);
+        //        }
         finish();
     }
 
     @Override
     public void registerError(String message) {
-        ToastUtils.toastShort("数据同步失败," + message);
-    }*/
+        toastShort("服务器数据同步失败!" + message);
+    }
 }

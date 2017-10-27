@@ -9,9 +9,9 @@ package com.tzly.ctcyh.router.base;
 
 public interface IBaseView<P extends IBasePresenter> {
 
-    void loadingDialog();
+    void showLoading();
 
-    void dismissDialog();
+    void dismissLoading();
 
     void setPresenter(P presenter);
 }

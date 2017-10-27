@@ -71,10 +71,13 @@
             android:name=".coupon_v.CouponListActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+        </activity>
+
+        <!--启动新进程 畅通卡支付-->
+        <activity
+            android:name="com.tzly.ctcyh.pay.html_v.Html5Activity"
+            android:process=":lyl.boon.process.web"
+            android:screenOrientation="portrait">
         </activity>
 
     </application>

@@ -1,5 +1,6 @@
 package com.tzly.ctcyh.router;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ public class UiRouter implements IUiRouter {
 
     @Override
     public void registerUI(IComponentRouter router, int priority) {
+        //含有且优先级无变化时直接返回
         if (prioritiesMap.containsKey(router) && priority == prioritiesMap.get(router)) {
             return;
         }
@@ -64,7 +66,7 @@ public class UiRouter implements IUiRouter {
     }
 
     /**
-     * 去除旧的地址信息数据
+     * 去除旧原有的相同信息数据
      */
     private void removeOldUIRouter(IComponentRouter router) {
         Iterator<IComponentRouter> iterator = uiRouterList.iterator();
@@ -90,9 +92,11 @@ public class UiRouter implements IUiRouter {
 
     /**
      * 最先执行方法
+     * false-->执行出错
+     * true--> 向下执行
      */
     @Override
-    public boolean openUri(Context context, String url, Bundle bundle) {
+    public boolean openUriBundle(Context context, String url, Bundle bundle) {
         url = url.trim();
         if (!TextUtils.isEmpty(url)) {
             if (!url.contains("://") && (!url.startsWith("tel:") ||
@@ -101,19 +105,19 @@ public class UiRouter implements IUiRouter {
                 url = "http://" + url;
             }
             Uri uri = Uri.parse(url);
-            return openUri(context, uri, bundle);
+            return openUriBundle(context, uri, bundle);
         }
-        return true;
+        return false;
     }
 
     /**
-     * 此方法最终会调用 子类实现
+     * 此方法最终会调用 IComponentRouter实现类中方法
      */
     @Override
-    public boolean openUri(Context context, Uri uri, Bundle bundle) {
+    public boolean openUriBundle(Context context, Uri uri, Bundle bundle) {
         for (IComponentRouter temp : uiRouterList) {
             try {
-                if (temp.verifyUri(uri) && temp.openUri(context, uri, bundle)) {
+                if (temp.verifyUri(uri) && temp.openUriBundle(context, uri, bundle)) {
                     return true;
                 }
             } catch (Exception e) {
@@ -128,6 +132,35 @@ public class UiRouter implements IUiRouter {
         for (IComponentRouter temp : uiRouterList) {
             if (temp.verifyUri(uri)) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean openUriForResult(Activity activity, String url, Bundle bundle, int requestCode) {
+        url = url.trim();
+        if (!TextUtils.isEmpty(url)) {
+            if (!url.contains("://") && (!url.startsWith("tel:") ||
+                    !url.startsWith("smsto:") ||
+                    !url.startsWith("file:"))) {
+                url = "http://" + url;
+            }
+            Uri uri = Uri.parse(url);
+            return openUriForResult(activity, uri, bundle, requestCode);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean openUriForResult(Activity activity, Uri uri, Bundle bundle, int requestCode) {
+        for (IComponentRouter temp : uiRouterList) {
+            try {
+                if (temp.verifyUri(uri) && temp.openUriForResult(activity, uri, bundle, requestCode)) {
+                    return true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return false;

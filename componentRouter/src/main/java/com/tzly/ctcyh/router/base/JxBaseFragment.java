@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.tzly.ctcyh.router.util.ToastUtils;
+import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
 
 /**
  * Fragment 下拉刷新基类
@@ -110,7 +110,7 @@ public abstract class JxBaseFragment extends Fragment {
         if (activity instanceof JxBaseActivity)
             ((JxBaseActivity) activity).showContentView();
         else
-            ToastUtils.toastShort("current fragment" + this.getClass().getSimpleName() + "is not extends JxBaseActivity");
+            toastShort("current fragment" + this.getClass().getSimpleName() + "is not extends JxBaseActivity");
     }
 
     protected void showActivityEmpty() {
@@ -118,7 +118,7 @@ public abstract class JxBaseFragment extends Fragment {
         if (activity instanceof JxBaseActivity)
             ((JxBaseActivity) activity).showEmptyView();
         else
-            ToastUtils.toastShort("current fragment" + this.getClass().getSimpleName() + "is not extends JxBaseActivity");
+            toastShort("current fragment" + this.getClass().getSimpleName() + "is not extends JxBaseActivity");
     }
 
     protected void showActivityError() {
@@ -126,7 +126,7 @@ public abstract class JxBaseFragment extends Fragment {
         if (activity instanceof JxBaseActivity)
             ((JxBaseActivity) activity).showErrorView();
         else
-            ToastUtils.toastShort("current fragment" + this.getClass().getSimpleName() + "is not extends JxBaseActivity");
+            toastShort("current fragment" + this.getClass().getSimpleName() + "is not extends JxBaseActivity");
     }
 
     protected void showActivityNetError() {
@@ -134,21 +134,29 @@ public abstract class JxBaseFragment extends Fragment {
         if (activity instanceof JxBaseActivity)
             ((JxBaseActivity) activity).showNetErrorView();
         else
-            ToastUtils.toastShort("current fragment" + this.getClass().getSimpleName() + "is not extends JxBaseActivity");
+            toastShort("current fragment" + this.getClass().getSimpleName() + "is not extends JxBaseActivity");
     }
 
     /**
      * 加载提示框
      */
-    protected void showActivityLoading() {
+    public void showLoading() {
         FragmentActivity activity = getActivity();
         if (activity instanceof JxBaseActivity)
             ((JxBaseActivity) activity).showLoading();
     }
 
-    protected void dismissActivityLoading() {
+    public void dismissLoading() {
         FragmentActivity activity = getActivity();
         if (activity instanceof JxBaseActivity)
             ((JxBaseActivity) activity).dismissLoading();
     }
+
+    /**
+     * 统一封装
+     */
+    public void toastShore(String message) {
+        toastShort(message);
+    }
+
 }

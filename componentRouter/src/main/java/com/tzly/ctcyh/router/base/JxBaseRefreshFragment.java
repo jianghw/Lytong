@@ -51,7 +51,7 @@ public abstract class JxBaseRefreshFragment extends JxBaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View inflate = inflater.inflate(R.layout.fragment_jx_base_refresh, container, true);
+        View inflate = inflater.inflate(R.layout.fragment_jx_base_refresh,null);
         final PullToRefreshLayout pullRefreshView = (PullToRefreshLayout) inflate.findViewById(R.id.custom_refresh);
         pullRefreshView.setPullDownEnable(isRefresh());
         pullRefreshView.setPullUpEnable(isLoadMore());

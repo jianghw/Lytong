@@ -1,9 +1,20 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar"
+           tools:ignore="ResourceName">
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme" tools:ignore="ResourceName">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
 
     <!--自定义键盘-->
     <style name="UserCustomKeyBoardStyle">
         <item name="android:textSize">@dimen/res_fs_16</item>
         <item name="android:textColor">@color/res_color_black_4d</item>
     </style>
+
+
 
 </resources>

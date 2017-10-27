@@ -3,6 +3,7 @@ package com.tzly.ctcyh.pay.coupon_v;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.tzly.ctcyh.pay.R;
@@ -36,8 +37,8 @@ public class CouponListActivity extends JxBaseActivity {
             Bundle bundle = intent.getExtras();
             if (intent.hasExtra(PayGlobal.putExtra.coupon_list_type))
                 mExtraType = bundle.getString(PayGlobal.putExtra.coupon_list_type);
-            if (intent.hasExtra(PayGlobal.fragmentHost.coupon_list_host))
-                mCurHost = bundle.getString(PayGlobal.fragmentHost.coupon_list_host);
+            if (intent.hasExtra(PayGlobal.Host.coupon_list_host))
+                mCurHost = bundle.getString(PayGlobal.Host.coupon_list_host);
         }
     }
 
@@ -58,17 +59,28 @@ public class CouponListActivity extends JxBaseActivity {
 
     private void initFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        switch (mCurHost) {
-            case PayGlobal.fragmentHost.coupon_list_host:
-                if (mCouponListFragment == null) {
-                    mCouponListFragment = CouponListFragment.newInstance(mExtraType);
-                }
-                FragmentUtils.add(fragmentManager, mCouponListFragment,
-                        R.id.lay_base_frame, false, true);
-                break;
-            default:
-                break;
+        //默认页面显示
+        if (TextUtils.isEmpty(mCurHost)) {
+            if (mCouponListFragment == null) {
+                mCouponListFragment = CouponListFragment.newInstance(mExtraType);
+            }
+            FragmentUtils.add(fragmentManager, mCouponListFragment,
+                    R.id.lay_base_frame, false, true);
+        } else if (mCurHost.equals(PayGlobal.Host.coupon_list_host)) {
+            if (mCouponListFragment == null) {
+                mCouponListFragment = CouponListFragment.newInstance(mExtraType);
+            }
+            FragmentUtils.add(fragmentManager, mCouponListFragment,
+                    R.id.lay_base_frame, false, true);
         }
+    }
+
+    /**
+     * 手动刷新
+     */
+    @Override
+    protected void userClickRefreshData() {
+        if (mCouponListFragment != null) mCouponListFragment.onRefreshData();
     }
 
     @Override

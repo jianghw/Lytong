@@ -5,16 +5,6 @@
     <application
         android:allowBackup="true"
         android:supportsRtl="true">
-        <!--启动新进程启动新进程-->
-        <activity
-            android:name=".base.Html5Activity"
-            android:process=":lyl.boon.process.web">
-            <intent-filter>
-                <action android:name="com.lyl.boon.ui.activity.htmlactivity"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-
 
     </application>
 

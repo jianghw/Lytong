@@ -25,8 +25,8 @@
 
     <ImageView
         android:id="@+id/refreshing_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/res_x_40"
+        android:layout_height="@dimen/res_x_40"
         android:layout_centerVertical="true"
         android:layout_marginRight="16dp"
         android:layout_toLeftOf="@+id/state_tv"
@@ -39,8 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginRight="16dp"
-        android:src="@mipmap/ic_load_more_succeed"
         android:layout_toLeftOf="@id/state_tv"
+        android:src="@mipmap/ic_load_more_succeed"
         android:visibility="visible"/>
 
 

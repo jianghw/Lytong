@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/btn_unused"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_120"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/res_x_30"
+        android:layout_marginRight="@dimen/res_x_30"
+        android:background="@drawable/selector_bg_gray"
+        android:gravity="center"
+        android:text="不使用优惠劵"
+        style="@style/ResTextTheme.16.Subtitle"/>
+
+</LinearLayout>

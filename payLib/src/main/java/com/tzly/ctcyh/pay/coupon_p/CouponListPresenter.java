@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.tzly.ctcyh.pay.bean.response.CouponResponse;
 import com.tzly.ctcyh.pay.data_m.BaseSubscriber;
-import com.tzly.ctcyh.pay.data_m.RepositoryManager;
+import com.tzly.ctcyh.pay.data_m.PayDataManager;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -21,13 +21,13 @@ import rx.subscriptions.CompositeSubscription;
 
 public class CouponListPresenter implements ICouponListContract.ICouponListPresenter {
 
-    private final RepositoryManager mRepository;
+    private final PayDataManager mRepository;
     private final ICouponListContract.ICouponListView mContractView;
     private final CompositeSubscription mSubscriptions;
 
-    public CouponListPresenter(@NonNull RepositoryManager repositoryManager,
+    public CouponListPresenter(@NonNull PayDataManager payDataManager,
                                @NonNull ICouponListContract.ICouponListView view) {
-        mRepository = repositoryManager;
+        mRepository = payDataManager;
         mContractView = view;
         mSubscriptions = new CompositeSubscription();
         mContractView.setPresenter(this);
@@ -38,13 +38,13 @@ public class CouponListPresenter implements ICouponListContract.ICouponListPrese
 
     @Override
     public void unSubscribe() {
-        mContractView.dismissDialog();
+        mContractView.dismissLoading();
         mSubscriptions.clear();
     }
 
     /**
-     * 获取指定类型优惠券
-     * 优惠券业务：1 加油充值；2 代驾；3 洗车
+     * 57.获取指定类型优惠券
+     * 1 加油充值，2 代驾，3 学车，4 科目强化，5 陪练 6 年检，7 保养，8 海外驾驶培训，9 换电瓶，998 第三方券，999 通用券
      */
     @Override
     public void getCouponByType() {
@@ -54,7 +54,7 @@ public class CouponListPresenter implements ICouponListContract.ICouponListPrese
                         .doOnSubscribe(new Action0() {
                             @Override
                             public void call() {
-                                mContractView.loadingDialog();
+                                mContractView.showLoading();
                             }
                         })
                         .subscribeOn(AndroidSchedulers.mainThread())
@@ -62,12 +62,12 @@ public class CouponListPresenter implements ICouponListContract.ICouponListPrese
                         .subscribe(new BaseSubscriber<CouponResponse>() {
                             @Override
                             public void doCompleted() {
-                                mContractView.dismissDialog();
+                                mContractView.dismissLoading();
                             }
 
                             @Override
                             public void doError(Throwable e) {
-                                mContractView.dismissDialog();
+                                mContractView.dismissLoading();
                                 mContractView.couponByTypeError(e.getMessage());
                             }
 
@@ -86,7 +86,6 @@ public class CouponListPresenter implements ICouponListContract.ICouponListPrese
 
     @Override
     public String getUserId() {
-        return "";
-        //        return mRepository.getRASUserID();
+        return mRepository.getRASUserID();
     }
 }

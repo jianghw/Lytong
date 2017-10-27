@@ -3,9 +3,11 @@ package com.tzly.ctcyh.pay.pay_type_v;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.tzly.ctcyh.pay.R;
+import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 
@@ -14,10 +16,11 @@ import com.tzly.ctcyh.router.util.FragmentUtils;
  * 支付方式 选择页面
  */
 
-public class PayTypeActivity extends JxBaseActivity implements IPayTypeUi{
+public class PayTypeActivity extends JxBaseActivity implements IPayTypeUi {
 
-    private int mCurPosition;
     private PayTypeFragment mPayTypeFragment;
+    private String mExtraOrder;
+    private String mCurHost;
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
@@ -30,7 +33,13 @@ public class PayTypeActivity extends JxBaseActivity implements IPayTypeUi{
 
         if (intent != null) {
             Bundle bundle = intent.getExtras();
+            if (intent.hasExtra(PayGlobal.putExtra.pay_type_order))
+                mExtraOrder = bundle.getString(PayGlobal.putExtra.pay_type_order);
+            if (intent.hasExtra(PayGlobal.Host.pay_type_host))
+                mCurHost = bundle.getString(PayGlobal.Host.pay_type_host);
         }
+
+        mExtraOrder = "17102710593369";
     }
 
     @Override
@@ -40,24 +49,27 @@ public class PayTypeActivity extends JxBaseActivity implements IPayTypeUi{
 
     @Override
     protected void bindContentView(View childView) {
-        titleContent("选择优惠劵");
+        titleContent("支付");
     }
 
     @Override
     protected void initContentData() {
+        initFragment();
     }
 
     private void initFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        switch (mCurPosition) {
-            case 1:
-                if (mPayTypeFragment == null) {
-                    mPayTypeFragment = PayTypeFragment.newInstance();
-                }
-                FragmentUtils.add(fragmentManager, mPayTypeFragment, R.id.lay_base_frame, false, true);
-                break;
-            default:
-                break;
+        //默认页面显示
+        if (TextUtils.isEmpty(mCurHost)) {
+            if (mPayTypeFragment == null) {
+                mPayTypeFragment = PayTypeFragment.newInstance(mExtraOrder);
+            }
+            FragmentUtils.add(fragmentManager, mPayTypeFragment, R.id.lay_base_frame, false, true);
+        } else if (mCurHost.equals(PayGlobal.Host.pay_type_host)) {
+            if (mPayTypeFragment == null) {
+                mPayTypeFragment = PayTypeFragment.newInstance(mExtraOrder);
+            }
+            FragmentUtils.add(fragmentManager, mPayTypeFragment, R.id.lay_base_frame, false, true);
         }
     }
 
@@ -65,12 +77,13 @@ public class PayTypeActivity extends JxBaseActivity implements IPayTypeUi{
      * 手动刷新
      */
     @Override
-    protected void userRefreshData() {
-
+    protected void userClickRefreshData() {
+        if(mPayTypeFragment!=null)mPayTypeFragment.onRefreshData();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
+
 }

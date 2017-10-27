@@ -1,5 +1,6 @@
 package com.tzly.ctcyh.router;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,9 +18,14 @@ public interface IComponentRouter {
      * @param bundle 打开目录activity时要传入的参数。建议只传基本类型参数。
      * @return 是否正常打开
      */
-    public boolean openUri(Context context, String url, Bundle bundle);
+    boolean openUriBundle(Context context, String url, Bundle bundle);
 
-    public boolean openUri(Context context, Uri uri, Bundle bundle);
+    boolean openUriBundle(Context context, Uri uri, Bundle bundle);
 
-    public boolean verifyUri(Uri uri);
+    boolean verifyUri(Uri uri);
+
+    boolean openUriForResult(Activity activity, String url, Bundle bundle,int requestCode);
+
+    boolean openUriForResult(Activity activity, Uri uri, Bundle bundle,int requestCode);
+
 }

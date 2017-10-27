@@ -98,7 +98,6 @@ public abstract class JxBaseActivity extends AppCompatActivity {
         multiStateLayout.setState(initMultiState());
 
         initContentData();
-        userRefreshData();
     }
 
     /**
@@ -120,7 +119,7 @@ public abstract class JxBaseActivity extends AppCompatActivity {
         tvEmpty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userRefreshData();
+                userClickRefreshData();
             }
         });
     }
@@ -284,7 +283,9 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     /**
      * 回退监听功能
      */
-    protected void backClickListener() {}
+    protected void backClickListener() {
+        closeFragment();
+    }
 
     /**
      * 页面关闭
@@ -370,7 +371,7 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     /**
      * 用户手动刷新数据
      */
-    protected void userRefreshData() {}
+    protected void userClickRefreshData() {}
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -398,6 +399,5 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     public synchronized void dismissLoading() {
         LoadingDialog.closeDialog(mLoadingDialog);
     }
-
 
 }

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!--有圆角的点击效果-->
-    <item android:drawable="@drawable/shape_submit_pressed_true" android:state_pressed="true"/>
-    <item android:drawable="@drawable/shape_submit_pressed_true" android:state_selected="true"/>
-    <item android:drawable="@drawable/shape_submit_pressed_true" android:state_checked="true"/>
+    <item android:drawable="@drawable/shape_pay_pressed_true" android:state_pressed="true"/>
+    <item android:drawable="@drawable/shape_pay_pressed_true" android:state_selected="true"/>
+    <item android:drawable="@drawable/shape_pay_pressed_true" android:state_checked="true"/>
     <!--默认状态下-->
-    <item android:drawable="@drawable/shape_submit_pressed_false"
+    <item android:drawable="@drawable/shape_pay_pressed_false"
           android:state_enabled="true" android:state_pressed="false"/>
     <!--不可点击状态下-->
-    <item android:drawable="@drawable/shape_submit_enable_false"
+    <item android:drawable="@drawable/shape_pay_enable_false"
           android:state_enabled="false" android:state_pressed="false"/>
 </selector>

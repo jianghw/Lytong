@@ -9,8 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_210"
         android:layout_marginLeft="@dimen/ds_30"
-        android:layout_marginRight="@dimen/ds_30"
-        android:background="@drawable/bg_sel_coupon_gray">
+        android:layout_marginRight="@dimen/ds_30">
 
         <ImageView
             android:id="@+id/coupon_img"
@@ -97,7 +96,6 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/ds_180"
             android:scaleType="centerCrop"
-            android:src="@mipmap/yishixiao"
-            android:visibility="gone"/>
+            android:src="@mipmap/yishixiao"/>
     </RelativeLayout>
 </LinearLayout>

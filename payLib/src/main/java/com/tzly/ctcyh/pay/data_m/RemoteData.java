@@ -2,8 +2,12 @@ package com.tzly.ctcyh.pay.data_m;
 
 import android.support.annotation.Nullable;
 
-import com.tzly.ctcyh.pay.api.IFebruaryService;
+import com.tzly.ctcyh.pay.api.ICouponService;
+import com.tzly.ctcyh.pay.api.IOrderService;
+import com.tzly.ctcyh.pay.api.IPayService;
 import com.tzly.ctcyh.pay.bean.response.CouponResponse;
+import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
+import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 
 import retrofit2.Retrofit;
 import rx.Observable;
@@ -53,6 +57,25 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<CouponResponse> getCouponByType(String userId, String extraType) {
-        return baseRetrofit().create(IFebruaryService.class).getConponByType(userId, extraType);
+        return baseRetrofit().create(ICouponService.class).getConponByType(userId, extraType);
     }
+
+    /**
+     * 31.创建订单后获取订单信息
+     */
+    @Override
+    public Observable<PayTypeResponse> getOrderInfo(String extraOrderId) {
+        return baseRetrofit().create(IOrderService.class).getOrderInfo(extraOrderId);
+    }
+
+    /**
+     * 5.获取工行支付页面
+     */
+    @Override
+    public Observable<PayUrlResponse> getBankPayHtml(String extraOrderId, String amount, int couponUserId) {
+        return couponUserId == 0 ? baseRetrofit().create(IPayService.class).getBankPayHtml(extraOrderId, amount)
+                : baseRetrofit().create(IPayService.class).getBankPayHtml(extraOrderId, amount, String.valueOf(couponUserId));
+    }
+
+
 }

@@ -6,6 +6,13 @@
         android:allowBackup="true"
         android:supportsRtl="true">
 
+        <!--登录页面-->
+        <activity
+            android:name=".login_v.LoginActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>

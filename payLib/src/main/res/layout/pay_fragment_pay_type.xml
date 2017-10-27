@@ -36,13 +36,14 @@
                 android:layout_height="@dimen/res_y_90"
                 android:layout_weight="1"
                 android:gravity="right|center_vertical"
-                android:text="订单号"/>
+                android:text="支付方式"/>
 
             <RadioGroup
+                android:id="@+id/rg_pay"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/res_x_60"
-                android:layout_weight="4">
+                android:layout_weight="3">
 
                 <RadioButton
                     android:id="@+id/rb_carpay"
@@ -52,13 +53,15 @@
                     android:background="@android:color/transparent"
                     android:button="@null"
                     android:drawableRight="@drawable/selector_radio_pay"
-                    android:text="畅通卡支付"/>
+                    android:text="畅通卡支付"
+                    android:visibility="gone"/>
 
                 <RelativeLayout
                     android:id="@+id/line_carpay"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/res_y_2"
-                    android:background="@color/res_color_gray_e6"/>
+                    android:background="@color/res_color_gray_e6"
+                    android:visibility="gone"/>
 
                 <RadioButton
                     android:id="@+id/rb_unionpay"
@@ -67,15 +70,16 @@
                     android:layout_height="@dimen/res_y_90"
                     android:background="@android:color/transparent"
                     android:button="@null"
-                    android:checked="true"
                     android:drawableRight="@drawable/selector_radio_pay"
-                    android:text="银联卡支付"/>
+                    android:text="银行卡支付"
+                    android:visibility="gone"/>
 
                 <RelativeLayout
                     android:id="@+id/line_unionpay"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/res_y_2"
-                    android:background="@color/res_color_gray_e6"/>
+                    android:background="@color/res_color_gray_e6"
+                    android:visibility="gone"/>
 
                 <RadioButton
                     android:id="@+id/rb_alipay"
@@ -85,13 +89,15 @@
                     android:background="@android:color/transparent"
                     android:button="@null"
                     android:drawableRight="@drawable/selector_radio_pay"
-                    android:text="支付宝"/>
+                    android:text="支付宝支付"
+                    android:visibility="gone"/>
 
                 <RelativeLayout
                     android:id="@+id/line_alipay"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/res_y_2"
-                    android:background="@color/res_color_gray_e6"/>
+                    android:background="@color/res_color_gray_e6"
+                    android:visibility="gone"/>
 
                 <RadioButton
                     android:id="@+id/rb_weixinpay"
@@ -101,7 +107,8 @@
                     android:background="@android:color/transparent"
                     android:button="@null"
                     android:drawableRight="@drawable/selector_radio_pay"
-                    android:text="微信支付"/>
+                    android:text="微信支付"
+                    android:visibility="gone"/>
 
             </RadioGroup>
 
@@ -115,7 +122,7 @@
         android:layout_height="@dimen/res_y_90"
         android:layout_below="@+id/lay_linear_top"
         android:layout_marginTop="@dimen/res_y_30"
-        android:background="@color/res_color_white">
+        android:background="@drawable/selector_bg_gray">
 
         <TextView
             style="@style/ResTextTheme.16.Subtitle"
@@ -189,7 +196,9 @@
             android:layout_width="@dimen/res_x_200"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
+            android:enabled="false"
             android:background="@drawable/selector_btn_pay"
+            android:gravity="center"
             android:text="支付"/>
     </RelativeLayout>
 </RelativeLayout>

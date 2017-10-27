@@ -1,6 +1,6 @@
 package com.tzly.ctcyh.pay.api;
 
-import com.tzly.ctcyh.pay.bean.response.CouponResponse;
+import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -12,14 +12,13 @@ import rx.Observable;
  * 优惠卷服务器接口
  */
 
-public interface IFebruaryService {
+public interface IOrderService {
 
     /**
      * 57.获取指定类型优惠券
      */
     @FormUrlEncoded
-    @POST("february/getConponByType")
-    Observable<CouponResponse> getConponByType(@Field("userId") String userId,
-                                               @Field("type") String type);
+    @POST("order/getOrderInfo")
+    Observable<PayTypeResponse> getOrderInfo(@Field("orderId") String orderId);
 
 }

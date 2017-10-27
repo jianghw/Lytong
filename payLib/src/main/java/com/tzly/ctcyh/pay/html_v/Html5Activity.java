@@ -1,6 +1,7 @@
-package com.tzly.ctcyh.router.base;
+package com.tzly.ctcyh.pay.html_v;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Build;
@@ -22,7 +23,12 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.tzly.ctcyh.pay.data_m.InjectionRepository;
+import com.tzly.ctcyh.pay.global.PayGlobal;
+import com.tzly.ctcyh.pay.html_p.HtmlPayPresenter;
+import com.tzly.ctcyh.pay.html_p.IHtmlPayContract;
 import com.tzly.ctcyh.router.R;
+import com.tzly.ctcyh.router.base.JxBaseActivity;
 
 /**
  * Created by jianghw on 2017/10/23.
@@ -31,30 +37,50 @@ import com.tzly.ctcyh.router.R;
  * Update day:
  */
 
-public class Html5Activity extends JxBaseActivity {
-    private String mUrl;
+public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IHtmlPayView {
     private LinearLayout mLayout;
-
     private WebView mWebView;
     private ProgressBar mProgressBar;
 
+    private String mTitle;
+    private String mUrl;
+    private String mOrderId;
+    private int mPayType;
+    private IHtmlPayContract.IHtmlPayPresenter mPresenter;
+
     @Override
-    protected void bundleIntent(Bundle savedInstanceState) {}
+    protected void bundleIntent(Bundle savedInstanceState) {
+        onNewIntent(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        if (intent != null) {
+            Bundle bundle = intent.getExtras();
+            if (intent.hasExtra(PayGlobal.putExtra.web_title_extra))
+                mTitle = bundle.getString(PayGlobal.putExtra.web_title_extra);
+            if (intent.hasExtra(PayGlobal.putExtra.web_url_extra))
+                mUrl = bundle.getString(PayGlobal.putExtra.web_url_extra);
+            if (intent.hasExtra(PayGlobal.putExtra.web_orderId_extra))
+                mOrderId = bundle.getString(PayGlobal.putExtra.web_orderId_extra);
+            if (intent.hasExtra(PayGlobal.putExtra.web_pay_type_extra))
+                mPayType = bundle.getInt(PayGlobal.putExtra.web_pay_type_extra);
+        }
+    }
 
     @Override
     protected int initContentView() {
         return R.layout.activity_html_5;
     }
 
+    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     @Override
     protected void bindContentView(View childView) {
         mProgressBar = (ProgressBar) childView.findViewById(R.id.pb_html5);
         mWebView = (WebView) childView.findViewById(R.id.wv_html5);
-    }
 
-    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
-    @Override
-    protected void initContentData() {
         WebSettings mWebSettings = mWebView.getSettings();
         mWebSettings.setSupportZoom(true);//支持缩放，默认为true
         //mWebSettings.setBuiltInZoomControls(true); //设置内置的缩放控件
@@ -67,7 +93,7 @@ public class Html5Activity extends JxBaseActivity {
 
         //调用JS方法.安卓版本大于17,加上注解 @JavascriptInterface
         mWebSettings.setJavaScriptEnabled(true);
-        mWebView.addJavascriptInterface(null, "jsObj");
+        mWebView.addJavascriptInterface(null, "CTTX");
 
         saveData(mWebSettings);
 
@@ -79,10 +105,25 @@ public class Html5Activity extends JxBaseActivity {
 
         mWebView.setWebChromeClient(webChromeClient);
         mWebView.setWebViewClient(webViewClient);
-        mWebView.loadUrl(mUrl);
+
+        mUrl = "<%@ page language=\"java\" contentType=\"text/html; charset=GBK\" pageEncoding=\"GBK\"%>" +
+                "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\" http://www.w3.org/TR/html4/loose.dtd\">" +
+                "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\">" +
+                "<title>表单提交</title></head><body>" + mUrl + "</body></html>";
+
+        //        mWebView.loadUrl(mUrl);
+        mWebView.loadDataWithBaseURL(null, mUrl, "text/html", "utf-8", null);
 
         //支持获取手势焦点，输入用户名、密码或其他
         mWebView.requestFocusFromTouch();
+    }
+
+    @Override
+    protected void initContentData() {
+        titleContent(mTitle);
+
+        HtmlPayPresenter presenter = new HtmlPayPresenter(
+                InjectionRepository.provideRepository(getApplicationContext()), this);
     }
 
     @Override
@@ -332,6 +373,7 @@ public class Html5Activity extends JxBaseActivity {
             mWebView.goBack();
             return true;
         }
+        orderDetail();
         return super.onKeyDown(keyCode, event);
     }
 
@@ -352,5 +394,14 @@ public class Html5Activity extends JxBaseActivity {
         super.onDestroy();
 
         System.exit(0);
+    }
+
+    protected void orderDetail() {
+        if (mPresenter != null) mPresenter.orderDetail();
+    }
+
+    @Override
+    public void setPresenter(IHtmlPayContract.IHtmlPayPresenter presenter) {
+        mPresenter = presenter;
     }
 }

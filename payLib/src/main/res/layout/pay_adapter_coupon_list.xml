@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/lay_re_left"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/res_y_180"
+        android:layout_marginLeft="@dimen/res_x_30"
+        android:layout_weight="2"
+        android:background="@mipmap/ic_coupon_white">
+
+        <RadioButton
+            android:id="@+id/coupon_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:checked="true"
+            android:drawableLeft="@drawable/selector_radio_pay"/>
+
+        <TextView
+            android:id="@+id/coupon_title"
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:layout_marginTop="@dimen/res_y_30"
+            android:layout_toRightOf="@+id/coupon_img"
+            android:maxLines="2"
+            tools:text="这里仔面过的大富大贵dsdsdsdsdsd"/>
+
+        <TextView
+            android:id="@+id/coupon_time"
+            style="@style/ResTextTheme.14.Hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/coupon_title"
+            android:layout_marginBottom="@dimen/res_y_30"
+            android:singleLine="true"
+            tools:text="这里是优化巻哦呀"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/lay_re_right"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/res_y_180"
+        android:layout_marginRight="@dimen/res_x_30"
+        android:layout_weight="1"
+        android:background="@mipmap/ic_coupon_red">
+
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/ResTextTheme.16.White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:maxLength="6"
+            android:singleLine="true"
+            android:textSize="@dimen/res_fs_22"
+            tools:text="10"/>
+
+        <TextView
+            android:id="@+id/tv_unit"
+            style="@style/ResTextTheme.14.White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_price"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:layout_toRightOf="@+id/tv_price"
+            tools:text="元"/>
+
+        <TextView
+            android:id="@+id/tv_remark"
+            style="@style/ResTextTheme.14.White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_price"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/res_y_10"
+            android:maxLength="10"
+            android:singleLine="true"
+            tools:text="元ffdf"/>
+    </RelativeLayout>
+
+</LinearLayout>

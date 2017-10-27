@@ -49,4 +49,6 @@ dependencies {
     compile project(':layout')
     //列表分装控件
     compile project(':XRecyclerView')
+    //加密工具
+    compile files('libs/sun.misc.BASE64Decoder.jar')
 }

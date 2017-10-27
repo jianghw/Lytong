@@ -1,5 +1,7 @@
 package com.tzly.ctcyh.pay.pay_type_p;
 
+import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
+import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 
@@ -13,9 +15,21 @@ import com.tzly.ctcyh.router.base.IBaseView;
 public interface IPayTypeContract {
 
     interface IPayTypeView extends IBaseView<IPayTypePresenter> {
+        String getExtraOrderId();
+
+        void getOrderInfoError(String message);
+
+        void getOrderInfoSucceed(PayTypeResponse response);
+
+        void getBankPayHtmlError(String message);
+
+        void getBankPayHtmlSucceed(PayUrlResponse response);
     }
 
     interface IPayTypePresenter extends IBasePresenter {
+        void getOrderInfo();
+
+        void getBankPayHtml(String s, int couponBeanId);
     }
 
 }

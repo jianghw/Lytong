@@ -32,6 +32,7 @@ dependencies {
     //接口沟通依赖
     compile project(':componentService')
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'
 }
 

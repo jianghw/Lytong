@@ -2,23 +2,21 @@ package com.tzly.ctcyh.pay.router;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.text.TextUtils;
 
-import com.tzly.ctcyh.pay.EntryActivity;
+import com.tzly.ctcyh.pay.html_v.Html5Activity;
+import com.tzly.ctcyh.pay.coupon_v.CouponListActivity;
+import com.tzly.ctcyh.pay.global.PayGlobal;
+import com.tzly.ctcyh.pay.pay_type_v.PayTypeActivity;
 import com.tzly.ctcyh.router.IComponentRouter;
+import com.tzly.ctcyh.router.LibUiRouter;
+import com.tzly.ctcyh.router.ServiceRouter;
+import com.tzly.ctcyh.service.IUserService;
 
 /**
  * 向外提供的路由规则
  */
 
-public class PayUiRouter implements IComponentRouter {
-
-    private static final String SCHEME_PAY = "scheme_pay";
-    private static final String HOST_PAY = "host_pay";
-
-    private static String[] HOSTS = new String[]{HOST_PAY};
+public class PayUiRouter extends LibUiRouter implements IComponentRouter {
 
     /**
      * 单例
@@ -32,39 +30,53 @@ public class PayUiRouter implements IComponentRouter {
     }
 
     @Override
-    public boolean openUri(Context context, String url, Bundle bundle) {
-        return TextUtils.isEmpty(url) || context == null || openUri(context, Uri.parse(url), bundle);
+    protected String[] initHostToLib() {
+        return new String[]{PayGlobal.Host.pay_type_host, PayGlobal.Host.coupon_list_host};
     }
 
     /**
-     * 实现父类方法
+     * 统一的路由规则，需要定义的在这里操作
      */
     @Override
-    public boolean openUri(Context context, Uri uri, Bundle bundle) {
-        if (uri == null || context == null) {
-            return true;
-        }
-        String host = uri.getHost();
-        if (HOST_PAY.equals(host)) {
-            Intent intent = new Intent(context, EntryActivity.class);
-            intent.putExtras(bundle == null ? new Bundle() : bundle);
-            context.startActivity(intent);
+    protected boolean gotoActivity(Context context, String host, Intent intent) {
+        if (PayGlobal.Host.pay_type_host.equals(host)) {
+            intent.setClass(context, PayTypeActivity.class);
+        } else if (PayGlobal.Host.coupon_list_host.equals(host)) {
+            intent.setClass(context, CouponListActivity.class);
+        } else if (PayGlobal.Host.html_5_host.equals(host)) {
+            intent.setClass(context, Html5Activity.class);
+        } else {
             return true;
         }
         return false;
     }
 
+
+    /**
+     * 不用登录逻辑
+     */
     @Override
-    public boolean verifyUri(Uri uri) {
-        String scheme = uri.getScheme();
-        String host = uri.getHost();
-        if (SCHEME_PAY.equals(scheme)) {
-            for (String str : HOSTS) {
-                if (str.equals(host)) {
-                    return true;
-                }
-            }
+    protected boolean excludeLoginActivity(String host) {
+        //可添加不需要登录业务
+        return loginActivity();
+    }
+
+    protected boolean loginActivity() {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
+            IUserService service = (IUserService) serviceRouter
+                    .getService(IUserService.class.getSimpleName());
+            boolean userLogin = service.isUserLogin();
+            return !userLogin;
+        } else {
+            //注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            return true;
         }
-        return false;
+    }
+
+    @Override
+    protected String verifySchemeToLib() {
+        return PayGlobal.Scheme.pay_scheme;
     }
 }

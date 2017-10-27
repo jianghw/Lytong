@@ -6,6 +6,21 @@
         <item name="android:textSize">@dimen/res_fs_16</item>
     </style>
 
+    <style name="ResTextTheme.14">
+        <!-- Customize your theme here. -->
+        <item name="android:textSize">@dimen/res_fs_14</item>
+    </style>
+    <!--小提示-->
+    <style name="ResTextTheme.14.Hint">
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/res_color_black_b3</item>
+    </style>
+    <!--小字体-->
+    <style name="ResTextTheme.14.White">
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/res_color_white</item>
+    </style>
+
     <!--16sp大小字体-->
     <style name="ResTextTheme.16">
         <!-- Customize your theme here. -->

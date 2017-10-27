@@ -1,9 +1,17 @@
 package com.tzly.ctcyh.pay.coupon_v;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.pay.R;
 import com.tzly.ctcyh.pay.bean.response.CouponBean;
 import com.tzly.ctcyh.pay.bean.response.CouponResponse;
 import com.tzly.ctcyh.pay.coupon_p.CouponListPresenter;
@@ -11,7 +19,8 @@ import com.tzly.ctcyh.pay.coupon_p.ICouponListContract;
 import com.tzly.ctcyh.pay.data_m.InjectionRepository;
 import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.router.base.JxBaseRecyclerListFragment;
-import com.tzly.ctcyh.router.util.ToastUtils;
+
+import java.util.List;
 
 /**
  * 选择优惠劵 页面 加油
@@ -34,13 +43,51 @@ public class CouponListFragment extends
                 InjectionRepository.provideRepository(getActivity().getApplicationContext()), this);
     }
 
+    /**
+     * 获取RecyclerHeader
+     */
+    protected View customViewHeader() {
+        LayoutInflater inflater = (LayoutInflater)
+                getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View rootView = inflater.inflate(R.layout.pay_custom_coupon_unused, null);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        TextView unUsed = (TextView) rootView.findViewById(R.id.btn_unused);
+        rootView.setLayoutParams(layoutParams);
+        unUsed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentActivity activity = getActivity();
+                if (activity != null) {
+                    activity.setResult(PayGlobal.resultCode.coupon_unused, new Intent());
+                    activity.finish();
+                }
+            }
+        });
+        return rootView;
+    }
+
     @Override
     public BaseAdapter<CouponBean> createAdapter() {
-        return null;
+        return new CouponListAdapter();
     }
 
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
+        CouponBean couponBean = (CouponBean) data;
+        for (CouponBean bean : mAdapter.getAll()) {
+            bean.setChoice(bean.getId() == couponBean.getId());
+        }
+        mAdapter.notifyDataSetChanged();
+
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(PayGlobal.putExtra.coupon_list_bean, couponBean);
+        intent.putExtras(bundle);
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            activity.setResult(PayGlobal.resultCode.coupon_used, intent);
+        }
     }
 
     @Override
@@ -62,18 +109,14 @@ public class CouponListFragment extends
     }
 
     @Override
-    public void loadingDialog() {
-        showActivityLoading();
-    }
-
-    @Override
-    public void dismissDialog() {
-        dismissActivityLoading();
-    }
-
-    @Override
     public void setPresenter(ICouponListContract.ICouponListPresenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mPresenter != null) mPresenter.unSubscribe();
     }
 
     @Override
@@ -83,11 +126,14 @@ public class CouponListFragment extends
 
     @Override
     public void couponByTypeError(String message) {
-        ToastUtils.toastShort(message);
+        toastShore(message);
+        showActivityError();
     }
 
     @Override
     public void couponByTypeSucceed(CouponResponse response) {
-
+        List<CouponBean> beanList = response.getData();
+        setSimpleDataResult(beanList);
     }
+
 }

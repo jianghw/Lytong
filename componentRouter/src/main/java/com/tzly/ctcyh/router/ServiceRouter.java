@@ -31,7 +31,7 @@ public class ServiceRouter {
      *
      * @param classname 组件名
      */
-    public void registerComponent(@Nullable String classname) {
+    public static void registerComponent(@Nullable String classname) {
         if (TextUtils.isEmpty(classname)) {
             return;
         }
@@ -53,7 +53,7 @@ public class ServiceRouter {
      *
      * @param classname 组件名
      */
-    public void unregisterComponent(@Nullable String classname) {
+    public static void unregisterComponent(@Nullable String classname) {
         if (TextUtils.isEmpty(classname)) {
             return;
         }

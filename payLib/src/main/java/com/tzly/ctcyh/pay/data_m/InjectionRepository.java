@@ -15,8 +15,8 @@ public class InjectionRepository {
      * @param applicationContext
      * @return
      */
-    public static RepositoryManager provideRepository(@NonNull Context applicationContext) {
-        return RepositoryManager.getInstance(
+    public static PayDataManager provideRepository(@NonNull Context applicationContext) {
+        return PayDataManager.getInstance(
                 RemoteData.getInstance(), LocalData.getInstance(applicationContext));
     }
 }

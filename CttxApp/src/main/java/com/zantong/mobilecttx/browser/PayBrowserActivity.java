@@ -68,7 +68,6 @@ public class PayBrowserActivity extends BaseJxActivity
     protected void initFragmentView(View view) {
         initTitleContent(mTitleWeb);
         setTvCloseVisible();
-
     }
 
     @SuppressLint("SetJavaScriptEnabled")
