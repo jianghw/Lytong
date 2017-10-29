@@ -342,8 +342,17 @@ public abstract class JxBaseActivity extends AppCompatActivity {
         if (mTvTitle != null) mTvTitle.setText(title);
     }
 
-    protected void titleContent(String title, String right) {
-        if (mTvTitle != null) mTvTitle.setText(title);
+    protected void titleClose() {
+        mTvClose.setVisibility(View.VISIBLE);
+        if (mTvClose != null) mTvClose.setText("关闭");
+    }
+
+    protected void titleClose(String close) {
+        mTvClose.setVisibility(View.VISIBLE);
+        if (mTvClose != null) mTvClose.setText(close);
+    }
+
+    protected void titleMore(String right) {
         mTvRight.setVisibility(View.VISIBLE);
         if (mTvRight != null) mTvRight.setText(right);
     }

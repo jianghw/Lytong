@@ -78,6 +78,10 @@
             android:name="com.tzly.ctcyh.pay.html_v.Html5Activity"
             android:process=":lyl.boon.process.web"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.tzly.ctcyh.pay.html_v.Html5Activity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
 
     </application>

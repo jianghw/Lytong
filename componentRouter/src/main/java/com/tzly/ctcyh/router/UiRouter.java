@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -134,6 +136,7 @@ public class UiRouter implements IUiRouter {
                 return true;
             }
         }
+        ToastUtils.toastShort("路由验证不过,去看看Host[]");
         return false;
     }
 

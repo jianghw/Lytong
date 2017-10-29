@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.MemoryData;
-import com.zantong.mobilecttx.push.PushBean;
+import com.zantong.mobilecttx.push_v.PushBean;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.dto.BaseDTO;

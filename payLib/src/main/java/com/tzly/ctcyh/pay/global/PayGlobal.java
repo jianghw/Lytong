@@ -17,6 +17,8 @@ public final class PayGlobal {
     public static final class resultCode {
         public static final int coupon_used = 2000;
         public static final int coupon_unused = 4000;
+        public static int web_pay_succeed=2001;
+        public static int web_pay_error =4001;
     }
 
     public static final class putExtra {

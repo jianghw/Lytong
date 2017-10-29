@@ -1,11 +1,17 @@
-package com.zantong.mobilecttx.push;
+package com.zantong.mobilecttx.push_v;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.NotificationCompat;
+import android.widget.RemoteViews;
 
 import com.alibaba.sdk.android.push.MessageReceiver;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.google.gson.Gson;
+import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
@@ -15,11 +21,16 @@ import com.zantong.mobilecttx.utils.Tools;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import cn.qqtheme.framework.util.log.LogUtils;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
+import static com.alibaba.sdk.android.ams.common.global.AmsGlobalHolder.getPackageName;
 
 /**
  * 用于接收推送的通知和消息
@@ -35,6 +46,11 @@ public class LytMessageReceiver extends MessageReceiver {
     public void onNotification(Context context, String title,
                                String summary, Map<String, String> extraMap) {
         LogUtils.i(title + "onNotification" + summary);
+
+        CPushMessage message = new CPushMessage();
+        message.setTitle(title);
+        message.setContent(summary);
+        buildNotification(context, message);
 
         PushBean pushBean = new PushBean();
         if (null != extraMap) {
@@ -81,7 +97,8 @@ public class LytMessageReceiver extends MessageReceiver {
     public void onMessage(Context context, CPushMessage cPushMessage) {
         try {
             LogUtils.i("收到一条推送消息 ====： " + cPushMessage.getTitle());
-            // 持久化推送的消息到数据库
+
+            buildNotification(context, cPushMessage);
         } catch (Exception e) {
             LogUtils.i(e.toString());
         }
@@ -109,6 +126,47 @@ public class LytMessageReceiver extends MessageReceiver {
                 context.startActivity(intent);
             }
         }
+    }
+
+    /**
+     * 接受到对应消息后，消息的弹出处理
+     */
+    public void buildNotification(Context context, CPushMessage message) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.custom_ali_push_notification);
+        remoteViews.setImageViewResource(R.id.custom_icon, R.mipmap.app_icon);
+        remoteViews.setTextViewText(R.id.tv_custom_title, message.getTitle());
+        remoteViews.setTextViewText(R.id.tv_custom_content, message.getContent());
+        remoteViews.setTextViewText(R.id.tv_custom_time, new SimpleDateFormat("HH:mm").format(new Date()));
+
+        Notification notification = new NotificationCompat.Builder(context)
+                .setContent(remoteViews)
+                .setContentTitle(message.getTitle())
+                .setContentText(message.getContent())
+                .setSmallIcon(R.mipmap.app_icon)
+                .setDefaults(Notification.DEFAULT_VIBRATE)
+                .setPriority(Notification.PRIORITY_DEFAULT)
+                .build();
+        notification.contentIntent = buildClickContent(context, message);
+        notification.deleteIntent = buildDeleteContent(context, message);
+        notificationManager.notify(message.hashCode(), notification);
+    }
+
+    public PendingIntent buildClickContent(Context context, CPushMessage message) {
+        Intent clickIntent = new Intent();
+        clickIntent.setAction("your notification click action");
+        //添加其他数据
+        clickIntent.putExtra("message key", message);//将message放入intent中，方便通知自建通知的点击事件
+        return PendingIntent.getService(context, 1000, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    public PendingIntent buildDeleteContent(Context context, CPushMessage message) {
+        Intent deleteIntent = new Intent();
+        deleteIntent.setAction("your notification click action");
+        //添加其他数据
+        deleteIntent.putExtra("message key", message);//将message放入intent中，方便通知自建通知的点击事件
+        return PendingIntent.getService(context, 2000, deleteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private void saveData(Context context, PushBean pushBean, String key) {

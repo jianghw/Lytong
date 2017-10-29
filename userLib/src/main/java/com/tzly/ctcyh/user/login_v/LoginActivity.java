@@ -230,7 +230,8 @@ public class LoginActivity extends JxBaseActivity implements
 
     @Override
     protected void bindContentView(View childView) {
-        titleContent("欢迎加入畅通车友会", "注册");
+        titleContent("欢迎加入畅通车友会");
+        titleMore( "注册");
         initView(childView);
 
         LoginPresenter presenter = new LoginPresenter(

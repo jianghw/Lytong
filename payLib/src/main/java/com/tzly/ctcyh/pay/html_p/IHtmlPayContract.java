@@ -1,5 +1,6 @@
 package com.tzly.ctcyh.pay.html_p;
 
+import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 
@@ -13,10 +14,21 @@ import com.tzly.ctcyh.router.base.IBaseView;
 public interface IHtmlPayContract {
 
     interface IHtmlPayView extends IBaseView<IHtmlPayPresenter> {
+        void orderDetailCompleted();
+
+        void intervalError(String s);
+
+        String getOrderId();
+
+        void getOrderDetailSucceed(OrderDetailResponse response);
+
+        void getOrderDetailError(String s);
     }
 
     interface IHtmlPayPresenter extends IBasePresenter {
         void orderDetail();
+
+        String getOrderId();
     }
 
 }

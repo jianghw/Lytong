@@ -8,6 +8,9 @@
         android:id="@+id/pb_html5"
         android:layout_width="match_parent"
         android:layout_height="4dp"
+        android:indeterminateOnly="false"
+        android:progressDrawable="@android:drawable/progress_horizontal"
+        android:indeterminateDrawable="@android:drawable/progress_horizontal"
         android:max="100"/>
 
     <WebView

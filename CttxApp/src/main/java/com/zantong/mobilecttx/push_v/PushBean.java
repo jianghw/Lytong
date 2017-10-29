@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.push;
+package com.zantong.mobilecttx.push_v;
 
 import java.io.Serializable;
 

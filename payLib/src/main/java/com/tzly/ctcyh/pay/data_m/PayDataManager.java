@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.tzly.ctcyh.pay.bean.response.CouponResponse;
+import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.router.util.RSAUtils;
@@ -67,6 +68,13 @@ public class PayDataManager {
      * 5.获取工行支付页面
      */
     public Observable<PayUrlResponse> getBankPayHtml(String extraOrderId, String amount, int couponUserId) {
-        return mRemoteData.getBankPayHtml(extraOrderId,amount,couponUserId);
+        return mRemoteData.getBankPayHtml(extraOrderId, amount, couponUserId);
+    }
+
+    /**
+     * 9.获取订单详情
+     */
+    public Observable<OrderDetailResponse> getOrderDetail(String orderId) {
+        return mRemoteData.getOrderDetail(orderId);
     }
 }

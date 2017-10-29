@@ -31,7 +31,11 @@ public class PayUiRouter extends LibUiRouter implements IComponentRouter {
 
     @Override
     protected String[] initHostToLib() {
-        return new String[]{PayGlobal.Host.pay_type_host, PayGlobal.Host.coupon_list_host};
+        return new String[]{
+                PayGlobal.Host.pay_type_host,
+                PayGlobal.Host.coupon_list_host,
+                PayGlobal.Host.html_5_host
+        };
     }
 
     /**
@@ -44,6 +48,7 @@ public class PayUiRouter extends LibUiRouter implements IComponentRouter {
         } else if (PayGlobal.Host.coupon_list_host.equals(host)) {
             intent.setClass(context, CouponListActivity.class);
         } else if (PayGlobal.Host.html_5_host.equals(host)) {
+            intent.setAction("com.tzly.ctcyh.pay.html_v.Html5Activity");
             intent.setClass(context, Html5Activity.class);
         } else {
             return true;

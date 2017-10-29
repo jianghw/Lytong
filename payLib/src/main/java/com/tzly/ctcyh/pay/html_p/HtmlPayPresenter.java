@@ -2,6 +2,7 @@ package com.tzly.ctcyh.pay.html_p;
 
 import android.support.annotation.NonNull;
 
+import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.data_m.BaseSubscriber;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
 
@@ -60,14 +61,14 @@ public class HtmlPayPresenter implements IHtmlPayContract.IHtmlPayPresenter {
                     @Override
                     public void doCompleted() {
                         mContractView.dismissLoading();
-//                        mContractView.orderDetailCompleted();
+                        mContractView.orderDetailCompleted();
                     }
 
                     @Override
                     public void doError(Throwable e) {
                         mContractView.dismissLoading();
-//                        mContractView.intervalError(
-//                                e.getMessage() != null ? e.getMessage() : "未知错误(interval)");
+                        mContractView.intervalError(
+                                e.getMessage() != null ? e.getMessage() : "未知错误(interval)");
                     }
 
                     @Override
@@ -78,30 +79,40 @@ public class HtmlPayPresenter implements IHtmlPayContract.IHtmlPayPresenter {
         mSubscriptions.add(subscription);
     }
 
+    /**
+     * 9.获取订单详情
+     */
     public void getOrderDetail() {
-//        Subscription subscription = mRepository.getOrderDetail(getOrderId())
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new BaseSubscriber<OrderDetailResponse>() {
-//                    @Override
-//                    public void doCompleted() {
-//                    }
-//
-//                    @Override
-//                    public void doError(Throwable e) {
-//                        mContractView.getOrderDetailError(e.getMessage()!=null?e.getMessage():"未知错误(N9)");
-//                    }
-//
-//                    @Override
-//                    public void doNext(OrderDetailResponse result) {
-//                        if (result != null && result.getResponseCode() == 2000) {
-//                            mContractView.getOrderDetailSucceed(result);
-//                        } else {
-//                            mContractView.getOrderDetailError(result != null
-//                                    ? result.getResponseDesc() : "未知错误(N9)");
-//                        }
-//                    }
-//                });
-//        mSubscriptions.add(subscription);
+        Subscription subscription = mRepository.getOrderDetail(getOrderId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<OrderDetailResponse>() {
+                    @Override
+                    public void doCompleted() {
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.getOrderDetailError(
+                                e.getMessage() != null ? e.getMessage() : "未知错误(N9)");
+                    }
+
+                    @Override
+                    public void doNext(OrderDetailResponse result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mContractView.getOrderDetailSucceed(result);
+                        } else {
+                            mContractView.getOrderDetailError(result != null
+                                    ? result.getResponseDesc() : "未知错误(N9)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    @Override
+    public String getOrderId() {
+        return mContractView.getOrderId();
     }
 }

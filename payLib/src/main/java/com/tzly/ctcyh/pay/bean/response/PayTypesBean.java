@@ -15,7 +15,16 @@ public class PayTypesBean {
 
     private int id;
     private String typeName;
+    private int payId;
     private boolean effective;
+
+    public int getPayId() {
+        return payId;
+    }
+
+    public void setPayId(int payId) {
+        this.payId = payId;
+    }
 
     public int getId() { return id;}
 

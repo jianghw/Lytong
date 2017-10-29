@@ -78,7 +78,7 @@ public class PayTypeActivity extends JxBaseActivity implements IPayTypeUi {
      */
     @Override
     protected void userClickRefreshData() {
-        if(mPayTypeFragment!=null)mPayTypeFragment.onRefreshData();
+        if (mPayTypeFragment != null) mPayTypeFragment.onRefreshData();
     }
 
     @Override
@@ -86,4 +86,14 @@ public class PayTypeActivity extends JxBaseActivity implements IPayTypeUi {
         super.onDestroy();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (TextUtils.isEmpty(mCurHost) || mCurHost.equals(PayGlobal.Host.pay_type_host)) {
+            if (mPayTypeFragment != null) {
+                mPayTypeFragment.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
 }

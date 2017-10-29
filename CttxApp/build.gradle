@@ -14,6 +14,11 @@ android {
 
         //dex突破65535的限制
         multiDexEnabled true
+        //阿里推送用
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'arm64-v8a', 'armeabi', 'armeabi-v7a', 'x86', 'x86_64'
+        }
     }
 
     sourceSets {
@@ -88,6 +93,10 @@ android {
 
             //图片下载地址（正式地址）
             signingConfig signingConfigs.debug
+
+            manifestPlaceholders = [baidu_API_KEY     : "E6lDRqyaSjj8jR8O5wdz5jpgiT0LOuQn",
+                                    alibaba_API_KEY   : "23481202",
+                                    alibaba_APP_SECRET: "a51ce60b119cf15b9ab220ed70d8078c"]
         }
 
         release {
@@ -111,6 +120,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //签名
             signingConfig signingConfigs.release
+
+            manifestPlaceholders = [baidu_API_KEY     : "E6lDRqyaSjj8jR8O5wdz5jpgiT0LOuQn",
+                                    alibaba_API_KEY   : "23481202",
+                                    alibaba_APP_SECRET: "a51ce60b119cf15b9ab220ed70d8078c"]
         }
     }
 

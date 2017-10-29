@@ -3,10 +3,12 @@ package com.tzly.ctcyh.pay.html_v;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +25,17 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.jianghw.multi.state.layout.MultiState;
+import com.tzly.ctcyh.pay.bean.response.OrderDetailBean;
+import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.data_m.InjectionRepository;
 import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.pay.html_p.HtmlPayPresenter;
 import com.tzly.ctcyh.pay.html_p.IHtmlPayContract;
 import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
+
+import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
 
 /**
  * Created by jianghw on 2017/10/23.
@@ -70,6 +77,14 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
         }
     }
 
+    /**
+     * 默认显示页面状态页
+     */
+    @MultiState
+    protected int initMultiState() {
+        return MultiState.CONTENT;
+    }
+
     @Override
     protected int initContentView() {
         return R.layout.activity_html_5;
@@ -105,14 +120,16 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
 
         mWebView.setWebChromeClient(webChromeClient);
         mWebView.setWebViewClient(webViewClient);
+        if (mPayType == 1) {
+            mUrl = "<%@ page language=\"java\" contentType=\"text/html; charset=GBK\" pageEncoding=\"GBK\"%>" +
+                    "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\" http://www.w3.org/TR/html4/loose.dtd\">" +
+                    "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\">" +
+                    "<title>表单提交</title></head><body>" + mUrl + "</body></html>";
 
-        mUrl = "<%@ page language=\"java\" contentType=\"text/html; charset=GBK\" pageEncoding=\"GBK\"%>" +
-                "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\" http://www.w3.org/TR/html4/loose.dtd\">" +
-                "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\">" +
-                "<title>表单提交</title></head><body>" + mUrl + "</body></html>";
-
-        //        mWebView.loadUrl(mUrl);
-        mWebView.loadDataWithBaseURL(null, mUrl, "text/html", "utf-8", null);
+            mWebView.loadDataWithBaseURL(null, mUrl, "text/html", "utf-8", null);
+        } else {
+            mWebView.loadUrl(mUrl);
+        }
 
         //支持获取手势焦点，输入用户名、密码或其他
         mWebView.requestFocusFromTouch();
@@ -121,6 +138,7 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
     @Override
     protected void initContentData() {
         titleContent(mTitle);
+        titleClose();
 
         HtmlPayPresenter presenter = new HtmlPayPresenter(
                 InjectionRepository.provideRepository(getApplicationContext()), this);
@@ -169,7 +187,23 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
          */
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
+            Intent intent = new Intent();
+            if (url.startsWith("tel:")) {//电话
+                intent.setAction(Intent.ACTION_DIAL);
+                Uri data = Uri.parse(url);
+                intent.setData(data);
+                startActivity(intent);
+            } else if (url.startsWith("alipays:")) {//阿里支付
+                intent.setData(Uri.parse(url));
+                try {
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                   toastShort("请确认手机安装支付宝app");
+                }
+            } else {
+                view.loadUrl(url);
+            }
             return true;
         }
 
@@ -281,6 +315,7 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
          */
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
+            mProgressBar.setProgress(newProgress);
             super.onProgressChanged(view, newProgress);
         }
 
@@ -367,13 +402,16 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
         });
     }
 
+    /**
+     * 回退键
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
             mWebView.goBack();
             return true;
         }
-        orderDetail();
+        if (!TextUtils.isEmpty(mOrderId)) orderDetail();
         return super.onKeyDown(keyCode, event);
     }
 
@@ -396,6 +434,26 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
         System.exit(0);
     }
 
+    /**
+     * 回退
+     */
+    @Override
+    protected void backClickListener() {
+        if (mWebView.canGoBack()) {
+            mWebView.goBack();// 返回前一个页面
+        } else {
+            if (!TextUtils.isEmpty(mOrderId)) orderDetail();
+        }
+    }
+
+    /**
+     * 关闭
+     */
+    @Override
+    protected void closeClickListener() {
+        if (!TextUtils.isEmpty(mOrderId)) orderDetail();
+    }
+
     protected void orderDetail() {
         if (mPresenter != null) mPresenter.orderDetail();
     }
@@ -403,5 +461,50 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
     @Override
     public void setPresenter(IHtmlPayContract.IHtmlPayPresenter presenter) {
         mPresenter = presenter;
+    }
+
+    @Override
+    public void orderDetailCompleted() {
+        //失败页面
+        errorStatus();
+    }
+
+    @Override
+    public void intervalError(String message) {
+        toastShort(message);
+    }
+
+    @Override
+    public String getOrderId() {
+        return mOrderId;
+    }
+
+    /**
+     * 获取订单详情页面
+     */
+    @Override
+    public void getOrderDetailSucceed(OrderDetailResponse response) {
+        OrderDetailBean orderDetailBean = response.getData();
+        if (orderDetailBean != null) {
+            int orderStatus = orderDetailBean.getOrderStatus();
+            //成功页面
+            if (orderStatus == 1) succeedStatus(orderDetailBean);
+        }
+    }
+
+    protected void succeedStatus(OrderDetailBean orderDetailBean) {
+        setResult(PayGlobal.resultCode.web_pay_succeed, null);
+        finish();
+    }
+
+    protected void errorStatus() {
+        setResult(PayGlobal.resultCode.web_pay_error, null);
+        finish();
+    }
+
+    @Override
+    public void getOrderDetailError(String s) {
+        toastShort(s);
+        errorStatus();
     }
 }

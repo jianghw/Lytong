@@ -1,5 +1,6 @@
 package com.tzly.ctcyh.pay.api;
 
+import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
 
 import retrofit2.http.Field;
@@ -21,4 +22,10 @@ public interface IOrderService {
     @POST("order/getOrderInfo")
     Observable<PayTypeResponse> getOrderInfo(@Field("orderId") String orderId);
 
+    /**
+     * 9.获取订单详情
+     */
+    @FormUrlEncoded
+    @POST("order/getOrderDetail")
+    Observable<OrderDetailResponse> getOrderDetail(@Field("orderId") String orderId);
 }

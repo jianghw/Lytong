@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.push;
+package com.zantong.mobilecttx.push_v;
 
 /**
  * Created by zhoujie on 2016/11/21.
