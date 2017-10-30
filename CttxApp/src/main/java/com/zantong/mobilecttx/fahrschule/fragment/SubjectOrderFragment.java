@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.browser.PayBrowserActivity;
@@ -218,7 +218,7 @@ public class SubjectOrderFragment extends BaseRefreshJxFragment
 
     @Override
     public void bankPayHtmlSucceed(PayOrderResponse result) {
-        if (!MemoryData.getInstance().loginFlag && !TextUtils.isEmpty(MemoryData.getInstance().userID)) {
+        if (!LoginData.getInstance().loginFlag && !TextUtils.isEmpty(LoginData.getInstance().userID)) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             getActivity().startActivity(intent);
         } else {

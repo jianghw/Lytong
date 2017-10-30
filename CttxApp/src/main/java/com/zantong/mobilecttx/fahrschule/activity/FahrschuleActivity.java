@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.fahrschule.fragment.FahrschuleApplyFragment;
@@ -15,7 +16,6 @@ import com.zantong.mobilecttx.fahrschule.fragment.FahrschuleOrderNumFragment;
 import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
  * 驾校报名页面
@@ -74,7 +74,7 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
                 if (mFahrschuleApplyFragment == null) {
                     mFahrschuleApplyFragment = FahrschuleApplyFragment.newInstance();
                 }
-                FragmentUtils.addFragment(
+                FragmentUtils.add(
                         fragmentManager, mFahrschuleApplyFragment, R.id.content, false, true);
                 mFahrschuleApplyFragment.setSwitcherListener(new SwitcherListener() {
                     @Override
@@ -87,14 +87,14 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
                 if (mFahrschuleOrderNumFragment == null) {
                     mFahrschuleOrderNumFragment = FahrschuleOrderNumFragment.newInstance();
                 }
-                FragmentUtils.addFragment(
+                FragmentUtils.add(
                         fragmentManager, mFahrschuleOrderNumFragment, R.id.content, false, true);
                 break;
             case 2:
                 if (mFahrschuleApplySucceedFragment == null) {
                     mFahrschuleApplySucceedFragment = FahrschuleApplySucceedFragment.newInstance();
                 }
-                FragmentUtils.addFragment(
+                FragmentUtils.add(
                         fragmentManager, mFahrschuleApplySucceedFragment, R.id.content, false, true);
                 break;
             default:

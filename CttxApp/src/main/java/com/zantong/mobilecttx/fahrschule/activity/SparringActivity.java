@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
@@ -15,7 +16,6 @@ import com.zantong.mobilecttx.fahrschule.fragment.SparringSucceedFragment;
 import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
  * 陪练页面
@@ -65,7 +65,7 @@ public class SparringActivity extends BaseJxActivity {
                 if (mSparringSubscribeFragment == null) {
                     mSparringSubscribeFragment = SparringSubscribeFragment.newInstance();
                 }
-                FragmentUtils.addFragment(fragmentManager, mSparringSubscribeFragment, R.id.lay_base_frame, false, true);
+                FragmentUtils.add(fragmentManager, mSparringSubscribeFragment, R.id.lay_base_frame, false, true);
                 mSparringSubscribeFragment.setSwitcherListener(new ISubjectSwitcherListener() {
                     @Override
                     public void setCurPosition(int position) {
@@ -77,13 +77,13 @@ public class SparringActivity extends BaseJxActivity {
                 if (mSparringOrderFragment == null) {
                     mSparringOrderFragment = SparringOrderFragment.newInstance();
                 }
-                FragmentUtils.addFragment(fragmentManager, mSparringOrderFragment, R.id.lay_base_frame, false, true);
+                FragmentUtils.add(fragmentManager, mSparringOrderFragment, R.id.lay_base_frame, false, true);
                 break;
             case 2://陪练预约成功
                 if (mSparringSucceedFragment == null) {
                     mSparringSucceedFragment = SparringSucceedFragment.newInstance();
                 }
-                FragmentUtils.addFragment(fragmentManager, mSparringSucceedFragment, R.id.lay_base_frame, false, true);
+                FragmentUtils.add(fragmentManager, mSparringSucceedFragment, R.id.lay_base_frame, false, true);
                 break;
             default:
                 break;

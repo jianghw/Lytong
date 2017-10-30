@@ -2,6 +2,8 @@ package com.tzly.ctcyh.router.util;
 
 import android.text.TextUtils;
 
+import com.tzly.ctcyh.router.util.rea.BaseUtil64;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;

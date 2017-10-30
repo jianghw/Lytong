@@ -2,20 +2,20 @@ package com.zantong.mobilecttx.presenter;
 
 import android.widget.Toast;
 
+import com.tzly.ctcyh.router.util.Des3;
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
-import com.zantong.mobilecttx.application.MemoryData;
-import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.LoginData;
+import com.zantong.mobilecttx.base.MessageFormat;
+import com.zantong.mobilecttx.login_v.LoginActivity;
 import com.zantong.mobilecttx.model.LoginInfoModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
-import com.zantong.mobilecttx.login_v.LoginActivity;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.SmsBean;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
-import com.zantong.mobilecttx.utils.rsa.Des3;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 
 import org.json.JSONException;
@@ -51,8 +51,8 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
             Toast.makeText(mLoginActivity, "请正确输入手机号", Toast.LENGTH_SHORT).show();
             return;
         }
-        if ("".equals(MemoryData.getInstance().imei)) {
-            MemoryData.getInstance().imei = "00000000";
+        if ("".equals(LoginData.getInstance().imei)) {
+            LoginData.getInstance().imei = "00000000";
         }
         mLoginActivity.showProgress();
         switch (index) {
@@ -80,10 +80,10 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
 
                     masp.put("phoenum", phone);
                     masp.put("pswd", pwd);
-                    masp.put("devicetoken", MemoryData.getInstance().imei);
+                    masp.put("devicetoken", LoginData.getInstance().imei);
                     masp.put("pushswitch", "0");
                     masp.put("pushmode", "2");
-                    String token = RSAUtils.strByEncryption(MemoryData.getInstance().deviceId, true);
+                    String token = RSAUtils.strByEncryption(LoginData.getInstance().deviceId, true);
                     masp.put("token", token);
                     MessageFormat.getInstance().setMessageJSONObject(masp);
                 } catch (JSONException e) {
@@ -101,7 +101,7 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
     @Override
     public void onSuccess(Object mLoginInfoBean, int index) {
         mLoginActivity.hideProgress();
-        if (index == 2 && !MemoryData.getInstance().success.equals(((LoginInfoBean) mLoginInfoBean).getSYS_HEAD().getReturnCode())) {
+        if (index == 2 && !LoginData.getInstance().success.equals(((LoginInfoBean) mLoginInfoBean).getSYS_HEAD().getReturnCode())) {
             ToastUtils.toastShort(((LoginInfoBean) mLoginInfoBean).getSYS_HEAD().getReturnMessage());
             return;
         }
@@ -121,18 +121,18 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
                 this.mLoginInfoBean.getRspInfo().setRecdphoe(Des3.decode(this.mLoginInfoBean.getRspInfo().getRecdphoe()));
 
                 UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERPD, mLoginActivity.mapData().get("pswd"));
-                UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, MemoryData.getInstance().imei);
+                UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, LoginData.getInstance().imei);
                 UserInfoRememberCtrl.saveObject(this.mLoginInfoBean.getRspInfo());
 
-                MemoryData.getInstance().mLoginInfoBean = this.mLoginInfoBean.getRspInfo();
+                LoginData.getInstance().mLoginInfoBean = this.mLoginInfoBean.getRspInfo();
 
-                SPUtils.getInstance().setLoginInfoBean(MemoryData.getInstance().mLoginInfoBean);
+                SPUtils.getInstance().setLoginInfoBean(LoginData.getInstance().mLoginInfoBean);
 
-                MemoryData.getInstance().userID = this.mLoginInfoBean.getRspInfo().getUsrid();
-                MemoryData.getInstance().filenum = this.mLoginInfoBean.getRspInfo().getFilenum();
-                MemoryData.getInstance().getdate = this.mLoginInfoBean.getRspInfo().getGetdate();
+                LoginData.getInstance().userID = this.mLoginInfoBean.getRspInfo().getUsrid();
+                LoginData.getInstance().filenum = this.mLoginInfoBean.getRspInfo().getFilenum();
+                LoginData.getInstance().getdate = this.mLoginInfoBean.getRspInfo().getGetdate();
 
-                MemoryData.getInstance().loginFlag = true;
+                LoginData.getInstance().loginFlag = true;
                 mLoginActivity.addLoginInfo(this.mLoginInfoBean);
                 break;
         }

@@ -25,7 +25,6 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.pay.bean.response.OrderDetailBean;
 import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.data_m.InjectionRepository;
@@ -75,14 +74,6 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
             if (intent.hasExtra(PayGlobal.putExtra.web_pay_type_extra))
                 mPayType = bundle.getInt(PayGlobal.putExtra.web_pay_type_extra);
         }
-    }
-
-    /**
-     * 默认显示页面状态页
-     */
-    @MultiState
-    protected int initMultiState() {
-        return MultiState.CONTENT;
     }
 
     @Override

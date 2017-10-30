@@ -8,19 +8,20 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.FragmentUtils;
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseJxFragment;
 import com.zantong.mobilecttx.browser.PayHtmlActivity;
 import com.zantong.mobilecttx.utils.AmountUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.NetUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationPayActivity;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 import com.zantong.mobilecttx.weizhang.dto.ViolationOrderDTO;
@@ -32,7 +33,6 @@ import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
  * 违章支付页面
@@ -124,10 +124,10 @@ public class ViolationPayFragment extends BaseJxFragment {
             case R.id.fragment_violation_paytype_layout:
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 ViolationPayTypeFragment payTypeFragment = ViolationPayTypeFragment.newInstance();
-                FragmentUtils.replaceFragment(fragmentManager, payTypeFragment, R.id.lay_base_frame, true);
+                FragmentUtils.replace(fragmentManager, payTypeFragment, R.id.lay_base_frame, true);
                 break;
             case R.id.fragment_violation_commit://提交
-                if (MemoryData.getInstance().mHashMap.isEmpty()) {
+                if (LoginData.getInstance().mHashMap.isEmpty()) {
                     getParentActivity().showLoadingDialog();
                     searchViolation();
                 } else
@@ -152,8 +152,8 @@ public class ViolationPayFragment extends BaseJxFragment {
         getParentActivity().showLoadingDialog();
         ViolationOrderDTO dto = new ViolationOrderDTO();
 
-        dto.setCarnum(String.valueOf(MemoryData.getInstance().mHashMap.get("carnum")));
-        dto.setEnginenum(String.valueOf(MemoryData.getInstance().mHashMap.get("enginenum")));
+        dto.setCarnum(String.valueOf(LoginData.getInstance().mHashMap.get("carnum")));
+        dto.setEnginenum(String.valueOf(LoginData.getInstance().mHashMap.get("enginenum")));
 
         int price = Integer.valueOf(mViolationBean.getViolationamt());
         int orderPrice = price / 100;
@@ -161,7 +161,7 @@ public class ViolationPayFragment extends BaseJxFragment {
 
         dto.setPeccancydate(mViolationBean.getViolationdate());
         dto.setPeccancynum(mViolationBean.getViolationnum());
-        dto.setUsernum(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
+        dto.setUsernum(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
 
         CarApiClient.createOrder(ContextUtils.getContext(), dto, new CallBack<BaseResponse>() {
             @Override
@@ -181,9 +181,9 @@ public class ViolationPayFragment extends BaseJxFragment {
      * cip.cfc.v004.01
      */
     private void searchViolation() {
-        if (!TextUtils.isEmpty(MemoryData.getInstance().filenum)) {
+        if (!TextUtils.isEmpty(LoginData.getInstance().filenum)) {
             UserApiClient.setJiaoYiDaiMa(ContextUtils.getContext(),
-                    MemoryData.getInstance().filenum, new CallBack<BankResponse>() {
+                    LoginData.getInstance().filenum, new CallBack<BankResponse>() {
                         @Override
                         public void onSuccess(BankResponse bankResponse) {
                             getParentActivity().dismissLoadingDialog();
@@ -216,7 +216,7 @@ public class ViolationPayFragment extends BaseJxFragment {
 
         String violationnum = mViolationBean.getViolationnum();
         String violationamt = mViolationBean.getViolationamt();
-        String merCustomId = MemoryData.getInstance().filenum;//畅通卡档案编号
+        String merCustomId = LoginData.getInstance().filenum;//畅通卡档案编号
 
         String payUrl = BuildConfig.APP_URL
                 + "payment_payForViolation?orderid=" + violationnum

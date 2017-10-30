@@ -13,7 +13,7 @@ import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.google.gson.Gson;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
-import com.zantong.mobilecttx.home.activity.HomeMainActivity;
+import com.zantong.mobilecttx.home_v.HomeMainActivity;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import cn.qqtheme.framework.util.log.LogUtils;
@@ -72,7 +73,6 @@ public class LytMessageReceiver extends MessageReceiver {
             if (pushBean.getType() != null && pushBean.getType().equals("1")) {
                 EventBus.getDefault().postSticky(new AddPushTrumpetEvent(pushBean));
             }
-
         } else {
             LogUtils.i("@收到通知 && 自定义消息为空");
         }
@@ -97,7 +97,6 @@ public class LytMessageReceiver extends MessageReceiver {
     public void onMessage(Context context, CPushMessage cPushMessage) {
         try {
             LogUtils.i("收到一条推送消息 ====： " + cPushMessage.getTitle());
-
             buildNotification(context, cPushMessage);
         } catch (Exception e) {
             LogUtils.i(e.toString());
@@ -138,15 +137,18 @@ public class LytMessageReceiver extends MessageReceiver {
         remoteViews.setImageViewResource(R.id.custom_icon, R.mipmap.app_icon);
         remoteViews.setTextViewText(R.id.tv_custom_title, message.getTitle());
         remoteViews.setTextViewText(R.id.tv_custom_content, message.getContent());
-        remoteViews.setTextViewText(R.id.tv_custom_time, new SimpleDateFormat("HH:mm").format(new Date()));
+        remoteViews.setTextViewText(R.id.tv_custom_time, new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINESE).format(new Date()));
 
         Notification notification = new NotificationCompat.Builder(context)
                 .setContent(remoteViews)
                 .setContentTitle(message.getTitle())
                 .setContentText(message.getContent())
+                .setTicker(message.getTitle()) //通知首次出现在通知栏，带上升动画效果的
                 .setSmallIcon(R.mipmap.app_icon)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setPriority(Notification.PRIORITY_DEFAULT)
+                .setVibrate(new long[]{0, 300, 500, 700})// 设置震动的时间
+                .setDefaults(Notification.DEFAULT_ALL)// 添加默认以上3种全部提醒
                 .build();
         notification.contentIntent = buildClickContent(context, message);
         notification.deleteIntent = buildDeleteContent(context, message);
@@ -155,17 +157,17 @@ public class LytMessageReceiver extends MessageReceiver {
 
     public PendingIntent buildClickContent(Context context, CPushMessage message) {
         Intent clickIntent = new Intent();
-        clickIntent.setAction("your notification click action");
+        clickIntent.setAction("com.push_v.PushNotificationService.click");
         //添加其他数据
-        clickIntent.putExtra("message key", message);//将message放入intent中，方便通知自建通知的点击事件
+        clickIntent.putExtra("message_click", message);//将message放入intent中，方便通知自建通知的点击事件
         return PendingIntent.getService(context, 1000, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     public PendingIntent buildDeleteContent(Context context, CPushMessage message) {
         Intent deleteIntent = new Intent();
-        deleteIntent.setAction("your notification click action");
+        deleteIntent.setAction("com.push_v.PushNotificationService.delete");
         //添加其他数据
-        deleteIntent.putExtra("message key", message);//将message放入intent中，方便通知自建通知的点击事件
+        deleteIntent.putExtra("message_delete", message);//将message放入intent中，方便通知自建通知的点击事件
         return PendingIntent.getService(context, 2000, deleteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 

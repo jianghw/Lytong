@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 
@@ -72,7 +72,7 @@ public class InspectService extends Service {
     private void updateCurrentTime() {
         Date now = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd HH:mm:ss");
-        OpenQueryBean.RspInfoBean b = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(MemoryData.getInstance().CarLocalFlag);
+        OpenQueryBean.RspInfoBean b = (OpenQueryBean.RspInfoBean) UserInfoRememberCtrl.readObject(LoginData.getInstance().CarLocalFlag);
         String currentTm = sdf.format(now).replace("/","").replace(":","").replace(" ","");
         if (b != null) {
             for (int i = 0; i < b.getUserCarsInfo().size(); i++) {

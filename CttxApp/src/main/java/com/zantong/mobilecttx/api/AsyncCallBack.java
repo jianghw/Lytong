@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 
 import cn.qqtheme.framework.bean.BankResponse;
 
@@ -104,7 +104,7 @@ public class AsyncCallBack<T> implements Callback {
         if (response.isSuccessful()) {
             try {
                 String reader = response.body().string();
-                MemoryData.getInstance().mHashMap.put("htmlResponse", reader);
+                LoginData.getInstance().mHashMap.put("htmlResponse", reader);
                 LogUtils.i("reader===" + reader);
                 if (!TextUtils.isEmpty(reader)) {
                     T t = gson.fromJson(reader, clazz);

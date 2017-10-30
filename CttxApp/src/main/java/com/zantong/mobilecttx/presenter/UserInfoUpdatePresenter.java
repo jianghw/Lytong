@@ -1,7 +1,7 @@
 package com.zantong.mobilecttx.presenter;
 
 import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.BasePresenter;
 import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.application.Config;
@@ -42,9 +42,9 @@ public class UserInfoUpdatePresenter extends BasePresenter<UserInfoUpdateView> i
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.u003.01");
                 masp = new JSONObject();
                 try {
-                    masp.put("usrid", MemoryData.getInstance().userID);
+                    masp.put("usrid", LoginData.getInstance().userID);
                     masp.put("portrait", mUserInfoUpdate.mapData().get("portrait"));
-                    masp.put("devicetoken", MemoryData.getInstance().imei);
+                    masp.put("devicetoken", LoginData.getInstance().imei);
                     masp.put("pushswitch", 0);
                     MessageFormat.getInstance().setMessageJSONObject(masp);
                 } catch (JSONException e) {
@@ -62,10 +62,10 @@ public class UserInfoUpdatePresenter extends BasePresenter<UserInfoUpdateView> i
         UpdateInfo mUpdateInfo = (UpdateInfo) clazz;
         switch (index) {
             case 1:
-                if (MemoryData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())) {
+                if (LoginData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())) {
                     mUserInfoUpdate.updateView(clazz, index);
-                    MemoryData.getInstance().mLoginInfoBean.setPortrait(mUserInfoUpdate.mapData().get("portrait"));
-                    UserInfoRememberCtrl.saveObject(MemoryData.getInstance().mLoginInfoBean);
+                    LoginData.getInstance().mLoginInfoBean.setPortrait(mUserInfoUpdate.mapData().get("portrait"));
+                    UserInfoRememberCtrl.saveObject(LoginData.getInstance().mLoginInfoBean);
                 } else {
                     mUserInfoUpdate.setUserHeadImage();
                     ToastUtils.toastShort(mUpdateInfo.getSYS_HEAD().getReturnMessage());

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
@@ -16,12 +16,12 @@ import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.Tools;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.lang.ref.WeakReference;
 
-import static com.zantong.mobilecttx.utils.rsa.RSAUtils.strByEncryption;
+import static com.tzly.ctcyh.router.util.rea.RSAUtils.strByEncryption;
+
 
 /**
  * Created by jianghw on 2017/4/26.
@@ -46,13 +46,13 @@ public class LocalData {
 
     BaseDTO initBaseDTO() {
         BaseDTO dto = new BaseDTO();
-        dto.setUsrId(strByEncryption(MemoryData.getInstance().userID, true));
+        dto.setUsrId(strByEncryption(LoginData.getInstance().userID, true));
         return dto;
     }
 
     public MessageDetailDTO initMessageDetailDTO() {
         MessageDetailDTO dto = new MessageDetailDTO();
-        dto.setUsrId(strByEncryption(MemoryData.getInstance().userID, true));
+        dto.setUsrId(strByEncryption(LoginData.getInstance().userID, true));
         return dto;
     }
 
@@ -62,7 +62,7 @@ public class LocalData {
      * @return
      */
     public String DefaultUserID() {
-        return MemoryData.getInstance().userID;
+        return LoginData.getInstance().userID;
     }
 
     /**
@@ -81,14 +81,14 @@ public class LocalData {
      * @return
      */
     public String getStrByEncryption(String string) {
-        return RSAUtils.strByEncryption(string, true);
+        return strByEncryption(string, true);
     }
 
     /**
      * 登陆用户信息
      */
     public RspInfoBean getDefaultUser() {
-        return MemoryData.getInstance().mLoginInfoBean;
+        return LoginData.getInstance().mLoginInfoBean;
     }
 
     /**
@@ -129,18 +129,18 @@ public class LocalData {
      */
     public void initGlobalLoginInfo(RspInfoBean rspInfoBean) {
         if (rspInfoBean == null) return;
-        MemoryData.getInstance().mLoginInfoBean = rspInfoBean;
-        MemoryData.getInstance().userID = rspInfoBean.getUsrid();
-        MemoryData.getInstance().filenum = rspInfoBean.getFilenum();
-        MemoryData.getInstance().getdate = rspInfoBean.getGetdate();
-        MemoryData.getInstance().loginFlag = true;
+        LoginData.getInstance().mLoginInfoBean = rspInfoBean;
+        LoginData.getInstance().userID = rspInfoBean.getUsrid();
+        LoginData.getInstance().filenum = rspInfoBean.getFilenum();
+        LoginData.getInstance().getdate = rspInfoBean.getGetdate();
+        LoginData.getInstance().loginFlag = true;
 
         OpenQueryBean.RspInfoBean.UserCarsInfoBean mUserCarsInfoBean =
                 (OpenQueryBean.RspInfoBean.UserCarsInfoBean)
-                        UserInfoRememberCtrl.readObject(MemoryData.getInstance().DefaultCarLocalFlag);
+                        UserInfoRememberCtrl.readObject(LoginData.getInstance().DefaultCarLocalFlag);
         if (mUserCarsInfoBean != null) {
-            MemoryData.getInstance().defaultCar = true;
-            MemoryData.getInstance().defaultCarNumber = mUserCarsInfoBean.getCarnum();
+            LoginData.getInstance().defaultCar = true;
+            LoginData.getInstance().defaultCarNumber = mUserCarsInfoBean.getCarnum();
         }
     }
 
@@ -162,7 +162,7 @@ public class LocalData {
      */
     public void saveLoginInfoRepeat(LoginInfoBean result) {
         initGlobalLoginInfo(result.getRspInfo());
-        UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, MemoryData.getInstance().imei);
+        UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, LoginData.getInstance().imei);
         UserInfoRememberCtrl.saveObject(result.getRspInfo());
     }
 }

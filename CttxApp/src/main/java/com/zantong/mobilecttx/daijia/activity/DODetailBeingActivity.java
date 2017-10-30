@@ -4,28 +4,28 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import cn.qqtheme.framework.bean.BaseResponse;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderDetailResponse;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderDetailDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.HashUtils;
-import com.zantong.mobilecttx.widght.refresh.OnPullListener;
-import com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
+import com.zantong.mobilecttx.widght.refresh.OnPullListener;
+import com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout;
 
 import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.global.JxGlobal;
 
 /**
@@ -102,12 +102,12 @@ public class DODetailBeingActivity extends BaseMvpActivity<IBaseView, HelpPresen
                 Intent intent = getIntent();
                 String orderId = intent.getStringExtra(JxGlobal.putExtra.common_extra);
                 dto.setOrderId(orderId);
-                dto.setUsrId(RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().userID, true));
+                dto.setUsrId(RSAUtils.strByEncryptionLiYing(LoginData.getInstance().userID, true));
 
                 HashMap<String, String> hashMap = new HashMap<String, String>();
                 hashMap.put("time",time);
                 hashMap.put("orderId",orderId);
-                hashMap.put("usrId", MemoryData.getInstance().userID);
+                hashMap.put("usrId", LoginData.getInstance().userID);
                 dto.setHash(HashUtils.getSignature(hashMap));
 
                 CarApiClient.cancelDaiJiaOrderDetail(DODetailBeingActivity.this, dto, new CallBack<BaseResponse>() {
@@ -150,7 +150,7 @@ public class DODetailBeingActivity extends BaseMvpActivity<IBaseView, HelpPresen
         String orderId = intent.getStringExtra(JxGlobal.putExtra.common_extra);
         dto.setOrderId(orderId);
         dto.setTime(time);
-        dto.setUsrId(RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().userID, true));
+        dto.setUsrId(RSAUtils.strByEncryptionLiYing(LoginData.getInstance().userID, true));
 
         CarApiClient.getDaiJiaOrderDetail(this, dto, new CallBack<DaiJiaOrderDetailResponse>() {
             @Override

@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.home.activity;
+package com.zantong.mobilecttx.guide_v;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,56 +7,64 @@ import android.widget.TextView;
 
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
-import com.umeng.analytics.MobclickAgent;
+import com.tzly.ctcyh.router.UiRouter;
+import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
 import com.zantong.mobilecttx.utils.SPUtils;
-import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.widght.GuideHeaderViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.OnClick;
 import cn.qqtheme.framework.util.AppUtils;
 
 /**
  * 引导页面
  */
-public class GuideCTActivity extends BaseJxActivity implements GuideHeaderViewPager.GuideInterface {
+public class GuideCTActivity extends JxBaseActivity
+        implements GuideHeaderViewPager.GuideInterface, View.OnClickListener {
 
-    @Bind(R.id.guide_headerview)
-    GuideHeaderViewPager mGuideHeaderview;
-    @Bind(R.id.guide_open)
+    GuideHeaderViewPager mHeaderViewPager;
     TextView mGuideOpen;
 
     public static final String GUIDE_PIC = "guide_pic_url";
     int mVersionCode;
 
-    @Override
-    protected void bundleIntent(Bundle savedInstanceState) {}
+    ArrayList<StartPicBean> arrayList;
 
-    protected boolean isNeedCustomTitle() {
+    @Override
+    protected void bundleIntent(Bundle savedInstanceState) {
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null)
+            arrayList = bundle.getParcelableArrayList(GUIDE_PIC);
+        else
+            arrayList = new ArrayList<>();
+    }
+
+    protected boolean isCustomTitle() {
         return true;
     }
 
     @Override
-    protected int getContentResId() {
+    protected int initContentView() {
         return R.layout.activity_ct_guide;
     }
 
-    protected boolean isNeedKnife() {
-        return true;
+    @Override
+    protected void bindContentView(View childView) {
+        initView(childView);
+    }
+
+    public void initView(View childView) {
+        mHeaderViewPager = (GuideHeaderViewPager) childView.findViewById(R.id.guide_headerview);
+        mGuideOpen = (TextView) childView.findViewById(R.id.guide_open);
+        mGuideOpen.setOnClickListener(this);
     }
 
     @Override
-    protected void initFragmentView(View view) {}
-
-    @Override
-    protected void initViewStatus() {
+    protected void initContentData() {
         initData();
     }
 
@@ -65,18 +73,10 @@ public class GuideCTActivity extends BaseJxActivity implements GuideHeaderViewPa
         Beta.init(getApplicationContext(), false);
 
         UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
-        int appCode = AppUtils.getAppVersionCode();//当前手机的
-        mVersionCode = appCode;
+        mVersionCode = AppUtils.getAppVersionCode();
         if (upgradeInfo != null) {
             mVersionCode = upgradeInfo.versionCode;
         }
-
-        Bundle bundle = getIntent().getExtras();
-        ArrayList<StartPicBean> arrayList;
-        if (bundle != null)
-            arrayList = bundle.getParcelableArrayList(GUIDE_PIC);
-        else
-            arrayList = new ArrayList<>();
 
         List<StartPicBean> mList = new ArrayList<>();
 
@@ -90,7 +90,7 @@ public class GuideCTActivity extends BaseJxActivity implements GuideHeaderViewPa
         guideS.add(R.mipmap.guide_1);
         guideS.add(R.mipmap.guide_2);
         guideS.add(R.mipmap.guide_3);
-        mGuideHeaderview.setImageUrls(guideS, ImageView.ScaleType.FIT_XY, this, mList);
+        mHeaderViewPager.setImageUrls(guideS, ImageView.ScaleType.FIT_XY, this, mList);
     }
 
     @Override
@@ -102,7 +102,8 @@ public class GuideCTActivity extends BaseJxActivity implements GuideHeaderViewPa
         }
     }
 
-    @OnClick({R.id.guide_open})
+
+
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.guide_open:
@@ -111,14 +112,15 @@ public class GuideCTActivity extends BaseJxActivity implements GuideHeaderViewPa
         }
     }
 
+
     private void gotoActivity() {
-        MobclickAgent.onEvent(this, Config.getUMengID(0));
-        Act.getInstance().gotoIntent(this, HomeMainActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(MainGlobal.putExtra.home_position_extra, 0);
+        UiRouter.getInstance().openUriBundle(this,
+                MainGlobal.Scheme.main_scheme + "://" + MainGlobal.Host.home_host,
+                bundle);
+
         SPUtils.getInstance().setIsGuide(String.valueOf(mVersionCode));
         finish();
-    }
-
-    @Override
-    protected void DestroyViewAndThing() {
     }
 }

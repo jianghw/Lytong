@@ -1,11 +1,11 @@
-package com.zantong.mobilecttx.utils.rsa;
+package com.tzly.ctcyh.router.util.rea;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * Created by zhoujie on 2016/12/1.
+ * base64 加解密
  */
 
 public class BaseUtil64 {

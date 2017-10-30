@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.presenter.fahrschule;
 
 import android.support.annotation.NonNull;
 
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
 import com.zantong.mobilecttx.contract.IFahrschuleShareFtyContract;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
@@ -54,8 +54,8 @@ public class FahrschuleSharePresenter
 
     @Override
     public String getPhone() {
-        return MemoryData.getInstance().mLoginInfoBean!=null
-                ?MemoryData.getInstance().mLoginInfoBean.getPhoenum():"00000000000000";
+        return LoginData.getInstance().mLoginInfoBean!=null
+                ? LoginData.getInstance().mLoginInfoBean.getPhoenum():"00000000000000";
     }
     /**
      * 7.获取用户指定活动的统计总数

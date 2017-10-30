@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import com.tzly.ctcyh.router.util.FragmentUtils;
+import com.tzly.ctcyh.router.util.StatusBarUtils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.application.Injection;
+import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.presenter.LicenseGradeAtyPresenter;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobilecttx.weizhang.fragment.LicenseDetailFragment;
@@ -17,9 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
-import cn.qqtheme.framework.util.ui.FragmentUtils;
-import cn.qqtheme.framework.util.ui.StatusBarUtils;
 
 import static com.zantong.mobilecttx.weizhang.activity.LicenseCheckGradeActivity.KEY_BUNDLE;
 
@@ -79,7 +78,7 @@ public class LicenseDetailActivity extends BaseJxActivity {
             if (detailFragment == null) {
                 detailFragment = LicenseDetailFragment.newInstance(newBean);
 
-                FragmentUtils.addFragment(fragmentManager, detailFragment, R.id.lay_base_frame);
+                FragmentUtils.add(fragmentManager, detailFragment, R.id.lay_base_frame,false,true);
             }
             LicenseGradeAtyPresenter mPresenter = new LicenseGradeAtyPresenter(
                     Injection.provideRepository(getApplicationContext()), detailFragment);

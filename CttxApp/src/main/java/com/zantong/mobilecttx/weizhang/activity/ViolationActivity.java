@@ -6,13 +6,13 @@ import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
 import com.zantong.mobilecttx.weizhang.fragment.ViolationQueryFragment;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
  * 违法查询页面 输入
@@ -63,8 +63,8 @@ public class ViolationActivity extends BaseJxActivity {
                             ? ViolationQueryFragment.newInstance()
                             : ViolationQueryFragment.newInstance(mVehicleLicenseBean);
                 }
-                FragmentUtils.replaceFragment(
-                        fragmentManager, mViolationQueryFragment, R.id.lay_base_frame, true);
+                FragmentUtils.add(
+                        fragmentManager, mViolationQueryFragment, R.id.lay_base_frame,false, true);
                 break;
             default:
                 break;

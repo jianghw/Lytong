@@ -20,15 +20,15 @@ import java.util.List;
  * app内存数据清单
  * Created by Administrator on 2016/5/9.
  */
-public class MemoryData {
+public class LoginData {
 
-    private static MemoryData instance;
+    private static LoginData instance;
 
-    private MemoryData() {}
+    private LoginData() {}
 
-    public static synchronized MemoryData getInstance() {
+    public static synchronized LoginData getInstance() {
         if (instance == null) {
-            instance = new MemoryData();
+            instance = new LoginData();
         }
         return instance;
     }
@@ -46,10 +46,7 @@ public class MemoryData {
 
     public String CarLocalFlag = "userCarInfo";//本地缓存车辆信息的key
     public String DefaultCarLocalFlag = "defaultCarInfo";//本地缓存默认车辆信息的key
-    public String IllegalViolationFlag = "IllegalViolationcChcek";//本地缓存违章信息的key
 
-    public String onlyflag = "";//短信验证码唯一标识
-    public boolean TitleFlag = false;//短信验证码唯一标识
     public boolean updateMsg = false;//设置-更新通知开启状态
     public final String NOTICE_STATE = "notice_state";//积分周期提醒key
 
@@ -88,7 +85,7 @@ public class MemoryData {
         UserInfoRememberCtrl.saveObject(DefaultCarLocalFlag, null);
         UserInfoRememberCtrl.saveObject("jiayou", null);
         UserInfoRememberCtrl.saveObject("nianjian", null);
-        UserInfoRememberCtrl.saveObject(MemoryData.getInstance().userID, null);
+        UserInfoRememberCtrl.saveObject(LoginData.getInstance().userID, null);
 
         AccountRememberCtrl.nosaveDefaultNumber(mContext);
         AccountRememberCtrl.nosaveLoginAD(mContext);

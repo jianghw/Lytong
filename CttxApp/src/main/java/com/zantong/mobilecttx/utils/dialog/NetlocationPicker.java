@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.daijia.bean.DistrictModel;
 import com.zantong.mobilecttx.map.bean.NetLocationBean;
 import com.zantong.mobilecttx.utils.dialog.WheelView.OnSelectListener;
@@ -176,13 +176,13 @@ public class NetlocationPicker extends LinearLayout {
 
     private ArrayList<String> getProvinceData() {
         ArrayList<String> list = new ArrayList<>();
-        if (MemoryData.getInstance().mNetLocationBean.getNetLocationlist() != null) {
-            for (int i = 0; i < MemoryData.getInstance().mNetLocationBean.getNetLocationlist().size(); i++) {
+        if (LoginData.getInstance().mNetLocationBean.getNetLocationlist() != null) {
+            for (int i = 0; i < LoginData.getInstance().mNetLocationBean.getNetLocationlist().size(); i++) {
 
-                list.add(MemoryData.getInstance().mNetLocationBean.getNetLocationlist().get(i).getNetLocationQu());
+                list.add(LoginData.getInstance().mNetLocationBean.getNetLocationlist().get(i).getNetLocationQu());
 
-                cityMap.put(MemoryData.getInstance().mNetLocationBean.getNetLocationlist().get(i).getNetLocationQu(),
-                        MemoryData.getInstance().mNetLocationBean.getNetLocationlist().get(i).getListNet());
+                cityMap.put(LoginData.getInstance().mNetLocationBean.getNetLocationlist().get(i).getNetLocationQu(),
+                        LoginData.getInstance().mNetLocationBean.getNetLocationlist().get(i).getListNet());
             }
         } else {
             LogUtils.i("网点数据是空");

@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -17,7 +18,7 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.FileDownloadApi;
 import com.zantong.mobilecttx.api.HandleCTCardApiClient;
 import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
 import com.zantong.mobilecttx.base.interf.IBaseView;
@@ -30,7 +31,6 @@ import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.ReadFfile;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.dialog.NetLocationDialog;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.widght.CttxEditText;
 import com.zantong.mobilecttx.widght.CttxTextView;
 import com.zantong.mobilecttx.widght.SettingItemView;
@@ -116,7 +116,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MemoryData.getInstance().filenum = "";
+        LoginData.getInstance().filenum = "";
     }
 
     @Override
@@ -139,8 +139,8 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
         quickApplyCardDTO.setUsrid(SPUtils.getInstance().getLoginInfoBean().getUsrid());
         quickApplyCardDTO.setCtfnum(RSAUtils.strByEncryption(getIntent().getStringExtra("idCard"), true));
         quickApplyCardDTO.setFilenum(RSAUtils.strByEncryption(getIntent().getStringExtra("filenum"), true));
-        if (MemoryData.getInstance().mLoginInfoBean != null)
-            quickApplyCardDTO.setPhoenum(RSAUtils.strByEncryption(MemoryData.getInstance().mLoginInfoBean.getPhoenum(), true));
+        if (LoginData.getInstance().mLoginInfoBean != null)
+            quickApplyCardDTO.setPhoenum(RSAUtils.strByEncryption(LoginData.getInstance().mLoginInfoBean.getPhoenum(), true));
         quickApplyCardDTO.setCtfvldprd(getIntent().getStringExtra("date"));
         quickApplyCardDTO.setActnotf("0");//默认不开启自动还款
         quickApplyCardDTO.setElecbillsign("0");
@@ -283,7 +283,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
      */
     private void checkCtkDate() {
         CheckCtkDTO checkCtkDTO = new CheckCtkDTO();
-        checkCtkDTO.setApplyCode(MemoryData.getInstance().filenum);
+        checkCtkDTO.setApplyCode(LoginData.getInstance().filenum);
         checkCtkDTO.setApplyInterface("banka");
         checkCtkDTO.setFlag("1");
         CarApiClient.checkCtk(this, checkCtkDTO, new CallBack<BaseResponse>() {
@@ -335,7 +335,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
-                        MemoryData.getInstance().mNetLocationBean
+                        LoginData.getInstance().mNetLocationBean
                                 = ReadFfile.readNetLocationFile(getApplicationContext());
                     }
 

@@ -10,21 +10,21 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.FileDownloadApi;
 import com.zantong.mobilecttx.api.HandleCTCardApiClient;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
-import cn.qqtheme.framework.bean.BankResponse;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.card.bean.YingXiaoResponse;
 import com.zantong.mobilecttx.card.dto.ApplyCTCardDTO;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
-import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.common.activity.CommonTwoLevelMenuActivity;
 import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
@@ -36,7 +36,6 @@ import com.zantong.mobilecttx.utils.ReadFfile;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.dialog.CityDialog;
 import com.zantong.mobilecttx.utils.dialog.NetLocationDialog;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.XmlParserHandler;
 import com.zantong.mobilecttx.widght.CttxEditText;
 import com.zantong.mobilecttx.widght.SettingItemView;
@@ -55,6 +54,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.custom.picker.DatePicker;
 import cn.qqtheme.framework.util.ContextUtils;
@@ -185,7 +185,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MemoryData.getInstance().filenum = "";
+        LoginData.getInstance().filenum = "";
     }
 
     @Override
@@ -260,8 +260,8 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         mIdCardNum.setContentText(idCard);
         applyCTCardDTO.setCtfnum(RSAUtils.strByEncryption(idCard, true));
 //手机号
-        mUserPhone.setContentText(MemoryData.getInstance().mLoginInfoBean != null ?
-                MemoryData.getInstance().mLoginInfoBean.getPhoenum() : "");
+        mUserPhone.setContentText(LoginData.getInstance().mLoginInfoBean != null ?
+                LoginData.getInstance().mLoginInfoBean.getPhoenum() : "");
 
 //婚姻状况
         applyCTCardDTO.setMarlst("1");
@@ -599,7 +599,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             e.printStackTrace();
         }
         // 获取解析出来的数据
-        MemoryData.getInstance().provinceModel = parserHandler.getDataList();
+        LoginData.getInstance().provinceModel = parserHandler.getDataList();
 
         CityDialog dialog = new CityDialog(this, null, new CityDialog.OnChooseDialogListener() {
             @Override
@@ -853,7 +853,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      */
     private void checkCtkDate() {
         CheckCtkDTO checkCtkDTO = new CheckCtkDTO();
-        checkCtkDTO.setApplyCode(MemoryData.getInstance().filenum);
+        checkCtkDTO.setApplyCode(LoginData.getInstance().filenum);
         checkCtkDTO.setApplyInterface("banka");
         checkCtkDTO.setFlag("1");
         CarApiClient.checkCtk(getApplicationContext(), checkCtkDTO, new CallBack<BaseResponse>() {
@@ -885,7 +885,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
-                        MemoryData.getInstance().mNetLocationBean
+                        LoginData.getInstance().mNetLocationBean
                                 = ReadFfile.readNetLocationFile(getApplicationContext());
                     }
 

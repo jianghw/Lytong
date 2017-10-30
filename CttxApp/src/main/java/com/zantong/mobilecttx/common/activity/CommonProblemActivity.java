@@ -5,11 +5,10 @@ import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.common.fragment.CommonProblemFragment;
-
-import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
  * 常见问题
@@ -46,8 +45,8 @@ public class CommonProblemActivity extends BaseJxActivity {
                 if (mProblemFragment == null) {
                     mProblemFragment = CommonProblemFragment.newInstance();
                 }
-                FragmentUtils.replaceFragment(
-                        fragmentManager, mProblemFragment, R.id.lay_base_frame, true);
+                FragmentUtils.add(
+                        fragmentManager, mProblemFragment, R.id.lay_base_frame,false, true);
                 break;
             default:
                 break;

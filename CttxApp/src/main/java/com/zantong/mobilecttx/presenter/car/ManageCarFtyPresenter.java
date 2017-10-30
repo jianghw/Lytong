@@ -5,6 +5,9 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.tzly.ctcyh.router.util.Des3;
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCar;
@@ -14,7 +17,6 @@ import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseResponse;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
-import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.contract.IManageCarFtyContract;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
@@ -23,8 +25,6 @@ import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
-import com.zantong.mobilecttx.utils.rsa.Des3;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -475,7 +475,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                 })
                 .toList();
 //清空车辆数据
-        MemoryData.getInstance().mServerCars.clear();
+        LoginData.getInstance().mServerCars.clear();
 
         Subscription subscription = Observable
                 .zip(isPay, unPay,
@@ -534,7 +534,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
             userCarInfoBean.setCarnumtype(bean.getVehicleType());
             beanArrayList.add(userCarInfoBean);
         }
-        MemoryData.getInstance().mServerCars.addAll(beanArrayList);
+        LoginData.getInstance().mServerCars.addAll(beanArrayList);
     }
 
 }

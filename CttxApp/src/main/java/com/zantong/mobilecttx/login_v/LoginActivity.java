@@ -26,11 +26,13 @@ import android.widget.TextView;
 
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+import com.tzly.ctcyh.router.util.Des3;
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
@@ -54,8 +56,6 @@ import com.zantong.mobilecttx.utils.TitleSetting;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.rsa.Des3;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 import com.zantong.mobilecttx.widght.CustomCharKeyBoard;
 import com.zantong.mobilecttx.widght.CustomNumKeyBoard;
@@ -299,7 +299,7 @@ public class LoginActivity extends Activity
     }
 
     public void setCodeTime() {
-        iTime = MemoryData.getInstance().smCtrlTime;
+        iTime = LoginData.getInstance().smCtrlTime;
         if (iTime > 0) {
             btnNumber.setEnabled(false);
             btnNumber.setText("60s");
@@ -414,7 +414,7 @@ public class LoginActivity extends Activity
 
         setJiaoYiDaiMa(Des3.decode(mLoginInfoBean.getRspInfo().getFilenum()));
 
-        if (!"0".equals(AccountRememberCtrl.getLoginAD(LoginActivity.this)) && Tools.isStrEmpty(MemoryData.getInstance().filenum)) {
+        if (!"0".equals(AccountRememberCtrl.getLoginAD(LoginActivity.this)) && Tools.isStrEmpty(LoginData.getInstance().filenum)) {
             new DialogMgr(LoginActivity.this,
                     "登录成功", "畅通车友会欢迎您，赶快去注册您的牡丹卡吧！", "添加畅通卡", "继续",
                     new View.OnClickListener() {
@@ -433,8 +433,8 @@ public class LoginActivity extends Activity
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (MemoryData.getInstance().className != null) {
-                                Act.getInstance().lauchIntent(LoginActivity.this, MemoryData.getInstance().className);
+                            if (LoginData.getInstance().className != null) {
+                                Act.getInstance().lauchIntent(LoginActivity.this, LoginData.getInstance().className);
                             }
                             finish();
                         }
@@ -583,7 +583,7 @@ public class LoginActivity extends Activity
      */
     private void getUserCarInfo() {
         UserCarsDTO dto = new UserCarsDTO();
-        dto.setUsrid(MemoryData.getInstance().userID);
+        dto.setUsrid(LoginData.getInstance().userID);
         UserApiClient.getCarInfo(LoginActivity.this, dto, new CallBack<UserCarsResult>() {
             @Override
             public void onSuccess(UserCarsResult result) {
@@ -602,8 +602,8 @@ public class LoginActivity extends Activity
             BindCarDTO dto = new BindCarDTO();
             dto.setPlateNo(info.getCarnum());
             dto.setEngineNo(info.getEnginenum());
-            dto.setUsrnum(MemoryData.getInstance().userID);
-            dto.setFileNum(MemoryData.getInstance().filenum);
+            dto.setUsrnum(LoginData.getInstance().userID);
+            dto.setFileNum(LoginData.getInstance().filenum);
             dto.setVehicleType(String.valueOf(Integer.valueOf(info.getCarnumtype()) + 1));
             CarApiClient.commitCar(this, dto, new CallBack<BaseResponse>() {
                 @Override
@@ -620,7 +620,7 @@ public class LoginActivity extends Activity
                     new String[]{Manifest.permission.READ_PHONE_STATE}
             );
         } else {
-            MemoryData.getInstance().imei = Tools.getIMEI();
+            LoginData.getInstance().imei = Tools.getIMEI();
         }
     }
 
@@ -632,7 +632,7 @@ public class LoginActivity extends Activity
 
     @PermissionSuccess(requestCode = 100)
     public void doPermissionIMEISuccess() {
-        MemoryData.getInstance().imei = Tools.getIMEI();
+        LoginData.getInstance().imei = Tools.getIMEI();
     }
 
     @PermissionFail(requestCode = 100)

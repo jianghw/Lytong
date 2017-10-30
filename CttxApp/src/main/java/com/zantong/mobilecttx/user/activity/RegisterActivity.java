@@ -15,7 +15,7 @@ import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 
 import cn.qqtheme.framework.bean.BankResponse;
@@ -194,7 +194,7 @@ public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter
      * 获取验证码
      */
     private void getVerifyCode() {
-        iTime = MemoryData.getInstance().smCtrlTime;
+        iTime = LoginData.getInstance().smCtrlTime;
         if (iTime > 0) {
             mVcodeBtn.setEnabled(false);
             mVcodeBtn.setText("60s");

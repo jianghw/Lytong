@@ -10,7 +10,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.home.activity.HomeMainActivity;
+import com.zantong.mobilecttx.home_v.HomeMainActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 /**

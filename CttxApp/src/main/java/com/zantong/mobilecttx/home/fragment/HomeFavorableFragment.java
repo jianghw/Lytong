@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.application.Injection;
@@ -312,7 +312,7 @@ public class HomeFavorableFragment extends BaseRefreshJxFragment
      * 进入年检页面
      */
     public void enterDrivingActivity() {
-        if (!MemoryData.getInstance().loginFlag) {
+        if (!LoginData.getInstance().loginFlag) {
             Act.getInstance().gotoIntentLogin(getActivity(), DrivingActivity.class);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             PermissionGen.needPermission(this, 2000, new String[]{

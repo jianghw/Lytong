@@ -9,13 +9,13 @@ import android.widget.Toast;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 
 import cn.qqtheme.framework.bean.BankResponse;
 
 import com.zantong.mobilecttx.browser.PayHtmlActivity;
 import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.user.bean.CheckOrderResult;
@@ -152,7 +152,7 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
                             .append("?orderNo=").append(item.getPolcyprignum())
                             .append("&payAmount=").append(item.getTotinsprem())
                             .append("&productCode=").append(item.getCastinspolcycode())
-                            .append("&userName=").append(MemoryData.getInstance().userID)
+                            .append("&userName=").append(LoginData.getInstance().userID)
                             .append("&clientIP=").append(NetUtils.getPhontIP(this))
                             .append("&clientType=").append(CLIENT_TYPE_0);
 
@@ -172,7 +172,7 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
      */
     private void commitInsOrder() {
         InsOrderDTO dto = new InsOrderDTO();
-        dto.setUsrid(MemoryData.getInstance().userID);
+        dto.setUsrid(LoginData.getInstance().userID);
         dto.setCastinspolcycode(mCastinspolcycode);
         dto.setOrigtranserlnum(mOrigtranserlnum);
         dto.setPolcyprignum(mPolcyprignum);

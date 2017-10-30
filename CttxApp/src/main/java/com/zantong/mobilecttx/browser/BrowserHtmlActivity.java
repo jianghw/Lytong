@@ -24,9 +24,9 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.contract.InterfaceForJS;
 import com.zantong.mobilecttx.contract.browser.IHtmlBrowserContract;
@@ -376,7 +376,7 @@ public class BrowserHtmlActivity extends BaseJxActivity implements IHtmlBrowserC
         }
 
         WXWebpageObject webpage = new WXWebpageObject();
-        if (MemoryData.getInstance().loginFlag) {
+        if (LoginData.getInstance().loginFlag) {
             webpage.webpageUrl = mStrUrl;
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";

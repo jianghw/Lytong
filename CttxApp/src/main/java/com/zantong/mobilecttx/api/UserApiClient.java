@@ -2,11 +2,10 @@ package com.zantong.mobilecttx.api;
 
 import android.content.Context;
 
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.BuildConfig;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.MessageFormat;
-
-import cn.qqtheme.framework.bean.BankResponse;
-
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -14,7 +13,6 @@ import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.card.bean.BindCardResult;
 import com.zantong.mobilecttx.card.dto.BindCardDTO;
-import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.home.bean.VersionResponse;
 import com.zantong.mobilecttx.home.dto.VersionDTO;
 import com.zantong.mobilecttx.user.bean.CheckOrderResult;
@@ -38,11 +36,12 @@ import com.zantong.mobilecttx.user.dto.VcodeDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.Tools;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.bean.PayHistoryResult;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.PayHistoryDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
+
+import cn.qqtheme.framework.bean.BankResponse;
 
 
 /**
@@ -108,8 +107,8 @@ public class UserApiClient extends BaseApiClient {
     public static void register(Context context, RegisterDTO params, CallBack<LoginResult> callback) {
         AsyncCallBack<LoginResult> asyncCallBack = new AsyncCallBack<LoginResult>(
                 context, callback, LoginResult.class);
-        if("".equals(MemoryData.getInstance().imei)){
-            params.setDevicetoken(MemoryData.getInstance().imei);
+        if("".equals(LoginData.getInstance().imei)){
+            params.setDevicetoken(LoginData.getInstance().imei);
         }
         params.setPushswitch("0");
         params.setPushmode("2");
@@ -209,7 +208,7 @@ public class UserApiClient extends BaseApiClient {
         t.setSYS_HEAD(getBean("cip.cfc.u002.01"));
         LogoutDTO dto = new LogoutDTO();
 
-        dto.setUsrid(MemoryData.getInstance().userID);
+        dto.setUsrid(LoginData.getInstance().userID);
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -287,9 +286,9 @@ public class UserApiClient extends BaseApiClient {
     public static void commitPersonInfo(Context context, PersonInfoDTO dto, CallBack<BankResponse> callback) {
         AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<BankResponse>(
                 context, callback, BankResponse.class);
-        dto.setDevicetoken(MemoryData.getInstance().imei);
+        dto.setDevicetoken(LoginData.getInstance().imei);
         dto.setPushswitch(0);//不推送
-        dto.setUsrid(MemoryData.getInstance().userID);
+        dto.setUsrid(LoginData.getInstance().userID);
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u003.01"));
         t.setReqInfo(dto);

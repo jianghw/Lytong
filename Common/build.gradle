@@ -3,7 +3,6 @@ apply plugin: 'com.android.library'
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
     compile 'junit:junit:4.12'
-
     compile rootProject.ext.dependencies["support"]
     compile rootProject.ext.dependencies["palette"]
     compile rootProject.ext.dependencies["appcompat"]
@@ -11,7 +10,6 @@ dependencies {
     compile rootProject.ext.dependencies["constraintlayout"]
     compile rootProject.ext.dependencies["cardview"]
     compile rootProject.ext.dependencies["multidex"]
-
     //其中latest.release指代最新Bugly SDK版本号
     //    compile 'com.tencent.bugly:crashreport:latest.release'
     //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
@@ -37,17 +35,14 @@ dependencies {
     //动画使用gif
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.15'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:0.9.9'
-
     compile files('libs/universal-image-loader-1.9.4.jar')
     //扫描
     compile files('libs/zxing.jar')
-    compile files('libs/sun.misc.BASE64Decoder.jar')
     //微信分享
     compile files('libs/libammsdk.jar')
     compile files('libs/pinyin4j-2.5.0.jar')
     //百度地图
     compile files('libs/BaiduLBS_Android.jar')
-
     compile project(':XRecyclerView')
 }
 

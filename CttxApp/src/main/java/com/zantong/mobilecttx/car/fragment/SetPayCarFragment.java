@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.car.adapter.SetPayCarAdapter;
 import com.zantong.mobilecttx.contract.ModelView;
@@ -69,7 +69,7 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
                             newPayNumber = mUserCarsInfoBean.getCarnum();
                             carnumtype = mUserCarsInfoBean.getCarnumtype();
                             mSetPayCarFragmentPresenter.loadView(1);
-                            MemoryData.getInstance().isSetPayCar = true;
+                            LoginData.getInstance().isSetPayCar = true;
                         }
                     },
                     new View.OnClickListener() {
@@ -79,7 +79,7 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
                             newPayNumber = mUserCarsInfoBean.getCarnum();
                             carnumtype = mUserCarsInfoBean.getCarnumtype();
                             mSetPayCarFragmentPresenter.loadView(1);
-                            MemoryData.getInstance().isSetPayCar = true;
+                            LoginData.getInstance().isSetPayCar = true;
                         }
                     });
         } else {
@@ -120,7 +120,7 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
     public void initView(View view) {
         super.initView(view);
 
-        mRspInfoBean = MemoryData.getInstance().mServerCars;
+        mRspInfoBean = LoginData.getInstance().mServerCars;
 //        LogUtils.jsonObject(mRspInfoBean);
 
         if (mRspInfoBean != null) {
@@ -151,7 +151,7 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
 
     @Override
     public void updateView(Object object, int index) {
-        mRspInfoBean = MemoryData.getInstance().mServerCars;
+        mRspInfoBean = LoginData.getInstance().mServerCars;
         ;
         int size = mRspInfoBean.size();
         for (int i = 0; i < size; i++) {

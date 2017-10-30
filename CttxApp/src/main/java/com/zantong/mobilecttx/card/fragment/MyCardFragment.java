@@ -9,21 +9,21 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.ctcyh.router.util.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseExtraFragment;
 import com.zantong.mobilecttx.car.adapter.PayCarAdapter;
 import com.zantong.mobilecttx.car.bean.PayCar;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.card.bean.BindCardBean;
-import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
+import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.widght.refresh.OnPullListener;
 import com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout;
-import com.zantong.mobilecttx.utils.Tools;
-import com.zantong.mobilecttx.utils.rsa.Des3;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,20 +96,20 @@ public class MyCardFragment extends BaseExtraFragment implements ModelView {
 //            @Override
 //            public void onItemClick(View view, Object data) {
 //                PayCar payCar = (PayCar) data;
-//                MemoryData.getInstance().mHashMap.put("enginenum", "*****");
+//                LoginData.getInstance().mHashMap.put("enginenum", "*****");
 //
-//                List<UserCarInfoBean> userCars = MemoryData.getInstance().mServerCars;
+//                List<UserCarInfoBean> userCars = LoginData.getInstance().mServerCars;
 //                for (int i = 0; i < userCars.size(); i++) {
 //                    if (userCars.get(i).getCarnum().equals(payCar.getCarnum())) {
 //                        if (!"".equals(userCars.get(i).getEnginenum())) {
-//                            MemoryData.getInstance().mHashMap.put("enginenum", userCars.get(i).getEnginenum());
+//                            LoginData.getInstance().mHashMap.put("enginenum", userCars.get(i).getEnginenum());
 //                        }
 //                        break;
 //                    }
 //                }
-//                MemoryData.getInstance().mHashMap.put("carnum", payCar.getCarnum());
-//                MemoryData.getInstance().mHashMap.put("carnumtype", payCar.getCarnumtype());
-//                MemoryData.getInstance().mHashMap.put("IllegalViolationName", payCar.getCarnum());
+//                LoginData.getInstance().mHashMap.put("carnum", payCar.getCarnum());
+//                LoginData.getInstance().mHashMap.put("carnumtype", payCar.getCarnumtype());
+//                LoginData.getInstance().mHashMap.put("IllegalViolationName", payCar.getCarnum());
 //
 //                ViolationDTO dto = new ViolationDTO();
 //                dto.setCarnum(RSAUtils.strByEncryption(payCar.getCarnum(), true));
@@ -131,7 +131,7 @@ public class MyCardFragment extends BaseExtraFragment implements ModelView {
      */
     private void getBangDingCar() {
         LogoutDTO dto = new LogoutDTO();
-        dto.setUsrid(MemoryData.getInstance().userID);
+        dto.setUsrid(LoginData.getInstance().userID);
         UserApiClient.getPayCars(ContextUtils.getContext(), dto, new CallBack<PayCarResult>() {
             @Override
             public void onSuccess(PayCarResult result) {

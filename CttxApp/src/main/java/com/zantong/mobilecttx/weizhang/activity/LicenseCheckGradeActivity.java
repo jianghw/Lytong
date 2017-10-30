@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
@@ -122,10 +122,10 @@ public class LicenseCheckGradeActivity extends BaseJxActivity implements View.On
      * 初始化填入数据
      */
     private void initIntentData() {
-        String fileNum = MemoryData.getInstance().filenum;
+        String fileNum = LoginData.getInstance().filenum;
         mEditArchivesNumber.setText(fileNum);
 
-        String startDate = MemoryData.getInstance().getdate;
+        String startDate = LoginData.getInstance().getdate;
         String beanStrtdt = removeDateAcross(startDate);
         if (!TextUtils.isEmpty(beanStrtdt)) mTvDate.setText(dateFormat(beanStrtdt));
 

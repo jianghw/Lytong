@@ -88,15 +88,15 @@ public abstract class JxBaseActivity extends AppCompatActivity {
                 }
             }
         });
+        //注入控件布局
+        multiStateLayout.customChildAt();
+        multiStateLayout.setState(initMultiState());
+
         //content
         if (initContentView() != 0) {
             View contentView = inflater.inflate(initContentView(), multiStateLayout, true);
             bindContentView(contentView);
         }
-        //注入控件布局
-        multiStateLayout.customChildAt();
-        multiStateLayout.setState(initMultiState());
-
         initContentData();
     }
 
@@ -362,7 +362,7 @@ public abstract class JxBaseActivity extends AppCompatActivity {
      */
     @MultiState
     protected int initMultiState() {
-        return MultiState.LOADING;
+        return MultiState.CONTENT;
     }
 
     /**

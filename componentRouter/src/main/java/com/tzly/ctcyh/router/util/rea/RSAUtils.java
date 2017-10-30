@@ -1,14 +1,13 @@
-package com.zantong.mobilecttx.utils.rsa;
+package com.tzly.ctcyh.router.util.rea;
 
 import android.text.TextUtils;
 
-import java.io.IOException;
+import com.tzly.ctcyh.router.util.Utils;
+
 import java.io.InputStream;
 
-import cn.qqtheme.framework.util.ContextUtils;
-
 /**
- * Created by zhoujie on 2016/11/25.
+ * rsa 工具
  */
 
 public class RSAUtils {
@@ -19,18 +18,16 @@ public class RSAUtils {
      * 通过加密的字符串
      */
     public static String strByEncryption(String source, boolean isEncryp) {
+        if (TextUtils.isEmpty(source)) return source;
+        String strEncryption = source.trim();
 
-        String strEncryption = source;
-        if (isEncryption && isEncryp) {
+        if (isEncryp) {
             try {
                 RSAEncryptor rsaEncryptor = new RSAEncryptor();
-                InputStream inPublic = ContextUtils.getContext().getResources()
+                InputStream inPublic = Utils.getContext().getResources()
                         .getAssets().open("rsa_public_key.pem");
                 rsaEncryptor.loadPublicKey(inPublic);
                 strEncryption = rsaEncryptor.encryptWithBase64(source);
-
-            } catch (IOException e) {
-                e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -50,7 +47,7 @@ public class RSAUtils {
         if (isEncryp) {
             try {
                 RSAEncryptor rsaEncryptor = new RSAEncryptor();
-                InputStream inPublic = ContextUtils.getContext().getResources().getAssets().open("rsa_public_key.pem");
+                InputStream inPublic = Utils.getContext().getResources().getAssets().open("rsa_public_key.pem");
                 rsaEncryptor.loadPublicKey(inPublic);
                 strEncryption = rsaEncryptor.encryptWithBase64(source);
             } catch (Exception e) {

@@ -8,7 +8,7 @@ import android.webkit.WebView;
 
 
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.utils.StateBarSetting;
 
 import org.apache.cordova.ConfigXmlParser;
@@ -45,7 +45,7 @@ public class Demo extends AppCompatActivity implements CordovaInterface {
         StateBarSetting.settingBar(this);
 
 //
-        START_URL = (String) MemoryData.getInstance().mHashMap.get("htmlUrl");
+        START_URL = (String) LoginData.getInstance().mHashMap.get("htmlUrl");
         cordovaInterface = new CordovaInterfaceImpl(Demo.this);
         ConfigXmlParser parser = new ConfigXmlParser();
         parser.parse(this);//这里会解析res/xml/config.xml配置文件

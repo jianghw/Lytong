@@ -4,10 +4,8 @@ package com.zantong.mobilecttx.presenter.weizhang;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.zantong.mobilecttx.application.MemoryData;
-
-import cn.qqtheme.framework.bean.BankResponse;
-
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
@@ -17,10 +15,10 @@ import com.zantong.mobilecttx.contract.IViolationQueryFtyContract;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import java.io.File;
 
+import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -299,7 +297,7 @@ public class ViolationQueryFtyPresenter
         carDTO.setPlateNo(RSAUtils.strByEncryption(bindCarDTO.getPlateNo(), true));
         carDTO.setEngineNo(RSAUtils.strByEncryption(bindCarDTO.getEngineNo(), true));
         carDTO.setVehicleType(bindCarDTO.getVehicleType());
-        carDTO.setUsrnum(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
+        carDTO.setUsrnum(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
         carDTO.setIssueDate(bindCarDTO.getIssueDate());
         carDTO.setIsPay(bindCarDTO.getIsPay());
 

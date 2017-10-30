@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.utils;
 import android.app.Activity;
 
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
-import com.zantong.mobilecttx.home.activity.HomeMainActivity;
+import com.zantong.mobilecttx.home_v.HomeMainActivity;
 
 import java.util.Stack;
 

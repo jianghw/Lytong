@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
@@ -16,7 +17,6 @@ import com.zantong.mobilecttx.fahrschule.fragment.SubjectSucceedFragment;
 import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
  * 科目强化页面
@@ -68,7 +68,7 @@ public class SubjectActivity extends BaseJxActivity {
                 if (mSubjectIntensifyFragment == null) {
                     mSubjectIntensifyFragment = SubjectIntensifyFragment.newInstance();
                 }
-                FragmentUtils.addFragment(fragmentManager, mSubjectIntensifyFragment, R.id.lay_base_frame, false, true);
+                FragmentUtils.add(fragmentManager, mSubjectIntensifyFragment, R.id.lay_base_frame, false, true);
                 mSubjectIntensifyFragment.setSwitcherListener(new ISubjectSwitcherListener() {
                     @Override
                     public void setCurPosition(int position) {
@@ -81,7 +81,7 @@ public class SubjectActivity extends BaseJxActivity {
                 if (mSubjectCommitFragment == null) {
                     mSubjectCommitFragment = SubjectCommitFragment.newInstance();
                 }
-                FragmentUtils.addFragment(fragmentManager, mSubjectCommitFragment, R.id.lay_base_frame, false, true);
+                FragmentUtils.add(fragmentManager, mSubjectCommitFragment, R.id.lay_base_frame, false, true);
                 mSubjectCommitFragment.setSwitcherListener(new ISubjectSwitcherListener() {
                     @Override
                     public void setCurPosition(int position) {
@@ -93,13 +93,13 @@ public class SubjectActivity extends BaseJxActivity {
                 if (mSubjectOrderFragment == null) {
                     mSubjectOrderFragment = SubjectOrderFragment.newInstance();
                 }
-                FragmentUtils.addFragment(fragmentManager, mSubjectOrderFragment, R.id.lay_base_frame, false, true);
+                FragmentUtils.add(fragmentManager, mSubjectOrderFragment, R.id.lay_base_frame, false, true);
                 break;
             case 3://科目强化去支付页面
                 if (mSubjectSucceedFragment == null) {
                     mSubjectSucceedFragment = SubjectSucceedFragment.newInstance();
                 }
-                FragmentUtils.addFragment(fragmentManager, mSubjectSucceedFragment, R.id.lay_base_frame, false, true);
+                FragmentUtils.add(fragmentManager, mSubjectSucceedFragment, R.id.lay_base_frame, false, true);
                 break;
             default:
                 break;

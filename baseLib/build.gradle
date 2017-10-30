@@ -51,4 +51,6 @@ dependencies {
     compile project(':XRecyclerView')
     //加密工具
     compile files('libs/sun.misc.BASE64Decoder.jar')
+    //html-textview显示
+    compile 'org.sufficientlysecure:html-textview:3.5'
 }

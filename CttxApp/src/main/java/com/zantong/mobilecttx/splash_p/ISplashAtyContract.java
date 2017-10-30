@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.contract;
+package com.zantong.mobilecttx.splash_p;
 
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;

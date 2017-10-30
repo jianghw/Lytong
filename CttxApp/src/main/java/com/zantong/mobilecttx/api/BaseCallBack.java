@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
 
@@ -45,7 +45,7 @@ public class BaseCallBack<T> implements Callback {
         if (response.isSuccessful()) {
             try {
                 String reader = response.body().string();
-                MemoryData.getInstance().mHashMap.put("htmlResponse", reader);
+                LoginData.getInstance().mHashMap.put("htmlResponse", reader);
 
                 LogUtils.i("reader===" + reader);
 

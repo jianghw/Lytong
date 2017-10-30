@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/header_viewpager_images"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
     <LinearLayout
         android:id="@+id/header_viewpager_dots"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/ds_60"
         android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/ds_60"
         android:gravity="center_horizontal"
-        android:visibility="invisible"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:visibility="invisible">
     </LinearLayout>
 
 </FrameLayout>

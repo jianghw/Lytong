@@ -116,7 +116,7 @@ public class MyApplication extends MultiDexApplication {
             @Override
             public void onSuccess(String response) {
                 LogUtils.i("DeviceId=============:" + PushServiceFactory.getCloudPushService().getDeviceId());
-                MemoryData.getInstance().deviceId = pushService.getDeviceId();
+                LoginData.getInstance().deviceId = pushService.getDeviceId();
             }
 
             @Override

@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.home.fragment;
+package com.zantong.mobilecttx.home_v;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -23,7 +23,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
@@ -31,7 +31,6 @@ import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.common.activity.CommonProblemActivity;
 import com.zantong.mobilecttx.contract.IHomeMeFtyContract;
-import com.zantong.mobilecttx.home.activity.HomeMainActivity;
 import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
 import com.zantong.mobilecttx.order.activity.CouponActivity;
 import com.zantong.mobilecttx.order.activity.MyOrderActivity;
@@ -227,7 +226,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         if (mPresenter != null) mPresenter.getUnReadMsgCount();
 
         //畅通卡
-        boolean isUnBound = TextUtils.isEmpty(MemoryData.getInstance().filenum);
+        boolean isUnBound = TextUtils.isEmpty(LoginData.getInstance().filenum);
 
         mTvCard.setText(isUnBound ? "未绑定牡丹畅通卡" : "已绑定牡丹畅通卡");
         mTvCard.setTextColor(isUnBound
@@ -236,17 +235,17 @@ public class HomeMeFragment extends BaseRefreshJxFragment
 
         //车辆
         StringBuffer stringBuffer = new StringBuffer();
-        if (MemoryData.getInstance().mCarNum == 0)
+        if (LoginData.getInstance().mCarNum == 0)
             stringBuffer.append("<font color=\"#b3b3b3\">");
         else
             stringBuffer.append("<font color=\"#f3362b\">");
-        stringBuffer.append(MemoryData.getInstance().mCarNum);
+        stringBuffer.append(LoginData.getInstance().mCarNum);
         stringBuffer.append("</font>");
         stringBuffer.append("&#160;");
         stringBuffer.append("车辆");
         mTvCar.setText(Html.fromHtml(stringBuffer.toString()));
 
-        RspInfoBean infoBean = MemoryData.getInstance().mLoginInfoBean;
+        RspInfoBean infoBean = LoginData.getInstance().mLoginInfoBean;
         File file = getHeadImageFile(mImgHead);
         if (file == null && infoBean != null) {
             ImageLoadUtils.loadHead(infoBean.getPortrait(), mImgHead);
@@ -389,7 +388,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
                 break;
             case R.id.tv_card://我的畅通卡
-                if (Tools.isStrEmpty(MemoryData.getInstance().filenum))
+                if (Tools.isStrEmpty(LoginData.getInstance().filenum))
                     Act.getInstance().gotoIntentLogin(getActivity(), UnblockedCardActivity.class);
                 else
                     Act.getInstance().gotoIntentLogin(getActivity(), MyCardActivity.class);

@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.util.RegexUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
@@ -238,14 +237,6 @@ public class LoginActivity extends JxBaseActivity implements
                 InjectionRepository.provideRepository(getApplicationContext()), this);
         //获取设备号
         takePhoneIMEI();
-    }
-
-    /**
-     * 默认显示页面状态页
-     */
-    @MultiState
-    protected int initMultiState() {
-        return MultiState.CONTENT;
     }
 
     @Override

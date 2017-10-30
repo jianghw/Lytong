@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.api;
 import android.content.Context;
 
 import com.zantong.mobilecttx.BuildConfig;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
 import com.zantong.mobilecttx.utils.NetUtils;
@@ -128,8 +128,8 @@ public class BaseApiClient {
         if (data != null) {
             builder.add("msg", data);
         }
-        if (MemoryData.getInstance().loginFlag && !"".equals(MemoryData.getInstance().userID)) {
-            builder.add("usrid", MemoryData.getInstance().userID);
+        if (LoginData.getInstance().loginFlag && !"".equals(LoginData.getInstance().userID)) {
+            builder.add("usrid", LoginData.getInstance().userID);
         }
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).post(builder.build()).build();
@@ -143,8 +143,8 @@ public class BaseApiClient {
         if (jsonParams != null) {
             builder.add("msg", jsonParams);
         }
-        if (MemoryData.getInstance().loginFlag && !"".equals(MemoryData.getInstance().userID)) {
-            builder.add("usrid", MemoryData.getInstance().userID);
+        if (LoginData.getInstance().loginFlag && !"".equals(LoginData.getInstance().userID)) {
+            builder.add("usrid", LoginData.getInstance().userID);
         }
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).post(builder.build()).build();

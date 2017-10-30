@@ -10,26 +10,26 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.Injection;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.car.bean.PayCar;
 import com.zantong.mobilecttx.car.bean.PayCarBean;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
-import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.IViolationListFtyContract;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.home.activity.Codequery;
+import com.zantong.mobilecttx.login_v.LoginActivity;
 import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.presenter.weizhang.ViolationListPresenter;
-import com.zantong.mobilecttx.login_v.LoginActivity;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResult;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
@@ -156,7 +156,7 @@ public class ViolationListActivity extends BaseJxActivity
         String violationnum = bean.getViolationnum();
         int processste = bean.getProcessste();//处理状态
 
-        if (!MemoryData.getInstance().loginFlag) {
+        if (!LoginData.getInstance().loginFlag) {
             Act.getInstance().gotoIntent(this, LoginActivity.class);
         } else if (processste == 2 || processste == 3) {
             showDialogToCodequery(bean);
@@ -173,7 +173,7 @@ public class ViolationListActivity extends BaseJxActivity
 
         if ("1".equals(penaltyNum) || "2".equals(penaltyNum)) {//是否处罚决定书
             showPayFragment(bean);
-        } else if (Tools.isStrEmpty(MemoryData.getInstance().filenum)) {//未綁卡
+        } else if (Tools.isStrEmpty(LoginData.getInstance().filenum)) {//未綁卡
             byCardHome();
         } else {
             if (!mPayCarOk) {
@@ -360,10 +360,10 @@ public class ViolationListActivity extends BaseJxActivity
         if (mViolationDTO == null) return null;
 
         mViolationDTO.setProcessste("2");
-        if (!TextUtils.isEmpty(MemoryData.getInstance().userID)) {
-            mViolationDTO.setToken(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
-        } else if (!TextUtils.isEmpty(MemoryData.getInstance().imei)) {
-            mViolationDTO.setToken(RSAUtils.strByEncryption(MemoryData.getInstance().imei, true));
+        if (!TextUtils.isEmpty(LoginData.getInstance().userID)) {
+            mViolationDTO.setToken(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
+        } else if (!TextUtils.isEmpty(LoginData.getInstance().imei)) {
+            mViolationDTO.setToken(RSAUtils.strByEncryption(LoginData.getInstance().imei, true));
         } else {
             mViolationDTO.setToken(RSAUtils.strByEncryption(PushServiceFactory.getCloudPushService().getDeviceId(), true));
         }
@@ -377,8 +377,8 @@ public class ViolationListActivity extends BaseJxActivity
     @Override
     public ViolationCarDTO getViolationCarDTO() {
         ViolationCarDTO violationCarDTO = new ViolationCarDTO();
-        String carnum = (String) MemoryData.getInstance().mHashMap.get("carnum");
-        String enginenum = (String) MemoryData.getInstance().mHashMap.get("enginenum");
+        String carnum = (String) LoginData.getInstance().mHashMap.get("carnum");
+        String enginenum = (String) LoginData.getInstance().mHashMap.get("enginenum");
 
         violationCarDTO.setCarnum(carnum);
         violationCarDTO.setCarnumtype(mViolationDTO.getCarnumtype());

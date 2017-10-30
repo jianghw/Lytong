@@ -6,12 +6,12 @@ import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.order.fragment.OrderExpressFragment;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
  * 呼叫快递
@@ -56,7 +56,7 @@ public class OrderExpressActivity extends BaseJxActivity {
                 if (mExpressFragment == null) {
                     mExpressFragment = OrderExpressFragment.newInstance(mOrderId);
                 }
-                FragmentUtils.addFragment(fragmentManager, mExpressFragment, R.id.lay_base_frame, false, true);
+                FragmentUtils.add(fragmentManager, mExpressFragment, R.id.lay_base_frame, false, true);
                 break;
             default:
                 break;

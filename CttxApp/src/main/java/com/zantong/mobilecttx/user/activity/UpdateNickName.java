@@ -6,10 +6,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.contract.ModelView;
@@ -17,7 +18,6 @@ import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.presenter.UpdateNickNamePresenter;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import java.util.HashMap;
 
@@ -46,7 +46,7 @@ public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePre
     public void initView() {
         setTitleText("修改昵称");
         setEnsureText("保存");
-        nickNameEdit.setText(MemoryData.getInstance().mLoginInfoBean.getNickname());
+        nickNameEdit.setText(LoginData.getInstance().mLoginInfoBean.getNickname());
     }
 
     @Override
@@ -115,10 +115,10 @@ public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePre
     public void updateView(Object object, int index) {
         switch (index) {
             case 1:
-                if (MemoryData.getInstance().success.equals(((UpdateInfo) object).getSYS_HEAD().getReturnCode())) {
+                if (LoginData.getInstance().success.equals(((UpdateInfo) object).getSYS_HEAD().getReturnCode())) {
                     liyingreg();
-                    MemoryData.getInstance().mLoginInfoBean.setNickname(nickNameEdit.getText().toString());
-                    UserInfoRememberCtrl.saveObject(MemoryData.getInstance().mLoginInfoBean);
+                    LoginData.getInstance().mLoginInfoBean.setNickname(nickNameEdit.getText().toString());
+                    UserInfoRememberCtrl.saveObject(LoginData.getInstance().mLoginInfoBean);
                     finish();
                 }
                 break;
@@ -126,10 +126,10 @@ public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePre
     }
 
     private void liyingreg() {
-        String phone = RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().mLoginInfoBean.getPhoenum(), true);
+        String phone = RSAUtils.strByEncryptionLiYing(LoginData.getInstance().mLoginInfoBean.getPhoenum(), true);
         LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
         liYingRegDTO.setPhoenum(phone);
-        liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().userID, true));
+        liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(LoginData.getInstance().userID, true));
         liYingRegDTO.setNickname(nickNameEdit.getText().toString());
         CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResponse>() {
             @Override

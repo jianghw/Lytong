@@ -1,7 +1,6 @@
-package com.zantong.mobilecttx.home.activity;
+package com.zantong.mobilecttx.splash_v;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,16 +16,17 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.tzly.ctcyh.router.UiRouter;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.contract.ISplashAtyContract;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
 import com.zantong.mobilecttx.home.bean.StartPicResponse;
-import com.zantong.mobilecttx.presenter.home.SplashPresenter;
+import com.zantong.mobilecttx.splash_p.ISplashAtyContract;
+import com.zantong.mobilecttx.splash_p.SplashPresenter;
 import com.zantong.mobilecttx.utils.SPUtils;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ import java.util.List;
 import cn.qqtheme.framework.util.AppUtils;
 import cn.qqtheme.framework.util.image.ImageOptions;
 
-import static com.zantong.mobilecttx.home.activity.GuideCTActivity.GUIDE_PIC;
+import static com.zantong.mobilecttx.guide_v.GuideCTActivity.GUIDE_PIC;
 
 /**
  * 启动页
@@ -95,16 +95,14 @@ public class SplashActivity extends AppCompatActivity
      * 数据初始
      */
     private void initThirdPartyData() {
-        mPresenter.startCountDown();
-        mPresenter.readObjectLoginInfoBean();
-
+        if (mPresenter != null) mPresenter.startCountDown();
         startAnimation();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.onSubscribe();
+        if (mPresenter != null) mPresenter.onSubscribe();
     }
 
     /**
@@ -122,7 +120,7 @@ public class SplashActivity extends AppCompatActivity
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                mPresenter.startGetPic();
+                if (mPresenter != null) mPresenter.startGetPic();
             }
 
             @Override
@@ -133,7 +131,7 @@ public class SplashActivity extends AppCompatActivity
 
     @Override
     public void countDownOver() {
-                gotoMain();
+        gotoMain();
     }
 
     @SuppressLint("SetTextI18n")
@@ -213,18 +211,21 @@ public class SplashActivity extends AppCompatActivity
         }
 
         if (appCode <= versionCode) {
+            Bundle bundle = new Bundle();
+            bundle.putInt(MainGlobal.putExtra.home_position_extra, 0);
+            UiRouter.getInstance().openUriBundle(this,
+                    MainGlobal.Scheme.main_scheme + "://" + MainGlobal.Host.home_host,
+                    bundle);
             MobclickAgent.onEvent(this, Config.getUMengID(0));
-            Act.getInstance().gotoIntent(this, HomeMainActivity.class);
-            finish();
         } else {
-            Intent intent = new Intent(this, GuideCTActivity.class);
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList(GUIDE_PIC, mResultList);
-            intent.putExtras(bundle);
-            startActivity(intent);
+            UiRouter.getInstance().openUriBundle(this,
+                    MainGlobal.Scheme.main_scheme + "://" + MainGlobal.Host.guide_host,
+                    bundle);
             overridePendingTransition(0, 0);
-            finish();
         }
+        finish();
     }
 
     @Override
@@ -236,7 +237,7 @@ public class SplashActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.unSubscribe();
+        if (mPresenter != null) mPresenter.unSubscribe();
     }
 
     @Override

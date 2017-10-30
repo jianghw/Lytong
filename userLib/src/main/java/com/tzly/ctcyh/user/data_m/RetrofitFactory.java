@@ -32,14 +32,21 @@ public class RetrofitFactory {
         }
     }
 
+    /**
+     * 手动修改值
+     */
     private String getBaseUrl(int type) {
+        return getBaseUrl(type, BuildConfig.App_Url);
+    }
+
+    private String getBaseUrl(int type, boolean isDebug) {
         switch (type) {
             case 1://同赞自己服务器
-                return BuildConfig.DEBUG
-                        ?"http://dev.liyingtong.com/":"http://biz.liyingtong.com/";
+                return isDebug
+                        ? "http://dev.liyingtong.com/" : "http://biz.liyingtong.com/";
             case 2:
-                return BuildConfig.DEBUG
-                        ?"https://ctkapptest.icbc-axa.com/ecip/":"https://ctkapp.icbc-axa.com/ecip/";
+                return isDebug
+                        ? "https://ctkapptest.icbc-axa.com/ecip/" : "https://ctkapp.icbc-axa.com/ecip/";
             default:
                 return "http://192.168.1.147:80/";
         }

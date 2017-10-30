@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
@@ -17,7 +18,6 @@ import com.zantong.mobilecttx.share.fragment.SparringShareFragment;
 import com.zantong.mobilecttx.share.fragment.SubjectShareFragment;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
  * Created by jianghw on 2017/7/7.
@@ -113,7 +113,7 @@ public class ShareParentActivity extends BaseJxActivity implements View.OnClickL
                 if (mFahrschuleShareFragment == null) {
                     mFahrschuleShareFragment = FahrschuleShareFragment.newInstance();
                 }
-                FragmentUtils.replaceFragment(fragmentManager, mFahrschuleShareFragment, R.id.content, true);
+                FragmentUtils.add(fragmentManager, mFahrschuleShareFragment, R.id.content,false, true);
 
                 mFahrschuleShareFragment.setCloseListener(new FragmentDestroy() {
                     @Override
@@ -126,7 +126,7 @@ public class ShareParentActivity extends BaseJxActivity implements View.OnClickL
                 if (mCreditShareFragment == null) {
                     mCreditShareFragment = CreditShareFragment.newInstance();
                 }
-                FragmentUtils.replaceFragment(fragmentManager, mCreditShareFragment, R.id.content, true);
+                FragmentUtils.add(fragmentManager, mCreditShareFragment, R.id.content,false, true);
                 mCreditShareFragment.setCloseListener(new FragmentDestroy() {
                     @Override
                     public void closeListener(int position) {
@@ -138,7 +138,7 @@ public class ShareParentActivity extends BaseJxActivity implements View.OnClickL
                 if (mFriendShareFragment == null) {
                     mFriendShareFragment = FriendShareFragment.newInstance();
                 }
-                FragmentUtils.replaceFragment(fragmentManager, mFriendShareFragment, R.id.content, true);
+                FragmentUtils.add(fragmentManager, mFriendShareFragment, R.id.content,false, true);
                 mFriendShareFragment.setCloseListener(new FragmentDestroy() {
                     @Override
                     public void closeListener(int position) {
@@ -150,7 +150,7 @@ public class ShareParentActivity extends BaseJxActivity implements View.OnClickL
                 if (mSparringShareFragment == null) {
                     mSparringShareFragment = SparringShareFragment.newInstance();
                 }
-                FragmentUtils.replaceFragment(fragmentManager, mSparringShareFragment, R.id.content, true);
+                FragmentUtils.add(fragmentManager, mSparringShareFragment, R.id.content,false, true);
                 mSparringShareFragment.setCloseListener(new FragmentDestroy() {
                     @Override
                     public void closeListener(int position) {
@@ -162,7 +162,7 @@ public class ShareParentActivity extends BaseJxActivity implements View.OnClickL
                 if (mSubjectShareFragment == null) {
                     mSubjectShareFragment = SubjectShareFragment.newInstance();
                 }
-                FragmentUtils.replaceFragment(fragmentManager, mSubjectShareFragment, R.id.content, true);
+                FragmentUtils.add(fragmentManager, mSubjectShareFragment, R.id.content,false, true);
                 mSubjectShareFragment.setCloseListener(new FragmentDestroy() {
                     @Override
                     public void closeListener(int position) {

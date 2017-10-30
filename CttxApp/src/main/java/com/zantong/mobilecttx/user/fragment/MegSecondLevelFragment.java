@@ -5,24 +5,25 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
-import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.contract.IMegSecondLevelAtyContract;
+import com.zantong.mobilecttx.order.bean.MessageBean;
+import com.zantong.mobilecttx.order.bean.MessageResponse;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.user.activity.MegSecondLevelActivity;
 import com.zantong.mobilecttx.user.adapter.MegSecondLevelAdapter;
 import com.zantong.mobilecttx.user.bean.Meg;
-import com.zantong.mobilecttx.order.bean.MessageBean;
-import com.zantong.mobilecttx.order.bean.MessageResponse;
 import com.zantong.mobilecttx.user.dto.MegDTO;
-import cn.qqtheme.framework.util.ToastUtils;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.qqtheme.framework.util.ToastUtils;
 
 import static com.zantong.mobilecttx.user.fragment.MegTypeFragment.MESSAGE_REQUEST_CODE;
 import static com.zantong.mobilecttx.user.fragment.MegTypeFragment.MESSAGE_RESULT_CODE;
@@ -168,7 +169,7 @@ public class MegSecondLevelFragment extends BaseListFragment<Meg>
      */
     private void getMsgList() {
         MegDTO dto = new MegDTO();
-        dto.setUsrId(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
+        dto.setUsrId(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
         String id = getArguments().getString(STR_TYPE);
         dto.setId(id);
         CarApiClient.getMsgList(this.getActivity(), dto, new CallBack<MessageResponse>() {

@@ -37,6 +37,7 @@ public abstract class LibUiRouter implements IComponentRouter {
         Intent intent = new Intent();
         if (gotoActivity(context, host, intent)) return false;
         if (excludeLoginActivity(host)) return false;
+
         intent.putExtras(bundle == null ? new Bundle() : bundle);
         ActivityUtils.startActivity(intent);
         return true;
@@ -92,6 +93,7 @@ public abstract class LibUiRouter implements IComponentRouter {
         Intent intent = new Intent();
         if (gotoActivity(activity, host, intent)) return false;
         if (excludeLoginActivity(host)) return false;
+
         intent.putExtras(bundle == null ? new Bundle() : bundle);
         ActivityUtils.startActivityForResult(intent, requestCode);
         return true;

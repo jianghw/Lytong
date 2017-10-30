@@ -6,16 +6,16 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.car.fragment.ManageCarListFragment;
-import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
 
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
  * 车辆管理母页面
@@ -44,7 +44,7 @@ public class ManageCarActivity extends BaseJxActivity {
             @Override
             public void onClick(View v) {
                 int count = 0;
-                for (UserCarInfoBean bean : MemoryData.getInstance().mServerCars) {
+                for (UserCarInfoBean bean : LoginData.getInstance().mServerCars) {
                     if (bean.getIspaycar().equals("1")) count = count + 1;
                 }
                 if (count < 2) {
@@ -80,8 +80,8 @@ public class ManageCarActivity extends BaseJxActivity {
                 if (mCarListFragment == null) {
                     mCarListFragment = ManageCarListFragment.newInstance();
                 }
-                FragmentUtils.replaceFragment(
-                        fragmentManager, mCarListFragment, R.id.lay_base_frame, true);
+                FragmentUtils.add(
+                        fragmentManager, mCarListFragment, R.id.lay_base_frame,false, true);
                 break;
             default:
                 break;

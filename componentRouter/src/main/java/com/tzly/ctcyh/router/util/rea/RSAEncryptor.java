@@ -1,4 +1,4 @@
-package com.tzly.ctcyh.router.util;
+package com.tzly.ctcyh.router.util.rea;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -28,7 +28,7 @@ import Decoder.BASE64Decoder;
 import Decoder.BASE64Encoder;
 
 /**
- * Created by zhoujie on 2016/11/8.
+ * RSAE
  */
 
 public class RSAEncryptor {

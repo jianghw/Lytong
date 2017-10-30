@@ -9,12 +9,12 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.car.adapter.ManageCarListAdapter;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.contract.IManageCarFtyContract;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.presenter.car.ManageCarFtyPresenter;
@@ -181,8 +181,8 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
         setSimpleDataResult(licenseBeanList);
 
         ManageCarActivity activity = (ManageCarActivity) getActivity();
-        MemoryData.getInstance().mCarNum = MemoryData.getInstance().mServerCars.size();
-        if (activity != null) activity.isAddCarTitle(MemoryData.getInstance().mCarNum);
+        LoginData.getInstance().mCarNum = LoginData.getInstance().mServerCars.size();
+        if (activity != null) activity.isAddCarTitle(LoginData.getInstance().mCarNum);
     }
 
     @Override

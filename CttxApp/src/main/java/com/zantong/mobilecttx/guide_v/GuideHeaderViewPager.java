@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.widght;
+package com.zantong.mobilecttx.guide_v;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -14,10 +14,11 @@ import android.widget.LinearLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
-import cn.qqtheme.framework.util.image.ImageOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.qqtheme.framework.util.image.ImageOptions;
 
 public class GuideHeaderViewPager extends FrameLayout {
     /**

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponBean;
@@ -14,7 +15,6 @@ import com.zantong.mobilecttx.order.fragment.CouponListFragment;
 import java.util.ArrayList;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
  * 优惠券 列表
@@ -59,8 +59,7 @@ public class CouponListActivity extends BaseJxActivity {
                 if (mCouponListFragment == null) {
                     mCouponListFragment = CouponListFragment.newInstance(rechargeCouponBeen);
                 }
-                FragmentUtils.replaceFragment(
-                        fragmentManager, mCouponListFragment, R.id.lay_base_frame, true);
+                FragmentUtils.add(fragmentManager, mCouponListFragment, R.id.lay_base_frame, false,true);
                 break;
             default:
                 break;

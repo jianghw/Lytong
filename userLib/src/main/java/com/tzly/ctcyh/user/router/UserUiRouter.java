@@ -51,9 +51,8 @@ public class UserUiRouter extends LibUiRouter implements IComponentRouter {
     @Override
     protected boolean excludeLoginActivity(String host) {
         //不需要登录
-        if (UserGlobal.Host.login_host.equals(host)) return false;
+        return !UserGlobal.Host.login_host.equals(host) && loginActivity();
 
-        return loginActivity();
     }
 
     protected boolean loginActivity() {ServiceRouter serviceRouter = ServiceRouter.getInstance();

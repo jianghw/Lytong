@@ -1,5 +1,5 @@
-apply plugin: 'com.android.application'
-
+//apply plugin: 'com.android.application'
+apply plugin: 'component-plugin'
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
@@ -167,10 +167,13 @@ dependencies {
     compile 'com.aliyun.ams:alicloud-android-push:3.0.11@aar'
     compile 'com.aliyun.ams:alicloud-android-utdid:1.1.5.3'
     compile 'com.aliyun.ams:alicloud-android-ut:5.1.0'
+
+    //接口沟通依赖
+    compile project(':componentService')
 }
 
 //自定义组件构建
-/*component {
+component {
     isRegisterCompoAuto = true
     applicationName = 'com.zantong.mobilecttx.application.MyApplication'
-}*/
+}

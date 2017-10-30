@@ -10,11 +10,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.card.bean.BindCardResult;
@@ -27,7 +28,6 @@ import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -187,7 +187,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
             return;
         }
 
-        params.setUserId(MemoryData.getInstance().userID);
+        params.setUserId(LoginData.getInstance().userID);
         params.setLicenseno(licenseno);
         params.setFileNum(fileNum);
 
@@ -197,7 +197,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
         dto.setFilenum(RSAUtils.strByEncryption(fileNum, true));
 
         dto.setRelatedphone(RSAUtils.strByEncryption(phone, true));
-        dto.setUsrid(MemoryData.getInstance().userID);
+        dto.setUsrid(LoginData.getInstance().userID);
         showDialogLoading();
 
         UserApiClient.bindCard(ContextUtils.getContext(), dto, new CallBack<BindCardResult>() {
@@ -223,12 +223,12 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
 
                             }
                         });
-                        MemoryData.getInstance().filenum = fileNum;
+                        LoginData.getInstance().filenum = fileNum;
                         RspInfoBean user = (RspInfoBean) UserInfoRememberCtrl.readObject();
                         user.setFilenum(fileNum);
 
                         UserInfoRememberCtrl.saveObject(user);
-                        MemoryData.getInstance().mLoginInfoBean.setFilenum(fileNum);
+                        LoginData.getInstance().mLoginInfoBean.setFilenum(fileNum);
 
                         Act.getInstance().gotoIntent(BindJiaZhaoActivity.this, BindCardSuccess.class);
                         BindJiaZhaoActivity.this.finish();

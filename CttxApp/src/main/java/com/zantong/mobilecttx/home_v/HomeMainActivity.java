@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.home.activity;
+package com.zantong.mobilecttx.home_v;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,14 +12,15 @@ import android.widget.FrameLayout;
 
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
+import com.tzly.ctcyh.router.base.JxBaseActivity;
+import com.tzly.ctcyh.router.util.FragmentUtils;
+import com.tzly.ctcyh.router.util.StatusBarUtils;
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
-import com.zantong.mobilecttx.application.MemoryData;
-import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.home.fragment.HomeDiscountsFragment;
-import com.zantong.mobilecttx.home.fragment.HomeMeFragment;
-import com.zantong.mobilecttx.home.fragment.HomeUnimpededFragment;
+import com.zantong.mobilecttx.application.LoginData;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.utils.AccountRememberCtrl;
@@ -27,24 +28,21 @@ import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.Tools;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 
 import cn.qqtheme.framework.bean.BaseResponse;
+import cn.qqtheme.framework.custom.tablebottom.UiTableBottom;
 import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.util.AppUtils;
 import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
-import cn.qqtheme.framework.util.ui.StatusBarUtils;
-import cn.qqtheme.framework.custom.tablebottom.UiTableBottom;
 
 
 /**
  * 新的主页面
  */
-public class HomeMainActivity extends BaseJxActivity {
+public class HomeMainActivity extends JxBaseActivity {
 
     private FrameLayout mFrameLayout;
     private UiTableBottom mCustomBottom;
@@ -52,15 +50,24 @@ public class HomeMainActivity extends BaseJxActivity {
      * 初始化当期页面
      */
     private int mCurBottomPosition = 0;
-    /**
-     * 三个页面
-     */
-    private HomeUnimpededFragment mHomeUnimpededFragment = null;
-    private HomeDiscountsFragment mHomeDiscountsFragment = null;
-    private HomeMeFragment mHomeMeFragment = null;
+
+    HomeUnimpededFragment mHomeUnimpededFragment;
+    HomeDiscountsFragment mHomeDiscountsFragment;
+    HomeMeFragment mHomeMeFragment;
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
+        onNewIntent(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent != null) {
+            Bundle bundle = intent.getExtras();
+            if (intent.hasExtra(MainGlobal.putExtra.home_position_extra))
+                mCurBottomPosition = bundle.getInt(MainGlobal.putExtra.home_position_extra, 0);
+        }
     }
 
     @Override
@@ -71,25 +78,25 @@ public class HomeMainActivity extends BaseJxActivity {
     /**
      * 不要基础title栏
      */
-    protected boolean isNeedCustomTitle() {
+    protected boolean isCustomTitle() {
         return true;
     }
 
     @Override
-    protected int getContentResId() {
+    protected int initContentView() {
         return R.layout.activity_main_immersion;
     }
 
     @Override
-    protected void initFragmentView(View view) {
+    protected void bindContentView(View view) {
         mFrameLayout = (FrameLayout) view.findViewById(R.id.content);
         mCustomBottom = (UiTableBottom) view.findViewById(R.id.custom_bottom);
 
-        initLoginInfo();
         initBottomTable();
-        //登录信息
-        if (MemoryData.getInstance().loginFlag) liyingreg();
+    }
 
+    @Override
+    protected void initContentData() {
         //更新检查
         Beta.checkUpgrade(false, true);
         Beta.init(getApplicationContext(), false);
@@ -143,18 +150,18 @@ public class HomeMainActivity extends BaseJxActivity {
     public void initLoginInfo() {
         RspInfoBean user = (RspInfoBean) UserInfoRememberCtrl.readObject();
         if (null != user) {
-            MemoryData.getInstance().userID = user.getUsrid();
-            MemoryData.getInstance().loginFlag = true;
-            MemoryData.getInstance().filenum = user.getFilenum();
-            MemoryData.getInstance().getdate = user.getGetdate();
-            MemoryData.getInstance().mLoginInfoBean = user;
-            if (UserInfoRememberCtrl.readObject(MemoryData.getInstance().NOTICE_STATE) != null) {
-                MemoryData.getInstance().updateMsg =
-                        (boolean) UserInfoRememberCtrl.readObject(MemoryData.getInstance().NOTICE_STATE);
+            LoginData.getInstance().userID = user.getUsrid();
+            LoginData.getInstance().loginFlag = true;
+            LoginData.getInstance().filenum = user.getFilenum();
+            LoginData.getInstance().getdate = user.getGetdate();
+            LoginData.getInstance().mLoginInfoBean = user;
+            if (UserInfoRememberCtrl.readObject(LoginData.getInstance().NOTICE_STATE) != null) {
+                LoginData.getInstance().updateMsg =
+                        (boolean) UserInfoRememberCtrl.readObject(LoginData.getInstance().NOTICE_STATE);
             }
             if (!Tools.isStrEmpty(AccountRememberCtrl.getDefaultNumber(getApplicationContext()))) {
-                MemoryData.getInstance().defaultCar = true;
-                MemoryData.getInstance().defaultCarNumber =
+                LoginData.getInstance().defaultCar = true;
+                LoginData.getInstance().defaultCarNumber =
                         AccountRememberCtrl.getDefaultNumber(getApplicationContext());
             }
         }
@@ -188,11 +195,12 @@ public class HomeMainActivity extends BaseJxActivity {
         initStatusBarColor();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
+
         switch (mCurBottomPosition) {
             case 0:
                 if (mHomeUnimpededFragment == null) {
                     mHomeUnimpededFragment = HomeUnimpededFragment.newInstance();
-                    FragmentUtils.addFragment(fragmentManager, mHomeUnimpededFragment, R.id.content, false, true);
+                    FragmentUtils.add(fragmentManager, mHomeUnimpededFragment, R.id.content, false, true);
                 }
                 mHomeUnimpededFragment.setMessageListener(new MessageListener() {
                     @Override
@@ -200,26 +208,22 @@ public class HomeMainActivity extends BaseJxActivity {
                         mCustomBottom.setTipOfNumber(position, number);
                     }
                 });
-
-                if (mHomeUnimpededFragment != null)
-                    FragmentUtils.hideAllShowFragment(fragmentManager, mHomeUnimpededFragment);
-
+                FragmentUtils.showHideNull(mHomeUnimpededFragment, mHomeDiscountsFragment, mHomeMeFragment);
                 JxConfig.getInstance().eventIdByUMeng(18);
                 break;
             case 1:
                 if (mHomeDiscountsFragment == null) {
                     mHomeDiscountsFragment = HomeDiscountsFragment.newInstance();
-                    FragmentUtils.addFragment(fragmentManager, mHomeDiscountsFragment, R.id.content, false, true);
+                    FragmentUtils.add(fragmentManager, mHomeDiscountsFragment, R.id.content, false, true);
                 }
-                if (mHomeDiscountsFragment != null)
-                    FragmentUtils.hideAllShowFragment(fragmentManager, mHomeDiscountsFragment);
+                FragmentUtils.showHideNull(mHomeDiscountsFragment, mHomeUnimpededFragment, mHomeMeFragment);
 
                 JxConfig.getInstance().eventIdByUMeng(19);
                 break;
             case 2:
                 if (mHomeMeFragment == null) {
                     mHomeMeFragment = HomeMeFragment.newInstance();
-                    FragmentUtils.addFragment(fragmentManager, mHomeMeFragment, R.id.content, false, true);
+                    FragmentUtils.add(fragmentManager, mHomeMeFragment, R.id.content, false, true);
                 }
                 mHomeMeFragment.setMessageListener(new MessageListener() {
                     @Override
@@ -227,8 +231,7 @@ public class HomeMainActivity extends BaseJxActivity {
                         mCustomBottom.setTipOfNumber(position, number);
                     }
                 });
-                if (mHomeMeFragment != null)
-                    FragmentUtils.hideAllShowFragment(fragmentManager, mHomeMeFragment);
+                FragmentUtils.showHideNull(mHomeMeFragment, mHomeUnimpededFragment, mHomeDiscountsFragment);
                 break;
             default:
                 break;
@@ -242,14 +245,14 @@ public class HomeMainActivity extends BaseJxActivity {
         LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
         try {
             String phone = RSAUtils.strByEncryptionLiYing(
-                    MemoryData.getInstance().mLoginInfoBean.getPhoenum(), true);
+                    LoginData.getInstance().mLoginInfoBean.getPhoenum(), true);
             SHATools sha = new SHATools();
             String pwd = RSAUtils.strByEncryptionLiYing(SHATools.hexString(
                     sha.eccryptSHA1(SPUtils.getInstance().getUserPwd())), true);
             liYingRegDTO.setPhoenum(phone);
             liYingRegDTO.setPswd(pwd);
             liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(
-                    MemoryData.getInstance().mLoginInfoBean.getUsrid(), true));
+                    LoginData.getInstance().mLoginInfoBean.getUsrid(), true));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -259,13 +262,6 @@ public class HomeMainActivity extends BaseJxActivity {
 
             }
         });
-    }
-
-    @Override
-    protected void DestroyViewAndThing() {
-        mHomeUnimpededFragment = null;
-        mHomeDiscountsFragment = null;
-        mHomeMeFragment = null;
     }
 
     public interface MessageListener {
@@ -290,8 +286,7 @@ public class HomeMainActivity extends BaseJxActivity {
 
     @Override
     public void onBackPressed() {
-        //实现Home键效果
-        //super.onBackPressed();这句话一定要注掉,不然又去调用默认的back处理方式了
+        //实现Home键效果  super.onBackPressed();这句话一定要注掉,不然又去调用默认的back处理方式了
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addCategory(Intent.CATEGORY_HOME);

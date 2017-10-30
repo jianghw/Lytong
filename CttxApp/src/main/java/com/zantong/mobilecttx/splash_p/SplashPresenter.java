@@ -1,10 +1,12 @@
-package com.zantong.mobilecttx.presenter.home;
+package com.zantong.mobilecttx.splash_p;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.tzly.ctcyh.router.util.Des3;
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
@@ -14,7 +16,6 @@ import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseResponse;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
-import com.zantong.mobilecttx.contract.ISplashAtyContract;
 import com.zantong.mobilecttx.home.bean.StartPicResponse;
 import com.zantong.mobilecttx.model.repository.BaseSubscriber;
 import com.zantong.mobilecttx.model.repository.RepositoryManager;
@@ -25,8 +26,6 @@ import com.zantong.mobilecttx.user.bean.UserCarsBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
 import com.zantong.mobilecttx.utils.Tools;
-import com.zantong.mobilecttx.utils.rsa.Des3;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 import com.zantong.mobilecttx.weizhang.dto.LicenseTestDTO;
 
@@ -69,12 +68,12 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
 
     private String getStartTime() {
         String nowMonth = Tools.getYearDate().substring(4, 6);
-        String oldMonth = MemoryData.getInstance().mLoginInfoBean.getGetdate().substring(4, 6);
+        String oldMonth = LoginData.getInstance().mLoginInfoBean.getGetdate().substring(4, 6);
         String startTime = "";
         if (Integer.parseInt(nowMonth) > Integer.parseInt(oldMonth)) {
-            startTime = Tools.getYearDate().substring(0, 4) + MemoryData.getInstance().mLoginInfoBean.getGetdate().substring(4);
+            startTime = Tools.getYearDate().substring(0, 4) + LoginData.getInstance().mLoginInfoBean.getGetdate().substring(4);
         } else {
-            startTime = MemoryData.getInstance().mLoginInfoBean.getGetdate();
+            startTime = LoginData.getInstance().mLoginInfoBean.getGetdate();
         }
         return startTime;
     }
@@ -252,7 +251,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
                     public void onNext(LoginInfoBean result) {
                         if (result != null &&
                                 result.getSYS_HEAD().getReturnCode().equals(
-                                        MemoryData.getInstance().success)) {
+                                        LoginData.getInstance().success)) {
 
                             mRepository.saveLoginInfoRepeat(result);
                         }
@@ -291,13 +290,13 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
         try {
             String pwd = mRepository.readLoginPassword();
             if (Tools.isStrEmpty(pwd)) throw new IllegalArgumentException("pwd is must not null");
-            masp.put("phoenum", MemoryData.getInstance().mLoginInfoBean.getPhoenum());
+            masp.put("phoenum", LoginData.getInstance().mLoginInfoBean.getPhoenum());
             SHATools sha = new SHATools();
             masp.put("pswd", SHATools.hexString(sha.eccryptSHA1(pwd)));
-            masp.put("devicetoken", MemoryData.getInstance().imei);
+            masp.put("devicetoken", LoginData.getInstance().imei);
             masp.put("pushswitch", "0");
             masp.put("pushmode", "1");
-            String token = RSAUtils.strByEncryption(MemoryData.getInstance().deviceId, true);
+            String token = RSAUtils.strByEncryption(LoginData.getInstance().deviceId, true);
             masp.put("token", token);
             MessageFormat.getInstance().setMessageJSONObject(masp);
         } catch (JSONException | NoSuchAlgorithmException e) {

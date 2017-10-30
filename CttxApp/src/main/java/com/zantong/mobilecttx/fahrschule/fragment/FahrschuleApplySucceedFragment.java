@@ -13,12 +13,12 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tzly.ctcyh.router.util.Des3;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
-import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 
 import cn.qqtheme.framework.global.JxConfig;
@@ -148,9 +148,9 @@ public class FahrschuleApplySucceedFragment extends BaseRefreshJxFragment implem
         }
 
         WXWebpageObject webpage = new WXWebpageObject();
-        if (MemoryData.getInstance().loginFlag) {
+        if (LoginData.getInstance().loginFlag) {
             webpage.webpageUrl = ShareParentActivity.getShareAppUrl(3) + "?phoneNum="
-                    + Des3.encode(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
+                    + Des3.encode(LoginData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         }

@@ -9,20 +9,20 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.Des3;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
-import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.presenter.ViolationDetailsPresenterImp;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
 
@@ -162,7 +162,7 @@ public class ViolationDetails extends BaseJxActivity implements ModelView {
             e.printStackTrace();
         }
 
-        if ("1".equals(MemoryData.getInstance().mHashMap.get("mRes"))) {
+        if ("1".equals(LoginData.getInstance().mHashMap.get("mRes"))) {
             mViolationPayRl.setVisibility(View.VISIBLE);
             try {
                 dateDate = formatDate.parse(mRspInfo.getPaydate());
@@ -198,8 +198,8 @@ public class ViolationDetails extends BaseJxActivity implements ModelView {
             mViolationPointsText.setText(mRspInfo.getViolationcent() + "分");
         }
         String violationNumber = Des3.decode(mRspInfo.getCarnum());
-        for (int i = 0; i < MemoryData.getInstance().payData.size(); i++) {
-            if (violationNumber.equals(MemoryData.getInstance().payData.get(i).getCarnum())) {
+        for (int i = 0; i < LoginData.getInstance().payData.size(); i++) {
+            if (violationNumber.equals(LoginData.getInstance().payData.get(i).getCarnum())) {
                 isPagCar = true;
                 break;
             } else {
@@ -215,13 +215,13 @@ public class ViolationDetails extends BaseJxActivity implements ModelView {
                 mNextBtn.setEnabled(true);
                 mNextBtn.setText("违章缴费");
                 mCommitType = 0;
-            } else if (Tools.isStrEmpty(MemoryData.getInstance().filenum)) {
+            } else if (Tools.isStrEmpty(LoginData.getInstance().filenum)) {
                 MobclickAgent.onEvent(this, Config.getUMengID(11));
                 mDescTextmDescText.setVisibility(View.VISIBLE);
                 mDescTextmDescText.setText("您还未绑定畅通卡，违章缴费需要使用畅通卡");
                 mNextBtn.setText("绑定畅通卡");
                 mCommitType = 1;
-            } else if (isPagCar || MemoryData.getInstance().payData.size() < 2) {
+            } else if (isPagCar || LoginData.getInstance().payData.size() < 2) {
                 mNextBtn.setEnabled(true);
                 mNextBtn.setText("违章缴费");
                 mCommitType = 0;
@@ -254,7 +254,7 @@ public class ViolationDetails extends BaseJxActivity implements ModelView {
     protected void submitData() {
         switch (mCommitType) {
             case 0:
-                MemoryData.getInstance().mHashMap.clear();
+                LoginData.getInstance().mHashMap.clear();
                 if (mDetailsBean != null) {
                     ViolationDetailsBean.RspInfoBean rspInfo = mDetailsBean.getRspInfo();
                     ViolationBean violationBean = new ViolationBean();

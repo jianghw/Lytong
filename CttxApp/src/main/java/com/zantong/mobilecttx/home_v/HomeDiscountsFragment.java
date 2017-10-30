@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.home.fragment;
+package com.zantong.mobilecttx.home_v;
 
 import android.Manifest;
 import android.content.Context;
@@ -16,7 +16,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
@@ -290,7 +290,7 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
      * 进入代驾页面
      */
     public void enterDrivingActivity() {
-        if (!MemoryData.getInstance().loginFlag) {
+        if (!LoginData.getInstance().loginFlag) {
             Act.getInstance().gotoIntentLogin(getActivity(), DrivingActivity.class);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             PermissionGen.needPermission(this, 2000, new String[]{

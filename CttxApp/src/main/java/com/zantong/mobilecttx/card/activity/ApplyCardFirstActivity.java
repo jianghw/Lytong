@@ -10,13 +10,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.HandleCTCardApiClient;
 import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
@@ -28,7 +29,6 @@ import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import java.util.Random;
 
@@ -228,7 +228,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         }
 
         //TODO 什么贵
-        MemoryData.getInstance().filenum = getDriverFileNum();
+        LoginData.getInstance().filenum = getDriverFileNum();
 
         if (BuildConfig.DEBUG) {//七天之内不能重复办卡 不用
             showDialogLoading();
@@ -326,7 +326,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MemoryData.getInstance().filenum = "";
+        LoginData.getInstance().filenum = "";
     }
 
     @Override

@@ -12,19 +12,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.Des3;
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.eventbus.CarInfoEvent;
-import com.zantong.mobilecttx.home.activity.HomeMainActivity;
+import com.zantong.mobilecttx.home_v.HomeMainActivity;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.user.bean.LoginResult;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
@@ -36,8 +38,6 @@ import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ScreenManager;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.rsa.Des3;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 import com.zantong.mobilecttx.weizhang.bean.QueryHistoryBean;
 import com.zantong.mobilecttx.widght.CustomCharKeyBoard;
@@ -256,12 +256,12 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                 if (res == 0) {
                     final RegisterDTO dto = new RegisterDTO();
                     String phone = RSAUtils.strByEncryption(getIntent().getStringExtra(PHONE), true);
-                    dto.setToken(RSAUtils.strByEncryption(MemoryData.getInstance().deviceId, true));
+                    dto.setToken(RSAUtils.strByEncryption(LoginData.getInstance().deviceId, true));
                     dto.setPhoenum(phone);
-                    if ("".equals(MemoryData.getInstance().imei)) {
+                    if ("".equals(LoginData.getInstance().imei)) {
                         dto.setDevicetoken("1234567890");
                     } else {
-                        dto.setDevicetoken(MemoryData.getInstance().imei);
+                        dto.setDevicetoken(LoginData.getInstance().imei);
                     }
                     LogUtils.i("token:" + dto.getDevicetoken());
                     try {
@@ -285,15 +285,15 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                                 result.getRspInfo().setPhoenum(Des3.decode(result.getRspInfo().getPhoenum()));
                                 result.getRspInfo().setCtfnum(Des3.decode(result.getRspInfo().getCtfnum()));
                                 UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERPD, mPwd.getText().toString());
-                                UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, MemoryData.getInstance().imei);
+                                UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, LoginData.getInstance().imei);
                                 UserInfoRememberCtrl.saveObject(result.getRspInfo());
 
                                 LogUtils.i("usrid:" + result.getRspInfo().getUsrid());
-                                MemoryData.getInstance().mLoginInfoBean = result.getRspInfo();
-                                MemoryData.getInstance().userID = result.getRspInfo().getUsrid();
-                                MemoryData.getInstance().filenum = result.getRspInfo().getFilenum();
+                                LoginData.getInstance().mLoginInfoBean = result.getRspInfo();
+                                LoginData.getInstance().userID = result.getRspInfo().getUsrid();
+                                LoginData.getInstance().filenum = result.getRspInfo().getFilenum();
 
-                                MemoryData.getInstance().loginFlag = true;
+                                LoginData.getInstance().loginFlag = true;
                                 commitLocalCar();
                                 commitIllegalHistory();
 
@@ -397,7 +397,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
         for (int i = 0; i < list.size(); i++) {
             final int index = i;
             CarInfoDTO carInfoDTO = list.get(i);
-            carInfoDTO.setUsrid(MemoryData.getInstance().userID);
+            carInfoDTO.setUsrid(LoginData.getInstance().userID);
             carInfoDTO.setIspaycar("0");
             carInfoDTO.setDefaultflag("1");
             carInfoDTO.setInspectflag("0");
@@ -425,7 +425,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
             params.setEngineNo(carInfoDTO.getEnginenum());
             params.setRegisterDate(carInfoDTO.getInspectdate());
             params.setIssueDate("");
-            params.setUsrnum(MemoryData.getInstance().userID);
+            params.setUsrnum(LoginData.getInstance().userID);
             CarApiClient.commitCar(getApplicationContext(), params, new CallBack<BaseResponse>() {
                 @Override
                 public void onSuccess(BaseResponse result) {
@@ -436,7 +436,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
 
     private void commitIllegalHistory() {
         try {
-            LinkedList<QueryHistoryBean.QueryCarBean> mDatas = MemoryData.getInstance().mQueryHistoryBean.getQueryCar();
+            LinkedList<QueryHistoryBean.QueryCarBean> mDatas = LoginData.getInstance().mQueryHistoryBean.getQueryCar();
             if (null == mDatas || mDatas.size() <= 0) {
                 return;
             }
@@ -453,7 +453,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                 params.setEngineNo(queryCarBean.getEngineNumber());
                 params.setRegisterDate("");
                 params.setIssueDate("");
-                params.setUsrnum(MemoryData.getInstance().userID);
+                params.setUsrnum(LoginData.getInstance().userID);
                 CarApiClient.commitCar(getApplicationContext(), params, new CallBack<BaseResponse>() {
                     @Override
                     public void onSuccess(BaseResponse result) {

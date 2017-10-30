@@ -15,15 +15,16 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.search.core.PoiInfo;
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.chongzhi.activity.ChooseAddressActivity;
-import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.daijia.bean.DJTokenResponse;
 import com.zantong.mobilecttx.daijia.bean.DaiJiaCreateResponse;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaCreateDTO;
@@ -33,7 +34,6 @@ import com.zantong.mobilecttx.utils.HashUtils;
 import com.zantong.mobilecttx.utils.OnClickUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 
 import java.util.HashMap;
 
@@ -86,10 +86,10 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         mLocationClient.setLocOption(option);
         mLocationClient.start();
 
-        mDrivingPhone.setText(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
+        mDrivingPhone.setText(LoginData.getInstance().mLoginInfoBean.getPhoenum());
         setEnsureText("代驾订单");
         mDrivingPhone.requestFocus();
-        mDrivingPhone.setSelection(MemoryData.getInstance().mLoginInfoBean.getPhoenum().length());
+        mDrivingPhone.setSelection(LoginData.getInstance().mLoginInfoBean.getPhoenum().length());
     }
 
     @Override
@@ -142,7 +142,7 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         }
 
         DaiJiaCreateDTO dto = new DaiJiaCreateDTO();
-        dto.setUsrId(RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().userID, true));
+        dto.setUsrId(RSAUtils.strByEncryptionLiYing(LoginData.getInstance().userID, true));
         dto.setName(phone);
         dto.setMobile(phone);
         dto.setAddress(mDrivingAddress.getText().toString());
@@ -159,7 +159,7 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         hashMap.put("addressLat", String.valueOf(latitude));
         hashMap.put("name", phone);
         hashMap.put("driverNum", String.valueOf("1"));
-        hashMap.put("usrId", MemoryData.getInstance().userID);
+        hashMap.put("usrId", LoginData.getInstance().userID);
         String hashStr = HashUtils.getSignature(hashMap);
         dto.setHash(hashStr);
 

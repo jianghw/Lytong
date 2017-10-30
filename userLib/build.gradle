@@ -14,7 +14,13 @@ android {
 
     }
     buildTypes {
+        debug {
+            buildConfigField "boolean", "App_Url", rootProject.ext.buildConfig.userDebug
+        }
+
         release {
+            buildConfigField "boolean", "App_Url", rootProject.ext.buildConfig.userDebug
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

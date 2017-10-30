@@ -9,23 +9,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
-import com.zantong.mobilecttx.application.MemoryData;
-import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-
-import cn.qqtheme.framework.bean.BankResponse;
-
 import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.LoginData;
+import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.user.dto.ChangePwdDTO;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.utils.TextWatchUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 import com.zantong.mobilecttx.widght.CustomCharKeyBoard;
 import com.zantong.mobilecttx.widght.CustomNumKeyBoard;
@@ -34,6 +31,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.util.ToastUtils;
 public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresenter>
@@ -196,7 +194,7 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
             return;
         }
         ChangePwdDTO dto = new ChangePwdDTO();
-        dto.setUsrid(MemoryData.getInstance().userID);
+        dto.setUsrid(LoginData.getInstance().userID);
         try {
             SHATools sha = new SHATools();
             String newPassword = SHATools.hexString(sha.eccryptSHA1(newPwd));
@@ -213,7 +211,7 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
                     hideDialogLoading();
                     if (Config.OK.equals(bankResponse.getSYS_HEAD().getReturnCode())) {
                         liyingreg(newPwdLi);
-                        MemoryData.getInstance().clearData(ChangePwdActivity.this);
+                        LoginData.getInstance().clearData(ChangePwdActivity.this);
                         finish();
                     } else {
                         ToastUtils.toastShort(bankResponse.getSYS_HEAD().getReturnMessage());
@@ -233,13 +231,13 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
 
     private void liyingreg(String pwd) {
         try {
-            String phone = RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().mLoginInfoBean.getPhoenum(), true);
+            String phone = RSAUtils.strByEncryptionLiYing(LoginData.getInstance().mLoginInfoBean.getPhoenum(), true);
             SHATools sha = new SHATools();
             String newPassword = RSAUtils.strByEncryptionLiYing(SHATools.hexString(sha.eccryptSHA1(pwd)), true);
             LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
             liYingRegDTO.setPhoenum(phone);
             liYingRegDTO.setPswd(newPassword);
-            liYingRegDTO.setUsrid(RSAUtils.strByEncryption(MemoryData.getInstance().userID, true));
+            liYingRegDTO.setUsrid(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
             CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResponse>() {
                 @Override
                 public void onSuccess(BaseResponse result) {

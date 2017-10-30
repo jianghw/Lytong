@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -64,7 +64,7 @@ public class FeedbackActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
             showDialogLoading();
             FeedbackDTO dto = new FeedbackDTO();
             dto.setReqcontent(content);
-            dto.setUsrid(MemoryData.getInstance().userID);
+            dto.setUsrid(LoginData.getInstance().userID);
             UserApiClient.commitFeedback(this, dto, new CallBack<BankResponse>() {
                 @Override
                 public void onSuccess(BankResponse bankResponse) {

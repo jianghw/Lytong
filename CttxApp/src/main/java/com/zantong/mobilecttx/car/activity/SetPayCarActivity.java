@@ -5,11 +5,10 @@ import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.car.fragment.SetPayCarFragment;
-
-import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 public class SetPayCarActivity extends BaseJxActivity {
 
@@ -40,8 +39,8 @@ public class SetPayCarActivity extends BaseJxActivity {
                 if (mSetPayCarFragment == null) {
                     mSetPayCarFragment = SetPayCarFragment.newInstance();
                 }
-                FragmentUtils.replaceFragment(
-                        fragmentManager, mSetPayCarFragment, R.id.activity_set_paycar_layout, true);
+                FragmentUtils.add(
+                        fragmentManager, mSetPayCarFragment, R.id.activity_set_paycar_layout,false, true);
                 break;
             default:
                 break;

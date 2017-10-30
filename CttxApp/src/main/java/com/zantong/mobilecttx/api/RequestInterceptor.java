@@ -1,7 +1,7 @@
 package com.zantong.mobilecttx.api;
 
 import com.google.gson.Gson;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 
 import java.io.IOException;
 
@@ -24,7 +24,7 @@ public class RequestInterceptor implements Interceptor {
 
         // 添加head
         Headers.Builder headBuilder=oldRequest.headers().newBuilder();
-        headBuilder.add("DvcToken", MemoryData.getInstance().imei);
+        headBuilder.add("DvcToken", LoginData.getInstance().imei);
         requestBuilder.headers(headBuilder.build());
 
         CacheControl.Builder builder = new CacheControl.Builder();

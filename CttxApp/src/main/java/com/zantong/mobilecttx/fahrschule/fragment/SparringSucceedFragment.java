@@ -13,16 +13,16 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tzly.ctcyh.router.util.Des3;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.card.activity.ApplyCardFirstActivity;
-import com.zantong.mobilecttx.application.MemoryData;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.utils.rsa.Des3;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 
 import cn.qqtheme.framework.util.ToastUtils;
@@ -91,7 +91,7 @@ public class SparringSucceedFragment extends BaseRefreshJxFragment implements Vi
     protected void onFirstDataVisible() {
 
         //未办卡
-        if (Tools.isStrEmpty(MemoryData.getInstance().filenum)) {
+        if (Tools.isStrEmpty(LoginData.getInstance().filenum)) {
             StringBuffer sb = new StringBuffer();
             sb.append("<font color=\"#f3362b\">");
             sb.append("<u>");
@@ -124,7 +124,7 @@ public class SparringSucceedFragment extends BaseRefreshJxFragment implements Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_prompt://绑卡去
-                if (Tools.isStrEmpty(MemoryData.getInstance().filenum))
+                if (Tools.isStrEmpty(LoginData.getInstance().filenum))
                     Act.getInstance().gotoIntent(getActivity(), ApplyCardFirstActivity.class);
                 break;
             case R.id.tv_commit:
@@ -162,9 +162,9 @@ public class SparringSucceedFragment extends BaseRefreshJxFragment implements Vi
         }
 
         WXWebpageObject webpage = new WXWebpageObject();
-        if (MemoryData.getInstance().loginFlag) {
+        if (LoginData.getInstance().loginFlag) {
             webpage.webpageUrl = ShareParentActivity.getShareAppUrl(4) + "?phoneNum="
-                    + Des3.encode(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
+                    + Des3.encode(LoginData.getInstance().mLoginInfoBean.getPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         }

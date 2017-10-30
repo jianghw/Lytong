@@ -11,6 +11,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -368,6 +370,516 @@ public class FragmentUtils {
             this.isHide = isHide;
             this.isAddStack = isAddStack;
         }
+    }
+
+    /**
+     * 显示fragment
+     *
+     * @param show 要显示的fragment
+     */
+    public static void show(@NonNull final Fragment show) {
+        putArgs(show, false);
+        operateNoAnim(show.getFragmentManager(), TYPE_SHOW_FRAGMENT, null, show);
+    }
+
+    /**
+     * 显示fragment
+     *
+     * @param fm fragment管理器
+     */
+    public static void show(@NonNull final FragmentManager fm) {
+        List<Fragment> fragments = getFragments(fm);
+        for (Fragment show : fragments) {
+            putArgs(show, false);
+        }
+        operateNoAnim(fm, TYPE_SHOW_FRAGMENT, null, fragments.toArray(new Fragment[fragments.size()]));
+    }
+
+    /**
+     * 隐藏fragment
+     *
+     * @param hide 要隐藏的fragment
+     */
+    public static void hide(@NonNull final Fragment hide) {
+        putArgs(hide, true);
+        operateNoAnim(hide.getFragmentManager(), TYPE_HIDE_FRAGMENT, null, hide);
+    }
+
+    /**
+     * 隐藏fragment
+     *
+     * @param fm fragment管理器
+     */
+    public static void hide(@NonNull final FragmentManager fm) {
+        List<Fragment> fragments = getFragments(fm);
+        for (Fragment hide : fragments) {
+            putArgs(hide, true);
+        }
+        operateNoAnim(fm, TYPE_HIDE_FRAGMENT, null, fragments.toArray(new Fragment[fragments.size()]));
+    }
+
+    /**
+     * 先显示后隐藏fragment
+     *
+     * @param showIndex 要显示的fragment索引
+     * @param fragments 要隐藏的fragments
+     */
+    public static void showHide(final int showIndex, @NonNull final List<Fragment> fragments) {
+        showHide(fragments.get(showIndex), fragments);
+    }
+
+    /**
+     * 先显示后隐藏fragment
+     *
+     * @param show 要显示的fragment
+     * @param hide 要隐藏的fragment
+     */
+    public static void showHide(@NonNull final Fragment show, @NonNull final List<Fragment> hide) {
+        for (Fragment fragment : hide) {
+            putArgs(fragment, fragment != show);
+        }
+        operateNoAnim(show.getFragmentManager(), TYPE_SHOW_HIDE_FRAGMENT, show,
+                hide.toArray(new Fragment[hide.size()]));
+    }
+
+    /**
+     * 先显示后隐藏fragment
+     *
+     * @param showIndex 要显示的fragment索引
+     * @param fragments 要隐藏的fragments
+     */
+    public static void showHide(final int showIndex, @NonNull final Fragment... fragments) {
+        showHide(fragments[showIndex], fragments);
+    }
+
+    /**
+     * 先显示后隐藏fragment
+     *
+     * @param show 要显示的fragment
+     * @param hide 要隐藏的fragment
+     */
+    public static void showHide(@NonNull final Fragment show, @NonNull final Fragment... hide) {
+
+        for (Fragment fragment : hide) {
+            putArgs(fragment, fragment != show);
+        }
+        operateNoAnim(show.getFragmentManager(), TYPE_SHOW_HIDE_FRAGMENT, show, hide);
+    }
+
+    public static void showHideNull(@NonNull final Fragment show, final Fragment... hide) {
+        List<Fragment> list = new ArrayList<>();
+        for (Fragment fragment : hide) {
+            if (fragment != null) list.add(fragment);
+        }
+        showHide(show, list);
+        //        boolean isExecute = false;
+        //        if (isExecute) {
+        //            operateNoAnim(show.getFragmentManager(), TYPE_SHOW_HIDE_FRAGMENT, show, hide);
+        //        }
+    }
+
+    /**
+     * 先显示后隐藏fragment
+     *
+     * @param show 要显示的fragment
+     * @param hide 要隐藏的fragment
+     */
+    public static void showHide(@NonNull final Fragment show,
+                                @NonNull final Fragment hide) {
+        putArgs(show, false);
+        putArgs(hide, true);
+        operateNoAnim(show.getFragmentManager(), TYPE_SHOW_HIDE_FRAGMENT, show, hide);
+    }
+
+    /**
+     * 获取同级别的fragment
+     *
+     * @param fm fragment管理器
+     * @return fragment管理器中的fragment
+     */
+    public static List<Fragment> getFragments(@NonNull final FragmentManager fm) {
+        @SuppressWarnings("RestrictedApi")
+        List<Fragment> fragments = fm.getFragments();
+        if (fragments == null || fragments.isEmpty()) return Collections.emptyList();
+        return fragments;
+    }
+
+    /**
+     * 获取同级别栈中的fragment
+     *
+     * @param fm fragment管理器
+     * @return fragment管理器栈中的fragment
+     */
+    public static List<Fragment> getFragmentsInStack(@NonNull final FragmentManager fm) {
+        List<Fragment> fragments = getFragments(fm);
+        List<Fragment> result = new ArrayList<>();
+        for (Fragment fragment : fragments) {
+            if (fragment != null && fragment.getArguments().getBoolean(ARGS_IS_ADD_STACK)) {
+                result.add(fragment);
+            }
+        }
+        return result;
+    }
+
+
+    /**
+     * 获取所有fragment
+     *
+     * @param fm fragment管理器
+     * @return 所有fragment
+     */
+    public static List<FragmentNode> getAllFragments(@NonNull final FragmentManager fm) {
+        return getAllFragments(fm, new ArrayList<FragmentNode>());
+    }
+
+    private static List<FragmentNode> getAllFragments(@NonNull final FragmentManager fm,
+                                                      final List<FragmentNode> result) {
+        List<Fragment> fragments = getFragments(fm);
+        for (int i = fragments.size() - 1; i >= 0; --i) {
+            Fragment fragment = fragments.get(i);
+            if (fragment != null) {
+                result.add(new FragmentNode(fragment,
+                        getAllFragments(fragment.getChildFragmentManager(),
+                                new ArrayList<FragmentNode>())));
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 获取栈中所有fragment
+     *
+     * @param fm fragment管理器
+     * @return 所有fragment
+     */
+    public static List<FragmentNode> getAllFragmentsInStack(@NonNull final FragmentManager fm) {
+        return getAllFragmentsInStack(fm, new ArrayList<FragmentNode>());
+    }
+
+    private static List<FragmentNode> getAllFragmentsInStack(@NonNull final FragmentManager fm,
+                                                             final List<FragmentNode> result) {
+        List<Fragment> fragments = getFragments(fm);
+        for (int i = fragments.size() - 1; i >= 0; --i) {
+            Fragment fragment = fragments.get(i);
+            if (fragment != null && fragment.getArguments().getBoolean(ARGS_IS_ADD_STACK)) {
+                result.add(new FragmentNode(fragment,
+                        getAllFragmentsInStack(fragment.getChildFragmentManager(),
+                                new ArrayList<FragmentNode>())));
+            }
+        }
+        return result;
+    }
+
+    public static class FragmentNode {
+        Fragment fragment;
+        List<FragmentNode> next;
+
+        public FragmentNode(final Fragment fragment, final List<FragmentNode> next) {
+            this.fragment = fragment;
+            this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            return fragment.getClass().getSimpleName()
+                    + "->"
+                    + ((next == null || next.isEmpty()) ? "no child" : next.toString());
+        }
+    }
+
+    /**
+     * 查找fragment
+     *
+     * @param fm      fragment管理器
+     * @param findClz 要查找的fragment类型
+     * @return 查找到的fragment
+     */
+    public static Fragment findFragment(@NonNull final FragmentManager fm,
+                                        final Class<? extends Fragment> findClz) {
+        return fm.findFragmentByTag(findClz.getName());
+    }
+
+    /**
+     * 替换fragment
+     *
+     * @param srcFragment  源fragment
+     * @param destFragment 目标fragment
+     */
+    public static void replace(@NonNull final Fragment srcFragment,
+                               @NonNull final Fragment destFragment) {
+        replace(srcFragment, destFragment, false);
+    }
+
+    /**
+     * 替换fragment
+     *
+     * @param srcFragment  源fragment
+     * @param destFragment 目标fragment
+     * @param isAddStack   是否入回退栈
+     */
+    public static void replace(@NonNull final Fragment srcFragment,
+                               @NonNull final Fragment destFragment,
+                               final boolean isAddStack) {
+        Args args = getArgs(srcFragment);
+        replace(srcFragment.getFragmentManager(), destFragment, args.id, isAddStack);
+    }
+
+    /**
+     * 替换fragment
+     *
+     * @param srcFragment  源fragment
+     * @param destFragment 目标fragment
+     * @param enterAnim    入场动画
+     * @param exitAnim     出场动画
+     */
+    public static void replace(@NonNull final Fragment srcFragment,
+                               @NonNull final Fragment destFragment,
+                               @AnimRes final int enterAnim,
+                               @AnimRes final int exitAnim) {
+        replace(srcFragment, destFragment, false, enterAnim, exitAnim, 0, 0);
+    }
+
+    /**
+     * 替换fragment
+     *
+     * @param srcFragment  源fragment
+     * @param destFragment 目标fragment
+     * @param isAddStack   是否入回退栈
+     * @param enterAnim    入场动画
+     * @param exitAnim     出场动画
+     */
+    public static void replace(@NonNull final Fragment srcFragment,
+                               @NonNull final Fragment destFragment,
+                               final boolean isAddStack,
+                               @AnimRes final int enterAnim,
+                               @AnimRes final int exitAnim) {
+        replace(srcFragment, destFragment, isAddStack, enterAnim, exitAnim, 0, 0);
+    }
+
+    /**
+     * 替换fragment
+     *
+     * @param srcFragment  源fragment
+     * @param destFragment 目标fragment
+     * @param enterAnim    入场动画
+     * @param exitAnim     出场动画
+     * @param popEnterAnim 入栈动画
+     * @param popExitAnim  出栈动画
+     */
+    public static void replace(@NonNull final Fragment srcFragment,
+                               @NonNull final Fragment destFragment,
+                               @AnimRes final int enterAnim,
+                               @AnimRes final int exitAnim,
+                               @AnimRes final int popEnterAnim,
+                               @AnimRes final int popExitAnim) {
+        replace(srcFragment, destFragment, false, enterAnim, exitAnim, popEnterAnim, popExitAnim);
+    }
+
+    /**
+     * 替换fragment
+     *
+     * @param srcFragment  源fragment
+     * @param destFragment 目标fragment
+     * @param isAddStack   是否入回退栈
+     * @param enterAnim    入场动画
+     * @param exitAnim     出场动画
+     * @param popEnterAnim 入栈动画
+     * @param popExitAnim  出栈动画
+     */
+    public static void replace(@NonNull final Fragment srcFragment,
+                               @NonNull final Fragment destFragment,
+                               final boolean isAddStack,
+                               @AnimRes final int enterAnim,
+                               @AnimRes final int exitAnim,
+                               @AnimRes final int popEnterAnim,
+                               @AnimRes final int popExitAnim) {
+        Args args = getArgs(srcFragment);
+        replace(srcFragment.getFragmentManager(), destFragment, args.id, isAddStack,
+                enterAnim, exitAnim, popEnterAnim, popExitAnim);
+    }
+
+    /**
+     * 替换fragment
+     *
+     * @param srcFragment    源fragment
+     * @param destFragment   目标fragment
+     * @param sharedElements 共享元素
+     */
+    public static void replace(@NonNull final Fragment srcFragment,
+                               @NonNull final Fragment destFragment,
+                               final View... sharedElements) {
+        replace(srcFragment, destFragment, false, sharedElements);
+    }
+
+    /**
+     * 替换fragment
+     *
+     * @param srcFragment    源fragment
+     * @param destFragment   目标fragment
+     * @param isAddStack     是否入回退栈
+     * @param sharedElements 共享元素
+     */
+    public static void replace(@NonNull final Fragment srcFragment,
+                               @NonNull final Fragment destFragment,
+                               final boolean isAddStack,
+                               final View... sharedElements) {
+        Args args = getArgs(srcFragment);
+        replace(srcFragment.getFragmentManager(), destFragment, args.id, isAddStack, sharedElements);
+    }
+
+    /**
+     * 替换fragment
+     *
+     * @param fm          fragment管理器
+     * @param containerId 布局Id
+     * @param fragment    fragment
+     */
+    public static void replace(@NonNull final FragmentManager fm,
+                               @NonNull final Fragment fragment,
+                               @IdRes final int containerId) {
+        replace(fm, fragment, containerId, false);
+    }
+
+    /**
+     * 替换fragment
+     *
+     * @param fm          fragment管理器
+     * @param containerId 布局Id
+     * @param fragment    fragment
+     * @param isAddStack  是否入回退栈
+     */
+    public static void replace(@NonNull final FragmentManager fm,
+                               @NonNull final Fragment fragment,
+                               @IdRes final int containerId,
+                               final boolean isAddStack) {
+        FragmentTransaction ft = fm.beginTransaction();
+        putArgs(fragment, new Args(containerId, false, isAddStack));
+        operate(TYPE_REPLACE_FRAGMENT, fm, ft, null, fragment);
+    }
+
+    /**
+     * 替换fragment
+     *
+     * @param fm          fragment管理器
+     * @param containerId 布局Id
+     * @param fragment    fragment
+     * @param enterAnim   入场动画
+     * @param exitAnim    出场动画
+     */
+    public static void replace(@NonNull final FragmentManager fm,
+                               @NonNull final Fragment fragment,
+                               @IdRes final int containerId,
+                               @AnimRes final int enterAnim,
+                               @AnimRes final int exitAnim) {
+        replace(fm, fragment, containerId, false, enterAnim, exitAnim, 0, 0);
+    }
+
+    /**
+     * 替换fragment
+     *
+     * @param fm          fragment管理器
+     * @param containerId 布局Id
+     * @param fragment    fragment
+     * @param isAddStack  是否入回退栈
+     * @param enterAnim   入场动画
+     * @param exitAnim    出场动画
+     */
+    public static void replace(@NonNull final FragmentManager fm,
+                               @NonNull final Fragment fragment,
+                               @IdRes final int containerId,
+                               final boolean isAddStack,
+                               @AnimRes final int enterAnim,
+                               @AnimRes final int exitAnim) {
+        replace(fm, fragment, containerId, isAddStack, enterAnim, exitAnim, 0, 0);
+    }
+
+    /**
+     * 替换fragment
+     *
+     * @param fm           fragment管理器
+     * @param containerId  布局Id
+     * @param fragment     fragment
+     * @param enterAnim    入场动画
+     * @param exitAnim     出场动画
+     * @param popEnterAnim 入栈动画
+     * @param popExitAnim  出栈动画
+     */
+    public static void replace(@NonNull final FragmentManager fm,
+                               @NonNull final Fragment fragment,
+                               @IdRes final int containerId,
+                               @AnimRes final int enterAnim,
+                               @AnimRes final int exitAnim,
+                               @AnimRes final int popEnterAnim,
+                               @AnimRes final int popExitAnim) {
+        replace(fm, fragment, containerId, false, enterAnim, exitAnim, popEnterAnim, popExitAnim);
+    }
+
+    /**
+     * 替换fragment
+     *
+     * @param fm           fragment管理器
+     * @param containerId  布局Id
+     * @param fragment     fragment
+     * @param isAddStack   是否入回退栈
+     * @param enterAnim    入场动画
+     * @param exitAnim     出场动画
+     * @param popEnterAnim 入栈动画
+     * @param popExitAnim  出栈动画
+     */
+    public static void replace(@NonNull final FragmentManager fm,
+                               @NonNull final Fragment fragment,
+                               @IdRes final int containerId,
+                               final boolean isAddStack,
+                               @AnimRes final int enterAnim,
+                               @AnimRes final int exitAnim,
+                               @AnimRes final int popEnterAnim,
+                               @AnimRes final int popExitAnim) {
+        FragmentTransaction ft = fm.beginTransaction();
+        putArgs(fragment, new Args(containerId, false, isAddStack));
+        addAnim(ft, enterAnim, exitAnim, popEnterAnim, popExitAnim);
+        operate(TYPE_REPLACE_FRAGMENT, fm, ft, null, fragment);
+    }
+
+    /**
+     * 替换fragment
+     *
+     * @param fm             fragment管理器
+     * @param containerId    布局Id
+     * @param fragment       fragment
+     * @param sharedElements 共享元素
+     */
+    public static void replace(@NonNull final FragmentManager fm,
+                               @NonNull final Fragment fragment,
+                               @IdRes final int containerId,
+                               final View... sharedElements) {
+        replace(fm, fragment, containerId, false, sharedElements);
+    }
+
+    /**
+     * 替换fragment
+     *
+     * @param fm             fragment管理器
+     * @param containerId    布局Id
+     * @param fragment       fragment
+     * @param isAddStack     是否入回退栈
+     * @param sharedElements 共享元素
+     */
+    public static void replace(@NonNull final FragmentManager fm,
+                               @NonNull final Fragment fragment,
+                               @IdRes final int containerId,
+                               final boolean isAddStack,
+                               final View... sharedElements) {
+        FragmentTransaction ft = fm.beginTransaction();
+        putArgs(fragment, new Args(containerId, false, isAddStack));
+        addSharedElement(ft, sharedElements);
+        operate(TYPE_REPLACE_FRAGMENT, fm, ft, null, fragment);
+    }
+
+    private static Args getArgs(final Fragment fragment) {
+        Bundle bundle = fragment.getArguments();
+        return new Args(bundle.getInt(ARGS_ID, fragment.getId()),
+                bundle.getBoolean(ARGS_IS_HIDE),
+                bundle.getBoolean(ARGS_IS_ADD_STACK));
     }
 
 }

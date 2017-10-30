@@ -18,11 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
-import com.zantong.mobilecttx.application.MemoryData;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.car.bean.CarBrandBean;
@@ -50,7 +51,6 @@ import com.zantong.mobilecttx.utils.UiHelpers;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
-import com.zantong.mobilecttx.utils.rsa.RSAUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 import com.zantong.mobilecttx.widght.SettingItemView;
@@ -186,9 +186,9 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
     @Override
     public void initData() {
 
-        infoBean = (CarInfoDTO) MemoryData.getInstance().mHashMap.get("ConsummateInfo");
+        infoBean = (CarInfoDTO) LoginData.getInstance().mHashMap.get("ConsummateInfo");
         if (infoBean != null) {
-            tempBean = (CarInfoDTO) MemoryData.getInstance().mHashMap.get("ConsummateInfo");
+            tempBean = (CarInfoDTO) LoginData.getInstance().mHashMap.get("ConsummateInfo");
             mPlateNum.setText(infoBean.getCarnum().substring(1, infoBean.getCarnum().length()));
             mPlateNum.setFocusable(false);
             mProvinceSelBtn.setFocusable(false);
@@ -207,7 +207,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
 
             }
             mRegisterDate.setText(infoBean.getInspectdate());
-            MemoryData.getInstance().mHashMap.remove("ConsummateInfo");
+            LoginData.getInstance().mHashMap.remove("ConsummateInfo");
         } else {
             setTitleText("添加车辆");
             mCommit.setText("保存并查询");
@@ -228,14 +228,14 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                 DialogUtils.delDialog(this, "删除提示", "您确定要删除该车辆吗？", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!MemoryData.getInstance().loginFlag) {
+                        if (!LoginData.getInstance().loginFlag) {
                             delLocalCarInfo();
                         } else {
                             dialogForDelCar();
                         }
                     }
                 });
-                MemoryData.getInstance().isDelCar = true;
+                LoginData.getInstance().isDelCar = true;
                 break;
             case R.id.add_car_province_layout://选择省
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -249,7 +249,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                 break;
             case R.id.add_car_type_layout://选车型
 
-                MemoryData.getInstance().commonListType = 3;
+                LoginData.getInstance().commonListType = 3;
                 startActivityForResult(new Intent(this, CommonListActivity.class), JxGlobal.requestCode.add_car_aty);
                 break;
             case R.id.add_car_date_layout://选日期
@@ -302,7 +302,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
 
         /* 老接口传值*/
         dto.setCarnum(mProvince.getText().toString() + mPlateNum.getTransformationMethod().getTransformation(mPlateNum.getText(), mPlateNum).toString());
-        dto.setUsrid(MemoryData.getInstance().userID);
+        dto.setUsrid(LoginData.getInstance().userID);
 
         dto.setCarnumtype(VehicleTypeTools.switchVehicleCode(mType.getText().toString()));
 
@@ -376,7 +376,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
             });
         } else {
 //未登录时直接提交到新服务器,登录时先提交旧服务器,再提交新服务器
-            if (!MemoryData.getInstance().loginFlag) {
+            if (!LoginData.getInstance().loginFlag) {
 
                 List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
                 if (isFrom) {//修改
@@ -395,11 +395,11 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                     mCommit.setClickable(false);
                     showDialogLoading();
 
-                    MemoryData.getInstance().mCarNum++;
-                    MemoryData.getInstance().mHashMap.put("carnum", dto.getCarnum());
-                    MemoryData.getInstance().mHashMap.put("enginenum", dto.getEnginenum());
-                    MemoryData.getInstance().mHashMap.put("carnumtype", dto.getCarnumtype());
-                    MemoryData.getInstance().mHashMap.put("IllegalViolationName", dto.getCarnum());//标题
+                    LoginData.getInstance().mCarNum++;
+                    LoginData.getInstance().mHashMap.put("carnum", dto.getCarnum());
+                    LoginData.getInstance().mHashMap.put("enginenum", dto.getEnginenum());
+                    LoginData.getInstance().mHashMap.put("carnumtype", dto.getCarnumtype());
+                    LoginData.getInstance().mHashMap.put("IllegalViolationName", dto.getCarnum());//标题
                     SPUtils.getInstance().getCarsInfo().add(dto);
 
                     ViolationDTO dto1 = new ViolationDTO();
@@ -422,13 +422,13 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                 hideKeyBord();
             } else {
                 LogUtils.i("老服务器");
-                params.setUsrnum(MemoryData.getInstance().userID);
+                params.setUsrnum(LoginData.getInstance().userID);
                 if (isFrom) {
                     editOldCarInfo();
                     showDialogLoading();
                     mCommit.setClickable(false);
                 } else {
-                    List<UserCarInfoBean> list1 = MemoryData.getInstance().mServerCars;
+                    List<UserCarInfoBean> list1 = LoginData.getInstance().mServerCars;
                     if (list1.size() > 0) {
                         for (int i = 0; i < list1.size(); i++) {
                             if (list1.get(i).getCarnum().equals(dto.getCarnum())) {
@@ -458,12 +458,12 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
 
                     commitCarInfoToNewServer();
 
-                    MemoryData.getInstance().mHashMap.put("carnum", carNum);
-                    MemoryData.getInstance().mHashMap.put("enginenum", carEngineNum);
-                    MemoryData.getInstance().mHashMap.put("carnumtype", dto.getCarnumtype());
-                    MemoryData.getInstance().mHashMap.put("IllegalViolationName", carNum);//标题
+                    LoginData.getInstance().mHashMap.put("carnum", carNum);
+                    LoginData.getInstance().mHashMap.put("enginenum", carEngineNum);
+                    LoginData.getInstance().mHashMap.put("carnumtype", dto.getCarnumtype());
+                    LoginData.getInstance().mHashMap.put("IllegalViolationName", carNum);//标题
 
-                    MemoryData.getInstance().mCarNum++;//车辆数+1
+                    LoginData.getInstance().mCarNum++;//车辆数+1
 
                     dto.setCarnum(carNum);
                     dto.setEnginenum(carEngineNum);
@@ -568,7 +568,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
         if (requestCode == JxGlobal.requestCode.add_car_aty
                 && resultCode == JxGlobal.resultCode.common_list_fty) {
             if (data != null) {
-                switch (MemoryData.getInstance().commonListType) {
+                switch (LoginData.getInstance().commonListType) {
                     case 3://车辆类型
                         mType.setText(data.getStringExtra(JxGlobal.putExtra.common_list_extra));
                         String[] strs = this.getResources().getStringArray(R.array.car_type);
@@ -760,7 +760,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
     private void delLocalCarInfo() {
         List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
         list.remove(infoBean);
-        MemoryData.getInstance().mCarNum--;
+        LoginData.getInstance().mCarNum--;
         hideKeyBord();
     }
 
@@ -867,7 +867,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
         CarApiClient.liYingCarManage(this, liYingCarManageDTO, new CallBack<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse result) {
-                MemoryData.getInstance().mCarNum--;
+                LoginData.getInstance().mCarNum--;
             }
         });
     }

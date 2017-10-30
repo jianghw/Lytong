@@ -51,7 +51,7 @@ public class PayRetrofit implements IRetrofitUrl {
                         Log.d("PayRetrofit", message);
                     }
                 })
-                .setLevel(BuildConfig.DEBUG
+                .setLevel(BuildConfig.App_Url
                         ? HttpLoggingInterceptor.Level.BASIC
                         : HttpLoggingInterceptor.Level.NONE);
 

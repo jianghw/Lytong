@@ -6,13 +6,13 @@ import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 import com.zantong.mobilecttx.weizhang.fragment.ViolationPayFragment;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ui.FragmentUtils;
 
 /**
  * 违章支付页面
@@ -64,7 +64,7 @@ public class ViolationPayActivity extends BaseJxActivity {
                 if (mViolationPayFragment == null) {
                     mViolationPayFragment = ViolationPayFragment.newInstance(violationBean);
                 }
-                FragmentUtils.addFragment(fragmentManager, mViolationPayFragment, R.id.lay_base_frame, false, true);
+                FragmentUtils.add(fragmentManager, mViolationPayFragment, R.id.lay_base_frame, false, true);
                 break;
             default:
                 break;
