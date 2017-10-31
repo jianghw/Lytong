@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.tzly.ctcyh.router.util.Des3;
+import com.tzly.ctcyh.router.util.rea.Des3;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.tzly.ctcyh.router.util.SHATools;
 import com.tzly.ctcyh.user.bean.BankResponse;
@@ -123,7 +123,7 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
         dto.setSYS_HEAD(requestHeadDTO);
 
         LoginDTO bean = new LoginDTO();
-        String token = RSAUtils.strByEncryption(mRepository.getPushDeviceId(), true);
+        String token = RSAUtils.strByEncryption(mRepository.getPushId(), true);
         bean.setToken(token);
         bean.setPushmode("2");
         bean.setPushswitch("0");
@@ -180,7 +180,7 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
         registerDTO.setPswd(Des3.encode(mContractView.getUserPassword()));
         registerDTO.setUsrid(mRepository.getRASUserID());
 
-        String token = RSAUtils.strByEncryption(mRepository.getPushDeviceId(), true);
+        String token = RSAUtils.strByEncryption(mRepository.getPushId(), true);
         registerDTO.setToken(token);
         registerDTO.setPushmode("2");
         registerDTO.setPushswitch("0");
@@ -226,6 +226,6 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
      */
     @Override
     public void initPhoneDeviceId() {
-        mRepository.initPhoneDeviceId();
+        mRepository.savePhoneDeviceId();
     }
 }

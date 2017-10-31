@@ -23,6 +23,12 @@ public interface IHtmlPayContract {
         void getOrderDetailSucceed(OrderDetailResponse response);
 
         void getOrderDetailError(String s);
+
+        void toastShort(String msg);
+
+        boolean isLogin();
+
+        void gotoLogin();
     }
 
     interface IHtmlPayPresenter extends IBasePresenter {

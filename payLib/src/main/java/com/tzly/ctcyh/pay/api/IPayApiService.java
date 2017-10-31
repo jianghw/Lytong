@@ -12,7 +12,7 @@ import rx.Observable;
  * 优惠卷服务器接口
  */
 
-public interface IPayService {
+public interface IPayApiService {
 
     /**
      * 5.获取工行支付页面

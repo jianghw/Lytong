@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -31,7 +32,6 @@ import java.util.HashMap;
 import butterknife.Bind;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
 
 /**
  * 代驾订单详情页面
@@ -89,7 +89,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
         mPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogUtils.createRechargeDialog(ContextUtils.getContext(),
+                DialogUtils.createRechargeDialog(Utils.getContext(),
                         mOrderId,
                         mPrice.getText().toString(),
                         "",
@@ -103,7 +103,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
                                 String payUrl = "http://139.196.183.121:8081/payment/payForWapb2cPay?orderid=" + mOrderId
                                         + "&amount=" + price + "&payType=0";
 
-                                CarApiClient.getPayOrderSn(ContextUtils.getContext(), payUrl, new CallBack<PayOrderResponse>() {
+                                CarApiClient.getPayOrderSn(Utils.getContext(), payUrl, new CallBack<PayOrderResponse>() {
                                     @Override
                                     public void onSuccess(PayOrderResponse result) {
                                         if (result.getResponseCode() == 2000) {
@@ -160,7 +160,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
         }
         dto.setTime(time);
         showDialogLoading();
-        CarApiClient.getDaiJiaOrderDetail(ContextUtils.getContext(), dto, new CallBack<DaiJiaOrderDetailResponse>() {
+        CarApiClient.getDaiJiaOrderDetail(Utils.getContext(), dto, new CallBack<DaiJiaOrderDetailResponse>() {
             @Override
             public void onSuccess(DaiJiaOrderDetailResponse result) {
                 hideDialogLoading();

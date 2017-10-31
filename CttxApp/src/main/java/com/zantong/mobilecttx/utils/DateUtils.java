@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.tzly.ctcyh.router.util.LogUtils;
+
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -12,7 +14,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * Created by zhengyingbing on 16/6/8.

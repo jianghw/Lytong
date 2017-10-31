@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.guide_v;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -7,11 +8,10 @@ import android.widget.TextView;
 
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
-import com.tzly.ctcyh.router.UiRouter;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.SPUtils;
 
 import java.util.ArrayList;
@@ -35,7 +35,12 @@ public class GuideCTActivity extends JxBaseActivity
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
+        onNewIntent(getIntent());
+    }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null)
             arrayList = bundle.getParcelableArrayList(GUIDE_PIC);
@@ -103,7 +108,6 @@ public class GuideCTActivity extends JxBaseActivity
     }
 
 
-
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.guide_open:
@@ -112,14 +116,8 @@ public class GuideCTActivity extends JxBaseActivity
         }
     }
 
-
     private void gotoActivity() {
-        Bundle bundle = new Bundle();
-        bundle.putInt(MainGlobal.putExtra.home_position_extra, 0);
-        UiRouter.getInstance().openUriBundle(this,
-                MainGlobal.Scheme.main_scheme + "://" + MainGlobal.Host.home_host,
-                bundle);
-
+        MainRouter.gotoMainActivity(this, 0);
         SPUtils.getInstance().setIsGuide(String.valueOf(mVersionCode));
         finish();
     }

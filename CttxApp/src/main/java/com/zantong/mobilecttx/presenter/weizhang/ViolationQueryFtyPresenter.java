@@ -13,8 +13,8 @@ import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.contract.IViolationQueryFtyContract;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 
 import java.io.File;
 

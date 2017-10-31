@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.model.repository;
+package com.zantong.mobilecttx.data_m;
 
 import android.text.TextUtils;
 
@@ -19,7 +19,6 @@ import com.zantong.mobilecttx.api.ISplashService;
 import com.zantong.mobilecttx.api.ITextService;
 import com.zantong.mobilecttx.api.IUserService;
 import com.zantong.mobilecttx.api.IViolationService;
-import cn.qqtheme.framework.bean.BankResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseResponse;
@@ -76,6 +75,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.bean.response.SubjectGoodsResponse;
 import okhttp3.MultipartBody;
@@ -100,24 +100,16 @@ public class RemoteData implements IRemoteSource {
         static final RemoteData INSTANCE = new RemoteData();
     }
 
-    private Retrofit initRetrofit() {
+    private Retrofit baseRetrofit() {
         return RetrofitFactory.getInstance().createRetrofit(1);
     }
 
-    private Retrofit initAppUrlRetrofit() {
+    private Retrofit bankRetrofit() {
         return RetrofitFactory.getInstance().createRetrofit(2);
     }
 
-    private Retrofit initBaseUrlRetrofit() {
-        return RetrofitFactory.getInstance().createRetrofit(3);
-    }
-
-    private Retrofit initTestRetrofit(int type) {
-        return RetrofitFactory.getInstance().createRetrofit(type);
-    }
-
     private Retrofit initImageRetrofit() {
-        return RetrofitFactory.getInstance().createRetrofit(5);
+        return RetrofitFactory.getInstance().createRetrofit(3);
     }
 
     /**
@@ -125,17 +117,17 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<MessageTypeResponse> messageFindAll(BaseDTO bean) {
-        return initRetrofit().create(IMessageService.class).messageFindAll(bean);
+        return baseRetrofit().create(IMessageService.class).messageFindAll(bean);
     }
 
     @Override
     public Observable<MessageResponse> findMessageDetailByMessageId(MegDTO bean) {
-        return initRetrofit().create(IMessageService.class).findMessageDetailByMessageId(bean);
+        return baseRetrofit().create(IMessageService.class).findMessageDetailByMessageId(bean);
     }
 
     @Override
     public Observable<MessageDetailResponse> findMessageDetail(MessageDetailDTO bean) {
-        return initRetrofit().create(IMessageService.class).findMessageDetail(bean);
+        return baseRetrofit().create(IMessageService.class).findMessageDetail(bean);
     }
 
     /**
@@ -143,7 +135,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<MessageResponse> deleteMessageDetail(MegDTO megDTO) {
-        return initRetrofit().create(IMessageService.class).deleteMessageDetail(megDTO);
+        return baseRetrofit().create(IMessageService.class).deleteMessageDetail(megDTO);
     }
 
     /**
@@ -151,7 +143,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<CouponFragmentResponse> usrCouponInfo(String usrnum, String couponStatus) {
-        return initRetrofit().create(IFebruaryService.class).usrCouponInfo(usrnum, couponStatus);
+        return baseRetrofit().create(IFebruaryService.class).usrCouponInfo(usrnum, couponStatus);
     }
 
     /**
@@ -159,7 +151,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<MessageResponse> delUsrCoupon(String couponId, String userId) {
-        return initRetrofit().create(IFebruaryService.class).delUsrCoupon(couponId, userId);
+        return baseRetrofit().create(IFebruaryService.class).delUsrCoupon(couponId, userId);
     }
 
     /**
@@ -170,7 +162,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<LicenseResponseBean> driverLicenseCheckGrade(String requestDTO) {
-        return initAppUrlRetrofit().create(IBankService.class).driverLicenseCheckGrade(requestDTO);
+        return bankRetrofit().create(IBankService.class).driverLicenseCheckGrade(requestDTO);
     }
 
     /**
@@ -182,7 +174,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<LoginInfoBean> loadLoginPost(String msg) {
-        return initAppUrlRetrofit().create(CTTXHttpPOSTInterface.class).loadPost(msg);
+        return bankRetrofit().create(CTTXHttpPOSTInterface.class).loadPost(msg);
     }
 
     /**
@@ -193,7 +185,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<StartPicResponse> startGetPic(String msg) {
-        return initRetrofit().create(ISplashService.class).startGetPic(msg);
+        return baseRetrofit().create(ISplashService.class).startGetPic(msg);
     }
 
     /**
@@ -201,7 +193,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<RechargeCouponResponse> getCouponByType(String userId, String type) {
-        return initRetrofit().create(IFebruaryService.class).getConponByType(userId, type);
+        return baseRetrofit().create(IFebruaryService.class).getConponByType(userId, type);
     }
 
     /**
@@ -209,7 +201,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<RechargeResponse> addOilCreateOrder(RechargeDTO rechargeDTO) {
-        return initRetrofit().create(IAddOilService.class).addOilCreateOrder(rechargeDTO);
+        return baseRetrofit().create(IAddOilService.class).addOilCreateOrder(rechargeDTO);
     }
 
     /**
@@ -217,7 +209,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<PayOrderResponse> onPayOrderByCoupon(String payUrl, String orderPrice, String payType) {
-        return initRetrofit().create(IAddOilService.class).onPayOrderByCoupon(payUrl, orderPrice, payType);
+        return baseRetrofit().create(IAddOilService.class).onPayOrderByCoupon(payUrl, orderPrice, payType);
     }
 
     /**
@@ -225,12 +217,12 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<PayOrderResponse> paymentCreateOrder(ViolationPayDTO payDTO) {
-        return initRetrofit().create(IViolationService.class).paymentCreateOrder(payDTO);
+        return baseRetrofit().create(IViolationService.class).paymentCreateOrder(payDTO);
     }
 
     @Override
     public Observable<ViolationNumBean> numberedQuery(String msg) {
-        return initAppUrlRetrofit().create(IBankService.class).numberedQuery(msg);
+        return bankRetrofit().create(IBankService.class).numberedQuery(msg);
     }
 
     /**
@@ -238,7 +230,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<HomeResponse> homePage(HomeDataDTO id) {
-        return initRetrofit().create(ICttxService.class).homePage(id);
+        return baseRetrofit().create(ICttxService.class).homePage(id);
     }
 
     /**
@@ -246,7 +238,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<UserCarsResult> getRemoteCarInfo(String requestDTO) {
-        return initAppUrlRetrofit().create(IBankService.class).getRemoteCarInfo(requestDTO);
+        return bankRetrofit().create(IBankService.class).getRemoteCarInfo(requestDTO);
     }
 
     /**
@@ -254,7 +246,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<MessageCountResponse> countMessageDetail(BaseDTO baseDTO) {
-        return initRetrofit().create(IMessageService.class).countMessageDetail(baseDTO);
+        return baseRetrofit().create(IMessageService.class).countMessageDetail(baseDTO);
     }
 
     /**
@@ -262,7 +254,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<BannerResponse> getBanner(String type) {
-        return initRetrofit().create(IBannerService.class).getBanner(type);
+        return baseRetrofit().create(IBannerService.class).getBanner(type);
     }
 
     /**
@@ -278,7 +270,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<MerchantAresResponse> getMerchantArea() {
-        return initRetrofit().create(IGoodsService.class).getMerchantArea();
+        return baseRetrofit().create(IGoodsService.class).getMerchantArea();
     }
 
     /**
@@ -286,7 +278,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<AresGoodsResponse> getAreaGoods(int areaCode) {
-        return initRetrofit().create(IGoodsService.class).getAreaGoods(areaCode);
+        return baseRetrofit().create(IGoodsService.class).getAreaGoods(areaCode);
     }
 
     /**
@@ -346,7 +338,7 @@ public class RemoteData implements IRemoteSource {
         if (!TextUtils.isEmpty(createOrder.getDriveNum()))
             options.put("driveNum", createOrder.getDriveNum());
 
-        return initRetrofit().create(IGoodsService.class).createOrder(options);
+        return baseRetrofit().create(IGoodsService.class).createOrder(options);
     }
 
     /**
@@ -354,7 +346,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<RecordCountResponse> getRecordCount(String type, String phone) {
-        return initRetrofit().create(IFebruaryService.class).getRecordCount(type, phone);
+        return baseRetrofit().create(IFebruaryService.class).getRecordCount(type, phone);
     }
 
     /**
@@ -362,7 +354,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<BankResponse> commitCarInfoToOldServer(String msg) {
-        return initAppUrlRetrofit().create(IBankService.class).commitCarInfoToOldServer(msg);
+        return bankRetrofit().create(IBankService.class).commitCarInfoToOldServer(msg);
     }
 
     /**
@@ -370,7 +362,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<BaseResponse> commitCarInfoToNewServer(BindCarDTO bindCarDTO) {
-        return initRetrofit().create(ICttxService.class).commitCarInfoToNewServer(bindCarDTO);
+        return baseRetrofit().create(ICttxService.class).commitCarInfoToNewServer(bindCarDTO);
     }
 
     /**
@@ -378,7 +370,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<PayOrderResponse> getBankPayHtml(String orderId, String orderPrice) {
-        return initRetrofit().create(IPayService.class).getBankPayHtml(orderId, orderPrice);
+        return baseRetrofit().create(IPayService.class).getBankPayHtml(orderId, orderPrice);
     }
 
     /**
@@ -386,7 +378,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<OrderListResponse> getOrderList(String userId) {
-        return initRetrofit().create(IOrderService.class).getOrderList(userId);
+        return baseRetrofit().create(IOrderService.class).getOrderList(userId);
     }
 
     /**
@@ -394,7 +386,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<OrderDetailResponse> getOrderDetail(String orderId) {
-        return initRetrofit().create(IOrderService.class).getOrderDetail(orderId);
+        return baseRetrofit().create(IOrderService.class).getOrderDetail(orderId);
     }
 
     /**
@@ -402,7 +394,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<BaseResponse> updateOrderStatus(String orderId, int orderStatus) {
-        return initRetrofit().create(IOrderService.class).updateOrderStatus(orderId, String.valueOf(orderStatus));
+        return baseRetrofit().create(IOrderService.class).updateOrderStatus(orderId, String.valueOf(orderStatus));
     }
 
     /**
@@ -410,7 +402,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<GoodsDetailResponse> getGoodsDetail(String goodsId) {
-        return initRetrofit().create(IGoodsService.class).getGoodsDetail(goodsId);
+        return baseRetrofit().create(IGoodsService.class).getGoodsDetail(goodsId);
     }
 
     /**
@@ -418,7 +410,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<HomeCarResponse> getTextNoticeInfo(String defaultUserID) {
-        return initRetrofit().create(ITextService.class).getTextNoticeInfo(defaultUserID);
+        return baseRetrofit().create(ITextService.class).getTextNoticeInfo(defaultUserID);
     }
 
     /**
@@ -426,7 +418,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<BaseResponse> handleViolations(ViolationCarDTO violationResult) {
-        return initRetrofit().create(ITextService.class).HandleViolationDTO(violationResult);
+        return baseRetrofit().create(ITextService.class).HandleViolationDTO(violationResult);
     }
 
     /**
@@ -435,7 +427,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<ViolationResultParent> searchViolation(String msg) {
-        return initAppUrlRetrofit().create(IBankService.class).searchViolation(msg);
+        return bankRetrofit().create(IBankService.class).searchViolation(msg);
     }
 
     /**
@@ -443,7 +435,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<PayCarResult> getPayCars(String msg) {
-        return initAppUrlRetrofit().create(IBankService.class).getPayCars(msg);
+        return bankRetrofit().create(IBankService.class).getPayCars(msg);
     }
 
     /**
@@ -451,7 +443,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<VehicleLicenseResponse> addOrUpdateVehicleLicense(List<BindCarDTO> dtoList) {
-        return initRetrofit().create(ICttxService.class).addOrUpdateVehicleLicense(dtoList);
+        return baseRetrofit().create(ICttxService.class).addOrUpdateVehicleLicense(dtoList);
     }
 
     /**
@@ -459,7 +451,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<DriverCoachResponse> getDriverCoach(String phone) {
-        return initRetrofit().create(IUserService.class).getDriverCoach(phone);
+        return baseRetrofit().create(IUserService.class).getDriverCoach(phone);
     }
 
     /**
@@ -467,7 +459,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<BaseResponse> addVehicleLicense(BindCarDTO bindCarDTO) {
-        return initRetrofit().create(ICttxService.class).addVehicleLicense(bindCarDTO);
+        return baseRetrofit().create(ICttxService.class).addVehicleLicense(bindCarDTO);
     }
 
     /**
@@ -475,7 +467,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<BaseResponse> removeVehicleLicense(BindCarDTO bindCarDTO) {
-        return initRetrofit().create(ICttxService.class).removeVehicleLicense(bindCarDTO);
+        return baseRetrofit().create(ICttxService.class).removeVehicleLicense(bindCarDTO);
     }
 
     /**
@@ -483,7 +475,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<BaseResponse> updateVehicleLicense(BindCarDTO bindCarDTO) {
-        return initRetrofit().create(ICttxService.class).updateVehicleLicense(bindCarDTO);
+        return baseRetrofit().create(ICttxService.class).updateVehicleLicense(bindCarDTO);
     }
 
     /**
@@ -491,12 +483,12 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<SubjectGoodsResponse> getGoods(String type) {
-        return initRetrofit().create(IGoodsService.class).getGoods(type);
+        return baseRetrofit().create(IGoodsService.class).getGoods(type);
     }
 
     @Override
     public Observable<SparringGoodsResponse> getGoodsFive(String type) {
-        return initRetrofit().create(IGoodsService.class).getGoodsFive(type);
+        return baseRetrofit().create(IGoodsService.class).getGoodsFive(type);
     }
 
     /**
@@ -504,7 +496,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<SparringAreaResponse> getServiceArea() {
-        return initRetrofit().create(IDriverTrainService.class).getServiceArea();
+        return baseRetrofit().create(IDriverTrainService.class).getServiceArea();
     }
 
     /**
@@ -512,7 +504,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<ServerTimeResponse> getServerTime() {
-        return initRetrofit().create(IDriverTrainService.class).getServerTime();
+        return baseRetrofit().create(IDriverTrainService.class).getServerTime();
     }
 
     /**
@@ -520,7 +512,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<BaseResponse> cancelOrder(String orderId, String userNum) {
-        return initRetrofit().create(IOrderService.class).cancelOrder(orderId, userNum);
+        return baseRetrofit().create(IOrderService.class).cancelOrder(orderId, userNum);
     }
 
     /**
@@ -528,7 +520,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<YearCheckResponse> annualInspectionList(AnnualDTO annualDTO) {
-        return initRetrofit().create(ICttxService.class).annualInspectionList(annualDTO);
+        return baseRetrofit().create(ICttxService.class).annualInspectionList(annualDTO);
     }
 
     /**
@@ -536,7 +528,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<YearCheckDetailResponse> annualInspection(int id) {
-        return initRetrofit().create(ICttxService.class).annualInspection(id);
+        return baseRetrofit().create(ICttxService.class).annualInspection(id);
     }
 
     /**
@@ -544,7 +536,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<GasStationDetailResponse> gasStation(int id) {
-        return initRetrofit().create(ICttxService.class).gasStation(id);
+        return baseRetrofit().create(ICttxService.class).gasStation(id);
     }
 
     /**
@@ -552,7 +544,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<GasStationResponse> gasStationList(AnnualDTO annualDTO) {
-        return initRetrofit().create(ICttxService.class).gasStationList(annualDTO);
+        return baseRetrofit().create(ICttxService.class).gasStationList(annualDTO);
     }
 
     /**
@@ -561,7 +553,7 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<ModuleResponse> moduleTree() {
 
-        return initRetrofit().create(IModuleService.class).moduleTree();
+        return baseRetrofit().create(IModuleService.class).moduleTree();
     }
 
     /**
@@ -569,7 +561,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<OrderExpressResponse> getAllAreas() {
-        return initRetrofit().create(IRegionService.class).getAllAreas();
+        return baseRetrofit().create(IRegionService.class).getAllAreas();
     }
 
     /**
@@ -577,7 +569,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<BaseResponse> addExpressInfo(ExpressDTO expressDTO) {
-        return initRetrofit().create(IOrderService.class).addExpressInfo(expressDTO);
+        return baseRetrofit().create(IOrderService.class).addExpressInfo(expressDTO);
     }
 
     /**
@@ -585,7 +577,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<ReceiveInfoResponse> getReceiveInfo(String orderId) {
-        return initRetrofit().create(IOrderService.class).getReceiveInfo(orderId);
+        return baseRetrofit().create(IOrderService.class).getReceiveInfo(orderId);
     }
 
     /**
@@ -594,6 +586,6 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<BaseResponse> updateState(List<ViolationNum> json) {
-        return initRetrofit().create(IPayService.class).updateState(json);
+        return baseRetrofit().create(IPayService.class).updateState(json);
     }
 }

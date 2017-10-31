@@ -11,8 +11,8 @@ import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 
 import rx.Subscription;
@@ -85,7 +85,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
     @Override
     public HomeDataDTO initHomeDataDTO() {
         HomeDataDTO params = new HomeDataDTO();
-        params.setUserId(mRepository.getDefaultRASUserID());
+        params.setUserId(mRepository.getDefaultUserID());
         return params;
     }
 
@@ -137,7 +137,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
      */
     @Override
     public void getTextNoticeInfo() {
-        Subscription subscription = mRepository.getTextNoticeInfo(mRepository.getDefaultRASUserID())
+        Subscription subscription = mRepository.getTextNoticeInfo(mRepository.getDefaultUserID())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HomeCarResponse>() {

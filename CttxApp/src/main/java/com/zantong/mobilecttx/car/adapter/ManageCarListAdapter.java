@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
-import com.tzly.ctcyh.router.util.Des3;
+import com.tzly.ctcyh.router.util.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
 

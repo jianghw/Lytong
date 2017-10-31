@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
-import com.tzly.ctcyh.router.util.Des3;
+import com.tzly.ctcyh.router.util.rea.Des3;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.R;
@@ -26,7 +26,6 @@ import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.eventbus.GetMsgAgainEvent;
-import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.home.adapter.HorizontalCarViolationAdapter;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.adapter.MainBannerImgHolderView;
@@ -38,7 +37,7 @@ import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.presenter.home.UnimpededFtyPresenter;
 import com.zantong.mobilecttx.push_v.PushBean;
-import com.zantong.mobilecttx.user.activity.MegTypeActivity;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.bean.MessageCountBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResponse;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
@@ -237,7 +236,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     private void resumeDataVisible() {
         mPresenter.homePage();
 
-        if (MemoryData.getInstance().isLogin()) {
+        if (MemoryData.getInstance().isMainLogin()) {
             mPresenter.getTextNoticeInfo();
         } else {
             getLocalCarInfo();
@@ -500,8 +499,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
             case R.id.img_msg://消息
             case R.id.tv_msg_count:
                 JxConfig.getInstance().eventIdByUMeng(15);
-
-                Act.getInstance().gotoIntentLogin(getActivity(), MegTypeActivity.class);
+                MainRouter.gotoMegTypeActivity(getActivity());
                 break;
             case R.id.img_scan://扫描
             case R.id.tv_scan:
@@ -548,7 +546,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
     protected void licenseCheckGrade() {
         LicenseFileNumDTO bean = SPUtils.getInstance().getLicenseFileNumDTO();
-        if (!LoginData.getInstance().loginFlag ||
+        if (!MemoryData.getInstance().isMainLogin() ||
                 bean == null && TextUtils.isEmpty(LoginData.getInstance().filenum)) {
             Act.getInstance().gotoIntentLogin(getActivity(), LicenseCheckGradeActivity.class);
         } else if (bean != null || !TextUtils.isEmpty(LoginData.getInstance().filenum)
@@ -579,27 +577,33 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_PHONE_STATE});
         } else {
-            Intent intent = new Intent();
-            intent.putExtra(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
-            Act.getInstance().gotoLoginByIntent(getActivity(), BaiduMapParentActivity.class, intent);
+            gotoOilMap();
         }
     }
 
+    private void gotoOilMap() {
+        Intent intent = new Intent();
+        intent.putExtra(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
+        Act.getInstance().gotoLoginByIntent(getActivity(), BaiduMapParentActivity.class, intent);
+    }
+
     /**
-     * 进入年检页面
+     * 进入地图年检页面
      */
     public void enterDrivingActivity() {
-        if (!LoginData.getInstance().loginFlag) {
-            Act.getInstance().gotoIntentLogin(getActivity(), BaiduMapParentActivity.class);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             PermissionGen.needPermission(this, 2000, new String[]{
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_PHONE_STATE});
         } else {
-            Act.getInstance().gotoIntentLogin(getActivity(), BaiduMapParentActivity.class);
+            gotoMap();
         }
+    }
+
+    private void gotoMap() {
+        MainRouter.gotoMapActivity(getActivity());
     }
 
     /**
@@ -614,9 +618,11 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                             Manifest.permission.WRITE_EXTERNAL_STORAGE}
             );
         } else {
-            Act.getInstance().lauchIntent(getActivity(), CaptureActivity.class);
+            gotoCapture();
         }
     }
+
+    private void gotoCapture() {MainRouter.gotoCaptureActivity(getActivity());}
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -626,7 +632,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
     @PermissionSuccess(requestCode = PER_REQUEST_CODE)
     public void doPermissionSuccess() {
-        Act.getInstance().lauchIntent(getActivity(), CaptureActivity.class);
+        gotoCapture();
     }
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)
@@ -640,7 +646,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
     @PermissionSuccess(requestCode = 2000)
     public void doDrivingSuccess() {
-        Act.getInstance().gotoIntentLogin(getActivity(), BaiduMapParentActivity.class);
+        gotoMap();
     }
 
     @PermissionFail(requestCode = 2000)
@@ -653,9 +659,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
      */
     @PermissionSuccess(requestCode = 3000)
     public void doMapPermissionSuccess() {
-        Intent intent = new Intent();
-        intent.putExtra(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
-        Act.getInstance().gotoLoginByIntent(getActivity(), BaiduMapParentActivity.class, intent);
+        gotoOilMap();
     }
 
     @PermissionFail(requestCode = 3000)

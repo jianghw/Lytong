@@ -37,10 +37,11 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
-import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.IBaiduMapContract;
 import com.zantong.mobilecttx.map.bean.GasStation;
 import com.zantong.mobilecttx.map.bean.GasStationDetail;
@@ -58,7 +59,6 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import java.util.List;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ui.DensityUtils;
 
@@ -191,7 +191,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
         initView();
 
         BaiduMapPresenter presenter = new BaiduMapPresenter(
-                Injection.provideRepository(ContextUtils.getContext()), this);
+                Injection.provideRepository(Utils.getContext()), this);
 
         //获取传感器管理服务
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);

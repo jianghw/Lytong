@@ -18,7 +18,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -70,7 +72,6 @@ import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -228,7 +229,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                 DialogUtils.delDialog(this, "删除提示", "您确定要删除该车辆吗？", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!LoginData.getInstance().loginFlag) {
+                        if (!MemoryData.getInstance().isMainLogin()) {
                             delLocalCarInfo();
                         } else {
                             dialogForDelCar();
@@ -376,7 +377,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
             });
         } else {
 //未登录时直接提交到新服务器,登录时先提交旧服务器,再提交新服务器
-            if (!LoginData.getInstance().loginFlag) {
+            if (!MemoryData.getInstance().isMainLogin()) {
 
                 List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
                 if (isFrom) {//修改

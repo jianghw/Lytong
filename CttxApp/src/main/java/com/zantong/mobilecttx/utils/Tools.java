@@ -11,12 +11,12 @@ import android.text.InputType;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.tzly.ctcyh.router.util.Utils;
+
 import java.io.File;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import cn.qqtheme.framework.util.ContextUtils;
 
 /**
  * Created by Administrator on 2016/5/4.
@@ -70,7 +70,7 @@ public class Tools {
     }
 
     public static String getIMEI() {
-        Context context = ContextUtils.getContext();
+        Context context = Utils.getContext();
         String imei = "00000000";
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         try {

@@ -3,7 +3,6 @@ package com.tzly.ctcyh.pay.data_m;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.tzly.ctcyh.service.MemoryData;
 
@@ -40,7 +39,6 @@ public class LocalData implements ILocalSource {
 
     @Override
     public String getUserID() {
-        Log.e("user===", MemoryData.getInstance().getUserID());
-        return MemoryData.getInstance().getUserID();
+        return MemoryData.getInstance().getGlobalUserID();
     }
 }

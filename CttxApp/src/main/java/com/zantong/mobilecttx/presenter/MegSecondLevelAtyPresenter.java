@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.presenter;
 import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.contract.IMegSecondLevelAtyContract;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.user.bean.Meg;
 import com.zantong.mobilecttx.order.bean.MessageResponse;
 import com.zantong.mobilecttx.user.dto.MegDTO;

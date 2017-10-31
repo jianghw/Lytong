@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
@@ -13,8 +14,6 @@ import com.zantong.mobilecttx.car.adapter.CarChooseXiAdapter;
 import com.zantong.mobilecttx.car.bean.CarLinkageResponse;
 import com.zantong.mobilecttx.car.bean.CarXiBean;
 import com.zantong.mobilecttx.car.dto.CarLinkageDTO;
-
-import cn.qqtheme.framework.util.ContextUtils;
 
 public class CarChooseXiFragment extends BaseRecyclerListJxFragment<CarXiBean> {
 
@@ -45,7 +44,7 @@ public class CarChooseXiFragment extends BaseRecyclerListJxFragment<CarXiBean> {
         carLinkageDTO.setModelsId("");
         carLinkageDTO.setSeriesId("");
         carLinkageDTO.setBrandId(String.valueOf(id));
-        CarApiClient.liYingCarLinkage(ContextUtils.getContext(), carLinkageDTO,
+        CarApiClient.liYingCarLinkage(Utils.getContext(), carLinkageDTO,
                 new CallBack<CarLinkageResponse>() {
                     @Override
                     public void onSuccess(CarLinkageResponse result) {

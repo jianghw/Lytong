@@ -16,13 +16,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.FileUploadApi;
-import com.zantong.mobilecttx.application.LoginData;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
-import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.contract.UserInfoUpdateView;
 import com.zantong.mobilecttx.presenter.UserInfoUpdatePresenter;
 import com.zantong.mobilecttx.utils.StringUtils;
@@ -41,7 +42,6 @@ import butterknife.OnClick;
 import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.image.ImageLoadUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -103,9 +103,9 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
     @Override
     public void initData() {
         File file = getHeadImageFile();
-        if (file == null && LoginData.getInstance().mLoginInfoBean != null)
+        if (file == null)
             ImageLoadUtils.loadHead(
-                    LoginData.getInstance().mLoginInfoBean.getPortrait(),
+                    MemoryData.getInstance().getPortrait(),
                     user_head_image
             );
     }
@@ -113,13 +113,16 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
     @Override
     protected void onResume() {
         super.onResume();
-        if (!Tools.isStrEmpty(LoginData.getInstance().mLoginInfoBean.getNickname())) {
-            user_info_name_text.setText(LoginData.getInstance().mLoginInfoBean.getNickname());
-        } else {
-            user_info_name_text.setText(LoginData.getInstance().mLoginInfoBean.getPhoenum().substring(7));
+        String nickname = MemoryData.getInstance().getNickname();
+        String phoenum = MemoryData.getInstance().getPhoenum();
+
+        if (!TextUtils.isEmpty(nickname)) {
+            user_info_name_text.setText(nickname);
+        } else if (!TextUtils.isEmpty(phoenum) && phoenum.length() > 7) {
+            user_info_name_text.setText(phoenum.substring(7));
         }
-        String phone = StringUtils.getEncrypPhone(LoginData.getInstance().mLoginInfoBean.getPhoenum());
-        user_info_phone_text.setText(phone);
+        String phoneX = StringUtils.getEncrypPhone(phoenum);
+        user_info_phone_text.setText(phoneX);
     }
 
     @Override
@@ -398,11 +401,11 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
 
         Map<String, RequestBody> params = new HashMap<>();
         RequestBody body = RequestBody.create(MediaType.parse("image/jpeg"), temFile);
-        String imagFileName = "";
-        String[] imageUrls = LoginData.getInstance().mLoginInfoBean.getPortrait().split("\\/");
+        String imagFileName;
+        String[] imageUrls =MemoryData.getInstance().getPortrait().split("\\/");
 
-        if (Tools.isStrEmpty(LoginData.getInstance().mLoginInfoBean.getPortrait())) {
-            imagFileName = LoginData.getInstance().userID + ".jpg";
+        if (Tools.isStrEmpty(MemoryData.getInstance().getPortrait())) {
+            imagFileName = MemoryData.getInstance().getGlobalUserID() + ".jpg";
         } else {
             imagFileName = imageUrls[imageUrls.length - 1];
         }
@@ -426,10 +429,10 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
                             url = json.get("url").toString();
 
                             mapData().put("portrait", url);
-                            if (Tools.isStrEmpty(LoginData.getInstance().mLoginInfoBean.getPortrait())) {
+                            if (Tools.isStrEmpty(MemoryData.getInstance().getPortrait())) {
                                 mUserInfoUpdatePresenter.loadView(1);
                             } else {
-                                ImageLoadUtils.loadHead(LoginData.getInstance().mLoginInfoBean.getPortrait(), user_head_image);
+                                ImageLoadUtils.loadHead(MemoryData.getInstance().getPortrait(), user_head_image);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

@@ -23,10 +23,11 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.contract.InterfaceForJS;
 import com.zantong.mobilecttx.contract.browser.IHtmlBrowserContract;
@@ -48,7 +49,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
@@ -367,7 +367,7 @@ public class BrowserHtmlActivity extends BaseJxActivity implements IHtmlBrowserC
      * @param flag (0 分享到微信好友 1 分享到微信朋友圈)
      */
     private void wechatShare(int flag) {
-        IWXAPI api = WXAPIFactory.createWXAPI(ContextUtils.getContext(), WXEntryActivity.APP_ID, true);
+        IWXAPI api = WXAPIFactory.createWXAPI(Utils.getContext(), WXEntryActivity.APP_ID, true);
         api.registerApp(WXEntryActivity.APP_ID);
 
         if (!api.isWXAppInstalled()) {

@@ -10,6 +10,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -32,8 +34,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.ContextUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
 
 public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView, HelpPresenter> implements ItemClickListener {
 
@@ -79,7 +79,7 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView, HelpPre
         ViolationSearchDTO dto = new ViolationSearchDTO();
         dto.setDate(mDate);
         dto.setUsernum(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
-        CarApiClient.getViolationHistory(ContextUtils.getContext(), dto,
+        CarApiClient.getViolationHistory(Utils.getContext(), dto,
                 new CallBack<ViolationHistoryBean>() {
                     @Override
                     public void onSuccess(ViolationHistoryBean result) {

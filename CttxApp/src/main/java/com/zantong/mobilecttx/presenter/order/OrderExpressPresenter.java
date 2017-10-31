@@ -4,8 +4,8 @@ package com.zantong.mobilecttx.presenter.order;
 import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.contract.IOrderExpressContract;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.order.bean.ChildrenBean;
 import com.zantong.mobilecttx.order.bean.ChildrenBeanX;
 import com.zantong.mobilecttx.order.bean.OrderExpressBean;
@@ -338,7 +338,7 @@ public class OrderExpressPresenter
     @Override
     public ExpressDTO initExpressDTO() {
         ExpressDTO expressDTO = new ExpressDTO();
-        expressDTO.setUserNum(mRepository.getDefaultRASUserID());
+        expressDTO.setUserNum(mRepository.getDefaultUserID());
         expressDTO.setExpressId("1");
         expressDTO.setOrderId(mAtyView.getOrderId());
         expressDTO.setSendName(mAtyView.getUserName());

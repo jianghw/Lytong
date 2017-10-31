@@ -10,8 +10,8 @@ import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResponse;
 import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResponse;
 import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -218,7 +218,7 @@ public class SparringSubscribePresenter
 
     @Override
     public String initUserId() {
-        return mRepository.getDefaultRASUserID();
+        return mRepository.getDefaultUserID();
     }
 
     /**
@@ -309,7 +309,7 @@ public class SparringSubscribePresenter
         CreateOrderDTO orderDTO = mAtyView.getCreateOrderDTO();
         orderDTO.setType("5");
         orderDTO.setPayType("1");
-        orderDTO.setUserNum(mRepository.getDefaultRASUserID());
+        orderDTO.setUserNum(mRepository.getDefaultUserID());
 
         if (mAtyView.getUseCoupon())
             orderDTO.setCouponId(mAtyView.getCouponId());

@@ -11,10 +11,11 @@ import android.widget.RemoteViews;
 import com.alibaba.sdk.android.push.MessageReceiver;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.google.gson.Gson;
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
-import com.zantong.mobilecttx.home_v.HomeMainActivity;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
+import com.zantong.mobilecttx.home_v.HomeMainActivity;
 import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.Tools;
@@ -27,8 +28,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import cn.qqtheme.framework.util.log.LogUtils;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.alibaba.sdk.android.ams.common.global.AmsGlobalHolder.getPackageName;

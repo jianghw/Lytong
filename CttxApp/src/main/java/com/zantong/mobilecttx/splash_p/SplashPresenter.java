@@ -4,8 +4,10 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.tzly.ctcyh.router.util.Des3;
+import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.rea.Des3;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
@@ -17,8 +19,8 @@ import com.zantong.mobilecttx.car.bean.VehicleLicenseResponse;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.home.bean.StartPicResponse;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
@@ -37,7 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import cn.qqtheme.framework.util.log.LogUtils;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -68,12 +69,12 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
 
     private String getStartTime() {
         String nowMonth = Tools.getYearDate().substring(4, 6);
-        String oldMonth = LoginData.getInstance().mLoginInfoBean.getGetdate().substring(4, 6);
+        String oldMonth = MemoryData.getInstance().getGetdate().substring(4, 6);
         String startTime = "";
         if (Integer.parseInt(nowMonth) > Integer.parseInt(oldMonth)) {
-            startTime = Tools.getYearDate().substring(0, 4) + LoginData.getInstance().mLoginInfoBean.getGetdate().substring(4);
+            startTime = Tools.getYearDate().substring(0, 4) +  MemoryData.getInstance().getGetdate().substring(4);
         } else {
-            startTime = LoginData.getInstance().mLoginInfoBean.getGetdate();
+            startTime =  MemoryData.getInstance().getGetdate();
         }
         return startTime;
     }
@@ -175,7 +176,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
                     bindCarDTO.setEngineNo(RSAUtils.strByEncryption(
                             Des3.decode(userCarInfoBean.getEnginenum()), true));
                     bindCarDTO.setVehicleType(userCarInfoBean.getCarnumtype());
-                    bindCarDTO.setUsrnum(mRepository.getDefaultRASUserID());
+                    bindCarDTO.setUsrnum(mRepository.getDefaultUserID());
                     bindCarDTO.setIsPay(!TextUtils.isEmpty(userCarInfoBean.getIspaycar())
                             ? Integer.valueOf(userCarInfoBean.getIspaycar()) : 0);
                     bindCarDTO.setIssueDate(userCarInfoBean.getInspectdate());
@@ -196,7 +197,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
                     bindCarDTO.setEngineNo(RSAUtils.strByEncryption(
                             Des3.decode(userCarInfoBean.getEnginenum()), true));
                     bindCarDTO.setVehicleType(userCarInfoBean.getCarnumtype());
-                    bindCarDTO.setUsrnum(mRepository.getDefaultRASUserID());
+                    bindCarDTO.setUsrnum(mRepository.getDefaultUserID());
                     bindCarDTO.setIsPay(1);
 
                     bindCarDTOList.add(bindCarDTO);
@@ -273,7 +274,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
 
         String fileNum = "3101147014160528";
         bean.setViolationnum(fileNum);
-        bean.setToken(mRepository.getDefaultRASUserID());
+        bean.setToken(mRepository.getDefaultUserID());
 
         dto.setReqInfo(bean);
         return new Gson().toJson(dto);
@@ -290,7 +291,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
         try {
             String pwd = mRepository.readLoginPassword();
             if (Tools.isStrEmpty(pwd)) throw new IllegalArgumentException("pwd is must not null");
-            masp.put("phoenum", LoginData.getInstance().mLoginInfoBean.getPhoenum());
+            masp.put("phoenum", MemoryData.getInstance().getPhoenum());
             SHATools sha = new SHATools();
             masp.put("pswd", SHATools.hexString(sha.eccryptSHA1(pwd)));
             masp.put("devicetoken", LoginData.getInstance().imei);

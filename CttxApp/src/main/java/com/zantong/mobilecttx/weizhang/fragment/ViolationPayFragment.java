@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.util.FragmentUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
@@ -31,7 +32,6 @@ import butterknife.OnClick;
 import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -163,7 +163,7 @@ public class ViolationPayFragment extends BaseJxFragment {
         dto.setPeccancynum(mViolationBean.getViolationnum());
         dto.setUsernum(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
 
-        CarApiClient.createOrder(ContextUtils.getContext(), dto, new CallBack<BaseResponse>() {
+        CarApiClient.createOrder(Utils.getContext(), dto, new CallBack<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse result) {
                 searchViolation();
@@ -182,7 +182,7 @@ public class ViolationPayFragment extends BaseJxFragment {
      */
     private void searchViolation() {
         if (!TextUtils.isEmpty(LoginData.getInstance().filenum)) {
-            UserApiClient.setJiaoYiDaiMa(ContextUtils.getContext(),
+            UserApiClient.setJiaoYiDaiMa(Utils.getContext(),
                     LoginData.getInstance().filenum, new CallBack<BankResponse>() {
                         @Override
                         public void onSuccess(BankResponse bankResponse) {
@@ -212,7 +212,7 @@ public class ViolationPayFragment extends BaseJxFragment {
      * 跳转到缴费页面
      */
     private void gotoPay() {
-        String merCustomIp = NetUtils.getPhontIP(ContextUtils.getContext());
+        String merCustomIp = NetUtils.getPhontIP(Utils.getContext());
 
         String violationnum = mViolationBean.getViolationnum();
         String violationamt = mViolationBean.getViolationamt();

@@ -3,9 +3,9 @@ package com.zantong.mobilecttx.application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.zantong.mobilecttx.model.repository.LocalData;
-import com.zantong.mobilecttx.model.repository.RemoteData;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.LocalData;
+import com.zantong.mobilecttx.data_m.RemoteData;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 
 /**
  * Created by jianghw on 2017/4/26.

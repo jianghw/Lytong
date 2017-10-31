@@ -7,8 +7,8 @@ import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
 import com.zantong.mobilecttx.contract.IHomeMeFtyContract;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
 import com.zantong.mobilecttx.user.bean.MessageCountResponse;
 
@@ -106,7 +106,7 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
     @Override
     public BaseDTO initBaseDTO() {
         BaseDTO baseDTO = new BaseDTO();
-        baseDTO.setUsrId(mRepository.getDefaultRASUserID());
+        baseDTO.setUsrId(mRepository.getDefaultUserID());
         return baseDTO;
     }
 

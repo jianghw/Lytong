@@ -1,15 +1,19 @@
-package com.zantong.mobilecttx.model.repository;
+package com.zantong.mobilecttx.data_m;
 
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tzly.ctcyh.router.ServiceRouter;
+import com.tzly.ctcyh.service.IUserService;
 import com.zantong.mobilecttx.BuildConfig;
-import com.zantong.mobilecttx.application.LoginData;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
@@ -29,27 +33,28 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 网络请求配置
  */
 
-public class DefaultRetrofit implements IRetrofitUrl {
+public class MainRetrofit implements IRetrofitUrl {
 
     private OkHttpClient client = null;
 
     private static class SingletonHolder {
-        private static final DefaultRetrofit INSTANCE = new DefaultRetrofit();
+        private static final MainRetrofit INSTANCE = new MainRetrofit();
     }
 
-    public static DefaultRetrofit getInstance() {
+    public static MainRetrofit getInstance() {
         return SingletonHolder.INSTANCE;
     }
 
-    private DefaultRetrofit() {
+    private MainRetrofit() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(
                 new HttpLoggingInterceptor.Logger() {
                     @Override
                     public void log(String message) {
-                        Log.d("DefaultOKHttp", message);
+                        Log.d("MainRetrofit", message);
                     }
                 })
-                .setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BASIC
+                .setLevel(BuildConfig.App_Url
+                        ? HttpLoggingInterceptor.Level.BASIC
                         : HttpLoggingInterceptor.Level.NONE);
 
         //拦截 Token添加器
@@ -58,10 +63,11 @@ public class DefaultRetrofit implements IRetrofitUrl {
             public Response intercept(Chain chain) throws IOException {
                 Request oldRequest = chain.request();
                 Request.Builder requestBuilder = oldRequest.newBuilder();
-
-                // 添加head
+                //添加head
                 Headers.Builder headBuilder = oldRequest.headers().newBuilder();
-                headBuilder.add("DvcToken", LoginData.getInstance().imei);
+
+                //TODO userPhone
+                headBuilder.add("DvcToken", getDeviceId());
                 requestBuilder.headers(headBuilder.build());
 
                 CacheControl.Builder builder = new CacheControl.Builder();
@@ -76,25 +82,44 @@ public class DefaultRetrofit implements IRetrofitUrl {
             }
         };
 
-        client = new OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .retryOnConnectionFailure(true)
-                .connectTimeout(30*1000, TimeUnit.MILLISECONDS)
-                .writeTimeout(30*1000, TimeUnit.MILLISECONDS)
-                .readTimeout(30*1000, TimeUnit.MILLISECONDS)
-                .addInterceptor(mTokenInterceptor)
-//                .authenticator(mAuthenticator)
-                .build();
+        SSLContext sslContext;
+        try {
+            sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+            javax.net.ssl.SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
-//        SSLContext sslContext;
-//        try {
-//            sslContext = SSLContext.getInstance("SSL");
-//            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
-//            javax.net.ssl.SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+            client = new OkHttpClient.Builder()
+                    .addInterceptor(loggingInterceptor)
+                    .retryOnConnectionFailure(true)
+                    .connectTimeout(30 * 1000, TimeUnit.MILLISECONDS)
+                    .writeTimeout(30 * 1000, TimeUnit.MILLISECONDS)
+                    .readTimeout(30 * 1000, TimeUnit.MILLISECONDS)
+                    .addInterceptor(mTokenInterceptor)
+                    //                .authenticator(mAuthenticator)
+                    .sslSocketFactory(sslSocketFactory)
+                    .hostnameVerifier(new HostnameVerifier() {
+                        @Override
+                        public boolean verify(String hostname, SSLSession session) {
+                            return true;
+                        }
+                    })
+                    .build();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getDeviceId() {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
+            IUserService service = (IUserService) serviceRouter
+                    .getService(IUserService.class.getSimpleName());
+            return service.getPhoneDeviceId();
+        } else {
+            //注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            return "0123456789";
+        }
     }
 
     private TrustManager[] trustAllCerts = new TrustManager[]{
@@ -126,12 +151,12 @@ public class DefaultRetrofit implements IRetrofitUrl {
     }
 
     //    private Authenticator mAuthenticator = new Authenticator() {
-//        @Override
-//        public Request authenticate(Route route, Response response) throws IOException {
-//            TokenBean refreshToken = refreshTokenBean();
-//            return response.request().newBuilder()
-//                    .header("Authorization", "Bearer " + refreshToken.getAccessToken())
-//                    .build();
-//        }
-//    };
+    //        @Override
+    //        public Request authenticate(Route route, Response response) throws IOException {
+    //            TokenBean refreshToken = refreshTokenBean();
+    //            return response.request().newBuilder()
+    //                    .header("Authorization", "Bearer " + refreshToken.getAccessToken())
+    //                    .build();
+    //        }
+    //    };
 }

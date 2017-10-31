@@ -191,7 +191,7 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onFirstDataVisible() {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.App_Url) {
             setEditAddress("城市车师傅师傅");
             setEditName("测试人员");
             setEditPhone("15252565532");

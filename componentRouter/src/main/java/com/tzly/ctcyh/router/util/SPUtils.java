@@ -4,7 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v4.util.SimpleArrayMap;
+import android.text.TextUtils;
 
+import com.tzly.ctcyh.router.util.rea.AESEncryptor;
+
+import java.io.ByteArrayInputStream;
+import java.io.ObjectInputStream;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -22,10 +27,78 @@ public final class SPUtils {
     private SharedPreferences sp;
     //用于用户信息保存
     public static String FILENAME = "CTTXINFO";
-    public static String USERINFO = "userinfo";
+    public static String USER_INFO = "user_info";
+    public static String OLD_USER_INFO = "userinfo";
 
     private static String USERPD = "userpd";
-    public static String USER_DEVICE = "user_device";
+    public static String USER_DEVICE_ID = "user_device_id";
+    public static String USER_PUSH_ID = "user_push_id";
+
+    /**
+     * desc:获取保存的Object对象 临时解决旧加密
+     */
+    public  Object readObject(String key) {
+        SharedPreferences sharedPreferences = Utils.getContext().getSharedPreferences(FILENAME, 0);
+        if (sharedPreferences.contains(key)) {
+            String sharedPreferencesString = sharedPreferences.getString(key, "");
+            try {
+                AESEncryptor.decrypt("19900506", sharedPreferencesString);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (TextUtils.isEmpty(sharedPreferencesString)) {
+                return null;
+            } else {
+                //将16进制的数据转为数组，准备反序列化
+                byte[] stringToBytes = StringToBytes(sharedPreferencesString);
+                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(stringToBytes);
+                try {
+                    ObjectInputStream inputStream = new ObjectInputStream(byteArrayInputStream);
+                    //返回反序列化得到的对象
+                    return inputStream.readObject();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }//所有异常返回null
+        return null;
+    }
+
+    /**
+     * desc:将16进制的数据转为数组
+     * <p>创建人：聂旭阳 , 2014-5-25 上午11:08:33</p>
+     */
+    public  byte[] StringToBytes(String data) {
+        String hexString = data.toUpperCase().trim();
+        if (hexString.length() % 2 != 0) {
+            return null;
+        }
+        byte[] retData = new byte[hexString.length() / 2];
+        for (int i = 0; i < hexString.length(); i++) {
+            int int_ch;  // 两位16进制数转化后的10进制数
+            char hex_char1 = hexString.charAt(i); ////两位16进制数中的第一位(高位*16)
+            int int_ch1;
+            if (hex_char1 >= '0' && hex_char1 <= '9')
+                int_ch1 = (hex_char1 - 48) * 16;   //// 0 的Ascll - 48
+            else if (hex_char1 >= 'A' && hex_char1 <= 'F')
+                int_ch1 = (hex_char1 - 55) * 16; //// A 的Ascll - 65
+            else
+                return null;
+            i++;
+            char hex_char2 = hexString.charAt(i); ///两位16进制数中的第二位(低位)
+            int int_ch2;
+            if (hex_char2 >= '0' && hex_char2 <= '9')
+                int_ch2 = (hex_char2 - 48); //// 0 的Ascll - 48
+            else if (hex_char2 >= 'A' && hex_char2 <= 'F')
+                int_ch2 = hex_char2 - 55; //// A 的Ascll - 65
+            else
+                return null;
+            int_ch = int_ch1 + int_ch2;
+            retData[i / 2] = (byte) int_ch;//将转化后的数放入Byte里
+        }
+        return retData;
+    }
 
     private SPUtils(final String spName) {
         sp = Utils.getContext().getSharedPreferences(spName, Context.MODE_PRIVATE);

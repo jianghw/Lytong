@@ -6,16 +6,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-
-import cn.qqtheme.framework.bean.BankResponse;
-
 import com.zantong.mobilecttx.browser.PayHtmlActivity;
-import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.user.bean.CheckOrderResult;
@@ -27,8 +25,8 @@ import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import butterknife.Bind;
+import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -204,7 +202,7 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
             CheckOrderDTO dto = new CheckOrderDTO();
             dto.setOrigtranserlnum(mOrigtranserlnum);
             dto.setPolcyprignum(mPolcyprignum);
-            UserApiClient.checkOrder(ContextUtils.getContext(), dto,
+            UserApiClient.checkOrder(Utils.getContext(), dto,
                     new CallBack<CheckOrderResult>() {
                         @Override
                         public void onSuccess(CheckOrderResult result) {

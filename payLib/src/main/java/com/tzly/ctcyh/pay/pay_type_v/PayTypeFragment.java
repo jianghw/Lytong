@@ -13,7 +13,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.tzly.ctcyh.pay.BuildConfig;
 import com.tzly.ctcyh.pay.R;
 import com.tzly.ctcyh.pay.bean.response.CouponBean;
 import com.tzly.ctcyh.pay.bean.response.PayTypeBean;
@@ -24,7 +23,7 @@ import com.tzly.ctcyh.pay.data_m.InjectionRepository;
 import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.pay.pay_type_p.IPayTypeContract;
 import com.tzly.ctcyh.pay.pay_type_p.PayTypePresenter;
-import com.tzly.ctcyh.router.UiRouter;
+import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
 import com.tzly.ctcyh.router.util.FormatUtils;
 import com.tzly.ctcyh.router.util.Utils;
@@ -167,13 +166,7 @@ public class PayTypeFragment extends JxBaseRefreshFragment
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.lay_re_coupon) {//优惠劵
-            Bundle bundle = new Bundle();
-            bundle.putString(PayGlobal.putExtra.coupon_list_type, String.valueOf(mCouponType));
-            bundle.putString(PayGlobal.Host.coupon_list_host, PayGlobal.Host.coupon_list_host);
-
-            UiRouter.getInstance().openUriForResult(getActivity(),
-                    PayGlobal.Scheme.pay_scheme + "://" + PayGlobal.Host.coupon_list_host,
-                    bundle, PayGlobal.requestCode.coupon_list_choice);
+            PayRouter.gotoCouponListActivity(getActivity(), String.valueOf(mCouponType));
         } else if (v.getId() == R.id.tv_pay) {
             if (mPayType == 1) {
                 gotoCarPay();
@@ -212,23 +205,8 @@ public class PayTypeFragment extends JxBaseRefreshFragment
      * 支付宝
      */
     private void gotoAliPay() {
-        Bundle bundle = new Bundle();
-        bundle.putString(PayGlobal.putExtra.web_title_extra, "支付宝支付");
-        String url = BuildConfig.DEBUG
-                ? "http://dev.liyingtong.com/" : "http://biz.liyingtong.com/";
-        StringBuilder sb = new StringBuilder();
-        sb.append(url);
-        sb.append("aliPay/aliPayHtml");
-        sb.append("?orderId=" + getExtraOrderId());
-        sb.append("&amount=" + getSubmitPrice());
-        if (mCouponBeanId != 0) sb.append("&couponUserId=" + mCouponBeanId);
-        bundle.putString(PayGlobal.putExtra.web_url_extra, sb.toString());
-        bundle.putString(PayGlobal.putExtra.web_orderId_extra, getExtraOrderId());
-        bundle.putInt(PayGlobal.putExtra.web_pay_type_extra, mPayType);
-
-        UiRouter.getInstance().openUriForResult(getActivity(),
-                PayGlobal.Scheme.pay_scheme + "://" + PayGlobal.Host.html_5_host,
-                bundle, PayGlobal.requestCode.pay_type_price);
+        PayRouter.gotoHtmlActivity(getActivity(),
+                "支付宝支付", getExtraOrderId(), mPayType, getSubmitPrice(), mCouponBeanId);
     }
 
     /**
@@ -447,14 +425,7 @@ public class PayTypeFragment extends JxBaseRefreshFragment
 
     @Override
     public void getBankPayHtmlSucceed(PayUrlResponse response) {
-        Bundle bundle = new Bundle();
-        bundle.putString(PayGlobal.putExtra.web_title_extra, "畅通卡支付");
-        bundle.putString(PayGlobal.putExtra.web_url_extra, response.getData());
-        bundle.putString(PayGlobal.putExtra.web_orderId_extra, getExtraOrderId());
-        bundle.putInt(PayGlobal.putExtra.web_pay_type_extra, mPayType);
-
-        UiRouter.getInstance().openUriForResult(getActivity(),
-                PayGlobal.Scheme.pay_scheme + "://" + PayGlobal.Host.html_5_host,
-                bundle, PayGlobal.requestCode.pay_type_price);
+        PayRouter.gotoHtmlActivity(getActivity(),
+                "畅通卡支付", response.getData(),getExtraOrderId(), mPayType);
     }
 }

@@ -10,7 +10,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.ServiceRouter;
+import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.service.IUserService;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -23,9 +26,7 @@ import com.zantong.mobilecttx.card.dto.BindCardDTO;
 import com.zantong.mobilecttx.card.dto.BindDrivingDTO;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
-import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.utils.DialogMgr;
-import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
@@ -33,7 +34,6 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
@@ -200,7 +200,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
         dto.setUsrid(LoginData.getInstance().userID);
         showDialogLoading();
 
-        UserApiClient.bindCard(ContextUtils.getContext(), dto, new CallBack<BindCardResult>() {
+        UserApiClient.bindCard(Utils.getContext(), dto, new CallBack<BindCardResult>() {
             @Override
             public void onSuccess(BindCardResult result) {
                 hideDialogLoading();
@@ -217,19 +217,22 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
                             params.setSex("1");
                         }
 
-                        CarApiClient.commitDriving(ContextUtils.getContext(), params, new CallBack<BaseResponse>() {
+                        CarApiClient.commitDriving(Utils.getContext(), params, new CallBack<BaseResponse>() {
                             @Override
                             public void onSuccess(BaseResponse result) {
 
                             }
                         });
-                        LoginData.getInstance().filenum = fileNum;
-                        RspInfoBean user = (RspInfoBean) UserInfoRememberCtrl.readObject();
-                        user.setFilenum(fileNum);
-
-                        UserInfoRememberCtrl.saveObject(user);
-                        LoginData.getInstance().mLoginInfoBean.setFilenum(fileNum);
-
+                        //更新驾挡编号
+                        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+                        if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
+                            IUserService service = (IUserService) serviceRouter
+                                    .getService(IUserService.class.getSimpleName());
+                            service.saveUserFilenum(fileNum);
+                        } else {
+                            //注册机开始工作
+                            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+                        }
                         Act.getInstance().gotoIntent(BindJiaZhaoActivity.this, BindCardSuccess.class);
                         BindJiaZhaoActivity.this.finish();
 

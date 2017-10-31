@@ -9,9 +9,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.application.Injection;
+import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.contract.IOrderExpressContract;
 import com.zantong.mobilecttx.order.bean.ReceiveInfoBean;
 import com.zantong.mobilecttx.order.bean.ReceiveInfoResponse;
@@ -20,9 +21,8 @@ import com.zantong.mobilecttx.presenter.order.OrderExpressPresenter;
 import java.util.ArrayList;
 
 import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.imple.IAreaDialogListener;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.custom.popup.CustomDialog;
+import cn.qqtheme.framework.imple.IAreaDialogListener;
 import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
@@ -100,7 +100,7 @@ public class OrderExpressFragment extends BaseRefreshJxFragment
         initView(view);
 
         OrderExpressPresenter presenter = new OrderExpressPresenter(
-                Injection.provideRepository(ContextUtils.getContext()), this);
+                Injection.provideRepository(Utils.getContext()), this);
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -231,13 +232,13 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
 
     private void liyingreg(String pwd) {
         try {
-            String phone = RSAUtils.strByEncryptionLiYing(LoginData.getInstance().mLoginInfoBean.getPhoenum(), true);
+            String phone = RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().getPhoenum(), true);
             SHATools sha = new SHATools();
             String newPassword = RSAUtils.strByEncryptionLiYing(SHATools.hexString(sha.eccryptSHA1(pwd)), true);
             LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
             liYingRegDTO.setPhoenum(phone);
             liYingRegDTO.setPswd(newPassword);
-            liYingRegDTO.setUsrid(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
+            liYingRegDTO.setUsrid(MemoryData.getInstance().getRASUserID());
             CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResponse>() {
                 @Override
                 public void onSuccess(BaseResponse result) {

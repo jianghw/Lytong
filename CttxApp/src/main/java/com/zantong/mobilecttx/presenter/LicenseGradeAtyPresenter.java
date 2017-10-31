@@ -3,15 +3,15 @@ package com.zantong.mobilecttx.presenter;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.contract.ILicenseGradeAtyContract;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
-import cn.qqtheme.framework.util.log.LogUtils;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;

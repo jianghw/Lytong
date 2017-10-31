@@ -1,6 +1,5 @@
-package com.zantong.mobilecttx.model.repository;
+package com.zantong.mobilecttx.data_m;
 
-import cn.qqtheme.framework.bean.BankResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseResponse;
@@ -54,6 +53,7 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import java.util.List;
 
+import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.bean.response.SubjectGoodsResponse;
 import okhttp3.MultipartBody;

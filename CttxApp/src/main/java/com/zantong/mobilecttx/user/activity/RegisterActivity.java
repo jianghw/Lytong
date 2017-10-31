@@ -230,7 +230,7 @@ public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter
      */
     private void checkVerifyCode() {
         phone = mPhone.getText().toString();
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.App_Url) {
             Intent intent = new Intent(RegisterActivity.this, Register2Activity.class);
             intent.putExtra(Register2Activity.RES_CODE, 0);
             intent.putExtra(Register2Activity.PHONE, phone);

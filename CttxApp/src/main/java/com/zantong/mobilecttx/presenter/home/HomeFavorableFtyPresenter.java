@@ -7,8 +7,8 @@ import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.home.bean.BannerBean;
 import com.zantong.mobilecttx.home.bean.BannerResponse;
 import com.zantong.mobilecttx.home.bean.ModuleResponse;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 
 import rx.Observable;
 import rx.Subscription;

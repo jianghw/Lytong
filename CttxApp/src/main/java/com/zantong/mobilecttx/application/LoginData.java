@@ -2,15 +2,16 @@ package com.zantong.mobilecttx.application;
 
 import android.content.Context;
 
-import com.zantong.mobilecttx.map.bean.NetLocationBean;
-import com.zantong.mobilecttx.card.bean.ProvinceModel;
-import com.zantong.mobilecttx.user.bean.RspInfoBean;
-import com.zantong.mobilecttx.weizhang.bean.QueryHistoryBean;
-import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
+import com.zantong.mobilecttx.card.bean.ProvinceModel;
+import com.zantong.mobilecttx.map.bean.NetLocationBean;
+import com.zantong.mobilecttx.user.bean.RspInfoBean;
+import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.AccountRememberCtrl;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
+import com.zantong.mobilecttx.weizhang.bean.QueryHistoryBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,12 +38,18 @@ public class LoginData {
     public int smCtrlTime = 60;//验证码时间
     public String imei = "00000000";//手机IMEI
     public String deviceId = "";//阿里云DeviceId
-    public boolean loginFlag = false;//登录状态标志
-    public String userID = "";//用户ID
+
+    //用户ID
+    public String userID = MemoryData.getInstance().getGlobalUserID();
+    //登录状态标志
+    public boolean loginFlag = MemoryData.getInstance().isMainLogin();
+
     public boolean defaultCar = false;//默认车标志
     public String defaultCarNumber = "";//默认车牌号
-    public String filenum = "";//档案号(驾照号)
-    public String getdate = "";//初次领证号
+    //档案号(驾照号)
+    public String filenum = MemoryData.getInstance().getFilenum();
+    //初次领证号
+    public String getdate = MemoryData.getInstance().getGetdate();//初次领证号
 
     public String CarLocalFlag = "userCarInfo";//本地缓存车辆信息的key
     public String DefaultCarLocalFlag = "defaultCarInfo";//本地缓存默认车辆信息的key
@@ -52,7 +59,6 @@ public class LoginData {
 
     public String bitmap;
     public Class<?> className;
-
     public int mCarNum = 0;
 
     public RspInfoBean mLoginInfoBean;//用户Bean对象
@@ -76,7 +82,7 @@ public class LoginData {
         updateMsg = false;
         filenum = "";
         mNetLocationBean = null;
-        mLoginInfoBean=null;
+
 
         SPUtils.getInstance().setUserPwd("");
 

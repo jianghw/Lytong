@@ -1,6 +1,7 @@
 package cn.qqtheme.framework.custom.picker;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.FloatRange;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -23,6 +24,7 @@ import cn.qqtheme.framework.custom.popup.WheelView;
  * Builder:Android Studio
  */
 public class LinkagePicker extends WheelPicker {
+    protected   Context mApplicationContext;
     /**
      * 默认第一列
      */
@@ -76,7 +78,7 @@ public class LinkagePicker extends WheelPicker {
                          ArrayList<ArrayList<String>> secondList,
                          ArrayList<ArrayList<ArrayList<String>>> thirdList) {
         super(activity);
-
+        mApplicationContext=activity.getApplicationContext();
         initAllListData(firstList, secondList, thirdList);
     }
 

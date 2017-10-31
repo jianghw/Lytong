@@ -7,16 +7,16 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.browser.PayBrowserActivity;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectOrderContract;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobilecttx.eventbus.SubjectOrderEvent;
-import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
-import com.zantong.mobilecttx.presenter.fahrschule.SubjectOrderPresenter;
 import com.zantong.mobilecttx.login_v.LoginActivity;
+import com.zantong.mobilecttx.presenter.fahrschule.SubjectOrderPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
@@ -24,6 +24,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 
@@ -33,18 +34,11 @@ import cn.qqtheme.framework.util.ToastUtils;
 public class SubjectOrderFragment extends BaseRefreshJxFragment
         implements View.OnClickListener, ISubjectOrderContract.ISubjectOrderView {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
     private TextView mTvOrderNum;
 
     private TextView mTvCourseName;
     private TextView mTvUser;
     private TextView mTvPhone;
-
     /**
      * 订单金额
      */
@@ -64,24 +58,10 @@ public class SubjectOrderFragment extends BaseRefreshJxFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     public static SubjectOrderFragment newInstance() {
         return new SubjectOrderFragment();
-    }
-
-    public static SubjectOrderFragment newInstance(String param1, String param2) {
-        SubjectOrderFragment fragment = new SubjectOrderFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     protected boolean isRefresh() {
@@ -89,8 +69,7 @@ public class SubjectOrderFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    protected void onRefreshData() {
-    }
+    protected void onRefreshData() {}
 
     @Override
     protected int getFragmentLayoutResId() {
@@ -186,15 +165,15 @@ public class SubjectOrderFragment extends BaseRefreshJxFragment
      * 数据验证
      */
     private void dataFormValidation() {
+        MainRouter.gotoPayTypeActivity(getActivity(), mTvOrderNum.getText().toString());
 
-        String moneyString = mTvPrice.getText().toString();
-
-        double money = Double.parseDouble(moneyString);
-        int intMoney = (int) money * 100;
-        String stringMoney = String.valueOf(intMoney);
-        if (mPresenter != null) mPresenter.getBankPayHtml(
-                mTvOrderNum.getText().toString(),
-                stringMoney);
+        //        String moneyString = mTvPrice.getText().toString();
+        //        double money = Double.parseDouble(moneyString);
+        //        int intMoney = (int) money * 100;
+        //        String stringMoney = String.valueOf(intMoney);
+        //        if (mPresenter != null) mPresenter.getBankPayHtml(
+        //                mTvOrderNum.getText().toString(),
+        //                stringMoney);
     }
 
     @Override

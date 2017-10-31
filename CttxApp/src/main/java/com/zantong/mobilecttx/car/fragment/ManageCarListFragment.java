@@ -8,13 +8,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.car.adapter.ManageCarListAdapter;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
-import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.IManageCarFtyContract;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.presenter.car.ManageCarFtyPresenter;
@@ -24,7 +25,6 @@ import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
 import java.util.List;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -120,7 +120,7 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
     protected void initFragmentView(View view) {
 
         ManageCarFtyPresenter mPresenter = new ManageCarFtyPresenter(
-                Injection.provideRepository(ContextUtils.getContext()), this);
+                Injection.provideRepository(Utils.getContext()), this);
     }
 
     @Override

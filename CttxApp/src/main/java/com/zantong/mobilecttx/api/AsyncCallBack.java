@@ -6,11 +6,9 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.zantong.mobilecttx.application.LoginData;
-
-import cn.qqtheme.framework.bean.BankResponse;
-
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -18,7 +16,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import java.util.HashMap;
 
-import cn.qqtheme.framework.util.log.LogUtils;
+import cn.qqtheme.framework.bean.BankResponse;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;

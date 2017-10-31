@@ -38,7 +38,7 @@ public final class AppUtils {
      * @return App版本号
      */
     public static String getAppVersionName() {
-        return getAppVersionName(ContextUtils.getContext().getPackageName());
+        return getAppVersionName(XUtils.getContext().getPackageName());
     }
 
     /**
@@ -50,7 +50,7 @@ public final class AppUtils {
     public static String getAppVersionName(String packageName) {
         if (isSpace(packageName)) return null;
         try {
-            PackageManager pm = ContextUtils.getContext().getPackageManager();
+            PackageManager pm = XUtils.getContext().getPackageManager();
             PackageInfo pi = pm.getPackageInfo(packageName, 0);
             return pi == null ? null : pi.versionName;
         } catch (PackageManager.NameNotFoundException e) {
@@ -65,7 +65,7 @@ public final class AppUtils {
      * @return App版本码
      */
     public static int getAppVersionCode() {
-        return getAppVersionCode(ContextUtils.getContext().getPackageName());
+        return getAppVersionCode(XUtils.getContext().getPackageName());
     }
 
     /**
@@ -77,7 +77,7 @@ public final class AppUtils {
     public static int getAppVersionCode(String packageName) {
         if (isSpace(packageName)) return -1;
         try {
-            PackageManager pm = ContextUtils.getContext().getPackageManager();
+            PackageManager pm = XUtils.getContext().getPackageManager();
             PackageInfo pi = pm.getPackageInfo(packageName, 0);
             return pi == null ? -1 : pi.versionCode;
         } catch (PackageManager.NameNotFoundException e) {

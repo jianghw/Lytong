@@ -16,6 +16,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.service.MemoryData;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -86,10 +87,10 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         mLocationClient.setLocOption(option);
         mLocationClient.start();
 
-        mDrivingPhone.setText(LoginData.getInstance().mLoginInfoBean.getPhoenum());
+        mDrivingPhone.setText(MemoryData.getInstance().getPhoenum());
         setEnsureText("代驾订单");
         mDrivingPhone.requestFocus();
-        mDrivingPhone.setSelection(LoginData.getInstance().mLoginInfoBean.getPhoenum().length());
+        mDrivingPhone.setSelection(MemoryData.getInstance().getPhoenum().length());
     }
 
     @Override
@@ -116,7 +117,7 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
                     MobclickAgent.onEvent(this, Config.getUMengID(17));
                     huJiaoDriving();
                 } else {
-                    ToastUtils.toastShort( "亲，您点的太快了");
+                    ToastUtils.toastShort("亲，您点的太快了");
                 }
                 break;
             case R.id.driving_price:

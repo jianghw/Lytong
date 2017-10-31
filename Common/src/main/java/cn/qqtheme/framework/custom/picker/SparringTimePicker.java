@@ -19,7 +19,6 @@ import java.util.List;
 import cn.qqtheme.framework.R;
 import cn.qqtheme.framework.adapter.PopupCarTimeAdapter;
 import cn.qqtheme.framework.bean.response.SparringGoodsBean;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ConvertUtils;
 
 /**
@@ -122,8 +121,8 @@ public class SparringTimePicker extends LinkagePicker {
         textView.setText("确  认");
         textView.setGravity(Gravity.CENTER);
         textView.setTextSize(ConvertUtils.toSp(54f));
-        textView.setBackgroundColor(ContextUtils.getContext().getResources().getColor(R.color.colorTvBlue_59b));
-        textView.setTextColor(ContextUtils.getContext().getResources().getColor(R.color.colorWhite));
+        textView.setBackgroundColor(mApplicationContext.getResources().getColor(R.color.colorTvBlue_59b));
+        textView.setTextColor(mApplicationContext.getResources().getColor(R.color.colorWhite));
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override

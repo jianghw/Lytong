@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.tzly.ctcyh.pay.api.ICouponService;
 import com.tzly.ctcyh.pay.api.IOrderService;
-import com.tzly.ctcyh.pay.api.IPayService;
+import com.tzly.ctcyh.pay.api.IPayApiService;
 import com.tzly.ctcyh.pay.bean.response.CouponResponse;
 import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
@@ -74,8 +74,8 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<PayUrlResponse> getBankPayHtml(String extraOrderId, String amount, int couponUserId) {
-        return couponUserId == 0 ? baseRetrofit().create(IPayService.class).getBankPayHtml(extraOrderId, amount)
-                : baseRetrofit().create(IPayService.class).getBankPayHtml(extraOrderId, amount, String.valueOf(couponUserId));
+        return couponUserId == 0 ? baseRetrofit().create(IPayApiService.class).getBankPayHtml(extraOrderId, amount)
+                : baseRetrofit().create(IPayApiService.class).getBankPayHtml(extraOrderId, amount, String.valueOf(couponUserId));
     }
     /**
      * 9.获取订单详情

@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.presenter;
 
 import android.widget.Toast;
 
-import com.tzly.ctcyh.router.util.Des3;
+import com.tzly.ctcyh.router.util.rea.Des3;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
 import com.zantong.mobilecttx.application.Config;
@@ -14,7 +14,6 @@ import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.SmsBean;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 
@@ -124,15 +123,7 @@ public class LoginPhonePresenterImp implements SimplePresenter, OnLoadServiceBac
                 UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, LoginData.getInstance().imei);
                 UserInfoRememberCtrl.saveObject(this.mLoginInfoBean.getRspInfo());
 
-                LoginData.getInstance().mLoginInfoBean = this.mLoginInfoBean.getRspInfo();
 
-                SPUtils.getInstance().setLoginInfoBean(LoginData.getInstance().mLoginInfoBean);
-
-                LoginData.getInstance().userID = this.mLoginInfoBean.getRspInfo().getUsrid();
-                LoginData.getInstance().filenum = this.mLoginInfoBean.getRspInfo().getFilenum();
-                LoginData.getInstance().getdate = this.mLoginInfoBean.getRspInfo().getGetdate();
-
-                LoginData.getInstance().loginFlag = true;
                 mLoginActivity.addLoginInfo(this.mLoginInfoBean);
                 break;
         }

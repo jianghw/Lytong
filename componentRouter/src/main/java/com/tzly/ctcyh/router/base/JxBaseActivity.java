@@ -409,4 +409,10 @@ public abstract class JxBaseActivity extends AppCompatActivity {
         LoadingDialog.closeDialog(mLoadingDialog);
     }
 
+    /**
+     * 统一封装
+     */
+    public void toastShort(String message) {
+        toastShort(message);
+    }
 }

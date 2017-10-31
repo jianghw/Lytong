@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.utils.encryption;
+package com.tzly.ctcyh.router.util.rea;
 
 import java.security.SecureRandom;
 import javax.crypto.Cipher;
@@ -7,8 +7,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 /**
  * AES加密器
- * 作者：王海洋
- * 时间：2016/7/1 16:20
  */
 public class AESEncryptor {
     /**

@@ -31,10 +31,10 @@ import com.tzly.ctcyh.pay.data_m.InjectionRepository;
 import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.pay.html_p.HtmlPayPresenter;
 import com.tzly.ctcyh.pay.html_p.IHtmlPayContract;
+import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
-
-import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
+import com.tzly.ctcyh.service.MemoryData;
 
 /**
  * Created by jianghw on 2017/10/23.
@@ -43,7 +43,8 @@ import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
  * Update day:
  */
 
-public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IHtmlPayView {
+public class Html5Activity extends JxBaseActivity
+        implements IHtmlPayContract.IHtmlPayView {
     private LinearLayout mLayout;
     private WebView mWebView;
     private ProgressBar mProgressBar;
@@ -81,7 +82,7 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
         return R.layout.activity_html_5;
     }
 
-    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void bindContentView(View childView) {
         mProgressBar = (ProgressBar) childView.findViewById(R.id.pb_html5);
@@ -99,7 +100,6 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
 
         //调用JS方法.安卓版本大于17,加上注解 @JavascriptInterface
         mWebSettings.setJavaScriptEnabled(true);
-        mWebView.addJavascriptInterface(null, "CTTX");
 
         saveData(mWebSettings);
 
@@ -126,6 +126,7 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
         mWebView.requestFocusFromTouch();
     }
 
+    @SuppressLint("JavascriptInterface")
     @Override
     protected void initContentData() {
         titleContent(mTitle);
@@ -133,6 +134,8 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
 
         HtmlPayPresenter presenter = new HtmlPayPresenter(
                 InjectionRepository.provideRepository(getApplicationContext()), this);
+
+        mWebView.addJavascriptInterface(presenter, "CTTX");
     }
 
     @Override
@@ -190,7 +193,7 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
-                   toastShort("请确认手机安装支付宝app");
+                    toastShort("请确认手机安装支付宝app");
                 }
             } else {
                 view.loadUrl(url);
@@ -497,5 +500,18 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
     public void getOrderDetailError(String s) {
         toastShort(s);
         errorStatus();
+    }
+
+    /**
+     * 提供html 用的方法---------------------------
+     */
+    @Override
+    public boolean isLogin() {
+        return MemoryData.getInstance().isMainLogin();
+    }
+
+    @Override
+    public void gotoLogin() {
+        PayRouter.gotoLoginActivity(this);
     }
 }

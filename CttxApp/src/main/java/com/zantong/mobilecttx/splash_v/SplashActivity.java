@@ -16,14 +16,13 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.tzly.ctcyh.router.UiRouter;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
 import com.zantong.mobilecttx.home.bean.StartPicResponse;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.splash_p.ISplashAtyContract;
 import com.zantong.mobilecttx.splash_p.SplashPresenter;
 import com.zantong.mobilecttx.utils.SPUtils;
@@ -33,8 +32,6 @@ import java.util.List;
 
 import cn.qqtheme.framework.util.AppUtils;
 import cn.qqtheme.framework.util.image.ImageOptions;
-
-import static com.zantong.mobilecttx.guide_v.GuideCTActivity.GUIDE_PIC;
 
 /**
  * 启动页
@@ -211,18 +208,10 @@ public class SplashActivity extends AppCompatActivity
         }
 
         if (appCode <= versionCode) {
-            Bundle bundle = new Bundle();
-            bundle.putInt(MainGlobal.putExtra.home_position_extra, 0);
-            UiRouter.getInstance().openUriBundle(this,
-                    MainGlobal.Scheme.main_scheme + "://" + MainGlobal.Host.home_host,
-                    bundle);
+            MainRouter.gotoMainActivity(this, 0);
             MobclickAgent.onEvent(this, Config.getUMengID(0));
         } else {
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(GUIDE_PIC, mResultList);
-            UiRouter.getInstance().openUriBundle(this,
-                    MainGlobal.Scheme.main_scheme + "://" + MainGlobal.Host.guide_host,
-                    bundle);
+            MainRouter.gotoGuideActivity(this,mResultList);
             overridePendingTransition(0, 0);
         }
         finish();
@@ -250,11 +239,4 @@ public class SplashActivity extends AppCompatActivity
                 break;
         }
     }
-
-    //    private void gotoTest() {
-    //        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-    //        serviceRouter.registerComponent("com.tzly.ctcyh.pay.like.PayAppLike");
-    //
-    //        UiRouter.getInstance().openUri(this, "scheme_pay://host_pay", null);
-    //    }
 }

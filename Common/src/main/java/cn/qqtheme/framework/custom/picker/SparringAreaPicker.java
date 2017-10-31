@@ -12,14 +12,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import cn.qqtheme.framework.R;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ConvertUtils;
 
 /**
  * 地区选择器
  */
 public class SparringAreaPicker extends LinkagePicker {
-
 
     public SparringAreaPicker(Activity activity) {
         super(activity);
@@ -55,9 +53,9 @@ public class SparringAreaPicker extends LinkagePicker {
         textView.setLayoutParams(params);
         textView.setText("请选择地区");
         textView.setGravity(Gravity.CENTER);
-        textView.setTextColor(ContextUtils.getContext().getResources().getColor(R.color.colorTvBlue_59b));
+        textView.setTextColor(mApplicationContext.getResources().getColor(R.color.colorTvBlue_59b));
 
-        Drawable drawableRight = ContextUtils.getContext().getResources().getDrawable(R.mipmap.ic_tv_close);
+        Drawable drawableRight = mApplicationContext.getResources().getDrawable(R.mipmap.ic_tv_close);
         textView.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableRight, null);
 
         textView.setOnClickListener(new View.OnClickListener() {
@@ -84,8 +82,8 @@ public class SparringAreaPicker extends LinkagePicker {
         textView.setText("确  认");
         textView.setGravity(Gravity.CENTER);
         textView.setTextSize(ConvertUtils.toSp(54f));
-        textView.setBackgroundColor(ContextUtils.getContext().getResources().getColor(R.color.colorTvBlue_59b));
-        textView.setTextColor(ContextUtils.getContext().getResources().getColor(R.color.colorWhite));
+        textView.setBackgroundColor(mApplicationContext.getResources().getColor(R.color.colorTvBlue_59b));
+        textView.setTextColor(mApplicationContext.getResources().getColor(R.color.colorWhite));
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override

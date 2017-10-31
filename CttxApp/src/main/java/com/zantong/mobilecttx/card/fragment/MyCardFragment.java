@@ -9,7 +9,8 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.tzly.ctcyh.router.util.Des3;
+import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.router.util.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
@@ -31,7 +32,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
 public class MyCardFragment extends BaseExtraFragment implements ModelView {
@@ -132,7 +132,7 @@ public class MyCardFragment extends BaseExtraFragment implements ModelView {
     private void getBangDingCar() {
         LogoutDTO dto = new LogoutDTO();
         dto.setUsrid(LoginData.getInstance().userID);
-        UserApiClient.getPayCars(ContextUtils.getContext(), dto, new CallBack<PayCarResult>() {
+        UserApiClient.getPayCars(Utils.getContext(), dto, new CallBack<PayCarResult>() {
             @Override
             public void onSuccess(PayCarResult result) {
                 try {

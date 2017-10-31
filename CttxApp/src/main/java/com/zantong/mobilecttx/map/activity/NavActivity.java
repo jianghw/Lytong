@@ -9,6 +9,7 @@ import android.view.View;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseActivity;
 import com.zantong.mobilecttx.map.adapter.NavAdapter;
@@ -21,7 +22,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * 导航

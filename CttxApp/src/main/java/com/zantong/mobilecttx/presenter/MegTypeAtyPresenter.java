@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.contract.IMegTypeAtyContract;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.order.bean.MessageResponse;
 import com.zantong.mobilecttx.user.bean.MessageType;
 import com.zantong.mobilecttx.user.bean.MessageTypeResponse;

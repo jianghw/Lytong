@@ -18,12 +18,14 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.BuglyStrategy;
 import com.tencent.bugly.beta.Beta;
+import com.tzly.ctcyh.router.ServiceRouter;
+import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.service.IUserService;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.BuildConfig;
 
 import cn.qqtheme.framework.util.AppUtils;
-import cn.qqtheme.framework.util.ContextUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
 
 
 /**
@@ -40,31 +42,32 @@ public class MyApplication extends MultiDexApplication {
      * 第三方工具类
      */
     private void initThirdTools() {
+        //工具类
+        Utils.init(this);
+
         String channel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
-//有盟+统计初始化
+        //有盟+统计初始化
         MobclickAgent.UMAnalyticsConfig umAnalyticsConfig =
                 new MobclickAgent.UMAnalyticsConfig(
-                        getApplicationContext(), BuildConfig.DEBUG
+                        getApplicationContext(), BuildConfig.App_Url
                         ? "592544d7b27b0a65a200069e" : "58b3880304e20581760018e7",
                         channel);
 
         MobclickAgent.startWithConfigure(umAnalyticsConfig);
-        MobclickAgent.setDebugMode(BuildConfig.DEBUG);
+        MobclickAgent.setDebugMode(BuildConfig.App_Url);
         MobclickAgent.enableEncrypt(true);//日志加密
-        MobclickAgent.setCatchUncaughtExceptions(BuildConfig.DEBUG);
+        MobclickAgent.setCatchUncaughtExceptions(BuildConfig.App_Url);
         MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计方式
 
-//工具类
-        ContextUtils.init(this);
-//图片
+        //图片
         initImageLoader(this);
-//推送
+        //推送
         initCloudChannel(this);
-//百度 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
+        //百度 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
         SDKInitializer.initialize(getApplicationContext());
         //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
         SDKInitializer.setCoordType(CoordType.BD09LL);
-//bugly初始化
+        //bugly初始化
         BuglyStrategy strategy = new BuglyStrategy();
         //设置渠道
         strategy.setAppChannel(channel);
@@ -76,10 +79,10 @@ public class MyApplication extends MultiDexApplication {
         //自动检查更新开关
         Beta.autoCheckUpgrade = false;
         Bugly.init(getApplicationContext(),
-                BuildConfig.DEBUG ? "b7b596e1eb"
-                        : "62323a33e6", BuildConfig.DEBUG, strategy);
-//Log环境初始化
-        LogUtils.initLogUtils(BuildConfig.DEBUG);
+                BuildConfig.App_Url ? "b7b596e1eb"
+                        : "62323a33e6", BuildConfig.App_Url, strategy);
+        //Log环境初始化
+        LogUtils.initLogUtils(BuildConfig.App_Url);
     }
 
     /**
@@ -115,13 +118,22 @@ public class MyApplication extends MultiDexApplication {
         pushService.register(applicationContext, new CommonCallback() {
             @Override
             public void onSuccess(String response) {
-                LogUtils.i("DeviceId=============:" + PushServiceFactory.getCloudPushService().getDeviceId());
-                LoginData.getInstance().deviceId = pushService.getDeviceId();
+                //更新推送id
+                ServiceRouter serviceRouter = ServiceRouter.getInstance();
+                if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
+                    IUserService service = (IUserService) serviceRouter
+                            .getService(IUserService.class.getSimpleName());
+                    service.savePushId(pushService.getDeviceId());
+                } else {
+                    //注册机开始工作
+                    ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+                }
             }
 
             @Override
             public void onFailed(String errorCode, String errorMessage) {
-                LogUtils.i("init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
+                LogUtils.e("init cloudchannel failed -- errorcode:"
+                        + errorCode + " -- errorMessage:" + errorMessage);
             }
         });
 

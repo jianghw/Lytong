@@ -7,16 +7,14 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.application.Injection;
+import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectIntensifyContract;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobilecttx.eventbus.SubjectCommitEvent;
 import com.zantong.mobilecttx.fahrschule.adapter.SubjectGoodsAdapter;
-import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
-import cn.qqtheme.framework.bean.response.SubjectGoodsData;
-import cn.qqtheme.framework.bean.response.SubjectGoodsResponse;
 import com.zantong.mobilecttx.presenter.fahrschule.SubjectIntensifyPresenter;
 
 import org.greenrobot.eventbus.EventBus;
@@ -25,7 +23,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.util.ContextUtils;
+import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
+import cn.qqtheme.framework.bean.response.SubjectGoodsData;
+import cn.qqtheme.framework.bean.response.SubjectGoodsResponse;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -36,8 +36,6 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
 
     private XRecyclerView mCustomRecycler;
     private TextView mTvContent;
@@ -60,23 +58,9 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
         return new SubjectIntensifyFragment();
     }
 
-    public static SubjectIntensifyFragment newInstance(String param1, String param2) {
-        SubjectIntensifyFragment fragment = new SubjectIntensifyFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     /**
@@ -103,7 +87,7 @@ public class SubjectIntensifyFragment extends BaseRefreshJxFragment
         SubjectIntensifyPresenter mPresenter = new SubjectIntensifyPresenter(
                 Injection.provideRepository(getActivity().getApplicationContext()), this);
 
-        GridLayoutManager manager = new GridLayoutManager(ContextUtils.getContext(), 2);
+        GridLayoutManager manager = new GridLayoutManager(Utils.getContext(), 2);
         mCustomRecycler.setLayoutManager(manager);
         mCustomRecycler.setPullRefreshEnabled(false);
         mCustomRecycler.setLoadingMoreEnabled(false);

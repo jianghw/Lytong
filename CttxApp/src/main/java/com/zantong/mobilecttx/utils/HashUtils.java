@@ -29,7 +29,7 @@ public class HashUtils {
         for (Map.Entry<String, String> param : entrys) {
             basestring.append(param.getValue());
         }
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.App_Url) {
             basestring.append(saltBug);
         } else {
             basestring.append(saltRelease);

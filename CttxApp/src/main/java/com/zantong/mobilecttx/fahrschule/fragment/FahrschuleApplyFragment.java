@@ -16,11 +16,12 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
-import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.IFahrschuleApplyFtyContract;
 import com.zantong.mobilecttx.eventbus.FahrschuleApplyEvent;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
@@ -44,7 +45,6 @@ import java.util.Random;
 
 import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
@@ -180,7 +180,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
 
     @Override
     protected void onFirstDataVisible() {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.App_Url) {
             mEditName.setText("测试人员" + new Random().nextInt(10));
             mEditPhone.setText("1525252552" + new Random().nextInt(10));
             mEditIdentityCard.setText("342628198004160012");
@@ -366,7 +366,7 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
         }
 
         popupWindow.setBackgroundDrawable(
-                ContextCompat.getDrawable(ContextUtils.getContext(), R.drawable.shape_bg_popu_white));
+                ContextCompat.getDrawable(Utils.getContext(), R.drawable.shape_bg_popu_white));
 
         popupWindow.showAsDropDown(textView, 0, 30);
     }

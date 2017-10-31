@@ -6,6 +6,7 @@ import android.content.SharedPreferences.Editor;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
@@ -15,8 +16,6 @@ import java.io.IOException;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.qqtheme.framework.util.ContextUtils;
 
 public class SPUtils {
     /**
@@ -65,7 +64,7 @@ public class SPUtils {
     private static SPUtils sInstance;
 
     private SPUtils() {
-        mSharedPreferences = ContextUtils.getContext().getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+        mSharedPreferences = Utils.getContext().getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         mEditor = mSharedPreferences.edit();
     }
 

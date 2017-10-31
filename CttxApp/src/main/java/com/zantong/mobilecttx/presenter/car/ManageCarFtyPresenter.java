@@ -5,7 +5,8 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.tzly.ctcyh.router.util.Des3;
+import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.rea.Des3;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
@@ -19,8 +20,8 @@ import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.contract.IManageCarFtyContract;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
@@ -29,7 +30,6 @@ import com.zantong.mobilecttx.user.dto.LogoutDTO;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.util.log.LogUtils;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -76,7 +76,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
      */
     @Override
     public void getTextNoticeInfo() {
-        Subscription subscription = mRepository.getTextNoticeInfo(mRepository.getDefaultRASUserID())
+        Subscription subscription = mRepository.getTextNoticeInfo(mRepository.getDefaultUserID())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HomeCarResponse>() {
@@ -237,7 +237,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     bindCarDTO.setEngineNo(RSAUtils.strByEncryption(
                             Des3.decode(userCarInfoBean.getEnginenum()), true));
                     bindCarDTO.setVehicleType(userCarInfoBean.getCarnumtype());
-                    bindCarDTO.setUsrnum(mRepository.getDefaultRASUserID());
+                    bindCarDTO.setUsrnum(mRepository.getDefaultUserID());
                     bindCarDTO.setIsPay(!TextUtils.isEmpty(userCarInfoBean.getIspaycar())
                             ? Integer.valueOf(userCarInfoBean.getIspaycar()) : 0);
                     bindCarDTO.setIssueDate(userCarInfoBean.getInspectdate());
@@ -259,7 +259,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     bindCarDTO.setEngineNo(RSAUtils.strByEncryption(
                             Des3.decode(userCarInfoBean.getEnginenum()), true));
                     bindCarDTO.setVehicleType(userCarInfoBean.getCarnumtype());
-                    bindCarDTO.setUsrnum(mRepository.getDefaultRASUserID());
+                    bindCarDTO.setUsrnum(mRepository.getDefaultUserID());
                     bindCarDTO.setIsPay(1);
 
                     bindCarDTOList.add(bindCarDTO);
@@ -325,7 +325,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                                         bindCarDTO.setEngineNo(RSAUtils.strByEncryption(
                                                 Des3.decode(userCarInfoBean.getEnginenum()), true));
                                         bindCarDTO.setVehicleType(userCarInfoBean.getCarnumtype());
-                                        bindCarDTO.setUsrnum(mRepository.getDefaultRASUserID());
+                                        bindCarDTO.setUsrnum(mRepository.getDefaultUserID());
                                         bindCarDTO.setIsPay(!TextUtils.isEmpty(userCarInfoBean.getIspaycar())
                                                 ? Integer.valueOf(userCarInfoBean.getIspaycar()) : 0);
                                         return bindCarDTO;
@@ -392,7 +392,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                                         bindCarDTO.setEngineNo(RSAUtils.strByEncryption(
                                                 Des3.decode(userCarInfoBean.getEnginenum()), true));
                                         bindCarDTO.setVehicleType(userCarInfoBean.getCarnumtype());
-                                        bindCarDTO.setUsrnum(mRepository.getDefaultRASUserID());
+                                        bindCarDTO.setUsrnum(mRepository.getDefaultUserID());
                                         bindCarDTO.setIsPay(1);
 
                                         return bindCarDTO;

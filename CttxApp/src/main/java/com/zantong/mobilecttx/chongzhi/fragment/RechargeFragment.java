@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.PullableBaseFragment;
 import com.zantong.mobilecttx.browser.PayHtmlActivity;
@@ -48,7 +49,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
 
@@ -261,7 +261,7 @@ public class RechargeFragment extends PullableBaseFragment
 
     @Override
     protected void loadingData() {
-        GridLayoutManager manager = new GridLayoutManager(ContextUtils.getContext(), 3);
+        GridLayoutManager manager = new GridLayoutManager(Utils.getContext(), 3);
         mXRecyclerView.setLayoutManager(manager);
         mXRecyclerView.setPullRefreshEnabled(false);
         mXRecyclerView.setLoadingMoreEnabled(false);

@@ -18,6 +18,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tzly.ctcyh.router.ServiceRouter;
+import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.service.IUserService;
+import com.tzly.ctcyh.service.MemoryData;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
@@ -29,8 +33,8 @@ import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
 import com.zantong.mobilecttx.contract.ILoginView;
-import com.zantong.mobilecttx.login_v.LoginActivity;
 import com.zantong.mobilecttx.presenter.LogoutPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.dto.PersonInfoDTO;
 import com.zantong.mobilecttx.user.dto.UpdateUserHeadImgDTO;
 import com.zantong.mobilecttx.utils.DateService;
@@ -54,7 +58,6 @@ import butterknife.Bind;
 import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.custom.picker.DatePicker;
 import cn.qqtheme.framework.util.CleanUtils;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
@@ -127,7 +130,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         if (Tools.isStrEmpty(LoginData.getInstance().userID)) {
             mLogout.setVisibility(View.GONE);
         } else {
-            String date = LoginData.getInstance().mLoginInfoBean.getGetdate();
+            String date = MemoryData.getInstance().getGetdate();
             try {
                 if (date.contains("-")) {
                     mSelDate.setText(date);
@@ -143,16 +146,15 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (LoginData.getInstance().mLoginInfoBean != null) {
-            if (!Tools.isStrEmpty(LoginData.getInstance().mLoginInfoBean.getNickname())) {
-                user_info_name_text.setText(LoginData.getInstance().mLoginInfoBean.getNickname());
-            } else {
-                user_info_name_text.setText(LoginData.getInstance().mLoginInfoBean.getPhoenum().substring(7));
-            }
-            String phone = StringUtils.getEncrypPhone(LoginData.getInstance().mLoginInfoBean.getPhoenum());
-            user_info_phone_text.setText(phone);
+        String nickname = MemoryData.getInstance().getNickname();
+        String phone = MemoryData.getInstance().getPhoenum();
+        if (!Tools.isStrEmpty(nickname)) {
+            user_info_name_text.setText(nickname);
+        } else if (!TextUtils.isEmpty(phone) && phone.length() > 7) {
+            user_info_name_text.setText(phone.substring(7));
         }
+        String phoneX = StringUtils.getEncrypPhone(phone);
+        user_info_phone_text.setText(phoneX);
     }
 
     @Override
@@ -183,8 +185,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                     }
                 } else {
                     mBreakRulesNotice.setChecked(false);
-                    Intent intent2 = new Intent(SettingActivity.this, LoginActivity.class);
-                    startActivity(intent2);
+                    MainRouter.gotoLoginActivity(SettingActivity.this);
                 }
             }
         });
@@ -205,9 +206,8 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                         ToastUtils.toastShort("记分周期提醒已关闭");
                     }
                 } else {
-                    Intent intent2 = new Intent(SettingActivity.this, LoginActivity.class);
-                    startActivity(intent2);
                     mScoreNotice.setChecked(false);
+                    MainRouter.gotoLoginActivity(SettingActivity.this);
                 }
             }
         });
@@ -239,8 +239,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 if (LoginData.getInstance().loginFlag && !"".equals(LoginData.getInstance().userID)) {
                     showLicenseDateDialog();
                 } else {
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    startActivity(intent);
+                    MainRouter.gotoLoginActivity(this);
                 }
                 break;
             case R.id.activity_logout:
@@ -284,7 +283,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 picker.setRangeStart(DateUtils.getYear() - 100, DateUtils.getMonth(), DateUtils.getDay());
                 picker.setRangeEnd(DateUtils.getYear(), DateUtils.getMonth(), DateUtils.getDay());
                 try {
-                    String date = LoginData.getInstance().mLoginInfoBean.getGetdate();
+                    String date = MemoryData.getInstance().getGetdate();
                     if (!"".equals(date)) {
                         date = date.replace("-", "");
                         picker.setSelectedItem(Integer.valueOf(date.substring(0, 4)), Integer.valueOf(date.substring(4, 6)), Integer.valueOf(date.substring(6, 8)));
@@ -504,10 +503,10 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         Map<String, RequestBody> params = new HashMap<>();
         RequestBody body = RequestBody.create(MediaType.parse("image/jpeg"), mCropFile);
         String imagFileName = "";
-        String[] imageUrls = LoginData.getInstance().mLoginInfoBean.getPortrait().split("\\/");
+        String[] imageUrls = MemoryData.getInstance().getPortrait().split("\\/");
 
-        if (Tools.isStrEmpty(LoginData.getInstance().mLoginInfoBean.getPortrait())) {
-            imagFileName = LoginData.getInstance().userID + ".jpg";
+        if (Tools.isStrEmpty(MemoryData.getInstance().getPortrait())) {
+            imagFileName = MemoryData.getInstance().getGlobalUserID() + ".jpg";
         } else {
             imagFileName = imageUrls[imageUrls.length - 1];
         }
@@ -564,7 +563,16 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 ImageLoader.getInstance().clearMemoryCache();
                 getBaseBack().setEnabled(true);
                 if (bankResponse.getSYS_HEAD().getReturnCode().equals("000000")) {
-                    LoginData.getInstance().mLoginInfoBean.setPortrait(strUrl);
+                    //更新头像
+                    ServiceRouter serviceRouter = ServiceRouter.getInstance();
+                    if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
+                        IUserService service = (IUserService) serviceRouter
+                                .getService(IUserService.class.getSimpleName());
+                        service.saveUserPortrait(strUrl);
+                    } else {
+                        //注册机开始工作
+                        ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+                    }
                     ToastUtils.toastShort("修改头像成功");
                 }
             }
@@ -593,21 +601,29 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
      * @param date
      */
     private void commitGetCardDate(final String date) {
-        if (LoginData.getInstance().mLoginInfoBean.getGetdate().equals(date)) {
+        if (MemoryData.getInstance().getGetdate().equals(date)) {
             return;
         }
         PersonInfoDTO dto = new PersonInfoDTO();
         dto.setGetdate(date.replace("-", ""));
         showDialogLoading();
-        UserApiClient.commitPersonInfo(ContextUtils.getContext(), dto, new CallBack<BankResponse>() {
+        UserApiClient.commitPersonInfo(Utils.getContext(), dto, new CallBack<BankResponse>() {
             @Override
             public void onSuccess(BankResponse bankResponse) {
                 mSelDate.setText(date);
                 hideDialogLoading();
                 if (Config.OK.equals(bankResponse.getSYS_HEAD().getReturnCode())) {
                     picker.dismiss();
-                    LoginData.getInstance().mLoginInfoBean.setGetdate(date);
-                    UserInfoRememberCtrl.saveObject(LoginData.getInstance().mLoginInfoBean);
+                    //更新驾挡编号
+                    ServiceRouter serviceRouter = ServiceRouter.getInstance();
+                    if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
+                        IUserService service = (IUserService) serviceRouter
+                                .getService(IUserService.class.getSimpleName());
+                        service.saveUserGetdate(date);
+                    } else {
+                        //注册机开始工作
+                        ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+                    }
                 }
             }
 
@@ -632,7 +648,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
 
                 if ("000000".equals(bankResponse.getSYS_HEAD().getReturnCode())) {
 
-                    LoginData.getInstance().clearData(ContextUtils.getContext());
+                    LoginData.getInstance().clearData(Utils.getContext());
                     SPUtils.getInstance().clear();
                     CleanUtils.cleanCustomCache(FileUtils.photoImageDirectory(getApplicationContext()));
 

@@ -5,16 +5,15 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.router.util.rea.AESEncryptor;
 import com.zantong.mobilecttx.utils.Tools;
-import com.zantong.mobilecttx.utils.encryption.AESEncryptor;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import cn.qqtheme.framework.util.ContextUtils;
 
 /**
  * Created by Administrator on 2016/5/25.
@@ -35,7 +34,6 @@ public class UserInfoRememberCtrl {
         return readObject(USERINFO);
     }
 
-
     public static void clearObject(Context context, String key) {
         // 保存对象
         SharedPreferences.Editor sharedata = context.getSharedPreferences(FILENAME, 0).edit();
@@ -55,7 +53,7 @@ public class UserInfoRememberCtrl {
                 return;
             }
             // 保存对象
-            SharedPreferences.Editor sharedata = ContextUtils.getContext().getSharedPreferences(FILENAME, 0).edit();
+            SharedPreferences.Editor sharedata = Utils.getContext().getSharedPreferences(FILENAME, 0).edit();
             //先将序列化结果写到byte缓存中，其实就分配一个内存空间
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             ObjectOutputStream os = new ObjectOutputStream(bos);
@@ -111,7 +109,7 @@ public class UserInfoRememberCtrl {
      * @return modified:
      */
     public static Object readObject(String key) {
-        SharedPreferences sharedPreferences = ContextUtils.getContext().getSharedPreferences(FILENAME, 0);
+        SharedPreferences sharedPreferences = Utils.getContext().getSharedPreferences(FILENAME, 0);
         if (sharedPreferences.contains(key)) {
             String sharedPreferencesString = sharedPreferences.getString(key, "");
             try {

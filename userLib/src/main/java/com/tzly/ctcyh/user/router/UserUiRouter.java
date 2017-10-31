@@ -7,7 +7,7 @@ import com.tzly.ctcyh.router.IComponentRouter;
 import com.tzly.ctcyh.router.LibUiRouter;
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.service.IUserService;
-import com.tzly.ctcyh.user.global.UserGlobal;
+import com.tzly.ctcyh.service.RouterGlobal;
 import com.tzly.ctcyh.user.login_v.LoginActivity;
 
 /**
@@ -29,7 +29,7 @@ public class UserUiRouter extends LibUiRouter implements IComponentRouter {
 
     @Override
     protected String[] initHostToLib() {
-        return new String[]{UserGlobal.Host.login_host};
+        return new String[]{RouterGlobal.Host.login_host};
     }
 
     /**
@@ -37,7 +37,7 @@ public class UserUiRouter extends LibUiRouter implements IComponentRouter {
      */
     @Override
     protected boolean gotoActivity(Context context, String host, Intent intent) {
-        if (UserGlobal.Host.login_host.equals(host)) {
+        if (RouterGlobal.Host.login_host.equals(host)) {
             intent.setClass(context, LoginActivity.class);
         } else {
             return true;
@@ -51,8 +51,7 @@ public class UserUiRouter extends LibUiRouter implements IComponentRouter {
     @Override
     protected boolean excludeLoginActivity(String host) {
         //不需要登录
-        return !UserGlobal.Host.login_host.equals(host) && loginActivity();
-
+        return !RouterGlobal.Host.login_host.equals(host) && loginActivity();
     }
 
     protected boolean loginActivity() {ServiceRouter serviceRouter = ServiceRouter.getInstance();
@@ -70,6 +69,6 @@ public class UserUiRouter extends LibUiRouter implements IComponentRouter {
 
     @Override
     protected String verifySchemeToLib() {
-        return UserGlobal.Scheme.user_scheme;
+        return RouterGlobal.Scheme.user_scheme;
     }
 }

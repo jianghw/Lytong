@@ -8,8 +8,8 @@ import com.zantong.mobilecttx.map.bean.GasStationResponse;
 import com.zantong.mobilecttx.map.bean.YearCheckDetailResponse;
 import com.zantong.mobilecttx.map.bean.YearCheckResponse;
 import com.zantong.mobilecttx.map.dto.AnnualDTO;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

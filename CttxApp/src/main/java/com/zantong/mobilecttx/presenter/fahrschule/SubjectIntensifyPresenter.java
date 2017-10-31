@@ -5,8 +5,8 @@ import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectIntensifyContract;
 import cn.qqtheme.framework.bean.response.SubjectGoodsResponse;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

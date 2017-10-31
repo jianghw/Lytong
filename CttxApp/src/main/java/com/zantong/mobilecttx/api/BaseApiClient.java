@@ -2,8 +2,9 @@ package com.zantong.mobilecttx.api;
 
 import android.content.Context;
 
+import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.BuildConfig;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
 import com.zantong.mobilecttx.utils.NetUtils;
@@ -24,7 +25,6 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.FormBody;
@@ -112,10 +112,10 @@ public class BaseApiClient {
 
     public static <T> void get(Context context, String url,
                                AsyncCallBack<T> asyncCallBack) {
-//        PrefUtils pf = PrefUtils.getInstance(context);
-//        if (pf.isLogin()) {
-//            url += "?token=" + pf.getToken();
-//        }
+        //        PrefUtils pf = PrefUtils.getInstance(context);
+        //        if (pf.isLogin()) {
+        //            url += "?token=" + pf.getToken();
+        //        }
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).get().build();
         enqueue(context, request, asyncCallBack);
@@ -128,9 +128,7 @@ public class BaseApiClient {
         if (data != null) {
             builder.add("msg", data);
         }
-        if (LoginData.getInstance().loginFlag && !"".equals(LoginData.getInstance().userID)) {
-            builder.add("usrid", LoginData.getInstance().userID);
-        }
+        builder.add("usrid", MemoryData.getInstance().getGlobalUserID());
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).post(builder.build()).build();
         enqueue(context, request, asyncCallBack);
@@ -143,9 +141,7 @@ public class BaseApiClient {
         if (jsonParams != null) {
             builder.add("msg", jsonParams);
         }
-        if (LoginData.getInstance().loginFlag && !"".equals(LoginData.getInstance().userID)) {
-            builder.add("usrid", LoginData.getInstance().userID);
-        }
+        builder.add("usrid", MemoryData.getInstance().getGlobalUserID());
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).post(builder.build()).build();
         enqueue(context, request, asyncCallBack);
@@ -226,7 +222,7 @@ public class BaseApiClient {
     }
 
     public static void cancelCall(Object tag) {
-//        client.dispatcher().cancelAll();
+        //        client.dispatcher().cancelAll();
     }
 
 

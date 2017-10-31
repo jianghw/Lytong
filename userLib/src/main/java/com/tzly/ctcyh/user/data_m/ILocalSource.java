@@ -15,15 +15,17 @@ public interface ILocalSource {
 
     RequestHeadDTO getRequestHeadDTO();
 
-    void initPhoneDeviceId();
+    void savePhoneDeviceId();
 
     String getPhoneDeviceId();
 
-    String getPushDeviceId();
-
-    String getLoginResponseFromSp();
+    String getLoginResponseNewOrOld();
 
     Context getWeakReference();
 
     String getUserId();
+
+    void setPushId(String pushId);
+
+    String getPushId();
 }

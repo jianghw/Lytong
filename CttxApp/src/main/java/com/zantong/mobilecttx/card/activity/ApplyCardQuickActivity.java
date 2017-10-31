@@ -10,7 +10,10 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -29,7 +32,6 @@ import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.ReadFfile;
-import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.dialog.NetLocationDialog;
 import com.zantong.mobilecttx.widght.CttxEditText;
 import com.zantong.mobilecttx.widght.CttxTextView;
@@ -46,10 +48,8 @@ import butterknife.OnClick;
 import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.custom.picker.DatePicker;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
@@ -136,11 +136,10 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
         quickApplyCardDTO.setCtftp("0");
         quickApplyCardDTO.setUsrname(getIntent().getStringExtra("name"));
-        quickApplyCardDTO.setUsrid(SPUtils.getInstance().getLoginInfoBean().getUsrid());
+        quickApplyCardDTO.setUsrid(MemoryData.getInstance().getGlobalUserID());
         quickApplyCardDTO.setCtfnum(RSAUtils.strByEncryption(getIntent().getStringExtra("idCard"), true));
         quickApplyCardDTO.setFilenum(RSAUtils.strByEncryption(getIntent().getStringExtra("filenum"), true));
-        if (LoginData.getInstance().mLoginInfoBean != null)
-            quickApplyCardDTO.setPhoenum(RSAUtils.strByEncryption(LoginData.getInstance().mLoginInfoBean.getPhoenum(), true));
+        quickApplyCardDTO.setPhoenum(RSAUtils.strByEncryption(MemoryData.getInstance().getPhoenum(), true));
         quickApplyCardDTO.setCtfvldprd(getIntent().getStringExtra("date"));
         quickApplyCardDTO.setActnotf("0");//默认不开启自动还款
         quickApplyCardDTO.setElecbillsign("0");
@@ -258,7 +257,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
      */
     private void commitInfo() {
         showDialogLoading();
-        HandleCTCardApiClient.htmlLocal(ContextUtils.getContext(), "cip.cfc.u010.01", quickApplyCardDTO, this);
+        HandleCTCardApiClient.htmlLocal(Utils.getContext(), "cip.cfc.u010.01", quickApplyCardDTO, this);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.tzly.ctcyh.service;
 
-import android.text.TextUtils;
-
 import com.tzly.ctcyh.router.ServiceRouter;
+import com.tzly.ctcyh.router.UiRouter;
+import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 
 /**
@@ -18,14 +18,9 @@ public class MemoryData {
     private String usrid;
     private String phoenum;
     private String recdphoe;
-    /**
-     * 推送id
-     */
-    private String pushId;
-
-    public String getPushId() {
-        return pushId;
-    }
+    private String getdate;
+    private String nickname;
+    private String portrait;
 
     private static class SingletonHolder {
         private static final MemoryData INSTANCE = new MemoryData();
@@ -33,6 +28,14 @@ public class MemoryData {
 
     public static MemoryData getInstance() {
         return SingletonHolder.INSTANCE;
+    }
+
+    public String getGetdate() {
+        return getdate;
+    }
+
+    public void setGetdate(String getdate) {
+        this.getdate = getdate;
     }
 
     public boolean isLogin() {
@@ -43,12 +46,26 @@ public class MemoryData {
         isLogin = login;
     }
 
-    public String getUsrid() {
-        return usrid;
+    //TODO 暂时这么 要改！！！Main
+    public boolean isMainLogin() {
+        if (isLogin) return true;
+        UiRouter.getInstance().openUriBundle(
+                Utils.getContext(),
+                "main_scheme" + "://" + "in_exist_host",
+                null);
+        return isLogin;
     }
 
     public void setUsrid(String usrid) {
         this.usrid = usrid;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getFilenum() {
@@ -65,6 +82,14 @@ public class MemoryData {
 
     public void setCtfnum(String ctfnum) {
         this.ctfnum = ctfnum;
+    }
+
+    public String getPortrait() {
+        return portrait;
+    }
+
+    public void setPortrait(String portrait) {
+        this.portrait = portrait;
     }
 
     public String getPhoenum() {
@@ -87,22 +112,30 @@ public class MemoryData {
      * 获取用户id
      */
     public String getRASUserID() {
-        return RSAUtils.strByEncryption(getUserID(), true);
+        return RSAUtils.strByEncryption(getGlobalUserID(), true);
     }
 
-    public String getUserID() {
-        if (!TextUtils.isEmpty(usrid)) return usrid;
+    /**
+     * 只为用户模块使用 user 其他地方禁止使用
+     */
+    public String getUsrid() {
+        return usrid;
+    }
 
+    /**
+     * 朕 统一哈
+     */
+    public String getGlobalUserID() {
         ServiceRouter serviceRouter = ServiceRouter.getInstance();
         if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
             IUserService service = (IUserService) serviceRouter
                     .getService(IUserService.class.getSimpleName());
-            boolean userLogin = service.isUserLogin();
+            return service.getUserID();
         } else {
             //注册机开始工作
             ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            return "0123456789";
         }
-        return usrid;
     }
 
 }

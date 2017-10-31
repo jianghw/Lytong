@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -27,7 +28,6 @@ import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.utils.DialogMgr;
-import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.util.Random;
@@ -93,11 +93,11 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         //测试数据下
 
         boolean positon = new Random().nextBoolean();
-        if (BuildConfig.DEBUG && positon) {
+        if (BuildConfig.App_Url && positon) {
             mName.setText("遇紫紫");
             mIdCard.setText("301364198811040740");
             mDriverFileNum.setText("310002038631");
-        } else if (BuildConfig.DEBUG && !positon) {
+        } else if (BuildConfig.App_Url && !positon) {
             mName.setText("毛乾帅");
             mIdCard.setText("310109198503162039");
             mDriverFileNum.setText("310010007285");
@@ -230,7 +230,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         //TODO 什么贵
         LoginData.getInstance().filenum = getDriverFileNum();
 
-        if (BuildConfig.DEBUG) {//七天之内不能重复办卡 不用
+        if (BuildConfig.App_Url) {//七天之内不能重复办卡 不用
             showDialogLoading();
             checkApplyCardRecord();
         } else {
@@ -287,10 +287,10 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         BidCTCardDTO bidCTCardDTO = new BidCTCardDTO();
         bidCTCardDTO.setCtftp("0");
         bidCTCardDTO.setUsrname(getUserName());
-        bidCTCardDTO.setUsrid(SPUtils.getInstance().getLoginInfoBean().getUsrid());
+        bidCTCardDTO.setUsrid(MemoryData.getInstance().getGlobalUserID());
         bidCTCardDTO.setCtfnum(RSAUtils.strByEncryption(getUserIdCard(), true));
         bidCTCardDTO.setFilenum(RSAUtils.strByEncryption(getDriverFileNum(), true));
-        bidCTCardDTO.setPhoenum(RSAUtils.strByEncryption(SPUtils.getInstance().getLoginInfoBean().getUsrid(), true));
+        bidCTCardDTO.setPhoenum(RSAUtils.strByEncryption(MemoryData.getInstance().getPhoenum(), true));
         HandleCTCardApiClient.htmlLocal(this, "cip.cfc.u006.01", bidCTCardDTO, this);
     }
 

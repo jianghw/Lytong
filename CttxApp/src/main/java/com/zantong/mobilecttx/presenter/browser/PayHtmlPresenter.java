@@ -7,8 +7,8 @@ import com.google.gson.Gson;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.contract.browser.IPayHtmlContract;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNumBean;
 import com.zantong.mobilecttx.weizhang.dto.LicenseTestDTO;
@@ -134,7 +134,7 @@ public class PayHtmlPresenter
         String fileNum = mAtyView.getViolationNum();
 
         bean.setViolationnum(fileNum);
-        bean.setToken(mRepository.getDefaultRASUserID());
+        bean.setToken(mRepository.getDefaultUserID());
 
         dto.setReqInfo(bean);
         return new Gson().toJson(dto);

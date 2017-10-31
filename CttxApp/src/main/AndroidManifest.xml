@@ -92,10 +92,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
-        <!-- 登陆页面 -->
-        <activity
-            android:name=".login_v.LoginActivity"
-            android:screenOrientation="portrait"/>
         <activity
             android:name=".common.Demo"
             android:screenOrientation="portrait"

@@ -156,7 +156,9 @@ public abstract class JxBaseFragment extends Fragment {
      * 统一封装
      */
     public void toastShore(String message) {
-        toastShort(message);
+        FragmentActivity activity = getActivity();
+        if (activity instanceof JxBaseActivity)
+            ((JxBaseActivity) activity). toastShort(message);
     }
 
 }

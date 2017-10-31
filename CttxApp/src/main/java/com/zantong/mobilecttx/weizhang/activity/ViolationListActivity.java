@@ -10,7 +10,9 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.service.MemoryData;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
@@ -23,10 +25,10 @@ import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.contract.IViolationListFtyContract;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.home.activity.Codequery;
-import com.zantong.mobilecttx.login_v.LoginActivity;
 import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.presenter.weizhang.ViolationListPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -40,7 +42,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -156,8 +157,8 @@ public class ViolationListActivity extends BaseJxActivity
         String violationnum = bean.getViolationnum();
         int processste = bean.getProcessste();//处理状态
 
-        if (!LoginData.getInstance().loginFlag) {
-            Act.getInstance().gotoIntent(this, LoginActivity.class);
+        if (!MemoryData.getInstance().isMainLogin()) {
+            MainRouter.gotoLoginActivity(this);
         } else if (processste == 2 || processste == 3) {
             showDialogToCodequery(bean);
         } else {
@@ -210,7 +211,7 @@ public class ViolationListActivity extends BaseJxActivity
      * 去绑卡页面
      */
     private void byCardHome() {
-        MobclickAgent.onEvent(ContextUtils.getContext(), Config.getUMengID(11));
+        MobclickAgent.onEvent(Utils.getContext(), Config.getUMengID(11));
         DialogUtils.remindDialog(this,
                 "温馨提示", "您还未绑卡，暂时无法进行缴费", "取消", "立即绑卡",
                 new View.OnClickListener() {

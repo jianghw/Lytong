@@ -23,10 +23,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.R;
-import cn.qqtheme.framework.util.ui.DensityUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import cn.qqtheme.framework.util.image.ImageTools;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
 import com.zantong.mobilecttx.widght.Viewfinder;
 
@@ -36,7 +35,8 @@ import java.io.IOException;
 import java.util.List;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.log.LogUtils;
+import cn.qqtheme.framework.util.image.ImageTools;
+import cn.qqtheme.framework.util.ui.DensityUtils;
 
 /**
  * 拍照扫描

@@ -7,8 +7,8 @@ import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeResponse;
 import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
 import com.zantong.mobilecttx.contract.IRechargeAtyContract;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import rx.Subscription;
@@ -90,7 +90,7 @@ public class RechargePresenter implements IRechargeAtyContract.IRechargeAtyPrese
 
     @Override
     public String initUserId() {
-        return mRepository.getDefaultRASUserID();
+        return mRepository.getDefaultUserID();
     }
 
     /**
@@ -135,7 +135,7 @@ public class RechargePresenter implements IRechargeAtyContract.IRechargeAtyPrese
     @Override
     public RechargeDTO initRechargeDTO() {
         RechargeDTO bean = mAtyView.initRechargeDTO();
-        bean.setUserId(mRepository.getDefaultRASUserID());
+        bean.setUserId(mRepository.getDefaultUserID());
         return bean;
     }
 

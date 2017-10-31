@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.webkit.JavascriptInterface;
 
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
@@ -30,7 +32,6 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 import org.greenrobot.eventbus.EventBus;
 
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * @author Sandy
@@ -51,7 +52,7 @@ public class InterfaceForJS {
 
     @JavascriptInterface
     public boolean isLogin() {
-        return LoginData.getInstance().loginFlag;
+        return MemoryData.getInstance().isMainLogin();
     }
 
     @JavascriptInterface

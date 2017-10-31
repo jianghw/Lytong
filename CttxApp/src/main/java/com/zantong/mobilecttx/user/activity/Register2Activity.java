@@ -12,7 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.tzly.ctcyh.router.util.Des3;
+import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.router.util.rea.Des3;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -53,9 +55,7 @@ import java.util.List;
 import butterknife.Bind;
 import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
 
 public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresenter> implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
 
@@ -284,11 +284,11 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                                 result.getRspInfo().setFilenum(Des3.decode(result.getRspInfo().getFilenum()));
                                 result.getRspInfo().setPhoenum(Des3.decode(result.getRspInfo().getPhoenum()));
                                 result.getRspInfo().setCtfnum(Des3.decode(result.getRspInfo().getCtfnum()));
+
                                 UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERPD, mPwd.getText().toString());
                                 UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, LoginData.getInstance().imei);
                                 UserInfoRememberCtrl.saveObject(result.getRspInfo());
 
-                                LogUtils.i("usrid:" + result.getRspInfo().getUsrid());
                                 LoginData.getInstance().mLoginInfoBean = result.getRspInfo();
                                 LoginData.getInstance().userID = result.getRspInfo().getUsrid();
                                 LoginData.getInstance().filenum = result.getRspInfo().getFilenum();
@@ -349,7 +349,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                         e.printStackTrace();
                     }
                     showDialogLoading();
-                    UserApiClient.reset(ContextUtils.getContext(), dto, new CallBack<LoginResult>() {
+                    UserApiClient.reset(Utils.getContext(), dto, new CallBack<LoginResult>() {
                         @Override
                         public void onSuccess(LoginResult result) {
                             hideDialogLoading();

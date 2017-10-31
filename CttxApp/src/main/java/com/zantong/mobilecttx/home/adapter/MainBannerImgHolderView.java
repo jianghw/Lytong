@@ -7,26 +7,27 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
-import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.home.activity.CustomCordovaActivity;
 import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResponse;
 import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
-import com.zantong.mobilecttx.login_v.LoginActivity;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import cn.qqtheme.framework.bean.BaseResponse;
+import cn.qqtheme.framework.custom.banner.CBPageAdapter;
 import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.image.ImageOptions;
-import cn.qqtheme.framework.custom.banner.CBPageAdapter;
 
 /**
  * Created by Sai on 15/8/4.
@@ -65,7 +66,7 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
     }
 
     protected void webProcessingService(HomeAdvertisement data) {
-        CarApiClient.commitAdClick(ContextUtils.getContext(), data.getId(),"1",
+        CarApiClient.commitAdClick(Utils.getContext(), data.getId(),"1",
                 new CallBack<BaseResponse>() {
                     @Override
                     public void onSuccess(BaseResponse result) {
@@ -78,11 +79,11 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
                 || url.contains("happysend")) {//保险
             Act.getInstance().gotoIntent(mAdapterContext, CustomCordovaActivity.class, url);
         } else if (url.contains("localActivity")) {//百日无违章
-            if (LoginData.getInstance().loginFlag) {
+            if (MemoryData.getInstance().isMainLogin()) {
                 JxConfig.getInstance().eventIdByUMeng(1);
                 getSignStatus();
             } else {
-                Act.getInstance().gotoIntent(mAdapterContext, LoginActivity.class);
+                MainRouter.gotoLoginActivity(mAdapterContext);
             }
         } else if (url.contains("fahrschule")) {//驾校报名
             Act.getInstance().gotoIntentLogin(mAdapterContext, FahrschuleActivity.class);
@@ -97,7 +98,7 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
     private void getSignStatus() {
         ActivityCarDTO activityCarDTO = new ActivityCarDTO();
         activityCarDTO.setUsrnum(LoginData.getInstance().userID);
-        CarApiClient.getActivityCar(ContextUtils.getContext(), activityCarDTO, new CallBack<ActivityCarResponse>() {
+        CarApiClient.getActivityCar(Utils.getContext(), activityCarDTO, new CallBack<ActivityCarResponse>() {
             @Override
             public void onSuccess(ActivityCarResponse result) {
                 Intent intent = new Intent();

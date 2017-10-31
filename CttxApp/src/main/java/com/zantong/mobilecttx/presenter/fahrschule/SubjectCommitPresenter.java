@@ -7,8 +7,8 @@ import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectCommitContract;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -91,7 +91,7 @@ public class SubjectCommitPresenter
     public CreateOrderDTO getCreateOrder() {
         CreateOrderDTO orderDTO = new CreateOrderDTO();
         orderDTO.setType("4");
-        orderDTO.setUserNum(mRepository.getDefaultRASUserID());
+        orderDTO.setUserNum(initUserId());
         orderDTO.setGoodsId(mAtyView.getGoodsId());
         orderDTO.setPrice(mAtyView.getPriceValue());
 
@@ -99,8 +99,6 @@ public class SubjectCommitPresenter
         orderDTO.setPhone(mAtyView.getEditPhone());
 
         orderDTO.setPayType("1");
-
-        if (mAtyView.getUseCoupon()) orderDTO.setCouponId(mAtyView.getCouponId());
         return orderDTO;
     }
 
@@ -146,6 +144,6 @@ public class SubjectCommitPresenter
 
     @Override
     public String initUserId() {
-        return mRepository.getDefaultRASUserID();
+        return mRepository.getDefaultUserID();
     }
 }

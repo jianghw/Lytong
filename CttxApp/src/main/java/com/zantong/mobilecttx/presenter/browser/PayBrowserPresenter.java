@@ -4,8 +4,8 @@ package com.zantong.mobilecttx.presenter.browser;
 import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.contract.browser.IPayBrowserFtyContract;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
 
 import java.util.concurrent.TimeUnit;

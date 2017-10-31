@@ -1,6 +1,7 @@
 package com.tzly.ctcyh.pay.html_p;
 
 import android.support.annotation.NonNull;
+import android.webkit.JavascriptInterface;
 
 import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.data_m.BaseSubscriber;
@@ -114,5 +115,20 @@ public class HtmlPayPresenter implements IHtmlPayContract.IHtmlPayPresenter {
     @Override
     public String getOrderId() {
         return mContractView.getOrderId();
+    }
+
+    @JavascriptInterface
+    public void ToastMsg(String msg) {
+        mContractView.toastShort(msg);
+    }
+
+    @JavascriptInterface
+    public boolean isLogin() {
+        return mContractView.isLogin();
+    }
+
+    @JavascriptInterface
+    public void gotoLogin() {
+        mContractView.gotoLogin();
     }
 }

@@ -14,7 +14,8 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.tzly.ctcyh.router.util.Des3;
+import com.tzly.ctcyh.router.util.rea.Des3;
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
@@ -123,9 +124,9 @@ public class FriendShareFragment extends BaseRefreshJxFragment
         if (mPresenter != null) mPresenter.getRecordCount();
 
         String contentString;
-        if (LoginData.getInstance().loginFlag && LoginData.getInstance().mLoginInfoBean != null)
+        if (MemoryData.getInstance().isMainLogin())
             contentString = ShareParentActivity.getShareAppUrl(1) + "?phoneNum="
-                    + Des3.encode(LoginData.getInstance().mLoginInfoBean.getPhoenum());
+                    + Des3.encode(MemoryData.getInstance().getPhoenum());
         else
             contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         if (!TextUtils.isEmpty(contentString)) {
@@ -240,7 +241,7 @@ public class FriendShareFragment extends BaseRefreshJxFragment
         WXWebpageObject webpage = new WXWebpageObject();
         if (LoginData.getInstance().loginFlag) {
             webpage.webpageUrl = ShareParentActivity.getShareAppUrl(1) + "?phoneNum="
-                    + Des3.encode(LoginData.getInstance().mLoginInfoBean.getPhoenum());
+                    + Des3.encode(MemoryData.getInstance().getPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         }

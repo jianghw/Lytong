@@ -4,8 +4,8 @@ package com.zantong.mobilecttx.presenter.fahrschule;
 import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectOrderContract;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import rx.Subscription;

@@ -16,8 +16,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.tzly.ctcyh.router.util.Des3;
+import com.tzly.ctcyh.router.util.rea.Des3;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
@@ -222,7 +223,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
 //可添加控件操作
         int size;
-        if (LoginData.getInstance().loginFlag)
+        if (MemoryData.getInstance().isMainLogin())
             size = LoginData.getInstance().mServerCars.size();
         else
             size = SPUtils.getInstance().getCarsInfo().size();
@@ -500,7 +501,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
      */
     private void submitData() {
         //登陆状态
-        if (LoginData.getInstance().loginFlag) {
+        if (MemoryData.getInstance().isMainLogin()) {
             if (mCustomSwitchBtn.isChecked()) {
                 List<UserCarInfoBean> serverCars = LoginData.getInstance().mServerCars;
                 if (serverCars != null && serverCars.size() > 0) {
@@ -522,7 +523,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
             }
         }
         //未登录状态
-        if (!LoginData.getInstance().loginFlag) {
+        if (!MemoryData.getInstance().isMainLogin()) {
             if (mCustomSwitchBtn.isChecked()) {
                 List<CarInfoDTO> infoDTOList = SPUtils.getInstance().getCarsInfo();
                 if (infoDTOList != null && infoDTOList.size() > 0) {

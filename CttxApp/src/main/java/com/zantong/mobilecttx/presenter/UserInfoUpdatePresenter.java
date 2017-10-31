@@ -1,16 +1,17 @@
 package com.zantong.mobilecttx.presenter;
 
+import com.tzly.ctcyh.router.ServiceRouter;
+import com.tzly.ctcyh.service.IUserService;
 import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.BasePresenter;
 import com.zantong.mobilecttx.base.MessageFormat;
-import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.contract.UserInfoUpdateView;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.model.UserInfoUpdateModel;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
 import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
-import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,8 +65,17 @@ public class UserInfoUpdatePresenter extends BasePresenter<UserInfoUpdateView> i
             case 1:
                 if (LoginData.getInstance().success.equals(mUpdateInfo.getSYS_HEAD().getReturnCode())) {
                     mUserInfoUpdate.updateView(clazz, index);
-                    LoginData.getInstance().mLoginInfoBean.setPortrait(mUserInfoUpdate.mapData().get("portrait"));
-                    UserInfoRememberCtrl.saveObject(LoginData.getInstance().mLoginInfoBean);
+
+                    //更新头像
+                    ServiceRouter serviceRouter = ServiceRouter.getInstance();
+                    if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
+                        IUserService service = (IUserService) serviceRouter
+                                .getService(IUserService.class.getSimpleName());
+                        service.saveUserPortrait(mUserInfoUpdate.mapData().get("portrait"));
+                    } else {
+                        //注册机开始工作
+                        ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+                    }
                 } else {
                     mUserInfoUpdate.setUserHeadImage();
                     ToastUtils.toastShort(mUpdateInfo.getSYS_HEAD().getReturnMessage());

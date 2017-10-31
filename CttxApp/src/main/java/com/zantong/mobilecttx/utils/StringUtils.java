@@ -76,8 +76,7 @@ public class StringUtils {
     }
 
     public static String getEncrypPhone(String phone) {
-        String str = phone.substring(0, phone.length() - (phone.substring(3)).length()) + "****" + phone.substring(7);
-        return str;
+        return phone.substring(0, phone.length() - (phone.substring(3)).length()) + "****" + phone.substring(7);
     }
 
     public static String getTimeToStr() throws ParseException {

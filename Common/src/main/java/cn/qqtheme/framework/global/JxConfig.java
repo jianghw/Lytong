@@ -4,7 +4,7 @@ import android.support.v4.util.SimpleArrayMap;
 
 import com.umeng.analytics.MobclickAgent;
 
-import cn.qqtheme.framework.util.ContextUtils;
+import cn.qqtheme.framework.util.XUtils;
 
 /**
  * Created by jianghw on 2017/7/5.
@@ -85,11 +85,8 @@ public final class JxConfig {
      * 自定义友盟事件
      */
     public void eventIdByUMeng(int position) {
-        MobclickAgent.onEvent(ContextUtils.getContext(), getUMengEventID(position));
+        MobclickAgent.onEvent(XUtils.getContext(), getUMengEventID(position));
     }
 
-    public void customUrlUMeng(String url) {
-        MobclickAgent.onEvent(ContextUtils.getContext(), url);
-    }
 
 }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseActivity;
@@ -16,7 +17,6 @@ import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
 
 import butterknife.ButterKnife;
-import cn.qqtheme.framework.util.log.LogUtils;
 
 /**
  * Fragment基类

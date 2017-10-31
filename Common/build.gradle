@@ -22,8 +22,7 @@ dependencies {
     compile 'com.github.devlight:infinitecycleviewpager:1.0.2'
     //友盟+
     compile 'com.umeng.analytics:analytics:latest.integration'
-    //logger
-    compile 'com.orhanobut:logger:1.15'
+
     //网络依赖
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'

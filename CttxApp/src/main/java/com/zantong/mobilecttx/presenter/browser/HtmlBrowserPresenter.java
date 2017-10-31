@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.contract.browser.IHtmlBrowserContract;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import java.io.File;

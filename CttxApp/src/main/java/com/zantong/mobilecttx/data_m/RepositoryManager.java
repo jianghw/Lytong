@@ -1,10 +1,9 @@
-package com.zantong.mobilecttx.model.repository;
+package com.zantong.mobilecttx.data_m;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import cn.qqtheme.framework.bean.BankResponse;
-
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -61,6 +60,7 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import java.util.List;
 
+import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.bean.response.SubjectGoodsResponse;
 import okhttp3.MultipartBody;
@@ -113,8 +113,6 @@ public class RepositoryManager {
 
     /**
      * 获取用户id~
-     *
-     * @return
      */
     public String getDefaultUserID() {
         return mLocalData.DefaultUserID();
@@ -123,7 +121,7 @@ public class RepositoryManager {
     /**
      * 加密后的userid
      */
-    public String getDefaultRASUserID() {
+    public String getRASUserID() {
         return mLocalData.getRASUserID();
     }
 
@@ -141,8 +139,7 @@ public class RepositoryManager {
      * 手机号码
      */
     public String getDefaultUserPhone() {
-        return mLocalData.getDefaultUser() != null
-                ? mLocalData.getDefaultUser().getPhoenum() : "";
+        return MemoryData.getInstance().getPhoenum();
     }
 
     /**

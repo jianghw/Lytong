@@ -10,18 +10,16 @@ import android.widget.TextView;
 
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponBean;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
-import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectCommitContract;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobilecttx.eventbus.SubjectCommitEvent;
 import com.zantong.mobilecttx.eventbus.SubjectOrderEvent;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderBean;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
-import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
-import com.zantong.mobilecttx.order.activity.CouponListActivity;
 import com.zantong.mobilecttx.presenter.fahrschule.SubjectCommitPresenter;
 import com.zantong.mobilecttx.utils.StringUtils;
 
@@ -32,6 +30,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;
@@ -43,10 +42,6 @@ import cn.qqtheme.framework.util.ViewUtils;
 public class SubjectCommitFragment extends BaseRefreshJxFragment
         implements View.OnClickListener, ISubjectCommitContract.ISubjectCommitView {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
     /**
      * mPresenter
      */
@@ -91,25 +86,13 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     public static SubjectCommitFragment newInstance() {
         return new SubjectCommitFragment();
     }
 
-    public static SubjectCommitFragment newInstance(String param1, String param2) {
-        SubjectCommitFragment fragment = new SubjectCommitFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     protected boolean isRefresh() {
         return false;
@@ -134,7 +117,7 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
         ViewUtils.editTextInputSpace(mEditName);
         ViewUtils.editTextInputSpace(mEditPhone);
 
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.App_Url) {
             mEditName.setText("小姐哦啊金粉世家");
             mEditPhone.setText("15252525569");
         }
@@ -152,9 +135,6 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
     @Override
     protected void onFirstDataVisible() {
         EventBus.getDefault().register(this);
-
-        //优惠劵
-        if (mPresenter != null) mPresenter.getCouponByType();
     }
 
     @Override
@@ -175,9 +155,9 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
         mTvCommit = (TextView) view.findViewById(R.id.tv_commit);
         mTvCommit.setOnClickListener(this);
 
-        mLayCoupon = (RelativeLayout) view.findViewById(R.id.lay_coupon);
-        mLayCoupon.setOnClickListener(this);
-        mTvCoupon = (TextView) view.findViewById(R.id.tv_coupon);
+//        mLayCoupon = (RelativeLayout) view.findViewById(R.id.lay_coupon);
+//        mLayCoupon.setOnClickListener(this);
+//        mTvCoupon = (TextView) view.findViewById(R.id.tv_coupon);
         mTvRemark = (TextView) view.findViewById(R.id.tv_remark);
     }
 
@@ -211,18 +191,18 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
                 dataFormValidation();
                 break;
             case R.id.lay_coupon://优惠价
-                if (mCouponBeanList == null || mCouponBeanList.size() < 1) {
-                    if (mPresenter != null) mPresenter.getCouponByType();
-                } else {
-                    Intent intent = new Intent(getActivity(), CouponListActivity.class);
-                    Bundle bundle = new Bundle();
-
-                    ArrayList<RechargeCouponBean> arrayList = new ArrayList<>();
-                    arrayList.addAll(mCouponBeanList);
-                    bundle.putParcelableArrayList(JxGlobal.putExtra.recharge_coupon_extra, arrayList);
-                    intent.putExtras(bundle);
-                    startActivityForResult(intent, JxGlobal.requestCode.recharge_coupon_list);
-                }
+//                if (mCouponBeanList == null || mCouponBeanList.size() < 1) {
+//                    if (mPresenter != null) mPresenter.getCouponByType();
+//                } else {
+//                    Intent intent = new Intent(getActivity(), CouponListActivity.class);
+//                    Bundle bundle = new Bundle();
+//
+//                    ArrayList<RechargeCouponBean> arrayList = new ArrayList<>();
+//                    arrayList.addAll(mCouponBeanList);
+//                    bundle.putParcelableArrayList(JxGlobal.putExtra.recharge_coupon_extra, arrayList);
+//                    intent.putExtras(bundle);
+//                    startActivityForResult(intent, JxGlobal.requestCode.recharge_coupon_list);
+//                }
                 break;
             default:
                 break;

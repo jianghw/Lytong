@@ -16,7 +16,6 @@ import cn.qqtheme.framework.R;
 import cn.qqtheme.framework.custom.picker.entity.City;
 import cn.qqtheme.framework.custom.picker.entity.County;
 import cn.qqtheme.framework.custom.picker.entity.Province;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ConvertUtils;
 
 /**
@@ -103,12 +102,10 @@ public class AreaPicker extends LinkagePicker {
         textView.setLayoutParams(params);
         textView.setText("请选择地区");
         textView.setGravity(Gravity.CENTER);
-        textView.setTextColor(ContextUtils.getContext().getResources().getColor(R.color.colorTvBlue_59b));
+        textView.setTextColor(mApplicationContext.getResources().getColor(R.color.colorTvBlue_59b));
 
-        Drawable drawableRight = ContextUtils.getContext().getResources().getDrawable(R.mipmap.ic_tv_close);
+        Drawable drawableRight = mApplicationContext.getResources().getDrawable(R.mipmap.ic_tv_close);
         textView.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableRight, null);
-//        textView.setCompoundDrawablePadding(ConvertUtils.toDp(45f));
-
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

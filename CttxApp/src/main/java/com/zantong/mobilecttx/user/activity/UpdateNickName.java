@@ -6,7 +6,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.service.IUserService;
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -17,7 +20,6 @@ import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.presenter.UpdateNickNamePresenter;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
-import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 
 import java.util.HashMap;
 
@@ -46,7 +48,7 @@ public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePre
     public void initView() {
         setTitleText("修改昵称");
         setEnsureText("保存");
-        nickNameEdit.setText(LoginData.getInstance().mLoginInfoBean.getNickname());
+        nickNameEdit.setText(MemoryData.getInstance().getNickname());
     }
 
     @Override
@@ -117,8 +119,17 @@ public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePre
             case 1:
                 if (LoginData.getInstance().success.equals(((UpdateInfo) object).getSYS_HEAD().getReturnCode())) {
                     liyingreg();
-                    LoginData.getInstance().mLoginInfoBean.setNickname(nickNameEdit.getText().toString());
-                    UserInfoRememberCtrl.saveObject(LoginData.getInstance().mLoginInfoBean);
+                    //更新别名
+                    ServiceRouter serviceRouter = ServiceRouter.getInstance();
+                    if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
+                        IUserService service = (IUserService) serviceRouter
+                                .getService(IUserService.class.getSimpleName());
+                        service.saveUserNickname(nickNameEdit.getText().toString().trim());
+                    } else {
+                        //注册机开始工作
+                        ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+                    }
+
                     finish();
                 }
                 break;
@@ -126,11 +137,11 @@ public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePre
     }
 
     private void liyingreg() {
-        String phone = RSAUtils.strByEncryptionLiYing(LoginData.getInstance().mLoginInfoBean.getPhoenum(), true);
+        String phone = RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().getPhoenum(), true);
         LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
         liYingRegDTO.setPhoenum(phone);
-        liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(LoginData.getInstance().userID, true));
-        liYingRegDTO.setNickname(nickNameEdit.getText().toString());
+        liYingRegDTO.setUsrid(MemoryData.getInstance().getRASUserID());
+        liYingRegDTO.setNickname(nickNameEdit.getText().toString().trim());
         CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResponse>() {
             @Override
             public void onSuccess(BaseResponse result) {

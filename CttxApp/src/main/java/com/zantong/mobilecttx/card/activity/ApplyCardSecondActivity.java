@@ -10,7 +10,10 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -33,7 +36,6 @@ import com.zantong.mobilecttx.utils.ChineseToPinYin;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.ReadFfile;
-import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.dialog.CityDialog;
 import com.zantong.mobilecttx.utils.dialog.NetLocationDialog;
 import com.zantong.mobilecttx.utils.xmlparser.XmlParserHandler;
@@ -57,11 +59,9 @@ import butterknife.OnClick;
 import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.custom.picker.DatePicker;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;
-import cn.qqtheme.framework.util.log.LogUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 import rx.Observable;
@@ -260,8 +260,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         mIdCardNum.setContentText(idCard);
         applyCTCardDTO.setCtfnum(RSAUtils.strByEncryption(idCard, true));
 //手机号
-        mUserPhone.setContentText(LoginData.getInstance().mLoginInfoBean != null ?
-                LoginData.getInstance().mLoginInfoBean.getPhoenum() : "");
+        mUserPhone.setContentText(MemoryData.getInstance().getPhoenum());
 
 //婚姻状况
         applyCTCardDTO.setMarlst("1");
@@ -286,7 +285,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
 //证件类型
         applyCTCardDTO.setCtftp("0");
 
-        applyCTCardDTO.setUsrid(SPUtils.getInstance().getLoginInfoBean().getUsrid());
+        applyCTCardDTO.setUsrid(MemoryData.getInstance().getGlobalUserID());
 
         applyCTCardDTO.setActnotf("1");
         applyCTCardDTO.setElecbillsign("0");
@@ -801,7 +800,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     private void commitInfo() {
         showDialogLoading();
 
-        HandleCTCardApiClient.htmlLocal(ContextUtils.getContext(), "cip.cfc.u007.01", applyCTCardDTO, this);
+        HandleCTCardApiClient.htmlLocal(Utils.getContext(), "cip.cfc.u007.01", applyCTCardDTO, this);
     }
 
     /**
@@ -834,7 +833,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      * @param applyCTCardDTO
      */
     private void commitYingXiaoDataForLYT(ApplyCTCardDTO applyCTCardDTO) {
-        CarApiClient.commitYingXiaoData(ContextUtils.getContext(), applyCTCardDTO,
+        CarApiClient.commitYingXiaoData(Utils.getContext(), applyCTCardDTO,
                 new CallBack<BaseResponse>() {
                     @Override
                     public void onSuccess(BaseResponse result) {

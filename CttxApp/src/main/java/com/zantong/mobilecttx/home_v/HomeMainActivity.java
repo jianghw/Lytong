@@ -15,7 +15,9 @@ import com.tencent.bugly.beta.UpgradeInfo;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.tzly.ctcyh.router.util.StatusBarUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -34,7 +36,6 @@ import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.custom.tablebottom.UiTableBottom;
 import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.util.AppUtils;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 
@@ -121,7 +122,7 @@ public class HomeMainActivity extends JxBaseActivity {
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                shareAppShop(ContextUtils.getContext().getPackageName());
+                                shareAppShop(Utils.getContext().getPackageName());
                             }
                         });
             }
@@ -153,8 +154,6 @@ public class HomeMainActivity extends JxBaseActivity {
             LoginData.getInstance().userID = user.getUsrid();
             LoginData.getInstance().loginFlag = true;
             LoginData.getInstance().filenum = user.getFilenum();
-            LoginData.getInstance().getdate = user.getGetdate();
-            LoginData.getInstance().mLoginInfoBean = user;
             if (UserInfoRememberCtrl.readObject(LoginData.getInstance().NOTICE_STATE) != null) {
                 LoginData.getInstance().updateMsg =
                         (boolean) UserInfoRememberCtrl.readObject(LoginData.getInstance().NOTICE_STATE);
@@ -244,15 +243,13 @@ public class HomeMainActivity extends JxBaseActivity {
     private void liyingreg() {
         LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
         try {
-            String phone = RSAUtils.strByEncryptionLiYing(
-                    LoginData.getInstance().mLoginInfoBean.getPhoenum(), true);
+            String phone = RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().getPhoenum(), true);
             SHATools sha = new SHATools();
             String pwd = RSAUtils.strByEncryptionLiYing(SHATools.hexString(
                     sha.eccryptSHA1(SPUtils.getInstance().getUserPwd())), true);
             liYingRegDTO.setPhoenum(phone);
             liYingRegDTO.setPswd(pwd);
-            liYingRegDTO.setUsrid(RSAUtils.strByEncryptionLiYing(
-                    LoginData.getInstance().mLoginInfoBean.getUsrid(), true));
+            liYingRegDTO.setUsrid(MemoryData.getInstance().getRASUserID());
         } catch (Exception e) {
             e.printStackTrace();
         }

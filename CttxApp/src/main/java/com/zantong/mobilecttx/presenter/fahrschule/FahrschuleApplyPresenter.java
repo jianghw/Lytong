@@ -9,8 +9,8 @@ import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResponse;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.contract.IFahrschuleApplyFtyContract;
-import com.zantong.mobilecttx.model.repository.BaseSubscriber;
-import com.zantong.mobilecttx.model.repository.RepositoryManager;
+import com.zantong.mobilecttx.data_m.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -218,7 +218,7 @@ public class FahrschuleApplyPresenter
     public CreateOrderDTO getCreateOrder() {
         CreateOrderDTO orderDTO = new CreateOrderDTO();
         orderDTO.setType("3");
-        orderDTO.setUserNum(mRepository.getDefaultRASUserID());
+        orderDTO.setUserNum(mRepository.getDefaultUserID());
         orderDTO.setGoodsId(mAtyView.getGoodsId());
         orderDTO.setPrice(mAtyView.getPriceValue());
         orderDTO.setUserName(mAtyView.getEditName());

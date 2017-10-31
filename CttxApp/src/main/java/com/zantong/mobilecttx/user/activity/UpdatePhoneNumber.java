@@ -9,16 +9,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.zantong.mobilecttx.application.LoginData;
+import com.tzly.ctcyh.router.ServiceRouter;
+import com.tzly.ctcyh.service.IUserService;
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
+import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.presenter.UpdatePhoneNumberPresenter;
-import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
-import com.zantong.mobilecttx.contract.ModelView;
 
 import java.util.HashMap;
 import java.util.Timer;
@@ -26,6 +27,7 @@ import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.qqtheme.framework.util.ToastUtils;
 
 public class UpdatePhoneNumber extends BaseMvpActivity<IBaseView, UpdatePhoneNumberPresenter> implements View.OnClickListener, IBaseView, ModelView {
 
@@ -195,7 +197,7 @@ public class UpdatePhoneNumber extends BaseMvpActivity<IBaseView, UpdatePhoneNum
             case R.id.login_btn:
                 String oldPhone = edit_old_phone.getText().toString();
                 if(ValidateUtils.isMobile(oldPhone) &&
-                        !LoginData.getInstance().mLoginInfoBean.getPhoenum().equals(oldPhone)){
+                        !MemoryData.getInstance().getPhoenum().equals(oldPhone)){
                     ToastUtils.toastShort("您输入的原手机号不正确");
                 }else if(ValidateUtils.isMobile(edit_phone_number.getText().toString())){
                     //presenter.loadView(2);
@@ -222,15 +224,24 @@ public class UpdatePhoneNumber extends BaseMvpActivity<IBaseView, UpdatePhoneNum
             case 1:
                 iTime = LoginData.getInstance().smCtrlTime;
                 if(iTime > 0){
-//                    Toast.makeText(LoginPhone.this,"验证码发送成功，请注意查收", Toast.LENGTH_SHORT).show();
                     btnNumber.setEnabled(false);
                     btnNumber.setText("60s");
                 }
                 break;
             case 2:
                 if(LoginData.getInstance().success.equals(((UpdateInfo) object).getSYS_HEAD().getReturnCode())){
-                    LoginData.getInstance().mLoginInfoBean.setPhoenum(edit_phone_number.getText().toString());
-                    UserInfoRememberCtrl.saveObject(LoginData.getInstance().mLoginInfoBean);
+
+                    //更新驾挡编号
+                    ServiceRouter serviceRouter = ServiceRouter.getInstance();
+                    if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
+                        IUserService service = (IUserService) serviceRouter
+                                .getService(IUserService.class.getSimpleName());
+                        service.saveUserPhoenum(edit_phone_number.getText().toString().trim());
+                    } else {
+                        //注册机开始工作
+                        ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+                    }
+
                     finish();
                 }
                 break;

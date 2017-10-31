@@ -1,9 +1,10 @@
-package com.zantong.mobilecttx.model.repository;
+package com.zantong.mobilecttx.data_m;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
@@ -57,12 +58,10 @@ public class LocalData {
     }
 
     /**
-     * 获取用户id值
-     *
-     * @return
+     * 获取用户id值 空值会调起登录页面
      */
     public String DefaultUserID() {
-        return LoginData.getInstance().userID;
+        return MemoryData.getInstance().getGlobalUserID();
     }
 
     /**
@@ -84,12 +83,6 @@ public class LocalData {
         return strByEncryption(string, true);
     }
 
-    /**
-     * 登陆用户信息
-     */
-    public RspInfoBean getDefaultUser() {
-        return LoginData.getInstance().mLoginInfoBean;
-    }
 
     /**
      * 安盛请求必须构建体
@@ -114,7 +107,6 @@ public class LocalData {
 
     /**
      * 获取登录信息
-     *
      */
     public RspInfoBean readObjectLoginInfoBean() {
         RspInfoBean rspInfoBean;
@@ -129,11 +121,9 @@ public class LocalData {
      */
     public void initGlobalLoginInfo(RspInfoBean rspInfoBean) {
         if (rspInfoBean == null) return;
-        LoginData.getInstance().mLoginInfoBean = rspInfoBean;
         LoginData.getInstance().userID = rspInfoBean.getUsrid();
         LoginData.getInstance().filenum = rspInfoBean.getFilenum();
         LoginData.getInstance().getdate = rspInfoBean.getGetdate();
-        LoginData.getInstance().loginFlag = true;
 
         OpenQueryBean.RspInfoBean.UserCarsInfoBean mUserCarsInfoBean =
                 (OpenQueryBean.RspInfoBean.UserCarsInfoBean)

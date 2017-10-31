@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
+import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.service.MemoryData;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
@@ -46,7 +48,6 @@ import com.zantong.mobilecttx.user.activity.SettingActivity;
 import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
 import com.zantong.mobilecttx.user.bean.MessageCountBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResponse;
-import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationHistoryAcitvity;
@@ -56,7 +57,6 @@ import java.util.List;
 
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.AppUtils;
-import cn.qqtheme.framework.util.ContextUtils;
 import cn.qqtheme.framework.util.FileUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.image.ImageLoadUtils;
@@ -245,18 +245,16 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         stringBuffer.append("车辆");
         mTvCar.setText(Html.fromHtml(stringBuffer.toString()));
 
-        RspInfoBean infoBean = LoginData.getInstance().mLoginInfoBean;
         File file = getHeadImageFile(mImgHead);
-        if (file == null && infoBean != null) {
-            ImageLoadUtils.loadHead(infoBean.getPortrait(), mImgHead);
+        if (file == null && MemoryData.getInstance().isMainLogin()) {
+            ImageLoadUtils.loadHead(MemoryData.getInstance().getPortrait(), mImgHead);
         }
 
-        if (infoBean != null && !Tools.isStrEmpty(infoBean.getNickname())) {
-            mTvLogin.setText(infoBean.getNickname());
-        } else if (infoBean != null) {
-            String phoenum = infoBean.getPhoenum();
-            if (!TextUtils.isEmpty(phoenum) && phoenum.length() >= 7)
-                mTvLogin.setText(infoBean.getPhoenum().substring(7));
+        String phone = MemoryData.getInstance().getPhoenum();
+        if (!Tools.isStrEmpty(MemoryData.getInstance().getNickname())) {
+            mTvLogin.setText(MemoryData.getInstance().getNickname());
+        } else if (!TextUtils.isEmpty(phone) && phone.length() >= 7) {
+            mTvLogin.setText(phone.substring(7));
         } else {
             mTvCard.setText("未绑定牡丹畅通卡");
             mTvCard.setTextColor(getResources().getColor(R.color.colorTvGray_b2));
@@ -272,7 +270,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
      * 头像
      */
     private File getHeadImageFile(ImageView userImage) {
-        String ImgPath = FileUtils.photoImagePath(ContextUtils.getContext(), FileUtils.CROP_DIR);
+        String ImgPath = FileUtils.photoImagePath(Utils.getContext(), FileUtils.CROP_DIR);
 
         File mCropFile = new File(ImgPath);
         if (!mCropFile.exists()) {
@@ -285,7 +283,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
             outputUri = Uri.fromFile(mCropFile);
         }
 
-        Bitmap bitmap = FileUtils.decodeUriAsBitmap(outputUri, ContextUtils.getContext());
+        Bitmap bitmap = FileUtils.decodeUriAsBitmap(outputUri, Utils.getContext());
         if (bitmap != null) userImage.setImageBitmap(bitmap);
 
         return mCropFile;
@@ -293,7 +291,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
 
     private Uri getUriForFileByN(File mCameraFile) {
         try {
-            return FileProvider.getUriForFile(ContextUtils.getContext(),
+            return FileProvider.getUriForFile(Utils.getContext(),
                     getApplication().getPackageName() + ".fileprovider", mCameraFile);
         } catch (Exception e) {
             e.printStackTrace();
@@ -406,7 +404,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 Act.getInstance().gotoIntentLogin(getActivity(), ViolationHistoryAcitvity.class);
                 break;
             case R.id.lay_msg://消息
-                MobclickAgent.onEvent(ContextUtils.getContext(), Config.getUMengID(24));
+                MobclickAgent.onEvent(Utils.getContext(), Config.getUMengID(24));
                 Act.getInstance().gotoIntentLogin(getActivity(), MegTypeActivity.class);
                 break;
             case R.id.lay_recommend://推荐送豪礼
