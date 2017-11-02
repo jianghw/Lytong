@@ -42,8 +42,8 @@ public class PayDataManager {
     /**
      * 57.获取指定类型优惠券
      */
-    public Observable<CouponResponse> getCouponByType(String userId, String extraType) {
-        return mRemoteData.getCouponByType(userId, extraType);
+    public Observable<CouponResponse> getCouponByType(String userId, String extraType, int payType) {
+        return mRemoteData.getCouponByType(userId, extraType,payType);
     }
 
     /**

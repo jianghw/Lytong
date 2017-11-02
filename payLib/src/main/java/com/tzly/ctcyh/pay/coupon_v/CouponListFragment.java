@@ -100,10 +100,11 @@ public class CouponListFragment extends
         if (mPresenter != null) mPresenter.getCouponByType();
     }
 
-    public static CouponListFragment newInstance(String type) {
+    public static CouponListFragment newInstance(String type, int payType) {
         CouponListFragment f = new CouponListFragment();
         Bundle bundle = new Bundle();
         bundle.putString(PayGlobal.putExtra.coupon_list_type, type);
+        bundle.putInt(PayGlobal.putExtra.web_pay_type_extra, payType);
         f.setArguments(bundle);
         return f;
     }
@@ -134,6 +135,11 @@ public class CouponListFragment extends
     public void couponByTypeSucceed(CouponResponse response) {
         List<CouponBean> beanList = response.getData();
         setSimpleDataResult(beanList);
+    }
+
+    @Override
+    public int getPayType() {
+        return getArguments().getInt(PayGlobal.putExtra.web_pay_type_extra);
     }
 
 }

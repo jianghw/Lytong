@@ -33,7 +33,7 @@ public interface IHtmlBrowserContract {
 
         void uploadDrivingImg();
 
-        void getBankPayHtml(String orderId, String s);
+        void getBankPayHtml(String coupon, String orderId, String s);
     }
 
 }

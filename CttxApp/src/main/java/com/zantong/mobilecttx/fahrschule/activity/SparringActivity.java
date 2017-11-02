@@ -6,21 +6,19 @@ import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobilecttx.fahrschule.fragment.SparringOrderFragment;
 import com.zantong.mobilecttx.fahrschule.fragment.SparringSubscribeFragment;
 import com.zantong.mobilecttx.fahrschule.fragment.SparringSucceedFragment;
-import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
-
-import cn.qqtheme.framework.global.JxGlobal;
+import com.zantong.mobilecttx.global.MainGlobal;
 
 /**
  * 陪练页面
  */
-public class SparringActivity extends BaseJxActivity {
+public class SparringActivity extends JxBaseActivity {
 
     private int mCurPosition;
 
@@ -33,26 +31,40 @@ public class SparringActivity extends BaseJxActivity {
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
-        Intent intent = getIntent();
-        if (intent != null)
-            mCurPosition = intent.getIntExtra(JxGlobal.putExtra.fahrschule_position_extra, 0);
+        onNewIntent(getIntent());
     }
 
     @Override
-    protected int getContentResId() {
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        if (intent != null) {
+            Bundle bundle = intent.getExtras();
+            if (intent.hasExtra(MainGlobal.Host.sparring_host))
+                mCurPosition = bundle.getInt(MainGlobal.Host.sparring_host, 0);
+        }
+    }
+
+    @Override
+    protected int initContentView() {
         return R.layout.activity_base_frame;
     }
 
     @Override
-    protected void initFragmentView(View view) {
-        initTitleContent("陪练预约");
-        setImageRightVisible(0);
+    protected void bindContentView(View childView) {
+        titleContent("陪练预约");
+        rightImage(0);
+    }
 
+    @Override
+    protected void initContentData() {
         initFragment(mCurPosition);
     }
 
     @Override
-    protected void DestroyViewAndThing() {
+    protected void onDestroy() {
+        super.onDestroy();
+
         mSparringSubscribeFragment = null;
         mSparringOrderFragment = null;
         mSparringSucceedFragment = null;
@@ -87,27 +99,6 @@ public class SparringActivity extends BaseJxActivity {
                 break;
             default:
                 break;
-        }
-    }
-
-    /**
-     * 页面回调
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
-                && resultCode == JxGlobal.resultCode.web_order_id_succeed) {
-            mCurPosition = 2;
-            initFragment(mCurPosition);
-        } else if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
-                && resultCode == JxGlobal.resultCode.web_order_id_error && data != null) {
-            //前往 订单详情页面
-            String orderId = data.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
-            Intent intent = new Intent(this, OrderDetailActivity.class);
-            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
-            startActivity(intent);
-            finish();
         }
     }
 

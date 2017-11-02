@@ -20,7 +20,6 @@ import android.widget.TextView;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.service.MemoryData;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
@@ -40,6 +39,7 @@ import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
 import com.zantong.mobilecttx.order.bean.CouponFragmentLBean;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
 import com.zantong.mobilecttx.presenter.home.HomeMeFtyPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.user.activity.AboutActivity;
 import com.zantong.mobilecttx.user.activity.MegTypeActivity;
@@ -246,13 +246,13 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         mTvCar.setText(Html.fromHtml(stringBuffer.toString()));
 
         File file = getHeadImageFile(mImgHead);
-        if (file == null && MemoryData.getInstance().isMainLogin()) {
-            ImageLoadUtils.loadHead(MemoryData.getInstance().getPortrait(), mImgHead);
+        if (file == null && MainRouter.isUserLogin()) {
+            ImageLoadUtils.loadHead(MainRouter.getUserPortrait(), mImgHead);
         }
 
-        String phone = MemoryData.getInstance().getPhoenum();
-        if (!Tools.isStrEmpty(MemoryData.getInstance().getNickname())) {
-            mTvLogin.setText(MemoryData.getInstance().getNickname());
+        String phone = MainRouter.getUserPhoenum();
+        if (!Tools.isStrEmpty(MainRouter.getUserNickname())) {
+            mTvLogin.setText(MainRouter.getUserNickname());
         } else if (!TextUtils.isEmpty(phone) && phone.length() >= 7) {
             mTvLogin.setText(phone.substring(7));
         } else {

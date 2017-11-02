@@ -1,9 +1,8 @@
 
-package com.zantong.mobilecttx.presenter.order;
+package com.zantong.mobilecttx.order_p;
 
 import android.support.annotation.NonNull;
 
-import com.zantong.mobilecttx.contract.IOrderDetailContract;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
@@ -42,7 +41,7 @@ public class OrderDetailPresenter
 
     @Override
     public void unSubscribe() {
-        mAtyView.dismissLoadingDialog();
+        mAtyView.dismissLoading();
         mSubscriptions.clear();
     }
 
@@ -56,7 +55,7 @@ public class OrderDetailPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoadingDialog();
+                        mAtyView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -64,11 +63,12 @@ public class OrderDetailPresenter
                 .subscribe(new BaseSubscriber<OrderDetailResponse>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoadingDialog();
+                        mAtyView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
+                        mAtyView.dismissLoading();
                         mAtyView.getOrderDetailError(e.getMessage());
                     }
 

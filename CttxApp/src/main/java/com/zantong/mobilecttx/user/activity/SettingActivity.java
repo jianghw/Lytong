@@ -21,7 +21,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.service.IUserService;
-import com.tzly.ctcyh.service.MemoryData;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
@@ -127,27 +126,20 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         picker = new DatePicker(SettingActivity.this);
         setTitleText("设置");
 
-        if (Tools.isStrEmpty(LoginData.getInstance().userID)) {
-            mLogout.setVisibility(View.GONE);
-        } else {
-            String date = MemoryData.getInstance().getGetdate();
-            try {
-                if (date.contains("-")) {
-                    mSelDate.setText(date);
-                } else {
-                    mSelDate.setText(date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        String date = MainRouter.getUserGetdate();
+
+        if (!TextUtils.isEmpty(date) && date.contains("-")) {
+            mSelDate.setText(date);
+        } else if (!TextUtils.isEmpty(date) && date.length() >= 8) {
+            mSelDate.setText(date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8));
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        String nickname = MemoryData.getInstance().getNickname();
-        String phone = MemoryData.getInstance().getPhoenum();
+        String nickname = MainRouter.getUserNickname();
+        String phone = MainRouter.getUserPhoenum();
         if (!Tools.isStrEmpty(nickname)) {
             user_info_name_text.setText(nickname);
         } else if (!TextUtils.isEmpty(phone) && phone.length() > 7) {
@@ -283,7 +275,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 picker.setRangeStart(DateUtils.getYear() - 100, DateUtils.getMonth(), DateUtils.getDay());
                 picker.setRangeEnd(DateUtils.getYear(), DateUtils.getMonth(), DateUtils.getDay());
                 try {
-                    String date = MemoryData.getInstance().getGetdate();
+                    String date = MainRouter.getUserGetdate();
                     if (!"".equals(date)) {
                         date = date.replace("-", "");
                         picker.setSelectedItem(Integer.valueOf(date.substring(0, 4)), Integer.valueOf(date.substring(4, 6)), Integer.valueOf(date.substring(6, 8)));
@@ -503,10 +495,10 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         Map<String, RequestBody> params = new HashMap<>();
         RequestBody body = RequestBody.create(MediaType.parse("image/jpeg"), mCropFile);
         String imagFileName = "";
-        String[] imageUrls = MemoryData.getInstance().getPortrait().split("\\/");
+        String[] imageUrls = MainRouter.getUserPortrait().split("\\/");
 
-        if (Tools.isStrEmpty(MemoryData.getInstance().getPortrait())) {
-            imagFileName = MemoryData.getInstance().getGlobalUserID() + ".jpg";
+        if (Tools.isStrEmpty(MainRouter.getUserPortrait())) {
+            imagFileName = MainRouter.getUserID(true) + ".jpg";
         } else {
             imagFileName = imageUrls[imageUrls.length - 1];
         }
@@ -601,7 +593,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
      * @param date
      */
     private void commitGetCardDate(final String date) {
-        if (MemoryData.getInstance().getGetdate().equals(date)) {
+        if (MainRouter.getUserGetdate().equals(date)) {
             return;
         }
         PersonInfoDTO dto = new PersonInfoDTO();

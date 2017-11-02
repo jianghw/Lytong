@@ -15,7 +15,7 @@ public interface IRemoteSource {
     /**
      * 57.获取指定类型优惠券
      */
-    Observable<CouponResponse> getCouponByType(String userId, String extraType);
+    Observable<CouponResponse> getCouponByType(String userId, String extraType, int payType);
 
     /**
      * 31.创建订单后获取订单信息

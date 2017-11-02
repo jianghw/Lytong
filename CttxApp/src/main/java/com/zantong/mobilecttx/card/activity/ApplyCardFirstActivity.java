@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -27,6 +26,7 @@ import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
@@ -287,10 +287,10 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         BidCTCardDTO bidCTCardDTO = new BidCTCardDTO();
         bidCTCardDTO.setCtftp("0");
         bidCTCardDTO.setUsrname(getUserName());
-        bidCTCardDTO.setUsrid(MemoryData.getInstance().getGlobalUserID());
+        bidCTCardDTO.setUsrid(MainRouter.getUserID(true));
         bidCTCardDTO.setCtfnum(RSAUtils.strByEncryption(getUserIdCard(), true));
         bidCTCardDTO.setFilenum(RSAUtils.strByEncryption(getDriverFileNum(), true));
-        bidCTCardDTO.setPhoenum(RSAUtils.strByEncryption(MemoryData.getInstance().getPhoenum(), true));
+        bidCTCardDTO.setPhoenum(RSAUtils.strByEncryption(MainRouter.getUserPhoenum(), true));
         HandleCTCardApiClient.htmlLocal(this, "cip.cfc.u006.01", bidCTCardDTO, this);
     }
 

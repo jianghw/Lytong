@@ -13,7 +13,6 @@ import android.webkit.JavascriptInterface;
 
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
@@ -24,6 +23,7 @@ import com.zantong.mobilecttx.eventbus.PayMotoOrderEvent;
 import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
 import com.zantong.mobilecttx.login_v.LoginActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
@@ -52,7 +52,7 @@ public class InterfaceForJS {
 
     @JavascriptInterface
     public boolean isLogin() {
-        return MemoryData.getInstance().isMainLogin();
+        return MainRouter.isUserLogin();
     }
 
     @JavascriptInterface
@@ -204,8 +204,8 @@ public class InterfaceForJS {
 
     //跳转支付页面
     @JavascriptInterface
-    public void payMOTOrder(String orderId, String amount) {
-        EventBus.getDefault().post(new PayMotoOrderEvent(orderId,amount));
+    public void payMOTOrder(String coupon, String orderId, String amount) {
+        EventBus.getDefault().post(new PayMotoOrderEvent( coupon, orderId,amount));
     }
 
 }

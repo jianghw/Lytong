@@ -1,5 +1,7 @@
 package com.tzly.ctcyh.service;
 
+import android.content.Context;
+
 /**
  * Created by jianghw on 2017/10/26.
  * Description:
@@ -9,9 +11,11 @@ package com.tzly.ctcyh.service;
 
 public interface IUserService {
 
-    boolean isUserLogin();
+    boolean isUserByLogin();
 
-    void initLoginData();
+    boolean isLogin();
+
+    void gotoLoginActivity(Context context);
 
     void saveUserFilenum(String filenum);
 
@@ -29,5 +33,17 @@ public interface IUserService {
 
     String getUserID();
 
+    String getUserID(boolean isNeedLogin);
+
     String getRASUserID();
+
+    String getUserPhoenum();
+
+    String getUserFilenum();
+
+    String getUserGetdate();
+
+    String getUserPortrait();
+
+    String getUserNickname();
 }

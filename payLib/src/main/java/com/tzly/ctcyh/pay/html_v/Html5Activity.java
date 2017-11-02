@@ -1,13 +1,21 @@
 package com.tzly.ctcyh.pay.html_v;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,6 +35,7 @@ import android.widget.ProgressBar;
 
 import com.tzly.ctcyh.pay.bean.response.OrderDetailBean;
 import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
+import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.pay.data_m.InjectionRepository;
 import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.pay.html_p.HtmlPayPresenter;
@@ -34,7 +43,14 @@ import com.tzly.ctcyh.pay.html_p.IHtmlPayContract;
 import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
-import com.tzly.ctcyh.service.MemoryData;
+import com.tzly.ctcyh.router.util.EncryptUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.primission.PermissionFail;
+import com.tzly.ctcyh.router.util.primission.PermissionGen;
+import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
+
+import static com.tzly.ctcyh.router.util.Utils.getContext;
+import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * Created by jianghw on 2017/10/23.
@@ -118,7 +134,14 @@ public class Html5Activity extends JxBaseActivity
                     "<title>表单提交</title></head><body>" + mUrl + "</body></html>";
 
             mWebView.loadDataWithBaseURL(null, mUrl, "text/html", "utf-8", null);
+        } else if (mPayType == 3) {
+            mWebView.loadUrl(mUrl);
         } else {
+            String cust_id = PayRouter.getUserPhoenum();
+            String SEC_KEY = "BE7D6564766740037581842CE0ACA1DD";
+            String token = EncryptUtils.encryptMD5ToString(SEC_KEY + cust_id + SEC_KEY);
+            mUrl = mUrl + "?cust_id=" + cust_id + "&token=" + token;
+
             mWebView.loadUrl(mUrl);
         }
 
@@ -126,7 +149,7 @@ public class Html5Activity extends JxBaseActivity
         mWebView.requestFocusFromTouch();
     }
 
-    @SuppressLint("JavascriptInterface")
+    @SuppressLint({"JavascriptInterface", "AddJavascriptInterface"})
     @Override
     protected void initContentData() {
         titleContent(mTitle);
@@ -382,7 +405,6 @@ public class Html5Activity extends JxBaseActivity
                     case WebView.HitTestResult.IMAGE_TYPE: // 处理长按图片的菜单项
                         // 获取图片的路径
                         String saveImgUrl = result.getExtra();
-
                         // 跳转到图片详情页，显示图片
                         //                        Intent i = new Intent(MainActivity.this, ImageActivity.class);
                         //                        i.putExtra("imgUrl", saveImgUrl);
@@ -507,11 +529,199 @@ public class Html5Activity extends JxBaseActivity
      */
     @Override
     public boolean isLogin() {
-        return MemoryData.getInstance().isMainLogin();
+        return PayRouter.isLogin();
     }
 
     @Override
     public void gotoLogin() {
         PayRouter.gotoLoginActivity(this);
+    }
+
+    @Override
+    public void payMOTOrder(String coupon, String orderId, String amount) {
+        int i = (int) (Float.valueOf(amount) * 100);
+        mOrderId = orderId;
+        if (mPresenter != null) mPresenter.getBankPayHtml(orderId, String.valueOf(i), coupon);
+    }
+
+    /**
+     * js调摄像机
+     */
+    @Override
+    public void callCamera() {
+        takePhoto();
+    }
+
+    /**
+     * 拍照
+     */
+    public void takePhoto() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, PER_REQUEST_CODE, new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE});
+        } else {
+            goToCamera();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    /**
+     * 行驶证 拍照前权限调用
+     */
+    @PermissionSuccess(requestCode = PER_REQUEST_CODE)
+    public void doPermissionSuccess() {
+        goToCamera();
+    }
+
+    @PermissionFail(requestCode = PER_REQUEST_CODE)
+    public void doPermissionFail() {
+        ToastUtils.toastShort("您已关闭摄像头权限,请设置中打开");
+    }
+
+    protected void goToCamera() {
+        PayRouter.gotoOcrCameraActivity(this);
+    }
+
+    @Override
+    public void searchViolationList(String carnum, String enginenum, String carnumtype) {
+        PayRouter.gotoViolationListActivity(this, carnum, enginenum, carnumtype);
+    }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        //拍照回调
+//        if (requestCode == Global.requestCode.violation_query_camera
+//                && resultCode == JxGlobal.resultCode.ocr_camera_license) {
+//            if (OcrCameraActivity.file == null)
+//                ToastUtils.toastShort("照片获取失败");
+//            else if (mPresenter != null)
+//                mPresenter.uploadDrivingImg();
+//        }
+//    }
+
+//    @Override
+//    public void uploadDrivingImgError(String message) {
+//        toastShort(message);
+//    }
+
+    /**
+     * 55.行驶证扫描接口
+     */
+//    @Override
+//    public void uploadDrivingImgSucceed(DrivingOcrResult result) {
+//        DrivingOcrBean bean = result.getContent();
+//        if (bean != null) {
+//            mWebView.loadUrl("javascript:callbackCamera(" + new Gson().toJson(bean) + ");");
+//        } else {
+//            ToastUtils.toastShort("行驶证图片解析失败(55)，请重试");
+//        }
+//    }
+
+    @Override
+    public void goNianjianMap() {
+
+    }
+
+    @Override
+    public void popAttention() {
+
+    }
+
+    @Override
+    public String getEncreptUserId() {
+        return PayRouter.getRASUserID();
+    }
+
+    @Override
+    public void queryViolations() {
+
+    }
+
+    //获取绑卡状态 0已绑卡  1未绑卡
+    @Override
+    public int getBindCardStatus() {
+        return TextUtils.isEmpty(PayRouter.getUserFilenum()) ? 1 : 0;
+    }
+
+    @Override
+    public String getUserId() {
+        return null;
+    }
+
+    @Override
+    public void chaser() {
+
+    }
+
+    @Override
+    public void addOil() {
+
+    }
+
+    @Override
+    public void bindCard() {
+        if (TextUtils.isEmpty(PayRouter.getUserFilenum()))
+            PayRouter.gotoUnblockedCardActivity(this);
+        else
+            PayRouter.gotoMyCardActivity(this);
+    }
+
+    @Override
+    public Location getLocaltion() {
+        LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            return null;
+        }
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        } else {
+            LocationListener locationListener = new LocationListener() {
+                // Provider的状态在可用、暂时不可用和无服务三个状态直接切换时触发此函数
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+                }
+
+                // Provider被enable时触发此函数，比如GPS被打开
+                @Override
+                public void onProviderEnabled(String provider) {
+                }
+
+                // Provider被disable时触发此函数，比如GPS被关闭
+                @Override
+                public void onProviderDisabled(String provider) {
+                }
+
+                //当坐标改变时触发此函数，如果Provider传进相同的坐标，它就不会被触发
+                @Override
+                public void onLocationChanged(Location location) {
+                }
+            };
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
+            return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
+    }
+
+    /**
+     * 支付
+     */
+    @Override
+    public void getBankPayHtmlError(String message) {
+        toastShort(message);
+    }
+
+    @Override
+    public void getBankPayHtmlSucceed(PayUrlResponse response) {
+        PayRouter.gotoHtmlActivity(this, "畅通卡支付", response.getData(), getOrderId(), mPayType);
     }
 }

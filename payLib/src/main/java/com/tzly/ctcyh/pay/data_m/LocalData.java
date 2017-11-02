@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.tzly.ctcyh.service.MemoryData;
+import com.tzly.ctcyh.pay.router.PayRouter;
 
 import java.lang.ref.WeakReference;
 
@@ -39,6 +39,6 @@ public class LocalData implements ILocalSource {
 
     @Override
     public String getUserID() {
-        return MemoryData.getInstance().getGlobalUserID();
+        return PayRouter.getUserID();
     }
 }

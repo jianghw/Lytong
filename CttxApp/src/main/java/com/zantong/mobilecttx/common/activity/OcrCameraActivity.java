@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
 import com.zantong.mobilecttx.widght.Viewfinder;
@@ -34,7 +35,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.image.ImageTools;
 import cn.qqtheme.framework.util.ui.DensityUtils;
 
@@ -86,7 +86,10 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
         mSurfaceView.setBackgroundColor(TRIM_MEMORY_BACKGROUND);
         mSurfaceHolder.addCallback(new SurfaceCallback());//为SurfaceView的句柄添加一个回调函数
         //设置参数,并拍照
-        mResType = getIntent().getIntExtra(JxGlobal.putExtra.ocr_camera_extra, 0);
+        Bundle bundle=getIntent().getExtras();
+        if (bundle != null) {
+            mResType =   bundle.getInt(MainGlobal.putExtra.ocr_camera_extra, 0);
+        }
         if (mResType == 0) {
             mDriverBtn.setVisibility(View.GONE);
         } else {
@@ -165,7 +168,7 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
                 mCancelBtn.setVisibility(View.GONE);
                 mConfirmBtn.setVisibility(View.GONE);
                 if (mResType == 0) {//行驶证
-                    setResult(JxGlobal.resultCode.ocr_camera_license, new Intent());
+                    setResult(MainGlobal.resultCode.ocr_camera_license, new Intent());
                 } else if (mResType == 1) {//驾驶证
                     setResult(1206, new Intent());
                 } else if (mResType == 2) {//驾驶证
@@ -221,7 +224,7 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
                     @Override
                     public void onClick(View v) {
                         if (mResType == 0) {//行驶证
-                            setResult(JxGlobal.resultCode.ocr_camera_license, new Intent());
+                            setResult(MainGlobal.resultCode.ocr_camera_license, new Intent());
                         } else if (mResType == 1) {//驾驶证
                             setResult(1206, new Intent());
                         } else if (mResType == 2) {//驾驶证

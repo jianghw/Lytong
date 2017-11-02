@@ -4,11 +4,10 @@ package com.zantong.mobilecttx.presenter.home;
 import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.base.dto.BaseDTO;
-import com.zantong.mobilecttx.application.LoginData;
-import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
 import com.zantong.mobilecttx.contract.IHomeMeFtyContract;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
+import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
 import com.zantong.mobilecttx.user.bean.MessageCountResponse;
 
@@ -49,7 +48,7 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
 
     @Override
     public void getCouponCount() {
-        Subscription subscription = mRepository.usrCouponInfo(LoginData.getInstance().userID, "1")
+        Subscription subscription = mRepository.usrCouponInfo(mRepository.getRASUserID(), "1")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<CouponFragmentResponse>() {
@@ -106,7 +105,7 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
     @Override
     public BaseDTO initBaseDTO() {
         BaseDTO baseDTO = new BaseDTO();
-        baseDTO.setUsrId(mRepository.getDefaultUserID());
+        baseDTO.setUsrId(mRepository.getRASUserID());
         return baseDTO;
     }
 

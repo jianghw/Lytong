@@ -57,8 +57,8 @@ public class RemoteData implements IRemoteSource {
      * 57.获取指定类型优惠券
      */
     @Override
-    public Observable<CouponResponse> getCouponByType(String userId, String extraType) {
-        return baseRetrofit().create(ICouponService.class).getConponByType(userId, extraType);
+    public Observable<CouponResponse> getCouponByType(String userId, String extraType, int payType) {
+        return baseRetrofit().create(ICouponService.class).getConponByType(userId, extraType,payType);
     }
 
     /**
@@ -74,7 +74,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<PayUrlResponse> getBankPayHtml(String extraOrderId, String amount, int couponUserId) {
-        return couponUserId == 0 ? baseRetrofit().create(IPayApiService.class).getBankPayHtml(extraOrderId, amount)
+        return couponUserId <= 0 ? baseRetrofit().create(IPayApiService.class).getBankPayHtml(extraOrderId, amount)
                 : baseRetrofit().create(IPayApiService.class).getBankPayHtml(extraOrderId, amount, String.valueOf(couponUserId));
     }
     /**

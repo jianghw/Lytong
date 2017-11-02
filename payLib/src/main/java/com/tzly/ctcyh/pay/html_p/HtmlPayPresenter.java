@@ -1,9 +1,11 @@
 package com.tzly.ctcyh.pay.html_p;
 
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.webkit.JavascriptInterface;
 
 import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
+import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.pay.data_m.BaseSubscriber;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
 
@@ -112,6 +114,47 @@ public class HtmlPayPresenter implements IHtmlPayContract.IHtmlPayPresenter {
         mSubscriptions.add(subscription);
     }
 
+    /**
+     * 5.获取工行支付页面
+     */
+    @Override
+    public void getBankPayHtml(String orderId, String amount, String coupon) {
+        Subscription subscription =
+                mRepository.getBankPayHtml(orderId, amount, Integer.valueOf(coupon))
+                        .subscribeOn(Schedulers.io())
+                        .doOnSubscribe(new Action0() {
+                            @Override
+                            public void call() {
+                                mContractView.showLoading();
+                            }
+                        })
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new BaseSubscriber<PayUrlResponse>() {
+                            @Override
+                            public void doCompleted() {
+                                mContractView.dismissLoading();
+                            }
+
+                            @Override
+                            public void doError(Throwable e) {
+                                mContractView.dismissLoading();
+                                mContractView.getBankPayHtmlError(e.getMessage());
+                            }
+
+                            @Override
+                            public void doNext(PayUrlResponse response) {
+                                if (response != null && response.getResponseCode() == 2000) {
+                                    mContractView.getBankPayHtmlSucceed(response);
+                                } else {
+                                    mContractView.getBankPayHtmlError(response != null
+                                            ? response.getResponseDesc() : "未知错误(5)");
+                                }
+                            }
+                        });
+        mSubscriptions.add(subscription);
+    }
+
     @Override
     public String getOrderId() {
         return mContractView.getOrderId();
@@ -130,5 +173,90 @@ public class HtmlPayPresenter implements IHtmlPayContract.IHtmlPayPresenter {
     @JavascriptInterface
     public void gotoLogin() {
         mContractView.gotoLogin();
+    }
+
+    @JavascriptInterface
+    public Location getLocaltion() {
+        return mContractView.getLocaltion();
+    }
+
+    //绑畅通卡
+    @JavascriptInterface
+    public void bindCard() {
+        mContractView.bindCard();
+    }
+
+    //加油充值
+    @JavascriptInterface
+    public void addOil() {
+        //        mJSContext.startActivity(new Intent(mJSContext, RechargeActivity.class));
+        mContractView.addOil();
+    }
+
+    //代驾
+    @JavascriptInterface
+    public void chaser() {
+        //        mJSContext.startActivity(new Intent(mJSContext, DrivingActivity.class));
+        mContractView.chaser();
+    }
+
+    //分享领积分
+    @JavascriptInterface
+    public void shareActivity() {}
+
+    //获取用户ID
+    @JavascriptInterface
+    public String getUserId() {
+        return mContractView.getUserId();
+    }
+
+    //获取绑卡状态 0已绑卡  1未绑卡
+    @JavascriptInterface
+    public int getBindCardStatus() {
+        return mContractView.getBindCardStatus();
+    }
+
+    //查询违章
+    @JavascriptInterface
+    public void queryViolations() {
+        mContractView.queryViolations();
+    }
+
+    //获取用户ID
+    @JavascriptInterface
+    public String getEncreptUserId() {
+        return mContractView.getEncreptUserId();
+    }
+
+    //跳转到积分规则页面
+    @JavascriptInterface
+    public void popAttention() {
+        //        mJSContext.startActivity(new Intent(mJSContext, HundredRuleActivity.class));
+        mContractView.popAttention();
+    }
+
+    //去年检地图地址
+    @JavascriptInterface
+    public void goNianjianMap() {
+        //        Act.getInstance().gotoIntentLogin(mJSContext, BaiduMapParentActivity.class);
+        mContractView.goNianjianMap();
+    }
+
+    //去往违章列表页面
+    @JavascriptInterface
+    public void searchViolationList(String carnum, String enginenum, String carnumtype) {
+        mContractView.searchViolationList(carnum, enginenum, carnumtype);
+    }
+
+    //js调摄像机
+    @JavascriptInterface
+    public void callCamera() {
+        mContractView.callCamera();
+    }
+
+    //跳转支付页面
+    @JavascriptInterface
+    public void payMOTOrder(String coupon, String orderId, String amount) {
+        mContractView.payMOTOrder(coupon, orderId, amount);
     }
 }

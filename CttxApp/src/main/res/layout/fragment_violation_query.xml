@@ -221,7 +221,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="初次领行驶证日期"
+            android:text="注册驶证日期"
             android:textColor="@color/colorTvBlack_4d"
             android:textSize="@dimen/fs_16sp"/>
 

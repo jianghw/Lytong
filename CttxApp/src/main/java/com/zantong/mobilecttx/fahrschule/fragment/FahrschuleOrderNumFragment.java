@@ -1,24 +1,21 @@
 package com.zantong.mobilecttx.fahrschule.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.FormatUtils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.application.LoginData;
-import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.browser.PayBrowserActivity;
+import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
+import com.zantong.mobilecttx.contract.IFahrschuleOrderNumFtyContract;
 import com.zantong.mobilecttx.eventbus.FahrschuleApplyEvent;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
-import com.zantong.mobilecttx.contract.IFahrschuleOrderNumFtyContract;
 import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleOrderNumPresenter;
-import com.zantong.mobilecttx.login_v.LoginActivity;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,7 +23,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -119,8 +115,7 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    protected void onRefreshData() {
-    }
+    protected void onRefreshData() {}
 
     @Override
     protected int getFragmentLayoutResId() {
@@ -177,7 +172,7 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
         sb.append("</font>");
         mTvPayType.setText(Html.fromHtml(sb.toString()));
 
-        mTvMoney.setText(createOrder.getPrice());
+        mTvMoney.setText(FormatUtils.submitPrice(createOrder.getPrice()));
     }
 
     public void initView(View view) {
@@ -205,15 +200,17 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_pay://支付
-                if (mPresenter != null) {
-                    String moneyString = mTvMoney.getText().toString();
+                MainRouter.gotoPayTypeActivity(getActivity(), mTvOrder.getText().toString());
+                if (getActivity() != null) getActivity().finish();
 
-                    double money = Double.parseDouble(moneyString);
-                    int intMoney = (int) money * 100;
-                    String stringMoney = String.valueOf(intMoney);
-                    mPresenter.getBankPayHtml(
-                            mTvOrder.getText().toString(),
-                            stringMoney);
+                if (mPresenter != null) {
+                    //                    String moneyString = mTvMoney.getText().toString();
+                    //                    double money = Double.parseDouble(moneyString);
+                    //                    int intMoney = (int) money * 100;
+                    //                    String stringMoney = String.valueOf(intMoney);
+                    //                    mPresenter.getBankPayHtml(
+                    //                            mTvOrder.getText().toString(),
+                    //                            stringMoney);
 
                     JxConfig.getInstance().eventIdByUMeng(30);
                 }
@@ -244,16 +241,15 @@ public class FahrschuleOrderNumFragment extends BaseRefreshJxFragment
 
     @Override
     public void onPayOrderByCouponSucceed(PayOrderResponse result) {
-
-        if (!LoginData.getInstance().loginFlag && !TextUtils.isEmpty(LoginData.getInstance().userID)) {
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            getActivity().startActivity(intent);
-        } else {
-            Intent intent = new Intent(getActivity(), PayBrowserActivity.class);
-            intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付");
-            intent.putExtra(JxGlobal.putExtra.web_url_extra, result.getData());
-            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, mTvOrder.getText().toString());
-            getActivity().startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
-        }
+        //        if (!LoginData.getInstance().loginFlag && !TextUtils.isEmpty(LoginData.getInstance().userID)) {
+        //            Intent intent = new Intent(getActivity(), LoginActivity.class);
+        //            getActivity().startActivity(intent);
+        //        } else {
+        //            Intent intent = new Intent(getActivity(), PayBrowserActivity.class);
+        //            intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付");
+        //            intent.putExtra(JxGlobal.putExtra.web_url_extra, result.getData());
+        //            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, mTvOrder.getText().toString());
+        //            getActivity().startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
+        //        }
     }
 }

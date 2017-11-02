@@ -49,7 +49,7 @@ public class CouponListPresenter implements ICouponListContract.ICouponListPrese
     @Override
     public void getCouponByType() {
         Subscription subscription =
-                mRepository.getCouponByType(getUserId(), mContractView.getExtraType())
+                mRepository.getCouponByType(getUserId(), mContractView.getExtraType(), mContractView.getPayType())
                         .subscribeOn(Schedulers.io())
                         .doOnSubscribe(new Action0() {
                             @Override

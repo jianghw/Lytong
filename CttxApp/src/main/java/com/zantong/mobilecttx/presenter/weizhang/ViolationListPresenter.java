@@ -266,7 +266,7 @@ public class ViolationListPresenter
         dto.setSYS_HEAD(requestHeadDTO);
 
         LogoutDTO params = new LogoutDTO();
-        params.setUsrid(mRepository.getDefaultUserID());
+        params.setUsrid(mRepository.getRASUserID());
 
         dto.setReqInfo(params);
         return new Gson().toJson(dto);

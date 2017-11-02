@@ -4,11 +4,11 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
@@ -60,8 +60,8 @@ public class LocalData {
     /**
      * 获取用户id值 空值会调起登录页面
      */
-    public String DefaultUserID() {
-        return MemoryData.getInstance().getGlobalUserID();
+    public String DefaultUserID(boolean isNeedLogin) {
+        return MainRouter.getUserID(isNeedLogin);
     }
 
     /**
@@ -69,8 +69,8 @@ public class LocalData {
      *
      * @return
      */
-    public String getRASUserID() {
-        return getStrByEncryption(DefaultUserID());
+    public String getRASUserID(boolean isNeedLogin) {
+        return getStrByEncryption(DefaultUserID(isNeedLogin));
     }
 
     /**

@@ -20,6 +20,7 @@ public interface ICouponService {
     @FormUrlEncoded
     @POST("february/getConponByType")
     Observable<CouponResponse> getConponByType(@Field("userId") String userId,
-                                               @Field("type") String type);
+                                               @Field("type") String type,
+                                               @Field("payType") int payType);
 
 }

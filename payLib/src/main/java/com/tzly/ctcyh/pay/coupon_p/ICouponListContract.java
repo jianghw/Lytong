@@ -19,6 +19,8 @@ public interface ICouponListContract {
         void couponByTypeError(String message);
 
         void couponByTypeSucceed(CouponResponse response);
+
+        int getPayType();
     }
 
     interface ICouponListPresenter extends IBasePresenter {

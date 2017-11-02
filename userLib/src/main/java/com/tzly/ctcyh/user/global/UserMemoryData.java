@@ -1,14 +1,12 @@
-package com.tzly.ctcyh.service;
+package com.tzly.ctcyh.user.global;
 
 import com.tzly.ctcyh.router.ServiceRouter;
-import com.tzly.ctcyh.router.UiRouter;
-import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.service.IUserService;
 
 /**
  * app内存数据清单 用于全局数据交互
  */
-public class MemoryData {
+public class UserMemoryData {
     /**
      * 登录用户信息
      */
@@ -23,10 +21,10 @@ public class MemoryData {
     private String portrait;
 
     private static class SingletonHolder {
-        private static final MemoryData INSTANCE = new MemoryData();
+        private static final UserMemoryData INSTANCE = new UserMemoryData();
     }
 
-    public static MemoryData getInstance() {
+    public static UserMemoryData getInstance() {
         return SingletonHolder.INSTANCE;
     }
 
@@ -44,16 +42,6 @@ public class MemoryData {
 
     public void setLogin(boolean login) {
         isLogin = login;
-    }
-
-    //TODO 暂时这么 要改！！！Main
-    public boolean isMainLogin() {
-        if (isLogin) return true;
-        UiRouter.getInstance().openUriBundle(
-                Utils.getContext(),
-                "main_scheme" + "://" + "in_exist_host",
-                null);
-        return isLogin;
     }
 
     public void setUsrid(String usrid) {
@@ -108,12 +96,6 @@ public class MemoryData {
         this.recdphoe = recdphoe;
     }
 
-    /**
-     * 获取用户id
-     */
-    public String getRASUserID() {
-        return RSAUtils.strByEncryption(getGlobalUserID(), true);
-    }
 
     /**
      * 只为用户模块使用 user 其他地方禁止使用

@@ -373,6 +373,11 @@ public class RemoteData implements IRemoteSource {
         return baseRetrofit().create(IPayService.class).getBankPayHtml(orderId, orderPrice);
     }
 
+    @Override
+    public Observable<PayOrderResponse> getBankPayHtml(String orderId, String orderPrice,int coupon) {
+        return baseRetrofit().create(IPayService.class).getBankPayHtml(orderId, orderPrice, String.valueOf(coupon));
+    }
+
     /**
      * 8.查询订单列表
      */
@@ -582,10 +587,19 @@ public class RemoteData implements IRemoteSource {
 
     /**
      * 46.更新违章缴费状态
+     *
      * @param json
      */
     @Override
     public Observable<BaseResponse> updateState(List<ViolationNum> json) {
         return baseRetrofit().create(IPayService.class).updateState(json);
+    }
+
+    /**
+     * 是否提供活动
+     */
+    @Override
+    public Observable<HomeCarResponse> getIndexLayer() {
+        return baseRetrofit().create(ICttxService.class).getIndexLayer();
     }
 }

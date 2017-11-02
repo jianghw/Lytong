@@ -16,7 +16,6 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
-import com.tzly.ctcyh.service.MemoryData;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -31,6 +30,7 @@ import com.zantong.mobilecttx.daijia.bean.DaiJiaCreateResponse;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaCreateDTO;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.HashUtils;
 import com.zantong.mobilecttx.utils.OnClickUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
@@ -87,10 +87,10 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         mLocationClient.setLocOption(option);
         mLocationClient.start();
 
-        mDrivingPhone.setText(MemoryData.getInstance().getPhoenum());
+        mDrivingPhone.setText(MainRouter.getUserPhoenum());
         setEnsureText("代驾订单");
         mDrivingPhone.requestFocus();
-        mDrivingPhone.setSelection(MemoryData.getInstance().getPhoenum().length());
+        mDrivingPhone.setSelection(MainRouter.getUserPhoenum().length());
     }
 
     @Override

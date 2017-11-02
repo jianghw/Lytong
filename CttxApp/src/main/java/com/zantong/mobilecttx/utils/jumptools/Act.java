@@ -3,7 +3,6 @@ package com.zantong.mobilecttx.utils.jumptools;
 import android.content.Context;
 import android.content.Intent;
 
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.router.MainRouter;
 
 import cn.qqtheme.framework.global.JxGlobal;
@@ -43,7 +42,7 @@ public class Act {
      */
     public void gotoIntentLogin(Context packageContext, Class<?> className) {
 
-        if (MemoryData.getInstance().isMainLogin()) {
+        if (MainRouter.isUserLogin()) {
             Intent intent = new Intent(packageContext, className);
             packageContext.startActivity(intent);
         } else {
@@ -52,7 +51,7 @@ public class Act {
     }
 
     public void gotoLoginByIntent(Context packageContext, Class<?> className, Intent intent) {
-        if (MemoryData.getInstance().isMainLogin()) {
+        if (MainRouter.isUserLogin()) {
             intent.setClass(packageContext, className);
             packageContext.startActivity(intent);
         } else {

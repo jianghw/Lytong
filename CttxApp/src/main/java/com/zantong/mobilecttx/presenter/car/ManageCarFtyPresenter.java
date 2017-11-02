@@ -76,7 +76,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
      */
     @Override
     public void getTextNoticeInfo() {
-        Subscription subscription = mRepository.getTextNoticeInfo(mRepository.getDefaultUserID())
+        Subscription subscription = mRepository.getTextNoticeInfo(mRepository.getRASUserID())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HomeCarResponse>() {
@@ -126,7 +126,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
     @Override
     public String initUserCarsDTO() {
         UserCarsDTO params = new UserCarsDTO();
-        params.setUsrid(mRepository.getDefaultUserID());
+        params.setUsrid(mRepository.getRASUserID());
 
         RequestDTO dto = new RequestDTO();
         RequestHeadDTO requestHeadDTO = mRepository.initLicenseFileNumDTO("cip.cfc.c003.01");
@@ -168,7 +168,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
         dto.setSYS_HEAD(requestHeadDTO);
 
         LogoutDTO params = new LogoutDTO();
-        params.setUsrid(mRepository.getDefaultUserID());
+        params.setUsrid(mRepository.getRASUserID());
 
         dto.setReqInfo(params);
         return new Gson().toJson(dto);
@@ -237,7 +237,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     bindCarDTO.setEngineNo(RSAUtils.strByEncryption(
                             Des3.decode(userCarInfoBean.getEnginenum()), true));
                     bindCarDTO.setVehicleType(userCarInfoBean.getCarnumtype());
-                    bindCarDTO.setUsrnum(mRepository.getDefaultUserID());
+                    bindCarDTO.setUsrnum(mRepository.getRASUserID());
                     bindCarDTO.setIsPay(!TextUtils.isEmpty(userCarInfoBean.getIspaycar())
                             ? Integer.valueOf(userCarInfoBean.getIspaycar()) : 0);
                     bindCarDTO.setIssueDate(userCarInfoBean.getInspectdate());
@@ -259,7 +259,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     bindCarDTO.setEngineNo(RSAUtils.strByEncryption(
                             Des3.decode(userCarInfoBean.getEnginenum()), true));
                     bindCarDTO.setVehicleType(userCarInfoBean.getCarnumtype());
-                    bindCarDTO.setUsrnum(mRepository.getDefaultUserID());
+                    bindCarDTO.setUsrnum(mRepository.getRASUserID());
                     bindCarDTO.setIsPay(1);
 
                     bindCarDTOList.add(bindCarDTO);
@@ -325,7 +325,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                                         bindCarDTO.setEngineNo(RSAUtils.strByEncryption(
                                                 Des3.decode(userCarInfoBean.getEnginenum()), true));
                                         bindCarDTO.setVehicleType(userCarInfoBean.getCarnumtype());
-                                        bindCarDTO.setUsrnum(mRepository.getDefaultUserID());
+                                        bindCarDTO.setUsrnum(mRepository.getRASUserID());
                                         bindCarDTO.setIsPay(!TextUtils.isEmpty(userCarInfoBean.getIspaycar())
                                                 ? Integer.valueOf(userCarInfoBean.getIspaycar()) : 0);
                                         return bindCarDTO;
@@ -392,7 +392,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                                         bindCarDTO.setEngineNo(RSAUtils.strByEncryption(
                                                 Des3.decode(userCarInfoBean.getEnginenum()), true));
                                         bindCarDTO.setVehicleType(userCarInfoBean.getCarnumtype());
-                                        bindCarDTO.setUsrnum(mRepository.getDefaultUserID());
+                                        bindCarDTO.setUsrnum(mRepository.getRASUserID());
                                         bindCarDTO.setIsPay(1);
 
                                         return bindCarDTO;

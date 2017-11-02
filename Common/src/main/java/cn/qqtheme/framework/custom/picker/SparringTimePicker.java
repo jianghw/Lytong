@@ -37,7 +37,6 @@ public class SparringTimePicker extends LinkagePicker {
         super(activity);
 
         ArrayList<ArrayList<ArrayList<String>>> thirdList = getThirdArrayLists("09:00");
-
         initAllListData(firstList, secondList, thirdList);
     }
 

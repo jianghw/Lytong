@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.tzly.ctcyh.pay.R;
 import com.tzly.ctcyh.pay.bean.response.CouponBean;
+import com.tzly.ctcyh.pay.bean.response.CouponResponse;
 import com.tzly.ctcyh.pay.bean.response.PayTypeBean;
 import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
 import com.tzly.ctcyh.pay.bean.response.PayTypesBean;
@@ -85,7 +86,7 @@ public class PayTypeFragment extends JxBaseRefreshFragment
      */
     private TextView mTvPay;
     /**
-     * p
+     * 支付模块
      */
     private IPayTypeContract.IPayTypePresenter mPresenter;
     private RadioGroup mRadioGroup;
@@ -101,14 +102,35 @@ public class PayTypeFragment extends JxBaseRefreshFragment
     /**
      * 当前
      */
-    private int mCouponBeanId;
+    private int mCouponBeanId = -1;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof IPayTypeUi) {
+            IPayTypeUi iPayTypeUi = (IPayTypeUi) activity;
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mPresenter != null) mPresenter.unSubscribe();
+    }
+
+    /**
+     * 是否可刷新
+     */
+    protected boolean isRefresh() {
+        return false;
+    }
 
     /**
      * 刷新数据
      */
     @Override
     protected void onRefreshData() {
-        if (mPresenter != null) mPresenter.getOrderInfo();
+        onFirstDataVisible();
     }
 
     @Override
@@ -161,12 +183,39 @@ public class PayTypeFragment extends JxBaseRefreshFragment
     }
 
     /**
+     * 事件监听
+     */
+    public void radioButtonToPay() {
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                if (checkedId == R.id.rb_carpay) {
+                    mPayType = 1;
+                } else if (checkedId == R.id.rb_unionpay) {
+                    mPayType = 2;
+                } else if (checkedId == R.id.rb_alipay) {
+                    mPayType = 3;
+                } else if (checkedId == R.id.rb_weixinpay) {
+                    mPayType = 4;
+                }
+                //获取优惠
+                mTvPay.setEnabled(true);
+                if (mPresenter != null) mPresenter.getCouponByType();
+            }
+        });
+    }
+
+    /**
      * 点击事件
      */
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.lay_re_coupon) {//优惠劵
-            PayRouter.gotoCouponListActivity(getActivity(), String.valueOf(mCouponType));
+            if (mPayType == 0) {
+                toastShore("请先选择支付方式");
+            } else {
+                PayRouter.gotoCouponListActivity(getActivity(), String.valueOf(mCouponType), mPayType);
+            }
         } else if (v.getId() == R.id.tv_pay) {
             if (mPayType == 1) {
                 gotoCarPay();
@@ -183,15 +232,7 @@ public class PayTypeFragment extends JxBaseRefreshFragment
         int priceInteger = getSubmitPrice();
 
         if (mPresenter != null)
-            mPresenter.getBankPayHtml(String.valueOf(priceInteger), mCouponBeanId);
-    }
-
-    /**
-     * 提交价格
-     */
-    private int getSubmitPrice() {
-        String price = mTvSubmitPrice.getText().toString();
-        return (int) (Float.valueOf(price) * 100);
+            mPresenter.getBankPayHtml(getExtraOrderId(), String.valueOf(priceInteger), mCouponBeanId);
     }
 
     /**
@@ -205,43 +246,13 @@ public class PayTypeFragment extends JxBaseRefreshFragment
      * 支付宝
      */
     private void gotoAliPay() {
-        PayRouter.gotoHtmlActivity(getActivity(),
+        PayRouter.gotoAliHtmlActivity(getActivity(),
                 "支付宝支付", getExtraOrderId(), mPayType, getSubmitPrice(), mCouponBeanId);
-    }
-
-    /**
-     * 事件监听
-     */
-    public void radioButtonToPay() {
-        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                mTvPay.setEnabled(true);
-
-                if (checkedId == R.id.rb_carpay) {
-                    mPayType = 1;
-                } else if (checkedId == R.id.rb_unionpay) {
-                    mPayType = 2;
-                } else if (checkedId == R.id.rb_alipay) {
-                    mPayType = 3;
-                } else if (checkedId == R.id.rb_weixinpay) {
-                    mPayType = 4;
-                }
-            }
-        });
     }
 
     @Override
     protected void onFirstDataVisible() {
         if (mPresenter != null) mPresenter.getOrderInfo();
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity instanceof IPayTypeUi) {
-            IPayTypeUi iPayTypeUi = (IPayTypeUi) activity;
-        }
     }
 
     public static PayTypeFragment newInstance(String extraOrder) {
@@ -258,20 +269,14 @@ public class PayTypeFragment extends JxBaseRefreshFragment
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (mPresenter != null) mPresenter.unSubscribe();
-    }
-
-    @Override
     public String getExtraOrderId() {
         return getArguments().getString(PayGlobal.putExtra.pay_type_order);
     }
 
     @Override
     public void getOrderInfoError(String message) {
-        toastShore(message);
         showActivityError();
+        toastShore(message);
     }
 
     /**
@@ -279,12 +284,9 @@ public class PayTypeFragment extends JxBaseRefreshFragment
      */
     @Override
     public void getOrderInfoSucceed(PayTypeResponse response) {
-        showActivityContent();
-
         PayTypeBean payTypeBean = response.getData();
         if (payTypeBean == null) return;
         mCouponType = payTypeBean.getBusiness();
-
         mTvOrder.setText(FormatUtils.textForNull(getExtraOrderId()));
 
         StringBuilder sb = new StringBuilder();
@@ -294,9 +296,10 @@ public class PayTypeFragment extends JxBaseRefreshFragment
             sb.append(payTypeBean.getDescription());
         }
         mCombo.setText(FormatUtils.textForNull(sb.toString()));
-        mTvPrice.setText(String.valueOf(payTypeBean.getPrice()));
+        //原价格
+        setOriginalPrice(payTypeBean.getPrice());
         //显示价格
-        mTvSubmitPrice.setText(String.valueOf(payTypeBean.getPrice()));
+        setSubmitPrice(payTypeBean.getPrice());
 
         List<PayTypesBean> typesBeanList = payTypeBean.getPayTypes();
         for (PayTypesBean bean : typesBeanList) {
@@ -334,43 +337,29 @@ public class PayTypeFragment extends JxBaseRefreshFragment
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //不使用优惠劵
+
         if (requestCode == PayGlobal.requestCode.coupon_list_choice &&
                 resultCode == PayGlobal.resultCode.coupon_unused) {
-            mTvSubmitPrice.setText(mTvPrice.getText().toString());
-
+            //不使用优惠劵
+            setSubmitPrice(getOriginalPrice());
             mCouponBeanId = 0;
+            setCouponText("未使用优惠券");
         } else if (requestCode == PayGlobal.requestCode.coupon_list_choice &&
                 resultCode == PayGlobal.resultCode.coupon_used) {
+            //使用优惠劵
             couponResult(data);
         } else if (requestCode == PayGlobal.requestCode.pay_type_price &&
                 resultCode == PayGlobal.resultCode.web_pay_succeed) {
-            toastShore("支付成功");
-            //支付成功
-            //        Intent intent = new Intent();
-            //        if (mOrderListBean.getType() == 3) {
-            //            intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 2);
-            //            Act.getInstance().gotoLoginByIntent(this, FahrschuleActivity.class, intent);
-            //        } else if (mOrderListBean.getType() == 4) {
-            //            intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 3);
-            //            Act.getInstance().gotoLoginByIntent(this, SubjectActivity.class, intent);
-            //        } else if (mOrderListBean.getType() == 5) {
-            //            intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 2);
-            //            Act.getInstance().gotoLoginByIntent(this, SparringActivity.class, intent);
-            //        }
+            toastShore("支付完成");
+            //前往 完成页面
+            String orderId = getExtraOrderId();
+            PayRouter.gotoOrderSucceedActivity(getActivity(), orderId, mCouponType);
         } else if (requestCode == PayGlobal.requestCode.pay_type_price &&
                 resultCode == PayGlobal.resultCode.web_pay_error) {
-            toastShore("支付失败");
-            //支付失败
-
+            toastShore("未完成支付");
             //前往 订单详情页面
-            //        String orderId = data.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
-            //        String targetType = mOrderListBean.getTargetType();
-            //        if (targetType.equals("0")) {//前往 订单详情页面
-            //            Intent intent = new Intent(this, mOrderListBean.getType() == 6
-            //                    ? AnnualDetailActivity.class : OrderDetailActivity.class);
-            //            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
-            //            startActivity(intent);
+            String orderId = getExtraOrderId();
+            PayRouter.gotoOrderDetailActivity(getActivity(), orderId, mCouponType);
         }
     }
 
@@ -378,41 +367,42 @@ public class PayTypeFragment extends JxBaseRefreshFragment
      * 优惠巻回调
      */
     protected void couponResult(Intent data) {
-        if (data != null) {
-            CouponBean bean = data.getExtras()
-                    .getParcelable(PayGlobal.putExtra.coupon_list_bean);
+        if (data == null) return;
+        CouponBean bean = data.getExtras().getParcelable(PayGlobal.putExtra.coupon_list_bean);
+        if (bean == null) return;
 
-            String price = mTvPrice.getText().toString();
-            float priceFloat = Float.valueOf(price);
+        mCouponBeanId = bean.getId();
+        setCouponText("已选择:" + bean.getCouponUse());
+        int couponValue = bean.getCouponValue();
+        int couponLimit = bean.getCouponLimit();
 
-            if (bean != null) {
-                mCouponBeanId = bean.getId();
-                mTvCoupon.setText(bean.getCouponUse());
-                int couponValue = bean.getCouponValue();
-                int couponLimit = bean.getCouponLimit();
-                float priceValue = priceFloat;
+        float originalPrice = getOriginalPrice();
+        float priceValue = originalPrice;
 
-                if (couponLimit != 0) {
-                    if (priceFloat >= couponLimit) {
-                        priceValue = bean.getCouponType() == 2
-                                ? priceFloat * couponValue :
-                                bean.getCouponType() == 3 ? priceFloat - couponValue
-                                        : priceFloat;
-                        priceValue = priceValue <= 0 ? 0 : priceValue;
-                    } else {
-                        mCouponBeanId = 0;
-                        mTvCoupon.setText("商品价格未满足" + couponLimit + "元,不可使用优惠劵");
-                    }
-                } else {//不限制
-                    priceValue = bean.getCouponType() == 2
-                            ? priceFloat * couponValue :
-                            bean.getCouponType() == 3 ? priceFloat - couponValue
-                                    : priceFloat;
-                    priceValue = priceValue <= 0 ? 0 : priceValue;
-                }
-                mTvSubmitPrice.setText(FormatUtils.submitPrice(priceValue));
+        if (couponLimit != 0) {//限制
+            if (originalPrice >= couponLimit) {
+                priceValue = getPriceValue(bean, couponValue, originalPrice);
+            } else {
+                mCouponBeanId = 0;
+                setCouponText("商品价格未满足" + couponLimit + "元,不可使用优惠劵");
             }
+        } else {//不限制
+            priceValue = getPriceValue(bean, couponValue, originalPrice);
         }
+        setSubmitPrice(priceValue);
+    }
+
+    /**
+     * 价格处理
+     */
+    private float getPriceValue(CouponBean bean, int couponValue, float originalPrice) {
+        float priceValue;
+        priceValue = bean.getCouponType() == 2
+                ? originalPrice * couponValue :
+                bean.getCouponType() == 3 ? originalPrice - couponValue
+                        : originalPrice;
+        priceValue = priceValue <= 0 ? 0 : priceValue;
+        return priceValue;
     }
 
     /**
@@ -426,6 +416,78 @@ public class PayTypeFragment extends JxBaseRefreshFragment
     @Override
     public void getBankPayHtmlSucceed(PayUrlResponse response) {
         PayRouter.gotoHtmlActivity(getActivity(),
-                "畅通卡支付", response.getData(),getExtraOrderId(), mPayType);
+                "畅通卡支付", response.getData(), getExtraOrderId(), mPayType);
+    }
+
+    /**
+     * 获取原价格
+     */
+    protected float getOriginalPrice() {
+        String price = mTvPrice.getText().toString();
+        return Float.valueOf(price);
+    }
+
+    protected void setOriginalPrice(float price) {
+        mTvPrice.setText(FormatUtils.submitPrice(price));
+    }
+
+    /**
+     * 提交价格
+     */
+    private int getSubmitPrice() {
+        String price = mTvSubmitPrice.getText().toString();
+        return (int) (Float.valueOf(price) * 100);
+    }
+
+    protected void setSubmitPrice(float price) {
+        mTvSubmitPrice.setText(FormatUtils.submitPrice(price));
+    }
+
+    /**
+     * 优惠劵模块
+     */
+    @Override
+    public String getExtraType() {
+        return String.valueOf(mCouponType);
+    }
+
+    @Override
+    public int getPayType() {
+        return mPayType;
+    }
+
+    protected void setCouponText(String text) {
+        mTvCoupon.setText(text);
+    }
+
+    /**
+     * 优惠---------------------------------------
+     */
+    @Override
+    public void couponByTypeError(String message) {
+        toastShore(message);
+        setCouponText(message + "请点击我~");
+    }
+
+    /**
+     * 可使用优惠券
+     */
+    @Override
+    public void couponByTypeSucceed(CouponResponse response) {
+        if (mCouponBeanId == 0) {
+            setCouponText("未使用优惠券");
+            return;
+        }
+
+        List<CouponBean> list = response.getData();
+        int userCount = 0;
+        float priceFloat = getOriginalPrice();
+        for (CouponBean bean : list) {
+            int couponLimit = bean.getCouponLimit();
+            if (couponLimit == 0 || priceFloat >= couponLimit) {
+                userCount++;
+            }
+        }
+        setCouponText("你有" + userCount + "张可使用优惠劵");
     }
 }

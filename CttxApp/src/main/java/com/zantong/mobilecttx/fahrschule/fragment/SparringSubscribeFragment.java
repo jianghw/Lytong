@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponBean;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
-import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.fahrschule.ISparringSubscribeContract;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobilecttx.eventbus.SparringOrderEvent;
@@ -24,7 +24,6 @@ import com.zantong.mobilecttx.fahrschule.bean.SparringAreaBean;
 import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResponse;
 import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
-import com.zantong.mobilecttx.order.activity.CouponListActivity;
 import com.zantong.mobilecttx.presenter.fahrschule.SparringSubscribePresenter;
 import com.zantong.mobilecttx.utils.StringUtils;
 
@@ -40,11 +39,11 @@ import java.util.Locale;
 
 import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
 import cn.qqtheme.framework.bean.response.SubjectGoodsData;
+import cn.qqtheme.framework.custom.popup.CustomDialog;
+import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.imple.IAreaDialogListener;
 import cn.qqtheme.framework.imple.ISpeedDialogListener;
 import cn.qqtheme.framework.imple.ITimeDialogListener;
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.custom.popup.CustomDialog;
 import cn.qqtheme.framework.util.RegexUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ViewUtils;
@@ -110,7 +109,7 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
     /**
      * 是否点击获取优惠
      */
-    private boolean isChoiceCoupon = true;
+    private boolean isChoiceCoupon = false;
     /**
      * 优惠券id
      */
@@ -158,8 +157,7 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    protected void onRefreshData() {
-    }
+    protected void onRefreshData() {}
 
     @Override
     protected int getFragmentLayoutResId() {
@@ -200,7 +198,7 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
         }
 
         //优惠劵
-        if (mPresenter != null) mPresenter.getCouponByType();
+//        if (mPresenter != null) mPresenter.getCouponByType();
     }
 
     @Override
@@ -229,9 +227,11 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
         mEditPhone = (EditText) view.findViewById(R.id.edit_phone);
         mEditLicense = (EditText) view.findViewById(R.id.edit_license);
         mEditRemark = (EditText) view.findViewById(R.id.edit_remark);
-        mTvCoupon = (TextView) view.findViewById(R.id.tv_coupon);
-        mLayCoupon = (RelativeLayout) view.findViewById(R.id.lay_coupon);
-        mLayCoupon.setOnClickListener(this);
+
+//        mTvCoupon = (TextView) view.findViewById(R.id.tv_coupon);
+//        mLayCoupon = (RelativeLayout) view.findViewById(R.id.lay_coupon);
+//        mLayCoupon.setOnClickListener(this);
+
         mTvCommit = (TextView) view.findViewById(R.id.tv_commit);
         mTvCommit.setOnClickListener(this);
     }
@@ -251,20 +251,20 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
             case R.id.tv_commit:
                 dataFormValidation();
                 break;
-            case R.id.lay_coupon://优惠价
-                if (mCouponBeanList == null || mCouponBeanList.size() < 1) {
-                    if (mPresenter != null) mPresenter.getCouponByType();
-                } else {
-                    Intent intent = new Intent(getActivity(), CouponListActivity.class);
-                    Bundle bundle = new Bundle();
-
-                    ArrayList<RechargeCouponBean> arrayList = new ArrayList<>();
-                    arrayList.addAll(mCouponBeanList);
-                    bundle.putParcelableArrayList(JxGlobal.putExtra.recharge_coupon_extra, arrayList);
-                    intent.putExtras(bundle);
-                    startActivityForResult(intent, JxGlobal.requestCode.recharge_coupon_list);
-                }
-                break;
+//            case R.id.lay_coupon://优惠价
+//                if (mCouponBeanList == null || mCouponBeanList.size() < 1) {
+//                    if (mPresenter != null) mPresenter.getCouponByType();
+//                } else {
+//                    Intent intent = new Intent(getActivity(), CouponListActivity.class);
+//                    Bundle bundle = new Bundle();
+//
+//                    ArrayList<RechargeCouponBean> arrayList = new ArrayList<>();
+//                    arrayList.addAll(mCouponBeanList);
+//                    bundle.putParcelableArrayList(JxGlobal.putExtra.recharge_coupon_extra, arrayList);
+//                    intent.putExtras(bundle);
+//                    startActivityForResult(intent, JxGlobal.requestCode.recharge_coupon_list);
+//                }
+//                break;
             default:
                 break;
         }
@@ -372,6 +372,7 @@ public class SparringSubscribeFragment extends BaseRefreshJxFragment
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.SIMPLIFIED_CHINESE);
         String start = getCreateOrderDTO().getStartTime();
         String end = getCreateOrderDTO().getEndTime();
+
         int difference = 2;
         if (!TextUtils.isEmpty(start) && !TextUtils.isEmpty(end)) {
             try {

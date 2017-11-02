@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -20,6 +19,7 @@ import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.dto.ChangePwdDTO;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.utils.TextWatchUtils;
@@ -232,13 +232,13 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
 
     private void liyingreg(String pwd) {
         try {
-            String phone = RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().getPhoenum(), true);
+            String phone = RSAUtils.strByEncryptionLiYing(MainRouter.getUserPhoenum(), true);
             SHATools sha = new SHATools();
             String newPassword = RSAUtils.strByEncryptionLiYing(SHATools.hexString(sha.eccryptSHA1(pwd)), true);
             LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
             liYingRegDTO.setPhoenum(phone);
             liYingRegDTO.setPswd(newPassword);
-            liYingRegDTO.setUsrid(MemoryData.getInstance().getRASUserID());
+            liYingRegDTO.setUsrid(MainRouter.getRASUserID());
             CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResponse>() {
                 @Override
                 public void onSuccess(BaseResponse result) {

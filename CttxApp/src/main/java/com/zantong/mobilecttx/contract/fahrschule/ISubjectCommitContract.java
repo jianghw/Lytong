@@ -46,8 +46,6 @@ public interface ISubjectCommitContract {
         CreateOrderDTO getCreateOrder();
 
         void getCouponByType();
-
-        String initUserId();
     }
 
 }

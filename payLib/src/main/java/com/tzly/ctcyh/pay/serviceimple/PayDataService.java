@@ -14,9 +14,13 @@ import com.tzly.ctcyh.service.IPayService;
 
 public class PayDataService implements IPayService {
 
-
     @Override
     public void gotoPayTypeActivity(Activity context, String orderId) {
         PayRouter.gotoPayTypeActivity(context, orderId);
+    }
+
+    @Override
+    public void gotoHtmlActivity(Activity context, String title, String url, String extraOrderId, int payType) {
+        PayRouter.gotoHtmlActivity(context, title, url, extraOrderId, payType);
     }
 }

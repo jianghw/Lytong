@@ -7,8 +7,10 @@ public class PayMotoOrderEvent {
 
     private final String orderId;
     private final String amount;
+    private final String coupon;
 
-    public PayMotoOrderEvent(String orderId, String amount) {
+    public PayMotoOrderEvent(String coupon, String orderId, String amount) {
+        this.coupon = coupon;
         this.orderId = orderId;
         this.amount = amount;
     }
@@ -19,5 +21,9 @@ public class PayMotoOrderEvent {
 
     public String getAmount() {
         return amount;
+    }
+
+    public String getCoupon() {
+        return coupon;
     }
 }

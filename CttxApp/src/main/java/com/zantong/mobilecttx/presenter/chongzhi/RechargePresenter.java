@@ -90,7 +90,7 @@ public class RechargePresenter implements IRechargeAtyContract.IRechargeAtyPrese
 
     @Override
     public String initUserId() {
-        return mRepository.getDefaultUserID();
+        return mRepository.getRASUserID();
     }
 
     /**
@@ -135,7 +135,7 @@ public class RechargePresenter implements IRechargeAtyContract.IRechargeAtyPrese
     @Override
     public RechargeDTO initRechargeDTO() {
         RechargeDTO bean = mAtyView.initRechargeDTO();
-        bean.setUserId(mRepository.getDefaultUserID());
+        bean.setUserId(mRepository.getRASUserID());
         return bean;
     }
 

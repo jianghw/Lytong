@@ -26,6 +26,11 @@ public interface IPayService {
     @POST("pay/getBankPayHtml")
     Observable<PayOrderResponse> getBankPayHtml(@Field("orderId") String orderId, @Field("amount") String orderPrice);
 
+    @FormUrlEncoded
+    @POST("pay/getBankPayHtml")
+    Observable<PayOrderResponse> getBankPayHtml(@Field("orderId") String orderId,
+                                              @Field("amount") String amount, @Field("couponUserId") String couponUserId);
+
     /**
      * 46.更新违章缴费状态
      * @param json

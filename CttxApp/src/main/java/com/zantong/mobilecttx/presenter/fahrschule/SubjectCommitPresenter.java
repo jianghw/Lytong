@@ -91,7 +91,7 @@ public class SubjectCommitPresenter
     public CreateOrderDTO getCreateOrder() {
         CreateOrderDTO orderDTO = new CreateOrderDTO();
         orderDTO.setType("4");
-        orderDTO.setUserNum(initUserId());
+        orderDTO.setUserNum(mRepository.getRASUserID());
         orderDTO.setGoodsId(mAtyView.getGoodsId());
         orderDTO.setPrice(mAtyView.getPriceValue());
 
@@ -108,7 +108,7 @@ public class SubjectCommitPresenter
      */
     @Override
     public void getCouponByType() {
-        Subscription subscription = mRepository.getCouponByType(initUserId(), "4")
+        Subscription subscription = mRepository.getCouponByType(mRepository.getRASUserID(), "4")
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -142,8 +142,4 @@ public class SubjectCommitPresenter
         mSubscriptions.add(subscription);
     }
 
-    @Override
-    public String initUserId() {
-        return mRepository.getDefaultUserID();
-    }
 }

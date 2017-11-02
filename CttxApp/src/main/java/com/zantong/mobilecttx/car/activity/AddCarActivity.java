@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -42,6 +41,7 @@ import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.eventbus.AddCarInfoEvent;
 import com.zantong.mobilecttx.eventbus.EditCarInfoEvent;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
 import com.zantong.mobilecttx.utils.CarBrandParser;
@@ -229,7 +229,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                 DialogUtils.delDialog(this, "删除提示", "您确定要删除该车辆吗？", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!MemoryData.getInstance().isMainLogin()) {
+                        if (!MainRouter.isUserLogin()) {
                             delLocalCarInfo();
                         } else {
                             dialogForDelCar();
@@ -376,9 +376,8 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                 }
             });
         } else {
-//未登录时直接提交到新服务器,登录时先提交旧服务器,再提交新服务器
-            if (!MemoryData.getInstance().isMainLogin()) {
-
+            //未登录时直接提交到新服务器,登录时先提交旧服务器,再提交新服务器
+            if (!MainRouter.isUserLogin()) {
                 List<CarInfoDTO> list = SPUtils.getInstance().getCarsInfo();
                 if (isFrom) {//修改
                     SPUtils.getInstance().getCarsInfo().remove(tempBean);
@@ -886,42 +885,42 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
         finish();
     }
 
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    public void onDataSynEvent(OcrDrivingEvent event) {
-//        if (event != null && event.getStatus()){
-//            event.setStatus(false);
-//            showDialogLoading();
-//            CarApiClient.uploadDrivingImg(this, event.getFile(), new CallBack<DrivingOcrResult>() {
-//                @Override
-//                public void onSuccess(DrivingOcrResult result) {
-//                    hideDialogLoading();
-//                    if ("OK".equals(result.getStatus())) {
-//                        String cardNo = result.getContent().getCardNo();
-//                        String province = cardNo.substring(0,1);
-//                        String plateNum = cardNo.substring(1,cardNo.length());
-//                        String provinces = "沪浙苏皖京藏川鄂甘赣贵桂黑吉冀津晋辽鲁蒙闽宁青琼陕湘新渝豫粤云";
-//                        if (provinces.contains(province)){
-//                            mProvince.setText(province);
-//                        }
-//                        mPlateNum.setText(plateNum);
-//                        String engineNum = result.getContent().getEnginePN();
-//                        engineNum = engineNum.substring(engineNum.length() - 5,engineNum.length());
-//                        mEngineNum.setText(engineNum);
-//                        mType.setText(result.getContent().getVehicleType());
-//                        dto.setCarnumtype(VehicleTypeTools.switchVehicleCode(mType.getText().toString()));
-//                    } else {
-//                        ToastUtils.showShort(AddCarActivity.this, "解析失败，请重试");
-//                    }
-//                }
-//
-//                @Override
-//                public void onError(String errorCode, String msg) {
-//                    super.onError(errorCode, msg);
-//                    hideDialogLoading();
-//                }
-//            });
-//        }
-//    }
+    //    @Subscribe(threadMode = ThreadMode.MAIN)
+    //    public void onDataSynEvent(OcrDrivingEvent event) {
+    //        if (event != null && event.getStatus()){
+    //            event.setStatus(false);
+    //            showDialogLoading();
+    //            CarApiClient.uploadDrivingImg(this, event.getFile(), new CallBack<DrivingOcrResult>() {
+    //                @Override
+    //                public void onSuccess(DrivingOcrResult result) {
+    //                    hideDialogLoading();
+    //                    if ("OK".equals(result.getStatus())) {
+    //                        String cardNo = result.getContent().getCardNo();
+    //                        String province = cardNo.substring(0,1);
+    //                        String plateNum = cardNo.substring(1,cardNo.length());
+    //                        String provinces = "沪浙苏皖京藏川鄂甘赣贵桂黑吉冀津晋辽鲁蒙闽宁青琼陕湘新渝豫粤云";
+    //                        if (provinces.contains(province)){
+    //                            mProvince.setText(province);
+    //                        }
+    //                        mPlateNum.setText(plateNum);
+    //                        String engineNum = result.getContent().getEnginePN();
+    //                        engineNum = engineNum.substring(engineNum.length() - 5,engineNum.length());
+    //                        mEngineNum.setText(engineNum);
+    //                        mType.setText(result.getContent().getVehicleType());
+    //                        dto.setCarnumtype(VehicleTypeTools.switchVehicleCode(mType.getText().toString()));
+    //                    } else {
+    //                        ToastUtils.showShort(AddCarActivity.this, "解析失败，请重试");
+    //                    }
+    //                }
+    //
+    //                @Override
+    //                public void onError(String errorCode, String msg) {
+    //                    super.onError(errorCode, msg);
+    //                    hideDialogLoading();
+    //                }
+    //            });
+    //        }
+    //    }
 
     /**
      * ocr获取行驶证信息

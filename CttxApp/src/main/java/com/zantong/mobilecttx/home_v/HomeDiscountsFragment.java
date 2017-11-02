@@ -21,7 +21,6 @@ import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.contract.home.INativeItemListener;
-import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.fahrschule.activity.SparringActivity;
 import com.zantong.mobilecttx.home.adapter.FavorableBannerImgHolderView;
 import com.zantong.mobilecttx.home.adapter.HomeDiscountsAdapter;
@@ -166,10 +165,11 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
                 enterDrivingActivity();
             } else if (path.equals("native_app_enhancement")) {//科目强化
                 JxConfig.getInstance().eventIdByUMeng(37);
-                MainRouter.gotoSubjectActivity(getActivity());
+                MainRouter.gotoSubjectActivity(getActivity(),0);
             } else if (path.equals("native_app_sparring")) {//陪练
                 JxConfig.getInstance().eventIdByUMeng(38);
                 Act.getInstance().gotoIntentLogin(getActivity(), SparringActivity.class);
+                MainRouter.gotoSparringActivity(getActivity(),0);
             } else if (path.equals("native_app_drive_share")) {//分享
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.share_position_extra, 1);
@@ -179,7 +179,7 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
                 Act.getInstance().gotoIntentLogin(getActivity(), CarBeautyActivity.class);
             } else if (path.equals("native_app_driver")) {//驾校报名
                 JxConfig.getInstance().eventIdByUMeng(28);
-                Act.getInstance().gotoIntentLogin(getActivity(), FahrschuleActivity.class);
+                MainRouter.gotoFahrschuleActivity(getActivity(),0);
             } else {//其他
                 ToastUtils.toastShort("此版本暂无此状态页面,请更新最新版本");
             }

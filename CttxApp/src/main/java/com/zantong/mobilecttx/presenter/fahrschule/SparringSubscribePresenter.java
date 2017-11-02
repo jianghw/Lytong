@@ -218,7 +218,7 @@ public class SparringSubscribePresenter
 
     @Override
     public String initUserId() {
-        return mRepository.getDefaultUserID();
+        return mRepository.getRASUserID();
     }
 
     /**
@@ -309,7 +309,7 @@ public class SparringSubscribePresenter
         CreateOrderDTO orderDTO = mAtyView.getCreateOrderDTO();
         orderDTO.setType("5");
         orderDTO.setPayType("1");
-        orderDTO.setUserNum(mRepository.getDefaultUserID());
+        orderDTO.setUserNum(mRepository.getRASUserID());
 
         if (mAtyView.getUseCoupon())
             orderDTO.setCouponId(mAtyView.getCouponId());

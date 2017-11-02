@@ -338,7 +338,7 @@ public class OrderExpressPresenter
     @Override
     public ExpressDTO initExpressDTO() {
         ExpressDTO expressDTO = new ExpressDTO();
-        expressDTO.setUserNum(mRepository.getDefaultUserID());
+        expressDTO.setUserNum(mRepository.getRASUserID());
         expressDTO.setExpressId("1");
         expressDTO.setOrderId(mAtyView.getOrderId());
         expressDTO.setSendName(mAtyView.getUserName());

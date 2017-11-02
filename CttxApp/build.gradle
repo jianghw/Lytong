@@ -1,5 +1,6 @@
 //apply plugin: 'com.android.application'
 apply plugin: 'component-plugin'
+
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
@@ -175,7 +176,6 @@ dependencies {
     //接口沟通依赖
     compile project(':componentService')
 }
-
 //自定义组件构建
 component {
     isRegisterCompoAuto = true

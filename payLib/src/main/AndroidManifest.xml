@@ -46,6 +46,31 @@
             android:name="org.simalliance.openmobileapi"
             android:required="false"/>
 
+        <!--**********支付类型选择****************-->
+        <activity
+            android:name=".pay_type_v.PayTypeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <!--**********优惠劵类型选择****************-->
+        <activity
+            android:name=".coupon_v.CouponListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <!--启动新进程 畅通卡支付-->
+        <activity
+            android:name="com.tzly.ctcyh.pay.html_v.Html5Activity"
+            android:process=":lyl.boon.process.web"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.tzly.ctcyh.pay.html_v.Html5Activity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

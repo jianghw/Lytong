@@ -58,7 +58,7 @@ public class CouponAtyPresenter implements ICouponAtyContract.ICouponAtyPresente
      */
     @Override
     public void usrCouponInfo() {
-        Subscription subscription = mRepository.usrCouponInfo(mRepository.getDefaultUserID(), mView.getCouponStatus())
+        Subscription subscription = mRepository.usrCouponInfo(mRepository.getRASUserID(), mView.getCouponStatus())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -143,7 +143,7 @@ public class CouponAtyPresenter implements ICouponAtyContract.ICouponAtyPresente
      */
     @Override
     public void delUsrCoupon(CouponFragmentBean meg, final int position) {
-        Subscription subscription = mRepository.delUsrCoupon(meg.getCouponId(), mRepository.initDelUsrCouponDTODTO())
+        Subscription subscription = mRepository.delUsrCoupon(meg.getCouponId(), mRepository.getRASUserID())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override

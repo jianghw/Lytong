@@ -8,7 +8,6 @@ import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Config;
@@ -79,7 +78,7 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
                 || url.contains("happysend")) {//保险
             Act.getInstance().gotoIntent(mAdapterContext, CustomCordovaActivity.class, url);
         } else if (url.contains("localActivity")) {//百日无违章
-            if (MemoryData.getInstance().isMainLogin()) {
+            if (MainRouter.isUserLogin()) {
                 JxConfig.getInstance().eventIdByUMeng(1);
                 getSignStatus();
             } else {

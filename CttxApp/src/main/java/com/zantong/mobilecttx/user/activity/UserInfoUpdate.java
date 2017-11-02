@@ -17,7 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.util.LogUtils;
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.FileUploadApi;
@@ -26,6 +25,7 @@ import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
 import com.zantong.mobilecttx.contract.UserInfoUpdateView;
 import com.zantong.mobilecttx.presenter.UserInfoUpdatePresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -105,7 +105,7 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
         File file = getHeadImageFile();
         if (file == null)
             ImageLoadUtils.loadHead(
-                    MemoryData.getInstance().getPortrait(),
+                    MainRouter.getUserPortrait(),
                     user_head_image
             );
     }
@@ -113,8 +113,8 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
     @Override
     protected void onResume() {
         super.onResume();
-        String nickname = MemoryData.getInstance().getNickname();
-        String phoenum = MemoryData.getInstance().getPhoenum();
+        String nickname = MainRouter.getUserNickname();
+        String phoenum = MainRouter.getUserPhoenum();
 
         if (!TextUtils.isEmpty(nickname)) {
             user_info_name_text.setText(nickname);
@@ -402,10 +402,10 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
         Map<String, RequestBody> params = new HashMap<>();
         RequestBody body = RequestBody.create(MediaType.parse("image/jpeg"), temFile);
         String imagFileName;
-        String[] imageUrls =MemoryData.getInstance().getPortrait().split("\\/");
+        String[] imageUrls = MainRouter.getUserPortrait().split("\\/");
 
-        if (Tools.isStrEmpty(MemoryData.getInstance().getPortrait())) {
-            imagFileName = MemoryData.getInstance().getGlobalUserID() + ".jpg";
+        if (Tools.isStrEmpty( MainRouter.getUserPortrait())) {
+            imagFileName =  MainRouter.getUserID(true)+ ".jpg";
         } else {
             imagFileName = imageUrls[imageUrls.length - 1];
         }
@@ -429,10 +429,10 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
                             url = json.get("url").toString();
 
                             mapData().put("portrait", url);
-                            if (Tools.isStrEmpty(MemoryData.getInstance().getPortrait())) {
+                            if (Tools.isStrEmpty( MainRouter.getUserPortrait())) {
                                 mUserInfoUpdatePresenter.loadView(1);
                             } else {
-                                ImageLoadUtils.loadHead(MemoryData.getInstance().getPortrait(), user_head_image);
+                                ImageLoadUtils.loadHead( MainRouter.getUserPortrait(), user_head_image);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

@@ -212,6 +212,8 @@ public interface IRemoteSource {
      */
     Observable<PayOrderResponse> getBankPayHtml(String orderId, String orderPrice);
 
+    Observable<PayOrderResponse> getBankPayHtml(String orderId, String orderPrice, int coupon);
+
     /**
      * 8.查询订单列表
      */
@@ -343,4 +345,8 @@ public interface IRemoteSource {
      * @param json
      */
     Observable<BaseResponse> updateState(List<ViolationNum> json);
+    /**
+     * 是否提供活动
+     */
+    Observable<HomeCarResponse> getIndexLayer();
 }

@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.tzly.ctcyh.service.IUserService;
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -19,6 +18,7 @@ import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.presenter.UpdateNickNamePresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 
 import java.util.HashMap;
@@ -26,6 +26,8 @@ import java.util.HashMap;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.bean.BaseResponse;
+
+import static com.zantong.mobilecttx.router.MainRouter.getUserPhoenum;
 
 public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePresenter>
         implements View.OnClickListener, IBaseView, ModelView {
@@ -48,7 +50,7 @@ public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePre
     public void initView() {
         setTitleText("修改昵称");
         setEnsureText("保存");
-        nickNameEdit.setText(MemoryData.getInstance().getNickname());
+        nickNameEdit.setText(MainRouter.getUserNickname());
     }
 
     @Override
@@ -137,10 +139,10 @@ public class UpdateNickName extends BaseMvpActivity<IBaseView, UpdateNickNamePre
     }
 
     private void liyingreg() {
-        String phone = RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().getPhoenum(), true);
+        String phone = RSAUtils.strByEncryptionLiYing(getUserPhoenum(), true);
         LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
         liYingRegDTO.setPhoenum(phone);
-        liYingRegDTO.setUsrid(MemoryData.getInstance().getRASUserID());
+        liYingRegDTO.setUsrid(MainRouter.getRASUserID());
         liYingRegDTO.setNickname(nickNameEdit.getText().toString().trim());
         CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResponse>() {
             @Override

@@ -23,6 +23,7 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tzly.ctcyh.router.util.EncryptUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
@@ -35,9 +36,11 @@ import com.zantong.mobilecttx.daijia.bean.DrivingOcrBean;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.eventbus.DriveLicensePhotoEvent;
 import com.zantong.mobilecttx.eventbus.PayMotoOrderEvent;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.huodong.activity.HundredAgreementActivity;
 import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
 import com.zantong.mobilecttx.presenter.browser.HtmlBrowserPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
@@ -59,7 +62,8 @@ import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_COD
 /**
  * 公用浏览器 html页面显示
  */
-public class BrowserHtmlActivity extends BaseJxActivity implements IHtmlBrowserContract.IHtmlBrowserView {
+public class BrowserHtmlActivity extends BaseJxActivity
+        implements IHtmlBrowserContract.IHtmlBrowserView {
 
     @Bind(R.id.webView)
     ProgressWebView mWebView;
@@ -106,6 +110,11 @@ public class BrowserHtmlActivity extends BaseJxActivity implements IHtmlBrowserC
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.addJavascriptInterface(new InterfaceForJS(this), "CTTX");
+
+        String cust_id = MainRouter.getUserPhoenum();
+        String SEC_KEY = "BE7D6564766740037581842CE0ACA1DD";
+        String token = EncryptUtils.encryptMD5ToString(SEC_KEY + cust_id + SEC_KEY);
+        mStrUrl = mStrUrl + "?cust_id=" + cust_id + "&token=" + token;
         mWebView.loadUrl(mStrUrl);
 
         WebSettings settings = mWebView.getSettings();
@@ -173,11 +182,8 @@ public class BrowserHtmlActivity extends BaseJxActivity implements IHtmlBrowserC
 
     @Override
     public void getBankPayHtmlSucceed(PayOrderResponse result, String orderId) {
-        Intent intent = new Intent(this, PayBrowserActivity.class);
-        intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付");
-        intent.putExtra(JxGlobal.putExtra.web_url_extra, result.getData());
-        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
-        startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
+
+        MainRouter.gotoHtmlActivity(this, "银行支付", result.getData(), orderId, 1);
     }
 
     /**
@@ -299,7 +305,8 @@ public class BrowserHtmlActivity extends BaseJxActivity implements IHtmlBrowserC
         String orderId = event.getOrderId();
         float orderPrice = Float.valueOf(event.getAmount());
         int price = (int) (orderPrice * 100);
-        mPresenter.getBankPayHtml(orderId, String.valueOf(price));
+        String coupon = event.getCoupon();
+        mPresenter.getBankPayHtml(coupon, orderId, String.valueOf(price));
     }
 
     /**
@@ -331,9 +338,6 @@ public class BrowserHtmlActivity extends BaseJxActivity implements IHtmlBrowserC
     }
 
     protected void goToCamera() {
-        Intent intentOcr = new Intent(this, OcrCameraActivity.class);
-        intentOcr.putExtra(JxGlobal.putExtra.ocr_camera_extra, 0);
-        startActivityForResult(intentOcr, JxGlobal.requestCode.violation_query_camera);
     }
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)
@@ -345,19 +349,12 @@ public class BrowserHtmlActivity extends BaseJxActivity implements IHtmlBrowserC
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //拍照回调
-        if (requestCode == JxGlobal.requestCode.violation_query_camera
-                && resultCode == JxGlobal.resultCode.ocr_camera_license) {
+        if (requestCode == MainGlobal.requestCode.violation_query_camera
+                && resultCode == MainGlobal.resultCode.ocr_camera_license) {
             if (OcrCameraActivity.file == null)
                 ToastUtils.toastShort("照片获取失败");
             else if (mPresenter != null)
                 mPresenter.uploadDrivingImg();
-        }
-        //TODO
-        if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
-                && resultCode == JxGlobal.resultCode.web_order_id_succeed) {
-
-        } else if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
-                && resultCode == JxGlobal.resultCode.web_order_id_error && data != null) {
         }
     }
 

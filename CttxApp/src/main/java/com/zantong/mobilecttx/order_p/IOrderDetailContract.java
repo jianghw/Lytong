@@ -1,7 +1,7 @@
-package com.zantong.mobilecttx.contract;
+package com.zantong.mobilecttx.order_p;
 
-import com.zantong.mobilecttx.base.interf.IMvpPresenter;
-import com.zantong.mobilecttx.base.interf.IMvpView;
+import com.tzly.ctcyh.router.base.IBasePresenter;
+import com.tzly.ctcyh.router.base.IBaseView;
 import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
 
 /**
@@ -10,11 +10,7 @@ import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
 
 public interface IOrderDetailContract {
 
-    interface IOrderDetailView extends IMvpView<IOrderDetailPresenter> {
-
-        void showLoadingDialog();
-
-        void dismissLoadingDialog();
+    interface IOrderDetailView extends IBaseView<IOrderDetailPresenter> {
 
         void getOrderDetailError(String message);
 
@@ -23,12 +19,10 @@ public interface IOrderDetailContract {
         String getOrderId();
     }
 
-    interface IOrderDetailPresenter extends IMvpPresenter {
-
+    interface IOrderDetailPresenter extends IBasePresenter {
         void getOrderDetail();
 
         String getOrderId();
-
     }
 
 }

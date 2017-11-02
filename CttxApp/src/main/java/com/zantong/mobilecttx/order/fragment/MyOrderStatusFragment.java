@@ -7,11 +7,10 @@ import android.view.View;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
-import com.zantong.mobilecttx.order.activity.AnnualDetailActivity;
-import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
 import com.zantong.mobilecttx.order.activity.MyOrderActivity;
 import com.zantong.mobilecttx.order.adapter.OrderStatusAdapter;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.util.List;
@@ -73,10 +72,10 @@ public class MyOrderStatusFragment extends BaseRecyclerListJxFragment<OrderListB
             String orderId = bean.getOrderId();
             String targetType = bean.getTargetType();
             if (targetType.equals("0")) {//前往 订单详情页面
-                Intent intent = new Intent(getActivity(), bean.getType() == 6
-                        ? AnnualDetailActivity.class : OrderDetailActivity.class);
-                intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
-                startActivity(intent);
+                if (bean.getType() == 6)
+                    MainRouter.gotoAnnualDetailActivity(getActivity(), orderId);
+                else
+                    MainRouter.gotoOrderDetailActivity(getActivity(), orderId);
             } else {
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.browser_title_extra, bean.getGoodsName());

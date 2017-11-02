@@ -1,20 +1,15 @@
 package com.zantong.mobilecttx.weizhang.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
-import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
-import com.zantong.mobilecttx.order.bean.OrderListBean;
 import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.adapter.ViolationResultAdapter;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 
 import java.util.List;
-
-import cn.qqtheme.framework.global.JxGlobal;
 
 /**
  * 所有订单
@@ -68,14 +63,6 @@ public class ViolationListFragment extends BaseRecyclerListJxFragment<ViolationB
      */
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
-        if (data instanceof OrderListBean) {
-            OrderListBean bean = (OrderListBean) data;
-            String orderId = bean.getOrderId();
-            //前往 订单详情页面
-            Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
-            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
-            startActivity(intent);
-        }
     }
 
     @Override
@@ -85,7 +72,6 @@ public class ViolationListFragment extends BaseRecyclerListJxFragment<ViolationB
 
     @Override
     protected void initFragmentView(View view) {
-
         mCurAdapter.setItemPayListener(new ViolationResultAdapter.ItemPayListener() {
             @Override
             public void doClickPay(ViolationBean bean) {
@@ -95,12 +81,10 @@ public class ViolationListFragment extends BaseRecyclerListJxFragment<ViolationB
     }
 
     @Override
-    protected void onFirstDataVisible() {
-    }
+    protected void onFirstDataVisible() {}
 
     @Override
-    protected void DestroyViewAndThing() {
-    }
+    protected void DestroyViewAndThing() {}
 
     /**
      * 显示数据

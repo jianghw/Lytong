@@ -46,7 +46,7 @@ public class PayBrowserActivity extends BaseJxActivity
         if (intent != null) {
             mTitleWeb = intent.getStringExtra(JxGlobal.putExtra.web_title_extra);
             mUrl = intent.getStringExtra(JxGlobal.putExtra.web_url_extra);
-            mOrderId = intent.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
+//            mOrderId = intent.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
 
             mSingleUrl = intent.hasExtra(JxGlobal.putExtra.web_single_url_extra);
         }
@@ -186,16 +186,16 @@ public class PayBrowserActivity extends BaseJxActivity
     }
 
     protected void succeedStatus() {
-        Intent intent = new Intent();
-        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, mOrderId);
-        setResult(JxGlobal.resultCode.web_order_id_succeed, intent);
+//        Intent intent = new Intent();
+//        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, mOrderId);
+//        setResult(JxGlobal.resultCode.web_order_id_succeed, intent);
         finish();
     }
 
     protected void errorStatus() {
-        Intent intent = new Intent();
-        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, mOrderId);
-        setResult(JxGlobal.resultCode.web_order_id_error, intent);
+//        Intent intent = new Intent();
+//        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, mOrderId);
+//        setResult(JxGlobal.resultCode.web_order_id_error, intent);
         finish();
     }
 

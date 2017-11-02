@@ -8,14 +8,22 @@ import com.tzly.ctcyh.router.LibUiRouter;
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.service.RouterGlobal;
+import com.zantong.mobilecttx.card.activity.MyCardActivity;
+import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
+import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
+import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
+import com.zantong.mobilecttx.fahrschule.activity.SparringActivity;
 import com.zantong.mobilecttx.fahrschule.activity.SubjectActivity;
 import com.zantong.mobilecttx.guide_v.GuideCTActivity;
 import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.home_v.HomeMainActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
+import com.zantong.mobilecttx.order_v.AnnualDetailActivity;
+import com.zantong.mobilecttx.order_v.OrderDetailActivity;
 import com.zantong.mobilecttx.user.activity.MegTypeActivity;
+import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 
 /**
  * 向外提供的路由规则
@@ -45,7 +53,15 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 RouterGlobal.Host.capture_host,
                 RouterGlobal.Host.recharge_host,
                 RouterGlobal.Host.subject_host,
-                RouterGlobal.Host.in_exist_host
+                RouterGlobal.Host.order_detail_host,
+                RouterGlobal.Host.annual_detail_host,
+                RouterGlobal.Host.fahrschule_host,
+                RouterGlobal.Host.sparring_host,
+                RouterGlobal.Host.unblocked_card_host,
+                RouterGlobal.Host.violation_list_host,
+                RouterGlobal.Host.ocr_camera_host,
+                RouterGlobal.Host.my_card_host
+
         };
     }
 
@@ -70,23 +86,26 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, RechargeActivity.class);
         } else if (RouterGlobal.Host.subject_host.equals(host)) {
             intent.setClass(context, SubjectActivity.class);
+        } else if (RouterGlobal.Host.order_detail_host.equals(host)) {
+            intent.setClass(context, OrderDetailActivity.class);
+        } else if (RouterGlobal.Host.annual_detail_host.equals(host)) {
+            intent.setClass(context, AnnualDetailActivity.class);
+        } else if (RouterGlobal.Host.fahrschule_host.equals(host)) {
+            intent.setClass(context, FahrschuleActivity.class);
+        } else if (RouterGlobal.Host.sparring_host.equals(host)) {
+            intent.setClass(context, SparringActivity.class);
+        } else if (RouterGlobal.Host.unblocked_card_host.equals(host)) {
+            intent.setClass(context, UnblockedCardActivity.class);
+        } else if (RouterGlobal.Host.my_card_host.equals(host)) {
+            intent.setClass(context, MyCardActivity.class);
+        } else if (RouterGlobal.Host.violation_list_host.equals(host)) {
+            intent.setClass(context, ViolationListActivity.class);
+        } else if (RouterGlobal.Host.ocr_camera_host.equals(host)) {
+            intent.setClass(context, OcrCameraActivity.class);
         } else {
-            initLoginBean();
             return true;
         }
         return false;
-    }
-
-    protected void initLoginBean() {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
-            IUserService service = (IUserService) serviceRouter
-                    .getService(IUserService.class.getSimpleName());
-            service.initLoginData();
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-        }
     }
 
     /**
@@ -98,6 +117,8 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
         return !RouterGlobal.Host.guide_host.equals(host)
                 && !RouterGlobal.Host.home_host.equals(host)
                 && !RouterGlobal.Host.capture_host.equals(host)
+                && !RouterGlobal.Host.violation_list_host.equals(host)
+                && !RouterGlobal.Host.ocr_camera_host.equals(host)
                 && loginActivity();
     }
 
@@ -106,7 +127,7 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
         if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
             IUserService service = (IUserService) serviceRouter
                     .getService(IUserService.class.getSimpleName());
-            boolean userLogin = service.isUserLogin();
+            boolean userLogin = service.isUserByLogin();
             return !userLogin;
         } else {
             //注册机开始工作

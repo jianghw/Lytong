@@ -12,7 +12,7 @@ import com.google.gson.GsonBuilder;
 import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.service.MemoryData;
+import com.tzly.ctcyh.user.global.UserMemoryData;
 import com.tzly.ctcyh.user.bean.RequestHeadDTO;
 import com.tzly.ctcyh.user.bean.response.LoginBean;
 import com.tzly.ctcyh.user.bean.response.LoginResponse;
@@ -153,7 +153,7 @@ public class LocalData implements ILocalSource {
 
     @Override
     public String getUserId() {
-        return MemoryData.getInstance().getUsrid();
+        return UserMemoryData.getInstance().getUsrid();
     }
 
     /**
@@ -167,6 +167,31 @@ public class LocalData implements ILocalSource {
     @Override
     public String getPushId() {
         return SPUtils.getInstance(SPUtils.FILENAME).getString(SPUtils.USER_PUSH_ID);
+    }
+
+    @Override
+    public String getPhoenum() {
+        return UserMemoryData.getInstance().getPhoenum();
+    }
+
+    @Override
+    public String getFilenum() {
+        return UserMemoryData.getInstance().getFilenum();
+    }
+
+    @Override
+    public String getGetdate() {
+        return UserMemoryData.getInstance().getGetdate();
+    }
+
+    @Override
+    public String getPortrait() {
+        return UserMemoryData.getInstance().getPortrait();
+    }
+
+    @Override
+    public String getNickname() {
+        return UserMemoryData.getInstance().getNickname();
     }
 
 }

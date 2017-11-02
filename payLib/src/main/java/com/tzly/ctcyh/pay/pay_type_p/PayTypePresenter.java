@@ -2,6 +2,7 @@ package com.tzly.ctcyh.pay.pay_type_p;
 
 import android.support.annotation.NonNull;
 
+import com.tzly.ctcyh.pay.bean.response.CouponResponse;
 import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.pay.data_m.BaseSubscriber;
@@ -88,9 +89,9 @@ public class PayTypePresenter implements IPayTypeContract.IPayTypePresenter {
      * 5.获取工行支付页面
      */
     @Override
-    public void getBankPayHtml(String amount, int couponUserId) {
+    public void getBankPayHtml(String orderId, String amount, int couponUserId) {
         Subscription subscription =
-                mRepository.getBankPayHtml(mContractView.getExtraOrderId(), amount, couponUserId)
+                mRepository.getBankPayHtml(orderId, amount, couponUserId)
                         .subscribeOn(Schedulers.io())
                         .doOnSubscribe(new Action0() {
                             @Override
@@ -123,5 +124,52 @@ public class PayTypePresenter implements IPayTypeContract.IPayTypePresenter {
                             }
                         });
         mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 57.获取指定类型优惠券
+     * 1 加油充值，2 代驾，3 学车，4 科目强化，5 陪练 6 年检，7 保养，8 海外驾驶培训，9 换电瓶，998 第三方券，999 通用券
+     */
+    @Override
+    public void getCouponByType() {
+        Subscription subscription =
+                mRepository.getCouponByType(getUserId(), mContractView.getExtraType(), mContractView.getPayType())
+                        .subscribeOn(Schedulers.io())
+                        .doOnSubscribe(new Action0() {
+                            @Override
+                            public void call() {
+                                mContractView.showLoading();
+                            }
+                        })
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new BaseSubscriber<CouponResponse>() {
+                            @Override
+                            public void doCompleted() {
+                                mContractView.dismissLoading();
+                            }
+
+                            @Override
+                            public void doError(Throwable e) {
+                                mContractView.dismissLoading();
+                                mContractView.couponByTypeError(e.getMessage());
+                            }
+
+                            @Override
+                            public void doNext(CouponResponse response) {
+                                if (response != null && response.getResponseCode() == 2000) {
+                                    mContractView.couponByTypeSucceed(response);
+                                } else {
+                                    mContractView.couponByTypeError(response != null
+                                            ? response.getResponseDesc() : "未知错误(57)");
+                                }
+                            }
+                        });
+        mSubscriptions.add(subscription);
+    }
+
+    @Override
+    public String getUserId() {
+        return mRepository.getRASUserID();
     }
 }

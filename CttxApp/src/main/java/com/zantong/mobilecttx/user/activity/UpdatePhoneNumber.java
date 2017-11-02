@@ -11,7 +11,6 @@ import android.widget.ImageView;
 
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.service.IUserService;
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
@@ -19,6 +18,7 @@ import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.presenter.UpdatePhoneNumberPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 
 import java.util.HashMap;
@@ -197,7 +197,7 @@ public class UpdatePhoneNumber extends BaseMvpActivity<IBaseView, UpdatePhoneNum
             case R.id.login_btn:
                 String oldPhone = edit_old_phone.getText().toString();
                 if(ValidateUtils.isMobile(oldPhone) &&
-                        !MemoryData.getInstance().getPhoenum().equals(oldPhone)){
+                        !MainRouter.getUserPhoenum().equals(oldPhone)){
                     ToastUtils.toastShort("您输入的原手机号不正确");
                 }else if(ValidateUtils.isMobile(edit_phone_number.getText().toString())){
                     //presenter.loadView(2);

@@ -3,7 +3,6 @@ package com.zantong.mobilecttx.data_m;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -41,6 +40,7 @@ import com.zantong.mobilecttx.order.bean.OrderExpressResponse;
 import com.zantong.mobilecttx.order.bean.OrderListResponse;
 import com.zantong.mobilecttx.order.bean.ReceiveInfoResponse;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResponse;
 import com.zantong.mobilecttx.user.bean.MessageDetailResponse;
@@ -107,22 +107,30 @@ public class RepositoryManager {
 
     public MegDTO initMegDTO() {
         MegDTO megDTO = new MegDTO();
-        megDTO.setUsrId(mLocalData.getRASUserID());
+        megDTO.setUsrId(getRASUserID());
         return megDTO;
     }
 
     /**
      * 获取用户id~
      */
-    public String getDefaultUserID() {
-        return mLocalData.DefaultUserID();
+    public String getUserID() {
+        return getUserID(true);
+    }
+
+    public String getUserID(boolean isNeedLogin) {
+        return mLocalData.DefaultUserID(isNeedLogin);
     }
 
     /**
      * 加密后的userid
      */
     public String getRASUserID() {
-        return mLocalData.getRASUserID();
+        return getRASUserID(true);
+    }
+
+    public String getRASUserID(boolean isNeedLogin) {
+        return mLocalData.getRASUserID(isNeedLogin);
     }
 
     /**
@@ -139,7 +147,7 @@ public class RepositoryManager {
      * 手机号码
      */
     public String getDefaultUserPhone() {
-        return MemoryData.getInstance().getPhoenum();
+        return MainRouter.getUserPhoenum();
     }
 
     /**
@@ -193,10 +201,6 @@ public class RepositoryManager {
      */
     public Observable<MessageResponse> deleteMessageDetail(MegDTO megDTO) {
         return mRemoteData.deleteMessageDetail(megDTO);
-    }
-
-    public String initDelUsrCouponDTODTO() {
-        return mLocalData.getRASUserID();
     }
 
     /**
@@ -376,6 +380,12 @@ public class RepositoryManager {
      */
     public Observable<PayOrderResponse> getBankPayHtml(String orderId, String orderPrice) {
         return mRemoteData.getBankPayHtml(orderId, orderPrice);
+    }
+
+    public Observable<PayOrderResponse> getBankPayHtml(String orderId, String orderPrice, int coupon) {
+        return coupon <= 0
+                ? mRemoteData.getBankPayHtml(orderId, orderPrice)
+                : mRemoteData.getBankPayHtml(orderId, orderPrice, coupon);
     }
 
     /**
@@ -565,9 +575,15 @@ public class RepositoryManager {
 
     /**
      * 46.更新违章缴费状态
-     * @param json
      */
     public Observable<BaseResponse> updateState(List<ViolationNum> json) {
         return mRemoteData.updateState(json);
+    }
+
+    /**
+     * 是否提供活动
+     */
+    public Observable<HomeCarResponse> getIndexLayer() {
+        return mRemoteData.getIndexLayer();
     }
 }

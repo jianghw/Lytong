@@ -165,7 +165,7 @@ public class OrderParentPresenter
 
     @Override
     public String initUserId() {
-        return mRepository.getDefaultUserID();
+        return mRepository.getRASUserID();
     }
 
     /**
@@ -213,7 +213,7 @@ public class OrderParentPresenter
      */
     @Override
     public void cancelOrder(OrderListBean bean) {
-        Subscription subscription = mRepository.cancelOrder(bean.getOrderId(), mRepository.getDefaultUserID())
+        Subscription subscription = mRepository.cancelOrder(bean.getOrderId(), mRepository.getRASUserID())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override

@@ -1,8 +1,12 @@
 package com.tzly.ctcyh.user.serviceimple;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import com.tzly.ctcyh.router.UiRouter;
 import com.tzly.ctcyh.service.IUserService;
+import com.tzly.ctcyh.service.RouterGlobal;
 import com.tzly.ctcyh.user.data_m.UserDataManager;
 
 /**
@@ -24,13 +28,24 @@ public class UserDataService implements IUserService {
      * 是否登录
      */
     @Override
-    public boolean isUserLogin() {
+    public boolean isUserByLogin() {
         return mRepository.isUserLogin();
     }
 
+    /**
+     * 只初始化数据
+     */
     @Override
-    public void initLoginData() {
-        mRepository.initLoginData();
+    public boolean isLogin() {
+        return mRepository.isLogin();
+    }
+
+    @Override
+    public void gotoLoginActivity(Context context) {
+        Bundle bundle = new Bundle();
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.user_scheme + "://" + RouterGlobal.Host.login_host,
+                bundle);
     }
 
     /**
@@ -95,7 +110,40 @@ public class UserDataService implements IUserService {
     }
 
     @Override
+    public String getUserID(boolean isNeedLogin) {
+        return mRepository.getUserID(isNeedLogin);
+    }
+
+    @Override
     public String getRASUserID() {
         return mRepository.getRASUserID();
+    }
+
+    /**
+     * 手机号码
+     */
+    @Override
+    public String getUserPhoenum() {
+        return mRepository.getUserPhoenum();
+    }
+
+    @Override
+    public String getUserFilenum() {
+        return mRepository.getUserFilenum();
+    }
+
+    @Override
+    public String getUserGetdate() {
+        return mRepository.getUserGetdate();
+    }
+
+    @Override
+    public String getUserPortrait() {
+        return mRepository.getUserPortrait();
+    }
+
+    @Override
+    public String getUserNickname() {
+        return mRepository.getUserNickname();
     }
 }

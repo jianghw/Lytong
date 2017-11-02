@@ -40,7 +40,7 @@
                     android:drawableRight="@mipmap/btn_rightarrow"
                     android:enabled="true"
                     android:gravity="right|center_vertical"
-                    android:text="中石化"
+                    android:text="请选择"
                     android:textColor="@color/gray_25"
                     android:textSize="@dimen/fs_16sp"/>
             </LinearLayout>
@@ -121,7 +121,7 @@
                 android:layout_height="@dimen/ds_25"
                 android:background="@color/gray_f5"/>
             <!--支付充值-->
-            <RelativeLayout
+           <!-- <RelativeLayout
                 android:id="@+id/ray_paystyle_layout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_150"
@@ -164,9 +164,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_25"
-                android:background="@color/gray_f5"/>
+                android:background="@color/gray_f5"/>-->
             <!--优惠券-->
-            <RelativeLayout
+            <!--<RelativeLayout
                 android:id="@+id/ray_discount_coupon"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_150"
@@ -231,7 +231,7 @@
                     android:layout_marginLeft="@dimen/ds_30"
                     android:layout_marginRight="@dimen/ds_30"
                     android:src="@mipmap/btn_rightarrow"/>
-            </RelativeLayout>
+            </RelativeLayout>-->
 
             <!--充值说明模块-->
             <LinearLayout

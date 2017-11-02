@@ -9,13 +9,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.browser.PayHtmlActivity;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
-import com.zantong.mobilecttx.browser.PayBrowserActivity;
 import com.zantong.mobilecttx.application.Injection;
+import com.zantong.mobilecttx.base.activity.BaseJxActivity;
+import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
+import com.zantong.mobilecttx.browser.PayHtmlActivity;
 import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.fahrschule.activity.SparringActivity;
@@ -25,6 +23,7 @@ import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
 import com.zantong.mobilecttx.order.fragment.MyOrderStatusFragment;
 import com.zantong.mobilecttx.presenter.order.OrderParentPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
@@ -32,9 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.custom.popup.CustomDialog;
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.imple.IPayTypeListener;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -132,6 +129,7 @@ public class MyOrderActivity extends BaseJxActivity
             @Override
             public void doClickPay(OrderListBean bean) {
                 mOrderListBean = bean;
+
                 payTypeByUser(bean);
             }
 
@@ -181,21 +179,23 @@ public class MyOrderActivity extends BaseJxActivity
      * canPayType支付方式:1-工行支付,2-支付宝;例:1,2
      */
     private void payTypeByUser(final OrderListBean orderListBean) {
-        if (orderListBean.getCanPayType().contains("1")
-                && orderListBean.getCanPayType().contains("2")) {
+        MainRouter.gotoPayTypeActivity(this, orderListBean.getOrderId());
 
-            CustomDialog.payTypeDialog(this, new IPayTypeListener() {
-                @Override
-                public void submitPayType(boolean type) {
-                    if (type) gotoPayByCard(orderListBean);
-                    else gotoPayByAlipay(orderListBean);
-                }
-            });
-        } else if (orderListBean.getCanPayType().contains("1")) {
-            gotoPayByCard(orderListBean);
-        } else if (orderListBean.getCanPayType().contains("2")) {
-            gotoPayByAlipay(orderListBean);
-        }
+        //        if (orderListBean.getCanPayType().contains("1")
+        //                && orderListBean.getCanPayType().contains("2")) {
+        //
+        //            CustomDialog.payTypeDialog(this, new IPayTypeListener() {
+        //                @Override
+        //                public void submitPayType(boolean type) {
+        //                    if (type) gotoPayByCard(orderListBean);
+        //                    else gotoPayByAlipay(orderListBean);
+        //                }
+        //            });
+        //        } else if (orderListBean.getCanPayType().contains("1")) {
+        //            gotoPayByCard(orderListBean);
+        //        } else if (orderListBean.getCanPayType().contains("2")) {
+        //            gotoPayByAlipay(orderListBean);
+        //        }
 
     }
 
@@ -216,12 +216,12 @@ public class MyOrderActivity extends BaseJxActivity
      * 支付宝支付
      */
     private void gotoPayByAlipay(OrderListBean bean) {
-        Intent intent = new Intent(this, PayBrowserActivity.class);
-        intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付宝支付");
-        intent.putExtra(JxGlobal.putExtra.web_url_extra, BuildConfig.CAR_MANGER_URL + "aliPay/aliPayHtml?orderId=" + bean.getOrderId());
-        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, bean.getOrderId());
-        intent.putExtra(JxGlobal.putExtra.web_single_url_extra, true);
-        startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
+        //        Intent intent = new Intent(this, PayBrowserActivity.class);
+        //        intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付宝支付");
+        //        intent.putExtra(JxGlobal.putExtra.web_url_extra, BuildConfig.CAR_MANGER_URL + "aliPay/aliPayHtml?orderId=" + bean.getOrderId());
+        //        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, bean.getOrderId());
+        //        intent.putExtra(JxGlobal.putExtra.web_single_url_extra, true);
+        //        startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
     }
 
     /**
@@ -376,11 +376,11 @@ public class MyOrderActivity extends BaseJxActivity
 
     @Override
     public void getBankPayHtmlSucceed(PayOrderResponse result, String orderId) {
-        Intent intent = new Intent(this, PayBrowserActivity.class);
-        intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付");
-        intent.putExtra(JxGlobal.putExtra.web_url_extra, result.getData());
-        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
-        startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
+        //        Intent intent = new Intent(this, PayBrowserActivity.class);
+        //        intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付");
+        //        intent.putExtra(JxGlobal.putExtra.web_url_extra, result.getData());
+        //        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
+        //        startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
     }
 
     /**
@@ -410,19 +410,19 @@ public class MyOrderActivity extends BaseJxActivity
         } else if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
                 && resultCode == JxGlobal.resultCode.web_order_id_error && data != null) {
             //前往 订单详情页面
-            String orderId = data.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
-            String targetType = mOrderListBean.getTargetType();
-            if (targetType.equals("0")) {//前往 订单详情页面
-                Intent intent = new Intent(this, mOrderListBean.getType() == 6
-                        ? AnnualDetailActivity.class : OrderDetailActivity.class);
-                intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
-                startActivity(intent);
-            } else {
-                Intent intent = new Intent();
-                intent.putExtra(JxGlobal.putExtra.browser_title_extra, mOrderListBean.getGoodsName());
-                intent.putExtra(JxGlobal.putExtra.browser_url_extra, mOrderListBean.getTargetUrl() + "?orderId=" + orderId);
-                Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
-            }
+            //            String orderId = data.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
+            //            String targetType = mOrderListBean.getTargetType();
+            //            if (targetType.equals("0")) {//前往 订单详情页面
+            //                Intent intent = new Intent(this, mOrderListBean.getType() == 6
+            //                        ? AnnualDetailActivity.class : OrderDetailActivity.class);
+            //                intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
+            //                startActivity(intent);
+            //            } else {
+            //                Intent intent = new Intent();
+            //                intent.putExtra(JxGlobal.putExtra.browser_title_extra, mOrderListBean.getGoodsName());
+            //                intent.putExtra(JxGlobal.putExtra.browser_url_extra, mOrderListBean.getTargetUrl() + "?orderId=" + orderId);
+            //                Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
+            //            }
         }
     }
 

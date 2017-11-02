@@ -190,7 +190,7 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
             case R.id.tv_commit:
                 dataFormValidation();
                 break;
-            case R.id.lay_coupon://优惠价
+//            case R.id.lay_coupon://优惠价
 //                if (mCouponBeanList == null || mCouponBeanList.size() < 1) {
 //                    if (mPresenter != null) mPresenter.getCouponByType();
 //                } else {
@@ -203,7 +203,7 @@ public class SubjectCommitFragment extends BaseRefreshJxFragment
 //                    intent.putExtras(bundle);
 //                    startActivityForResult(intent, JxGlobal.requestCode.recharge_coupon_list);
 //                }
-                break;
+//                break;
             default:
                 break;
         }

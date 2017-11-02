@@ -1,20 +1,16 @@
 package com.zantong.mobilecttx.fahrschule.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.FormatUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobilecttx.browser.PayBrowserActivity;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectOrderContract;
 import com.zantong.mobilecttx.contract.fahrschule.ISubjectSwitcherListener;
 import com.zantong.mobilecttx.eventbus.SubjectOrderEvent;
-import com.zantong.mobilecttx.login_v.LoginActivity;
 import com.zantong.mobilecttx.presenter.fahrschule.SubjectOrderPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.StringUtils;
@@ -25,7 +21,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
-import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -135,8 +130,8 @@ public class SubjectOrderFragment extends BaseRefreshJxFragment
             mTvUser.setText(event.getEditName());
             mTvPhone.setText(event.getPhone());
         }
-
-        mTvPrice.setText(event.getPrice());
+        String price = event.getPrice();
+        mTvPrice.setText(FormatUtils.submitPrice(Float.valueOf(price)));
     }
 
     private String displayPriceValue(double discount, int couponType, int price) {
@@ -166,6 +161,7 @@ public class SubjectOrderFragment extends BaseRefreshJxFragment
      */
     private void dataFormValidation() {
         MainRouter.gotoPayTypeActivity(getActivity(), mTvOrderNum.getText().toString());
+        if (getActivity() != null) getActivity().finish();
 
         //        String moneyString = mTvPrice.getText().toString();
         //        double money = Double.parseDouble(moneyString);
@@ -197,16 +193,16 @@ public class SubjectOrderFragment extends BaseRefreshJxFragment
 
     @Override
     public void bankPayHtmlSucceed(PayOrderResponse result) {
-        if (!LoginData.getInstance().loginFlag && !TextUtils.isEmpty(LoginData.getInstance().userID)) {
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            getActivity().startActivity(intent);
-        } else {
-            Intent intent = new Intent(getActivity(), PayBrowserActivity.class);
-            intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付");
-            intent.putExtra(JxGlobal.putExtra.web_url_extra, result.getData());
-            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, mTvOrderNum.getText().toString());
-            getActivity().startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
-        }
+        //        if (!LoginData.getInstance().loginFlag && !TextUtils.isEmpty(LoginData.getInstance().userID)) {
+        //            Intent intent = new Intent(getActivity(), LoginActivity.class);
+        //            getActivity().startActivity(intent);
+        //        } else {
+        //            Intent intent = new Intent(getActivity(), PayBrowserActivity.class);
+        //            intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付");
+        //            intent.putExtra(JxGlobal.putExtra.web_url_extra, result.getData());
+        //            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, mTvOrderNum.getText().toString());
+        //            getActivity().startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
+        //        }
     }
 
 }

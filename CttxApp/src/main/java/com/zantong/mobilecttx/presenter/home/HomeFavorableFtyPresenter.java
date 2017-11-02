@@ -57,8 +57,7 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BannerResponse>() {
                     @Override
-                    public void doCompleted() {
-                    }
+                    public void doCompleted() {}
 
                     @Override
                     public void doError(Throwable e) {
@@ -91,8 +90,7 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BannerBean>() {
                     @Override
-                    public void doCompleted() {
-                    }
+                    public void doCompleted() {}
 
                     @Override
                     public void doError(Throwable e) {
@@ -122,8 +120,7 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<ModuleResponse>() {
                     @Override
-                    public void doCompleted() {
-                    }
+                    public void doCompleted() {}
 
                     @Override
                     public void doError(Throwable e) {

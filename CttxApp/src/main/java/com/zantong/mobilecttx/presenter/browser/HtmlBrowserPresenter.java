@@ -112,8 +112,8 @@ public class HtmlBrowserPresenter
      * N 5.获取工行支付页面
      */
     @Override
-    public void getBankPayHtml(final String orderId, String orderPrice) {
-        Subscription subscription = mRepository.getBankPayHtml(orderId, orderPrice)
+    public void getBankPayHtml(String coupon, final String orderId, String orderPrice) {
+        Subscription subscription = mRepository.getBankPayHtml(orderId, orderPrice, Integer.valueOf(coupon))
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override

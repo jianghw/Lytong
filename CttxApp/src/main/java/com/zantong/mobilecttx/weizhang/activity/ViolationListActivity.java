@@ -12,7 +12,6 @@ import android.view.View;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
-import com.tzly.ctcyh.service.MemoryData;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
@@ -23,9 +22,7 @@ import com.zantong.mobilecttx.car.bean.PayCar;
 import com.zantong.mobilecttx.car.bean.PayCarBean;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.contract.IViolationListFtyContract;
-import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.home.activity.Codequery;
-import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.presenter.weizhang.ViolationListPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
@@ -78,7 +75,7 @@ public class ViolationListActivity extends BaseJxActivity
     protected void bundleIntent(Bundle savedInstanceState) {
         Intent intent = getIntent();
         if (intent != null) {
-            mTitle = intent.getStringExtra("plateNum");
+            mTitle = (String) LoginData.getInstance().mHashMap.get("carnum");
 
             Bundle bundle = intent.getExtras();
             mViolationDTO = (ViolationDTO) bundle.getSerializable("params");
@@ -157,7 +154,7 @@ public class ViolationListActivity extends BaseJxActivity
         String violationnum = bean.getViolationnum();
         int processste = bean.getProcessste();//处理状态
 
-        if (!MemoryData.getInstance().isMainLogin()) {
+        if (!MainRouter.isUserLogin()) {
             MainRouter.gotoLoginActivity(this);
         } else if (processste == 2 || processste == 3) {
             showDialogToCodequery(bean);
@@ -411,21 +408,22 @@ public class ViolationListActivity extends BaseJxActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
-                && resultCode == JxGlobal.resultCode.web_order_id_succeed) {
 
-            Intent intent = new Intent();
-            intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 2);
-            Act.getInstance().gotoLoginByIntent(this, FahrschuleActivity.class, intent);
-
-        } else if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
-                && resultCode == JxGlobal.resultCode.web_order_id_error && data != null) {
-            //前往 订单详情页面
-            String orderId = data.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
-            Intent intent = new Intent(this, OrderDetailActivity.class);
-            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
-            startActivity(intent);
-        }
+        //        if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
+        //                && resultCode == JxGlobal.resultCode.web_order_id_succeed) {
+        //
+        //            Intent intent = new Intent();
+        //            intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 2);
+        //            Act.getInstance().gotoLoginByIntent(this, FahrschuleActivity.class, intent);
+        //
+        //        } else if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
+        //                && resultCode == JxGlobal.resultCode.web_order_id_error && data != null) {
+        //            //前往 订单详情页面
+        //            String orderId = data.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
+        //            Intent intent = new Intent(this, OrderDetailActivity.class);
+        //            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
+        //            startActivity(intent);
+        //        }
     }
 
     /**

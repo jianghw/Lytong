@@ -2,10 +2,10 @@ package com.zantong.mobilecttx.application;
 
 import android.content.Context;
 
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.card.bean.ProvinceModel;
 import com.zantong.mobilecttx.map.bean.NetLocationBean;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.AccountRememberCtrl;
@@ -40,16 +40,16 @@ public class LoginData {
     public String deviceId = "";//阿里云DeviceId
 
     //用户ID
-    public String userID = MemoryData.getInstance().getGlobalUserID();
+    public String userID = MainRouter.getUserID(false);
     //登录状态标志
-    public boolean loginFlag = MemoryData.getInstance().isMainLogin();
+    public boolean loginFlag = MainRouter.isUserLogin();
 
     public boolean defaultCar = false;//默认车标志
     public String defaultCarNumber = "";//默认车牌号
     //档案号(驾照号)
-    public String filenum = MemoryData.getInstance().getFilenum();
+    public String filenum = MainRouter.getUserFilenum();
     //初次领证号
-    public String getdate = MemoryData.getInstance().getGetdate();//初次领证号
+    public String getdate = MainRouter.getUserGetdate();//初次领证号
 
     public String CarLocalFlag = "userCarInfo";//本地缓存车辆信息的key
     public String DefaultCarLocalFlag = "defaultCarInfo";//本地缓存默认车辆信息的key

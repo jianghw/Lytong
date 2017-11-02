@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 
 import cn.qqtheme.framework.custom.popup.WheelView;
+import cn.qqtheme.framework.util.XUtils;
 
 /**
  * 两级、三级联动选择器。
@@ -24,7 +25,7 @@ import cn.qqtheme.framework.custom.popup.WheelView;
  * Builder:Android Studio
  */
 public class LinkagePicker extends WheelPicker {
-    protected   Context mApplicationContext;
+    protected Context mApplicationContext;
     /**
      * 默认第一列
      */
@@ -60,6 +61,7 @@ public class LinkagePicker extends WheelPicker {
 
     public LinkagePicker(Activity activity) {
         super(activity);
+        mApplicationContext = activity != null ? activity : XUtils.getContext();
     }
 
     /**
@@ -67,8 +69,8 @@ public class LinkagePicker extends WheelPicker {
      */
     public LinkagePicker(Activity activity, ArrayList<String> firstList,
                          ArrayList<ArrayList<String>> secondList) {
-
         this(activity, firstList, secondList, null);
+        mApplicationContext = activity != null ? activity : XUtils.getContext();
     }
 
     /**
@@ -78,7 +80,7 @@ public class LinkagePicker extends WheelPicker {
                          ArrayList<ArrayList<String>> secondList,
                          ArrayList<ArrayList<ArrayList<String>>> thirdList) {
         super(activity);
-        mApplicationContext=activity.getApplicationContext();
+        mApplicationContext = activity != null ? activity : XUtils.getContext();
         initAllListData(firstList, secondList, thirdList);
     }
 

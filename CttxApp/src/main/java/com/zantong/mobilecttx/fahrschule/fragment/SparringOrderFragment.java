@@ -1,28 +1,24 @@
 package com.zantong.mobilecttx.fahrschule.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.FormatUtils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.application.LoginData;
-import com.zantong.mobilecttx.browser.PayBrowserActivity;
+import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.contract.fahrschule.ISparringOrderContract;
 import com.zantong.mobilecttx.eventbus.SparringOrderEvent;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.presenter.fahrschule.SparringOrderPresenter;
-import com.zantong.mobilecttx.login_v.LoginActivity;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.ToastUtils;
 
 /**
@@ -157,13 +153,12 @@ public class SparringOrderFragment extends BaseRefreshJxFragment
         mTvPhone.setText(bean.getPhone());
         mTvLicense.setText(bean.getDriveNum());
         mTvRemark.setText(bean.getRemark());
-        mTvPrice.setText(bean.getPrice());
+        mTvPrice.setText(FormatUtils.submitPrice(bean.getPrice()));
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.tv_commit:
                 dataFormValidation();
                 break;
@@ -176,14 +171,16 @@ public class SparringOrderFragment extends BaseRefreshJxFragment
      * 数据验证
      */
     private void dataFormValidation() {
-        String moneyString = mTvPrice.getText().toString();
+        MainRouter.gotoPayTypeActivity(getActivity(), mTvOrderNum.getText().toString());
+        if (getActivity() != null) getActivity().finish();
 
-        double money = Double.parseDouble(moneyString);
-        int intMoney = (int) money * 100;
-        String stringMoney = String.valueOf(intMoney);
-        if (mPresenter != null) mPresenter.getBankPayHtml(
-                mTvOrderNum.getText().toString().trim(),
-                stringMoney);
+        //        String moneyString = mTvPrice.getText().toString();
+        //        double money = Double.parseDouble(moneyString);
+        //        int intMoney = (int) money * 100;
+        //        String stringMoney = String.valueOf(intMoney);
+        //        if (mPresenter != null) mPresenter.getBankPayHtml(
+        //                mTvOrderNum.getText().toString().trim(),
+        //                stringMoney);
     }
 
     @Override
@@ -207,16 +204,16 @@ public class SparringOrderFragment extends BaseRefreshJxFragment
 
     @Override
     public void bankPayHtmlSucceed(PayOrderResponse result) {
-        if (!LoginData.getInstance().loginFlag && !TextUtils.isEmpty(LoginData.getInstance().userID)) {
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            getActivity().startActivity(intent);
-        } else {
-            Intent intent = new Intent(getActivity(), PayBrowserActivity.class);
-            intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付");
-            intent.putExtra(JxGlobal.putExtra.web_url_extra, result.getData());
-            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, mTvOrderNum.getText().toString());
-            getActivity().startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
-        }
+        //        if (!LoginData.getInstance().loginFlag && !TextUtils.isEmpty(LoginData.getInstance().userID)) {
+        //            Intent intent = new Intent(getActivity(), LoginActivity.class);
+        //            getActivity().startActivity(intent);
+        //        } else {
+        //            Intent intent = new Intent(getActivity(), PayBrowserActivity.class);
+        //            intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付");
+        //            intent.putExtra(JxGlobal.putExtra.web_url_extra, result.getData());
+        //            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, mTvOrderNum.getText().toString());
+        //            getActivity().startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
+        //        }
     }
 
 }

@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.order.activity;
+package com.zantong.mobilecttx.order_v;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,14 +14,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.contract.IOrderDetailContract;
+import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.order.bean.OrderDetailBean;
 import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
-import com.zantong.mobilecttx.presenter.order.OrderDetailPresenter;
+import com.zantong.mobilecttx.order_p.IOrderDetailContract;
+import com.zantong.mobilecttx.order_p.OrderDetailPresenter;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
@@ -30,12 +31,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 年检订单详情页面
  */
-public class AnnualDetailActivity extends BaseJxActivity
+public class AnnualDetailActivity extends JxBaseActivity
         implements View.OnClickListener, IOrderDetailContract.IOrderDetailView {
 
     private IOrderDetailContract.IOrderDetailPresenter mPresenter;
@@ -121,32 +121,44 @@ public class AnnualDetailActivity extends BaseJxActivity
     private TextView mTvSendBack;
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null) mPresenter.unSubscribe();
+    }
+
+    @Override
     protected void bundleIntent(Bundle savedInstanceState) {
-        Intent intent = getIntent();
+        onNewIntent(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
         if (intent != null) {
-            mOrderId = intent.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
+            Bundle bundle = intent.getExtras();
+            if (intent.hasExtra(MainGlobal.putExtra.web_order_id_extra))
+                mOrderId = bundle.getString(MainGlobal.putExtra.web_order_id_extra);
         }
     }
 
     @Override
-    protected int getContentResId() {
+    protected int initContentView() {
         return R.layout.activity_annual_order_detail;
     }
 
     @Override
-    protected void initFragmentView(View view) {
-        initTitleContent("订单详情");
+    protected void bindContentView(View childView) {
+        titleContent("订单详情");
 
+        initView(childView);
         OrderDetailPresenter presenter = new OrderDetailPresenter(
                 Injection.provideRepository(getApplicationContext()), this);
-
-        initView(view);
-        if (mPresenter != null) mPresenter.getOrderDetail();
     }
 
     @Override
-    protected void DestroyViewAndThing() {
-        if (mPresenter != null) mPresenter.unSubscribe();
+    protected void initContentData() {
+        if (mPresenter != null) mPresenter.getOrderDetail();
     }
 
     public void initView(View view) {
@@ -207,19 +219,8 @@ public class AnnualDetailActivity extends BaseJxActivity
     }
 
     @Override
-    public void showLoadingDialog() {
-        showDialogLoading();
-    }
-
-    @Override
-    public void dismissLoadingDialog() {
-        hideDialogLoading();
-    }
-
-    @Override
     public void getOrderDetailError(String message) {
-        dismissLoadingDialog();
-        ToastUtils.toastShort(message);
+      toastShort(message);
     }
 
     @Override
@@ -254,7 +255,7 @@ public class AnnualDetailActivity extends BaseJxActivity
 
     private void gotoBrowser(String beanDetail, TextView tvContent) {
         if (!TextUtils.isEmpty(beanDetail) && beanDetail.contains("target=\"_self\"")) {
-            customDisplaysHyperlinks(beanDetail,tvContent);
+            customDisplaysHyperlinks(beanDetail, tvContent);
         } else {
             CharSequence charSequence = Html.fromHtml(beanDetail);
             mTvContentBottom.setText(charSequence);

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.pay.R;
 import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
@@ -22,6 +23,7 @@ public class CouponListActivity extends JxBaseActivity {
      * 页传递
      */
     private String mExtraType;
+    private int mPayType;
     private String mCurHost;
 
     @Override
@@ -37,6 +39,8 @@ public class CouponListActivity extends JxBaseActivity {
             Bundle bundle = intent.getExtras();
             if (intent.hasExtra(PayGlobal.putExtra.coupon_list_type))
                 mExtraType = bundle.getString(PayGlobal.putExtra.coupon_list_type);
+            if (intent.hasExtra(PayGlobal.putExtra.web_pay_type_extra))
+                mPayType = bundle.getInt(PayGlobal.putExtra.web_pay_type_extra);
             if (intent.hasExtra(PayGlobal.Host.coupon_list_host))
                 mCurHost = bundle.getString(PayGlobal.Host.coupon_list_host);
         }
@@ -45,6 +49,11 @@ public class CouponListActivity extends JxBaseActivity {
     @Override
     protected int initContentView() {
         return R.layout.activity_base_frame;
+    }
+
+    @MultiState
+    protected int initMultiState() {
+        return MultiState.LOADING;
     }
 
     @Override
@@ -62,13 +71,13 @@ public class CouponListActivity extends JxBaseActivity {
         //默认页面显示
         if (TextUtils.isEmpty(mCurHost)) {
             if (mCouponListFragment == null) {
-                mCouponListFragment = CouponListFragment.newInstance(mExtraType);
+                mCouponListFragment = CouponListFragment.newInstance(mExtraType,mPayType);
             }
             FragmentUtils.add(fragmentManager, mCouponListFragment,
                     R.id.lay_base_frame, false, true);
         } else if (mCurHost.equals(PayGlobal.Host.coupon_list_host)) {
             if (mCouponListFragment == null) {
-                mCouponListFragment = CouponListFragment.newInstance(mExtraType);
+                mCouponListFragment = CouponListFragment.newInstance(mExtraType,mPayType);
             }
             FragmentUtils.add(fragmentManager, mCouponListFragment,
                     R.id.lay_base_frame, false, true);

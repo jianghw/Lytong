@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
 import com.tzly.ctcyh.router.util.rea.Des3;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -132,10 +131,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     private List<UserCarInfoBean> mUserCarInfoBeanList = new ArrayList<>();
     private TextView mTvAppraisement;
 
-    public static HomeUnimpededFragment newInstance() {
-        return new HomeUnimpededFragment();
-    }
-
     /**
      * 会多次刷新数据 ^3^
      */
@@ -152,6 +147,10 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     public void onPause() {
         super.onPause();
         startCampaignCustom(true);
+    }
+
+    public static HomeUnimpededFragment newInstance() {
+        return new HomeUnimpededFragment();
     }
 
     @Override
@@ -231,16 +230,17 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         //违章车辆
         mCarViolationAdapter = new HorizontalCarViolationAdapter(getContext(), mUserCarInfoBeanList);
         mCustomViolation.setAdapter(mCarViolationAdapter);
+
+        if(mPresenter!=null) mPresenter.getIndexLayer();
     }
 
     private void resumeDataVisible() {
-        mPresenter.homePage();
-
-        if (MemoryData.getInstance().isMainLogin()) {
+        if (MainRouter.isUserLogin()) {
             mPresenter.getTextNoticeInfo();
         } else {
             getLocalCarInfo();
         }
+        mPresenter.homePage();
     }
 
     private void initScrollUp(final List<HomeNotice> mDataLists) {
@@ -546,7 +546,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
     protected void licenseCheckGrade() {
         LicenseFileNumDTO bean = SPUtils.getInstance().getLicenseFileNumDTO();
-        if (!MemoryData.getInstance().isMainLogin() ||
+        if (!MainRouter.isUserLogin() ||
                 bean == null && TextUtils.isEmpty(LoginData.getInstance().filenum)) {
             Act.getInstance().gotoIntentLogin(getActivity(), LicenseCheckGradeActivity.class);
         } else if (bean != null || !TextUtils.isEmpty(LoginData.getInstance().filenum)

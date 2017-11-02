@@ -359,7 +359,7 @@
             </LinearLayout>
 
             <!--优惠劵-->
-            <TextView
+         <!--   <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ds_30"
                 android:background="@color/colorBgGray_f8"/>
@@ -409,7 +409,7 @@
                     android:textColor="@color/colorTvBlack_4d"
                     android:textSize="@dimen/fs_16sp"
                     tools:text="4545接送接受对方就覅时间覅手机哦仅仅是地方手机上的方式解决"/>
-            </RelativeLayout>
+            </RelativeLayout>-->
 
             <View
                 android:layout_width="match_parent"

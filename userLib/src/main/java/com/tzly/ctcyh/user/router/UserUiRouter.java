@@ -5,8 +5,6 @@ import android.content.Intent;
 
 import com.tzly.ctcyh.router.IComponentRouter;
 import com.tzly.ctcyh.router.LibUiRouter;
-import com.tzly.ctcyh.router.ServiceRouter;
-import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.service.RouterGlobal;
 import com.tzly.ctcyh.user.login_v.LoginActivity;
 
@@ -51,20 +49,11 @@ public class UserUiRouter extends LibUiRouter implements IComponentRouter {
     @Override
     protected boolean excludeLoginActivity(String host) {
         //不需要登录
-        return !RouterGlobal.Host.login_host.equals(host) && loginActivity();
+        return !RouterGlobal.Host.login_host.equals(host) && gotoByIsLogin();
     }
 
-    protected boolean loginActivity() {ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
-            IUserService service = (IUserService) serviceRouter
-                    .getService(IUserService.class.getSimpleName());
-            boolean userLogin = service.isUserLogin();
-            return !userLogin;
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-            return true;
-        }
+    private boolean gotoByIsLogin() {
+        return UserRouter.gotoByIsLogin();
     }
 
     @Override

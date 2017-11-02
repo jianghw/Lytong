@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -31,6 +30,7 @@ import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
 import com.zantong.mobilecttx.common.activity.CommonTwoLevelMenuActivity;
 import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;
 import com.zantong.mobilecttx.utils.ChineseToPinYin;
 import com.zantong.mobilecttx.utils.DateUtils;
@@ -260,7 +260,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         mIdCardNum.setContentText(idCard);
         applyCTCardDTO.setCtfnum(RSAUtils.strByEncryption(idCard, true));
 //手机号
-        mUserPhone.setContentText(MemoryData.getInstance().getPhoenum());
+        mUserPhone.setContentText(MainRouter.getUserPhoenum());
 
 //婚姻状况
         applyCTCardDTO.setMarlst("1");
@@ -285,7 +285,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
 //证件类型
         applyCTCardDTO.setCtftp("0");
 
-        applyCTCardDTO.setUsrid(MemoryData.getInstance().getGlobalUserID());
+        applyCTCardDTO.setUsrid(MainRouter.getUserID(true));
 
         applyCTCardDTO.setActnotf("1");
         applyCTCardDTO.setElecbillsign("0");

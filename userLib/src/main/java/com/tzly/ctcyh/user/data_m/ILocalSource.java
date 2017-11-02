@@ -28,4 +28,14 @@ public interface ILocalSource {
     void setPushId(String pushId);
 
     String getPushId();
+
+    String getPhoenum();
+
+    String getFilenum();
+
+    String getGetdate();
+
+    String getPortrait();
+
+    String getNickname();
 }

@@ -1,6 +1,9 @@
 package com.tzly.ctcyh.pay.html_p;
 
+import android.location.Location;
+
 import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
+import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 
@@ -29,12 +32,44 @@ public interface IHtmlPayContract {
         boolean isLogin();
 
         void gotoLogin();
+
+        void payMOTOrder(String coupon, String orderId, String amount);
+
+        void callCamera();
+
+        void searchViolationList(String carnum, String enginenum, String carnumtype);
+
+        void goNianjianMap();
+
+        void popAttention();
+
+        String getEncreptUserId();
+
+        void queryViolations();
+
+        int getBindCardStatus();
+
+        String getUserId();
+
+        void chaser();
+
+        void addOil();
+
+        void bindCard();
+
+        Location getLocaltion();
+
+        void getBankPayHtmlError(String message);
+
+        void getBankPayHtmlSucceed(PayUrlResponse response);
     }
 
     interface IHtmlPayPresenter extends IBasePresenter {
         void orderDetail();
 
         String getOrderId();
+
+        void getBankPayHtml(String orderId, String s, String coupon);
     }
 
 }

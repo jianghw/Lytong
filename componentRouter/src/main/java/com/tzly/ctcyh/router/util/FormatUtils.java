@@ -2,6 +2,7 @@ package com.tzly.ctcyh.router.util;
 
 import android.text.TextUtils;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 /**
@@ -28,6 +29,20 @@ public final class FormatUtils {
      * @return
      */
     public static String submitPrice(float price) {
-        return new DecimalFormat("#0.00").format(price);
+        return new DecimalFormat("#0.00").format(floatValue(price));
     }
+
+    public static String submitPrice(String price) {
+        Float p = Float.valueOf(price);
+        return new DecimalFormat("#0.00").format(floatValue(p));
+    }
+
+    /**
+     * 向上取值
+     */
+    public static float floatValue(float price) {
+        BigDecimal newPrice = new BigDecimal(price).setScale(2, BigDecimal.ROUND_UP);
+        return newPrice.floatValue();
+    }
+
 }

@@ -48,6 +48,8 @@ public interface IUnimpededFtyContract {
         String initUserCarsDTO();
 
         void getTextNoticeInfo();
+
+        void getIndexLayer();
     }
 
 }

@@ -38,8 +38,6 @@ public class PayTypeActivity extends JxBaseActivity implements IPayTypeUi {
             if (intent.hasExtra(PayGlobal.Host.pay_type_host))
                 mCurHost = bundle.getString(PayGlobal.Host.pay_type_host);
         }
-
-        mExtraOrder = "17102710593369";
     }
 
     @Override

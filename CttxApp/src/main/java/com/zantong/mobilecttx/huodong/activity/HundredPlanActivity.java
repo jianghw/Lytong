@@ -13,7 +13,6 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.tzly.ctcyh.service.MemoryData;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -25,6 +24,7 @@ import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.huodong.bean.ActivitySignNum;
 import com.zantong.mobilecttx.huodong.dto.HundredPlanDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.activity.SettingActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.DialogUtils;
@@ -138,7 +138,7 @@ public class HundredPlanActivity extends BaseMvpActivity {
 
                 HundredPlanDTO dto = new HundredPlanDTO();
                 dto.setUsrnum(LoginData.getInstance().userID);
-                dto.setPhoneNum(MemoryData.getInstance().getPhoenum());
+                dto.setPhoneNum(MainRouter.getUserPhoenum());
                 dto.setPlateNo(mSelCar.getText().toString());
 
                 CarApiClient.commitHundredPlan(this, dto, new CallBack<BaseResponse>() {

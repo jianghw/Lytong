@@ -3,10 +3,10 @@ package com.zantong.mobilecttx.api;
 import android.content.Context;
 
 import com.tzly.ctcyh.router.util.LogUtils;
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.NetUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -128,7 +128,7 @@ public class BaseApiClient {
         if (data != null) {
             builder.add("msg", data);
         }
-        builder.add("usrid", MemoryData.getInstance().getGlobalUserID());
+        builder.add("usrid", MainRouter.getUserID(false));
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).post(builder.build()).build();
         enqueue(context, request, asyncCallBack);
@@ -141,7 +141,7 @@ public class BaseApiClient {
         if (jsonParams != null) {
             builder.add("msg", jsonParams);
         }
-        builder.add("usrid", MemoryData.getInstance().getGlobalUserID());
+        builder.add("usrid", MainRouter.getUserID(false));
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).post(builder.build()).build();
         enqueue(context, request, asyncCallBack);

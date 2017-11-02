@@ -16,29 +16,20 @@ import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.tzly.ctcyh.router.util.StatusBarUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.api.CallBack;
-import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.user.bean.RspInfoBean;
-import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.utils.AccountRememberCtrl;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.Tools;
-import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 
-import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.custom.tablebottom.UiTableBottom;
 import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.util.AppUtils;
 import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionGen;
-
 
 /**
  * 新的主页面
@@ -235,30 +226,6 @@ public class HomeMainActivity extends JxBaseActivity {
             default:
                 break;
         }
-    }
-
-    /**
-     * 信息备份
-     */
-    private void liyingreg() {
-        LiYingRegDTO liYingRegDTO = new LiYingRegDTO();
-        try {
-            String phone = RSAUtils.strByEncryptionLiYing(MemoryData.getInstance().getPhoenum(), true);
-            SHATools sha = new SHATools();
-            String pwd = RSAUtils.strByEncryptionLiYing(SHATools.hexString(
-                    sha.eccryptSHA1(SPUtils.getInstance().getUserPwd())), true);
-            liYingRegDTO.setPhoenum(phone);
-            liYingRegDTO.setPswd(pwd);
-            liYingRegDTO.setUsrid(MemoryData.getInstance().getRASUserID());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        CarApiClient.liYingReg(getApplicationContext(), liYingRegDTO, new CallBack<BaseResponse>() {
-            @Override
-            public void onSuccess(BaseResponse result) {
-
-            }
-        });
     }
 
     public interface MessageListener {

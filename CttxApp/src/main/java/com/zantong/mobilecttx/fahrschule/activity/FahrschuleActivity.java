@@ -5,22 +5,19 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageView;
 
+import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.fahrschule.fragment.FahrschuleApplyFragment;
 import com.zantong.mobilecttx.fahrschule.fragment.FahrschuleApplySucceedFragment;
 import com.zantong.mobilecttx.fahrschule.fragment.FahrschuleOrderNumFragment;
-import com.zantong.mobilecttx.order.activity.OrderDetailActivity;
-
-import cn.qqtheme.framework.global.JxGlobal;
+import com.zantong.mobilecttx.global.MainGlobal;
 
 /**
  * 驾校报名页面
  */
-public class FahrschuleActivity extends BaseJxActivity implements View.OnClickListener {
+public class FahrschuleActivity extends JxBaseActivity {
 
     private int mCurPosition;
 
@@ -30,38 +27,42 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
     private FahrschuleApplyFragment mFahrschuleApplyFragment = null;
     private FahrschuleOrderNumFragment mFahrschuleOrderNumFragment = null;
     private FahrschuleApplySucceedFragment mFahrschuleApplySucceedFragment = null;
-    private ImageView mImgBack;
-    private ImageView mImgHome;
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
-        Intent intent = getIntent();
-        if (intent != null)
-            mCurPosition = intent.getIntExtra(JxGlobal.putExtra.fahrschule_position_extra, 0);
-    }
-
-    /**
-     * 不要基础title栏
-     */
-    protected boolean isNeedCustomTitle() {
-        return true;
+        onNewIntent(getIntent());
     }
 
     @Override
-    protected int getContentResId() {
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        if (intent != null) {
+            Bundle bundle = intent.getExtras();
+            if (intent.hasExtra(MainGlobal.Host.fahrschule_host))
+                mCurPosition = bundle.getInt(MainGlobal.Host.fahrschule_host, 0);
+        }
+    }
+
+    @Override
+    protected int initContentView() {
         return R.layout.activity_fahrschule;
     }
 
     @Override
-    protected void initFragmentView(View view) {
+    protected void bindContentView(View childView) {
+        titleContent("驾校报名");
+        rightImage(0);
+    }
 
-        initView(view);
-
+    @Override
+    protected void initContentData() {
         initFragment(mCurPosition);
     }
 
     @Override
-    protected void DestroyViewAndThing() {
+    protected void onDestroy() {
+        super.onDestroy();
         mFahrschuleApplyFragment = null;
         mFahrschuleOrderNumFragment = null;
         mFahrschuleApplySucceedFragment = null;
@@ -74,8 +75,7 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
                 if (mFahrschuleApplyFragment == null) {
                     mFahrschuleApplyFragment = FahrschuleApplyFragment.newInstance();
                 }
-                FragmentUtils.add(
-                        fragmentManager, mFahrschuleApplyFragment, R.id.content, false, true);
+                FragmentUtils.add(fragmentManager, mFahrschuleApplyFragment, R.id.content, false, true);
                 mFahrschuleApplyFragment.setSwitcherListener(new SwitcherListener() {
                     @Override
                     public void setCurPosition(int position) {
@@ -103,46 +103,19 @@ public class FahrschuleActivity extends BaseJxActivity implements View.OnClickLi
     }
 
     /**
-     * 页面回调
+     * 回退监听功能
      */
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
-                && resultCode == JxGlobal.resultCode.web_order_id_succeed) {
-            mCurPosition = 2;
-            initFragment(mCurPosition);
-        } else if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
-                && resultCode == JxGlobal.resultCode.web_order_id_error && data != null) {
-            //前往 订单详情页面
-            String orderId = data.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
-            Intent intent = new Intent(this, OrderDetailActivity.class);
-            intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
-            startActivity(intent);
+    protected void backClickListener() {
+        if (mCurPosition == 2)
             finish();
-        }
-    }
-
-    private void initView(View view) {
-        mImgBack = (ImageView) view.findViewById(R.id.img_back);
-        mImgBack.setOnClickListener(this);
-        mImgHome = (ImageView) view.findViewById(R.id.img_home);
-        mImgHome.setOnClickListener(this);
+        else
+            closeFragment();
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.img_back://上一级
-                if (mCurPosition == 2)
-                    finish();
-                else
-                    closeFragment();
-                break;
-            case R.id.img_home:
-                finish();
-                break;
-        }
+    protected void imageClickListener() {
+        finish();
     }
 
     /**

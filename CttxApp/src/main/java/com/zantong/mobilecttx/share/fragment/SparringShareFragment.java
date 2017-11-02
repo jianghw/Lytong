@@ -15,7 +15,6 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tzly.ctcyh.router.util.rea.Des3;
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
@@ -24,6 +23,7 @@ import com.zantong.mobilecttx.contract.IFahrschuleShareFtyContract;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountBean;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
 import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleSharePresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share.activity.ShareParentActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
@@ -123,9 +123,9 @@ public class SparringShareFragment extends BaseRefreshJxFragment
         if (mPresenter != null) mPresenter.getRecordCount();
 
         String contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
-        if (MemoryData.getInstance().isMainLogin())
+        if (MainRouter.isUserLogin())
             contentString = ShareParentActivity.getShareAppUrl(21) + "?phoneNum="
-                    + Des3.encode(MemoryData.getInstance().getPhoenum());
+                    + Des3.encode(MainRouter.getUserPhoenum());
         else
             contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         if (!TextUtils.isEmpty(contentString)) {
@@ -240,7 +240,7 @@ public class SparringShareFragment extends BaseRefreshJxFragment
         WXWebpageObject webpage = new WXWebpageObject();
         if (LoginData.getInstance().loginFlag) {
             webpage.webpageUrl = ShareParentActivity.getShareAppUrl(21) + "?phoneNum="
-                    + Des3.encode(MemoryData.getInstance().getPhoenum());
+                    + Des3.encode(MainRouter.getUserPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         }

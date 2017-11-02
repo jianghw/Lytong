@@ -61,9 +61,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HomeResponse>() {
                     @Override
-                    public void doCompleted() {
-
-                    }
+                    public void doCompleted() {}
 
                     @Override
                     public void doError(Throwable e) {
@@ -85,7 +83,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
     @Override
     public HomeDataDTO initHomeDataDTO() {
         HomeDataDTO params = new HomeDataDTO();
-        params.setUserId(mRepository.getDefaultUserID());
+        params.setUserId(mRepository.getRASUserID(false));
         return params;
     }
 
@@ -96,9 +94,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<UserCarsResult>() {
                     @Override
-                    public void doCompleted() {
-
-                    }
+                    public void doCompleted() {}
 
                     @Override
                     public void doError(Throwable e) {
@@ -122,7 +118,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
     @Override
     public String initUserCarsDTO() {
         UserCarsDTO params = new UserCarsDTO();
-        params.setUsrid(mRepository.getDefaultUserID());
+        params.setUsrid(mRepository.getRASUserID());
 
         RequestDTO dto = new RequestDTO();
         RequestHeadDTO requestHeadDTO = mRepository.initLicenseFileNumDTO("cip.cfc.c003.01");
@@ -137,13 +133,39 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
      */
     @Override
     public void getTextNoticeInfo() {
-        Subscription subscription = mRepository.getTextNoticeInfo(mRepository.getDefaultUserID())
+        Subscription subscription = mRepository.getTextNoticeInfo(mRepository.getRASUserID())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HomeCarResponse>() {
                     @Override
-                    public void doCompleted() {
+                    public void doCompleted() {}
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.remoteCarInfoError(e.getMessage());
                     }
+
+                    @Override
+                    public void doNext(HomeCarResponse result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.getTextNoticeInfo(result);
+                        } else {
+                            mAtyView.remoteCarInfoError(result != null
+                                    ? result.getResponseDesc() : "未知错误(NoticeInfo)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    @Override
+    public void getIndexLayer() {
+        Subscription subscription = mRepository.getIndexLayer()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<HomeCarResponse>() {
+                    @Override
+                    public void doCompleted() {}
 
                     @Override
                     public void doError(Throwable e) {

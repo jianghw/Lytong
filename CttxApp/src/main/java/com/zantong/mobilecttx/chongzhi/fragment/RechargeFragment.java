@@ -2,7 +2,6 @@ package com.zantong.mobilecttx.chongzhi.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.InputFilter;
@@ -13,9 +12,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
@@ -23,7 +20,6 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.PullableBaseFragment;
-import com.zantong.mobilecttx.browser.PayHtmlActivity;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeAgreementActivity;
 import com.zantong.mobilecttx.chongzhi.adapter.OilPriceAdapter;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeBean;
@@ -34,13 +30,12 @@ import com.zantong.mobilecttx.chongzhi.dto.RechargeDTO;
 import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
 import com.zantong.mobilecttx.contract.IRechargeAtyContract;
 import com.zantong.mobilecttx.order.activity.CouponDetailActivity;
-import com.zantong.mobilecttx.order.activity.CouponListActivity;
 import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
-import com.zantong.mobilecttx.utils.UiHelpers;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
@@ -74,16 +69,16 @@ public class RechargeFragment extends PullableBaseFragment
     /**
      * 持畅通卡支付
      */
-    private TextView mTvPayStyle;
-    private ImageView mImgAlipayBoult;
-    private RelativeLayout mRayPaystyleLayout;
+    //    private TextView mTvPayStyle;
+    //    private ImageView mImgAlipayBoult;
+    //    private RelativeLayout mRayPaystyleLayout;
     /**
      * 持畅通卡支付
      */
-    private TextView mTvPayCoupon;
-    private TextView mTvPayCouponDate;
-    private ImageView mImgCouponState;
-    private RelativeLayout mRayDiscountCoupon;
+    //    private TextView mTvPayCoupon;
+    //    private TextView mTvPayCouponDate;
+    //    private ImageView mImgCouponState;
+    //    private RelativeLayout mRayDiscountCoupon;
     private TextView mTvDesc;
     /**
      * 我已阅读用户充值协议
@@ -98,7 +93,8 @@ public class RechargeFragment extends PullableBaseFragment
     /**
      * 默认折扣 价格提交用
      */
-    private String DEFAULT_DISCOUNT_1 = "0.993";
+    //    private String DEFAULT_DISCOUNT_1 = "0.993";
+    private String DEFAULT_DISCOUNT_1 = "1.00";
     private String DEFAULT_DISCOUNT_2 = "1.00";
     private String CURRENT_DISCOUNT = "0.00";
     private OilPriceAdapter mAdapter;
@@ -111,7 +107,7 @@ public class RechargeFragment extends PullableBaseFragment
     /**
      * 是否选择使用优惠券
      */
-    private boolean isChoice = true;
+    private boolean isChoice = false;
     /**
      * 优惠券 弹出框布局
      */
@@ -145,15 +141,18 @@ public class RechargeFragment extends PullableBaseFragment
         mLayProvider.setOnClickListener(this);
         mEditCardnum = (EditText) view.findViewById(R.id.edit_cardnum);
         mXRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_list);
-        mTvPayStyle = (TextView) view.findViewById(R.id.tv_pay_style);
-        mImgAlipayBoult = (ImageView) view.findViewById(R.id.img_alipay_boult);
-        mRayPaystyleLayout = (RelativeLayout) view.findViewById(R.id.ray_paystyle_layout);
-        mRayPaystyleLayout.setOnClickListener(this);
-        mTvPayCoupon = (TextView) view.findViewById(R.id.tv_pay_coupon);
-        mTvPayCouponDate = (TextView) view.findViewById(R.id.tv_pay_coupon_date);
-        mImgCouponState = (ImageView) view.findViewById(R.id.img_coupon_state);
-        mRayDiscountCoupon = (RelativeLayout) view.findViewById(R.id.ray_discount_coupon);
-        mRayDiscountCoupon.setOnClickListener(this);
+
+        //        mTvPayStyle = (TextView) view.findViewById(R.id.tv_pay_style);
+        //        mImgAlipayBoult = (ImageView) view.findViewById(R.id.img_alipay_boult);
+        //        mRayPaystyleLayout = (RelativeLayout) view.findViewById(R.id.ray_paystyle_layout);
+        //        mRayPaystyleLayout.setOnClickListener(this);
+
+        //        mTvPayCoupon = (TextView) view.findViewById(R.id.tv_pay_coupon);
+        //        mTvPayCouponDate = (TextView) view.findViewById(R.id.tv_pay_coupon_date);
+        //        mImgCouponState = (ImageView) view.findViewById(R.id.img_coupon_state);
+        //        mRayDiscountCoupon = (RelativeLayout) view.findViewById(R.id.ray_discount_coupon);
+        //        mRayDiscountCoupon.setOnClickListener(this);
+
         mTvDesc = (TextView) view.findViewById(R.id.tv_desc);
         mTvAgreement = (TextView) view.findViewById(R.id.tv_agreement);
         mTvAgreement.setOnClickListener(this);
@@ -224,11 +223,6 @@ public class RechargeFragment extends PullableBaseFragment
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
 
@@ -258,7 +252,6 @@ public class RechargeFragment extends PullableBaseFragment
         return false;
     }
 
-
     @Override
     protected void loadingData() {
         GridLayoutManager manager = new GridLayoutManager(Utils.getContext(), 3);
@@ -269,8 +262,6 @@ public class RechargeFragment extends PullableBaseFragment
 
         mAdapter = new OilPriceAdapter(mRechargeDTO);
         mXRecyclerView.setAdapter(mAdapter);
-        //优惠劵
-        if (mPresenter != null) mPresenter.getCouponByType();
 
         //价格刷新
         mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
@@ -339,32 +330,32 @@ public class RechargeFragment extends PullableBaseFragment
                             }
                         });
                 break;
-            case R.id.ray_paystyle_layout://支付方式
-                DialogUtils.createSelectDialog(this.getActivity(),
-                        "支付方式",
-                        initPayStyles(),
-                        new DialogUtils.DialogOnClickBack() {
-                            @Override
-                            public void onRechargeProviderClick(View view, Object data) {
-                                initPayStyle(data);
-                            }
-                        });
-                break;
-            case R.id.ray_discount_coupon://优惠劵
-                if (initDiscountCoupon() == null || initDiscountCoupon().size() < 1) {
-                    if (mPresenter != null) mPresenter.getCouponByType();
-                } else {
-                    Intent intent = new Intent(getActivity(), CouponListActivity.class);
-                    Bundle bundle = new Bundle();
-                    List<RechargeCouponBean> list = initDiscountCoupon();
-                    ArrayList<RechargeCouponBean> arrayList = new ArrayList<>();
-                    arrayList.addAll(list);
-
-                    bundle.putParcelableArrayList(JxGlobal.putExtra.recharge_coupon_extra, arrayList);
-                    intent.putExtras(bundle);
-                    startActivityForResult(intent, JxGlobal.requestCode.recharge_coupon_list);
-                }
-                break;
+            //            case R.id.ray_paystyle_layout://支付方式
+            //                DialogUtils.createSelectDialog(this.getActivity(),
+            //                        "支付方式",
+            //                        initPayStyles(),
+            //                        new DialogUtils.DialogOnClickBack() {
+            //                            @Override
+            //                            public void onRechargeProviderClick(View view, Object data) {
+            //                                initPayStyle(data);
+            //                            }
+            //                        });
+            //                break;
+            //            case R.id.ray_discount_coupon://优惠劵
+            //                if (initDiscountCoupon() == null || initDiscountCoupon().size() < 1) {
+            //
+            //                } else {
+            //                    Intent intent = new Intent(getActivity(), CouponListActivity.class);
+            //                    Bundle bundle = new Bundle();
+            //                    List<RechargeCouponBean> list = initDiscountCoupon();
+            //                    ArrayList<RechargeCouponBean> arrayList = new ArrayList<>();
+            //                    arrayList.addAll(list);
+            //
+            //                    bundle.putParcelableArrayList(JxGlobal.putExtra.recharge_coupon_extra, arrayList);
+            //                    intent.putExtras(bundle);
+            //                    startActivityForResult(intent, JxGlobal.requestCode.recharge_coupon_list);
+            //                }
+            //                break;
             case R.id.tv_agreement://充值协议
                 Act.getInstance().gotoIntent(getActivity(), RechargeAgreementActivity.class);
                 break;
@@ -574,35 +565,35 @@ public class RechargeFragment extends PullableBaseFragment
     private void initPayStyle(Object data) {
         if (data != null && data instanceof CommonTwoLevelMenuBean) {
             CommonTwoLevelMenuBean bean = (CommonTwoLevelMenuBean) data;
-            mTvPayStyle.setText(bean.getContext());
+            //            mTvPayStyle.setText(bean.getContext());
             mPayType = bean.getId() == 1 ? 0 : 1;//支付卡
 
             priceStateList(mProviderType);
             //优惠劵控件隐藏
-            mRayDiscountCoupon.setVisibility(mPayType == 0 ? View.VISIBLE : View.GONE);
+            //            mRayDiscountCoupon.setVisibility(mPayType == 0 ? View.VISIBLE : View.GONE);
 
-            if (bean.getId() == 1) {
-                initTvPayStyleDrawable(bean);
-            } else if (bean.getId() == 2) {
-                UiHelpers.setTextViewIcon(getContext().getApplicationContext(),
-                        mTvPayStyle,
-                        bean.getImgId(),
-                        -1,
-                        -1,
-                        UiHelpers.DRAWABLE_LEFT);
-            } else {
-                initTvPayStyleDrawable(bean);
-            }
+            //            if (bean.getId() == 1) {
+            //                initTvPayStyleDrawable(bean);
+            //            } else if (bean.getId() == 2) {
+            //                UiHelpers.setTextViewIcon(getContext().getApplicationContext(),
+            //                        mTvPayStyle,
+            //                        bean.getImgId(),
+            //                        -1,
+            //                        -1,
+            //                        UiHelpers.DRAWABLE_LEFT);
+            //            } else {
+            //                initTvPayStyleDrawable(bean);
+            //            }
         }
     }
 
-    private void initTvPayStyleDrawable(CommonTwoLevelMenuBean bean) {
-        Drawable drawableLeft = getResources().getDrawable(bean.getImgId());
-        drawableLeft.setBounds(0, 0, drawableLeft.getMinimumWidth(), drawableLeft.getMinimumHeight());
-        Drawable drawableRight = getResources().getDrawable(R.mipmap.icon_recommand);
-        drawableRight.setBounds(0, 0, drawableRight.getMinimumWidth(), drawableRight.getMinimumHeight());
-        mTvPayStyle.setCompoundDrawables(drawableLeft, null, drawableRight, null);
-    }
+    //    private void initTvPayStyleDrawable(CommonTwoLevelMenuBean bean) {
+    //        Drawable drawableLeft = getResources().getDrawable(bean.getImgId());
+    //        drawableLeft.setBounds(0, 0, drawableLeft.getMinimumWidth(), drawableLeft.getMinimumHeight());
+    //        Drawable drawableRight = getResources().getDrawable(R.mipmap.icon_recommand);
+    //        drawableRight.setBounds(0, 0, drawableRight.getMinimumWidth(), drawableRight.getMinimumHeight());
+    //        mTvPayStyle.setCompoundDrawables(drawableLeft, null, drawableRight, null);
+    //    }
 
     /**
      * 优惠卷
@@ -662,9 +653,9 @@ public class RechargeFragment extends PullableBaseFragment
     private void displayCouponState(String msg) {
         mCouponType = 2;
         isChoice = msg.equals("无优惠劵") || msg.equals("获取失败,点击加载");
-        mTvPayCoupon.setText(msg);
-        mTvPayCouponDate.setVisibility(View.GONE);
-        mImgCouponState.setImageResource(R.mipmap.icon_nocoupon);
+        //        mTvPayCoupon.setText(msg);
+        //        mTvPayCouponDate.setVisibility(View.GONE);
+        //        mImgCouponState.setImageResource(R.mipmap.icon_nocoupon);
     }
 
     /**
@@ -708,10 +699,10 @@ public class RechargeFragment extends PullableBaseFragment
 
         if (isChoice) {
             mCouponId = bean.getId();
-            mTvPayCoupon.setText(bean.getCouponContent());
-            mImgCouponState.setImageResource(R.mipmap.icon_coupon);
-            mTvPayCouponDate.setVisibility(View.VISIBLE);
-            mTvPayCouponDate.setText(bean.getCouponValidityEnd() + "到期");
+            //            mTvPayCoupon.setText(bean.getCouponContent());
+            //            mImgCouponState.setImageResource(R.mipmap.icon_coupon);
+            //            mTvPayCouponDate.setVisibility(View.VISIBLE);
+            //            mTvPayCouponDate.setText(bean.getCouponValidityEnd() + "到期");
         } else {
             displayCouponState("不使用优惠劵");
         }
@@ -730,16 +721,20 @@ public class RechargeFragment extends PullableBaseFragment
     public void addOilCreateOrderSucceed(final RechargeResponse result) {
         ToastUtils.toastShort(result.getResponseDesc());
 
-        DialogUtils.createRechargeDialog(getActivity(),
-                result.getData().getOrderId(),
-                getRechargeMoney(),
-                String.valueOf(mPayType),
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onPayOrderByCoupon(result);
-                    }
-                });
+        MainRouter.gotoPayTypeActivity(getActivity(), result.getData().getOrderId());
+
+        SPUtils.getInstance().setOilCard(mRechargeDTO.getOilCardNum());
+
+        //        DialogUtils.createRechargeDialog(getActivity(),
+        //                result.getData().getOrderId(),
+        //                getRechargeMoney(),
+        //                String.valueOf(mPayType),
+        //                new View.OnClickListener() {
+        //                    @Override
+        //                    public void onClick(View v) {
+        //                        onPayOrderByCoupon(result);
+        //                    }
+        //                });
     }
 
     private void onPayOrderByCoupon(RechargeResponse result) {
@@ -774,10 +769,7 @@ public class RechargeFragment extends PullableBaseFragment
      */
     @Override
     public void onPayOrderByCouponSucceed(PayOrderResponse result) {
-        Intent intent = new Intent();
-        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
-        intent.putExtra(JxGlobal.putExtra.browser_url_extra, result.getData());
-        Act.getInstance().gotoLoginByIntent(getActivity(), PayHtmlActivity.class, intent);
+
         //TODO 保存卡号
         SPUtils.getInstance().setOilCard(mRechargeDTO.getOilCardNum());
         //TODO 确保优惠劵的使用状态

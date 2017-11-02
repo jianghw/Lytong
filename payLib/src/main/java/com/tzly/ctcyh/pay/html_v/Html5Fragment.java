@@ -7,12 +7,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
 
-import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.base.JxBaseFragment;
-import com.tzly.ctcyh.router.util.ToastUtils;
-import com.tzly.ctcyh.service.MemoryData;
 
 /**
  * Fragment 下拉刷新基类
@@ -107,21 +103,6 @@ public class Html5Fragment extends JxBaseFragment {
     public static Html5Fragment newInstance(Activity activity) {
         Html5Fragment f = new Html5Fragment();
         return f;
-    }
-
-    @JavascriptInterface
-    public void ToastMsg(String msg) {
-        ToastUtils.toastShort(msg);
-    }
-
-    @JavascriptInterface
-    public boolean isLogin() {
-        return MemoryData.getInstance().isMainLogin();
-    }
-
-    @JavascriptInterface
-    public void gotoLogin() {
-        PayRouter.gotoLoginActivity(getContext());
     }
 
   /*  @JavascriptInterface

@@ -56,7 +56,6 @@ public class PayUiRouter extends LibUiRouter implements IComponentRouter {
         return false;
     }
 
-
     /**
      * 不用登录逻辑
      */
@@ -71,7 +70,7 @@ public class PayUiRouter extends LibUiRouter implements IComponentRouter {
         if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
             IUserService service = (IUserService) serviceRouter
                     .getService(IUserService.class.getSimpleName());
-            boolean userLogin = service.isUserLogin();
+            boolean userLogin = service.isUserByLogin();
             return !userLogin;
         } else {
             //注册机开始工作

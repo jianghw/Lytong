@@ -22,6 +22,7 @@ import com.jianghw.multi.state.layout.OnStateViewCreatedListener;
 import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.custom.LoadingDialog;
 import com.tzly.ctcyh.router.util.StatusBarUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
 
 
 /**
@@ -357,6 +358,22 @@ public abstract class JxBaseActivity extends AppCompatActivity {
         if (mTvRight != null) mTvRight.setText(right);
     }
 
+    protected void rightImage(int imgRed) {
+        if (imgRed < 0 && mImgHome != null) {
+            mImgHome.setVisibility(View.GONE);
+            return;
+        }
+
+        if (mImgHome != null && mImgHome.getVisibility() != View.VISIBLE) {
+            mImgHome.setVisibility(View.VISIBLE);
+            mImgHome.setImageResource(imgRed != 0 ? imgRed : R.mipmap.ic_title_home);
+        }
+
+        if (mTvRight != null && mTvRight.getVisibility() != View.GONE) {
+            mTvRight.setVisibility(View.GONE);
+        }
+    }
+
     /**
      * 默认第一次显示状态
      */
@@ -412,7 +429,7 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     /**
      * 统一封装
      */
-    public void toastShort(String message) {
-        toastShort(message);
+    public void toastShort(String msg) {
+        ToastUtils.toastShort(msg);
     }
 }

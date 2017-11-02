@@ -134,7 +134,7 @@ public class PayHtmlPresenter
         String fileNum = mAtyView.getViolationNum();
 
         bean.setViolationnum(fileNum);
-        bean.setToken(mRepository.getDefaultUserID());
+        bean.setToken(mRepository.getRASUserID());
 
         dto.setReqInfo(bean);
         return new Gson().toJson(dto);

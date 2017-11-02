@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.tzly.ctcyh.router.util.rea.Des3;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
-import com.tzly.ctcyh.service.MemoryData;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
@@ -37,7 +36,9 @@ import com.zantong.mobilecttx.contract.IViolationQueryFtyContract;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrBean;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.eventbus.AddCarInfoEvent;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.presenter.weizhang.ViolationQueryFtyPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
 import com.zantong.mobilecttx.utils.DialogMgr;
@@ -223,7 +224,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
 
 //可添加控件操作
         int size;
-        if (MemoryData.getInstance().isMainLogin())
+        if (MainRouter.isUserLogin())
             size = LoginData.getInstance().mServerCars.size();
         else
             size = SPUtils.getInstance().getCarsInfo().size();
@@ -501,7 +502,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
      */
     private void submitData() {
         //登陆状态
-        if (MemoryData.getInstance().isMainLogin()) {
+        if (MainRouter.isUserLogin()) {
             if (mCustomSwitchBtn.isChecked()) {
                 List<UserCarInfoBean> serverCars = LoginData.getInstance().mServerCars;
                 if (serverCars != null && serverCars.size() > 0) {
@@ -523,7 +524,7 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
             }
         }
         //未登录状态
-        if (!MemoryData.getInstance().isMainLogin()) {
+        if (!MainRouter.isUserLogin()) {
             if (mCustomSwitchBtn.isChecked()) {
                 List<CarInfoDTO> infoDTOList = SPUtils.getInstance().getCarsInfo();
                 if (infoDTOList != null && infoDTOList.size() > 0) {
@@ -741,12 +742,8 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
     }
 
     protected void goToCamera() {
-        Intent intentOcr = new Intent(getActivity(), OcrCameraActivity.class);
-        intentOcr.putExtra(JxGlobal.putExtra.ocr_camera_extra, 0);
-//        startActivityForResult(intentOcr, 1201);
-        startActivityForResult(intentOcr, JxGlobal.requestCode.violation_query_camera);
+        MainRouter.gotoOcrCameraActivity(getActivity());
     }
-
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)
     public void doPermissionFail() {
@@ -762,8 +759,8 @@ public class ViolationQueryFragment extends BaseRefreshJxFragment
             setTvType(data.getStringExtra(JxGlobal.putExtra.common_list_extra));
         }
 //拍照回调
-        if (requestCode == JxGlobal.requestCode.violation_query_camera
-                && resultCode == JxGlobal.resultCode.ocr_camera_license) {
+        if (requestCode == MainGlobal.requestCode.violation_query_camera
+                && resultCode == MainGlobal.resultCode.ocr_camera_license) {
 
             if (OcrCameraActivity.file == null)
                 ToastUtils.toastShort("照片获取失败");
