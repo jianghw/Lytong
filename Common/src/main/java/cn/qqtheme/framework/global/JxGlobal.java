@@ -37,13 +37,8 @@ public final class JxGlobal {
         public static final String recharge_coupon_bean_extra = "recharge_coupon_bean_extra";
 
         public static final String car_item_bean_extra = "car_item_bean_extra";
-        public static final String browser_title_extra = "browser_title_extra";
-        public static final String browser_url_extra = "browser_url_extra";
         public static final String violation_pay_bean_extra = "violation_pay_bean_extra";
-        public static final String violation_pay_enginenum_extra = "violation_pay_enginenum_extra";
         public static final String map_type_extra = "map_type_extra";
-
-        public static final String violation_num_extra = "violation_num_extra";
     }
 
     public static final class MapType {

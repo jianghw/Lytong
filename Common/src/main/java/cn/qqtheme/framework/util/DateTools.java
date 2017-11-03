@@ -52,7 +52,6 @@ public class DateTools {
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
         if (date == null) {
-            ToastUtils.toastShort("格式化日期失败,显示当前日期");
             return simpleDateFormat.format(new Date());
         }
         return simpleDateFormat.format(date);
@@ -68,7 +67,6 @@ public class DateTools {
             e.printStackTrace();
         }
         if (date == null) {
-            ToastUtils.toastShort("格式化日期失败,显示当前日期");
             return new Date().getTime();
         }
         return date.getTime();

@@ -11,11 +11,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
-import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
@@ -34,14 +35,13 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.custom.banner.CBViewHolderCreator;
+import cn.qqtheme.framework.custom.banner.ConvenientBanner;
 import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
-import cn.qqtheme.framework.custom.banner.CBViewHolderCreator;
-import cn.qqtheme.framework.custom.banner.ConvenientBanner;
 
 /**
  * 优惠页面

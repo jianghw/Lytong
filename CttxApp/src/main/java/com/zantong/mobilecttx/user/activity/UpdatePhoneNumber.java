@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.tzly.ctcyh.router.ServiceRouter;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.service.IUserService;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.LoginData;
@@ -27,7 +28,6 @@ import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.ToastUtils;
 
 public class UpdatePhoneNumber extends BaseMvpActivity<IBaseView, UpdatePhoneNumberPresenter> implements View.OnClickListener, IBaseView, ModelView {
 

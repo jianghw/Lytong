@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
@@ -45,7 +46,6 @@ import cn.qqtheme.framework.imple.IAreaDialogListener;
 import cn.qqtheme.framework.imple.ISpeedDialogListener;
 import cn.qqtheme.framework.imple.ITimeDialogListener;
 import cn.qqtheme.framework.util.RegexUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ViewUtils;
 
 /**

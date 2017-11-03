@@ -38,11 +38,13 @@ import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
 import com.zantong.mobilecttx.huodong.activity.HundredPlanActivity;
 import com.zantong.mobilecttx.huodong.adapter.HundredPlanCarsAdapter;
 import com.zantong.mobilecttx.model.AppInfo;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.qqtheme.framework.util.image.ImageLoadUtils;
 import cn.qqtheme.framework.util.image.ImageTools;
 import cn.qqtheme.framework.util.ui.DensityUtils;
 
@@ -241,6 +243,52 @@ public class DialogUtils {
     }
 
     /**
+     * 活动页面
+     */
+    public static void createActionDialog(final Context context, int count,
+                                          String imageUrl, final String url, ActionADOnClick onClickBack) {
+        final AlertDialog dialog = new AlertDialog.Builder(context).create();
+        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_action_ad, null);
+        ImageView mImage = (ImageView) view.findViewById(R.id.img_url);
+        mImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(url))
+                    MainRouter.gotoHtmlActivity(context, "活动优惠", url);
+            }
+        });
+        ImageLoadUtils.loadThreeRectangle(imageUrl, mImage);
+
+        TextView mCount = (TextView) view.findViewById(R.id.tv_count);
+        TextView mClose = (TextView) view.findViewById(R.id.tv_close);
+        mClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dialog != null) dialog.dismiss();
+            }
+        });
+
+        if (onClickBack != null) onClickBack.textCount(mCount, mClose);
+
+        mCount.setVisibility(count <= 0 ? View.GONE : View.VISIBLE);
+        mClose.setVisibility(count <= 0 ? View.VISIBLE : View.GONE);
+
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        dialog.show();
+
+        Window window = dialog.getWindow();
+        if (window == null) return;
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = DensityUtils.getScreenWidth(context) * 3 / 4;
+        params.height = DensityUtils.getScreenHeight(context) * 3 / 4;
+        dialog.getWindow().setAttributes(params);
+        dialog.getWindow().setBackgroundDrawableResource(R.color.trans);
+        dialog.getWindow().setContentView(view);
+    }
+
+
+    /**
      * 加油充值优惠模块
      */
     public static void createCouponSelectDialog(Context context, String title,
@@ -320,6 +368,10 @@ public class DialogUtils {
 
     public interface ActivityOnClick {
         void onActivityCouponClick(View view);
+    }
+
+    public interface ActionADOnClick {
+        void textCount(TextView mCount, TextView mClose);
     }
 
     /**
@@ -959,7 +1011,7 @@ public class DialogUtils {
         SystemBarTintManager tintManager = new SystemBarTintManager((Activity) context);
         WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
         params.width = DensityUtils.getScreenWidth(context);
-//		params.height = DensityUtils.getScreenHeight(context) - tintManager.getConfig().getStatusBarHeight();
+        //		params.height = DensityUtils.getScreenHeight(context) - tintManager.getConfig().getStatusBarHeight();
         dialog.getWindow().setAttributes(params);
         dialog.getWindow().setContentView(view);
         dialog.getWindow().setGravity(Gravity.BOTTOM);

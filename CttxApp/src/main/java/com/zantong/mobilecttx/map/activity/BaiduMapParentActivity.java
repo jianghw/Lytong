@@ -37,11 +37,12 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
+import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.contract.IBaiduMapContract;
 import com.zantong.mobilecttx.map.bean.GasStation;
 import com.zantong.mobilecttx.map.bean.GasStationDetail;
@@ -53,13 +54,12 @@ import com.zantong.mobilecttx.map.bean.YearCheckDetailResponse;
 import com.zantong.mobilecttx.map.bean.YearCheckResponse;
 import com.zantong.mobilecttx.map.dto.AnnualDTO;
 import com.zantong.mobilecttx.presenter.map.BaiduMapPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DistanceUtils;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.util.List;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ui.DensityUtils;
 
 /**
@@ -111,16 +111,16 @@ public class BaiduMapParentActivity extends BaseJxActivity
             mMapType = intent.getIntExtra(JxGlobal.putExtra.map_type_extra, 0);
         }
 
-//        MapStatus.Builder builder = new MapStatus.Builder();
-//        if (intent != null && intent.hasExtra("x") && intent.hasExtra("y")) {
-//            // 当用intent参数时，设置中心点为指定点
-//            Bundle b = intent.getExtras();
-//            LatLng latLng = new LatLng(b.getDouble("y"), b.getDouble("x"));
-//            builder.target(latLng);
-//        }
-//        builder.overlook(-20).zoom(mCurZoom);
-//        baiduMapOptions = new BaiduMapOptions().mapStatus(builder.build())
-//                .compassEnabled(false).zoomControlsEnabled(false);
+        //        MapStatus.Builder builder = new MapStatus.Builder();
+        //        if (intent != null && intent.hasExtra("x") && intent.hasExtra("y")) {
+        //            // 当用intent参数时，设置中心点为指定点
+        //            Bundle b = intent.getExtras();
+        //            LatLng latLng = new LatLng(b.getDouble("y"), b.getDouble("x"));
+        //            builder.target(latLng);
+        //        }
+        //        builder.overlook(-20).zoom(mCurZoom);
+        //        baiduMapOptions = new BaiduMapOptions().mapStatus(builder.build())
+        //                .compassEnabled(false).zoomControlsEnabled(false);
     }
 
     @Override
@@ -240,10 +240,8 @@ public class BaiduMapParentActivity extends BaseJxActivity
 
     protected void rightClickListener() {
         if (mMapType == JxGlobal.MapType.annual_inspection_map) {
-            Intent intent = new Intent();
-            intent.putExtra(JxGlobal.putExtra.browser_title_extra, "年检须知");
-            intent.putExtra(JxGlobal.putExtra.browser_url_extra, "file:///android_asset/www/nianjian_desc.html");
-            Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
+
+            MainRouter.gotoHtmlActivity(this, "年检须知", "file:///android_asset/www/nianjian_desc.html");
         }
     }
 
@@ -556,10 +554,9 @@ public class BaiduMapParentActivity extends BaseJxActivity
     }
 
     protected void annualInspection() {
-        Intent intent = new Intent();
-        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "年检服务");
-        intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://nianjian.liyingtong.com/myCar");
-        Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
+        MainRouter.gotoHtmlActivity(this, "年检服务",
+                BuildConfig.App_Url ? "http://139.196.183.121:3000/myCar"
+                        : "http://nianjian.liyingtong.com/myCar");
     }
 
     /**

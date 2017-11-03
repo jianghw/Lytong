@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.NotificationCompat;
+import android.text.TextUtils;
 import android.widget.RemoteViews;
 
 import com.alibaba.sdk.android.push.MessageReceiver;
@@ -15,8 +16,7 @@ import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
-import com.zantong.mobilecttx.home_v.HomeMainActivity;
-import com.zantong.mobilecttx.user.activity.MegDetailActivity;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.Tools;
 
@@ -46,11 +46,6 @@ public class LytMessageReceiver extends MessageReceiver {
     public void onNotification(Context context, String title,
                                String summary, Map<String, String> extraMap) {
         LogUtils.i(title + "onNotification" + summary);
-
-        CPushMessage message = new CPushMessage();
-        message.setTitle(title);
-        message.setContent(summary);
-        buildNotification(context, message);
 
         PushBean pushBean = new PushBean();
         if (null != extraMap) {
@@ -110,20 +105,21 @@ public class LytMessageReceiver extends MessageReceiver {
         LogUtils.i("onNotificationOpened");
 
         AliPushExtBean pushExtBean = new Gson().fromJson(extraMap, AliPushExtBean.class);
-        if (pushExtBean != null) {
-            String type = pushExtBean.getType();
-            if (type.equals("1")) {//小喇叭页面
-                Intent intent = new Intent(context, HomeMainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            } else if (type.equals("2")) {
-                Intent intent = new Intent(context, MegDetailActivity.class);
-                intent.putExtra("messageDetailId", pushExtBean.getId());
-                intent.putExtra("title", title);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
-        }
+        if (pushExtBean == null) return;
+        String type = pushExtBean.getType();
+        if (TextUtils.isEmpty(type)) return;
+        //前台工作
+        //        if (AppUtils.isAppForeground()) {
+        if (type.equals("1"))//主页
+            MainRouter.gotoMainActivity(context, 0);
+        else if (type.equals("2"))//消息详情
+            MainRouter.gotoMegDetailActivity(context, title, pushExtBean.getId());
+        else if (type.equals("3"))//优惠详情
+            MainRouter.gotoCouponActivity(context);
+        else if (type.equals("4"))//html详情
+            MainRouter.gotoHtmlActivity(context, title, pushExtBean.getUrl());
+        else if (type.equals("5"))//违章查询
+            MainRouter.gotoViolationActivity(context);
     }
 
     /**

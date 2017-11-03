@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.Des3;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
@@ -30,6 +30,7 @@ import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.eventbus.CarInfoEvent;
 import com.zantong.mobilecttx.home_v.HomeMainActivity;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.bean.LoginResult;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.user.dto.RegisterDTO;
@@ -55,7 +56,6 @@ import java.util.List;
 import butterknife.Bind;
 import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.util.ToastUtils;
 
 public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresenter> implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
 
@@ -230,12 +230,14 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                 mCharKeyBoard.changeUpper();
             }
         }
+
         switch (view.getId()) {
             case R.id.register_commit_btn:
                 mNumKeyBoard.setVisibility(View.GONE);
                 mCharKeyBoard.setVisibility(View.GONE);
                 final String pwd = mPwd.getText().toString().replace(" ", "");
                 String pwd2 = mPwd2.getText().toString().replace(" ", "");
+
                 if (pwd.length() < 6 || pwd.length() > 20) {
                     ToastUtils.toastShort("密码位数不对");
                     return;
@@ -252,18 +254,17 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                     ToastUtils.toastShort("两次输入的密码不一致");
                     return;
                 }
+
                 SPUtils.getInstance().setUserPwd(pwd);
+                showDialogLoading();
+
                 if (res == 0) {
                     final RegisterDTO dto = new RegisterDTO();
                     String phone = RSAUtils.strByEncryption(getIntent().getStringExtra(PHONE), true);
-                    dto.setToken(RSAUtils.strByEncryption(LoginData.getInstance().deviceId, true));
+                    dto.setToken(RSAUtils.strByEncryption(MainRouter.getPushId(), true));
                     dto.setPhoenum(phone);
-                    if ("".equals(LoginData.getInstance().imei)) {
-                        dto.setDevicetoken("1234567890");
-                    } else {
-                        dto.setDevicetoken(LoginData.getInstance().imei);
-                    }
-                    LogUtils.i("token:" + dto.getDevicetoken());
+                    dto.setDevicetoken(MainRouter.getPhoneDeviceId());
+
                     try {
                         SHATools sha = new SHATools();
                         String password = SHATools.hexString(sha.eccryptSHA1(pwd));
@@ -273,60 +274,14 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                         e.printStackTrace();
                     }
 
-                    showDialogLoading();
-                    UserApiClient.register(this, dto, new CallBack<LoginResult>() {
+                    UserApiClient.register(Utils.getContext(), dto, new CallBack<LoginResult>() {
                         @Override
                         public void onSuccess(LoginResult result) {
                             hideDialogLoading();
                             if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
-                                liyingreg(pwd, result.getRspInfo().getUsrid());
-                                SPUtils.getInstance().setLoginInfoBean(result.getRspInfo());
-                                result.getRspInfo().setFilenum(Des3.decode(result.getRspInfo().getFilenum()));
-                                result.getRspInfo().setPhoenum(Des3.decode(result.getRspInfo().getPhoenum()));
-                                result.getRspInfo().setCtfnum(Des3.decode(result.getRspInfo().getCtfnum()));
-
-                                UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERPD, mPwd.getText().toString());
-                                UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, LoginData.getInstance().imei);
-                                UserInfoRememberCtrl.saveObject(result.getRspInfo());
-
-                                LoginData.getInstance().mLoginInfoBean = result.getRspInfo();
-                                LoginData.getInstance().userID = result.getRspInfo().getUsrid();
-                                LoginData.getInstance().filenum = result.getRspInfo().getFilenum();
-
-                                LoginData.getInstance().loginFlag = true;
-                                commitLocalCar();
-                                commitIllegalHistory();
-
-                                new DialogMgr(Register2Activity.this,
-                                        "登录成功！",
-                                        "欢迎你加入畅通车友会\n赶快去添加你的牡丹畅通卡吧！",
-                                        "添加畅通卡",
-                                        "继续",
-                                        new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                Act.getInstance().lauchIntent(Register2Activity.this, UnblockedCardActivity.class);
-                                                ScreenManager.getScreenManager().specialMethod();
-                                            }
-                                        },
-                                        new View.OnClickListener() {
-
-                                            @Override
-                                            public void onClick(View v) {
-                                                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeMainActivity.class);
-                                            }
-                                        },
-                                        new View.OnClickListener() {
-
-                                            @Override
-                                            public void onClick(View v) {
-                                                AccountRememberCtrl.saveLoginAD(Register2Activity.this, "0");
-                                                ScreenManager.getScreenManager().popAllActivityExceptOne(HomeMainActivity.class);
-                                            }
-                                        });
-                                EventBus.getDefault().post(new CarInfoEvent(true));
+                                succeedToLogin();
                             } else {
-                                ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
+                                ToastUtils.toastShort("注册失败"+result.getSYS_HEAD().getReturnMessage());
                             }
                         }
 
@@ -334,6 +289,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                         public void onError(String errorCode, String msg) {
                             super.onError(errorCode, msg);
                             hideDialogLoading();
+                            ToastUtils.toastShort("注册失败");
                         }
                     });
                 } else {
@@ -348,7 +304,6 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
                     }
-                    showDialogLoading();
                     UserApiClient.reset(Utils.getContext(), dto, new CallBack<LoginResult>() {
                         @Override
                         public void onSuccess(LoginResult result) {
@@ -363,11 +318,70 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                         public void onError(String errorCode, String msg) {
                             super.onError(errorCode, msg);
                             hideDialogLoading();
+                            ToastUtils.toastShort("重置失败");
                         }
                     });
-
                 }
                 break;
+        }
+    }
+
+    private void succeedToLogin() {
+        MainRouter.gotoLoginActivity(this);
+        finish();
+    }
+
+    private void succeedToLogin(LoginResult result, String pwd) {
+        if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
+
+            liyingreg(pwd, result.getRspInfo().getUsrid());
+            SPUtils.getInstance().setLoginInfoBean(result.getRspInfo());
+            result.getRspInfo().setFilenum(Des3.decode(result.getRspInfo().getFilenum()));
+            result.getRspInfo().setPhoenum(Des3.decode(result.getRspInfo().getPhoenum()));
+            result.getRspInfo().setCtfnum(Des3.decode(result.getRspInfo().getCtfnum()));
+
+            UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERPD, mPwd.getText().toString());
+            UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, LoginData.getInstance().imei);
+            UserInfoRememberCtrl.saveObject(result.getRspInfo());
+
+            LoginData.getInstance().mLoginInfoBean = result.getRspInfo();
+            LoginData.getInstance().userID = result.getRspInfo().getUsrid();
+            LoginData.getInstance().filenum = result.getRspInfo().getFilenum();
+
+            LoginData.getInstance().loginFlag = true;
+            commitLocalCar();
+            commitIllegalHistory();
+
+            new DialogMgr(Register2Activity.this,
+                    "登录成功！",
+                    "欢迎你加入畅通车友会\n赶快去添加你的牡丹畅通卡吧！",
+                    "添加畅通卡",
+                    "继续",
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Act.getInstance().lauchIntent(Register2Activity.this, UnblockedCardActivity.class);
+                            ScreenManager.getScreenManager().specialMethod();
+                        }
+                    },
+                    new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            ScreenManager.getScreenManager().popAllActivityExceptOne(HomeMainActivity.class);
+                        }
+                    },
+                    new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            AccountRememberCtrl.saveLoginAD(Register2Activity.this, "0");
+                            ScreenManager.getScreenManager().popAllActivityExceptOne(HomeMainActivity.class);
+                        }
+                    });
+            EventBus.getDefault().post(new CarInfoEvent(true));
+        } else {
+            ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
         }
     }
 

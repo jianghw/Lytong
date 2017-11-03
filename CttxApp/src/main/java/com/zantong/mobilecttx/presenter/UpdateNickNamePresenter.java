@@ -1,11 +1,12 @@
 package com.zantong.mobilecttx.presenter;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.BasePresenter;
 import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.model.UpdateNickNameModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
@@ -15,8 +16,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * Created by 王海洋 on 16/6/1.

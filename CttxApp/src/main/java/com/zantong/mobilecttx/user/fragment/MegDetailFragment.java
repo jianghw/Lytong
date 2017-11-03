@@ -1,7 +1,6 @@
 package com.zantong.mobilecttx.user.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
@@ -16,14 +15,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.PullableBaseFragment;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.contract.IMegDetailAtyContract;
-import com.zantong.mobilecttx.user.activity.MegDetailActivity;
+import com.zantong.mobilecttx.global.MainGlobal;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.bean.Meg;
 import com.zantong.mobilecttx.user.bean.MessageDetailResponse;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,8 +30,6 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.image.ImageOptions;
 
 /**
@@ -157,9 +154,11 @@ public class MegDetailFragment extends PullableBaseFragment
         }
     }
 
+    /**
+     * 前页面刷新
+     */
     private void setResultForRefresh() {
-        MegDetailActivity activity = (MegDetailActivity) getActivity();
-        activity.setResultForRefresh();
+        getActivity().setResult(MainGlobal.resultCode.meg_detail_deled);
     }
 
     private void customDisplaysHyperlinks(String content) {
@@ -208,10 +207,8 @@ public class MegDetailFragment extends PullableBaseFragment
     private void internalBrowser(String contentHrefLine) {
         String title = "信息";
         if (titleTv != null) title = titleTv.getText().toString().trim();
-        Intent intent = new Intent();
-        intent.putExtra(JxGlobal.putExtra.browser_title_extra, title);
-        intent.putExtra(JxGlobal.putExtra.browser_url_extra, contentHrefLine);
-        Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
+
+        MainRouter.gotoHtmlActivity(getActivity(), title, contentHrefLine);
     }
 
     /**

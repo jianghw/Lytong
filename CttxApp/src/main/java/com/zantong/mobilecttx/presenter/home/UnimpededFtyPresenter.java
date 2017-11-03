@@ -4,17 +4,23 @@ package com.zantong.mobilecttx.presenter.home;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
-import com.zantong.mobilecttx.home.bean.HomeCarResponse;
-import com.zantong.mobilecttx.home.bean.HomeResponse;
-import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
+import com.zantong.mobilecttx.home.bean.HomeCarResponse;
+import com.zantong.mobilecttx.home.bean.HomeResponse;
+import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
+import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 
+import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -118,7 +124,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
     @Override
     public String initUserCarsDTO() {
         UserCarsDTO params = new UserCarsDTO();
-        params.setUsrid(mRepository.getRASUserID());
+        params.setUsrid(mRepository.getUserID());
 
         RequestDTO dto = new RequestDTO();
         RequestHeadDTO requestHeadDTO = mRepository.initLicenseFileNumDTO("cip.cfc.c003.01");
@@ -163,26 +169,55 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
         Subscription subscription = mRepository.getIndexLayer()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<HomeCarResponse>() {
+                .subscribe(new BaseSubscriber<IndexLayerResponse>() {
                     @Override
                     public void doCompleted() {}
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.remoteCarInfoError(e.getMessage());
+                        mAtyView.indexLayerError(e.getMessage());
                     }
 
                     @Override
-                    public void doNext(HomeCarResponse result) {
+                    public void doNext(IndexLayerResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.getTextNoticeInfo(result);
+                            mAtyView.indexLayerSucceed(result);
                         } else {
-                            mAtyView.remoteCarInfoError(result != null
-                                    ? result.getResponseDesc() : "未知错误(NoticeInfo)");
+                            mAtyView.indexLayerError(result != null
+                                    ? result.getResponseDesc() : "未知错误(IndexLayer)");
                         }
                     }
                 });
         mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 倒计时
+     */
+    @Override
+    public void startCountDown() {
+        Subscription subCount = Observable
+                .interval(10, 1000, TimeUnit.MILLISECONDS)
+                .take(3)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Long>() {
+                    @Override
+                    public void onCompleted() {
+                        mAtyView.countDownCompleted();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        LogUtils.e(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        mAtyView.countDownTextView(3 - aLong);
+                    }
+                });
+        mSubscriptions.add(subCount);
     }
 
 }

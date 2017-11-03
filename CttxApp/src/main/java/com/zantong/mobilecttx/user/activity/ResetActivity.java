@@ -11,26 +11,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.application.LoginData;
+import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
+import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-
-import cn.qqtheme.framework.bean.BankResponse;
-
+import com.zantong.mobilecttx.contract.IOrderView;
+import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.user.bean.VcodeResult;
 import com.zantong.mobilecttx.user.dto.VcodeDTO;
-import com.zantong.mobilecttx.presenter.OrderPresenter;
-import cn.qqtheme.framework.util.ToastUtils;
 import com.zantong.mobilecttx.utils.ValidateUtils;
-import com.zantong.mobilecttx.contract.IOrderView;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
+import cn.qqtheme.framework.bean.BankResponse;
 
 /**
  * 重置密码
@@ -114,8 +113,6 @@ public class ResetActivity extends BaseMvpActivity<IOrderView,OrderPresenter> {
                         mVcodeBtn.setText("重发验证码");
                         break;
                 }
-//				}
-
                 super.handleMessage(msg);
             }
         };
@@ -205,7 +202,7 @@ public class ResetActivity extends BaseMvpActivity<IOrderView,OrderPresenter> {
         VcodeDTO dto = new VcodeDTO();
         dto.setPhoenum(mPhone.getText().toString());
         dto.setSmsscene("001");
-        UserApiClient.getVerifyCode2(this, dto, new CallBack<VcodeResult>() {
+        UserApiClient.getVerifyCode2(Utils.getContext(), dto, new CallBack<VcodeResult>() {
             @Override
             public void onSuccess(VcodeResult result) {
                 if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {

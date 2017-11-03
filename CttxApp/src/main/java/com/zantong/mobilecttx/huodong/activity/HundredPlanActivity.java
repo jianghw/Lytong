@@ -13,6 +13,7 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -36,7 +37,6 @@ import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ui.DensityUtils;
 
 /**

@@ -14,6 +14,7 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
@@ -29,8 +30,6 @@ import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 import com.zantong.mobilecttx.zxing.EncodingUtils;
 
 import java.util.List;
-
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 分享返现页面

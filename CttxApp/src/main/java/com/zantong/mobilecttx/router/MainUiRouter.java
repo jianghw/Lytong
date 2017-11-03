@@ -5,9 +5,9 @@ import android.content.Intent;
 
 import com.tzly.ctcyh.router.IComponentRouter;
 import com.tzly.ctcyh.router.LibUiRouter;
-import com.tzly.ctcyh.router.ServiceRouter;
-import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.service.RouterGlobal;
+import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
+import com.zantong.mobilecttx.browser.PayHtmlActivity;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
@@ -20,9 +20,14 @@ import com.zantong.mobilecttx.guide_v.GuideCTActivity;
 import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.home_v.HomeMainActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
+import com.zantong.mobilecttx.order.activity.CouponActivity;
 import com.zantong.mobilecttx.order_v.AnnualDetailActivity;
 import com.zantong.mobilecttx.order_v.OrderDetailActivity;
+import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.user.activity.MegTypeActivity;
+import com.zantong.mobilecttx.user.activity.RegisterActivity;
+import com.zantong.mobilecttx.user.activity.ResetActivity;
+import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
 import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 
 /**
@@ -60,8 +65,14 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 RouterGlobal.Host.unblocked_card_host,
                 RouterGlobal.Host.violation_list_host,
                 RouterGlobal.Host.ocr_camera_host,
+                RouterGlobal.Host.register_host,
+                RouterGlobal.Host.reset_host,
+                RouterGlobal.Host.meg_detail_host,
+                RouterGlobal.Host.coupon_status_host,
+                RouterGlobal.Host.html_self_host,
+                RouterGlobal.Host.html_pay_host,
+                RouterGlobal.Host.violation_query_host,
                 RouterGlobal.Host.my_card_host
-
         };
     }
 
@@ -102,6 +113,21 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, ViolationListActivity.class);
         } else if (RouterGlobal.Host.ocr_camera_host.equals(host)) {
             intent.setClass(context, OcrCameraActivity.class);
+        } else if (RouterGlobal.Host.register_host.equals(host)) {
+            intent.setClass(context, RegisterActivity.class);
+        } else if (RouterGlobal.Host.reset_host.equals(host)) {
+            intent.setClass(context, ResetActivity.class);
+        } else if (RouterGlobal.Host.meg_detail_host.equals(host)) {
+            intent.setClass(context, MegDetailActivity.class);
+        } else if (RouterGlobal.Host.coupon_status_host.equals(host)) {
+            intent.setClass(context, CouponActivity.class);
+        } else if (RouterGlobal.Host.html_pay_host.equals(host)) {
+            intent.setClass(context, PayHtmlActivity.class);
+        } else if (RouterGlobal.Host.html_self_host.equals(host)) {
+            intent.setAction("com.zantong.mobilecttx.browser.BrowserHtmlActivity");
+            intent.setClass(context, BrowserHtmlActivity.class);
+        } else if (RouterGlobal.Host.violation_query_host.equals(host)) {
+            intent.setClass(context, ViolationActivity.class);
         } else {
             return true;
         }
@@ -119,21 +145,10 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 && !RouterGlobal.Host.capture_host.equals(host)
                 && !RouterGlobal.Host.violation_list_host.equals(host)
                 && !RouterGlobal.Host.ocr_camera_host.equals(host)
-                && loginActivity();
-    }
-
-    protected boolean loginActivity() {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
-            IUserService service = (IUserService) serviceRouter
-                    .getService(IUserService.class.getSimpleName());
-            boolean userLogin = service.isUserByLogin();
-            return !userLogin;
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-            return true;
-        }
+                && !RouterGlobal.Host.register_host.equals(host)
+                && !RouterGlobal.Host.reset_host.equals(host)
+                && !RouterGlobal.Host.violation_query_host.equals(host)
+                && MainRouter.gotoByIsLogin();
     }
 
     @Override

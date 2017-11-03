@@ -31,6 +31,8 @@ public interface IUserService {
 
     String getPhoneDeviceId();
 
+    String getPushId();
+
     String getUserID();
 
     String getUserID(boolean isNeedLogin);
@@ -46,4 +48,6 @@ public interface IUserService {
     String getUserPortrait();
 
     String getUserNickname();
+
+    void cleanUserLogin();
 }

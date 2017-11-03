@@ -1,7 +1,6 @@
 package com.zantong.mobilecttx.fahrschule.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -16,12 +15,12 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.contract.IFahrschuleApplyFtyContract;
 import com.zantong.mobilecttx.eventbus.FahrschuleApplyEvent;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
@@ -36,7 +35,7 @@ import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResponse;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresBean;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResponse;
 import com.zantong.mobilecttx.presenter.fahrschule.FahrschuleApplyPresenter;
-import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.router.MainRouter;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -44,9 +43,7 @@ import java.util.List;
 import java.util.Random;
 
 import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.RegexUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 驾校报名页面
@@ -207,10 +204,8 @@ public class FahrschuleApplyFragment extends BaseRefreshJxFragment
                 } else if (mPresenter != null) mPresenter.getAreaGoods();
                 break;
             case R.id.tv_info://官网
-                Intent intent = new Intent();
-                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "驾校报名官网");
-                intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://www.antingjx.com/jianjie/");
-                Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
+                MainRouter.gotoHtmlActivity(getActivity(),
+                        "驾校报名官网", "http://www.antingjx.com/jianjie/");
                 break;
             case R.id.btn_commit:
                 dataFormValidation();

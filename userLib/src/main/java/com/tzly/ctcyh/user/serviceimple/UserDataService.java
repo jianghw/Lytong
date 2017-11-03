@@ -101,6 +101,11 @@ public class UserDataService implements IUserService {
         return mRepository.getPhoneDeviceId();
     }
 
+    @Override
+    public String getPushId() {
+        return mRepository.getPushId();
+    }
+
     /**
      * 统一获取用户id
      */
@@ -145,5 +150,12 @@ public class UserDataService implements IUserService {
     @Override
     public String getUserNickname() {
         return mRepository.getUserNickname();
+    }
+    /**
+     * 退出登录
+     */
+    @Override
+    public void cleanUserLogin() {
+        mRepository.getCleanUser();
     }
 }

@@ -4,7 +4,7 @@ package com.zantong.mobilecttx.push_v;
  * Created by zhoujie on 2016/11/21.
  */
 
-public class AliPushExtBean  {
+public class AliPushExtBean {
 
     /**
      * type : 2
@@ -14,7 +14,16 @@ public class AliPushExtBean  {
 
     private String type;
     private String id;
+    private String url;
     private String _ALIYUN_NOTIFICATION_ID_;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getType() {
         return type;

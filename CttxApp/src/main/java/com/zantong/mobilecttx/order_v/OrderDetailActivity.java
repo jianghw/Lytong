@@ -17,12 +17,12 @@ import android.widget.TextView;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.order.bean.OrderDetailBean;
 import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
 import com.zantong.mobilecttx.order_p.IOrderDetailContract;
 import com.zantong.mobilecttx.order_p.OrderDetailPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
@@ -33,8 +33,6 @@ import org.sufficientlysecure.htmltextview.HtmlTextView;
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import cn.qqtheme.framework.global.JxGlobal;
 
 /**
  * 订单详情页面
@@ -183,7 +181,7 @@ public class OrderDetailActivity extends JxBaseActivity
         mTvSupplier.setText(bean.getMerchantName());
         mTvOrderNum.setText(bean.getOrderId());
         mTvDate.setText(bean.getCreateDate());
-        mTvPayType.setText(bean.getPayType() == 0 ? "牡丹畅通卡" : "其他支付");
+        mTvPayType.setText(bean.getPayType() == 1 ? "畅通工行卡" : "其他支付");
 
         String beanDetail = bean.getDetail();
 
@@ -199,11 +197,13 @@ public class OrderDetailActivity extends JxBaseActivity
 
         @Override
         public void onClick(View widget) {
-            //html页面
-            //            Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
-            //            intent.putExtra(EXTRA_TABLE_HTML, getTableHtml());
-            //            startActivity(intent);
+            gotoHtml(getTableHtml());
         }
+    }
+
+    private void gotoHtml(String tableHtml) {
+
+        MainRouter.gotoHtmlActivity(this, "Web页面", tableHtml);
     }
 
     private void gotoBrowser(String beanDetail, TextView tvContent) {
@@ -261,10 +261,8 @@ public class OrderDetailActivity extends JxBaseActivity
      */
     private void internalBrowser(String contentHrefLine) {
         String title = "信息";
-        Intent intent = new Intent();
-        intent.putExtra(JxGlobal.putExtra.browser_title_extra, title);
-        intent.putExtra(JxGlobal.putExtra.browser_url_extra, contentHrefLine);
-        Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
+
+        MainRouter.gotoHtmlActivity(this, title, contentHrefLine);
     }
 
     /**

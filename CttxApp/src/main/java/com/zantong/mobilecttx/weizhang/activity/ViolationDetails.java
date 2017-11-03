@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.Des3;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
@@ -35,7 +36,6 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 违章详情

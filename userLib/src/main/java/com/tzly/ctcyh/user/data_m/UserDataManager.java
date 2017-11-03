@@ -101,7 +101,8 @@ public class UserDataManager {
      */
     public String getPushId() {
         String pushId = mLocalData.getPushId();
-        if (TextUtils.isEmpty(pushId)) pushId = getUserID();
+        if (TextUtils.isEmpty(pushId)) pushId = UserRouter.getPushId();
+        if (TextUtils.isEmpty(pushId)) pushId = getUserID(false);
         if (TextUtils.isEmpty(pushId)) pushId = "1234567890";
         LogUtils.i("PushId=============:" + pushId);
         return pushId;
@@ -123,8 +124,9 @@ public class UserDataManager {
      * 统一下 这里获取数据
      */
     public String getUserID() {
-
-        return getUserID(true);
+        String userId = getUserID(true);
+        LogUtils.i("userId=============:" + userId);
+        return userId;
     }
 
     public String getUserID(boolean isNeedLogin) {
@@ -338,5 +340,13 @@ public class UserDataManager {
         }
         initLoginBean(responseFromSp);
         return mLocalData.getNickname();
+    }
+
+    /**
+     * 退出登录
+     */
+    public void getCleanUser() {
+
+        mLocalData.getCleanUser();
     }
 }

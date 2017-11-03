@@ -123,10 +123,13 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
         mSubscriptions.add(subscription);
     }
 
+    /**
+     * 不加密
+     */
     @Override
     public String initUserCarsDTO() {
         UserCarsDTO params = new UserCarsDTO();
-        params.setUsrid(mRepository.getRASUserID());
+        params.setUsrid(mRepository.getUserID());
 
         RequestDTO dto = new RequestDTO();
         RequestHeadDTO requestHeadDTO = mRepository.initLicenseFileNumDTO("cip.cfc.c003.01");
@@ -161,6 +164,9 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
         mSubscriptions.add(subscription);
     }
 
+    /**
+     * 不加密
+     */
     @Override
     public String initHomeDataDTO() {
         RequestDTO dto = new RequestDTO();
@@ -168,7 +174,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
         dto.setSYS_HEAD(requestHeadDTO);
 
         LogoutDTO params = new LogoutDTO();
-        params.setUsrid(mRepository.getRASUserID());
+        params.setUsrid(mRepository.getUserID());
 
         dto.setReqInfo(params);
         return new Gson().toJson(dto);
@@ -236,12 +242,12 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                             Des3.decode(userCarInfoBean.getCarnum()), true));
                     bindCarDTO.setEngineNo(RSAUtils.strByEncryption(
                             Des3.decode(userCarInfoBean.getEnginenum()), true));
-                    bindCarDTO.setVehicleType(userCarInfoBean.getCarnumtype());
                     bindCarDTO.setUsrnum(mRepository.getRASUserID());
+
+                    bindCarDTO.setVehicleType(userCarInfoBean.getCarnumtype());
                     bindCarDTO.setIsPay(!TextUtils.isEmpty(userCarInfoBean.getIspaycar())
                             ? Integer.valueOf(userCarInfoBean.getIspaycar()) : 0);
                     bindCarDTO.setIssueDate(userCarInfoBean.getInspectdate());
-
                     bindCarDTOList.add(bindCarDTO);
                 }
             }
@@ -255,11 +261,11 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     BindCarDTO bindCarDTO = new BindCarDTO();
                     bindCarDTO.setPlateNo(RSAUtils.strByEncryption(
                             Des3.decode(userCarInfoBean.getCarnum()), true));
-
                     bindCarDTO.setEngineNo(RSAUtils.strByEncryption(
                             Des3.decode(userCarInfoBean.getEnginenum()), true));
-                    bindCarDTO.setVehicleType(userCarInfoBean.getCarnumtype());
                     bindCarDTO.setUsrnum(mRepository.getRASUserID());
+
+                    bindCarDTO.setVehicleType(userCarInfoBean.getCarnumtype());
                     bindCarDTO.setIsPay(1);
 
                     bindCarDTOList.add(bindCarDTO);
@@ -474,7 +480,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     }
                 })
                 .toList();
-//清空车辆数据
+        //清空车辆数据
         LoginData.getInstance().mServerCars.clear();
 
         Subscription subscription = Observable

@@ -19,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/ds_15"
         android:layout_centerHorizontal="true"
         android:background="@drawable/bg_tv_white_shade"
         android:gravity="center"

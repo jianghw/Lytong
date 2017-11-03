@@ -9,18 +9,19 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseExtraFragment;
 import com.zantong.mobilecttx.car.adapter.PayCarAdapter;
 import com.zantong.mobilecttx.car.bean.PayCar;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.card.bean.BindCardBean;
 import com.zantong.mobilecttx.contract.ModelView;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.widght.refresh.OnPullListener;
@@ -32,7 +33,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.ToastUtils;
 
 public class MyCardFragment extends BaseExtraFragment implements ModelView {
 
@@ -131,7 +131,7 @@ public class MyCardFragment extends BaseExtraFragment implements ModelView {
      */
     private void getBangDingCar() {
         LogoutDTO dto = new LogoutDTO();
-        dto.setUsrid(LoginData.getInstance().userID);
+        dto.setUsrid(MainRouter.getUserID(true));
         UserApiClient.getPayCars(Utils.getContext(), dto, new CallBack<PayCarResult>() {
             @Override
             public void onSuccess(PayCarResult result) {

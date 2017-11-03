@@ -15,6 +15,7 @@ import com.tencent.bugly.beta.UpgradeInfo;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.tzly.ctcyh.router.util.StatusBarUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.LoginData;
@@ -28,7 +29,6 @@ import com.zantong.mobilecttx.utils.Tools;
 import cn.qqtheme.framework.custom.tablebottom.UiTableBottom;
 import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.util.AppUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 
 /**

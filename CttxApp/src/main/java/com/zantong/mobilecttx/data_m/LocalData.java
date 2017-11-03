@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
@@ -80,7 +81,7 @@ public class LocalData {
      * @return
      */
     public String getStrByEncryption(String string) {
-        return strByEncryption(string, true);
+        return RSAUtils.strByEncryption(string, true);
     }
 
 

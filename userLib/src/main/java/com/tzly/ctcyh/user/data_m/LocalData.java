@@ -194,4 +194,10 @@ public class LocalData implements ILocalSource {
         return UserMemoryData.getInstance().getNickname();
     }
 
+    @Override
+    public void getCleanUser() {
+        UserMemoryData.getInstance().getCleanUser();
+        SPUtils.getInstance(SPUtils.FILENAME).clear();
+    }
+
 }

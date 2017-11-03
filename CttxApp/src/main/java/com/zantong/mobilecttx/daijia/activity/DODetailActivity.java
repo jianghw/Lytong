@@ -17,6 +17,7 @@ import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderDetailResponse;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderDetailDTO;
 import com.zantong.mobilecttx.eventbus.DrivingCancelEvent;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.HashUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
@@ -106,11 +107,8 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
                                 CarApiClient.getPayOrderSn(Utils.getContext(), payUrl, new CallBack<PayOrderResponse>() {
                                     @Override
                                     public void onSuccess(PayOrderResponse result) {
-                                        if (result.getResponseCode() == 2000) {
-                                            Intent intent = new Intent();
-                                            intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
-                                            intent.putExtra(JxGlobal.putExtra.browser_url_extra, result.getData());
-                                            Act.getInstance().gotoLoginByIntent(DODetailActivity.this, PayHtmlActivity.class, intent);
+                                        if (result.getResponseCode() == 2000) {;
+                                            MainRouter.gotoHtmlActivity(DODetailActivity.this,"支付",result.getData());
                                         }
                                     }
                                 });

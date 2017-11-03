@@ -23,4 +23,8 @@ public class PayDataService implements IPayService {
     public void gotoHtmlActivity(Activity context, String title, String url, String extraOrderId, int payType) {
         PayRouter.gotoHtmlActivity(context, title, url, extraOrderId, payType);
     }
+    @Override
+    public void gotoHtmlActivity(Activity context, String title, String url) {
+        PayRouter.gotoHtmlActivity(context, title, url);
+    }
 }

@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.serviceimple;
 
 import android.app.Activity;
 
+import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.tzly.ctcyh.service.IMainService;
 import com.zantong.mobilecttx.router.MainRouter;
 
@@ -48,6 +49,7 @@ public class MainDataService implements IMainService {
     public void gotoMyCardActivity(Activity context) {
         MainRouter.gotoMyCardActivity(context);
     }
+
     /**
      * 违章列表
      */
@@ -60,4 +62,38 @@ public class MainDataService implements IMainService {
     public void gotoOcrCameraActivity(Activity context) {
         MainRouter.gotoOcrCameraActivity(context);
     }
+
+    /**
+     * 去绑定畅通卡页面
+     */
+    @Override
+    public void loginFilenumDialog(Activity activity) {
+        MainRouter.loginFilenumDialog(activity);
+    }
+
+    /**
+     * 注册页面
+     */
+    @Override
+    public void gotoRegisterActivity(Activity activity) {
+        MainRouter.gotoRegisterActivity(activity);
+    }
+
+    /**
+     * 密码页面
+     */
+    @Override
+    public void gotoResetActivity(Activity activity) {
+        MainRouter.gotoResetActivity(activity);
+    }
+
+    /**
+     * 获取设备推动id
+     */
+    @Override
+    public String getPushId() {
+        return PushServiceFactory.getCloudPushService().getDeviceId();
+    }
+
+
 }

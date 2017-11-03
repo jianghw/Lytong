@@ -12,18 +12,19 @@ import javax.crypto.spec.IvParameterSpec;
  * 3DES加密工具类
  */
 public class Des3 {
+
     private static boolean isDecode = true;
-    // 密钥
+    // 瀵嗛挜
     private final static String secretKey = "liuyunqiang@lx100$#365#$";
-    // 向量
+    // 鍚戦噺
     private final static String mIV = "01234567";
-    // 加解密统一使用的编码方式
+    // 鍔犺В瀵嗙粺涓€浣跨敤鐨勭紪鐮佹柟寮?
     private final static String encoding = "utf-8";
 
     /**
-     * 3DES加密
+     * 3DES鍔犲瘑
      *
-     * @param plainText 普通文本
+     * @param plainText 鏅€氭枃鏈?
      * @return
      * @throws Exception
      */
@@ -48,9 +49,9 @@ public class Des3 {
     }
 
     /**
-     * 3DES解密
+     * 3DES瑙ｅ瘑
      *
-     * @param encryptText 加密文本
+     * @param encryptText 鍔犲瘑鏂囨湰
      * @return
      * @throws Exception
      */
@@ -73,4 +74,5 @@ public class Des3 {
         }
         return strDecode;
     }
+
 }

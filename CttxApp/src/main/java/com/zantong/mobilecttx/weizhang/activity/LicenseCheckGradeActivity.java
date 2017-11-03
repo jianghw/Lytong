@@ -11,9 +11,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.application.LoginData;
+import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
@@ -30,7 +31,6 @@ import cn.qqtheme.framework.custom.picker.entity.City;
 import cn.qqtheme.framework.custom.picker.entity.County;
 import cn.qqtheme.framework.custom.picker.entity.Province;
 import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * Created by jianghw on 2017/5/4.

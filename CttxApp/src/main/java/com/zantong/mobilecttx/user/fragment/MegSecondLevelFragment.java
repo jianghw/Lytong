@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -12,21 +13,16 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.contract.IMegSecondLevelAtyContract;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.order.bean.MessageBean;
 import com.zantong.mobilecttx.order.bean.MessageResponse;
-import com.zantong.mobilecttx.user.activity.MegDetailActivity;
-import com.zantong.mobilecttx.user.activity.MegSecondLevelActivity;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.adapter.MegSecondLevelAdapter;
 import com.zantong.mobilecttx.user.bean.Meg;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.qqtheme.framework.util.ToastUtils;
-
-import static com.zantong.mobilecttx.user.fragment.MegTypeFragment.MESSAGE_REQUEST_CODE;
-import static com.zantong.mobilecttx.user.fragment.MegTypeFragment.MESSAGE_RESULT_CODE;
 
 /**
  * 消息分类第二步
@@ -120,16 +116,15 @@ public class MegSecondLevelFragment extends BaseListFragment<Meg>
     protected void onRecyclerItemClick(View view, Object data) {
         if (!(data instanceof Meg)) return;
         Meg item = (Meg) data;
-        Intent intent = new Intent(getActivity(), MegDetailActivity.class);
-        intent.putExtra("messageDetailId", item.getMessageDetailId());
-        intent.putExtra(STR_TITLE, getArguments().getString(STR_TITLE));
-        startActivityForResult(intent, MESSAGE_REQUEST_CODE);
+        MainRouter.gotoMegDetailActivity(
+                getActivity(), getArguments().getString(STR_TITLE), item.getMessageDetailId());
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == MESSAGE_REQUEST_CODE && resultCode == MESSAGE_RESULT_CODE) {
+        if (requestCode == MainGlobal.requestCode.meg_detail_del
+                && resultCode == MainGlobal.resultCode.meg_detail_deled) {
             mCurrentPage = 1;//标记全部刷新
             getData();
             setResultForRefresh();
@@ -137,8 +132,7 @@ public class MegSecondLevelFragment extends BaseListFragment<Meg>
     }
 
     private void setResultForRefresh() {
-        MegSecondLevelActivity activity = (MegSecondLevelActivity) getActivity();
-        activity.setResultForRefresh();
+        getActivity().setResult(MainGlobal.resultCode.meg_detail_deled);
     }
 
     /**

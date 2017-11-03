@@ -1,16 +1,19 @@
 package com.zantong.mobilecttx.home_v;
 
 import android.Manifest;
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.Des3;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
@@ -20,7 +23,6 @@ import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
@@ -33,7 +35,9 @@ import com.zantong.mobilecttx.home.bean.HomeBean;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.home.bean.HomeResponse;
-import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
+import com.zantong.mobilecttx.home.bean.IndexLayerBean;
+import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
+import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.presenter.home.UnimpededFtyPresenter;
 import com.zantong.mobilecttx.push_v.PushBean;
 import com.zantong.mobilecttx.router.MainRouter;
@@ -41,11 +45,8 @@ import com.zantong.mobilecttx.user.bean.MessageCountBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResponse;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
+import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
-import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.weizhang.activity.LicenseCheckGradeActivity;
-import com.zantong.mobilecttx.weizhang.activity.LicenseDetailActivity;
-import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobilecttx.widght.MainScrollUpAdvertisementView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -59,8 +60,6 @@ import java.util.List;
 import cn.qqtheme.framework.custom.banner.CBViewHolderCreator;
 import cn.qqtheme.framework.custom.banner.ConvenientBanner;
 import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -93,22 +92,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
      * 扫罚单
      */
     private TextView mTvScan;
-    /**
-     * 加油充值
-     */
-    private TextView mTvOil;
-    /**
-     * 年检
-     */
-    private TextView mTvCheck;
-    /**
-     * 洗车
-     */
-    private TextView mTvCarwash;
-    /**
-     * 代驾
-     */
-    private TextView mTvDrive;
+
     private ImageView mImgTrumpet;
     private ImageView mImgLabel;
 
@@ -130,6 +114,12 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     private HomeMainActivity.MessageListener mHomeMainListener;
     private List<UserCarInfoBean> mUserCarInfoBeanList = new ArrayList<>();
     private TextView mTvAppraisement;
+
+    private ViewPager mViewPager;
+    private LinearLayout mTabLayout;
+    private List<Fragment> mPagerList;
+    private HomePagerFragment_0 pagerFragment_0;
+    private HomePagerFragment_1 pagerFragment_1;
 
     /**
      * 会多次刷新数据 ^3^
@@ -194,20 +184,72 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         mImgScan.setOnClickListener(this);
         mTvScan = (TextView) view.findViewById(R.id.tv_scan);
         mTvScan.setOnClickListener(this);
-        mTvOil = (TextView) view.findViewById(R.id.tv_oil);
-        mTvOil.setOnClickListener(this);
-        mTvAppraisement = (TextView) view.findViewById(R.id.tv_appraisement);
-        mTvAppraisement.setOnClickListener(this);
-        mTvCheck = (TextView) view.findViewById(R.id.tv_check);
-        mTvCheck.setOnClickListener(this);
-        mTvCarwash = (TextView) view.findViewById(R.id.tv_license);
-        mTvCarwash.setOnClickListener(this);
-        mTvDrive = (TextView) view.findViewById(R.id.tv_drive);
-        mTvDrive.setOnClickListener(this);
+
         mImgTrumpet = (ImageView) view.findViewById(R.id.img_trumpet);
         mImgLabel = (ImageView) view.findViewById(R.id.img_label);
         mCustomGrapevine = (MainScrollUpAdvertisementView) view.findViewById(R.id.custom_grapevine);
         mCustomViolation = (HorizontalInfiniteCycleViewPager) view.findViewById(R.id.custom_violation);
+
+        mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        mTabLayout = (LinearLayout) view.findViewById(R.id.tabLayout);
+        if (mPagerList == null) mPagerList = new ArrayList<>();
+        initPagerFragment();
+        initViewPager();
+    }
+
+    private void initPagerFragment() {
+        if (mPagerList != null && !mPagerList.isEmpty()) mPagerList.clear();
+
+        pagerFragment_0 = HomePagerFragment_0.newInstance();
+        mPagerList.add(pagerFragment_0);
+        pagerFragment_1 = HomePagerFragment_1.newInstance();
+        mPagerList.add(pagerFragment_1);
+    }
+
+    private void initViewPager() {
+        OrderFragmentAdapter mainFragmentAdapter =
+                new OrderFragmentAdapter(getChildFragmentManager(), mPagerList, null);
+        mViewPager.setAdapter(mainFragmentAdapter);
+        mViewPager.setOffscreenPageLimit(mPagerList.size() - 1);//设置预加载
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < dotViewList.size(); i++) {
+                    dotViewList.get(i).setBackgroundResource(
+                            i == position ? R.mipmap.icon_dot_sel : R.mipmap.icon_dot_nor);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
+        //        mTabLayout.setupWithViewPager(mViewPager);
+
+        initTabLayDots(mPagerList.size());
+    }
+
+    // 放圆点的View的list
+    private List<View> dotViewList = new ArrayList<>();
+
+    private void initTabLayDots(int len) {
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(16, 16);
+        layoutParams.setMargins(12, 12, 12, 12);
+        mTabLayout.removeAllViews();
+        if (!dotViewList.isEmpty()) dotViewList.clear();
+        for (int i = 0; i < len; i++) {
+            ImageView dot = new ImageView(getContext());
+            dot.setLayoutParams(layoutParams);
+            if (i == 0) {
+                dot.setBackgroundResource(R.mipmap.icon_dot_sel);
+            } else {
+                dot.setBackgroundResource(R.mipmap.icon_dot_nor);
+            }
+            dotViewList.add(dot);
+            mTabLayout.addView(dot);
+        }
     }
 
     @Override
@@ -231,7 +273,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         mCarViolationAdapter = new HorizontalCarViolationAdapter(getContext(), mUserCarInfoBeanList);
         mCustomViolation.setAdapter(mCarViolationAdapter);
 
-        if(mPresenter!=null) mPresenter.getIndexLayer();
+        if (mPresenter != null) mPresenter.getIndexLayer();
     }
 
     private void resumeDataVisible() {
@@ -390,6 +432,48 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     }
 
     /**
+     * 优惠活动
+     */
+    @Override
+    public void indexLayerError(String message) {
+        ToastUtils.toastShort(message);
+    }
+
+    public TextView mCountTv;
+    public TextView mmCloseTv;
+
+    @Override
+    public void indexLayerSucceed(IndexLayerResponse result) {
+        IndexLayerBean bean = result.getData();
+        if (bean == null) return;
+
+        DialogUtils.createActionDialog(getActivity(), 3, bean.getImgUrl(), bean.getPageUrl(),
+                new DialogUtils.ActionADOnClick() {
+                    @Override
+                    public void textCount(TextView mCount, TextView mClose) {
+                        mCountTv = mCount;
+                        mmCloseTv = mClose;
+                    }
+                });
+
+        if (mPresenter != null) mPresenter.startCountDown();
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void countDownTextView(long count) {
+        if (mCountTv != null) mCountTv.setText(count + "s");
+    }
+
+    @Override
+    public void countDownCompleted() {
+        if (mmCloseTv != null)
+            mmCloseTv.setVisibility(View.VISIBLE);
+        if (mCountTv != null)
+            mCountTv.setVisibility(View.GONE);
+    }
+
+    /**
      * 车辆数据解密
      */
     private List<UserCarInfoBean> decodeCarInfo(List<UserCarInfoBean> carInfoBeanList) {
@@ -506,104 +590,9 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
                 JxConfig.getInstance().eventIdByUMeng(17);
                 takeCapture();
                 break;
-            case R.id.tv_oil://优惠加油
-                showContacts();
-                break;
-            case R.id.tv_license://驾驶证查分
-                JxConfig.getInstance().eventIdByUMeng(7);
-                licenseCheckGrade();
-                break;
-            case R.id.tv_appraisement://爱车估值
-                JxConfig.getInstance().eventIdByUMeng(34);
-                carValuation();
-                break;
-            case R.id.tv_check://年检
-                JxConfig.getInstance().eventIdByUMeng(4);
-                enterDrivingActivity();
-                break;
-            case R.id.tv_drive://国际驾照
-                JxConfig.getInstance().eventIdByUMeng(35);
-                InternationalDrivingDocument();
-                break;
             default:
                 break;
         }
-    }
-
-    protected void carValuation() {
-        Intent intent = new Intent();
-        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "爱车估值");
-        intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://m.jingzhengu.com/xiansuo/sellcar-changtongcheyouhui.html");
-        Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
-    }
-
-    protected void InternationalDrivingDocument() {
-        Intent intent = new Intent();
-        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "国际驾照");
-        intent.putExtra(JxGlobal.putExtra.browser_url_extra, "https://m.huizuche.com/Cdl/Intro3/ctcyh");
-        Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
-    }
-
-    protected void licenseCheckGrade() {
-        LicenseFileNumDTO bean = SPUtils.getInstance().getLicenseFileNumDTO();
-        if (!MainRouter.isUserLogin() ||
-                bean == null && TextUtils.isEmpty(LoginData.getInstance().filenum)) {
-            Act.getInstance().gotoIntentLogin(getActivity(), LicenseCheckGradeActivity.class);
-        } else if (bean != null || !TextUtils.isEmpty(LoginData.getInstance().filenum)
-                && !TextUtils.isEmpty(LoginData.getInstance().getdate)) {
-            LicenseFileNumDTO loginBean = new LicenseFileNumDTO();
-            loginBean.setFilenum(LoginData.getInstance().filenum);
-            loginBean.setStrtdt(LoginData.getInstance().getdate);
-
-            Intent intent = new Intent(getActivity(), LicenseDetailActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(LicenseCheckGradeActivity.KEY_BUNDLE, bean != null ? bean : loginBean);
-            bundle.putBoolean(LicenseCheckGradeActivity.KEY_BUNDLE_FINISH, true);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        } else {
-            Act.getInstance().gotoIntentLogin(getActivity(), LicenseCheckGradeActivity.class);
-        }
-    }
-
-    /**
-     * 加油地图
-     */
-    public void showContacts() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            PermissionGen.needPermission(this, 3000, new String[]{
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_PHONE_STATE});
-        } else {
-            gotoOilMap();
-        }
-    }
-
-    private void gotoOilMap() {
-        Intent intent = new Intent();
-        intent.putExtra(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
-        Act.getInstance().gotoLoginByIntent(getActivity(), BaiduMapParentActivity.class, intent);
-    }
-
-    /**
-     * 进入地图年检页面
-     */
-    public void enterDrivingActivity() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            PermissionGen.needPermission(this, 2000, new String[]{
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_PHONE_STATE});
-        } else {
-            gotoMap();
-        }
-    }
-
-    private void gotoMap() {
-        MainRouter.gotoMapActivity(getActivity());
     }
 
     /**
@@ -642,28 +631,5 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
 
     public void setMessageListener(HomeMainActivity.MessageListener messageListener) {
         mHomeMainListener = messageListener;
-    }
-
-    @PermissionSuccess(requestCode = 2000)
-    public void doDrivingSuccess() {
-        gotoMap();
-    }
-
-    @PermissionFail(requestCode = 2000)
-    public void doDrivingFail() {
-        ToastUtils.toastShort("您已关闭定位权限,请手机设置中打开");
-    }
-
-    /**
-     * 申请拍照运行时权限
-     */
-    @PermissionSuccess(requestCode = 3000)
-    public void doMapPermissionSuccess() {
-        gotoOilMap();
-    }
-
-    @PermissionFail(requestCode = 3000)
-    public void doMapPermissionFail() {
-        ToastUtils.toastShort("此功能需要打开相关的地图权限");
     }
 }

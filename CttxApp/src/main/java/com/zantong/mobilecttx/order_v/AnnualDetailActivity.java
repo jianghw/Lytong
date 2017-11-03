@@ -17,20 +17,22 @@ import android.widget.TextView;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.order.bean.OrderDetailBean;
 import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
 import com.zantong.mobilecttx.order_p.IOrderDetailContract;
 import com.zantong.mobilecttx.order_p.OrderDetailPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+
+import org.sufficientlysecure.htmltextview.ClickableTableSpan;
+import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
+import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import cn.qqtheme.framework.global.JxGlobal;
 
 /**
  * 年检订单详情页面
@@ -112,7 +114,7 @@ public class AnnualDetailActivity extends JxBaseActivity
      * 寄回快递单号
      */
     private TextView mTvSendBackTitle;
-    private TextView mTvContentBottom;
+    private HtmlTextView mTvContentBottom;
     /**
      * 对订单有疑问?
      */
@@ -197,7 +199,7 @@ public class AnnualDetailActivity extends JxBaseActivity
         mTvSendOff = (TextView) view.findViewById(R.id.tv_send_off);
         mTvSendBackTitle = (TextView) view.findViewById(R.id.tv_send_back_title);
         mTvSendBack = (TextView) view.findViewById(R.id.tv_send_back);
-        mTvContentBottom = (TextView) view.findViewById(R.id.tv_content_bottom);
+        mTvContentBottom = (HtmlTextView) view.findViewById(R.id.tv_content_bottom);
         mTvQuery = (TextView) view.findViewById(R.id.tv_query);
         mTvQuery.setOnClickListener(this);
     }
@@ -245,12 +247,30 @@ public class AnnualDetailActivity extends JxBaseActivity
         mTvContent.setText(bean.getGoodsName());
         mTvOrderNum.setText(bean.getOrderId());
         mTvDate.setText(bean.getCreateDate());
-        mTvPayType.setText(bean.getPayType() == 0 ? "牡丹畅通卡" : "其他支付");
+        mTvPayType.setText(bean.getPayType() == 1 ? "畅通工行卡" : "其他支付");
         mTvSendOff.setText(bean.getSendOffExpress());
         mTvSendBack.setText(bean.getSendBackExpress());
 
         String beanDetail = bean.getDetail();
-        gotoBrowser(beanDetail, mTvContentBottom);
+
+        mTvContentBottom.setHtml(beanDetail, new HtmlResImageGetter(mTvContentBottom));
+        mTvContentBottom.setClickableTableSpan(new ClickableTableSpanImpl());
+    }
+
+    class ClickableTableSpanImpl extends ClickableTableSpan {
+        @Override
+        public ClickableTableSpan newInstance() {
+            return new ClickableTableSpanImpl();
+        }
+
+        @Override
+        public void onClick(View widget) {
+            gotoHtml(getTableHtml());
+        }
+    }
+
+    private void gotoHtml(String tableHtml) {
+        MainRouter.gotoHtmlActivity(this, "Web页面",tableHtml);
     }
 
     private void gotoBrowser(String beanDetail, TextView tvContent) {
@@ -308,10 +328,7 @@ public class AnnualDetailActivity extends JxBaseActivity
      */
     private void internalBrowser(String contentHrefLine) {
         String title = "信息";
-        Intent intent = new Intent();
-        intent.putExtra(JxGlobal.putExtra.browser_title_extra, title);
-        intent.putExtra(JxGlobal.putExtra.browser_url_extra, contentHrefLine);
-        Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
+        MainRouter.gotoHtmlActivity(this,title,contentHrefLine);
     }
 
     /**

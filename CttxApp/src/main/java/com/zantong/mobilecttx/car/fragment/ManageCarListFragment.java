@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
@@ -25,7 +26,6 @@ import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
 import java.util.List;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 车辆列表

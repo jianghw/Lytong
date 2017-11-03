@@ -1,6 +1,5 @@
 package com.zantong.mobilecttx.home_v;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -19,21 +18,21 @@ import android.widget.TextView;
 
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.umeng.analytics.MobclickAgent;
+import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.common.activity.CommonProblemActivity;
 import com.zantong.mobilecttx.contract.IHomeMeFtyContract;
 import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
-import com.zantong.mobilecttx.order.activity.CouponActivity;
 import com.zantong.mobilecttx.order.activity.MyOrderActivity;
 import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
 import com.zantong.mobilecttx.order.bean.CouponFragmentLBean;
@@ -55,10 +54,8 @@ import com.zantong.mobilecttx.weizhang.activity.ViolationHistoryAcitvity;
 import java.io.File;
 import java.util.List;
 
-import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.AppUtils;
 import cn.qqtheme.framework.util.FileUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.image.ImageLoadUtils;
 
 import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
@@ -222,8 +219,10 @@ public class HomeMeFragment extends BaseRefreshJxFragment
             mLayDriverOrder.setVisibility(View.GONE);
         }
 
-        if (mPresenter != null) mPresenter.getCouponCount();
-        if (mPresenter != null) mPresenter.getUnReadMsgCount();
+        if (mPresenter != null && MainRouter.isUserLogin()) {
+            mPresenter.getCouponCount();
+            mPresenter.getUnReadMsgCount();
+        }
 
         //畅通卡
         boolean isUnBound = TextUtils.isEmpty(LoginData.getInstance().filenum);
@@ -244,6 +243,15 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         stringBuffer.append("&#160;");
         stringBuffer.append("车辆");
         mTvCar.setText(Html.fromHtml(stringBuffer.toString()));
+
+        //优惠劵
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("<font color=\"#b3b3b3\">");
+        buffer.append(0);
+        buffer.append("</font>");
+        buffer.append("&#160;");
+        buffer.append("张优惠券");
+        mTvCoupon.setText(Html.fromHtml(buffer.toString()));
 
         File file = getHeadImageFile(mImgHead);
         if (file == null && MainRouter.isUserLogin()) {
@@ -379,14 +387,13 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 Act.getInstance().gotoIntentLogin(getActivity(), MyOrderActivity.class);
                 break;
             case R.id.lay_driver_order://司机订单
-                Intent intent = new Intent();
-                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "司机订单");
-                intent.putExtra(JxGlobal.putExtra.browser_url_extra,
-                        "http://biz.liyingtong.com/h5/driver/index.html");
-                Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
+                MainRouter.gotoHtmlActivity(getActivity(),
+                        "司机订单", BuildConfig.App_Url
+                                ? "http://dev.liyingtong.com/h5/driver/index.html"
+                                : "http://api2.liyingtong.com/h5/driver/index.html");
                 break;
             case R.id.tv_card://我的畅通卡
-                if (Tools.isStrEmpty(LoginData.getInstance().filenum))
+                if (TextUtils.isEmpty(MainRouter.getUserFilenum()))
                     Act.getInstance().gotoIntentLogin(getActivity(), UnblockedCardActivity.class);
                 else
                     Act.getInstance().gotoIntentLogin(getActivity(), MyCardActivity.class);
@@ -397,7 +404,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 break;
             case R.id.tv_coupon:
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(27));
-                Act.getInstance().gotoIntentLogin(getActivity(), CouponActivity.class);
+                MainRouter.gotoCouponActivity(getActivity());
                 break;
             case R.id.lay_query://违章缴费查询
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(34));
@@ -425,10 +432,8 @@ public class HomeMeFragment extends BaseRefreshJxFragment
                 Beta.checkUpgrade();
                 break;
             case R.id.about_advertising://隐私说明
-                Intent i = new Intent();
-                i.putExtra(JxGlobal.putExtra.browser_title_extra, "隐私声明");
-                i.putExtra(JxGlobal.putExtra.browser_url_extra, "file:///android_asset/bindcard_agreement.html");
-                Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, i);
+                MainRouter.gotoHtmlActivity(getActivity(),
+                        "隐私声明", "file:///android_asset/bindcard_agreement.html");
                 break;
             default:
                 break;

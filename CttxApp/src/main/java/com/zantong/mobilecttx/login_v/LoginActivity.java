@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.Des3;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
@@ -42,6 +43,7 @@ import com.zantong.mobilecttx.contract.LoginPhoneView;
 import com.zantong.mobilecttx.eventbus.CarInfoEvent;
 import com.zantong.mobilecttx.eventbus.GetUserEvent;
 import com.zantong.mobilecttx.presenter.LoginPhonePresenterImp;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.activity.RegisterActivity;
 import com.zantong.mobilecttx.user.activity.ResetActivity;
 import com.zantong.mobilecttx.user.bean.LoginInfoBean;
@@ -75,7 +77,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -583,7 +584,7 @@ public class LoginActivity extends Activity
      */
     private void getUserCarInfo() {
         UserCarsDTO dto = new UserCarsDTO();
-        dto.setUsrid(LoginData.getInstance().userID);
+        dto.setUsrid(MainRouter.getUserID(false));
         UserApiClient.getCarInfo(LoginActivity.this, dto, new CallBack<UserCarsResult>() {
             @Override
             public void onSuccess(UserCarsResult result) {

@@ -4,6 +4,7 @@ import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.home.bean.HomeResponse;
+import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 
@@ -33,6 +34,14 @@ public interface IUnimpededFtyContract {
         void getTextNoticeInfo(HomeCarResponse result);
 
         void getRemoteCarInfoSucceed(UserCarsResult result);
+
+        void indexLayerError(String message);
+
+        void indexLayerSucceed(IndexLayerResponse result);
+
+        void countDownTextView(long l);
+
+        void countDownCompleted();
     }
 
     interface IUnimpededFtyPresenter extends IMvpPresenter {
@@ -50,6 +59,8 @@ public interface IUnimpededFtyContract {
         void getTextNoticeInfo();
 
         void getIndexLayer();
+
+        void startCountDown();
     }
 
 }

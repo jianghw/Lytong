@@ -46,6 +46,9 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
         mSubscriptions.clear();
     }
 
+    /**
+     * 优惠券
+     */
     @Override
     public void getCouponCount() {
         Subscription subscription = mRepository.usrCouponInfo(mRepository.getRASUserID(), "1")
@@ -53,9 +56,7 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<CouponFragmentResponse>() {
                     @Override
-                    public void doCompleted() {
-
-                    }
+                    public void doCompleted() {}
 
                     @Override
                     public void doError(Throwable e) {
@@ -74,6 +75,9 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
         mSubscriptions.add(subscription);
     }
 
+    /**
+     * 未读消息
+     */
     @Override
     public void getUnReadMsgCount() {
         Subscription subscription = mRepository.countMessageDetail(initBaseDTO())
@@ -81,9 +85,7 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MessageCountResponse>() {
                     @Override
-                    public void doCompleted() {
-
-                    }
+                    public void doCompleted() {}
 
                     @Override
                     public void doError(Throwable e) {

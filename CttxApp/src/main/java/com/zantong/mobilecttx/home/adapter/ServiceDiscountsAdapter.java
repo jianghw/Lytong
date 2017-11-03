@@ -88,7 +88,7 @@ public class ServiceDiscountsAdapter extends BaseAdapter<ChildrenBean> {
         int width = ((ScreenUtils.widthPixels(mAdapterContext) - ConvertUtils.toPx(7.33f) * 2) / (itemType == ITEM_TYPE_TWO_PIC ? 2 : 3));
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.width = width;
-        layoutParams.height = (itemType == ITEM_TYPE_TWO_PIC) ? (int) (width * 1.1) : (int) (width * 1.2);
+        layoutParams.height = (itemType == ITEM_TYPE_TWO_PIC) ? width  : (int) (width * 1.2);
         view.setLayoutParams(layoutParams);
     }
 

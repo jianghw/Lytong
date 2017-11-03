@@ -22,4 +22,12 @@ public interface IMainService {
     void gotoViolationListActivity(Activity context, String carnum, String enginenum, String carnumtype);
 
     void gotoOcrCameraActivity(Activity context);
+
+    void loginFilenumDialog(Activity activity);
+
+    void gotoRegisterActivity(Activity context);
+
+    void gotoResetActivity(Activity context);
+
+    String getPushId();
 }

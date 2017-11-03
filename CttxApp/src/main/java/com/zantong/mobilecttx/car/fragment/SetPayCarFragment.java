@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.car.adapter.SetPayCarAdapter;
@@ -16,8 +17,6 @@ import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import cn.qqtheme.framework.util.ToastUtils;
 
 public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> implements ModelView {
 

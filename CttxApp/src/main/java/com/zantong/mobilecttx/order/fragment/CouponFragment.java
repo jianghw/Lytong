@@ -5,23 +5,22 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.application.Injection;
+import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.contract.ICouponAtyContract;
-import com.zantong.mobilecttx.presenter.CouponAtyPresenter;
 import com.zantong.mobilecttx.order.activity.CouponDetailActivity;
 import com.zantong.mobilecttx.order.adapter.CouponAdapter;
 import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
 import com.zantong.mobilecttx.order.bean.CouponFragmentLBean;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
 import com.zantong.mobilecttx.order.bean.MessageResponse;
-import com.zantong.mobilecttx.widght.SpaceItemDecoration;
+import com.zantong.mobilecttx.presenter.CouponAtyPresenter;
+import com.tzly.ctcyh.router.custom.SpaceItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 优惠券
@@ -59,6 +58,7 @@ public class CouponFragment extends BaseRecyclerListJxFragment<CouponFragmentBea
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
         if (!(data instanceof CouponFragmentBean)) return;
+
         CouponFragmentBean couponFragmentBean = (CouponFragmentBean) data;
         Intent intent = new Intent(getActivity(), CouponDetailActivity.class);
         Bundle bundle = new Bundle();

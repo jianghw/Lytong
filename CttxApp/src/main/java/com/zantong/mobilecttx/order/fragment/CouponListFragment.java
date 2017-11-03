@@ -14,7 +14,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponBean;
 import com.zantong.mobilecttx.order.adapter.RechargCouponAdapter;
-import com.zantong.mobilecttx.widght.SpaceItemDecoration;
+import com.tzly.ctcyh.router.custom.SpaceItemDecoration;
 
 import java.util.ArrayList;
 

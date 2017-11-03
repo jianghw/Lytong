@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tzly.ctcyh.router.ServiceRouter;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.service.IUserService;
 import com.umeng.analytics.MobclickAgent;
@@ -58,7 +59,6 @@ import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.custom.picker.DatePicker;
 import cn.qqtheme.framework.util.CleanUtils;
 import cn.qqtheme.framework.util.FileUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -639,6 +639,8 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 hideDialogLoading();
 
                 if ("000000".equals(bankResponse.getSYS_HEAD().getReturnCode())) {
+
+                    MainRouter.cleanUserLogin();
 
                     LoginData.getInstance().clearData(Utils.getContext());
                     SPUtils.getInstance().clear();

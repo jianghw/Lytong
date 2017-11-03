@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
@@ -24,7 +25,6 @@ import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.custom.popup.CustomDialog;
 import cn.qqtheme.framework.imple.IAreaDialogListener;
 import cn.qqtheme.framework.util.RegexUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 呼叫快递页面

@@ -20,6 +20,18 @@ public class UserMemoryData {
     private String nickname;
     private String portrait;
 
+    public void getCleanUser() {
+        isLogin = false;
+        filenum = null;
+        ctfnum = null;
+        usrid = null;
+        phoenum = null;
+        recdphoe = null;
+        getdate = null;
+        nickname = null;
+        portrait = null;
+    }
+
     private static class SingletonHolder {
         private static final UserMemoryData INSTANCE = new UserMemoryData();
     }

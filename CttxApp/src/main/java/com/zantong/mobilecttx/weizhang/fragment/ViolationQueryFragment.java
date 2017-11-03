@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.Des3;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
@@ -63,7 +64,6 @@ import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ViewUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;

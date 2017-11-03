@@ -31,10 +31,9 @@ import com.tzly.ctcyh.user.custom.CustomNumKeyBoard;
 import com.tzly.ctcyh.user.data_m.InjectionRepository;
 import com.tzly.ctcyh.user.login_p.ILoginContract;
 import com.tzly.ctcyh.user.login_p.LoginPresenter;
+import com.tzly.ctcyh.user.router.UserRouter;
 
 import java.util.ArrayList;
-
-import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
 
 /**
  * 登陆界面
@@ -166,7 +165,7 @@ public class LoginActivity extends JxBaseActivity implements
      * 设置密码页面
      */
     private void gotoResetActivity() {
-        //        Act.getInstance().lauchIntent(this, ResetActivity.class);
+        UserRouter.gotoResetActivity(this);
     }
 
     @Override
@@ -219,7 +218,7 @@ public class LoginActivity extends JxBaseActivity implements
      * 右边文字点击 注册页码
      */
     protected void rightClickListener() {
-        //                Act.getInstance().lauchIntent(this, RegisterActivity.class);
+        UserRouter.gotoRegisterActivity(this);
     }
 
     @Override
@@ -230,7 +229,7 @@ public class LoginActivity extends JxBaseActivity implements
     @Override
     protected void bindContentView(View childView) {
         titleContent("欢迎加入畅通车友会");
-        titleMore( "注册");
+        titleMore("注册");
         initView(childView);
 
         LoginPresenter presenter = new LoginPresenter(
@@ -396,10 +395,8 @@ public class LoginActivity extends JxBaseActivity implements
 
     @Override
     public void registerSucceed() {
-        //        if (MemoryData.getInstance().className != null) {
-        //            Act.getInstance().lauchIntent(this, MemoryData.getInstance().className);
-        //        }
-        finish();
+        hideInputType();
+        UserRouter.loginFilenumDialog(this);
     }
 
     @Override

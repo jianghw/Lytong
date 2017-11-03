@@ -172,11 +172,13 @@ public class GuideHeaderViewPager extends FrameLayout {
         @Override
         public void onPageSelected(int pos) {
             int len = dotViewsList.size();
+
             if (len != 0) {
                 int position = 0;
                 if (len > 1) {
                     position = pos % len;
                 }
+
                 for (int i = 0; i < len; i++) {
                     if (i == position) {
                         dotViewsList.get(position).setBackgroundResource(R.mipmap.icon_guide_select);

@@ -77,12 +77,8 @@ public class LoginData {
     public boolean isSetPayCar = false;//是否操作了更改可缴费车辆
 
     public void clearData(Context mContext) {
-        userID = "";
-        loginFlag = false;
         updateMsg = false;
-        filenum = "";
         mNetLocationBean = null;
-
 
         SPUtils.getInstance().setUserPwd("");
 

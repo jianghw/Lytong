@@ -38,4 +38,6 @@ public interface ILocalSource {
     String getPortrait();
 
     String getNickname();
+
+    void getCleanUser();
 }

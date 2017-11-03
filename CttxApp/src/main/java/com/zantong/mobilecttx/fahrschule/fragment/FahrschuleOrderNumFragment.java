@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.util.FormatUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
@@ -23,7 +24,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 驾校订单确认页面

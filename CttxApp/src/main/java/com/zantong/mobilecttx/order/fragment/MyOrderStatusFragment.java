@@ -1,21 +1,16 @@
 package com.zantong.mobilecttx.order.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.order.activity.MyOrderActivity;
 import com.zantong.mobilecttx.order.adapter.OrderStatusAdapter;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.util.List;
-
-import cn.qqtheme.framework.global.JxGlobal;
 
 /**
  * 所有订单
@@ -77,10 +72,8 @@ public class MyOrderStatusFragment extends BaseRecyclerListJxFragment<OrderListB
                 else
                     MainRouter.gotoOrderDetailActivity(getActivity(), orderId);
             } else {
-                Intent intent = new Intent();
-                intent.putExtra(JxGlobal.putExtra.browser_title_extra, bean.getGoodsName());
-                intent.putExtra(JxGlobal.putExtra.browser_url_extra, bean.getTargetUrl() + "?orderId=" + orderId);
-                Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
+                MainRouter.gotoHtmlActivity(getActivity(),
+                        bean.getGoodsName(), bean.getTargetUrl() + "?orderId=" + orderId);
             }
         }
     }

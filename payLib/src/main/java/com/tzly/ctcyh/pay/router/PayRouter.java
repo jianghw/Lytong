@@ -31,6 +31,23 @@ public final class PayRouter {
     }
 
     /**
+     * 页面跳转判断是否登录用
+     */
+    public static boolean gotoByIsLogin() {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        Object object = serviceRouter.getService(IUserService.class.getSimpleName());
+        if (object != null && object instanceof IUserService) {
+            IUserService service = (IUserService) object;
+            boolean userLogin = service.isUserByLogin();
+            return !userLogin;
+        } else {
+            //注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            return true;
+        }
+    }
+
+    /**
      * 选优惠页面
      */
     public static void gotoCouponListActivity(Activity context, String type, int payType) {
@@ -50,7 +67,7 @@ public final class PayRouter {
     public static void gotoAliHtmlActivity(Activity context, String title,
                                            String extraOrderId, int payType, int price, int couponBeanId) {
         String url = BuildConfig.App_Url
-                ? "http://dev.liyingtong.com/" : "http://biz.liyingtong.com/";
+                ? "http://dev.liyingtong.com/" : "http://api2.liyingtong.com/";
         StringBuilder sb = new StringBuilder();
         sb.append(url);
         sb.append("aliPay/aliPayHtml");
@@ -111,7 +128,7 @@ public final class PayRouter {
     public static void gotoOrderDetailActivity(Activity context, String orderId, int couponType) {
         ServiceRouter serviceRouter = ServiceRouter.getInstance();
         Object object = serviceRouter.getService(IMainService.class.getSimpleName());
-        if (object != null) {
+        if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoOrderDetailActivity(context, orderId, couponType);
         } else {
@@ -126,7 +143,7 @@ public final class PayRouter {
     public static void gotoOrderSucceedActivity(Activity context, String orderId, int couponType) {
         ServiceRouter serviceRouter = ServiceRouter.getInstance();
         Object object = serviceRouter.getService(IMainService.class.getSimpleName());
-        if (object != null) {
+        if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoOrderSucceedActivity(context, orderId, couponType);
         } else {
@@ -218,7 +235,7 @@ public final class PayRouter {
     public static void gotoUnblockedCardActivity(Activity context) {
         ServiceRouter serviceRouter = ServiceRouter.getInstance();
         Object object = serviceRouter.getService(IMainService.class.getSimpleName());
-        if (object != null) {
+        if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoUnblockedCardActivity(context);
         } else {
@@ -230,7 +247,7 @@ public final class PayRouter {
     public static void gotoMyCardActivity(Activity context) {
         ServiceRouter serviceRouter = ServiceRouter.getInstance();
         Object object = serviceRouter.getService(IMainService.class.getSimpleName());
-        if (object != null) {
+        if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoMyCardActivity(context);
         } else {
@@ -245,7 +262,7 @@ public final class PayRouter {
     public static void gotoViolationListActivity(Activity context, String carnum, String enginenum, String carnumtype) {
         ServiceRouter serviceRouter = ServiceRouter.getInstance();
         Object object = serviceRouter.getService(IMainService.class.getSimpleName());
-        if (object != null) {
+        if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoViolationListActivity(context, carnum, enginenum, carnumtype);
         } else {
@@ -260,7 +277,7 @@ public final class PayRouter {
     public static void gotoOcrCameraActivity(Activity context) {
         ServiceRouter serviceRouter = ServiceRouter.getInstance();
         Object object = serviceRouter.getService(IMainService.class.getSimpleName());
-        if (object != null) {
+        if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoOcrCameraActivity(context);
         } else {

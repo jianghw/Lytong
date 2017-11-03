@@ -195,7 +195,9 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         int width = (ScreenUtils.widthPixels(mAdapterContext) -
                 (row == 2 ? ConvertUtils.toPx(7.33f) * 2 : ConvertUtils.toPx(10f) * 2)) / row;
 
-        return (row == 2 ? width / 2 : (int) (width * 1.2)) * lineNumber
+//        return (row == 2 ? width / 2 : (int) (width * 1.2)) * lineNumber
+//                + (row == 2 ? ConvertUtils.toPx(7.33f) * 2 : ConvertUtils.toPx(10f) * 2);
+        return (row == 2 ? width  : (int) (width * 1.2)) * lineNumber
                 + (row == 2 ? ConvertUtils.toPx(7.33f) * 2 : ConvertUtils.toPx(10f) * 2);
     }
 
@@ -215,7 +217,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
                 ? childrenBeanList.size() >= 4 ? 2 : lineNumber
                 : childrenBeanList.size() >= 6 ? 2 : lineNumber;
 
-        return (row == 2 ? width / 2 : (int) (width * 1.2)) * lineNumber
+        return (row == 2 ? width: (int) (width * 1.2)) * lineNumber
                 + (row == 2 ? ConvertUtils.toPx(7.33f) * 2 : ConvertUtils.toPx(10f) * 2);
     }
 

@@ -13,6 +13,7 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
@@ -22,7 +23,6 @@ import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 
 import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 驾校支付成功页面

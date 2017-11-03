@@ -12,13 +12,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.contract.home.INativeItemListener;
 import com.zantong.mobilecttx.fahrschule.activity.SparringActivity;
@@ -44,7 +44,6 @@ import cn.qqtheme.framework.custom.banner.CBViewHolderCreator;
 import cn.qqtheme.framework.custom.banner.ConvenientBanner;
 import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -150,10 +149,7 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
         if (childrenBean != null && !TextUtils.isEmpty(childrenBean.getTargetPath())) {
             String path = childrenBean.getTargetPath();
             if (path.contains("http")) {//启动公司自己html
-                Intent intent = new Intent();
-                intent.putExtra(JxGlobal.putExtra.browser_title_extra, childrenBean.getTitle());
-                intent.putExtra(JxGlobal.putExtra.browser_url_extra, path);
-                Act.getInstance().gotoLoginByIntent(getActivity(), BrowserHtmlActivity.class, intent);
+                MainRouter.gotoHtmlActivity(getActivity(), childrenBean.getTitle(), path);
             } else if (path.equals("native_app_recharge")) {//加油充值
                 MainRouter.gotoRechargeActivity(getActivity());
             } else if (path.equals("native_app_loan")) {

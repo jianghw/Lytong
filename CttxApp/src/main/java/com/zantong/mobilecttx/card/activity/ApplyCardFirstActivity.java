@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
@@ -20,7 +21,6 @@ import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.card.dto.BidCTCardDTO;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
@@ -28,7 +28,6 @@ import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogMgr;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.util.Random;
 
@@ -36,9 +35,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.RegexUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.ViewUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
@@ -112,10 +109,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 new DialogMgr(this, R.mipmap.code_query_notice_iamge);
                 break;
             case R.id.apply_card_first_desc:   //说明
-                Intent intent = new Intent();
-                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "隐私声明");
-                intent.putExtra(JxGlobal.putExtra.browser_url_extra, "file:///android_asset/bindcard_agreement.html");
-                Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
+                MainRouter.gotoHtmlActivity(this,"隐私声明","file:///android_asset/bindcard_agreement.html");
                 break;
             case R.id.apply_card_first_commit://下一步
                 commitValue();

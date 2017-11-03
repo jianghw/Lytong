@@ -60,6 +60,10 @@ public class ProgressWebView extends LinearLayout {
         mWebView.setWebViewClient(client);
     }
 
+    public void setWebChromeClient(WebChromeClient client) {
+        mWebView.setWebChromeClient(client);
+    }
+
     public void myRequestFocus() {
         mWebView.requestFocus();
     }
@@ -70,10 +74,6 @@ public class ProgressWebView extends LinearLayout {
 
     public void loadDataWithBaseURL(String baseUrl, String data, String mimeType, String encoding, String historyUrl) {
         mWebView.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl);
-    }
-
-    public void setWebChromeClient(WebChromeClient webChromeClient) {
-        mWebView.setWebChromeClient(webChromeClient);
     }
 
     private class WebChromeClient extends android.webkit.WebChromeClient {

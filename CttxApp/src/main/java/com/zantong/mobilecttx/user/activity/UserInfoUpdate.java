@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.FileUploadApi;
@@ -40,7 +41,6 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.util.FileUtils;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.image.ImageLoadUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;

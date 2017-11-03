@@ -2,8 +2,8 @@ package com.zantong.mobilecttx.api;
 
 import com.zantong.mobilecttx.car.bean.VehicleLicenseResponse;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
-import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.home.bean.HomeResponse;
+import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.map.bean.GasStationDetailResponse;
 import com.zantong.mobilecttx.map.bean.GasStationResponse;
@@ -91,5 +91,5 @@ public interface ICttxService {
      * 是否提供活动
      */
     @GET("banner/getIndexLayer")
-    Observable<HomeCarResponse> getIndexLayer();
+    Observable<IndexLayerResponse> getIndexLayer();
 }

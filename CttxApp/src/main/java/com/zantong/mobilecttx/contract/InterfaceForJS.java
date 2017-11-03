@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.webkit.JavascriptInterface;
 
 import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
@@ -21,7 +22,6 @@ import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.eventbus.DriveLicensePhotoEvent;
 import com.zantong.mobilecttx.eventbus.PayMotoOrderEvent;
 import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
-import com.zantong.mobilecttx.login_v.LoginActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.Tools;
@@ -30,8 +30,6 @@ import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import org.greenrobot.eventbus.EventBus;
-
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * @author Sandy
@@ -57,7 +55,7 @@ public class InterfaceForJS {
 
     @JavascriptInterface
     public void gotoLogin() {
-        mJSContext.startActivity(new Intent(mJSContext, LoginActivity.class));
+        MainRouter.gotoLoginActivity(mJSContext);
     }
 
     @JavascriptInterface
@@ -150,6 +148,7 @@ public class InterfaceForJS {
     //查询违章
     @JavascriptInterface
     public void queryViolations() {
+        MainRouter.gotoViolationActivity(mJSContext);
     }
 
     //获取用户ID

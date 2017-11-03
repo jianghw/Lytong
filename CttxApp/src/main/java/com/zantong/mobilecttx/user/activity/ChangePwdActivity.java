@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.util.ToastUtils;
+
 public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresenter>
         implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
 

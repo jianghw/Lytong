@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -13,21 +14,18 @@ import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.browser.PayHtmlActivity;
 import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.bean.CheckOrderResult;
 import com.zantong.mobilecttx.user.bean.OrderItem;
 import com.zantong.mobilecttx.user.dto.CheckOrderDTO;
 import com.zantong.mobilecttx.user.dto.InsOrderDTO;
 import com.zantong.mobilecttx.utils.NetUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import butterknife.Bind;
 import cn.qqtheme.framework.bean.BankResponse;
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 我的订单
@@ -154,10 +152,7 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
                             .append("&clientIP=").append(NetUtils.getPhontIP(this))
                             .append("&clientType=").append(CLIENT_TYPE_0);
 
-                    Intent intent = new Intent();
-                    intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
-                    intent.putExtra(JxGlobal.putExtra.browser_url_extra, stringBuilder.toString());
-                    Act.getInstance().gotoLoginByIntent(this, PayHtmlActivity.class, intent);
+                    MainRouter.gotoHtmlActivity(this,"支付",stringBuilder.toString());
                 } else {
                     commitInsOrder();
                 }

@@ -7,8 +7,7 @@ import android.widget.ImageView;
 
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
-import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.router.MainRouter;
 
 import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.global.JxGlobal;
@@ -71,10 +70,8 @@ public class CarBeautyActivity extends BaseJxActivity implements View.OnClickLis
 //                break;
             case R.id.img_violation:
                 mCurPosition = 2;
-                Intent intent = new Intent();
-                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "汽车冰蜡");
-                intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://m.hiservice.com.cn/market/icbc58");
-                Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
+                MainRouter.gotoHtmlActivity(this,
+                        "汽车冰蜡", "http://m.hiservice.com.cn/market/icbc58");
                 break;
             default:
                 break;

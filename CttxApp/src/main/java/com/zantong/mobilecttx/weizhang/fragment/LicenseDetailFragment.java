@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.contract.ILicenseGradeAtyContract;
@@ -22,7 +23,6 @@ import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.util.List;
 
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.custom.CustomLoader;
 
 

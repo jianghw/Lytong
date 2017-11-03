@@ -41,6 +41,7 @@ import com.zantong.mobilecttx.home.bean.BannerResponse;
 import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.home.bean.HomeResponse;
+import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
 import com.zantong.mobilecttx.home.bean.ModuleResponse;
 import com.zantong.mobilecttx.home.bean.StartPicResponse;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
@@ -599,7 +600,7 @@ public class RemoteData implements IRemoteSource {
      * 是否提供活动
      */
     @Override
-    public Observable<HomeCarResponse> getIndexLayer() {
+    public Observable<IndexLayerResponse> getIndexLayer() {
         return baseRetrofit().create(ICttxService.class).getIndexLayer();
     }
 }

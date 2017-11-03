@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
@@ -26,7 +27,6 @@ import java.util.List;
 import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
 import cn.qqtheme.framework.bean.response.SubjectGoodsData;
 import cn.qqtheme.framework.bean.response.SubjectGoodsResponse;
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 科目强化页面

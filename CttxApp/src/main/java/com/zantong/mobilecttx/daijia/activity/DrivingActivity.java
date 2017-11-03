@@ -15,6 +15,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.search.core.PoiInfo;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
@@ -41,7 +42,6 @@ import java.util.HashMap;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 代驾首页

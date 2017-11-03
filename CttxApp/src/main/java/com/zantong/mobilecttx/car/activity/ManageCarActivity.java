@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.util.FragmentUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
@@ -14,8 +15,6 @@ import com.zantong.mobilecttx.car.fragment.ManageCarListFragment;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
-
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 车辆管理母页面

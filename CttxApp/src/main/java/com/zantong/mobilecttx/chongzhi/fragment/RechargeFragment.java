@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.PullableBaseFragment;
@@ -44,7 +45,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
 
 
 /**

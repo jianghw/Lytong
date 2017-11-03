@@ -244,6 +244,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".user.activity.MegDetailActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".huodong.activity.HundredAgreementActivity"
@@ -386,7 +387,14 @@
 
         <activity
             android:name=".browser.BrowserHtmlActivity"
-            android:screenOrientation="portrait"/>
+            android:launchMode="singleTop"
+            android:process=":lyl.boon.process.web"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.zantong.mobilecttx.browser.BrowserHtmlActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <!-- ===================付款web模块========================================= -->
         <!-- 付款web模块页面 -->
         <activity

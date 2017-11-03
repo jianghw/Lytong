@@ -36,6 +36,16 @@ public class PayTypeBean {
     private int goodsId;
     private String name;
     private String description;
+    private int couponId;
+
+    public int getCouponId() {
+        return couponId;
+    }
+
+    public void setCouponId(int couponId) {
+        this.couponId = couponId;
+    }
+
     private List<PayTypesBean> payTypes;
 
     public int getBusiness() { return business;}

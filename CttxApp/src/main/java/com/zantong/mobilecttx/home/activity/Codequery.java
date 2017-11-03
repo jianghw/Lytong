@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
@@ -19,7 +20,6 @@ import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;

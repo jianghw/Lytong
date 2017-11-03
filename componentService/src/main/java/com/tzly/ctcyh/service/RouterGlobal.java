@@ -33,6 +33,13 @@ public final class RouterGlobal {
         public static final String my_card_host = "my_card_host";
         public static final String violation_list_host = "violation_list_host";
         public static final String ocr_camera_host = "ocr_camera_host";
+        public static final String reset_host = "reset_host";
+        public static final String register_host = "register_host";
+        public static final String meg_detail_host = "meg_detail_host";
+        public static final String coupon_status_host = "coupon_status_host";
+        public static final String html_self_host = "html_self_host";
+        public static final String html_pay_host = "html_pay_host";
+        public static final String violation_query_host = "violation_query_host";
     }
 
     public static final class Scheme {

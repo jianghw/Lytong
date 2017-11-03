@@ -120,9 +120,9 @@ public class MyApplication extends MultiDexApplication {
             public void onSuccess(String response) {
                 //更新推送id
                 ServiceRouter serviceRouter = ServiceRouter.getInstance();
-                if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
-                    IUserService service = (IUserService) serviceRouter
-                            .getService(IUserService.class.getSimpleName());
+                Object object = serviceRouter.getService(IUserService.class.getSimpleName());
+                if (object != null) {
+                    IUserService service = (IUserService) object;
                     service.savePushId(pushService.getDeviceId());
                 } else {
                     //注册机开始工作

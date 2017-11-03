@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -13,8 +14,9 @@ import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.contract.IMegTypeAtyContract;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.order.bean.MessageResponse;
-import com.zantong.mobilecttx.user.activity.MegDetailActivity;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.adapter.MegAdapter;
 import com.zantong.mobilecttx.user.bean.MessageType;
 import com.zantong.mobilecttx.user.bean.MessageTypeBean;
@@ -23,8 +25,6 @@ import com.zantong.mobilecttx.user.bean.MessageTypeResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.util.ToastUtils;
-
 /**
  * 消息类别列表
  */
@@ -32,9 +32,20 @@ import cn.qqtheme.framework.util.ToastUtils;
 public class MegTypeFragment extends BaseListFragment<MessageType>
         implements IMegTypeAtyContract.IMegTypeAtyView {
 
-    public static final int MESSAGE_REQUEST_CODE = 200;
-    public static final int MESSAGE_RESULT_CODE = 400;
     private IMegTypeAtyContract.IMegTypeAtyPresenter mPresenter;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.onSubscribe();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mAdapter != null) mAdapter.cleanListData();
+        mPresenter.unSubscribe();
+    }
 
     @Override
     protected void onLoadMoreData() {
@@ -100,10 +111,7 @@ public class MegTypeFragment extends BaseListFragment<MessageType>
             ToastUtils.toastShort("数据出错,请重新加载~");
             return;
         }
-        Intent intent = new Intent(getActivity(), MegDetailActivity.class);
-        intent.putExtra("messageDetailId", item.getMessageDetailId());
-        intent.putExtra("title", item.getTitle());
-        startActivityForResult(intent, MESSAGE_REQUEST_CODE);
+        MainRouter.gotoMegDetailActivity(getActivity(), item.getTitle(), item.getMessageDetailId());
     }
 
     /**
@@ -133,7 +141,8 @@ public class MegTypeFragment extends BaseListFragment<MessageType>
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == MESSAGE_REQUEST_CODE && resultCode == MESSAGE_RESULT_CODE) {
+        if (requestCode == MainGlobal.requestCode.meg_detail_del
+                && resultCode == MainGlobal.resultCode.meg_detail_deled) {
             mCurrentPage = 1;//标记全部刷新
             getData();
         }
@@ -165,19 +174,6 @@ public class MegTypeFragment extends BaseListFragment<MessageType>
                 }
             }
         });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.onSubscribe();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (mAdapter != null) mAdapter.cleanListData();
-        mPresenter.unSubscribe();
     }
 
     /**

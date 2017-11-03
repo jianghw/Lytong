@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.BaseApiClient;
@@ -23,7 +24,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 基类

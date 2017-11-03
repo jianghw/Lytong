@@ -8,8 +8,6 @@ import com.tzly.ctcyh.pay.html_v.Html5Activity;
 import com.tzly.ctcyh.pay.pay_type_v.PayTypeActivity;
 import com.tzly.ctcyh.router.IComponentRouter;
 import com.tzly.ctcyh.router.LibUiRouter;
-import com.tzly.ctcyh.router.ServiceRouter;
-import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.service.RouterGlobal;
 
 /**
@@ -62,21 +60,7 @@ public class PayUiRouter extends LibUiRouter implements IComponentRouter {
     @Override
     protected boolean excludeLoginActivity(String host) {
         //可添加不需要登录业务
-        return loginActivity();
-    }
-
-    protected boolean loginActivity() {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
-            IUserService service = (IUserService) serviceRouter
-                    .getService(IUserService.class.getSimpleName());
-            boolean userLogin = service.isUserByLogin();
-            return !userLogin;
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-            return true;
-        }
+        return PayRouter.gotoByIsLogin();
     }
 
     @Override

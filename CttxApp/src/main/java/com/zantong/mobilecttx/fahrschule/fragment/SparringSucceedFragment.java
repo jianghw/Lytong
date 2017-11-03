@@ -13,6 +13,7 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.LoginData;
@@ -25,8 +26,6 @@ import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
-
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 陪练支付 成功

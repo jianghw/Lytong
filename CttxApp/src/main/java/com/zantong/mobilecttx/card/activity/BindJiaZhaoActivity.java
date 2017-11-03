@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.ServiceRouter;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.tzly.ctcyh.service.IUserService;
@@ -20,12 +21,12 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.card.bean.BindCardResult;
 import com.zantong.mobilecttx.card.dto.BindCardDTO;
 import com.zantong.mobilecttx.card.dto.BindDrivingDTO;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -33,8 +34,6 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -122,10 +121,9 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
                         });
                 break;
             case R.id.activity_bind_jia_zhao_agreement://保密隐私条例
-                Intent intent = new Intent();
-                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "《用户隐私保密协议》");
-                intent.putExtra(JxGlobal.putExtra.browser_url_extra, "file:///android_asset/www/bindcard_agreement.html");
-                Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
+
+                MainRouter.gotoHtmlActivity(this,
+                        "《用户隐私保密协议》", "file:///android_asset/www/bindcard_agreement.html");
                 break;
             case R.id.bind_jia_zhao_commit://提交信息
                 bindChangTongKa();

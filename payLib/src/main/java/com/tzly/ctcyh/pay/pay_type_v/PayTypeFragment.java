@@ -154,10 +154,12 @@ public class PayTypeFragment extends JxBaseRefreshFragment
         mLayLinearOrder = (LinearLayout) view.findViewById(R.id.lay_linear_order);
         mCombo = (TextView) view.findViewById(R.id.combo);
         mLayLinearCombo = (LinearLayout) view.findViewById(R.id.lay_linear_combo);
-        mTvName = (TextView) view.findViewById(R.id.tv_name);
-        mLayLinearName = (LinearLayout) view.findViewById(R.id.lay_linear_name);
-        mTvPhone = (TextView) view.findViewById(R.id.tv_phone);
-        mLayLinearPhone = (LinearLayout) view.findViewById(R.id.lay_linear_phone);
+
+        //        mTvName = (TextView) view.findViewById(R.id.tv_name);
+        //        mLayLinearName = (LinearLayout) view.findViewById(R.id.lay_linear_name);
+        //        mTvPhone = (TextView) view.findViewById(R.id.tv_phone);
+        //        mLayLinearPhone = (LinearLayout) view.findViewById(R.id.lay_linear_phone);
+
         mTvPrice = (TextView) view.findViewById(R.id.tv_price);
         mLayLinearPrice = (LinearLayout) view.findViewById(R.id.lay_linear_price);
 
@@ -200,7 +202,7 @@ public class PayTypeFragment extends JxBaseRefreshFragment
                 }
                 //获取优惠
                 mTvPay.setEnabled(true);
-                if (mPresenter != null) mPresenter.getCouponByType();
+                if (mPresenter != null && mLayReCoupon.isEnabled()) mPresenter.getCouponByType();
             }
         });
     }
@@ -316,6 +318,10 @@ public class PayTypeFragment extends JxBaseRefreshFragment
                 mRbWeixinpay.setVisibility(View.VISIBLE);
             }
         }
+
+        //标记是否可点优惠劵
+        mLayReCoupon.setEnabled(payTypeBean.getCouponId() <= 0);
+        if (payTypeBean.getCouponId() > 0) mTvCoupon.setText("此订单已用优惠劵,可直接支付");
     }
 
     /**

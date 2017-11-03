@@ -9,11 +9,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
-import com.zantong.mobilecttx.browser.PayHtmlActivity;
 import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.fahrschule.activity.SparringActivity;
@@ -32,7 +31,6 @@ import java.util.List;
 
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 订单列表页面
@@ -154,10 +152,8 @@ public class MyOrderActivity extends BaseJxActivity
              */
             @Override
             public void doClickSubscribe(OrderListBean bean) {
-                Intent intent = new Intent();
-                intent.putExtra(JxGlobal.putExtra.browser_title_extra, bean.getGoodsName());
-                intent.putExtra(JxGlobal.putExtra.browser_url_extra, bean.getTargetUrl());
-                Act.getInstance().gotoLoginByIntent(MyOrderActivity.this, BrowserHtmlActivity.class, intent);
+
+                MainRouter.gotoHtmlActivity(MyOrderActivity.this, bean.getGoodsName(), bean.getTargetUrl());
             }
 
             /**
@@ -368,19 +364,12 @@ public class MyOrderActivity extends BaseJxActivity
 
     @Override
     public void onPayOrderByCouponSucceed(PayOrderResponse result) {
-        Intent intent = new Intent();
-        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
-        intent.putExtra(JxGlobal.putExtra.browser_url_extra, result.getData());
-        Act.getInstance().gotoLoginByIntent(this, PayHtmlActivity.class, intent);
+
     }
 
     @Override
     public void getBankPayHtmlSucceed(PayOrderResponse result, String orderId) {
-        //        Intent intent = new Intent(this, PayBrowserActivity.class);
-        //        intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付");
-        //        intent.putExtra(JxGlobal.putExtra.web_url_extra, result.getData());
-        //        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
-        //        startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
+
     }
 
     /**

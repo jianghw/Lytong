@@ -9,13 +9,18 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.GeolocationPermissions;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
@@ -24,6 +29,7 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tzly.ctcyh.router.util.EncryptUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
@@ -50,9 +56,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.Bind;
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -65,8 +68,8 @@ import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_COD
 public class BrowserHtmlActivity extends BaseJxActivity
         implements IHtmlBrowserContract.IHtmlBrowserView {
 
-    @Bind(R.id.webView)
-    ProgressWebView mWebView;
+    private WebView mWebView;
+    private ProgressBar mProgressBar;
 
     protected String mStrTitle;
     protected String mStrUrl;
@@ -77,10 +80,19 @@ public class BrowserHtmlActivity extends BaseJxActivity
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
-        Intent intent = getIntent();
+        onNewIntent(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
         if (intent != null) {
-            mStrTitle = intent.getStringExtra(JxGlobal.putExtra.browser_title_extra);
-            mStrUrl = intent.getStringExtra(JxGlobal.putExtra.browser_url_extra);
+            Bundle bundle = intent.getExtras();
+            if (intent.hasExtra(MainGlobal.putExtra.browser_title_extra))
+                mStrTitle = bundle.getString(MainGlobal.putExtra.browser_title_extra);
+            if (intent.hasExtra(MainGlobal.putExtra.browser_url_extra))
+                mStrUrl = bundle.getString(MainGlobal.putExtra.browser_url_extra);
         }
     }
 
@@ -89,13 +101,12 @@ public class BrowserHtmlActivity extends BaseJxActivity
         return R.layout.activity_browser;
     }
 
-    protected boolean isNeedKnife() {
-        return true;
-    }
-
     @Override
-    protected void initFragmentView(View view) {
+    protected void initFragmentView(View childView) {
         EventBus.getDefault().register(this);
+
+        mProgressBar = (ProgressBar) childView.findViewById(R.id.pb_html5);
+        mWebView = (WebView) childView.findViewById(R.id.wv_html5);
 
         initTitleContent(mStrTitle);
         setTvCloseVisible();
@@ -107,9 +118,26 @@ public class BrowserHtmlActivity extends BaseJxActivity
 
     @SuppressLint("SetJavaScriptEnabled")
     protected void initViewStatus() {
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.setWebViewClient(new MyWebViewClient());
+        WebSettings settings = mWebView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        //设置支持Javascript
+        settings.setDefaultTextEncodingName("utf-8");
+        //自己添加
+        settings.setSupportZoom(true);//支持缩放，默认为true
+        //mWebSettings.setBuiltInZoomControls(true); //设置内置的缩放控件
+        settings.setLoadWithOverviewMode(true);// 缩放至屏幕的大小
+        settings.setUseWideViewPort(true);//将图片调整到适合webview的大小
+        settings.setDefaultTextEncodingName("utf-8");//设置编码格式
+        settings.setLoadsImagesAutomatically(true);//支持自动加载图片
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); //支持内容重新布局
+
         mWebView.addJavascriptInterface(new InterfaceForJS(this), "CTTX");
+
+        saveData(settings);
+        newWin(settings);
+
+        mWebView.setWebViewClient(webViewClient);
+        mWebView.setWebChromeClient(webChromeClient);
 
         String cust_id = MainRouter.getUserPhoenum();
         String SEC_KEY = "BE7D6564766740037581842CE0ACA1DD";
@@ -117,13 +145,30 @@ public class BrowserHtmlActivity extends BaseJxActivity
         mStrUrl = mStrUrl + "?cust_id=" + cust_id + "&token=" + token;
         mWebView.loadUrl(mStrUrl);
 
-        WebSettings settings = mWebView.getSettings();
-        //设置支持Javascript
-        settings.setDefaultTextEncodingName("utf-8");
+        //支持获取手势焦点，输入用户名、密码或其他
+        mWebView.requestFocusFromTouch();
+    }
 
-        //触摸焦点起作用.
-        //如果不设置，则在点击网页文本输入框时，不能弹出软键盘及不响应其他的一些事件。
-        mWebView.requestFocus();
+    /**
+     * HTML5数据存储
+     */
+    private void saveData(WebSettings mWebSettings) {
+        //有时候网页需要自己保存一些关键数据,Android WebView 需要自己设置
+        mWebSettings.setDomStorageEnabled(true); //开启 DOM storage API 功能
+        mWebSettings.setDatabaseEnabled(true); //开启database storage API 功能
+        mWebSettings.setAppCacheEnabled(true);//开启Application Caches 功能
+        String appCachePath = getApplicationContext().getCacheDir().getAbsolutePath();
+        mWebSettings.setAppCachePath(appCachePath);
+    }
+
+    /**
+     * 多窗口的问题
+     */
+    private void newWin(WebSettings mWebSettings) {
+        //html中的_bank标签就是新建窗口打开，有时会打不开，需要加以下
+        //然后 复写 WebChromeClient的onCreateWindow方法
+        mWebSettings.setSupportMultipleWindows(false); //多窗口
+        mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
     }
 
     /**
@@ -217,7 +262,7 @@ public class BrowserHtmlActivity extends BaseJxActivity
         }
     }
 
-    private class MyWebViewClient extends WebViewClient {
+    WebViewClient webViewClient = new WebViewClient() {
         // 重写shouldOverrideUrlLoading方法，使点击链接后不使用其他的浏览器打开。
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -269,13 +314,79 @@ public class BrowserHtmlActivity extends BaseJxActivity
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             handler.proceed();
         }
-    }
+    };
+
+    WebChromeClient webChromeClient = new WebChromeClient() {
+        /**
+         * 获得网页的加载进度
+         */
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            mProgressBar.setProgress(newProgress);
+            super.onProgressChanged(view, newProgress);
+        }
+
+        //=========HTML5定位==========================================================
+        //需要先加入权限
+        //<uses-permission android:name="android.permission.INTERNET"/>
+        //<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+        //<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+        @Override
+        public void onReceivedIcon(WebView view, Bitmap icon) {
+            super.onReceivedIcon(view, icon);
+        }
+
+        /**
+         * 获取Web页中的title用来设置自己界面中的title
+         */
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+        }
+
+        @Override
+        public void onGeolocationPermissionsHidePrompt() {
+            super.onGeolocationPermissionsHidePrompt();
+        }
+
+        @Override
+        public void onGeolocationPermissionsShowPrompt(final String origin, final GeolocationPermissions.Callback callback) {
+            callback.invoke(origin, true, false);//注意个函数，第二个参数就是是否同意定位权限，第三个是是否希望内核记住
+            super.onGeolocationPermissionsShowPrompt(origin, callback);
+        }
+        //=========HTML5定位==========================================================
+
+        //=========多窗口的问题==========================================================
+        @Override
+        public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
+            WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
+            transport.setWebView(view);
+            resultMsg.sendToTarget();
+            return true;
+        }
+        //=========多窗口的问题==========================================================
+    };
 
     @Override
     protected void DestroyViewAndThing() {
         EventBus.getDefault().unregister(this);
-        mWebView.destroyWebView();
         if (mPresenter != null) mPresenter.unSubscribe();
+
+        if (mWebView != null) {
+            mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+            mWebView.clearFormData();
+            mWebView.clearHistory();
+            ((ViewGroup) mWebView.getParent()).removeView(mWebView);
+            mWebView.loadUrl("about:blank");
+            mWebView.stopLoading();
+            mWebView.setWebChromeClient(null);
+            mWebView.setWebViewClient(null);
+            mWebView.destroy();
+            mWebView = null;
+        }
+        super.onDestroy();
+
+        System.exit(0);
     }
 
     /**
@@ -338,6 +449,7 @@ public class BrowserHtmlActivity extends BaseJxActivity
     }
 
     protected void goToCamera() {
+        MainRouter.gotoOcrCameraActivity(this);
     }
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)

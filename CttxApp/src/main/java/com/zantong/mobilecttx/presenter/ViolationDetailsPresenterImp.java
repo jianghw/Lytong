@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.presenter;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
 import com.zantong.mobilecttx.application.Config;
@@ -16,8 +17,6 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * Created by Administrator on 2016/5/5.

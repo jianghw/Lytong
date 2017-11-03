@@ -42,6 +42,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.utils.StateBarSetting;
 import com.zantong.mobilecttx.utils.TitleSetting;
@@ -75,8 +76,6 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Map;
-
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * This activity opens the camera and does the actual scanning on a background thread. It draws a

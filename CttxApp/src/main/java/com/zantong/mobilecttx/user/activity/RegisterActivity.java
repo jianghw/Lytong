@@ -11,16 +11,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
+import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-
-import cn.qqtheme.framework.bean.BankResponse;
-
-import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.user.bean.VcodeResult;
@@ -31,7 +29,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.util.ToastUtils;
+import cn.qqtheme.framework.bean.BankResponse;
 
 public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter> {
 
@@ -235,6 +233,7 @@ public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter
             intent.putExtra(Register2Activity.RES_CODE, 0);
             intent.putExtra(Register2Activity.PHONE, phone);
             startActivity(intent);
+
             finish();
         } else {
             onCheckVerifyCode();
@@ -262,6 +261,7 @@ public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter
                     @Override
                     public void onSuccess(BankResponse bankResponse) {
                         hideDialogLoading();
+
                         if (Config.OK.equals(bankResponse.getSYS_HEAD().getReturnCode())) {
                             Intent intent = new Intent(RegisterActivity.this, Register2Activity.class);
                             intent.putExtra(Register2Activity.RES_CODE, 0);
@@ -274,6 +274,7 @@ public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter
                     @Override
                     public void onError(String errorCode, String msg) {
                         hideDialogLoading();
+                        ToastUtils.toastShort("验证失败" + msg);
                     }
                 }
         );

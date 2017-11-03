@@ -1,7 +1,6 @@
 package com.zantong.mobilecttx.home.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,7 +11,6 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobilecttx.home.activity.CustomCordovaActivity;
 import com.zantong.mobilecttx.home.bean.BannersBean;
@@ -25,7 +23,6 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.custom.banner.CBPageAdapter;
 import cn.qqtheme.framework.global.JxConfig;
-import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.image.ImageOptions;
 
 /**
@@ -86,10 +83,7 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
         } else if (url.contains("fahrschule")) {//驾校报名
             Act.getInstance().gotoIntentLogin(mAdapterContext, FahrschuleActivity.class);
         } else {
-            Intent intent = new Intent();
-            intent.putExtra(JxGlobal.putExtra.browser_title_extra, "优惠");
-            intent.putExtra(JxGlobal.putExtra.browser_url_extra, url);
-            Act.getInstance().gotoLoginByIntent(mAdapterContext, BrowserHtmlActivity.class, intent);
+            MainRouter.gotoHtmlActivity(mAdapterContext, "优惠", url);
         }
     }
 
@@ -99,17 +93,17 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
         CarApiClient.getActivityCar(Utils.getContext(), activityCarDTO, new CallBack<ActivityCarResponse>() {
             @Override
             public void onSuccess(ActivityCarResponse result) {
-                Intent intent = new Intent();
+                String url = null;
                 if (result.getResponseCode() == 2000 && !TextUtils.isEmpty(result.getData().getPlateNo())) {
                     SPUtils.getInstance().setSignStatus(true);
                     SPUtils.getInstance().setSignCarPlate(result.getData().getPlateNo());
-                    intent.putExtra(JxGlobal.putExtra.browser_url_extra, Config.HUNDRED_PLAN_HOME);
+                    url = Config.HUNDRED_PLAN_HOME;
                 } else if (result.getResponseCode() == 4000) {
                     SPUtils.getInstance().setSignStatus(false);
-                    intent.putExtra(JxGlobal.putExtra.browser_url_extra, Config.HUNDRED_PLAN_DEADLINE);
+                    url = Config.HUNDRED_PLAN_DEADLINE;
                 }
-                intent.putExtra(JxGlobal.putExtra.browser_title_extra, "百日无违章");
-                Act.getInstance().gotoLoginByIntent(mAdapterContext, BrowserHtmlActivity.class, intent);
+
+                MainRouter.gotoHtmlActivity(mAdapterContext, "百日无违章", url);
             }
 
             @Override

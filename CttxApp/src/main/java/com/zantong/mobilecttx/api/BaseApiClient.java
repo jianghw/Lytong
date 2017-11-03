@@ -98,24 +98,16 @@ public class BaseApiClient {
                     return cookies != null ? cookies : new ArrayList<Cookie>();
                 }
             });
-
             client = builder.build();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (KeyManagementException e) {
             e.printStackTrace();
         }
-
-
     }
 
 
-    public static <T> void get(Context context, String url,
-                               AsyncCallBack<T> asyncCallBack) {
-        //        PrefUtils pf = PrefUtils.getInstance(context);
-        //        if (pf.isLogin()) {
-        //            url += "?token=" + pf.getToken();
-        //        }
+    public static <T> void get(Context context, String url, AsyncCallBack<T> asyncCallBack) {
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).get().build();
         enqueue(context, request, asyncCallBack);
@@ -125,10 +117,9 @@ public class BaseApiClient {
                                 AsyncCallBack<T> asyncCallBack) {
         FormBody.Builder builder = new FormBody.Builder();
         String data = asyncCallBack.getGson().toJson(jsonParams);
-        if (data != null) {
-            builder.add("msg", data);
-        }
-        builder.add("usrid", MainRouter.getUserID(false));
+        if (data != null) builder.add("msg", data);
+        if (MainRouter.isUserLogin())
+            builder.add("usrid", MainRouter.getUserID(false));
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).post(builder.build()).build();
         enqueue(context, request, asyncCallBack);
@@ -138,10 +129,9 @@ public class BaseApiClient {
                                     AsyncCallBack<T> asyncCallBack) {
         FormBody.Builder builder = new FormBody.Builder();
 
-        if (jsonParams != null) {
-            builder.add("msg", jsonParams);
-        }
-        builder.add("usrid", MainRouter.getUserID(false));
+        if (jsonParams != null) builder.add("msg", jsonParams);
+        if (MainRouter.isUserLogin())
+            builder.add("usrid", MainRouter.getUserID(false));
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).post(builder.build()).build();
         enqueue(context, request, asyncCallBack);
@@ -231,8 +221,7 @@ public class BaseApiClient {
     }
 
     public static String getDownUrl(String relativeUrl) {
-        //http://dev.liyingtong.com/download/
-        //http://biz.liyingtong.com/download/
+
         return "BuildConfig.APP_DOWNLOD" + relativeUrl;
     }
 

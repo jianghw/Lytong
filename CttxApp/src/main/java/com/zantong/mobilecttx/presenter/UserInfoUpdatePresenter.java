@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.presenter;
 
 import com.tzly.ctcyh.router.ServiceRouter;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.service.IUserService;
 import com.zantong.mobilecttx.api.OnLoadServiceBackUI;
 import com.zantong.mobilecttx.application.Config;
@@ -15,8 +16,6 @@ import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 作者：王海洋

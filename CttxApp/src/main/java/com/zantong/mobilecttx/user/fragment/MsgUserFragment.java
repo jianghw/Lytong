@@ -2,11 +2,11 @@ package com.zantong.mobilecttx.user.fragment;
 
 import android.view.View;
 
-import com.zantong.mobilecttx.user.adapter.MsgAdapter;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
+import com.zantong.mobilecttx.user.adapter.MsgAdapter;
 import com.zantong.mobilecttx.user.bean.MsgBean;
-import cn.qqtheme.framework.util.ToastUtils;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,5 @@
 package com.zantong.mobilecttx.weizhang.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.util.FragmentUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.BuildConfig;
@@ -18,11 +18,10 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseJxFragment;
-import com.zantong.mobilecttx.browser.PayHtmlActivity;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.AmountUtils;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.NetUtils;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationPayActivity;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 import com.zantong.mobilecttx.weizhang.dto.ViolationOrderDTO;
@@ -31,8 +30,6 @@ import butterknife.Bind;
 import butterknife.OnClick;
 import cn.qqtheme.framework.bean.BankResponse;
 import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 违章支付页面
@@ -225,11 +222,7 @@ public class ViolationPayFragment extends BaseJxFragment {
                 + "&merCustomId=" + merCustomId
                 + "&remark=" + remark;
 
-        Intent intent = new Intent();
-        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "支付");
-        intent.putExtra(JxGlobal.putExtra.browser_url_extra, payUrl);
-        intent.putExtra(JxGlobal.putExtra.violation_num_extra, violationnum);
-        Act.getInstance().gotoLoginByIntent(getActivity(), PayHtmlActivity.class, intent);
+        MainRouter.gotoPayHtmlActivity(getActivity(),"支付页面",payUrl,violationamt);
 
         getActivity().finish();
     }

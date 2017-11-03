@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.umeng.analytics.MobclickAgent;
@@ -39,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * 违法信息列表页面

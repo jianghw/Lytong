@@ -10,19 +10,19 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseActivity;
 import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
-import com.zantong.mobilecttx.eventbus.ErrorEvent;
 import com.zantong.mobilecttx.contract.IBaseFragment;
+import com.zantong.mobilecttx.eventbus.ErrorEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
-import cn.qqtheme.framework.util.ToastUtils;
 
 /**
  * Fragment基类
