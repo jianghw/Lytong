@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.base;
 
-import com.zantong.mobilecttx.application.LoginData;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.Tools;
 
 import org.json.JSONException;
@@ -62,8 +62,8 @@ public class MessageFormat {
         map.put("TransServiceCode", mTransServiceCode);
         map.put("RequestDate", Tools.getYearDate());
         map.put("RequestTime", Tools.getTimeDate());
-        map.put("DvcToken", LoginData.getInstance().imei);
-        map.put("ConsumerSeqNo", LoginData.getInstance().imei + Tools.getYearDate() + Tools.getTimeDateS());
+        map.put("DvcToken", MainRouter.getPhoneDeviceId());
+        map.put("ConsumerSeqNo", MainRouter.getPhoneDeviceId() + Tools.getYearDate() + Tools.getTimeDateS());
         return map;
     }
 

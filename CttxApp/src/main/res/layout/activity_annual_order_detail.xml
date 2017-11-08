@@ -204,7 +204,7 @@
             android:layout_marginTop="@dimen/ds_24"
             android:background="@color/colorLineGray_e6"/>
 
-        <org.sufficientlysecure.htmltextview.HtmlTextView
+        <com.tzly.ctcyh.router.custom.htmltxt.HtmlTextView
             android:id="@+id/tv_content_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

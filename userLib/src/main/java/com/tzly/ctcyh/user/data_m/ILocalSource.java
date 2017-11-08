@@ -40,4 +40,6 @@ public interface ILocalSource {
     String getNickname();
 
     void getCleanUser();
+
+    void saveLoginBean(String userString);
 }

@@ -9,15 +9,14 @@ import android.widget.TextView;
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.weizhang.activity.LicenseCheckGradeActivity;
-import com.zantong.mobilecttx.weizhang.activity.LicenseDetailActivity;
+import com.zantong.mobilecttx.violation_v.LicenseCheckGradeActivity;
+import com.zantong.mobilecttx.violation_v.LicenseDetailActivity;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
-import cn.qqtheme.framework.global.JxConfig;
+import com.tzly.ctcyh.router.util.MobUtils;
 
 
 /**
@@ -49,8 +48,8 @@ public class HomePagerFragment_0 extends JxBaseRefreshFragment implements View.O
     }
 
     @Override
-    protected void bindFragmentView(View fragmentView) {
-        initView(fragmentView);
+    protected void bindFragmentView(View fragment) {
+        initView(fragment);
     }
 
     @Override
@@ -77,19 +76,19 @@ public class HomePagerFragment_0 extends JxBaseRefreshFragment implements View.O
         switch (v.getId()) {
 
             case R.id.tv_license://驾驶证查分
-                JxConfig.getInstance().eventIdByUMeng(7);
+                MobUtils.getInstance().eventIdByUMeng(7);
                 licenseCheckGrade();
                 break;
             case R.id.tv_appraisement://爱车估值
-                JxConfig.getInstance().eventIdByUMeng(34);
+                MobUtils.getInstance().eventIdByUMeng(34);
                 carValuation();
                 break;
             case R.id.tv_check://年检
-                JxConfig.getInstance().eventIdByUMeng(4);
+                MobUtils.getInstance().eventIdByUMeng(4);
                 gotoCheckHtml();
                 break;
             case R.id.tv_drive://国际驾照
-                JxConfig.getInstance().eventIdByUMeng(35);
+                MobUtils.getInstance().eventIdByUMeng(35);
                 InternationalDrivingDocument();
                 break;
         }
@@ -103,14 +102,11 @@ public class HomePagerFragment_0 extends JxBaseRefreshFragment implements View.O
 
     protected void licenseCheckGrade() {
         LicenseFileNumDTO bean = SPUtils.getInstance().getLicenseFileNumDTO();
-        if (!MainRouter.isUserLogin() ||
-                bean == null && TextUtils.isEmpty(LoginData.getInstance().filenum)) {
-            Act.getInstance().gotoIntentLogin(getActivity(), LicenseCheckGradeActivity.class);
-        } else if (bean != null || !TextUtils.isEmpty(LoginData.getInstance().filenum)
-                && !TextUtils.isEmpty(LoginData.getInstance().getdate)) {
+        if (!TextUtils.isEmpty(MainRouter.getUserFilenum())
+                && !TextUtils.isEmpty(MainRouter.getUserGetdate()) || bean != null) {
             LicenseFileNumDTO loginBean = new LicenseFileNumDTO();
-            loginBean.setFilenum(LoginData.getInstance().filenum);
-            loginBean.setStrtdt(LoginData.getInstance().getdate);
+            loginBean.setFilenum(MainRouter.getUserFilenum());
+            loginBean.setStrtdt(MainRouter.getUserGetdate());
 
             Intent intent = new Intent(getActivity(), LicenseDetailActivity.class);
             Bundle bundle = new Bundle();

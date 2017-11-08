@@ -106,4 +106,16 @@ public final class UserRouter {
             return "";
         }
     }
+
+    public static void gotoMainActivity(Activity activity, int i) {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        Object object = serviceRouter.getService(IMainService.class.getSimpleName());
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoMainActivity(activity, i);
+        } else {
+            //注册机开始工作
+            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
+        }
+    }
 }

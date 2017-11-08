@@ -28,13 +28,12 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.util.EncryptUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.application.LoginData;
-import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.contract.InterfaceForJS;
 import com.zantong.mobilecttx.contract.browser.IHtmlBrowserContract;
@@ -65,7 +64,7 @@ import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_COD
 /**
  * 公用浏览器 html页面显示
  */
-public class BrowserHtmlActivity extends BaseJxActivity
+public class BrowserHtmlActivity extends JxBaseActivity
         implements IHtmlBrowserContract.IHtmlBrowserView {
 
     private WebView mWebView;
@@ -97,24 +96,30 @@ public class BrowserHtmlActivity extends BaseJxActivity
     }
 
     @Override
-    protected int getContentResId() {
+    protected int initContentView() {
         return R.layout.activity_browser;
     }
 
     @Override
-    protected void initFragmentView(View childView) {
+    protected void bindContentView(View childView) {
         EventBus.getDefault().register(this);
 
         mProgressBar = (ProgressBar) childView.findViewById(R.id.pb_html5);
         mWebView = (WebView) childView.findViewById(R.id.wv_html5);
 
-        initTitleContent(mStrTitle);
-        setTvCloseVisible();
-        setTvRightVisible("分享");
+        titleContent(mStrTitle);
+        titleClose();
+        titleMore("分享");
+    }
+
+    @Override
+    protected void initContentData() {
+        initViewStatus();
 
         HtmlBrowserPresenter presenter = new HtmlBrowserPresenter(
                 Injection.provideRepository(getApplicationContext()), this);
     }
+
 
     @SuppressLint("SetJavaScriptEnabled")
     protected void initViewStatus() {
@@ -139,10 +144,12 @@ public class BrowserHtmlActivity extends BaseJxActivity
         mWebView.setWebViewClient(webViewClient);
         mWebView.setWebChromeClient(webChromeClient);
 
-        String cust_id = MainRouter.getUserPhoenum();
-        String SEC_KEY = "BE7D6564766740037581842CE0ACA1DD";
-        String token = EncryptUtils.encryptMD5ToString(SEC_KEY + cust_id + SEC_KEY);
-        mStrUrl = mStrUrl + "?cust_id=" + cust_id + "&token=" + token;
+        if (mStrUrl.contains("m.wedrive.com.cn") || mStrUrl.contains("tester.wedrive.com.cn")) {
+            String cust_id = MainRouter.getUserPhoenum();
+            String SEC_KEY = "BE7D6564766740037581842CE0ACA1DD";
+            String token = EncryptUtils.encryptMD5ToString(SEC_KEY + cust_id + SEC_KEY);
+            mStrUrl = mStrUrl + "?cust_id=" + cust_id + "&token=" + token;
+        }
         mWebView.loadUrl(mStrUrl);
 
         //支持获取手势焦点，输入用户名、密码或其他
@@ -185,16 +192,6 @@ public class BrowserHtmlActivity extends BaseJxActivity
     }
 
     @Override
-    public void showLoadingDialog() {
-        showDialogLoading();
-    }
-
-    @Override
-    public void dismissLoadingDialog() {
-        hideDialogLoading();
-    }
-
-    @Override
     public void uploadDrivingImgError(String message) {
         errorToast(message);
     }
@@ -222,7 +219,6 @@ public class BrowserHtmlActivity extends BaseJxActivity
 
     protected void errorToast(String message) {
         ToastUtils.toastShort(message);
-        dismissLoadingDialog();
     }
 
     @Override
@@ -292,16 +288,16 @@ public class BrowserHtmlActivity extends BaseJxActivity
 
             if (url.contains("detail")) {
                 mRightBtnStatus = 1;
-                initTitleContent("积分明细");
-                setTvRightVisible("积分规则");
-            } else if (url.contains("index")) {
+                titleContent("积分明细");
+                titleMore("积分规则");
+            } else if (url.contains("h5/build/index")) {
                 mRightBtnStatus = 0;
-                initTitleContent("百日无违章");
-                setTvRightVisible("活动说明");
+                titleContent("百日无违章");
+                titleMore("活动说明");
             } else {
                 mRightBtnStatus = -1;
-                initTitleContent(mStrTitle);
-                setTvRightVisible("分享");
+                titleContent(mStrTitle);
+                titleMore("分享");
             }
         }
 
@@ -368,9 +364,12 @@ public class BrowserHtmlActivity extends BaseJxActivity
     };
 
     @Override
-    protected void DestroyViewAndThing() {
+    protected void onDestroy() {
+        super.onDestroy();
         EventBus.getDefault().unregister(this);
+
         if (mPresenter != null) mPresenter.unSubscribe();
+        setResult(MainGlobal.resultCode.web_browser_back);
 
         if (mWebView != null) {
             mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
@@ -384,9 +383,7 @@ public class BrowserHtmlActivity extends BaseJxActivity
             mWebView.destroy();
             mWebView = null;
         }
-        super.onDestroy();
-
-        System.exit(0);
+        //        System.exit(0);
     }
 
     /**
@@ -485,7 +482,7 @@ public class BrowserHtmlActivity extends BaseJxActivity
         }
 
         WXWebpageObject webpage = new WXWebpageObject();
-        if (LoginData.getInstance().loginFlag) {
+        if (MainRouter.isUserLogin()) {
             webpage.webpageUrl = mStrUrl;
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";

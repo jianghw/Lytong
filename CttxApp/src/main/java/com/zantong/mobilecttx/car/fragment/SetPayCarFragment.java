@@ -1,12 +1,14 @@
 package com.zantong.mobilecttx.car.fragment;
 
 import android.app.Dialog;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
+import com.zantong.mobilecttx.car.activity.SetPayCarActivity;
 import com.zantong.mobilecttx.car.adapter.SetPayCarAdapter;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.presenter.SetPayCarFragmentPresenter;
@@ -40,12 +42,10 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
     }
 
     @Override
-    protected void onLoadMoreData() {
-    }
+    protected void onLoadMoreData() {}
 
     @Override
-    protected void onRefreshData() {
-    }
+    protected void onRefreshData() {}
 
     public HashMap<String, String> mapData() {
         HashMap<String, String> mHashMap = new HashMap<>();
@@ -85,18 +85,17 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
             ToastUtils.toastShort("绑定车辆小于2辆,无需改邦操作");
         }
 
-//        IOSpopwindow menuPop = new IOSpopwindow(getActivity(), getView(), pay.get(0).getCarnum(), pay.get(1).getCarnum(), new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        }, new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        }, "提示：车辆改绑成功后12小时才可进行违章缴费");
-
+        //        IOSpopwindow menuPop = new IOSpopwindow(getActivity(), getView(), pay.get(0).getCarnum(), pay.get(1).getCarnum(), new View.OnClickListener() {
+        //            @Override
+        //            public void onClick(View v) {
+        //
+        //            }
+        //        }, new View.OnClickListener() {
+        //            @Override
+        //            public void onClick(View v) {
+        //
+        //            }
+        //        }, "提示：车辆改绑成功后12小时才可进行违章缴费");
     }
 
     @Override
@@ -120,8 +119,6 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
         super.initView(view);
 
         mRspInfoBean = LoginData.getInstance().mServerCars;
-//        LogUtils.jsonObject(mRspInfoBean);
-
         if (mRspInfoBean != null) {
             int size = mRspInfoBean.size();
 
@@ -163,7 +160,13 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
         }
         UserInfoRememberCtrl.saveObject("userCarInfo", mRspInfoBean);
         ToastUtils.toastShort("修改成功");
-        getActivity().finish();
+
+        FragmentActivity activity = getActivity();
+        if (activity != null && activity instanceof SetPayCarActivity) {
+            SetPayCarActivity payCarActivity = (SetPayCarActivity) activity;
+            payCarActivity.setSucceedResult();
+            payCarActivity.finish();
+        }
     }
 
     @Override

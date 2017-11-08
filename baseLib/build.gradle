@@ -51,6 +51,8 @@ dependencies {
     compile project(':XRecyclerView')
     //加密工具
     compile files('libs/sun.misc.BASE64Decoder.jar')
-    //html-textview显示
-    compile 'org.sufficientlysecure:html-textview:3.5'
+    //友盟+
+    compile 'com.umeng.analytics:analytics:latest.integration'
+    //其中latest.release指代最新Bugly SDK版本号
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
 }

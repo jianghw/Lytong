@@ -185,7 +185,6 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        LoginData.getInstance().filenum = "";
     }
 
     @Override
@@ -852,7 +851,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      */
     private void checkCtkDate() {
         CheckCtkDTO checkCtkDTO = new CheckCtkDTO();
-        checkCtkDTO.setApplyCode(LoginData.getInstance().filenum);
+        checkCtkDTO.setApplyCode(MainRouter.getUserFilenum());
         checkCtkDTO.setApplyInterface("banka");
         checkCtkDTO.setFlag("1");
         CarApiClient.checkCtk(getApplicationContext(), checkCtkDTO, new CallBack<BaseResponse>() {

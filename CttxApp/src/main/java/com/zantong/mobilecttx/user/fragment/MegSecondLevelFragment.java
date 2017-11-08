@@ -6,11 +6,7 @@ import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.tzly.ctcyh.router.util.ToastUtils;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.api.CallBack;
-import com.zantong.mobilecttx.api.CarApiClient;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.contract.IMegSecondLevelAtyContract;
 import com.zantong.mobilecttx.global.MainGlobal;
@@ -19,7 +15,6 @@ import com.zantong.mobilecttx.order.bean.MessageResponse;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.adapter.MegSecondLevelAdapter;
 import com.zantong.mobilecttx.user.bean.Meg;
-import com.zantong.mobilecttx.user.dto.MegDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,7 +119,7 @@ public class MegSecondLevelFragment extends BaseListFragment<Meg>
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MainGlobal.requestCode.meg_detail_del
-                && resultCode == MainGlobal.resultCode.meg_detail_deled) {
+                && resultCode == MainGlobal.resultCode.meg_detail_del) {
             mCurrentPage = 1;//标记全部刷新
             getData();
             setResultForRefresh();
@@ -132,7 +127,7 @@ public class MegSecondLevelFragment extends BaseListFragment<Meg>
     }
 
     private void setResultForRefresh() {
-        getActivity().setResult(MainGlobal.resultCode.meg_detail_deled);
+        getActivity().setResult(MainGlobal.resultCode.meg_detail_del);
     }
 
     /**
@@ -158,23 +153,6 @@ public class MegSecondLevelFragment extends BaseListFragment<Meg>
         return new MegSecondLevelAdapter();
     }
 
-    /**
-     * @deprecated 不用
-     */
-    private void getMsgList() {
-        MegDTO dto = new MegDTO();
-        dto.setUsrId(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
-        String id = getArguments().getString(STR_TYPE);
-        dto.setId(id);
-        CarApiClient.getMsgList(this.getActivity(), dto, new CallBack<MessageResponse>() {
-            @Override
-            public void onSuccess(MessageResponse result) {
-                if (result.getResponseCode() == 2000) {
-                    setDataResult(result.getData().getMessageDetailList());
-                }
-            }
-        });
-    }
 
     @Override
     public String getIdByArguments() {

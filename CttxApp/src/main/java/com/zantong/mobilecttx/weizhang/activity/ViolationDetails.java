@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.weizhang.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,9 +21,9 @@ import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.presenter.ViolationDetailsPresenterImp;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
-import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
@@ -215,7 +216,7 @@ public class ViolationDetails extends BaseJxActivity implements ModelView {
                 mNextBtn.setEnabled(true);
                 mNextBtn.setText("违章缴费");
                 mCommitType = 0;
-            } else if (Tools.isStrEmpty(LoginData.getInstance().filenum)) {
+            } else if (TextUtils.isEmpty(MainRouter.getUserFilenum())) {
                 MobclickAgent.onEvent(this, Config.getUMengID(11));
                 mDescTextmDescText.setVisibility(View.VISIBLE);
                 mDescTextmDescText.setText("您还未绑定畅通卡，违章缴费需要使用畅通卡");

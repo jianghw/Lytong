@@ -38,20 +38,7 @@ public interface ISplashAtyContract {
     }
 
     interface ISplashAtyPresenter extends IMvpPresenter {
-        /**
-         * 登录数据读取
-         */
-        void readObjectLoginInfoBean();
 
-        /**
-         * 提交安盛服务器登录数据
-         */
-        String initLoginMessage();
-
-        /**
-         * 提交安盛服务器
-         */
-        void loadLoginPost();
 
         /**
          * app启动图片获取
@@ -68,8 +55,6 @@ public interface ISplashAtyContract {
          */
         void startGuidePic();
 
-
-        void loadLoginPostTest();
     }
 
 }

@@ -63,8 +63,7 @@
             android:layout_below="@id/underline1"
             android:layout_marginTop="50dip"
             android:enabled="false"
-            android:text="修改密码"
-            android:textColor="@color/next_btn_selector" />
+            android:text="修改密码"/>
 
     </LinearLayout>
 

@@ -1,5 +1,6 @@
 package com.tzly.ctcyh.service;
 
+import android.app.Activity;
 import android.content.Context;
 
 /**
@@ -50,4 +51,6 @@ public interface IUserService {
     String getUserNickname();
 
     void cleanUserLogin();
+
+    void saveLoginBean(Activity activity, String user, String userString);
 }

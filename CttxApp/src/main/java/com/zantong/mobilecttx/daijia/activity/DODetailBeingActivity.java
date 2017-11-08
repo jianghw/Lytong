@@ -14,6 +14,7 @@ import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderDetailResponse;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderDetailDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.HashUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
@@ -102,12 +103,12 @@ public class DODetailBeingActivity extends BaseMvpActivity<IBaseView, HelpPresen
                 Intent intent = getIntent();
                 String orderId = intent.getStringExtra(JxGlobal.putExtra.common_extra);
                 dto.setOrderId(orderId);
-                dto.setUsrId(RSAUtils.strByEncryptionLiYing(LoginData.getInstance().userID, true));
+                dto.setUsrId(MainRouter.getRASUserID());
 
                 HashMap<String, String> hashMap = new HashMap<String, String>();
                 hashMap.put("time",time);
                 hashMap.put("orderId",orderId);
-                hashMap.put("usrId", LoginData.getInstance().userID);
+                hashMap.put("usrId", MainRouter.getUserID(false));
                 dto.setHash(HashUtils.getSignature(hashMap));
 
                 CarApiClient.cancelDaiJiaOrderDetail(DODetailBeingActivity.this, dto, new CallBack<BaseResponse>() {
@@ -150,7 +151,7 @@ public class DODetailBeingActivity extends BaseMvpActivity<IBaseView, HelpPresen
         String orderId = intent.getStringExtra(JxGlobal.putExtra.common_extra);
         dto.setOrderId(orderId);
         dto.setTime(time);
-        dto.setUsrId(RSAUtils.strByEncryptionLiYing(LoginData.getInstance().userID, true));
+        dto.setUsrId(MainRouter.getRASUserID());
 
         CarApiClient.getDaiJiaOrderDetail(this, dto, new CallBack<DaiJiaOrderDetailResponse>() {
             @Override

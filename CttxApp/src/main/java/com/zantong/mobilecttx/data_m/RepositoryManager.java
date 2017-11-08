@@ -222,14 +222,6 @@ public class RepositoryManager {
         return mLocalData.readObjectLoginInfoBean();
     }
 
-    /**
-     * 初始化用户登录信息
-     *
-     * @param rspInfoBean
-     */
-    public void initGlobalLoginInfo(RspInfoBean rspInfoBean) {
-        mLocalData.initGlobalLoginInfo(rspInfoBean);
-    }
 
     /**
      * 安盛登录接口
@@ -250,9 +242,6 @@ public class RepositoryManager {
         return mLocalData.readLoginPassword();
     }
 
-    public void saveLoginInfoRepeat(LoginInfoBean result) {
-        mLocalData.saveLoginInfoRepeat(result);
-    }
 
     /**
      * 40.app启动图片获取

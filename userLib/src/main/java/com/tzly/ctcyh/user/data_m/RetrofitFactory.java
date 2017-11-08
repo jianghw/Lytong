@@ -44,6 +44,9 @@ public class RetrofitFactory {
             case 1://同赞自己服务器
                 return isDebug
                         ? "http://dev.liyingtong.com/" : "http://api2.liyingtong.com/";
+//            case 1://同赞自己服务器
+//                return isDebug
+//                        ? "http://192.168.1.127:8082/" : "http://api2.liyingtong.com/";
             case 2:
                 return isDebug
                         ? "https://ctkapptest.icbc-axa.com/ecip/" : "https://ctkapp.icbc-axa.com/ecip/";

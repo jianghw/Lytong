@@ -53,7 +53,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
     @Override
     public void unSubscribe() {
-        mAtyView.hideLoadingProgress();
+        mAtyView.dismissLoading();
         mSubscriptions.clear();
     }
 
@@ -198,7 +198,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
     public void startCountDown() {
         Subscription subCount = Observable
                 .interval(10, 1000, TimeUnit.MILLISECONDS)
-                .take(3)
+                .take(4)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Long>() {

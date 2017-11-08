@@ -2,7 +2,7 @@ package com.tzly.ctcyh.user.global;
 
 /**
  * Created by jianghw on 2017/7/5.
- * Description:
+ * Description: 1x00--1
  * Update by:
  * Update day:
  */

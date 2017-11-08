@@ -17,13 +17,11 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.BuglyStrategy;
-import com.tencent.bugly.beta.Beta;
-import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.service.IUserService;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.BuildConfig;
+import com.zantong.mobilecttx.router.MainRouter;
 
 import cn.qqtheme.framework.util.AppUtils;
 
@@ -67,6 +65,7 @@ public class MyApplication extends MultiDexApplication {
         SDKInitializer.initialize(getApplicationContext());
         //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
         SDKInitializer.setCoordType(CoordType.BD09LL);
+
         //bugly初始化
         BuglyStrategy strategy = new BuglyStrategy();
         //设置渠道
@@ -75,9 +74,9 @@ public class MyApplication extends MultiDexApplication {
                 + "_" + AppUtils.getAppVersionCode();
         //App的版本
         strategy.setAppVersion(version);
-        Beta.autoInit = false;
-        //自动检查更新开关
-        Beta.autoCheckUpgrade = false;
+//        Beta.autoInit = false;
+//        //自动检查更新开关
+//        Beta.autoCheckUpgrade = false;
         Bugly.init(getApplicationContext(),
                 BuildConfig.App_Url ? "b7b596e1eb"
                         : "62323a33e6", BuildConfig.App_Url, strategy);
@@ -119,15 +118,7 @@ public class MyApplication extends MultiDexApplication {
             @Override
             public void onSuccess(String response) {
                 //更新推送id
-                ServiceRouter serviceRouter = ServiceRouter.getInstance();
-                Object object = serviceRouter.getService(IUserService.class.getSimpleName());
-                if (object != null) {
-                    IUserService service = (IUserService) object;
-                    service.savePushId(pushService.getDeviceId());
-                } else {
-                    //注册机开始工作
-                    ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-                }
+                MainRouter.savePushId(pushService.getDeviceId());
             }
 
             @Override

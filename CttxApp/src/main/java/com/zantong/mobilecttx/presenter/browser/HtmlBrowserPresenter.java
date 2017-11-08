@@ -51,7 +51,7 @@ public class HtmlBrowserPresenter
 
     @Override
     public void unSubscribe() {
-        mAtyView.dismissLoadingDialog();
+        mAtyView.dismissLoading();
         mSubscriptions.clear();
     }
 
@@ -62,7 +62,7 @@ public class HtmlBrowserPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoadingDialog();
+                        mAtyView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -83,11 +83,12 @@ public class HtmlBrowserPresenter
                 .subscribe(new BaseSubscriber<DrivingOcrResult>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoadingDialog();
+                        mAtyView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
+                        mAtyView.dismissLoading();
                         mAtyView.uploadDrivingImgError(e.getMessage());
                     }
 
@@ -118,7 +119,7 @@ public class HtmlBrowserPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoadingDialog();
+                        mAtyView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -126,11 +127,12 @@ public class HtmlBrowserPresenter
                 .subscribe(new BaseSubscriber<PayOrderResponse>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoadingDialog();
+                        mAtyView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
+                        mAtyView.dismissLoading();
                         mAtyView.getBankPayHtmlError(e.getMessage());
                     }
 

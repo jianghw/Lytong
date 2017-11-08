@@ -7,8 +7,6 @@ import com.google.gson.Gson;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.rea.Des3;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
-import com.zantong.mobilecttx.application.LoginData;
-import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCar;
@@ -20,21 +18,12 @@ import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.home.bean.StartPicResponse;
-import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.user.bean.LoginInfoBean;
-import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.user.bean.UserCarsBean;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
-import com.zantong.mobilecttx.utils.Tools;
-import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 import com.zantong.mobilecttx.weizhang.dto.LicenseTestDTO;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -43,7 +32,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -67,33 +55,9 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
         mSplashAtyView.setPresenter(this);
     }
 
-    private String getStartTime() {
-        String nowMonth = Tools.getYearDate().substring(4, 6);
-        String oldMonth =  MainRouter.getUserGetdate().substring(4, 6);
-        String startTime = "";
-        if (Integer.parseInt(nowMonth) > Integer.parseInt(oldMonth)) {
-            startTime = Tools.getYearDate().substring(0, 4) + MainRouter.getUserGetdate().substring(4);
-        } else {
-            startTime = MainRouter.getUserGetdate();
-        }
-        return startTime;
-    }
-
     @Override
     public void onSubscribe() {
         //TODO 缓存操作 暂时先就这样
-    }
-
-    /**
-     * 历史数据操作,初始化全局数据
-     */
-    @Override
-    public void readObjectLoginInfoBean() {
-        RspInfoBean rspInfoBean = mRepository.readObjectLoginInfoBean();
-        if (rspInfoBean == null) return;
-        mRepository.initGlobalLoginInfo(rspInfoBean);
-
-        getAllVehicles();
     }
 
     public String initUserCarsDTO() {
@@ -120,40 +84,6 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
         return new Gson().toJson(dto);
     }
 
-    /**
-     * 两个网络请求 结果合并处理
-     */
-    public void getAllVehicles() {
-        Subscription subscription = Observable.zip(
-                mRepository.getRemoteCarInfo(initUserCarsDTO()),
-                mRepository.getPayCars(initHomeDataDTO()),
-                new Func2<UserCarsResult, PayCarResult, List<BindCarDTO>>() {
-                    @Override
-                    public List<BindCarDTO> call(UserCarsResult userCarsResult,
-                                                 PayCarResult payCarResult) {
-
-                        return getBindCarDTOList(userCarsResult, payCarResult);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<List<BindCarDTO>>() {
-                    @Override
-                    public void doCompleted() {
-                    }
-
-                    @Override
-                    public void doError(Throwable e) {
-                    }
-
-                    @Override
-                    public void doNext(List<BindCarDTO> result) {
-                        if (result != null && !result.isEmpty())
-                            addOrUpdateVehicleLicense(result);
-                    }
-                });
-        mSubscriptions.add(subscription);
-    }
 
     /**
      * 车辆数据合并
@@ -230,41 +160,6 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
         mSubscriptions.add(subscription);
     }
 
-    /**
-     * 提交安盛服务器/成功后保存数据
-     */
-    @Override
-    public void loadLoginPost() {
-        Subscription subscription = mRepository.loadLoginPost(initLoginMessage())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<LoginInfoBean>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onNext(LoginInfoBean result) {
-                        if (result != null &&
-                                result.getSYS_HEAD().getReturnCode().equals(
-                                        LoginData.getInstance().success)) {
-
-                            mRepository.saveLoginInfoRepeat(result);
-                        }
-                    }
-                });
-        mSubscriptions.add(subscription);
-    }
-
-    @Override
-    public void loadLoginPostTest() {
-    }
-
     public String initLicenseFileNumDTO() {
         RequestDTO dto = new RequestDTO();
 
@@ -278,32 +173,6 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
 
         dto.setReqInfo(bean);
         return new Gson().toJson(dto);
-    }
-
-    /**
-     * 提交安盛服务器登录数据
-     * cip.cfc.u011.01
-     */
-    @Override
-    public String initLoginMessage() {
-        MessageFormat.getInstance().setTransServiceCode("cip.cfc.u011.01");
-        JSONObject masp = new JSONObject();
-        try {
-            String pwd = mRepository.readLoginPassword();
-            if (Tools.isStrEmpty(pwd)) throw new IllegalArgumentException("pwd is must not null");
-            masp.put("phoenum", MainRouter.getUserPhoenum());
-            SHATools sha = new SHATools();
-            masp.put("pswd", SHATools.hexString(sha.eccryptSHA1(pwd)));
-            masp.put("devicetoken", LoginData.getInstance().imei);
-            masp.put("pushswitch", "0");
-            masp.put("pushmode", "1");
-            String token = RSAUtils.strByEncryption(LoginData.getInstance().deviceId, true);
-            masp.put("token", token);
-            MessageFormat.getInstance().setMessageJSONObject(masp);
-        } catch (JSONException | NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return MessageFormat.getInstance().getMessageFormat();
     }
 
     /**

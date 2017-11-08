@@ -1,7 +1,7 @@
 package com.zantong.mobilecttx.contract;
 
-import com.zantong.mobilecttx.base.interf.IMvpPresenter;
-import com.zantong.mobilecttx.base.interf.IMvpView;
+import com.tzly.ctcyh.router.base.IBasePresenter;
+import com.tzly.ctcyh.router.base.IBaseView;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 /**
@@ -10,18 +10,14 @@ import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 public interface IFahrschuleOrderNumFtyContract {
 
-    interface IFahrschuleOrderNumFtyView extends IMvpView<IFahrschuleOrderNumFtyPresenter> {
-
-        void showLoadingDialog();
-
-        void dismissLoadingDialog();
+    interface IFahrschuleOrderNumFtyView extends IBaseView<IFahrschuleOrderNumFtyPresenter> {
 
         void onPayOrderByCouponError(String message);
 
         void onPayOrderByCouponSucceed(PayOrderResponse result);
     }
 
-    interface IFahrschuleOrderNumFtyPresenter extends IMvpPresenter {
+    interface IFahrschuleOrderNumFtyPresenter extends IBasePresenter {
 
         void onPayOrderByCoupon(String orderId, String orderPrice, String payType);
 

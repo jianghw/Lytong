@@ -140,9 +140,6 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
         String status = event.getStatus();
         String message = event.getMsg();
         if (event.getContext().equals(getActivity())) {
-//            showView(LOADING);
-//            LogUtils.i("Fragment_error_status:" + event.getStatus());
-//            LogUtils.i("Fragment_error_msg:" + event.getMsg());
             onErrorMsg(status, message);
 
         }
@@ -155,9 +152,6 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
      * @param message
      */
     protected void onErrorMsg(String status, String message) {
-//        if (status.equals(Config.ERROR_IO) || status.equals(Config.ERROR_NET)
-//                || status.equals(Config.ERROR_PARSER)) {
-//        }
 
     }
 

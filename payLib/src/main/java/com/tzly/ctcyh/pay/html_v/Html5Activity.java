@@ -44,11 +44,11 @@ import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.util.EncryptUtils;
-import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
 import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
 
+import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
 import static com.tzly.ctcyh.router.util.Utils.getContext;
 import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CODE;
 
@@ -59,8 +59,7 @@ import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CO
  * Update day:
  */
 
-public class Html5Activity extends JxBaseActivity
-        implements IHtmlPayContract.IHtmlPayView {
+public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IHtmlPayView {
     private LinearLayout mLayout;
     private WebView mWebView;
     private ProgressBar mProgressBar;
@@ -216,7 +215,7 @@ public class Html5Activity extends JxBaseActivity
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    toastShort("请确认手机安装支付宝app");
+                    toastShore("请确认手机安装支付宝app");
                 }
             } else {
                 view.loadUrl(url);
@@ -427,12 +426,17 @@ public class Html5Activity extends JxBaseActivity
             mWebView.goBack();
             return true;
         }
-        if (!TextUtils.isEmpty(mOrderId)) orderDetail();
+        if (!TextUtils.isEmpty(mOrderId)) {
+            orderDetail();
+            return true;
+        }
         return super.onKeyDown(keyCode, event);
     }
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
+
         if (mWebView != null) {
             mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             mWebView.clearFormData();
@@ -445,9 +449,6 @@ public class Html5Activity extends JxBaseActivity
             mWebView.destroy();
             mWebView = null;
         }
-        super.onDestroy();
-
-        System.exit(0);
     }
 
     /**
@@ -487,7 +488,7 @@ public class Html5Activity extends JxBaseActivity
 
     @Override
     public void intervalError(String message) {
-        toastShort(message);
+        toastShore(message);
     }
 
     @Override
@@ -520,8 +521,13 @@ public class Html5Activity extends JxBaseActivity
 
     @Override
     public void getOrderDetailError(String s) {
-        toastShort(s);
+        toastShore(s);
         errorStatus();
+    }
+
+    @Override
+    public void ToastMsg(String msg) {
+        toastShort(msg);
     }
 
     /**
@@ -582,7 +588,7 @@ public class Html5Activity extends JxBaseActivity
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)
     public void doPermissionFail() {
-        ToastUtils.toastShort("您已关闭摄像头权限,请设置中打开");
+        toastShort("您已关闭摄像头权限,请设置中打开");
     }
 
     protected void goToCamera() {
@@ -594,37 +600,36 @@ public class Html5Activity extends JxBaseActivity
         PayRouter.gotoViolationListActivity(this, carnum, enginenum, carnumtype);
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        //拍照回调
-//        if (requestCode == Global.requestCode.violation_query_camera
-//                && resultCode == JxGlobal.resultCode.ocr_camera_license) {
-//            if (OcrCameraActivity.file == null)
-//                ToastUtils.toastShort("照片获取失败");
-//            else if (mPresenter != null)
-//                mPresenter.uploadDrivingImg();
-//        }
-//    }
+    //    @Override
+    //    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    //        super.onActivityResult(requestCode, resultCode, data);
+    //        //拍照回调
+    //        if (requestCode == Global.requestCode.violation_query_camera
+    //                && resultCode == JxGlobal.resultCode.ocr_camera_license) {
+    //            if (OcrCameraActivity.file == null)
+    //                ToastUtils.toastShort("照片获取失败");
+    //            else if (mPresenter != null)
+    //                mPresenter.uploadDrivingImg();
+    //        }
+    //    }
 
-//    @Override
-//    public void uploadDrivingImgError(String message) {
-//        toastShort(message);
-//    }
+    //    @Override
+    //    public void uploadDrivingImgError(String message) {
+    //        toastShort(message);
+    //    }
 
     /**
      * 55.行驶证扫描接口
      */
-//    @Override
-//    public void uploadDrivingImgSucceed(DrivingOcrResult result) {
-//        DrivingOcrBean bean = result.getContent();
-//        if (bean != null) {
-//            mWebView.loadUrl("javascript:callbackCamera(" + new Gson().toJson(bean) + ");");
-//        } else {
-//            ToastUtils.toastShort("行驶证图片解析失败(55)，请重试");
-//        }
-//    }
-
+    //    @Override
+    //    public void uploadDrivingImgSucceed(DrivingOcrResult result) {
+    //        DrivingOcrBean bean = result.getContent();
+    //        if (bean != null) {
+    //            mWebView.loadUrl("javascript:callbackCamera(" + new Gson().toJson(bean) + ");");
+    //        } else {
+    //            ToastUtils.toastShort("行驶证图片解析失败(55)，请重试");
+    //        }
+    //    }
     @Override
     public void goNianjianMap() {
 
@@ -658,12 +663,10 @@ public class Html5Activity extends JxBaseActivity
 
     @Override
     public void chaser() {
-
     }
 
     @Override
     public void addOil() {
-
     }
 
     @Override
@@ -717,7 +720,7 @@ public class Html5Activity extends JxBaseActivity
      */
     @Override
     public void getBankPayHtmlError(String message) {
-        toastShort(message);
+        toastShore(message);
     }
 
     @Override

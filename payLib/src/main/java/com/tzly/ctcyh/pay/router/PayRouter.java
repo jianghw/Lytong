@@ -103,14 +103,17 @@ public final class PayRouter {
         gotoHtmlActivity(context, bundle);
     }
 
+    /**
+     * payhtml
+     */
     private static void gotoHtmlActivity(Activity context, Bundle bundle) {
         UiRouter.getInstance().openUriForResult(context,
                 RouterGlobal.Scheme.pay_scheme + "://" + RouterGlobal.Host.html_5_host,
-                bundle, PayGlobal.requestCode.pay_type_price);
+                bundle, PayGlobal.requestCode.pay_html_price);
     }
 
     /**
-     * 支付页面页面
+     * 支付方式页面
      */
     public static void gotoPayTypeActivity(Activity context, String orderId) {
         Bundle bundle = new Bundle();

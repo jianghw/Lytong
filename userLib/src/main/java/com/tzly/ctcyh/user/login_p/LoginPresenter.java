@@ -167,7 +167,12 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
 
                     @Override
                     public void doNext(BaseResponse baseResult) {
-                        mContractView.registerSucceed();
+                        if (baseResult != null && baseResult.getResponseCode() == 2000) {
+                            mContractView.registerSucceed();
+                        } else {
+                            mContractView.registerError(baseResult != null
+                                    ? baseResult.getResponseDesc() : "未知错误");
+                        }
                     }
                 });
         mSubscriptions.add(subscription);
@@ -176,8 +181,8 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
     @Override
     public RegisterDTO initRegisterDTO() {
         RegisterDTO registerDTO = new RegisterDTO();
-        registerDTO.setPhoenum(Des3.encode(mContractView.getUserPhone()));
-        registerDTO.setPswd(Des3.encode(mContractView.getUserPassword()));
+        registerDTO.setPhoenum(RSAUtils.strByEncryption(mContractView.getUserPhone(), true));
+        registerDTO.setPswd(RSAUtils.strByEncryption(mContractView.getUserPassword(), true));
         registerDTO.setUsrid(mRepository.getRASUserID());
 
         String token = RSAUtils.strByEncryption(mRepository.getPushId(), true);

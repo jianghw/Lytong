@@ -158,7 +158,7 @@ public class ViolationPayFragment extends BaseJxFragment {
 
         dto.setPeccancydate(mViolationBean.getViolationdate());
         dto.setPeccancynum(mViolationBean.getViolationnum());
-        dto.setUsernum(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
+        dto.setUsernum(RSAUtils.strByEncryption(MainRouter.getUserID(false), true));
 
         CarApiClient.createOrder(Utils.getContext(), dto, new CallBack<BaseResponse>() {
             @Override
@@ -178,9 +178,9 @@ public class ViolationPayFragment extends BaseJxFragment {
      * cip.cfc.v004.01
      */
     private void searchViolation() {
-        if (!TextUtils.isEmpty(LoginData.getInstance().filenum)) {
-            UserApiClient.setJiaoYiDaiMa(Utils.getContext(),
-                    LoginData.getInstance().filenum, new CallBack<BankResponse>() {
+        if (!TextUtils.isEmpty(MainRouter.getUserFilenum())) {
+            UserApiClient.setJiaoYiDaiMa(Utils.getContext(), MainRouter.getUserFilenum(),
+                    new CallBack<BankResponse>() {
                         @Override
                         public void onSuccess(BankResponse bankResponse) {
                             getParentActivity().dismissLoadingDialog();
@@ -213,7 +213,7 @@ public class ViolationPayFragment extends BaseJxFragment {
 
         String violationnum = mViolationBean.getViolationnum();
         String violationamt = mViolationBean.getViolationamt();
-        String merCustomId = LoginData.getInstance().filenum;//畅通卡档案编号
+        String merCustomId = MainRouter.getUserFilenum();//畅通卡档案编号
 
         String payUrl = BuildConfig.APP_URL
                 + "payment_payForViolation?orderid=" + violationnum
@@ -222,7 +222,7 @@ public class ViolationPayFragment extends BaseJxFragment {
                 + "&merCustomId=" + merCustomId
                 + "&remark=" + remark;
 
-        MainRouter.gotoPayHtmlActivity(getActivity(),"支付页面",payUrl,violationamt);
+        MainRouter.gotoPayHtmlActivity(getActivity(), "支付页面", payUrl, violationamt);
 
         getActivity().finish();
     }

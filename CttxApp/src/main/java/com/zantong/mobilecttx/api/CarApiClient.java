@@ -5,7 +5,6 @@ import android.text.TextUtils;
 
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.bean.CouponResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.CarLinkageResponse;
@@ -45,6 +44,7 @@ import com.zantong.mobilecttx.map.bean.WachCarPlaceResponse;
 import com.zantong.mobilecttx.map.bean.YearCheckDetailResponse;
 import com.zantong.mobilecttx.map.bean.YearCheckResponse;
 import com.zantong.mobilecttx.order.bean.MessageResponse;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.bean.BonusResponse;
 import com.zantong.mobilecttx.user.bean.MessageCountResponse;
 import com.zantong.mobilecttx.user.bean.MessageTypeResponse;
@@ -175,7 +175,7 @@ public class CarApiClient extends BaseApiClient {
 
     public static void commitCar(Context context, BindCarDTO params, CallBack<BaseResponse> callback) {
 
-        params.setUsrnum(RSAUtils.strByEncryptionLiYing(LoginData.getInstance().userID, true));
+        params.setUsrnum(MainRouter.getRASUserID());
         params.setEngineNo(RSAUtils.strByEncryptionLiYing(params.getEngineNo(), true));
         params.setPlateNo(RSAUtils.strByEncryptionLiYing(params.getPlateNo(), true));
 
@@ -195,7 +195,7 @@ public class CarApiClient extends BaseApiClient {
     }
 
     public static void commitDriving(Context context, BindDrivingDTO params, CallBack<BaseResponse> callback) {
-        params.setUserId(RSAUtils.strByEncryptionLiYing(LoginData.getInstance().userID, true));
+        params.setUserId(MainRouter.getRASUserID());
         params.setFileNum(RSAUtils.strByEncryptionLiYing(params.getFileNum(), true));
         params.setLicenseno(RSAUtils.strByEncryptionLiYing(params.getLicenseno(), true));
         BaseCallBack<BaseResponse> baseCallBack = new BaseCallBack<BaseResponse>(
@@ -204,7 +204,7 @@ public class CarApiClient extends BaseApiClient {
     }
 
     public static void liYingReg(Context context, LiYingRegDTO params, CallBack<BaseResponse> callback) {
-        params.setToken(RSAUtils.strByEncryptionLiYing(LoginData.getInstance().deviceId, true));
+        params.setToken(RSAUtils.strByEncryptionLiYing(MainRouter.getPushId(), true));
         params.setPushmode("2");
         params.setPushswitch("1");
         BaseCallBack<BaseResponse> baseCallBack = new BaseCallBack<BaseResponse>(
@@ -213,7 +213,7 @@ public class CarApiClient extends BaseApiClient {
     }
 
     public static void liYingCarManage(Context context, LiYingCarManageDTO params, CallBack<BaseResponse> callback) {
-        params.setUsrnum(RSAUtils.strByEncryptionLiYing(LoginData.getInstance().userID, true));
+        params.setUsrnum(MainRouter.getRASUserID());
         params.setPlateNo(RSAUtils.strByEncryptionLiYing(params.getPlateNo(), true));
         try {
             params.setVehicleType(String.valueOf(Integer.valueOf(params.getVehicleType())));

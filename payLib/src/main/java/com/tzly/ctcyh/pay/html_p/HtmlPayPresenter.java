@@ -162,7 +162,7 @@ public class HtmlPayPresenter implements IHtmlPayContract.IHtmlPayPresenter {
 
     @JavascriptInterface
     public void ToastMsg(String msg) {
-        mContractView.toastShort(msg);
+        mContractView.ToastMsg(msg);
     }
 
     @JavascriptInterface

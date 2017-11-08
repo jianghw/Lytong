@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.pay.R;
 import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
@@ -49,11 +48,6 @@ public class CouponListActivity extends JxBaseActivity {
     @Override
     protected int initContentView() {
         return R.layout.activity_base_frame;
-    }
-
-    @MultiState
-    protected int initMultiState() {
-        return MultiState.LOADING;
     }
 
     @Override

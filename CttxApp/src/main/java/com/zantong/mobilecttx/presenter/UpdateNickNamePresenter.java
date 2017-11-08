@@ -10,6 +10,7 @@ import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.model.UpdateNickNameModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.activity.UpdateNickName;
 
 import org.json.JSONException;
@@ -30,10 +31,7 @@ public class UpdateNickNamePresenter extends BasePresenter<IBaseView> implements
     public UpdateNickNamePresenter(UpdateNickName mUpdateNickName) {
         this.mUpdateNickName = mUpdateNickName;
         mUpdateNickNameModelImpc = new UpdateNickNameModelImp();
-
-
     }
-
 
     @Override
     public void loadView(int index) {
@@ -43,9 +41,9 @@ public class UpdateNickNamePresenter extends BasePresenter<IBaseView> implements
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.u003.01");
                 masp = new JSONObject() ;
                 try {
-                    masp.put("usrid", LoginData.getInstance().userID);
+                    masp.put("usrid", MainRouter.getUserID(true));
                     masp.put("nickname", mUpdateNickName.mapData().get("nickname"));
-                    masp.put("devicetoken", LoginData.getInstance().imei);
+                    masp.put("devicetoken", MainRouter.getPhoneDeviceId());
                     masp.put("pushswitch", 0);
                     MessageFormat.getInstance().setMessageJSONObject(masp);
                 } catch (JSONException e) {

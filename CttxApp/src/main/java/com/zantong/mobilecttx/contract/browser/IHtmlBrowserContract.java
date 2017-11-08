@@ -1,7 +1,7 @@
 package com.zantong.mobilecttx.contract.browser;
 
-import com.zantong.mobilecttx.base.interf.IMvpPresenter;
-import com.zantong.mobilecttx.base.interf.IMvpView;
+import com.tzly.ctcyh.router.base.IBasePresenter;
+import com.tzly.ctcyh.router.base.IBaseView;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
@@ -13,11 +13,7 @@ import java.io.File;
 
 public interface IHtmlBrowserContract {
 
-    interface IHtmlBrowserView extends IMvpView<IHtmlBrowserPresenter> {
-
-        void showLoadingDialog();
-
-        void dismissLoadingDialog();
+    interface IHtmlBrowserView extends IBaseView<IHtmlBrowserPresenter> {
 
         void uploadDrivingImgError(String message);
 
@@ -28,7 +24,7 @@ public interface IHtmlBrowserContract {
         void getBankPayHtmlSucceed(PayOrderResponse result, String orderId);
     }
 
-    interface IHtmlBrowserPresenter extends IMvpPresenter {
+    interface IHtmlBrowserPresenter extends IBasePresenter {
         File getImageFile();
 
         void uploadDrivingImg();

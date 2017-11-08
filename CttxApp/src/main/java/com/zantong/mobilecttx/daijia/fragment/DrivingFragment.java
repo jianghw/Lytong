@@ -3,10 +3,8 @@ package com.zantong.mobilecttx.daijia.fragment;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.daijia.activity.DODetailActivity;
 import com.zantong.mobilecttx.daijia.adapter.DrivingOrderAdapter;
@@ -14,6 +12,7 @@ import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderListBean;
 import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderListResponse;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderListDTO;
 import com.zantong.mobilecttx.eventbus.DrivingCancelEvent;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -36,7 +35,7 @@ public class DrivingFragment extends BaseListFragment<DaiJiaOrderListBean> {
 
     private void initDaiJiaOrderData() {
         DaiJiaOrderListDTO dto = new DaiJiaOrderListDTO();
-        dto.setUsrId(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
+        dto.setUsrId(MainRouter.getRASUserID());
         onShowLoading();
         CarApiClient.getDaiJiaOrderList(this.getActivity(), dto, new CallBack<DaiJiaOrderListResponse>() {
             @Override

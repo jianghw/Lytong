@@ -32,8 +32,8 @@ public class MainDataService implements IMainService {
             MainRouter.gotoSubjectActivity(context, 3);
         } else if (couponType == 5) {
             MainRouter.gotoSparringActivity(context, 2);
-        } else {
-            MainRouter.gotoSubjectActivity(context, 3);
+        } else {//主页
+            MainRouter.gotoMainActivity(context, 1);
         }
     }
 
@@ -89,10 +89,16 @@ public class MainDataService implements IMainService {
 
     /**
      * 获取设备推动id
+     * PushServiceFactory.getCloudPushService().getDeviceId()
      */
     @Override
     public String getPushId() {
         return PushServiceFactory.getCloudPushService().getDeviceId();
+    }
+
+    @Override
+    public void gotoMainActivity(Activity activity, int i) {
+        MainRouter.gotoMainActivity(activity, i);
     }
 
 

@@ -49,7 +49,7 @@ public class OrderParentPresenter
 
     @Override
     public void unSubscribe() {
-        mAtyView.dismissLoadingDialog();
+        mAtyView.dismissLoading();
         mSubscriptions.clear();
     }
 
@@ -63,7 +63,7 @@ public class OrderParentPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoadingDialog();
+                        mAtyView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -71,11 +71,12 @@ public class OrderParentPresenter
                 .subscribe(new BaseSubscriber<OrderListResponse>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoadingDialog();
+                        mAtyView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
+                        mAtyView.dismissLoading();
                         mAtyView.getOrderListError(e.getMessage());
                     }
 
@@ -143,10 +144,12 @@ public class OrderParentPresenter
                 .subscribe(new BaseSubscriber<List<OrderListBean>>() {
                     @Override
                     public void doCompleted() {
+                        mAtyView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
+                        mAtyView.dismissLoading();
                         mAtyView.dataDistribution(e.getMessage(), orderStatus);
                     }
 
@@ -178,7 +181,7 @@ public class OrderParentPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoadingDialog();
+                        mAtyView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -186,11 +189,12 @@ public class OrderParentPresenter
                 .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoadingDialog();
+                        mAtyView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
+                        mAtyView.dismissLoading();
                         mAtyView.updateOrderStatusError(e.getMessage());
                     }
 
@@ -218,7 +222,7 @@ public class OrderParentPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoadingDialog();
+                        mAtyView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -226,11 +230,12 @@ public class OrderParentPresenter
                 .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoadingDialog();
+                        mAtyView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
+                        mAtyView.dismissLoading();
                         mAtyView.updateOrderStatusError(e.getMessage());
                     }
 
@@ -238,7 +243,6 @@ public class OrderParentPresenter
                     public void doNext(BaseResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.updateOrderStatusSucceed(result);
-
                         } else {
                             mAtyView.updateOrderStatusError(result != null
                                     ? result.getResponseDesc() : "未知错误(N10)");
@@ -258,7 +262,7 @@ public class OrderParentPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoadingDialog();
+                        mAtyView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -266,11 +270,12 @@ public class OrderParentPresenter
                 .subscribe(new BaseSubscriber<PayOrderResponse>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoadingDialog();
+                        mAtyView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
+                        mAtyView.dismissLoading();
                         mAtyView.onPayOrderByCouponError(e.getMessage());
                     }
 
@@ -298,7 +303,7 @@ public class OrderParentPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoadingDialog();
+                        mAtyView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -306,11 +311,12 @@ public class OrderParentPresenter
                 .subscribe(new BaseSubscriber<PayOrderResponse>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoadingDialog();
+                        mAtyView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
+                        mAtyView.dismissLoading();
                         mAtyView.onPayOrderByCouponError(e.getMessage());
                     }
 

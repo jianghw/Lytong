@@ -18,6 +18,7 @@ import com.jcodecraeer.xrecyclerview.touch.SwipeMenu;
 import com.jcodecraeer.xrecyclerview.touch.SwipeMenuCreator;
 import com.jcodecraeer.xrecyclerview.touch.SwipeMenuItem;
 import com.tzly.ctcyh.router.R;
+import com.tzly.ctcyh.router.custom.SpaceItemDecoration;
 import com.tzly.ctcyh.router.util.ConvertUtils;
 
 import java.util.List;
@@ -66,6 +67,9 @@ public abstract class JxBaseRecyclerListFragment<T> extends JxBaseFragment {
         mCustomRecycler.setPullRefreshEnabled(isRefresh());
         mCustomRecycler.setLoadingMoreEnabled(isLoadMore());
 
+        if (getCustomDecoration() > 0)
+            mCustomRecycler.addItemDecoration(new SpaceItemDecoration(getCustomDecoration()));
+
         initRecyclerHeader(customViewHeader());
 
         if (getRecyclerHeader() != null) {
@@ -110,6 +114,10 @@ public abstract class JxBaseRecyclerListFragment<T> extends JxBaseFragment {
         mCustomRecycler.setAdapter(mAdapter);
 
         return inflate;
+    }
+
+    protected int getCustomDecoration() {
+        return 0;
     }
 
     protected abstract int initFragmentView();

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
+import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.umeng.analytics.MobclickAgent;
@@ -26,20 +27,19 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
-import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.common.activity.CommonProblemActivity;
-import com.zantong.mobilecttx.contract.IHomeMeFtyContract;
 import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
+import com.zantong.mobilecttx.home_p.HomeMeFtyPresenter;
+import com.zantong.mobilecttx.home_p.IHomeMeFtyContract;
 import com.zantong.mobilecttx.order.activity.MyOrderActivity;
 import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
 import com.zantong.mobilecttx.order.bean.CouponFragmentLBean;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
-import com.zantong.mobilecttx.presenter.home.HomeMeFtyPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.share.activity.ShareParentActivity;
+import com.zantong.mobilecttx.share_v.ShareParentActivity;
 import com.zantong.mobilecttx.user.activity.AboutActivity;
 import com.zantong.mobilecttx.user.activity.MegTypeActivity;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
@@ -63,7 +63,7 @@ import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 /**
  * 新个人页面
  */
-public class HomeMeFragment extends BaseRefreshJxFragment
+public class HomeMeFragment extends JxBaseRefreshFragment
         implements View.OnClickListener, IHomeMeFtyContract.IHomeMeFtyView {
 
     private static final String ARG_PARAM1 = "param1";
@@ -149,20 +149,23 @@ public class HomeMeFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    protected void onRefreshData() {}
-
-    @Override
-    protected int getFragmentLayoutResId() {
+    protected int initFragmentView() {
         return R.layout.fragment_home_me;
     }
 
     @Override
-    protected void initFragmentView(View view) {
+    protected void bindFragmentView(View view) {
         initView(view);
 
         HomeMeFtyPresenter mPresenter = new HomeMeFtyPresenter(
                 Injection.provideRepository(getActivity().getApplicationContext()), this);
     }
+
+    @Override
+    protected void onRefreshData() {}
+
+    @Override
+    protected void onLoadMoreData() {}
 
     @Override
     public void setPresenter(IHomeMeFtyContract.IHomeMeFtyPresenter presenter) {
@@ -225,7 +228,7 @@ public class HomeMeFragment extends BaseRefreshJxFragment
         }
 
         //畅通卡
-        boolean isUnBound = TextUtils.isEmpty(LoginData.getInstance().filenum);
+        boolean isUnBound = TextUtils.isEmpty(MainRouter.getUserFilenum());
 
         mTvCard.setText(isUnBound ? "未绑定牡丹畅通卡" : "已绑定牡丹畅通卡");
         mTvCard.setTextColor(isUnBound
@@ -308,9 +311,12 @@ public class HomeMeFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    protected void DestroyViewAndThing() {
+    public void onDestroyView() {
+        super.onDestroyView();
+
         if (mPresenter != null) mPresenter.unSubscribe();
     }
+
 
     public void initView(View view) {
         mTvTitle = (TextView) view.findViewById(R.id.tv_title);

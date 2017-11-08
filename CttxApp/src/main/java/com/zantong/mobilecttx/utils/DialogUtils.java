@@ -281,7 +281,7 @@ public class DialogUtils {
         if (window == null) return;
         WindowManager.LayoutParams params = window.getAttributes();
         params.width = DensityUtils.getScreenWidth(context) * 3 / 4;
-        params.height = DensityUtils.getScreenHeight(context) * 3 / 4;
+        params.height = DensityUtils.getScreenHeight(context) * 2 / 3;
         dialog.getWindow().setAttributes(params);
         dialog.getWindow().setBackgroundDrawableResource(R.color.trans);
         dialog.getWindow().setContentView(view);

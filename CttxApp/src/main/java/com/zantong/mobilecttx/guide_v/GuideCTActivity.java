@@ -118,6 +118,7 @@ public class GuideCTActivity extends JxBaseActivity
 
     private void gotoActivity() {
         MainRouter.gotoMainActivity(this, 0);
+
         SPUtils.getInstance().setIsGuide(String.valueOf(mVersionCode));
         finish();
     }

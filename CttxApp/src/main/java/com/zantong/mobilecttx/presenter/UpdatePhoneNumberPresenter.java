@@ -11,6 +11,7 @@ import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.model.UpdatePhoneNumberModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.activity.UpdatePhoneNumber;
 import com.zantong.mobilecttx.user.bean.SmsBean;
 
@@ -48,11 +49,9 @@ public class UpdatePhoneNumberPresenter extends BasePresenter<IBaseView> impleme
             case 1:
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.u014.01");
                 masp = new JSONObject();
-//
                 try {
                     masp.put("phoenum", mUpdatePhoneNumber.mapData().get("phoenum"));
                     masp.put("smsscene", "002");
-//            masp.put("usrid","000160180 6199 2851");
                     MessageFormat.getInstance().setMessageJSONObject(masp);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -63,14 +62,12 @@ public class UpdatePhoneNumberPresenter extends BasePresenter<IBaseView> impleme
 
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.u003.01");
                 masp = new JSONObject();
-//
                 try {
-                    masp.put("usrid", LoginData.getInstance().userID);
+                    masp.put("usrid", MainRouter.getUserID(true));
                     String phone = RSAUtils.strByEncryption(mUpdatePhoneNumber.mapData().get("phoenum"), true);
                     masp.put("phoenum", phone);
-                    masp.put("devicetoken", LoginData.getInstance().imei);
+                    masp.put("devicetoken", MainRouter.getPhoneDeviceId());
                     masp.put("pushswitch", 0);
-//            masp.put("usrid","000160180 6199 2851");
                     MessageFormat.getInstance().setMessageJSONObject(masp);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -80,13 +77,11 @@ public class UpdatePhoneNumberPresenter extends BasePresenter<IBaseView> impleme
 
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.p002.01");
                 masp = new JSONObject();
-//
                 try {
                     masp.put("phoenum", mUpdatePhoneNumber.mapData().get("phoenum"));
                     masp.put("smsscene", "002");
                     masp.put("captcha", mUpdatePhoneNumber.mapData().get("captcha"));
                     masp.put("onlyflag", onlyflag);
-//            masp.put("usrid","000160180 6199 2851");
                     MessageFormat.getInstance().setMessageJSONObject(masp);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -127,10 +122,6 @@ public class UpdatePhoneNumberPresenter extends BasePresenter<IBaseView> impleme
                 }else{
                     ToastUtils.toastShort(mUpdateInfo.getSYS_HEAD().getReturnMessage());
                 }
-//                Gson gson = new Gson();
-//                String json = gson.toJson(mLoginInfoBean);
-//                UserInfoRememberCtrl.saveObject(mLoginPhone, this.mLoginInfoBean.getRspInfo());
-//                mLoginPhone.addLoginInfo(this.mLoginInfoBean);
                 break;
         }
     }

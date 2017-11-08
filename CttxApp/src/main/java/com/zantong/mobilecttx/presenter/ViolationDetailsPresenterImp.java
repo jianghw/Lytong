@@ -1,6 +1,5 @@
 package com.zantong.mobilecttx.presenter;
 
-import android.text.TextUtils;
 import android.view.View;
 
 import com.tzly.ctcyh.router.util.ToastUtils;
@@ -11,6 +10,7 @@ import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.model.ViolationDetailsModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
@@ -47,12 +47,8 @@ public class ViolationDetailsPresenterImp implements SimplePresenter, OnLoadServ
         masp = new JSONObject();
         try {
             masp.put("violationnum", number);
-            if (TextUtils.isEmpty(LoginData.getInstance().imei)) {
-                masp.put("token", RSAUtils.strByEncryption("00000000", true));
-            } else {
-                masp.put("token", RSAUtils.strByEncryption(LoginData.getInstance().imei, true));
-            }
 
+            masp.put("token", RSAUtils.strByEncryption(MainRouter.getPhoneDeviceId(), true));
             MessageFormat.getInstance().setMessageJSONObject(masp);
         } catch (JSONException e) {
             e.printStackTrace();

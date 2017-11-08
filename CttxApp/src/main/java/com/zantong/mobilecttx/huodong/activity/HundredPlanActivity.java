@@ -19,7 +19,6 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.huodong.bean.ActivitySignNum;
@@ -137,7 +136,7 @@ public class HundredPlanActivity extends BaseMvpActivity {
                 }
 
                 HundredPlanDTO dto = new HundredPlanDTO();
-                dto.setUsrnum(LoginData.getInstance().userID);
+                dto.setUsrnum(MainRouter.getUserID(false));
                 dto.setPhoneNum(MainRouter.getUserPhoenum());
                 dto.setPlateNo(mSelCar.getText().toString());
 
@@ -222,7 +221,7 @@ public class HundredPlanActivity extends BaseMvpActivity {
         }
 
         WXWebpageObject webpage = new WXWebpageObject();
-        if (LoginData.getInstance().loginFlag) {
+        if (MainRouter.isUserLogin()) {
             webpage.webpageUrl = "http://d.eqxiu.com/s/um7rznLE";
         } else {
             webpage.webpageUrl = "http://d.eqxiu.com/s/um7rznLE";

@@ -196,7 +196,7 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
             return;
         }
         ChangePwdDTO dto = new ChangePwdDTO();
-        dto.setUsrid(LoginData.getInstance().userID);
+        dto.setUsrid(MainRouter.getUserID(false));
         try {
             SHATools sha = new SHATools();
             String newPassword = SHATools.hexString(sha.eccryptSHA1(newPwd));

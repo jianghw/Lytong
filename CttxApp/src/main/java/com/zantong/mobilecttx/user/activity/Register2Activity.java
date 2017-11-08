@@ -12,9 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.rea.Des3;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -24,23 +25,18 @@ import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
-import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.eventbus.CarInfoEvent;
-import com.zantong.mobilecttx.home_v.HomeMainActivity;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.bean.LoginResult;
+import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.user.dto.RegisterDTO;
-import com.zantong.mobilecttx.utils.AccountRememberCtrl;
-import com.zantong.mobilecttx.utils.DialogMgr;
-import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.ScreenManager;
 import com.zantong.mobilecttx.utils.ValidateUtils;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.xmlparser.SHATools;
 import com.zantong.mobilecttx.weizhang.bean.QueryHistoryBean;
 import com.zantong.mobilecttx.widght.CustomCharKeyBoard;
@@ -236,7 +232,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                 mNumKeyBoard.setVisibility(View.GONE);
                 mCharKeyBoard.setVisibility(View.GONE);
                 final String pwd = mPwd.getText().toString().replace(" ", "");
-                String pwd2 = mPwd2.getText().toString().replace(" ", "");
+                final String pwd2 = mPwd2.getText().toString().replace(" ", "");
 
                 if (pwd.length() < 6 || pwd.length() > 20) {
                     ToastUtils.toastShort("密码位数不对");
@@ -279,9 +275,9 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                         public void onSuccess(LoginResult result) {
                             hideDialogLoading();
                             if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
-                                succeedToLogin();
+                                succeedToLogin(result,pwd2);
                             } else {
-                                ToastUtils.toastShort("注册失败"+result.getSYS_HEAD().getReturnMessage());
+                                ToastUtils.toastShort("注册失败" + result.getSYS_HEAD().getReturnMessage());
                             }
                         }
 
@@ -326,62 +322,17 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
         }
     }
 
-    private void succeedToLogin() {
-        MainRouter.gotoLoginActivity(this);
-        finish();
-    }
-
     private void succeedToLogin(LoginResult result, String pwd) {
-        if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
-
-            liyingreg(pwd, result.getRspInfo().getUsrid());
-            SPUtils.getInstance().setLoginInfoBean(result.getRspInfo());
-            result.getRspInfo().setFilenum(Des3.decode(result.getRspInfo().getFilenum()));
-            result.getRspInfo().setPhoenum(Des3.decode(result.getRspInfo().getPhoenum()));
-            result.getRspInfo().setCtfnum(Des3.decode(result.getRspInfo().getCtfnum()));
-
-            UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERPD, mPwd.getText().toString());
-            UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, LoginData.getInstance().imei);
-            UserInfoRememberCtrl.saveObject(result.getRspInfo());
-
-            LoginData.getInstance().mLoginInfoBean = result.getRspInfo();
-            LoginData.getInstance().userID = result.getRspInfo().getUsrid();
-            LoginData.getInstance().filenum = result.getRspInfo().getFilenum();
-
-            LoginData.getInstance().loginFlag = true;
-            commitLocalCar();
-            commitIllegalHistory();
-
-            new DialogMgr(Register2Activity.this,
-                    "登录成功！",
-                    "欢迎你加入畅通车友会\n赶快去添加你的牡丹畅通卡吧！",
-                    "添加畅通卡",
-                    "继续",
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Act.getInstance().lauchIntent(Register2Activity.this, UnblockedCardActivity.class);
-                            ScreenManager.getScreenManager().specialMethod();
-                        }
-                    },
-                    new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-                            ScreenManager.getScreenManager().popAllActivityExceptOne(HomeMainActivity.class);
-                        }
-                    },
-                    new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View v) {
-                            AccountRememberCtrl.saveLoginAD(Register2Activity.this, "0");
-                            ScreenManager.getScreenManager().popAllActivityExceptOne(HomeMainActivity.class);
-                        }
-                    });
-            EventBus.getDefault().post(new CarInfoEvent(true));
+        RspInfoBean bean = result.getRspInfo();
+        if (bean != null) {
+            Gson gson = new GsonBuilder()
+                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                    .create();
+            String userString = gson.toJson(bean);
+            MainRouter.saveLoginBean(this,userString,pwd);
         } else {
-            ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
+            MainRouter.gotoLoginActivity(this);
+            finish();
         }
     }
 
@@ -411,7 +362,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
         for (int i = 0; i < list.size(); i++) {
             final int index = i;
             CarInfoDTO carInfoDTO = list.get(i);
-            carInfoDTO.setUsrid(LoginData.getInstance().userID);
+            //            carInfoDTO.setUsrid(LoginData.getInstance().userID);
             carInfoDTO.setIspaycar("0");
             carInfoDTO.setDefaultflag("1");
             carInfoDTO.setInspectflag("0");
@@ -439,7 +390,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
             params.setEngineNo(carInfoDTO.getEnginenum());
             params.setRegisterDate(carInfoDTO.getInspectdate());
             params.setIssueDate("");
-            params.setUsrnum(LoginData.getInstance().userID);
+            //            params.setUsrnum(LoginData.getInstance().userID);
             CarApiClient.commitCar(getApplicationContext(), params, new CallBack<BaseResponse>() {
                 @Override
                 public void onSuccess(BaseResponse result) {
@@ -467,7 +418,7 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
                 params.setEngineNo(queryCarBean.getEngineNumber());
                 params.setRegisterDate("");
                 params.setIssueDate("");
-                params.setUsrnum(LoginData.getInstance().userID);
+                //                params.setUsrnum(LoginData.getInstance().userID);
                 CarApiClient.commitCar(getApplicationContext(), params, new CallBack<BaseResponse>() {
                     @Override
                     public void onSuccess(BaseResponse result) {
@@ -477,7 +428,6 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override

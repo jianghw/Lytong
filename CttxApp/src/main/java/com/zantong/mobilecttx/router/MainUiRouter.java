@@ -8,26 +8,27 @@ import com.tzly.ctcyh.router.LibUiRouter;
 import com.tzly.ctcyh.service.RouterGlobal;
 import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
 import com.zantong.mobilecttx.browser.PayHtmlActivity;
+import com.zantong.mobilecttx.car.activity.SetPayCarActivity;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
-import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
-import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
-import com.zantong.mobilecttx.fahrschule.activity.SparringActivity;
-import com.zantong.mobilecttx.fahrschule.activity.SubjectActivity;
+import com.zantong.mobilecttx.fahrschule_v.FahrschuleActivity;
+import com.zantong.mobilecttx.fahrschule_v.SparringActivity;
+import com.zantong.mobilecttx.fahrschule_v.SubjectActivity;
 import com.zantong.mobilecttx.guide_v.GuideCTActivity;
 import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.home_v.HomeMainActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
+import com.zantong.mobilecttx.msg_v.MegDetailActivity;
+import com.zantong.mobilecttx.oiling_v.RechargeActivity;
 import com.zantong.mobilecttx.order.activity.CouponActivity;
 import com.zantong.mobilecttx.order_v.AnnualDetailActivity;
 import com.zantong.mobilecttx.order_v.OrderDetailActivity;
-import com.zantong.mobilecttx.user.activity.MegDetailActivity;
 import com.zantong.mobilecttx.user.activity.MegTypeActivity;
 import com.zantong.mobilecttx.user.activity.RegisterActivity;
 import com.zantong.mobilecttx.user.activity.ResetActivity;
-import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
+import com.zantong.mobilecttx.violation_v.ViolationActivity;
 import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 
 /**
@@ -72,6 +73,7 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 RouterGlobal.Host.html_self_host,
                 RouterGlobal.Host.html_pay_host,
                 RouterGlobal.Host.violation_query_host,
+                RouterGlobal.Host.set_pay_car_host,
                 RouterGlobal.Host.my_card_host
         };
     }
@@ -128,6 +130,8 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, BrowserHtmlActivity.class);
         } else if (RouterGlobal.Host.violation_query_host.equals(host)) {
             intent.setClass(context, ViolationActivity.class);
+        } else if (RouterGlobal.Host.set_pay_car_host.equals(host)) {
+            intent.setClass(context, SetPayCarActivity.class);
         } else {
             return true;
         }

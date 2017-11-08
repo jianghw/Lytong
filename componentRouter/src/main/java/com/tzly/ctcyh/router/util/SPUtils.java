@@ -24,6 +24,7 @@ import java.util.Set;
 public final class SPUtils {
 
     private static SimpleArrayMap<String, SPUtils> SP_UTILS_MAP = new SimpleArrayMap<>();
+
     private SharedPreferences sp;
     //用于用户信息保存
     public static String FILENAME = "CTTXINFO";
@@ -33,35 +34,34 @@ public final class SPUtils {
     private static String USERPD = "userpd";
     public static String USER_DEVICE_ID = "user_device_id";
     public static String USER_PUSH_ID = "user_push_id";
+    public static String USER_LOGIN_DIALOG = "user_login_dialog";
 
     /**
      * desc:获取保存的Object对象 临时解决旧加密
      */
-    public  Object readObject(String key) {
-        SharedPreferences sharedPreferences = Utils.getContext().getSharedPreferences(FILENAME, 0);
-        if (sharedPreferences.contains(key)) {
-            String sharedPreferencesString = sharedPreferences.getString(key, "");
+    public Object readObject(String key) {
+        String sharedPreferencesString = getString(key);
+        try {
+            AESEncryptor.decrypt("19900506", sharedPreferencesString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (TextUtils.isEmpty(sharedPreferencesString)) {
+            return null;
+        } else {
+            //将16进制的数据转为数组，准备反序列化
+            byte[] stringToBytes = StringToBytes(sharedPreferencesString);
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(stringToBytes);
             try {
-                AESEncryptor.decrypt("19900506", sharedPreferencesString);
+                ObjectInputStream inputStream = new ObjectInputStream(byteArrayInputStream);
+                //返回反序列化得到的对象
+                return inputStream.readObject();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            if (TextUtils.isEmpty(sharedPreferencesString)) {
-                return null;
-            } else {
-                //将16进制的数据转为数组，准备反序列化
-                byte[] stringToBytes = StringToBytes(sharedPreferencesString);
-                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(stringToBytes);
-                try {
-                    ObjectInputStream inputStream = new ObjectInputStream(byteArrayInputStream);
-                    //返回反序列化得到的对象
-                    return inputStream.readObject();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }//所有异常返回null
+        }
+        //所有异常返回null
         return null;
     }
 
@@ -69,7 +69,7 @@ public final class SPUtils {
      * desc:将16进制的数据转为数组
      * <p>创建人：聂旭阳 , 2014-5-25 上午11:08:33</p>
      */
-    public  byte[] StringToBytes(String data) {
+    public byte[] StringToBytes(String data) {
         String hexString = data.toUpperCase().trim();
         if (hexString.length() % 2 != 0) {
             return null;

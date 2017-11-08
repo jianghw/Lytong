@@ -30,4 +30,6 @@ public interface IMainService {
     void gotoResetActivity(Activity context);
 
     String getPushId();
+
+    void gotoMainActivity(Activity activity, int i);
 }

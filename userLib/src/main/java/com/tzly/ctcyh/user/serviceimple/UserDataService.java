@@ -1,13 +1,23 @@
 package com.tzly.ctcyh.user.serviceimple;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.tzly.ctcyh.router.UiRouter;
+import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.service.RouterGlobal;
+import com.tzly.ctcyh.user.bean.BaseResponse;
+import com.tzly.ctcyh.user.bean.request.RegisterDTO;
 import com.tzly.ctcyh.user.data_m.UserDataManager;
+import com.tzly.ctcyh.user.router.UserRouter;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by jianghw on 2017/10/12.
@@ -151,6 +161,7 @@ public class UserDataService implements IUserService {
     public String getUserNickname() {
         return mRepository.getUserNickname();
     }
+
     /**
      * 退出登录
      */
@@ -158,4 +169,43 @@ public class UserDataService implements IUserService {
     public void cleanUserLogin() {
         mRepository.getCleanUser();
     }
+
+    @Override
+    public void saveLoginBean(final Activity activity, String user, String pwd) {
+        mRepository.saveLoginBean(user);
+
+        RegisterDTO registerDTO = new RegisterDTO();
+        registerDTO.setPhoenum(RSAUtils.strByEncryption(mRepository.getUserPhoenum(), true));
+        registerDTO.setPswd(RSAUtils.strByEncryption(pwd, true));
+        registerDTO.setUsrid(mRepository.getRASUserID());
+        String token = RSAUtils.strByEncryption(mRepository.getPushId(), true);
+        registerDTO.setToken(token);
+        registerDTO.setPushmode("2");
+        registerDTO.setPushswitch("0");
+        mRepository.register(registerDTO)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        new Action1<BaseResponse>() {
+                            @Override
+                            public void call(BaseResponse baseResponse) {
+                                if (baseResponse != null
+                                        && baseResponse.getResponseCode() == 2000) {
+                                    UserRouter.loginFilenumDialog(activity);
+                                } else {
+                                    ToastUtils.toastShort("注册成功,登录失败~");
+                                    UserRouter.gotoLoginActivity(activity);
+                                    if (activity != null) activity.finish();
+                                }
+                            }
+                        }, new Action1<Throwable>() {
+                            @Override
+                            public void call(Throwable throwable) {
+                                ToastUtils.toastShort("注册成功,登录失败~");
+                                UserRouter.gotoLoginActivity(activity);
+                                if (activity != null) activity.finish();
+                            }
+                        });
+    }
+
 }

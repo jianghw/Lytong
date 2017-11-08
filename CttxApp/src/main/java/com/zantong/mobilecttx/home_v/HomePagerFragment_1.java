@@ -51,8 +51,8 @@ public class HomePagerFragment_1 extends JxBaseRefreshFragment implements View.O
     }
 
     @Override
-    protected void bindFragmentView(View fragmentView) {
-        initView(fragmentView);
+    protected void bindFragmentView(View fragment) {
+        initView(fragment);
     }
 
     @Override

@@ -18,7 +18,7 @@ public class OrderDetailBean {
      * remark	string	订单备注
      * createDate	string	创建时间
      * goodsName	string	商品名称
-     * icon	string	供应商图标
+     * pay_icon	string	供应商图标
      * merchantName	string	供应商名称
      * detail	string	订单详情
      * sendOffExpress	string	发出单号

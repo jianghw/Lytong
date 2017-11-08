@@ -12,7 +12,6 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.contract.IOrderView;
 import com.zantong.mobilecttx.presenter.OrderPresenter;
@@ -148,7 +147,7 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
                             .append("?orderNo=").append(item.getPolcyprignum())
                             .append("&payAmount=").append(item.getTotinsprem())
                             .append("&productCode=").append(item.getCastinspolcycode())
-                            .append("&userName=").append(LoginData.getInstance().userID)
+                            .append("&userName=").append(MainRouter.getUserID(false))
                             .append("&clientIP=").append(NetUtils.getPhontIP(this))
                             .append("&clientType=").append(CLIENT_TYPE_0);
 
@@ -165,7 +164,7 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
      */
     private void commitInsOrder() {
         InsOrderDTO dto = new InsOrderDTO();
-        dto.setUsrid(LoginData.getInstance().userID);
+        dto.setUsrid(MainRouter.getUserID(false));
         dto.setCastinspolcycode(mCastinspolcycode);
         dto.setOrigtranserlnum(mOrigtranserlnum);
         dto.setPolcyprignum(mPolcyprignum);

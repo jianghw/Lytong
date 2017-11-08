@@ -50,9 +50,6 @@ public class UserDataManager {
 
     /**
      * 安盛登录接口
-     *
-     * @param msg
-     * @return
      */
     public Observable<LoginResponse> loadLoginPost(String msg) {
         return mRemoteData.loadLoginPost(msg);
@@ -137,7 +134,6 @@ public class UserDataManager {
         return mLocalData.getUserId();
     }
 
-
     /**
      * 用户是否登录
      * filenum	是	string	档案号 加密
@@ -190,9 +186,16 @@ public class UserDataManager {
         UserMemoryData.getInstance().setRecdphoe(Des3.decode(loginBean.getRecdphoe()));
     }
 
-    public void initLoginData() {
-        LoginResponse responseFromSp = getLoginResponseFromSp();
+    protected void saveUserMemoryAll(LoginResponse responseFromSp) {
+        saveLoginResponseToSp(responseFromSp);
         initLoginBean(responseFromSp);
+    }
+
+    /**
+     * 登录后保存数据 本地保存
+     */
+    public void saveLoginResponseToSp(LoginResponse loginResponse) {
+        mLocalData.saveLoginResponseToSp(loginResponse);
     }
 
     /**
@@ -211,10 +214,11 @@ public class UserDataManager {
     }
 
     /**
-     * 登录后保存数据 本地保存
+     * 注册页面保存用户信息
      */
-    public void saveLoginResponseToSp(LoginResponse loginResponse) {
-        mLocalData.saveLoginResponseToSp(loginResponse);
+    public void saveLoginBean(String userString) {
+        mLocalData.saveLoginBean(userString);
+        saveUserMemory();
     }
 
     /**
@@ -226,8 +230,7 @@ public class UserDataManager {
             LoginBean loginBean = responseFromSp.getRspInfo();
             loginBean.setFilenum(filenum);
         }
-        saveLoginResponseToSp(responseFromSp);
-        initLoginBean(responseFromSp);
+        saveUserMemoryAll(responseFromSp);
     }
 
     /**
@@ -239,8 +242,7 @@ public class UserDataManager {
             LoginBean loginBean = responseFromSp.getRspInfo();
             loginBean.setPhoenum(phoenum);
         }
-        saveLoginResponseToSp(responseFromSp);
-        initLoginBean(responseFromSp);
+        saveUserMemoryAll(responseFromSp);
     }
 
     /**
@@ -252,8 +254,7 @@ public class UserDataManager {
             LoginBean loginBean = responseFromSp.getRspInfo();
             loginBean.setPortrait(portrait);
         }
-        saveLoginResponseToSp(responseFromSp);
-        initLoginBean(responseFromSp);
+        saveUserMemoryAll(responseFromSp);
     }
 
     /**
@@ -265,8 +266,7 @@ public class UserDataManager {
             LoginBean loginBean = responseFromSp.getRspInfo();
             loginBean.setGetdate(getdate);
         }
-        saveLoginResponseToSp(responseFromSp);
-        initLoginBean(responseFromSp);
+        saveUserMemoryAll(responseFromSp);
     }
 
     /**
@@ -278,8 +278,7 @@ public class UserDataManager {
             LoginBean loginBean = responseFromSp.getRspInfo();
             loginBean.setNickname(nickname);
         }
-        saveLoginResponseToSp(responseFromSp);
-        initLoginBean(responseFromSp);
+        saveUserMemoryAll(responseFromSp);
     }
 
     public String getUserPhoenum() {
@@ -287,9 +286,7 @@ public class UserDataManager {
         if (!TextUtils.isEmpty(phoenum)) return phoenum;
         //false
         LoginResponse responseFromSp = getLoginResponseFromSp();
-        if (responseFromSp == null) {
-            return "";
-        }
+        if (responseFromSp == null) return "";
         initLoginBean(responseFromSp);
         return mLocalData.getPhoenum();
     }
@@ -297,48 +294,38 @@ public class UserDataManager {
     public String getUserFilenum() {
         String filenum = mLocalData.getFilenum();
         if (!TextUtils.isEmpty(filenum)) return filenum;
-        //false
-        LoginResponse responseFromSp = getLoginResponseFromSp();
-        if (responseFromSp == null) {
-            return "";
-        }
-        initLoginBean(responseFromSp);
+
+        if (saveUserMemory()) return "";
         return mLocalData.getFilenum();
+    }
+
+    protected boolean saveUserMemory() {
+        LoginResponse responseFromSp = getLoginResponseFromSp();
+        if (responseFromSp == null) return true;
+        initLoginBean(responseFromSp);
+        return false;
     }
 
     public String getUserGetdate() {
         String getdate = mLocalData.getGetdate();
         if (!TextUtils.isEmpty(getdate)) return getdate;
-        //false
-        LoginResponse responseFromSp = getLoginResponseFromSp();
-        if (responseFromSp == null) {
-            return "";
-        }
-        initLoginBean(responseFromSp);
+        if (saveUserMemory()) return "";
         return mLocalData.getGetdate();
     }
 
     public String getUserPortrait() {
         String getdate = mLocalData.getPortrait();
         if (!TextUtils.isEmpty(getdate)) return getdate;
-        //false
-        LoginResponse responseFromSp = getLoginResponseFromSp();
-        if (responseFromSp == null) {
-            return "";
-        }
-        initLoginBean(responseFromSp);
+
+        if (saveUserMemory()) return "";
         return mLocalData.getPortrait();
     }
 
     public String getUserNickname() {
         String getdate = mLocalData.getNickname();
         if (!TextUtils.isEmpty(getdate)) return getdate;
-        //false
-        LoginResponse responseFromSp = getLoginResponseFromSp();
-        if (responseFromSp == null) {
-            return "";
-        }
-        initLoginBean(responseFromSp);
+
+        if (saveUserMemory()) return "";
         return mLocalData.getNickname();
     }
 
@@ -346,7 +333,6 @@ public class UserDataManager {
      * 退出登录
      */
     public void getCleanUser() {
-
         mLocalData.getCleanUser();
     }
 }

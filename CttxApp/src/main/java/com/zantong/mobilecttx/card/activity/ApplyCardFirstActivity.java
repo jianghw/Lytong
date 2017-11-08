@@ -18,7 +18,6 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.HandleCTCardApiClient;
 import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.card.dto.BidCTCardDTO;
@@ -109,7 +108,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 new DialogMgr(this, R.mipmap.code_query_notice_iamge);
                 break;
             case R.id.apply_card_first_desc:   //说明
-                MainRouter.gotoHtmlActivity(this,"隐私声明","file:///android_asset/bindcard_agreement.html");
+                MainRouter.gotoHtmlActivity(this, "隐私声明", "file:///android_asset/bindcard_agreement.html");
                 break;
             case R.id.apply_card_first_commit://下一步
                 commitValue();
@@ -221,10 +220,8 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
             return;
         }
 
-        //TODO 什么贵
-        LoginData.getInstance().filenum = getDriverFileNum();
-
-        if (BuildConfig.App_Url) {//七天之内不能重复办卡 不用
+        //七天之内不能重复办卡 不用
+        if (BuildConfig.App_Url) {
             showDialogLoading();
             checkApplyCardRecord();
         } else {
@@ -320,7 +317,6 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        LoginData.getInstance().filenum = "";
     }
 
     @Override

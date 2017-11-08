@@ -16,13 +16,11 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.tzly.ctcyh.router.util.ToastUtils;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.chongzhi.activity.ChooseAddressActivity;
@@ -41,7 +39,7 @@ import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.global.JxConfig;
+import com.tzly.ctcyh.router.util.MobUtils;
 
 /**
  * 代驾首页
@@ -143,7 +141,7 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         }
 
         DaiJiaCreateDTO dto = new DaiJiaCreateDTO();
-        dto.setUsrId(RSAUtils.strByEncryptionLiYing(LoginData.getInstance().userID, true));
+        dto.setUsrId(MainRouter.getRASUserID());
         dto.setName(phone);
         dto.setMobile(phone);
         dto.setAddress(mDrivingAddress.getText().toString());
@@ -160,11 +158,11 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         hashMap.put("addressLat", String.valueOf(latitude));
         hashMap.put("name", phone);
         hashMap.put("driverNum", String.valueOf("1"));
-        hashMap.put("usrId", LoginData.getInstance().userID);
+        hashMap.put("usrId",MainRouter.getUserID(false));
         String hashStr = HashUtils.getSignature(hashMap);
         dto.setHash(hashStr);
 
-        JxConfig.getInstance().eventIdByUMeng(26);
+        MobUtils.getInstance().eventIdByUMeng(26);
 
         CarApiClient.huJiaoDaiJia(this, dto, new CallBack<DaiJiaCreateResponse>() {
             @Override

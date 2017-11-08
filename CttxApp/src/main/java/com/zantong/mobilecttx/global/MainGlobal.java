@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.global;
 
 /**
  * Created by jianghw on 2017/7/5.
- * Description:
+ * Description: 1x00--0
  * Update by:
  * Update day:
  */
@@ -10,13 +10,20 @@ package com.zantong.mobilecttx.global;
 public final class MainGlobal {
 
     public static final class requestCode {
-        public static final int violation_query_camera = 1100;
-        public static final int meg_detail_del = 1101;
+        public static final int meg_detail_del = 1010;
+        public static final int violation_query_camera = 1020;
+        public static final int violation_query_bean = 1030;
+        public static final int set_pay_car=1040;
     }
 
     public static final class resultCode {
-        public static final int ocr_camera_license = 2200;
-        public static final int meg_detail_deled = 2201;
+        public static final int meg_detail_del = 2010;
+        public static final int order_express_back = 2020;
+        public static final int ocr_camera_license = 2030;
+        public static final int web_browser_back = 2040;
+        public static final int violation_query_submit = 2050;
+        public static final int violation_query_del = 2051;
+        public static final int set_pay_car_succeed =2060;
     }
 
     public static final class putExtra {
@@ -28,6 +35,7 @@ public final class MainGlobal {
         public static final String browser_title_extra = "browser_title_extra";
         public static final String browser_url_extra = "browser_url_extra";
         public static final String violation_num_extra = "violation_num_extra";
+        public static final String car_item_bean_extra = "car_item_bean_extra";
     }
 
     public static final class Host {

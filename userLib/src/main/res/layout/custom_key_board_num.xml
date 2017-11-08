@@ -132,7 +132,7 @@
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@mipmap/ic_keyboard_del"/>
+                android:background="@mipmap/user_ic_keyboard_del"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -227,7 +227,7 @@
                     <ImageView
                         android:layout_width="26dp"
                         android:layout_height="18dp"
-                        android:background="@mipmap/ic_keyboard_hide"/>
+                        android:background="@mipmap/user_ic_keyboard_hide"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

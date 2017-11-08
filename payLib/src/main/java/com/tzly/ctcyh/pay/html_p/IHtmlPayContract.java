@@ -27,7 +27,7 @@ public interface IHtmlPayContract {
 
         void getOrderDetailError(String s);
 
-        void toastShort(String msg);
+        void ToastMsg(String msg);
 
         boolean isLogin();
 

@@ -9,6 +9,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.webkit.JavascriptInterface;
 
 import com.tzly.ctcyh.router.util.LogUtils;
@@ -17,14 +18,13 @@ import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
-import com.zantong.mobilecttx.chongzhi.activity.RechargeActivity;
+import com.zantong.mobilecttx.oiling_v.RechargeActivity;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.eventbus.DriveLicensePhotoEvent;
 import com.zantong.mobilecttx.eventbus.PayMotoOrderEvent;
 import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
@@ -109,7 +109,7 @@ public class InterfaceForJS {
     //绑畅通卡
     @JavascriptInterface
     public void bindCard() {
-        if (Tools.isStrEmpty(LoginData.getInstance().filenum)) {
+        if (TextUtils.isEmpty(MainRouter.getUserFilenum())) {
             Act.getInstance().gotoIntentLogin(mJSContext, UnblockedCardActivity.class);
         } else {
             Act.getInstance().gotoIntentLogin(mJSContext, MyCardActivity.class);
@@ -136,13 +136,13 @@ public class InterfaceForJS {
     //获取用户ID
     @JavascriptInterface
     public String getUserId() {
-        return LoginData.getInstance().userID;
+        return MainRouter.getUserID(true);
     }
 
     //获取绑卡状态 0已绑卡  1未绑卡
     @JavascriptInterface
     public int getBindCardStatus() {
-        return "".equals(LoginData.getInstance().filenum) ? 1 : 0;
+        return "".equals(MainRouter.getUserFilenum()) ? 1 : 0;
     }
 
     //查询违章
@@ -154,7 +154,7 @@ public class InterfaceForJS {
     //获取用户ID
     @JavascriptInterface
     public String getEncreptUserId() {
-        return RSAUtils.strByEncryptionLiYing(LoginData.getInstance().userID, true);
+        return MainRouter.getRASUserID();
     }
 
     //跳转到积分规则页面

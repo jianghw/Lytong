@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/img_url"
-        android:layout_margin="@dimen/ds_96"
+        android:layout_margin="@dimen/ds_48"
         android:background="@drawable/bg_tv_countdown"
         android:gravity="center"
         android:textSize="@dimen/fs_14sp"
@@ -29,7 +29,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/img_url"
         android:gravity="center"
-        android:padding="@dimen/ds_96"
+        android:padding="@dimen/ds_48"
         android:text="关闭"
         android:textSize="@dimen/fs_22sp"/>
 

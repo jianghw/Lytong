@@ -9,10 +9,10 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.dto.FeedbackDTO;
 
 import butterknife.Bind;
@@ -62,7 +62,7 @@ public class FeedbackActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
             showDialogLoading();
             FeedbackDTO dto = new FeedbackDTO();
             dto.setReqcontent(content);
-            dto.setUsrid(LoginData.getInstance().userID);
+            dto.setUsrid(MainRouter.getUserID(false));
             UserApiClient.commitFeedback(this, dto, new CallBack<BankResponse>() {
                 @Override
                 public void onSuccess(BankResponse bankResponse) {

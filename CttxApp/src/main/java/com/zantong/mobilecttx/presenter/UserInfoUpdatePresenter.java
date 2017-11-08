@@ -12,6 +12,7 @@ import com.zantong.mobilecttx.contract.UserInfoUpdateView;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.model.UserInfoUpdateModel;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
 
 import org.json.JSONException;
@@ -42,9 +43,9 @@ public class UserInfoUpdatePresenter extends BasePresenter<UserInfoUpdateView> i
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.u003.01");
                 masp = new JSONObject();
                 try {
-                    masp.put("usrid", LoginData.getInstance().userID);
+                    masp.put("usrid", MainRouter.getUserID(true));
                     masp.put("portrait", mUserInfoUpdate.mapData().get("portrait"));
-                    masp.put("devicetoken", LoginData.getInstance().imei);
+                    masp.put("devicetoken", MainRouter.getPhoneDeviceId());
                     masp.put("pushswitch", 0);
                     MessageFormat.getInstance().setMessageJSONObject(masp);
                 } catch (JSONException e) {

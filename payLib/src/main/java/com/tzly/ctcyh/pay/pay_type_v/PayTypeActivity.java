@@ -79,9 +79,14 @@ public class PayTypeActivity extends JxBaseActivity implements IPayTypeUi {
         if (mPayTypeFragment != null) mPayTypeFragment.onRefreshData();
     }
 
+    /**
+     * 页面回调code 注意
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        setResult(PayGlobal.resultCode.pay_type_back);
     }
 
     @Override

@@ -18,14 +18,12 @@ import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.car.adapter.ManageCarListAdapter;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
 import com.zantong.mobilecttx.contract.IManageCarFtyContract;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.presenter.car.ManageCarFtyPresenter;
-import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
+import com.zantong.mobilecttx.router.MainRouter;
 
 import java.util.List;
-
-import cn.qqtheme.framework.global.JxGlobal;
 
 /**
  * 车辆列表
@@ -41,7 +39,6 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
 
     private IManageCarFtyContract.IManageCarFtyPresenter mPresenter;
     private ManageCarListAdapter mCarListAdapter;
-    private boolean mFirstInit = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -103,11 +100,10 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
         if (data instanceof VehicleLicenseBean) {
             VehicleLicenseBean bean = (VehicleLicenseBean) data;
             if (bean.getIsPayable() < 0) return;
-            Intent intent = new Intent();
+
             Bundle bundle = new Bundle();
-            bundle.putParcelable(JxGlobal.putExtra.car_item_bean_extra, bean);
-            intent.putExtras(bundle);
-            Act.getInstance().gotoLoginByIntent(getActivity(), ViolationActivity.class, intent);
+            bundle.putParcelable(MainGlobal.putExtra.car_item_bean_extra, bean);
+            MainRouter.gotoViolationActivity(getActivity(), bundle);
         }
     }
 
@@ -139,20 +135,10 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        if (mFirstInit) mFirstInit = false;
-        else if (mPresenter != null) mPresenter.getAllVehicles();
-    }
+    public void textNoticeInfoError(String message) {}
 
     @Override
-    public void textNoticeInfoError(String message) {
-    }
-
-    @Override
-    public void textNoticeInfoSucceed(HomeCarResponse result) {
-    }
+    public void textNoticeInfoSucceed(HomeCarResponse result) {}
 
     /**
      * 操作失败
@@ -193,5 +179,20 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
     @Override
     public void dismissLoadingDialog() {
         hideDialogLoading();
+    }
+
+    /**
+     * 回调
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == MainGlobal.resultCode.violation_query_submit
+                || resultCode == MainGlobal.resultCode.violation_query_del
+                || resultCode == MainGlobal.resultCode.set_pay_car_succeed) {
+            if (mPresenter != null) mPresenter.getAllVehicles();
+        }
+
     }
 }

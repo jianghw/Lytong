@@ -9,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
@@ -28,7 +27,6 @@ import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.presenter.weizhang.ViolationListPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResult;
@@ -171,7 +169,7 @@ public class ViolationListActivity extends BaseJxActivity
 
         if ("1".equals(penaltyNum) || "2".equals(penaltyNum)) {//是否处罚决定书
             showPayFragment(bean);
-        } else if (Tools.isStrEmpty(LoginData.getInstance().filenum)) {//未綁卡
+        } else if (TextUtils.isEmpty(MainRouter.getUserFilenum())) {//未綁卡
             byCardHome();
         } else {
             if (!mPayCarOk) {
@@ -358,13 +356,7 @@ public class ViolationListActivity extends BaseJxActivity
         if (mViolationDTO == null) return null;
 
         mViolationDTO.setProcessste("2");
-        if (!TextUtils.isEmpty(LoginData.getInstance().userID)) {
-            mViolationDTO.setToken(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
-        } else if (!TextUtils.isEmpty(LoginData.getInstance().imei)) {
-            mViolationDTO.setToken(RSAUtils.strByEncryption(LoginData.getInstance().imei, true));
-        } else {
-            mViolationDTO.setToken(RSAUtils.strByEncryption(PushServiceFactory.getCloudPushService().getDeviceId(), true));
-        }
+        mViolationDTO.setToken(RSAUtils.strByEncryption(MainRouter.getPhoneDeviceId(), true));
 
         return mViolationDTO;
     }

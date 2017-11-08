@@ -132,14 +132,35 @@ public class LocalData implements ILocalSource {
         String user = getLoginResponseFromSp();
         if (!TextUtils.isEmpty(user)) return user;
         //获取旧数据，走旧业务逻辑
-        LoginBean oldLoginBean = (LoginBean)
-                SPUtils.getInstance(SPUtils.FILENAME).readObject(SPUtils.OLD_USER_INFO);
+        Object oldLoginBean = SPUtils.getInstance(SPUtils.FILENAME).readObject(SPUtils.OLD_USER_INFO);
         if (oldLoginBean == null) return null;
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .create();
+        String userString = gson.toJson(oldLoginBean);
+        LoginBean loginBean = gson.fromJson(userString, LoginBean.class);
+
         LoginResponse responseFromSp = new LoginResponse();
-        responseFromSp.setRspInfo(oldLoginBean);
+        responseFromSp.setRspInfo(loginBean);
         saveLoginResponseToSp(responseFromSp);
         SPUtils.getInstance(SPUtils.FILENAME).remove(SPUtils.OLD_USER_INFO);
         return getLoginResponseFromSp();
+    }
+
+    /**
+     * 保存用户信息
+     */
+    @Override
+    public void saveLoginBean(String userString) {
+        if (TextUtils.isEmpty(userString)) return;
+        getCleanUser();
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .create();
+        LoginBean loginBean = gson.fromJson(userString, LoginBean.class);
+        LoginResponse responseFromSp = new LoginResponse();
+        responseFromSp.setRspInfo(loginBean);
+        saveLoginResponseToSp(responseFromSp);
     }
 
     public String getLoginResponseFromSp() {

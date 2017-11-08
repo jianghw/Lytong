@@ -1,7 +1,7 @@
 package com.zantong.mobilecttx.contract;
 
-import com.zantong.mobilecttx.base.interf.IMvpPresenter;
-import com.zantong.mobilecttx.base.interf.IMvpView;
+import com.tzly.ctcyh.router.base.IBasePresenter;
+import com.tzly.ctcyh.router.base.IBaseView;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
@@ -14,16 +14,7 @@ import com.zantong.mobilecttx.user.bean.UserCarsResult;
 
 public interface IUnimpededFtyContract {
 
-    interface IUnimpededFtyView extends IMvpView<IUnimpededFtyPresenter> {
-        /**
-         * 显示loading框
-         */
-        void loadingProgress();
-
-        /**
-         * 隐藏loading框
-         */
-        void hideLoadingProgress();
+    interface IUnimpededFtyView extends IBaseView<IUnimpededFtyPresenter> {
 
         void homePageError(String message);
 
@@ -44,7 +35,7 @@ public interface IUnimpededFtyContract {
         void countDownCompleted();
     }
 
-    interface IUnimpededFtyPresenter extends IMvpPresenter {
+    interface IUnimpededFtyPresenter extends IBasePresenter {
         /**
          * 首页接口请求
          */

@@ -62,8 +62,7 @@ public class ViolationListFragment extends BaseRecyclerListJxFragment<ViolationB
      * @deprecated sb
      */
     @Override
-    protected void onRecyclerItemClick(View view, Object data) {
-    }
+    protected void onRecyclerItemClick(View view, Object data) {}
 
     @Override
     protected void onRefreshData() {

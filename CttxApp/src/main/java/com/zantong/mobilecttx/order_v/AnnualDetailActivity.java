@@ -15,6 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.JxBaseActivity;
+import com.tzly.ctcyh.router.custom.htmltxt.HtmlResImageGetter;
+import com.tzly.ctcyh.router.custom.htmltxt.HtmlTextView;
+import com.tzly.ctcyh.router.custom.htmltxt.IHtmlTextClick;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.global.MainGlobal;
@@ -25,10 +28,6 @@ import com.zantong.mobilecttx.order_p.OrderDetailPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-
-import org.sufficientlysecure.htmltextview.ClickableTableSpan;
-import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
-import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
@@ -222,7 +221,7 @@ public class AnnualDetailActivity extends JxBaseActivity
 
     @Override
     public void getOrderDetailError(String message) {
-      toastShort(message);
+        toastShore(message);
     }
 
     @Override
@@ -247,30 +246,38 @@ public class AnnualDetailActivity extends JxBaseActivity
         mTvContent.setText(bean.getGoodsName());
         mTvOrderNum.setText(bean.getOrderId());
         mTvDate.setText(bean.getCreateDate());
-        mTvPayType.setText(bean.getPayType() == 1 ? "畅通工行卡" : "其他支付");
+        int type = bean.getPayType();
+        String payType;
+        if (type == 1) {
+            payType = "工行卡支付";
+        } else if (type == 2) {
+            payType = "银联卡支付";
+        } else if (type == 3) {
+            payType = "支付宝支付";
+        } else if (type == 4) {
+            payType = "微信支付";
+        } else {
+            payType = "其他支付";
+        }
+        mTvPayType.setText(payType);
         mTvSendOff.setText(bean.getSendOffExpress());
         mTvSendBack.setText(bean.getSendBackExpress());
 
         String beanDetail = bean.getDetail();
 
-        mTvContentBottom.setHtml(beanDetail, new HtmlResImageGetter(mTvContentBottom));
-        mTvContentBottom.setClickableTableSpan(new ClickableTableSpanImpl());
+        mTvContentBottom.setClickHtml(beanDetail,
+                new HtmlResImageGetter(mTvContentBottom),
+                new IHtmlTextClick() {
+                    @Override
+                    public void clickLine(String url) {
+                        gotoHtml(url);
+                    }
+                });
     }
 
-    class ClickableTableSpanImpl extends ClickableTableSpan {
-        @Override
-        public ClickableTableSpan newInstance() {
-            return new ClickableTableSpanImpl();
-        }
-
-        @Override
-        public void onClick(View widget) {
-            gotoHtml(getTableHtml());
-        }
-    }
 
     private void gotoHtml(String tableHtml) {
-        MainRouter.gotoHtmlActivity(this, "Web页面",tableHtml);
+        MainRouter.gotoHtmlActivity(this, "Web页面", tableHtml);
     }
 
     private void gotoBrowser(String beanDetail, TextView tvContent) {
@@ -328,7 +335,7 @@ public class AnnualDetailActivity extends JxBaseActivity
      */
     private void internalBrowser(String contentHrefLine) {
         String title = "信息";
-        MainRouter.gotoHtmlActivity(this,title,contentHrefLine);
+        MainRouter.gotoHtmlActivity(this, title, contentHrefLine);
     }
 
     /**

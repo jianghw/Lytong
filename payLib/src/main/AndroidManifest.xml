@@ -63,7 +63,7 @@
         <!--启动新进程 畅通卡支付-->
         <activity
             android:name="com.tzly.ctcyh.pay.html_v.Html5Activity"
-            android:process=":lyl.boon.process.web"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.tzly.ctcyh.pay.html_v.Html5Activity"/>

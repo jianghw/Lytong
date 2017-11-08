@@ -12,6 +12,7 @@ import com.zantong.mobilecttx.car.fragment.SetPayCarFragment;
 import com.zantong.mobilecttx.home.bean.UpdateInfo;
 import com.zantong.mobilecttx.model.SetPayCarFragmentModelImp;
 import com.zantong.mobilecttx.presenter.presenterinterface.SimplePresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,7 +45,7 @@ public class SetPayCarFragmentPresenter extends BasePresenter<IBaseView> impleme
                 masp = new JSONObject();
 
                 try {
-                    masp.put("usrid", LoginData.getInstance().userID);
+                    masp.put("usrid", MainRouter.getUserID(false));
                     masp.put("delcarnum", RSAUtils.strByEncryption(
                             mSetPayCarFragment.mapData().get("delcarnum"), true));
                     masp.put("addcarnum", RSAUtils.strByEncryption(

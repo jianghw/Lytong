@@ -11,7 +11,7 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
-import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
+import com.zantong.mobilecttx.fahrschule_v.FahrschuleActivity;
 import com.zantong.mobilecttx.home.activity.CustomCordovaActivity;
 import com.zantong.mobilecttx.home.bean.BannersBean;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResponse;
@@ -22,7 +22,7 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.custom.banner.CBPageAdapter;
-import cn.qqtheme.framework.global.JxConfig;
+import com.tzly.ctcyh.router.util.MobUtils;
 import cn.qqtheme.framework.util.image.ImageOptions;
 
 /**
@@ -74,8 +74,8 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
                 || url.contains("happysend")) {//保险
             Act.getInstance().gotoIntent(mAdapterContext, CustomCordovaActivity.class, url);
         } else if (url.contains("localActivity")) {//百日无违章
-            if (LoginData.getInstance().loginFlag) {
-                JxConfig.getInstance().eventIdByUMeng(1);
+            if (MainRouter.isUserLogin()) {
+                MobUtils.getInstance().eventIdByUMeng(1);
                 getSignStatus();
             } else {
                 MainRouter.gotoLoginActivity(mAdapterContext);
@@ -89,7 +89,7 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
 
     private void getSignStatus() {
         ActivityCarDTO activityCarDTO = new ActivityCarDTO();
-        activityCarDTO.setUsrnum(LoginData.getInstance().userID);
+        activityCarDTO.setUsrnum(MainRouter.getUserID(false));
         CarApiClient.getActivityCar(Utils.getContext(), activityCarDTO, new CallBack<ActivityCarResponse>() {
             @Override
             public void onSuccess(ActivityCarResponse result) {

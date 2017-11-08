@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.BuildConfig;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
@@ -15,6 +14,7 @@ import com.zantong.mobilecttx.card.bean.BindCardResult;
 import com.zantong.mobilecttx.card.dto.BindCardDTO;
 import com.zantong.mobilecttx.home.bean.VersionResponse;
 import com.zantong.mobilecttx.home.dto.VersionDTO;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.bean.CheckOrderResult;
 import com.zantong.mobilecttx.user.bean.LoginResult;
 import com.zantong.mobilecttx.user.bean.OrderResult;
@@ -79,13 +79,13 @@ public class UserApiClient extends BaseApiClient {
     public static void login(Context context, LoginDTO params, CallBack<LoginResult> callback) {
         AsyncCallBack<LoginResult> asyncCallBack = new AsyncCallBack<LoginResult>(
                 context, callback, LoginResult.class);
-//        private String phoenum; //手机号
-//        private String captcha;//验证码
-//        private String onlyflag;//唯一标示
-//        private String devicetoken;//设备标识号
-//        private String pushswitch;//推送开关
-//        private String pushmode;//推送方式
-//        private String chkflg;//验证标志
+        //        private String phoenum; //手机号
+        //        private String captcha;//验证码
+        //        private String onlyflag;//唯一标示
+        //        private String devicetoken;//设备标识号
+        //        private String pushswitch;//推送开关
+        //        private String pushmode;//推送方式
+        //        private String chkflg;//验证标志
         params.setOnlyflag("1dsgasdags");
         params.setCaptcha("673589");
         params.setDevicetoken("387fhjdkg0jt4");
@@ -100,16 +100,12 @@ public class UserApiClient extends BaseApiClient {
 
     /**
      * 注册
-     *
-     * @author Sandy
-     * create at 16/6/21 下午5:00
      */
     public static void register(Context context, RegisterDTO params, CallBack<LoginResult> callback) {
         AsyncCallBack<LoginResult> asyncCallBack = new AsyncCallBack<LoginResult>(
                 context, callback, LoginResult.class);
-        if("".equals(LoginData.getInstance().imei)){
-            params.setDevicetoken(LoginData.getInstance().imei);
-        }
+
+        params.setDevicetoken(MainRouter.getPhoneDeviceId());
         params.setPushswitch("0");
         params.setPushmode("2");
         RequestDTO t = new RequestDTO();
@@ -172,9 +168,9 @@ public class UserApiClient extends BaseApiClient {
     public static void reset(Context context, RegisterDTO params, CallBack<LoginResult> callback) {
         AsyncCallBack<LoginResult> asyncCallBack = new AsyncCallBack<LoginResult>(
                 context, callback, LoginResult.class);
-//        params.setDevicetoken("387fhjdkg0jt4");
-//        params.setPushswitch("0");
-//        params.setPushmode("2");
+        //        params.setDevicetoken("387fhjdkg0jt4");
+        //        params.setPushswitch("0");
+        //        params.setPushmode("2");
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u013.01"));
         t.setReqInfo(params);
@@ -203,12 +199,12 @@ public class UserApiClient extends BaseApiClient {
      * create at 16/6/8 下午11:48
      */
     public static void logout(Context context, CallBack<BankResponse> callback) {
-        AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<BankResponse>(context, callback, BankResponse.class);
+        AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<>(context, callback, BankResponse.class);
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u002.01"));
         LogoutDTO dto = new LogoutDTO();
 
-        dto.setUsrid(LoginData.getInstance().userID);
+        dto.setUsrid(MainRouter.getUserID(false));
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -286,9 +282,9 @@ public class UserApiClient extends BaseApiClient {
     public static void commitPersonInfo(Context context, PersonInfoDTO dto, CallBack<BankResponse> callback) {
         AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<BankResponse>(
                 context, callback, BankResponse.class);
-        dto.setDevicetoken(LoginData.getInstance().imei);
+        dto.setDevicetoken(MainRouter.getPhoneDeviceId());
         dto.setPushswitch(0);//不推送
-        dto.setUsrid(LoginData.getInstance().userID);
+        dto.setUsrid(MainRouter.getUserID(true));
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u003.01"));
         t.setReqInfo(dto);
@@ -422,7 +418,7 @@ public class UserApiClient extends BaseApiClient {
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
 
-    public static void setJiaoYiDaiMa(Context context, String strFileNum,CallBack<BankResponse> callback) {
+    public static void setJiaoYiDaiMa(Context context, String strFileNum, CallBack<BankResponse> callback) {
         JiaoYiDaiMaDTO jiaoYiDaiMaDTO = new JiaoYiDaiMaDTO();
         jiaoYiDaiMaDTO.setFilenum(RSAUtils.strByEncryption(strFileNum, true));
         AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<BankResponse>(

@@ -146,7 +146,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
      */
     private void getOrderDetail() {
         DaiJiaOrderDetailDTO dto = new DaiJiaOrderDetailDTO();
-        dto.setUsrId(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
+        dto.setUsrId(MainRouter.getRASUserID());
         Intent intent = getIntent();
         mOrderId = intent.getStringExtra(JxGlobal.putExtra.common_extra);
         dto.setOrderId(mOrderId);
@@ -271,11 +271,11 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
                 }
                 dto.setTime(time);
                 dto.setOrderId(mOrderId);
-                dto.setUsrId(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
+                dto.setUsrId(MainRouter.getRASUserID());
                 HashMap<String, String> hashMap = new HashMap<String, String>();
                 hashMap.put("time", time);
                 hashMap.put("orderId", mOrderId);
-                hashMap.put("usrId", LoginData.getInstance().userID);
+                hashMap.put("usrId", MainRouter.getUserID(false));
                 dto.setHash(HashUtils.getSignature(hashMap));
                 CarApiClient.cancelDaiJiaOrderDetail(DODetailActivity.this, dto, new CallBack<BaseResponse>() {
                     @Override

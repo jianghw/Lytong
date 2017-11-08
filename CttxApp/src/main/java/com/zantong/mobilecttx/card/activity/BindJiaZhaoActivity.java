@@ -10,16 +10,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
-import com.tzly.ctcyh.service.IUserService;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.card.bean.BindCardResult;
 import com.zantong.mobilecttx.card.dto.BindCardDTO;
@@ -185,7 +182,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
             return;
         }
 
-        params.setUserId(LoginData.getInstance().userID);
+        params.setUserId(MainRouter.getUserID(false));
         params.setLicenseno(licenseno);
         params.setFileNum(fileNum);
 
@@ -195,7 +192,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
         dto.setFilenum(RSAUtils.strByEncryption(fileNum, true));
 
         dto.setRelatedphone(RSAUtils.strByEncryption(phone, true));
-        dto.setUsrid(LoginData.getInstance().userID);
+        dto.setUsrid(MainRouter.getUserID(false));
         showDialogLoading();
 
         UserApiClient.bindCard(Utils.getContext(), dto, new CallBack<BindCardResult>() {
@@ -222,15 +219,8 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
                             }
                         });
                         //更新驾挡编号
-                        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-                        if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
-                            IUserService service = (IUserService) serviceRouter
-                                    .getService(IUserService.class.getSimpleName());
-                            service.saveUserFilenum(fileNum);
-                        } else {
-                            //注册机开始工作
-                            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-                        }
+                        MainRouter.saveUserFilenum(fileNum);
+
                         Act.getInstance().gotoIntent(BindJiaZhaoActivity.this, BindCardSuccess.class);
                         BindJiaZhaoActivity.this.finish();
 

@@ -18,10 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.service.IUserService;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
@@ -159,7 +157,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         userChangePwdRl.setOnClickListener(this);
         userInfoRl.setOnClickListener(this);
 
-        if (!LoginData.getInstance().loginFlag) {
+        if (!MainRouter.isUserLogin()) {
             SPUtils.getInstance().setWeizhangPush(false);
             SPUtils.getInstance().setJifenPush(false);
         }
@@ -169,7 +167,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         mBreakRulesNotice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (LoginData.getInstance().loginFlag) {
+                if (MainRouter.isUserLogin()) {
                     SPUtils.getInstance().setWeizhangPush(isChecked);
                     mBreakRulesNotice.setChecked(isChecked);
                     if (!isChecked) {
@@ -186,7 +184,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 Intent intent = new Intent(SettingActivity.this, DateService.class);
-                if (LoginData.getInstance().loginFlag && !"".equals(LoginData.getInstance().userID)) {
+                if (MainRouter.isUserLogin() && !"".equals(MainRouter.getUserID(false))) {
                     SPUtils.getInstance().setJifenPush(isChecked);
                     LoginData.getInstance().updateMsg = isChecked;
                     if (isChecked) {
@@ -228,7 +226,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 Act.getInstance().gotoIntent(this, AboutActivity.class);
                 break;
             case R.id.setting_date_text://选择领证日期
-                if (LoginData.getInstance().loginFlag && !"".equals(LoginData.getInstance().userID)) {
+                if (MainRouter.isUserLogin() && !"".equals(MainRouter.getUserID(false))) {
                     showLicenseDateDialog();
                 } else {
                     MainRouter.gotoLoginActivity(this);
@@ -545,8 +543,8 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         getBaseBack().setEnabled(false);
         UpdateUserHeadImgDTO updateUserHeadImgDTO = new UpdateUserHeadImgDTO();
         updateUserHeadImgDTO.setPortrait(strUrl);
-        updateUserHeadImgDTO.setUsrid(LoginData.getInstance().userID);
-        updateUserHeadImgDTO.setDevicetoken(LoginData.getInstance().imei);
+        updateUserHeadImgDTO.setUsrid(MainRouter.getUserID(true));
+        updateUserHeadImgDTO.setDevicetoken(MainRouter.getPhoneDeviceId());
         updateUserHeadImgDTO.setPushswitch("0");
         UserApiClient.updateUserHeadImg(this, updateUserHeadImgDTO, new CallBack<BankResponse>() {
             @Override
@@ -556,15 +554,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 getBaseBack().setEnabled(true);
                 if (bankResponse.getSYS_HEAD().getReturnCode().equals("000000")) {
                     //更新头像
-                    ServiceRouter serviceRouter = ServiceRouter.getInstance();
-                    if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
-                        IUserService service = (IUserService) serviceRouter
-                                .getService(IUserService.class.getSimpleName());
-                        service.saveUserPortrait(strUrl);
-                    } else {
-                        //注册机开始工作
-                        ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-                    }
+                    MainRouter.saveUserPortrait(strUrl);
                     ToastUtils.toastShort("修改头像成功");
                 }
             }
@@ -606,16 +596,8 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 hideDialogLoading();
                 if (Config.OK.equals(bankResponse.getSYS_HEAD().getReturnCode())) {
                     picker.dismiss();
-                    //更新驾挡编号
-                    ServiceRouter serviceRouter = ServiceRouter.getInstance();
-                    if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
-                        IUserService service = (IUserService) serviceRouter
-                                .getService(IUserService.class.getSimpleName());
-                        service.saveUserGetdate(date);
-                    } else {
-                        //注册机开始工作
-                        ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-                    }
+
+                    MainRouter.saveUserGetdate(date);
                 }
             }
 
@@ -633,19 +615,17 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
     private void logout() {
         showDialogLoading();
 
-        UserApiClient.logout(this, new CallBack<BankResponse>() {
+        UserApiClient.logout(Utils.getContext(), new CallBack<BankResponse>() {
             @Override
             public void onSuccess(BankResponse bankResponse) {
                 hideDialogLoading();
 
                 if ("000000".equals(bankResponse.getSYS_HEAD().getReturnCode())) {
-
-                    MainRouter.cleanUserLogin();
-
                     LoginData.getInstance().clearData(Utils.getContext());
                     SPUtils.getInstance().clear();
                     CleanUtils.cleanCustomCache(FileUtils.photoImageDirectory(getApplicationContext()));
 
+                    MainRouter.cleanUserLogin();
                     mLogout.setVisibility(View.GONE);
                     finish();
                 } else {

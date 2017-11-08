@@ -6,12 +6,7 @@ import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.tzly.ctcyh.router.util.ToastUtils;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.api.CallBack;
-import com.zantong.mobilecttx.api.CarApiClient;
-import com.zantong.mobilecttx.application.LoginData;
-import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.fragment.BaseListFragment;
 import com.zantong.mobilecttx.contract.IMegTypeAtyContract;
 import com.zantong.mobilecttx.global.MainGlobal;
@@ -142,7 +137,7 @@ public class MegTypeFragment extends BaseListFragment<MessageType>
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == MainGlobal.requestCode.meg_detail_del
-                && resultCode == MainGlobal.resultCode.meg_detail_deled) {
+                && resultCode == MainGlobal.resultCode.meg_detail_del) {
             mCurrentPage = 1;//标记全部刷新
             getData();
         }
@@ -156,24 +151,6 @@ public class MegTypeFragment extends BaseListFragment<MessageType>
     @Override
     protected void getData() {
         if (mPresenter != null) mPresenter.messageFindAll();
-    }
-
-    /**
-     * 获取消息类别列表
-     *
-     * @deprecated 不用
-     */
-    private void getMsgTypeList() {
-        BaseDTO dto = new BaseDTO();
-        dto.setUsrId(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
-        CarApiClient.getMsgTypeList(this.getActivity(), dto, new CallBack<MessageTypeResponse>() {
-            @Override
-            public void onSuccess(MessageTypeResponse result) {
-                if (result.getResponseCode() == 2000) {
-                    setDataResult(result.getData().getMessageList());
-                }
-            }
-        });
     }
 
     /**

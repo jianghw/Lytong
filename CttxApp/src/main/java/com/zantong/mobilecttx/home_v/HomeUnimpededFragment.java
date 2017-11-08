@@ -13,16 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
+import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.Des3;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
-import com.zantong.mobilecttx.base.fragment.BaseRefreshJxFragment;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
@@ -59,7 +59,6 @@ import java.util.List;
 
 import cn.qqtheme.framework.custom.banner.CBViewHolderCreator;
 import cn.qqtheme.framework.custom.banner.ConvenientBanner;
-import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 import cn.qqtheme.framework.util.primission.PermissionSuccess;
@@ -69,7 +68,7 @@ import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_COD
 /**
  * 畅通主页面
  */
-public class HomeUnimpededFragment extends BaseRefreshJxFragment
+public class HomeUnimpededFragment extends JxBaseRefreshFragment
         implements View.OnClickListener, IUnimpededFtyContract.IUnimpededFtyView {
 
     // TODO: Rename and change types of parameters
@@ -143,10 +142,6 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         return new HomeUnimpededFragment();
     }
 
-    @Override
-    protected int getFragmentLayoutResId() {
-        return R.layout.fragment_home_unimpeded;
-    }
 
     /**
      * 下拉数据设置
@@ -157,10 +152,18 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     }
 
     @Override
-    protected void initFragmentView(View view) {
+    protected void onLoadMoreData() {}
+
+    @Override
+    protected int initFragmentView() {
+        return R.layout.fragment_home_unimpeded;
+    }
+
+    @Override
+    protected void bindFragmentView(View fragment) {
         EventBus.getDefault().register(this);
 
-        initView(view);
+        initView(fragment);
 
         UnimpededFtyPresenter mPresenter = new UnimpededFtyPresenter(
                 Injection.provideRepository(getActivity().getApplicationContext()), this);
@@ -320,24 +323,16 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
      * 清除资源
      */
     @Override
-    protected void DestroyViewAndThing() {
-        mPresenter.unSubscribe();
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (mPresenter != null) mPresenter.unSubscribe();
         if (!mHomeNotices.isEmpty()) mHomeNotices.clear();
         if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
 
         EventBus.getDefault().removeStickyEvent(AddPushTrumpetEvent.class);
         EventBus.getDefault().removeStickyEvent(GetMsgAgainEvent.class);
         EventBus.getDefault().unregister(this);
-    }
-
-    @Override
-    public void loadingProgress() {
-        showDialogLoading();
-    }
-
-    @Override
-    public void hideLoadingProgress() {
-        hideDialogLoading();
     }
 
     /**
@@ -555,7 +550,7 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
     public void onDataSynEvent(GetMsgAgainEvent event) {
         if (event != null && event.getStatus()) {
             BaseDTO dto = new BaseDTO();
-            dto.setUsrId(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
+            dto.setUsrId(MainRouter.getRASUserID());
             CarApiClient.getUnReadMsgCount(this.getActivity(), dto, new CallBack<MessageCountResponse>() {
                 @Override
                 public void onSuccess(MessageCountResponse result) {
@@ -582,12 +577,12 @@ public class HomeUnimpededFragment extends BaseRefreshJxFragment
         switch (v.getId()) {
             case R.id.img_msg://消息
             case R.id.tv_msg_count:
-                JxConfig.getInstance().eventIdByUMeng(15);
+                MobUtils.getInstance().eventIdByUMeng(15);
                 MainRouter.gotoMegTypeActivity(getActivity());
                 break;
             case R.id.img_scan://扫描
             case R.id.tv_scan:
-                JxConfig.getInstance().eventIdByUMeng(17);
+                MobUtils.getInstance().eventIdByUMeng(17);
                 takeCapture();
                 break;
             default:

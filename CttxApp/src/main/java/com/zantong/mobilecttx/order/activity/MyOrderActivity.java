@@ -9,18 +9,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
-import com.zantong.mobilecttx.fahrschule.activity.FahrschuleActivity;
-import com.zantong.mobilecttx.fahrschule.activity.SparringActivity;
-import com.zantong.mobilecttx.fahrschule.activity.SubjectActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
 import com.zantong.mobilecttx.order.fragment.MyOrderStatusFragment;
+import com.zantong.mobilecttx.order_v.OrderExpressActivity;
 import com.zantong.mobilecttx.presenter.order.OrderParentPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -30,12 +28,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.global.JxGlobal;
 
 /**
  * 订单列表页面
  */
-public class MyOrderActivity extends BaseJxActivity
+public class MyOrderActivity extends JxBaseActivity
         implements IOrderParentFtyContract.IOrderParentFtyView {
 
     private TabLayout mTabLayout;
@@ -55,26 +52,30 @@ public class MyOrderActivity extends BaseJxActivity
     private OrderListBean mOrderListBean;
 
     @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-    }
+    protected void bundleIntent(Bundle savedInstanceState) {}
 
     @Override
-    protected int getContentResId() {
+    protected int initContentView() {
         return R.layout.activity_order_parent;
     }
 
     @Override
-    protected void initFragmentView(View view) {
-        initTitleContent("我的订单");
+    protected void bindContentView(View childView) {
+        titleContent("我的订单");
 
         OrderParentPresenter presenter = new OrderParentPresenter(
                 Injection.provideRepository(getApplicationContext()), this);
 
-        initView(view);
+        initView(childView);
         if (mFragmentList == null) mFragmentList = new ArrayList<>();
         initFragment();
 
         initViewPager();
+    }
+
+    @Override
+    protected void initContentData() {
+        if (mPresenter != null) mPresenter.getOrderList();
     }
 
     public void initView(View view) {
@@ -110,7 +111,7 @@ public class MyOrderActivity extends BaseJxActivity
              */
             @Override
             public void refreshListData(int position) {
-                if (mPresenter != null) mPresenter.getOrderList();
+                initContentData();
             }
 
             /**
@@ -144,7 +145,8 @@ public class MyOrderActivity extends BaseJxActivity
              */
             @Override
             public void doClickCourier(OrderListBean bean) {
-                Act.getInstance().gotoIntent(MyOrderActivity.this, OrderExpressActivity.class, bean.getOrderId());
+                Act.getInstance().gotoIntent(
+                        MyOrderActivity.this, OrderExpressActivity.class, bean.getOrderId());
             }
 
             /**
@@ -152,8 +154,8 @@ public class MyOrderActivity extends BaseJxActivity
              */
             @Override
             public void doClickSubscribe(OrderListBean bean) {
-
-                MainRouter.gotoHtmlActivity(MyOrderActivity.this, bean.getGoodsName(), bean.getTargetUrl());
+                MainRouter.gotoHtmlActivity(
+                        MyOrderActivity.this, bean.getGoodsName(), bean.getTargetUrl());
             }
 
             /**
@@ -174,7 +176,8 @@ public class MyOrderActivity extends BaseJxActivity
      * 支付类型选择
      * canPayType支付方式:1-工行支付,2-支付宝;例:1,2
      */
-    private void payTypeByUser(final OrderListBean orderListBean) {
+    private void payTypeByUser(OrderListBean orderListBean) {
+
         MainRouter.gotoPayTypeActivity(this, orderListBean.getOrderId());
 
         //        if (orderListBean.getCanPayType().contains("1")
@@ -235,32 +238,22 @@ public class MyOrderActivity extends BaseJxActivity
         mViewPager.setOffscreenPageLimit(mFragmentList.size() - 1);//设置预加载
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
             @Override
-            public void onPageSelected(int position) {
-            }
+            public void onPageSelected(int position) {}
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-            }
+            public void onPageScrollStateChanged(int state) {}
         });
 
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
-    /**
-     * 刷新
-     */
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (mPresenter != null) mPresenter.getOrderList();
-    }
+    protected void onDestroy() {
+        super.onDestroy();
 
-    @Override
-    protected void DestroyViewAndThing() {
         mMyOrderStatusFragment = null;
         orderUnStatusFragment = null;
         orderCancleStatusFragment = null;
@@ -275,22 +268,11 @@ public class MyOrderActivity extends BaseJxActivity
         mPresenter = presenter;
     }
 
-    @Override
-    public void showLoadingDialog() {
-        showDialogLoading();
-    }
-
-    @Override
-    public void dismissLoadingDialog() {
-        hideDialogLoading();
-    }
-
     /**
      * 加载订单失败状态
      */
     @Override
     public void getOrderListError(String message) {
-        dismissLoadingDialog();
         ToastUtils.toastShort(message);
 
         if (mMyOrderStatusFragment != null) mMyOrderStatusFragment.setPayOrderListData(null);
@@ -347,72 +329,34 @@ public class MyOrderActivity extends BaseJxActivity
      */
     @Override
     public void updateOrderStatusError(String message) {
-        dismissLoadingDialog();
         ToastUtils.toastShort(message);
     }
 
     @Override
     public void updateOrderStatusSucceed(BaseResponse result) {
-        if (mPresenter != null) mPresenter.getOrderList();
+        initContentData();
     }
 
     @Override
     public void onPayOrderByCouponError(String message) {
-        dismissLoadingDialog();
         ToastUtils.toastShort(message);
     }
 
     @Override
-    public void onPayOrderByCouponSucceed(PayOrderResponse result) {
-
-    }
+    public void onPayOrderByCouponSucceed(PayOrderResponse result) {}
 
     @Override
-    public void getBankPayHtmlSucceed(PayOrderResponse result, String orderId) {
-
-    }
+    public void getBankPayHtmlSucceed(PayOrderResponse result, String orderId) {}
 
     /**
      * 页面回调
-     * 1、驾校报名成功页面
-     * 2、订单详情页面
-     * 订单类型：1 加油充值，2 代驾，3 学车，4 科目强化，5 陪练
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
-                && resultCode == JxGlobal.resultCode.web_order_id_succeed) {
-
-            Intent intent = new Intent();
-            if (mOrderListBean.getType() == 3) {
-                intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 2);
-                Act.getInstance().gotoLoginByIntent(this, FahrschuleActivity.class, intent);
-            } else if (mOrderListBean.getType() == 4) {
-                intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 3);
-                Act.getInstance().gotoLoginByIntent(this, SubjectActivity.class, intent);
-            } else if (mOrderListBean.getType() == 5) {
-                intent.putExtra(JxGlobal.putExtra.fahrschule_position_extra, 2);
-                Act.getInstance().gotoLoginByIntent(this, SparringActivity.class, intent);
-            }
-
-        } else if (requestCode == JxGlobal.requestCode.fahrschule_order_num_web
-                && resultCode == JxGlobal.resultCode.web_order_id_error && data != null) {
-            //前往 订单详情页面
-            //            String orderId = data.getStringExtra(JxGlobal.putExtra.web_order_id_extra);
-            //            String targetType = mOrderListBean.getTargetType();
-            //            if (targetType.equals("0")) {//前往 订单详情页面
-            //                Intent intent = new Intent(this, mOrderListBean.getType() == 6
-            //                        ? AnnualDetailActivity.class : OrderDetailActivity.class);
-            //                intent.putExtra(JxGlobal.putExtra.web_order_id_extra, orderId);
-            //                startActivity(intent);
-            //            } else {
-            //                Intent intent = new Intent();
-            //                intent.putExtra(JxGlobal.putExtra.browser_title_extra, mOrderListBean.getGoodsName());
-            //                intent.putExtra(JxGlobal.putExtra.browser_url_extra, mOrderListBean.getTargetUrl() + "?orderId=" + orderId);
-            //                Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
-            //            }
-        }
+        //支付类型页面2240 html 快递
+        //TODO 这么写好坑
+        initContentData();
     }
 
     public interface RefreshListener {

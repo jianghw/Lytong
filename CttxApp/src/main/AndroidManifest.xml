@@ -171,7 +171,7 @@
             android:name=".daijia.activity.DaiJiaActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".chongzhi.activity.RechargeActivity"
+            android:name=".oiling_v.RechargeActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".map.activity.NavActivity"
@@ -193,7 +193,7 @@
             android:name=".common.activity.CommonTwoLevelMenuActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".chongzhi.activity.RechargeAgreementActivity"
+            android:name=".oiling_v.RechargeAgreementActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".card.activity.ApplySuccessActvity"
@@ -243,7 +243,7 @@
             android:name=".user.activity.MegSecondLevelActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.MegDetailActivity"
+            android:name=".msg_v.MegDetailActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
         <activity
@@ -319,8 +319,9 @@
         <!-- ========================违章查询页面================================= -->
         <!-- 违法查询页面 输入 -->
         <activity
-            android:name=".weizhang.activity.ViolationActivity"
+            android:name=".violation_v.ViolationActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTop"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <!-- 违章列表信息显示页面 -->
         <activity
@@ -331,11 +332,11 @@
             android:name=".weizhang.activity.ViolationPayActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".weizhang.activity.LicenseCheckGradeActivity"
+            android:name=".violation_v.LicenseCheckGradeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".weizhang.activity.LicenseDetailActivity"
+            android:name=".violation_v.LicenseDetailActivity"
             android:screenOrientation="portrait"/>
         <!-- 缴费须知 -->
         <activity
@@ -345,26 +346,26 @@
         <!-- ===================活动模块========================================= -->
         <!-- 活动页面;驾校报名 -->
         <activity
-            android:name=".fahrschule.activity.FahrschuleActivity"
+            android:name=".fahrschule_v.FahrschuleActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
         <!-- 活动页面;科目强化 -->
         <activity
-            android:name=".fahrschule.activity.SubjectActivity"
+            android:name=".fahrschule_v.SubjectActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
         <!-- 活动页面;陪练预约 -->
         <activity
-            android:name=".fahrschule.activity.SparringActivity"
+            android:name=".fahrschule_v.SparringActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
         <!-- ===================分享模块========================================= -->
         <!-- 分享模块页面 -->
         <activity
-            android:name=".share.activity.ShareParentActivity"
+            android:name=".share_v.ShareParentActivity"
             android:screenOrientation="portrait"/>
 
         <!-- ===================订单模块========================================= -->
@@ -380,15 +381,12 @@
             android:screenOrientation="portrait"/>
         <!--呼叫快递-->
         <activity
-            android:name=".order.activity.OrderExpressActivity"
+            android:name=".order_v.OrderExpressActivity"
             android:screenOrientation="portrait"/>
 
-        <!-- ====================================浏览器================================ -->
-
+        <!-- ==========android:process=":com.zantong.mobilecttx.web"=====浏览器============ -->
         <activity
             android:name=".browser.BrowserHtmlActivity"
-            android:launchMode="singleTop"
-            android:process=":lyl.boon.process.web"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.zantong.mobilecttx.browser.BrowserHtmlActivity"/>
@@ -405,7 +403,7 @@
         <!-- ===================优惠模块========================================= -->
         <!-- 优惠模块 -->
         <activity
-            android:name=".share.activity.CarBeautyActivity"
+            android:name=".share_v.CarBeautyActivity"
             android:screenOrientation="portrait"/>
 
         <service android:name=".utils.DateService">

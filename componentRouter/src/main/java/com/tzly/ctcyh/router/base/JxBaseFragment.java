@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Fragment 下拉刷新基类
@@ -70,11 +70,14 @@ public abstract class JxBaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        // 统计页面
+        MobclickAgent.onPageStart(this.getClass().getSimpleName());
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        MobclickAgent.onPageEnd(this.getClass().getSimpleName());
     }
 
     /**
@@ -155,10 +158,10 @@ public abstract class JxBaseFragment extends Fragment {
     /**
      * 统一封装
      */
-    public void toastShore(String message) {
+    public void toastShort(String message) {
         FragmentActivity activity = getActivity();
         if (activity instanceof JxBaseActivity)
-            ((JxBaseActivity) activity). toastShort(message);
+            ((JxBaseActivity) activity).toastShore(message);
     }
 
 }

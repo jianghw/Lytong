@@ -3,6 +3,7 @@ package com.tzly.ctcyh.router.base;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.custom.LoadingDialog;
 import com.tzly.ctcyh.router.util.StatusBarUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
+import com.umeng.analytics.MobclickAgent;
 
 
 /**
@@ -175,11 +177,15 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        // 友盟统计开始
+        MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        // 友盟统计结束
+        MobclickAgent.onPause(this);
     }
 
     @Override
@@ -375,6 +381,24 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     }
 
     /**
+     * 定义渐变色红色
+     */
+    protected void titleBackground() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            if (mBackgroundLay != null)
+                mBackgroundLay.setBackground(getResources().getDrawable(R.drawable.shape_pay_pressed_false));
+            if (mImgBack != null)
+                mImgBack.setImageResource(R.mipmap.ic_arrow_left);
+            if (mTvTitle != null)
+                mTvTitle.setTextColor(getResources().getColor(R.color.res_color_white));
+            if (mTvRight != null)
+                mTvRight.setTextColor(getResources().getColor(R.color.res_color_white));
+            if (mTvLine != null)
+                mTvLine.setVisibility(View.GONE);
+        }
+    }
+
+    /**
      * 默认第一次显示状态
      */
     @MultiState
@@ -429,7 +453,7 @@ public abstract class JxBaseActivity extends AppCompatActivity {
     /**
      * 统一封装
      */
-    public void toastShort(String msg) {
+    public void toastShore(String msg) {
         ToastUtils.toastShort(msg);
     }
 }

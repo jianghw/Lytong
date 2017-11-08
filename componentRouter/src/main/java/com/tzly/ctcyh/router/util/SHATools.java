@@ -40,8 +40,7 @@ public class SHATools {
 
         for (int i = 0; i < bytes.length; i++) {
             int val = ((int) bytes[i]) & 0xff;
-            if (val < 16)
-                hexValue.append("0");
+            if (val < 16) hexValue.append("0");
             hexValue.append(Integer.toHexString(val));
         }
         return hexValue.toString();

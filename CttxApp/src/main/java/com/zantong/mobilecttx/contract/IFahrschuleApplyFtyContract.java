@@ -1,7 +1,7 @@
 package com.zantong.mobilecttx.contract;
 
-import com.zantong.mobilecttx.base.interf.IMvpPresenter;
-import com.zantong.mobilecttx.base.interf.IMvpView;
+import com.tzly.ctcyh.router.base.IBasePresenter;
+import com.tzly.ctcyh.router.base.IBaseView;
 import com.zantong.mobilecttx.fahrschule.bean.AresGoodsResponse;
 import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
 import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResponse;
@@ -14,11 +14,7 @@ import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 
 public interface IFahrschuleApplyFtyContract {
 
-    interface IFahrschuleApplyFtyView extends IMvpView<IFahrschuleApplyFtyPresenter> {
-
-        void showLoadingDialog();
-
-        void dismissLoadingDialog();
+    interface IFahrschuleApplyFtyView extends IBaseView<IFahrschuleApplyFtyPresenter> {
 
         void getMerchantAreaError(String message);
 
@@ -49,7 +45,7 @@ public interface IFahrschuleApplyFtyContract {
         void getGoodsDetailSucceed(GoodsDetailResponse result);
     }
 
-    interface IFahrschuleApplyFtyPresenter extends IMvpPresenter {
+    interface IFahrschuleApplyFtyPresenter extends IBasePresenter {
         /**
          * 3.获取商户区域列表
          */

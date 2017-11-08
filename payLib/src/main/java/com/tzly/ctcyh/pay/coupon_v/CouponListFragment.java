@@ -19,7 +19,6 @@ import com.tzly.ctcyh.pay.coupon_p.ICouponListContract;
 import com.tzly.ctcyh.pay.data_m.InjectionRepository;
 import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.router.base.JxBaseRecyclerListFragment;
-import com.tzly.ctcyh.router.custom.SpaceItemDecoration;
 
 import java.util.List;
 
@@ -40,12 +39,15 @@ public class CouponListFragment extends
 
     @Override
     protected void bindFragmentView(View fragmentView) {
-        //分隔栏
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.res_y_20);
-        getCustomRecycler().addItemDecoration(new SpaceItemDecoration(spacingInPixels));
-
         CouponListPresenter mPresenter = new CouponListPresenter(
                 InjectionRepository.provideRepository(getActivity().getApplicationContext()), this);
+    }
+
+    /**
+     * 分隔栏
+     */
+    protected int getCustomDecoration() {
+        return getResources().getDimensionPixelSize(R.dimen.res_y_20);
     }
 
     /**
@@ -132,8 +134,7 @@ public class CouponListFragment extends
 
     @Override
     public void couponByTypeError(String message) {
-        toastShore(message);
-        showActivityError();
+        toastShort(message);
     }
 
     @Override

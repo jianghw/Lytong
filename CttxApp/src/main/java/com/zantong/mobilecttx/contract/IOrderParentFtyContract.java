@@ -1,7 +1,7 @@
 package com.zantong.mobilecttx.contract;
 
-import com.zantong.mobilecttx.base.interf.IMvpPresenter;
-import com.zantong.mobilecttx.base.interf.IMvpView;
+import com.tzly.ctcyh.router.base.IBasePresenter;
+import com.tzly.ctcyh.router.base.IBaseView;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
@@ -15,11 +15,7 @@ import cn.qqtheme.framework.bean.BaseResponse;
 
 public interface IOrderParentFtyContract {
 
-    interface IOrderParentFtyView extends IMvpView<IOrderParentFtyPresenter> {
-
-        void showLoadingDialog();
-
-        void dismissLoadingDialog();
+    interface IOrderParentFtyView extends IBaseView<IOrderParentFtyPresenter> {
 
         void getOrderListError(String message);
 
@@ -44,7 +40,7 @@ public interface IOrderParentFtyContract {
         void getBankPayHtmlSucceed(PayOrderResponse result, String orderId);
     }
 
-    interface IOrderParentFtyPresenter extends IMvpPresenter {
+    interface IOrderParentFtyPresenter extends IBasePresenter {
         void getOrderList();
 
         String initUserId();

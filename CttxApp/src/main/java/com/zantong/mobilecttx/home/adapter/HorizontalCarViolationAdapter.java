@@ -24,7 +24,7 @@ import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.weizhang.activity.ViolationActivity;
+import com.zantong.mobilecttx.violation_v.ViolationActivity;
 import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.qqtheme.framework.custom.popup.MoreWindow;
-import cn.qqtheme.framework.global.JxConfig;
+import com.tzly.ctcyh.router.util.MobUtils;
 import cn.qqtheme.framework.util.ScreenUtils;
 
 /**
@@ -113,7 +113,7 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JxConfig.getInstance().eventIdByUMeng(11);
+                MobUtils.getInstance().eventIdByUMeng(11);
 
                 showMoreWindow(v);
             }
@@ -131,13 +131,13 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
         mMoreWindow.initClickListener(new MoreWindow.onClickListener() {
             @Override
             public void clickInquire() {//违章查询
-                JxConfig.getInstance().eventIdByUMeng(12);
+                MobUtils.getInstance().eventIdByUMeng(12);
                 Act.getInstance().gotoIntent(mContext, ViolationActivity.class);
             }
 
             @Override
             public void clickScan() {
-                JxConfig.getInstance().eventIdByUMeng(14);
+                MobUtils.getInstance().eventIdByUMeng(14);
                 Act.getInstance().gotoIntent(mContext, Codequery.class);
             }
         });

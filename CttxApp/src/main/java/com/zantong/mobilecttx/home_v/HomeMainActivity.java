@@ -14,20 +14,15 @@ import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
+import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.StatusBarUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.global.MainGlobal;
-import com.zantong.mobilecttx.user.bean.RspInfoBean;
-import com.zantong.mobilecttx.utils.AccountRememberCtrl;
 import com.zantong.mobilecttx.utils.DialogUtils;
-import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
-import com.zantong.mobilecttx.utils.Tools;
 
 import cn.qqtheme.framework.custom.tablebottom.UiTableBottom;
-import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.util.AppUtils;
 import cn.qqtheme.framework.util.primission.PermissionGen;
 
@@ -90,8 +85,7 @@ public class HomeMainActivity extends JxBaseActivity {
     @Override
     protected void initContentData() {
         //更新检查
-        Beta.checkUpgrade(false, true);
-        Beta.init(getApplicationContext(), false);
+//        Beta.init(getApplicationContext(), false);
         UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
         int appCode = AppUtils.getAppVersionCode();
         int mVersionCode = appCode;
@@ -133,27 +127,6 @@ public class HomeMainActivity extends JxBaseActivity {
             startActivity(intent);
         } catch (Exception e) {
             ToastUtils.toastShort("您没有安装应用市场,请点击立即更新");
-        }
-    }
-
-    /**
-     * 登陆信息
-     */
-    public void initLoginInfo() {
-        RspInfoBean user = (RspInfoBean) UserInfoRememberCtrl.readObject();
-        if (null != user) {
-            LoginData.getInstance().userID = user.getUsrid();
-            LoginData.getInstance().loginFlag = true;
-            LoginData.getInstance().filenum = user.getFilenum();
-            if (UserInfoRememberCtrl.readObject(LoginData.getInstance().NOTICE_STATE) != null) {
-                LoginData.getInstance().updateMsg =
-                        (boolean) UserInfoRememberCtrl.readObject(LoginData.getInstance().NOTICE_STATE);
-            }
-            if (!Tools.isStrEmpty(AccountRememberCtrl.getDefaultNumber(getApplicationContext()))) {
-                LoginData.getInstance().defaultCar = true;
-                LoginData.getInstance().defaultCarNumber =
-                        AccountRememberCtrl.getDefaultNumber(getApplicationContext());
-            }
         }
     }
 
@@ -199,7 +172,7 @@ public class HomeMainActivity extends JxBaseActivity {
                     }
                 });
                 FragmentUtils.showHideNull(mHomeUnimpededFragment, mHomeDiscountsFragment, mHomeMeFragment);
-                JxConfig.getInstance().eventIdByUMeng(18);
+                MobUtils.getInstance().eventIdByUMeng(18);
                 break;
             case 1:
                 if (mHomeDiscountsFragment == null) {
@@ -208,7 +181,7 @@ public class HomeMainActivity extends JxBaseActivity {
                 }
                 FragmentUtils.showHideNull(mHomeDiscountsFragment, mHomeUnimpededFragment, mHomeMeFragment);
 
-                JxConfig.getInstance().eventIdByUMeng(19);
+                MobUtils.getInstance().eventIdByUMeng(19);
                 break;
             case 2:
                 if (mHomeMeFragment == null) {
@@ -241,6 +214,7 @@ public class HomeMainActivity extends JxBaseActivity {
                 ToastUtils.toastShort("请再点击一次,退出应用");
                 exitTime = System.currentTimeMillis();
             } else {
+                finish();
                 return super.onKeyDown(keyCode, event);
             }
             return true;

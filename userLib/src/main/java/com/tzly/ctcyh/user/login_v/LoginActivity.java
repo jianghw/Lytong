@@ -122,11 +122,11 @@ public class LoginActivity extends JxBaseActivity implements
         if (view == mCharKeyboard.getCharTabView()) {
             if (isDaxie) {
                 isDaxie = false;
-                mCharKeyboard.getCharTabViewImg().setBackgroundResource(R.mipmap.ic_char_lower);
+                mCharKeyboard.getCharTabViewImg().setBackgroundResource(R.mipmap.user_ic_char_lower);
                 mCharKeyboard.changeLower();
             } else {
                 isDaxie = true;
-                mCharKeyboard.getCharTabViewImg().setBackgroundResource(R.mipmap.ic_char_upper);
+                mCharKeyboard.getCharTabViewImg().setBackgroundResource(R.mipmap.user_ic_char_upper);
                 mCharKeyboard.changeUpper();
             }
         }
@@ -365,7 +365,7 @@ public class LoginActivity extends JxBaseActivity implements
 
     @PermissionFail(requestCode = PermissionGen.PER_REQUEST_CODE)
     public void doPermissionIMEIFail() {
-        toastShort("手机识别码权限被拒绝，请手机设置中打开");
+        toastShore("手机识别码权限被拒绝，请手机设置中打开");
     }
 
     @Override
@@ -375,7 +375,7 @@ public class LoginActivity extends JxBaseActivity implements
 
     @Override
     public void userLoginError(String message) {
-        toastShort(message);
+        toastShore(message);
     }
 
     @Override
@@ -390,7 +390,7 @@ public class LoginActivity extends JxBaseActivity implements
 
     @Override
     public void userLoginSucceed(LoginResponse loginInfoBean) {
-        toastShort("银行服务器登录成功!");
+        toastShore("银行服务器登录成功!");
     }
 
     @Override
@@ -401,6 +401,6 @@ public class LoginActivity extends JxBaseActivity implements
 
     @Override
     public void registerError(String message) {
-        toastShort("服务器数据同步失败!" + message);
+        toastShore("服务器数据同步失败!" + message);
     }
 }

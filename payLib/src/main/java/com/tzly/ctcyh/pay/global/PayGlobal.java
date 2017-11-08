@@ -2,7 +2,7 @@ package com.tzly.ctcyh.pay.global;
 
 /**
  * Created by jianghw on 2017/7/5.
- * Description:
+ * Description: 1x00--2
  * Update by:
  * Update day:
  */
@@ -10,16 +10,17 @@ package com.tzly.ctcyh.pay.global;
 public final class PayGlobal {
 
     public static final class requestCode {
-        public static final int coupon_list_choice = 1000;
-        public static final int pay_type_price = 900;
-        public static final int pay_type_choice=800;
+        public static final int coupon_list_choice = 1210;
+        public static final int pay_type_choice=1220;
+        public static final int pay_html_price = 1230;
     }
 
     public static final class resultCode {
-        public static final int coupon_used = 2000;
-        public static final int coupon_unused = 4000;
-        public static int web_pay_succeed = 2001;
-        public static int web_pay_error = 4001;
+        public static final int coupon_used = 2220;
+        public static final int coupon_unused = 2221;
+        public static int web_pay_succeed = 2230;
+        public static int web_pay_error = 2231;
+        public static int pay_type_back = 2240;
     }
 
     public static final class putExtra {

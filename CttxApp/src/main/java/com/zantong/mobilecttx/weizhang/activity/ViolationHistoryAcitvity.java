@@ -16,11 +16,11 @@ import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.contract.ItemClickListener;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.adapter.SectionedExpandableLayoutHelper;
 import com.zantong.mobilecttx.weizhang.bean.ViolationCarInfo;
@@ -78,7 +78,7 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView, HelpPre
         showDialogLoading();
         ViolationSearchDTO dto = new ViolationSearchDTO();
         dto.setDate(mDate);
-        dto.setUsernum(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
+        dto.setUsernum(RSAUtils.strByEncryption(MainRouter.getUserID(false), true));
         CarApiClient.getViolationHistory(Utils.getContext(), dto,
                 new CallBack<ViolationHistoryBean>() {
                     @Override
@@ -97,7 +97,7 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView, HelpPre
                             ViolationSearchDTO dto = new ViolationSearchDTO();
                             dto.setCarnum(info.getCarnum());
                             dto.setDate(mDate);
-                            dto.setUsernum(RSAUtils.strByEncryption(LoginData.getInstance().userID, true));
+                            dto.setUsernum(RSAUtils.strByEncryption(MainRouter.getUserID(false), true));
                             getHistoryByCar(info, dto);
 
                         }

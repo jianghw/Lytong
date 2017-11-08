@@ -5,12 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
-import com.zantong.mobilecttx.card.bean.OpenQueryBean;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.user.bean.LoginInfoBean;
 import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
@@ -21,8 +18,6 @@ import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.lang.ref.WeakReference;
-
-import static com.tzly.ctcyh.router.util.rea.RSAUtils.strByEncryption;
 
 
 /**
@@ -48,13 +43,13 @@ public class LocalData {
 
     BaseDTO initBaseDTO() {
         BaseDTO dto = new BaseDTO();
-        dto.setUsrId(strByEncryption(LoginData.getInstance().userID, true));
+        dto.setUsrId(MainRouter.getRASUserID());
         return dto;
     }
 
     public MessageDetailDTO initMessageDetailDTO() {
         MessageDetailDTO dto = new MessageDetailDTO();
-        dto.setUsrId(strByEncryption(LoginData.getInstance().userID, true));
+        dto.setUsrId(MainRouter.getRASUserID());
         return dto;
     }
 
@@ -116,26 +111,6 @@ public class LocalData {
     }
 
     /**
-     * 初始化用户登录信息
-     *
-     * @param rspInfoBean
-     */
-    public void initGlobalLoginInfo(RspInfoBean rspInfoBean) {
-        if (rspInfoBean == null) return;
-        LoginData.getInstance().userID = rspInfoBean.getUsrid();
-        LoginData.getInstance().filenum = rspInfoBean.getFilenum();
-        LoginData.getInstance().getdate = rspInfoBean.getGetdate();
-
-        OpenQueryBean.RspInfoBean.UserCarsInfoBean mUserCarsInfoBean =
-                (OpenQueryBean.RspInfoBean.UserCarsInfoBean)
-                        UserInfoRememberCtrl.readObject(LoginData.getInstance().DefaultCarLocalFlag);
-        if (mUserCarsInfoBean != null) {
-            LoginData.getInstance().defaultCar = true;
-            LoginData.getInstance().defaultCarNumber = mUserCarsInfoBean.getCarnum();
-        }
-    }
-
-    /**
      * 获取登录密码
      *
      * @return
@@ -146,14 +121,4 @@ public class LocalData {
         return pwd;
     }
 
-    /**
-     * 登录后重复保存数据
-     *
-     * @param result
-     */
-    public void saveLoginInfoRepeat(LoginInfoBean result) {
-        initGlobalLoginInfo(result.getRspInfo());
-        UserInfoRememberCtrl.saveObject(UserInfoRememberCtrl.USERDEVICE, LoginData.getInstance().imei);
-        UserInfoRememberCtrl.saveObject(result.getRspInfo());
-    }
 }

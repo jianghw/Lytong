@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -142,8 +143,8 @@ public class PayTypeFragment extends JxBaseRefreshFragment
     }
 
     @Override
-    protected void bindFragmentView(View fragmentView) {
-        initView(fragmentView);
+    protected void bindFragmentView(View fragment) {
+        initView(fragment);
 
         PayTypePresenter mPresenter = new PayTypePresenter(
                 InjectionRepository.provideRepository(Utils.getContext()), this);
@@ -214,7 +215,7 @@ public class PayTypeFragment extends JxBaseRefreshFragment
     public void onClick(View v) {
         if (v.getId() == R.id.lay_re_coupon) {//优惠劵
             if (mPayType == 0) {
-                toastShore("请先选择支付方式");
+                toastShort("请先选择支付方式");
             } else {
                 PayRouter.gotoCouponListActivity(getActivity(), String.valueOf(mCouponType), mPayType);
             }
@@ -240,9 +241,7 @@ public class PayTypeFragment extends JxBaseRefreshFragment
     /**
      * 银行卡支付
      */
-    private void gotoUnionPay() {
-
-    }
+    private void gotoUnionPay() {}
 
     /**
      * 支付宝
@@ -277,8 +276,7 @@ public class PayTypeFragment extends JxBaseRefreshFragment
 
     @Override
     public void getOrderInfoError(String message) {
-        showActivityError();
-        toastShore(message);
+        toastShort(message);
     }
 
     /**
@@ -354,15 +352,15 @@ public class PayTypeFragment extends JxBaseRefreshFragment
                 resultCode == PayGlobal.resultCode.coupon_used) {
             //使用优惠劵
             couponResult(data);
-        } else if (requestCode == PayGlobal.requestCode.pay_type_price &&
+        } else if (requestCode == PayGlobal.requestCode.pay_html_price &&
                 resultCode == PayGlobal.resultCode.web_pay_succeed) {
-            toastShore("支付完成");
+            toastShort("支付完成");
             //前往 完成页面
             String orderId = getExtraOrderId();
             PayRouter.gotoOrderSucceedActivity(getActivity(), orderId, mCouponType);
-        } else if (requestCode == PayGlobal.requestCode.pay_type_price &&
+        } else if (requestCode == PayGlobal.requestCode.pay_html_price &&
                 resultCode == PayGlobal.resultCode.web_pay_error) {
-            toastShore("未完成支付");
+            toastShort("未完成支付");
             //前往 订单详情页面
             String orderId = getExtraOrderId();
             PayRouter.gotoOrderDetailActivity(getActivity(), orderId, mCouponType);
@@ -416,13 +414,18 @@ public class PayTypeFragment extends JxBaseRefreshFragment
      */
     @Override
     public void getBankPayHtmlError(String message) {
-        toastShore(message);
+        toastShort(message);
     }
 
     @Override
     public void getBankPayHtmlSucceed(PayUrlResponse response) {
         PayRouter.gotoHtmlActivity(getActivity(),
-                "畅通卡支付", response.getData(), getExtraOrderId(), mPayType);
+                "工行卡支付", response.getData(), getExtraOrderId(), mPayType);
+    }
+
+    protected void closeActivity() {
+        FragmentActivity activity = getActivity();
+        if (activity != null) activity.finish();
     }
 
     /**
@@ -471,7 +474,7 @@ public class PayTypeFragment extends JxBaseRefreshFragment
      */
     @Override
     public void couponByTypeError(String message) {
-        toastShore(message);
+        toastShort(message);
         setCouponText(message + "请点击我~");
     }
 

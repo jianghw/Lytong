@@ -297,7 +297,7 @@
                         android:id="@+id/input_tab_img"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="@mipmap/ic_char_lower"/>
+                        android:background="@mipmap/user_ic_char_lower"/>
                 </LinearLayout>
 
                 <TextView
@@ -389,7 +389,7 @@
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-                        android:background="@mipmap/ic_keyboard_del"/>
+                        android:background="@mipmap/user_ic_keyboard_del"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -430,7 +430,7 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="14dp"
-                        android:background="@mipmap/ic_keyboard_hide"/>
+                        android:background="@mipmap/user_ic_keyboard_hide"/>
                 </LinearLayout>
 
                 <TextView

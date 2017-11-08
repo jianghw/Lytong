@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
@@ -21,7 +22,7 @@ import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.contract.home.INativeItemListener;
-import com.zantong.mobilecttx.fahrschule.activity.SparringActivity;
+import com.zantong.mobilecttx.fahrschule_v.SparringActivity;
 import com.zantong.mobilecttx.home.adapter.FavorableBannerImgHolderView;
 import com.zantong.mobilecttx.home.adapter.HomeDiscountsAdapter;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
@@ -32,8 +33,8 @@ import com.zantong.mobilecttx.home.bean.ModuleBean;
 import com.zantong.mobilecttx.home.bean.ModuleResponse;
 import com.zantong.mobilecttx.presenter.home.HomeFavorableFtyPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.share.activity.CarBeautyActivity;
-import com.zantong.mobilecttx.share.activity.ShareParentActivity;
+import com.zantong.mobilecttx.share_v.CarBeautyActivity;
+import com.zantong.mobilecttx.share_v.ShareParentActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import java.util.ArrayList;
@@ -42,7 +43,6 @@ import java.util.List;
 import cn.qqtheme.framework.bean.BaseResponse;
 import cn.qqtheme.framework.custom.banner.CBViewHolderCreator;
 import cn.qqtheme.framework.custom.banner.ConvenientBanner;
-import cn.qqtheme.framework.global.JxConfig;
 import cn.qqtheme.framework.global.JxGlobal;
 import cn.qqtheme.framework.util.primission.PermissionFail;
 import cn.qqtheme.framework.util.primission.PermissionGen;
@@ -157,13 +157,13 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
             } else if (path.equals("native_app_toast")) {
                 ToastUtils.toastShort("此功能开发中,敬请期待~");
             } else if (path.equals("native_app_daijia")) {//代驾
-                JxConfig.getInstance().eventIdByUMeng(25);
+                MobUtils.getInstance().eventIdByUMeng(25);
                 enterDrivingActivity();
             } else if (path.equals("native_app_enhancement")) {//科目强化
-                JxConfig.getInstance().eventIdByUMeng(37);
+                MobUtils.getInstance().eventIdByUMeng(37);
                 MainRouter.gotoSubjectActivity(getActivity(),0);
             } else if (path.equals("native_app_sparring")) {//陪练
-                JxConfig.getInstance().eventIdByUMeng(38);
+                MobUtils.getInstance().eventIdByUMeng(38);
                 Act.getInstance().gotoIntentLogin(getActivity(), SparringActivity.class);
                 MainRouter.gotoSparringActivity(getActivity(),0);
             } else if (path.equals("native_app_drive_share")) {//分享
@@ -171,10 +171,10 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
                 intent.putExtra(JxGlobal.putExtra.share_position_extra, 1);
                 Act.getInstance().gotoLoginByIntent(getActivity(), ShareParentActivity.class, intent);
             } else if (path.equals("native_app_car_beauty")) {//汽车美容
-                JxConfig.getInstance().eventIdByUMeng(27);
+                MobUtils.getInstance().eventIdByUMeng(27);
                 Act.getInstance().gotoIntentLogin(getActivity(), CarBeautyActivity.class);
             } else if (path.equals("native_app_driver")) {//驾校报名
-                JxConfig.getInstance().eventIdByUMeng(28);
+                MobUtils.getInstance().eventIdByUMeng(28);
                 MainRouter.gotoFahrschuleActivity(getActivity(),0);
             } else {//其他
                 ToastUtils.toastShort("此版本暂无此状态页面,请更新最新版本");

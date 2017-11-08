@@ -112,8 +112,9 @@ public abstract class JxBaseRefreshFragment extends JxBaseFragment {
 
     /**
      * 绑定控件
+     * @param fragment
      */
-    protected abstract void bindFragmentView(View fragmentView);
+    protected abstract void bindFragmentView(View fragment);
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
