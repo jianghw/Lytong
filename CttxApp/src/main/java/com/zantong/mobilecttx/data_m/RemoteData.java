@@ -109,6 +109,10 @@ public class RemoteData implements IRemoteSource {
         return RetrofitFactory.getInstance().createRetrofit(2);
     }
 
+    private Retrofit testRetrofit() {
+        return RetrofitFactory.getInstance().createRetrofit(4);
+    }
+
     private Retrofit initImageRetrofit() {
         return RetrofitFactory.getInstance().createRetrofit(3);
     }
@@ -375,7 +379,7 @@ public class RemoteData implements IRemoteSource {
     }
 
     @Override
-    public Observable<PayOrderResponse> getBankPayHtml(String orderId, String orderPrice,int coupon) {
+    public Observable<PayOrderResponse> getBankPayHtml(String orderId, String orderPrice, int coupon) {
         return baseRetrofit().create(IPayService.class).getBankPayHtml(orderId, orderPrice, String.valueOf(coupon));
     }
 

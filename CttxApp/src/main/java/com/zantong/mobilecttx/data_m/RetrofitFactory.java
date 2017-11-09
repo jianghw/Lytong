@@ -26,6 +26,8 @@ public class RetrofitFactory {
                 return MainRetrofit.getInstance().createRetrofit(getBaseUrl(type));
             case 3:
                 return MainRetrofit.getInstance().createRetrofit(getBaseUrl(type));
+            case 4:
+                return MainRetrofit.getInstance().createRetrofit(getBaseUrl(type));
             default:
                 throw new IllegalArgumentException("pay retrofit type is not right");
         }
