@@ -240,7 +240,8 @@ public class MainClubActivity extends RefreshBaseActivity
     }
 
     private void upGradeInfo() {//更新检查
-//        Beta.init(getApplicationContext(), false);
+        Beta.checkUpgrade(false, true);
+        Beta.init(getApplicationContext(), false);
 
         UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
         int appCode = AppUtils.getAppVersionCode();
@@ -398,8 +399,8 @@ public class MainClubActivity extends RefreshBaseActivity
         int id = v.getId();
         if (id == R.id.lay_oil) {//加油充值
             Act.getInstance().gotoIntentLogin(this, RechargeActivity.class);
-        } else if (id == R.id.lay_annual) {//年检
-            enterDrivingActivity();
+        } else if (id == R.id.lay_annual) {//爱车估值
+            carValuation();
         } else if (id == R.id.lay_violations) {//违章查询
             Act.getInstance().gotoIntent(this, ViolationActivity.class);
         } else if (id == R.id.lay_apply) {//驾校报名
@@ -409,6 +410,13 @@ public class MainClubActivity extends RefreshBaseActivity
         } else if (id == R.id.lay_subject) {
             Act.getInstance().gotoIntentLogin(this, SubjectActivity.class);
         }
+    }
+
+    protected void carValuation() {
+        Intent intent = new Intent();
+        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "爱车估值");
+        intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://m.jingzhengu.com/xiansuo/sellcar-changtongcheyouhui.html");
+        Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
     }
 
     private void popUpMore() {

@@ -67,7 +67,7 @@
             android:layout_marginBottom="@dimen/y20"
             android:layout_marginTop="@dimen/y20"
             android:gravity="center"
-            android:text="购车贷款"/>
+            android:text="爱车估值"/>
     </LinearLayout>
 
     <LinearLayout

@@ -56,12 +56,12 @@ public class MyApplication extends MultiDexApplication {
                 + "_" + AppUtils.getAppVersionCode();
         //App的版本
         strategy.setAppVersion(version);
-        Beta.autoInit = true;
+        Beta.autoInit = false;
+        //自动检查更新开关
+        Beta.autoCheckUpgrade = false;
         Bugly.init(getApplicationContext(),
                 BuildConfig.LOG_DEBUG ? "ed72069020" : "0268e1b821",
                 BuildConfig.LOG_DEBUG, strategy);
-        //自动检查更新开关
-        Beta.autoCheckUpgrade = false;
 //Log环境初始化
         LogUtils.initLogUtils(BuildConfig.LOG_DEBUG);
     }
