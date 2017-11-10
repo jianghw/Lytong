@@ -254,7 +254,7 @@ public class DialogUtils {
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(url))
-                    MainRouter.gotoHtmlActivity(context, "活动优惠", url);
+                    MainRouter.gotoHtmlActivity(context, "优惠活动", url);
             }
         });
         ImageLoadUtils.loadThreeRectangle(imageUrl, mImage);

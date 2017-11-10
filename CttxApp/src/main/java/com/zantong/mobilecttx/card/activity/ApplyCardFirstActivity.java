@@ -24,6 +24,7 @@ import com.zantong.mobilecttx.card.dto.BidCTCardDTO;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogMgr;
@@ -158,7 +159,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
     private void openCamera() {
         Intent intentOcr = new Intent(this, OcrCameraActivity.class);
-        intentOcr.putExtra("ocr_resource", 1);
+        intentOcr.putExtra(MainGlobal.putExtra.ocr_camera_extra, 1);
         startActivityForResult(intentOcr, 1205);
     }
 
@@ -215,7 +216,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
             ToastUtils.toastShort("身份证号码不正确");
             return;
         }
-        if (!getUserIdCard().startsWith("310")) {
+        if (!getDriverFileNum().startsWith("310")) {
             ToastUtils.toastShort("外地驾照如需办理请先换成上海驾照");
             return;
         }

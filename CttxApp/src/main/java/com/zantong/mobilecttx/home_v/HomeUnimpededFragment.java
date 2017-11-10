@@ -441,16 +441,20 @@ public class HomeUnimpededFragment extends JxBaseRefreshFragment
     public void indexLayerSucceed(IndexLayerResponse result) {
         IndexLayerBean bean = result.getData();
         if (bean == null) return;
-
-        DialogUtils.createActionDialog(getActivity(), 3, bean.getImgUrl(), bean.getPageUrl(),
-                new DialogUtils.ActionADOnClick() {
-                    @Override
-                    public void textCount(TextView mCount, TextView mClose) {
-                        mCountTv = mCount;
-                        mmCloseTv = mClose;
-                    }
-                });
-
+        String imgUrl = bean.getImgUrl();
+        String pageUrl = bean.getPageUrl();
+        if (TextUtils.isEmpty(imgUrl) && !TextUtils.isEmpty(pageUrl)) {
+            MainRouter.gotoHtmlActivity(getActivity(), "优惠活动", pageUrl);
+        } else {
+            DialogUtils.createActionDialog(getActivity(), 3, imgUrl, pageUrl,
+                    new DialogUtils.ActionADOnClick() {
+                        @Override
+                        public void textCount(TextView mCount, TextView mClose) {
+                            mCountTv = mCount;
+                            mmCloseTv = mClose;
+                        }
+                    });
+        }
         if (mPresenter != null) mPresenter.startCountDown();
     }
 

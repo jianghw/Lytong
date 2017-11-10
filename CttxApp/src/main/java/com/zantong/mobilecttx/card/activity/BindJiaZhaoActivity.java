@@ -23,6 +23,7 @@ import com.zantong.mobilecttx.card.dto.BindCardDTO;
 import com.zantong.mobilecttx.card.dto.BindDrivingDTO;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.ValidateUtils;
@@ -84,7 +85,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1203 && resultCode == 1204) {
+        if ( resultCode == 1204) {
             if (data != null) {
                 getJiaZhaoInfo();
             } else {
@@ -272,7 +273,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
     public void doSomething() {
         //有授权，直接开启摄像头
         Intent intent = new Intent(this, OcrCameraActivity.class);
-        intent.putExtra("ocr_resource", 2);
+        intent.putExtra(MainGlobal.putExtra.ocr_camera_extra, 2);
         startActivityForResult(intent, 1203);
     }
 

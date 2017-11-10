@@ -80,6 +80,13 @@ public class ViolationActivity extends JxBaseActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mViolationQueryFragment != null)
+            mViolationQueryFragment.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
 
