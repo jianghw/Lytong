@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.card.bean;
 
-import cn.qqtheme.framework.bean.BankResponse;
+import com.tzly.ctcyh.router.bean.BankResponse;
 
 /**
  * Created by zhengyingbing on 16/9/13.

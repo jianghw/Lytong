@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.chongzhi.adapter.OilPriceAdapter;
@@ -41,8 +42,6 @@ import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.qqtheme.framework.global.JxGlobal;
 
 /**
  * 加油充值页面业务

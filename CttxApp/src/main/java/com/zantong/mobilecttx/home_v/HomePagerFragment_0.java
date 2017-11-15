@@ -6,7 +6,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.jianghw.multi.state.layout.MultiState;
+import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.util.MobUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.router.MainRouter;
@@ -16,13 +18,11 @@ import com.zantong.mobilecttx.violation_v.LicenseCheckGradeActivity;
 import com.zantong.mobilecttx.violation_v.LicenseDetailActivity;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
-import com.tzly.ctcyh.router.util.MobUtils;
-
 
 /**
  * 页面
  */
-public class HomePagerFragment_0 extends JxBaseRefreshFragment implements View.OnClickListener {
+public class HomePagerFragment_0 extends RefreshFragment implements View.OnClickListener {
 
     private TextView mTvLicense;
     private TextView mTvAppraisement;
@@ -36,29 +36,27 @@ public class HomePagerFragment_0 extends JxBaseRefreshFragment implements View.O
         return false;
     }
 
-    @Override
-    protected void onRefreshData() {}
+    @MultiState
+    protected int initMultiState() {
+        return MultiState.CONTENT;
+    }
 
     @Override
-    protected void onLoadMoreData() {}
-
-    @Override
-    protected int initFragmentView() {
+    protected int fragmentView() {
         return R.layout.fragment_home_pager_0;
     }
 
     @Override
-    protected void bindFragmentView(View fragment) {
+    protected void bindFragment(View fragment) {
         initView(fragment);
     }
 
     @Override
-    protected void onFirstDataVisible() {}
+    protected void loadingFirstData() {}
 
     public static HomePagerFragment_0 newInstance() {
         return new HomePagerFragment_0();
     }
-
 
     public void initView(View view) {
         mTvLicense = (TextView) view.findViewById(R.id.tv_license);

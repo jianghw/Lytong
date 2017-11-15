@@ -110,8 +110,7 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
 
         mAdapter = createAdapter();
         if (mAdapter == null) throw new IllegalArgumentException("adapter is must not null");
-        if(isNeedItemClick())
-        mAdapter.setOnItemClickListener(onItemClickListener);
+        if(isNeedItemClick()) mAdapter.setOnItemClickListener(onItemClickListener);
         mCustomRecycler.setAdapter(mAdapter);
 
         initFragmentView(view);

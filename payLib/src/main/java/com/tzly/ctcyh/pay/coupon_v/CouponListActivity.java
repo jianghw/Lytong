@@ -4,18 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
-import android.view.View;
 
 import com.tzly.ctcyh.pay.R;
 import com.tzly.ctcyh.pay.global.PayGlobal;
-import com.tzly.ctcyh.router.base.JxBaseActivity;
+import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 
 
 /**
  * 优惠券 列表
  */
-public class CouponListActivity extends JxBaseActivity {
+public class CouponListActivity extends AbstractBaseActivity {
 
     private CouponListFragment mCouponListFragment;
     /**
@@ -26,14 +25,7 @@ public class CouponListActivity extends JxBaseActivity {
     private String mCurHost;
 
     @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-        onNewIntent(getIntent());
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
+    protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             if (intent.hasExtra(PayGlobal.putExtra.coupon_list_type))
@@ -51,7 +43,7 @@ public class CouponListActivity extends JxBaseActivity {
     }
 
     @Override
-    protected void bindContentView(View childView) {
+    protected void bindFragment() {
         titleContent("选择优惠劵");
     }
 
@@ -76,14 +68,6 @@ public class CouponListActivity extends JxBaseActivity {
             FragmentUtils.add(fragmentManager, mCouponListFragment,
                     R.id.lay_base_frame, false, true);
         }
-    }
-
-    /**
-     * 手动刷新
-     */
-    @Override
-    protected void userClickRefreshData() {
-        if (mCouponListFragment != null) mCouponListFragment.onRefreshData();
     }
 
     @Override

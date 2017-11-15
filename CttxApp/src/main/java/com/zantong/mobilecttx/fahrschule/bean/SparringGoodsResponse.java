@@ -1,8 +1,8 @@
 package com.zantong.mobilecttx.fahrschule.bean;
 
-import cn.qqtheme.framework.bean.BaseResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 
-import cn.qqtheme.framework.bean.response.SubjectGoodsData;
+import com.tzly.ctcyh.router.bean.response.SubjectGoodsData;
 
 /**
  * 科目强化商品列表

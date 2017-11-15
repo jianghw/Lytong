@@ -49,10 +49,24 @@ dependencies {
     compile project(':layout')
     //列表分装控件
     compile project(':XRecyclerView')
-    //加密工具
-    compile files('libs/sun.misc.BASE64Decoder.jar')
     //友盟+
     compile 'com.umeng.analytics:analytics:latest.integration'
     //其中latest.release指代最新Bugly SDK版本号
     compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
+    //第三方控件车辆滑动图
+    compile 'com.github.devlight:infinitecycleviewpager:1.0.2'
+    //eventbus
+    compile 'org.greenrobot:eventbus:3.0.0'
+    //加密工具
+    compile files('libs/sun.misc.BASE64Decoder.jar')
+    //图片加载缓存
+    compile files('libs/universal-image-loader-1.9.4.jar')
+    //扫描
+    compile files('libs/zxing.jar')
+    //微信分享
+    compile files('libs/libammsdk.jar')
+    //拼音工具
+    compile files('libs/pinyin4j-2.5.0.jar')
+    //百度地图
+    compile files('libs/BaiduLBS_Android.jar')
 }

@@ -3,23 +3,19 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical"
-              tools:context="com.zantong.mobilecttx.home_v.HomeUnimpededFragment">
+              android:orientation="vertical">
     <!--头部banner-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="46">
 
-        <cn.qqtheme.framework.custom.banner.ConvenientBanner
+        <com.tzly.ctcyh.router.custom.banner.ConvenientBanner
             android:id="@+id/custom_convenientBanner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <include
-            layout="@layout/include_unimpeded_title"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ds_111"/>
+        <include layout="@layout/include_unimpeded_title"/>
     </RelativeLayout>
     <!--导航控件-->
     <android.support.v4.view.ViewPager

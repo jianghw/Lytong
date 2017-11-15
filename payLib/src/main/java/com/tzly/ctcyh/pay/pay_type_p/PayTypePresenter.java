@@ -69,15 +69,15 @@ public class PayTypePresenter implements IPayTypeContract.IPayTypePresenter {
                             @Override
                             public void doError(Throwable e) {
                                 mContractView.dismissLoading();
-                                mContractView.getOrderInfoError(e.getMessage());
+                                mContractView.responseError(e.getMessage());
                             }
 
                             @Override
                             public void doNext(PayTypeResponse response) {
                                 if (response != null && response.getResponseCode() == 2000) {
-                                    mContractView.getOrderInfoSucceed(response);
+                                    mContractView.responseSucceed(response);
                                 } else {
-                                    mContractView.getOrderInfoError(response != null
+                                    mContractView.responseError(response != null
                                             ? response.getResponseDesc() : "未知错误(57)");
                                 }
                             }

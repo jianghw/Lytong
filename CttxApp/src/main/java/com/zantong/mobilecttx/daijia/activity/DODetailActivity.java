@@ -5,14 +5,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.browser.PayHtmlActivity;
 import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderDetailResponse;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderDetailDTO;
 import com.zantong.mobilecttx.eventbus.DrivingCancelEvent;
@@ -21,7 +18,6 @@ import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.HashUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 import com.zantong.mobilecttx.widght.refresh.OnPullListener;
 import com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout;
@@ -31,8 +27,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.HashMap;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.router.global.JxGlobal;
 
 /**
  * 代驾订单详情页面

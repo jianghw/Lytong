@@ -18,7 +18,7 @@ import com.tzly.ctcyh.router.custom.SpaceItemDecoration;
 
 import java.util.ArrayList;
 
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.ctcyh.router.global.JxGlobal;
 
 /**
  * 选择优惠劵 页面 加油

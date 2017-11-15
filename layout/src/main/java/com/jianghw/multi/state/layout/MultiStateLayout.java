@@ -68,6 +68,10 @@ public class MultiStateLayout extends FrameLayout {
     private boolean mIsSystemState;
     private OnStateViewCreatedListener mOnStateViewCreatedListener;
     private static MultiStateConfiguration.Builder mStateConfiguration;
+    /**
+     * 接口
+     */
+    private IAddContentView mIAddContentView;
 
     public MultiStateLayout(@NonNull Context context) {
         this(context, null);
@@ -262,7 +266,7 @@ public class MultiStateLayout extends FrameLayout {
 
         if (mIsSystemState) {
             hideViewByState(mCurState, displayContentLayout);
-        } else {
+        } else {//xml中获取
             hideCustomViewByState(mCurCustomStateKey, displayContentLayout);
         }
         showViewByState(state);
@@ -362,6 +366,12 @@ public class MultiStateLayout extends FrameLayout {
      * show content view without animation
      */
     private void showContentView() {
+        if (null == mContentView && mIAddContentView != null) {
+            mContentView = mIAddContentView.getContentView();
+            addView(mContentView, mContentView.getLayoutParams());
+            callViewCreated(mContentView, MultiState.CONTENT);
+        }
+
         if (null != mContentView) {
             mContentView.setVisibility(VISIBLE);
         }
@@ -732,5 +742,13 @@ public class MultiStateLayout extends FrameLayout {
         if (null != mOnStateViewCreatedListener) {
             mOnStateViewCreatedListener.onViewCreated(view, state);
         }
+    }
+
+    private void setCustomContent(View contentView) {
+        mContentView = contentView;
+    }
+
+    public void setContentView(IAddContentView iAddContentView) {
+        mIAddContentView = iAddContentView;
     }
 }

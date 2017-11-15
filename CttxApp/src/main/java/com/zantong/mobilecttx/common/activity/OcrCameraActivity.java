@@ -35,8 +35,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import cn.qqtheme.framework.util.image.ImageTools;
-import cn.qqtheme.framework.util.ui.DensityUtils;
+import com.tzly.ctcyh.router.custom.image.ImageTools;
+import com.tzly.ctcyh.router.DensityUtils;
 
 /**
  * 拍照扫描

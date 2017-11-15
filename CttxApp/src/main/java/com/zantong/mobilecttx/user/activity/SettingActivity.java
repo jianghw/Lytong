@@ -18,8 +18,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tzly.ctcyh.router.bean.BankResponse;
+import com.tzly.ctcyh.router.util.CleanUtils;
+import com.tzly.ctcyh.router.util.FileUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.router.util.primission.PermissionFail;
+import com.tzly.ctcyh.router.util.primission.PermissionGen;
+import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
+import com.tzly.ctcyh.router.custom.picker.DatePicker;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
@@ -53,13 +60,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.bean.BankResponse;
-import cn.qqtheme.framework.custom.picker.DatePicker;
-import cn.qqtheme.framework.util.CleanUtils;
-import cn.qqtheme.framework.util.FileUtils;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -69,7 +69,7 @@ import retrofit2.Response;
 
 import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
-import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 设置页面

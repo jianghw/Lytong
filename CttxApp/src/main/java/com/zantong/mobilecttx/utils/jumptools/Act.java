@@ -5,7 +5,7 @@ import android.content.Intent;
 
 import com.zantong.mobilecttx.router.MainRouter;
 
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.ctcyh.router.global.JxGlobal;
 
 /**
  * Created by Administrator on 2016/5/4.

@@ -36,7 +36,7 @@ import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.ctcyh.router.global.JxGlobal;
 
 /**
  * 违章详情

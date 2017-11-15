@@ -18,8 +18,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tzly.ctcyh.router.bean.BankResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.primission.PermissionFail;
+import com.tzly.ctcyh.router.util.primission.PermissionGen;
+import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -69,12 +75,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.bean.BankResponse;
-import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
+
 
 
 public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements IBaseView {

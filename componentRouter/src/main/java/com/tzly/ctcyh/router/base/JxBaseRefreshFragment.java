@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.custom.refresh.IPullListener;
@@ -81,9 +80,9 @@ public abstract class JxBaseRefreshFragment extends JxBaseFragment {
             }
         });
 
-        LinearLayout linearLayout = (LinearLayout) inflate.findViewById(R.id.base_fragment_content);
-        View fragmentView = inflater.inflate(initFragmentView(), linearLayout, true);
-        bindFragmentView(fragmentView);
+//        LinearLayout linearLayout = (LinearLayout) inflate.findViewById(R.id.base_fragment_content);
+//        View contentView = inflater.inflate(extraTopView(), linearLayout, true);
+//        bindExtraTopView(contentView);
         return inflate;
     }
 

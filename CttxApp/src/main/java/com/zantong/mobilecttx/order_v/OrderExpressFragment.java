@@ -10,8 +10,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.router.imple.IAreaDialogListener;
+import com.tzly.ctcyh.router.util.RegexUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.router.custom.popup.CustomDialog;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.order.bean.ReceiveInfoBean;
@@ -20,11 +24,6 @@ import com.zantong.mobilecttx.order_p.IOrderExpressContract;
 import com.zantong.mobilecttx.order_p.OrderExpressPresenter;
 
 import java.util.ArrayList;
-
-import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.custom.popup.CustomDialog;
-import cn.qqtheme.framework.imple.IAreaDialogListener;
-import cn.qqtheme.framework.util.RegexUtils;
 
 /**
  * 呼叫快递页面

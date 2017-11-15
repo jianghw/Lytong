@@ -1,10 +1,10 @@
 package com.zantong.mobilecttx.home_v;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.FileProvider;
@@ -16,9 +16,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jianghw.multi.state.layout.MultiState;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
-import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
+import com.tzly.ctcyh.router.util.AppUtils;
+import com.tzly.ctcyh.router.util.FileUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.umeng.analytics.MobclickAgent;
@@ -47,31 +51,19 @@ import com.zantong.mobilecttx.user.activity.SettingActivity;
 import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
 import com.zantong.mobilecttx.user.bean.MessageCountBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResponse;
-import com.zantong.mobilecttx.utils.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.activity.ViolationHistoryAcitvity;
 
 import java.io.File;
 import java.util.List;
 
-import cn.qqtheme.framework.util.AppUtils;
-import cn.qqtheme.framework.util.FileUtils;
-import cn.qqtheme.framework.util.image.ImageLoadUtils;
-
 import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 
 /**
  * 新个人页面
  */
-public class HomeMeFragment extends JxBaseRefreshFragment
+public class HomeMeFragment extends RefreshFragment
         implements View.OnClickListener, IHomeMeFtyContract.IHomeMeFtyView {
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
     /**
      * 个人中心
      */
@@ -119,61 +111,65 @@ public class HomeMeFragment extends JxBaseRefreshFragment
      * mPresenter
      */
     private IHomeMeFtyContract.IHomeMeFtyPresenter mPresenter;
-    private HomeMainActivity.MessageListener mHomeListener;
+    private IHomeMainUi mIHomeMainUi;
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof IHomeMainUi) {
+            mIHomeMainUi = (IHomeMainUi) activity;
+        }
+    }
+
+    /**
+     * 会多次刷新数据 ^3^
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (mPresenter != null) mPresenter.unSubscribe();
+    }
 
     public static HomeMeFragment newInstance() {
         return new HomeMeFragment();
     }
 
-    public static HomeMeFragment newInstance(String param1, String param2) {
-        HomeMeFragment fragment = new HomeMeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @MultiState
+    protected int initMultiState() {
+        return MultiState.CONTENT;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    protected boolean isRefresh() {
-        return false;
-    }
-
-    @Override
-    protected int initFragmentView() {
+    protected int fragmentView() {
         return R.layout.fragment_home_me;
     }
 
     @Override
-    protected void bindFragmentView(View view) {
-        initView(view);
+    protected void bindFragment(View fragment) {
+        initView(fragment);
 
         HomeMeFtyPresenter mPresenter = new HomeMeFtyPresenter(
-                Injection.provideRepository(getActivity().getApplicationContext()), this);
+                Injection.provideRepository(getContext()), this);
+
+        versionUpgrade();
     }
 
-    @Override
-    protected void onRefreshData() {}
-
-    @Override
-    protected void onLoadMoreData() {}
-
-    @Override
-    public void setPresenter(IHomeMeFtyContract.IHomeMeFtyPresenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
-    protected void onFirstDataVisible() {
+    /**
+     * 版本检查
+     */
+    private void versionUpgrade() {
         UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
         int appCode = AppUtils.getAppVersionCode();
         int mVersionCode = appCode;
@@ -192,19 +188,17 @@ public class HomeMeFragment extends JxBaseRefreshFragment
         }
     }
 
-    /**
-     * 会多次刷新数据 ^3^
-     */
     @Override
-    public void onResume() {
-        super.onResume();
-
-        initDataRefresh();
+    public void setPresenter(IHomeMeFtyContract.IHomeMeFtyPresenter presenter) {
+        mPresenter = presenter;
     }
 
+    /**
+     * 数据加载
+     */
     @Override
-    public void onPause() {
-        super.onPause();
+    protected void loadingFirstData() {
+        initDataRefresh();
     }
 
     /**
@@ -229,7 +223,6 @@ public class HomeMeFragment extends JxBaseRefreshFragment
 
         //畅通卡
         boolean isUnBound = TextUtils.isEmpty(MainRouter.getUserFilenum());
-
         mTvCard.setText(isUnBound ? "未绑定牡丹畅通卡" : "已绑定牡丹畅通卡");
         mTvCard.setTextColor(isUnBound
                 ? getResources().getColor(R.color.colorTvGray_b2)
@@ -262,8 +255,9 @@ public class HomeMeFragment extends JxBaseRefreshFragment
         }
 
         String phone = MainRouter.getUserPhoenum();
-        if (!Tools.isStrEmpty(MainRouter.getUserNickname())) {
-            mTvLogin.setText(MainRouter.getUserNickname());
+        String nickName = MainRouter.getUserNickname();
+        if (!TextUtils.isEmpty(nickName)) {
+            mTvLogin.setText(nickName);
         } else if (!TextUtils.isEmpty(phone) && phone.length() >= 7) {
             mTvLogin.setText(phone.substring(7));
         } else {
@@ -296,7 +290,6 @@ public class HomeMeFragment extends JxBaseRefreshFragment
 
         Bitmap bitmap = FileUtils.decodeUriAsBitmap(outputUri, Utils.getContext());
         if (bitmap != null) userImage.setImageBitmap(bitmap);
-
         return mCropFile;
     }
 
@@ -309,14 +302,6 @@ public class HomeMeFragment extends JxBaseRefreshFragment
             return Uri.fromFile(mCameraFile);
         }
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        if (mPresenter != null) mPresenter.unSubscribe();
-    }
-
 
     public void initView(View view) {
         mTvTitle = (TextView) view.findViewById(R.id.tv_title);
@@ -495,8 +480,8 @@ public class HomeMeFragment extends JxBaseRefreshFragment
         if (mImgMsg != null) mImgMsg.setVisibility(
                 resultData != null && resultData.getCount() > 0 ? View.VISIBLE : View.GONE);
 
-        if (mHomeListener != null)
-            mHomeListener.setTipOfNumber(2, resultData != null ? resultData.getCount() : 0);
+        if (mIHomeMainUi != null)
+            mIHomeMainUi.setTipOfNumber(2, resultData != null ? resultData.getCount() : 0);
     }
 
     @Override
@@ -516,9 +501,5 @@ public class HomeMeFragment extends JxBaseRefreshFragment
     @Override
     public void driverCoachSucceed(DriverCoachResponse result) {
         mLayDriverOrder.setVisibility(result.getData() ? View.VISIBLE : View.GONE);
-    }
-
-    public void setMessageListener(HomeMainActivity.MessageListener messageListener) {
-        mHomeListener = messageListener;
     }
 }

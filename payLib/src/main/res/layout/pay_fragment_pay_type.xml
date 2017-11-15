@@ -54,166 +54,167 @@
             android:text="支付"/>
     </RelativeLayout>
 
-    <ScrollView
+    <!--<ScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_above="@+id/lay_re_bottom">-->
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/lay_re_bottom">
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/lay_linear_top"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/res_y_30"
+            android:background="@color/res_color_white"
+            android:orientation="vertical">
 
+            <include layout="@layout/pay_content_pay_type_goods"/>
+
+            <!--分割线-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/res_y_2"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:layout_marginRight="@dimen/res_x_30"
+                android:layout_marginTop="@dimen/res_x_30"
+                android:background="@color/res_color_gray_e6"/>
+
+            <!--支付方式-->
             <LinearLayout
-                android:id="@+id/lay_linear_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/res_y_30"
-                android:background="@color/res_color_white"
-                android:orientation="vertical">
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:layout_marginRight="@dimen/res_x_30"
+                android:orientation="horizontal">
 
-                <include layout="@layout/pay_content_pay_type_goods"/>
+                <TextView
+                    style="@style/ResTextTheme.16.Subtitle.width"
+                    android:layout_height="@dimen/res_y_90"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:text="支付方式"/>
 
-                <!--分割线-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/res_y_2"
-                    android:layout_marginLeft="@dimen/res_x_30"
-                    android:layout_marginRight="@dimen/res_x_30"
-                    android:layout_marginTop="@dimen/res_x_30"
-                    android:background="@color/res_color_gray_e6"/>
-
-                <!--支付方式-->
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <RadioGroup
+                    android:id="@+id/rg_pay"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/res_x_30"
-                    android:layout_marginRight="@dimen/res_x_30"
-                    android:orientation="horizontal">
+                    android:layout_marginLeft="@dimen/res_x_60"
+                    android:layout_weight="3">
 
-                    <TextView
-                        style="@style/ResTextTheme.16.Subtitle.width"
+                    <RadioButton
+                        android:id="@+id/rb_carpay"
+                        style="@style/ResTextTheme.16.Subtitle"
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/res_y_90"
-                        android:layout_weight="1"
-                        android:gravity="right|center_vertical"
-                        android:text="支付方式"/>
+                        android:background="@android:color/transparent"
+                        android:button="@null"
+                        android:drawableRight="@drawable/selector_radio_pay"
+                        android:text="工行卡支付"
+                        android:visibility="gone"/>
 
-                    <RadioGroup
-                        android:id="@+id/rg_pay"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/res_x_60"
-                        android:layout_weight="3">
+                    <RelativeLayout
+                        android:id="@+id/line_carpay"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/res_y_2"
+                        android:background="@color/res_color_gray_e6"
+                        android:visibility="gone"/>
 
-                        <RadioButton
-                            android:id="@+id/rb_carpay"
-                            style="@style/ResTextTheme.16.Subtitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/res_y_90"
-                            android:background="@android:color/transparent"
-                            android:button="@null"
-                            android:drawableRight="@drawable/selector_radio_pay"
-                            android:text="工行卡支付"
-                            android:visibility="gone"/>
+                    <RadioButton
+                        android:id="@+id/rb_unionpay"
+                        style="@style/ResTextTheme.16.Subtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/res_y_90"
+                        android:background="@android:color/transparent"
+                        android:button="@null"
+                        android:drawableRight="@drawable/selector_radio_pay"
+                        android:text="银联卡支付"
+                        android:visibility="gone"/>
 
-                        <RelativeLayout
-                            android:id="@+id/line_carpay"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/res_y_2"
-                            android:background="@color/res_color_gray_e6"
-                            android:visibility="gone"/>
+                    <RelativeLayout
+                        android:id="@+id/line_unionpay"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/res_y_2"
+                        android:background="@color/res_color_gray_e6"
+                        android:visibility="gone"/>
 
-                        <RadioButton
-                            android:id="@+id/rb_unionpay"
-                            style="@style/ResTextTheme.16.Subtitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/res_y_90"
-                            android:background="@android:color/transparent"
-                            android:button="@null"
-                            android:drawableRight="@drawable/selector_radio_pay"
-                            android:text="银联卡支付"
-                            android:visibility="gone"/>
+                    <RadioButton
+                        android:id="@+id/rb_alipay"
+                        style="@style/ResTextTheme.16.Subtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/res_y_90"
+                        android:background="@android:color/transparent"
+                        android:button="@null"
+                        android:drawableRight="@drawable/selector_radio_pay"
+                        android:text="支付宝支付"
+                        android:visibility="gone"/>
 
-                        <RelativeLayout
-                            android:id="@+id/line_unionpay"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/res_y_2"
-                            android:background="@color/res_color_gray_e6"
-                            android:visibility="gone"/>
+                    <RelativeLayout
+                        android:id="@+id/line_alipay"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/res_y_2"
+                        android:background="@color/res_color_gray_e6"
+                        android:visibility="gone"/>
 
-                        <RadioButton
-                            android:id="@+id/rb_alipay"
-                            style="@style/ResTextTheme.16.Subtitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/res_y_90"
-                            android:background="@android:color/transparent"
-                            android:button="@null"
-                            android:drawableRight="@drawable/selector_radio_pay"
-                            android:text="支付宝支付"
-                            android:visibility="gone"/>
+                    <RadioButton
+                        android:id="@+id/rb_weixinpay"
+                        style="@style/ResTextTheme.16.Subtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/res_y_90"
+                        android:background="@android:color/transparent"
+                        android:button="@null"
+                        android:drawableRight="@drawable/selector_radio_pay"
+                        android:text="微信支付"
+                        android:visibility="gone"/>
 
-                        <RelativeLayout
-                            android:id="@+id/line_alipay"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/res_y_2"
-                            android:background="@color/res_color_gray_e6"
-                            android:visibility="gone"/>
+                </RadioGroup>
 
-                        <RadioButton
-                            android:id="@+id/rb_weixinpay"
-                            style="@style/ResTextTheme.16.Subtitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/res_y_90"
-                            android:background="@android:color/transparent"
-                            android:button="@null"
-                            android:drawableRight="@drawable/selector_radio_pay"
-                            android:text="微信支付"
-                            android:visibility="gone"/>
-
-                    </RadioGroup>
-
-                </LinearLayout>
             </LinearLayout>
+        </LinearLayout>
 
-            <!--优惠劵模块-->
-            <RelativeLayout
-                android:id="@+id/lay_re_coupon"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/res_y_90"
-                android:layout_below="@+id/lay_linear_top"
-                android:layout_marginBottom="@dimen/res_y_90"
-                android:layout_marginTop="@dimen/res_y_30"
-                android:background="@drawable/selector_bg_gray">
+        <!--优惠劵模块-->
+        <RelativeLayout
+            android:id="@+id/lay_re_coupon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/res_y_90"
+            android:layout_below="@+id/lay_linear_top"
+            android:layout_marginBottom="@dimen/res_y_90"
+            android:layout_marginTop="@dimen/res_y_30"
+            android:background="@drawable/selector_bg_gray">
 
-                <TextView
-                    style="@style/ResTextTheme.16.Subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/res_x_30"
-                    android:text="优惠劵"/>
+            <TextView
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:text="优惠劵"/>
 
-                <ImageView
-                    android:id="@+id/img_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/res_x_30"
-                    android:src="@mipmap/ic_arrow_right"/>
+            <ImageView
+                android:id="@+id/img_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/res_x_30"
+                android:src="@mipmap/ic_arrow_right"/>
 
-                <TextView
-                    android:id="@+id/tv_coupon"
-                    style="@style/ResTextTheme.16.Subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/res_x_30"
-                    android:layout_toLeftOf="@+id/img_right"
-                    android:textColor="@color/res_color_red_f3"
-                    tools:text="优惠劵"/>
+            <TextView
+                android:id="@+id/tv_coupon"
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/res_x_30"
+                android:layout_toLeftOf="@+id/img_right"
+                android:textColor="@color/res_color_red_f3"
+                tools:text="优惠劵"/>
 
-            </RelativeLayout>
         </RelativeLayout>
-    </ScrollView>
+    </RelativeLayout>
+    <!--</ScrollView>-->
 
 </RelativeLayout>

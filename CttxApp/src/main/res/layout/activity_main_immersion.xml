@@ -19,7 +19,7 @@
         android:layout_height="1px"
         android:background="@color/colorLineGray_e6"/>
 
-    <cn.qqtheme.framework.custom.tablebottom.UiTableBottom
+    <com.tzly.ctcyh.router.custom.tablebottom.UiTableBottom
         android:id="@+id/custom_bottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_147"

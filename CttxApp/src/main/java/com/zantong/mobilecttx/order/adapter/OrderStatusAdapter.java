@@ -17,7 +17,7 @@ import com.zantong.mobilecttx.order.bean.OrderListBean;
 
 import java.text.DecimalFormat;
 
-import static cn.qqtheme.framework.util.image.ImageOptions.getMessageOptions;
+import static com.tzly.ctcyh.router.custom.image.ImageOptions.getMessageOptions;
 
 /**
  * Created by zhoujie on 2017/2/13.

@@ -438,7 +438,9 @@ public class FragmentUtils {
         for (Fragment fragment : hide) {
             putArgs(fragment, fragment != show);
         }
-        operateNoAnim(show.getFragmentManager(), TYPE_SHOW_HIDE_FRAGMENT, show,
+        operateNoAnim(show.getFragmentManager(),
+                TYPE_SHOW_HIDE_FRAGMENT,
+                show,
                 hide.toArray(new Fragment[hide.size()]));
     }
 
@@ -459,7 +461,6 @@ public class FragmentUtils {
      * @param hide 要隐藏的fragment
      */
     public static void showHide(@NonNull final Fragment show, @NonNull final Fragment... hide) {
-
         for (Fragment fragment : hide) {
             putArgs(fragment, fragment != show);
         }
@@ -472,10 +473,6 @@ public class FragmentUtils {
             if (fragment != null) list.add(fragment);
         }
         showHide(show, list);
-        //        boolean isExecute = false;
-        //        if (isExecute) {
-        //            operateNoAnim(show.getFragmentManager(), TYPE_SHOW_HIDE_FRAGMENT, show, hide);
-        //        }
     }
 
     /**

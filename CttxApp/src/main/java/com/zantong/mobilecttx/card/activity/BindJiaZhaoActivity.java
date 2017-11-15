@@ -10,8 +10,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.router.util.primission.PermissionFail;
+import com.tzly.ctcyh.router.util.primission.PermissionGen;
+import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -31,10 +35,6 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
 
 /**
  * 绑定畅通卡

@@ -10,7 +10,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/res_x_250"
         android:indeterminateBehavior="repeat"
-        android:indeterminateDrawable="@drawable/animated_loading"
+        android:indeterminateDrawable="@drawable/anim_rotate_loading"
         android:indeterminateOnly="true"/>
 
     <TextView

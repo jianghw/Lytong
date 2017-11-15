@@ -1,3 +1,385 @@
 <resources>
-    <string name="app_name">My Library</string>
+    <string name="main_app_name">畅通车友会</string>
+
+    <string name="refreshing">正在刷新…</string>
+    <string name="refresh_fail">刷新失败</string>
+    <string name="pullup_to_load">上拉加载更多</string>
+    <string name="release_to_load">释放立即加载</string>
+    <string name="loading">正在加载…</string>
+    <string name="load_succeed">加载成功</string>
+    <string name="load_fail">加载失败</string>
+    <string name="refreshing_nomal">获取数据中…</string>
+    <string name="common_back">返回</string>
+    <string name="common_empty">暂无数据，下拉刷新试试</string>
+
+    <!-- zxing相关配置 -->
+    <string name="button_add_calendar">Add to calendar</string>
+    <string name="button_add_contact">Add contact</string>
+    <string name="button_book_search">Book Search</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_custom_product_search">Custom search</string>
+    <string name="button_dial">Dial number</string>
+    <string name="button_email">Send email</string>
+    <string name="button_get_directions">Get directions</string>
+    <string name="button_mms">Send MMS</string>
+    <string name="button_ok">OK</string>
+    <string name="button_open_browser">Open browser</string>
+    <string name="button_product_search">Product search</string>
+    <string name="button_search_book_contents">Search contents</string>
+    <string name="button_share_app">Application</string>
+    <string name="button_share_bookmark">Bookmark</string>
+    <string name="button_share_by_email">Share via email</string>
+    <string name="button_share_by_sms">Share via SMS</string>
+    <string name="button_share_clipboard">Clipboard</string>
+    <string name="button_share_contact">Contact</string>
+    <string name="button_show_map">Show map</string>
+    <string name="button_sms">Send SMS</string>
+    <string name="button_web_search">Web search</string>
+    <string name="button_wifi">Connect to Network</string>
+    <string name="contents_contact">Contact info</string>
+    <string name="contents_email">Email address</string>
+    <string name="contents_location">Geographic coordinates</string>
+    <string name="contents_phone">Phone number</string>
+    <string name="contents_sms">SMS address</string>
+    <string name="contents_text">Plain text</string>
+    <string name="history_clear_text">Clear history</string>
+    <string name="history_clear_one_history_text">Clear</string>
+    <string name="history_email_title">Barcode Scanner history</string>
+    <string name="history_empty">Empty</string>
+    <string name="history_empty_detail">No barcode scans have been recorded</string>
+    <string name="history_send">Send history</string>
+    <string name="menu_encode_mecard">Use MECARD</string>
+    <string name="menu_encode_vcard">Use vCard</string>
+    <string name="menu_share">Share</string>
+    <string name="msg_bulk_mode_scanned">Bulk mode: barcode scanned and saved</string>
+    <string name="msg_default_format">Format</string>
+    <string name="msg_default_meta">Metadata</string>
+    <string name="msg_default_mms_subject">Hi</string>
+    <string name="msg_default_status">Place a barcode inside the viewfinder rectangle to scan it.</string>
+    <string name="msg_default_time">Time</string>
+    <string name="msg_default_type">Type</string>
+    <string name="msg_encode_contents_failed">Could not encode a barcode from the data provided.</string>
+    <string name="msg_error">Error</string>
+    <string name="msg_google_books">Google</string>
+    <string name="msg_google_product">Google</string>
+    <string name="msg_intent_failed">Sorry, the requested application could not be launched. The barcode contents may be invalid.</string>
+    <string name="msg_invalid_value">Invalid value</string>
+    <string name="msg_redirect">Redirect</string>
+    <string name="msg_sbc_book_not_searchable">Sorry, this book is not searchable.</string>
+    <string name="msg_sbc_failed">Sorry, the search encountered a problem.</string>
+    <string name="msg_sbc_no_page_returned">No page returned</string>
+    <string name="msg_sbc_page">Page</string>
+    <string name="msg_sbc_results">Results</string>
+    <string name="msg_sbc_searching_book">Searching book\u2026</string>
+    <string name="msg_sbc_snippet_unavailable">Snippet not available</string>
+    <string name="msg_share_explanation">You can share data by displaying a barcode on your screen and scanning it with another phone.</string>
+    <string name="msg_share_text">Or type some text and press Enter</string>
+    <string name="msg_sure">Are you sure?</string>
+    <string name="msg_unmount_usb">Sorry, the SD card is not accessible.</string>
+    <string name="preferences_actions_title">When a barcode is found\u2026</string>
+    <string name="preferences_auto_focus_title">Use auto focus</string>
+    <string name="preferences_auto_open_web_title">Open web pages automatically</string>
+    <string name="preferences_bulk_mode_summary">Scan and save many barcodes continuously</string>
+    <string name="preferences_bulk_mode_title">Bulk scan mode</string>
+    <string name="preferences_copy_to_clipboard_title">Copy to clipboard</string>
+    <string name="preferences_custom_product_search_summary" formatted="false">Substitutions: %s = contents, %f = format, %t = type</string>
+    <string name="preferences_custom_product_search_title">Custom search URL</string>
+    <string name="preferences_decode_1D_industrial_title">1D Industrial</string>
+    <string name="preferences_decode_1D_product_title">1D Product</string>
+    <string name="preferences_decode_Aztec_title">Aztec</string>
+    <string name="preferences_decode_Data_Matrix_title">Data Matrix</string>
+    <string name="preferences_decode_PDF417_title">PDF417 (β)</string>
+    <string name="preferences_decode_QR_title">QR Codes</string>
+    <string name="preferences_device_bug_workarounds_title">Device Bug Workarounds</string>
+    <string name="preferences_disable_barcode_scene_mode_title">No barcode scene mode</string>
+    <string name="preferences_disable_continuous_focus_summary">Use only standard focus mode</string>
+    <string name="preferences_disable_continuous_focus_title">No continuous focus</string>
+    <string name="preferences_disable_exposure_title">No exposure</string>
+    <string name="preferences_disable_metering_title">No metering</string>
+    <string name="preferences_front_light_summary">Improves scanning in low light on some phones, but may cause glare. Does not work on all phones.</string>
+    <string name="preferences_front_light_title">Use front light</string>
+    <string name="preferences_front_light_auto">Automatic</string>
+    <string name="preferences_front_light_off">Off</string>
+    <string name="preferences_front_light_on">On</string>
+    <string name="preferences_general_title">General settings</string>
+    <string name="preferences_history_summary">Store your scans in History</string>
+    <string name="preferences_history_title">Add to History</string>
+    <string name="preferences_invert_scan_title">Invert scan</string>
+    <string name="preferences_invert_scan_summary">Scan for white barcodes on black background. Not available on some devices.</string>
+    <string name="preferences_orientation_title">No automatic rotation</string>
+    <string name="preferences_play_beep_title">Beep</string>
+    <string name="preferences_remember_duplicates_summary">Store multiple scans of the same barcode in History</string>
+    <string name="preferences_remember_duplicates_title">Remember duplicates</string>
+    <string name="preferences_result_title">Result settings</string>
+    <string name="preferences_scanning_title">When scanning for barcodes, decode\u2026</string>
+    <string name="preferences_search_country">Search country</string>
+    <string name="preferences_supplemental_summary">Try to retrieve more information about the barcode contents</string>
+    <string name="preferences_supplemental_title">Retrieve more info</string>
+    <string name="preferences_vibrate_title">Vibrate</string>
+    <string name="result_address_book">Found contact info</string>
+    <string name="result_calendar">Found calendar event</string>
+    <string name="result_email_address">Found email address</string>
+    <string name="result_geo">Found geographic coordinates</string>
+    <string name="result_isbn">Found book</string>
+    <string name="result_product">Found product</string>
+    <string name="result_sms">Found SMS address</string>
+    <string name="result_tel">Found phone number</string>
+    <string name="result_text">Found plain text</string>
+    <string name="result_uri">Found URL</string>
+    <string name="result_wifi">Found WLAN Configuration</string>
+    <string name="sbc_name">Google Book Search</string>
+    <string name="wifi_changing_network">Requesting connection to network\u2026</string>
+
+    <string name="dialog_select_date_hint">请对照驾驶证上的初次领证日期进行选择，以免造成数据错误</string>
+
+    <string name="errcode_success">分享成功</string>
+    <string name="errcode_cancel">分享取消</string>
+    <string name="errcode_deny">分享被拒绝</string>
+    <string name="errcode_unknown">分享返回</string>
+
+    <string name="phone_num"><u>95588</u></string>
+    <string name="recharge_agreement_content">\n&#160;&#160;&#160;&#160;本协议是使用畅通车友会的车主（以下简称车主）和畅通车友会就账户充值等相关事宜所订立的油卡充值服务协议，请您仔细阅读本协议，您勾选“我已阅读并同意《油卡充值协议》”复选框后，即表示完全接受本协议项下的全部条款，本协议即构成对双方有约束力的法律文件。
+\n\n一、协议声明\n\n
+1、畅通车友会通过互联网依法为用户提供油卡充值、订单查询等服务，用户在完全同意本协议及畅通车友会规定的情况下，方有权使用畅通车友会的油卡充值服务。
+2、您勾选充值页面中的“我已阅读并同意《油卡充值协议》”复选框后，即视为您已阅读、了解、并完全同意本协议的各项内容，并具有独立承担法律责任的能力。畅通车友会对于未成年用户使用本服务过程中的行为，以及因其使用本服务而产生的一切后果不承担任何责任。
+3、畅通车友会在必要时可修改本协议，并在畅通车友会软件内进行公告，即公告之日起生效。如您继续使用畅通车友会账户充值服务，则视为您已接受修改后的油卡充值协议。
+\n\n二、服务说明\n\n
+1、畅通车友会通过互联网依法为用户提供油卡充值、订单查询等服务，用户在完全同意本协议及畅通车友会规定的情况下，方有权使用畅通车友会的油卡充值服务。
+2、车主需完成畅通车友会注册，即可启用畅通车友会账户充值服务。
+3、油卡充值完成后，到账可能有一定时间延时，望您理解等待。
+4、使用畅通车友会油卡充值支付油卡金额的发票需到加油油站索取，发票金额为用户实付金额。
+\n\n三、免责声明\n\n
+　　包括但不仅限于下列情况发生时，畅通车友会将不承担任何责任：
+1、用户因使用第三方支付渠道充值过程中发生的相关争议。
+2、由于用户将密码告知他人导致的用户财产损失。
+3、因用户个人故意或重大过失，或本协议之外的第三方所造成的用户财产损失。
+4、由不可抗力及不可预见的情势导致的各种情况和纠纷造成畅通车友会未能及时、准确、完整的提供账户充值服务；不可抗力和不可预见情况包括：系统故障、恶意黑客攻击、电信部门技术调整导致重大影响、政府管制导致的暂时关闭、病毒侵袭。
+5、用户同意保障和维护畅通车友会及其他用户的利益，如因用户违反有关法律、法规或本协议项下的任何条款而给畅通车友会或任何其他第三人造成损失，用户同意承担由此造成的损害赔偿责任。
+6、如用户利用系统差错、故障或其他原因导致的漏洞，损害畅通车友会利益，畅通车友会将终止为该用户提供充值服务，并保留法律追究的权利。
+7、畅通车友会负责对畅通车友会中展示的信息进行审核与更新，但并不就信息的时效性、准确性、以及服务功能的完整性和可靠性承担任何义务和赔偿责任。
+8、如畅通车友会发现有影响用户信息安全的行为，畅通车友会有权采取措施对用户信息实施保护。
+　　畅通车友会对以下情况不做任何承诺，包括但不仅限于下列情况：
+9、服务一定能符合您的要求；服务不会受中断；服务的安全性、及时性、完整性和准确性。
+10、车主应妥善保管账户、密码等信息资料，因非畅通车友会原因造成您的用户信息泄露，由此给您带来的损失，畅通车友会不承担任何责任。
+11、使用畅通车友会服务时，因用户个人原因产生的损失，畅通车友会不承担任何责任。
+\n\n四、其他\n\n
+1、本协议的订立、执行和解释及争议的解决均应适用中国法律。
+2、如双方就本协议内容或其执行发生任何争议，双方应尽量友好协商解决；协商不成时，任何一方均可向有管辖权的中华人民共和国大陆地区法院提起诉讼。畅通车友会保留对协议的最终解释权和修改权。
+3、本协议项下所有的通知均可通过重要页面公告、电子邮件或常规的信件传送等方式进行；该等通知于发送之日视为已送达收件人。</string>
+
+    <string name="apply_four_hint">本人保证申请表所填全部资料及所有相关资料真实、合法、有效。为本合约订立及履行之目的，
+                        本人授权中国工商银行可以通过金融信用信息基础数据库及其他渠道查询本人相关信息。
+                        中国工商银行已依法向本人提示相关条款，对相关概念、内容及法律效果做出说明。 本人知悉并保证遵守《&lt;font color=#13B1F5>中国工商银行牡丹信用卡章程&lt;/font>》（已向银行所取并阅读和知悉）；
+                        已阅读并了解《&lt;font color=#13B1F5>牡丹信用卡（个人卡）&lt;/font>》《&lt;font color=#13B1F5>安全用卡须知&lt;/font>》， 自愿遵守合约和协议书（若申请并注册成功）的规定。不论盛情批准与否。
+                        本人同意申请表及相关资料均由中国工商银行保留。</string>
+
+    <string name="apply_success_hint">温馨提示:领卡时需&lt;font color=#F53E2A>开通工行e支付,激活预留手机号码&lt;/font>,用于线上违章缴费。</string>
+    <string name="driving_price_desc">&lt;font color=#F53E2A>*&lt;/font>  起步价包含8公里路程，代驾距离超过8公里后，每1公里加收&lt;font color=#FFB700>2.8元&lt;/font>。
+&lt;br/>&lt;br/>&lt;font color=#F53E2A>*&lt;/font>  累计等候15分钟免费，以后每等候1分钟加收&lt;font color=#FFB700>1元&lt;/font>。
+&lt;br/>&lt;br/>&lt;font color=#F53E2A>*&lt;/font>  除代驾费用外，用户需额外支付&lt;font color=#FFB700>1元&lt;/font>代驾附加险。</string>
+
+    <string name="hundred_agreement_content">
+    活动时间：\n
+    活动报名时间：2017.3.16-2017.4.15\n
+    奖品发放时间：2017.08.07-2017.08.17\n\n
+    活动期限：\n
+    2017.04.17-2017.07.27 共计100天。\n\n
+    报名方式：\n
+    方法一：下载安装“畅通车友会”APP。\n
+    方法二：关注微信“工银牡丹惠上海”公众账号，回复“百日无违章”即可进入报名页面。\n
+    方法三：关注微信FM105.7公众账号，回复“百日无违章”即可进入报名页面。\n\n
+    活动规则：\n
+    一、本活动从3.16日起至8.17止，活动范围上海市；\n
+    二、适用于所有本市行驶车辆，“微型”、“小型”、“轻型”均可，大中型只接受“客车”均可参赛，每个行驶证、每个手机号、每个车牌号仅可参与一次。\n
+    三、凡报名参赛者只要被交警部门或行政执法部门记录一次违规违章行为即告淘汰。只要从04.17日起至07.27止，100天内没有交通违法，并全年参加2次百日无违章活动，均有机会赢取百吨油。\n
+    四、活动期间累计积分第一名的参赛者将获得“百日无违章”一等奖，奖品1吨油（按92#汽油在奖品发放当日的油价发放油卡）；\n
+    五、活动期间所有无违章者均有机会参加电台105.7每日的抽奖活动，活动奖品30升油（奖品发放期间将公布供获奖者可选择的加油站，以报名车辆油品为准）；\n
+    六、凡参加此次“百日无违章”活动的无违章者均可瓜分百吨油，如无违章人数多于1万人则积分排名前1万名均可获得阳光普照奖，活动奖品每人保底8升油（奖品发放期间将公布供获奖者可选择的加油站，以报名车辆油品为准）；\n
+    七、本次活动最终解释权归主办方所有</string>
+
+    <string name="hundred_rule_content">
+    1.分享：\n活动期间，参赛者分享APP下载链接且好友下载并注册可获取200积分，绑定畅通卡可获取500积分；\n\n
+    2.签到：\n每天签到获取1分，连续签到第15天获得积分5分，15天之后每天在前一天基础上再增加5分 直到每天签到分数满30分不再增加。中途若中断签到，当天签到积分从第一天开始（即当天签到获得1分），并保留已有积分（仅连续签到分数从第一天开始）；\n\n
+    3.绑卡：\n参赛者在线绑定畅通卡可获取2000积分（“畅通卡”牡丹畅通卡是由中国工商银行上海市分行与上海市公安局交通警察总队合作）；\n\n
+    4.加油：\n活动期间在APP内使用加油充值功能的参赛者可获取100积分；\n\n
+    5.代驾：\n活动期间在APP内使用代驾服务功能的参赛者可获取100积分；\n\n
+    本次活动最终解释权归主办方所有。
+    </string>
+
+    <string name="apply_card_notice">
+    \n1.卡片介绍:\n\n牡丹畅通卡是由中国工商银行上海市分行与上海市公安局交通警察总队合作，面向本市驾驶员群体发行的银行信用卡。
+        该卡是继我行原已发行的“牡丹交通卡”之后推出的全新版本，旨在以更丰富的产品功能服务大众，构建和谐社会，为广大驾驶员提供便利、
+        快捷的城市交通服务。\n\n牡丹畅通卡的业务功能：牡丹畅通卡集先进的金融IC卡和银联标准磁条贷记卡于一身，具有与牡丹贷记卡一样
+        的透支消费、转账结算、存取现金等基本金融功能，同时具有自助缴纳交通违法罚款、委托代理扣收公路规费、购买车辆保险、丰富的汽车
+        增值服务等特色功能。\n\n适用对象：凡持有本市有效机动车驾驶执照的人员均可申请办理牡丹畅通卡。\n\n特色优势:\n“ 放心用”—
+        轻点鼠标或按钮,分秒之间缴罚款\n “省心付”— 网点协议一次签,定期代扣通行费\n“安心行”— 畅通车保品种全,自助选购车辆险\n
+        “贴心惠”— 增值服务丰富多,爱车亮行每一天\n\n我行将逐步推出丰富的汽车增值服务,涉及道路救援、洗车、汽车美容、快修保养、
+        驾驶员医疗救助、特惠汽车用品等,全心照顾驾车出行。\n\n2.办理须知:\n\n开办条件：客户必须为本市机动车驾驶员。\n正常申办
+        周期：7-15天\n费税标准：牡丹畅通卡有效期内豁免年费。\n利率信息：牡丹畅通卡属于牡丹贷记卡品种，有关存款利息、透支利息、
+        滞纳金、超限费等规定同牡丹代记卡。\n\n3.名词解释:\n\n	1)	金融IC卡：牡丹畅通卡所属的金融IC卡记录了机动车驾驶员的姓名、
+        身份证号码、档案编号、家庭住址、初领证日期，用于交通信息管理。\n2)	交通违法罚款：交通违法罚款分为“电子警察”、“违法停车”、
+        “现场执法”三种，使用牡丹畅通卡可自助缴纳以上类型的交通违法罚款。\n3)	规费是车辆养路费、通行费、监护费的统称，我行可通过柜面
+        为客户办理牡丹畅通卡的规费授权，实现规费收取机构每月批量扣收客户规费的业务。\n	4)	汽车增值服务：畅通卡持卡人可持卡在专署特
+        惠商户中享受优惠服务，服务项目涉及道路救援、汽车美容、快修保养、洗车服务、医疗救助、特惠商品等。
+ </string>
+
+    <string name="tv_license_aty_prompt">
+        <font color='#F53E2A'><b>使用说明：</b></font>\n
+        1、 为保护用户隐私<font color='#F53E2A'>非畅通卡</font>用户无法使用驾照查分功能；\n
+        2、 本驾照查分非实时生效，仅供参考，详情以上海市公安交通管理部门发布的信息为准。
+    </string>
+    <string name="tv_license_detail_prompt">驾驶证累计扣分<font color='#00B6FF'>满12分</font>，
+        应当在<font color='#00B6FF'>十五日内</font>到驾驶证合法地或者违法行为地公安机关交通管理部内参加为期七日的道路交通安全法律、
+        法规和相关知识学习并参加考试。
+    </string>
+    <string name="tv_license_instructions">
+        <u>在线处理违章，只需要10S</u>
+    </string>
+    <string name="tv_driving_hint">
+        注：可手动刷新新查看订单状态；\n
+        代驾完成后可提醒司机上传订单完成，可查看消费价格。
+    </string>
+
+
+    <!--首页导航栏名称-->
+    <string name="recharge">优惠加油</string>
+    <string name="annual">年检服务</string>
+    <string name="designated_driver">代驾</string>
+    <string name="car_evaluate">爱车估价</string>
+    <string name="car_wash">驾驶证查分</string>
+    <string name="designated_wash">国际驾照</string>
+
+    <string name="tv_pay_type_prompt">
+        <font color='#ffffff'>银联卡支付&#160;&#160;</font>
+        <font color='#0f536f'>*不可改</font>
+    </string>
+
+    <string name="tv_where_cash">
+        <i>返还的现金在哪里查看?&#160;&#160;>></i>
+    </string>
+
+    <string name="tv_apply_official_website">
+        <font color='#0f536f'>
+            <u>官网介绍链接</u>
+        </font>
+    </string>
+
+    <string name="tv_favorable_price_admissions">
+        <font color='#f3362b'>￥&#160;%s</font>
+        <font color='#b3b3b3'>起</font>
+    </string>
+
+    <string name="digits_content">1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+    </string>
+    <string name="tv_violation_camera">
+        拍照扫描行驶证\n
+        车辆信息自动识别
+    </string>
+    <string name="tv_license_camera">
+        拍照扫描驾驶证\n
+        车辆信息自动识别
+    </string>
+    <string name="tv_license_number">
+        <font color='#f3362b'>*</font>车牌号码
+    </string>
+    <string name="tv_engine_number">
+        <font color='#f3362b'>*</font>发动机号
+    </string>
+    <string name="tv_license_type">
+        <font color='#f3362b'>*</font>车牌类型
+    </string>
+
+    <string name="tv_license_num_type">
+        <font color='#f3362b'>*</font>驾驶证证号
+    </string>
+    <string name="tv_record_num_type">
+        <font color='#f3362b'>*</font>驾驶证档案编号
+    </string>
+    <string name="tv_phone_num_type">
+        <font color='#f3362b'>*</font>预留手机号
+    </string>
+
+
+    <string name="tv_coupon_count">
+        <font color='#f3362b'>%1$d</font>&#160;张优惠劵
+    </string>
+
+    <string name="tv_car_count">
+        <font color='#f3362b'>%1$d</font>&#160;辆车
+    </string>
+
+    <string name="tv_apply_contact">
+        客服会在24小时内联系您\n
+        如有疑问，请拨打客户热线：400-9200-260
+    </string>
+
+    <string name="tv_credit_prompt">
+        <font color='#b2b2b2'>每成功推荐1人注册APP，即可获</font>
+        <font color='#f3362b'>200</font>
+        <font color='#b2b2b2'>活动积分</font>\n
+        <font color='#b2b2b2'>若其中有人完成绑卡，再送推荐者</font>
+        <font color='#f3362b'>500</font>
+        <font color='#b2b2b2'>活动积分</font>
+    </string>
+
+    <string name="tv_order_num">
+        订单编号：&#160;%s
+    </string>
+    <string name="tv_price_china">
+        <font color='#f3362b'>￥</font>&#160;
+    </string>
+    <string name="tv_share_fahrschule_weixin_title">
+        畅通车友会APP —车主一站式服务APP
+    </string>
+    <string name="tv_share_fahrschule_weixin_content">
+        【限时活动】畅通车友会APP联合上海知名驾校开启暑假报名价格优惠并送好礼活动。
+        活动期间每成功邀请好友报名成功，即可获得100元现金返现。
+        活动期间邀请越多返现越高噢！ 
+        畅通车友会APP是中国工商银行上海分行打造的一款车主一站式服务APP。
+    </string>
+
+    <string name="tv_share_pertussis_weixin_title">
+        畅通车友会APP —车主一站式服务APP
+    </string>
+    <string name="tv_share_pertussis_weixin_content">
+        【百日无违章 共赢百吨油】上海交通广播、中国工商银行上海分行协同畅通车友会APP举办上海市首届”百日无违章 共赢百吨油”活动。
+        邀请好友赚积分，赢大奖！活动火热进行中。
+        畅通车友会APP是中国工商银行上海分行打造的一款车主一站式服务APP。
+    </string>
+
+    <string name="tv_share_cash_weixin_title">
+      畅通车友会APP —车主一站式服务APP
+    </string>
+    <string name="tv_share_cash_weixin_content">
+        畅通车友会APP邀请好友成功注册APP，即可参加”分享返现”活动。
+        活动期间好友扫描分享者二维码，并成功注册。分享用户即可获取现金。
+        分享成功越多金额越高，快去邀请好友吧！
+        畅通车友会APP是中国工商银行上海分行打造的一款车主一站式服务APP。
+    </string>
+    <string name="tv_custom_image">
+       1.在应用市场下载安装并注册“畅通车友会APP”;\n
+       2.“优惠”-“邀请好友就返现”-“安亭驾校火热招生”-已成功支付人数*100=返现金额;\n
+       3.“个人中心”-联系客服-识别途中二维码关注“畅通卡车友会公众号”;\n
+       4.畅通卡车友会公众号内回复“驾校返现”按照提示信息即可完成提现流程;\n
+       5.自发起提现之日起2-3个工作日内到账;\n
+    </string>
+    <string name="tv_custom_scoring_cycle">
+       为了保证您的车辆违法计分准确，\n
+       可在核算车辆违法指定周期之外的，\n
+       计分统计自助选择开启或关闭。\n
+    </string>
+
+    <string name="tv_bind_rules">
+        我已阅读并同意<font color='#0f536f'>《用户隐私保密说明》</font>&#160;
+    </string>
+
+    <string name="tv_sparring_prompt">
+        您已经拥有牡丹畅通卡\n
+        再赠送您免费陪练2小时课程
+    </string>
+    <string name="tv_sparring_prompt_un_card">
+        \n可再获得免费陪练2小时课程
+    </string>
+
+    <string name="tv_subject_time">%1$s课时/%2$s小时</string>
 </resources>

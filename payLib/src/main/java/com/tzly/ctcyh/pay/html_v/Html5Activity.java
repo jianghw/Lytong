@@ -725,6 +725,6 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
 
     @Override
     public void getBankPayHtmlSucceed(PayUrlResponse response) {
-        PayRouter.gotoHtmlActivity(this, "畅通卡支付", response.getData(), getOrderId(), mPayType);
+        PayRouter.gotoHtmlActivity(this, "工行卡支付", response.getData(), getOrderId(), mPayType);
     }
 }

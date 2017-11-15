@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.api;
 
-import cn.qqtheme.framework.bean.BaseResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 

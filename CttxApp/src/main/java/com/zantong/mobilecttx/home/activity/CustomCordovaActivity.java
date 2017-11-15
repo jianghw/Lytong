@@ -17,7 +17,7 @@ import org.apache.cordova.CordovaWebViewImpl;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
 
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.ctcyh.router.global.JxGlobal;
 
 
 /**

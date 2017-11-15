@@ -17,8 +17,8 @@ import com.zantong.mobilecttx.weizhang.bean.RspInfoBean;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobilecttx.widght.UISwitchButton;
 
-import cn.qqtheme.framework.custom.popup.CustomDialog;
-import cn.qqtheme.framework.util.DateTools;
+import com.tzly.ctcyh.router.custom.popup.CustomDialog;
+import com.tzly.ctcyh.router.util.DateTools;
 
 /**
  * 违章查分数据列表

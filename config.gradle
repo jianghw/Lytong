@@ -20,8 +20,8 @@ ext {
     ]
 
     buildConfig = [
-            mianDebug: "false",
-            userDebug: "false",
-            payDebug : "false"
+            mianDebug: "true",
+            userDebug: "true",
+            payDebug : "true"
     ]
 }

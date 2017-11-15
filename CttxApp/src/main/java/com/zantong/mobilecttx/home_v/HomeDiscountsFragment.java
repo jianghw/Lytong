@@ -12,14 +12,20 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.router.base.RecyclerListFragment;
+import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.router.custom.banner.CBViewHolderCreator;
+import com.tzly.ctcyh.router.custom.banner.ConvenientBanner;
+import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.MobUtils;
-import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.router.util.primission.PermissionFail;
+import com.tzly.ctcyh.router.util.primission.PermissionGen;
+import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.contract.home.INativeItemListener;
 import com.zantong.mobilecttx.fahrschule_v.SparringActivity;
@@ -40,19 +46,10 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.custom.banner.CBViewHolderCreator;
-import cn.qqtheme.framework.custom.banner.ConvenientBanner;
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
-
-
 /**
  * 优惠页面
  */
-public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean>
+public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
         implements IHomeFavorableFtyContract.IHomeFavorableFtyView {
 
     private ConvenientBanner mCustomConvenientBanner;
@@ -116,14 +113,9 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
     }
 
     @Override
-    protected void onRefreshData() {
-        onFirstDataVisible();
-    }
-
-    @Override
-    protected void initFragmentView(View view) {
+    protected void initPresenter() {
         HomeFavorableFtyPresenter presenter = new HomeFavorableFtyPresenter(
-                Injection.provideRepository(getActivity().getApplicationContext()), this);
+                Injection.provideRepository(getContext()), this);
 
         if (mDiscountsAdapter != null)
             mDiscountsAdapter.setNativeItemListener(new INativeItemListener() {
@@ -155,17 +147,17 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
             } else if (path.equals("native_app_loan")) {
 
             } else if (path.equals("native_app_toast")) {
-                ToastUtils.toastShort("此功能开发中,敬请期待~");
+                toastShort("此功能开发中,敬请期待~");
             } else if (path.equals("native_app_daijia")) {//代驾
                 MobUtils.getInstance().eventIdByUMeng(25);
                 enterDrivingActivity();
             } else if (path.equals("native_app_enhancement")) {//科目强化
                 MobUtils.getInstance().eventIdByUMeng(37);
-                MainRouter.gotoSubjectActivity(getActivity(),0);
+                MainRouter.gotoSubjectActivity(getActivity(), 0);
             } else if (path.equals("native_app_sparring")) {//陪练
                 MobUtils.getInstance().eventIdByUMeng(38);
                 Act.getInstance().gotoIntentLogin(getActivity(), SparringActivity.class);
-                MainRouter.gotoSparringActivity(getActivity(),0);
+                MainRouter.gotoSparringActivity(getActivity(), 0);
             } else if (path.equals("native_app_drive_share")) {//分享
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.share_position_extra, 1);
@@ -175,9 +167,9 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
                 Act.getInstance().gotoIntentLogin(getActivity(), CarBeautyActivity.class);
             } else if (path.equals("native_app_driver")) {//驾校报名
                 MobUtils.getInstance().eventIdByUMeng(28);
-                MainRouter.gotoFahrschuleActivity(getActivity(),0);
+                MainRouter.gotoFahrschuleActivity(getActivity(), 0);
             } else {//其他
-                ToastUtils.toastShort("此版本暂无此状态页面,请更新最新版本");
+                toastShort("此版本暂无此状态页面,请更新最新版本");
             }
         }
     }
@@ -185,12 +177,6 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
     @Override
     public void setPresenter(IHomeFavorableFtyContract.IHomeFavorableFtyPresenter presenter) {
         mPresenter = presenter;
-    }
-
-    @Override
-    protected void onFirstDataVisible() {
-        if (mPresenter != null) mPresenter.moduleTree();
-        if (mPresenter != null) mPresenter.getBanner();
     }
 
     @Override
@@ -206,9 +192,14 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
     }
 
     @Override
+    protected void loadingFirstData() {
+        if (mPresenter != null) mPresenter.moduleTree();
+        if (mPresenter != null) mPresenter.getBanner();
+    }
+
+    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-
         startCampaignCustom(hidden);
     }
 
@@ -247,7 +238,7 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
 
     @Override
     public void getBannerError(String responseDesc) {
-        ToastUtils.toastShort(responseDesc);
+        toastShort(responseDesc);
     }
 
     /**
@@ -257,25 +248,21 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
     public void getRewardSucceed(BannerBean bannerBean) {}
 
     /**
-     * 获取模块
-     */
-    @Override
-    public void moduleTreeError(String message) {
-        setSimpleDataResult(null);
-        ToastUtils.toastShort(message + "请下拉刷新");
-    }
-
-    /**
      * 数据加载成功
      */
     @Override
-    public void moduleTreeSucceed(ModuleResponse result) {
-        List<ModuleBean> moduleBeanList = result.getData();
-        setSimpleDataResult(moduleBeanList);
+    protected void responseData(Object response) {
+        if (response instanceof ModuleResponse) {
+            ModuleResponse moduleResponse = (ModuleResponse) response;
+            List<ModuleBean> moduleBeanList = moduleResponse.getData();
+            setSimpleDataResult(moduleBeanList);
+        } else
+            responseError();
     }
 
     @Override
-    protected void DestroyViewAndThing() {
+    public void onDestroyView() {
+        super.onDestroyView();
         if (mPresenter != null) mPresenter.unSubscribe();
     }
 
@@ -311,6 +298,6 @@ public class HomeDiscountsFragment extends BaseRecyclerListJxFragment<ModuleBean
 
     @PermissionFail(requestCode = 2000)
     public void doDrivingFail() {
-        ToastUtils.toastShort("您已关闭定位权限,请手机设置中打开");
+        toastShort("您已关闭定位权限,请手机设置中打开");
     }
 }

@@ -6,14 +6,14 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_135"
+        android:layout_height="@dimen/res_y_88"
         android:background="@color/colorWhite"
         android:gravity="center"
         android:text="优惠"
         android:textColor="@color/colorTvRed_f33"
         android:textSize="@dimen/fs_18sp"/>
 
-    <cn.qqtheme.framework.custom.banner.ConvenientBanner
+    <com.tzly.ctcyh.router.custom.banner.ConvenientBanner
         android:id="@+id/custom_convenientBanner"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_480"/>

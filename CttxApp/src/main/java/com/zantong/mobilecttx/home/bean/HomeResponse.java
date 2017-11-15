@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.home.bean;
 
-import cn.qqtheme.framework.bean.BaseResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 
 /**
  * Created by zhoujie on 2016/9/19.

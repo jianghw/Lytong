@@ -7,11 +7,9 @@ import android.widget.RelativeLayout;
 
 import com.zantong.mobilecttx.R;
 
-import pl.droidsonroids.gif.GifDrawable;
-import pl.droidsonroids.gif.GifImageView;
 
 public class GifHeadView extends RelativeLayout {
-    private GifImageView gifImageView;
+//    private GifImageView gifImageView;
 
     public GifHeadView(Context context) {
         this(context, null, 0);
@@ -27,26 +25,26 @@ public class GifHeadView extends RelativeLayout {
         super(context, attrs, defStyleAttr);
         // TODO Auto-generated constructor stub
         LayoutInflater.from(context).inflate(R.layout.gif_headview, this, true);
-        gifImageView = (GifImageView) findViewById(R.id.giv_anim);
+//        gifImageView = (GifImageView) findViewById(R.id.giv_anim);
     }
 
-    /**
+ /*   *//**
      * 设置gif动画资源
      *
      * @param gifDrawable
-     */
+     *//*
     public void setGifAnim(GifDrawable gifDrawable) {
         gifImageView.setImageDrawable(gifDrawable);
         // 停止自动播放
         gifDrawable.stop();
     }
 
-    /**
+    *//**
      * 获取gif
      *
      * @return
-     */
+     *//*
     public GifDrawable getDrawable() {
         return (GifDrawable) gifImageView.getDrawable();
-    }
+    }*/
 }

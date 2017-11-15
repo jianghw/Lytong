@@ -4,6 +4,7 @@ package com.zantong.mobilecttx.presenter.browser;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.contract.browser.IPayHtmlContract;
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import cn.qqtheme.framework.bean.BaseResponse;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;

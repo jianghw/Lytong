@@ -20,10 +20,10 @@ import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
-import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.custom.banner.CBPageAdapter;
+import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.router.custom.banner.CBPageAdapter;
 import com.tzly.ctcyh.router.util.MobUtils;
-import cn.qqtheme.framework.util.image.ImageOptions;
+import com.tzly.ctcyh.router.custom.image.ImageOptions;
 
 /**
  * Created by Sai on 15/8/4.

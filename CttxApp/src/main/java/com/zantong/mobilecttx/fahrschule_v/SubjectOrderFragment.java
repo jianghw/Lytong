@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.tzly.ctcyh.router.bean.response.SubjectGoodsBean;
 import com.tzly.ctcyh.router.util.FormatUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
@@ -19,8 +20,6 @@ import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
 
 /**
  * 科目强化订单确认页面

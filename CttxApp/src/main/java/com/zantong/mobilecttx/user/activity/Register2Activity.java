@@ -50,8 +50,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.bean.BankResponse;
-import cn.qqtheme.framework.bean.BaseResponse;
+import com.tzly.ctcyh.router.bean.BankResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 
 public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresenter> implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
 

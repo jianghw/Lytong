@@ -9,14 +9,14 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
+import com.tzly.ctcyh.router.ScreenUtils;
+import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
+import com.tzly.ctcyh.router.util.ConvertUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.home.bean.ChildrenBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.qqtheme.framework.util.ConvertUtils;
-import cn.qqtheme.framework.util.ScreenUtils;
-import cn.qqtheme.framework.util.image.ImageLoadUtils;
 
 /**
  * 优惠页面复杂页面
@@ -85,7 +85,7 @@ public class ServiceDiscountsAdapter extends BaseAdapter<ChildrenBean> {
      * 根据状态布局设置 长 宽
      */
     protected void stateImageParams(View view, int itemType) {
-        int width = ((ScreenUtils.widthPixels(mAdapterContext) - ConvertUtils.toPx(7.33f) * 2) / (itemType == ITEM_TYPE_TWO_PIC ? 2 : 3));
+        int width = ((ScreenUtils.widthPixels(mAdapterContext) - ConvertUtils.dp2px(7.33f) * 2) / (itemType == ITEM_TYPE_TWO_PIC ? 2 : 3));
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.width = width;
         layoutParams.height = (itemType == ITEM_TYPE_TWO_PIC) ? width  : (int) (width * 1.2);

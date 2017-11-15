@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
@@ -16,7 +17,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.IOException;
 import java.util.HashMap;
 
-import cn.qqtheme.framework.bean.BankResponse;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -89,7 +89,7 @@ public class AsyncCallBack<T> implements Callback {
         this.tag = tag;
         this.clazz = clazz;
         this.gson = new Gson();
-        this.errorList = new HashMap<String, String>();
+        this.errorList = new HashMap<>();
     }
 
     public AsyncCallBack(Context context, CallBack<T> callback, Class<T> clazz) {

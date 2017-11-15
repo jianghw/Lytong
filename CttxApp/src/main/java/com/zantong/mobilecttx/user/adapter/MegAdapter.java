@@ -16,9 +16,9 @@ import com.zantong.mobilecttx.user.bean.MessageType;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.qqtheme.framework.util.DateTools;
+import com.tzly.ctcyh.router.util.DateTools;
 
-import static cn.qqtheme.framework.util.image.ImageOptions.getMessageOptions;
+import static com.tzly.ctcyh.router.custom.image.ImageOptions.getMessageOptions;
 
 /**
  * Created by zhoujie on 2017/2/13.

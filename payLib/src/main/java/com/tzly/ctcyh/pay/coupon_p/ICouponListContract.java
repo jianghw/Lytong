@@ -1,8 +1,8 @@
 package com.tzly.ctcyh.pay.coupon_p;
 
-import com.tzly.ctcyh.pay.bean.response.CouponResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
+import com.tzly.ctcyh.router.base.IResponseView;
 
 /**
  * Created by jianghw on 2017/10/12.
@@ -13,12 +13,8 @@ import com.tzly.ctcyh.router.base.IBaseView;
 
 public interface ICouponListContract {
 
-    interface ICouponListView extends IBaseView<ICouponListPresenter> {
+    interface ICouponListView extends IBaseView<ICouponListPresenter>, IResponseView {
         String getExtraType();
-
-        void couponByTypeError(String message);
-
-        void couponByTypeSucceed(CouponResponse response);
 
         int getPayType();
     }
@@ -27,7 +23,6 @@ public interface ICouponListContract {
         void getCouponByType();
 
         String getUserId();
-
     }
 
 }

@@ -5,7 +5,7 @@ import com.zantong.mobilecttx.user.bean.CouponBean;
 
 import java.util.List;
 
-import cn.qqtheme.framework.bean.BaseResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 
 /**
  * Created by zhoujie on 2017/2/16.

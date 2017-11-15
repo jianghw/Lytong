@@ -12,24 +12,25 @@ import android.widget.FrameLayout;
 
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
-import com.tzly.ctcyh.router.base.JxBaseActivity;
+import com.tzly.ctcyh.router.base.AbstractBaseActivity;
+import com.tzly.ctcyh.router.custom.tablebottom.UiTableBottom;
+import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.StatusBarUtils;
-import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.router.util.primission.PermissionGen;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.utils.DialogUtils;
 
-import cn.qqtheme.framework.custom.tablebottom.UiTableBottom;
-import cn.qqtheme.framework.util.AppUtils;
-import cn.qqtheme.framework.util.primission.PermissionGen;
+import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
+
 
 /**
  * 新的主页面
  */
-public class HomeMainActivity extends JxBaseActivity {
+public class HomeMainActivity extends AbstractBaseActivity implements IHomeMainUi {
 
     private FrameLayout mFrameLayout;
     private UiTableBottom mCustomBottom;
@@ -43,13 +44,7 @@ public class HomeMainActivity extends JxBaseActivity {
     HomeMeFragment mHomeMeFragment;
 
     @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-        onNewIntent(getIntent());
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
+    protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             if (intent.hasExtra(MainGlobal.putExtra.home_position_extra))
@@ -58,8 +53,13 @@ public class HomeMainActivity extends JxBaseActivity {
     }
 
     @Override
+    protected void newIntent(Intent intent) {
+        initFragment();
+    }
+
+    @Override
     protected void initStatusBarColor() {
-        StatusBarUtils.setTranslucentForImageViewInFragment(this, 38, null);
+        StatusBarUtils.setTranslucentForImageViewInFragment(this, StatusBarUtils.DEFAULT_BAR_ALPHA, null);
     }
 
     /**
@@ -75,9 +75,9 @@ public class HomeMainActivity extends JxBaseActivity {
     }
 
     @Override
-    protected void bindContentView(View view) {
-        mFrameLayout = (FrameLayout) view.findViewById(R.id.content);
-        mCustomBottom = (UiTableBottom) view.findViewById(R.id.custom_bottom);
+    protected void bindFragment() {
+        mFrameLayout = (FrameLayout) findViewById(R.id.content);
+        mCustomBottom = (UiTableBottom) findViewById(R.id.custom_bottom);
 
         initBottomTable();
     }
@@ -85,7 +85,6 @@ public class HomeMainActivity extends JxBaseActivity {
     @Override
     protected void initContentData() {
         //更新检查
-//        Beta.init(getApplicationContext(), false);
         UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
         int appCode = AppUtils.getAppVersionCode();
         int mVersionCode = appCode;
@@ -126,7 +125,7 @@ public class HomeMainActivity extends JxBaseActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } catch (Exception e) {
-            ToastUtils.toastShort("您没有安装应用市场,请点击立即更新");
+            toastShort("您没有安装应用市场,请点击立即更新");
         }
     }
 
@@ -155,45 +154,29 @@ public class HomeMainActivity extends JxBaseActivity {
     }
 
     private void initFragment() {
-        initStatusBarColor();
-
         FragmentManager fragmentManager = getSupportFragmentManager();
-
         switch (mCurBottomPosition) {
             case 0:
                 if (mHomeUnimpededFragment == null) {
                     mHomeUnimpededFragment = HomeUnimpededFragment.newInstance();
-                    FragmentUtils.add(fragmentManager, mHomeUnimpededFragment, R.id.content, false, true);
+                    FragmentUtils.add(fragmentManager, mHomeUnimpededFragment, R.id.content);
                 }
-                mHomeUnimpededFragment.setMessageListener(new MessageListener() {
-                    @Override
-                    public void setTipOfNumber(int position, int number) {
-                        mCustomBottom.setTipOfNumber(position, number);
-                    }
-                });
                 FragmentUtils.showHideNull(mHomeUnimpededFragment, mHomeDiscountsFragment, mHomeMeFragment);
                 MobUtils.getInstance().eventIdByUMeng(18);
                 break;
             case 1:
                 if (mHomeDiscountsFragment == null) {
                     mHomeDiscountsFragment = HomeDiscountsFragment.newInstance();
-                    FragmentUtils.add(fragmentManager, mHomeDiscountsFragment, R.id.content, false, true);
+                    FragmentUtils.add(fragmentManager, mHomeDiscountsFragment, R.id.content);
                 }
                 FragmentUtils.showHideNull(mHomeDiscountsFragment, mHomeUnimpededFragment, mHomeMeFragment);
-
                 MobUtils.getInstance().eventIdByUMeng(19);
                 break;
             case 2:
                 if (mHomeMeFragment == null) {
                     mHomeMeFragment = HomeMeFragment.newInstance();
-                    FragmentUtils.add(fragmentManager, mHomeMeFragment, R.id.content, false, true);
+                    FragmentUtils.add(fragmentManager, mHomeMeFragment, R.id.content);
                 }
-                mHomeMeFragment.setMessageListener(new MessageListener() {
-                    @Override
-                    public void setTipOfNumber(int position, int number) {
-                        mCustomBottom.setTipOfNumber(position, number);
-                    }
-                });
                 FragmentUtils.showHideNull(mHomeMeFragment, mHomeUnimpededFragment, mHomeDiscountsFragment);
                 break;
             default:
@@ -201,21 +184,27 @@ public class HomeMainActivity extends JxBaseActivity {
         }
     }
 
-    public interface MessageListener {
-        void setTipOfNumber(int position, int number);
+    /**
+     * 底部小红点显示
+     */
+    @Override
+    public void setTipOfNumber(int position, int number) {
+        mCustomBottom.setTipOfNumber(position, number);
     }
 
     private long exitTime;
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getAction() == KeyEvent.ACTION_DOWN) {
+
             if ((System.currentTimeMillis() - exitTime) > 2000) {
-                ToastUtils.toastShort("请再点击一次,退出应用");
+                toastShort("请再点击一次,退出应用");
                 exitTime = System.currentTimeMillis();
             } else {
                 finish();
-                return super.onKeyDown(keyCode, event);
+                System.exit(0);
             }
             return true;
         }

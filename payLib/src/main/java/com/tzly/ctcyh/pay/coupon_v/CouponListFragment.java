@@ -18,36 +18,31 @@ import com.tzly.ctcyh.pay.coupon_p.CouponListPresenter;
 import com.tzly.ctcyh.pay.coupon_p.ICouponListContract;
 import com.tzly.ctcyh.pay.data_m.InjectionRepository;
 import com.tzly.ctcyh.pay.global.PayGlobal;
-import com.tzly.ctcyh.router.base.JxBaseRecyclerListFragment;
+import com.tzly.ctcyh.router.base.RecyclerListFragment;
 
 import java.util.List;
 
 /**
  * 选择优惠劵 页面 加油
  */
-public class CouponListFragment extends
-        JxBaseRecyclerListFragment<CouponBean> implements ICouponListContract.ICouponListView {
+public class CouponListFragment extends RecyclerListFragment<CouponBean>
+        implements ICouponListContract.ICouponListView {
     /**
-     * p
+     * mP
      */
     private ICouponListContract.ICouponListPresenter mPresenter;
-
-    @Override
-    protected int initFragmentView() {
-        return 0;
-    }
-
-    @Override
-    protected void bindFragmentView(View fragmentView) {
-        CouponListPresenter mPresenter = new CouponListPresenter(
-                InjectionRepository.provideRepository(getActivity().getApplicationContext()), this);
-    }
 
     /**
      * 分隔栏
      */
     protected int getCustomDecoration() {
         return getResources().getDimensionPixelSize(R.dimen.res_y_20);
+    }
+
+    @Override
+    protected void initPresenter() {
+        CouponListPresenter mPresenter = new CouponListPresenter(
+                InjectionRepository.provideRepository(getActivity()), this);
     }
 
     /**
@@ -91,20 +86,11 @@ public class CouponListFragment extends
         Bundle bundle = new Bundle();
         bundle.putParcelable(PayGlobal.putExtra.coupon_list_bean, couponBean);
         intent.putExtras(bundle);
+
         FragmentActivity activity = getActivity();
         if (activity != null) {
             activity.setResult(PayGlobal.resultCode.coupon_used, intent);
         }
-    }
-
-    @Override
-    protected void onRefreshData() {
-        if (mPresenter != null) mPresenter.getCouponByType();
-    }
-
-    @Override
-    protected void onFirstDataVisible() {
-        if (mPresenter != null) mPresenter.getCouponByType();
     }
 
     public static CouponListFragment newInstance(String type, int payType) {
@@ -128,24 +114,28 @@ public class CouponListFragment extends
     }
 
     @Override
+    protected void loadingFirstData() {
+        if (mPresenter != null) mPresenter.getCouponByType();
+    }
+
+    @Override
     public String getExtraType() {
         return getArguments().getString(PayGlobal.putExtra.coupon_list_type);
     }
 
     @Override
-    public void couponByTypeError(String message) {
-        toastShort(message);
-    }
-
-    @Override
-    public void couponByTypeSucceed(CouponResponse response) {
-        List<CouponBean> beanList = response.getData();
-        setSimpleDataResult(beanList);
-    }
-
-    @Override
     public int getPayType() {
         return getArguments().getInt(PayGlobal.putExtra.web_pay_type_extra);
+    }
+
+    @Override
+    protected void responseData(Object response) {
+        if (response instanceof CouponResponse) {
+            CouponResponse couponResponse = (CouponResponse) response;
+            List<CouponBean> beanList = couponResponse.getData();
+            setSimpleDataResult(beanList);
+        } else
+            responseError();
     }
 
 }

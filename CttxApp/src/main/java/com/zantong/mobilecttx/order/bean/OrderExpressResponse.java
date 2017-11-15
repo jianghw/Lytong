@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.order.bean;
 
 import java.util.List;
 
-import cn.qqtheme.framework.bean.BaseResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 
 /**
  * 32.获取地区列表

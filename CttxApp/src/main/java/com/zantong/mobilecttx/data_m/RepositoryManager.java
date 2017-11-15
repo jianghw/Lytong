@@ -3,6 +3,9 @@ package com.zantong.mobilecttx.data_m;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.tzly.ctcyh.router.bean.BankResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.router.bean.response.SubjectGoodsResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -61,9 +64,6 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import java.util.List;
 
-import cn.qqtheme.framework.bean.BankResponse;
-import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.bean.response.SubjectGoodsResponse;
 import okhttp3.MultipartBody;
 import rx.Observable;
 

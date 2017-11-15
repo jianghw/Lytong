@@ -1,7 +1,7 @@
 package com.zantong.mobilecttx.weizhang.bean;
 
-import cn.qqtheme.framework.bean.APPHEADBean;
-import cn.qqtheme.framework.bean.SYSHEADBean;
+import com.tzly.ctcyh.router.bean.APPHEADBean;
+import com.tzly.ctcyh.router.bean.SYSHEADBean;
 
 /**
  * Created by jianghw on 2017/5/5.

@@ -26,7 +26,7 @@ import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.pay.pay_type_p.IPayTypeContract;
 import com.tzly.ctcyh.pay.pay_type_p.PayTypePresenter;
 import com.tzly.ctcyh.pay.router.PayRouter;
-import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.util.FormatUtils;
 import com.tzly.ctcyh.router.util.Utils;
 
@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * 选择支付方式
  */
-public class PayTypeFragment extends JxBaseRefreshFragment
+public class PayTypeFragment extends RefreshFragment
         implements View.OnClickListener, IPayTypeContract.IPayTypeView {
 
     private TextView mTvOrder;
@@ -119,31 +119,13 @@ public class PayTypeFragment extends JxBaseRefreshFragment
         if (mPresenter != null) mPresenter.unSubscribe();
     }
 
-    /**
-     * 是否可刷新
-     */
-    protected boolean isRefresh() {
-        return false;
-    }
-
-    /**
-     * 刷新数据
-     */
     @Override
-    protected void onRefreshData() {
-        onFirstDataVisible();
-    }
-
-    @Override
-    protected void onLoadMoreData() {}
-
-    @Override
-    protected int initFragmentView() {
+    protected int fragmentView() {
         return R.layout.pay_fragment_pay_type;
     }
 
     @Override
-    protected void bindFragmentView(View fragment) {
+    protected void bindFragment(View fragment) {
         initView(fragment);
 
         PayTypePresenter mPresenter = new PayTypePresenter(
@@ -252,7 +234,7 @@ public class PayTypeFragment extends JxBaseRefreshFragment
     }
 
     @Override
-    protected void onFirstDataVisible() {
+    protected void loadingFirstData() {
         if (mPresenter != null) mPresenter.getOrderInfo();
     }
 
@@ -275,51 +257,48 @@ public class PayTypeFragment extends JxBaseRefreshFragment
     }
 
     @Override
-    public void getOrderInfoError(String message) {
-        toastShort(message);
-    }
+    protected void responseData(Object response) {
+        if (!(response instanceof PayTypeResponse))
+            responseError();
+        else {
+            PayTypeResponse payTypeResponse = (PayTypeResponse) response;
+            PayTypeBean payTypeBean = payTypeResponse.getData();
+            if (payTypeBean == null) return;
+            mCouponType = payTypeBean.getBusiness();
+            mTvOrder.setText(FormatUtils.textForNull(getExtraOrderId()));
 
-    /**
-     * 订单信息
-     */
-    @Override
-    public void getOrderInfoSucceed(PayTypeResponse response) {
-        PayTypeBean payTypeBean = response.getData();
-        if (payTypeBean == null) return;
-        mCouponType = payTypeBean.getBusiness();
-        mTvOrder.setText(FormatUtils.textForNull(getExtraOrderId()));
-
-        StringBuilder sb = new StringBuilder();
-        if (!TextUtils.isEmpty(payTypeBean.getName())) sb.append(payTypeBean.getName());
-        if (!TextUtils.isEmpty(payTypeBean.getDescription())) {
-            sb.append("/");
-            sb.append(payTypeBean.getDescription());
-        }
-        mCombo.setText(FormatUtils.textForNull(sb.toString()));
-        //原价格
-        setOriginalPrice(payTypeBean.getPrice());
-        //显示价格
-        setSubmitPrice(payTypeBean.getPrice());
-
-        List<PayTypesBean> typesBeanList = payTypeBean.getPayTypes();
-        for (PayTypesBean bean : typesBeanList) {
-            if (bean.getPayId() == 1) {
-                mRbCarpay.setVisibility(View.VISIBLE);
-                mLineCarpay.setVisibility(View.VISIBLE);
-            } else if (bean.getPayId() == 2) {
-                mRbUnionpay.setVisibility(View.VISIBLE);
-                mLineUnionpay.setVisibility(View.VISIBLE);
-            } else if (bean.getPayId() == 3) {
-                mRbAlipay.setVisibility(View.VISIBLE);
-                mLineAlipay.setVisibility(View.VISIBLE);
-            } else if (bean.getPayId() == 4) {
-                mRbWeixinpay.setVisibility(View.VISIBLE);
+            StringBuilder sb = new StringBuilder();
+            if (!TextUtils.isEmpty(payTypeBean.getName())) sb.append(payTypeBean.getName());
+            if (!TextUtils.isEmpty(payTypeBean.getDescription())) {
+                sb.append("/");
+                sb.append(payTypeBean.getDescription());
             }
-        }
+            mCombo.setText(FormatUtils.textForNull(sb.toString()));
+            //原价格
+            setOriginalPrice(payTypeBean.getPrice());
+            //显示价格
+            setSubmitPrice(payTypeBean.getPrice());
 
-        //标记是否可点优惠劵
-        mLayReCoupon.setEnabled(payTypeBean.getCouponId() <= 0);
-        if (payTypeBean.getCouponId() > 0) mTvCoupon.setText("此订单已用优惠劵,可直接支付");
+            List<PayTypesBean> typesBeanList = payTypeBean.getPayTypes();
+            for (PayTypesBean bean : typesBeanList) {
+                if (bean.getPayId() == 1) {
+                    mRbCarpay.setVisibility(View.VISIBLE);
+                    mLineCarpay.setVisibility(View.VISIBLE);
+                } else if (bean.getPayId() == 2) {
+                    mRbUnionpay.setVisibility(View.VISIBLE);
+                    mLineUnionpay.setVisibility(View.VISIBLE);
+                } else if (bean.getPayId() == 3) {
+                    mRbAlipay.setVisibility(View.VISIBLE);
+                    mLineAlipay.setVisibility(View.VISIBLE);
+                } else if (bean.getPayId() == 4) {
+                    mRbWeixinpay.setVisibility(View.VISIBLE);
+                }
+            }
+
+            //标记是否可点优惠劵
+            mLayReCoupon.setEnabled(payTypeBean.getCouponId() <= 0);
+            if (payTypeBean.getCouponId() > 0) mTvCoupon.setText("此订单已用优惠劵,可直接支付");
+        }
     }
 
     /**
@@ -475,7 +454,7 @@ public class PayTypeFragment extends JxBaseRefreshFragment
     @Override
     public void couponByTypeError(String message) {
         toastShort(message);
-        setCouponText(message + "请点击我~");
+        setCouponText(message);
     }
 
     /**

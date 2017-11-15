@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.card.bean;
 
-import cn.qqtheme.framework.bean.BaseResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 
 /**
  * Created by zhoujie on 2017/2/14.

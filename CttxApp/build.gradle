@@ -163,8 +163,6 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':CordovaLib')
-    compile project(':Common')
-
     //butterknife
     compile 'com.jakewharton:butterknife:7.0.1'
     //阿里云推送
@@ -172,7 +170,6 @@ dependencies {
     compile 'com.aliyun.ams:alicloud-android-push:3.0.11@aar'
     compile 'com.aliyun.ams:alicloud-android-utdid:1.1.5.3'
     compile 'com.aliyun.ams:alicloud-android-ut:5.1.0'
-
     //接口沟通依赖
     compile project(':componentService')
 }

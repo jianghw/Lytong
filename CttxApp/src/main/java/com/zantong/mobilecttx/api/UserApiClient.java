@@ -41,7 +41,7 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.PayHistoryDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
-import cn.qqtheme.framework.bean.BankResponse;
+import com.tzly.ctcyh.router.bean.BankResponse;
 
 
 /**

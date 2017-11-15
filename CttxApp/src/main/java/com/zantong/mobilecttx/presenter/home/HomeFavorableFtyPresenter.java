@@ -124,15 +124,16 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.moduleTreeError(e.getMessage());
+                        mAtyView.responseError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(ModuleResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.moduleTreeSucceed(result);
+                            mAtyView.responseSucceed(result);
                         } else
-                            mAtyView.moduleTreeError(result != null ? result.getResponseDesc() : "未知错误(N25)");
+                            mAtyView.responseError(result != null
+                                    ? result.getResponseDesc() : "未知错误(N25)");
                     }
                 });
         mSubscriptions.add(subscription);

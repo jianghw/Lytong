@@ -15,9 +15,6 @@ import android.widget.TextView;
 
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.utils.GifHeadView;
-
-import pl.droidsonroids.gif.GifDrawable;
 
 
 /**
@@ -158,7 +155,7 @@ public class PullToRefreshLayout extends RelativeLayout {
 
         reverseUpAnimation = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.reverse_up_anim);
         reverseDownAnimation = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.reverse_down_anim);
-        refreshingAnimation = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.rotating_anim);
+        refreshingAnimation = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.anim_rotating);
 
         // 添加匀速转动动画
         LinearInterpolator interpolator = new LinearInterpolator();
@@ -759,24 +756,24 @@ public class PullToRefreshLayout extends RelativeLayout {
     /**
      * 设置下拉刷新gif动画头
      */
-    public void setGifRefreshView(GifDrawable headGifDrawable) {
-        // 设置下拉头
-        GifHeadView headView = new GifHeadView(getContext());
-        headView.setGifAnim(headGifDrawable);
-        setCustomRefreshView(headView);
-        setOnRefreshProcessListener(new GifOnPullProcessListener(headView.getDrawable()));
-    }
-
-    /**
-     * 设置上拉加载更多gif动画头
-     */
-    public void setGifLoadmoreView(GifDrawable footGifDrawable) {
-        // 设置上拉头
-        GifHeadView footView = new GifHeadView(getContext());
-        footView.setGifAnim(footGifDrawable);
-        setCustomUploadMoreView(footView);
-        setOnLoadmoreProcessListener(new GifOnPullProcessListener(footView.getDrawable()));
-    }
+//    public void setGifRefreshView(GifDrawable headGifDrawable) {
+//        // 设置下拉头
+//        GifHeadView headView = new GifHeadView(getContext());
+//        headView.setGifAnim(headGifDrawable);
+//        setCustomRefreshView(headView);
+//        setOnRefreshProcessListener(new GifOnPullProcessListener(headView.getDrawable()));
+//    }
+//
+//    /**
+//     * 设置上拉加载更多gif动画头
+//     */
+//    public void setGifLoadmoreView(GifDrawable footGifDrawable) {
+//        // 设置上拉头
+//        GifHeadView footView = new GifHeadView(getContext());
+//        footView.setGifAnim(footGifDrawable);
+//        setCustomUploadMoreView(footView);
+//        setOnLoadmoreProcessListener(new GifOnPullProcessListener(footView.getDrawable()));
+//    }
 
     /**
      * 设置下拉刷新过程监听器

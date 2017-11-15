@@ -31,7 +31,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import cn.qqtheme.framework.util.image.ImageOptions;
+import com.tzly.ctcyh.router.custom.image.ImageOptions;
 
 /**
  * 消息详情

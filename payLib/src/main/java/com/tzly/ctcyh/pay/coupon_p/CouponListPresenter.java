@@ -68,15 +68,15 @@ public class CouponListPresenter implements ICouponListContract.ICouponListPrese
                             @Override
                             public void doError(Throwable e) {
                                 mContractView.dismissLoading();
-                                mContractView.couponByTypeError(e.getMessage());
+                                mContractView.responseError(e.getMessage());
                             }
 
                             @Override
                             public void doNext(CouponResponse response) {
                                 if (response != null && response.getResponseCode() == 2000) {
-                                    mContractView.couponByTypeSucceed(response);
+                                    mContractView.responseSucceed(response);
                                 } else {
-                                    mContractView.couponByTypeError(response != null
+                                    mContractView.responseError(response != null
                                             ? response.getResponseDesc() : "未知错误(57)");
                                 }
                             }

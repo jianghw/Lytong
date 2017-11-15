@@ -59,8 +59,8 @@ import com.zantong.mobilecttx.utils.DistanceUtils;
 
 import java.util.List;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.ui.DensityUtils;
+import com.tzly.ctcyh.router.global.JxGlobal;
+import com.tzly.ctcyh.router.DensityUtils;
 
 /**
  * Created by jianghw on 2017/7/7.

@@ -35,8 +35,8 @@ import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.bean.BaseResponse;
-import cn.qqtheme.framework.util.ui.DensityUtils;
+import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.router.DensityUtils;
 
 /**
  * 活动报名

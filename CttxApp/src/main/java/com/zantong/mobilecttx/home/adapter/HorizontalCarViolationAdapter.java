@@ -31,9 +31,9 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.custom.popup.MoreWindow;
+import com.tzly.ctcyh.router.custom.popup.MoreWindow;
 import com.tzly.ctcyh.router.util.MobUtils;
-import cn.qqtheme.framework.util.ScreenUtils;
+import com.tzly.ctcyh.router.ScreenUtils;
 
 /**
  * Created by jianghw on 2017/6/27.

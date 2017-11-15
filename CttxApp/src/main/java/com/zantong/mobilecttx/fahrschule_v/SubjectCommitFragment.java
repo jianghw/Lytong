@@ -9,7 +9,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.tzly.ctcyh.router.bean.response.SubjectGoodsBean;
+import com.tzly.ctcyh.router.global.JxGlobal;
+import com.tzly.ctcyh.router.util.RegexUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.ViewUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
@@ -30,11 +34,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.RegexUtils;
-import cn.qqtheme.framework.util.ViewUtils;
 
 /**
  * 科目强化提交订单

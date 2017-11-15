@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.api;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.base.bean.CouponResponse;
@@ -60,8 +61,6 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationOrderDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationSearchDTO;
 
 import java.io.File;
-
-import cn.qqtheme.framework.bean.BaseResponse;
 
 public class CarApiClient extends BaseApiClient {
 

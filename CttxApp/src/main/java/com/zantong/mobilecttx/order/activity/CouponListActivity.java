@@ -14,7 +14,7 @@ import com.zantong.mobilecttx.order.fragment.CouponListFragment;
 
 import java.util.ArrayList;
 
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.ctcyh.router.global.JxGlobal;
 
 /**
  * 优惠券 列表

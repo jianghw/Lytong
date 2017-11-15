@@ -6,7 +6,7 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
 
 import java.util.List;
 
-import cn.qqtheme.framework.bean.BaseResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 
 /**
  * 支付页面

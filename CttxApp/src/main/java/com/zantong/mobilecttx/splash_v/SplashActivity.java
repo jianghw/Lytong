@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.tzly.ctcyh.router.custom.image.ImageOptions;
+import com.tzly.ctcyh.router.util.AppUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
@@ -29,9 +31,6 @@ import com.zantong.mobilecttx.utils.SPUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.qqtheme.framework.util.AppUtils;
-import cn.qqtheme.framework.util.image.ImageOptions;
 
 /**
  * 启动页

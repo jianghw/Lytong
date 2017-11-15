@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
 
-import cn.qqtheme.framework.util.ViewUtils;
+import com.tzly.ctcyh.router.util.ViewUtils;
 
 /**
  * 办卡输入框样式

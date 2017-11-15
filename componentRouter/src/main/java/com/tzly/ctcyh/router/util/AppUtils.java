@@ -4,10 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 import java.util.List;
 
@@ -110,5 +113,81 @@ public class AppUtils {
             }
         }
         return true;
+    }
+
+    /**
+     * 获取App版本号
+     *
+     * @return App版本号
+     */
+    public static String getAppVersionName() {
+        return getAppVersionName(Utils.getContext().getPackageName());
+    }
+
+    /**
+     * 获取App版本号
+     *
+     * @param packageName 包名
+     * @return App版本号
+     */
+    public static String getAppVersionName(String packageName) {
+        if (isSpace(packageName)) return null;
+        try {
+            PackageManager pm = Utils.getContext().getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(packageName, 0);
+            return pi == null ? null : pi.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * 获取App版本码
+     *
+     * @return App版本码
+     */
+    public static int getAppVersionCode() {
+        return getAppVersionCode(Utils.getContext().getPackageName());
+    }
+
+    /**
+     * 获取App版本码
+     *
+     * @param packageName 包名
+     * @return App版本码
+     */
+    public static int getAppVersionCode(String packageName) {
+        if (isSpace(packageName)) return -1;
+        try {
+            PackageManager pm = Utils.getContext().getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(packageName, 0);
+            return pi == null ? -1 : pi.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public static String getAppMetaData(Context context, String key) {
+        if (context == null || TextUtils.isEmpty(key)) {
+            return null;
+        }
+        String resultData = null;
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            if (packageManager != null) {
+                ApplicationInfo applicationInfo =
+                        packageManager.getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+                if (applicationInfo != null) {
+                    if (applicationInfo.metaData != null) {
+                        resultData = applicationInfo.metaData.getString(key);
+                    }
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return resultData;
     }
 }

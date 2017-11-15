@@ -86,7 +86,7 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
 //		mRotateDownAnim.setDuration(ROTATE_ANIM_DURATION);
 //		mRotateDownAnim.setFillAfter(true);
 
-        mRotateUpAnim = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.rotating_anim);
+        mRotateUpAnim = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.anim_rotating);
         LinearInterpolator lir = new LinearInterpolator();
         mRotateUpAnim.setInterpolator(lir);
         mHeaderTimeView = (TextView) findViewById(R.id.last_refresh_time);
@@ -103,8 +103,6 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
 //            progressView.setIndicatorId(style);
 //            mProgressBar.setView(progressView);
 //        }
-
-
     }
 
     public void setArrowImageView(int resid) {

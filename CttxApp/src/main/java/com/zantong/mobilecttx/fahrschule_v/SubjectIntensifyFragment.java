@@ -8,6 +8,9 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.tzly.ctcyh.router.bean.response.SubjectGoodsBean;
+import com.tzly.ctcyh.router.bean.response.SubjectGoodsData;
+import com.tzly.ctcyh.router.bean.response.SubjectGoodsResponse;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
@@ -23,10 +26,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
-import cn.qqtheme.framework.bean.response.SubjectGoodsData;
-import cn.qqtheme.framework.bean.response.SubjectGoodsResponse;
 
 /**
  * 科目强化页面

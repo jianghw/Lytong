@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.api;
 
-import cn.qqtheme.framework.bean.BankResponse;
+import com.tzly.ctcyh.router.bean.BankResponse;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;

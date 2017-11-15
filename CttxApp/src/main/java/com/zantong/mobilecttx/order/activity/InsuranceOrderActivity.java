@@ -24,7 +24,7 @@ import com.zantong.mobilecttx.utils.NetUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.bean.BankResponse;
+import com.tzly.ctcyh.router.bean.BankResponse;
 
 /**
  * 我的订单

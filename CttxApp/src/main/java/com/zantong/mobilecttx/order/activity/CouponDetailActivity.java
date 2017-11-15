@@ -11,7 +11,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
-import cn.qqtheme.framework.util.image.ImageOptions;
+import com.tzly.ctcyh.router.custom.image.ImageOptions;
 
 import java.text.DecimalFormat;
 

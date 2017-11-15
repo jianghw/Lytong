@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.bean.BankResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
@@ -28,8 +30,6 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationOrderDTO;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.qqtheme.framework.bean.BankResponse;
-import cn.qqtheme.framework.bean.BaseResponse;
 
 /**
  * 违章支付页面
@@ -209,11 +209,11 @@ public class ViolationPayFragment extends BaseJxFragment {
      * 跳转到缴费页面
      */
     private void gotoPay() {
-        String merCustomIp = NetUtils.getPhontIP(Utils.getContext());
-
         String violationnum = mViolationBean.getViolationnum();
         String violationamt = mViolationBean.getViolationamt();
+
         String merCustomId = MainRouter.getUserFilenum();//畅通卡档案编号
+        String merCustomIp = NetUtils.getPhontIP(Utils.getContext());
 
         String payUrl = BuildConfig.APP_URL
                 + "payment_payForViolation?orderid=" + violationnum
@@ -222,7 +222,7 @@ public class ViolationPayFragment extends BaseJxFragment {
                 + "&merCustomId=" + merCustomId
                 + "&remark=" + remark;
 
-        MainRouter.gotoPayHtmlActivity(getActivity(), "支付页面", payUrl, violationamt);
+        MainRouter.gotoPayHtmlActivity(getActivity(), "支付页面", payUrl, violationnum);
 
         getActivity().finish();
     }

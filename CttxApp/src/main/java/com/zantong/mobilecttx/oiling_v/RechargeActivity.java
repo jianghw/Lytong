@@ -8,21 +8,20 @@ import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.tzly.ctcyh.router.base.JxBaseActivity;
+import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.FragmentUtils;
+import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.primission.PermissionFail;
+import com.tzly.ctcyh.router.util.primission.PermissionGen;
+import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.oiling_p.RechargePresenter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
-import com.tzly.ctcyh.router.util.MobUtils;
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
-
-import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 加油充值

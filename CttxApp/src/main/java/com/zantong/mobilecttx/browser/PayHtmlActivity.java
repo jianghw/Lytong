@@ -27,7 +27,7 @@ import com.zantong.mobilecttx.contract.browser.IPayHtmlContract;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.presenter.browser.PayHtmlPresenter;
 
-import cn.qqtheme.framework.bean.BaseResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 
 /**
  * 加油 违章 支付浏览器

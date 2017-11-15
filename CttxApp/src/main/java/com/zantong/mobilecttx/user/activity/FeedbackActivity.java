@@ -16,7 +16,7 @@ import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.dto.FeedbackDTO;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.bean.BankResponse;
+import com.tzly.ctcyh.router.bean.BankResponse;
 
 /**
  * 帮助与反馈

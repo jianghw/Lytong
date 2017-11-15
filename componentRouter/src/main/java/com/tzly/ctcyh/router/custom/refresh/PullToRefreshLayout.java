@@ -538,7 +538,6 @@ public class PullToRefreshLayout extends RelativeLayout {
 
                     refreshingView.setVisibility(View.VISIBLE);
                     refreshingView.startAnimation(refreshingAnimation);
-
                     refreshStateTextView.setText("获取数据中...");
                 }
                 break;
@@ -555,7 +554,7 @@ public class PullToRefreshLayout extends RelativeLayout {
                     refreshingView.setVisibility(View.VISIBLE);
                     refreshingView.startAnimation(refreshingAnimation);
 
-                    refreshStateTextView.setText("获取数据中...");
+                    refreshStateTextView.setText("刷新数据中...");
                 }
                 break;
             case RELEASE_TO_LOAD://释放加载
@@ -622,6 +621,7 @@ public class PullToRefreshLayout extends RelativeLayout {
 
                     refreshStateTextView.setText("加载成功");
                     refreshStateImageView.setVisibility(View.VISIBLE);
+
                     if (refreshStateImageView instanceof ImageView)
                         ((ImageView) refreshStateImageView).setImageResource(R.mipmap.ic_load_more_succeed);
                 }
@@ -635,6 +635,7 @@ public class PullToRefreshLayout extends RelativeLayout {
 
                     refreshStateTextView.setText("加载失败");
                     refreshStateImageView.setVisibility(View.VISIBLE);
+
                     if (refreshStateImageView instanceof ImageView)
                         ((ImageView) refreshStateImageView).setImageResource(R.mipmap.ic_load_more_failed);
                 }
@@ -746,7 +747,6 @@ public class PullToRefreshLayout extends RelativeLayout {
         if (mIPullListener != null)
             mIPullListener.onLoadMore(this);
     }
-
 
     /**
      * 设置下拉刷新过程监听器

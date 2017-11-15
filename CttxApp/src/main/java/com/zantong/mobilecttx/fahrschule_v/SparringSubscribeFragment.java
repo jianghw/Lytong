@@ -10,7 +10,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.tzly.ctcyh.router.bean.response.SubjectGoodsBean;
+import com.tzly.ctcyh.router.bean.response.SubjectGoodsData;
+import com.tzly.ctcyh.router.global.JxGlobal;
+import com.tzly.ctcyh.router.imple.IAreaDialogListener;
+import com.tzly.ctcyh.router.imple.ISpeedDialogListener;
+import com.tzly.ctcyh.router.imple.ITimeDialogListener;
+import com.tzly.ctcyh.router.util.RegexUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.ViewUtils;
+import com.tzly.ctcyh.router.custom.popup.CustomDialog;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
@@ -37,16 +46,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import cn.qqtheme.framework.bean.response.SubjectGoodsBean;
-import cn.qqtheme.framework.bean.response.SubjectGoodsData;
-import cn.qqtheme.framework.custom.popup.CustomDialog;
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.imple.IAreaDialogListener;
-import cn.qqtheme.framework.imple.ISpeedDialogListener;
-import cn.qqtheme.framework.imple.ITimeDialogListener;
-import cn.qqtheme.framework.util.RegexUtils;
-import cn.qqtheme.framework.util.ViewUtils;
 
 /**
  * 陪练预约 页面

@@ -13,7 +13,7 @@ import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.fahrschule_v.FahrschuleShareFragment;
 
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.ctcyh.router.global.JxGlobal;
 
 /**
  * Created by jianghw on 2017/7/7.

@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.fahrschule.bean;
 
-import cn.qqtheme.framework.bean.BaseResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 
 import java.util.List;
 

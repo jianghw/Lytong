@@ -18,7 +18,7 @@ import com.zantong.mobilecttx.home.bean.StartPicBean;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.util.image.ImageOptions;
+import com.tzly.ctcyh.router.custom.image.ImageOptions;
 
 public class GuideHeaderViewPager extends FrameLayout {
     /**

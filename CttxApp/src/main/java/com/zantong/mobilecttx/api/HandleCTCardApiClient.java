@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.base.MessageFormat;
 
-import cn.qqtheme.framework.bean.BankResponse;
+import com.tzly.ctcyh.router.bean.BankResponse;
 
 /**
  * Created by zhoujie on 2017/1/3.

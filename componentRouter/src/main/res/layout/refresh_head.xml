@@ -4,7 +4,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="#F8F8F8">
-
     <ImageView
         android:id="@+id/pull_icon"
         android:layout_width="wrap_content"
@@ -25,8 +24,8 @@
 
     <ImageView
         android:id="@+id/refreshing_icon"
-        android:layout_width="@dimen/res_x_40"
-        android:layout_height="@dimen/res_x_40"
+        android:layout_width="@dimen/res_x_60"
+        android:layout_height="@dimen/res_x_60"
         android:layout_centerVertical="true"
         android:layout_marginRight="16dp"
         android:layout_toLeftOf="@+id/state_tv"
@@ -35,13 +34,11 @@
 
     <ImageView
         android:id="@+id/state_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/res_x_60"
+        android:layout_height="@dimen/res_x_60"
         android:layout_centerVertical="true"
         android:layout_marginRight="16dp"
         android:layout_toLeftOf="@id/state_tv"
         android:src="@mipmap/ic_load_more_succeed"
         android:visibility="visible"/>
-
-
 </RelativeLayout>

@@ -16,6 +16,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.tzly.ctcyh.router.util.MobUtils;
+import com.tzly.ctcyh.router.util.RegexUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.BuildConfig;
@@ -40,9 +42,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 import java.util.Random;
-
-import com.tzly.ctcyh.router.util.MobUtils;
-import cn.qqtheme.framework.util.RegexUtils;
 
 /**
  * 驾校报名页面

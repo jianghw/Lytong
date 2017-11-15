@@ -37,9 +37,7 @@ public class UnblockedCardActivity extends BaseJxActivity {
     }
 
     @Override
-    protected void DestroyViewAndThing() {
-
-    }
+    protected void DestroyViewAndThing() {}
 
     /**
      * 右title

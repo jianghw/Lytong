@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
+import com.tzly.ctcyh.router.util.AppUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
 import com.zantong.mobilecttx.router.MainRouter;
@@ -16,8 +17,6 @@ import com.zantong.mobilecttx.utils.SPUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.qqtheme.framework.util.AppUtils;
 
 /**
  * 引导页面

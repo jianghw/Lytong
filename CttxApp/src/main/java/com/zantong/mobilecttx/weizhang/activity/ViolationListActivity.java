@@ -37,7 +37,7 @@ import com.zantong.mobilecttx.weizhang.fragment.ViolationListFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.qqtheme.framework.global.JxGlobal;
+import com.tzly.ctcyh.router.global.JxGlobal;
 
 /**
  * 违法信息列表页面

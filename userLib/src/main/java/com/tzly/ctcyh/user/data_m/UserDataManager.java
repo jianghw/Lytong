@@ -90,6 +90,7 @@ public class UserDataManager {
     public String getPhoneDeviceId() {
         String deviceId = mLocalData.getPhoneDeviceId();
         if (TextUtils.isEmpty(deviceId)) deviceId = getPushId();
+        LogUtils.i("DeviceId=============:" + deviceId);
         return deviceId;
     }
 
@@ -106,7 +107,6 @@ public class UserDataManager {
     }
 
     public void savePushId(String pushId) {
-        LogUtils.i("PushId=============:" + pushId);
         mLocalData.setPushId(pushId);
     }
 

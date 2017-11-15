@@ -29,7 +29,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
-import cn.qqtheme.framework.bean.BankResponse;
+import com.tzly.ctcyh.router.bean.BankResponse;
 
 /**
  * 重置密码

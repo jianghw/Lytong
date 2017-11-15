@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.home_v;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -13,9 +14,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
-import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.jianghw.multi.state.layout.MultiState;
+import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.custom.banner.CBViewHolderCreator;
+import com.tzly.ctcyh.router.custom.banner.ConvenientBanner;
 import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.primission.PermissionFail;
+import com.tzly.ctcyh.router.util.primission.PermissionGen;
+import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
 import com.tzly.ctcyh.router.util.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -57,23 +64,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import cn.qqtheme.framework.custom.banner.CBViewHolderCreator;
-import cn.qqtheme.framework.custom.banner.ConvenientBanner;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
-
-import static cn.qqtheme.framework.util.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 畅通主页面
  */
-public class HomeUnimpededFragment extends JxBaseRefreshFragment
+public class HomeUnimpededFragment extends RefreshFragment
         implements View.OnClickListener, IUnimpededFtyContract.IUnimpededFtyView {
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     /**
      * Hello blank fragment
@@ -85,7 +82,6 @@ public class HomeUnimpededFragment extends JxBaseRefreshFragment
      * 畅通车友会
      */
     private TextView mTvTitle;
-    private ImageView mImgScan;
 
     /**
      * 扫罚单
@@ -110,9 +106,8 @@ public class HomeUnimpededFragment extends JxBaseRefreshFragment
      * 违章车adapter
      */
     private HorizontalCarViolationAdapter mCarViolationAdapter;
-    private HomeMainActivity.MessageListener mHomeMainListener;
+
     private List<UserCarInfoBean> mUserCarInfoBeanList = new ArrayList<>();
-    private TextView mTvAppraisement;
 
     private ViewPager mViewPager;
     private LinearLayout mTabLayout;
@@ -120,15 +115,22 @@ public class HomeUnimpededFragment extends JxBaseRefreshFragment
     private HomePagerFragment_0 pagerFragment_0;
     private HomePagerFragment_1 pagerFragment_1;
 
+    private IHomeMainUi mIHomeMainUi;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof IHomeMainUi) {
+            mIHomeMainUi = (IHomeMainUi) activity;
+        }
+    }
+
     /**
      * 会多次刷新数据 ^3^
      */
     @Override
     public void onResume() {
         super.onResume();
-
-        resumeDataVisible();
-
         startCampaignCustom(false);
     }
 
@@ -138,35 +140,62 @@ public class HomeUnimpededFragment extends JxBaseRefreshFragment
         startCampaignCustom(true);
     }
 
+    /**
+     * 清除资源
+     */
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (mPresenter != null) mPresenter.unSubscribe();
+        if (!mHomeNotices.isEmpty()) mHomeNotices.clear();
+        if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
+
+        EventBus.getDefault().removeStickyEvent(AddPushTrumpetEvent.class);
+        EventBus.getDefault().removeStickyEvent(GetMsgAgainEvent.class);
+        EventBus.getDefault().unregister(this);
+    }
+
     public static HomeUnimpededFragment newInstance() {
         return new HomeUnimpededFragment();
     }
 
-
-    /**
-     * 下拉数据设置
-     */
-    @Override
-    protected void onRefreshData() {
-        resumeDataVisible();
+    @MultiState
+    protected int initMultiState() {
+        return MultiState.CONTENT;
     }
 
     @Override
-    protected void onLoadMoreData() {}
-
-    @Override
-    protected int initFragmentView() {
+    protected int fragmentView() {
         return R.layout.fragment_home_unimpeded;
     }
 
     @Override
-    protected void bindFragmentView(View fragment) {
+    protected void bindFragment(View fragment) {
         EventBus.getDefault().register(this);
 
         initView(fragment);
 
         UnimpededFtyPresenter mPresenter = new UnimpededFtyPresenter(
                 Injection.provideRepository(getActivity().getApplicationContext()), this);
+
+        //广告页本地加载
+        List<Integer> localImages = new ArrayList<>();
+        localImages.add(R.mipmap.banner);
+        mCustomConvenientBanner.setPages(
+                new CBViewHolderCreator<LocalImageHolderView>() {
+                    @Override
+                    public LocalImageHolderView createHolder() {
+                        return new LocalImageHolderView();
+                    }
+                }, localImages)
+                .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
+                .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
+        //小喇叭
+        initScrollUp(mHomeNotices);
+        //违章车辆
+        mCarViolationAdapter = new HorizontalCarViolationAdapter(getContext(), mUserCarInfoBeanList);
+        mCustomViolation.setAdapter(mCarViolationAdapter);
     }
 
     @Override
@@ -183,8 +212,6 @@ public class HomeUnimpededFragment extends JxBaseRefreshFragment
         mImgMsg.setOnClickListener(this);
 
         mTvTitle = (TextView) view.findViewById(R.id.tv_title);
-        mImgScan = (ImageView) view.findViewById(R.id.img_scan);
-        mImgScan.setOnClickListener(this);
         mTvScan = (TextView) view.findViewById(R.id.tv_scan);
         mTvScan.setOnClickListener(this);
 
@@ -195,6 +222,7 @@ public class HomeUnimpededFragment extends JxBaseRefreshFragment
 
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
         mTabLayout = (LinearLayout) view.findViewById(R.id.tabLayout);
+
         if (mPagerList == null) mPagerList = new ArrayList<>();
         initPagerFragment();
         initViewPager();
@@ -255,39 +283,6 @@ public class HomeUnimpededFragment extends JxBaseRefreshFragment
         }
     }
 
-    @Override
-    protected void onFirstDataVisible() {
-        //广告页本地加载
-        List<Integer> localImages = new ArrayList<>();
-        localImages.add(R.mipmap.banner);
-        mCustomConvenientBanner.setPages(
-                new CBViewHolderCreator<LocalImageHolderView>() {
-                    @Override
-                    public LocalImageHolderView createHolder() {
-                        return new LocalImageHolderView();
-                    }
-                }, localImages)
-                .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
-                .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
-
-        //小喇叭
-        initScrollUp(mHomeNotices);
-        //违章车辆
-        mCarViolationAdapter = new HorizontalCarViolationAdapter(getContext(), mUserCarInfoBeanList);
-        mCustomViolation.setAdapter(mCarViolationAdapter);
-
-        if (mPresenter != null) mPresenter.getIndexLayer();
-    }
-
-    private void resumeDataVisible() {
-        if (MainRouter.isUserLogin()) {
-            mPresenter.getTextNoticeInfo();
-        } else {
-            getLocalCarInfo();
-        }
-        mPresenter.homePage();
-    }
-
     private void initScrollUp(final List<HomeNotice> mDataLists) {
         if (mDataLists != null && mDataLists.size() == 0) {
             List<HomeNotice> mList = new ArrayList<>();
@@ -300,6 +295,9 @@ public class HomeUnimpededFragment extends JxBaseRefreshFragment
         mCustomGrapevine.setTimer(5000);
     }
 
+    /**
+     * 初次加载页面是不调用
+     */
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -320,19 +318,17 @@ public class HomeUnimpededFragment extends JxBaseRefreshFragment
     }
 
     /**
-     * 清除资源
+     * 数据初始化
      */
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    protected void loadingFirstData() {
+        if (mPresenter != null) mPresenter.getIndexLayer();
 
-        if (mPresenter != null) mPresenter.unSubscribe();
-        if (!mHomeNotices.isEmpty()) mHomeNotices.clear();
-        if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
-
-        EventBus.getDefault().removeStickyEvent(AddPushTrumpetEvent.class);
-        EventBus.getDefault().removeStickyEvent(GetMsgAgainEvent.class);
-        EventBus.getDefault().unregister(this);
+        if (MainRouter.isUserLogin())
+            mPresenter.getTextNoticeInfo();
+        else
+            getLocalCarInfo();
+        if (mPresenter != null) mPresenter.homePage();
     }
 
     /**
@@ -348,12 +344,12 @@ public class HomeUnimpededFragment extends JxBaseRefreshFragment
         HomeBean bean = result.getData();
         //未读消息
         mTvMsgCount.setText(bean != null ? String.valueOf(bean.getMsgNum()) : "0");
-        mTvMsgCount.setVisibility(bean != null ?
-                bean.getMsgNum() == 0 ? View.INVISIBLE : View.VISIBLE
+        mTvMsgCount.setVisibility(bean != null
+                ? bean.getMsgNum() == 0 ? View.INVISIBLE : View.VISIBLE
                 : View.INVISIBLE);
 
-        if (mHomeMainListener != null)
-            mHomeMainListener.setTipOfNumber(2, bean != null ? bean.getMsgNum() : 0);
+        if (mIHomeMainUi != null)
+            mIHomeMainUi.setTipOfNumber(2, bean != null ? bean.getMsgNum() : 0);
         //小喇叭通知
         if (bean != null && bean.getNotices() != null) {
             if (!bean.getNotices().isEmpty())
@@ -565,8 +561,8 @@ public class HomeUnimpededFragment extends JxBaseRefreshFragment
                         mTvMsgCount.setVisibility(bean != null ?
                                 bean.getCount() == 0 ? View.INVISIBLE : View.VISIBLE : View.INVISIBLE);
 
-                        if (mHomeMainListener != null)
-                            mHomeMainListener.setTipOfNumber(2, bean != null ? bean.getCount() : 0);
+                        if (mIHomeMainUi != null)
+                            mIHomeMainUi.setTipOfNumber(2, bean != null ? bean.getCount() : 0);
                     }
                 }
             });
@@ -583,9 +579,8 @@ public class HomeUnimpededFragment extends JxBaseRefreshFragment
             case R.id.tv_msg_count:
                 MobUtils.getInstance().eventIdByUMeng(15);
                 MainRouter.gotoMegTypeActivity(getActivity());
-                break;
-            case R.id.img_scan://扫描
-            case R.id.tv_scan:
+                break;//扫描
+            case R.id.tv_scan://扫描
                 MobUtils.getInstance().eventIdByUMeng(17);
                 takeCapture();
                 break;
@@ -628,7 +623,4 @@ public class HomeUnimpededFragment extends JxBaseRefreshFragment
         ToastUtils.toastShort("相机权限被拒绝，请手机设置中打开");
     }
 
-    public void setMessageListener(HomeMainActivity.MessageListener messageListener) {
-        mHomeMainListener = messageListener;
-    }
 }

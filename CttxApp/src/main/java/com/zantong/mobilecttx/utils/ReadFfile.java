@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.utils;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.tzly.ctcyh.router.util.FileUtils;
 import com.zantong.mobilecttx.map.bean.NetLocationBean;
 
 import java.io.BufferedReader;
@@ -24,7 +25,7 @@ public class ReadFfile {
 
         try {
 //            File urlFile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "networktable.txt");
-            String filePath = cn.qqtheme.framework.util.FileUtils.icbTxtFilePath(context, cn.qqtheme.framework.util.FileUtils.DOWNLOAD_DIR);
+            String filePath = com.tzly.ctcyh.router.util.FileUtils.icbTxtFilePath(context, FileUtils.DOWNLOAD_DIR);
             File urlFile = new File(filePath);
 
             InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(urlFile), "UTF-8");

@@ -7,7 +7,7 @@ import com.zantong.mobilecttx.presenter.MegTypeAtyPresenter;
 import com.zantong.mobilecttx.user.fragment.MegTypeFragment;
 
 import com.tzly.ctcyh.router.util.MobUtils;
-import cn.qqtheme.framework.util.AtyUtils;
+import com.tzly.ctcyh.router.util.AtyUtils;
 
 /**
  * 消息页面

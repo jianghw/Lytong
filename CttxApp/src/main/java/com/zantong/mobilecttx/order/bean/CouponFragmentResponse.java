@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.order.bean;
 
-import cn.qqtheme.framework.bean.BaseResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 
 /**
  * 优惠券

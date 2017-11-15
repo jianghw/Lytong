@@ -7,23 +7,22 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
-import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.jianghw.multi.state.layout.MultiState;
+import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.primission.PermissionFail;
+import com.tzly.ctcyh.router.util.primission.PermissionGen;
+import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
-import cn.qqtheme.framework.global.JxGlobal;
-import cn.qqtheme.framework.util.primission.PermissionFail;
-import cn.qqtheme.framework.util.primission.PermissionGen;
-import cn.qqtheme.framework.util.primission.PermissionSuccess;
-
-
 /**
  * 页面
  */
-public class HomePagerFragment_1 extends JxBaseRefreshFragment implements View.OnClickListener {
+public class HomePagerFragment_1 extends RefreshFragment implements View.OnClickListener {
 
 
     private TextView mTvOil;
@@ -39,24 +38,20 @@ public class HomePagerFragment_1 extends JxBaseRefreshFragment implements View.O
         return false;
     }
 
-    @Override
-    protected void onRefreshData() {}
+    @MultiState
+    protected int initMultiState() {
+        return MultiState.CONTENT;
+    }
 
     @Override
-    protected void onLoadMoreData() {}
-
-    @Override
-    protected int initFragmentView() {
+    protected int fragmentView() {
         return R.layout.fragment_home_pager_1;
     }
 
     @Override
-    protected void bindFragmentView(View fragment) {
+    protected void bindFragment(View fragment) {
         initView(fragment);
     }
-
-    @Override
-    protected void onFirstDataVisible() {}
 
     public static HomePagerFragment_1 newInstance() {
         return new HomePagerFragment_1();
@@ -68,6 +63,9 @@ public class HomePagerFragment_1 extends JxBaseRefreshFragment implements View.O
         mTvMap = (TextView) view.findViewById(R.id.tv_map);
         mTvMap.setOnClickListener(this);
     }
+
+    @Override
+    protected void loadingFirstData() {}
 
     @Override
     public void onClick(View v) {
@@ -135,11 +133,11 @@ public class HomePagerFragment_1 extends JxBaseRefreshFragment implements View.O
         gotoOilMap();
     }
 
+
     @PermissionFail(requestCode = 3000)
     public void doMapPermissionFail() {
         ToastUtils.toastShort("此功能需要打开相关的地图权限");
     }
-
 
     @PermissionSuccess(requestCode = 2000)
     public void doDrivingSuccess() {
