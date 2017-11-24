@@ -101,5 +101,18 @@ public class MainDataService implements IMainService {
         MainRouter.gotoMainActivity(activity, i);
     }
 
+    @Override
+    public void gotoProblemFeedbackActivity(Activity activity) {
+        MainRouter.gotoProblemFeedbackActivity(activity);
+    }
+
+    /**
+     * 加油地图
+     */
+    @Override
+    public void gotoBaiduMapParentActivity(Activity context) {
+        MainRouter.gotoBaiduMapParentActivity(context);
+    }
+
 
 }

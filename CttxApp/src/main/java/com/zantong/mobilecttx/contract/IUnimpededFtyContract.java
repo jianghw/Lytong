@@ -43,10 +43,6 @@ public interface IUnimpededFtyContract {
 
         HomeDataDTO initHomeDataDTO();
 
-        void getRemoteCarInfo();
-
-        String initUserCarsDTO();
-
         void getTextNoticeInfo();
 
         void getIndexLayer();

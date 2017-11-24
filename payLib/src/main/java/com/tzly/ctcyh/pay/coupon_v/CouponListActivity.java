@@ -14,7 +14,7 @@ import com.tzly.ctcyh.router.util.FragmentUtils;
 /**
  * 优惠券 列表
  */
-public class CouponListActivity extends AbstractBaseActivity {
+public class CouponListActivity extends  AbstractBaseActivity {
 
     private CouponListFragment mCouponListFragment;
     /**
@@ -36,6 +36,9 @@ public class CouponListActivity extends AbstractBaseActivity {
                 mCurHost = bundle.getString(PayGlobal.Host.coupon_list_host);
         }
     }
+
+    @Override
+    protected void newIntent(Intent intent) {}
 
     @Override
     protected int initContentView() {

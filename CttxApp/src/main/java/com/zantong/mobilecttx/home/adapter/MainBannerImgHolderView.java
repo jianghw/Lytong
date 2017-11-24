@@ -90,7 +90,7 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
 
     private void getSignStatus() {
         ActivityCarDTO activityCarDTO = new ActivityCarDTO();
-        activityCarDTO.setUsrnum(MainRouter.getUserID(false));
+        activityCarDTO.setUsrnum(MainRouter.getUserID());
         CarApiClient.getActivityCar(Utils.getContext(), activityCarDTO, new CallBack<ActivityCarResponse>() {
             @Override
             public void onSuccess(ActivityCarResponse result) {

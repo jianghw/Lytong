@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -16,7 +17,6 @@ import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.dto.FeedbackDTO;
 
 import butterknife.Bind;
-import com.tzly.ctcyh.router.bean.BankResponse;
 
 /**
  * 帮助与反馈
@@ -62,7 +62,7 @@ public class FeedbackActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
             showDialogLoading();
             FeedbackDTO dto = new FeedbackDTO();
             dto.setReqcontent(content);
-            dto.setUsrid(MainRouter.getUserID(false));
+            dto.setUsrid(MainRouter.getUserID());
             UserApiClient.commitFeedback(this, dto, new CallBack<BankResponse>() {
                 @Override
                 public void onSuccess(BankResponse bankResponse) {

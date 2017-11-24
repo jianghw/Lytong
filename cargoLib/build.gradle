@@ -1,0 +1,53 @@
+apply plugin: 'component-plugin'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "App_Url", rootProject.ext.buildConfig.cargoDebug
+        }
+        release {
+            buildConfigField "boolean", "App_Url", rootProject.ext.buildConfig.cargoDebug
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //区分模块资源
+    resourcePrefix "cargo_"
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            assets.srcDirs = ['assets']
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+    compile rootProject.ext.dependencies["appcompat"]
+    //接口沟通依赖
+    compile project(':componentService')
+}
+
+//自定义组件构建
+component {
+    isRegisterCompoAuto = true
+    applicationName = 'com.tzly.ctcyh.cargo.CargoApplication'
+}

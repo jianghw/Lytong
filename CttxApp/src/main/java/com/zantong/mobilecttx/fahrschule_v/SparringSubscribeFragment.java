@@ -260,7 +260,6 @@ public class SparringSubscribeFragment extends JxBaseRefreshFragment
             //                if (mCouponBeanList == null || mCouponBeanList.size() < 1) {
             //                    if (mPresenter != null) mPresenter.getCouponByType();
             //                } else {
-            //                    Intent intent = new Intent(getActivity(), CouponListActivity.class);
             //                    Bundle bundle = new Bundle();
             //
             //                    ArrayList<RechargeCouponBean> arrayList = new ArrayList<>();

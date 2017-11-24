@@ -22,6 +22,7 @@
         android:layout_marginLeft="@dimen/ds_60"
         android:layout_marginTop="@dimen/res_y_42"
         android:background="@drawable/bg_tv_msg_count"
+        android:visibility="invisible"
         android:gravity="center"
         android:textColor="@color/red_normal"
         android:textSize="@dimen/fs_10sp"

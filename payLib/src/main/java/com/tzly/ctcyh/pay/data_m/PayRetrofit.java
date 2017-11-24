@@ -5,8 +5,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tzly.ctcyh.pay.BuildConfig;
-import com.tzly.ctcyh.router.ServiceRouter;
-import com.tzly.ctcyh.service.IUserService;
+import com.tzly.ctcyh.pay.router.PayRouter;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -109,16 +108,7 @@ public class PayRetrofit implements IRetrofitUrl {
     }
 
     private String getDeviceId() {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
-            IUserService service = (IUserService) serviceRouter
-                    .getService(IUserService.class.getSimpleName());
-            return service.getPhoneDeviceId();
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-            return "0123456789";
-        }
+        return PayRouter.getDeviceId();
     }
 
     private TrustManager[] trustAllCerts = new TrustManager[]{

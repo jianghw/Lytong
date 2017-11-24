@@ -117,7 +117,6 @@
 
 
             <ImageView
-                android:id="@+id/pay_type_choose_arrow"
                 android:layout_width="7.1dip"
                 android:layout_height="12dip"
                 android:layout_marginLeft="@dimen/ds_30"

@@ -17,7 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="银行卡支付"
+            android:drawableRight="@mipmap/icon_zhongshihua"
+            android:text="中石化充值卡"
             android:textColor="@color/colorTvBlack_4d"
             android:textSize="@dimen/fs_18sp"/>
 
@@ -26,7 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ds_48"
-            android:text="支付宝支付"
+            android:drawableRight="@mipmap/icon_zhongshiyou"
+            android:text="中石油充值卡"
             android:textColor="@color/colorTvBlack_4d"
             android:textSize="@dimen/fs_18sp"/>
 
@@ -42,7 +44,7 @@
         android:layout_marginRight="@dimen/ds_45"
         android:background="@mipmap/ic_btn_bg"
         android:enabled="true"
-        android:text="确定支付"
+        android:text="确   定"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/fs_18sp"/>
 

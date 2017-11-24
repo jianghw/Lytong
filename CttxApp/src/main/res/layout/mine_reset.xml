@@ -61,7 +61,6 @@
             style="@style/EditextNormalStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/ds_144"
-            android:layout_toLeftOf="@id/image_delete"
             android:hint="请输入验证码"
             android:maxLength="6"
             android:paddingLeft="@dimen/ds_48"

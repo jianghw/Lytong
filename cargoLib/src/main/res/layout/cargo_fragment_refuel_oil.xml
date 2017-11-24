@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <!--提供商-->
+    <RelativeLayout
+        android:id="@+id/lay_0"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_80"
+        android:layout_marginTop="@dimen/res_y_30"
+        android:background="@drawable/sel_item_solid_gray"
+        android:paddingLeft="@dimen/res_x_30"
+        android:paddingRight="@dimen/res_x_30">
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/cargo_tv_provider"/>
+
+        <ImageView
+            android:id="@+id/img_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/btn_rightarrow"/>
+
+        <TextView
+            android:id="@+id/tv_type"
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/res_x_30"
+            android:layout_toLeftOf="@+id/img_type"
+            android:text="中石化"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_2"
+        style="@style/cargo_line_gray"
+        android:layout_below="@+id/lay_0"/>
+
+    <LinearLayout
+        android:id="@+id/lay_3"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_80"
+        android:layout_below="@+id/tv_2"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/res_x_30"
+        android:paddingRight="@dimen/res_x_30">
+
+        <TextView
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cargo_tv_oil_card_number"/>
+
+        <EditText
+            android:id="@+id/edit_oil"
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:hint="请输入19位加油卡号"
+            android:inputType="number"
+            android:maxEms="19"
+            android:maxLength="19"
+            android:maxLines="1"
+            android:minWidth="@dimen/res_x_124"
+            android:textColorHint="@color/res_color_gray_e6"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_4"
+        style="@style/ResTextTheme.14.Red"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lay_3"
+        android:background="@color/res_color_white"
+        android:gravity="left"
+        android:paddingLeft="@dimen/res_x_30"
+        android:paddingRight="@dimen/res_x_30"
+        android:text="@string/cargo_tv_oil_tip"/>
+
+    <LinearLayout
+        android:id="@+id/lay_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_4"
+        android:layout_marginTop="@dimen/res_y_30"
+        android:background="@color/res_color_white"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/res_y_80"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:gravity="center_vertical"
+            android:text="充值金额"/>
+
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/res_x_15"
+            android:paddingRight="@dimen/res_x_15"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lay_5"
+        android:layout_marginTop="@dimen/res_y_30"
+        android:background="@color/res_color_white"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/res_y_80"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:gravity="center_vertical"
+            android:text="充值说明"/>
+
+        <TextView
+            android:id="@+id/tv_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:layout_marginRight="@dimen/res_x_30"
+            tools:text="jfsfosjffjsfjsijsdjs"/>
+
+        <TextView
+            android:id="@+id/tv_agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_margin="@dimen/res_x_30"
+            android:drawableLeft="@mipmap/btn_tick_on"
+            android:text="我已阅读用户充值协议"
+            android:textColor="@color/res_color_blue_0b"
+            android:textSize="@dimen/res_fs_14"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_commit"
+        style="@style/ResButtonTheme.Single"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/res_x_30"
+        android:enabled="false"
+        android:text="充    值"/>
+
+</RelativeLayout>

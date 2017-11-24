@@ -116,32 +116,25 @@ public class RepositoryManager {
      * 获取用户id~
      */
     public String getUserID() {
-        return getUserID(true);
-    }
-
-    public String getUserID(boolean isNeedLogin) {
-        return mLocalData.DefaultUserID(isNeedLogin);
+        return mLocalData.DefaultUserID();
     }
 
     /**
      * 加密后的userid
      */
     public String getRASUserID() {
-        return getRASUserID(true);
+        return mLocalData.getRASUserID();
     }
 
-    public String getRASUserID(boolean isNeedLogin) {
-        return mLocalData.getRASUserID(isNeedLogin);
+    public String getRASEmptyID() {
+        return getRASByStr("");
     }
 
     /**
      * 这段加密封装
-     *
-     * @param string
-     * @return
      */
-    public String getStrByEncryption(String string) {
-        return mLocalData.getStrByEncryption(string);
+    public String getRASByStr(String string) {
+        return mLocalData.getRASByEncryption(string);
     }
 
     /**

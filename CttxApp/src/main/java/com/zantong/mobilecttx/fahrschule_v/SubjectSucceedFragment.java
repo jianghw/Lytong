@@ -86,7 +86,6 @@ public class SubjectSucceedFragment extends JxBaseRefreshFragment implements Vie
     @Override
     protected void onLoadMoreData() {}
 
-
     @Override
     protected void onFirstDataVisible() {}
 
@@ -96,6 +95,16 @@ public class SubjectSucceedFragment extends JxBaseRefreshFragment implements Vie
         mTvPrompt = (TextView) view.findViewById(R.id.tv_prompt);
         mTvCommit = (TextView) view.findViewById(R.id.tv_commit);
         mTvCommit.setOnClickListener(this);
+    }
+
+    /**
+     * 优惠页面
+     */
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        MainRouter.gotoMainActivity(getActivity(), 1);
     }
 
     @Override
@@ -137,8 +146,8 @@ public class SubjectSucceedFragment extends JxBaseRefreshFragment implements Vie
 
         WXWebpageObject webpage = new WXWebpageObject();
         if (MainRouter.isUserLogin()) {
-            webpage.webpageUrl = ShareParentActivity.getShareAppUrl(4)+ "?phoneNum="
-                    + Des3.encode( MainRouter.getUserPhoenum());
+            webpage.webpageUrl = ShareParentActivity.getShareAppUrl(4) + "?phoneNum="
+                    + Des3.encode(MainRouter.getUserPhoenum());
         } else {
             webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         }

@@ -56,8 +56,8 @@ public class LocalData {
     /**
      * 获取用户id值 空值会调起登录页面
      */
-    public String DefaultUserID(boolean isNeedLogin) {
-        return MainRouter.getUserID(isNeedLogin);
+    public String DefaultUserID() {
+        return MainRouter.getUserID();
     }
 
     /**
@@ -65,8 +65,8 @@ public class LocalData {
      *
      * @return
      */
-    public String getRASUserID(boolean isNeedLogin) {
-        return getStrByEncryption(DefaultUserID(isNeedLogin));
+    public String getRASUserID() {
+        return getRASByEncryption(DefaultUserID());
     }
 
     /**
@@ -75,7 +75,7 @@ public class LocalData {
      * @param string
      * @return
      */
-    public String getStrByEncryption(String string) {
+    public String getRASByEncryption(String string) {
         return RSAUtils.strByEncryption(string, true);
     }
 

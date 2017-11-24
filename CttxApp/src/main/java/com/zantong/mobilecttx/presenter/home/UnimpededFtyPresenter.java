@@ -3,11 +3,7 @@ package com.zantong.mobilecttx.presenter.home;
 
 import android.support.annotation.NonNull;
 
-import com.google.gson.Gson;
 import com.tzly.ctcyh.router.util.LogUtils;
-import com.zantong.mobilecttx.base.dto.RequestDTO;
-import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
-import com.zantong.mobilecttx.car.dto.UserCarsDTO;
 import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
@@ -15,7 +11,7 @@ import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
-import com.zantong.mobilecttx.user.bean.UserCarsResult;
+import com.zantong.mobilecttx.router.MainRouter;
 
 import java.util.concurrent.TimeUnit;
 
@@ -89,49 +85,9 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
     @Override
     public HomeDataDTO initHomeDataDTO() {
         HomeDataDTO params = new HomeDataDTO();
-        params.setUserId(mRepository.getRASUserID(false));
+        params.setUserId(MainRouter.isUserLogin()
+                ? mRepository.getRASUserID() : mRepository.getRASEmptyID());
         return params;
-    }
-
-    @Override
-    public void getRemoteCarInfo() {
-        Subscription subscription = mRepository.getRemoteCarInfo(initUserCarsDTO())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<UserCarsResult>() {
-                    @Override
-                    public void doCompleted() {}
-
-                    @Override
-                    public void doError(Throwable e) {
-                        mAtyView.remoteCarInfoError(e.getMessage());
-                    }
-
-                    @Override
-                    public void doNext(UserCarsResult result) {
-                        if (result != null && "000000".equals(result.getSYS_HEAD().getReturnCode())) {
-                            mAtyView.getRemoteCarInfoSucceed(result);
-                        } else {
-                            mAtyView.remoteCarInfoError(result != null
-                                    ? result.getSYS_HEAD().getReturnMessage()
-                                    : "未知错误(cip.cfc.c003.01)");
-                        }
-                    }
-                });
-        mSubscriptions.add(subscription);
-    }
-
-    @Override
-    public String initUserCarsDTO() {
-        UserCarsDTO params = new UserCarsDTO();
-        params.setUsrid(mRepository.getUserID());
-
-        RequestDTO dto = new RequestDTO();
-        RequestHeadDTO requestHeadDTO = mRepository.initLicenseFileNumDTO("cip.cfc.c003.01");
-
-        dto.setSYS_HEAD(requestHeadDTO);
-        dto.setReqInfo(params);
-        return new Gson().toJson(dto);
     }
 
     /**
@@ -139,7 +95,8 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
      */
     @Override
     public void getTextNoticeInfo() {
-        Subscription subscription = mRepository.getTextNoticeInfo(mRepository.getRASUserID())
+        Subscription subscription = mRepository
+                .getTextNoticeInfo(mRepository.getRASUserID())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HomeCarResponse>() {

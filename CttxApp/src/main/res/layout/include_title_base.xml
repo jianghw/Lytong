@@ -38,8 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="@color/colorTvBlack_4c"
-            android:textSize="@dimen/fs_18sp"
+            android:textColor="@color/res_color_red_f3"
+            android:textSize="@dimen/res_fs_18"
             tools:text="驾校报名"/>
 
         <ImageView

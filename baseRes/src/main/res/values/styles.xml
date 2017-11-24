@@ -3,7 +3,18 @@
     <!-- Base text theme. -->
     <style name="ResTextTheme">
         <!-- Customize your theme here. -->
-        <item name="android:textSize">@dimen/res_fs_16</item>
+        <item name="android:gravity">center</item>
+        <item name="android:typeface">normal</item>
+    </style>
+
+    <style name="ResTextTheme.Subtitle">
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/res_color_black_4d</item>
+    </style>
+
+    <style name="ResTextTheme.Red">
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/res_color_red_f3</item>
     </style>
 
     <style name="ResTextTheme.14">
@@ -21,21 +32,33 @@
         <item name="android:textColor">@color/res_color_white</item>
     </style>
 
+    <style name="ResTextTheme.14.Red">
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/res_color_red_f3</item>
+    </style>
+
     <!--16sp大小字体-->
     <style name="ResTextTheme.16">
         <!-- Customize your theme here. -->
         <item name="android:textSize">@dimen/res_fs_16</item>
     </style>
+
     <!--白色字体-->
     <style name="ResTextTheme.16.White">
         <!-- Customize your theme here. -->
         <item name="android:textColor">@color/res_color_white</item>
+    </style>
+
+    <style name="ResTextTheme.16.Hint">
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/res_color_black_b3</item>
     </style>
     <!--小标题-->
     <style name="ResTextTheme.16.Subtitle">
         <!-- Customize your theme here. -->
         <item name="android:textColor">@color/res_color_black_4d</item>
     </style>
+
     <!--使用layout_weight-->
     <style name="ResTextTheme.16.Subtitle.width">
         <!-- Customize your theme here. -->
@@ -72,7 +95,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/selector_btn_submit</item>
-        <item name="android:textColor">@color/violation_details_state_btn_selector</item>
+        <item name="android:textColor">@color/res_color_white</item>
         <item name="android:textSize">@dimen/res_fs_18</item>
     </style>
     <!--单行提交控件-->

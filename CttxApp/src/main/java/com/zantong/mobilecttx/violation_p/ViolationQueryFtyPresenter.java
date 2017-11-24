@@ -4,6 +4,8 @@ package com.zantong.mobilecttx.violation_p;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.tzly.ctcyh.router.bean.BankResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
@@ -16,8 +18,6 @@ import com.zantong.mobilecttx.data_m.RepositoryManager;
 
 import java.io.File;
 
-import com.tzly.ctcyh.router.bean.BankResponse;
-import com.tzly.ctcyh.router.bean.BaseResponse;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -304,10 +304,10 @@ public class ViolationQueryFtyPresenter
         BindCarDTO bindCarDTO = mAtyView.getBindCarDTO();
 
         BindCarDTO carDTO = new BindCarDTO();
-        carDTO.setPlateNo(RSAUtils.strByEncryption(bindCarDTO.getPlateNo(), true));
-        carDTO.setEngineNo(RSAUtils.strByEncryption(bindCarDTO.getEngineNo(), true));
+        carDTO.setPlateNo(mRepository.getRASByStr(bindCarDTO.getPlateNo()));
+        carDTO.setEngineNo(mRepository.getRASByStr(bindCarDTO.getEngineNo()));
         carDTO.setVehicleType(bindCarDTO.getVehicleType());
-        carDTO.setUsrnum(RSAUtils.strByEncryption(mRepository.getUserID(false), true));
+        carDTO.setUsrnum(mRepository.getRASUserID());
         carDTO.setIssueDate(bindCarDTO.getIssueDate());
         carDTO.setIsPay(bindCarDTO.getIsPay());
 

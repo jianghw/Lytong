@@ -50,8 +50,7 @@
             android:id="@+id/coupon_stuta"
             android:layout_width="@dimen/ds_300"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:background="@mipmap/coupon_bg_r">
+            android:layout_alignParentRight="true">
 
             <TextView
                 android:id="@+id/tv_price"
@@ -69,8 +68,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/tv_price"
-                android:layout_toRightOf="@+id/tv_price"
                 android:layout_marginLeft="@dimen/ds_30"
+                android:layout_toRightOf="@+id/tv_price"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/fs_14sp"
                 tools:text="元"/>
@@ -95,7 +94,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/ds_180"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/yishixiao"/>
+            android:scaleType="centerCrop"/>
     </RelativeLayout>
 </LinearLayout>

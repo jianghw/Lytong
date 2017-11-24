@@ -279,7 +279,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         BidCTCardDTO bidCTCardDTO = new BidCTCardDTO();
         bidCTCardDTO.setCtftp("0");
         bidCTCardDTO.setUsrname(getUserName());
-        bidCTCardDTO.setUsrid(MainRouter.getUserID(true));
+        bidCTCardDTO.setUsrid(MainRouter.getUserID());
         bidCTCardDTO.setCtfnum(RSAUtils.strByEncryption(getUserIdCard(), true));
         bidCTCardDTO.setFilenum(RSAUtils.strByEncryption(getDriverFileNum(), true));
         bidCTCardDTO.setPhoenum(RSAUtils.strByEncryption(MainRouter.getUserPhoenum(), true));

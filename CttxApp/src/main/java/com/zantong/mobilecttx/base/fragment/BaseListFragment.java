@@ -15,6 +15,7 @@ import com.jcodecraeer.xrecyclerview.touch.OnSwipeMenuItemClickListener;
 import com.jcodecraeer.xrecyclerview.touch.SwipeMenu;
 import com.jcodecraeer.xrecyclerview.touch.SwipeMenuCreator;
 import com.jcodecraeer.xrecyclerview.touch.SwipeMenuItem;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.R;
 
@@ -118,8 +119,8 @@ public abstract class BaseListFragment<T> extends BaseFragment{
             int height = resetDeleteItemHeight();
             // 设置菜单方向为竖型的。
             swipeRightMenu.setOrientation(SwipeMenu.HORIZONTAL);
-            SwipeMenuItem deleteItem = new SwipeMenuItem(getContext().getApplicationContext())
-                    .setBackgroundDrawable(R.drawable.selector_item_delete_red)
+            SwipeMenuItem deleteItem = new SwipeMenuItem(Utils.getContext())
+                    .setBackgroundColor(getResources().getColor(R.color.res_color_red_ef))
                     .setImage(R.mipmap.ic_action_delete)
                     .setText("删除") // 文字，还可以设置文字颜色，大小等。。
                     .setTextColor(Color.WHITE)

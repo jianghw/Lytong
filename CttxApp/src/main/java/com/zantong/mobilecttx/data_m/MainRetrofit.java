@@ -4,9 +4,8 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.tzly.ctcyh.router.ServiceRouter;
-import com.tzly.ctcyh.service.IUserService;
 import com.zantong.mobilecttx.BuildConfig;
+import com.zantong.mobilecttx.router.MainRouter;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -110,16 +109,7 @@ public class MainRetrofit implements IRetrofitUrl {
     }
 
     private String getDeviceId() {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
-            IUserService service = (IUserService) serviceRouter
-                    .getService(IUserService.class.getSimpleName());
-            return service.getPhoneDeviceId();
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-            return "0123456789";
-        }
+        return MainRouter.getPhoneDeviceId();
     }
 
     private TrustManager[] trustAllCerts = new TrustManager[]{

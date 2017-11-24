@@ -53,13 +53,6 @@
             android:screenOrientation="portrait">
         </activity>
 
-        <!--**********优惠劵类型选择****************-->
-        <activity
-            android:name=".coupon_v.CouponListActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-        </activity>
-
         <!--启动新进程 畅通卡支付-->
         <activity
             android:name="com.tzly.ctcyh.pay.html_v.Html5Activity"
@@ -69,6 +62,24 @@
                 <action android:name="com.tzly.ctcyh.pay.html_v.Html5Activity"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
+        </activity>
+
+        <!--**********优惠劵类型选择****************-->
+        <activity
+            android:name=".coupon_v.CouponListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
+        <!--列表-->
+        <activity
+            android:name=".coupon_v.CouponStatusActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+        </activity>
+        <!--详情-->
+        <activity
+            android:name=".coupon_v.CouponDetailActivity"
+            android:screenOrientation="portrait">
         </activity>
 
     </application>

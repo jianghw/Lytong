@@ -183,7 +183,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
             return;
         }
 
-        params.setUserId(MainRouter.getUserID(false));
+        params.setUserId(MainRouter.getUserID());
         params.setLicenseno(licenseno);
         params.setFileNum(fileNum);
 
@@ -193,7 +193,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
         dto.setFilenum(RSAUtils.strByEncryption(fileNum, true));
 
         dto.setRelatedphone(RSAUtils.strByEncryption(phone, true));
-        dto.setUsrid(MainRouter.getUserID(false));
+        dto.setUsrid(MainRouter.getUserID());
         showDialogLoading();
 
         UserApiClient.bindCard(Utils.getContext(), dto, new CallBack<BindCardResult>() {

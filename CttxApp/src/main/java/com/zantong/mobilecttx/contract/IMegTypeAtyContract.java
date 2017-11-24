@@ -1,11 +1,11 @@
 package com.zantong.mobilecttx.contract;
 
+import com.tzly.ctcyh.router.base.IBasePresenter;
+import com.tzly.ctcyh.router.base.IBaseView;
+import com.tzly.ctcyh.router.base.IResponseView;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
-import com.zantong.mobilecttx.base.interf.IMvpPresenter;
-import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.order.bean.MessageResponse;
 import com.zantong.mobilecttx.user.bean.MessageType;
-import com.zantong.mobilecttx.user.bean.MessageTypeResponse;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 
 /**
@@ -14,29 +14,14 @@ import com.zantong.mobilecttx.user.dto.MegDTO;
 
 public interface IMegTypeAtyContract {
 
-    interface IMegTypeAtyView extends IMvpView<IMegTypeAtyPresenter> {
-
-        void onShowLoading();
-
-        /**
-         * 请求响应成功
-         *
-         * @param messageTypeResult
-         */
-        void findAllMessageSucceed(MessageTypeResponse messageTypeResult);
-
-        void findAllMessageError(String message);
-
-        void showLoadingDialog();
-
-        void dismissLoadingDialog();
+    interface IMegTypeAtyView extends IBaseView<IMegTypeAtyPresenter> ,IResponseView{
 
         void deleteMessageDetailSucceed(MessageResponse messageResult, int position);
 
         void deleteMessageDetailError(String message);
     }
 
-    interface IMegTypeAtyPresenter extends IMvpPresenter {
+    interface IMegTypeAtyPresenter extends IBasePresenter {
 
         void messageFindAll();
 

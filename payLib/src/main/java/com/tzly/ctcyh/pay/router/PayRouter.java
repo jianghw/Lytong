@@ -3,6 +3,7 @@ package com.tzly.ctcyh.pay.router;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import com.tzly.ctcyh.pay.BuildConfig;
 import com.tzly.ctcyh.pay.global.PayGlobal;
@@ -30,20 +31,189 @@ public final class PayRouter {
                 bundle);
     }
 
+    private static Object getUserObject() {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        return serviceRouter.getService(IUserService.class.getSimpleName());
+    }
+
+    /**
+     * 只初始化数据
+     */
+    public static boolean isLogin() {
+        Object object = getUserObject();
+        if (object != null && object instanceof IUserService) {
+            IUserService service = (IUserService) object;
+            return service.isLogin();
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            return false;
+        }
+    }
+
     /**
      * 页面跳转判断是否登录用
      */
     public static boolean gotoByIsLogin() {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IUserService.class.getSimpleName());
+        Object object = getUserObject();
         if (object != null && object instanceof IUserService) {
             IUserService service = (IUserService) object;
-            boolean userLogin = service.isUserByLogin();
-            return !userLogin;
-        } else {
-            //注册机开始工作
+            return service.isUserByLogin();
+        } else {//注册机开始工作
             ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
             return true;
+        }
+    }
+
+    /**
+     * 用户id
+     */
+    public static String getUserID() {
+        Object object = getUserObject();
+        if (object != null && object instanceof IUserService) {
+            IUserService service = (IUserService) object;
+            return service.getUserID();
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            return "";
+        }
+    }
+
+    public static String getRASUserID() {
+        Object object = getUserObject();
+        if (object != null && object instanceof IUserService) {
+            IUserService service = (IUserService) object;
+            return service.getRASUserID();
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            return "";
+        }
+    }
+
+    /**
+     * 用户驾档编号
+     */
+    public static String getUserFilenum() {
+        Object object = getUserObject();
+        if (object != null && object instanceof IUserService) {
+            IUserService service = (IUserService) object;
+            return service.getUserFilenum();
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            return "";
+        }
+    }
+
+    /**
+     * 手机号码
+     */
+    public static String getUserPhoenum() {
+        Object object = getUserObject();
+        if (object != null && object instanceof IUserService) {
+            IUserService service = (IUserService) object;
+            return service.getUserPhoenum();
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            return "";
+        }
+    }
+
+    /**
+     * 设备号码
+     */
+    public static String getDeviceId() {
+        Object object = getUserObject();
+        if (object != null && object instanceof IUserService) {
+            IUserService service = (IUserService) object;
+            return service.getPhoneDeviceId();
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            return "0123456789";
+        }
+    }
+
+    private static Object getMainObject() {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        return serviceRouter.getService(IMainService.class.getSimpleName());
+    }
+
+    /**
+     * 订单详情
+     */
+    public static void gotoOrderDetailActivity(Activity context, String orderId, int couponType) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoOrderDetailActivity(context, orderId, couponType);
+        } else {
+            //注册机开始工作
+            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
+        }
+    }
+
+    /**
+     * 订单完成状态页面
+     */
+    public static void gotoOrderSucceedActivity(Activity context, String orderId, int couponType) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoOrderSucceedActivity(context, orderId, couponType);
+        } else {
+            //注册机开始工作
+            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
+        }
+    }
+
+    /**
+     * 绑定畅通卡页面
+     */
+    public static void gotoUnblockedCardActivity(Activity context) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoUnblockedCardActivity(context);
+        } else {
+            //注册机开始工作
+            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
+        }
+    }
+
+    public static void gotoMyCardActivity(Activity context) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoMyCardActivity(context);
+        } else {
+            //注册机开始工作
+            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
+        }
+    }
+
+    /**
+     * 违章列表夜间
+     */
+    public static void gotoViolationListActivity(Activity context, String carnum, String enginenum, String carnumtype) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoViolationListActivity(context, carnum, enginenum, carnumtype);
+        } else {
+            //注册机开始工作
+            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
+        }
+    }
+
+    /**
+     * 拍照页面
+     */
+    public static void gotoOcrCameraActivity(Activity context) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoOcrCameraActivity(context);
+        } else {
+            //注册机开始工作
+            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
         }
     }
 
@@ -126,166 +296,24 @@ public final class PayRouter {
     }
 
     /**
-     * 订单详情
+     * 优惠券列表
      */
-    public static void gotoOrderDetailActivity(Activity context, String orderId, int couponType) {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IMainService.class.getSimpleName());
-        if (object != null && object instanceof IMainService) {
-            IMainService service = (IMainService) object;
-            service.gotoOrderDetailActivity(context, orderId, couponType);
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
-        }
+    public static void gotoCouponStatusActivity(Context context) {
+        Bundle bundle = new Bundle();
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.pay_scheme + "://" + RouterGlobal.Host.coupon_status_host,
+                bundle);
     }
 
     /**
-     * 订单完成状态页面
+     * 优惠劵详情
      */
-    public static void gotoOrderSucceedActivity(Activity context, String orderId, int couponType) {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IMainService.class.getSimpleName());
-        if (object != null && object instanceof IMainService) {
-            IMainService service = (IMainService) object;
-            service.gotoOrderSucceedActivity(context, orderId, couponType);
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
-        }
-    }
+    public static void gotoCouponDetailActivity(FragmentActivity activity, String couponId) {
+        Bundle bundle = new Bundle();
+        bundle.putString(PayGlobal.putExtra.coupon_detail_id, couponId);
 
-    /**
-     * 用户id
-     */
-    public static String getUserID() {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IUserService.class.getSimpleName());
-        if (object != null) {
-            IUserService service = (IUserService) object;
-            return service.getUserID();
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-            return "";
-        }
-    }
-
-    public static String getRASUserID() {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IUserService.class.getSimpleName());
-        if (object != null) {
-            IUserService service = (IUserService) object;
-            return service.getRASUserID();
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-            return "";
-        }
-    }
-
-    /**
-     * 用户驾档编号
-     */
-    public static String getUserFilenum() {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IUserService.class.getSimpleName());
-        if (object != null) {
-            IUserService service = (IUserService) object;
-            return service.getUserFilenum();
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-            return "";
-        }
-    }
-
-    /**
-     * 手机号码
-     */
-    public static String getUserPhoenum() {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IUserService.class.getSimpleName());
-        if (object != null) {
-            IUserService service = (IUserService) object;
-            return service.getUserPhoenum();
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-            return "";
-        }
-    }
-
-    /**
-     * 只初始化数据
-     */
-    public static boolean isLogin() {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IUserService.class.getSimpleName());
-        if (object != null) {
-            IUserService service = (IUserService) object;
-            return service.isLogin();
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-            return false;
-        }
-    }
-
-    /**
-     * 绑定畅通卡页面
-     */
-    public static void gotoUnblockedCardActivity(Activity context) {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IMainService.class.getSimpleName());
-        if (object != null && object instanceof IMainService) {
-            IMainService service = (IMainService) object;
-            service.gotoUnblockedCardActivity(context);
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
-        }
-    }
-
-    public static void gotoMyCardActivity(Activity context) {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IMainService.class.getSimpleName());
-        if (object != null && object instanceof IMainService) {
-            IMainService service = (IMainService) object;
-            service.gotoMyCardActivity(context);
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
-        }
-    }
-
-    /**
-     * 违章列表夜间
-     */
-    public static void gotoViolationListActivity(Activity context, String carnum, String enginenum, String carnumtype) {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IMainService.class.getSimpleName());
-        if (object != null && object instanceof IMainService) {
-            IMainService service = (IMainService) object;
-            service.gotoViolationListActivity(context, carnum, enginenum, carnumtype);
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
-        }
-    }
-
-    /**
-     * 拍照页面
-     */
-    public static void gotoOcrCameraActivity(Activity context) {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IMainService.class.getSimpleName());
-        if (object != null && object instanceof IMainService) {
-            IMainService service = (IMainService) object;
-            service.gotoOcrCameraActivity(context);
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
-        }
+        UiRouter.getInstance().openUriBundle(activity,
+                RouterGlobal.Scheme.pay_scheme + "://" + RouterGlobal.Host.coupon_detail_host,
+                bundle);
     }
 }

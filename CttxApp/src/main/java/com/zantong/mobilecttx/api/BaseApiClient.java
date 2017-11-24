@@ -119,7 +119,7 @@ public class BaseApiClient {
         String data = asyncCallBack.getGson().toJson(jsonParams);
         if (data != null) builder.add("msg", data);
         if (MainRouter.isUserLogin())
-            builder.add("usrid", MainRouter.getUserID(false));
+            builder.add("usrid", MainRouter.isUserLogin() ? MainRouter.getUserID() : "");
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).post(builder.build()).build();
         enqueue(context, request, asyncCallBack);
@@ -131,7 +131,7 @@ public class BaseApiClient {
 
         if (jsonParams != null) builder.add("msg", jsonParams);
         if (MainRouter.isUserLogin())
-            builder.add("usrid", MainRouter.getUserID(false));
+            builder.add("usrid", MainRouter.isUserLogin() ? MainRouter.getUserID() : "");
         Request request = new Request.Builder().tag(asyncCallBack.getTag())
                 .url(url).post(builder.build()).build();
         enqueue(context, request, asyncCallBack);

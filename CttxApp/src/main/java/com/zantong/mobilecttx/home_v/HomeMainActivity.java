@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.home_v;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +23,8 @@ import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.global.MainGlobal;
+import com.zantong.mobilecttx.push_v.IPushBroadcastReceiver;
+import com.zantong.mobilecttx.push_v.PushBroadcastReceiver;
 import com.zantong.mobilecttx.utils.DialogUtils;
 
 import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
@@ -30,7 +33,8 @@ import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
 /**
  * 新的主页面
  */
-public class HomeMainActivity extends AbstractBaseActivity implements IHomeMainUi {
+public class HomeMainActivity extends AbstractBaseActivity
+        implements IPushBroadcastReceiver {
 
     private FrameLayout mFrameLayout;
     private UiTableBottom mCustomBottom;
@@ -42,6 +46,10 @@ public class HomeMainActivity extends AbstractBaseActivity implements IHomeMainU
     HomeUnimpededFragment mHomeUnimpededFragment;
     HomeDiscountsFragment mHomeDiscountsFragment;
     HomeMeFragment mHomeMeFragment;
+    /**
+     * 广播
+     */
+    private PushBroadcastReceiver mBroadcastReceiver;
 
     @Override
     protected void bundleIntent(Intent intent) {
@@ -54,12 +62,16 @@ public class HomeMainActivity extends AbstractBaseActivity implements IHomeMainU
 
     @Override
     protected void newIntent(Intent intent) {
-        initFragment();
+        mCustomBottom.selectTab(mCurBottomPosition);
+
+        if (mHomeUnimpededFragment != null) mHomeUnimpededFragment.loadingFirstData();
+        if (mHomeMeFragment != null) mHomeMeFragment.loadingFirstData();
     }
 
     @Override
     protected void initStatusBarColor() {
-        StatusBarUtils.setTranslucentForImageViewInFragment(this, StatusBarUtils.DEFAULT_BAR_ALPHA, null);
+        StatusBarUtils.setTranslucentForImageViewInFragment(
+                this, StatusBarUtils.DEFAULT_BAR_ALPHA, null);
     }
 
     /**
@@ -76,10 +88,23 @@ public class HomeMainActivity extends AbstractBaseActivity implements IHomeMainU
 
     @Override
     protected void bindFragment() {
+        //核心部分代码：
+        mBroadcastReceiver = new PushBroadcastReceiver();
+        IntentFilter itFilter = new IntentFilter();
+        itFilter.addAction(PushBroadcastReceiver.PUSH_TIP_ACTION);
+        registerReceiver(mBroadcastReceiver, itFilter);
+        mBroadcastReceiver.setCustomListener(this);
+
         mFrameLayout = (FrameLayout) findViewById(R.id.content);
         mCustomBottom = (UiTableBottom) findViewById(R.id.custom_bottom);
 
         initBottomTable();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mBroadcastReceiver);
     }
 
     @Override
@@ -96,7 +121,8 @@ public class HomeMainActivity extends AbstractBaseActivity implements IHomeMainU
             if (upgradeInfo.upgradeType == 2) {
                 Beta.checkUpgrade();
             } else {
-                DialogUtils.updateDialog(this, upgradeInfo.title, upgradeInfo.newFeature,
+                DialogUtils.updateDialog(this,
+                        upgradeInfo.title, upgradeInfo.newFeature,
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -130,7 +156,8 @@ public class HomeMainActivity extends AbstractBaseActivity implements IHomeMainU
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
         PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -185,11 +212,16 @@ public class HomeMainActivity extends AbstractBaseActivity implements IHomeMainU
     }
 
     /**
-     * 底部小红点显示
+     * 底部小红点显示 和消息提示
      */
     @Override
-    public void setTipOfNumber(int position, int number) {
-        mCustomBottom.setTipOfNumber(position, number);
+    public void tipByNumber(int position, int number) {
+        if (mCustomBottom != null)
+            mCustomBottom.setTipOfNumber(position, number);
+        if (mHomeUnimpededFragment != null)
+            mHomeUnimpededFragment.unMessageCount(position, number);
+        if (mHomeMeFragment != null)
+            mHomeMeFragment.unMessageCount(position, number);
     }
 
     private long exitTime;

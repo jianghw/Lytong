@@ -135,7 +135,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
         quickApplyCardDTO.setCtftp("0");
         quickApplyCardDTO.setUsrname(getIntent().getStringExtra("name"));
-        quickApplyCardDTO.setUsrid(MainRouter.getUserID(true));
+        quickApplyCardDTO.setUsrid(MainRouter.getUserID());
         quickApplyCardDTO.setCtfnum(RSAUtils.strByEncryption(getIntent().getStringExtra("idCard"), true));
         quickApplyCardDTO.setFilenum(RSAUtils.strByEncryption(getIntent().getStringExtra("filenum"), true));
         quickApplyCardDTO.setPhoenum(RSAUtils.strByEncryption(MainRouter.getUserPhoenum(), true));

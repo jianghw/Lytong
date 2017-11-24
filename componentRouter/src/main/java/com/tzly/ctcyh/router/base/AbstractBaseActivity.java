@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -20,6 +21,8 @@ import com.tzly.ctcyh.router.custom.LoadingDialog;
 import com.tzly.ctcyh.router.util.StatusBarUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.List;
 
 
 /**
@@ -113,11 +116,6 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
         newIntent(intent);
     }
 
-    /**
-     * 某些启动Top的页面用
-     */
-    protected abstract void newIntent(Intent intent);
-
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putInt(BASE_POSITION, mBasePosition);
@@ -145,6 +143,11 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
     }
 
     protected abstract void bundleIntent(Intent intent);
+
+    /**
+     * 某些启动Top的页面用
+     */
+    protected abstract void newIntent(Intent intent);
 
     protected abstract int initContentView();
 
@@ -223,6 +226,22 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
     }
 
     /**
+     * 定义渐变色红色
+     */
+    protected void titleBackground() {
+        if (mBackgroundLay != null)
+            mBackgroundLay.setBackground(getResources().getDrawable(R.drawable.shape_pay_pressed_false));
+        if (mImgBack != null)
+            mImgBack.setImageResource(R.mipmap.ic_arrow_left);
+        if (mTvTitle != null)
+            mTvTitle.setTextColor(getResources().getColor(R.color.res_color_white));
+        if (mTvRight != null)
+            mTvRight.setTextColor(getResources().getColor(R.color.res_color_white));
+        if (mTvLine != null)
+            mTvLine.setVisibility(View.GONE);
+    }
+
+    /**
      * 回退监听功能
      */
     protected void backClickListener() {
@@ -259,6 +278,18 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
             fragmentManager.popBackStackImmediate();
         } else {
             finish();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        for (Fragment fragment : fragments) {
+            if (fragment != null && fragment.isVisible())
+                fragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 

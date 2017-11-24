@@ -32,4 +32,8 @@ public interface IMainService {
     String getPushId();
 
     void gotoMainActivity(Activity activity, int i);
+
+    void gotoProblemFeedbackActivity(Activity activity);
+
+    void gotoBaiduMapParentActivity(Activity context);
 }

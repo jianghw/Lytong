@@ -45,7 +45,7 @@ public class SetPayCarFragmentPresenter extends BasePresenter<IBaseView> impleme
                 masp = new JSONObject();
 
                 try {
-                    masp.put("usrid", MainRouter.getUserID(false));
+                    masp.put("usrid", MainRouter.getUserID());
                     masp.put("delcarnum", RSAUtils.strByEncryption(
                             mSetPayCarFragment.mapData().get("delcarnum"), true));
                     masp.put("addcarnum", RSAUtils.strByEncryption(

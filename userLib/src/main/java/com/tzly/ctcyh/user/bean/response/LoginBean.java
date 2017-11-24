@@ -27,7 +27,6 @@ public class LoginBean {
      * phoenum	是	string	手机号 加密
      * recdphoe	是	string	推荐人手机号 加密
      */
-
     private String lastlogindate;
     private String remindflag;
     private String getdate;

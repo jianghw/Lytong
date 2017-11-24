@@ -151,13 +151,13 @@ public class PluginBuild implements Plugin<Project> {
             System.out.println("there is no add dependencies !!!");
             return;
         }
-        String[] compileComponents= components.split(",")
+        String[] compileComponents = components.split(",")
         if (compileComponents == null || compileComponents.length == 0) {
             System.out.println("there is no add dependencies ~");
             return;
         }
         for (String str : compileComponents) {
-            System.out.println("compile is ===>" + str);
+            System.out.println("compile is Lib===>" + str);
             //当包含 ：时即为引用aar包
             if (str.contains(":")) {
                 File file = project.file("../componentRelease/" + str.split(":")[1] + "-release.aar")

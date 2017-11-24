@@ -48,7 +48,6 @@
                 android:text="分"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/fs_16sp"/>
-
         </RelativeLayout>
 
         <TextView

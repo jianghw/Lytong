@@ -271,7 +271,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
                 HashMap<String, String> hashMap = new HashMap<String, String>();
                 hashMap.put("time", time);
                 hashMap.put("orderId", mOrderId);
-                hashMap.put("usrId", MainRouter.getUserID(false));
+                hashMap.put("usrId", MainRouter.getUserID());
                 dto.setHash(HashUtils.getSignature(hashMap));
                 CarApiClient.cancelDaiJiaOrderDetail(DODetailActivity.this, dto, new CallBack<BaseResponse>() {
                     @Override

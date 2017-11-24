@@ -12,7 +12,6 @@ import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
@@ -158,7 +157,7 @@ public class ViolationPayFragment extends BaseJxFragment {
 
         dto.setPeccancydate(mViolationBean.getViolationdate());
         dto.setPeccancynum(mViolationBean.getViolationnum());
-        dto.setUsernum(RSAUtils.strByEncryption(MainRouter.getUserID(false), true));
+        dto.setUsernum(MainRouter.getRASUserID());
 
         CarApiClient.createOrder(Utils.getContext(), dto, new CallBack<BaseResponse>() {
             @Override

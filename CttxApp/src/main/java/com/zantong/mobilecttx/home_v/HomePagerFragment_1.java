@@ -68,6 +68,9 @@ public class HomePagerFragment_1 extends RefreshFragment implements View.OnClick
     protected void loadingFirstData() {}
 
     @Override
+    protected void responseData(Object response) {}
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_oil://优惠加油

@@ -20,7 +20,7 @@
                 android:layout_marginLeft="@dimen/ds_48"
                 android:layout_marginRight="@dimen/ds_48"
                 android:layout_marginTop="@dimen/ds_48"
-                android:background="@drawable/shape_edit_apply"
+                android:background="@drawable/shape_radius_white"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_banner1"/>
 
@@ -32,7 +32,7 @@
                 android:layout_marginLeft="@dimen/ds_48"
                 android:layout_marginRight="@dimen/ds_48"
                 android:layout_marginTop="@dimen/ds_48"
-                android:background="@drawable/shape_edit_apply"
+                android:background="@drawable/shape_radius_white"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_banner2"/>
 
@@ -44,7 +44,7 @@
                 android:layout_marginLeft="@dimen/ds_48"
                 android:layout_marginRight="@dimen/ds_48"
                 android:layout_marginTop="@dimen/ds_48"
-                android:background="@drawable/shape_edit_apply"
+                android:background="@drawable/shape_radius_white"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_banner3"/>
 
@@ -56,7 +56,7 @@
                 android:layout_marginLeft="@dimen/ds_48"
                 android:layout_marginRight="@dimen/ds_48"
                 android:layout_marginTop="@dimen/ds_48"
-                android:background="@drawable/shape_edit_apply"
+                android:background="@drawable/shape_radius_white"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_banner4"/>
 
@@ -68,7 +68,7 @@
                 android:layout_marginLeft="@dimen/ds_48"
                 android:layout_marginRight="@dimen/ds_48"
                 android:layout_marginTop="@dimen/ds_48"
-                android:background="@drawable/shape_edit_apply"
+                android:background="@drawable/shape_radius_white"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_banner5"/>
         </RelativeLayout>

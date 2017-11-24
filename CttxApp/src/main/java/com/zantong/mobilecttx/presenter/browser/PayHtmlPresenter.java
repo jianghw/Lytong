@@ -10,6 +10,7 @@ import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.contract.browser.IPayHtmlContract;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNumBean;
 import com.zantong.mobilecttx.weizhang.dto.LicenseTestDTO;
@@ -92,7 +93,8 @@ public class PayHtmlPresenter
 
     @Override
     public void numberedQuery() {
-        Subscription subscription = mRepository.numberedQuery(initLicenseFileNumDTO())
+        Subscription subscription = mRepository
+                .numberedQuery(initLicenseFileNumDTO())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -104,12 +106,12 @@ public class PayHtmlPresenter
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ViolationNumBean>() {
                     @Override
-                    public void onCompleted() {
-                    }
+                    public void onCompleted() {}
 
                     @Override
                     public void onError(Throwable e) {
-                        mAtyView.numberedQueryError(e.getMessage() != null ? e.getMessage() : "未知错误(V003)");
+                        mAtyView.numberedQueryError(
+                                e.getMessage() != null ? e.getMessage() : "未知错误(V003)");
                     }
 
                     @Override
@@ -134,7 +136,7 @@ public class PayHtmlPresenter
         String fileNum = mAtyView.getViolationNum();
 
         bean.setViolationnum(fileNum);
-        bean.setToken(mRepository.getRASUserID());
+        bean.setToken(mRepository.getRASByStr(MainRouter.getPhoneDeviceId()));
 
         dto.setReqInfo(bean);
         return new Gson().toJson(dto);

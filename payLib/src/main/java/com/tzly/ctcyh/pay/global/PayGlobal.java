@@ -11,7 +11,7 @@ public final class PayGlobal {
 
     public static final class requestCode {
         public static final int coupon_list_choice = 1210;
-        public static final int pay_type_choice=1220;
+        public static final int pay_type_choice = 1220;
         public static final int pay_html_price = 1230;
     }
 
@@ -31,6 +31,7 @@ public final class PayGlobal {
         public static final String web_url_extra = "web_url_extra";
         public static final String web_orderId_extra = "web_orderId_extra";
         public static final String web_pay_type_extra = "web_pay_type_extra";
+        public static final String coupon_detail_id = "coupon_detail_id";
     }
 
     public static final class Host {

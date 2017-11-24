@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/res_y_30">
+
+        <TextView
+            style="@style/ResTextTheme.Subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="油卡充值服务协议"
+            android:textStyle="bold"/>
+
+        <TextView
+            style="@style/ResTextTheme.14.Hint"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:lineSpacingExtra="@dimen/res_x_10"
+            android:text="@string/recharge_agreement_content"/>
+    </LinearLayout>
+</ScrollView>

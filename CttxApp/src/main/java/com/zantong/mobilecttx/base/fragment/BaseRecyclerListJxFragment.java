@@ -12,6 +12,7 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jcodecraeer.xrecyclerview.touch.*;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 
 import java.util.List;
@@ -110,7 +111,7 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
 
         mAdapter = createAdapter();
         if (mAdapter == null) throw new IllegalArgumentException("adapter is must not null");
-        if(isNeedItemClick()) mAdapter.setOnItemClickListener(onItemClickListener);
+        if (isNeedItemClick()) mAdapter.setOnItemClickListener(onItemClickListener);
         mCustomRecycler.setAdapter(mAdapter);
 
         initFragmentView(view);
@@ -155,8 +156,8 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
             int height = resetDeleteItemHeight();
             // 设置菜单方向为竖型的。
             swipeRightMenu.setOrientation(SwipeMenu.HORIZONTAL);
-            SwipeMenuItem deleteItem = new SwipeMenuItem(getContext().getApplicationContext())
-                    .setBackgroundDrawable(R.drawable.selector_item_delete_red)
+            SwipeMenuItem deleteItem = new SwipeMenuItem(Utils.getContext())
+                    .setBackgroundColor(getResources().getColor(R.color.res_color_red_ef))
                     .setImage(R.mipmap.ic_action_delete)
                     .setText("删除") // 文字，还可以设置文字颜色，大小等。。
                     .setTextColor(Color.WHITE)

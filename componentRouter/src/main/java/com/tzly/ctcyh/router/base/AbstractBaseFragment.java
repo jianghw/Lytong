@@ -32,11 +32,6 @@ public abstract class AbstractBaseFragment extends Fragment {
         super.onAttach(activity);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
     /**
      * 创建fragment时被回调。该方法只会调用一次。
      */
@@ -93,11 +88,6 @@ public abstract class AbstractBaseFragment extends Fragment {
         return view;
     }
 
-    @MultiState
-    protected int initMultiState() {
-        return MultiState.LOADING;
-    }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -149,6 +139,16 @@ public abstract class AbstractBaseFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @MultiState
+    protected int initMultiState() {
+        return MultiState.LOADING;
     }
 
     /**
@@ -250,7 +250,7 @@ public abstract class AbstractBaseFragment extends Fragment {
      * 初次获取数据
      */
     public void responseError() {
-        responseError("数据类型匹配,未知错误");
+        responseError("数据类型出错,未知错误");
     }
 
     public void responseError(String message) {
@@ -268,6 +268,5 @@ public abstract class AbstractBaseFragment extends Fragment {
         }
     }
 
-    protected void responseData(Object response) {}
-
+    protected abstract void responseData(Object response);
 }

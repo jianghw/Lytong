@@ -47,7 +47,7 @@ public class CodeTransform extends Transform {
             System.out.println("application is ===>" + ctClass.getName());
         }
         for (CtClass ctClass : likeList) {
-            System.out.println("applicationlike is ===>" + ctClass.getName());
+            System.out.println("applicationLike is ===>" + ctClass.getName());
         }
 
         transformInvocation.inputs.each { TransformInput input ->
@@ -161,6 +161,7 @@ public class CodeTransform extends Transform {
         StringBuilder autoLoadComCode = new StringBuilder();
         for (CtClass ctClass : activators) {
             autoLoadComCode.append("new " + ctClass.getName() + "()" + ".onCreate();")
+            println "Auto Load class name:====>" + ctClass.getName()
         }
         return autoLoadComCode.toString()
     }

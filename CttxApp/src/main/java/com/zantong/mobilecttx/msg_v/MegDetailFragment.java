@@ -1,6 +1,5 @@
 package com.zantong.mobilecttx.msg_v;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
@@ -15,7 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.custom.image.ImageOptions;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.global.MainGlobal;
@@ -31,14 +32,12 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.tzly.ctcyh.router.custom.image.ImageOptions;
-
 /**
  * 消息详情
  * 最新修改日期：2017-05-10
  */
 
-public class MegDetailFragment extends JxBaseRefreshFragment
+public class MegDetailFragment extends RefreshFragment
         implements IMegDetailAtyContract.IMegDetailAtyView {
 
     private static String STR_TYPE = "messageDetailId";
@@ -58,35 +57,19 @@ public class MegDetailFragment extends JxBaseRefreshFragment
     }
 
     @Override
-    protected int initFragmentView() {
+    protected int fragmentView() {
         return R.layout.activity_meg_detail;
     }
 
     @Override
-    protected void bindFragmentView(View view) {
-
+    protected void bindFragment(View view) {
         headImage = (ImageView) view.findViewById(R.id.img_head);
         titleTv = (TextView) view.findViewById(R.id.tv_title);
         contentTv = (TextView) view.findViewById(R.id.tv_content);
         timeTv = (TextView) view.findViewById(R.id.tv_time);
 
-        MegDetailAtyPresenter mPresenter =
-                new MegDetailAtyPresenter(Injection.provideRepository(getActivity()), this);
-    }
-
-    @Override
-    protected void onFirstDataVisible() {
-        if (mPresenter != null) mPresenter.findMessageDetail();
-    }
-
-    @Override
-    protected void onLoadMoreData() {
-        onFirstDataVisible();
-    }
-
-    @Override
-    protected void onRefreshData() {
-        onFirstDataVisible();
+        MegDetailAtyPresenter mPresenter = new MegDetailAtyPresenter(
+                Injection.provideRepository(Utils.getContext()), this);
     }
 
     @Override
@@ -100,15 +83,25 @@ public class MegDetailFragment extends JxBaseRefreshFragment
         if (mPresenter != null) mPresenter.unSubscribe();
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
-    public void findMessageDetailSucceed(MessageDetailResponse messageResult) {
-        Meg message = messageResult.getData();
-        if (message == null) return;
+    protected void loadingFirstData() {
+        if (mPresenter != null) mPresenter.findMessageDetail();
+    }
 
+    @Override
+    protected void responseData(Object response) {
+        if (response instanceof MessageDetailResponse) {
+            MessageDetailResponse detailResponse = (MessageDetailResponse) response;
+            Meg message = detailResponse.getData();
+            setSimpleDataResult(message);
+        } else
+            responseError();
+    }
+
+    private void setSimpleDataResult(Meg message) {
         setResultForRefresh();
 
-        if (!TextUtils.isEmpty(message.getImage()) && message.getImage() != null)
+        if (!TextUtils.isEmpty(message.getImage()))
             ImageLoader.getInstance().displayImage(
                     message.getImage(),
                     headImage,
@@ -222,11 +215,6 @@ public class MegDetailFragment extends JxBaseRefreshFragment
             end = matcherEnd.start();
         }
         return content.substring(start, end);
-    }
-
-    @Override
-    public void findMessageDetailError(String message) {
-        toastShort(message);
     }
 
     @Override

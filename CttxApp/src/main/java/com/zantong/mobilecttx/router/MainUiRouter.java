@@ -21,11 +21,10 @@ import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.home_v.HomeMainActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.msg_v.MegDetailActivity;
-import com.zantong.mobilecttx.oiling_v.RechargeActivity;
-import com.zantong.mobilecttx.order.activity.CouponActivity;
 import com.zantong.mobilecttx.order_v.AnnualDetailActivity;
 import com.zantong.mobilecttx.order_v.OrderDetailActivity;
-import com.zantong.mobilecttx.user.activity.MegTypeActivity;
+import com.zantong.mobilecttx.msg_v.MegTypeActivity;
+import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.user.activity.RegisterActivity;
 import com.zantong.mobilecttx.user.activity.ResetActivity;
 import com.zantong.mobilecttx.violation_v.ViolationActivity;
@@ -57,7 +56,6 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 RouterGlobal.Host.driving_host,
                 RouterGlobal.Host.meg_type_host,
                 RouterGlobal.Host.capture_host,
-                RouterGlobal.Host.recharge_host,
                 RouterGlobal.Host.subject_host,
                 RouterGlobal.Host.order_detail_host,
                 RouterGlobal.Host.annual_detail_host,
@@ -69,12 +67,13 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 RouterGlobal.Host.register_host,
                 RouterGlobal.Host.reset_host,
                 RouterGlobal.Host.meg_detail_host,
-                RouterGlobal.Host.coupon_status_host,
                 RouterGlobal.Host.html_self_host,
                 RouterGlobal.Host.html_pay_host,
                 RouterGlobal.Host.violation_query_host,
                 RouterGlobal.Host.set_pay_car_host,
-                RouterGlobal.Host.my_card_host
+                RouterGlobal.Host.my_card_host,
+                RouterGlobal.Host.problem_feed_host,
+                RouterGlobal.Host.oil_map_host
         };
     }
 
@@ -95,8 +94,6 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, MegTypeActivity.class);
         } else if (RouterGlobal.Host.capture_host.equals(host)) {
             intent.setClass(context, CaptureActivity.class);
-        } else if (RouterGlobal.Host.recharge_host.equals(host)) {
-            intent.setClass(context, RechargeActivity.class);
         } else if (RouterGlobal.Host.subject_host.equals(host)) {
             intent.setClass(context, SubjectActivity.class);
         } else if (RouterGlobal.Host.order_detail_host.equals(host)) {
@@ -121,8 +118,6 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, ResetActivity.class);
         } else if (RouterGlobal.Host.meg_detail_host.equals(host)) {
             intent.setClass(context, MegDetailActivity.class);
-        } else if (RouterGlobal.Host.coupon_status_host.equals(host)) {
-            intent.setClass(context, CouponActivity.class);
         } else if (RouterGlobal.Host.html_pay_host.equals(host)) {
             intent.setClass(context, PayHtmlActivity.class);
         } else if (RouterGlobal.Host.html_self_host.equals(host)) {
@@ -132,6 +127,10 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, ViolationActivity.class);
         } else if (RouterGlobal.Host.set_pay_car_host.equals(host)) {
             intent.setClass(context, SetPayCarActivity.class);
+        } else if (RouterGlobal.Host.problem_feed_host.equals(host)) {
+            intent.setClass(context, ProblemFeedbackActivity.class);
+        } else if (RouterGlobal.Host.oil_map_host.equals(host)) {
+            intent.setClass(context, BaiduMapParentActivity.class);
         } else {
             return true;
         }
@@ -152,7 +151,7 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 && !RouterGlobal.Host.register_host.equals(host)
                 && !RouterGlobal.Host.reset_host.equals(host)
                 && !RouterGlobal.Host.violation_query_host.equals(host)
-                && MainRouter.gotoByIsLogin();
+                && !MainRouter.gotoByIsLogin();
     }
 
     @Override

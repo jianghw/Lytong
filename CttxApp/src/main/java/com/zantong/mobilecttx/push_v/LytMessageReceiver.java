@@ -15,17 +15,13 @@ import com.google.gson.Gson;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
-import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.Tools;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -46,35 +42,37 @@ public class LytMessageReceiver extends MessageReceiver {
     public void onNotification(Context context, String title,
                                String summary, Map<String, String> extraMap) {
         LogUtils.i(title + "onNotification" + summary);
+        if (null == extraMap) return;
 
         PushBean pushBean = new PushBean();
-        if (null != extraMap) {
-            for (Map.Entry<String, String> entry : extraMap.entrySet()) {
-                if (entry.getKey().equals("id")) {
-                    pushBean.setId(entry.getValue());
-                }
-                if (entry.getKey().equals("type")) {
-                    pushBean.setType(entry.getValue());
-                }
+        pushBean.setTitle(title);
+        pushBean.setContent(summary);
+        pushBean.setDate(Tools.getYearDate());
+        pushBean.setNewMeg(true);
+
+        for (Map.Entry<String, String> entry : extraMap.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            if (key.equals("id")) {
+                pushBean.setId(value);
+            } else if (key.equals("type")) {
+                pushBean.setType(value);
             }
-
-            pushBean.setTitle(title);
-            pushBean.setContent(summary);
-
-            pushBean.setDate(Tools.getYearDate());
-            pushBean.setNewMeg(true);
-
-            if (pushBean.getType() != null && pushBean.getType().equals("1")) {
-                EventBus.getDefault().postSticky(new AddPushTrumpetEvent(pushBean));
-            }
-        } else {
-            LogUtils.i("@收到通知 && 自定义消息为空");
         }
+
+        if (pushBean.getType() != null && pushBean.getType().equals("1")) {
+            EventBus.getDefault().postSticky(new AddPushTrumpetEvent(pushBean));
+        }
+        //启动服务标记小圆点
+        Intent i = new Intent(context, PushTipService.class);
+        i.setAction("com.custom.service.push.tip");
+        context.startService(i);
     }
 
     /**
      * 应用处于前台时通知到达回调。注意:该方法仅对自定义样式通知有效,
-     * 相关详情请参考https://help.aliyun.com/document_detail/30066.html?spm=5176.product30047.6.620.wjcC87#h3-3-4-basiccustompushnotification-api
+     * 相关详情请参考
+     * https://help.aliyun.com/document_detail/30066.html?spm=5176.product30047.6.620.wjcC87#h3-3-4-basiccustompushnotification-api
      */
     @Override
     protected void onNotificationReceivedInApp(Context context, String title, String summary,
@@ -115,7 +113,7 @@ public class LytMessageReceiver extends MessageReceiver {
         else if (type.equals("2"))//消息详情
             MainRouter.gotoMegDetailActivity(context, title, pushExtBean.getId());
         else if (type.equals("3"))//优惠详情
-            MainRouter.gotoCouponActivity(context);
+            MainRouter.gotoCouponStatusActivity(context);
         else if (type.equals("4"))//html详情
             MainRouter.gotoHtmlActivity(context, title, pushExtBean.getUrl());
         else if (type.equals("5"))//违章查询
@@ -166,60 +164,6 @@ public class LytMessageReceiver extends MessageReceiver {
         return PendingIntent.getService(context, 2000, deleteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    private void saveData(Context context, PushBean pushBean, String key) {
-        List<HomeNotice> list;
-        boolean isHave = false;
-        list = (List<HomeNotice>) UserInfoRememberCtrl.readObject(key);
-        if (list != null) {
-            for (HomeNotice item : list) {
-                if (item.getId().equals(pushBean.getId())) {
-                    isHave = true;
-                }
-            }
-            if (!isHave) {
-                HomeNotice homeNotice = new HomeNotice();
-                homeNotice.setId(pushBean.getId());
-                homeNotice.setDesc(pushBean.getContent());
-                homeNotice.setType(Integer.valueOf(pushBean.getType()));
-                homeNotice.setDate(pushBean.getDate());
-                homeNotice.setNewMeg(pushBean.isNewMeg());
-                list.add(homeNotice);
-                UserInfoRememberCtrl.saveObject(key, list);
-            }
-        } else {
-            list = new ArrayList<>();
-            HomeNotice homeNotice = new HomeNotice();
-            homeNotice.setId(pushBean.getId());
-            homeNotice.setDesc(pushBean.getContent());
-            homeNotice.setType(Integer.valueOf(pushBean.getType()));
-            homeNotice.setDate(pushBean.getDate());
-            homeNotice.setNewMeg(pushBean.isNewMeg());
-            list.add(homeNotice);
-            UserInfoRememberCtrl.saveObject(key, list);
-        }
-    }
-
-    private void saveDataOpen(Context context, PushBean pushBean, String key) {
-        try {
-            List<HomeNotice> list;
-            list = (List<HomeNotice>) UserInfoRememberCtrl.readObject(key);
-            for (HomeNotice item : list) {
-                if (item.getId().equals(pushBean.getId())) {
-                    item.setNewMeg(false);
-                }
-            }
-            UserInfoRememberCtrl.saveObject(key, list);
-            try {
-                // 刷新下消息列表
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      * 通知删除回调
      */
@@ -234,7 +178,8 @@ public class LytMessageReceiver extends MessageReceiver {
      * 通知点击回调为onNotificationClickedWithNoAction而不是onNotificationOpened
      */
     @Override
-    protected void onNotificationClickedWithNoAction(Context context, String title, String summary, String extraMap) {
+    protected void onNotificationClickedWithNoAction(Context context,
+                                                     String title, String summary, String extraMap) {
         LogUtils.i("onNotificationClickedWithNoAction ====： " + " : " + title + " : " + summary + " : " + extraMap);
     }
 }

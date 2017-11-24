@@ -303,8 +303,9 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
     private void getCarInfoDto() {
 
         /* 老接口传值*/
-        dto.setCarnum(mProvince.getText().toString() + mPlateNum.getTransformationMethod().getTransformation(mPlateNum.getText(), mPlateNum).toString());
-        dto.setUsrid(MainRouter.getUserID(false));
+        dto.setCarnum(mProvince.getText().toString()
+                + mPlateNum.getTransformationMethod().getTransformation(mPlateNum.getText(), mPlateNum).toString());
+        dto.setUsrid(MainRouter.getUserID());
 
         dto.setCarnumtype(VehicleTypeTools.switchVehicleCode(mType.getText().toString()));
 
@@ -423,7 +424,7 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                 hideKeyBord();
             } else {
                 LogUtils.i("老服务器");
-                params.setUsrnum(MainRouter.getUserID(false));
+                params.setUsrnum(MainRouter.getUserID());
                 if (isFrom) {
                     editOldCarInfo();
                     showDialogLoading();

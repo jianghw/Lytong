@@ -3,6 +3,7 @@ package com.tzly.ctcyh.user.data_m;
 import android.content.Context;
 
 import com.tzly.ctcyh.user.bean.RequestHeadDTO;
+import com.tzly.ctcyh.user.bean.response.LoginBean;
 import com.tzly.ctcyh.user.bean.response.LoginResponse;
 
 /**
@@ -23,23 +24,15 @@ public interface ILocalSource {
 
     Context getWeakReference();
 
-    String getUserId();
-
     void setPushId(String pushId);
 
     String getPushId();
 
-    String getPhoenum();
-
-    String getFilenum();
-
-    String getGetdate();
-
-    String getPortrait();
-
-    String getNickname();
-
     void getCleanUser();
 
     void saveLoginBean(String userString);
+
+    LoginBean getLoginBean();
+
+    String getRASByStr(String string);
 }

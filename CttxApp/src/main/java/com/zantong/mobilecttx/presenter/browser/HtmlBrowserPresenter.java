@@ -114,7 +114,8 @@ public class HtmlBrowserPresenter
      */
     @Override
     public void getBankPayHtml(String coupon, final String orderId, String orderPrice) {
-        Subscription subscription = mRepository.getBankPayHtml(orderId, orderPrice, Integer.valueOf(coupon))
+        Subscription subscription = mRepository
+                .getBankPayHtml(orderId, orderPrice, Integer.valueOf(coupon))
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override

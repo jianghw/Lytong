@@ -1,0 +1,14 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="cargo_app_name" tools:ignore="ResourceName">加油商品</string>
+
+    <string name="cargo_tv_provider">
+        <font color='#f3362b'>*</font>提供商
+    </string>
+    <string name="cargo_tv_oil_card_number">
+        <font color='#f3362b'>*</font>油卡号
+    </string>
+    <string name="cargo_tv_oil_tip">
+        <font color='#f3362b'>*请填写正确的油卡卡号，错充金额将无法退还</font>
+    </string>
+</resources>

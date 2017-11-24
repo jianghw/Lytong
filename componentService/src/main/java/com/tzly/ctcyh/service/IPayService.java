@@ -1,6 +1,7 @@
 package com.tzly.ctcyh.service;
 
 import android.app.Activity;
+import android.content.Context;
 
 /**
  * Created by jianghw on 2017/10/26.
@@ -16,5 +17,7 @@ public interface IPayService {
     void gotoHtmlActivity(Activity context, String title, String url, String extraOrderId, int payType);
 
     void gotoHtmlActivity(Activity context, String title, String url);
+
+    void gotoCouponStatusActivity(Context context);
 
 }

@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.presenter.order;
 
 import android.support.annotation.NonNull;
 
+import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
@@ -12,7 +13,6 @@ import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import java.util.List;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -217,7 +217,8 @@ public class OrderParentPresenter
      */
     @Override
     public void cancelOrder(OrderListBean bean) {
-        Subscription subscription = mRepository.cancelOrder(bean.getOrderId(), mRepository.getRASUserID())
+        Subscription subscription = mRepository
+                .cancelOrder(bean.getOrderId(), mRepository.getRASUserID())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override

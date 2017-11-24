@@ -89,7 +89,7 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
 
     private void getSignStatus() {
         ActivityCarDTO activityCarDTO = new ActivityCarDTO();
-        activityCarDTO.setUsrnum(MainRouter.getUserID(false));
+        activityCarDTO.setUsrnum(MainRouter.getUserID());
         CarApiClient.getActivityCar(Utils.getContext(), activityCarDTO, new CallBack<ActivityCarResponse>() {
             @Override
             public void onSuccess(ActivityCarResponse result) {

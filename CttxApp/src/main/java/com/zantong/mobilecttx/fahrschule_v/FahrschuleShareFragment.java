@@ -18,6 +18,7 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.Des3;
 import com.zantong.mobilecttx.R;
@@ -33,8 +34,6 @@ import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 import com.zantong.mobilecttx.zxing.EncodingUtils;
 
 import java.util.List;
-
-import com.tzly.ctcyh.router.util.MobUtils;
 
 /**
  * 驾校报名分享页面
@@ -105,9 +104,7 @@ public class FahrschuleShareFragment extends JxBaseRefreshFragment
     }
 
     @Override
-    protected void onLoadMoreData() {
-
-    }
+    protected void onLoadMoreData() {}
 
     @Override
     protected int initFragmentView() {

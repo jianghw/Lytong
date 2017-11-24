@@ -43,7 +43,7 @@ public class UserInfoUpdatePresenter extends BasePresenter<UserInfoUpdateView> i
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.u003.01");
                 masp = new JSONObject();
                 try {
-                    masp.put("usrid", MainRouter.getUserID(true));
+                    masp.put("usrid", MainRouter.getUserID());
                     masp.put("portrait", mUserInfoUpdate.mapData().get("portrait"));
                     masp.put("devicetoken", MainRouter.getPhoneDeviceId());
                     masp.put("pushswitch", 0);

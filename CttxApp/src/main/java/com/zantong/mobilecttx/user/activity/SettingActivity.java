@@ -184,7 +184,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 Intent intent = new Intent(SettingActivity.this, DateService.class);
-                if (MainRouter.isUserLogin() && !"".equals(MainRouter.getUserID(false))) {
+                if (MainRouter.isUserLogin()) {
                     SPUtils.getInstance().setJifenPush(isChecked);
                     LoginData.getInstance().updateMsg = isChecked;
                     if (isChecked) {
@@ -226,7 +226,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 Act.getInstance().gotoIntent(this, AboutActivity.class);
                 break;
             case R.id.setting_date_text://选择领证日期
-                if (MainRouter.isUserLogin() && !"".equals(MainRouter.getUserID(false))) {
+                if (MainRouter.isUserLogin() && !"".equals(MainRouter.getUserID())) {
                     showLicenseDateDialog();
                 } else {
                     MainRouter.gotoLoginActivity(this);
@@ -496,7 +496,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         String[] imageUrls = MainRouter.getUserPortrait().split("\\/");
 
         if (Tools.isStrEmpty(MainRouter.getUserPortrait())) {
-            imagFileName = MainRouter.getUserID(true) + ".jpg";
+            imagFileName = MainRouter.getUserID() + ".jpg";
         } else {
             imagFileName = imageUrls[imageUrls.length - 1];
         }
@@ -543,7 +543,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         getBaseBack().setEnabled(false);
         UpdateUserHeadImgDTO updateUserHeadImgDTO = new UpdateUserHeadImgDTO();
         updateUserHeadImgDTO.setPortrait(strUrl);
-        updateUserHeadImgDTO.setUsrid(MainRouter.getUserID(true));
+        updateUserHeadImgDTO.setUsrid(MainRouter.getUserID());
         updateUserHeadImgDTO.setDevicetoken(MainRouter.getPhoneDeviceId());
         updateUserHeadImgDTO.setPushswitch("0");
         UserApiClient.updateUserHeadImg(this, updateUserHeadImgDTO, new CallBack<BankResponse>() {
@@ -621,13 +621,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 hideDialogLoading();
 
                 if ("000000".equals(bankResponse.getSYS_HEAD().getReturnCode())) {
-                    LoginData.getInstance().clearData(Utils.getContext());
-                    SPUtils.getInstance().clear();
-                    CleanUtils.cleanCustomCache(FileUtils.photoImageDirectory(getApplicationContext()));
-
-                    MainRouter.cleanUserLogin();
-                    mLogout.setVisibility(View.GONE);
-                    finish();
+                    cleanData();
                 } else {
                     ToastUtils.toastShort("退出失败");
                 }
@@ -639,6 +633,16 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 ToastUtils.toastShort(msg + "退出失败");
             }
         });
+    }
+
+    private void cleanData() {
+        LoginData.getInstance().clearData(Utils.getContext());
+        SPUtils.getInstance().clear();
+        CleanUtils.cleanCustomCache(FileUtils.photoImageDirectory(Utils.getContext()));
+
+        mLogout.setVisibility(View.GONE);
+        MainRouter.cleanUserLogin();
+        MainRouter.gotoMainActivity(this, 0);
     }
 
     private void crop(Uri uri) {

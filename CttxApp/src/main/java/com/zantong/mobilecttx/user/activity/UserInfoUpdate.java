@@ -405,7 +405,7 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
         String[] imageUrls = MainRouter.getUserPortrait().split("\\/");
 
         if (Tools.isStrEmpty( MainRouter.getUserPortrait())) {
-            imagFileName =  MainRouter.getUserID(true)+ ".jpg";
+            imagFileName =  MainRouter.getUserID()+ ".jpg";
         } else {
             imagFileName = imageUrls[imageUrls.length - 1];
         }

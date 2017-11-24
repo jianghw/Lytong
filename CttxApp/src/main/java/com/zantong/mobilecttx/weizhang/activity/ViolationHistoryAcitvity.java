@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -78,7 +77,7 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView, HelpPre
         showDialogLoading();
         ViolationSearchDTO dto = new ViolationSearchDTO();
         dto.setDate(mDate);
-        dto.setUsernum(RSAUtils.strByEncryption(MainRouter.getUserID(false), true));
+        dto.setUsernum(MainRouter.getRASUserID());
         CarApiClient.getViolationHistory(Utils.getContext(), dto,
                 new CallBack<ViolationHistoryBean>() {
                     @Override
@@ -97,7 +96,7 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView, HelpPre
                             ViolationSearchDTO dto = new ViolationSearchDTO();
                             dto.setCarnum(info.getCarnum());
                             dto.setDate(mDate);
-                            dto.setUsernum(RSAUtils.strByEncryption(MainRouter.getUserID(false), true));
+                            dto.setUsernum(MainRouter.getRASUserID());
                             getHistoryByCar(info, dto);
 
                         }

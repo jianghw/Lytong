@@ -5,7 +5,10 @@ import android.support.annotation.Nullable;
 import com.tzly.ctcyh.pay.api.ICouponService;
 import com.tzly.ctcyh.pay.api.IOrderService;
 import com.tzly.ctcyh.pay.api.IPayApiService;
+import com.tzly.ctcyh.pay.bean.BaseResponse;
+import com.tzly.ctcyh.pay.bean.response.CouponDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponResponse;
+import com.tzly.ctcyh.pay.bean.response.CouponStatusResponse;
 import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
@@ -58,7 +61,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<CouponResponse> getCouponByType(String userId, String extraType, int payType) {
-        return baseRetrofit().create(ICouponService.class).getConponByType(userId, extraType,payType);
+        return baseRetrofit().create(ICouponService.class).getConponByType(userId, extraType, payType);
     }
 
     /**
@@ -77,12 +80,37 @@ public class RemoteData implements IRemoteSource {
         return couponUserId <= 0 ? baseRetrofit().create(IPayApiService.class).getBankPayHtml(extraOrderId, amount)
                 : baseRetrofit().create(IPayApiService.class).getBankPayHtml(extraOrderId, amount, String.valueOf(couponUserId));
     }
+
     /**
      * 9.获取订单详情
      */
     @Override
     public Observable<OrderDetailResponse> getOrderDetail(String orderId) {
         return baseRetrofit().create(IOrderService.class).getOrderDetail(orderId);
+    }
+
+    /**
+     * 获取优惠券列表
+     */
+    @Override
+    public Observable<CouponStatusResponse> couponUserList(String rasUserID, String couponStatus) {
+        return baseRetrofit().create(ICouponService.class).couponUserList(rasUserID, couponStatus);
+    }
+
+    /**
+     * 2.4.27删除用户优惠券
+     */
+    @Override
+    public Observable<BaseResponse> delUsrCoupon(String rasUserID, String couponId) {
+        return baseRetrofit().create(ICouponService.class).delUsrCoupon(rasUserID, couponId);
+    }
+
+    /**
+     * 优惠券详情
+     */
+    @Override
+    public Observable<CouponDetailResponse> couponDetail(String couponId) {
+        return baseRetrofit().create(ICouponService.class).couponDetail( couponId);
     }
 
 

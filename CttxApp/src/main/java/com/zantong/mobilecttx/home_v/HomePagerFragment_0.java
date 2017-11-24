@@ -54,6 +54,9 @@ public class HomePagerFragment_0 extends RefreshFragment implements View.OnClick
     @Override
     protected void loadingFirstData() {}
 
+    @Override
+    protected void responseData(Object response) {}
+
     public static HomePagerFragment_0 newInstance() {
         return new HomePagerFragment_0();
     }

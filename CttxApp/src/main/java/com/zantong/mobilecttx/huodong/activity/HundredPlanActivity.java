@@ -13,6 +13,8 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tzly.ctcyh.router.DensityUtils;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
@@ -35,8 +37,6 @@ import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import com.tzly.ctcyh.router.bean.BaseResponse;
-import com.tzly.ctcyh.router.DensityUtils;
 
 /**
  * 活动报名
@@ -136,7 +136,7 @@ public class HundredPlanActivity extends BaseMvpActivity {
                 }
 
                 HundredPlanDTO dto = new HundredPlanDTO();
-                dto.setUsrnum(MainRouter.getUserID(false));
+                dto.setUsrnum(MainRouter.getUserID());
                 dto.setPhoneNum(MainRouter.getUserPhoenum());
                 dto.setPlateNo(mSelCar.getText().toString());
 

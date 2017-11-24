@@ -18,7 +18,6 @@ import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
-import com.zantong.mobilecttx.oiling_v.RechargeActivity;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.eventbus.DriveLicensePhotoEvent;
 import com.zantong.mobilecttx.eventbus.PayMotoOrderEvent;
@@ -119,7 +118,7 @@ public class InterfaceForJS {
     //加油充值
     @JavascriptInterface
     public void addOil() {
-        mJSContext.startActivity(new Intent(mJSContext, RechargeActivity.class));
+        MainRouter.gotoRechargeActivity(mJSContext);
     }
 
     //代驾
@@ -136,7 +135,7 @@ public class InterfaceForJS {
     //获取用户ID
     @JavascriptInterface
     public String getUserId() {
-        return MainRouter.getUserID(true);
+        return MainRouter.getUserID();
     }
 
     //获取绑卡状态 0已绑卡  1未绑卡
@@ -204,7 +203,7 @@ public class InterfaceForJS {
     //跳转支付页面
     @JavascriptInterface
     public void payMOTOrder(String coupon, String orderId, String amount) {
-        EventBus.getDefault().post(new PayMotoOrderEvent( coupon, orderId,amount));
+        EventBus.getDefault().post(new PayMotoOrderEvent(coupon, orderId, amount));
     }
 
 }

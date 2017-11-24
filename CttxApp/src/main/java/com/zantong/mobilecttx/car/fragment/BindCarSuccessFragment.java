@@ -66,7 +66,7 @@ public class BindCarSuccessFragment extends BaseExtraFragment {
         mPayCarAdapter = new PayCarAdapter();
         mCarsRecyclerView.setAdapter(mPayCarAdapter);
         LogoutDTO dto = new LogoutDTO();
-        dto.setUsrid(MainRouter.getUserID(true));
+        dto.setUsrid(MainRouter.getUserID());
         onShowLoading();
 
         UserApiClient.getPayCars(this.getActivity(), dto, new CallBack<PayCarResult>() {

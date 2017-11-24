@@ -35,7 +35,9 @@ public abstract class LibUiRouter implements IComponentRouter {
         }
         String host = uri.getHost();
         Intent intent = new Intent();
+        //当路由存在时向下执行
         if (gotoActivity(context, host, intent)) return false;
+        //默认情况下登录状态向下执行
         if (excludeLoginActivity(host)) return false;
 
         intent.putExtras(bundle == null ? new Bundle() : bundle);

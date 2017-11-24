@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.custom.refresh.IPullListener;
@@ -48,10 +49,12 @@ public abstract class JxBaseRefreshFragment extends JxBaseFragment {
      */
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View inflate = inflater.inflate(R.layout.fragment_jx_base_refresh,null);
-        final PullToRefreshLayout pullRefreshView = (PullToRefreshLayout) inflate.findViewById(R.id.custom_refresh);
+        View inflate = inflater.inflate(R.layout.fragment_jx_base_refresh, null);
+        final PullToRefreshLayout pullRefreshView =
+                (PullToRefreshLayout) inflate.findViewById(R.id.custom_refresh);
         pullRefreshView.setPullDownEnable(isRefresh());
         pullRefreshView.setPullUpEnable(isLoadMore());
         pullRefreshView.setIPullListener(new IPullListener() {
@@ -80,9 +83,9 @@ public abstract class JxBaseRefreshFragment extends JxBaseFragment {
             }
         });
 
-//        LinearLayout linearLayout = (LinearLayout) inflate.findViewById(R.id.base_fragment_content);
-//        View contentView = inflater.inflate(extraTopView(), linearLayout, true);
-//        bindExtraTopView(contentView);
+        LinearLayout linearLayout = (LinearLayout) inflate.findViewById(R.id.base_fragment_content);
+        View contentView = inflater.inflate(initFragmentView(), linearLayout, true);
+        bindFragmentView(contentView);
         return inflate;
     }
 
@@ -111,6 +114,7 @@ public abstract class JxBaseRefreshFragment extends JxBaseFragment {
 
     /**
      * 绑定控件
+     *
      * @param fragment
      */
     protected abstract void bindFragmentView(View fragment);

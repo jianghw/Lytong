@@ -26,10 +26,6 @@ public class MegTypeAtyPresenter implements IMegTypeAtyContract.IMegTypeAtyPrese
     private final RepositoryManager mRepository;
     private final IMegTypeAtyContract.IMegTypeAtyView mView;
     private final CompositeSubscription mSubscriptions;
-    /**
-     * 是否为刷新操作
-     */
-    private boolean isRefresh = false;
 
     public MegTypeAtyPresenter(@NonNull RepositoryManager repositoryManager,
                                @NonNull IMegTypeAtyContract.IMegTypeAtyView view) {
@@ -56,7 +52,7 @@ public class MegTypeAtyPresenter implements IMegTypeAtyContract.IMegTypeAtyPrese
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        if (!isRefresh) mView.onShowLoading();
+                        mView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -64,21 +60,22 @@ public class MegTypeAtyPresenter implements IMegTypeAtyContract.IMegTypeAtyPrese
                 .subscribe(new BaseSubscriber<MessageTypeResponse>() {
                     @Override
                     public void doCompleted() {
-                        isRefresh = true;
+                        mView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mView.findAllMessageError(e.getMessage());
+                        mView.responseError(e.getMessage());
+                        mView.dismissLoading();
                     }
 
                     @Override
                     public void doNext(MessageTypeResponse messageTypeResult) {
                         if (messageTypeResult != null
                                 && messageTypeResult.getResponseCode() == 2000) {
-                            mView.findAllMessageSucceed(messageTypeResult);
+                            mView.responseSucceed(messageTypeResult);
                         } else {
-                            mView.findAllMessageError(messageTypeResult != null
+                            mView.responseError(messageTypeResult != null
                                     ? messageTypeResult.getResponseDesc() : "未知错误(2.4.20.1)");
                         }
                     }
@@ -98,7 +95,7 @@ public class MegTypeAtyPresenter implements IMegTypeAtyContract.IMegTypeAtyPrese
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mView.showLoadingDialog();
+                        mView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -106,12 +103,13 @@ public class MegTypeAtyPresenter implements IMegTypeAtyContract.IMegTypeAtyPrese
                 .subscribe(new BaseSubscriber<MessageResponse>() {
                     @Override
                     public void doCompleted() {
-                        mView.dismissLoadingDialog();
+                        mView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
                         mView.deleteMessageDetailError(e.getMessage());
+                        mView.dismissLoading();
                     }
 
                     @Override

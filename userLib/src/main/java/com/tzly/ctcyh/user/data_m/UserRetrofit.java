@@ -4,9 +4,8 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.tzly.ctcyh.router.ServiceRouter;
-import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.user.BuildConfig;
+import com.tzly.ctcyh.user.router.UserRouter;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -66,7 +65,7 @@ public class UserRetrofit implements IRetrofitUrl {
                 //添加head
                 Headers.Builder headBuilder = oldRequest.headers().newBuilder();
                 //TODO userPhone
-                headBuilder.add("DvcToken",getDeviceId());
+                headBuilder.add("DvcToken", getDeviceId());
                 requestBuilder.headers(headBuilder.build());
 
                 CacheControl.Builder builder = new CacheControl.Builder();
@@ -126,16 +125,7 @@ public class UserRetrofit implements IRetrofitUrl {
     };
 
     private String getDeviceId() {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        if (serviceRouter.getService(IUserService.class.getSimpleName()) != null) {
-            IUserService service = (IUserService) serviceRouter
-                    .getService(IUserService.class.getSimpleName());
-            return service.getPhoneDeviceId();
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-            return "0123456789";
-        }
+        return UserRouter.getDeviceId();
     }
 
     @Override

@@ -131,7 +131,7 @@ public class MyCardFragment extends BaseExtraFragment implements ModelView {
      */
     private void getBangDingCar() {
         LogoutDTO dto = new LogoutDTO();
-        dto.setUsrid(MainRouter.getUserID(true));
+        dto.setUsrid(MainRouter.getUserID());
         UserApiClient.getPayCars(Utils.getContext(), dto, new CallBack<PayCarResult>() {
             @Override
             public void onSuccess(PayCarResult result) {

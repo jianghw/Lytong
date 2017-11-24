@@ -3,6 +3,8 @@ package com.tzly.ctcyh.router;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.tzly.ctcyh.router.util.LogUtils;
+
 import java.util.HashMap;
 
 /**
@@ -79,6 +81,7 @@ public class ServiceRouter {
         if (serviceName == null || serviceImpl == null) {
             return;
         }
+        LogUtils.d(serviceName);
         mServiceMap.put(serviceName, serviceImpl);
     }
 

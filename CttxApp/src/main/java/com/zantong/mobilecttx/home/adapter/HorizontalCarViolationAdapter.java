@@ -13,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.ScreenUtils;
+import com.tzly.ctcyh.router.custom.popup.MoreWindow;
+import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
@@ -30,10 +33,6 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.tzly.ctcyh.router.custom.popup.MoreWindow;
-import com.tzly.ctcyh.router.util.MobUtils;
-import com.tzly.ctcyh.router.ScreenUtils;
 
 /**
  * Created by jianghw on 2017/6/27.
@@ -69,8 +68,8 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
             if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
             mUserCarInfoBeanList.addAll(infoBeanList);
         }
-//        if (carCount <= 3) 需求不要
-            mUserCarInfoBeanList.add(new UserCarInfoBean());
+        //        if (carCount <= 3) 需求不要
+        mUserCarInfoBeanList.add(new UserCarInfoBean());
     }
 
     public void notifyDataSetChanged(List<UserCarInfoBean> infoBeanList) {

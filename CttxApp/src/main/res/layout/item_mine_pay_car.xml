@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_120"
-        android:background="@drawable/bg_sel_item_gray">
+        android:background="@drawable/sel_item_solid_gray">
 
         <TextView
             android:id="@+id/item_mine_pay_car_num"

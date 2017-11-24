@@ -284,7 +284,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
 //证件类型
         applyCTCardDTO.setCtftp("0");
 
-        applyCTCardDTO.setUsrid(MainRouter.getUserID(true));
+        applyCTCardDTO.setUsrid(MainRouter.getUserID());
 
         applyCTCardDTO.setActnotf("1");
         applyCTCardDTO.setElecbillsign("0");

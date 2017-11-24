@@ -50,7 +50,8 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
      */
     @Override
     public void getCouponCount() {
-        Subscription subscription = mRepository.usrCouponInfo(mRepository.getRASUserID(), "1")
+        Subscription subscription = mRepository
+                .usrCouponInfo(mRepository.getRASUserID(), "1")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<CouponFragmentResponse>() {

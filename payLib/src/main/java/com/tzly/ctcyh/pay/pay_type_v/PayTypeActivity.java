@@ -33,9 +33,7 @@ public class PayTypeActivity extends AbstractBaseActivity implements IPayTypeUi 
     }
 
     @Override
-    protected void newIntent(Intent intent) {
-
-    }
+    protected void newIntent(Intent intent) {}
 
     @Override
     protected int initContentView() {
@@ -78,14 +76,4 @@ public class PayTypeActivity extends AbstractBaseActivity implements IPayTypeUi 
         setResult(PayGlobal.resultCode.pay_type_back);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (TextUtils.isEmpty(mCurHost) || mCurHost.equals(PayGlobal.Host.pay_type_host)) {
-            if (mPayTypeFragment != null) {
-                mPayTypeFragment.onActivityResult(requestCode, resultCode, data);
-            }
-        }
-    }
 }

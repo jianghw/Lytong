@@ -41,7 +41,7 @@ public class UpdateNickNamePresenter extends BasePresenter<IBaseView> implements
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.u003.01");
                 masp = new JSONObject() ;
                 try {
-                    masp.put("usrid", MainRouter.getUserID(true));
+                    masp.put("usrid", MainRouter.getUserID());
                     masp.put("nickname", mUpdateNickName.mapData().get("nickname"));
                     masp.put("devicetoken", MainRouter.getPhoneDeviceId());
                     masp.put("pushswitch", 0);

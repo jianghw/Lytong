@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/shade_bg_gradient_vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/res_x_60"
+        android:layout_marginRight="@dimen/res_x_60"
+        android:layout_marginTop="@dimen/res_y_60"
+        android:background="@drawable/shape_radius_white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/res_y_60">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_brand"
+                android:layout_width="@dimen/res_x_120"
+                android:layout_height="@dimen/res_x_120"
+                android:layout_margin="@dimen/res_x_30"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/app_icon"/>
+
+            <TextView
+                android:id="@+id/tv_brand"
+                style="@style/ResTextTheme.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/img_brand"
+                android:gravity="left|center_vertical"
+                android:maxLines="2"
+                android:textSize="@dimen/res_fs_18"
+                tools:text="发生的纠纷是第三阶段风机伺服电机 "/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_price"
+                style="@style/ResTextTheme.Red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="0"
+                android:textSize="@dimen/res_fs_50"/>
+
+            <TextView
+                android:id="@+id/tv_unit"
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_price"
+                android:layout_marginLeft="@dimen/res_x_20"
+                android:layout_toRightOf="@+id/tv_price"
+                tools:text="元"/>
+
+            <ImageView
+                android:id="@+id/img_invalid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_unit"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/pay_ic_coupon_un"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_code"
+            style="@style/ResTextTheme.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/ds_60"
+            android:layout_marginRight="@dimen/ds_60"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/res_fs_28"
+            tools:text="10"/>
+
+        <TextView
+            android:id="@+id/tv_date"
+            style="@style/ResTextTheme.14.Hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:singleLine="true"
+            android:textSize="@dimen/fs_14sp"
+            tools:text="2017-08-01"/>
+
+        <TextView
+            style="@style/ResTextTheme.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:singleLine="true"
+            android:text="优惠详情"
+            android:textSize="@dimen/res_fs_22"/>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:layout_marginRight="@dimen/res_x_30"
+            android:layout_marginTop="@dimen/res_x_20"
+            android:textColor="@color/colorTvBlack_b3"
+            android:textSize="@dimen/res_fs_16"
+            tools:text="使用规则fsfsdfsfjsdfsjfiisjdffdssff"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/res_y_2"
+            android:layout_margin="@dimen/res_x_30"
+            android:background="@color/res_color_red_f3"/>
+
+        <TextView
+            style="@style/ResTextTheme.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:singleLine="true"
+            android:text="使用规则"
+            android:textSize="@dimen/res_fs_22"/>
+
+        <TextView
+            android:id="@+id/tv_use"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:layout_marginRight="@dimen/res_x_30"
+            android:layout_marginTop="@dimen/res_x_20"
+            android:textColor="@color/colorTvBlack_b3"
+            android:textSize="@dimen/res_fs_16"
+            tools:text="使用规则fsfsdfsfjsdfsjfiisjdffdssff"/>
+    </LinearLayout>
+
+</RelativeLayout>

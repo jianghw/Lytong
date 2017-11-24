@@ -76,7 +76,8 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
      */
     @Override
     public void getTextNoticeInfo() {
-        Subscription subscription = mRepository.getTextNoticeInfo(mRepository.getRASUserID())
+        Subscription subscription = mRepository
+                .getTextNoticeInfo(mRepository.getRASUserID())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HomeCarResponse>() {

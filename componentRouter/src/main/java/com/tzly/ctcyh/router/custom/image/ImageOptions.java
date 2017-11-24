@@ -52,9 +52,7 @@ public class ImageOptions {
                 .showImageForEmptyUri(R.mipmap.app_icon)
                 .showImageOnFail(R.mipmap.app_icon)
                 .showImageOnLoading(R.mipmap.app_icon)
-                .cacheInMemory(true)
                 .cacheOnDisk(true)
-                .considerExifParams(true)
                 .bitmapConfig(Bitmap.Config.RGB_565).build();
         return options;
     }

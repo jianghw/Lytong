@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.tzly.ctcyh.router.custom.CustomLoader;
 import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -23,8 +25,6 @@ import com.zantong.mobilecttx.weizhang.bean.RspInfoBean;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.util.List;
-
-import com.tzly.ctcyh.router.custom.CustomLoader;
 
 
 /**
@@ -147,7 +147,7 @@ public class LicenseDetailFragment extends JxBaseRefreshFragment
         mCustomRecycler.setAdapter(mAdapter);
 
         LicenseGradeAtyPresenter mPresenter = new LicenseGradeAtyPresenter(
-                Injection.provideRepository(getContext()), this);
+                Injection.provideRepository(Utils.getContext()), this);
     }
 
     /**

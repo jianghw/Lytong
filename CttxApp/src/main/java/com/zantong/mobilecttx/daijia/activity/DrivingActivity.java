@@ -15,6 +15,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.search.core.PoiInfo;
+import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
@@ -39,7 +40,6 @@ import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import com.tzly.ctcyh.router.util.MobUtils;
 
 /**
  * 代驾首页
@@ -158,7 +158,7 @@ public class DrivingActivity extends BaseMvpActivity<IBaseView, HelpPresenter> {
         hashMap.put("addressLat", String.valueOf(latitude));
         hashMap.put("name", phone);
         hashMap.put("driverNum", String.valueOf("1"));
-        hashMap.put("usrId",MainRouter.getUserID(false));
+        hashMap.put("usrId",MainRouter.getUserID());
         String hashStr = HashUtils.getSignature(hashMap);
         dto.setHash(hashStr);
 

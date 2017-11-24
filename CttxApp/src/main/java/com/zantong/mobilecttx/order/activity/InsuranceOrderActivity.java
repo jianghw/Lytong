@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
@@ -24,7 +25,6 @@ import com.zantong.mobilecttx.utils.NetUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
 
 import butterknife.Bind;
-import com.tzly.ctcyh.router.bean.BankResponse;
 
 /**
  * 我的订单
@@ -147,7 +147,7 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
                             .append("?orderNo=").append(item.getPolcyprignum())
                             .append("&payAmount=").append(item.getTotinsprem())
                             .append("&productCode=").append(item.getCastinspolcycode())
-                            .append("&userName=").append(MainRouter.getUserID(false))
+                            .append("&userName=").append(MainRouter.getUserID())
                             .append("&clientIP=").append(NetUtils.getPhontIP(this))
                             .append("&clientType=").append(CLIENT_TYPE_0);
 
@@ -164,7 +164,7 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
      */
     private void commitInsOrder() {
         InsOrderDTO dto = new InsOrderDTO();
-        dto.setUsrid(MainRouter.getUserID(false));
+        dto.setUsrid(MainRouter.getUserID());
         dto.setCastinspolcycode(mCastinspolcycode);
         dto.setOrigtranserlnum(mOrigtranserlnum);
         dto.setPolcyprignum(mPolcyprignum);

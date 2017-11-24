@@ -106,7 +106,7 @@ public class LicenseGradeAtyPresenter implements ILicenseGradeAtyContract.ILicen
         LogUtils.e(bean.getStrtdt());
         LogUtils.e(bean.getEnddt());
 
-        String fileNum = mRepository.getStrByEncryption(bean.getFilenum());
+        String fileNum = mRepository.getRASByStr(bean.getFilenum());
         LicenseFileNumDTO fileNumDTO = new LicenseFileNumDTO();
         fileNumDTO.setFilenum(fileNum);
         fileNumDTO.setStrtdt(bean.getStrtdt());

@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.msg_p;
 
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
-import com.zantong.mobilecttx.user.bean.MessageDetailResponse;
+import com.tzly.ctcyh.router.base.IResponseView;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 
 /**
@@ -11,15 +11,7 @@ import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 
 public interface IMegDetailAtyContract {
 
-    interface IMegDetailAtyView extends IBaseView<IMegDetailAtyPresenter> {
-        /**
-         * 请求响应成功
-         *
-         * @param messageResult
-         */
-        void findMessageDetailSucceed(MessageDetailResponse messageResult);
-
-        void findMessageDetailError(String message);
+    interface IMegDetailAtyView extends IBaseView<IMegDetailAtyPresenter>,IResponseView {
 
         int getIdByArguments();
     }

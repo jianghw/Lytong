@@ -35,7 +35,7 @@ public class UserDataService implements IUserService {
     }
 
     /**
-     * 是否登录
+     * 是否登录 true--登录过
      */
     @Override
     public boolean isUserByLogin() {
@@ -122,11 +122,6 @@ public class UserDataService implements IUserService {
     @Override
     public String getUserID() {
         return mRepository.getUserID();
-    }
-
-    @Override
-    public String getUserID(boolean isNeedLogin) {
-        return mRepository.getUserID(isNeedLogin);
     }
 
     @Override

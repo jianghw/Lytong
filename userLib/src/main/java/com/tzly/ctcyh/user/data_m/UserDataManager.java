@@ -8,8 +8,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.rea.Des3;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
-import com.tzly.ctcyh.user.global.UserMemoryData;
 import com.tzly.ctcyh.user.bean.BankResponse;
 import com.tzly.ctcyh.user.bean.BaseResponse;
 import com.tzly.ctcyh.user.bean.RequestHeadDTO;
@@ -89,7 +87,6 @@ public class UserDataManager {
      */
     public String getPhoneDeviceId() {
         String deviceId = mLocalData.getPhoneDeviceId();
-        if (TextUtils.isEmpty(deviceId)) deviceId = getPushId();
         LogUtils.i("DeviceId=============:" + deviceId);
         return deviceId;
     }
@@ -100,21 +97,27 @@ public class UserDataManager {
     public String getPushId() {
         String pushId = mLocalData.getPushId();
         if (TextUtils.isEmpty(pushId)) pushId = UserRouter.getPushId();
-        if (TextUtils.isEmpty(pushId)) pushId = getUserID(false);
-        if (TextUtils.isEmpty(pushId)) pushId = "1234567890";
         LogUtils.i("PushId=============:" + pushId);
         return pushId;
     }
 
     public void savePushId(String pushId) {
         mLocalData.setPushId(pushId);
+        LogUtils.i("PushId=============:" + pushId);
     }
 
     /**
      * 获取用户 id
      */
     public String getRASUserID() {
-        return RSAUtils.strByEncryption(getUserID(), true);
+        return getRASByStr(getUserID());
+    }
+
+    /**
+     * 这段加密封装
+     */
+    public String getRASByStr(String string) {
+        return mLocalData.getRASByStr(string);
     }
 
     /**
@@ -127,11 +130,11 @@ public class UserDataManager {
     }
 
     public String getUserID(boolean isNeedLogin) {
-        String userId = mLocalData.getUserId();
+        String userId = mLocalData.getLoginBean().getUsrid();
         if (!TextUtils.isEmpty(userId)) return userId;
 
         if (isNeedLogin) isUserLogin();
-        return mLocalData.getUserId();
+        return mLocalData.getLoginBean().getUsrid();
     }
 
     /**
@@ -143,7 +146,7 @@ public class UserDataManager {
      * recdphoe	是	string	推荐人手机号 加密
      */
     public boolean isUserLogin() {
-        boolean isLogin = UserMemoryData.getInstance().isLogin();
+        boolean isLogin = mLocalData.isLogin();
         if (isLogin) return true;
         //false
         LoginResponse responseFromSp = getLoginResponseFromSp();
@@ -157,7 +160,7 @@ public class UserDataManager {
     }
 
     public boolean isLogin() {
-        boolean isLogin = UserMemoryData.getInstance().isLogin();
+        boolean isLogin = mLocalData.isLogin();
         if (isLogin) return true;
         LoginResponse responseFromSp = getLoginResponseFromSp();
         if (responseFromSp == null) {
@@ -174,16 +177,14 @@ public class UserDataManager {
         if (responseFromSp == null) return;
         LoginBean loginBean = responseFromSp.getRspInfo();
         if (loginBean == null) return;
-        UserMemoryData.getInstance().setLogin(true);
-        UserMemoryData.getInstance().setUsrid(loginBean.getUsrid());
-        UserMemoryData.getInstance().setGetdate(loginBean.getGetdate());
-        UserMemoryData.getInstance().setNickname(loginBean.getNickname());
-        UserMemoryData.getInstance().setPortrait(loginBean.getPortrait());
 
-        UserMemoryData.getInstance().setFilenum(Des3.decode(loginBean.getFilenum()));
-        UserMemoryData.getInstance().setPhoenum(Des3.decode(loginBean.getPhoenum()));
-        UserMemoryData.getInstance().setCtfnum(Des3.decode(loginBean.getCtfnum()));
-        UserMemoryData.getInstance().setRecdphoe(Des3.decode(loginBean.getRecdphoe()));
+        loginBean.setFilenum(Des3.decode(loginBean.getFilenum()));
+        loginBean.setPhoenum(Des3.decode(loginBean.getPhoenum()));
+        loginBean.setCtfnum(Des3.decode(loginBean.getCtfnum()));
+        loginBean.setRecdphoe(Des3.decode(loginBean.getRecdphoe()));
+
+        mLocalData.setLoginBean(loginBean);
+        mLocalData.setLogin(true);
     }
 
     protected void saveUserMemoryAll(LoginResponse responseFromSp) {
@@ -228,7 +229,7 @@ public class UserDataManager {
         LoginResponse responseFromSp = getLoginResponseFromSp();
         if (responseFromSp != null) {
             LoginBean loginBean = responseFromSp.getRspInfo();
-            loginBean.setFilenum(filenum);
+            loginBean.setFilenum(Des3.encode(filenum));
         }
         saveUserMemoryAll(responseFromSp);
     }
@@ -240,7 +241,7 @@ public class UserDataManager {
         LoginResponse responseFromSp = getLoginResponseFromSp();
         if (responseFromSp != null) {
             LoginBean loginBean = responseFromSp.getRspInfo();
-            loginBean.setPhoenum(phoenum);
+            loginBean.setPhoenum(Des3.encode(phoenum));
         }
         saveUserMemoryAll(responseFromSp);
     }
@@ -282,51 +283,54 @@ public class UserDataManager {
     }
 
     public String getUserPhoenum() {
-        String phoenum = mLocalData.getPhoenum();
+        String phoenum = mLocalData.getLoginBean().getPhoenum();
         if (!TextUtils.isEmpty(phoenum)) return phoenum;
         //false
         LoginResponse responseFromSp = getLoginResponseFromSp();
         if (responseFromSp == null) return "";
         initLoginBean(responseFromSp);
-        return mLocalData.getPhoenum();
+        return mLocalData.getLoginBean().getPhoenum();
     }
 
     public String getUserFilenum() {
-        String filenum = mLocalData.getFilenum();
+        String filenum = mLocalData.getLoginBean().getFilenum();
         if (!TextUtils.isEmpty(filenum)) return filenum;
 
         if (saveUserMemory()) return "";
-        return mLocalData.getFilenum();
+        return mLocalData.getLoginBean().getFilenum();
     }
 
+    public String getUserGetdate() {
+        String getdate = mLocalData.getLoginBean().getGetdate();
+        if (!TextUtils.isEmpty(getdate)) return getdate;
+        if (saveUserMemory()) return "";
+        return mLocalData.getLoginBean().getGetdate();
+    }
+
+    public String getUserPortrait() {
+        String getdate = mLocalData.getLoginBean().getPortrait();
+        if (!TextUtils.isEmpty(getdate)) return getdate;
+
+        if (saveUserMemory()) return "";
+        return mLocalData.getLoginBean().getPortrait();
+    }
+
+    public String getUserNickname() {
+        String getdate = mLocalData.getLoginBean().getNickname();
+        if (!TextUtils.isEmpty(getdate)) return getdate;
+
+        if (saveUserMemory()) return "";
+        return mLocalData.getLoginBean().getNickname();
+    }
+
+    /**
+     * 内存数据为空时查询缓存数据
+     */
     protected boolean saveUserMemory() {
         LoginResponse responseFromSp = getLoginResponseFromSp();
         if (responseFromSp == null) return true;
         initLoginBean(responseFromSp);
         return false;
-    }
-
-    public String getUserGetdate() {
-        String getdate = mLocalData.getGetdate();
-        if (!TextUtils.isEmpty(getdate)) return getdate;
-        if (saveUserMemory()) return "";
-        return mLocalData.getGetdate();
-    }
-
-    public String getUserPortrait() {
-        String getdate = mLocalData.getPortrait();
-        if (!TextUtils.isEmpty(getdate)) return getdate;
-
-        if (saveUserMemory()) return "";
-        return mLocalData.getPortrait();
-    }
-
-    public String getUserNickname() {
-        String getdate = mLocalData.getNickname();
-        if (!TextUtils.isEmpty(getdate)) return getdate;
-
-        if (saveUserMemory()) return "";
-        return mLocalData.getNickname();
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.tzly.ctcyh.router.base;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +18,7 @@ import com.jcodecraeer.xrecyclerview.touch.SwipeMenuCreator;
 import com.jcodecraeer.xrecyclerview.touch.SwipeMenuItem;
 import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.custom.SpaceItemDecoration;
-import com.tzly.ctcyh.router.util.ConvertUtils;
+import com.tzly.ctcyh.router.util.Utils;
 
 import java.util.List;
 
@@ -75,7 +74,6 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
             mCustomRecycler.addItemDecoration(new SpaceItemDecoration(getCustomDecoration()));
 
         initRecyclerHeader(customViewHeader());
-
         if (getRecyclerHeader() != null) {
             mCustomRecycler.addHeaderView(getRecyclerHeader());
         }
@@ -123,6 +121,7 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
     protected int getCustomDecoration() {
         return 0;
     }
+
     /**
      * 额外的布局
      */
@@ -131,8 +130,6 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
     }
 
     protected void bindExtraTopView(View view) {}
-
-    protected abstract void initPresenter();
 
     protected View customViewHeader() {
         return null;
@@ -162,15 +159,15 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
     private SwipeMenuCreator swipeMenuCreator = new SwipeMenuCreator() {
         @Override
         public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
-            int width = ConvertUtils.px2dp(80);
+            int width = getResources().getDimensionPixelSize(R.dimen.res_x_166);
             int height = resetDeleteItemHeight();
             // 设置菜单方向为竖型的。
             swipeRightMenu.setOrientation(SwipeMenu.HORIZONTAL);
-            SwipeMenuItem deleteItem = new SwipeMenuItem(getContext().getApplicationContext())
-                    .setBackgroundDrawable(R.drawable.selector_item_delete_red)
+            SwipeMenuItem deleteItem = new SwipeMenuItem(Utils.getContext())
+                    .setBackgroundColor(getResources().getColor(R.color.res_color_red_ef))
                     .setImage(R.mipmap.ic_list_item_delete)
                     .setText("删除") // 文字，还可以设置文字颜色，大小等。。
-                    .setTextColor(Color.WHITE)
+                    .setTextColor(getResources().getColor(R.color.res_color_white))
                     .setWidth(width)
                     .setHeight(height);
             swipeRightMenu.addMenuItem(deleteItem);// 添加一个按钮到右侧侧菜单。
@@ -258,6 +255,8 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
     protected void onRefreshData() {
         loadingFirstData();
     }
+
+    protected abstract void initPresenter();
 
     /**
      * 加载更多数据

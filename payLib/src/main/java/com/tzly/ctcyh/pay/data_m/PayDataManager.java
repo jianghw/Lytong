@@ -3,7 +3,10 @@ package com.tzly.ctcyh.pay.data_m;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.tzly.ctcyh.pay.bean.BaseResponse;
+import com.tzly.ctcyh.pay.bean.response.CouponDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponResponse;
+import com.tzly.ctcyh.pay.bean.response.CouponStatusResponse;
 import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
@@ -43,7 +46,7 @@ public class PayDataManager {
      * 57.获取指定类型优惠券
      */
     public Observable<CouponResponse> getCouponByType(String userId, String extraType, int payType) {
-        return mRemoteData.getCouponByType(userId, extraType,payType);
+        return mRemoteData.getCouponByType(userId, extraType, payType);
     }
 
     /**
@@ -76,5 +79,26 @@ public class PayDataManager {
      */
     public Observable<OrderDetailResponse> getOrderDetail(String orderId) {
         return mRemoteData.getOrderDetail(orderId);
+    }
+
+    /**
+     * 获取优惠券列表
+     */
+    public Observable<CouponStatusResponse> couponUserList(String rasUserID, String couponStatus) {
+        return mRemoteData.couponUserList(rasUserID, couponStatus);
+    }
+
+    /**
+     * 2.4.27删除用户优惠券
+     */
+    public Observable<BaseResponse> delUsrCoupon(String rasUserID, String couponId) {
+        return mRemoteData.delUsrCoupon(rasUserID, couponId);
+    }
+
+    /**
+     * 优惠券详情
+     */
+    public Observable<CouponDetailResponse> couponDetail(String couponId) {
+        return mRemoteData.couponDetail(couponId);
     }
 }

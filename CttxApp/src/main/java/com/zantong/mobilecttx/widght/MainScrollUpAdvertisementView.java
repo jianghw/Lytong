@@ -39,7 +39,7 @@ public class MainScrollUpAdvertisementView extends BaseAutoScrollUpTextView<Home
      */
     @Override
     protected int getAdertisementHeight() {
-        return 44;
+        return 29;
     }
 
 }

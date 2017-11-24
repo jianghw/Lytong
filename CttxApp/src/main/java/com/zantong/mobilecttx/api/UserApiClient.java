@@ -204,7 +204,7 @@ public class UserApiClient extends BaseApiClient {
         t.setSYS_HEAD(getBean("cip.cfc.u002.01"));
         LogoutDTO dto = new LogoutDTO();
 
-        dto.setUsrid(MainRouter.getUserID(false));
+        dto.setUsrid(MainRouter.getUserID());
         t.setReqInfo(dto);
         post(context, BuildConfig.BASE_URL, t, asyncCallBack);
     }
@@ -284,7 +284,7 @@ public class UserApiClient extends BaseApiClient {
                 context, callback, BankResponse.class);
         dto.setDevicetoken(MainRouter.getPhoneDeviceId());
         dto.setPushswitch(0);//不推送
-        dto.setUsrid(MainRouter.getUserID(true));
+        dto.setUsrid(MainRouter.getUserID());
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u003.01"));
         t.setReqInfo(dto);

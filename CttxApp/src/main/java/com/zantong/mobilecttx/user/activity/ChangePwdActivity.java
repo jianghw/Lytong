@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.bean.BankResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
@@ -33,8 +35,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
-import com.tzly.ctcyh.router.bean.BankResponse;
-import com.tzly.ctcyh.router.bean.BaseResponse;
 
 public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresenter>
         implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
@@ -196,7 +196,7 @@ public class ChangePwdActivity extends BaseMvpActivity<IOrderView, OrderPresente
             return;
         }
         ChangePwdDTO dto = new ChangePwdDTO();
-        dto.setUsrid(MainRouter.getUserID(false));
+        dto.setUsrid(MainRouter.getUserID());
         try {
             SHATools sha = new SHATools();
             String newPassword = SHATools.hexString(sha.eccryptSHA1(newPwd));

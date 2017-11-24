@@ -4,6 +4,7 @@ package com.zantong.mobilecttx.presenter.weizhang;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -19,7 +20,6 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.util.List;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -175,9 +175,7 @@ public class ViolationListPresenter
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<List<ViolationBean>>() {
                     @Override
-                    public void doCompleted() {
-
-                    }
+                    public void doCompleted() {}
 
                     @Override
                     public void doError(Throwable e) {
@@ -237,8 +235,7 @@ public class ViolationListPresenter
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<PayCarResult>() {
                     @Override
-                    public void doCompleted() {
-                    }
+                    public void doCompleted() {}
 
                     @Override
                     public void doError(Throwable e) {

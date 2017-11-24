@@ -108,7 +108,8 @@ public class SubjectCommitPresenter
      */
     @Override
     public void getCouponByType() {
-        Subscription subscription = mRepository.getCouponByType(mRepository.getRASUserID(), "4")
+        Subscription subscription = mRepository
+                .getCouponByType(mRepository.getRASUserID(), "4")
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override

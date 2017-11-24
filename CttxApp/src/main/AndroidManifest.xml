@@ -170,9 +170,7 @@
         <activity
             android:name=".daijia.activity.DaiJiaActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".oiling_v.RechargeActivity"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".map.activity.NavActivity"
             android:screenOrientation="portrait"
@@ -192,29 +190,15 @@
         <activity
             android:name=".common.activity.CommonTwoLevelMenuActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".oiling_v.RechargeAgreementActivity"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".card.activity.ApplySuccessActvity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".user.activity.MegTypeActivity"
+            android:name=".msg_v.MegTypeActivity"
             android:screenOrientation="portrait"/>
 
         <!-- ======================优惠劵模块=========================== -->
-        <!-- 优惠劵 -->
-        <activity
-            android:name=".order.activity.CouponActivity"
-            android:screenOrientation="portrait"/>
-        <!-- 优惠劵详情 -->
-        <activity
-            android:name=".order.activity.CouponDetailActivity"
-            android:screenOrientation="portrait"/>
-        <!-- 加油优惠劵选择 -->
-        <activity
-            android:name=".order.activity.CouponListActivity"
-            android:screenOrientation="portrait"/>
 
         <!-- 活动报名 -->
         <activity
@@ -320,8 +304,8 @@
         <!-- 违法查询页面 输入 -->
         <activity
             android:name=".violation_v.ViolationActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <!-- 违章列表信息显示页面 -->
         <activity
@@ -465,6 +449,15 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="com.push_v.PushNotificationService.delete"/>
+            </intent-filter>
+        </service>
+        <!--推送用-->
+        <!-- 配置Service组件,同时配置一个action -->
+        <service
+            android:name=".push_v.PushTipService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.custom.service.push.tip"/>
             </intent-filter>
         </service>
 

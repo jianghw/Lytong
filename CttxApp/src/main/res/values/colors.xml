@@ -41,7 +41,6 @@
     <color name="colorNoticeGrayNumberFont">#FFF5F2F2</color>
     <color name="colorAddCarGrayNumberFont">#FF666666</color>
 
-    <color name="surePayPopupBackground">#4D000000</color>
     <color name="payRecordTimePopBack">#4D000000</color>
     <color name="mineGray">#FFC8C8CC</color>
     <color name="noticeBackText">#FFFFEDED</color>
@@ -105,7 +104,6 @@
     <color name="gray_d3">#d3d3d3</color>
     <color name="gray_6e">#6E6E6E</color>
     <color name="gray_e3">#e3e3e3</color>
-    <color name="gray_cd">#cdcdcd</color>
 
     <color name="popup_main_background">#af000000</color>
     <color name="civory">#ffffff</color>
@@ -113,5 +111,4 @@
     <color name="common_base_color">#fff5f2f2</color>
 
     <color name="red_normal">#F53E2A</color>
-    <color name="red_pressed">#FF6666</color>
 </resources>

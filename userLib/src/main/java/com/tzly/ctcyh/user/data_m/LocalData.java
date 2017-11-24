@@ -1,18 +1,15 @@
 package com.tzly.ctcyh.user.data_m;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.SPUtils;
-import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.user.global.UserMemoryData;
+import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.tzly.ctcyh.user.bean.RequestHeadDTO;
 import com.tzly.ctcyh.user.bean.response.LoginBean;
 import com.tzly.ctcyh.user.bean.response.LoginResponse;
@@ -34,6 +31,12 @@ public class LocalData implements ILocalSource {
     private final WeakReference<Context> weakReference;
 
     /**
+     * 登录用户信息
+     */
+    private boolean isLogin;
+    private LoginBean mLoginBean;
+
+    /**
      * 懒汉式，线程不安全
      */
     public static LocalData getInstance(@NonNull Context context) {
@@ -47,6 +50,11 @@ public class LocalData implements ILocalSource {
         weakReference = new WeakReference<>(context);
     }
 
+    @Override
+    public Context getWeakReference() {
+        return weakReference.get();
+    }
+
     /**
      * 安盛请求必须构建体
      */
@@ -57,7 +65,8 @@ public class LocalData implements ILocalSource {
         dto.setRequestDate(getDate());
         dto.setRequestTime(getTime());
         dto.setConsumerSeqNo(getRandomStr());
-        dto.setDvcToken(getTelDeviceId());
+        dto.setDvcToken(getPhoneDeviceId());
+
         return dto;
     }
 
@@ -82,19 +91,6 @@ public class LocalData implements ILocalSource {
         return sb.toString();
     }
 
-    @SuppressLint("HardwareIds")
-    public static String getTelDeviceId() {
-        String telDeviceId = "";
-        TelephonyManager telephonyManager =
-                (TelephonyManager) Utils.getContext().getSystemService(Context.TELEPHONY_SERVICE);
-        try {
-            telDeviceId = telephonyManager.getDeviceId();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return telDeviceId;
-    }
-
     /**
      * 设备保存device id
      */
@@ -109,7 +105,9 @@ public class LocalData implements ILocalSource {
      */
     @Override
     public String getPhoneDeviceId() {
-        return SPUtils.getInstance(SPUtils.FILENAME).getString(SPUtils.USER_DEVICE_ID);
+        String deviceId = SPUtils.getInstance(SPUtils.FILENAME).getString(SPUtils.USER_DEVICE_ID);
+        if (TextUtils.isEmpty(deviceId)) deviceId = AppUtils.getDeviceId();
+        return deviceId;
     }
 
     /**
@@ -122,6 +120,10 @@ public class LocalData implements ILocalSource {
                 .create();
         String user = gson.toJson(loginResponse);
         SPUtils.getInstance(SPUtils.FILENAME).put(SPUtils.USER_INFO, user);
+    }
+
+    public String getLoginResponseFromSp() {
+        return SPUtils.getInstance(SPUtils.FILENAME).getString(SPUtils.USER_INFO);
     }
 
     /**
@@ -154,6 +156,7 @@ public class LocalData implements ILocalSource {
     public void saveLoginBean(String userString) {
         if (TextUtils.isEmpty(userString)) return;
         getCleanUser();
+
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .create();
@@ -163,18 +166,22 @@ public class LocalData implements ILocalSource {
         saveLoginResponseToSp(responseFromSp);
     }
 
-    public String getLoginResponseFromSp() {
-        return SPUtils.getInstance(SPUtils.FILENAME).getString(SPUtils.USER_INFO);
+    /**
+     * 获取用户数据bean
+     */
+    @Override
+    public LoginBean getLoginBean() {
+
+        return mLoginBean != null ? mLoginBean : new LoginBean();
     }
 
     @Override
-    public Context getWeakReference() {
-        return weakReference.get();
+    public String getRASByStr(String string) {
+        return RSAUtils.strByEncryption(string, true);
     }
 
-    @Override
-    public String getUserId() {
-        return UserMemoryData.getInstance().getUsrid();
+    public void setLoginBean(LoginBean loginBean) {
+        mLoginBean = loginBean;
     }
 
     /**
@@ -190,34 +197,22 @@ public class LocalData implements ILocalSource {
         return SPUtils.getInstance(SPUtils.FILENAME).getString(SPUtils.USER_PUSH_ID);
     }
 
-    @Override
-    public String getPhoenum() {
-        return UserMemoryData.getInstance().getPhoenum();
+    public boolean isLogin() {
+        return isLogin;
     }
 
-    @Override
-    public String getFilenum() {
-        return UserMemoryData.getInstance().getFilenum();
+    public void setLogin(boolean login) {
+        isLogin = login;
     }
 
-    @Override
-    public String getGetdate() {
-        return UserMemoryData.getInstance().getGetdate();
-    }
-
-    @Override
-    public String getPortrait() {
-        return UserMemoryData.getInstance().getPortrait();
-    }
-
-    @Override
-    public String getNickname() {
-        return UserMemoryData.getInstance().getNickname();
-    }
-
+    /**
+     * 数据清理中~
+     */
     @Override
     public void getCleanUser() {
-        UserMemoryData.getInstance().getCleanUser();
+        isLogin = false;
+        mLoginBean = null;
+
         SPUtils.getInstance(SPUtils.FILENAME).clear();
     }
 

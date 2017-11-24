@@ -3,11 +3,9 @@ package com.zantong.mobilecttx.violation_v;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
 
-import com.tzly.ctcyh.router.base.JxBaseActivity;
+import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
-import com.tzly.ctcyh.router.util.StatusBarUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
@@ -24,23 +22,16 @@ import static com.zantong.mobilecttx.violation_v.LicenseCheckGradeActivity.KEY_B
  * 驾驶证查分
  */
 
-public class LicenseDetailActivity extends JxBaseActivity {
+public class LicenseDetailActivity extends AbstractBaseActivity {
     /**
      * 是否手动关闭当前页面
      */
     private boolean isClose;
     private LicenseFileNumDTO bean;
-
-    /**
-     * 状态栏颜色
-     */
-    protected void initStatusBarColor() {
-        StatusBarUtils.setColor(this, getResources().getColor(R.color.colorTvRed_f33), 0);
-    }
+    private LicenseDetailFragment mLicenseDetailFragment;
 
     @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-        Intent intent = getIntent();
+    protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             bean = bundle.getParcelable(KEY_BUNDLE);
@@ -49,16 +40,17 @@ public class LicenseDetailActivity extends JxBaseActivity {
     }
 
     @Override
+    protected void newIntent(Intent intent) {}
+
+    @Override
     protected int initContentView() {
         return R.layout.activity_base_frame;
     }
 
     @Override
-    protected void bindContentView(View childView) {
+    protected void bindFragment() {
         titleContent("本计分周期累计扣分");
-
         titleMore("编辑");
-        titleBackground();
     }
 
     @Override
@@ -73,12 +65,10 @@ public class LicenseDetailActivity extends JxBaseActivity {
             newBean.setEnddt(localDateFormat(getEndDate(startDay)));
 
             FragmentManager fragmentManager = getSupportFragmentManager();
-            LicenseDetailFragment detailFragment =
-                    (LicenseDetailFragment) getSupportFragmentManager().findFragmentById(R.id.lay_base_frame);
-            if (detailFragment == null) {
-                detailFragment = LicenseDetailFragment.newInstance(newBean);
 
-                FragmentUtils.add(fragmentManager, detailFragment, R.id.lay_base_frame, false, true);
+            if (mLicenseDetailFragment == null) {
+                mLicenseDetailFragment = LicenseDetailFragment.newInstance(newBean);
+                FragmentUtils.add(fragmentManager, mLicenseDetailFragment, R.id.lay_base_frame);
             }
         }
     }
@@ -91,7 +81,6 @@ public class LicenseDetailActivity extends JxBaseActivity {
 
     /**
      * 去除分隔符
-
      */
     private String removeDateAcross(String beanStrtdt) {
         if (beanStrtdt.contains("-")) {

@@ -21,7 +21,6 @@ public class PayAppLike implements IApplicationLike {
     @Override
     public void onCreate() {
         uiRouter.registerUI(mPayUiRouter);
-
         mServiceRouter.addService(IPayService.class.getSimpleName(), new PayDataService());
     }
 

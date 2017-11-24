@@ -42,8 +42,9 @@ import com.tzly.ctcyh.pay.html_p.HtmlPayPresenter;
 import com.tzly.ctcyh.pay.html_p.IHtmlPayContract;
 import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.R;
-import com.tzly.ctcyh.router.base.JxBaseActivity;
+import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.EncryptUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
 import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
@@ -59,7 +60,7 @@ import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CO
  * Update day:
  */
 
-public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IHtmlPayView {
+public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContract.IHtmlPayView {
     private LinearLayout mLayout;
     private WebView mWebView;
     private ProgressBar mProgressBar;
@@ -71,14 +72,12 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
     private IHtmlPayContract.IHtmlPayPresenter mPresenter;
 
     @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-        onNewIntent(getIntent());
+    protected int initContentView() {
+        return R.layout.activity_html_5;
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
+    protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             if (intent.hasExtra(PayGlobal.putExtra.web_title_extra))
@@ -93,16 +92,18 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
     }
 
     @Override
-    protected int initContentView() {
-        return R.layout.activity_html_5;
+    protected void newIntent(Intent intent) {}
+
+    @Override
+    protected void bindFragment() {
+        mProgressBar = (ProgressBar) findViewById(R.id.pb_html5);
+        mWebView = (WebView) findViewById(R.id.wv_html5);
+
+        bindWebSettings();
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    @Override
-    protected void bindContentView(View childView) {
-        mProgressBar = (ProgressBar) childView.findViewById(R.id.pb_html5);
-        mWebView = (WebView) childView.findViewById(R.id.wv_html5);
-
+    protected void bindWebSettings() {
         WebSettings mWebSettings = mWebView.getSettings();
         mWebSettings.setSupportZoom(true);//支持缩放，默认为true
         //mWebSettings.setBuiltInZoomControls(true); //设置内置的缩放控件
@@ -140,7 +141,6 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
             String SEC_KEY = "BE7D6564766740037581842CE0ACA1DD";
             String token = EncryptUtils.encryptMD5ToString(SEC_KEY + cust_id + SEC_KEY);
             mUrl = mUrl + "?cust_id=" + cust_id + "&token=" + token;
-
             mWebView.loadUrl(mUrl);
         }
 
@@ -155,7 +155,7 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
         titleClose();
 
         HtmlPayPresenter presenter = new HtmlPayPresenter(
-                InjectionRepository.provideRepository(getApplicationContext()), this);
+                InjectionRepository.provideRepository(Utils.getContext()), this);
 
         mWebView.addJavascriptInterface(presenter, "CTTX");
     }
@@ -215,7 +215,7 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    toastShore("请确认手机安装支付宝app");
+                    toastShort("请确认手机安装支付宝app");
                 }
             } else {
                 view.loadUrl(url);
@@ -488,7 +488,7 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
 
     @Override
     public void intervalError(String message) {
-        toastShore(message);
+        toastShort(message);
     }
 
     @Override
@@ -521,7 +521,7 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
 
     @Override
     public void getOrderDetailError(String s) {
-        toastShore(s);
+        toastShort(s);
         errorStatus();
     }
 
@@ -631,14 +631,10 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
     //        }
     //    }
     @Override
-    public void goNianjianMap() {
-
-    }
+    public void goNianjianMap() {}
 
     @Override
-    public void popAttention() {
-
-    }
+    public void popAttention() {}
 
     @Override
     public String getEncreptUserId() {
@@ -646,9 +642,7 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
     }
 
     @Override
-    public void queryViolations() {
-
-    }
+    public void queryViolations() {}
 
     //获取绑卡状态 0已绑卡  1未绑卡
     @Override
@@ -658,16 +652,14 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
 
     @Override
     public String getUserId() {
-        return null;
+        return PayRouter.getUserID();
     }
 
     @Override
-    public void chaser() {
-    }
+    public void chaser() {}
 
     @Override
-    public void addOil() {
-    }
+    public void addOil() {}
 
     @Override
     public void bindCard() {
@@ -720,7 +712,7 @@ public class Html5Activity extends JxBaseActivity implements IHtmlPayContract.IH
      */
     @Override
     public void getBankPayHtmlError(String message) {
-        toastShore(message);
+        toastShort(message);
     }
 
     @Override

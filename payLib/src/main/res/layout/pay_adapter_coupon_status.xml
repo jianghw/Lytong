@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/res_y_158">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/res_x_30"
+        android:layout_toLeftOf="@+id/img_status"
+        android:background="@mipmap/pay_ic_coupon_white">
+
+        <ImageView
+            android:id="@+id/img_coupon"
+            android:layout_width="@dimen/res_x_120"
+            android:layout_height="@dimen/res_x_120"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/app_icon"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/img_coupon"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:layout_toRightOf="@id/img_coupon"
+            android:maxLines="2"
+            android:textSize="@dimen/res_fs_18"
+            tools:text="满300可减去50"/>
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/ResTextTheme.14.Hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/img_coupon"
+            android:layout_alignLeft="@+id/tv_title"
+            android:singleLine="true"
+            tools:text="这里是优化巻哦呀"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/img_invalid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/img_status"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/pay_ic_coupon_un"/>
+
+    <RelativeLayout
+        android:id="@+id/img_status"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/res_x_30"
+        android:background="@mipmap/pay_ic_coupon_red">
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_remark"
+            android:layout_centerHorizontal="true"
+            android:maxLength="6"
+            android:singleLine="true"
+            android:textColor="@color/res_color_white"
+            android:textSize="@dimen/res_fs_26"
+            tools:text="10"/>
+
+        <TextView
+            android:id="@+id/tv_unit"
+            style="@style/ResTextTheme.14.White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tv_price"
+            android:textSize="@dimen/res_fs_12"
+            tools:text="元"/>
+
+        <TextView
+            android:id="@+id/tv_remark"
+            style="@style/ResTextTheme.14.White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/res_y_19"
+            android:maxLength="10"
+            android:singleLine="true"
+            tools:text="通用券"/>
+    </RelativeLayout>
+
+</RelativeLayout>

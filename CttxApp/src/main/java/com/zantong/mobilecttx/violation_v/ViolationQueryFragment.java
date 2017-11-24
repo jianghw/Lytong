@@ -593,7 +593,7 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
      * enginenum	是	string	发动机号 加密
      */
     private void initCarInfoDto(String carNum, String engine, String vehicleCode) {
-        mCarInfoDTO.setUsrid(MainRouter.getUserID(false));
+        mCarInfoDTO.setUsrid(MainRouter.getUserID());
         mCarInfoDTO.setCarnum(carNum);
         mCarInfoDTO.setEnginenum(engine);
         //数字
@@ -664,7 +664,7 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
         mBindCarDTO.setPlateNo(carNum);
         mBindCarDTO.setEngineNo(engine);
         mBindCarDTO.setVehicleType(vehicleCode);
-        mBindCarDTO.setUsrnum(MainRouter.getUserID(false));
+        mBindCarDTO.setUsrnum(MainRouter.getUserID());
         mBindCarDTO.setIssueDate(getTvData());
 
         //        mBindCarDTO.setFileNum("");

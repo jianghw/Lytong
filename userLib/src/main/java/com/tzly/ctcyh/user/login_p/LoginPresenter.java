@@ -94,9 +94,8 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
                             register(loginBean);
 
                             String filenum = Des3.decode(loginBean.getFilenum());
-                            if (!TextUtils.isEmpty(filenum)) {
-                                loginV004(filenum);
-                            }
+                            if (!TextUtils.isEmpty(filenum)) loginV004(filenum);
+
                             mContractView.userLoginSucceed(loginResponse);
                         } else {
                             mContractView.userLoginError(loginResponse != null
@@ -194,21 +193,19 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
 
     @Override
     public void loginV004(String filenum) {
-        Subscription subscription = mRepository.bank_V004_01(initLoginV004DTO(filenum))
+        Subscription subscription = mRepository
+                .bank_V004_01(initLoginV004DTO(filenum))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BankResponse>() {
                     @Override
-                    public void doCompleted() {
-                    }
+                    public void doCompleted() {}
 
                     @Override
-                    public void doError(Throwable e) {
-                    }
+                    public void doError(Throwable e) {}
 
                     @Override
-                    public void doNext(BankResponse baseResult) {
-                    }
+                    public void doNext(BankResponse baseResult) {}
                 });
         mSubscriptions.add(subscription);
     }
@@ -220,7 +217,7 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
         dto.setSYS_HEAD(requestHeadDTO);
 
         FileNumDTO bean = new FileNumDTO();
-        bean.setFilenum(RSAUtils.strByEncryption(filenum, true));
+        bean.setFilenum(mRepository.getRASByStr(filenum));
 
         dto.setReqInfo(bean);
         return new Gson().toJson(dto);

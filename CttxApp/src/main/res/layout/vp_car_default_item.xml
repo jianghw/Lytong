@@ -32,10 +32,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/ds_60"
-                    android:layout_marginTop="@dimen/ds_36"
+                    android:layout_marginTop="@dimen/res_y_20"
                     android:text="违章查询、扣分加缴费"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/fs_22sp"
+                    android:textSize="@dimen/res_fs_18"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -44,10 +44,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_plate_number"
                     android:layout_marginLeft="@dimen/ds_60"
-                    android:layout_marginTop="@dimen/ds_18"
+                    android:layout_marginTop="@dimen/res_y_20"
                     android:text="一步完成、仅需10秒"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/fs_22sp"
+                    android:textSize="@dimen/res_fs_18"
                     android:textStyle="bold"/>
 
             </RelativeLayout>

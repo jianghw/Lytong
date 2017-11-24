@@ -18,6 +18,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.tzly.ctcyh.router.custom.image.ImageOptions;
 import com.tzly.ctcyh.router.util.AppUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
@@ -72,14 +73,14 @@ public class SplashActivity extends AppCompatActivity
 
         mImgHuawei = (ImageView) findViewById(R.id.img_huawei);
         String umengChannel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
-        if (umengChannel.equals("tzly_huawei")) {
-            mImgHuawei.setImageResource(R.mipmap.ic_huawei);
-        }
+//        if (umengChannel.equals("tzly_huawei")) {
+//            mImgHuawei.setImageResource(R.mipmap.ic_huawei);
+//        }
     }
 
     private void initPresenter() {
         SplashPresenter mPresenter = new SplashPresenter(
-                Injection.provideRepository(getApplicationContext()), this);
+                Injection.provideRepository(Utils.getContext()), this);
     }
 
     @Override

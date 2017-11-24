@@ -40,7 +40,11 @@ public final class RouterGlobal {
         public static final String html_self_host = "html_self_host";
         public static final String html_pay_host = "html_pay_host";
         public static final String violation_query_host = "violation_query_host";
-        public static final String set_pay_car_host="set_pay_car_host";
+        public static final String set_pay_car_host = "set_pay_car_host";
+        public static final String coupon_detail_host = "coupon_detail_host";
+        public static final String problem_feed_host = "problem_feed_host";
+        public static final String oil_map_host = "oil_map_host";
+        public static final String recharge_agree_host = "recharge_agree_host";
     }
 
     public static final class Scheme {
@@ -49,5 +53,7 @@ public final class RouterGlobal {
         public static final String user_scheme = "user_scheme";
 
         public static final String pay_scheme = "pay_scheme";
+
+        public static final String cargo_scheme = "cargo_scheme";
     }
 }

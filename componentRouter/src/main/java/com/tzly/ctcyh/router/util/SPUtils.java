@@ -33,6 +33,7 @@ public final class SPUtils {
 
     private static String USERPD = "userpd";
     public static String USER_DEVICE_ID = "user_device_id";
+    public static String USER_OIL_NUM = "user_oil_num";
     public static String USER_PUSH_ID = "user_push_id";
     public static String USER_LOGIN_DIALOG = "user_login_dialog";
 

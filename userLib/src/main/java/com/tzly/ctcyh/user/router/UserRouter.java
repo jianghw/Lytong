@@ -28,17 +28,20 @@ public final class UserRouter {
                 bundle);
     }
 
+    private static Object getUserObject() {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        return serviceRouter.getService(IUserService.class.getSimpleName());
+    }
+
     /**
      * 页面跳转判断是否登录用
      * true-->跳出登录页面
      */
     public static boolean gotoByIsLogin() {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IUserService.class.getSimpleName());
+        Object object = getUserObject();
         if (object != null && object instanceof IUserService) {
             IUserService service = (IUserService) object;
-            boolean userLogin = service.isUserByLogin();
-            return !userLogin;
+            return service.isUserByLogin();
         } else {
             //注册机开始工作
             ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
@@ -46,12 +49,27 @@ public final class UserRouter {
         }
     }
 
+    public static String getDeviceId() {
+        Object object = getUserObject();
+        if (object != null && object instanceof IUserService) {
+            IUserService service = (IUserService) object;
+            return service.getPhoneDeviceId();
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            return "0123456789";
+        }
+    }
+
+    private static Object getMainObject() {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        return serviceRouter.getService(IMainService.class.getSimpleName());
+    }
+
     /**
      * 去绑定畅通卡页面
      */
     public static void loginFilenumDialog(Activity activity) {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IMainService.class.getSimpleName());
+        Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.loginFilenumDialog(activity);
@@ -65,8 +83,7 @@ public final class UserRouter {
      * 注册页面
      */
     public static void gotoRegisterActivity(Activity context) {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IMainService.class.getSimpleName());
+        Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoRegisterActivity(context);
@@ -80,8 +97,7 @@ public final class UserRouter {
      * 密码页面
      */
     public static void gotoResetActivity(Activity context) {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IMainService.class.getSimpleName());
+        Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoResetActivity(context);
@@ -95,8 +111,7 @@ public final class UserRouter {
      * 获取设备推动id
      */
     public static String getPushId() {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IMainService.class.getSimpleName());
+        Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             return service.getPushId();
@@ -108,8 +123,7 @@ public final class UserRouter {
     }
 
     public static void gotoMainActivity(Activity activity, int i) {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IMainService.class.getSimpleName());
+        Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoMainActivity(activity, i);

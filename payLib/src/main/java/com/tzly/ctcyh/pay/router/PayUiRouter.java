@@ -3,7 +3,9 @@ package com.tzly.ctcyh.pay.router;
 import android.content.Context;
 import android.content.Intent;
 
+import com.tzly.ctcyh.pay.coupon_v.CouponDetailActivity;
 import com.tzly.ctcyh.pay.coupon_v.CouponListActivity;
+import com.tzly.ctcyh.pay.coupon_v.CouponStatusActivity;
 import com.tzly.ctcyh.pay.html_v.Html5Activity;
 import com.tzly.ctcyh.pay.pay_type_v.PayTypeActivity;
 import com.tzly.ctcyh.router.IComponentRouter;
@@ -32,7 +34,9 @@ public class PayUiRouter extends LibUiRouter implements IComponentRouter {
         return new String[]{
                 RouterGlobal.Host.pay_type_host,
                 RouterGlobal.Host.coupon_list_host,
-                RouterGlobal.Host.html_5_host
+                RouterGlobal.Host.html_5_host,
+                RouterGlobal.Host.coupon_detail_host,
+                RouterGlobal.Host.coupon_status_host
         };
     }
 
@@ -48,6 +52,10 @@ public class PayUiRouter extends LibUiRouter implements IComponentRouter {
         } else if (RouterGlobal.Host.html_5_host.equals(host)) {
             intent.setAction("com.tzly.ctcyh.pay.html_v.Html5Activity");
             intent.setClass(context, Html5Activity.class);
+        } else if (RouterGlobal.Host.coupon_detail_host.equals(host)) {
+            intent.setClass(context, CouponDetailActivity.class);
+        } else if (RouterGlobal.Host.coupon_status_host.equals(host)) {
+            intent.setClass(context, CouponStatusActivity.class);
         } else {
             return true;
         }
@@ -60,7 +68,7 @@ public class PayUiRouter extends LibUiRouter implements IComponentRouter {
     @Override
     protected boolean excludeLoginActivity(String host) {
         //可添加不需要登录业务
-        return PayRouter.gotoByIsLogin();
+        return !PayRouter.gotoByIsLogin();
     }
 
     @Override

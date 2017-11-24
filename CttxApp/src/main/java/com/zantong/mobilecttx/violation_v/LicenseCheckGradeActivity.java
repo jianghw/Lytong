@@ -23,14 +23,9 @@ import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
-import com.tzly.ctcyh.router.custom.picker.entity.City;
-import com.tzly.ctcyh.router.custom.picker.entity.County;
-import com.tzly.ctcyh.router.custom.picker.entity.Province;
 
 /**
  * Created by jianghw on 2017/5/4.
@@ -49,8 +44,7 @@ public class LicenseCheckGradeActivity extends JxBaseActivity implements View.On
     public static final String KEY_BUNDLE_FINISH = "Close_Activity";
 
     @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-    }
+    protected void bundleIntent(Bundle savedInstanceState) {}
 
     @Override
     protected int initContentView() {
@@ -86,37 +80,6 @@ public class LicenseCheckGradeActivity extends JxBaseActivity implements View.On
     }
 
     /**
-     * Test
-     */
-    private void showTestDialog() {
-        ArrayList<Province> aresBeanList = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            Province province = new Province();
-            province.setAreaId(String.valueOf(i));
-            province.setAreaName("province" + i);
-
-            ArrayList<City> cities = new ArrayList<>();
-            for (int j = 0; j < 5; j++) {
-                City city = new City();
-                city.setAreaId(String.valueOf(j));
-                city.setAreaName("city" + j);
-
-                ArrayList<County> counties = new ArrayList<>();
-                for (int k = 0; k < 4; k++) {
-                    County county = new County();
-                    county.setAreaId(String.valueOf(k));
-                    county.setAreaName("county" + k);
-                    counties.add(county);
-                }
-                city.setCounties(counties);
-                cities.add(city);
-            }
-            province.setCities(cities);
-            aresBeanList.add(province);
-        }
-    }
-
-    /**
      * 初始化填入数据
      */
     private void initIntentData() {
@@ -149,7 +112,6 @@ public class LicenseCheckGradeActivity extends JxBaseActivity implements View.On
     }
 
     private void assignViews() {
-
         mEditArchivesNumber = (EditText) findViewById(R.id.edit_archives_number);
         mTvDate = (TextView) findViewById(R.id.tv_date);
         mTvImage = (ImageView) findViewById(R.id.img_cartype_desc);

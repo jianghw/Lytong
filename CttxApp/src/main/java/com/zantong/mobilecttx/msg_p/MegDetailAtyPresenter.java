@@ -44,7 +44,8 @@ public class MegDetailAtyPresenter implements IMegDetailAtyContract.IMegDetailAt
 
     @Override
     public void findMessageDetail() {
-        Subscription subscription = mRepository.findMessageDetail(initMessageDetailDTO())
+        Subscription subscription = mRepository
+                .findMessageDetail(initMessageDetailDTO())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -62,16 +63,16 @@ public class MegDetailAtyPresenter implements IMegDetailAtyContract.IMegDetailAt
 
                     @Override
                     public void onError(Throwable e) {
+                        mView.responseError(e.getMessage());
                         mView.dismissLoading();
-                        mView.findMessageDetailError(e.getMessage());
                     }
 
                     @Override
                     public void onNext(MessageDetailResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mView.findMessageDetailSucceed(result);
+                            mView.responseSucceed(result);
                         } else {
-                            mView.findMessageDetailError(result != null
+                            mView.responseError(result != null
                                     ? result.getResponseDesc() : "未知错误(2.4.21)");
                         }
                     }

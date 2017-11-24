@@ -1,0 +1,21 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.tzly.ctcyh.cargo">
+
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true">
+
+        <!--加油-->
+        <activity
+            android:name=".refuel_v.RefuelOilActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".refuel_v.RechargeAgreementActivity"
+            android:screenOrientation="portrait"/>
+
+    </application>
+
+</manifest>

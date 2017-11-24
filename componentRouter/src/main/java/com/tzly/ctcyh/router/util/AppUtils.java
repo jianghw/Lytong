@@ -13,6 +13,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by jianghw on 2017/10/27.
@@ -28,14 +29,23 @@ public class AppUtils {
 
     @SuppressLint("HardwareIds")
     public static String getDeviceId() {
-        Context context = Utils.getContext();
-        String deviceId = "";
+        String deviceId = null;
         TelephonyManager telephonyManager =
-                (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+                (TelephonyManager) Utils.getContext().getSystemService(Context.TELEPHONY_SERVICE);
         try {
             deviceId = telephonyManager.getDeviceId();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        if (TextUtils.isEmpty(deviceId)) {
+            StringBuffer sb = new StringBuffer();
+            String allChar = "0123456789";
+            Random random = new Random();
+            for (int i = 0; i < 12; i++) {
+                sb.append(allChar.charAt(
+                        random.nextInt(allChar.length())));
+            }
+            deviceId = sb.toString();
         }
         return deviceId;
     }

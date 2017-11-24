@@ -63,7 +63,7 @@ public class UpdatePhoneNumberPresenter extends BasePresenter<IBaseView> impleme
                 MessageFormat.getInstance().setTransServiceCode("cip.cfc.u003.01");
                 masp = new JSONObject();
                 try {
-                    masp.put("usrid", MainRouter.getUserID(true));
+                    masp.put("usrid", MainRouter.getUserID());
                     String phone = RSAUtils.strByEncryption(mUpdatePhoneNumber.mapData().get("phoenum"), true);
                     masp.put("phoenum", phone);
                     masp.put("devicetoken", MainRouter.getPhoneDeviceId());

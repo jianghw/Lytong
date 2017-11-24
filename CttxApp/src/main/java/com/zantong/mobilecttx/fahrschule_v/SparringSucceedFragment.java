@@ -89,7 +89,6 @@ public class SparringSucceedFragment extends JxBaseRefreshFragment implements Vi
 
     @Override
     protected void onFirstDataVisible() {
-
         //未办卡
         if (TextUtils.isEmpty(MainRouter.getUserFilenum())) {
             StringBuffer sb = new StringBuffer();
@@ -115,6 +114,16 @@ public class SparringSucceedFragment extends JxBaseRefreshFragment implements Vi
         mTvPrompt.setOnClickListener(this);
         mTvCommit = (TextView) view.findViewById(R.id.tv_commit);
         mTvCommit.setOnClickListener(this);
+    }
+
+    /**
+     * 优惠页面
+     */
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        MainRouter.gotoMainActivity(getActivity(), 1);
     }
 
     @Override

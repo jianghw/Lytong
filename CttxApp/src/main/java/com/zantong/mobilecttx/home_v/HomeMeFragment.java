@@ -5,10 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.FileProvider;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
@@ -45,7 +42,7 @@ import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_v.ShareParentActivity;
 import com.zantong.mobilecttx.user.activity.AboutActivity;
-import com.zantong.mobilecttx.user.activity.MegTypeActivity;
+import com.zantong.mobilecttx.msg_v.MegTypeActivity;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.user.activity.SettingActivity;
 import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
@@ -74,10 +71,7 @@ public class HomeMeFragment extends RefreshFragment
      * 未登录
      */
     private TextView mTvLogin;
-    private TextView mTvToolbar;
-    private Toolbar mToolbar;
-    private CollapsingToolbarLayout mCollapsingToolbar;
-    private AppBarLayout mAppbar;
+
     /**
      * 1张牡丹畅通卡
      */
@@ -111,28 +105,10 @@ public class HomeMeFragment extends RefreshFragment
      * mPresenter
      */
     private IHomeMeFtyContract.IHomeMeFtyPresenter mPresenter;
-    private IHomeMainUi mIHomeMainUi;
-
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (activity instanceof IHomeMainUi) {
-            mIHomeMainUi = (IHomeMainUi) activity;
-        }
-    }
-
-    /**
-     * 会多次刷新数据 ^3^
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
     @Override
@@ -202,12 +178,10 @@ public class HomeMeFragment extends RefreshFragment
     }
 
     /**
-     * 是否隐藏
+     * 啊不用此方法 不能出现未加载状态页面
      */
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-    }
+    protected void responseData(Object response) {}
 
     private void initDataRefresh() {
         if (mPresenter != null && !TextUtils.isEmpty(mPresenter.initUserPhone())) {
@@ -218,7 +192,6 @@ public class HomeMeFragment extends RefreshFragment
 
         if (mPresenter != null && MainRouter.isUserLogin()) {
             mPresenter.getCouponCount();
-            mPresenter.getUnReadMsgCount();
         }
 
         //畅通卡
@@ -267,8 +240,14 @@ public class HomeMeFragment extends RefreshFragment
             mImgHead.setImageResource(R.mipmap.portrait);
             mTvLogin.setText("您还未登录");
         }
+    }
 
-        mTvToolbar.setText(mTvLogin.getText().toString());
+    /**
+     * 是否隐藏
+     */
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
     }
 
     /**
@@ -310,12 +289,7 @@ public class HomeMeFragment extends RefreshFragment
         mImgHead = (ImageView) view.findViewById(R.id.img_head);
         mImgHead.setOnClickListener(this);
         mTvLogin = (TextView) view.findViewById(R.id.tv_login);
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        mToolbar.setTitle("");
-        mTvToolbar = (TextView) view.findViewById(R.id.tv_toolbar);
 
-        mCollapsingToolbar = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar);
-        mAppbar = (AppBarLayout) view.findViewById(R.id.appbar);
         mTvCard = (TextView) view.findViewById(R.id.tv_card);
         mTvCard.setOnClickListener(this);
         mTvCar = (TextView) view.findViewById(R.id.tv_car);
@@ -348,19 +322,19 @@ public class HomeMeFragment extends RefreshFragment
         mAboutAdvertising.setOnClickListener(this);
 
         //动态调整标题透明度
-        mAppbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                int scrollRangle = appBarLayout.getTotalScrollRange();
-                //初始verticalOffset为0，不能参与计算。
-                if (verticalOffset == 0) {
-                    mTvToolbar.setAlpha(0.0f);
-                } else {//保留一位小数
-                    float alpha = Math.abs(Math.round(1.0f * verticalOffset / scrollRangle) * 10) / 10;
-                    mTvToolbar.setAlpha(alpha);
-                }
-            }
-        });
+        //        mAppbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+        //            @Override
+        //            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        //                int scrollRangle = appBarLayout.getTotalScrollRange();
+        //                //初始verticalOffset为0，不能参与计算。
+        //                if (verticalOffset == 0) {
+        //                    mTvToolbar.setAlpha(0.0f);
+        //                } else {//保留一位小数
+        //                    float alpha = Math.abs(Math.round(1.0f * verticalOffset / scrollRangle) * 10) / 10;
+        //                    mTvToolbar.setAlpha(alpha);
+        //                }
+        //            }
+        //        });
     }
 
     @Override
@@ -395,7 +369,7 @@ public class HomeMeFragment extends RefreshFragment
                 break;
             case R.id.tv_coupon:
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(27));
-                MainRouter.gotoCouponActivity(getActivity());
+                MainRouter.gotoCouponStatusActivity(getActivity());
                 break;
             case R.id.lay_query://违章缴费查询
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(34));
@@ -474,14 +448,20 @@ public class HomeMeFragment extends RefreshFragment
     /**
      * 未读消息
      */
+    public void unMessageCount(int position, int number) {
+        //未读消息
+        if (mImgMsg != null)
+            mImgMsg.setVisibility(number <= 0 ? View.INVISIBLE : View.VISIBLE);
+    }
+
+    /**
+     * 未读消息
+     */
     @Override
     public void countMessageDetailSucceed(MessageCountResponse result) {
         MessageCountBean resultData = result.getData();
         if (mImgMsg != null) mImgMsg.setVisibility(
                 resultData != null && resultData.getCount() > 0 ? View.VISIBLE : View.GONE);
-
-        if (mIHomeMainUi != null)
-            mIHomeMainUi.setTipOfNumber(2, resultData != null ? resultData.getCount() : 0);
     }
 
     @Override

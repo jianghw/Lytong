@@ -53,7 +53,7 @@ public class UserUiRouter extends LibUiRouter implements IComponentRouter {
     }
 
     private boolean gotoByIsLogin() {
-        return UserRouter.gotoByIsLogin();
+        return !UserRouter.gotoByIsLogin();
     }
 
     @Override

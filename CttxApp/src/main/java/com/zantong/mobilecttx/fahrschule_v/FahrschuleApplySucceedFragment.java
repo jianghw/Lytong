@@ -76,14 +76,10 @@ public class FahrschuleApplySucceedFragment
     }
 
     @Override
-    protected void onRefreshData() {
-
-    }
+    protected void onRefreshData() {}
 
     @Override
-    protected void onLoadMoreData() {
-
-    }
+    protected void onLoadMoreData() {}
 
     @Override
     protected int initFragmentView() {
@@ -105,6 +101,16 @@ public class FahrschuleApplySucceedFragment
         mTvPromptContact = (TextView) view.findViewById(R.id.tv_prompt_contact);
         mBtnPay = (Button) view.findViewById(R.id.btn_pay);
         mBtnPay.setOnClickListener(this);
+    }
+
+    /**
+     * 优惠页面
+     */
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        MainRouter.gotoMainActivity(getActivity(), 1);
     }
 
     @Override

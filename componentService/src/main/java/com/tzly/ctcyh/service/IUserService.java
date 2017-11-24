@@ -36,8 +36,6 @@ public interface IUserService {
 
     String getUserID();
 
-    String getUserID(boolean isNeedLogin);
-
     String getRASUserID();
 
     String getUserPhoenum();

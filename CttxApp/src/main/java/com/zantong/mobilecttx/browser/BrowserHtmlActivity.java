@@ -28,9 +28,8 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.tzly.ctcyh.router.base.JxBaseActivity;
+import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.EncryptUtils;
-import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
@@ -58,13 +57,14 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
 import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 
 /**
  * 公用浏览器 html页面显示
  */
-public class BrowserHtmlActivity extends JxBaseActivity
+public class BrowserHtmlActivity extends AbstractBaseActivity
         implements IHtmlBrowserContract.IHtmlBrowserView {
 
     private WebView mWebView;
@@ -78,14 +78,7 @@ public class BrowserHtmlActivity extends JxBaseActivity
     private int mRightBtnStatus = -1;
 
     @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-        onNewIntent(getIntent());
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
+    protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             if (intent.hasExtra(MainGlobal.putExtra.browser_title_extra))
@@ -96,16 +89,14 @@ public class BrowserHtmlActivity extends JxBaseActivity
     }
 
     @Override
-    protected int initContentView() {
-        return R.layout.activity_browser;
-    }
+    protected void newIntent(Intent intent) {}
 
     @Override
-    protected void bindContentView(View childView) {
+    protected void bindFragment() {
         EventBus.getDefault().register(this);
 
-        mProgressBar = (ProgressBar) childView.findViewById(R.id.pb_html5);
-        mWebView = (WebView) childView.findViewById(R.id.wv_html5);
+        mProgressBar = (ProgressBar) findViewById(R.id.pb_html5);
+        mWebView = (WebView) findViewById(R.id.wv_html5);
 
         titleContent(mStrTitle);
         titleClose();
@@ -113,13 +104,18 @@ public class BrowserHtmlActivity extends JxBaseActivity
     }
 
     @Override
+    protected int initContentView() {
+        return R.layout.activity_browser;
+    }
+
+
+    @Override
     protected void initContentData() {
         initViewStatus();
 
         HtmlBrowserPresenter presenter = new HtmlBrowserPresenter(
-                Injection.provideRepository(getApplicationContext()), this);
+                Injection.provideRepository(Utils.getContext()), this);
     }
-
 
     @SuppressLint("SetJavaScriptEnabled")
     protected void initViewStatus() {
@@ -129,6 +125,8 @@ public class BrowserHtmlActivity extends JxBaseActivity
         settings.setDefaultTextEncodingName("utf-8");
         //自己添加
         settings.setSupportZoom(true);//支持缩放，默认为true
+        //无限缩放
+        //        settings.setUseWideViewPort(true);
         //mWebSettings.setBuiltInZoomControls(true); //设置内置的缩放控件
         settings.setLoadWithOverviewMode(true);// 缩放至屏幕的大小
         settings.setUseWideViewPort(true);//将图片调整到适合webview的大小
@@ -143,13 +141,14 @@ public class BrowserHtmlActivity extends JxBaseActivity
 
         mWebView.setWebViewClient(webViewClient);
         mWebView.setWebChromeClient(webChromeClient);
-
+        //额外的第三方要求
         if (mStrUrl.contains("m.wedrive.com.cn") || mStrUrl.contains("tester.wedrive.com.cn")) {
             String cust_id = MainRouter.getUserPhoenum();
             String SEC_KEY = "BE7D6564766740037581842CE0ACA1DD";
             String token = EncryptUtils.encryptMD5ToString(SEC_KEY + cust_id + SEC_KEY);
             mStrUrl = mStrUrl + "?cust_id=" + cust_id + "&token=" + token;
         }
+
         mWebView.loadUrl(mStrUrl);
 
         //支持获取手势焦点，输入用户名、密码或其他
@@ -205,7 +204,7 @@ public class BrowserHtmlActivity extends JxBaseActivity
         if (bean != null) {
             mWebView.loadUrl("javascript:callbackCamera(" + new Gson().toJson(bean) + ");");
         } else {
-            ToastUtils.toastShort("行驶证图片解析失败(55)，请重试");
+            toastShort("行驶证图片解析失败(55)，请重试");
         }
     }
 
@@ -218,7 +217,7 @@ public class BrowserHtmlActivity extends JxBaseActivity
     }
 
     protected void errorToast(String message) {
-        ToastUtils.toastShort(message);
+        toastShort(message);
     }
 
     @Override
@@ -274,7 +273,7 @@ public class BrowserHtmlActivity extends JxBaseActivity
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ToastUtils.toastShort("请确认手机安装支付宝app");
+                    toastShort("请确认手机安装支付宝app");
                 }
             } else {
                 view.loadUrl(url);
@@ -403,11 +402,17 @@ public class BrowserHtmlActivity extends JxBaseActivity
         return super.onKeyDown(keyCode, event);
     }
 
+    /**
+     * 拍照
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSynEvent(DriveLicensePhotoEvent event) {
         takePhoto();
     }
 
+    /**
+     * 支付
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSynEvent(PayMotoOrderEvent event) {
         String orderId = event.getOrderId();
@@ -451,7 +456,7 @@ public class BrowserHtmlActivity extends JxBaseActivity
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)
     public void doPermissionFail() {
-        ToastUtils.toastShort("您已关闭摄像头权限,请设置中打开");
+        toastShort("您已关闭摄像头权限,请设置中打开");
     }
 
     @Override
@@ -461,7 +466,7 @@ public class BrowserHtmlActivity extends JxBaseActivity
         if (requestCode == MainGlobal.requestCode.violation_query_camera
                 && resultCode == MainGlobal.resultCode.ocr_camera_license) {
             if (OcrCameraActivity.file == null)
-                ToastUtils.toastShort("照片获取失败");
+                toastShort("照片获取失败");
             else if (mPresenter != null)
                 mPresenter.uploadDrivingImg();
         }
@@ -477,7 +482,7 @@ public class BrowserHtmlActivity extends JxBaseActivity
         api.registerApp(WXEntryActivity.APP_ID);
 
         if (!api.isWXAppInstalled()) {
-            ToastUtils.toastShort("您还未安装微信客户端");
+            toastShort("您还未安装微信客户端");
             return;
         }
 

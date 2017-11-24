@@ -9,8 +9,10 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.UiRouter;
+import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.service.ICargoService;
 import com.tzly.ctcyh.service.IPayService;
 import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.service.RouterGlobal;
@@ -49,9 +51,19 @@ public final class MainRouter {
         if (object != null && object instanceof IUserService) {
             IUserService service = (IUserService) object;
             service.gotoLoginActivity(context);
-        } else {
-            //注册机开始工作
+        } else {//注册机开始工作
             ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+        }
+    }
+
+    public static boolean isUserLogin() {
+        Object object = getUserObject();
+        if (object != null && object instanceof IUserService) {
+            IUserService service = (IUserService) object;
+            return service.isLogin();
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            return false;
         }
     }
 
@@ -62,10 +74,8 @@ public final class MainRouter {
         Object object = getUserObject();
         if (object != null && object instanceof IUserService) {
             IUserService service = (IUserService) object;
-            boolean userLogin = service.isUserByLogin();
-            return !userLogin;
-        } else {
-            //注册机开始工作
+            return service.isUserByLogin();
+        } else {//注册机开始工作
             ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
             return true;
         }
@@ -79,8 +89,7 @@ public final class MainRouter {
         if (object != null && object instanceof IUserService) {
             IUserService service = (IUserService) object;
             service.saveLoginBean(activity, user, pwd);
-        } else {
-            //注册机开始工作
+        } else {//注册机开始工作
             ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
         }
     }
@@ -123,16 +132,13 @@ public final class MainRouter {
 
     /**
      * 用户id
-     *
-     * @param isNeedLogin
      */
-    public static String getUserID(boolean isNeedLogin) {
+    public static String getUserID() {
         Object object = getUserObject();
         if (object != null && object instanceof IUserService) {
             IUserService service = (IUserService) object;
-            return service.getUserID(isNeedLogin);
-        } else {
-            //注册机开始工作
+            return service.getUserID();
+        } else {//注册机开始工作
             ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
             return "";
         }
@@ -182,8 +188,7 @@ public final class MainRouter {
         if (object != null && object instanceof IUserService) {
             IUserService service = (IUserService) object;
             return service.getPushId();
-        } else {
-            //注册机开始工作
+        } else {//注册机开始工作
             ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
             return "";
         }
@@ -194,8 +199,7 @@ public final class MainRouter {
         if (object != null && object instanceof IUserService) {
             IUserService service = (IUserService) object;
             return service.getUserFilenum();
-        } else {
-            //注册机开始工作
+        } else {//注册机开始工作
             ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
             return "";
         }
@@ -206,22 +210,9 @@ public final class MainRouter {
         if (object != null && object instanceof IUserService) {
             IUserService service = (IUserService) object;
             return service.getUserGetdate();
-        } else {
-            //注册机开始工作
+        } else {//注册机开始工作
             ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
             return "";
-        }
-    }
-
-    public static boolean isUserLogin() {
-        Object object = getUserObject();
-        if (object != null && object instanceof IUserService) {
-            IUserService service = (IUserService) object;
-            return service.isLogin();
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-            return false;
         }
     }
 
@@ -242,8 +233,7 @@ public final class MainRouter {
         if (object != null && object instanceof IUserService) {
             IUserService service = (IUserService) object;
             return service.getUserNickname();
-        } else {
-            //注册机开始工作
+        } else {//注册机开始工作
             ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
             return "";
         }
@@ -257,6 +247,19 @@ public final class MainRouter {
         if (object != null && object instanceof IUserService) {
             IUserService service = (IUserService) object;
             service.savePushId(id);
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+        }
+    }
+
+    /**
+     * 退出登录
+     */
+    public static void cleanUserLogin() {
+        Object object = getUserObject();
+        if (object != null && object instanceof IUserService) {
+            IUserService service = (IUserService) object;
+            service.cleanUserLogin();
         } else {
             //注册机开始工作
             ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
@@ -316,20 +319,6 @@ public final class MainRouter {
         UiRouter.getInstance().openUriBundle(activity,
                 RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.reset_host,
                 bundle);
-    }
-
-    /**
-     * 退出登录
-     */
-    public static void cleanUserLogin() {
-        Object object = getUserObject();
-        if (object != null && object instanceof IUserService) {
-            IUserService service = (IUserService) object;
-            service.cleanUserLogin();
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
-        }
     }
 
     /**
@@ -398,10 +387,14 @@ public final class MainRouter {
      * 加油页面
      */
     public static void gotoRechargeActivity(Context context) {
-        Bundle bundle = new Bundle();
-        UiRouter.getInstance().openUriBundle(context,
-                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.recharge_host,
-                bundle);
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        Object object = serviceRouter.getService(ICargoService.class.getSimpleName());
+        if (object != null && object instanceof ICargoService) {
+            ICargoService service = (ICargoService) object;
+            service.gotoRechargeActivity(context);
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.cargo.like.CargoAppLike");
+        }
     }
 
     /**
@@ -477,13 +470,6 @@ public final class MainRouter {
                 bundle, MainGlobal.requestCode.meg_detail_del);
     }
 
-    public static void gotoCouponActivity(Context context) {
-        Bundle bundle = new Bundle();
-        UiRouter.getInstance().openUriBundle(context,
-                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.coupon_status_host,
-                bundle);
-    }
-
     /**
      * 违章查询页面
      */
@@ -527,7 +513,8 @@ public final class MainRouter {
                 bundle);
     }
 
-    public static void gotoViolationListActivity(Activity context, String carnum, String enginenum, String carnumtype) {
+    public static void gotoViolationListActivity(Activity context,
+                                                 String carnum, String enginenum, String carnumtype) {
         LoginData.getInstance().mHashMap.put("IllegalViolationName", carnum);
         LoginData.getInstance().mHashMap.put("carnum", carnum);
         LoginData.getInstance().mHashMap.put("enginenum", enginenum);
@@ -557,16 +544,33 @@ public final class MainRouter {
                 bundle, MainGlobal.requestCode.violation_query_camera);
     }
 
+    private static Object getPayObject() {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        return serviceRouter.getService(IPayService.class.getSimpleName());
+    }
+
+    /**
+     * 优惠券列表
+     */
+    public static void gotoCouponStatusActivity(Context context) {
+        Object object = getPayObject();
+        if (object != null && object instanceof IPayService) {
+            IPayService service = (IPayService) object;
+            service.gotoCouponStatusActivity(context);
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.pay.like.PayAppLike");
+        }
+    }
+
     /**
      * 支付页面页面 其他模块
      */
     public static void gotoPayTypeActivity(Activity context, String orderId) {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        if (serviceRouter.getService(IPayService.class.getSimpleName()) != null) {
-            IPayService service = (IPayService) serviceRouter.getService(IPayService.class.getSimpleName());
+        Object object = getPayObject();
+        if (object != null && object instanceof IPayService) {
+            IPayService service = (IPayService) object;
             service.gotoPayTypeActivity(context, orderId);
-        } else {
-            //注册机开始工作
+        } else {//注册机开始工作
             ServiceRouter.registerComponent("com.tzly.ctcyh.pay.like.PayAppLike");
         }
     }
@@ -574,20 +578,19 @@ public final class MainRouter {
     /**
      * 银行卡支付页面
      */
-    public static void gotoHtmlActivity(Activity browserHtmlActivity, String title, String content, String orderId, int type) {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IPayService.class.getSimpleName());
+    public static void gotoHtmlActivity(Activity activity, String title, String content,
+                                        String orderId, int type) {
+        Object object = getPayObject();
         if (object != null && object instanceof IPayService) {
             IPayService service = (IPayService) object;
-            service.gotoHtmlActivity(browserHtmlActivity, title, content, orderId, type);
-        } else {
-            //注册机开始工作
+            service.gotoHtmlActivity(activity, title, content, orderId, type);
+        } else {//注册机开始工作
             ServiceRouter.registerComponent("com.tzly.ctcyh.pay.like.PayAppLike");
         }
     }
 
     /**
-     * html
+     * html 广告 优惠等页面
      */
     public static void gotoHtmlActivity(Context activity, String title, String url) {
         Bundle bundle = new Bundle();
@@ -605,6 +608,24 @@ public final class MainRouter {
         bundle.putString(MainGlobal.putExtra.violation_num_extra, num);
         UiRouter.getInstance().openUriBundle(activity,
                 RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.html_pay_host,
+                bundle);
+    }
+
+    /**
+     * 问题页面
+     */
+    public static void gotoProblemFeedbackActivity(Activity activity) {
+        Bundle bundle = new Bundle();
+        UiRouter.getInstance().openUriBundle(activity,
+                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.problem_feed_host,
+                bundle);
+    }
+
+    public static void gotoBaiduMapParentActivity(Activity context) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.oil_map_host,
                 bundle);
     }
 }
