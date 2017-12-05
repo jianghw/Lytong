@@ -1,12 +1,11 @@
 package com.zantong.mobilecttx.contract.browser;
 
-import com.zantong.mobilecttx.base.interf.IMvpPresenter;
-import com.zantong.mobilecttx.base.interf.IMvpView;
+import com.tzly.ctcyh.router.base.IBasePresenter;
+import com.tzly.ctcyh.router.base.IBaseView;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
 
 import java.util.List;
-
-import com.tzly.ctcyh.router.bean.BaseResponse;
 
 /**
  * 支付页面
@@ -14,11 +13,7 @@ import com.tzly.ctcyh.router.bean.BaseResponse;
 
 public interface IPayHtmlContract {
 
-    interface IPayHtmlView extends IMvpView<IPayHtmlPresenter> {
-
-        void showLoadingDialog();
-
-        void dismissLoadingDialog();
+    interface IPayHtmlView extends IBaseView<IPayHtmlPresenter> {
 
         String getViolationNum();
 
@@ -29,7 +24,7 @@ public interface IPayHtmlContract {
         void updateStateSucceed(BaseResponse result);
     }
 
-    interface IPayHtmlPresenter extends IMvpPresenter {
+    interface IPayHtmlPresenter extends IBasePresenter {
         void updateState(List<ViolationNum> violationUpdateDTO);
 
         void numberedQuery();

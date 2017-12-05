@@ -118,41 +118,46 @@
             android:paddingRight="@dimen/res_x_15"/>
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/sv_hint"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/lay_5"
-        android:layout_marginTop="@dimen/res_y_30"
-        android:background="@color/res_color_white"
-        android:orientation="vertical">
-
-        <TextView
-            style="@style/ResTextTheme.16.Subtitle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/res_y_80"
-            android:layout_marginLeft="@dimen/res_x_30"
-            android:gravity="center_vertical"
-            android:text="充值说明"/>
-
-        <TextView
-            android:id="@+id/tv_hint"
+        android:layout_above="@+id/btn_commit"
+        android:layout_marginTop="@dimen/res_y_30">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/res_x_30"
-            android:layout_marginRight="@dimen/res_x_30"
-            tools:text="jfsfosjffjsfjsijsdjs"/>
+            android:background="@color/res_color_white"
+            android:orientation="vertical">
+            <TextView
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/res_y_80"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:gravity="center_vertical"
+                android:text="充值说明"/>
 
-        <TextView
-            android:id="@+id/tv_agreement"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_margin="@dimen/res_x_30"
-            android:drawableLeft="@mipmap/btn_tick_on"
-            android:text="我已阅读用户充值协议"
-            android:textColor="@color/res_color_blue_0b"
-            android:textSize="@dimen/res_fs_14"/>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:layout_marginRight="@dimen/res_x_30"
+                tools:text="jfsfosjffjsfjsijsdjs"/>
+
+            <TextView
+                android:id="@+id/tv_agreement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_margin="@dimen/res_x_30"
+                android:drawableLeft="@mipmap/btn_tick_on"
+                android:text="我已阅读用户充值协议"
+                android:textColor="@color/res_color_blue_0b"
+                android:textSize="@dimen/res_fs_14"/>
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/btn_commit"

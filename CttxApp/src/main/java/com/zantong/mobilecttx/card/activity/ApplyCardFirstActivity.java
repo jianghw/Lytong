@@ -10,10 +10,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.RegexUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.ViewUtils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
@@ -26,12 +28,13 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.HandleCTCardApiClient;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
+import com.zantong.mobilecttx.base.bean.BindDrivingBean;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.card.dto.BidCTCardDTO;
+import com.zantong.mobilecttx.card.dto.BindDrivingDTO;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
-import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogMgr;
@@ -61,6 +64,8 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     EditText mIdCard;//身份证
     @Bind(R.id.tv_toast)
     TextView mTvToast;
+
+    BindDrivingDTO bindDrivingDTO = new BindDrivingDTO();
 
     @Override
     public HelpPresenter initPresenter() {
@@ -121,7 +126,10 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 takePhoto();
                 break;
             case R.id.tv_toast:
-                ToastUtils.toastLong("只要持外地驾驶证的客户到他现在居住所在地的车管所申请办理，办理时需提交以下资料，客户身份证，暂住证，驾驶证，还需要携带本人近期一寸彩照3张去所属车管所填写机动车驾驶证申请表就可以办理了，正常的话当天就可以换到证，最迟不会超过三个工作日");
+                ToastUtils.toastLong("只要持外地驾驶证的客户到他现在居住所在地的车管所申请办理，" +
+                        "办理时需提交以下资料，客户身份证，暂住证，驾驶证，" +
+                        "还需要携带本人近期一寸彩照3张去所属车管所填写机动车驾驶证申请表就可以办理了，" +
+                        "正常的话当天就可以换到证，最迟不会超过三个工作日");
                 break;
             default:
                 break;
@@ -157,14 +165,16 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         }
     }
 
+    /**
+     * 驾驶证
+     */
     private void openCamera() {
-        Intent intentOcr = new Intent(this, OcrCameraActivity.class);
-        intentOcr.putExtra(MainGlobal.putExtra.ocr_camera_extra, 1);
-        startActivityForResult(intentOcr, 1205);
+        MainRouter.gotoDrivingCameraActivity(this);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -179,6 +189,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)
     public void doPermissionFail() {
+        ToastUtils.toastShort("您已关闭摄像头权限,请设置中打开");
     }
 
     @PermissionSuccess(requestCode = 100)
@@ -188,7 +199,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
 
     @PermissionFail(requestCode = 100)
     public void doFailSomething() {
-        ToastUtils.toastShort("您已关闭内存卡读写权限");
+        ToastUtils.toastShort("您已关闭内存卡读写权限,请设置中打开");
     }
 
     /**
@@ -208,11 +219,13 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
             return;
         }
 
-        if (getDriverFileNum().length() != 12) {
-            ToastUtils.toastShort("请输入12位驾档编号");
-            return;
-        }
-        if (!RegexUtils.isIDCard15(getUserIdCard()) && !RegexUtils.isIDCard18(getUserIdCard())) {
+        //        if (getDriverFileNum().length() != 12) {
+        //            ToastUtils.toastShort("请输入12位驾档编号");
+        //            return;
+        //        }
+
+        if (!RegexUtils.isIDCard15(getUserIdCard())
+                && !RegexUtils.isIDCard18(getUserIdCard())) {
             ToastUtils.toastShort("身份证号码不正确");
             return;
         }
@@ -294,6 +307,18 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     @Override
     public void resultSuccess(BankResponse bankResponse) {
         hideDialogLoading();
+
+        bindDrivingDTO.setUserId(MainRouter.getUserID());
+        bindDrivingDTO.setLicenseno(getUserIdCard());
+        bindDrivingDTO.setFileNum(getDriverFileNum());
+        bindDrivingDTO.setName(getUserName());
+
+        CarApiClient.commitDriving(Utils.getContext(), bindDrivingDTO,
+                new CallBack<BaseResponse>() {
+                    @Override
+                    public void onSuccess(BaseResponse result) {}
+                });
+
         if (bankResponse.getSYS_HEAD().getReturnCode().equals("1")) {//不可快捷办卡
             Intent intent = new Intent(this, ApplyCardSecondActivity.class);
             intent.putExtra("filenum", getDriverFileNum());
@@ -306,6 +331,8 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
             intent.putExtra("name", getUserName());
             intent.putExtra("idCard", getUserIdCard());
             startActivity(intent);
+        } else {
+            ToastUtils.toastShort(bankResponse.getSYS_HEAD().getReturnMessage());
         }
     }
 
@@ -323,10 +350,23 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1205 && resultCode == 1206) {
-            if (data != null) {
-                getJiaZhaoInfo();
-            }
+        if (requestCode == 110 && resultCode == 200 && data != null) {
+            String drivingDTO = data.getStringExtra("bankcardinfo");
+            BindDrivingBean drivingBean = new Gson().fromJson(drivingDTO, BindDrivingBean.class);
+
+            mName.setText(drivingBean.getName());
+            mIdCard.setText(drivingBean.getNum());
+
+            bindDrivingDTO.setName(drivingBean.getName());
+            bindDrivingDTO.setLicenseno(drivingBean.getNum());
+            bindDrivingDTO.setSex(drivingBean.getSex().contains("男") ? "0" : "1");
+            bindDrivingDTO.setDateOfBirth(drivingBean.getBirt());
+            bindDrivingDTO.setAddress(drivingBean.getAddr());
+            bindDrivingDTO.setDateOfFirstIssue(drivingBean.getIssue());
+            bindDrivingDTO.setValidPeriodEnd(drivingBean.getValidPeriod());
+            bindDrivingDTO.setNationality(drivingBean.getNation().contains("中国") ? "1" : "2");
+            bindDrivingDTO.setAllowType(drivingBean.getDrivingType());
+            bindDrivingDTO.setValidPeriodStart(drivingBean.getRegisterDate());
         }
     }
 
@@ -336,7 +376,6 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
      */
     private void getJiaZhaoInfo() {
         showDialogLoading();
-
         CarApiClient.uploadDriverImg(this, OcrCameraActivity.file, new CallBack<DriverOcrResult>() {
             @Override
             public void onSuccess(DriverOcrResult result) {

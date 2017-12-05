@@ -6,8 +6,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_225"
-        android:padding="@dimen/ds_45">
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/ds_45"
+        android:paddingRight="@dimen/ds_45">
 
         <ImageView
             android:id="@+id/img_navigation"
@@ -21,8 +22,7 @@
             android:id="@+id/tv_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/img_navigation"
-            android:layout_marginLeft="@dimen/ds_30"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/ds_30"
             android:layout_toLeftOf="@+id/img_navigation"
             android:textColor="@color/colorTvRed_f33"
@@ -35,8 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="@dimen/ds_30"
-            android:layout_toLeftOf="@+id/img_navigation"
+            android:layout_marginTop="@dimen/ds_45"
+            android:layout_toLeftOf="@+id/tv_distance"
             android:singleLine="true"
             android:textColor="@color/colorTvBlack_4d"
             android:textSize="@dimen/fs_18sp"
@@ -47,7 +47,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/tv_name"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginBottom="@dimen/ds_45"
+            android:layout_marginTop="@dimen/ds_20"
             android:layout_toLeftOf="@+id/tv_distance"
             android:textColor="@color/colorTvGray_7f"
             android:textSize="@dimen/fs_16sp"

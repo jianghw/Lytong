@@ -47,7 +47,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.utils.StateBarSetting;
 import com.zantong.mobilecttx.utils.TitleSetting;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
+import com.zantong.mobilecttx.violation_v.ViolationDetailsActivity;
 import com.zantong.mobilecttx.zxing.BarcodeFormat;
 import com.zantong.mobilecttx.zxing.DecodeHintType;
 import com.zantong.mobilecttx.zxing.Result;
@@ -562,7 +562,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
             ToastUtils.toastShort("该违章单编号不正确，请重新扫描");
         } else {
             if (displayContents.length() == 16) {
-                Act.getInstance().gotoIntent(CaptureActivity.this, ViolationDetails.class, displayContents);
+                Act.getInstance().gotoIntent(CaptureActivity.this, ViolationDetailsActivity.class, displayContents);
             } else {
                 continuePreview();
                 ToastUtils.toastShort("该违章单编号不正确，请重新扫描");

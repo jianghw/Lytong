@@ -309,8 +309,14 @@ public class ViolationQueryFtyPresenter
         carDTO.setVehicleType(bindCarDTO.getVehicleType());
         carDTO.setUsrnum(mRepository.getRASUserID());
         carDTO.setIssueDate(bindCarDTO.getIssueDate());
-        carDTO.setIsPay(bindCarDTO.getIsPay());
+        carDTO.setRegisterDate(bindCarDTO.getRegisterDate());
+        carDTO.setVin(bindCarDTO.getVin());
+        carDTO.setCarModel(bindCarDTO.getCarModel());
+        carDTO.setUseCharacter(bindCarDTO.getUseCharacter());
+        carDTO.setAddress(bindCarDTO.getAddress());
+        carDTO.setOwnerName(bindCarDTO.getOwnerName());
 
+        carDTO.setIsPay(bindCarDTO.getIsPay());
         carDTO.setBrandId(bindCarDTO.getBrandId());
         carDTO.setSeriesId(bindCarDTO.getSeriesId());
         carDTO.setCarModelId(bindCarDTO.getCarModelId());
@@ -324,7 +330,7 @@ public class ViolationQueryFtyPresenter
     public String initCarInfoDTO() {
         RequestDTO dto = new RequestDTO();
 
-        RequestHeadDTO requestHeadDTO = mRepository.initLicenseFileNumDTO("cip.cfc.u005.01");
+        RequestHeadDTO requestHeadDTO = mRepository.initServiceCodeDTO("cip.cfc.u005.01");
         dto.setSYS_HEAD(requestHeadDTO);
 
         CarInfoDTO bean = mAtyView.getCarInfoDTO();

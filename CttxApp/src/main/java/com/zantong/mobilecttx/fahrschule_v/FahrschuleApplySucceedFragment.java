@@ -144,6 +144,7 @@ public class FahrschuleApplySucceedFragment
      * @param flag (0 分享到微信好友 1 分享到微信朋友圈)
      */
     private void wechatShare(int flag) {
+        //注册应用到微信
         IWXAPI api = WXAPIFactory.createWXAPI(getActivity(), WXEntryActivity.APP_ID, true);
         api.registerApp(WXEntryActivity.APP_ID);
 
@@ -151,7 +152,7 @@ public class FahrschuleApplySucceedFragment
             ToastUtils.toastShort("您还未安装微信客户端");
             return;
         }
-
+        //传递个网页对象
         WXWebpageObject webpage = new WXWebpageObject();
         if (MainRouter.isUserLogin()) {
             webpage.webpageUrl = ShareParentActivity.getShareAppUrl(3) + "?phoneNum="

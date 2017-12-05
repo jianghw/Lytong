@@ -88,7 +88,7 @@ public class HomeMainActivity extends AbstractBaseActivity
 
     @Override
     protected void bindFragment() {
-        //核心部分代码：
+        //推送广播核心部分代码：
         mBroadcastReceiver = new PushBroadcastReceiver();
         IntentFilter itFilter = new IntentFilter();
         itFilter.addAction(PushBroadcastReceiver.PUSH_TIP_ACTION);
@@ -99,6 +99,19 @@ public class HomeMainActivity extends AbstractBaseActivity
         mCustomBottom = (UiTableBottom) findViewById(R.id.custom_bottom);
 
         initBottomTable();
+    }
+
+    /**
+     * 底部小红点显示 和消息提示
+     */
+    @Override
+    public void tipByNumber(int position, int number) {
+        if (mCustomBottom != null)
+            mCustomBottom.setTipOfNumber(position, number);
+        if (mHomeUnimpededFragment != null)
+            mHomeUnimpededFragment.unMessageCount(position, number);
+        if (mHomeMeFragment != null)
+            mHomeMeFragment.unMessageCount(position, number);
     }
 
     @Override
@@ -209,19 +222,6 @@ public class HomeMainActivity extends AbstractBaseActivity
             default:
                 break;
         }
-    }
-
-    /**
-     * 底部小红点显示 和消息提示
-     */
-    @Override
-    public void tipByNumber(int position, int number) {
-        if (mCustomBottom != null)
-            mCustomBottom.setTipOfNumber(position, number);
-        if (mHomeUnimpededFragment != null)
-            mHomeUnimpededFragment.unMessageCount(position, number);
-        if (mHomeMeFragment != null)
-            mHomeMeFragment.unMessageCount(position, number);
     }
 
     private long exitTime;

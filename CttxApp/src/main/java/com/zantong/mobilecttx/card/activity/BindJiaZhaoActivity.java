@@ -2,7 +2,9 @@ package com.zantong.mobilecttx.card.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
@@ -22,12 +25,12 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.UserApiClient;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
+import com.zantong.mobilecttx.base.bean.BindDrivingBean;
 import com.zantong.mobilecttx.card.bean.BindCardResult;
 import com.zantong.mobilecttx.card.dto.BindCardDTO;
 import com.zantong.mobilecttx.card.dto.BindDrivingDTO;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
-import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.ValidateUtils;
@@ -35,6 +38,9 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+
+import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
+import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 绑定畅通卡
@@ -60,7 +66,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
     @Bind(R.id.tv_toast)
     TextView mTvToast;
 
-    final BindDrivingDTO params = new BindDrivingDTO();
+    BindDrivingDTO bindDrivingDTO = new BindDrivingDTO();
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {}
@@ -82,20 +88,9 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
     @Override
     protected void DestroyViewAndThing() {}
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if ( resultCode == 1204) {
-            if (data != null) {
-                getJiaZhaoInfo();
-            } else {
-                mLicenseno.setText("数据为空");
-            }
-        }
-    }
-
-    @OnClick({R.id.bind_jia_zhao_file_num_img, R.id.bind_jia_zhao_idcard_img, R.id.bind_jia_zhao_phone_img, R.id.tv_toast,
-            R.id.bind_jia_zhao_file_camera, R.id.bind_jia_zhao_commit, R.id.activity_bind_jia_zhao_agreement})
+    @OnClick({R.id.bind_jia_zhao_file_num_img, R.id.bind_jia_zhao_idcard_img,
+            R.id.bind_jia_zhao_phone_img, R.id.tv_toast, R.id.bind_jia_zhao_file_camera,
+            R.id.bind_jia_zhao_commit, R.id.activity_bind_jia_zhao_agreement})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bind_jia_zhao_file_num_img:
@@ -105,18 +100,12 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
                 new DialogMgr(BindJiaZhaoActivity.this, R.mipmap.img_jiazhao_idcard);
                 break;
             case R.id.bind_jia_zhao_phone_img:
-                ToastUtils.toastShort("预留手机号是指在办理银行卡过程中，" +
+                toastShort("预留手机号是指在办理银行卡过程中，" +
                         "开通网上银行时需要在柜台提交的银行预留手机号，" +
                         "作为以后确认信息的凭证，能及时接受账户资金变动信息。");
                 break;
             case R.id.bind_jia_zhao_file_camera:
-
-                PermissionGen.needPermission(this, 100,
-                        new String[]{
-                                Manifest.permission.CAMERA,
-                                Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        });
+                takePhoto();
                 break;
             case R.id.activity_bind_jia_zhao_agreement://保密隐私条例
 
@@ -139,64 +128,40 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
      * 提交绑卡信息接口和驾驶证信息接口
      */
     private void bindChangTongKa() {
-
-        //        userId;//关联用户ID
-        //        name;//驾驶证姓名
-        //        licenseno;//证号
-        //        sex;//性别
-        //        nationality;//国籍
-        //        address;//住址
-        //        dateOfBirth;//出生日期
-        //        dateOfFirstIssue;//初次领
-        //        allowType;//准驾车型
-        //        validPeriodStart;//有效期
-        //        validPeriodEnd;//有效期限截
-        //        fileNum;//档案编号
-        //        record;//记录
-        //        memo;//备注
-        //        params.setAllowType("5");
-
-        String licenseno = mLicenseno.getText().toString().trim();
-        final String fileNum = mFileNum.getText().toString().trim();
-        String phone = mPhone.getText().toString().trim();
+        String licenseno = getLicenseno();
+        String fileNum = getFileNum();
+        String phone = getUserPhone();
 
         if (TextUtils.isEmpty(licenseno)) {
-            ToastUtils.toastShort("驾驶证号不可为空");
+            toastShort("驾驶证号不可为空");
             return;
         }
         if (TextUtils.isEmpty(fileNum)) {
-            ToastUtils.toastShort("驾驶证档案编号不可为空");
+            toastShort("驾驶证档案编号不可为空");
             return;
         }
         if (TextUtils.isEmpty(phone)) {
-            ToastUtils.toastShort("手机号码不可为空");
+            toastShort("手机号码不可为空");
             return;
         }
-
-        if (fileNum.length() != 12) {
-            ToastUtils.toastShort("请输入12位正确驾档编号");
-            return;
-        }
+        //        if (fileNum.length() != 12) {
+        //            ToastUtils.toastShort("请输入12位正确驾档编号");
+        //            return;
+        //        }
 
         if (!ValidateUtils.isMobile(phone)) {
-            ToastUtils.toastShort("手机号码格式不正确");
+            toastShort("手机号码格式不正确");
             return;
         }
-
-        params.setUserId(MainRouter.getUserID());
-        params.setLicenseno(licenseno);
-        params.setFileNum(fileNum);
-
-        BindCardDTO dto = new BindCardDTO();
-        dto.setCtfnum(RSAUtils.strByEncryption(licenseno, true));
-        dto.setCtftp("0");
-        dto.setFilenum(RSAUtils.strByEncryption(fileNum, true));
-
-        dto.setRelatedphone(RSAUtils.strByEncryption(phone, true));
-        dto.setUsrid(MainRouter.getUserID());
+        BindCardDTO cardDTO = new BindCardDTO();
+        cardDTO.setCtfnum(RSAUtils.strByEncryption(licenseno, true));
+        cardDTO.setCtftp("0");
+        cardDTO.setFilenum(RSAUtils.strByEncryption(fileNum, true));
+        cardDTO.setRelatedphone(RSAUtils.strByEncryption(phone, true));
+        cardDTO.setUsrid(MainRouter.getUserID());
         showDialogLoading();
 
-        UserApiClient.bindCard(Utils.getContext(), dto, new CallBack<BindCardResult>() {
+        UserApiClient.bindCard(Utils.getContext(), cardDTO, new CallBack<BindCardResult>() {
             @Override
             public void onSuccess(BindCardResult result) {
                 hideDialogLoading();
@@ -206,43 +171,73 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
                     if (result.getRspInfo().getCardflag() != 0
                             && result.getRspInfo().getCustcodeflag() == 1
                             && result.getRspInfo().getMobileflag() == 1) {
-
-                        if ("男".equals(params.getSex())) {
-                            params.setSex("0");
-                        } else {
-                            params.setSex("1");
-                        }
-
-                        CarApiClient.commitDriving(Utils.getContext(), params, new CallBack<BaseResponse>() {
-                            @Override
-                            public void onSuccess(BaseResponse result) {
-
-                            }
-                        });
-                        //更新驾挡编号
-                        MainRouter.saveUserFilenum(fileNum);
-
-                        Act.getInstance().gotoIntent(BindJiaZhaoActivity.this, BindCardSuccess.class);
-                        BindJiaZhaoActivity.this.finish();
-
+                        succeedData();
                     } else if (result.getRspInfo().getCardflag() == 0) {
-                        ToastUtils.toastShort("您还没有畅通卡");
+                        toastShort("您还没有畅通卡");
                     } else if (result.getRspInfo().getCustcodeflag() == 0) {
-                        ToastUtils.toastShort("您的身份证号与驾照号码不一致");
+                        toastShort("您的身份证号与驾照号码不一致");
                     } else if (result.getRspInfo().getMobileflag() == 0) {
-                        ToastUtils.toastShort("您的预留手机号码不正确");
+                        toastShort("您的预留手机号码不正确");
                     }
                 } else {
-                    ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
+                    toastShort(result.getSYS_HEAD().getReturnMessage());
                 }
             }
 
             @Override
             public void onError(String errorCode, String msg) {
-                ToastUtils.toastShort(msg + "&&" + errorCode);
+                toastShort(msg + "&&" + errorCode);
                 hideDialogLoading();
             }
         });
+    }
+
+    @NonNull
+    private String getUserPhone() {return mPhone.getText().toString().trim();}
+
+    private String getLicenseno() {
+        return mLicenseno.getText().toString().trim();
+    }
+
+    @NonNull
+    private String getFileNum() {return mFileNum.getText().toString().trim();}
+
+    private void succeedData() {
+        bindDrivingDTO.setUserId(MainRouter.getUserID());
+        bindDrivingDTO.setLicenseno(getLicenseno());
+        bindDrivingDTO.setFileNum(getFileNum());
+
+        CarApiClient.commitDriving(Utils.getContext(), bindDrivingDTO, new CallBack<BaseResponse>() {
+            @Override
+            public void onSuccess(BaseResponse result) {}
+        });
+        //更新驾挡编号
+        MainRouter.saveUserFilenum(getFileNum());
+
+        Act.getInstance().gotoIntent(this, BindCardSuccess.class);
+        finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 110 && resultCode == 200 && data != null) {
+            String drivingDTO = data.getStringExtra("bankcardinfo");
+            BindDrivingBean drivingBean = new Gson().fromJson(drivingDTO, BindDrivingBean.class);
+
+            mLicenseno.setText(drivingBean.getNum());
+
+            bindDrivingDTO.setName(drivingBean.getName());
+            bindDrivingDTO.setLicenseno(drivingBean.getNum());
+            bindDrivingDTO.setSex(drivingBean.getSex().contains("男") ? "0" : "1");
+            bindDrivingDTO.setDateOfBirth(drivingBean.getBirt());
+            bindDrivingDTO.setAddress(drivingBean.getAddr());
+            bindDrivingDTO.setDateOfFirstIssue(drivingBean.getIssue());
+            bindDrivingDTO.setValidPeriodEnd(drivingBean.getValidPeriod());
+            bindDrivingDTO.setNationality(drivingBean.getNation().contains("中国") ? "1" : "2");
+            bindDrivingDTO.setAllowType(drivingBean.getDrivingType());
+            bindDrivingDTO.setValidPeriodStart(drivingBean.getRegisterDate());
+        }
     }
 
     /**
@@ -258,7 +253,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
                 if ("OK".equals(result.getStatus()) && result.getContent() != null) {
                     mLicenseno.setText(result.getContent().getCardNo());
                 } else {
-                    ToastUtils.toastShort("解析失败，请重试");
+                    toastShort("解析失败，请重试");
                 }
             }
 
@@ -269,17 +264,45 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
         });
     }
 
-    @PermissionSuccess(requestCode = 100)
-    public void doSomething() {
-        //有授权，直接开启摄像头
-        Intent intent = new Intent(this, OcrCameraActivity.class);
-        intent.putExtra(MainGlobal.putExtra.ocr_camera_extra, 2);
-        startActivityForResult(intent, 1203);
+    /**
+     * 拍照
+     */
+    public void takePhoto() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, PER_REQUEST_CODE, new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE});
+        } else {
+            goToCamera();
+        }
     }
 
-    @PermissionFail(requestCode = 100)
-    public void doFailSomething() {
-        ToastUtils.toastShort("您已关闭摄像头权限");
+    /**
+     * 驾驶证
+     */
+    private void goToCamera() {
+        MainRouter.gotoDrivingCameraActivity(this);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    /**
+     * 拍照前权限调用
+     */
+    @PermissionSuccess(requestCode = PER_REQUEST_CODE)
+    public void doPermissionSuccess() {
+        goToCamera();
+    }
+
+    @PermissionFail(requestCode = PER_REQUEST_CODE)
+    public void doPermissionFail() {
+        toastShort("您已关闭摄像头权限,请设置中打开");
     }
 
 }

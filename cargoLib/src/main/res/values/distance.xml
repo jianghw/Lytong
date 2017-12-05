@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="public_1_dp">1dip</dimen>
+    <dimen name="public_4_dp">4dip</dimen>
+    <dimen name="public_3_dp">3dip</dimen>
+    <dimen name="public_6_dp">6dip</dimen>
+    <dimen name="public_8_dp">8dip</dimen>
+    <dimen name="public_10_dp">10dip</dimen>
+    <dimen name="public_12_dp">12dip</dimen>
+    <dimen name="public_14_dp">14dip</dimen>
+    <dimen name="public_16_dp">16dip</dimen>
+    <dimen name="public_18_dp">18dip</dimen>
+    <dimen name="public_20_dp">20dip</dimen>
+    <dimen name="public_24_dp">24dip</dimen>
+    <dimen name="public_28_dp">28dip</dimen>
+    <dimen name="public_30_dp">30dip</dimen>
+    <dimen name="public_36_dp">36dip</dimen>
+    <dimen name="public_34_dp">34dip</dimen>
+    <dimen name="public_40_dp">40dip</dimen>
+    <dimen name="public_46_dp">46dip</dimen>
+    <dimen name="public_48_dp">48dip</dimen>
+    <dimen name="public_60_dp">60dip</dimen>
+    <dimen name="public_68_dp">68dip</dimen>
+    <dimen name="public_70_dp">70dip</dimen>
+    <dimen name="public_80_dp">80dip</dimen>
+    <dimen name="public_100_dp">100dip</dimen>
+    <dimen name="public_120_dp">120dip</dimen>
+    <dimen name="public_160_dp">160dip</dimen>
+    <dimen name="public_180_dp">180dip</dimen>
+    <dimen name="public_200_dp">200dip</dimen>
+    
+    <dimen name="public_4_sp">4sp</dimen>
+    <dimen name="public_6_sp">6sp</dimen>
+    <dimen name="public_7_sp">7sp</dimen>
+    <dimen name="public_8_sp">8sp</dimen>
+    <dimen name="public_9_sp">9sp</dimen>
+    <dimen name="public_10_sp">10sp</dimen>
+    <dimen name="public_12_sp">12sp</dimen>
+    <dimen name="public_14_sp">14sp</dimen>
+    <dimen name="public_16_sp">16sp</dimen>
+    <dimen name="public_18_sp">18sp</dimen>
+    <dimen name="public_20_sp">20sp</dimen>
+    <dimen name="public_28_sp">28sp</dimen>
+    <dimen name="public_30_sp">30sp</dimen>
+    <dimen name="public_34_sp">34sp</dimen>
+    <dimen name="public_40_sp">40sp</dimen>
+</resources>

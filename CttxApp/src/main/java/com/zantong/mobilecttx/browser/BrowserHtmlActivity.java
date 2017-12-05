@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ import com.tzly.ctcyh.router.util.primission.PermissionGen;
 import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
+import com.zantong.mobilecttx.base.bean.BindCarBean;
 import com.zantong.mobilecttx.contract.InterfaceForJS;
 import com.zantong.mobilecttx.contract.browser.IHtmlBrowserContract;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrBean;
@@ -201,6 +202,7 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
     @Override
     public void uploadDrivingImgSucceed(DrivingOcrResult result) {
         DrivingOcrBean bean = result.getContent();
+
         if (bean != null) {
             mWebView.loadUrl("javascript:callbackCamera(" + new Gson().toJson(bean) + ");");
         } else {
@@ -451,7 +453,7 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
     }
 
     protected void goToCamera() {
-        MainRouter.gotoOcrCameraActivity(this);
+        MainRouter.gotoVehicleCameraActivity(this);
     }
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)
@@ -463,12 +465,31 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //拍照回调
-        if (requestCode == MainGlobal.requestCode.violation_query_camera
-                && resultCode == MainGlobal.resultCode.ocr_camera_license) {
-            if (OcrCameraActivity.file == null)
-                toastShort("照片获取失败");
-            else if (mPresenter != null)
-                mPresenter.uploadDrivingImg();
+        if (requestCode == 110 && resultCode == 200) {
+            vehicleCameraSucceed(data);
+        }
+    }
+
+    private void vehicleCameraSucceed(Intent intent) {
+        String vehicleInfo = intent.getStringExtra("vehicleInfo");
+        BindCarBean carBean = new Gson().fromJson(vehicleInfo, BindCarBean.class);
+
+        DrivingOcrBean bean = new DrivingOcrBean();
+        bean.setIssueDate(carBean.getIssueDate());
+        bean.setName(carBean.getName());
+        bean.setRegisterDate(carBean.getRegisterDate());
+        bean.setVin(carBean.getVin());
+        bean.setVehicleType(carBean.getVehicleType());
+        bean.setCardNo(carBean.getCardNo());
+        bean.setEnginePN(carBean.getEnginePN());
+        bean.setModel(carBean.getModel());
+        bean.setAddress(carBean.getAddr());
+        bean.setUseCharacte(carBean.getUseCharace());
+
+        if (!TextUtils.isEmpty(vehicleInfo)) {
+            mWebView.loadUrl("javascript:callbackCamera(" + new Gson().toJson(bean) + ");");
+        } else {
+            toastShort("行驶证图片解析失败(55)，请重试");
         }
     }
 

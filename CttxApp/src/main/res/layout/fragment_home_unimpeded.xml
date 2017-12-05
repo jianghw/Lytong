@@ -35,8 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/res_y_100"
         android:background="@color/colorWhite"
-        android:paddingBottom="@dimen/res_y_20"
-        android:paddingTop="@dimen/res_y_20">
+        android:paddingBottom="@dimen/res_y_10"
+        android:paddingTop="@dimen/res_y_10">
 
         <ImageView
             android:id="@+id/img_trumpet"
@@ -77,9 +77,9 @@
         android:background="@color/colorBgGray_f8"
         app:icvp_center_page_scale_offset="1dp"
         app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
-        app:icvp_max_page_scale="0.9"
+        app:icvp_max_page_scale="0.8"
         app:icvp_medium_scaled="false"
-        app:icvp_min_page_scale="0.7"
+        app:icvp_min_page_scale="0.6"
         app:icvp_min_page_scale_offset="1dp"
         app:icvp_scroll_duration="100"/>
 </LinearLayout>

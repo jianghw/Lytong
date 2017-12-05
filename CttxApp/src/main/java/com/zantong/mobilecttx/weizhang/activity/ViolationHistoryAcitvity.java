@@ -21,6 +21,7 @@ import com.zantong.mobilecttx.contract.ItemClickListener;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.violation_v.ViolationDetailsActivity;
 import com.zantong.mobilecttx.weizhang.adapter.SectionedExpandableLayoutHelper;
 import com.zantong.mobilecttx.weizhang.bean.ViolationCarInfo;
 import com.zantong.mobilecttx.weizhang.bean.ViolationHistoryBean;
@@ -128,7 +129,7 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView, HelpPre
 
     @Override
     public void itemClicked(ViolationItemInfo item) {
-        Act.getInstance().gotoIntent(this, ViolationDetails.class, item.getPeccancynum());
+        Act.getInstance().gotoIntent(this, ViolationDetailsActivity.class, item.getPeccancynum());
     }
 
     @OnClick({(R.id.activity_violation_history_layout)})

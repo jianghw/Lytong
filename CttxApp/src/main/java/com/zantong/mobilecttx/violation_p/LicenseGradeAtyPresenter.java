@@ -50,12 +50,13 @@ public class LicenseGradeAtyPresenter implements ILicenseGradeAtyContract.ILicen
      */
     @Override
     public void driverLicenseCheckGrade() {
-        Subscription subscription = mRepository.driverLicenseCheckGrade(initLicenseFileNumDTO())
+        Subscription subscription = mRepository
+                .driverLicenseCheckGrade(initLicenseFileNumDTO())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                    mView.onShowDefaultData();
+                        mView.onShowDefaultData();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -66,14 +67,14 @@ public class LicenseGradeAtyPresenter implements ILicenseGradeAtyContract.ILicen
 
                     @Override
                     public void doError(Throwable e) {
-                        mView.driverLicenseCheckGradeError(e.getMessage());
+                        mView.responseError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(LicenseResponseBean responseBean) {
                         if (responseBean != null
                                 && responseBean.getSYS_HEAD().getReturnCode().equals("000000")) {
-                            mView.driverLicenseCheckGradeSucceed(responseBean);
+                            mView.responseSucceed(responseBean);
                         } else {
                             mView.driverLicenseCheckGradeError(responseBean != null
                                     ? responseBean.getSYS_HEAD().getReturnMessage() : "未知错误(cip.cfc.v001.01)");
@@ -86,7 +87,6 @@ public class LicenseGradeAtyPresenter implements ILicenseGradeAtyContract.ILicen
     /**
      * 保存数据
      */
-    @Override
     public void saveLicenseFileNumDTO() {
         mRepository.saveLicenseFileNumDTO(mView.initLicenseFileNumDTO());
     }
@@ -98,7 +98,7 @@ public class LicenseGradeAtyPresenter implements ILicenseGradeAtyContract.ILicen
     public String initLicenseFileNumDTO() {
         RequestDTO dto = new RequestDTO();
 
-        RequestHeadDTO requestHeadDTO = mRepository.initLicenseFileNumDTO("cip.cfc.v001.01");
+        RequestHeadDTO requestHeadDTO = mRepository.initServiceCodeDTO("cip.cfc.v001.01");
         dto.setSYS_HEAD(requestHeadDTO);
         LicenseFileNumDTO bean = mView.initLicenseFileNumDTO();
 

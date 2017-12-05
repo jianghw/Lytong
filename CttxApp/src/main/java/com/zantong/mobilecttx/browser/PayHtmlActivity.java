@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.View;
 import android.webkit.GeolocationPermissions;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
@@ -18,21 +17,21 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.tzly.ctcyh.router.base.AbstractBaseActivity;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.contract.InterfaceForJS;
 import com.zantong.mobilecttx.contract.browser.IPayHtmlContract;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.presenter.browser.PayHtmlPresenter;
-
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.zantong.mobilecttx.router.MainRouter;
 
 /**
  * 加油 违章 支付浏览器
  */
-public class PayHtmlActivity extends BaseJxActivity implements IPayHtmlContract.IPayHtmlView {
+public class PayHtmlActivity extends AbstractBaseActivity implements IPayHtmlContract.IPayHtmlView {
 
     private WebView mWebView;
     private ProgressBar mProgressBar;
@@ -44,14 +43,7 @@ public class PayHtmlActivity extends BaseJxActivity implements IPayHtmlContract.
     private IPayHtmlContract.IPayHtmlPresenter mPresenter;
 
     @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-        onNewIntent(getIntent());
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
+    protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             if (intent.hasExtra(MainGlobal.putExtra.browser_title_extra))
@@ -64,23 +56,31 @@ public class PayHtmlActivity extends BaseJxActivity implements IPayHtmlContract.
     }
 
     @Override
-    protected int getContentResId() {
+    protected void newIntent(Intent intent) {}
+
+    @Override
+    protected int initContentView() {
         return R.layout.activity_browser;
     }
 
     @Override
-    protected void initFragmentView(View childView) {
-        mProgressBar = (ProgressBar) childView.findViewById(R.id.pb_html5);
-        mWebView = (WebView) childView.findViewById(R.id.wv_html5);
+    protected void bindFragment() {
+        mProgressBar = (ProgressBar) findViewById(R.id.pb_html5);
+        mWebView = (WebView) findViewById(R.id.wv_html5);
 
-        initTitleContent(mStrTitle);
-        setTvCloseVisible();
+        titleContent(mStrTitle);
+        titleClose();
 
         PayHtmlPresenter presenter = new PayHtmlPresenter(
                 Injection.provideRepository(getApplicationContext()), this);
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
+    @Override
+    protected void initContentData() {
+        initViewStatus();
+    }
+
+    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     protected void initViewStatus() {
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -198,7 +198,9 @@ public class PayHtmlActivity extends BaseJxActivity implements IPayHtmlContract.
     }
 
     @Override
-    protected void DestroyViewAndThing() {
+    protected void onDestroy() {
+        super.onDestroy();
+
         if (mPresenter != null) mPresenter.unSubscribe();
         if (mWebView != null) mWebView.destroy();
     }
@@ -244,20 +246,9 @@ public class PayHtmlActivity extends BaseJxActivity implements IPayHtmlContract.
         }
     };
 
-
     @Override
     public void setPresenter(IPayHtmlContract.IPayHtmlPresenter presenter) {
         mPresenter = presenter;
-    }
-
-    @Override
-    public void showLoadingDialog() {
-        showDialogLoading();
-    }
-
-    @Override
-    public void dismissLoadingDialog() {
-        hideDialogLoading();
     }
 
     @Override
@@ -279,7 +270,7 @@ public class PayHtmlActivity extends BaseJxActivity implements IPayHtmlContract.
 
     @Override
     public void updateStateSucceed(BaseResponse result) {
-        finish();
+        MainRouter.gotoMainActivity(this, 0);
     }
 
     /**

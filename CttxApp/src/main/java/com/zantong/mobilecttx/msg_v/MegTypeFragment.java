@@ -127,7 +127,8 @@ public class MegTypeFragment extends RecyclerListFragment<MessageType>
         if (response instanceof MessageTypeResponse) {
             MessageTypeResponse typeResponse = (MessageTypeResponse) response;
             MessageTypeBean typeBean = typeResponse.getData();
-            List<MessageType> megList = typeBean.getMessageList();
+            List<MessageType> megList = null;
+            if (typeBean != null) megList = typeBean.getMessageList();
             setSimpleDataResult(megList);
         } else
             responseError();

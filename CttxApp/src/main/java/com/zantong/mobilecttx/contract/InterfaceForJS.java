@@ -14,8 +14,6 @@ import android.webkit.JavascriptInterface;
 
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
@@ -25,7 +23,7 @@ import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
+import com.zantong.mobilecttx.violation_v.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import org.greenrobot.eventbus.EventBus;
@@ -176,21 +174,20 @@ public class InterfaceForJS {
     //去往违章列表页面
     @JavascriptInterface
     public void searchViolationList(String carnum, String enginenum, String carnumtype) {
-        LoginData.getInstance().mHashMap.put("IllegalViolationName", carnum);
-        LoginData.getInstance().mHashMap.put("carnum", carnum);
-        LoginData.getInstance().mHashMap.put("enginenum", enginenum);
-        LoginData.getInstance().mHashMap.put("carnumtype", carnumtype);
 
-        ViolationDTO dto = new ViolationDTO();
-        dto.setCarnum(RSAUtils.strByEncryption(carnum, true));
-        dto.setEnginenum(RSAUtils.strByEncryption(enginenum, true));
-        dto.setCarnumtype(carnumtype);
+        ViolationDTO violationDTO = new ViolationDTO();
+        violationDTO.setCarnum(carnum);
+
+        if (!TextUtils.isEmpty(enginenum) && enginenum.length() > 5)
+            enginenum = enginenum.substring(enginenum.length() - 5, enginenum.length());
+        violationDTO.setEnginenum(enginenum);
+
+        violationDTO.setCarnumtype(carnumtype);
 
         Intent intent = new Intent(mJSContext, ViolationListActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("params", dto);
+        bundle.putSerializable("params", violationDTO);
         intent.putExtras(bundle);
-        intent.putExtra("plateNum", carnum);
         mJSContext.startActivity(intent);
     }
 

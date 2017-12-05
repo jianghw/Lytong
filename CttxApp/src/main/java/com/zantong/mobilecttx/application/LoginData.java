@@ -54,7 +54,6 @@ public class LoginData {
     public QueryHistoryBean mQueryHistoryBean;//查询历史缓存
 
     public HashMap<String, Object> mHashMap = new HashMap<>();//界面信息传递工具
-    public List<UserCarInfoBean> payData = new ArrayList<>();//可缴费车辆集合
     public List<UserCarInfoBean> mServerCars = new ArrayList<>();//我的车辆集合
     public List<CarInfoDTO> mLocalCars = new ArrayList<>();//我的车辆集合
     public List<ProvinceModel> provinceModel;//城市三级联动数据列表
@@ -85,7 +84,6 @@ public class LoginData {
         mQueryHistoryBean = null;//查询历史缓存
 
         if (mHashMap != null) mHashMap.clear();//界面信息传递工具
-        if (payData != null) payData.clear();//可缴费车辆集合
         if (mServerCars != null) mServerCars.clear();//我的车辆集合
         if (mLocalCars != null) mLocalCars.clear();//我的车辆集合
         if (provinceModel != null) provinceModel.clear();//城市三级联动数据列表

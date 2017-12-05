@@ -55,7 +55,7 @@ public class PayHtmlPresenter
 
     @Override
     public void unSubscribe() {
-        mAtyView.dismissLoadingDialog();
+        mAtyView.dismissLoading();
         mSubscriptions.clear();
     }
 
@@ -69,7 +69,7 @@ public class PayHtmlPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoadingDialog();
+                        mAtyView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -77,16 +77,14 @@ public class PayHtmlPresenter
                 .subscribe(new BaseSubscriber<Long>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoadingDialog();
+                        mAtyView.dismissLoading();
                     }
 
                     @Override
-                    public void doError(Throwable e) {
-                    }
+                    public void doError(Throwable e) {}
 
                     @Override
-                    public void doNext(Long aLong) {
-                    }
+                    public void doNext(Long aLong) {}
                 });
         mSubscriptions.add(subscription);
     }
@@ -99,7 +97,7 @@ public class PayHtmlPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoadingDialog();
+                        mAtyView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -129,7 +127,7 @@ public class PayHtmlPresenter
     public String initLicenseFileNumDTO() {
         RequestDTO dto = new RequestDTO();
 
-        RequestHeadDTO requestHeadDTO = mRepository.initLicenseFileNumDTO("cip.cfc.v003.01");
+        RequestHeadDTO requestHeadDTO = mRepository.initServiceCodeDTO("cip.cfc.v003.01");
         dto.setSYS_HEAD(requestHeadDTO);
 
         LicenseTestDTO bean = new LicenseTestDTO();
@@ -154,12 +152,13 @@ public class PayHtmlPresenter
                 .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoadingDialog();
+                        mAtyView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.updateStateError(e.getMessage() != null ? e.getMessage() : "未知错误(46)");
+                        mAtyView.updateStateError(e.getMessage() != null
+                                ? e.getMessage() : "未知错误(46)");
                     }
 
                     @Override
@@ -167,7 +166,8 @@ public class PayHtmlPresenter
                         if (result != null && result.getResponseCode() == 2000) {
                             mAtyView.updateStateSucceed(result);
                         } else {
-                            mAtyView.updateStateError(result != null ? result.getResponseDesc() : "未知错误(46)");
+                            mAtyView.updateStateError(result != null
+                                    ? result.getResponseDesc() : "未知错误(46)");
                         }
                     }
                 });

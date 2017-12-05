@@ -27,6 +27,13 @@ android {
     }
     //区分模块资源
     resourcePrefix "user_"
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            assets.srcDirs = ['assets']
+        }
+    }
 }
 
 dependencies {

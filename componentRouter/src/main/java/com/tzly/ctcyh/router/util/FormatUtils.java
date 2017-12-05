@@ -32,17 +32,34 @@ public final class FormatUtils {
         return new DecimalFormat("#0.00").format(floatValue(price));
     }
 
-    public static String submitPrice(String price) {
-        Float p = Float.valueOf(price);
-        return new DecimalFormat("#0.00").format(floatValue(p));
-    }
-
     /**
      * 向上取值
      */
     public static float floatValue(float price) {
         BigDecimal newPrice = new BigDecimal(price).setScale(2, BigDecimal.ROUND_UP);
         return newPrice.floatValue();
+    }
+
+    public static String submitPrice(double price) {
+        return new DecimalFormat("#0.00").format(doubleValue(price));
+    }
+
+    public static String submitPrice(String price) {
+        Double d = Double.valueOf(price);
+        return new DecimalFormat("#0.00").format(doubleValue(d));
+    }
+
+    public static double doubleValue(double price) {
+        BigDecimal newPrice = new BigDecimal(price).setScale(2, BigDecimal.ROUND_UP);
+        return newPrice.doubleValue();
+    }
+
+    public static String displayPrice(String price) {
+        String money = "0.00";
+        if (TextUtils.isEmpty(price)) return money;
+        double amount;
+        amount = Double.valueOf(price) / 100;
+        return submitPrice(amount);
     }
 
 }

@@ -127,7 +127,6 @@
             android:digits="@string/digits_content"
             android:gravity="right|center_vertical"
             android:hint="请输入档案编号"
-            android:maxLength="12"
             android:maxLines="1"
             android:minWidth="@dimen/ds_180"
             android:textColor="@color/colorTvBlack_4d"

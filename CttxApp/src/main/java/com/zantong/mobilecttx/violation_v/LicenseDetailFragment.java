@@ -9,16 +9,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.custom.CustomLoader;
-import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.violation_p.ILicenseGradeAtyContract;
 import com.zantong.mobilecttx.violation_p.LicenseGradeAtyPresenter;
-import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
 import com.zantong.mobilecttx.weizhang.adapter.LicenseDetailAdapter;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.RspInfoBean;
@@ -30,7 +28,7 @@ import java.util.List;
 /**
  * 驾驶证查分详情
  */
-public class LicenseDetailFragment extends JxBaseRefreshFragment
+public class LicenseDetailFragment extends RefreshFragment
         implements ILicenseGradeAtyContract.ILicenseGradeAtyView {
 
     private RelativeLayout mRyBgLoader;
@@ -45,7 +43,7 @@ public class LicenseDetailFragment extends JxBaseRefreshFragment
     private RelativeLayout mLayScore;
     private TextView mTvPrompt;
     /**
-     * 小提示
+     * 小提示 布局
      */
     private TextView mTvHint;
     private LinearLayout mLayError;
@@ -72,33 +70,39 @@ public class LicenseDetailFragment extends JxBaseRefreshFragment
 
     /**
      * 可下拉刷新
-     *
-     * @return true
      */
     @Override
     protected boolean isRefresh() {
-        return false;
+        return true;
     }
 
     @Override
-    protected int initFragmentView() {
+    protected int fragmentView() {
         return R.layout.fragment_license_detail;
     }
 
-    /**
-     * 不用
-     */
-    protected void onRefreshData() {
-        if (mPresenter != null) mPresenter.driverLicenseCheckGrade();
+    @Override
+    protected void bindFragment(View fragment) {
+        initView(fragment);
+        bindExtraView();
     }
 
-    @Override
-    protected void onLoadMoreData() {}
+    public void initView(View view) {
+        mRyBgLoader = (RelativeLayout) view.findViewById(R.id.lay_center_score);
+        mImgLoader = (CustomLoader) view.findViewById(R.id.img_loader);
+        mTvScore = (TextView) view.findViewById(R.id.tv_score);
+        mTvScoreZ = (TextView) view.findViewById(R.id.tv_score_z);
+        mLayScore = (RelativeLayout) view.findViewById(R.id.lay_score);
+        mTvFinger = (TextView) view.findViewById(R.id.tv_finger);
 
-    @Override
-    protected void bindFragmentView(View view) {
-        initView(view);
+        mTvPromptWeep = (TextView) view.findViewById(R.id.tv_prompt_weep);
+        mTvPrompt = (TextView) view.findViewById(R.id.tv_prompt);
+        mTvHint = (TextView) view.findViewById(R.id.tv_hint);
+        mLayError = (LinearLayout) view.findViewById(R.id.lay_error);
+        mCustomRecycler = (XRecyclerView) view.findViewById(R.id.custom_recycler);
+    }
 
+    protected void bindExtraView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -106,32 +110,14 @@ public class LicenseDetailFragment extends JxBaseRefreshFragment
         mCustomRecycler.setPullRefreshEnabled(false);
         mCustomRecycler.setLoadingMoreEnabled(false);
         //ScrollView 去滑动
-        mCustomRecycler.setNestedScrollingEnabled(false);
-
-        mCustomRecycler.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                mCustomRecycler.postDelayed(new Runnable() {
-                    public void run() {
-                        if (mCustomRecycler == null) return;
-                        mCurrentPage = 1;
-                        onRefreshData();
-                        mCustomRecycler.refreshComplete();
-                    }
-                }, 1500);
-            }
-
-            @Override
-            public void onLoadMore() {
-            }
-        });
+        mCustomRecycler.setNestedScrollingEnabled(true);
 
         mAdapter = createAdapter();
         if (mAdapter == null) throw new IllegalArgumentException("adapter is must not null");
         mAdapter.setItemClickListener(new LicenseDetailAdapter.ItemClickListener() {
             @Override
             public void doClickViolation(String num) {//违章查询页面
-                Act.getInstance().gotoIntent(getActivity(), ViolationDetails.class, num);
+                Act.getInstance().gotoIntent(getActivity(), ViolationDetailsActivity.class, num);
             }
 
             /**
@@ -150,6 +136,28 @@ public class LicenseDetailFragment extends JxBaseRefreshFragment
                 Injection.provideRepository(Utils.getContext()), this);
     }
 
+    public LicenseDetailAdapter createAdapter() {
+        return new LicenseDetailAdapter();
+    }
+
+    @Override
+    public void setPresenter(ILicenseGradeAtyContract.ILicenseGradeAtyPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        animationRefresh(false);
+        if (mPresenter != null) mPresenter.unSubscribe();
+    }
+
+    @Override
+    protected void loadingFirstData() {
+        if (mPresenter != null) mPresenter.driverLicenseCheckGrade();
+    }
+
     /**
      * 数字计算
      */
@@ -162,55 +170,13 @@ public class LicenseDetailFragment extends JxBaseRefreshFragment
         if (mTvScore != null) mTvScore.setText(String.valueOf(newScore));
     }
 
-    public void initView(View view) {
-        mRyBgLoader = (RelativeLayout) view.findViewById(R.id.lay_center_score);
-        mImgLoader = (CustomLoader) view.findViewById(R.id.img_loader);
-        mTvScore = (TextView) view.findViewById(R.id.tv_score);
-        mTvScoreZ = (TextView) view.findViewById(R.id.tv_score_z);
-        mLayScore = (RelativeLayout) view.findViewById(R.id.lay_score);
-        mTvFinger = (TextView) view.findViewById(R.id.tv_finger);
-        mTvFinger.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Act.getInstance().gotoIntent(getActivity(), ViolationActivity.class);
-            }
-        });
-        mTvPromptWeep = (TextView) view.findViewById(R.id.tv_prompt_weep);
-        mTvPrompt = (TextView) view.findViewById(R.id.tv_prompt);
-        mTvHint = (TextView) view.findViewById(R.id.tv_hint);
-        mLayError = (LinearLayout) view.findViewById(R.id.lay_error);
-        mCustomRecycler = (XRecyclerView) view.findViewById(R.id.custom_recycler);
-    }
-
-    public LicenseDetailAdapter createAdapter() {
-        return new LicenseDetailAdapter();
-    }
-
-    @Override
-    protected void onFirstDataVisible() {
-        if (mPresenter != null) mPresenter.driverLicenseCheckGrade();
-    }
-
-    @Override
-    public void setPresenter(ILicenseGradeAtyContract.ILicenseGradeAtyPresenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        setLayoutVisibilityByRefresh(false);
-        if (mPresenter != null) mPresenter.unSubscribe();
-    }
-
     /**
      * 加载数据时
      */
     @Override
     public void onShowDefaultData() {
-        setLayoutVisibilityByRefresh(true);
-        showErrorCryingFace(false);
+        animationRefresh(true);
+        errorCryingFace(false);
     }
 
     /**
@@ -225,27 +191,47 @@ public class LicenseDetailFragment extends JxBaseRefreshFragment
      * 数据加载成功
      */
     @Override
-    public void driverLicenseCheckGradeSucceed(LicenseResponseBean result) {
-        RspInfoBean rspInfo = result.getRspInfo();
-        List<RspInfoBean.ViolationInfoBean> infoBeanList = rspInfo.getViolationInfo();
-        setDataResult(infoBeanList);
-        ToastUtils.toastShort(result.getSYS_HEAD().getReturnMessage());
+    protected void responseData(Object response) {
+        if (response instanceof LicenseResponseBean) {
+            LicenseResponseBean responseBean = (LicenseResponseBean) response;
+            RspInfoBean rspInfo = responseBean.getRspInfo();
+            List<RspInfoBean.ViolationInfoBean> infoBeanList = null;
+            if (rspInfo != null) infoBeanList = rspInfo.getViolationInfo();
+            setDataResult(infoBeanList);
+            toastShort(responseBean.getSYS_HEAD().getReturnMessage());
+        } else
+            responseError();
+    }
+
+    /**
+     * 数据加载
+     */
+    protected void setDataResult(List<RspInfoBean.ViolationInfoBean> list) {
+        mCurrentPage = 1;
+        mAdapter.replace(list);
+        mLayError.setVisibility(mAdapter.getItemCount() < 1 ? View.VISIBLE : View.GONE);
+
+        mTvFinger.setText(mAdapter.getItemCount() == 0 ? "你暂无扣分,请继续保持" : "你有扣分记录");
+
+        animationRefresh(false);
     }
 
     @Override
     public void driverLicenseCheckGradeError(String message) {
-        showErrorCryingFace(true);
+        showStateContent();
+
+        errorCryingFace(true);
         mLayError.setVisibility(View.VISIBLE);
 
-        setLayoutVisibilityByRefresh(false);
-        ToastUtils.toastShort(message);
+        animationRefresh(false);
+        toastShort(message);
     }
 
     /**
      * @param isRefresh true 刷新中~
      */
     @Override
-    public void setLayoutVisibilityByRefresh(boolean isRefresh) {
+    public void animationRefresh(boolean isRefresh) {
         mImgLoader.AnimationControlCenter(isRefresh);
         mImgLoader.setVisibility(isRefresh ? View.VISIBLE : View.INVISIBLE);
     }
@@ -256,22 +242,16 @@ public class LicenseDetailFragment extends JxBaseRefreshFragment
      * @param isCrying false 不显示库哭脸
      */
     @Override
-    public void showErrorCryingFace(boolean isCrying) {
+    public void errorCryingFace(boolean isCrying) {
         mTvPromptWeep.setVisibility(isCrying ? View.VISIBLE : View.INVISIBLE);
 
         mTvScore.setVisibility(isCrying ? View.INVISIBLE : View.VISIBLE);
         mTvScoreZ.setVisibility(isCrying ? View.INVISIBLE : View.VISIBLE);
-        mRyBgLoader.setBackgroundResource(isCrying ? R.mipmap.ic_loading_coupon_cry : R.mipmap.ic_loading_coupon_bg);
-    }
 
-    /**
-     * 数据加载
-     */
-    protected void setDataResult(List<RspInfoBean.ViolationInfoBean> list) {
-        mAdapter.append(list);
-        mLayError.setVisibility(mAdapter.getItemCount() < 1 ? View.VISIBLE : View.GONE);
+        if (isCrying) mTvFinger.setText("本功能需要申办畅通卡并开通使用才能正确显示你的分数");
 
-        setLayoutVisibilityByRefresh(false);
+        mRyBgLoader.setBackgroundResource(isCrying
+                ? R.mipmap.ic_loading_coupon_cry : R.mipmap.ic_loading_coupon_bg);
     }
 
 }

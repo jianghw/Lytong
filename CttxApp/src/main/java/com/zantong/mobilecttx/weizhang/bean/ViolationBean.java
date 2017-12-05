@@ -24,6 +24,9 @@ public class ViolationBean implements Parcelable {
     private String violationinfo; //违章条例
     private String violationtype; //违章事由
 
+    private String enginenum;//自己写的额外的，接口里没有
+
+
     public String getViolationtime() {
         return violationtime;
     }
@@ -46,6 +49,14 @@ public class ViolationBean implements Parcelable {
 
     public void setViolationcent(String violationcent) {
         this.violationcent = violationcent;
+    }
+
+    public int getProcessste() {
+        return processste;
+    }
+
+    public void setProcessste(int processste) {
+        this.processste = processste;
     }
 
     public String getCarnum() {
@@ -104,18 +115,16 @@ public class ViolationBean implements Parcelable {
         this.violationtype = violationtype;
     }
 
-    public void setProcessste(int processste) {
-        this.processste = processste;
+    public String getEnginenum() {
+        return enginenum;
     }
 
-    public int getProcessste() {
-        return processste;
+    public void setEnginenum(String enginenum) {
+        this.enginenum = enginenum;
     }
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
+    public int describeContents() { return 0; }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -130,10 +139,10 @@ public class ViolationBean implements Parcelable {
         dest.writeString(this.violationplace);
         dest.writeString(this.violationinfo);
         dest.writeString(this.violationtype);
+        dest.writeString(this.enginenum);
     }
 
-    public ViolationBean() {
-    }
+    public ViolationBean() {}
 
     protected ViolationBean(Parcel in) {
         this.violationtime = in.readString();
@@ -147,17 +156,14 @@ public class ViolationBean implements Parcelable {
         this.violationplace = in.readString();
         this.violationinfo = in.readString();
         this.violationtype = in.readString();
+        this.enginenum = in.readString();
     }
 
-    public static final Parcelable.Creator<ViolationBean> CREATOR = new Parcelable.Creator<ViolationBean>() {
+    public static final Creator<ViolationBean> CREATOR = new Creator<ViolationBean>() {
         @Override
-        public ViolationBean createFromParcel(Parcel source) {
-            return new ViolationBean(source);
-        }
+        public ViolationBean createFromParcel(Parcel source) {return new ViolationBean(source);}
 
         @Override
-        public ViolationBean[] newArray(int size) {
-            return new ViolationBean[size];
-        }
+        public ViolationBean[] newArray(int size) {return new ViolationBean[size];}
     };
 }

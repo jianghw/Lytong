@@ -44,7 +44,6 @@
         android:paddingLeft="16dip"
         android:paddingRight="@dimen/ds_60">
 
-
         <TextView
             style="@style/TextInfoStyle"
             android:text="驾驶证证号"/>
@@ -112,7 +111,6 @@
             android:gravity="center_vertical|right"
             android:hint="驾驶证档案编号"
             android:inputType="number"
-            android:maxLength="12"
             android:maxLines="1"/>
     </LinearLayout>
 

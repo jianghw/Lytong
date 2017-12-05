@@ -45,6 +45,8 @@ public final class RouterGlobal {
         public static final String problem_feed_host = "problem_feed_host";
         public static final String oil_map_host = "oil_map_host";
         public static final String recharge_agree_host = "recharge_agree_host";
+        public static final String driving_camera_host = "driving_camera_host";
+        public static final String vehicle_camera_host = "vehicle_camera_host";
     }
 
     public static final class Scheme {

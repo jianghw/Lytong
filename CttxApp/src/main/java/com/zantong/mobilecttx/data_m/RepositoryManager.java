@@ -55,6 +55,7 @@ import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
+import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNumBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
@@ -174,7 +175,7 @@ public class RepositoryManager {
      *
      * @param urlCode cip.cfc.v001.01
      */
-    public RequestHeadDTO initLicenseFileNumDTO(String urlCode) {
+    public RequestHeadDTO initServiceCodeDTO(String urlCode) {
         RequestHeadDTO dto = mLocalData.initRequestHeadDTO();
         dto.setTransServiceCode(urlCode);
         return dto;
@@ -426,7 +427,7 @@ public class RepositoryManager {
     /**
      * cip.cfc.c002.01
      */
-    public Observable<PayCarResult> getPayCars(String msg) {
+    public Observable<PayCarResult> payCars_c002(String msg) {
         return mRemoteData.getPayCars(msg);
     }
 
@@ -568,5 +569,12 @@ public class RepositoryManager {
      */
     public Observable<IndexLayerResponse> getIndexLayer() {
         return mRemoteData.getIndexLayer();
+    }
+
+    /**
+     * 违章查询详情
+     */
+    public Observable<ViolationDetailsBean> violationDetails_v003(String msg) {
+        return mRemoteData.violationDetails_v003(msg);
     }
 }

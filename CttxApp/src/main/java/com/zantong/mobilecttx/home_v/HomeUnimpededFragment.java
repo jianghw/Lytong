@@ -105,8 +105,8 @@ public class HomeUnimpededFragment extends RefreshFragment
     /**
      * 小喇叭数据
      */
-    private List<HomeNotice> mHomeNotices = Collections.synchronizedList(new ArrayList<HomeNotice>());
-
+    private List<HomeNotice> mHomeNotices =
+            Collections.synchronizedList(new ArrayList<HomeNotice>());
     /**
      * 违章车adapter
      */
@@ -366,7 +366,7 @@ public class HomeUnimpededFragment extends RefreshFragment
      */
     @Override
     public void homePageError(String message) {
-        ToastUtils.toastShort(message);
+        toastShort(message);
     }
 
     /**
@@ -429,7 +429,6 @@ public class HomeUnimpededFragment extends RefreshFragment
         if (result != null && result.getData() != null) {
             List<UserCarInfoBean> infoBeanList = result.getData();
             //车辆数据保存处理
-            LoginData.getInstance().payData.clear();
             LoginData.getInstance().mCarNum = infoBeanList.size();
             LoginData.getInstance().mServerCars = decodeCarInfo(infoBeanList);
 
@@ -449,7 +448,6 @@ public class HomeUnimpededFragment extends RefreshFragment
         if (result != null && result.getRspInfo() != null) {
             List<UserCarInfoBean> infoBeanList = result.getRspInfo().getUserCarsInfo();
 
-            LoginData.getInstance().payData.clear();
             LoginData.getInstance().mCarNum = infoBeanList.size();
             LoginData.getInstance().mServerCars = decodeCarInfo(infoBeanList);
 
@@ -515,10 +513,6 @@ public class HomeUnimpededFragment extends RefreshFragment
             userCarInfoBean.setEnginenum(Des3.decode(userCarInfoBean.getEnginenum()));
             userCarInfoBean.setCarnum(Des3.decode(userCarInfoBean.getCarnum()));
 
-            if (!TextUtils.isEmpty(userCarInfoBean.getIspaycar())
-                    && userCarInfoBean.getIspaycar().equals("1"))
-
-                LoginData.getInstance().payData.add(userCarInfoBean);
             arrayList.add(userCarInfoBean);
         }
         return arrayList;
@@ -597,25 +591,25 @@ public class HomeUnimpededFragment extends RefreshFragment
                 MobUtils.getInstance().eventIdByUMeng(17);
                 takeCapture();
                 break;
+            case R.id.tv_drive://国际驾照
+                MobUtils.getInstance().eventIdByUMeng(35);
+                goodId = 1;
+                InternationalDrivingDocument();
+                break;
             case R.id.tv_license://驾驶证查分
                 MobUtils.getInstance().eventIdByUMeng(7);
-                goodId = 1;
+                goodId = 2;
                 licenseCheckGrade();
                 break;
             case R.id.tv_appraisement://爱车估值
                 MobUtils.getInstance().eventIdByUMeng(34);
-                goodId = 2;
+                goodId = 3;
                 carValuation();
                 break;
             case R.id.tv_check://年检
                 MobUtils.getInstance().eventIdByUMeng(4);
-                goodId = 3;
-                gotoCheckHtml();
-                break;
-            case R.id.tv_drive://国际驾照
-                MobUtils.getInstance().eventIdByUMeng(35);
                 goodId = 4;
-                InternationalDrivingDocument();
+                gotoCheckHtml();
                 break;
             case R.id.tv_oil://优惠加油
                 goodId = 5;

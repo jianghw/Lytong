@@ -39,7 +39,6 @@ public class CouponDetailBean {
          * couponLimit : 0
          * couponBusiness : 代驾
          */
-
         private String couponId;
         private String couponName;
         private String couponContent;

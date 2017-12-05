@@ -23,17 +23,18 @@ public class HandleCTCardApiClient extends BaseApiClient {
 
         String reqinfo = new Gson().toJson(jsonParams);
 
-        AsyncCallBack<BankResponse> asyncCallBack = new AsyncCallBack<>(context, new CallBack<BankResponse>() {
-            @Override
-            public void onSuccess(BankResponse result) {
-                resultInterface.resultSuccess(result);
-            }
+        AsyncCallBack<BankResponse> asyncCallBack =
+                new AsyncCallBack<>(context, new CallBack<BankResponse>() {
+                    @Override
+                    public void onSuccess(BankResponse result) {
+                        resultInterface.resultSuccess(result);
+                    }
 
-            @Override
-            public void onError(String errorCode, String msg) {
-                resultInterface.resultError(msg);
-            }
-        }, BankResponse.class);
+                    @Override
+                    public void onError(String errorCode, String msg) {
+                        resultInterface.resultError(msg);
+                    }
+                }, BankResponse.class);
 
         try {
             MessageFormat.getInstance().setTransServiceCode(serviceCode);

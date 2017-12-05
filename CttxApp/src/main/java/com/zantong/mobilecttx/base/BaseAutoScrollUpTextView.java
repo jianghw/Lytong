@@ -99,7 +99,8 @@ public abstract class BaseAutoScrollUpTextView<T> extends ListView implements
                                     int defStyle) {
         super(context, attrs, defStyle);
         this.mContext = context;
-        mScrollY = dip2px(getAdertisementHeight());
+        //        mScrollY = dip2px(getAdertisementHeight());
+        mScrollY = getAdertisementHeight();
         init();
 
     }

@@ -160,8 +160,7 @@ public class UserDataManager {
     }
 
     public boolean isLogin() {
-        boolean isLogin = mLocalData.isLogin();
-        if (isLogin) return true;
+        if (mLocalData.isLogin()) return true;
         LoginResponse responseFromSp = getLoginResponseFromSp();
         if (responseFromSp == null) {
             return false;

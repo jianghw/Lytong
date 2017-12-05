@@ -17,7 +17,17 @@ public class BindCarDTO {
     private String engineNo;//发动机号码
     private String registerDate;//注册日期
     private String issueDate;//发证日期
+
     private int isPay;//是否为付费车
+    private String ownerName;//所有人
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
 
     public int getIsPay() {
         return isPay;

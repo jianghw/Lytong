@@ -11,12 +11,10 @@ import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.UiRouter;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.SPUtils;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.tzly.ctcyh.service.ICargoService;
 import com.tzly.ctcyh.service.IPayService;
 import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.service.RouterGlobal;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
 import com.zantong.mobilecttx.utils.DialogMgr;
@@ -278,8 +276,8 @@ public final class MainRouter {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            gotoUnblockedCardActivity(activity);
                             if (activity != null) gotoMainActivity(activity, 0);
+                            if (activity != null) gotoUnblockedCardActivity(activity);
                         }
                     },
                     new View.OnClickListener() {
@@ -381,20 +379,6 @@ public final class MainRouter {
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.driving_host,
                 bundle);
-    }
-
-    /**
-     * 加油页面
-     */
-    public static void gotoRechargeActivity(Context context) {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(ICargoService.class.getSimpleName());
-        if (object != null && object instanceof ICargoService) {
-            ICargoService service = (ICargoService) object;
-            service.gotoRechargeActivity(context);
-        } else {//注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.cargo.like.CargoAppLike");
-        }
     }
 
     /**
@@ -515,14 +499,9 @@ public final class MainRouter {
 
     public static void gotoViolationListActivity(Activity context,
                                                  String carnum, String enginenum, String carnumtype) {
-        LoginData.getInstance().mHashMap.put("IllegalViolationName", carnum);
-        LoginData.getInstance().mHashMap.put("carnum", carnum);
-        LoginData.getInstance().mHashMap.put("enginenum", enginenum);
-        LoginData.getInstance().mHashMap.put("carnumtype", carnumtype);
-
         ViolationDTO dto = new ViolationDTO();
-        dto.setCarnum(RSAUtils.strByEncryption(carnum, true));
-        dto.setEnginenum(RSAUtils.strByEncryption(enginenum, true));
+        dto.setCarnum(carnum);
+        dto.setEnginenum(enginenum);
         dto.setCarnumtype(carnumtype);
 
         Bundle bundle = new Bundle();
@@ -534,7 +513,7 @@ public final class MainRouter {
     }
 
     /**
-     * 扫描
+     * 行驶证扫描
      */
     public static void gotoOcrCameraActivity(Activity context) {
         Bundle bundle = new Bundle();
@@ -627,5 +606,46 @@ public final class MainRouter {
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.oil_map_host,
                 bundle);
+    }
+
+    /**
+     * 加油页面
+     */
+    public static void gotoRechargeActivity(Context context) {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        Object object = serviceRouter.getService(ICargoService.class.getSimpleName());
+        if (object != null && object instanceof ICargoService) {
+            ICargoService service = (ICargoService) object;
+            service.gotoRechargeActivity(context);
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.cargo.like.CargoAppLike");
+        }
+    }
+
+    /**
+     * 驾驶证
+     */
+    public static void gotoDrivingCameraActivity(Activity activity) {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        Object object = serviceRouter.getService(ICargoService.class.getSimpleName());
+        if (object != null && object instanceof ICargoService) {
+            ICargoService service = (ICargoService) object;
+            service.gotoDrivingCameraActivity(activity);
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.cargo.like.CargoAppLike");
+        }
+    }
+    /**
+     * 行驶证
+     */
+    public static void gotoVehicleCameraActivity(Activity activity) {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        Object object = serviceRouter.getService(ICargoService.class.getSimpleName());
+        if (object != null && object instanceof ICargoService) {
+            ICargoService service = (ICargoService) object;
+            service.gotoVehicleCameraActivity(activity);
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent("com.tzly.ctcyh.cargo.like.CargoAppLike");
+        }
     }
 }

@@ -3,6 +3,8 @@ package com.tzly.ctcyh.cargo.router;
 import android.content.Context;
 import android.content.Intent;
 
+import com.tzly.ctcyh.cargo.cc.drivingl.activity.DrivingCameraActivity;
+import com.tzly.ctcyh.cargo.cc.vehicle.activity.VehicleCameraActivity;
 import com.tzly.ctcyh.cargo.refuel_v.RechargeAgreementActivity;
 import com.tzly.ctcyh.cargo.refuel_v.RefuelOilActivity;
 import com.tzly.ctcyh.router.IComponentRouter;
@@ -30,7 +32,9 @@ public class CargoUiRouter extends LibUiRouter implements IComponentRouter {
     protected String[] initHostToLib() {
         return new String[]{
                 RouterGlobal.Host.recharge_host,
-                RouterGlobal.Host.recharge_agree_host
+                RouterGlobal.Host.recharge_agree_host,
+                RouterGlobal.Host.driving_camera_host,
+                RouterGlobal.Host.vehicle_camera_host
         };
     }
 
@@ -43,6 +47,10 @@ public class CargoUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, RefuelOilActivity.class);
         } else if (RouterGlobal.Host.recharge_agree_host.equals(host)) {
             intent.setClass(context, RechargeAgreementActivity.class);
+        } else if (RouterGlobal.Host.driving_camera_host.equals(host)) {
+            intent.setClass(context, DrivingCameraActivity.class);
+        } else if (RouterGlobal.Host.vehicle_camera_host.equals(host)) {
+            intent.setClass(context, VehicleCameraActivity.class);
         } else {
             return true;
         }

@@ -92,6 +92,8 @@ public class MyCardFragment extends BaseExtraFragment implements ModelView {
         mCarsRecyclerView.noMoreLoadings();
         refreshing_title_notice.setVisibility(View.GONE);
 
+        getBangDingCar();
+
 //        mPayCarAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
 //            @Override
 //            public void onItemClick(View view, Object data) {

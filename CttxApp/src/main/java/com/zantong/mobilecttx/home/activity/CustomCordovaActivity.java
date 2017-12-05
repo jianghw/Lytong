@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+import com.tzly.ctcyh.router.global.JxGlobal;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.utils.SystemBarTintManager;
 
@@ -16,9 +17,6 @@ import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CordovaWebViewImpl;
 import org.apache.cordova.engine.SystemWebView;
 import org.apache.cordova.engine.SystemWebViewEngine;
-
-import com.tzly.ctcyh.router.global.JxGlobal;
-
 
 /**
  * 保险模块浏览器

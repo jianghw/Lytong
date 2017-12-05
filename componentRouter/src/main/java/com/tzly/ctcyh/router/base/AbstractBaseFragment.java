@@ -250,18 +250,22 @@ public abstract class AbstractBaseFragment extends Fragment {
      * 初次获取数据
      */
     public void responseError() {
-        responseError("数据类型出错,未知错误");
+        responseError("数据出错,未知错误");
     }
 
     public void responseError(String message) {
         toastShort(message);
         showStateError();
+
+        errorData(message);
     }
+
+    protected void errorData(String message) {}
 
     public void responseSucceed(Object response) {
         if (response == null) {
             toastShort("数据为空,未知错误");
-            showStateNetError();
+            showStateEmpty();
         } else {
             showStateContent();
             responseData(response);

@@ -69,6 +69,7 @@ import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
+import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNumBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
@@ -606,5 +607,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<IndexLayerResponse> getIndexLayer() {
         return baseRetrofit().create(ICttxService.class).getIndexLayer();
+    }
+
+    /**
+     * 违章查询详情
+     */
+    @Override
+    public Observable<ViolationDetailsBean> violationDetails_v003(String msg) {
+        return bankRetrofit().create(IBankService.class).violationDetails_v003(msg);
     }
 }

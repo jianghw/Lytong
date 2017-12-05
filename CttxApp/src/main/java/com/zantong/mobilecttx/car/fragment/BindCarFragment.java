@@ -3,16 +3,15 @@ package com.zantong.mobilecttx.car.fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.fragment.BaseExtraFragment;
-import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
+import com.zantong.mobilecttx.violation_v.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import butterknife.Bind;
@@ -72,11 +71,11 @@ public class BindCarFragment extends BaseExtraFragment {
         mCent.setText(points);
         mCount.setText(times);
         mAmt.setText(money);
-//        if (!times.equals("0")){
-//            mAmt.setTextColor(getResources().getColor(R.color.red));
-//            mCent.setTextColor(getResources().getColor(R.color.red));
-//            mCount.setTextColor(getResources().getColor(R.color.red));
-//        }
+        //        if (!times.equals("0")){
+        //            mAmt.setTextColor(getResources().getColor(R.color.red));
+        //            mCent.setTextColor(getResources().getColor(R.color.red));
+        //            mCount.setTextColor(getResources().getColor(R.color.red));
+        //        }
     }
 
     @OnClick(R.id.fragment_bindcar_layout)
@@ -86,21 +85,20 @@ public class BindCarFragment extends BaseExtraFragment {
         switch (v.getId()) {
             case R.id.fragment_bindcar_layout:
                 MobclickAgent.onEvent(this.getActivity(), Config.getUMengID(1));
-                LoginData.getInstance().mHashMap.put("IllegalViolationName", mCarNum);
-                LoginData.getInstance().mHashMap.put("carnum", mCarNum);
-                LoginData.getInstance().mHashMap.put("enginenum", mEngineNum);
-                LoginData.getInstance().mHashMap.put("carnumtype", mCarType);
 
-                ViolationDTO dto = new ViolationDTO();
-                dto.setCarnum(RSAUtils.strByEncryption(mCarNum, true));
-                dto.setEnginenum(RSAUtils.strByEncryption(mEngineNum, true));
-                dto.setCarnumtype(mCarType);
+                ViolationDTO violationDTO = new ViolationDTO();
+                violationDTO.setCarnum(mCarNum);
 
-                Intent intent = new Intent(this.getActivity(), ViolationListActivity.class);
+                String enginenum = mEngineNum;
+                if (!TextUtils.isEmpty(enginenum) && enginenum.length() > 5)
+                    enginenum = enginenum.substring(enginenum.length() - 5, enginenum.length());
+                violationDTO.setEnginenum(enginenum);
+                violationDTO.setCarnumtype(mCarType);
+
+                Intent intent = new Intent(getActivity(), ViolationListActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("params", dto);
+                bundle.putSerializable("params", violationDTO);
                 intent.putExtras(bundle);
-                intent.putExtra("plateNum", mCarNum);
                 startActivity(intent);
                 break;
         }

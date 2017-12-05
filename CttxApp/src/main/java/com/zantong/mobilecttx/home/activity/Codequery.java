@@ -19,7 +19,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.weizhang.activity.ViolationDetails;
+import com.zantong.mobilecttx.violation_v.ViolationDetailsActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -77,7 +77,7 @@ public class Codequery extends BaseJxActivity {
                 if (TextUtils.isEmpty(getEditNumber())) {
                     ToastUtils.toastShort("请输入正确罚单编号");
                 } else {
-                    Act.getInstance().gotoIntent(this, ViolationDetails.class, getEditNumber());
+                    Act.getInstance().gotoIntent(this, ViolationDetailsActivity.class, getEditNumber());
                 }
                 break;
             case R.id.img_camera:

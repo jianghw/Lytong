@@ -4,6 +4,7 @@ import com.tzly.ctcyh.router.bean.BankResponse;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
+import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNumBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 
@@ -20,7 +21,7 @@ import rx.Observable;
 public interface IBankService {
 
     @FormUrlEncoded
-    @POST("mobilecall_call/mobilecall_call")
+    @POST("mobilecall_call")
     Observable<LicenseResponseBean> driverLicenseCheckGrade(@Field("msg") String requestDTO);
 
     @FormUrlEncoded
@@ -42,4 +43,11 @@ public interface IBankService {
     @FormUrlEncoded
     @POST("mobilecall_call")
     Observable<PayCarResult> getPayCars(@Field("msg") String msg);
+
+    /**
+     * 违章查询详情
+     */
+    @FormUrlEncoded
+    @POST("mobilecall_call")
+    Observable<ViolationDetailsBean> violationDetails_v003(@Field("msg") String msg);
 }

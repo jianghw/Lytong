@@ -16,20 +16,20 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
 import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.MobUtils;
-import com.tzly.ctcyh.router.util.ViewUtils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
 import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
 import com.tzly.ctcyh.router.util.rea.Des3;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
+import com.zantong.mobilecttx.base.bean.BindCarBean;
 import com.zantong.mobilecttx.car.activity.CarBrandActivity;
 import com.zantong.mobilecttx.car.activity.CarChooseActivity;
 import com.zantong.mobilecttx.car.bean.CarBrandBean;
@@ -39,7 +39,6 @@ import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.common.activity.CommonListActivity;
-import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrBean;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.eventbus.AddCarInfoEvent;
@@ -55,7 +54,6 @@ import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
 import com.zantong.mobilecttx.violation_p.IViolationQueryFtyContract;
 import com.zantong.mobilecttx.violation_p.ViolationQueryFtyPresenter;
-import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 import com.zantong.mobilecttx.widght.UISwitchButton;
 
@@ -185,7 +183,6 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
     @Override
     protected void bindFragmentView(View fragment) {
         initView(fragment);
-        ViewUtils.editTextInputSpace(mEditPlate);
 
         ViolationQueryFtyPresenter mPresenter = new ViolationQueryFtyPresenter(
                 Injection.provideRepository(getActivity().getApplicationContext()), this);
@@ -370,7 +367,7 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
                 startActivityForResult(intent, JxGlobal.requestCode.violation_query_plate);
                 break;
             case R.id.lay_date://日期
-                String temp = mTvDate.getText().toString().trim();
+                String temp = getTvData();
                 String[] temps = null;
                 if (!TextUtils.isEmpty(temp)) temps = temp.split("-");
                 MyChooseDialog dialog = new MyChooseDialog(
@@ -380,7 +377,7 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
 
                             @Override
                             public void back(String name) {
-                                mTvDate.setText(name);
+                                setTvData(name);
                             }
                         });
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -442,7 +439,8 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
      * 数据表单验证
      */
     private boolean dataFormValidation() {
-        String plate = mEditPlate.getTransformationMethod().getTransformation(getEditPlate(), mEditPlate).toString();
+        String plate = mEditPlate.getTransformationMethod()
+                .getTransformation(getEditPlate(), mEditPlate).toString();
 
         String engine = getEditEngine();
         String carType = getTvType();
@@ -451,8 +449,14 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
             toastShort("请输入正确的车牌号");
             return false;
         }
-        if (TextUtils.isEmpty(plate) || engine.length() != 5) {
-            toastShort("请输入正确的发动机号");
+        if (TextUtils.isEmpty(plate) || engine.length() != 6) {
+            toastShort("请输入正确的6位发动机号");
+            return false;
+        }
+
+        String data = getTvData();
+        if (TextUtils.isEmpty(data) || data.equals("0") || data.equals("null")) {
+            toastShort("请选择车辆注册日期");
             return false;
         }
 
@@ -462,7 +466,9 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
         }
 
         String vehicleCode = VehicleTypeTools.switchVehicleCode(carType);
-        if (plate.length() < 7 && (vehicleCode.equals("51") || vehicleCode.equals("52"))) {
+
+        if ((plate.length() < 7 && (vehicleCode.equals("51") || vehicleCode.equals("52")))
+                ||(plate.length() >= 7&&!vehicleCode.equals("51")&&!vehicleCode.equals("52"))) {
             DialogUtils.createDialog(getActivity(),
                     "温馨提示",
                     "如果您的汽车为新能源汽车,车牌类型请选择相应新能源车型",
@@ -470,14 +476,12 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
                     "修改车牌或车型",
                     new View.OnClickListener() {
                         @Override
-                        public void onClick(View v) {
-
-                        }
+                        public void onClick(View v) {}
                     },
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
+                            setEditPlate("");
                         }
                     });
             return false;
@@ -557,23 +561,21 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
     }
 
     private void doQueryVehicle() {
-
-        LoginData.getInstance().mHashMap.put("carnum", mCarInfoDTO.getCarnum());
-        LoginData.getInstance().mHashMap.put("enginenum", mCarInfoDTO.getEnginenum());
-        LoginData.getInstance().mHashMap.put("carnumtype", mCarInfoDTO.getCarnumtype());
-        LoginData.getInstance().mHashMap.put("IllegalViolationName", mCarInfoDTO.getCarnum());//标题
-
         ViolationDTO violationDTO = new ViolationDTO();
-        violationDTO.setCarnum(RSAUtils.strByEncryption(mCarInfoDTO.getCarnum(), true));
-        violationDTO.setEnginenum(RSAUtils.strByEncryption(mCarInfoDTO.getEnginenum(), true));
+        violationDTO.setCarnum(mCarInfoDTO.getCarnum());
+
+        String enginenum = mCarInfoDTO.getEnginenum();
+        if (!TextUtils.isEmpty(enginenum) && enginenum.length() > 5)
+            enginenum = enginenum.substring(enginenum.length() - 5, enginenum.length());
+        violationDTO.setEnginenum(enginenum);
         violationDTO.setCarnumtype(mCarInfoDTO.getCarnumtype());
 
         Intent intent = new Intent(getActivity(), ViolationListActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("params", violationDTO);
         intent.putExtras(bundle);
-        intent.putExtra("plateNum", mCarInfoDTO.getCarnum());
         startActivity(intent);
+
         getActivity().finish();
     }
 
@@ -664,14 +666,7 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
         mBindCarDTO.setPlateNo(carNum);
         mBindCarDTO.setEngineNo(engine);
         mBindCarDTO.setVehicleType(vehicleCode);
-        mBindCarDTO.setUsrnum(MainRouter.getUserID());
         mBindCarDTO.setIssueDate(getTvData());
-
-        //        mBindCarDTO.setFileNum("");
-        //        mBindCarDTO.setAddress(mPosition.getText().toString());
-        //        mBindCarDTO.setUseCharacter(mUseProperty.getText().toString());
-        //        mBindCarDTO.setCarModel(mBrand.getText().toString());
-        //        mBindCarDTO.setVin(mCode.getText().toString());
     }
 
     public String getTvProvince() {
@@ -707,7 +702,7 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
     }
 
     public String getTvData() {
-        return mTvDate.getText().toString();
+        return mTvDate.getText().toString().trim();
     }
 
     public void setTvData(String tvData) {
@@ -729,7 +724,8 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -743,7 +739,7 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
     }
 
     protected void goToCamera() {
-        MainRouter.gotoOcrCameraActivity(getActivity());
+        MainRouter.gotoVehicleCameraActivity(getActivity());
     }
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)
@@ -760,13 +756,8 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
             setTvType(data.getStringExtra(JxGlobal.putExtra.common_list_extra));
         }
         //拍照回调
-        if (requestCode == MainGlobal.requestCode.violation_query_camera
-                && resultCode == MainGlobal.resultCode.ocr_camera_license) {
-
-            if (OcrCameraActivity.file == null)
-                toastShort("照片获取失败");
-            else if (mPresenter != null)
-                mPresenter.uploadDrivingImg();
+        if (requestCode == 110 && resultCode == 200) {
+            vehicleCameraSucceed(data);
         }
         //品牌
         if (requestCode == CarBrandActivity.REQUEST_CODE
@@ -820,37 +811,6 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
     public void uploadDrivingImgSucceed(DrivingOcrResult result) {
         DrivingOcrBean bean = result.getContent();
         if (bean != null) {
-            String cardNo = bean.getCardNo();
-            String provinces = "沪浙苏皖京藏川鄂甘赣贵桂黑吉冀津晋辽鲁蒙闽宁青琼陕湘新渝豫粤云";
-
-            if (!TextUtils.isEmpty(cardNo) && cardNo.length() >= 1 && mParam1 == null) {
-                String province = cardNo.substring(0, 1);
-                String plateNum = cardNo.substring(1, cardNo.length());
-
-                if (provinces.contains(province)) mTvProvince.setText(province);
-                mEditPlate.setText(plateNum);
-            }
-
-            String engineNum = bean.getEnginePN();
-            if (!TextUtils.isEmpty(engineNum) && engineNum.length() > 5) {
-                String engine = engineNum.substring(engineNum.length() - 5, engineNum.length());
-                mEditEngine.setText(engine);
-            }
-            mTvType.setText(bean.getVehicleType() != null ? bean.getVehicleType() : "");
-
-            mCarInfoDTO.setCarnumtype(VehicleTypeTools.switchVehicleCode(mTvType.getText().toString()));
-            //TODO RegisterDate 注册日期
-            String registerDate = bean.getRegisterDate();
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.SIMPLIFIED_CHINESE);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
-            try {
-                Date data = simpleDateFormat.parse(registerDate);
-                String dataString = sdf.format(data);
-                mTvDate.setText(dataString);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
         } else {
             toastShort("行驶证图片解析失败(55)，请重试");
         }
@@ -858,6 +818,50 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
 
     @Override
     public void uploadDrivingImgError(String message) {
-       toastShort(message);
+        toastShort(message);
     }
+
+    private void vehicleCameraSucceed(Intent intent) {
+        String vehicleInfo = intent.getStringExtra("vehicleInfo");
+        BindCarBean carBean = new Gson().fromJson(vehicleInfo, BindCarBean.class);
+
+        String cardNo = carBean.getCardNo();
+        String provinces = "沪浙苏皖京藏川鄂甘赣贵桂黑吉冀津晋辽鲁蒙闽宁青琼陕湘新渝豫粤云";
+
+        if (!TextUtils.isEmpty(cardNo) && cardNo.length() >= 1
+                && mParam1 == null) {//编辑模式下车牌号不可改
+            String province = cardNo.substring(0, 1);
+            String plateNum = cardNo.substring(1, cardNo.length());
+
+            if (provinces.contains(province)) mTvProvince.setText(province);
+            mEditPlate.setText(plateNum);
+        }
+
+        String engineNum = carBean.getEnginePN();
+        if (!TextUtils.isEmpty(engineNum) && engineNum.length() >= 6) {
+            String engine = engineNum.substring(engineNum.length() - 6, engineNum.length());
+            mEditEngine.setText(engine);
+        }
+        setTvType(carBean.getVehicleType() != null ? carBean.getVehicleType() : "小型汽车");
+
+        //TODO RegisterDate 注册日期
+        String registerDate = carBean.getRegisterDate();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.SIMPLIFIED_CHINESE);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
+        try {
+            Date data = simpleDateFormat.parse(registerDate);
+            String dataString = sdf.format(data);
+            setTvData(dataString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        mBindCarDTO.setOwnerName(carBean.getName());
+        mBindCarDTO.setAddress(carBean.getAddr());
+        mBindCarDTO.setUseCharacter(carBean.getUseCharace());
+        mBindCarDTO.setVin(carBean.getVin());
+        mBindCarDTO.setRegisterDate(carBean.getRegisterDate());
+        mBindCarDTO.setIssueDate(carBean.getIssueDate());
+    }
+
 }

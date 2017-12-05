@@ -33,7 +33,7 @@ public class LocalData implements ILocalSource {
     /**
      * 登录用户信息
      */
-    private boolean isLogin;
+    private boolean isLogin = false;
     private LoginBean mLoginBean;
 
     /**

@@ -6,6 +6,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.router.custom.banner.CBPageAdapter;
+import com.tzly.ctcyh.router.custom.image.ImageOptions;
+import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -19,11 +23,6 @@ import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-
-import com.tzly.ctcyh.router.bean.BaseResponse;
-import com.tzly.ctcyh.router.custom.banner.CBPageAdapter;
-import com.tzly.ctcyh.router.util.MobUtils;
-import com.tzly.ctcyh.router.custom.image.ImageOptions;
 
 /**
  * Created by Sai on 15/8/4.
@@ -83,7 +82,7 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
         } else if (url.contains("fahrschule")) {//驾校报名
             Act.getInstance().gotoIntentLogin(mAdapterContext, FahrschuleActivity.class);
         } else {
-            MainRouter.gotoHtmlActivity(mAdapterContext, "优惠", url);
+            MainRouter.gotoHtmlActivity(mAdapterContext, "优惠活动", url);
         }
     }
 

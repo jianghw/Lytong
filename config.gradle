@@ -4,8 +4,8 @@ ext {
             buildToolsVersion: "25.0.3",
             minSdkVersion    : 16,
             targetSdkVersion : 25,
-            versionCode      : 53,
-            versionName      : "3.2.5"
+            versionCode      : 55,
+            versionName      : "3.2.9"
     ]
 
     dependencies = [
@@ -20,9 +20,9 @@ ext {
     ]
 
     buildConfig = [
-            mianDebug : "true",
-            userDebug : "true",
-            payDebug  : "true",
-            cargoDebug: "true"
+            mianDebug : "false",
+            userDebug : "false",
+            payDebug  : "false",
+            cargoDebug: "false"
     ]
 }

@@ -133,7 +133,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
         params.setUsrid(mRepository.getUserID());
 
         RequestDTO dto = new RequestDTO();
-        RequestHeadDTO requestHeadDTO = mRepository.initLicenseFileNumDTO("cip.cfc.c003.01");
+        RequestHeadDTO requestHeadDTO = mRepository.initServiceCodeDTO("cip.cfc.c003.01");
 
         dto.setSYS_HEAD(requestHeadDTO);
         dto.setReqInfo(params);
@@ -146,7 +146,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
      */
     @Override
     public void getPayCars() {
-        Subscription subscription = mRepository.getPayCars(initHomeDataDTO())
+        Subscription subscription = mRepository.payCars_c002(initHomeDataDTO())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<PayCarResult>() {
@@ -171,7 +171,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
     @Override
     public String initHomeDataDTO() {
         RequestDTO dto = new RequestDTO();
-        RequestHeadDTO requestHeadDTO = mRepository.initLicenseFileNumDTO("cip.cfc.c002.01");
+        RequestHeadDTO requestHeadDTO = mRepository.initServiceCodeDTO("cip.cfc.c002.01");
         dto.setSYS_HEAD(requestHeadDTO);
 
         LogoutDTO params = new LogoutDTO();
@@ -188,7 +188,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
     public void getAllVehicles() {
         Subscription subscription = Observable.zip(
                 mRepository.getRemoteCarInfo(initUserCarsDTO()),
-                mRepository.getPayCars(initHomeDataDTO()),
+                mRepository.payCars_c002(initHomeDataDTO()),
                 new Func2<UserCarsResult, PayCarResult, List<BindCarDTO>>() {
                     @Override
                     public List<BindCarDTO> call(UserCarsResult userCarsResult,
@@ -233,7 +233,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
         List<BindCarDTO> bindCarDTOList = new ArrayList<>();
 
         UserCarsBean userCarsBean = userCarsResult.getRspInfo();
-        if (userCarsBean != null) {
+        if (userCarsBean != null && userCarsResult.getSYS_HEAD().getReturnCode().equals("000000")) {
             List<UserCarInfoBean> carInfoBeanList = userCarsBean.getUserCarsInfo();
             if (carInfoBeanList != null && carInfoBeanList.size() > 0) {
                 for (UserCarInfoBean userCarInfoBean : carInfoBeanList) {
@@ -255,7 +255,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
         }
 
         PayCarBean payCarBean = payCarResult.getRspInfo();
-        if (payCarBean != null) {
+        if (payCarBean != null && payCarResult.getSYS_HEAD().getReturnCode().equals("000000")) {
             List<PayCar> payCarList = payCarBean.getUserCarsInfo();
             if (payCarList != null && payCarList.size() > 0) {
                 for (PayCar userCarInfoBean : payCarList) {

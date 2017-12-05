@@ -28,7 +28,7 @@ import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.user.activity.RegisterActivity;
 import com.zantong.mobilecttx.user.activity.ResetActivity;
 import com.zantong.mobilecttx.violation_v.ViolationActivity;
-import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
+import com.zantong.mobilecttx.violation_v.ViolationListActivity;
 
 /**
  * 向外提供的路由规则

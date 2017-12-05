@@ -13,10 +13,9 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.car.fragment.ManageCarListFragment;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
-import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.violation_v.ViolationActivity;
 
 /**
  * 车辆管理母页面
@@ -73,7 +72,9 @@ public class ManageCarActivity extends BaseJxActivity {
      */
     protected void imageClickListener() {
         //TODO 确保每次能添加
-        Act.getInstance().gotoIntent(this, ViolationActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(MainGlobal.putExtra.car_item_bean_extra, null);
+        MainRouter.gotoViolationActivity(this, bundle);
     }
 
     private void initFragment() {
@@ -94,6 +95,8 @@ public class ManageCarActivity extends BaseJxActivity {
     @Override
     protected void DestroyViewAndThing() {
         mCarListFragment = null;
+
+        MainRouter.gotoMainActivity(this,2);
     }
 
     @Override

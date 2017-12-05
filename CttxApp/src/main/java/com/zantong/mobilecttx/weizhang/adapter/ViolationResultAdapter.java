@@ -14,6 +14,7 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.utils.StringUtils;
+import com.zantong.mobilecttx.violation_v.IViolationListUi;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 
 import butterknife.Bind;
@@ -21,7 +22,11 @@ import butterknife.ButterKnife;
 
 public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
 
-    private ItemPayListener mClickListener;
+    private final IViolationListUi mViolationListUi;
+
+    public ViolationResultAdapter(IViolationListUi violationListUi) {
+        mViolationListUi = violationListUi;
+    }
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -60,7 +65,7 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
             holder.mPayBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mClickListener != null) mClickListener.doClickPay(violationBean);
+                    if (mViolationListUi != null) mViolationListUi.doClickPay(violationBean);
                 }
             });
             if (processte == 0 || processte == 2) {
@@ -75,15 +80,6 @@ public class ViolationResultAdapter extends BaseAdapter<ViolationBean> {
             }
         }
     }
-
-    public void setItemPayListener(ItemPayListener listener) {
-        mClickListener = listener;
-    }
-
-    public interface ItemPayListener {
-        void doClickPay(ViolationBean bean);
-    }
-
 
     @Override
     public View createView(ViewGroup viewGroup, int i) {

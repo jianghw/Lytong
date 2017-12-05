@@ -95,6 +95,13 @@ public class RefuelOilFragment extends RefreshFragment
         }
     }
 
+    /**
+     * 是否可刷新
+     */
+    protected boolean isRefresh() {
+        return false;
+    }
+
     @Override
     protected void loadingFirstData() {
         if (mPresenter != null) mPresenter.getGoods();
@@ -125,6 +132,18 @@ public class RefuelOilFragment extends RefreshFragment
         mTvAgreement.setOnClickListener(this);
         mBtnCommit = (Button) view.findViewById(R.id.btn_commit);
         mBtnCommit.setOnClickListener(this);
+//        final ScrollView scrollView = (ScrollView) view.findViewById(R.id.sv_hint);
+//        scrollView.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.getAction() == MotionEvent.ACTION_UP) {
+//                    scrollView.requestDisallowInterceptTouchEvent(false);
+//                } else {
+//                    scrollView.requestDisallowInterceptTouchEvent(true);
+//                }
+//                return false;
+//            }
+//        });
 
         GridLayoutManager manager = new GridLayoutManager(Utils.getContext(), 3);
         mXRecyclerView.setLayoutManager(manager);
@@ -213,7 +232,7 @@ public class RefuelOilFragment extends RefreshFragment
         if (v.getId() == R.id.btn_commit) {
             formDataValidation();
         } else if (v.getId() == R.id.tv_agreement) {//加油协议
-            CargoRouter.RechargeAgreementActivity(getActivity());
+            CargoRouter.gotoRechargeAgreementActivity(getActivity());
         } else if (v.getId() == R.id.lay_0) {//提供商
             CustomDialog.payTypeDialog(getActivity(), new IPayTypeListener() {
                 @Override

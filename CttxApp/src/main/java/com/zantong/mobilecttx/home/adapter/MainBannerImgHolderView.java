@@ -6,6 +6,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.router.custom.banner.CBPageAdapter;
+import com.tzly.ctcyh.router.custom.image.ImageOptions;
+import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -19,11 +23,6 @@ import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-
-import com.tzly.ctcyh.router.bean.BaseResponse;
-import com.tzly.ctcyh.router.custom.banner.CBPageAdapter;
-import com.tzly.ctcyh.router.util.MobUtils;
-import com.tzly.ctcyh.router.custom.image.ImageOptions;
 
 /**
  * Created by Sai on 15/8/4.

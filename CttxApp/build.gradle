@@ -152,6 +152,12 @@ android {
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
         }
     }
+
+    dexOptions {
+        dexInProcess true
+        preDexLibraries true
+        javaMaxHeapSize "4g"//越大越好
+    }
 }
 
 repositories {
@@ -162,7 +168,6 @@ repositories {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':CordovaLib')
     //butterknife
     compile 'com.jakewharton:butterknife:7.0.1'
     //阿里云推送
@@ -172,6 +177,7 @@ dependencies {
     compile 'com.aliyun.ams:alicloud-android-ut:5.1.0'
     //接口沟通依赖
     compile project(':componentService')
+    compile project(':CordovaLib')
 }
 //自定义组件构建
 component {

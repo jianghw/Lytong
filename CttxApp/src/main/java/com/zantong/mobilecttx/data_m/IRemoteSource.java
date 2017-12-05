@@ -1,5 +1,8 @@
 package com.zantong.mobilecttx.data_m;
 
+import com.tzly.ctcyh.router.bean.BankResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.router.bean.response.SubjectGoodsResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseResponse;
@@ -46,6 +49,7 @@ import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
+import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNumBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
@@ -54,9 +58,6 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 
 import java.util.List;
 
-import com.tzly.ctcyh.router.bean.BankResponse;
-import com.tzly.ctcyh.router.bean.BaseResponse;
-import com.tzly.ctcyh.router.bean.response.SubjectGoodsResponse;
 import okhttp3.MultipartBody;
 import rx.Observable;
 
@@ -350,4 +351,6 @@ public interface IRemoteSource {
      * 是否提供活动
      */
     Observable<IndexLayerResponse> getIndexLayer();
+
+    Observable<ViolationDetailsBean> violationDetails_v003(String msg);
 }

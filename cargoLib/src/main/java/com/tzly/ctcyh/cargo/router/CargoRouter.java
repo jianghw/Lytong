@@ -117,10 +117,30 @@ public final class CargoRouter {
     /**
      * 加油协议页面
      */
-    public static void RechargeAgreementActivity(Context context) {
+    public static void gotoRechargeAgreementActivity(Context context) {
         Bundle bundle = new Bundle();
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.recharge_agree_host,
                 bundle);
+    }
+
+    /**
+     * 驾驶证扫描 110
+     */
+    public static void gotoDrivingCameraActivity(Activity context) {
+        Bundle bundle = new Bundle();
+        UiRouter.getInstance().openUriForResult(context,
+                RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.driving_camera_host,
+                bundle, 110);
+    }
+
+    /**
+     * 行驶证证扫描 110
+     */
+    public static void gotoVehicleCameraActivity(Activity context) {
+        Bundle bundle = new Bundle();
+        UiRouter.getInstance().openUriForResult(context,
+                RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.vehicle_camera_host,
+                bundle, 110);
     }
 }

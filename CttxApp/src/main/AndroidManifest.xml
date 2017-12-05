@@ -95,11 +95,7 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
 
         <activity
-            android:name=".common.Demo"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity
-            android:name=".weizhang.activity.ViolationDetails"
+            android:name=".violation_v.ViolationDetailsActivity"
             android:screenOrientation="portrait"/>
         <!-- =======================输入编码查询违章页面===================================== -->
         <activity
@@ -309,11 +305,11 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <!-- 违章列表信息显示页面 -->
         <activity
-            android:name=".weizhang.activity.ViolationListActivity"
+            android:name=".violation_v.ViolationListActivity"
             android:screenOrientation="portrait"/>
         <!-- 违章缴费页面 -->
         <activity
-            android:name=".weizhang.activity.ViolationPayActivity"
+            android:name=".violation_v.ViolationPayActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".violation_v.LicenseCheckGradeActivity"

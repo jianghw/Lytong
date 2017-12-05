@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.widght;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.BaseAutoScrollUpTextView;
 import com.zantong.mobilecttx.home.bean.HomeNotice;
 
@@ -39,7 +40,7 @@ public class MainScrollUpAdvertisementView extends BaseAutoScrollUpTextView<Home
      */
     @Override
     protected int getAdertisementHeight() {
-        return 29;
+        return getResources().getDimensionPixelSize(R.dimen.res_y_100);
     }
 
 }

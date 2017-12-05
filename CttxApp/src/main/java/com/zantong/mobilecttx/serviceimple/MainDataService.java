@@ -60,7 +60,7 @@ public class MainDataService implements IMainService {
 
     @Override
     public void gotoOcrCameraActivity(Activity context) {
-        MainRouter.gotoOcrCameraActivity(context);
+        MainRouter.gotoVehicleCameraActivity(context);
     }
 
     /**

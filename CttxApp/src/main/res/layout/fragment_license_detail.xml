@@ -9,10 +9,10 @@
         android:id="@+id/lay_score"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ds_450"
-        android:background="@drawable/bg_title_shade"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/bg_title_shade">
 
         <RelativeLayout
             android:id="@+id/lay_center_score"
@@ -81,17 +81,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/ds_51"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:layout_marginRight="@dimen/res_x_30"
+            android:layout_marginTop="@dimen/res_x_30"
             android:drawablePadding="@dimen/ds_24"
             android:drawableRight="@mipmap/ic_finger_left"
-            android:text="@string/tv_license_instructions"
+            android:gravity="center"
             android:textColor="@color/light_blue"
-            android:textSize="@dimen/fs_18sp"/>
+            android:textSize="@dimen/fs_18sp"
+            tools:text="本功能需要申办畅通卡并开通使用才能正确显示你的分数"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="@dimen/ds_48"
+            android:layout_marginTop="@dimen/res_x_30"
             android:background="#D0D0D0"/>
 
         <RelativeLayout

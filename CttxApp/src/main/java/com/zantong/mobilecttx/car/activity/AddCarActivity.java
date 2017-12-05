@@ -60,7 +60,7 @@ import com.zantong.mobilecttx.utils.UiHelpers;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
-import com.zantong.mobilecttx.weizhang.activity.ViolationListActivity;
+import com.zantong.mobilecttx.violation_v.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 import com.zantong.mobilecttx.widght.SettingItemView;
 
@@ -460,11 +460,6 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
 
                     commitCarInfoToNewServer();
 
-                    LoginData.getInstance().mHashMap.put("carnum", carNum);
-                    LoginData.getInstance().mHashMap.put("enginenum", carEngineNum);
-                    LoginData.getInstance().mHashMap.put("carnumtype", dto.getCarnumtype());
-                    LoginData.getInstance().mHashMap.put("IllegalViolationName", carNum);//标题
-
                     LoginData.getInstance().mCarNum++;//车辆数+1
 
                     dto.setCarnum(carNum);
@@ -473,16 +468,18 @@ public class AddCarActivity extends BaseMvpActivity<IBaseView, HelpPresenter> im
                     EventBus.getDefault().post(new AddCarInfoEvent(true, dto));
                     hideKeyBord();
 
-                    ViolationDTO dto1 = new ViolationDTO();
-                    dto1.setCarnum(RSAUtils.strByEncryption(carNum, true));
-                    dto1.setEnginenum(RSAUtils.strByEncryption(dto.getEnginenum(), true));
-                    dto1.setCarnumtype(dto.getCarnumtype());
+                    ViolationDTO violationDTO = new ViolationDTO();
+                    violationDTO.setCarnum(carNum);
+                    String enginenum = carEngineNum;
+                    if (!TextUtils.isEmpty(enginenum) && enginenum.length() > 5)
+                        enginenum = enginenum.substring(enginenum.length() - 5, enginenum.length());
+                    violationDTO.setEnginenum(enginenum);
+                    violationDTO.setCarnumtype(dto.getCarnumtype());
 
                     Intent intent = new Intent(AddCarActivity.this, ViolationListActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("params", dto1);
+                    bundle.putSerializable("params", violationDTO);
                     intent.putExtras(bundle);
-                    intent.putExtra("plateNum", carNum);
                     startActivity(intent);
                     finish();
                 }

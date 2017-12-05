@@ -122,7 +122,8 @@ public class CouponStatusFragment extends RecyclerListFragment<CouponStatusBean>
         if (response instanceof CouponStatusResponse) {
             CouponStatusResponse couponResponse = (CouponStatusResponse) response;
             CouponStatusList data = couponResponse.getData();
-            List<CouponStatusBean> couponList = data.getCouponList();
+            List<CouponStatusBean> couponList = null;
+            if (data != null) couponList = data.getCouponList();
             setSimpleDataResult(couponList);
         } else
             responseError();

@@ -2,6 +2,7 @@ package com.tzly.ctcyh.cargo;
 
 import android.support.multidex.MultiDexApplication;
 
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.Utils;
 
 
@@ -16,6 +17,7 @@ public class CargoApplication extends MultiDexApplication {
         super.onCreate();
 
         Utils.init(this);
+        LogUtils.initLogUtils(true);
     }
 
 }

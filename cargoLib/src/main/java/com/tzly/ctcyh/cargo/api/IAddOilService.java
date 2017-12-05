@@ -1,6 +1,9 @@
 package com.tzly.ctcyh.cargo.api;
 
 
+import com.tzly.ctcyh.cargo.bean.BaseResponse;
+import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
+import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
@@ -28,4 +31,16 @@ public interface IAddOilService {
      */
     @POST("addOil/createOrder")
     Observable<RefuelOrderResponse> createOrder(@Body RefuelOilDTO oilDTO);
+
+    /**
+     * 驾驶证
+     */
+    @POST("cttx/bindingDriving")
+    Observable<BaseResponse> bindingDriving(@Body BindDrivingDTO drivingDTO);
+
+    /**
+     * 16.新增车辆
+     */
+    @POST("cttx/addVehiclelicense")
+    Observable<BaseResponse> addVehicleLicense(@Body BindCarDTO bindCarDTO);
 }

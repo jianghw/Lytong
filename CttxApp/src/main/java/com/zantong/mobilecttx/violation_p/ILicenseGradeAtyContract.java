@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.violation_p;
 
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
-import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
+import com.tzly.ctcyh.router.base.IResponseView;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 /**
@@ -11,24 +11,20 @@ import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 public interface ILicenseGradeAtyContract {
 
-    interface ILicenseGradeAtyView extends IBaseView<ILicenseGradeAtyPresenter> {
+    interface ILicenseGradeAtyView extends IBaseView<ILicenseGradeAtyPresenter>,IResponseView {
 
-        void setLayoutVisibilityByRefresh(boolean isRefresh);
+        void animationRefresh(boolean isRefresh);
 
         /**
          * 请求响应成功
-         *
-         * @param result
          */
-        void driverLicenseCheckGradeSucceed(LicenseResponseBean result);
-
         void driverLicenseCheckGradeError(String message);
 
         LicenseFileNumDTO initLicenseFileNumDTO();
 
         void onShowDefaultData();
 
-        void showErrorCryingFace(boolean isCrying);
+        void errorCryingFace(boolean isCrying);
     }
 
     interface ILicenseGradeAtyPresenter extends IBasePresenter {
@@ -36,8 +32,6 @@ public interface ILicenseGradeAtyContract {
         void driverLicenseCheckGrade();
 
         String initLicenseFileNumDTO();
-
-        void saveLicenseFileNumDTO();
     }
 
 }

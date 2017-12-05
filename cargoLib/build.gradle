@@ -44,6 +44,8 @@ dependencies {
     compile rootProject.ext.dependencies["appcompat"]
     //接口沟通依赖
     compile project(':componentService')
+    compile files('libs/ymvehicle_20161010.jar')
+    compile files('libs/ymdl_v_20161215.jar')
 }
 
 //自定义组件构建
