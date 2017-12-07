@@ -49,7 +49,7 @@ public class Des3 {
     }
 
     /**
-     * 3DES瑙ｅ瘑
+     * 3DES 解密
      *
      * @param encryptText 鍔犲瘑鏂囨湰
      * @return

@@ -49,4 +49,9 @@ public interface IRemoteSource {
      * 优惠券详情
      */
     Observable<CouponDetailResponse> couponDetail(String couponId);
+
+    /**
+     * 微信支付
+     */
+    Observable<PayUrlResponse> weChatPay(String orderId, String amount, String phontIP);
 }

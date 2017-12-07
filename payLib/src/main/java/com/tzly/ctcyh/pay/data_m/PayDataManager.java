@@ -101,4 +101,11 @@ public class PayDataManager {
     public Observable<CouponDetailResponse> couponDetail(String couponId) {
         return mRemoteData.couponDetail(couponId);
     }
+
+    /**
+     * 微信支付
+     */
+    public Observable<PayUrlResponse> weChatPay(String orderId, String amount, String phontIP) {
+        return mRemoteData.weChatPay(orderId, amount, phontIP);
+    }
 }

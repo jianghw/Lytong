@@ -21,7 +21,7 @@ import com.jianghw.multi.state.layout.MultiState;
 import com.jianghw.multi.state.layout.MultiStateLayout;
 import com.jianghw.multi.state.layout.OnStateViewCreatedListener;
 import com.tzly.ctcyh.router.R;
-import com.tzly.ctcyh.router.custom.LoadingDialog;
+import com.tzly.ctcyh.router.custom.dialog.LoadingDialog;
 import com.tzly.ctcyh.router.util.StatusBarUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.umeng.analytics.MobclickAgent;

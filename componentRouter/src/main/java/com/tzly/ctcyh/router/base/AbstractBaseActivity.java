@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.R;
-import com.tzly.ctcyh.router.custom.LoadingDialog;
+import com.tzly.ctcyh.router.custom.dialog.LoadingDialog;
 import com.tzly.ctcyh.router.util.StatusBarUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
@@ -287,9 +287,11 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         List<Fragment> fragments = fragmentManager.getFragments();
-        for (Fragment fragment : fragments) {
-            if (fragment != null && fragment.isVisible())
-                fragment.onActivityResult(requestCode, resultCode, data);
+        if (fragments != null && !fragments.isEmpty()) {
+            for (Fragment fragment : fragments) {
+                if (fragment != null && fragment.isVisible())
+                    fragment.onActivityResult(requestCode, resultCode, data);
+            }
         }
     }
 

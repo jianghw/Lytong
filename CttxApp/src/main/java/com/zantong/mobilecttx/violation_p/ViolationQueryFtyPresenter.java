@@ -15,6 +15,7 @@ import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
+import com.zantong.mobilecttx.router.MainRouter;
 
 import java.io.File;
 
@@ -307,7 +308,10 @@ public class ViolationQueryFtyPresenter
         carDTO.setPlateNo(mRepository.getRASByStr(bindCarDTO.getPlateNo()));
         carDTO.setEngineNo(mRepository.getRASByStr(bindCarDTO.getEngineNo()));
         carDTO.setVehicleType(bindCarDTO.getVehicleType());
-        carDTO.setUsrnum(mRepository.getRASUserID());
+        if (MainRouter.isUserLogin())
+            carDTO.setUsrnum(mRepository.getRASUserID());
+        else
+            carDTO.setUsrnum(mRepository.getRASByStr(""));
         carDTO.setIssueDate(bindCarDTO.getIssueDate());
         carDTO.setRegisterDate(bindCarDTO.getRegisterDate());
         carDTO.setVin(bindCarDTO.getVin());

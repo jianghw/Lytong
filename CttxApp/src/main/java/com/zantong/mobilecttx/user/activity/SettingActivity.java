@@ -136,15 +136,19 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
     @Override
     protected void onResume() {
         super.onResume();
-        String nickname = MainRouter.getUserNickname();
+
         String phone = MainRouter.getUserPhoenum();
+        if (!TextUtils.isEmpty(phone) && phone.length() > 7) {
+            user_info_name_text.setText(phone.substring(7));
+
+            String phoneX = StringUtils.getEncrypPhone(phone);
+            user_info_phone_text.setText(phoneX);
+        }
+
+        String nickname = MainRouter.getUserNickname();
         if (!Tools.isStrEmpty(nickname)) {
             user_info_name_text.setText(nickname);
-        } else if (!TextUtils.isEmpty(phone) && phone.length() > 7) {
-            user_info_name_text.setText(phone.substring(7));
         }
-        String phoneX = StringUtils.getEncrypPhone(phone);
-        user_info_phone_text.setText(phoneX);
     }
 
     @Override

@@ -21,7 +21,7 @@ import com.zantong.mobilecttx.user.bean.CheckOrderResult;
 import com.zantong.mobilecttx.user.bean.OrderItem;
 import com.zantong.mobilecttx.user.dto.CheckOrderDTO;
 import com.zantong.mobilecttx.user.dto.InsOrderDTO;
-import com.zantong.mobilecttx.utils.NetUtils;
+import com.tzly.ctcyh.router.util.NetUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
 
 import butterknife.Bind;

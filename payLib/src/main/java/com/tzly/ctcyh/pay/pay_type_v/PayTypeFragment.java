@@ -28,6 +28,7 @@ import com.tzly.ctcyh.pay.pay_type_p.PayTypePresenter;
 import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.util.FormatUtils;
+import com.tzly.ctcyh.router.util.NetUtils;
 import com.tzly.ctcyh.router.util.Utils;
 
 import java.util.List;
@@ -209,15 +210,30 @@ public class PayTypeFragment extends RefreshFragment
             } else if (mPayType == 3) {
                 gotoAliPay();
             } else if (mPayType == 4) {
+                gotoWeixinPay();
             }
         }
     }
 
-    private void gotoCarPay() {
-        int priceInteger = getSubmitPrice();
+    /**
+     * 微信支付
+     */
+    private void gotoWeixinPay() {
+        if (mPresenter != null) {
+            int priceInteger = getSubmitPrice();
+            mPresenter.weChatPay(getExtraOrderId(),
+                    String.valueOf(priceInteger), NetUtils.getPhontIP(Utils.getContext()));
+        }
+    }
 
-        if (mPresenter != null)
+    /**
+     * 工行卡支付
+     */
+    private void gotoCarPay() {
+        if (mPresenter != null) {
+            int priceInteger = getSubmitPrice();
             mPresenter.getBankPayHtml(getExtraOrderId(), String.valueOf(priceInteger), mCouponBeanId);
+        }
     }
 
     /**
@@ -405,6 +421,17 @@ public class PayTypeFragment extends RefreshFragment
     protected void closeActivity() {
         FragmentActivity activity = getActivity();
         if (activity != null) activity.finish();
+    }
+
+    @Override
+    public void weChatPayError(String message) {
+        toastShort(message);
+    }
+
+    @Override
+    public void weChatPaySucceed(PayUrlResponse response) {
+        PayRouter.gotoHtmlActivity(getActivity(),
+                "微信支付", response.getData(), getExtraOrderId(), mPayType);
     }
 
     /**

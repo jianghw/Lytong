@@ -111,7 +111,6 @@ public class ManageCarActivity extends BaseJxActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (mCarListFragment != null)
-            mCarListFragment.onActivityResult(requestCode, resultCode, data);
+        if (mCarListFragment != null) mCarListFragment.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -110,7 +110,15 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<CouponDetailResponse> couponDetail(String couponId) {
-        return baseRetrofit().create(ICouponService.class).couponDetail( couponId);
+        return baseRetrofit().create(ICouponService.class).couponDetail(couponId);
+    }
+
+    /**
+     * 微信支付
+     */
+    @Override
+    public Observable<PayUrlResponse> weChatPay(String orderId, String amount, String phontIP) {
+        return baseRetrofit().create(IPayApiService.class).weChatPay(orderId, amount, phontIP);
     }
 
 

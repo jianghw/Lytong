@@ -283,11 +283,6 @@
         <activity
             android:name=".car.activity.ManageCarActivity"
             android:screenOrientation="portrait"/>
-        <!-- 添加车辆 -->
-        <activity
-            android:name=".car.activity.AddCarActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
         <!-- 绑定车辆 -->
         <activity
             android:name=".car.activity.SetPayCarActivity"

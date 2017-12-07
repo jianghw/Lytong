@@ -172,4 +172,42 @@ public class PayTypePresenter implements IPayTypeContract.IPayTypePresenter {
     public String getUserId() {
         return mRepository.getRASUserID();
     }
+
+    @Override
+    public void weChatPay(String extraOrderId, String amount, String phontIP) {
+        Subscription subscription = mRepository
+                .weChatPay(extraOrderId, amount, phontIP)
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<PayUrlResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.weChatPayError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(PayUrlResponse response) {
+                        if (response != null && response.getResponseCode() == 2000) {
+                            mContractView.weChatPaySucceed(response);
+                        } else {
+                            mContractView.weChatPayError(response != null
+                                    ? response.getResponseDesc() : "未知错误(5)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
 }

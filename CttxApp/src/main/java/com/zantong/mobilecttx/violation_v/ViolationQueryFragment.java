@@ -401,12 +401,12 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
                 startActivityForResult(intentX, CarChooseActivity.REQUEST_X_CODE);
                 break;
             case R.id.btn_query://提交
-                if (dataFormValidation()) updateVehicle();
                 getActivity().setResult(MainGlobal.resultCode.violation_query_submit);
+                if (dataFormValidation()) updateVehicle();
                 break;
             case R.id.btn_delete://删除
-                if (dataFormValidation()) deleteCar();
                 getActivity().setResult(MainGlobal.resultCode.violation_query_del);
+                if (dataFormValidation()) deleteCar();
                 break;
             default:
                 break;
@@ -468,7 +468,7 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
         String vehicleCode = VehicleTypeTools.switchVehicleCode(carType);
 
         if ((plate.length() < 7 && (vehicleCode.equals("51") || vehicleCode.equals("52")))
-                ||(plate.length() >= 7&&!vehicleCode.equals("51")&&!vehicleCode.equals("52"))) {
+                || (plate.length() >= 7 && !vehicleCode.equals("51") && !vehicleCode.equals("52"))) {
             DialogUtils.createDialog(getActivity(),
                     "温馨提示",
                     "如果您的汽车为新能源汽车,车牌类型请选择相应新能源车型",
@@ -595,7 +595,9 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
      * enginenum	是	string	发动机号 加密
      */
     private void initCarInfoDto(String carNum, String engine, String vehicleCode) {
-        mCarInfoDTO.setUsrid(MainRouter.getUserID());
+        if (MainRouter.isUserLogin())
+            mCarInfoDTO.setUsrid(MainRouter.getUserID());
+
         mCarInfoDTO.setCarnum(carNum);
         mCarInfoDTO.setEnginenum(engine);
         //数字

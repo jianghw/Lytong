@@ -146,8 +146,7 @@ public class UserDataManager {
      * recdphoe	是	string	推荐人手机号 加密
      */
     public boolean isUserLogin() {
-        boolean isLogin = mLocalData.isLogin();
-        if (isLogin) return true;
+        if (mLocalData.isLogin()) return true;
         //false
         LoginResponse responseFromSp = getLoginResponseFromSp();
         if (responseFromSp == null) {

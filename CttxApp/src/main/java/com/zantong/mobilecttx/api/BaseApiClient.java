@@ -7,7 +7,7 @@ import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.utils.NetUtils;
+import com.tzly.ctcyh.router.util.NetUtils;
 
 import org.greenrobot.eventbus.EventBus;
 

@@ -65,7 +65,6 @@ public class HomeMainActivity extends AbstractBaseActivity
         mCustomBottom.selectTab(mCurBottomPosition);
 
         if (mHomeUnimpededFragment != null) mHomeUnimpededFragment.loadingFirstData();
-        if (mHomeMeFragment != null) mHomeMeFragment.loadingFirstData();
     }
 
     @Override

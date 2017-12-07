@@ -49,11 +49,7 @@ public class UserUiRouter extends LibUiRouter implements IComponentRouter {
     @Override
     protected boolean excludeLoginActivity(String host) {
         //不需要登录
-        return !RouterGlobal.Host.login_host.equals(host) && gotoByIsLogin();
-    }
-
-    private boolean gotoByIsLogin() {
-        return !UserRouter.gotoByIsLogin();
+        return !RouterGlobal.Host.login_host.equals(host) && !UserRouter.gotoByIsLogin();
     }
 
     @Override

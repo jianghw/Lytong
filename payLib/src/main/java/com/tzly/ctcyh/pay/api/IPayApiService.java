@@ -19,11 +19,21 @@ public interface IPayApiService {
      */
     @FormUrlEncoded
     @POST("pay/getBankPayHtml")
-    Observable<PayUrlResponse> getBankPayHtml(@Field("orderId") String orderId, @Field("amount") String amount);
+    Observable<PayUrlResponse> getBankPayHtml(@Field("orderId") String orderId,
+                                              @Field("amount") String amount);
 
     @FormUrlEncoded
     @POST("pay/getBankPayHtml")
     Observable<PayUrlResponse> getBankPayHtml(@Field("orderId") String orderId,
-                                              @Field("amount") String amount, @Field("couponUserId") String couponUserId);
+                                              @Field("amount") String amount,
+                                              @Field("couponUserId") String couponUserId);
 
+    /**
+     * 微信支付
+     */
+    @FormUrlEncoded
+    @POST("pay/weChatPay")
+    Observable<PayUrlResponse> weChatPay(@Field("orderId") String orderId,
+                                         @Field("amount") String amount,
+                                         @Field("ip") String phontIP);
 }

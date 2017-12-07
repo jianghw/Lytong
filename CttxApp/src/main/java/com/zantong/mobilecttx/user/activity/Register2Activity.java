@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tzly.ctcyh.router.bean.BankResponse;
+import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
@@ -50,8 +52,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.Bind;
-import com.tzly.ctcyh.router.bean.BankResponse;
-import com.tzly.ctcyh.router.bean.BaseResponse;
 
 public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresenter> implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
 
@@ -151,8 +151,6 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
 
         setTitleText(res == 0 ? "注册" : "重置密码");
         mCommit.setText(res == 0 ? "注册" : "重置密码");
-
-
     }
 
     @Override
@@ -253,7 +251,6 @@ public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresente
 
                 SPUtils.getInstance().setUserPwd(pwd);
                 showDialogLoading();
-
                 if (res == 0) {
                     final RegisterDTO dto = new RegisterDTO();
                     String phone = RSAUtils.strByEncryption(getIntent().getStringExtra(PHONE), true);

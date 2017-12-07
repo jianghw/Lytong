@@ -113,16 +113,19 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
     @Override
     protected void onResume() {
         super.onResume();
-        String nickname = MainRouter.getUserNickname();
-        String phoenum = MainRouter.getUserPhoenum();
 
+        String phoenum = MainRouter.getUserPhoenum();
+        if (!TextUtils.isEmpty(phoenum) && phoenum.length() > 7) {
+            user_info_name_text.setText(phoenum.substring(7));
+
+            String phoneX = StringUtils.getEncrypPhone(phoenum);
+            user_info_phone_text.setText(phoneX);
+        }
+
+        String nickname = MainRouter.getUserNickname();
         if (!TextUtils.isEmpty(nickname)) {
             user_info_name_text.setText(nickname);
-        } else if (!TextUtils.isEmpty(phoenum) && phoenum.length() > 7) {
-            user_info_name_text.setText(phoenum.substring(7));
         }
-        String phoneX = StringUtils.getEncrypPhone(phoenum);
-        user_info_phone_text.setText(phoneX);
     }
 
     @Override
@@ -404,8 +407,8 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
         String imagFileName;
         String[] imageUrls = MainRouter.getUserPortrait().split("\\/");
 
-        if (Tools.isStrEmpty( MainRouter.getUserPortrait())) {
-            imagFileName =  MainRouter.getUserID()+ ".jpg";
+        if (Tools.isStrEmpty(MainRouter.getUserPortrait())) {
+            imagFileName = MainRouter.getUserID() + ".jpg";
         } else {
             imagFileName = imageUrls[imageUrls.length - 1];
         }
@@ -429,10 +432,10 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
                             url = json.get("url").toString();
 
                             mapData().put("portrait", url);
-                            if (Tools.isStrEmpty( MainRouter.getUserPortrait())) {
+                            if (Tools.isStrEmpty(MainRouter.getUserPortrait())) {
                                 mUserInfoUpdatePresenter.loadView(1);
                             } else {
-                                ImageLoadUtils.loadHead( MainRouter.getUserPortrait(), user_head_image);
+                                ImageLoadUtils.loadHead(MainRouter.getUserPortrait(), user_head_image);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

@@ -114,7 +114,6 @@ public class FriendShareFragment extends JxBaseRefreshFragment
                 Injection.provideRepository(getActivity().getApplicationContext()), this);
     }
 
-
     @Override
     public void setPresenter(IFahrschuleShareFtyContract.IFahrschuleShareFtyPresenter presenter) {
         mPresenter = presenter;

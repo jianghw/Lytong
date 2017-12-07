@@ -187,9 +187,9 @@ public class UserDataService implements IUserService {
 
                     @Override
                     public void doError(Throwable e) {
-                        ToastUtils.toastShort("注册成功,登录失败~");
+                        ToastUtils.toastShort("注册成功,登录失败请重新登录~");
+                        mRepository.getCleanUser();
                         UserRouter.gotoLoginActivity(activity);
-                        if (activity != null) activity.finish();
                     }
 
                     @Override
@@ -198,9 +198,9 @@ public class UserDataService implements IUserService {
                                 && baseResponse.getResponseCode() == 2000) {
                             UserRouter.loginFilenumDialog(activity);
                         } else {
-                            ToastUtils.toastShort("注册成功,登录失败~");
+                            ToastUtils.toastShort("注册成功,登录失败请重新登录~");
+                            mRepository.getCleanUser();
                             UserRouter.gotoLoginActivity(activity);
-                            if (activity != null) activity.finish();
                         }
                     }
                 });

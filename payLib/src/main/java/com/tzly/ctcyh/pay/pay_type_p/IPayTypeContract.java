@@ -28,6 +28,10 @@ public interface IPayTypeContract {
         void couponByTypeSucceed(CouponResponse response);
 
         int getPayType();
+
+        void weChatPayError(String message);
+
+        void weChatPaySucceed(PayUrlResponse response);
     }
 
     interface IPayTypePresenter extends IBasePresenter {
@@ -38,6 +42,8 @@ public interface IPayTypeContract {
         void getCouponByType();
 
         String getUserId();
+
+        void weChatPay(String extraOrderId, String s, String phontIP);
     }
 
 }

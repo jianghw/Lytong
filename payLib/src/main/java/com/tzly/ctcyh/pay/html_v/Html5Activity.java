@@ -49,6 +49,9 @@ import com.tzly.ctcyh.router.util.primission.PermissionFail;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
 import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
 import static com.tzly.ctcyh.router.util.Utils.getContext;
 import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CODE;
@@ -215,7 +218,20 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    toastShort("请确认手机安装支付宝app");
+                    toastShort("未安装支付宝app");
+                }
+            } else if (url.startsWith("weixin://wap/pay?")) { // 如下方案可在非微信内部WebView的H5页面中调出微信支付
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                try {
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    toastShort("未安装微信app");
+
+                    Map<String, String> extraHeaders = new HashMap<String, String>();
+                    extraHeaders.put("Referer", "http://liyingtong.com");
+                    view.loadUrl(url, extraHeaders);
                 }
             } else {
                 view.loadUrl(url);

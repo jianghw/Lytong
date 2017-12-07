@@ -15,6 +15,7 @@ import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.FormatUtils;
 import com.tzly.ctcyh.router.util.FragmentUtils;
+import com.tzly.ctcyh.router.util.NetUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.rea.Des3;
 import com.zantong.mobilecttx.BuildConfig;
@@ -29,7 +30,6 @@ import com.zantong.mobilecttx.car.bean.PayCarBean;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.utils.NetUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.violation_p.IViolationPayContract;
 import com.zantong.mobilecttx.violation_p.IViolationPayPresenter;
@@ -197,8 +197,11 @@ public class ViolationPayFragment extends RefreshFragment
             } else if (!isPayCarData) {
                 toastShort("获取绑定车辆数据出错,请下拉刷新或使用工行卡");
             } else if (payCarList.size() >= 2 && !payCarList.contains(carNum)) {
-                toastShort("当前车辆为" + carNum + "请改绑车辆或使用工行卡");
-                mFragmentViolationCommit.setText("去改绑车辆");
+                String enginenum = getViolationBean().getEnginenum();
+                if (!TextUtils.isEmpty(enginenum)) {
+                    toastShort("当前车辆为" + carNum + "请改绑车辆或使用工行卡");
+                    mFragmentViolationCommit.setText("去改绑车辆");
+                }
             }
         } else {
             mFragmentViolationPaytypeText.setText("使用工行卡缴费");
@@ -331,9 +334,12 @@ public class ViolationPayFragment extends RefreshFragment
         String merCustomId = MainRouter.getUserFilenum();//畅通卡档案编号
         String merCustomIp = NetUtils.getPhontIP(Utils.getContext());
 
+        int amt = (int) (Float.valueOf(violationamt) * 100);
+        String value = String.valueOf(amt);
+
         String payUrl = BuildConfig.APP_URL
                 + "payment_payForViolation?orderid=" + violationnum
-                + "&amount=" + violationamt
+                + "&amount=" + value
                 + "&merCustomIp=" + merCustomIp
                 + "&merCustomId=" + merCustomId
                 + "&remark=" + remark;

@@ -173,7 +173,19 @@ public class HomeMeFragment extends RefreshFragment
      * 数据加载
      */
     @Override
-    protected void loadingFirstData() {
+    protected void loadingFirstData() {}
+
+    /**
+     * 手动刷新动作
+     */
+    protected void onRefreshData() {
+        initDataRefresh();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
         initDataRefresh();
     }
 
@@ -187,6 +199,7 @@ public class HomeMeFragment extends RefreshFragment
         if (mPresenter != null && !TextUtils.isEmpty(mPresenter.initUserPhone())) {
             mPresenter.getDriverCoach();
         } else {
+            if(mLayDriverOrder!=null)
             mLayDriverOrder.setVisibility(View.GONE);
         }
 
