@@ -32,9 +32,6 @@ public class UnblockedCardActivity extends AbstractBaseActivity implements View.
     protected void bundleIntent(Intent intent) {}
 
     @Override
-    protected void newIntent(Intent intent) {}
-
-    @Override
     protected int initContentView() {
         return R.layout.activity_unblocked_card;
     }

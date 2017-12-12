@@ -6,6 +6,7 @@
               android:orientation="vertical">
     <!--头部banner-->
     <RelativeLayout
+        android:id="@+id/ry_banner"
         android:layout_width="match_parent"
         android:layout_height="@dimen/res_y_450">
 

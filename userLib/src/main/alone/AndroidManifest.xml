@@ -14,13 +14,26 @@
         <!--登录页面-->
         <activity
             android:name=".login_v.LoginActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <!--验证码页-->
+        <activity
+            android:name=".pw_v.SendCodeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+
+        <!--注册页面-->
+        <activity
+            android:name=".register_v.RegisterActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

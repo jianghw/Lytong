@@ -151,7 +151,7 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
                             .append("&clientIP=").append(NetUtils.getPhontIP(this))
                             .append("&clientType=").append(CLIENT_TYPE_0);
 
-                    MainRouter.gotoHtmlActivity(this,"支付",stringBuilder.toString());
+                    MainRouter.gotoHtmlActivity(this, "支付", stringBuilder.toString());
                 } else {
                     commitInsOrder();
                 }

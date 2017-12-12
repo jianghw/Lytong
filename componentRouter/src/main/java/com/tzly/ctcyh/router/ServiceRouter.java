@@ -13,6 +13,9 @@ import java.util.HashMap;
 
 public class ServiceRouter {
 
+    public static final String USER_LIKE = "com.tzly.ctcyh.user.like.UserAppLike";
+    public static final String MAIN_LIKE = "com.zantong.mobilecttx.like.MainAppLike";
+
     private HashMap<String, Object> mServiceMap = new HashMap<>();
     //注册的组件的集合
     private static HashMap<String, IApplicationLike> mComponentMap = new HashMap<>();

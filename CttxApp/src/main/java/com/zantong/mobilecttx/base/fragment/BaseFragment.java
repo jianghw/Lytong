@@ -14,7 +14,6 @@ import com.tzly.ctcyh.router.util.ToastUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseActivity;
-import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
 import com.zantong.mobilecttx.contract.IBaseFragment;
 import com.zantong.mobilecttx.eventbus.ErrorEvent;
 
@@ -118,8 +117,6 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
         FragmentActivity activity = getActivity();
         if (activity != null && activity instanceof BaseActivity) {
             ((BaseActivity) activity).showDialogLoading(msg);
-        } else if (activity != null && activity instanceof MvpBaseActivity) {
-            ((MvpBaseActivity) activity).showDialogLoading(msg);
         }
     }
 
@@ -130,8 +127,6 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
         FragmentActivity activity = getActivity();
         if (activity != null && activity instanceof BaseActivity) {
             ((BaseActivity) activity).hideDialogLoading();
-        } else if (activity != null && activity instanceof MvpBaseActivity) {
-            ((MvpBaseActivity) activity).hideDialogLoading();
         }
     }
 

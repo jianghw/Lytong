@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_96"
+        android:background="@color/res_color_gray_e6"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/ds_42"
+        android:text="请使用已注册的手机号找回密码"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        android:background="@color/res_color_white"
+        android:paddingLeft="16dip"
+        android:paddingRight="16dip">
+
+        <EditText
+            android:id="@+id/reset_phone"
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/reset_vcode_btn"
+            android:background="@color/res_color_white"
+            android:gravity="left|center_vertical"
+            android:hint="请输入您的手机号码"
+            android:inputType="number"
+            android:maxLength="11"/>
+
+        <Button
+            android:id="@+id/reset_vcode_btn"
+            style="@style/ResButtonTheme"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="获取验证码"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/underline"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:layout_below="@+id/edt_pass"
+        android:layout_marginLeft="16dip"
+        android:background="@color/res_color_gray_e6"/>
+
+    <EditText
+        android:id="@+id/reset_vcode"
+        style="@style/ResTextTheme.16.Subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="48dip"
+        android:layout_below="@+id/underline"
+        android:background="@color/res_color_white"
+        android:gravity="left|center_vertical"
+        android:hint="请输入验证码"
+        android:inputType="textPassword"
+        android:maxLength="6"
+        android:paddingLeft="16dip"
+        android:paddingRight="16dip"
+        android:singleLine="true"/>
+
+    <Button
+        android:id="@+id/reset_next_btn"
+        style="@style/ResButtonTheme.Single"
+        android:layout_marginTop="50dip"
+        android:enabled="false"
+        android:text="下一步"
+        android:textSize="@dimen/fs_18sp"/>
+
+</LinearLayout>

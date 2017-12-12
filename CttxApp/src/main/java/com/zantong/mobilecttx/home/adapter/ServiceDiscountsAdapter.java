@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
-import com.tzly.ctcyh.router.ScreenUtils;
+import com.tzly.ctcyh.router.util.ScreenUtils;
 import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.util.ConvertUtils;
 import com.zantong.mobilecttx.R;

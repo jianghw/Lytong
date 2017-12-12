@@ -14,6 +14,7 @@ import com.tzly.ctcyh.user.bean.RequestHeadDTO;
 import com.tzly.ctcyh.user.bean.request.RegisterDTO;
 import com.tzly.ctcyh.user.bean.response.LoginBean;
 import com.tzly.ctcyh.user.bean.response.LoginResponse;
+import com.tzly.ctcyh.user.bean.response.VCodeResponse;
 import com.tzly.ctcyh.user.router.UserRouter;
 
 import rx.Observable;
@@ -47,32 +48,14 @@ public class UserDataManager {
     }
 
     /**
-     * 安盛登录接口
-     */
-    public Observable<LoginResponse> loadLoginPost(String msg) {
-        return mRemoteData.loadLoginPost(msg);
-    }
-
-    /**
-     * 8.用户注册修改接口
-     */
-    public Observable<BaseResponse> register(RegisterDTO registerDTO) {
-        return mRemoteData.register(registerDTO);
-    }
-
-    /**
      * urlCode 构造器
      *
      * @param urlCode cip.cfc.v001.01
      */
-    public RequestHeadDTO getRequestHeadDTO(String urlCode) {
+    public RequestHeadDTO requestHeadDTO(String urlCode) {
         RequestHeadDTO dto = mLocalData.getRequestHeadDTO();
         dto.setTransServiceCode(urlCode);
         return dto;
-    }
-
-    public Observable<BankResponse> bank_V004_01(String msg) {
-        return mRemoteData.bank_V004_01(msg);
     }
 
     /**
@@ -336,5 +319,44 @@ public class UserDataManager {
      */
     public void getCleanUser() {
         mLocalData.getCleanUser();
+    }
+
+    /**
+     * 安盛登录接口
+     */
+    public Observable<LoginResponse> bank_u011_01(String msg) {
+        return mRemoteData.bank_u011_01(msg);
+    }
+
+    /**
+     * 8.用户注册修改接口
+     */
+    public Observable<BaseResponse> register(RegisterDTO registerDTO) {
+        return mRemoteData.register(registerDTO);
+    }
+
+    public Observable<BankResponse> bank_v004_01(String msg) {
+        return mRemoteData.bank_v004_01(msg);
+    }
+
+    /**
+     * 获取验证码
+     */
+    public Observable<VCodeResponse> bank_u015_01(String msg) {
+        return mRemoteData.bank_u015_01(msg);
+    }
+
+    /**
+     * 发送验证码
+     */
+    public Observable<BankResponse> bank_p002_01(String msg) {
+        return mRemoteData.bank_p002_01(msg);
+    }
+
+    /**
+     * 注册
+     */
+    public Observable<LoginResponse> bank_u001_01(String msg) {
+        return mRemoteData.bank_u001_01(msg);
     }
 }

@@ -48,39 +48,39 @@ public class CouponListPresenter implements ICouponListContract.ICouponListPrese
      */
     @Override
     public void getCouponByType() {
-        Subscription subscription =
-                mRepository.getCouponByType(getUserId(), mContractView.getExtraType(), mContractView.getPayType())
-                        .subscribeOn(Schedulers.io())
-                        .doOnSubscribe(new Action0() {
-                            @Override
-                            public void call() {
-                                mContractView.showLoading();
-                            }
-                        })
-                        .subscribeOn(AndroidSchedulers.mainThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new BaseSubscriber<CouponResponse>() {
-                            @Override
-                            public void doCompleted() {
-                                mContractView.dismissLoading();
-                            }
+        Subscription subscription = mRepository
+                .getCouponByType(getUserId(), mContractView.getExtraType(), mContractView.getPayType())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<CouponResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
 
-                            @Override
-                            public void doError(Throwable e) {
-                                mContractView.dismissLoading();
-                                mContractView.responseError(e.getMessage());
-                            }
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.responseError(e.getMessage());
+                    }
 
-                            @Override
-                            public void doNext(CouponResponse response) {
-                                if (response != null && response.getResponseCode() == 2000) {
-                                    mContractView.responseSucceed(response);
-                                } else {
-                                    mContractView.responseError(response != null
-                                            ? response.getResponseDesc() : "未知错误(57)");
-                                }
-                            }
-                        });
+                    @Override
+                    public void doNext(CouponResponse response) {
+                        if (response != null && response.getResponseCode() == 2000) {
+                            mContractView.responseSucceed(response);
+                        } else {
+                            mContractView.responseError(response != null
+                                    ? response.getResponseDesc() : "未知错误(57)");
+                        }
+                    }
+                });
         mSubscriptions.add(subscription);
     }
 

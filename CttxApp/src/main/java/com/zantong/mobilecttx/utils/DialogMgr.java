@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
 
-import com.tzly.ctcyh.router.DensityUtils;
+import com.tzly.ctcyh.router.util.DensityUtils;
 
 
 /**

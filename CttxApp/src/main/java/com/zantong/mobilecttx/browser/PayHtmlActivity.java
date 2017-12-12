@@ -56,9 +56,6 @@ public class PayHtmlActivity extends AbstractBaseActivity implements IPayHtmlCon
     }
 
     @Override
-    protected void newIntent(Intent intent) {}
-
-    @Override
     protected int initContentView() {
         return R.layout.activity_browser;
     }

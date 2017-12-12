@@ -29,10 +29,13 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
+import com.tzly.ctcyh.router.custom.image.ImageTools;
+import com.tzly.ctcyh.router.util.DensityUtils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponBean;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
+import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponBean;
 import com.zantong.mobilecttx.common.adapter.CommonSelectAdapter;
 import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
 import com.zantong.mobilecttx.huodong.activity.HundredPlanActivity;
@@ -43,10 +46,6 @@ import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
-import com.tzly.ctcyh.router.custom.image.ImageTools;
-import com.tzly.ctcyh.router.DensityUtils;
 
 
 /**

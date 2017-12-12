@@ -17,9 +17,9 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.tzly.ctcyh.router.DensityUtils;
+import com.tzly.ctcyh.router.util.DensityUtils;
 import com.tzly.ctcyh.router.R;
-import com.tzly.ctcyh.router.ScreenUtils;
+import com.tzly.ctcyh.router.util.ScreenUtils;
 import com.tzly.ctcyh.router.adapter.PopupCarTypeAdapter;
 import com.tzly.ctcyh.router.bean.response.SubjectGoodsBean;
 import com.tzly.ctcyh.router.bean.response.SubjectGoodsData;

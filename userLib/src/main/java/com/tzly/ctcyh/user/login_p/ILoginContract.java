@@ -3,7 +3,6 @@ package com.tzly.ctcyh.user.login_p;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 import com.tzly.ctcyh.user.bean.request.RegisterDTO;
-import com.tzly.ctcyh.user.bean.response.LoginBean;
 import com.tzly.ctcyh.user.bean.response.LoginResponse;
 
 /**
@@ -34,9 +33,9 @@ public interface ILoginContract {
 
         String initLoginDTO();
 
-        void register(LoginBean rspInfoBean);
+        void register(LoginResponse loginResponse);
 
-        RegisterDTO initRegisterDTO();
+        RegisterDTO initRegisterDTO(LoginResponse loginResponse);
 
         String initLoginV004DTO(String filenum);
 

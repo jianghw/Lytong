@@ -35,7 +35,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView, HelpPresenter> implements ItemClickListener {
+public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView, HelpPresenter>
+        implements ItemClickListener {
 
     @Bind(R.id.activity_violation_history_num)
     TextView mNum;
@@ -93,6 +94,7 @@ public class ViolationHistoryAcitvity extends BaseMvpActivity<IBaseView, HelpPre
                             violationCarList.get(0).setExpanded(true);
                         }
                         sectionedExpandableLayoutHelper.removeAll();
+
                         for (ViolationCarInfo info : violationCarList) {
                             ViolationSearchDTO dto = new ViolationSearchDTO();
                             dto.setCarnum(info.getCarnum());

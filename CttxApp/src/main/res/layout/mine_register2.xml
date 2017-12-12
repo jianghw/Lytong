@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,15 +17,14 @@
             android:layout_height="48dip"
             android:layout_below="@id/underline"
             android:hint="请输入6-20位密码(字母与数字组合)"
-            android:inputType="textPassword"
             android:imeOptions="actionNone"
+            android:inputType="textPassword"
             android:maxLength="20"
             android:paddingLeft="16dip"
             android:paddingRight="16dip"
-            android:singleLine="true" />
+            android:singleLine="true"/>
 
-
-        <include layout="@layout/view_line1" />
+        <include layout="@layout/view_line1"/>
 
         <EditText
             android:id="@+id/register_repwd"
@@ -34,12 +33,12 @@
             android:layout_height="48dip"
             android:layout_below="@id/underline"
             android:hint="请再输入一遍"
+            android:imeOptions="actionSend"
             android:inputType="textPassword"
             android:maxLength="20"
-            android:imeOptions="actionSend"
             android:paddingLeft="16dip"
             android:paddingRight="16dip"
-            android:singleLine="true" />
+            android:singleLine="true"/>
 
         <Button
             android:id="@+id/register_commit_btn"
@@ -48,7 +47,7 @@
             android:layout_marginTop="@dimen/ds_150"
             android:enabled="false"
             android:text="下一步"
-          android:textSize="@dimen/fs_18sp" />
+            android:textSize="@dimen/fs_18sp"/>
 
     </LinearLayout>
 
@@ -57,12 +56,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:visibility="gone" />
+        android:visibility="gone"/>
+
     <com.zantong.mobilecttx.widght.CustomCharKeyBoard
         android:id="@+id/mine_register_charkeyboard"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
 </FrameLayout>

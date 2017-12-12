@@ -27,9 +27,6 @@ public class RechargeAgreementActivity extends AbstractBaseActivity {
     protected void bundleIntent(Intent intent) {}
 
     @Override
-    protected void newIntent(Intent intent) {}
-
-    @Override
     protected int initContentView() {
         return R.layout.cargo_activity_recharge_agree;
     }

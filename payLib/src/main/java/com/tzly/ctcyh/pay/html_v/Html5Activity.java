@@ -95,9 +95,6 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
     }
 
     @Override
-    protected void newIntent(Intent intent) {}
-
-    @Override
     protected void bindFragment() {
         mProgressBar = (ProgressBar) findViewById(R.id.pb_html5);
         mWebView = (WebView) findViewById(R.id.wv_html5);

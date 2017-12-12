@@ -1,49 +1,41 @@
 package com.zantong.mobilecttx.user.activity;
 
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
+import android.content.Intent;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.base.AbstractBaseActivity;
+import com.tzly.ctcyh.router.util.AppUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.presenter.HelpPresenter;
 
-import butterknife.Bind;
+public class AboutActivity extends AbstractBaseActivity {
 
-public class AboutActivity extends BaseMvpActivity<IBaseView, HelpPresenter> implements IBaseView {
-
-    @Bind(R.id.mine_about_version)
+    /**
+     * Version 1.0
+     */
     TextView mVersion;
 
-    @Override
-    public HelpPresenter initPresenter() {
-        return new HelpPresenter();
-    }
 
     @Override
-    protected int getContentResId() {
+    protected void bundleIntent(Intent intent) {}
+
+    @Override
+    protected int initContentView() {
         return R.layout.mine_about_activity;
     }
 
     @Override
-    public void showLoading() {
+    protected void bindFragment() {
+        titleContent("关于我们");
+
+        mVersion = (TextView) findViewById(R.id.mine_about_version);
     }
 
     @Override
-    public void hideLoading() {
-    }
-
-    @Override
-    public void initView() {
-        setTitleText("关于我们");
-    }
-
-    @Override
-    public void initData() {
+    protected void initContentData() {
         mVersion.setText(getVersion());
     }
+
 
     /**
      * 获取版本号
@@ -51,16 +43,11 @@ public class AboutActivity extends BaseMvpActivity<IBaseView, HelpPresenter> imp
      * @return 当前应用的版本号
      */
     private String getVersion() {
-        try {
-            PackageManager manager = this.getPackageManager();
-            PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-            String version = "  " + info.versionName;
-            String tag = "";
-            if (BuildConfig.App_Url) tag = "debug";
-            return getResources().getString(R.string.version_name) + version + tag;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return this.getString(R.string.can_not_find_version_name);
-        }
+        String version = AppUtils.getAppVersionName()
+                + "_" + AppUtils.getAppVersionCode();
+        String channel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
+        String config = BuildConfig.App_Url ? "debug" : "release";
+        return version + "/" + channel + "/" + config;
     }
+
 }

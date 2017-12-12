@@ -19,6 +19,7 @@ public class GenerateValueFiles {
      */
     private final static String defaultW = "<dimen name=\"res_x_{0}\">{1}dp</dimen>\n";
     private final static String defaultH = "<dimen name=\"res_y_{0}\">{1}dp</dimen>\n";
+
     private final static String templateW = "<dimen name=\"res_x_{0}\">{1}px</dimen>\n";
     private final static String templateH = "<dimen name=\"res_y_{0}\">{1}px</dimen>\n";
 
@@ -28,14 +29,15 @@ public class GenerateValueFiles {
     private final static String VALUE_TEMPLATE = "values-{0}x{1}";
     private final static String VALUE_DEFAULT = "values";
 
-    private final static String SUPPORT_DIMENSION = "320,480;" +
-            "480,800;480,854;" +
-            "540,960;600,1024;" +
-            "720,1184;720,1196;720,1280;" +
-            "768,1024;768,1280;" +
-            "800,1280;" +
-            "1080,1794;1080,1812;1080,1920;" +
-            "1440,2560;";
+    private final static String SUPPORT_DIMENSION =
+            "320,480;" +
+                    "480,800;480,854;" +
+                    "540,960;600,1200;600,1024;" +
+                    "720,1184;720,1196;720,1280;" +
+                    "768,1024;768,1280;" +
+                    "800,1280;" +
+                    "1080,1794;1080,1812;1080,1920;1200,1920;" +
+                    "1440,2560;1440,2960;1536,2048;1600,2560;1800,2560;";
 
     private String mSupportDimension = SUPPORT_DIMENSION;
 

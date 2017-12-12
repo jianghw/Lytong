@@ -8,6 +8,7 @@ import com.tzly.ctcyh.user.bean.BankResponse;
 import com.tzly.ctcyh.user.bean.BaseResponse;
 import com.tzly.ctcyh.user.bean.request.RegisterDTO;
 import com.tzly.ctcyh.user.bean.response.LoginResponse;
+import com.tzly.ctcyh.user.bean.response.VCodeResponse;
 
 import retrofit2.Retrofit;
 import rx.Observable;
@@ -45,7 +46,7 @@ public class RemoteData implements IRemoteSource {
      * https://ctkapptest.icbc-axa.com/ecip/mobilecall_call
      */
     @Override
-    public Observable<LoginResponse> loadLoginPost(String msg) {
+    public Observable<LoginResponse> bank_u011_01(String msg) {
         return bankRetrofit().create(IBankService.class).loadPost(msg);
     }
 
@@ -58,7 +59,31 @@ public class RemoteData implements IRemoteSource {
     }
 
     @Override
-    public Observable<BankResponse> bank_V004_01(String msg) {
+    public Observable<BankResponse> bank_v004_01(String msg) {
         return bankRetrofit().create(IBankService.class).loginV004(msg);
+    }
+
+    /**
+     * 获取验证码
+     */
+    @Override
+    public Observable<VCodeResponse> bank_u015_01(String msg) {
+        return bankRetrofit().create(IBankService.class).sendVerificationCode(msg);
+    }
+
+    /**
+     * 发送验证码
+     */
+    @Override
+    public Observable<BankResponse> bank_p002_01(String msg) {
+        return bankRetrofit().create(IBankService.class).v_p002_01(msg);
+    }
+
+    /**
+     * 注册
+     */
+    @Override
+    public Observable<LoginResponse> bank_u001_01(String msg) {
+        return bankRetrofit().create(IBankService.class).v_u001_01(msg);
     }
 }

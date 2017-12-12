@@ -13,7 +13,7 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.tzly.ctcyh.router.DensityUtils;
+import com.tzly.ctcyh.router.util.DensityUtils;
 import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.umeng.analytics.MobclickAgent;

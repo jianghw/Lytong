@@ -21,9 +21,6 @@ public class MegTypeActivity extends AbstractBaseActivity {
     protected void bundleIntent(Intent intent) {}
 
     @Override
-    protected void newIntent(Intent intent) {}
-
-    @Override
     protected int initContentView() {
         return R.layout.activity_base_frame;
     }

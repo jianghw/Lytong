@@ -10,7 +10,9 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
@@ -20,6 +22,7 @@ import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.custom.banner.CBViewHolderCreator;
 import com.tzly.ctcyh.router.custom.banner.ConvenientBanner;
 import com.tzly.ctcyh.router.global.JxGlobal;
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
@@ -251,6 +254,18 @@ public class HomeUnimpededFragment extends RefreshFragment
         //        if (mPagerList == null) mPagerList = new ArrayList<>();
         //        initPagerFragment();
         //        initViewPager();
+
+//        final RelativeLayout mTv = (RelativeLayout) view.findViewById(R.id.ry_banner);
+//        LogUtils.e("===>" + mTv.getWidth() + "/" + mTv.getHeight());
+//        ViewTreeObserver vto = mTv.getViewTreeObserver();
+//        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//            public boolean onPreDraw() {
+//                int height = mTv.getMeasuredHeight();
+//                int width = mTv.getMeasuredWidth();
+//                LogUtils.e("===>" + width + "/" + height);
+//                return true;
+//            }
+//        });
     }
 
     private void initPagerFragment() {

@@ -9,6 +9,7 @@ import com.tzly.ctcyh.router.UiRouter;
 import com.tzly.ctcyh.service.IMainService;
 import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.service.RouterGlobal;
+import com.tzly.ctcyh.user.global.UserGlobal;
 
 /**
  * Created by jianghw on 2017/10/31.
@@ -28,6 +29,17 @@ public final class UserRouter {
                 bundle);
     }
 
+    /**
+     * 发验证码
+     */
+    public static void gotoCodeActivity(Context context, String host) {
+        Bundle bundle = new Bundle();
+        bundle.putString(UserGlobal.Host.login_code_host, host);
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.user_scheme + "://" + RouterGlobal.Host.send_code_host,
+                bundle);
+    }
+
     private static Object getUserObject() {
         ServiceRouter serviceRouter = ServiceRouter.getInstance();
         return serviceRouter.getService(IUserService.class.getSimpleName());
@@ -44,7 +56,7 @@ public final class UserRouter {
             return service.isUserByLogin();
         } else {
             //注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            ServiceRouter.registerComponent(ServiceRouter.USER_LIKE);
             return true;
         }
     }
@@ -55,11 +67,14 @@ public final class UserRouter {
             IUserService service = (IUserService) object;
             return service.getPhoneDeviceId();
         } else {//注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            ServiceRouter.registerComponent(ServiceRouter.USER_LIKE);
             return "0123456789";
         }
     }
 
+    /**
+     * 主模块业务
+     */
     private static Object getMainObject() {
         ServiceRouter serviceRouter = ServiceRouter.getInstance();
         return serviceRouter.getService(IMainService.class.getSimpleName());
@@ -75,7 +90,7 @@ public final class UserRouter {
             service.loginFilenumDialog(activity);
         } else {
             //注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
+            ServiceRouter.registerComponent(ServiceRouter.MAIN_LIKE);
         }
     }
 

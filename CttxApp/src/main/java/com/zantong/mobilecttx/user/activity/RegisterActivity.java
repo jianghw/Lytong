@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
@@ -29,7 +30,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.Bind;
-import com.tzly.ctcyh.router.bean.BankResponse;
 
 public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter> {
 
@@ -238,7 +238,6 @@ public class RegisterActivity extends BaseMvpActivity<IOrderView, OrderPresenter
         } else {
             onCheckVerifyCode();
         }
-
     }
 
     private void onCheckVerifyCode() {

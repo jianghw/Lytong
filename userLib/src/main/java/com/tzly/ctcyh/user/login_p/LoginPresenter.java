@@ -4,9 +4,8 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.tzly.ctcyh.router.util.rea.Des3;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.tzly.ctcyh.router.util.SHATools;
+import com.tzly.ctcyh.router.util.rea.Des3;
 import com.tzly.ctcyh.user.bean.BankResponse;
 import com.tzly.ctcyh.user.bean.BaseResponse;
 import com.tzly.ctcyh.user.bean.RequestDTO;
@@ -62,7 +61,8 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
 
     @Override
     public void userLogin() {
-        Subscription subscription = mRepository.loadLoginPost(initLoginDTO())
+        Subscription subscription = mRepository
+                .bank_u011_01(initLoginDTO())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -86,13 +86,12 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
 
                     @Override
                     public void doNext(LoginResponse loginResponse) {
-                        if (loginResponse != null &&
-                                loginResponse.getSYS_HEAD().getReturnCode().equals(UserGlobal.Response.bank_succeed)) {
-                            mRepository.saveLoginResponseToSp(loginResponse);
+                        if (loginResponse != null && loginResponse.getSYS_HEAD().getReturnCode()
+                                .equals(UserGlobal.Response.bank_succeed)) {
+
+                            register(loginResponse);
 
                             LoginBean loginBean = loginResponse.getRspInfo();
-                            register(loginBean);
-
                             String filenum = Des3.decode(loginBean.getFilenum());
                             if (!TextUtils.isEmpty(filenum)) loginV004(filenum);
 
@@ -117,21 +116,23 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
     @Override
     public String initLoginDTO() {
         RequestDTO dto = new RequestDTO();
-
-        RequestHeadDTO requestHeadDTO = mRepository.getRequestHeadDTO("cip.cfc.u011.01");
+        RequestHeadDTO requestHeadDTO = mRepository.requestHeadDTO("cip.cfc.u011.01");
         dto.setSYS_HEAD(requestHeadDTO);
 
         LoginDTO bean = new LoginDTO();
-        String token = RSAUtils.strByEncryption(mRepository.getPushId(), true);
+        String token = mRepository.getRASByStr(mRepository.getPushId());
         bean.setToken(token);
+
         bean.setPushmode("2");
         bean.setPushswitch("0");
-        String phone = RSAUtils.strByEncryption(mContractView.getUserPhone(), true);
+
+        String phone = mRepository.getRASByStr(mContractView.getUserPhone());
         bean.setPhoenum(phone);
+
         SHATools shaTools = new SHATools();
         try {
-            String pwd = RSAUtils.strByEncryption(
-                    SHATools.hexString(shaTools.eccryptSHA1(mContractView.getUserPassword())), true);
+            String pwd = mRepository.getRASByStr(
+                    SHATools.hexString(shaTools.eccryptSHA1(mContractView.getUserPassword())));
             bean.setPswd(pwd);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -143,12 +144,11 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
 
     /**
      * 同赞信息保存接口
-     *
-     * @param rspInfoBean
      */
     @Override
-    public void register(LoginBean rspInfoBean) {
-        Subscription subscription = mRepository.register(initRegisterDTO())
+    public void register(final LoginResponse loginResponse) {
+        Subscription subscription = mRepository
+                .register(initRegisterDTO(loginResponse))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {
@@ -167,6 +167,8 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
                     @Override
                     public void doNext(BaseResponse baseResult) {
                         if (baseResult != null && baseResult.getResponseCode() == 2000) {
+                            //备份数据
+                            mRepository.saveLoginResponseToSp(loginResponse);
                             mContractView.registerSucceed();
                         } else {
                             mContractView.registerError(baseResult != null
@@ -178,13 +180,16 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
     }
 
     @Override
-    public RegisterDTO initRegisterDTO() {
-        RegisterDTO registerDTO = new RegisterDTO();
-        registerDTO.setPhoenum(RSAUtils.strByEncryption(mContractView.getUserPhone(), true));
-        registerDTO.setPswd(RSAUtils.strByEncryption(mContractView.getUserPassword(), true));
-        registerDTO.setUsrid(mRepository.getRASUserID());
+    public RegisterDTO initRegisterDTO(LoginResponse loginResponse) {
+        LoginBean loginBean = loginResponse.getRspInfo();
 
-        String token = RSAUtils.strByEncryption(mRepository.getPushId(), true);
+        RegisterDTO registerDTO = new RegisterDTO();
+        registerDTO.setPhoenum(mRepository.getRASByStr(mContractView.getUserPhone()));
+        registerDTO.setPswd(mRepository.getRASByStr(mContractView.getUserPassword()));
+        registerDTO.setUsrid(mRepository.getRASByStr(loginBean.getUsrid()));
+        registerDTO.setNickname(loginBean.getNickname());
+
+        String token = mRepository.getRASByStr(mRepository.getPushId());
         registerDTO.setToken(token);
         registerDTO.setPushmode("2");
         registerDTO.setPushswitch("0");
@@ -194,7 +199,7 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
     @Override
     public void loginV004(String filenum) {
         Subscription subscription = mRepository
-                .bank_V004_01(initLoginV004DTO(filenum))
+                .bank_v004_01(initLoginV004DTO(filenum))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BankResponse>() {
@@ -213,7 +218,7 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
     @Override
     public String initLoginV004DTO(String filenum) {
         RequestDTO dto = new RequestDTO();
-        RequestHeadDTO requestHeadDTO = mRepository.getRequestHeadDTO("cip.cfc.v004.01");
+        RequestHeadDTO requestHeadDTO = mRepository.requestHeadDTO("cip.cfc.v004.01");
         dto.setSYS_HEAD(requestHeadDTO);
 
         FileNumDTO bean = new FileNumDTO();

@@ -69,13 +69,12 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
             mBaseTitle = savedInstanceState.getString(BASE_TITLE);
         }
 
-        bundleIntent(getIntent());
-
         ViewGroup content = (ViewGroup) findViewById(android.R.id.content);
         content.removeAllViews();
         LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         content.addView(linearLayout);
+
         if (!isCustomTitle()) {
             View titleView = LayoutInflater.from(this).inflate(initTitleView(), linearLayout, false);
             linearLayout.addView(titleView);
@@ -84,6 +83,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
         LayoutInflater.from(this).inflate(initContentView(), linearLayout, true);
         if (isStatusBar()) initStatusBarColor();
 
+        bundleIntent(getIntent());
         bindFragment();
         initContentData();
     }
@@ -113,7 +113,6 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
         super.onNewIntent(intent);
 
         bundleIntent(intent);
-        newIntent(intent);
     }
 
     @Override
@@ -142,14 +141,9 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    protected abstract void bundleIntent(Intent intent);
-
-    /**
-     * 某些启动Top的页面用
-     */
-    protected abstract void newIntent(Intent intent);
-
     protected abstract int initContentView();
+
+    protected abstract void bundleIntent(Intent intent);
 
     protected abstract void bindFragment();
 

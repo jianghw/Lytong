@@ -90,39 +90,39 @@ public class PayTypePresenter implements IPayTypeContract.IPayTypePresenter {
      */
     @Override
     public void getBankPayHtml(String orderId, String amount, int couponUserId) {
-        Subscription subscription =
-                mRepository.getBankPayHtml(orderId, amount, couponUserId)
-                        .subscribeOn(Schedulers.io())
-                        .doOnSubscribe(new Action0() {
-                            @Override
-                            public void call() {
-                                mContractView.showLoading();
-                            }
-                        })
-                        .subscribeOn(AndroidSchedulers.mainThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new BaseSubscriber<PayUrlResponse>() {
-                            @Override
-                            public void doCompleted() {
-                                mContractView.dismissLoading();
-                            }
+        Subscription subscription = mRepository
+                .getBankPayHtml(orderId, amount, couponUserId)
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<PayUrlResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
 
-                            @Override
-                            public void doError(Throwable e) {
-                                mContractView.dismissLoading();
-                                mContractView.getBankPayHtmlError(e.getMessage());
-                            }
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.getBankPayHtmlError(e.getMessage());
+                    }
 
-                            @Override
-                            public void doNext(PayUrlResponse response) {
-                                if (response != null && response.getResponseCode() == 2000) {
-                                    mContractView.getBankPayHtmlSucceed(response);
-                                } else {
-                                    mContractView.getBankPayHtmlError(response != null
-                                            ? response.getResponseDesc() : "未知错误(5)");
-                                }
-                            }
-                        });
+                    @Override
+                    public void doNext(PayUrlResponse response) {
+                        if (response != null && response.getResponseCode() == 2000) {
+                            mContractView.getBankPayHtmlSucceed(response);
+                        } else {
+                            mContractView.getBankPayHtmlError(response != null
+                                    ? response.getResponseDesc() : "未知错误(5)");
+                        }
+                    }
+                });
         mSubscriptions.add(subscription);
     }
 
@@ -132,39 +132,39 @@ public class PayTypePresenter implements IPayTypeContract.IPayTypePresenter {
      */
     @Override
     public void getCouponByType() {
-        Subscription subscription =
-                mRepository.getCouponByType(getUserId(), mContractView.getExtraType(), mContractView.getPayType())
-                        .subscribeOn(Schedulers.io())
-                        .doOnSubscribe(new Action0() {
-                            @Override
-                            public void call() {
-                                mContractView.showLoading();
-                            }
-                        })
-                        .subscribeOn(AndroidSchedulers.mainThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new BaseSubscriber<CouponResponse>() {
-                            @Override
-                            public void doCompleted() {
-                                mContractView.dismissLoading();
-                            }
+        Subscription subscription = mRepository
+                .getCouponByType(getUserId(), mContractView.getExtraType(), mContractView.getPayType())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<CouponResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
 
-                            @Override
-                            public void doError(Throwable e) {
-                                mContractView.dismissLoading();
-                                mContractView.couponByTypeError(e.getMessage());
-                            }
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.couponByTypeError(e.getMessage());
+                    }
 
-                            @Override
-                            public void doNext(CouponResponse response) {
-                                if (response != null && response.getResponseCode() == 2000) {
-                                    mContractView.couponByTypeSucceed(response);
-                                } else {
-                                    mContractView.couponByTypeError(response != null
-                                            ? response.getResponseDesc() : "未知错误(57)");
-                                }
-                            }
-                        });
+                    @Override
+                    public void doNext(CouponResponse response) {
+                        if (response != null && response.getResponseCode() == 2000) {
+                            mContractView.couponByTypeSucceed(response);
+                        } else {
+                            mContractView.couponByTypeError(response != null
+                                    ? response.getResponseDesc() : "未知错误(57)");
+                        }
+                    }
+                });
         mSubscriptions.add(subscription);
     }
 

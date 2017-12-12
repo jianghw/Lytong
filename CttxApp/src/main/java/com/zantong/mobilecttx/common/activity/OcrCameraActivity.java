@@ -36,7 +36,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.tzly.ctcyh.router.custom.image.ImageTools;
-import com.tzly.ctcyh.router.DensityUtils;
+import com.tzly.ctcyh.router.util.DensityUtils;
 
 /**
  * 拍照扫描

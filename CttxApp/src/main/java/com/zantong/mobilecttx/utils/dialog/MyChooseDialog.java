@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
@@ -26,8 +25,6 @@ public class MyChooseDialog extends Dialog {
     Context context;
     private String[] name;
     private OnChooseDialogListener chooseDialogListener;
-    EditText etName;
-    private int layou;
     private TimePicker timePicker;
 
     public MyChooseDialog(Context context, String[] name, OnChooseDialogListener chooseDialogListener) {

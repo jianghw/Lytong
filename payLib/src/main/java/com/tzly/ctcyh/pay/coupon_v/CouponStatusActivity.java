@@ -27,9 +27,6 @@ public class CouponStatusActivity extends AbstractBaseActivity {
     protected void bundleIntent(Intent intent) {}
 
     @Override
-    protected void newIntent(Intent intent) {}
-
-    @Override
     protected int initContentView() {
         return R.layout.pay_activity_coupon_status;
     }

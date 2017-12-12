@@ -33,9 +33,6 @@ public class PayTypeActivity extends AbstractBaseActivity implements IPayTypeUi 
     }
 
     @Override
-    protected void newIntent(Intent intent) {}
-
-    @Override
     protected int initContentView() {
         return R.layout.activity_base_frame;
     }

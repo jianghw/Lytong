@@ -16,6 +16,7 @@ public final class RouterGlobal {
         public static final String driving_host = "driving_host";
 
         public static final String login_host = "login_host";
+        public static final String send_code_host = "send_code_host";
 
         public static final String coupon_list_host = "coupon_list_host";
         public static final String pay_type_host = "pay_type_host";

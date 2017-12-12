@@ -58,12 +58,8 @@ public class HomeMainActivity extends AbstractBaseActivity
             if (intent.hasExtra(MainGlobal.putExtra.home_position_extra))
                 mCurBottomPosition = bundle.getInt(MainGlobal.putExtra.home_position_extra, 0);
         }
-    }
 
-    @Override
-    protected void newIntent(Intent intent) {
-        mCustomBottom.selectTab(mCurBottomPosition);
-
+        if (mCustomBottom != null) mCustomBottom.selectTab(mCurBottomPosition);
         if (mHomeUnimpededFragment != null) mHomeUnimpededFragment.loadingFirstData();
     }
 

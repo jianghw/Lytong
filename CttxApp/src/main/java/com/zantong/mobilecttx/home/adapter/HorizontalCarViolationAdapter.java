@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.tzly.ctcyh.router.ScreenUtils;
+import com.tzly.ctcyh.router.util.ScreenUtils;
 import com.tzly.ctcyh.router.custom.popup.MoreWindow;
 import com.tzly.ctcyh.router.util.MobUtils;
 import com.umeng.analytics.MobclickAgent;

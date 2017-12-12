@@ -18,6 +18,8 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.tzly.ctcyh.router.custom.image.ImageOptions;
 import com.tzly.ctcyh.router.util.AppUtils;
+import com.tzly.ctcyh.router.util.DensityUtils;
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
@@ -62,6 +64,10 @@ public class SplashActivity extends AppCompatActivity
         initView();
         initPresenter();
         initThirdPartyData();
+
+        int width = DensityUtils.getScreenWidth(this);
+        int height = DensityUtils.getScreenHeight(this);
+        LogUtils.e("===》" + width + "/" + height);
     }
 
     private void initView() {
@@ -73,9 +79,9 @@ public class SplashActivity extends AppCompatActivity
 
         mImgHuawei = (ImageView) findViewById(R.id.img_huawei);
         String umengChannel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
-//        if (umengChannel.equals("tzly_huawei")) {
-//            mImgHuawei.setImageResource(R.mipmap.ic_huawei);
-//        }
+        //        if (umengChannel.equals("tzly_huawei")) {
+        //            mImgHuawei.setImageResource(R.mipmap.ic_huawei);
+        //        }
     }
 
     private void initPresenter() {
@@ -112,8 +118,7 @@ public class SplashActivity extends AppCompatActivity
         mImgLogo.setAnimation(splashAnimation);
         splashAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
-            }
+            public void onAnimationStart(Animation animation) {}
 
             @Override
             public void onAnimationEnd(Animation animation) {
@@ -121,8 +126,7 @@ public class SplashActivity extends AppCompatActivity
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
+            public void onAnimationRepeat(Animation animation) {}
         });
     }
 
@@ -211,7 +215,7 @@ public class SplashActivity extends AppCompatActivity
             MainRouter.gotoMainActivity(this, 0);
             MobclickAgent.onEvent(this, Config.getUMengID(0));
         } else {
-            MainRouter.gotoGuideActivity(this,mResultList);
+            MainRouter.gotoGuideActivity(this, mResultList);
             overridePendingTransition(0, 0);
         }
         finish();

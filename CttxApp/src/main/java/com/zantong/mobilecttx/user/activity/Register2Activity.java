@@ -53,7 +53,8 @@ import java.util.List;
 
 import butterknife.Bind;
 
-public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresenter> implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
+public class Register2Activity extends BaseMvpActivity<IOrderView, OrderPresenter>
+        implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener {
 
     @Bind(R.id.register_commit_btn)
     Button mCommit;

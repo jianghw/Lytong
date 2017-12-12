@@ -145,10 +145,6 @@
             android:name=".user.activity.ChangePwdActivity"
             android:screenOrientation="portrait"/>
 
-        <!-- 选a择城市 -->
-        <activity
-            android:name=".daijia.activity.AddrActivity"
-            android:screenOrientation="portrait"/>
         <!-- 公共列表类 -->
         <activity
             android:name=".common.activity.CommonListActivity"
@@ -219,9 +215,7 @@
         <activity
             android:name=".daijia.activity.DODetailBeingActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".user.activity.MegSecondLevelActivity"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".msg_v.MegDetailActivity"
             android:launchMode="singleTop"

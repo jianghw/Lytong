@@ -37,6 +37,8 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.tzly.ctcyh.router.global.JxGlobal;
+import com.tzly.ctcyh.router.util.DensityUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.BuildConfig;
@@ -58,9 +60,6 @@ import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DistanceUtils;
 
 import java.util.List;
-
-import com.tzly.ctcyh.router.global.JxGlobal;
-import com.tzly.ctcyh.router.DensityUtils;
 
 /**
  * Created by jianghw on 2017/7/7.

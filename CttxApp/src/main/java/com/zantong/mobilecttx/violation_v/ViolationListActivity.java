@@ -66,9 +66,6 @@ public class ViolationListActivity extends AbstractBaseActivity
     }
 
     @Override
-    protected void newIntent(Intent intent) {}
-
-    @Override
     protected int initContentView() {
         return R.layout.activity_violation_list;
     }
@@ -181,6 +178,7 @@ public class ViolationListActivity extends AbstractBaseActivity
         bundle.putParcelable(JxGlobal.putExtra.violation_pay_bean_extra, bean);
         intent.putExtras(bundle);
         startActivity(intent);
+
         overridePendingTransition(R.anim.push_bottom_in, 0);
     }
 

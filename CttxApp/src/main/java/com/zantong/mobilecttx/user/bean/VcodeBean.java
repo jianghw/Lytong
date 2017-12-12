@@ -1,11 +1,9 @@
 package com.zantong.mobilecttx.user.bean;
 
-import com.tzly.ctcyh.router.bean.BankResponse;
-
 /**
  * Created by zhengyingbing on 16/6/1.
  */
-public class VcodeBean extends BankResponse {
+public class VcodeBean {
 
     private String onlyflag;
     private String rgstste;//0 未注册  1已注册

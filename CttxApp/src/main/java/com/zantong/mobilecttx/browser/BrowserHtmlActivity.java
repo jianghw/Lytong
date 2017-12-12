@@ -90,9 +90,6 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
     }
 
     @Override
-    protected void newIntent(Intent intent) {}
-
-    @Override
     protected void bindFragment() {
         EventBus.getDefault().register(this);
 

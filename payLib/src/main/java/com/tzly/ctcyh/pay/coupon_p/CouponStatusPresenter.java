@@ -48,8 +48,8 @@ public class CouponStatusPresenter implements ICouponStatusContract.ICouponStatu
      */
     @Override
     public void couponUserList() {
-        Subscription subscription = mRepository.couponUserList(
-                mRepository.getRASUserID(), mContractView.getCouponStatus())
+        Subscription subscription = mRepository
+                .couponUserList(mRepository.getRASUserID(), mContractView.getCouponStatus())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -83,13 +83,14 @@ public class CouponStatusPresenter implements ICouponStatusContract.ICouponStatu
                 });
         mSubscriptions.add(subscription);
     }
+
     /**
      * 2.4.27删除用户优惠券
      */
     @Override
     public void delUsrCoupon(String couponId, final int position) {
-        Subscription subscription = mRepository.delUsrCoupon(
-                mRepository.getRASUserID(), couponId)
+        Subscription subscription = mRepository
+                .delUsrCoupon(mRepository.getRASUserID(), couponId)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -114,7 +115,7 @@ public class CouponStatusPresenter implements ICouponStatusContract.ICouponStatu
                     @Override
                     public void doNext(BaseResponse response) {
                         if (response != null && response.getResponseCode() == 2000) {
-                            mContractView.delUsrCouponSucceed(response,position);
+                            mContractView.delUsrCouponSucceed(response, position);
                         } else {
                             mContractView.delUsrCouponError(response != null
                                     ? response.getResponseDesc() : "未知错误(2.4.27)");

@@ -1,30 +1,25 @@
 package com.zantong.mobilecttx.card.activity;
 
+import android.content.Intent;
+
+import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
-import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.presenter.HelpPresenter;
 
-public class CardNoticeActivity extends BaseMvpActivity<IBaseView, HelpPresenter>  {
+public class CardNoticeActivity extends AbstractBaseActivity {
 
     @Override
-    public void initView() {
-    }
+    protected void bundleIntent(Intent intent) {}
 
     @Override
-    public void initData() {
-        setTitleText("办卡须知");
-    }
-
-    @Override
-    public HelpPresenter initPresenter() {
-        return new HelpPresenter();
-    }
-
-    @Override
-    protected int getContentResId() {
+    protected int initContentView() {
         return R.layout.activity_card_notice;
     }
 
+    @Override
+    protected void bindFragment() {
+        titleContent("办卡须知");
+    }
 
+    @Override
+    protected void initContentData() {}
 }

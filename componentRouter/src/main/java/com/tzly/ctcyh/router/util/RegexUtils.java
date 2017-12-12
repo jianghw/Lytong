@@ -64,7 +64,7 @@ public final class RegexUtils {
      */
     public static final String REGEX_IP = "((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)";
 
-/************** 以下摘自http://tool.oschina.net/regex **************/
+    /************** 以下摘自http://tool.oschina.net/regex **************/
 
     /**
      * 正则：双字节字符(包括汉字在内)
@@ -117,6 +117,27 @@ public final class RegexUtils {
     private RegexUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
+
+    /**
+     * 密码规则验证
+     */
+    public static boolean checkPwd(String pwd) {
+        return isMatch("^[A-Za-z0-9]{6,20}$", pwd);
+    }
+
+    /**
+     * 是否纯数字
+     */
+    public static boolean checkNum(String pwd) {
+        return isMatch("[0-9]*", pwd);
+    }
+    /**
+     * 是否纯字母
+     */
+    public static boolean checkChar(String pwd) {
+        return isMatch("[A-Za-z]*", pwd);
+    }
+
 
     /**
      * 验证手机号（简单）

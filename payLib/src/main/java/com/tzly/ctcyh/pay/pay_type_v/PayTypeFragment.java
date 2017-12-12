@@ -106,6 +106,14 @@ public class PayTypeFragment extends RefreshFragment
      */
     private int mCouponBeanId = -1;
 
+    public static PayTypeFragment newInstance(String extraOrder) {
+        PayTypeFragment f = new PayTypeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(PayGlobal.putExtra.pay_type_order, extraOrder);
+        f.setArguments(bundle);
+        return f;
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -254,14 +262,6 @@ public class PayTypeFragment extends RefreshFragment
         if (mPresenter != null) mPresenter.getOrderInfo();
     }
 
-    public static PayTypeFragment newInstance(String extraOrder) {
-        PayTypeFragment f = new PayTypeFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(PayGlobal.putExtra.pay_type_order, extraOrder);
-        f.setArguments(bundle);
-        return f;
-    }
-
     @Override
     public void setPresenter(IPayTypeContract.IPayTypePresenter presenter) {
         mPresenter = presenter;
@@ -272,6 +272,9 @@ public class PayTypeFragment extends RefreshFragment
         return getArguments().getString(PayGlobal.putExtra.pay_type_order);
     }
 
+    /**
+     * 数据显示
+     */
     @Override
     protected void responseData(Object response) {
         if (!(response instanceof PayTypeResponse))
@@ -280,6 +283,7 @@ public class PayTypeFragment extends RefreshFragment
             PayTypeResponse payTypeResponse = (PayTypeResponse) response;
             PayTypeBean payTypeBean = payTypeResponse.getData();
             if (payTypeBean == null) return;
+
             mCouponType = payTypeBean.getBusiness();
             mTvOrder.setText(FormatUtils.textForNull(getExtraOrderId()));
 

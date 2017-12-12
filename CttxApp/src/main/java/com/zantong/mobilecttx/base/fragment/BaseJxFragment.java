@@ -14,7 +14,6 @@ import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseActivity;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.base.activity.MvpBaseActivity;
 
 import butterknife.ButterKnife;
 
@@ -180,9 +179,7 @@ public abstract class BaseJxFragment extends Fragment {
         FragmentActivity activity = getActivity();
         if (activity != null && activity instanceof BaseActivity) {
             ((BaseActivity) activity).showDialogLoading();
-        } else if (activity != null && activity instanceof MvpBaseActivity) {
-            ((MvpBaseActivity) activity).showDialogLoading();
-        } else if (activity != null && activity instanceof BaseJxActivity) {
+        }  else if (activity != null && activity instanceof BaseJxActivity) {
             ((BaseJxActivity) activity).showDialogLoading();
         }
     }
@@ -196,9 +193,7 @@ public abstract class BaseJxFragment extends Fragment {
         FragmentActivity activity = getActivity();
         if (activity != null && activity instanceof BaseActivity) {
             ((BaseActivity) activity).showDialogLoading(msg);
-        } else if (activity != null && activity instanceof MvpBaseActivity) {
-            ((MvpBaseActivity) activity).showDialogLoading(msg);
-        } else if (activity != null && activity instanceof BaseJxActivity) {
+        }else if (activity != null && activity instanceof BaseJxActivity) {
             ((BaseJxActivity) activity).showDialogLoading(msg);
         }
     }
@@ -210,8 +205,6 @@ public abstract class BaseJxFragment extends Fragment {
         FragmentActivity activity = getActivity();
         if (activity != null && activity instanceof BaseActivity) {
             ((BaseActivity) activity).hideDialogLoading();
-        } else if (activity != null && activity instanceof MvpBaseActivity) {
-            ((MvpBaseActivity) activity).hideDialogLoading();
         } else if (activity != null && activity instanceof BaseJxActivity) {
             ((BaseJxActivity) activity).hideDialogLoading();
         }

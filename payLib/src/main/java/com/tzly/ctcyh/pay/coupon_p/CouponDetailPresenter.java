@@ -47,7 +47,8 @@ public class CouponDetailPresenter implements ICouponDetailContract.ICouponDetai
      */
     @Override
     public void couponDetail() {
-        Subscription subscription = mRepository.couponDetail(mContractView.couponId())
+        Subscription subscription = mRepository
+                .couponDetail(mContractView.couponId())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override

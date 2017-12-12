@@ -38,9 +38,6 @@ public class CouponListActivity extends  AbstractBaseActivity {
     }
 
     @Override
-    protected void newIntent(Intent intent) {}
-
-    @Override
     protected int initContentView() {
         return R.layout.activity_base_frame;
     }

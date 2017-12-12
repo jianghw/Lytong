@@ -7,6 +7,7 @@ import com.tzly.ctcyh.router.IComponentRouter;
 import com.tzly.ctcyh.router.LibUiRouter;
 import com.tzly.ctcyh.service.RouterGlobal;
 import com.tzly.ctcyh.user.login_v.LoginActivity;
+import com.tzly.ctcyh.user.pw_v.SendCodeActivity;
 
 /**
  * 向外提供的路由规则
@@ -27,7 +28,10 @@ public class UserUiRouter extends LibUiRouter implements IComponentRouter {
 
     @Override
     protected String[] initHostToLib() {
-        return new String[]{RouterGlobal.Host.login_host};
+        return new String[]{
+                RouterGlobal.Host.login_host,
+                RouterGlobal.Host.send_code_host
+        };
     }
 
     /**
@@ -37,6 +41,8 @@ public class UserUiRouter extends LibUiRouter implements IComponentRouter {
     protected boolean gotoActivity(Context context, String host, Intent intent) {
         if (RouterGlobal.Host.login_host.equals(host)) {
             intent.setClass(context, LoginActivity.class);
+        } else if (RouterGlobal.Host.send_code_host.equals(host)) {
+            intent.setClass(context, SendCodeActivity.class);
         } else {
             return true;
         }
@@ -49,7 +55,9 @@ public class UserUiRouter extends LibUiRouter implements IComponentRouter {
     @Override
     protected boolean excludeLoginActivity(String host) {
         //不需要登录
-        return !RouterGlobal.Host.login_host.equals(host) && !UserRouter.gotoByIsLogin();
+        return !RouterGlobal.Host.login_host.equals(host)
+                && !RouterGlobal.Host.send_code_host.equals(host)
+                && !UserRouter.gotoByIsLogin();
     }
 
     @Override
