@@ -5,19 +5,19 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.router.base.RecyclerListFragment;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
-import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.car.activity.CarChooseActivity;
 import com.zantong.mobilecttx.car.adapter.CarChooseXiAdapter;
 import com.zantong.mobilecttx.car.bean.CarLinkageResponse;
 import com.zantong.mobilecttx.car.bean.CarXiBean;
 import com.zantong.mobilecttx.car.dto.CarLinkageDTO;
 
-public class CarChooseXiFragment extends BaseRecyclerListJxFragment<CarXiBean> {
+import java.util.List;
 
-    private int id;
+public class CarChooseXiFragment extends RecyclerListFragment<CarXiBean> {
 
     public static CarChooseXiFragment newInstance(int typeId) {
         CarChooseXiFragment fragment = new CarChooseXiFragment();
@@ -33,36 +33,7 @@ public class CarChooseXiFragment extends BaseRecyclerListJxFragment<CarXiBean> {
     }
 
     @Override
-    protected void initFragmentView(View view) {
-        Bundle bundle = getArguments();
-        id = bundle.getInt("id", 0);
-        carXingList(id);
-    }
-
-    private void carXingList(int id) {
-        CarLinkageDTO carLinkageDTO = new CarLinkageDTO();
-        carLinkageDTO.setModelsId("");
-        carLinkageDTO.setSeriesId("");
-        carLinkageDTO.setBrandId(String.valueOf(id));
-        CarApiClient.liYingCarLinkage(Utils.getContext(), carLinkageDTO,
-                new CallBack<CarLinkageResponse>() {
-                    @Override
-                    public void onSuccess(CarLinkageResponse result) {
-                        if (result.getResponseCode() == 2000) {
-                            setDataResult(result.getData().getSeries());
-                        }
-                    }
-                });
-    }
-
-    @Override
-    protected void onFirstDataVisible() {
-    }
-
-    @Override
-    protected void onRefreshData() {
-        carXingList(id);
-    }
+    protected void initPresenter() {}
 
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
@@ -76,7 +47,43 @@ public class CarChooseXiFragment extends BaseRecyclerListJxFragment<CarXiBean> {
     }
 
     @Override
-    protected void DestroyViewAndThing() {
+    protected void loadingFirstData() {
+        carXingList(getArguments().getInt("id", 0));
+    }
 
+    private void carXingList(int id) {
+        CarLinkageDTO carLinkageDTO = new CarLinkageDTO();
+        carLinkageDTO.setModelsId("");
+        carLinkageDTO.setSeriesId("");
+        carLinkageDTO.setBrandId(String.valueOf(id));
+
+        CarApiClient.liYingCarLinkage(Utils.getContext(), carLinkageDTO,
+                new CallBack<CarLinkageResponse>() {
+                    @Override
+                    public void onSuccess(CarLinkageResponse result) {
+                        if (result.getResponseCode() == 2000) {
+                            responseSucceed(result);
+                        } else {
+                            responseError();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String errorCode, String msg) {
+                        responseError(msg);
+                    }
+                });
+    }
+
+    @Override
+    protected void responseData(Object response) {
+        if (response instanceof CarLinkageResponse) {
+            CarLinkageResponse couponResponse = (CarLinkageResponse) response;
+            CarLinkageResponse.CarInfo carInfo = couponResponse.getData();
+            List<CarXiBean> couponList = null;
+            if (carInfo != null) couponList = carInfo.getSeries();
+            setSimpleDataResult(couponList);
+        } else
+            responseError();
     }
 }

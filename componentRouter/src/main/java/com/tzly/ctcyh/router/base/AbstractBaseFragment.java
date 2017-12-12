@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jianghw.multi.state.layout.IAddContentView;
 import com.jianghw.multi.state.layout.MultiState;
 import com.jianghw.multi.state.layout.MultiStateLayout;
 import com.jianghw.multi.state.layout.OnStateViewCreatedListener;
@@ -55,17 +54,6 @@ public abstract class AbstractBaseFragment extends Fragment {
         //此处不用container,
         View view = inflater.inflate(R.layout.activity_jx_content, null);
         multiStateLayout = (MultiStateLayout) view.findViewById(R.id.lay_state);
-        //content
-        if (contentView() > 0) {
-            final View contentView = inflater.inflate(contentView(), multiStateLayout, false);
-            bindContent(contentView);
-            multiStateLayout.setContentView(new IAddContentView() {
-                @Override
-                public View getContentView() {
-                    return contentView;
-                }
-            });
-        }
         multiStateLayout.setOnStateViewCreatedListener(new OnStateViewCreatedListener() {
             @Override
             public void onViewCreated(View view, int state) {
@@ -82,6 +70,12 @@ public abstract class AbstractBaseFragment extends Fragment {
                 }
             }
         });
+
+        if (contentView() > 0) {
+            View contentView = inflater.inflate(contentView(), multiStateLayout, false);
+            multiStateLayout.setCustomContent(contentView);
+            bindContent(contentView);
+        }
         int multiState = initMultiState();
         multiStateLayout.setState(multiState);
         if (multiState == MultiState.CONTENT) loadingFirstData();

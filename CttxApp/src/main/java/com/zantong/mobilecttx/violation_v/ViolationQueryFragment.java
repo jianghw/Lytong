@@ -8,9 +8,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -20,6 +20,8 @@ import com.google.gson.Gson;
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
 import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.router.custom.dialog.DateDialogFragment;
+import com.tzly.ctcyh.router.custom.dialog.IOnDateSetListener;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
@@ -50,7 +52,6 @@ import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
-import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
 import com.zantong.mobilecttx.utils.popwindow.KeyWordPop;
 import com.zantong.mobilecttx.violation_p.IViolationQueryFtyContract;
 import com.zantong.mobilecttx.violation_p.ViolationQueryFtyPresenter;
@@ -61,6 +62,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -367,21 +369,21 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
                 startActivityForResult(intent, JxGlobal.requestCode.violation_query_plate);
                 break;
             case R.id.lay_date://日期
-                String temp = getTvData();
-                String[] temps = null;
-                if (!TextUtils.isEmpty(temp)) temps = temp.split("-");
-                MyChooseDialog dialog = new MyChooseDialog(
-                        getActivity(),
-                        temps,
-                        new MyChooseDialog.OnChooseDialogListener() {
+                DateDialogFragment dialogFragment = DateDialogFragment.newInstance();
+                dialogFragment.setClickListener(new IOnDateSetListener() {
+                    @Override
+                    public void onDateSet(
+                            DatePicker view, int year, int month, int dayOfMonth, boolean usable) {
 
-                            @Override
-                            public void back(String name) {
-                                setTvData(name);
-                            }
-                        });
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.show();
+                        if (!usable) return;
+                        SimpleDateFormat format = new SimpleDateFormat(
+                                "yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(year, month, dayOfMonth);
+                        setTvData(format.format(calendar.getTime()));
+                    }
+                });
+                dialogFragment.show(getFragmentManager(), "register_date");
                 break;
             case R.id.lay_brand://品牌
                 startActivityForResult(
@@ -801,7 +803,8 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
             CarStyleInfoBean carBrandBean = (CarStyleInfoBean) data.getSerializableExtra(CarChooseActivity.CAR_XING_BEAN);
             if (carBrandBean != null) {
                 mTvVehicle.setText(carBrandBean.getCarModelName());
-                mBindCarDTO.setCarModelId(String.valueOf(carBrandBean.getCarModelId()));
+                int carModelId = carBrandBean.getCarModelId();
+                mBindCarDTO.setCarModelId(String.valueOf(carModelId));
             }
         }
     }

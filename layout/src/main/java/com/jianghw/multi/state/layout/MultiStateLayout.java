@@ -56,7 +56,7 @@ public class MultiStateLayout extends FrameLayout {
      * 当前状态
      */
     @MultiState
-    private int mCurState = MultiState.CONTENT;
+    private int mCurState = MultiState.LOADING;
 
     /**
      * 自定义当前状态布局
@@ -366,8 +366,10 @@ public class MultiStateLayout extends FrameLayout {
      * show content view without animation
      */
     private void showContentView() {
-        if (null == mContentView && mIAddContentView != null) {
+        //说明自定义传过来的值,手动加入
+        if (null == mContentView && null != mIAddContentView) {
             mContentView = mIAddContentView.getContentView();
+
             addView(mContentView, mContentView.getLayoutParams());
             callViewCreated(mContentView, MultiState.CONTENT);
         }
@@ -744,8 +746,11 @@ public class MultiStateLayout extends FrameLayout {
         }
     }
 
-    private void setCustomContent(View contentView) {
+    public void setCustomContent(View contentView) {
         mContentView = contentView;
+
+        addView(mContentView, mContentView.getLayoutParams());
+        callViewCreated(mContentView, MultiState.CONTENT);
     }
 
     public void setContentView(IAddContentView iAddContentView) {

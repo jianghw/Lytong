@@ -1,13 +1,11 @@
 package com.zantong.mobilecttx.splash_v;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -16,6 +14,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.custom.image.ImageOptions;
 import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.DensityUtils;
@@ -38,7 +37,7 @@ import java.util.List;
 /**
  * 启动页
  */
-public class SplashActivity extends AppCompatActivity
+public class SplashActivity extends AbstractBaseActivity
         implements ISplashAtyContract.ISplashAtyView, View.OnClickListener {
 
     private ISplashAtyContract.ISplashAtyPresenter mPresenter;
@@ -53,16 +52,31 @@ public class SplashActivity extends AppCompatActivity
      */
     private ArrayList<StartPicBean> mResultList = new ArrayList<>();
 
+    /**
+     * 是否要子布局定义title
+     */
+    protected boolean isCustomTitle() {
+        return true;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        super.onCreate(savedInstanceState);
+    protected int initContentView() {
+        return R.layout.common_splash_activity;
+    }
 
-        setContentView(R.layout.common_splash_activity);
+    @Override
+    protected void bundleIntent(Intent intent) {}
 
+    @Override
+    protected void bindFragment() {
         initView();
-        initPresenter();
+
+        SplashPresenter mPresenter = new SplashPresenter(
+                Injection.provideRepository(Utils.getContext()), this);
+    }
+
+    @Override
+    protected void initContentData() {
         initThirdPartyData();
 
         int width = DensityUtils.getScreenWidth(this);
@@ -79,14 +93,6 @@ public class SplashActivity extends AppCompatActivity
 
         mImgHuawei = (ImageView) findViewById(R.id.img_huawei);
         String umengChannel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
-        //        if (umengChannel.equals("tzly_huawei")) {
-        //            mImgHuawei.setImageResource(R.mipmap.ic_huawei);
-        //        }
-    }
-
-    private void initPresenter() {
-        SplashPresenter mPresenter = new SplashPresenter(
-                Injection.provideRepository(Utils.getContext()), this);
     }
 
     @Override
@@ -102,17 +108,12 @@ public class SplashActivity extends AppCompatActivity
         startAnimation();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mPresenter != null) mPresenter.onSubscribe();
-    }
-
     /**
      * 动画
      */
     public void startAnimation() {
-        Animation splashAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.splash_fade);
+        Animation splashAnimation = AnimationUtils.loadAnimation(
+                Utils.getContext(), R.anim.splash_fade);
         splashAnimation.setStartOffset(100);
         splashAnimation.setFillAfter(true);
         mImgLogo.setAnimation(splashAnimation);

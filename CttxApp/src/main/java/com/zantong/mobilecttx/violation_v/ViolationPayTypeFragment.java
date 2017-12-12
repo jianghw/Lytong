@@ -6,10 +6,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.jianghw.multi.state.layout.MultiState;
-import com.tzly.ctcyh.router.base.AbstractBaseFragment;
+import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.zantong.mobilecttx.R;
 
-public class ViolationPayTypeFragment extends AbstractBaseFragment
+public class ViolationPayTypeFragment extends RefreshFragment
         implements View.OnClickListener {
 
     private IViolationPayUi mIViolationPayUi;
@@ -32,19 +32,16 @@ public class ViolationPayTypeFragment extends AbstractBaseFragment
             mIViolationPayUi = (IViolationPayUi) activity;
     }
 
+    /**
+     * 是否可刷新
+     */
+    protected boolean isRefresh() {
+        return false;
+    }
+
     @MultiState
     protected int initMultiState() {
         return MultiState.CONTENT;
-    }
-
-    @Override
-    protected int contentView() {
-        return R.layout.fragment_violation_paytype;
-    }
-
-    @Override
-    protected void bindContent(View contentView) {
-        initView(contentView);
     }
 
     @Override
@@ -57,7 +54,14 @@ public class ViolationPayTypeFragment extends AbstractBaseFragment
     }
 
     @Override
-    protected void clickRefreshData() {}
+    protected int fragmentView() {
+        return R.layout.fragment_violation_paytype;
+    }
+
+    @Override
+    protected void bindFragment(View fragment) {
+        initView(fragment);
+    }
 
     @Override
     protected void responseData(Object response) {}

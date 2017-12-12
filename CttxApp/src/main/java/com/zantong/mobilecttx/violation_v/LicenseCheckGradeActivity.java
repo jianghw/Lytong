@@ -4,21 +4,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.JxBaseActivity;
+import com.tzly.ctcyh.router.custom.dialog.DateDialogFragment;
+import com.tzly.ctcyh.router.custom.dialog.IOnDateSetListener;
 import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.SPUtils;
-import com.zantong.mobilecttx.utils.dialog.MyChooseDialog;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.text.ParseException;
@@ -120,20 +121,21 @@ public class LicenseCheckGradeActivity extends JxBaseActivity implements View.On
     }
 
     private void showDataDialog() {
-        String[] temps = null;
-        String temp = getTvDate();
-        if (!TextUtils.isEmpty(temp) && temp.contains("-")) {
-            temps = temp.split("-");
-        }
-        MyChooseDialog dialog = new MyChooseDialog(this, temps,
-                new MyChooseDialog.OnChooseDialogListener() {
-                    @Override
-                    public void back(String name) {
-                        mTvDate.setText(name);
-                    }
-                });
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.show();
+        DateDialogFragment dialogFragment = DateDialogFragment.newInstance();
+        dialogFragment.setClickListener(new IOnDateSetListener() {
+            @Override
+            public void onDateSet(
+                    DatePicker view, int year, int month, int dayOfMonth, boolean usable) {
+
+                if (!usable) return;
+                SimpleDateFormat format = new SimpleDateFormat(
+                        "yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(year, month, dayOfMonth);
+                mTvDate.setText(format.format(calendar.getTime()));
+            }
+        });
+        dialogFragment.show(getSupportFragmentManager(), "register_date");
     }
 
     @Override
