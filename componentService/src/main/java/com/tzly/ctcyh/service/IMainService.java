@@ -25,10 +25,6 @@ public interface IMainService {
 
     void loginFilenumDialog(Activity activity);
 
-    void gotoRegisterActivity(Activity context);
-
-    void gotoResetActivity(Activity context);
-
     String getPushId();
 
     void gotoMainActivity(Activity activity, int i);

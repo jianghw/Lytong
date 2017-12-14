@@ -29,6 +29,15 @@ public final class UserRouter {
                 bundle);
     }
 
+    public static void gotoLoginActivity(Context context, String phone, String pw) {
+        Bundle bundle = new Bundle();
+        bundle.putString(UserGlobal.putExtra.user_login_phone, phone);
+        bundle.putString(UserGlobal.putExtra.user_login_pw, pw);
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.user_scheme + "://" + RouterGlobal.Host.login_host,
+                bundle);
+    }
+
     /**
      * 发验证码
      */
@@ -37,6 +46,18 @@ public final class UserRouter {
         bundle.putString(UserGlobal.Host.login_code_host, host);
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.user_scheme + "://" + RouterGlobal.Host.send_code_host,
+                bundle);
+    }
+
+    /**
+     * 注册页面
+     */
+    public static void gotoRegisterActivity(Context context, String host, String phone) {
+        Bundle bundle = new Bundle();
+        bundle.putString(UserGlobal.Host.send_register_host, host);
+        bundle.putString(UserGlobal.putExtra.user_login_phone, phone);
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.user_scheme + "://" + RouterGlobal.Host.register_host,
                 bundle);
     }
 
@@ -91,34 +112,6 @@ public final class UserRouter {
         } else {
             //注册机开始工作
             ServiceRouter.registerComponent(ServiceRouter.MAIN_LIKE);
-        }
-    }
-
-    /**
-     * 注册页面
-     */
-    public static void gotoRegisterActivity(Activity context) {
-        Object object = getMainObject();
-        if (object != null && object instanceof IMainService) {
-            IMainService service = (IMainService) object;
-            service.gotoRegisterActivity(context);
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
-        }
-    }
-
-    /**
-     * 密码页面
-     */
-    public static void gotoResetActivity(Activity context) {
-        Object object = getMainObject();
-        if (object != null && object instanceof IMainService) {
-            IMainService service = (IMainService) object;
-            service.gotoResetActivity(context);
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
         }
     }
 

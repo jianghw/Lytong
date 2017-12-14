@@ -138,9 +138,7 @@
         <activity
             android:name=".user.activity.Register2Activity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".user.activity.ResetActivity"
-            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".user.activity.ChangePwdActivity"
             android:screenOrientation="portrait"/>

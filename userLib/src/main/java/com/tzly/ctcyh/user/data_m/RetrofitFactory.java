@@ -48,7 +48,7 @@ public class RetrofitFactory {
                 return isDebug
                         ? "https://ctkapptest.icbc-axa.com/ecip/" : "https://ctkapp.icbc-axa.com/ecip/";
             default:
-                return "http://192.168.1.147:80/";
+                return "http://192.168.1.127:8081/";
         }
     }
 }

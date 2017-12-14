@@ -1,6 +1,7 @@
 package com.tzly.ctcyh.pay.data_m;
 
 import com.tzly.ctcyh.pay.bean.BaseResponse;
+import com.tzly.ctcyh.pay.bean.response.CouponCodeResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponStatusResponse;
@@ -54,4 +55,14 @@ public interface IRemoteSource {
      * 微信支付
      */
     Observable<PayUrlResponse> weChatPay(String orderId, String amount, String phontIP);
+
+    /**
+     * 码券列表
+     */
+    Observable<CouponCodeResponse> getCodeList(String rasUserID, String couponStatus);
+
+    /**
+     * 删除码券
+     */
+    Observable<BaseResponse> deleteCode(String codeId, String rasUserID);
 }

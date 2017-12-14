@@ -54,7 +54,9 @@ public class SendCodePresenter implements ISendCodeContract.ISendCodePresenter {
         mSubscriptions.clear();
     }
 
-
+    /**
+     * 获取验证码
+     */
     @Override
     public void sendVerificationCode() {
         Subscription subscription = mRepository
@@ -64,7 +66,6 @@ public class SendCodePresenter implements ISendCodeContract.ISendCodePresenter {
                     @Override
                     public void call() {
                         mContractView.showLoading();
-                        mContractView.codeBtnEnable(false);
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -73,13 +74,11 @@ public class SendCodePresenter implements ISendCodeContract.ISendCodePresenter {
                     @Override
                     public void doCompleted() {
                         mContractView.dismissLoading();
-                        mContractView.codeBtnEnable(true);
                     }
 
                     @Override
                     public void doError(Throwable e) {
                         mContractView.dismissLoading();
-                        mContractView.codeBtnEnable(true);
 
                         mContractView.verificationCodeError(e.getMessage());
                     }
@@ -119,8 +118,15 @@ public class SendCodePresenter implements ISendCodeContract.ISendCodePresenter {
     public void startCountDown() {
         Subscription subCount = Observable
                 .interval(10, 1000, TimeUnit.MILLISECONDS)
-                .take(60)
-                .subscribeOn(Schedulers.io())
+                .take(61)
+                .subscribeOn(Schedulers.newThread())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.codeBtnEnable(false);
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Long>() {
                     @Override
@@ -141,6 +147,9 @@ public class SendCodePresenter implements ISendCodeContract.ISendCodePresenter {
         mSubscriptions.add(subCount);
     }
 
+    /**
+     * 验证号码
+     */
     @Override
     public void v_p002_01() {
         Subscription subscription = mRepository
@@ -150,7 +159,6 @@ public class SendCodePresenter implements ISendCodeContract.ISendCodePresenter {
                     @Override
                     public void call() {
                         mContractView.showLoading();
-                        mContractView.codeBtnEnable(false);
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())

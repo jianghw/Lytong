@@ -3,9 +3,11 @@ package com.tzly.ctcyh.pay.data_m;
 import android.support.annotation.Nullable;
 
 import com.tzly.ctcyh.pay.api.ICouponService;
+import com.tzly.ctcyh.pay.api.IFebruaryService;
 import com.tzly.ctcyh.pay.api.IOrderService;
 import com.tzly.ctcyh.pay.api.IPayApiService;
 import com.tzly.ctcyh.pay.bean.BaseResponse;
+import com.tzly.ctcyh.pay.bean.response.CouponCodeResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponStatusResponse;
@@ -119,6 +121,20 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<PayUrlResponse> weChatPay(String orderId, String amount, String phontIP) {
         return baseRetrofit().create(IPayApiService.class).weChatPay(orderId, amount, phontIP);
+    }
+    /**
+     *码券列表
+     */
+    @Override
+    public Observable<CouponCodeResponse> getCodeList(String rasUserID, String couponStatus) {
+        return baseRetrofit().create(IFebruaryService.class).getCodeList(rasUserID, couponStatus);
+    }
+    /**
+     * 删除码券
+     */
+    @Override
+    public Observable<BaseResponse> deleteCode(String codeId, String rasUserID) {
+        return baseRetrofit().create(IFebruaryService.class).deleteCode(codeId, rasUserID);
     }
 
 

@@ -71,7 +71,8 @@ public class LocalData implements ILocalSource {
     }
 
     public String getDate() {
-        return new SimpleDateFormat("yyyyMMdd", Locale.SIMPLIFIED_CHINESE).format(Calendar.getInstance().getTime());
+        return new SimpleDateFormat("yyyyMMdd", Locale.SIMPLIFIED_CHINESE)
+                .format(Calendar.getInstance().getTime());
     }
 
     public String getTime() {

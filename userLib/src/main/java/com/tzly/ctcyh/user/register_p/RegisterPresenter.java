@@ -129,4 +129,74 @@ public class RegisterPresenter implements IRegisterContract.IRegisterPresenter {
         dto.setReqInfo(bean);
         return new Gson().toJson(dto);
     }
+
+    /**
+     * cip.cfc.u013.01
+     */
+    @Override
+    public void v_u013_01() {
+        Subscription subscription = mRepository
+                .bank_u013_01(registerPWDTO())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<LoginResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.v_u001_01Error(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(LoginResponse response) {
+                        if (response != null && response.getSYS_HEAD().getReturnCode()
+                                .equals(UserGlobal.Response.bank_succeed)) {
+                            mContractView.v_u001_01Succeed(response);
+                        } else {
+                            mContractView.v_u001_01Error(response != null
+                                    ? response.getSYS_HEAD().getReturnMessage() : "未知错误(u013)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    private String registerPWDTO() {
+        RequestDTO dto = new RequestDTO();
+        RequestHeadDTO requestHeadDTO = mRepository.requestHeadDTO("cip.cfc.u013.01");
+        dto.setSYS_HEAD(requestHeadDTO);
+
+        LoginDTO bean = new LoginDTO();
+        String token = mRepository.getRASByStr(mRepository.getPushId());
+        bean.setToken(token);
+
+        bean.setPushmode("2");
+        bean.setPushswitch("0");
+
+        String phone = mRepository.getRASByStr(mContractView.getUserPhone());
+        bean.setPhoenum(phone);
+
+        SHATools shaTools = new SHATools();
+        try {
+            String pwd = mRepository.getRASByStr(
+                    SHATools.hexString(shaTools.eccryptSHA1(mContractView.getUserPassword())));
+            bean.setPswd(pwd);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        bean.setDevicetoken(mRepository.getPhoneDeviceId());
+        dto.setReqInfo(bean);
+        return new Gson().toJson(dto);
+    }
 }

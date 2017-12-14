@@ -359,4 +359,11 @@ public class UserDataManager {
     public Observable<LoginResponse> bank_u001_01(String msg) {
         return mRemoteData.bank_u001_01(msg);
     }
+
+    /**
+     * 修改密码
+     */
+    public Observable<LoginResponse> bank_u013_01(String msg) {
+        return mRemoteData.bank_u001_01(msg);
+    }
 }

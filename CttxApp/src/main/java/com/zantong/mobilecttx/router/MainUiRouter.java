@@ -21,12 +21,11 @@ import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.home_v.HomeMainActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.msg_v.MegDetailActivity;
+import com.zantong.mobilecttx.msg_v.MegTypeActivity;
 import com.zantong.mobilecttx.order_v.AnnualDetailActivity;
 import com.zantong.mobilecttx.order_v.OrderDetailActivity;
-import com.zantong.mobilecttx.msg_v.MegTypeActivity;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.user.activity.RegisterActivity;
-import com.zantong.mobilecttx.user.activity.ResetActivity;
 import com.zantong.mobilecttx.violation_v.ViolationActivity;
 import com.zantong.mobilecttx.violation_v.ViolationListActivity;
 
@@ -65,7 +64,6 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 RouterGlobal.Host.violation_list_host,
                 RouterGlobal.Host.ocr_camera_host,
                 RouterGlobal.Host.register_host,
-                RouterGlobal.Host.reset_host,
                 RouterGlobal.Host.meg_detail_host,
                 RouterGlobal.Host.html_self_host,
                 RouterGlobal.Host.html_pay_host,
@@ -114,8 +112,6 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, OcrCameraActivity.class);
         } else if (RouterGlobal.Host.register_host.equals(host)) {
             intent.setClass(context, RegisterActivity.class);
-        } else if (RouterGlobal.Host.reset_host.equals(host)) {
-            intent.setClass(context, ResetActivity.class);
         } else if (RouterGlobal.Host.meg_detail_host.equals(host)) {
             intent.setClass(context, MegDetailActivity.class);
         } else if (RouterGlobal.Host.html_pay_host.equals(host)) {
@@ -149,7 +145,6 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 && !RouterGlobal.Host.violation_list_host.equals(host)
                 && !RouterGlobal.Host.ocr_camera_host.equals(host)
                 && !RouterGlobal.Host.register_host.equals(host)
-                && !RouterGlobal.Host.reset_host.equals(host)
                 && !RouterGlobal.Host.violation_query_host.equals(host)
                 && !MainRouter.gotoByIsLogin();
     }

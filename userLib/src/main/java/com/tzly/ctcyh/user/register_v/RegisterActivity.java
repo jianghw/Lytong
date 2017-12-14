@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
+import com.tzly.ctcyh.router.util.KeyboardUtils;
 import com.tzly.ctcyh.user.R;
 import com.tzly.ctcyh.user.global.UserGlobal;
 
@@ -16,6 +17,7 @@ public class RegisterActivity extends AbstractBaseActivity {
 
     private RegisterFragment mFragment;
     private String mExtraHost;
+    private String mExtraPhone;
 
     /**
      * 回退监听功能
@@ -33,8 +35,12 @@ public class RegisterActivity extends AbstractBaseActivity {
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
-            if (intent.hasExtra(UserGlobal.Host.login_code_host))
-                mExtraHost = bundle.getString(UserGlobal.Host.login_code_host);
+            if (bundle != null) {
+                if (intent.hasExtra(UserGlobal.Host.send_register_host))
+                    mExtraHost = bundle.getString(UserGlobal.Host.send_register_host);
+                if (intent.hasExtra(UserGlobal.putExtra.user_login_phone))
+                    mExtraPhone = bundle.getString(UserGlobal.putExtra.user_login_phone);
+            }
         }
     }
 
@@ -51,9 +57,16 @@ public class RegisterActivity extends AbstractBaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         //默认页面显示
         if (mFragment == null) {
-            mFragment = RegisterFragment.newInstance(mExtraHost);
+            mFragment = RegisterFragment.newInstance(mExtraHost,mExtraPhone);
         }
         FragmentUtils.add(fragmentManager, mFragment, R.id.lay_base_frame);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        KeyboardUtils.hideSoftInput(this);
     }
 
     @Override

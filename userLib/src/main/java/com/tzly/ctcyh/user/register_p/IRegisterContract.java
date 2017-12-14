@@ -29,6 +29,8 @@ public interface IRegisterContract {
         void v_u001_01();
 
         void initPhoneDeviceId();
+
+        void v_u013_01();
     }
 
 }

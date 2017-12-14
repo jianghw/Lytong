@@ -34,6 +34,11 @@ public final class PayGlobal {
         public static final String coupon_detail_id = "coupon_detail_id";
     }
 
+    public static final class Response {
+        public static final String bank_succeed = "000000";
+        public static final int base_succeed = 2000;
+    }
+
     public static final class Host {
         public static final String coupon_list_host = "coupon_list_host";
         public static final String pay_type_host = "pay_type_host";

@@ -1,9 +1,11 @@
 package com.tzly.ctcyh.user.login_v;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -27,6 +29,7 @@ import com.tzly.ctcyh.user.bean.response.LoginResponse;
 import com.tzly.ctcyh.user.custom.CustomCharKeyBoard;
 import com.tzly.ctcyh.user.custom.CustomNumKeyBoard;
 import com.tzly.ctcyh.user.data_m.InjectionRepository;
+import com.tzly.ctcyh.user.global.UserGlobal;
 import com.tzly.ctcyh.user.login_p.ILoginContract;
 import com.tzly.ctcyh.user.login_p.LoginPresenter;
 import com.tzly.ctcyh.user.router.UserRouter;
@@ -133,9 +136,56 @@ public class LoginFragment extends RefreshFragment
         }
 
         initTextListener();
+    }
 
-        mEdtPhone.setOnTouchListener(this);// 对输入框增加触摸事件，让其显示自定义输入框
-        mEdtCode.setOnTouchListener(this);// 对输入框增加触摸事件，让其显示自定义输入框
+    @Override
+    protected void responseData(Object response) {
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        hitCustomKeyboard();
+        if (mPresenter != null) mPresenter.unSubscribe();
+    }
+
+    /**
+     * 输入监控
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    private void initTextListener() {
+        // 对输入框增加触摸事件，让其显示自定义输入框
+        mEdtPhone.setOnTouchListener(this);
+        mEdtCode.setOnTouchListener(this);
+
+        mEdtPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        mEdtCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
 
         mNumKeyboard.getChangeAbcView().setOnClickListener(this);
         mNumKeyboard.getNumDelView().setOnClickListener(this);
@@ -154,55 +204,18 @@ public class LoginFragment extends RefreshFragment
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {//下一步
-
                     KeyboardUtils.hideSoftInput(mEdtPhone);
                     mEdtCode.requestFocus();
                     numCustomKeyboard();
                 }
-                return false;
+                return true;
             }
         });
     }
 
-    @Override
-    protected void responseData(Object response) {}
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        hitCustomKeyboard();
-        if (mPresenter != null) mPresenter.unSubscribe();
+    private void getDeviceId() {
+        if (mPresenter != null) mPresenter.initPhoneDeviceId();
     }
-
-    /**
-     * 输入监控
-     */
-    private void initTextListener() {
-        mEdtPhone.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-
-        mEdtCode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-    }
-
-    private void getDeviceId() {if (mPresenter != null) mPresenter.initPhoneDeviceId();}
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -229,7 +242,8 @@ public class LoginFragment extends RefreshFragment
         if (view.getId() == R.id.btn_login) {
             validationSubmitData();
             return;
-        } else if (view.getId() == R.id.tv_forget_pw) {
+        }
+        if (view.getId() == R.id.tv_forget_pw) {
             gotoResetActivity();
             return;
         }
@@ -289,7 +303,7 @@ public class LoginFragment extends RefreshFragment
      * 设置密码页面
      */
     private void gotoResetActivity() {
-        UserRouter.gotoResetActivity(getActivity());
+        UserRouter.gotoCodeActivity(getContext(), UserGlobal.Host.code_pw_host);
     }
 
     /**
@@ -341,6 +355,7 @@ public class LoginFragment extends RefreshFragment
         return true;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (v.getId() == R.id.edt_word) {//密码

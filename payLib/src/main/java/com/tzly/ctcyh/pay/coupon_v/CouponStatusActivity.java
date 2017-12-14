@@ -44,9 +44,11 @@ public class CouponStatusActivity extends AbstractBaseActivity {
         if (mFragmentList == null) mFragmentList = new ArrayList<>();
         if (!mFragmentList.isEmpty()) mFragmentList.clear();
 
-        String[] title = new String[]{"可使用", "已失效"};
+        String[] title = new String[]{"优惠券", "码券"};
+
         mFragmentList.add(CouponStatusFragment.newInstance(1));
         mFragmentList.add(CouponStatusFragment.newInstance(2));
+
         TabListAdapter mainFragmentAdapter =
                 new TabListAdapter(getSupportFragmentManager(), mFragmentList, title);
         mViewPager.setAdapter(mainFragmentAdapter);

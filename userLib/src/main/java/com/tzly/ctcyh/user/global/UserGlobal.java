@@ -29,5 +29,6 @@ public final class UserGlobal {
         public static final String login_code_host = "login_code_host";
         public static final String code_pw_host = "code_pw_host";
         public static final String code_register_host = "code_register_host";
+        public static final String send_register_host = "send_register_host";
     }
 }

@@ -312,13 +312,6 @@ public final class MainRouter {
                 bundle);
     }
 
-    public static void gotoResetActivity(Activity activity) {
-        Bundle bundle = new Bundle();
-        UiRouter.getInstance().openUriBundle(activity,
-                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.reset_host,
-                bundle);
-    }
-
     /**
      * 主页面
      */

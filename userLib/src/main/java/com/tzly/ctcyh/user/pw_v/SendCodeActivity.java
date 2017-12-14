@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
+import com.tzly.ctcyh.router.util.KeyboardUtils;
 import com.tzly.ctcyh.user.R;
 import com.tzly.ctcyh.user.global.UserGlobal;
 
@@ -33,8 +34,10 @@ public class SendCodeActivity extends AbstractBaseActivity {
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
-            if (intent.hasExtra(UserGlobal.Host.login_code_host))
-                mExtraHost = bundle.getString(UserGlobal.Host.login_code_host);
+            if (bundle != null) {
+                if (intent.hasExtra(UserGlobal.Host.login_code_host))
+                    mExtraHost = bundle.getString(UserGlobal.Host.login_code_host);
+            }
         }
     }
 
@@ -54,6 +57,13 @@ public class SendCodeActivity extends AbstractBaseActivity {
             mFragment = SendCodeFragment.newInstance(mExtraHost);
         }
         FragmentUtils.add(fragmentManager, mFragment, R.id.lay_base_frame);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        KeyboardUtils.hideSoftInput(this);
     }
 
     @Override

@@ -30,7 +30,7 @@ public class LoginActivity extends AbstractBaseActivity {
      * 右边文字点击 注册页码
      */
     protected void rightClickListener() {
-        UserRouter.gotoRegisterActivity(this);
+        UserRouter.gotoCodeActivity(this, UserGlobal.Host.code_register_host);
     }
 
     @Override
@@ -38,6 +38,9 @@ public class LoginActivity extends AbstractBaseActivity {
         return R.layout.activity_base_frame;
     }
 
+    /**
+     * 页面间值传递
+     */
     @Override
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
@@ -45,13 +48,15 @@ public class LoginActivity extends AbstractBaseActivity {
             String mExtraPassword = null;
 
             Bundle bundle = intent.getExtras();
-            if (intent.hasExtra(UserGlobal.putExtra.user_login_phone))
-                mExtraPhone = bundle.getString(UserGlobal.putExtra.user_login_phone);
-            if (intent.hasExtra(UserGlobal.putExtra.user_login_pw))
-                mExtraPassword = bundle.getString(UserGlobal.putExtra.user_login_pw);
+            if (bundle != null) {
+                if (intent.hasExtra(UserGlobal.putExtra.user_login_phone))
+                    mExtraPhone = bundle.getString(UserGlobal.putExtra.user_login_phone);
+                if (intent.hasExtra(UserGlobal.putExtra.user_login_pw))
+                    mExtraPassword = bundle.getString(UserGlobal.putExtra.user_login_pw);
+            }
 
-            if (mFragment != null &&
-                    !TextUtils.isEmpty(mExtraPhone) && !TextUtils.isEmpty(mExtraPassword))
+            if (mFragment != null && !TextUtils.isEmpty(mExtraPhone)
+                    && !TextUtils.isEmpty(mExtraPassword))
                 mFragment.automaticOperation(mExtraPhone, mExtraPassword);
         }
     }
@@ -72,11 +77,20 @@ public class LoginActivity extends AbstractBaseActivity {
         FragmentUtils.add(fragmentManager, mFragment, R.id.lay_base_frame);
     }
 
+    /**
+     * 要有焦点
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        KeyboardUtils.hideSoftInput(this);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        KeyboardUtils.hideSoftInput(this);
         mFragment = null;
     }
 }

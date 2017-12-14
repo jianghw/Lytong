@@ -41,6 +41,10 @@ public class RemoteData implements IRemoteSource {
         return RetrofitFactory.getInstance().createRetrofit(2);
     }
 
+    private Retrofit testRetrofit() {
+        return RetrofitFactory.getInstance().createRetrofit(3);
+    }
+
     /**
      * 安盛登录
      * https://ctkapptest.icbc-axa.com/ecip/mobilecall_call

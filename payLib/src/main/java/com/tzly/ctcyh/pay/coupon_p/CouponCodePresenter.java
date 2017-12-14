@@ -4,15 +4,9 @@ import android.support.annotation.NonNull;
 
 import com.tzly.ctcyh.pay.bean.BaseResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponCodeResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponStatusBean;
-import com.tzly.ctcyh.pay.bean.response.CouponStatusList;
-import com.tzly.ctcyh.pay.bean.response.CouponStatusResponse;
 import com.tzly.ctcyh.pay.data_m.BaseSubscriber;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
 import com.tzly.ctcyh.pay.global.PayGlobal;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import rx.Observable;
 import rx.Subscription;
@@ -29,14 +23,14 @@ import rx.subscriptions.CompositeSubscription;
  * Update day:
  */
 
-public class CouponStatusPresenter implements ICouponStatusContract.ICouponStatusPresenter {
+public class CouponCodePresenter implements ICouponCodeContract.ICouponCodePresenter {
 
     private final PayDataManager mRepository;
-    private final ICouponStatusContract.ICouponStatusView mContractView;
+    private final ICouponCodeContract.ICouponCodeView mContractView;
     private final CompositeSubscription mSubscriptions;
 
-    public CouponStatusPresenter(@NonNull PayDataManager payDataManager,
-                                 @NonNull ICouponStatusContract.ICouponStatusView view) {
+    CouponCodePresenter(@NonNull PayDataManager payDataManager,
+                        @NonNull ICouponCodeContract.ICouponCodeView view) {
         mRepository = payDataManager;
         mContractView = view;
         mSubscriptions = new CompositeSubscription();
@@ -54,34 +48,18 @@ public class CouponStatusPresenter implements ICouponStatusContract.ICouponStatu
     }
 
     /**
-     * 获取优惠券列表
+     * 1． 码券列表
      */
     @Override
-    public void couponUserList() {
+    public void getCodeList() {
         Subscription subscription = Observable.zip(
-                mRepository.couponUserList(mRepository.getRASUserID(), "1"),
-                mRepository.couponUserList(mRepository.getRASUserID(), "2"),
-                new Func2<CouponStatusResponse, CouponStatusResponse, CouponStatusResponse>() {
+                mRepository.getCodeList(mRepository.getRASUserID(), "1"),
+                mRepository.getCodeList(mRepository.getRASUserID(), "2"),
+                new Func2<CouponCodeResponse, CouponCodeResponse, CouponCodeResponse>() {
                     @Override
-                    public CouponStatusResponse call(CouponStatusResponse function,
-                                                     CouponStatusResponse func2) {
-                        List<CouponStatusBean> statusBeanList = new ArrayList<>();
-                        if (function != null && function.getResponseCode() == PayGlobal.Response.base_succeed) {
-                            if (function.getData() != null) {
-                                statusBeanList.addAll(function.getData().getCouponList());
-                            }
-                        }
-
-                        if (func2 != null && func2.getResponseCode() == PayGlobal.Response.base_succeed) {
-                            if (func2.getData() != null) {
-                                statusBeanList.addAll(func2.getData().getCouponList());
-                            }
-                        }
-                        CouponStatusList list = new CouponStatusList();
-                        list.setCouponList(statusBeanList);
-                        CouponStatusResponse zipFunction = new CouponStatusResponse();
-                        zipFunction.setData(list);
-                        return zipFunction;
+                    public CouponCodeResponse call(CouponCodeResponse couponCodeResponse,
+                                                   CouponCodeResponse couponCodeResponse2) {
+                        return null;
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -93,7 +71,7 @@ public class CouponStatusPresenter implements ICouponStatusContract.ICouponStatu
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<CouponStatusResponse>() {
+                .subscribe(new BaseSubscriber<CouponCodeResponse>() {
                     @Override
                     public void doCompleted() {
                         mContractView.dismissLoading();
@@ -106,12 +84,13 @@ public class CouponStatusPresenter implements ICouponStatusContract.ICouponStatu
                     }
 
                     @Override
-                    public void doNext(CouponStatusResponse response) {
-                        if (response != null && response.getResponseCode() == 2000) {
+                    public void doNext(CouponCodeResponse response) {
+                        if (response != null &&
+                                response.getResponseCode() == PayGlobal.Response.base_succeed) {
                             mContractView.responseSucceed(response);
                         } else {
                             mContractView.responseError(response != null
-                                    ? response.getResponseDesc() : "未知错误(优惠券列表)");
+                                    ? response.getResponseDesc() : "未知错误(CodeList)");
                         }
                     }
                 });
@@ -122,9 +101,9 @@ public class CouponStatusPresenter implements ICouponStatusContract.ICouponStatu
      * 2.4.27删除用户优惠券
      */
     @Override
-    public void delUsrCoupon(String couponId, final int position) {
+    public void deleteCode(String codeId, final int position) {
         Subscription subscription = mRepository
-                .delUsrCoupon(mRepository.getRASUserID(), couponId)
+                .deleteCode(codeId, mRepository.getRASUserID())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -143,16 +122,17 @@ public class CouponStatusPresenter implements ICouponStatusContract.ICouponStatu
                     @Override
                     public void doError(Throwable e) {
                         mContractView.dismissLoading();
-                        mContractView.delUsrCouponError(e.getMessage());
+                        mContractView.deleteCodeError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(BaseResponse response) {
-                        if (response != null && response.getResponseCode() == 2000) {
-                            mContractView.delUsrCouponSucceed(response, position);
+                        if (response != null &&
+                                response.getResponseCode() == PayGlobal.Response.base_succeed) {
+                            mContractView.deleteCodeSucceed(response, position);
                         } else {
-                            mContractView.delUsrCouponError(response != null
-                                    ? response.getResponseDesc() : "未知错误(2.4.27)");
+                            mContractView.deleteCodeError(response != null
+                                    ? response.getResponseDesc() : "未知错误(deleteCode)");
                         }
                     }
                 });

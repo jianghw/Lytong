@@ -23,6 +23,7 @@ public interface ICouponStatusContract {
     }
 
     interface ICouponStatusPresenter extends IBasePresenter {
+
         void couponUserList();
 
         void delUsrCoupon(String couponId, int position);

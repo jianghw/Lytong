@@ -1,17 +1,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.tzly.ctcyh.user">
+    package="com.tzly.ctcyh.user">
 
     <application
         android:allowBackup="true"
         android:supportsRtl="true">
 
+        <!--项目使用模块-->
+
         <!--登录页面-->
         <activity
             android:name=".login_v.LoginActivity"
-            android:launchMode="singleInstance"
-            android:screenOrientation="portrait">
-        </activity>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
+        <!--验证码页-->
+        <activity
+            android:name=".pw_v.SendCodeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <!--注册页面-->
+        <activity
+            android:name=".register_v.RegisterActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
+

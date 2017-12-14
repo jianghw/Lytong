@@ -71,21 +71,6 @@ public class MainDataService implements IMainService {
         MainRouter.loginFilenumDialog(activity);
     }
 
-    /**
-     * 注册页面
-     */
-    @Override
-    public void gotoRegisterActivity(Activity activity) {
-        MainRouter.gotoRegisterActivity(activity);
-    }
-
-    /**
-     * 密码页面
-     */
-    @Override
-    public void gotoResetActivity(Activity activity) {
-        MainRouter.gotoResetActivity(activity);
-    }
 
     /**
      * 获取设备推动id

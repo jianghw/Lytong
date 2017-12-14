@@ -1,6 +1,7 @@
 package com.tzly.ctcyh.user.register_v;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.tzly.ctcyh.user.data_m.InjectionRepository;
 import com.tzly.ctcyh.user.global.UserGlobal;
 import com.tzly.ctcyh.user.register_p.IRegisterContract;
 import com.tzly.ctcyh.user.register_p.RegisterPresenter;
+import com.tzly.ctcyh.user.router.UserRouter;
 
 import java.util.ArrayList;
 
@@ -39,7 +41,8 @@ import java.util.ArrayList;
  */
 
 public class RegisterFragment extends RefreshFragment
-        implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener, IRegisterContract.IRegisterView {
+        implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener,
+        IRegisterContract.IRegisterView {
 
 
     /**
@@ -66,6 +69,7 @@ public class RegisterFragment extends RefreshFragment
      */
     private boolean isDaxie;
     private IRegisterContract.IRegisterPresenter mPresenter;
+    private int mFocusablePos;
 
     /**
      * 是否可刷新
@@ -79,10 +83,11 @@ public class RegisterFragment extends RefreshFragment
         return MultiState.CONTENT;
     }
 
-    public static RegisterFragment newInstance(String extraHost) {
+    public static RegisterFragment newInstance(String extraHost, String extraPhone) {
         RegisterFragment f = new RegisterFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(UserGlobal.Host.login_code_host, extraHost);
+        bundle.putString(UserGlobal.Host.send_register_host, extraHost);
+        bundle.putString(UserGlobal.putExtra.user_login_phone, extraPhone);
         f.setArguments(bundle);
         return f;
     }
@@ -116,8 +121,11 @@ public class RegisterFragment extends RefreshFragment
         }
     }
 
-    private void getDeviceId() {if (mPresenter != null) mPresenter.initPhoneDeviceId();}
+    private void getDeviceId() {
+        if (mPresenter != null) mPresenter.initPhoneDeviceId();
+    }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void loadingFirstData() {
 
@@ -151,8 +159,8 @@ public class RegisterFragment extends RefreshFragment
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {//下一步
-
                     mEdtWord.requestFocus();
+                    mFocusablePos = 1;
                     numCustomKeyboard();
                 }
                 return false;
@@ -161,7 +169,8 @@ public class RegisterFragment extends RefreshFragment
     }
 
     @Override
-    protected void responseData(Object response) {}
+    protected void responseData(Object response) {
+    }
 
     public void initView(View view) {
         mEdtPass = (EditText) view.findViewById(R.id.edt_pass);
@@ -171,6 +180,15 @@ public class RegisterFragment extends RefreshFragment
         mBtnLogin.setOnClickListener(this);
         mNumKeyboard = (CustomNumKeyBoard) view.findViewById(R.id.num_keyboard);
         mCharKeyboard = (CustomCharKeyBoard) view.findViewById(R.id.char_keyboard);
+
+        String host = getArguments().getString(UserGlobal.Host.send_register_host);
+        if (null != host && host.equals(UserGlobal.Host.code_pw_host)) {
+            mBtnLogin.setText("重置密码");
+        } else if (null != host && host.equals(UserGlobal.Host.code_register_host)) {
+            mBtnLogin.setText("注   册");
+        } else {
+            mBtnLogin.setText("未知错误");
+        }
     }
 
     /**
@@ -186,10 +204,11 @@ public class RegisterFragment extends RefreshFragment
 
         Editable editable = null;
         int start = 0;
-        if (view.getId() == R.id.edt_pass) {
+        if (mFocusablePos == 0) {
             editable = mEdtPass.getText();
             start = mEdtPass.getSelectionStart();
-        } else if (view.getId() == R.id.edt_word) {
+
+        } else if (mFocusablePos == 1) {
             editable = mEdtWord.getText();
             start = mEdtWord.getSelectionStart();
         }
@@ -265,7 +284,14 @@ public class RegisterFragment extends RefreshFragment
             return;
         }
 
-        if (mPresenter != null) mPresenter.v_u001_01();
+        String host = getArguments().getString(UserGlobal.Host.send_register_host);
+        if (null != host && host.equals(UserGlobal.Host.code_pw_host)) {
+            if (mPresenter != null) mPresenter.v_u013_01();
+        } else if (null != host && host.equals(UserGlobal.Host.code_register_host)) {
+            if (mPresenter != null) mPresenter.v_u001_01();
+        } else {
+            toastShort("未知错误");
+        }
     }
 
     public String getEdtPass() {
@@ -306,14 +332,19 @@ public class RegisterFragment extends RefreshFragment
         return true;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (v.getId() == R.id.edt_word) {//密码
-            mEdtWord.requestFocus();
-            numCustomKeyboard();
-        } else if (v.getId() == R.id.edt_pass) {//手机号码
-            mEdtPass.requestFocus();
-            numCustomKeyboard();
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            if (v.getId() == R.id.edt_pass) {//手机号码
+                mFocusablePos = 0;
+                mEdtPass.requestFocus();
+                numCustomKeyboard();
+            } else if (v.getId() == R.id.edt_word) {
+                mFocusablePos = 1;
+                mEdtWord.requestFocus();
+                numCustomKeyboard();
+            }
         }
         return true;
     }
@@ -342,7 +373,7 @@ public class RegisterFragment extends RefreshFragment
 
     @Override
     public String getUserPhone() {
-        return null;
+        return getArguments().getString(UserGlobal.putExtra.user_login_phone);
     }
 
     @Override
@@ -361,5 +392,9 @@ public class RegisterFragment extends RefreshFragment
     @Override
     public void v_u001_01Succeed(LoginResponse response) {
         toastShort("注册成功");
+
+        UserRouter.gotoLoginActivity(getContext(),
+                getArguments().getString(UserGlobal.putExtra.user_login_phone),
+                getEdtWord());
     }
 }
