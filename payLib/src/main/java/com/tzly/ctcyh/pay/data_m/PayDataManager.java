@@ -11,6 +11,7 @@ import com.tzly.ctcyh.pay.bean.response.CouponStatusResponse;
 import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
+import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 
 import rx.Observable;
@@ -106,8 +107,8 @@ public class PayDataManager {
     /**
      * 微信支付
      */
-    public Observable<PayUrlResponse> weChatPay(String orderId, String amount, String phontIP) {
-        return mRemoteData.weChatPay(orderId, amount, phontIP);
+    public Observable<PayWeixinResponse> weChatPay(String orderId, String amount, String phontIP, int couponUserId) {
+        return mRemoteData.weChatPay(orderId, amount, phontIP,couponUserId);
     }
 
     /**

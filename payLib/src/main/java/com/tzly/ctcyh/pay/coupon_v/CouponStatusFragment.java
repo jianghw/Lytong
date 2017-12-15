@@ -17,6 +17,7 @@ import com.tzly.ctcyh.pay.coupon_p.ICouponStatusContract;
 import com.tzly.ctcyh.pay.data_m.InjectionRepository;
 import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.base.RecyclerListFragment;
+import com.tzly.ctcyh.router.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,25 +40,30 @@ public class CouponStatusFragment extends RecyclerListFragment<CouponStatusBean>
 
     @Override
     public BaseAdapter<CouponStatusBean> createAdapter() {
-        return new CouponStatusAdapter(this);
+        return new CouponStatusAdapter();
     }
 
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
         if (!(data instanceof CouponStatusBean)) return;
         CouponStatusBean statusBean = (CouponStatusBean) data;
-        PayRouter.gotoCouponDetailActivity(getActivity(), statusBean.getCouponId());
+        PayRouter.gotoCouponDetailActivity(getActivity(), statusBean.getCouponUserId());
     }
 
     @Override
     protected void initPresenter() {
         CouponStatusPresenter mPresenter = new CouponStatusPresenter(
-                InjectionRepository.provideRepository(getActivity()), this);
+                InjectionRepository.provideRepository(Utils.getContext()), this);
     }
 
     @Override
     protected void loadingFirstData() {
         if (mPresenter != null) mPresenter.couponUserList();
+    }
+
+    public static Fragment newInstance() {
+
+        return new CouponStatusFragment();
     }
 
     public static Fragment newInstance(int status) {
@@ -74,12 +80,6 @@ public class CouponStatusFragment extends RecyclerListFragment<CouponStatusBean>
     }
 
     @Override
-    public String getCouponStatus() {
-        int status = getArguments().getInt(STATUS);
-        return String.valueOf(status);
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         if (mPresenter != null) mPresenter.unSubscribe();
@@ -90,7 +90,7 @@ public class CouponStatusFragment extends RecyclerListFragment<CouponStatusBean>
      */
     @Override
     protected boolean isDeleteItem() {
-        return getArguments().getInt(STATUS) == 1;
+        return true;
     }
 
     /**
@@ -110,7 +110,7 @@ public class CouponStatusFragment extends RecyclerListFragment<CouponStatusBean>
         int position = adapterPosition - 1;
         if (messageList != null && position >= 0) {
             CouponStatusBean meg = messageList.get(position);
-            mPresenter.delUsrCoupon(meg.getCouponId(), position);
+            mPresenter.delUsrCoupon(meg.getCouponUserId(), position);
         }
     }
 

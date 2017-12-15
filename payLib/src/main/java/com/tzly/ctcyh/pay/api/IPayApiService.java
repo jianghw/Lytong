@@ -1,6 +1,7 @@
 package com.tzly.ctcyh.pay.api;
 
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
+import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -33,7 +34,14 @@ public interface IPayApiService {
      */
     @FormUrlEncoded
     @POST("pay/weChatPay")
-    Observable<PayUrlResponse> weChatPay(@Field("orderId") String orderId,
+    Observable<PayWeixinResponse> weChatPay(@Field("orderId") String orderId,
+                                            @Field("amount") String amount,
+                                            @Field("ip") String phontIP);
+
+    @FormUrlEncoded
+    @POST("pay/weChatPay")
+    Observable<PayWeixinResponse> weChatPay(@Field("orderId") String orderId,
                                          @Field("amount") String amount,
-                                         @Field("ip") String phontIP);
+                                         @Field("ip") String phontIP,
+                                         @Field("couponUserId") String couponUserId);
 }

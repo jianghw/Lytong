@@ -3,10 +3,17 @@ package com.tzly.ctcyh.pay.coupon_p;
 import android.support.annotation.NonNull;
 
 import com.tzly.ctcyh.pay.bean.BaseResponse;
+import com.tzly.ctcyh.pay.bean.response.CouponCodeBean;
 import com.tzly.ctcyh.pay.bean.response.CouponCodeResponse;
+import com.tzly.ctcyh.pay.bean.response.CouponStatusBean;
+import com.tzly.ctcyh.pay.bean.response.CouponStatusList;
+import com.tzly.ctcyh.pay.bean.response.CouponStatusResponse;
 import com.tzly.ctcyh.pay.data_m.BaseSubscriber;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
 import com.tzly.ctcyh.pay.global.PayGlobal;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import rx.Observable;
 import rx.Subscription;
@@ -29,8 +36,8 @@ public class CouponCodePresenter implements ICouponCodeContract.ICouponCodePrese
     private final ICouponCodeContract.ICouponCodeView mContractView;
     private final CompositeSubscription mSubscriptions;
 
-    CouponCodePresenter(@NonNull PayDataManager payDataManager,
-                        @NonNull ICouponCodeContract.ICouponCodeView view) {
+    public CouponCodePresenter(@NonNull PayDataManager payDataManager,
+                               @NonNull ICouponCodeContract.ICouponCodeView view) {
         mRepository = payDataManager;
         mContractView = view;
         mSubscriptions = new CompositeSubscription();
@@ -57,9 +64,27 @@ public class CouponCodePresenter implements ICouponCodeContract.ICouponCodePrese
                 mRepository.getCodeList(mRepository.getRASUserID(), "2"),
                 new Func2<CouponCodeResponse, CouponCodeResponse, CouponCodeResponse>() {
                     @Override
-                    public CouponCodeResponse call(CouponCodeResponse couponCodeResponse,
-                                                   CouponCodeResponse couponCodeResponse2) {
-                        return null;
+                    public CouponCodeResponse call(CouponCodeResponse function,
+                                                   CouponCodeResponse func2) {
+                        List<CouponCodeBean> statusBeanList = new ArrayList<>();
+                        if (function != null && function.getResponseCode() == PayGlobal.Response.base_succeed) {
+                            if (function.getData() != null && !function.getData().isEmpty()) {
+                                for (CouponCodeBean bean : function.getData()) {
+                                    bean.setEnable(true);
+                                    statusBeanList.add(bean);
+                                }
+                            }
+                        }
+
+                        if (func2 != null && func2.getResponseCode() == PayGlobal.Response.base_succeed) {
+                            if (func2.getData() != null) {
+                                statusBeanList.addAll(func2.getData());
+                            }
+                        }
+
+                        CouponCodeResponse zipFunction = new CouponCodeResponse();
+                        zipFunction.setData(statusBeanList);
+                        return zipFunction;
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -85,13 +110,7 @@ public class CouponCodePresenter implements ICouponCodeContract.ICouponCodePrese
 
                     @Override
                     public void doNext(CouponCodeResponse response) {
-                        if (response != null &&
-                                response.getResponseCode() == PayGlobal.Response.base_succeed) {
-                            mContractView.responseSucceed(response);
-                        } else {
-                            mContractView.responseError(response != null
-                                    ? response.getResponseDesc() : "未知错误(CodeList)");
-                        }
+                        mContractView.responseSucceed(response);
                     }
                 });
         mSubscriptions.add(subscription);

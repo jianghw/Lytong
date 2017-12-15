@@ -2,6 +2,7 @@ package com.tzly.ctcyh.pay;
 
 import android.support.multidex.MultiDexApplication;
 
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.Utils;
 
 /**
@@ -15,5 +16,6 @@ public class PayApplication extends MultiDexApplication {
         super.onCreate();
 
         Utils.init(this);
+        LogUtils.initLogUtils(true);
     }
 }

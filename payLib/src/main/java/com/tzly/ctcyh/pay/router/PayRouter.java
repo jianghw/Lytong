@@ -220,9 +220,9 @@ public final class PayRouter {
     /**
      * 选优惠页面
      */
-    public static void gotoCouponListActivity(Activity context, String type, int payType) {
+    public static void gotoCouponListActivity(Activity context, int type, int payType) {
         Bundle bundle = new Bundle();
-        bundle.putString(PayGlobal.putExtra.coupon_list_type, type);
+        bundle.putInt(PayGlobal.putExtra.coupon_list_type, type);
         bundle.putInt(PayGlobal.putExtra.web_pay_type_extra, payType);
         bundle.putString(PayGlobal.Host.coupon_list_host, RouterGlobal.Host.coupon_list_host);
 

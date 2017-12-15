@@ -21,6 +21,7 @@ import com.tzly.ctcyh.pay.bean.response.PayTypeBean;
 import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
 import com.tzly.ctcyh.pay.bean.response.PayTypesBean;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
+import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
 import com.tzly.ctcyh.pay.data_m.InjectionRepository;
 import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.pay.pay_type_p.IPayTypeContract;
@@ -28,6 +29,7 @@ import com.tzly.ctcyh.pay.pay_type_p.PayTypePresenter;
 import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.util.FormatUtils;
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.NetUtils;
 import com.tzly.ctcyh.router.util.Utils;
 
@@ -117,9 +119,7 @@ public class PayTypeFragment extends RefreshFragment
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (activity instanceof IPayTypeUi) {
-            IPayTypeUi iPayTypeUi = (IPayTypeUi) activity;
-        }
+
     }
 
     @Override
@@ -208,7 +208,7 @@ public class PayTypeFragment extends RefreshFragment
             if (mPayType == 0) {
                 toastShort("请先选择支付方式");
             } else {
-                PayRouter.gotoCouponListActivity(getActivity(), String.valueOf(mCouponType), mPayType);
+                PayRouter.gotoCouponListActivity(getActivity(), mCouponType, mPayType);
             }
         } else if (v.getId() == R.id.tv_pay) {
             if (mPayType == 1) {
@@ -224,30 +224,40 @@ public class PayTypeFragment extends RefreshFragment
     }
 
     /**
-     * 微信支付
-     */
-    private void gotoWeixinPay() {
-        if (mPresenter != null) {
-            int priceInteger = getSubmitPrice();
-            mPresenter.weChatPay(getExtraOrderId(),
-                    String.valueOf(priceInteger), NetUtils.getPhontIP(Utils.getContext()));
-        }
-    }
-
-    /**
      * 工行卡支付
      */
     private void gotoCarPay() {
         if (mPresenter != null) {
             int priceInteger = getSubmitPrice();
-            mPresenter.getBankPayHtml(getExtraOrderId(), String.valueOf(priceInteger), mCouponBeanId);
+            mPresenter.getBankPayHtml(
+                    getExtraOrderId(),
+                    String.valueOf(priceInteger),
+                    mCouponBeanId);
         }
     }
 
     /**
      * 银行卡支付
      */
-    private void gotoUnionPay() {}
+    private void gotoUnionPay() {
+    }
+
+    /**
+     * 微信支付
+     */
+    private void gotoWeixinPay() {
+        if (mPresenter != null) {
+            int priceInteger = getSubmitPrice();
+            mPresenter.weChatPay(
+                    getExtraOrderId(),
+                    String.valueOf(priceInteger),
+                    NetUtils.getPhontIP(Utils.getContext()));
+
+            LogUtils.i("====>" +  NetUtils.getPhontIP(Utils.getContext()));
+            LogUtils.e("====>" +  NetUtils.getIPAddress(true));
+            LogUtils.e("====>" +  NetUtils.getLocalHostIp(Utils.getContext()));
+        }
+    }
 
     /**
      * 支付宝
@@ -265,6 +275,14 @@ public class PayTypeFragment extends RefreshFragment
     @Override
     public void setPresenter(IPayTypeContract.IPayTypePresenter presenter) {
         mPresenter = presenter;
+    }
+
+    /**
+     * 优惠券id
+     */
+    @Override
+    public int getCouponUserId() {
+        return mCouponBeanId;
     }
 
     @Override
@@ -316,8 +334,8 @@ public class PayTypeFragment extends RefreshFragment
             }
 
             //标记是否可点优惠劵
-            mLayReCoupon.setEnabled(payTypeBean.getCouponId() <= 0);
-            if (payTypeBean.getCouponId() > 0) mTvCoupon.setText("此订单已用优惠劵,可直接支付");
+            mLayReCoupon.setEnabled(payTypeBean.getCouponUserId() <= 0);
+            if (payTypeBean.getCouponUserId() > 0) mTvCoupon.setText("此订单已用优惠劵,可直接支付");
         }
     }
 
@@ -370,7 +388,7 @@ public class PayTypeFragment extends RefreshFragment
      * 优惠巻回调
      */
     protected void couponResult(Intent data) {
-        if (data == null) return;
+        if (data == null || data.getExtras() == null) return;
         CouponBean bean = data.getExtras().getParcelable(PayGlobal.putExtra.coupon_list_bean);
         if (bean == null) return;
 
@@ -433,9 +451,9 @@ public class PayTypeFragment extends RefreshFragment
     }
 
     @Override
-    public void weChatPaySucceed(PayUrlResponse response) {
+    public void weChatPaySucceed(PayWeixinResponse response) {
         PayRouter.gotoHtmlActivity(getActivity(),
-                "微信支付", response.getData(), getExtraOrderId(), mPayType);
+                "微信支付", response.getData().getMweburl(), getExtraOrderId(), mPayType);
     }
 
     /**

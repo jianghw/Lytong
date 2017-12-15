@@ -14,13 +14,13 @@ import com.tzly.ctcyh.router.util.FragmentUtils;
 /**
  * 优惠券 列表
  */
-public class CouponListActivity extends  AbstractBaseActivity {
+public class CouponListActivity extends AbstractBaseActivity {
 
     private CouponListFragment mCouponListFragment;
     /**
      * 页传递
      */
-    private String mExtraType;
+    private int mExtraType;
     private int mPayType;
     private String mCurHost;
 
@@ -28,12 +28,14 @@ public class CouponListActivity extends  AbstractBaseActivity {
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
-            if (intent.hasExtra(PayGlobal.putExtra.coupon_list_type))
-                mExtraType = bundle.getString(PayGlobal.putExtra.coupon_list_type);
-            if (intent.hasExtra(PayGlobal.putExtra.web_pay_type_extra))
-                mPayType = bundle.getInt(PayGlobal.putExtra.web_pay_type_extra);
-            if (intent.hasExtra(PayGlobal.Host.coupon_list_host))
-                mCurHost = bundle.getString(PayGlobal.Host.coupon_list_host);
+            if (bundle != null) {
+                if (intent.hasExtra(PayGlobal.putExtra.coupon_list_type))
+                    mExtraType = bundle.getInt(PayGlobal.putExtra.coupon_list_type);
+                if (intent.hasExtra(PayGlobal.putExtra.web_pay_type_extra))
+                    mPayType = bundle.getInt(PayGlobal.putExtra.web_pay_type_extra);
+                if (intent.hasExtra(PayGlobal.Host.coupon_list_host))
+                    mCurHost = bundle.getString(PayGlobal.Host.coupon_list_host);
+            }
         }
     }
 
@@ -57,22 +59,21 @@ public class CouponListActivity extends  AbstractBaseActivity {
         //默认页面显示
         if (TextUtils.isEmpty(mCurHost)) {
             if (mCouponListFragment == null) {
-                mCouponListFragment = CouponListFragment.newInstance(mExtraType,mPayType);
+                mCouponListFragment = CouponListFragment.newInstance(mExtraType, mPayType);
             }
-            FragmentUtils.add(fragmentManager, mCouponListFragment,
-                    R.id.lay_base_frame, false, true);
+            FragmentUtils.add(fragmentManager, mCouponListFragment, R.id.lay_base_frame);
         } else if (mCurHost.equals(PayGlobal.Host.coupon_list_host)) {
             if (mCouponListFragment == null) {
-                mCouponListFragment = CouponListFragment.newInstance(mExtraType,mPayType);
+                mCouponListFragment = CouponListFragment.newInstance(mExtraType, mPayType);
             }
-            FragmentUtils.add(fragmentManager, mCouponListFragment,
-                    R.id.lay_base_frame, false, true);
+            FragmentUtils.add(fragmentManager, mCouponListFragment, R.id.lay_base_frame);
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         mCouponListFragment = null;
     }
 }

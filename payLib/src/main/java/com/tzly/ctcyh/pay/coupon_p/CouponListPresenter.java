@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.tzly.ctcyh.pay.bean.response.CouponResponse;
 import com.tzly.ctcyh.pay.data_m.BaseSubscriber;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
+import com.tzly.ctcyh.pay.global.PayGlobal;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -34,7 +35,8 @@ public class CouponListPresenter implements ICouponListContract.ICouponListPrese
     }
 
     @Override
-    public void onSubscribe() {}
+    public void onSubscribe() {
+    }
 
     @Override
     public void unSubscribe() {
@@ -73,11 +75,11 @@ public class CouponListPresenter implements ICouponListContract.ICouponListPrese
 
                     @Override
                     public void doNext(CouponResponse response) {
-                        if (response != null && response.getResponseCode() == 2000) {
+                        if (response != null && response.getResponseCode() == PayGlobal.Response.base_succeed) {
                             mContractView.responseSucceed(response);
                         } else {
                             mContractView.responseError(response != null
-                                    ? response.getResponseDesc() : "未知错误(57)");
+                                    ? response.getResponseDesc() : "未知错误(getCouponByType)");
                         }
                     }
                 });

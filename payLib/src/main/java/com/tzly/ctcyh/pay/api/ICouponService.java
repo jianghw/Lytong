@@ -21,8 +21,8 @@ public interface ICouponService {
      * 57.获取指定类型优惠券
      */
     @FormUrlEncoded
-    @POST("february/getConponByType")
-    Observable<CouponResponse> getConponByType(@Field("userId") String userId,
+    @POST("february/getCouponByType")
+    Observable<CouponResponse> getCouponByType(@Field("userId") String userId,
                                                @Field("type") String type,
                                                @Field("payType") int payType);
 

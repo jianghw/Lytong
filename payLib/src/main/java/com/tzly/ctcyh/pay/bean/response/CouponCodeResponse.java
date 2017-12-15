@@ -2,6 +2,8 @@ package com.tzly.ctcyh.pay.bean.response;
 
 import com.tzly.ctcyh.pay.bean.BaseResponse;
 
+import java.util.List;
+
 /**
  * Created by jianghw on 2017/6/1.
  * Description:
@@ -11,13 +13,13 @@ import com.tzly.ctcyh.pay.bean.BaseResponse;
 
 public class CouponCodeResponse extends BaseResponse {
 
-    private CouponStatusList data;
+    private List<CouponCodeBean> data;
 
-    public void setData(CouponStatusList data) {
+    public void setData(List<CouponCodeBean> data) {
         this.data = data;
     }
 
-    public CouponStatusList getData() {
+    public List<CouponCodeBean> getData() {
         return data;
     }
 }

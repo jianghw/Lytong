@@ -33,6 +33,7 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.tzly.ctcyh.pay.BuildConfig;
 import com.tzly.ctcyh.pay.bean.response.OrderDetailBean;
 import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
@@ -83,14 +84,16 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
-            if (intent.hasExtra(PayGlobal.putExtra.web_title_extra))
-                mTitle = bundle.getString(PayGlobal.putExtra.web_title_extra);
-            if (intent.hasExtra(PayGlobal.putExtra.web_url_extra))
-                mUrl = bundle.getString(PayGlobal.putExtra.web_url_extra);
-            if (intent.hasExtra(PayGlobal.putExtra.web_orderId_extra))
-                mOrderId = bundle.getString(PayGlobal.putExtra.web_orderId_extra);
-            if (intent.hasExtra(PayGlobal.putExtra.web_pay_type_extra))
-                mPayType = bundle.getInt(PayGlobal.putExtra.web_pay_type_extra);
+            if (bundle != null) {
+                if (intent.hasExtra(PayGlobal.putExtra.web_title_extra))
+                    mTitle = bundle.getString(PayGlobal.putExtra.web_title_extra);
+                if (intent.hasExtra(PayGlobal.putExtra.web_url_extra))
+                    mUrl = bundle.getString(PayGlobal.putExtra.web_url_extra);
+                if (intent.hasExtra(PayGlobal.putExtra.web_orderId_extra))
+                    mOrderId = bundle.getString(PayGlobal.putExtra.web_orderId_extra);
+                if (intent.hasExtra(PayGlobal.putExtra.web_pay_type_extra))
+                    mPayType = bundle.getInt(PayGlobal.putExtra.web_pay_type_extra);
+            }
         }
     }
 
@@ -217,18 +220,26 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
                     e.printStackTrace();
                     toastShort("未安装支付宝app");
                 }
-            } else if (url.startsWith("weixin://wap/pay?")) { // 如下方案可在非微信内部WebView的H5页面中调出微信支付
+            }
+//            else if (url.startsWith("https://wx.tenpay.com")) {
+//                Map<String, String> extraHeaders = new HashMap<String, String>();
+//                extraHeaders.put("Referer", "liyingtong.com");
+//                view.loadUrl(url, extraHeaders);
+//            }
+            else if (url.startsWith("weixin://wap/pay?")) {
+                // 如下方案可在非微信内部WebView的H5页面中调出微信支付
                 intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(url));
+                StringBuilder sb = new StringBuilder();
+                sb.append(url);
+                sb.append("&redirect_url=");
+                sb.append(BuildConfig.App_Url ? "http://dev.liyingtong.com" : "http://api2.liyingtong.com");
+                sb.append(":8011/admin/index.php/user");
+                intent.setData(Uri.parse(sb.toString()));
                 try {
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
                     toastShort("未安装微信app");
-
-                    Map<String, String> extraHeaders = new HashMap<String, String>();
-                    extraHeaders.put("Referer", "http://liyingtong.com");
-                    view.loadUrl(url, extraHeaders);
                 }
             } else {
                 view.loadUrl(url);
@@ -644,10 +655,12 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
     //        }
     //    }
     @Override
-    public void goNianjianMap() {}
+    public void goNianjianMap() {
+    }
 
     @Override
-    public void popAttention() {}
+    public void popAttention() {
+    }
 
     @Override
     public String getEncreptUserId() {
@@ -655,7 +668,8 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
     }
 
     @Override
-    public void queryViolations() {}
+    public void queryViolations() {
+    }
 
     //获取绑卡状态 0已绑卡  1未绑卡
     @Override
@@ -669,10 +683,12 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
     }
 
     @Override
-    public void chaser() {}
+    public void chaser() {
+    }
 
     @Override
-    public void addOil() {}
+    public void addOil() {
+    }
 
     @Override
     public void bindCard() {

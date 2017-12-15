@@ -9,17 +9,21 @@ package com.tzly.ctcyh.pay.bean.response;
 
 public class CouponStatusBean {
 
+
     /**
-     * couponId : 40
-     * couponName : 满299 - 99
-     * couponValidityEnd : 2017-12-31
-     * couponImage : http://139.196.183.121:8011/admin/uploads/20170509/20170509180544742.jpg
-     * couponType : 3
-     * couponValue : 90
-     * couponLimit : 0
+     * couponUserId : 438
+     * couponName : 年检
+     * couponValidityEnd : 2017-11-11
+     * couponImage : 烦烦烦
+     * couponType : 2
+     * couponValue : 85
+     * couponLimit : 100
+     * couponBusiness : 年检
+     * channel : 0
+     * method : 0
      */
 
-    private String couponId;
+    private String couponUserId;
     private String couponName;
     private String couponValidityEnd;
     private String couponImage;
@@ -27,6 +31,75 @@ public class CouponStatusBean {
     private String couponValue;
     private String couponLimit;
     private String couponBusiness;
+    private int channel;
+    private String method;
+
+    private boolean isEnable;
+
+    public boolean isEnable() {
+        return isEnable;
+    }
+
+    public void setEnable(boolean enable) {
+        isEnable = enable;
+    }
+
+
+    public String getCouponUserId() {
+        return couponUserId;
+    }
+
+    public void setCouponUserId(String couponUserId) {
+        this.couponUserId = couponUserId;
+    }
+
+    public String getCouponName() {
+        return couponName;
+    }
+
+    public void setCouponName(String couponName) {
+        this.couponName = couponName;
+    }
+
+    public String getCouponValidityEnd() {
+        return couponValidityEnd;
+    }
+
+    public void setCouponValidityEnd(String couponValidityEnd) {
+        this.couponValidityEnd = couponValidityEnd;
+    }
+
+    public String getCouponImage() {
+        return couponImage;
+    }
+
+    public void setCouponImage(String couponImage) {
+        this.couponImage = couponImage;
+    }
+
+    public String getCouponType() {
+        return couponType;
+    }
+
+    public void setCouponType(String couponType) {
+        this.couponType = couponType;
+    }
+
+    public String getCouponValue() {
+        return couponValue;
+    }
+
+    public void setCouponValue(String couponValue) {
+        this.couponValue = couponValue;
+    }
+
+    public String getCouponLimit() {
+        return couponLimit;
+    }
+
+    public void setCouponLimit(String couponLimit) {
+        this.couponLimit = couponLimit;
+    }
 
     public String getCouponBusiness() {
         return couponBusiness;
@@ -36,32 +109,19 @@ public class CouponStatusBean {
         this.couponBusiness = couponBusiness;
     }
 
-    public String getCouponId() { return couponId;}
+    public int getChannel() {
+        return channel;
+    }
 
-    public void setCouponId(String couponId) { this.couponId = couponId;}
+    public void setChannel(int channel) {
+        this.channel = channel;
+    }
 
-    public String getCouponName() { return couponName;}
+    public String getMethod() {
+        return method;
+    }
 
-    public void setCouponName(String couponName) { this.couponName = couponName;}
-
-    public String getCouponValidityEnd() { return couponValidityEnd;}
-
-    public void setCouponValidityEnd(String couponValidityEnd) { this.couponValidityEnd = couponValidityEnd;}
-
-    public String getCouponImage() { return couponImage;}
-
-    public void setCouponImage(String couponImage) { this.couponImage = couponImage;}
-
-    public String getCouponType() { return couponType;}
-
-    public void setCouponType(String couponType) { this.couponType = couponType;}
-
-    public String getCouponValue() { return couponValue;}
-
-    public void setCouponValue(String couponValue) { this.couponValue = couponValue;}
-
-    public String getCouponLimit() { return couponLimit;}
-
-    public void setCouponLimit(String couponLimit) { this.couponLimit = couponLimit;}
-
+    public void setMethod(String method) {
+        this.method = method;
+    }
 }

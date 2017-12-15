@@ -15,26 +15,30 @@ import com.tzly.ctcyh.router.util.FragmentUtils;
  * 支付方式 选择页面
  */
 
-public class PayTypeActivity extends AbstractBaseActivity implements IPayTypeUi {
+public class PayTypeActivity extends AbstractBaseActivity {
 
     private PayTypeFragment mPayTypeFragment;
     private String mExtraOrder;
     private String mCurHost;
 
     @Override
-    protected void bundleIntent(Intent intent) {
-        if (intent != null) {
-            Bundle bundle = intent.getExtras();
-            if (intent.hasExtra(PayGlobal.putExtra.pay_type_order))
-                mExtraOrder = bundle.getString(PayGlobal.putExtra.pay_type_order);
-            if (intent.hasExtra(PayGlobal.Host.pay_type_host))
-                mCurHost = bundle.getString(PayGlobal.Host.pay_type_host);
-        }
+    protected int initContentView() {
+        return R.layout.activity_base_frame;
     }
 
     @Override
-    protected int initContentView() {
-        return R.layout.activity_base_frame;
+    protected void bundleIntent(Intent intent) {
+        if (intent != null) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                if (intent.hasExtra(PayGlobal.putExtra.pay_type_order))
+                    mExtraOrder = bundle.getString(PayGlobal.putExtra.pay_type_order);
+                if (intent.hasExtra(PayGlobal.Host.pay_type_host))
+                    mCurHost = bundle.getString(PayGlobal.Host.pay_type_host);
+            }
+        }
+
+        mExtraOrder = "17121511124250";
     }
 
     @Override
@@ -63,6 +67,13 @@ public class PayTypeActivity extends AbstractBaseActivity implements IPayTypeUi 
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        setResult(PayGlobal.resultCode.pay_type_back);
+    }
+
     /**
      * 页面回调code 注意
      */
@@ -70,7 +81,7 @@ public class PayTypeActivity extends AbstractBaseActivity implements IPayTypeUi 
     protected void onDestroy() {
         super.onDestroy();
 
-        setResult(PayGlobal.resultCode.pay_type_back);
+        mPayTypeFragment = null;
     }
 
 }

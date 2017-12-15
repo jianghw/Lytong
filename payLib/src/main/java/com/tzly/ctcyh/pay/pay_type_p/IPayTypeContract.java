@@ -2,6 +2,7 @@ package com.tzly.ctcyh.pay.pay_type_p;
 
 import com.tzly.ctcyh.pay.bean.response.CouponResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
+import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 import com.tzly.ctcyh.router.base.IResponseView;
@@ -31,7 +32,9 @@ public interface IPayTypeContract {
 
         void weChatPayError(String message);
 
-        void weChatPaySucceed(PayUrlResponse response);
+        void weChatPaySucceed(PayWeixinResponse response);
+
+        int getCouponUserId();
     }
 
     interface IPayTypePresenter extends IBasePresenter {
@@ -40,8 +43,6 @@ public interface IPayTypeContract {
         void getBankPayHtml(String orderId, String s, int couponBeanId);
 
         void getCouponByType();
-
-        String getUserId();
 
         void weChatPay(String extraOrderId, String s, String phontIP);
     }

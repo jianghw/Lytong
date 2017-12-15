@@ -10,6 +10,7 @@ import com.tzly.ctcyh.pay.bean.response.CouponStatusResponse;
 import com.tzly.ctcyh.pay.data_m.BaseSubscriber;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
 import com.tzly.ctcyh.pay.global.PayGlobal;
+import com.tzly.ctcyh.router.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,12 +64,15 @@ public class CouponStatusPresenter implements ICouponStatusContract.ICouponStatu
                 mRepository.couponUserList(mRepository.getRASUserID(), "2"),
                 new Func2<CouponStatusResponse, CouponStatusResponse, CouponStatusResponse>() {
                     @Override
-                    public CouponStatusResponse call(CouponStatusResponse function,
-                                                     CouponStatusResponse func2) {
+                    public CouponStatusResponse call(CouponStatusResponse function, CouponStatusResponse func2) {
                         List<CouponStatusBean> statusBeanList = new ArrayList<>();
                         if (function != null && function.getResponseCode() == PayGlobal.Response.base_succeed) {
-                            if (function.getData() != null) {
-                                statusBeanList.addAll(function.getData().getCouponList());
+                            if (function.getData() != null &&
+                                    !function.getData().getCouponList().isEmpty()) {
+                                for (CouponStatusBean bean : function.getData().getCouponList()) {
+                                    bean.setEnable(true);
+                                    statusBeanList.add(bean);
+                                }
                             }
                         }
 
@@ -77,10 +81,12 @@ public class CouponStatusPresenter implements ICouponStatusContract.ICouponStatu
                                 statusBeanList.addAll(func2.getData().getCouponList());
                             }
                         }
+
                         CouponStatusList list = new CouponStatusList();
                         list.setCouponList(statusBeanList);
                         CouponStatusResponse zipFunction = new CouponStatusResponse();
                         zipFunction.setData(list);
+
                         return zipFunction;
                     }
                 })
@@ -107,12 +113,7 @@ public class CouponStatusPresenter implements ICouponStatusContract.ICouponStatu
 
                     @Override
                     public void doNext(CouponStatusResponse response) {
-                        if (response != null && response.getResponseCode() == 2000) {
-                            mContractView.responseSucceed(response);
-                        } else {
-                            mContractView.responseError(response != null
-                                    ? response.getResponseDesc() : "未知错误(优惠券列表)");
-                        }
+                        mContractView.responseSucceed(response);
                     }
                 });
         mSubscriptions.add(subscription);

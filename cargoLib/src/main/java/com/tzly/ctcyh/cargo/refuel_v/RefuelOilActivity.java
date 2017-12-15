@@ -27,21 +27,8 @@ public class RefuelOilActivity extends AbstractBaseActivity {
     private RefuelOilFragment mOilFragment;
 
     @Override
-    protected void bundleIntent(Intent intent) {
-        if (intent != null) {
-            Bundle bundle = intent.getExtras();
-        }
-    }
-
-    @Override
     protected int initContentView() {
         return R.layout.activity_base_frame;
-    }
-
-    @Override
-    protected void bindFragment() {
-        titleContent("加油充值");
-        titleMore("优惠加油");
     }
 
     @Override
@@ -49,6 +36,19 @@ public class RefuelOilActivity extends AbstractBaseActivity {
         MobUtils.getInstance().eventIdByUMeng(3);
 
         showContacts();
+    }
+
+    @Override
+    protected void bundleIntent(Intent intent) {
+        if (intent != null) {
+            Bundle bundle = intent.getExtras();
+        }
+    }
+
+    @Override
+    protected void bindFragment() {
+        titleContent("加油充值");
+        titleMore("优惠加油");
     }
 
     @Override

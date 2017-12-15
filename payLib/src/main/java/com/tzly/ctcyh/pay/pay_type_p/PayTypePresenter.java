@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.tzly.ctcyh.pay.bean.response.CouponResponse;
 import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
+import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
 import com.tzly.ctcyh.pay.data_m.BaseSubscriber;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
 
@@ -36,7 +37,8 @@ public class PayTypePresenter implements IPayTypeContract.IPayTypePresenter {
     }
 
     @Override
-    public void onSubscribe() {}
+    public void onSubscribe() {
+    }
 
     @Override
     public void unSubscribe() {
@@ -133,7 +135,7 @@ public class PayTypePresenter implements IPayTypeContract.IPayTypePresenter {
     @Override
     public void getCouponByType() {
         Subscription subscription = mRepository
-                .getCouponByType(getUserId(), mContractView.getExtraType(), mContractView.getPayType())
+                .getCouponByType(mRepository.getRASUserID(), mContractView.getExtraType(), mContractView.getPayType())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -169,14 +171,9 @@ public class PayTypePresenter implements IPayTypeContract.IPayTypePresenter {
     }
 
     @Override
-    public String getUserId() {
-        return mRepository.getRASUserID();
-    }
-
-    @Override
     public void weChatPay(String extraOrderId, String amount, String phontIP) {
         Subscription subscription = mRepository
-                .weChatPay(extraOrderId, amount, phontIP)
+                .weChatPay(extraOrderId, amount, phontIP, mContractView.getCouponUserId())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -186,7 +183,7 @@ public class PayTypePresenter implements IPayTypeContract.IPayTypePresenter {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<PayUrlResponse>() {
+                .subscribe(new BaseSubscriber<PayWeixinResponse>() {
                     @Override
                     public void doCompleted() {
                         mContractView.dismissLoading();
@@ -199,7 +196,7 @@ public class PayTypePresenter implements IPayTypeContract.IPayTypePresenter {
                     }
 
                     @Override
-                    public void doNext(PayUrlResponse response) {
+                    public void doNext(PayWeixinResponse response) {
                         if (response != null && response.getResponseCode() == 2000) {
                             mContractView.weChatPaySucceed(response);
                         } else {

@@ -20,6 +20,7 @@ import com.tzly.ctcyh.pay.coupon_p.ICouponListContract;
 import com.tzly.ctcyh.pay.data_m.InjectionRepository;
 import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.router.base.RecyclerListFragment;
+import com.tzly.ctcyh.router.util.Utils;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class CouponListFragment extends RecyclerListFragment<CouponBean>
     @Override
     protected void initPresenter() {
         CouponListPresenter mPresenter = new CouponListPresenter(
-                InjectionRepository.provideRepository(getActivity()), this);
+                InjectionRepository.provideRepository(Utils.getContext()), this);
     }
 
     /**
@@ -94,10 +95,10 @@ public class CouponListFragment extends RecyclerListFragment<CouponBean>
         }
     }
 
-    public static CouponListFragment newInstance(String type, int payType) {
+    public static CouponListFragment newInstance(int type, int payType) {
         CouponListFragment f = new CouponListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(PayGlobal.putExtra.coupon_list_type, type);
+        bundle.putInt(PayGlobal.putExtra.coupon_list_type, type);
         bundle.putInt(PayGlobal.putExtra.web_pay_type_extra, payType);
         f.setArguments(bundle);
         return f;
@@ -121,7 +122,7 @@ public class CouponListFragment extends RecyclerListFragment<CouponBean>
 
     @Override
     public String getExtraType() {
-        return getArguments().getString(PayGlobal.putExtra.coupon_list_type);
+        return String.valueOf(getArguments().getInt(PayGlobal.putExtra.coupon_list_type));
     }
 
     @Override

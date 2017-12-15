@@ -15,7 +15,6 @@ import com.tzly.ctcyh.router.base.IResponseView;
 public interface ICouponStatusContract {
 
     interface ICouponStatusView extends IBaseView<ICouponStatusPresenter>, IResponseView {
-        String getCouponStatus();
 
         void delUsrCouponError(String message);
 

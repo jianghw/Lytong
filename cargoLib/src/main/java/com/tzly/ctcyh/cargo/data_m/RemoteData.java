@@ -2,11 +2,13 @@ package com.tzly.ctcyh.cargo.data_m;
 
 import android.support.annotation.Nullable;
 
+import com.tzly.ctcyh.cargo.api.IActivityService;
 import com.tzly.ctcyh.cargo.api.IAddOilService;
 import com.tzly.ctcyh.cargo.bean.BaseResponse;
 import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
 import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
+import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 
@@ -83,6 +85,14 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<BaseResponse> addVehicleLicense(BindCarDTO carDTO) {
         return baseRetrofit().create(IAddOilService.class).addVehicleLicense(carDTO);
+    }
+
+    /**
+     * 领券
+     */
+    @Override
+    public Observable<ReceiveCouponResponse> receiveCoupon(String rasUserID, String couponId, String channel) {
+        return baseRetrofit().create(IActivityService.class).receiveCoupon(rasUserID,couponId,channel);
     }
 
 

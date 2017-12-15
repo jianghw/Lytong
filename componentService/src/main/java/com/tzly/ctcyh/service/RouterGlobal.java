@@ -49,6 +49,11 @@ public final class RouterGlobal {
         public static final String vehicle_camera_host = "vehicle_camera_host";
     }
 
+    public static final class putExtra {
+        public static final String channel_active = "channel_active";
+        public static final String channel_register_date = "channel_register_date";
+    }
+
     public static final class Scheme {
         public static final String main_scheme = "main_scheme";
 
