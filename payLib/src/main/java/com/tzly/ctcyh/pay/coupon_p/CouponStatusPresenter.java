@@ -149,11 +149,11 @@ public class CouponStatusPresenter implements ICouponStatusContract.ICouponStatu
 
                     @Override
                     public void doNext(BaseResponse response) {
-                        if (response != null && response.getResponseCode() == 2000) {
+                        if (response != null && response.getResponseCode() == PayGlobal.Response.base_succeed) {
                             mContractView.delUsrCouponSucceed(response, position);
                         } else {
                             mContractView.delUsrCouponError(response != null
-                                    ? response.getResponseDesc() : "未知错误(2.4.27)");
+                                    ? response.getResponseDesc() : "未知错误(delUsrCoupon)");
                         }
                     }
                 });

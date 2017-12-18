@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.bean.response.SubjectGoodsResponse;
+import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -576,5 +577,19 @@ public class RepositoryManager {
      */
     public Observable<ViolationDetailsBean> violationDetails_v003(String msg) {
         return mRemoteData.violationDetails_v003(msg);
+    }
+
+    /**
+     * 可用的优惠券
+     */
+    public Observable<ValidCountResponse> getValidCount(String rasUserID) {
+        return mRemoteData.getValidCount(rasUserID);
+    }
+
+    /**
+     * 统计
+     */
+    public Observable<BaseResponse> saveStatisticsCount(String contentId, String rasUserID, String ip) {
+        return mRemoteData.saveStatisticsCount(contentId, rasUserID, ip);
     }
 }

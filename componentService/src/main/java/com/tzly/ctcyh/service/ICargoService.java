@@ -20,4 +20,8 @@ public interface ICargoService {
     void gotoDrivingCameraActivity(Activity activity);
 
     void gotoVehicleCameraActivity(Activity activity);
+
+    void gotoActiveActivity(Context context, String channel);
+
+    void gotoActiveActivity(Context context, String channel,String date);
 }

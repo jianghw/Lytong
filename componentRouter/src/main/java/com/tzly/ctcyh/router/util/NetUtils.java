@@ -78,7 +78,7 @@ public class NetUtils {
         //获取wifi服务
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         //判断wifi是否开启
-        if (!wifiManager.isWifiEnabled()) {
+        if (wifiManager != null && !wifiManager.isWifiEnabled()) {
             wifiManager.setWifiEnabled(true);
         }
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();

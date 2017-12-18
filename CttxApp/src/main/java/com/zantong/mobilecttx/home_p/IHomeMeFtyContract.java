@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.home_p;
 
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
+import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
@@ -15,10 +16,6 @@ public interface IHomeMeFtyContract {
 
     interface IHomeMeFtyView extends IBaseView<IHomeMeFtyPresenter> {
 
-        void getCouponCountSucceed(CouponFragmentResponse result);
-
-        void getCouponCountError(String responseDesc);
-
         void countMessageDetailSucceed(MessageCountResponse result);
 
         void countMessageDetailError(String responseDesc);
@@ -26,6 +23,10 @@ public interface IHomeMeFtyContract {
         void driverCoachError(String message);
 
         void driverCoachSucceed(DriverCoachResponse result);
+
+        void validCountError(String message);
+
+        void validCountSucceed(ValidCountResponse result);
     }
 
     interface IHomeMeFtyPresenter extends IBasePresenter {
@@ -39,6 +40,9 @@ public interface IHomeMeFtyContract {
         String initUserPhone();
 
         void getDriverCoach();
+
+        void getValidCount();
+
     }
 
 }

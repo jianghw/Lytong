@@ -22,6 +22,7 @@ import com.zantong.mobilecttx.api.ISplashService;
 import com.zantong.mobilecttx.api.ITextService;
 import com.zantong.mobilecttx.api.IUserService;
 import com.zantong.mobilecttx.api.IViolationService;
+import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseResponse;
@@ -615,5 +616,21 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<ViolationDetailsBean> violationDetails_v003(String msg) {
         return bankRetrofit().create(IBankService.class).violationDetails_v003(msg);
+    }
+
+    /**
+     * 可用的优惠券
+     */
+    @Override
+    public Observable<ValidCountResponse> getValidCount(String rasUserID) {
+        return baseRetrofit().create(IFebruaryService.class).getValidCount(rasUserID);
+    }
+
+    /**
+     * 统计
+     */
+    @Override
+    public Observable<BaseResponse> saveStatisticsCount(String contentId, String rasUserID, String ip) {
+        return baseRetrofit().create(IBannerService.class).saveStatisticsCount(contentId, rasUserID);
     }
 }

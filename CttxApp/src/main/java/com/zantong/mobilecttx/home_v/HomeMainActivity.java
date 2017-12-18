@@ -51,12 +51,17 @@ public class HomeMainActivity extends AbstractBaseActivity
      */
     private PushBroadcastReceiver mBroadcastReceiver;
 
+    /**
+     * 再次启动时调用
+     */
     @Override
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
-            if (intent.hasExtra(MainGlobal.putExtra.home_position_extra))
-                mCurBottomPosition = bundle.getInt(MainGlobal.putExtra.home_position_extra, 0);
+            if (bundle != null) {
+                if (intent.hasExtra(MainGlobal.putExtra.home_position_extra))
+                    mCurBottomPosition = bundle.getInt(MainGlobal.putExtra.home_position_extra, 0);
+            }
         }
 
         if (mCustomBottom != null) mCustomBottom.selectTab(mCurBottomPosition);

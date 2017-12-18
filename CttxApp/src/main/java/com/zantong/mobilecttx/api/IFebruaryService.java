@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.api;
 
+import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.chongzhi.bean.RechargeCouponResponse;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
 import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
@@ -46,4 +47,11 @@ public interface IFebruaryService {
     @FormUrlEncoded
     @POST("activity/getRecordCount")
     Observable<RecordCountResponse> getRecordCount(@Field("type") String type, @Field("phone") String phone);
+
+    /**
+     * 可用的优惠券
+     */
+    @FormUrlEncoded
+    @POST("february/getValidCount")
+    Observable<ValidCountResponse> getValidCount(@Field("userId") String rasUserID);
 }

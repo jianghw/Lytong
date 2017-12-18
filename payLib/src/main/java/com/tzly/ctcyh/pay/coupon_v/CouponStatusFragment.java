@@ -45,9 +45,6 @@ public class CouponStatusFragment extends RecyclerListFragment<CouponStatusBean>
 
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
-        if (!(data instanceof CouponStatusBean)) return;
-        CouponStatusBean statusBean = (CouponStatusBean) data;
-        PayRouter.gotoCouponDetailActivity(getActivity(), statusBean.getCouponUserId());
     }
 
     @Override
@@ -98,7 +95,7 @@ public class CouponStatusFragment extends RecyclerListFragment<CouponStatusBean>
      */
     @Override
     protected int resetDeleteItemHeight() {
-        return getResources().getDimensionPixelSize(R.dimen.res_y_158);
+        return getResources().getDimensionPixelSize(R.dimen.res_y_180);
     }
 
     /**

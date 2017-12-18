@@ -15,6 +15,8 @@ public class ServiceRouter {
 
     public static final String USER_LIKE = "com.tzly.ctcyh.user.like.UserAppLike";
     public static final String MAIN_LIKE = "com.zantong.mobilecttx.like.MainAppLike";
+    public static final String PAY_LIKE = "com.tzly.ctcyh.pay.like.PayAppLike";
+    public static final String CARGO_LIKE = "com.tzly.ctcyh.pay.like.PayAppLike";
 
     private HashMap<String, Object> mServiceMap = new HashMap<>();
     //注册的组件的集合

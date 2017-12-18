@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.presenter.home;
 
 import android.support.annotation.NonNull;
 
+import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
@@ -63,7 +64,8 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HomeResponse>() {
                     @Override
-                    public void doCompleted() {}
+                    public void doCompleted() {
+                    }
 
                     @Override
                     public void doError(Throwable e) {
@@ -101,7 +103,8 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<HomeCarResponse>() {
                     @Override
-                    public void doCompleted() {}
+                    public void doCompleted() {
+                    }
 
                     @Override
                     public void doError(Throwable e) {
@@ -128,7 +131,8 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<IndexLayerResponse>() {
                     @Override
-                    public void doCompleted() {}
+                    public void doCompleted() {
+                    }
 
                     @Override
                     public void doError(Throwable e) {
@@ -175,6 +179,33 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                     }
                 });
         mSubscriptions.add(subCount);
+    }
+
+    /**
+     * 统计
+     * 不登录不使用
+     */
+    @Override
+    public void saveStatisticsCount(String contentId, String ip) {
+        if (!MainRouter.isUserLogin()) return;
+        Subscription subscription = mRepository
+                .saveStatisticsCount(contentId, mRepository.getRASUserID(), ip)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void doCompleted() {
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                    }
+
+                    @Override
+                    public void doNext(BaseResponse result) {
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 
 }

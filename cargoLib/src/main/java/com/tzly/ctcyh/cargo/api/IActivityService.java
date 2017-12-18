@@ -1,6 +1,7 @@
 package com.tzly.ctcyh.cargo.api;
 
 
+import com.tzly.ctcyh.cargo.bean.response.ActiveConfigResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 
 import retrofit2.http.Field;
@@ -22,4 +23,16 @@ public interface IActivityService {
     Observable<ReceiveCouponResponse> receiveCoupon(@Field("userId") String rasUserID,
                                                     @Field("couponId") String couponId,
                                                     @Field("channel") String channel);
+
+    /**
+     * 获取配置接口
+     */
+    @FormUrlEncoded
+    @POST("config/getConfig ")
+    Observable<ActiveConfigResponse> getConfig(@Field("channel") String channel);
+
+    @FormUrlEncoded
+    @POST("config/getConfig ")
+    Observable<ActiveConfigResponse> getConfig(@Field("channel") String channel,
+                                               @Field("registerDate") String registerDate);
 }

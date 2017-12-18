@@ -9,12 +9,23 @@ package com.tzly.ctcyh.pay.bean.response;
 
 public class CouponStatusBean {
 
+    private boolean isEnable;
+
+    public boolean isEnable() {
+        return isEnable;
+    }
+
+    public void setEnable(boolean enable) {
+        isEnable = enable;
+    }
 
     /**
      * couponUserId : 438
      * couponName : 年检
-     * couponValidityEnd : 2017-11-11
+     * couponValidityEnd : 2017.11.11
+     * couponValidityStart : 2017.04.26
      * couponImage : 烦烦烦
+     * couponUse : 123
      * couponType : 2
      * couponValue : 85
      * couponLimit : 100
@@ -26,24 +37,16 @@ public class CouponStatusBean {
     private String couponUserId;
     private String couponName;
     private String couponValidityEnd;
+    private String couponValidityStart;
     private String couponImage;
+    private String couponUse;
     private String couponType;
     private String couponValue;
     private String couponLimit;
     private String couponBusiness;
-    private int channel;
+    private String channel;
+
     private String method;
-
-    private boolean isEnable;
-
-    public boolean isEnable() {
-        return isEnable;
-    }
-
-    public void setEnable(boolean enable) {
-        isEnable = enable;
-    }
-
 
     public String getCouponUserId() {
         return couponUserId;
@@ -69,12 +72,28 @@ public class CouponStatusBean {
         this.couponValidityEnd = couponValidityEnd;
     }
 
+    public String getCouponValidityStart() {
+        return couponValidityStart;
+    }
+
+    public void setCouponValidityStart(String couponValidityStart) {
+        this.couponValidityStart = couponValidityStart;
+    }
+
     public String getCouponImage() {
         return couponImage;
     }
 
     public void setCouponImage(String couponImage) {
         this.couponImage = couponImage;
+    }
+
+    public String getCouponUse() {
+        return couponUse;
+    }
+
+    public void setCouponUse(String couponUse) {
+        this.couponUse = couponUse;
     }
 
     public String getCouponType() {
@@ -109,11 +128,11 @@ public class CouponStatusBean {
         this.couponBusiness = couponBusiness;
     }
 
-    public int getChannel() {
+    public String getChannel() {
         return channel;
     }
 
-    public void setChannel(int channel) {
+    public void setChannel(String channel) {
         this.channel = channel;
     }
 

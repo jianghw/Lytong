@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.data_m;
 import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.bean.response.SubjectGoodsResponse;
+import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseResponse;
@@ -347,10 +348,21 @@ public interface IRemoteSource {
      * @param json
      */
     Observable<BaseResponse> updateState(List<ViolationNum> json);
+
     /**
      * 是否提供活动
      */
     Observable<IndexLayerResponse> getIndexLayer();
 
     Observable<ViolationDetailsBean> violationDetails_v003(String msg);
+
+    /**
+     * 可用的优惠券
+     */
+    Observable<ValidCountResponse> getValidCount(String rasUserID);
+
+    /**
+     * 统计
+     */
+    Observable<BaseResponse> saveStatisticsCount(String contentId, String rasUserID, String ip);
 }

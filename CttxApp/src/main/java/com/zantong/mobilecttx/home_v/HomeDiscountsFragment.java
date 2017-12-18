@@ -18,6 +18,7 @@ import com.tzly.ctcyh.router.custom.banner.CBViewHolderCreator;
 import com.tzly.ctcyh.router.custom.banner.ConvenientBanner;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.MobUtils;
+import com.tzly.ctcyh.router.util.NetUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
@@ -81,7 +82,8 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
      * @deprecated 不用
      */
     @Override
-    protected void onRecyclerItemClick(View view, Object data) {}
+    protected void onRecyclerItemClick(View view, Object data) {
+    }
 
     /**
      * 获取RecyclerHeader
@@ -137,6 +139,11 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
                     public void onSuccess(BaseResponse result) {
                     }
                 });
+
+        int contenId = childrenBean != null ? childrenBean.getId() : -1;
+        if (mPresenter != null && contenId > 0)
+            mPresenter.saveStatisticsCount(String.valueOf(contenId),
+                    NetUtils.getPhontIP(Utils.getContext()));
 
         if (childrenBean != null && !TextUtils.isEmpty(childrenBean.getTargetPath())) {
             String path = childrenBean.getTargetPath();
@@ -245,7 +252,8 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
      * 送豪礼
      */
     @Override
-    public void getRewardSucceed(BannerBean bannerBean) {}
+    public void getRewardSucceed(BannerBean bannerBean) {
+    }
 
     /**
      * 数据加载成功

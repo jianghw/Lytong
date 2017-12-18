@@ -13,13 +13,13 @@ import java.util.List;
 
 public class ActiveConfigResponse extends BaseResponse {
 
-    private List<RefuelOilBean> data;
+    private ActiveConfigBean data;
 
-    public void setData(List<RefuelOilBean> data) {
+    public void setData(ActiveConfigBean data) {
         this.data = data;
     }
 
-    public List<RefuelOilBean> getData() {
+    public ActiveConfigBean getData() {
         return data;
     }
 }

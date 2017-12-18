@@ -7,6 +7,7 @@ import com.tzly.ctcyh.pay.api.IFebruaryService;
 import com.tzly.ctcyh.pay.api.IOrderService;
 import com.tzly.ctcyh.pay.api.IPayApiService;
 import com.tzly.ctcyh.pay.bean.BaseResponse;
+import com.tzly.ctcyh.pay.bean.response.CodeDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponCodeResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponResponse;
@@ -121,8 +122,8 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<PayWeixinResponse> weChatPay(String orderId, String amount, String phontIP, int couponUserId) {
-        return couponUserId <= 0 ? baseRetrofit().create(IPayApiService.class).weChatPay(orderId, amount, phontIP)
-                : baseRetrofit().create(IPayApiService.class).weChatPay(orderId, amount, phontIP, String.valueOf(couponUserId));
+        return couponUserId <= 0 ? baseRetrofit().create(IPayApiService.class).weChatPay(orderId, amount)
+                : baseRetrofit().create(IPayApiService.class).weChatPay(orderId, amount, String.valueOf(couponUserId));
     }
 
     /**
@@ -139,6 +140,14 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<BaseResponse> deleteCode(String codeId, String rasUserID) {
         return baseRetrofit().create(IFebruaryService.class).deleteCode(codeId, rasUserID);
+    }
+
+    /**
+     * .码券详情
+     */
+    @Override
+    public Observable<CodeDetailResponse> getCodeDetail(String codeId) {
+        return baseRetrofit().create(IFebruaryService.class).getCodeDetail(codeId);
     }
 
 

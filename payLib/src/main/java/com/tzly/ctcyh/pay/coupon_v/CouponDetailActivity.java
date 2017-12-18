@@ -22,8 +22,10 @@ public class CouponDetailActivity extends AbstractBaseActivity {
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
-            if (intent.hasExtra(PayGlobal.putExtra.coupon_detail_id))
-                mCouponId = bundle.getString(PayGlobal.putExtra.coupon_detail_id);
+            if (bundle != null) {
+                if (intent.hasExtra(PayGlobal.putExtra.coupon_detail_id))
+                    mCouponId = bundle.getString(PayGlobal.putExtra.coupon_detail_id);
+            }
         }
     }
 
@@ -34,7 +36,7 @@ public class CouponDetailActivity extends AbstractBaseActivity {
 
     @Override
     protected void bindFragment() {
-        titleContent("我的优惠券");
+        titleContent("券码详情");
     }
 
     @Override
@@ -49,6 +51,12 @@ public class CouponDetailActivity extends AbstractBaseActivity {
             mCouponDetailFragment = CouponDetailFragment.newInstance(mCouponId);
         }
         FragmentUtils.add(fragmentManager, mCouponDetailFragment, R.id.lay_base_frame);
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mCouponDetailFragment = null;
     }
 }

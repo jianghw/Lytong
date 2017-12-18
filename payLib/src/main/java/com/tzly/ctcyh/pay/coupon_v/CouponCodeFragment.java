@@ -8,9 +8,12 @@ import android.view.View;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.tzly.ctcyh.pay.R;
 import com.tzly.ctcyh.pay.bean.BaseResponse;
+import com.tzly.ctcyh.pay.bean.response.CouponCodeBean;
+import com.tzly.ctcyh.pay.bean.response.CouponCodeResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponStatusBean;
 import com.tzly.ctcyh.pay.bean.response.CouponStatusList;
 import com.tzly.ctcyh.pay.bean.response.CouponStatusResponse;
+import com.tzly.ctcyh.pay.coupon_p.CouponCodeAdapter;
 import com.tzly.ctcyh.pay.coupon_p.CouponCodePresenter;
 import com.tzly.ctcyh.pay.coupon_p.CouponStatusAdapter;
 import com.tzly.ctcyh.pay.coupon_p.ICouponCodeContract;
@@ -25,7 +28,7 @@ import java.util.List;
 /**
  * 码券
  */
-public class CouponCodeFragment extends RecyclerListFragment<CouponStatusBean>
+public class CouponCodeFragment extends RecyclerListFragment<CouponCodeBean>
         implements ICouponCodeContract.ICouponCodeView {
 
     private static final String STATUS = "status";
@@ -39,15 +42,15 @@ public class CouponCodeFragment extends RecyclerListFragment<CouponStatusBean>
     }
 
     @Override
-    public BaseAdapter<CouponStatusBean> createAdapter() {
-        return new CouponStatusAdapter();
+    public BaseAdapter<CouponCodeBean> createAdapter() {
+        return new CouponCodeAdapter();
     }
 
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
-        if (!(data instanceof CouponStatusBean)) return;
-        CouponStatusBean statusBean = (CouponStatusBean) data;
-        PayRouter.gotoCouponDetailActivity(getActivity(), statusBean.getCouponUserId());
+        if (!(data instanceof CouponCodeBean)) return;
+        CouponCodeBean statusBean = (CouponCodeBean) data;
+        PayRouter.gotoCouponDetailActivity(getActivity(), statusBean.getGoodsId());
     }
 
     @Override
@@ -98,7 +101,7 @@ public class CouponCodeFragment extends RecyclerListFragment<CouponStatusBean>
      */
     @Override
     protected int resetDeleteItemHeight() {
-        return getResources().getDimensionPixelSize(R.dimen.res_y_158);
+        return getResources().getDimensionPixelSize(R.dimen.res_y_180);
     }
 
     /**
@@ -106,11 +109,11 @@ public class CouponCodeFragment extends RecyclerListFragment<CouponStatusBean>
      */
     @Override
     protected void onSwipeItemClickListener(int adapterPosition, int menuPosition, int direction) {
-        ArrayList<CouponStatusBean> messageList = mAdapter.getAll();
+        ArrayList<CouponCodeBean> messageList = mAdapter.getAll();
         int position = adapterPosition - 1;
         if (messageList != null && position >= 0) {
-            CouponStatusBean meg = messageList.get(position);
-            mPresenter.deleteCode(meg.getCouponUserId(), position);
+            CouponCodeBean codeBean = messageList.get(position);
+            mPresenter.deleteCode(codeBean.getGoodsId(), position);
         }
     }
 
@@ -119,12 +122,10 @@ public class CouponCodeFragment extends RecyclerListFragment<CouponStatusBean>
      */
     @Override
     protected void responseData(Object response) {
-        if (response instanceof CouponStatusResponse) {
-            CouponStatusResponse couponResponse = (CouponStatusResponse) response;
-            CouponStatusList data = couponResponse.getData();
-            List<CouponStatusBean> couponList = null;
-            if (data != null) couponList = data.getCouponList();
-            setSimpleDataResult(couponList);
+        if (response instanceof CouponCodeResponse) {
+            CouponCodeResponse couponResponse = (CouponCodeResponse) response;
+            List<CouponCodeBean> data = couponResponse.getData();
+            setSimpleDataResult(data);
         } else
             responseError();
     }

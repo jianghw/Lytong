@@ -45,6 +45,7 @@ import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.EncryptUtils;
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
@@ -137,7 +138,7 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
                     "<title>表单提交</title></head><body>" + mUrl + "</body></html>";
 
             mWebView.loadDataWithBaseURL(null, mUrl, "text/html", "utf-8", null);
-        } else if (mPayType == 3) {
+        } else if (mPayType == 3||mPayType==4) {
             mWebView.loadUrl(mUrl);
         } else {
             String cust_id = PayRouter.getUserPhoenum();
@@ -207,6 +208,10 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Intent intent = new Intent();
+            LogUtils.i(url);
+            Map<String, String> extraHeaders = new HashMap<>();
+            extraHeaders.put("Referer", "liyingtong.com");
+            view.loadUrl(url, extraHeaders);
             if (url.startsWith("tel:")) {//电话
                 intent.setAction(Intent.ACTION_DIAL);
                 Uri data = Uri.parse(url);
@@ -229,12 +234,7 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
             else if (url.startsWith("weixin://wap/pay?")) {
                 // 如下方案可在非微信内部WebView的H5页面中调出微信支付
                 intent.setAction(Intent.ACTION_VIEW);
-                StringBuilder sb = new StringBuilder();
-                sb.append(url);
-                sb.append("&redirect_url=");
-                sb.append(BuildConfig.App_Url ? "http://dev.liyingtong.com" : "http://api2.liyingtong.com");
-                sb.append(":8011/admin/index.php/user");
-                intent.setData(Uri.parse(sb.toString()));
+                intent.setData(Uri.parse(url));
                 try {
                     startActivity(intent);
                 } catch (Exception e) {

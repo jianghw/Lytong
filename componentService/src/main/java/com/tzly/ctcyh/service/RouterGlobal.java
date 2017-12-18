@@ -47,6 +47,7 @@ public final class RouterGlobal {
         public static final String recharge_agree_host = "recharge_agree_host";
         public static final String driving_camera_host = "driving_camera_host";
         public static final String vehicle_camera_host = "vehicle_camera_host";
+        public static final String active_host = "active_host";
     }
 
     public static final class putExtra {

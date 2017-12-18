@@ -19,6 +19,8 @@ public interface ICouponDetailContract {
 
     interface ICouponDetailPresenter extends IBasePresenter {
         void couponDetail();
+
+        void getCodeDetail();
     }
 
 }

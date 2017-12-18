@@ -37,8 +37,8 @@ public class PayTypeActivity extends AbstractBaseActivity {
                     mCurHost = bundle.getString(PayGlobal.Host.pay_type_host);
             }
         }
+        mExtraOrder = "17121817400291";
 
-        mExtraOrder = "17121511124250";
     }
 
     @Override

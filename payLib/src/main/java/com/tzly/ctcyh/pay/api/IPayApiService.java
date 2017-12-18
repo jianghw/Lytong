@@ -35,13 +35,11 @@ public interface IPayApiService {
     @FormUrlEncoded
     @POST("pay/weChatPay")
     Observable<PayWeixinResponse> weChatPay(@Field("orderId") String orderId,
-                                            @Field("amount") String amount,
-                                            @Field("ip") String phontIP);
+                                            @Field("amount") String amount);
 
     @FormUrlEncoded
     @POST("pay/weChatPay")
     Observable<PayWeixinResponse> weChatPay(@Field("orderId") String orderId,
                                          @Field("amount") String amount,
-                                         @Field("ip") String phontIP,
                                          @Field("couponUserId") String couponUserId);
 }

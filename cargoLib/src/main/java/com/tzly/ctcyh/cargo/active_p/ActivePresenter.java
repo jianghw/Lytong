@@ -65,41 +65,41 @@ public class ActivePresenter implements IActiveContract.IActivePresenter {
      */
     @Override
     public void getConfig() {
-//        Subscription subscription = mRepository
-//                .getConfig(mContractView.getChannel())
-//                .subscribeOn(Schedulers.io())
-//                .doOnSubscribe(new Action0() {
-//                    @Override
-//                    public void call() {
-//                        mContractView.showLoading();
-//                    }
-//                })
-//                .subscribeOn(AndroidSchedulers.mainThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new BaseSubscriber<ActiveConfigResponse>() {
-//                    @Override
-//                    public void doCompleted() {
-//                        mContractView.dismissLoading();
-//                    }
-//
-//                    @Override
-//                    public void doError(Throwable e) {
-//                        mContractView.dismissLoading();
-//                        mContractView.responseError(e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void doNext(ActiveConfigResponse response) {
-//                        if (response != null &&
-//                                response.getResponseCode() == CargoGlobal.Response.base_succeed) {
-//                            mContractView.responseSucceed(response);
-//                        } else {
-//                            mContractView.responseError(response != null
-//                                    ? response.getResponseDesc() : "未知错误(getConfig)");
-//                        }
-//                    }
-//                });
-//        mSubscriptions.add(subscription);
+        Subscription subscription = mRepository
+                .getConfig(mContractView.getChannel(),mContractView.getResisterDate())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<ActiveConfigResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.configError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(ActiveConfigResponse response) {
+                        if (response != null &&
+                                response.getResponseCode() == CargoGlobal.Response.base_succeed) {
+                            mContractView.configSucceed(response);
+                        } else {
+                            mContractView.configError(response != null
+                                    ? response.getResponseDesc() : "未知错误(getConfig)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 
     /**

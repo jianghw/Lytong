@@ -1,20 +1,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.tzly.ctcyh.pay">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.tzly.ctcyh.pay">
 
     <!--银联模块引入-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD"/>
-    <uses-permission android:name="android.permission.NFC"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD" />
+    <uses-permission android:name="android.permission.NFC" />
 
-    <uses-feature android:name="android.hardware.nfc.hce"/>
+    <uses-feature android:name="android.hardware.nfc.hce" />
 
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:name=".PayApplication"
@@ -25,38 +25,32 @@
         tools:replace="android:label">
 
         <!-- ***********************银联支付模块*******************************-->
-        <activity
-            android:name=".EntryActivity">
-        </activity>
+        <activity android:name=".EntryActivity"></activity>
 
         <activity
             android:name=".JARActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".APKActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <!--jar包中的-->
         <activity
             android:name="com.unionpay.uppay.PayActivity"
             android:configChanges="orientation|keyboardHidden|keyboard"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <!--jar包中的-->
         <activity
             android:name="com.unionpay.UPPayWapActivity"
             android:configChanges="orientation|keyboardHidden|fontScale"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
+            android:windowSoftInputMode="adjustResize"></activity>
 
         <!--定义应用程序必须链接的公共库-->
         <!-- android:required
              布尔值，指明应用程序是否必需由 android:name 指定的库：-->
         <uses-library
             android:name="org.simalliance.openmobileapi"
-            android:required="false"/>
+            android:required="false" />
 
         <!--**********支付类型选择****************-->
         <activity
@@ -64,8 +58,8 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -75,8 +69,8 @@
             android:process=":lyl.boon.process.web"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="com.tzly.ctcyh.pay.html_v.Html5Activity"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.tzly.ctcyh.pay.html_v.Html5Activity" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -84,19 +78,16 @@
         <activity
             android:name=".coupon_v.CouponListActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".coupon_v.CouponStatusActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".coupon_v.CouponDetailActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
     </application>
 </manifest>

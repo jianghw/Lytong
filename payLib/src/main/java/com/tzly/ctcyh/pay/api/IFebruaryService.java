@@ -1,6 +1,7 @@
 package com.tzly.ctcyh.pay.api;
 
 import com.tzly.ctcyh.pay.bean.BaseResponse;
+import com.tzly.ctcyh.pay.bean.response.CodeDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponCodeResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponResponse;
@@ -36,4 +37,11 @@ public interface IFebruaryService {
     @FormUrlEncoded
     @POST("february/deleteCode")
     Observable<BaseResponse> deleteCode(@Field("codeId") String codeId, @Field("userId") String rasUserID);
+
+    /**
+     * .码券详情
+     */
+    @FormUrlEncoded
+    @POST("february/getCodeDetail")
+    Observable<CodeDetailResponse> getCodeDetail(@Field("codeId") String codeId);
 }

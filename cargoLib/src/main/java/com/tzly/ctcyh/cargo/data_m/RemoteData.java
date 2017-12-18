@@ -8,6 +8,7 @@ import com.tzly.ctcyh.cargo.bean.BaseResponse;
 import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
 import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
+import com.tzly.ctcyh.cargo.bean.response.ActiveConfigResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
@@ -92,7 +93,16 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<ReceiveCouponResponse> receiveCoupon(String rasUserID, String couponId, String channel) {
-        return baseRetrofit().create(IActivityService.class).receiveCoupon(rasUserID,couponId,channel);
+        return baseRetrofit().create(IActivityService.class).receiveCoupon(rasUserID, couponId, channel);
+    }
+
+    /**
+     * 获取配置接口
+     */
+    @Override
+    public Observable<ActiveConfigResponse> getConfig(String channel, String resisterDate) {
+        return channel.equals("2") ? baseRetrofit().create(IActivityService.class).getConfig(channel, resisterDate)
+                : baseRetrofit().create(IActivityService.class).getConfig(channel);
     }
 
 

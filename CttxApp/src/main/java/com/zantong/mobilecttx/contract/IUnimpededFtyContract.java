@@ -48,6 +48,9 @@ public interface IUnimpededFtyContract {
         void getIndexLayer();
 
         void startCountDown();
+
+        void saveStatisticsCount(String contentId, String ip);
+
     }
 
 }

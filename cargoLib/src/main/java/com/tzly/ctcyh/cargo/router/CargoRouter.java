@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.UiRouter;
+import com.tzly.ctcyh.service.ICargoService;
 import com.tzly.ctcyh.service.IMainService;
 import com.tzly.ctcyh.service.IPayService;
 import com.tzly.ctcyh.service.IUserService;
@@ -72,7 +73,7 @@ public final class CargoRouter {
             IPayService service = (IPayService) object;
             service.gotoPayTypeActivity(context, orderId);
         } else {//注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.pay.like.PayAppLike");
+            ServiceRouter.registerComponent(ServiceRouter.PAY_LIKE);
         }
     }
 
@@ -86,7 +87,7 @@ public final class CargoRouter {
             IMainService service = (IMainService) object;
             service.gotoProblemFeedbackActivity(context);
         } else {//注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
+            ServiceRouter.registerComponent(ServiceRouter.MAIN_LIKE);
         }
     }
 
@@ -100,7 +101,21 @@ public final class CargoRouter {
             IMainService service = (IMainService) object;
             service.gotoBaiduMapParentActivity(context);
         } else {//注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
+            ServiceRouter.registerComponent(ServiceRouter.MAIN_LIKE);
+        }
+    }
+
+    /**
+     * 主页优惠
+     */
+    public static void gotoMainActivity(Activity context, int position) {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        Object object = serviceRouter.getService(IMainService.class.getSimpleName());
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoMainActivity(context, position);
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent(ServiceRouter.MAIN_LIKE);
         }
     }
 
@@ -142,5 +157,25 @@ public final class CargoRouter {
         UiRouter.getInstance().openUriForResult(context,
                 RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.vehicle_camera_host,
                 bundle, 110);
+    }
+
+    /**
+     * 活动页面逻辑
+     */
+    public static void gotoActiveActivity(Context context, String channel) {
+        Bundle bundle = new Bundle();
+        bundle.putString(RouterGlobal.putExtra.channel_active, channel);
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.active_host,
+                bundle);
+    }
+
+    public static void gotoActiveActivity(Context context, String channel,String date) {
+        Bundle bundle = new Bundle();
+        bundle.putString(RouterGlobal.putExtra.channel_active, channel);
+        bundle.putString(RouterGlobal.putExtra.channel_register_date, date);
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.active_host,
+                bundle);
     }
 }

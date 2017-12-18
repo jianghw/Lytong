@@ -1,5 +1,6 @@
 package com.tzly.ctcyh.cargo.active_p;
 
+import com.tzly.ctcyh.cargo.bean.response.ActiveConfigResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
@@ -25,6 +26,12 @@ public interface IActiveContract {
         void responseError(String message);
 
         void responseSucceed(ReceiveCouponResponse response);
+
+        String getResisterDate();
+
+        void configError(String message);
+
+        void configSucceed(ActiveConfigResponse response);
     }
 
     interface IActivePresenter extends IBasePresenter {

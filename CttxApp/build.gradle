@@ -154,11 +154,11 @@ android {
         }
     }
 
-    dexOptions {
-        dexInProcess true
-        preDexLibraries true
-        javaMaxHeapSize "4g"//越大越好
-    }
+//    dexOptions {
+//        dexInProcess true
+//        preDexLibraries true
+//        javaMaxHeapSize "4g"//越大越好
+//    }
 }
 
 repositories {

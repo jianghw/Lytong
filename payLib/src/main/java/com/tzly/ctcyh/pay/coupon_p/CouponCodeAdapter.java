@@ -7,25 +7,19 @@ import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.tzly.ctcyh.pay.BuildConfig;
 import com.tzly.ctcyh.pay.R;
-import com.tzly.ctcyh.pay.bean.response.CouponStatusBean;
-import com.tzly.ctcyh.router.custom.image.ImageOptions;
-
-import java.text.DecimalFormat;
+import com.tzly.ctcyh.pay.bean.response.CouponCodeBean;
 
 /**
  * 优惠卷
  */
 
-public class CouponStatusAdapter extends BaseAdapter<CouponStatusBean> {
+public class CouponCodeAdapter extends BaseAdapter<CouponCodeBean> {
 
     private Context mAdapterContext;
 
@@ -33,7 +27,7 @@ public class CouponStatusAdapter extends BaseAdapter<CouponStatusBean> {
     public View createView(ViewGroup viewGroup, int i) {
         mAdapterContext = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(mAdapterContext);
-        return inflater.inflate(R.layout.pay_adapter_coupon_status, viewGroup, false);
+        return inflater.inflate(R.layout.pay_adapter_coupon_code, viewGroup, false);
     }
 
     @Override
@@ -41,37 +35,27 @@ public class CouponStatusAdapter extends BaseAdapter<CouponStatusBean> {
         return new ViewHolder(view);
     }
 
+    /**
+     * channel：1 嗨修 2惠保养 3一元购 4电影券
+     */
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @SuppressLint("SetTextI18n")
     @Override
     public void bindViewData(BaseRecyclerViewHolder viewHolder,
-                             int position, CouponStatusBean statusBean) {
+                             int position, CouponCodeBean statusBean) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (statusBean == null) return;
 
-        holder.mTvTitle.setText(statusBean.getCouponName());
-        holder.mTvDate.setText("有效时间:" + statusBean.getCouponValidityStart() +
-                "-" + statusBean.getCouponValidityEnd());
-        holder.mTvContent.setText("仅限:" + statusBean.getCouponBusiness() + " 业务使用");
+        int channel = statusBean.getChannel();
+        if (channel == 1) holder.mTvTitle.setText("嗨修");
+        else if (channel == 2) holder.mTvTitle.setText("惠保养");
+        else if (channel == 3) holder.mTvTitle.setText("一元购");
+        else if (channel == 4) holder.mTvTitle.setText("电影券");
+        else holder.mTvTitle.setText("第三方码");
 
-        String value = statusBean.getCouponValue();
-        String type = statusBean.getCouponType();
-        //couponType：1无（比如兑换码）  2折扣  3满减
-        if (type.equals("2")) {
-            holder.mTvPrice.setText(new DecimalFormat("#0.#").format(Float.valueOf(value) / 10));
-            holder.mTvUnit.setVisibility(View.VISIBLE);
-            holder.mTvUnit.setText("折");
-        } else if (type.equals("3")) {
-            holder.mTvPrice.setText(value);
-            holder.mTvUnit.setVisibility(View.VISIBLE);
-            holder.mTvUnit.setText("元");
-        } else if (type.equals("1")) {
-            holder.mTvPrice.setText("兑换码");
-            holder.mTvUnit.setVisibility(View.INVISIBLE);
-        } else {
-            holder.mTvPrice.setText("未知状态");
-            holder.mTvUnit.setVisibility(View.INVISIBLE);
-        }
+        holder.mTvDate.setText("有效时间:" + statusBean.getStartTime() +
+                "-" + statusBean.getEndTime());
+        holder.mTvCode.setText(statusBean.getCode());
 
         holder.mImgStatus.setBackgroundResource(statusBean.isEnable()
                 ? R.mipmap.pay_ic_coupon_red : R.mipmap.pay_ic_coupon_gray);
@@ -92,6 +76,7 @@ public class CouponStatusAdapter extends BaseAdapter<CouponStatusBean> {
         TextView mTvTitle;
         TextView mTvDate;
         TextView mTvContent;
+        TextView mTvCode;
         TextView mTvPrice;
         TextView mTvUnit;
         RelativeLayout mImgStatus;
@@ -101,6 +86,7 @@ public class CouponStatusAdapter extends BaseAdapter<CouponStatusBean> {
             this.mTvTitle = (TextView) view.findViewById(R.id.tv_title);
             this.mTvDate = (TextView) view.findViewById(R.id.tv_date);
             this.mTvContent = (TextView) view.findViewById(R.id.tv_content);
+            this.mTvCode = (TextView) view.findViewById(R.id.tv_code);
             this.mTvPrice = (TextView) view.findViewById(R.id.tv_price);
             this.mTvUnit = (TextView) view.findViewById(R.id.tv_unit);
             this.mImgStatus = (RelativeLayout) view.findViewById(R.id.relay_status);

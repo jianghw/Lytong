@@ -28,6 +28,8 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
+import com.zantong.mobilecttx.base.bean.ValidCountBean;
+import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
@@ -173,7 +175,8 @@ public class HomeMeFragment extends RefreshFragment
      * 数据加载
      */
     @Override
-    protected void loadingFirstData() {}
+    protected void loadingFirstData() {
+    }
 
     /**
      * 手动刷新动作
@@ -193,18 +196,19 @@ public class HomeMeFragment extends RefreshFragment
      * 啊不用此方法 不能出现未加载状态页面
      */
     @Override
-    protected void responseData(Object response) {}
+    protected void responseData(Object response) {
+    }
 
     private void initDataRefresh() {
         if (mPresenter != null && !TextUtils.isEmpty(mPresenter.initUserPhone())) {
             mPresenter.getDriverCoach();
         } else {
-            if(mLayDriverOrder!=null)
-            mLayDriverOrder.setVisibility(View.GONE);
+            if (mLayDriverOrder != null)
+                mLayDriverOrder.setVisibility(View.GONE);
         }
 
         if (mPresenter != null && MainRouter.isUserLogin()) {
-            mPresenter.getCouponCount();
+            mPresenter.getValidCount();
         }
 
         //畅通卡
@@ -419,46 +423,6 @@ public class HomeMeFragment extends RefreshFragment
     }
 
     /**
-     * 优惠券
-     */
-    @Override
-    public void getCouponCountSucceed(CouponFragmentResponse result) {
-        CouponFragmentLBean resultData = result.getData();
-        StringBuffer stringBuffer = new StringBuffer();
-        List<CouponFragmentBean> couponList = null;
-
-        if (resultData == null) {
-            stringBuffer.append("<font color=\"#b3b3b3\">");
-        } else {
-            couponList = resultData.getCouponList();
-            if (couponList == null || couponList.size() == 0)
-                stringBuffer.append("<font color=\"#b3b3b3\">");
-            else
-                stringBuffer.append("<font color=\"#f3362b\">");
-        }
-
-        stringBuffer.append(couponList != null ? couponList.size() : 0);
-
-        stringBuffer.append("</font>");
-        stringBuffer.append("&#160;");
-        stringBuffer.append("张优惠券");
-        mTvCoupon.setText(Html.fromHtml(stringBuffer.toString()));
-    }
-
-    @Override
-    public void getCouponCountError(String responseDesc) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("<font color=\"#b3b3b3\">");
-        stringBuffer.append(0);
-        stringBuffer.append("</font>");
-        stringBuffer.append("&#160;");
-        stringBuffer.append("张优惠券");
-        mTvCoupon.setText(Html.fromHtml(stringBuffer.toString()));
-
-        ToastUtils.toastShort(responseDesc);
-    }
-
-    /**
      * 未读消息
      */
     public void unMessageCount(int position, int number) {
@@ -494,5 +458,46 @@ public class HomeMeFragment extends RefreshFragment
     @Override
     public void driverCoachSucceed(DriverCoachResponse result) {
         mLayDriverOrder.setVisibility(result.getData() ? View.VISIBLE : View.GONE);
+    }
+
+
+    /**
+     * 优惠券
+     */
+    @Override
+    public void validCountError(String message) {
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("<font color=\"#b3b3b3\">");
+        stringBuffer.append(0);
+        stringBuffer.append("</font>");
+        stringBuffer.append("&#160;");
+        stringBuffer.append("张可用券");
+        mTvCoupon.setText(Html.fromHtml(stringBuffer.toString()));
+
+        ToastUtils.toastShort(message);
+    }
+
+    @Override
+    public void validCountSucceed(ValidCountResponse result) {
+        ValidCountBean resultData = result.getData();
+        StringBuffer stringBuffer = new StringBuffer();
+
+        int count = 0;
+        if (resultData == null) {
+            stringBuffer.append("<font color=\"#b3b3b3\">");
+        } else {
+            count = resultData.getValidCount();
+            if (count == 0)
+                stringBuffer.append("<font color=\"#b3b3b3\">");
+            else
+                stringBuffer.append("<font color=\"#f3362b\">");
+        }
+
+        stringBuffer.append(count);
+
+        stringBuffer.append("</font>");
+        stringBuffer.append("&#160;");
+        stringBuffer.append("张可用券");
+        mTvCoupon.setText(Html.fromHtml(stringBuffer.toString()));
     }
 }

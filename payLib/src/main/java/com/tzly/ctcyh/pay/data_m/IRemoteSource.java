@@ -1,6 +1,7 @@
 package com.tzly.ctcyh.pay.data_m;
 
 import com.tzly.ctcyh.pay.bean.BaseResponse;
+import com.tzly.ctcyh.pay.bean.response.CodeDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponCodeResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponResponse;
@@ -66,4 +67,10 @@ public interface IRemoteSource {
      * 删除码券
      */
     Observable<BaseResponse> deleteCode(String codeId, String rasUserID);
+
+    /**
+     * .码券详情
+     */
+    Observable<CodeDetailResponse> getCodeDetail(String codeId);
+
 }

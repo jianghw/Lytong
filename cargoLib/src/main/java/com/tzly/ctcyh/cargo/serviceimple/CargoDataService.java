@@ -37,4 +37,14 @@ public class CargoDataService implements ICargoService {
     public void gotoVehicleCameraActivity(Activity context) {
         CargoRouter.gotoVehicleCameraActivity(context);
     }
+
+    @Override
+    public void gotoActiveActivity(Context context, String channel) {
+        CargoRouter.gotoActiveActivity(context, channel);
+    }
+
+    @Override
+    public void gotoActiveActivity(Context context, String channel, String date) {
+        CargoRouter.gotoActiveActivity(context, channel, date);
+    }
 }

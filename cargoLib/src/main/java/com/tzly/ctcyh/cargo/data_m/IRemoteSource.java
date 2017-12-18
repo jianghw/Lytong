@@ -5,6 +5,7 @@ import com.tzly.ctcyh.cargo.bean.BaseResponse;
 import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
 import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
+import com.tzly.ctcyh.cargo.bean.response.ActiveConfigResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
@@ -40,4 +41,6 @@ public interface IRemoteSource {
      * 领券
      */
     Observable<ReceiveCouponResponse> receiveCoupon(String rasUserID, String couponId, String channel);
+
+    Observable<ActiveConfigResponse> getConfig(String channel, String resisterDate);
 }

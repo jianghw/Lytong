@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.tzly.ctcyh.pay.bean.BaseResponse;
+import com.tzly.ctcyh.pay.bean.response.CodeDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponCodeResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponResponse;
@@ -14,6 +15,7 @@ import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 
+import rx.Completable;
 import rx.Observable;
 
 /**
@@ -108,7 +110,7 @@ public class PayDataManager {
      * 微信支付
      */
     public Observable<PayWeixinResponse> weChatPay(String orderId, String amount, String phontIP, int couponUserId) {
-        return mRemoteData.weChatPay(orderId, amount, phontIP,couponUserId);
+        return mRemoteData.weChatPay(orderId, amount, phontIP, couponUserId);
     }
 
     /**
@@ -123,5 +125,12 @@ public class PayDataManager {
      */
     public Observable<BaseResponse> deleteCode(String codeId, String rasUserID) {
         return mRemoteData.deleteCode(codeId, rasUserID);
+    }
+
+    /**
+     * .码券详情
+     */
+    public Observable<CodeDetailResponse> getCodeDetail(String codeId) {
+        return mRemoteData.getCodeDetail(codeId);
     }
 }

@@ -2,9 +2,11 @@ package com.tzly.ctcyh.pay.coupon_p;
 
 import android.support.annotation.NonNull;
 
+import com.tzly.ctcyh.pay.bean.response.CodeDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponDetailResponse;
 import com.tzly.ctcyh.pay.data_m.BaseSubscriber;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
+import com.tzly.ctcyh.pay.global.PayGlobal;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -34,7 +36,8 @@ public class CouponDetailPresenter implements ICouponDetailContract.ICouponDetai
     }
 
     @Override
-    public void onSubscribe() {}
+    public void onSubscribe() {
+    }
 
     @Override
     public void unSubscribe() {
@@ -72,11 +75,51 @@ public class CouponDetailPresenter implements ICouponDetailContract.ICouponDetai
 
                     @Override
                     public void doNext(CouponDetailResponse response) {
-                        if (response != null && response.getResponseCode() == 2000) {
+                        if (response != null && response.getResponseCode()
+                                == PayGlobal.Response.base_succeed) {
                             mContractView.responseSucceed(response);
                         } else {
                             mContractView.responseError(response != null
                                     ? response.getResponseDesc() : "未知错误(优惠券详情)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    @Override
+    public void getCodeDetail() {
+        Subscription subscription = mRepository
+                .getCodeDetail(mContractView.couponId())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<CodeDetailResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.responseError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(CodeDetailResponse response) {
+                        if (response != null && response.getResponseCode()
+                                == PayGlobal.Response.base_succeed) {
+                            mContractView.responseSucceed(response);
+                        } else {
+                            mContractView.responseError(response != null
+                                    ? response.getResponseDesc() : "未知错误(CodeDetail)");
                         }
                     }
                 });

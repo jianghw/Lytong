@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.home_p;
 
 import android.support.annotation.NonNull;
 
+import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
@@ -56,20 +57,15 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<CouponFragmentResponse>() {
                     @Override
-                    public void doCompleted() {}
+                    public void doCompleted() {
+                    }
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.getCouponCountError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(CouponFragmentResponse result) {
-                        if (result != null && result.getResponseCode() == 2000)
-                            mAtyView.getCouponCountSucceed(result);
-                        else
-                            mAtyView.getCouponCountError(
-                                    result != null ? result.getResponseDesc() : "未知错误2.4.2");
                     }
                 });
         mSubscriptions.add(subscription);
@@ -85,7 +81,8 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MessageCountResponse>() {
                     @Override
-                    public void doCompleted() {}
+                    public void doCompleted() {
+                    }
 
                     @Override
                     public void doError(Throwable e) {
@@ -121,7 +118,8 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<DriverCoachResponse>() {
                     @Override
-                    public void doCompleted() {}
+                    public void doCompleted() {
+                    }
 
                     @Override
                     public void doError(Throwable e) {
@@ -143,5 +141,33 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
     @Override
     public String initUserPhone() {
         return mRepository.getDefaultUserPhone();
+    }
+
+    @Override
+    public void getValidCount() {
+        Subscription subscription = mRepository
+                .getValidCount(mRepository.getRASUserID())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<ValidCountResponse>() {
+                    @Override
+                    public void doCompleted() {
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.validCountError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(ValidCountResponse result) {
+                        if (result != null && result.getResponseCode() == 2000)
+                            mAtyView.validCountSucceed(result);
+                        else
+                            mAtyView.validCountError(result != null
+                                    ? result.getResponseDesc() : "未知错误(validCount)");
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 }

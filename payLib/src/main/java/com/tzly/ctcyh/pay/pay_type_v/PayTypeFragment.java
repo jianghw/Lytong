@@ -252,10 +252,6 @@ public class PayTypeFragment extends RefreshFragment
                     getExtraOrderId(),
                     String.valueOf(priceInteger),
                     NetUtils.getPhontIP(Utils.getContext()));
-
-            LogUtils.i("====>" +  NetUtils.getPhontIP(Utils.getContext()));
-            LogUtils.e("====>" +  NetUtils.getIPAddress(true));
-            LogUtils.e("====>" +  NetUtils.getLocalHostIp(Utils.getContext()));
         }
     }
 

@@ -141,5 +141,6 @@
     <dimen name="fs_20sp">20sp</dimen>
     <dimen name="fs_22sp">22sp</dimen>
     <dimen name="fs_24sp">24sp</dimen>
+    <dimen name="fs_36sp">36sp</dimen>
     <dimen name="fs_48sp">48sp</dimen>
 </resources>

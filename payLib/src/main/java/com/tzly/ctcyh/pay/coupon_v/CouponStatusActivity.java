@@ -44,7 +44,7 @@ public class CouponStatusActivity extends AbstractBaseActivity {
         if (mFragmentList == null) mFragmentList = new ArrayList<>();
         if (!mFragmentList.isEmpty()) mFragmentList.clear();
 
-        String[] title = new String[]{"优惠券", "码券"};
+        String[] title = new String[]{"优惠券", "优惠码"};
 
         mFragmentList.add(CouponStatusFragment.newInstance());
         mFragmentList.add(CouponCodeFragment.newInstance());

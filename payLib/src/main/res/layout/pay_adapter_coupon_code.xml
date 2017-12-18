@@ -11,7 +11,6 @@
         android:layout_toLeftOf="@+id/relay_status"
         android:background="@mipmap/pay_ic_coupon_white">
 
-
         <TextView
             android:id="@+id/tv_title"
             style="@style/ResTextTheme.16.Subtitle"
@@ -35,13 +34,25 @@
 
         <TextView
             android:id="@+id/tv_content"
-            style="@style/ResTextTheme.14.Hint"
+            style="@style/ResTextTheme.16.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/tv_title"
             android:layout_below="@+id/tv_date"
             android:singleLine="true"
-            tools:text="这里是优化巻哦呀" />
+            android:textSize="@dimen/fs_14sp"
+            tools:text="券码:" />
+
+        <TextView
+            android:id="@+id/tv_code"
+            android:layout_marginLeft="@dimen/res_x_20"
+            style="@style/ResTextTheme.14.Red"
+            android:layout_width="wrap_content"
+            android:gravity="left"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_date"
+            android:layout_toRightOf="@+id/tv_content"
+            tools:text="ASDSDSDSDSDSDSDSDSDSDSDSDSDSDSSDSDSDSD" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -53,27 +64,15 @@
         android:background="@mipmap/pay_ic_coupon_red">
 
         <TextView
-            android:id="@+id/tv_unit"
-            style="@style/ResTextTheme.14.White"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tv_price"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/res_x_30"
-            android:textSize="@dimen/res_fs_12"
-            tools:text="元" />
-
-        <TextView
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:layout_marginRight="@dimen/res_x_20"
-            android:layout_toLeftOf="@+id/tv_unit"
             android:singleLine="true"
+            android:text="查看详情"
             android:textColor="@color/res_color_white"
-            android:textSize="@dimen/res_fs_26"
-            tools:text="10" />
+            android:textSize="@dimen/res_fs_16" />
     </RelativeLayout>
 
 </RelativeLayout>

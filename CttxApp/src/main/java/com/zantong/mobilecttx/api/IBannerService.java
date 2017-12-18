@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.api;
 
+import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.zantong.mobilecttx.home.bean.BannerResponse;
 
 import retrofit2.http.Field;
@@ -14,10 +15,16 @@ import rx.Observable;
 
 public interface IBannerService {
     /**
-     *58.获取banner图片
+     * 58.获取banner图片
      */
     @FormUrlEncoded
     @POST("banner/getBanner")
     Observable<BannerResponse> getBanner(@Field("type") String type);
 
+    /**
+     * 统计
+     */
+    @FormUrlEncoded
+    @POST("banner/saveStatisticsCount")
+    Observable<BaseResponse> saveStatisticsCount(String contentId, String rasUserID);
 }
