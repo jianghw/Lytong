@@ -2,6 +2,8 @@ package com.tzly.ctcyh.router.custom.dialog;
 
 import android.widget.DatePicker;
 
+import java.util.Date;
+
 /**
  * Created by jianghw on 2017/12/12.
  * Description:
@@ -10,5 +12,5 @@ import android.widget.DatePicker;
  */
 
 public interface IOnDateSetListener {
-    void onDateSet(DatePicker view, int year, int month, int dayOfMonth, boolean usable);
+    void onDateSet(DatePicker view, Date date, boolean usable);
 }

@@ -2,25 +2,16 @@ package com.tzly.ctcyh.cargo.active_p;
 
 import android.support.annotation.NonNull;
 
-import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
 import com.tzly.ctcyh.cargo.bean.response.ActiveConfigResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
-import com.tzly.ctcyh.cargo.bean.response.RefuelOilBean;
-import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
-import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.cargo.data_m.BaseSubscriber;
 import com.tzly.ctcyh.cargo.data_m.CargoDataManager;
 import com.tzly.ctcyh.cargo.global.CargoGlobal;
-import com.tzly.ctcyh.cargo.refuel_p.IRefuelOilContract;
+import com.tzly.ctcyh.cargo.router.CargoRouter;
 
-import java.util.List;
-
-import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -66,7 +57,7 @@ public class ActivePresenter implements IActiveContract.IActivePresenter {
     @Override
     public void getConfig() {
         Subscription subscription = mRepository
-                .getConfig(mContractView.getChannel(),mContractView.getResisterDate())
+                .getConfig(mContractView.getChannel(), mContractView.getResisterDate())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -109,6 +100,7 @@ public class ActivePresenter implements IActiveContract.IActivePresenter {
      */
     @Override
     public void receiveCoupon(String couponId) {
+
         Subscription subscription = mRepository
                 .receiveCoupon(mRepository.getRASUserID(), couponId, mContractView.getChannel())
                 .subscribeOn(Schedulers.io())

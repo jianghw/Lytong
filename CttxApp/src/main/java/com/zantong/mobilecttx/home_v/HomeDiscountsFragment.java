@@ -18,7 +18,6 @@ import com.tzly.ctcyh.router.custom.banner.CBViewHolderCreator;
 import com.tzly.ctcyh.router.custom.banner.ConvenientBanner;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.MobUtils;
-import com.tzly.ctcyh.router.util.NetUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
@@ -51,7 +50,7 @@ import java.util.List;
  * 优惠页面
  */
 public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
-        implements IHomeFavorableFtyContract.IHomeFavorableFtyView {
+        implements IHomeFavorableFtyContract.IHomeFavorableFtyView{
 
     private ConvenientBanner mCustomConvenientBanner;
 
@@ -140,10 +139,9 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
                     }
                 });
 
-        int contenId = childrenBean != null ? childrenBean.getId() : -1;
-        if (mPresenter != null && contenId > 0)
-            mPresenter.saveStatisticsCount(String.valueOf(contenId),
-                    NetUtils.getPhontIP(Utils.getContext()));
+        int contenId = childrenBean != null ? childrenBean.getStatisticsId() : -1;
+        if (mPresenter != null && contenId >= 0)
+            mPresenter.saveStatisticsCount(String.valueOf(contenId));
 
         if (childrenBean != null && !TextUtils.isEmpty(childrenBean.getTargetPath())) {
             String path = childrenBean.getTargetPath();
@@ -233,7 +231,13 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
                 new CBViewHolderCreator<FavorableBannerImgHolderView>() {
                     @Override
                     public FavorableBannerImgHolderView createHolder() {
-                        return new FavorableBannerImgHolderView();
+                        return new FavorableBannerImgHolderView(new IDiscountsBanner() {
+                            @Override
+                            public void getStatistId(int statisticsId) {
+                                if (mPresenter != null)
+                                    mPresenter.saveStatisticsCount(String.valueOf(statisticsId));
+                            }
+                        });
                     }
                 },
                 banners)
@@ -308,4 +312,5 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
     public void doDrivingFail() {
         toastShort("您已关闭定位权限,请手机设置中打开");
     }
+
 }

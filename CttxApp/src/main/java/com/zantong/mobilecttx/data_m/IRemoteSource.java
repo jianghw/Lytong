@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.data_m;
 import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.bean.response.SubjectGoodsResponse;
+import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
 import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -364,5 +365,10 @@ public interface IRemoteSource {
     /**
      * 统计
      */
-    Observable<BaseResponse> saveStatisticsCount(String contentId, String rasUserID, String ip);
+    Observable<BaseResponse> saveStatisticsCount(String contentId, String rasUserID);
+
+    /**
+     * 微信支付
+     */
+    Observable<PayWeixinResponse> weChatPay(String orderId, String amount, int couponUserId);
 }

@@ -57,17 +57,19 @@ public class ViolationListActivity extends AbstractBaseActivity
 
 
     @Override
-    protected void bundleIntent(Intent intent) {
-        if (intent != null) {
-            Bundle bundle = intent.getExtras();
-            mViolationDTO = (ViolationDTO) bundle.getSerializable("params");
-            if (mViolationDTO != null) mTitle = mViolationDTO.getCarnum();
-        }
+    protected int initContentView() {
+        return R.layout.activity_violation_list;
     }
 
     @Override
-    protected int initContentView() {
-        return R.layout.activity_violation_list;
+    protected void bundleIntent(Intent intent) {
+        if (intent != null) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                mViolationDTO = (ViolationDTO) bundle.getSerializable("params");
+            }
+        }
+        if (mViolationDTO != null) mTitle = mViolationDTO.getCarnum();
     }
 
     @Override
@@ -110,13 +112,16 @@ public class ViolationListActivity extends AbstractBaseActivity
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset,
-                                       int positionOffsetPixels) {}
+                                       int positionOffsetPixels) {
+            }
 
             @Override
-            public void onPageSelected(int position) {}
+            public void onPageSelected(int position) {
+            }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
 
         mTabLayout.setupWithViewPager(mViewPager);
@@ -183,26 +188,6 @@ public class ViolationListActivity extends AbstractBaseActivity
     }
 
     /**
-     * 去绑卡页面
-     */
-    private void byCardHome() {
-        MobclickAgent.onEvent(Utils.getContext(), Config.getUMengID(11));
-        DialogUtils.remindDialog(this,
-                "温馨提示", "您还未绑卡，暂时无法进行缴费", "取消", "立即绑卡",
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                    }
-                },
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Act.getInstance().gotoIntentLogin(ViolationListActivity.this, UnblockedCardActivity.class);
-                    }
-                });
-    }
-
-    /**
      * 罚单号
      */
     public void showDialogToCodequery(final ViolationBean bean) {
@@ -215,13 +200,26 @@ public class ViolationListActivity extends AbstractBaseActivity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Act.getInstance().gotoIntent(ViolationListActivity.this, Codequery.class);
+                        gotoCodequery();
                     }
                 });
     }
 
+    private void gotoCodequery() {
+        Act.getInstance().gotoIntent(this, Codequery.class);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    /**
+     * 去规则页面
+     */
     @Override
     protected void onDestroy() {
+        MainRouter.gotoActiveActivity(this, 1, mViolationDTO.getRegisterDate());
         super.onDestroy();
 
         orderUnStatusFragment = null;

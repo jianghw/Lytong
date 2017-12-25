@@ -13,6 +13,16 @@ public class ViolationDTO implements Serializable {
     private String processste;//0未处理，1已处理，2全部
     private String token;
 
+    private String registerDate;
+
+    public String getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(String registerDate) {
+        this.registerDate = registerDate;
+    }
+
     public String getCarnum() {
         return carnum;
     }

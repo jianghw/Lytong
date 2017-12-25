@@ -146,10 +146,11 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
      * 不登录不使用
      */
     @Override
-    public void saveStatisticsCount(String contentId, String ip) {
+    public void saveStatisticsCount(String contentId) {
         if (!MainRouter.isUserLogin()) return;
+
         Subscription subscription = mRepository
-                .saveStatisticsCount(contentId, mRepository.getRASUserID(), ip)
+                .saveStatisticsCount(contentId, mRepository.getRASUserID())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {

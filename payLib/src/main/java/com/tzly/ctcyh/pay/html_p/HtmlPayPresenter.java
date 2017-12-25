@@ -8,6 +8,7 @@ import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.pay.data_m.BaseSubscriber;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
+import com.tzly.ctcyh.pay.global.PayGlobal;
 
 import java.util.concurrent.TimeUnit;
 
@@ -39,7 +40,8 @@ public class HtmlPayPresenter implements IHtmlPayContract.IHtmlPayPresenter {
     }
 
     @Override
-    public void onSubscribe() {}
+    public void onSubscribe() {
+    }
 
     @Override
     public void unSubscribe() {
@@ -50,7 +52,7 @@ public class HtmlPayPresenter implements IHtmlPayContract.IHtmlPayPresenter {
     @Override
     public void orderDetail() {
         Subscription subscription = Observable.interval(2, 3000, TimeUnit.MILLISECONDS)
-                .take(4)
+                .take(3)
                 .subscribeOn(Schedulers.newThread())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -103,7 +105,8 @@ public class HtmlPayPresenter implements IHtmlPayContract.IHtmlPayPresenter {
 
                     @Override
                     public void doNext(OrderDetailResponse result) {
-                        if (result != null && result.getResponseCode() == 2000) {
+                        if (result != null && result.getResponseCode()
+                                == PayGlobal.Response.base_succeed) {
                             mContractView.getOrderDetailSucceed(result);
                         } else {
                             mContractView.getOrderDetailError(result != null
@@ -202,7 +205,8 @@ public class HtmlPayPresenter implements IHtmlPayContract.IHtmlPayPresenter {
 
     //分享领积分
     @JavascriptInterface
-    public void shareActivity() {}
+    public void shareActivity() {
+    }
 
     //获取用户ID
     @JavascriptInterface

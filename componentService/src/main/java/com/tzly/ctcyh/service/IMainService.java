@@ -1,6 +1,7 @@
 package com.tzly.ctcyh.service;
 
 import android.app.Activity;
+import android.content.Context;
 
 /**
  * Created by jianghw on 2017/10/26.
@@ -19,7 +20,7 @@ public interface IMainService {
 
     void gotoMyCardActivity(Activity context);
 
-    void gotoViolationListActivity(Activity context, String carnum, String enginenum, String carnumtype);
+    void gotoViolationListActivity(Context context, String carnum, String enginenum, String carnumtype);
 
     void gotoOcrCameraActivity(Activity context);
 
@@ -27,9 +28,13 @@ public interface IMainService {
 
     String getPushId();
 
-    void gotoMainActivity(Activity activity, int i);
+    void gotoMainActivity(Context activity, int i);
 
     void gotoProblemFeedbackActivity(Activity activity);
 
     void gotoBaiduMapParentActivity(Activity context);
+
+    void gotoActiveActivity(Context activity, int i);
+
+    void gotoHtmlActivity(Context activity, String title, String msg);
 }

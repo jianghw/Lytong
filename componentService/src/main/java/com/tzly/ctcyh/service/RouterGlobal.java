@@ -10,19 +10,24 @@ package com.tzly.ctcyh.service;
 public final class RouterGlobal {
 
     public static final class Host {
-        public static final String home_host = "home_host";
-        public static final String guide_host = "guide_host";
-        public static final String map_host = "map_host";
-        public static final String driving_host = "driving_host";
-
         public static final String login_host = "login_host";
         public static final String send_code_host = "send_code_host";
         public static final String register_host = "register_host";
+
 
         public static final String coupon_list_host = "coupon_list_host";
         public static final String pay_type_host = "pay_type_host";
         public static final String html_5_host = "html_5_host";
 
+
+        public static final String active_host = "active_host";
+        public static final String oil_map_host = "oil_map_host";
+        public static final String recharge_agree_host = "recharge_agree_host";
+
+        public static final String home_host = "home_host";
+        public static final String guide_host = "guide_host";
+        public static final String map_host = "map_host";
+        public static final String driving_host = "driving_host";
         public static final String meg_type_host = "meg_type_host";
         public static final String capture_host = "capture_host";
         public static final String recharge_host = "recharge_host";
@@ -33,21 +38,20 @@ public final class RouterGlobal {
         public static final String sparring_host = "sparring_host";
         public static final String unblocked_card_host = "unblocked_card_host";
         public static final String my_card_host = "my_card_host";
-        public static final String violation_list_host = "violation_list_host";
         public static final String ocr_camera_host = "ocr_camera_host";
         public static final String meg_detail_host = "meg_detail_host";
         public static final String coupon_status_host = "coupon_status_host";
         public static final String html_self_host = "html_self_host";
         public static final String html_pay_host = "html_pay_host";
+
         public static final String violation_query_host = "violation_query_host";
+        public static final String violation_list_host = "violation_list_host";
+
         public static final String set_pay_car_host = "set_pay_car_host";
         public static final String coupon_detail_host = "coupon_detail_host";
         public static final String problem_feed_host = "problem_feed_host";
-        public static final String oil_map_host = "oil_map_host";
-        public static final String recharge_agree_host = "recharge_agree_host";
         public static final String driving_camera_host = "driving_camera_host";
         public static final String vehicle_camera_host = "vehicle_camera_host";
-        public static final String active_host = "active_host";
     }
 
     public static final class putExtra {

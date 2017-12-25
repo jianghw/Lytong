@@ -20,8 +20,6 @@ public class CargoApplication extends MultiDexApplication {
 
         Utils.init(this);
         LogUtils.initLogUtils(true);
-
-        ToastUtils.toastShort(Des3.decode("8cxaZ0iOv8bGUs4RdU6fEA=="));
     }
 
 }

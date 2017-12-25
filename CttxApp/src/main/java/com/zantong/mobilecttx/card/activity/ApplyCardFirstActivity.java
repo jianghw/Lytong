@@ -219,20 +219,16 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
             return;
         }
 
-        //        if (getDriverFileNum().length() != 12) {
-        //            ToastUtils.toastShort("请输入12位驾档编号");
-        //            return;
-        //        }
+//        if (!RegexUtils.isIDCard15(getUserIdCard())
+//                && !RegexUtils.isIDCard18(getUserIdCard())) {
+//            ToastUtils.toastShort("身份证号码不正确");
+//            return;
+//        }
 
-        if (!RegexUtils.isIDCard15(getUserIdCard())
-                && !RegexUtils.isIDCard18(getUserIdCard())) {
-            ToastUtils.toastShort("身份证号码不正确");
-            return;
-        }
-        if (!getDriverFileNum().startsWith("310")) {
-            ToastUtils.toastShort("外地驾照如需办理请先换成上海驾照");
-            return;
-        }
+//        if (!getDriverFileNum().startsWith("310")) {
+//            ToastUtils.toastShort("外地驾照如需办理请先换成上海驾照");
+//            return;
+//        }
 
         //七天之内不能重复办卡 不用
         if (BuildConfig.App_Url) {

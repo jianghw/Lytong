@@ -105,7 +105,8 @@ public class HtmlTextView extends JellyBeanSpanFixTextView {
         setMovementMethod(LocalLinkMovementMethod.getInstance());
     }
 
-    public void setClickHtml(@NonNull String html, @Nullable Html.ImageGetter imageGetter, IHtmlTextClick textClick) {
+    public void setClickHtml(@NonNull String html, @Nullable Html.ImageGetter imageGetter,
+                             IHtmlTextClick textClick) {
         final HtmlTagHandler htmlTagHandler = new HtmlTagHandler(getPaint());
         htmlTagHandler.setClickableTableSpan(clickableTableSpan);
         htmlTagHandler.setDrawTableLinkSpan(drawTableLinkSpan);

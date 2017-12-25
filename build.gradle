@@ -33,6 +33,8 @@ allprojects {
         flatDir {
             dirs '../componentRelease'
         }
+        //日期控件用
+        maven { url 'https://jitpack.io' }
     }
 }
 

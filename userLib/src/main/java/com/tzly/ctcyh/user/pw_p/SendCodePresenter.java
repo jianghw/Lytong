@@ -56,11 +56,13 @@ public class SendCodePresenter implements ISendCodeContract.ISendCodePresenter {
 
     /**
      * 获取验证码
+     *
+     * @param register
      */
     @Override
-    public void sendVerificationCode() {
+    public void sendVerificationCode(boolean register) {
         Subscription subscription = mRepository
-                .bank_u015_01(vCodeDTO())
+                .bank_u015_01(register ? vRegisterCodeDTO() : vCodeDTO())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -101,6 +103,19 @@ public class SendCodePresenter implements ISendCodeContract.ISendCodePresenter {
     private String vCodeDTO() {
         RequestDTO dto = new RequestDTO();
         RequestHeadDTO requestHeadDTO = mRepository.requestHeadDTO("cip.cfc.u015.01");
+        dto.setSYS_HEAD(requestHeadDTO);
+
+        VCodeDTO vCodeDTO = new VCodeDTO();
+        vCodeDTO.setPhoenum(mContractView.getPhone());
+        vCodeDTO.setSmsscene("001");
+
+        dto.setReqInfo(vCodeDTO);
+        return new Gson().toJson(dto);
+    }
+
+    private String vRegisterCodeDTO() {
+        RequestDTO dto = new RequestDTO();
+        RequestHeadDTO requestHeadDTO = mRepository.requestHeadDTO("cip.cfc.u014.01");
         dto.setSYS_HEAD(requestHeadDTO);
 
         VCodeDTO vCodeDTO = new VCodeDTO();

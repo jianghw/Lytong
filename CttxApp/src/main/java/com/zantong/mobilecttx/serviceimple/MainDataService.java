@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.serviceimple;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.tzly.ctcyh.service.IMainService;
@@ -54,7 +55,7 @@ public class MainDataService implements IMainService {
      * 违章列表
      */
     @Override
-    public void gotoViolationListActivity(Activity context, String carnum, String enginenum, String carnumtype) {
+    public void gotoViolationListActivity(Context context, String carnum, String enginenum, String carnumtype) {
         MainRouter.gotoViolationListActivity(context, carnum, enginenum, carnumtype);
     }
 
@@ -82,7 +83,7 @@ public class MainDataService implements IMainService {
     }
 
     @Override
-    public void gotoMainActivity(Activity activity, int i) {
+    public void gotoMainActivity(Context activity, int i) {
         MainRouter.gotoMainActivity(activity, i);
     }
 
@@ -97,6 +98,22 @@ public class MainDataService implements IMainService {
     @Override
     public void gotoBaiduMapParentActivity(Activity context) {
         MainRouter.gotoBaiduMapParentActivity(context);
+    }
+
+    /**
+     * 去往活动规则页面
+     */
+    @Override
+    public void gotoActiveActivity(Context activity, int i) {
+        MainRouter.gotoActiveActivity(activity, i);
+    }
+
+    /**
+     * html 广告页面
+     */
+    @Override
+    public void gotoHtmlActivity(Context activity, String title, String msg) {
+        MainRouter.gotoHtmlActivity(activity, title, msg);
     }
 
 

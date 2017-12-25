@@ -1,6 +1,7 @@
 package com.tzly.ctcyh.router.util;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 /**
@@ -13,7 +14,8 @@ public final class ToastUtils {
     }
 
     private static void initToast(Context context, String message, int duration) {
-        Toast.makeText(context, message, duration).show();
+        if (!TextUtils.isEmpty(message))
+            Toast.makeText(context, message, duration).show();
     }
 
     public static void toastLong(String message) {

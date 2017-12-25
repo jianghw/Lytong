@@ -9,4 +9,6 @@ package com.tzly.ctcyh.router.custom.dialog;
 
 public interface IOnCouponSubmitListener {
     void submit(String couponId);
+
+    void cancel();
 }

@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.tzly.ctcyh.cargo">
 
     <application
@@ -13,6 +14,7 @@
 
         <activity
             android:name=".refuel_v.RechargeAgreementActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
         <!--扫描拍照-->
@@ -43,6 +45,7 @@
 
         <activity
             android:name=".active_v.ActiveActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/cargo_translucent_theme"></activity>
 

@@ -19,22 +19,18 @@ public class ViolationPayActivity extends AbstractBaseActivity implements IViola
     private ViolationBean violationBean;
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mViolationPayFragment = null;
+    protected int initContentView() {
+        return R.layout.activity_base_frame;
     }
 
     @Override
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
-            violationBean = bundle.getParcelable(JxGlobal.putExtra.violation_pay_bean_extra);
+            if (bundle != null) {
+                violationBean = bundle.getParcelable(JxGlobal.putExtra.violation_pay_bean_extra);
+            }
         }
-    }
-
-    @Override
-    protected int initContentView() {
-        return R.layout.activity_base_frame;
     }
 
     @Override
@@ -54,7 +50,8 @@ public class ViolationPayActivity extends AbstractBaseActivity implements IViola
     }
 
     @Override
-    protected void initContentData() {}
+    protected void initContentData() {
+    }
 
     /**
      * 注意 支付类型
@@ -67,5 +64,12 @@ public class ViolationPayActivity extends AbstractBaseActivity implements IViola
         if (mViolationPayFragment != null) {
             mViolationPayFragment.setPayType(payType);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mViolationPayFragment = null;
     }
 }

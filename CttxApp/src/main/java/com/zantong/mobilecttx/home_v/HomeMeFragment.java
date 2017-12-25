@@ -427,8 +427,7 @@ public class HomeMeFragment extends RefreshFragment
      */
     public void unMessageCount(int position, int number) {
         //未读消息
-        if (mImgMsg != null)
-            mImgMsg.setVisibility(number <= 0 ? View.INVISIBLE : View.VISIBLE);
+        if (mImgMsg != null) mImgMsg.setVisibility(number <= 0 ? View.INVISIBLE : View.VISIBLE);
     }
 
     /**

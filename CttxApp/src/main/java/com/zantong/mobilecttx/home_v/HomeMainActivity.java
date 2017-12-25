@@ -136,7 +136,7 @@ public class HomeMainActivity extends AbstractBaseActivity
             } else {
                 DialogUtils.updateDialog(this,
                         upgradeInfo.title, upgradeInfo.newFeature,
-                        new View.OnClickListener() {
+                         new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Beta.checkUpgrade();

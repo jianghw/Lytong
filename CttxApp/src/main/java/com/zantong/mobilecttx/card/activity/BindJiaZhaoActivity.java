@@ -144,10 +144,6 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
             toastShort("手机号码不可为空");
             return;
         }
-        //        if (fileNum.length() != 12) {
-        //            ToastUtils.toastShort("请输入12位正确驾档编号");
-        //            return;
-        //        }
 
         if (!ValidateUtils.isMobile(phone)) {
             toastShort("手机号码格式不正确");

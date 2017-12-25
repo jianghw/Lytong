@@ -44,7 +44,7 @@ public interface IPayTypeContract {
 
         void getCouponByType();
 
-        void weChatPay(String extraOrderId, String s, String phontIP);
+        void weChatPay(String extraOrderId, String s);
     }
 
 }

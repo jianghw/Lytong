@@ -19,7 +19,6 @@ import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
 import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
@@ -33,7 +32,6 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.tzly.ctcyh.pay.BuildConfig;
 import com.tzly.ctcyh.pay.bean.response.OrderDetailBean;
 import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
@@ -45,7 +43,6 @@ import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.EncryptUtils;
-import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
@@ -74,6 +71,7 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
     private String mUrl;
     private String mOrderId;
     private int mPayType;
+    private String mPayChannel;
     private IHtmlPayContract.IHtmlPayPresenter mPresenter;
 
     @Override
@@ -94,6 +92,8 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
                     mOrderId = bundle.getString(PayGlobal.putExtra.web_orderId_extra);
                 if (intent.hasExtra(PayGlobal.putExtra.web_pay_type_extra))
                     mPayType = bundle.getInt(PayGlobal.putExtra.web_pay_type_extra);
+                if (intent.hasExtra(PayGlobal.putExtra.web_pay_channel_extra))
+                    mPayChannel = bundle.getString(PayGlobal.putExtra.web_pay_channel_extra);
             }
         }
     }
@@ -115,7 +115,6 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
         mWebSettings.setUseWideViewPort(true);//将图片调整到适合webview的大小
         mWebSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
         mWebSettings.setLoadsImagesAutomatically(true);//支持自动加载图片
-
         mWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); //支持内容重新布局
 
         //调用JS方法.安卓版本大于17,加上注解 @JavascriptInterface
@@ -131,14 +130,19 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
 
         mWebView.setWebChromeClient(webChromeClient);
         mWebView.setWebViewClient(webViewClient);
-        if (mPayType == 1) {
+
+        if (mPayType == 1) {//银行支付
             mUrl = "<%@ page language=\"java\" contentType=\"text/html; charset=GBK\" pageEncoding=\"GBK\"%>" +
                     "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\" http://www.w3.org/TR/html4/loose.dtd\">" +
                     "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\">" +
                     "<title>表单提交</title></head><body>" + mUrl + "</body></html>";
 
             mWebView.loadDataWithBaseURL(null, mUrl, "text/html", "utf-8", null);
-        } else if (mPayType == 3||mPayType==4) {
+        } else if (mPayType == 4) {//微信支付
+            Map<String, String> extraHeaders = new HashMap<String, String>();
+            extraHeaders.put("Referer", "http://liyingtong.com");
+            mWebView.loadUrl(mUrl, extraHeaders);
+        } else if (mPayType == 3) {//阿里支付
             mWebView.loadUrl(mUrl);
         } else {
             String cust_id = PayRouter.getUserPhoenum();
@@ -147,7 +151,6 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
             mUrl = mUrl + "?cust_id=" + cust_id + "&token=" + token;
             mWebView.loadUrl(mUrl);
         }
-
         //支持获取手势焦点，输入用户名、密码或其他
         mWebView.requestFocusFromTouch();
     }
@@ -165,17 +168,19 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        mWebView.onPause();
-        mWebView.pauseTimers(); //小心这个！！！暂停整个 WebView 所有布局、解析、JS。
+    public void onResume() {
+        super.onResume();
+
+        mWebView.onResume();
+        mWebView.resumeTimers();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mWebView.onResume();
-        mWebView.resumeTimers();
+    public void onPause() {
+        super.onPause();
+
+        mWebView.onPause();
+        mWebView.pauseTimers(); //小心这个！！！暂停整个 WebView 所有布局、解析、JS。
     }
 
     /**
@@ -208,38 +213,27 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Intent intent = new Intent();
-            LogUtils.i(url);
-            Map<String, String> extraHeaders = new HashMap<>();
-            extraHeaders.put("Referer", "liyingtong.com");
-            view.loadUrl(url, extraHeaders);
+
             if (url.startsWith("tel:")) {//电话
                 intent.setAction(Intent.ACTION_DIAL);
                 Uri data = Uri.parse(url);
                 intent.setData(data);
                 startActivity(intent);
+                return true;
             } else if (url.startsWith("alipays:")) {//阿里支付
                 intent.setData(Uri.parse(url));
                 try {
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    toastShort("未安装支付宝app");
                 }
-            }
-//            else if (url.startsWith("https://wx.tenpay.com")) {
-//                Map<String, String> extraHeaders = new HashMap<String, String>();
-//                extraHeaders.put("Referer", "liyingtong.com");
-//                view.loadUrl(url, extraHeaders);
-//            }
-            else if (url.startsWith("weixin://wap/pay?")) {
-                // 如下方案可在非微信内部WebView的H5页面中调出微信支付
+            } else if (url.startsWith("weixin://wap/pay?")) {//微信
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(url));
                 try {
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    toastShort("未安装微信app");
                 }
             } else {
                 view.loadUrl(url);
@@ -253,22 +247,6 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
         @Override
         public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
             return super.shouldOverrideKeyEvent(view, event);
-        }
-
-        /**
-         * 这个事件就是开始载入页面调用的
-         */
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
-        }
-
-        /**
-         * 在页面加载结束时调用
-         */
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
         }
 
         /**
@@ -301,6 +279,7 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
             super.onReceivedSslError(view, handler, error);
+            handler.proceed();
         }
 
         @Override
@@ -462,15 +441,21 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
         super.onDestroy();
 
         if (mWebView != null) {
-            mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+//            mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+//            ((ViewGroup) mWebView.getParent()).removeView(mWebView);
+//            mWebView.loadUrl("about:blank");
+
             mWebView.clearFormData();
             mWebView.clearHistory();
-            ((ViewGroup) mWebView.getParent()).removeView(mWebView);
-            mWebView.loadUrl("about:blank");
+            mWebView.clearCache(true);
+            mWebView.clearMatches();
+            mWebView.clearSslPreferences();
+
             mWebView.stopLoading();
             mWebView.setWebChromeClient(null);
             mWebView.setWebViewClient(null);
             mWebView.destroy();
+
             mWebView = null;
         }
     }
@@ -513,6 +498,7 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
     @Override
     public void intervalError(String message) {
         toastShort(message);
+        errorStatus();
     }
 
     @Override
@@ -534,13 +520,26 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
     }
 
     protected void succeedStatus(OrderDetailBean orderDetailBean) {
-        setResult(PayGlobal.resultCode.web_pay_succeed, null);
-        finish();
+
+        if (TextUtils.isEmpty(mPayChannel)) {
+            setResult(PayGlobal.resultCode.web_pay_succeed, null);
+            finish();
+        } else {
+            toastShort("支付完成");
+            PayRouter.gotoActiveActivity(this,
+                    TextUtils.isEmpty(mPayChannel) ? 0 : Integer.valueOf(mPayChannel));
+        }
     }
 
     protected void errorStatus() {
-        setResult(PayGlobal.resultCode.web_pay_error, null);
-        finish();
+        if (TextUtils.isEmpty(mPayChannel)) {
+            setResult(PayGlobal.resultCode.web_pay_error, null);
+            finish();
+        } else {
+            toastShort("未完成支付");
+            PayRouter.gotoActiveActivity(this,
+                    TextUtils.isEmpty(mPayChannel) ? 0 : Integer.valueOf(mPayChannel));
+        }
     }
 
     @Override
@@ -624,36 +623,6 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
         PayRouter.gotoViolationListActivity(this, carnum, enginenum, carnumtype);
     }
 
-    //    @Override
-    //    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    //        super.onActivityResult(requestCode, resultCode, data);
-    //        //拍照回调
-    //        if (requestCode == Global.requestCode.violation_query_camera
-    //                && resultCode == JxGlobal.resultCode.ocr_camera_license) {
-    //            if (OcrCameraActivity.file == null)
-    //                ToastUtils.toastShort("照片获取失败");
-    //            else if (mPresenter != null)
-    //                mPresenter.uploadDrivingImg();
-    //        }
-    //    }
-
-    //    @Override
-    //    public void uploadDrivingImgError(String message) {
-    //        toastShort(message);
-    //    }
-
-    /**
-     * 55.行驶证扫描接口
-     */
-    //    @Override
-    //    public void uploadDrivingImgSucceed(DrivingOcrResult result) {
-    //        DrivingOcrBean bean = result.getContent();
-    //        if (bean != null) {
-    //            mWebView.loadUrl("javascript:callbackCamera(" + new Gson().toJson(bean) + ");");
-    //        } else {
-    //            ToastUtils.toastShort("行驶证图片解析失败(55)，请重试");
-    //        }
-    //    }
     @Override
     public void goNianjianMap() {
     }
@@ -746,6 +715,6 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
 
     @Override
     public void getBankPayHtmlSucceed(PayUrlResponse response) {
-        PayRouter.gotoHtmlActivity(this, "工行卡支付", response.getData(), getOrderId(), mPayType);
+        PayRouter.gotoPayHtmlActivity(this, "工行卡支付", response.getData(), getOrderId(), mPayType);
     }
 }

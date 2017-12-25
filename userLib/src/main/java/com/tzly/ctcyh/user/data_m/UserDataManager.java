@@ -70,7 +70,7 @@ public class UserDataManager {
      */
     public String getPhoneDeviceId() {
         String deviceId = mLocalData.getPhoneDeviceId();
-        LogUtils.i("DeviceId=============:" + deviceId);
+        LogUtils.d("DeviceId=============:" + deviceId);
         return deviceId;
     }
 
@@ -80,13 +80,13 @@ public class UserDataManager {
     public String getPushId() {
         String pushId = mLocalData.getPushId();
         if (TextUtils.isEmpty(pushId)) pushId = UserRouter.getPushId();
-        LogUtils.i("PushId=============:" + pushId);
+        LogUtils.d("PushId=============:" + pushId);
         return pushId;
     }
 
     public void savePushId(String pushId) {
         mLocalData.setPushId(pushId);
-        LogUtils.i("PushId=============:" + pushId);
+        LogUtils.d("PushId=============:" + pushId);
     }
 
     /**
@@ -107,16 +107,10 @@ public class UserDataManager {
      * 统一下 这里获取数据
      */
     public String getUserID() {
-        String userId = getUserID(true);
-        LogUtils.i("userId=============:" + userId);
-        return userId;
-    }
-
-    public String getUserID(boolean isNeedLogin) {
         String userId = mLocalData.getLoginBean().getUsrid();
         if (!TextUtils.isEmpty(userId)) return userId;
-
-        if (isNeedLogin) isUserLogin();
+        LogUtils.d("userId=============:" + userId);
+        isUserLogin();
         return mLocalData.getLoginBean().getUsrid();
     }
 
@@ -129,7 +123,7 @@ public class UserDataManager {
      * recdphoe	是	string	推荐人手机号 加密
      */
     public boolean isUserLogin() {
-        if (mLocalData.isLogin()) return true;
+        if (mLocalData.isLogin() && mLocalData.getLoginBean() != null) return true;
         //false
         LoginResponse responseFromSp = getLoginResponseFromSp();
         if (responseFromSp == null) {
@@ -138,17 +132,17 @@ public class UserDataManager {
             return false;
         }
         initLoginBean(responseFromSp);
-        return true;
+        return mLocalData.isLogin() && mLocalData.getLoginBean() != null;
     }
 
     public boolean isLogin() {
-        if (mLocalData.isLogin()) return true;
+        if (mLocalData.isLogin() && mLocalData.getLoginBean() != null) return true;
         LoginResponse responseFromSp = getLoginResponseFromSp();
         if (responseFromSp == null) {
             return false;
         }
         initLoginBean(responseFromSp);
-        return true;
+        return mLocalData.isLogin() && mLocalData.getLoginBean() != null;
     }
 
     /**

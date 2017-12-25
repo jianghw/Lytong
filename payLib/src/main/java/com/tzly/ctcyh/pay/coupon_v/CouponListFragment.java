@@ -80,7 +80,7 @@ public class CouponListFragment extends RecyclerListFragment<CouponBean>
     protected void onRecyclerItemClick(View view, Object data) {
         CouponBean couponBean = (CouponBean) data;
         for (CouponBean bean : mAdapter.getAll()) {
-            bean.setChoice(bean.getId() == couponBean.getId());
+            bean.setChoice(bean.getCouponUserId() == couponBean.getCouponUserId());
         }
         mAdapter.notifyDataSetChanged();
 

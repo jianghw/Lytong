@@ -190,6 +190,8 @@ public class ViolationDetailsFragment extends RefreshFragment
                             getActivity().finish();
                         }
                     });
+        }else{
+            toastShort(response.getSYS_HEAD().getReturnMessage());
         }
     }
 

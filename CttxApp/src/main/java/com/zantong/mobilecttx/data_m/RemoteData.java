@@ -22,6 +22,7 @@ import com.zantong.mobilecttx.api.ISplashService;
 import com.zantong.mobilecttx.api.ITextService;
 import com.zantong.mobilecttx.api.IUserService;
 import com.zantong.mobilecttx.api.IViolationService;
+import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
 import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -630,7 +631,13 @@ public class RemoteData implements IRemoteSource {
      * 统计
      */
     @Override
-    public Observable<BaseResponse> saveStatisticsCount(String contentId, String rasUserID, String ip) {
+    public Observable<BaseResponse> saveStatisticsCount(String contentId, String rasUserID) {
         return baseRetrofit().create(IBannerService.class).saveStatisticsCount(contentId, rasUserID);
+    }
+
+    @Override
+    public Observable<PayWeixinResponse> weChatPay(String orderId, String amount, int couponUserId) {
+        return couponUserId <= 0 ? baseRetrofit().create(IPayService.class).weChatPay(orderId, amount)
+                : baseRetrofit().create(IPayService.class).weChatPay(orderId, amount, String.valueOf(couponUserId));
     }
 }

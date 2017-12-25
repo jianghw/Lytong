@@ -131,7 +131,8 @@ public class SendCodeFragment extends RefreshFragment
             if (TextUtils.isEmpty(phone) || !RegexUtils.isMobileSimple(phone)) {
                 toastShort("请输入正确的手机号码");
             } else if (mPresenter != null) {
-                mPresenter.sendVerificationCode();
+                boolean register = getHostString().equals(UserGlobal.Host.code_register_host);
+                mPresenter.sendVerificationCode(register);
                 mPresenter.startCountDown();
                 mNext.setEnabled(true);
             }

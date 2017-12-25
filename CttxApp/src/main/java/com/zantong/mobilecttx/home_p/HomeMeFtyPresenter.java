@@ -76,7 +76,8 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
      */
     @Override
     public void getUnReadMsgCount() {
-        Subscription subscription = mRepository.countMessageDetail(initBaseDTO())
+        Subscription subscription = mRepository
+                .countMessageDetail(initBaseDTO())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<MessageCountResponse>() {

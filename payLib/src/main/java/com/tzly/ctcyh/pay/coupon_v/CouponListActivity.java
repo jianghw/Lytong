@@ -25,6 +25,11 @@ public class CouponListActivity extends AbstractBaseActivity {
     private String mCurHost;
 
     @Override
+    protected int initContentView() {
+        return R.layout.activity_base_frame;
+    }
+
+    @Override
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
@@ -37,11 +42,6 @@ public class CouponListActivity extends AbstractBaseActivity {
                     mCurHost = bundle.getString(PayGlobal.Host.coupon_list_host);
             }
         }
-    }
-
-    @Override
-    protected int initContentView() {
-        return R.layout.activity_base_frame;
     }
 
     @Override

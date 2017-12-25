@@ -46,12 +46,9 @@ public class CouponCodeAdapter extends BaseAdapter<CouponCodeBean> {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (statusBean == null) return;
 
-        int channel = statusBean.getChannel();
-        if (channel == 1) holder.mTvTitle.setText("嗨修");
-        else if (channel == 2) holder.mTvTitle.setText("惠保养");
-        else if (channel == 3) holder.mTvTitle.setText("一元购");
-        else if (channel == 4) holder.mTvTitle.setText("电影券");
-        else holder.mTvTitle.setText("第三方码");
+        String channel = statusBean.getChannel();
+        holder.mTvTitle.setText(channel);
+
 
         holder.mTvDate.setText("有效时间:" + statusBean.getStartTime() +
                 "-" + statusBean.getEndTime());

@@ -12,6 +12,7 @@ import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.home_v.HomeMainActivity;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
+import com.zantong.mobilecttx.router.MainRouter;
 
 import butterknife.Bind;
 
@@ -54,9 +55,8 @@ public class ApplySuccessActvity extends BaseMvpActivity<IBaseView, HelpPresente
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            startActivity(new Intent(this, HomeMainActivity.class));
-            finish();
-            return false;
+            MainRouter.gotoMainActivity(this, 1);
+            return true;
         } else {
             return super.onKeyDown(keyCode, event);
         }

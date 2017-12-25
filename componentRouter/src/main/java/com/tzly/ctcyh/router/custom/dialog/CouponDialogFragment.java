@@ -55,7 +55,7 @@ public class CouponDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.custom_dialog_coupon, container,true);
+        View view = inflater.inflate(R.layout.custom_dialog_coupon, container, true);
         TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
         TextView tvContent = (TextView) view.findViewById(R.id.tv_content);
         TextView tvPrice = (TextView) view.findViewById(R.id.tv_price);
@@ -64,7 +64,7 @@ public class CouponDialogFragment extends DialogFragment {
         tvTitle.setText(getArguments().getString(STATUS_NAME));
         tvContent.setText(getArguments().getString(STATUS_BUSINESS));
         String type = getArguments().getString(STATUS_TYPE);
-        String value =  getArguments().getString(STATUS_VALUE);
+        String value = getArguments().getString(STATUS_VALUE);
 
         if (type.equals("2")) {
             tvPrice.setText(new DecimalFormat("#0.#").format(Float.valueOf(value) / 10));
@@ -84,15 +84,16 @@ public class CouponDialogFragment extends DialogFragment {
 
             @Override
             public void onClick(View view) {
+                dismiss();
                 if (submitListener != null)
                     submitListener.submit(getArguments().getString(STATUS_ID));
-                dismiss();
             }
         });
         view.findViewById(R.id.tv_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismiss();
+                if (submitListener != null) submitListener.cancel();
             }
         });
         return view;

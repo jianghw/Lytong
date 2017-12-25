@@ -19,10 +19,9 @@ import android.widget.ProgressBar;
 
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.bean.BaseResponse;
-import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.contract.InterfaceForJS;
 import com.zantong.mobilecttx.contract.browser.IPayHtmlContract;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.presenter.browser.PayHtmlPresenter;
@@ -39,25 +38,30 @@ public class PayHtmlActivity extends AbstractBaseActivity implements IPayHtmlCon
     protected String mStrTitle;
     protected String mStrUrl;
     private String mViolationNum;
+    private String mViolationEngine;
 
     private IPayHtmlContract.IPayHtmlPresenter mPresenter;
+
+    @Override
+    protected int initContentView() {
+        return R.layout.activity_browser;
+    }
 
     @Override
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
-            if (intent.hasExtra(MainGlobal.putExtra.browser_title_extra))
-                mStrTitle = bundle.getString(MainGlobal.putExtra.browser_title_extra);
-            if (intent.hasExtra(MainGlobal.putExtra.browser_url_extra))
-                mStrUrl = bundle.getString(MainGlobal.putExtra.browser_url_extra);
-            if (intent.hasExtra(MainGlobal.putExtra.violation_num_extra))
-                mViolationNum = bundle.getString(MainGlobal.putExtra.violation_num_extra);
+            if (bundle != null) {
+                if (intent.hasExtra(MainGlobal.putExtra.browser_title_extra))
+                    mStrTitle = bundle.getString(MainGlobal.putExtra.browser_title_extra);
+                if (intent.hasExtra(MainGlobal.putExtra.browser_url_extra))
+                    mStrUrl = bundle.getString(MainGlobal.putExtra.browser_url_extra);
+                if (intent.hasExtra(MainGlobal.putExtra.violation_num_extra))
+                    mViolationNum = bundle.getString(MainGlobal.putExtra.violation_num_extra);
+                if (intent.hasExtra(MainGlobal.putExtra.car_enginenum_extra))
+                    mViolationEngine = bundle.getString(MainGlobal.putExtra.car_enginenum_extra);
+            }
         }
-    }
-
-    @Override
-    protected int initContentView() {
-        return R.layout.activity_browser;
     }
 
     @Override
@@ -69,7 +73,7 @@ public class PayHtmlActivity extends AbstractBaseActivity implements IPayHtmlCon
         titleClose();
 
         PayHtmlPresenter presenter = new PayHtmlPresenter(
-                Injection.provideRepository(getApplicationContext()), this);
+                Injection.provideRepository(Utils.getContext()), this);
     }
 
     @Override
@@ -98,7 +102,6 @@ public class PayHtmlActivity extends AbstractBaseActivity implements IPayHtmlCon
 
         mWebView.setWebViewClient(webViewClient);
         mWebView.setWebChromeClient(webChromeClient);
-
 
         //设置支持Javascript
         mWebView.getSettings().setJavaScriptEnabled(true);
@@ -218,7 +221,14 @@ public class PayHtmlActivity extends AbstractBaseActivity implements IPayHtmlCon
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ToastUtils.toastShort("请确认手机安装支付宝app");
+                }
+            } else if (url.startsWith("weixin://wap/pay?")) {//微信
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                try {
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             } else {
                 view.loadUrl(url);
@@ -255,19 +265,26 @@ public class PayHtmlActivity extends AbstractBaseActivity implements IPayHtmlCon
 
     @Override
     public void numberedQueryError(String msg) {
-        ToastUtils.toastShort("获取违章数据失败" + msg);
-        finish();
+        shortToast("获取违章数据失败" + msg);
+        gotoActive();
     }
 
     @Override
     public void updateStateError(String msg) {
-        ToastUtils.toastShort("更新同步数据失败" + msg);
-        finish();
+        shortToast("更新同步数据失败" + msg);
+        gotoActive();
     }
 
     @Override
     public void updateStateSucceed(BaseResponse result) {
-        MainRouter.gotoMainActivity(this, 0);
+        gotoActive();
+    }
+
+    private void gotoActive() {
+        if (TextUtils.isEmpty(mViolationEngine))
+            MainRouter.gotoMainActivity(this, 1);
+        else
+            MainRouter.gotoActiveActivity(this, 2);
     }
 
     /**
@@ -307,7 +324,7 @@ public class PayHtmlActivity extends AbstractBaseActivity implements IPayHtmlCon
         } else {
             finish();
         }
-        return false;
+        return true;
     }
 
     private void updateState() {

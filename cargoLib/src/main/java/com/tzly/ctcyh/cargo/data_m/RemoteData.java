@@ -101,7 +101,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<ActiveConfigResponse> getConfig(String channel, String resisterDate) {
-        return channel.equals("2") ? baseRetrofit().create(IActivityService.class).getConfig(channel, resisterDate)
+        return channel.equals("1") ? baseRetrofit().create(IActivityService.class).getConfig(channel, resisterDate)
                 : baseRetrofit().create(IActivityService.class).getConfig(channel);
     }
 

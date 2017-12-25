@@ -1,5 +1,6 @@
 package com.tzly.ctcyh.router.base;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -280,7 +281,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        List<Fragment> fragments = fragmentManager.getFragments();
+        @SuppressLint("RestrictedApi") List<Fragment> fragments = fragmentManager.getFragments();
         if (fragments != null && !fragments.isEmpty()) {
             for (Fragment fragment : fragments) {
                 if (fragment != null && fragment.isVisible())

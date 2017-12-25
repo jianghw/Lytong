@@ -33,8 +33,7 @@ import rx.subscriptions.CompositeSubscription;
  * Update by:
  * Update day:
  */
-public class PayHtmlPresenter
-        implements IPayHtmlContract.IPayHtmlPresenter {
+public class PayHtmlPresenter implements IPayHtmlContract.IPayHtmlPresenter {
 
     private final RepositoryManager mRepository;
     private final IPayHtmlContract.IPayHtmlView mAtyView;
@@ -81,10 +80,12 @@ public class PayHtmlPresenter
                     }
 
                     @Override
-                    public void doError(Throwable e) {}
+                    public void doError(Throwable e) {
+                    }
 
                     @Override
-                    public void doNext(Long aLong) {}
+                    public void doNext(Long aLong) {
+                    }
                 });
         mSubscriptions.add(subscription);
     }
@@ -104,12 +105,13 @@ public class PayHtmlPresenter
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ViolationNumBean>() {
                     @Override
-                    public void onCompleted() {}
+                    public void onCompleted() {
+                    }
 
                     @Override
                     public void onError(Throwable e) {
-                        mAtyView.numberedQueryError(
-                                e.getMessage() != null ? e.getMessage() : "未知错误(V003)");
+                        mAtyView.numberedQueryError(e.getMessage() != null
+                                ? e.getMessage() : "未知错误(V003)");
                     }
 
                     @Override
@@ -146,7 +148,8 @@ public class PayHtmlPresenter
      * @param violationUpdateDTO
      */
     public void updateState(List<ViolationNum> violationUpdateDTO) {
-        Subscription subscription = mRepository.updateState(violationUpdateDTO)
+        Subscription subscription = mRepository
+                .updateState(violationUpdateDTO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {

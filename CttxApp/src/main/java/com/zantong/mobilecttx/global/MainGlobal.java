@@ -35,6 +35,7 @@ public final class MainGlobal {
         public static final String browser_title_extra = "browser_title_extra";
         public static final String browser_url_extra = "browser_url_extra";
         public static final String violation_num_extra = "violation_num_extra";
+        public static final String car_enginenum_extra = "car_enginenum_extra";
         public static final String car_item_bean_extra = "car_item_bean_extra";
     }
 
@@ -42,6 +43,11 @@ public final class MainGlobal {
         public static final String subject_host = "subject_host";
         public static final String fahrschule_host = "fahrschule_host";
         public static final String sparring_host = "sparring_host";
+    }
+
+    public static final class Response {
+        public static final String bank_succeed = "000000";
+        public static final int base_succeed = 2000;
     }
 
 }

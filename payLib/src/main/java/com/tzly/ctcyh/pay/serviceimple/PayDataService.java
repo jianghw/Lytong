@@ -21,8 +21,10 @@ public class PayDataService implements IPayService {
     }
 
     @Override
-    public void gotoHtmlActivity(Activity context, String title, String url, String extraOrderId, int payType) {
-        PayRouter.gotoHtmlActivity(context, title, url, extraOrderId, payType);
+    public void gotoPayHtmlActivity(Activity context, String title, String url,
+                                    String extraOrderId, int payType,
+                                    String channel) {
+        PayRouter.gotoPayHtmlActivity(context, title, url, extraOrderId, payType, channel);
     }
 
     @Override

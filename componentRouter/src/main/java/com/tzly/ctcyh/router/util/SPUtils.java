@@ -36,6 +36,7 @@ public final class SPUtils {
     public static String USER_OIL_NUM = "user_oil_num";
     public static String USER_PUSH_ID = "user_push_id";
     public static String USER_LOGIN_DIALOG = "user_login_dialog";
+    public static String USER_CHANCLE_ID = "USER_CHANCLE_ID";
 
     /**
      * desc:获取保存的Object对象 临时解决旧加密

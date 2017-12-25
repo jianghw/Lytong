@@ -26,5 +26,5 @@ public interface IBannerService {
      */
     @FormUrlEncoded
     @POST("banner/saveStatisticsCount")
-    Observable<BaseResponse> saveStatisticsCount(String contentId, String rasUserID);
+    Observable<BaseResponse> saveStatisticsCount(@Field("contentId")String contentId, @Field("userId")String rasUserID);
 }

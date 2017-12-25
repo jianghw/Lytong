@@ -165,45 +165,4 @@ public class UserDataService implements IUserService {
         mRepository.getCleanUser();
     }
 
-    @Override
-    public void saveLoginBean(final Activity activity, String user, String pwd) {
-        mRepository.saveLoginBean(user);
-
-        RegisterDTO registerDTO = new RegisterDTO();
-        registerDTO.setPhoenum(RSAUtils.strByEncryption(mRepository.getUserPhoenum(), true));
-        registerDTO.setPswd(RSAUtils.strByEncryption(pwd, true));
-        registerDTO.setUsrid(mRepository.getRASUserID());
-        String token = RSAUtils.strByEncryption(mRepository.getPushId(), true);
-        registerDTO.setToken(token);
-        registerDTO.setPushmode("2");
-        registerDTO.setPushswitch("0");
-
-        mRepository.register(registerDTO)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse>() {
-                    @Override
-                    public void doCompleted() {}
-
-                    @Override
-                    public void doError(Throwable e) {
-                        ToastUtils.toastShort("注册成功,登录失败请重新登录~");
-                        mRepository.getCleanUser();
-                        UserRouter.gotoLoginActivity(activity);
-                    }
-
-                    @Override
-                    public void doNext(BaseResponse baseResponse) {
-                        if (baseResponse != null
-                                && baseResponse.getResponseCode() == 2000) {
-                            UserRouter.loginFilenumDialog(activity);
-                        } else {
-                            ToastUtils.toastShort("注册成功,登录失败请重新登录~");
-                            mRepository.getCleanUser();
-                            UserRouter.gotoLoginActivity(activity);
-                        }
-                    }
-                });
-    }
-
 }

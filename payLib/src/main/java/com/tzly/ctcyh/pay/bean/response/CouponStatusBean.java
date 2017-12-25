@@ -45,7 +45,6 @@ public class CouponStatusBean {
     private String couponLimit;
     private String couponBusiness;
     private String channel;
-
     private String method;
 
     public String getCouponUserId() {

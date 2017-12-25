@@ -49,7 +49,7 @@ public interface IUnimpededFtyContract {
 
         void startCountDown();
 
-        void saveStatisticsCount(String contentId, String ip);
+        void saveStatisticsCount(String contentId);
 
     }
 

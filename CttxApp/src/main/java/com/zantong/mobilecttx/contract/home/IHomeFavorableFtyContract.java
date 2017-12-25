@@ -29,7 +29,7 @@ public interface IHomeFavorableFtyContract {
 
         void moduleTree();
 
-        void saveStatisticsCount(String contentId, String ip);
+        void saveStatisticsCount(String contentId);
 
     }
 

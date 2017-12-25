@@ -8,6 +8,7 @@ import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
 import com.tzly.ctcyh.pay.data_m.BaseSubscriber;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
+import com.tzly.ctcyh.pay.global.PayGlobal;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -171,9 +172,9 @@ public class PayTypePresenter implements IPayTypeContract.IPayTypePresenter {
     }
 
     @Override
-    public void weChatPay(String extraOrderId, String amount, String phontIP) {
+    public void weChatPay(String extraOrderId, String amount) {
         Subscription subscription = mRepository
-                .weChatPay(extraOrderId, amount, phontIP, mContractView.getCouponUserId())
+                .weChatPay(extraOrderId, amount, mContractView.getCouponUserId())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -197,11 +198,12 @@ public class PayTypePresenter implements IPayTypeContract.IPayTypePresenter {
 
                     @Override
                     public void doNext(PayWeixinResponse response) {
-                        if (response != null && response.getResponseCode() == 2000) {
+                        if (response != null && response.getResponseCode()
+                                == PayGlobal.Response.base_succeed) {
                             mContractView.weChatPaySucceed(response);
                         } else {
                             mContractView.weChatPayError(response != null
-                                    ? response.getResponseDesc() : "未知错误(5)");
+                                    ? response.getResponseDesc() : "未知错误(weChatPay)");
                         }
                     }
                 });

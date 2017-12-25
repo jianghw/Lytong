@@ -29,6 +29,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.nostra13.universalimageloader.core.assist.ViewScaleType;
+import com.nostra13.universalimageloader.core.imageaware.NonViewAware;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.tzly.ctcyh.router.R;
+import com.tzly.ctcyh.router.util.LogUtils;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -75,16 +85,35 @@ public class HtmlHttpImageGetter implements ImageGetter {
     }
 
     public Drawable getDrawable(String source) {
-        UrlDrawable urlDrawable = new UrlDrawable();
+//        ImageGetterAsyncTask asyncTask = new ImageGetterAsyncTask(urlDrawable, this, container,
+//                matchParentWidth, compressImage, qualityImage);
+//        asyncTask.execute(source);
 
-        // get the actual source
-        ImageGetterAsyncTask asyncTask = new ImageGetterAsyncTask(urlDrawable, this, container,
-                matchParentWidth, compressImage, qualityImage);
+        final URLDrawable drawable = new URLDrawable();
+        //解决 UIL 加载同一个 URL 图片时，导致下一个 task 被 cancel 掉的问题
+        DisplayImageOptions op = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.mipmap.default_220_160)
+                .showImageForEmptyUri(R.mipmap.default_220_160)
+                .showImageOnFail(R.mipmap.default_220_160)
+                .cacheOnDisk(true)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
 
-        asyncTask.execute(source);
+        ImageSize imageSize = new ImageSize(480, 320);
+        NonViewAware nonViewAware = new NonViewAware(imageSize, ViewScaleType.CROP);
 
-        // return reference to URLDrawable which will asynchronously load the image specified in the src tag
-        return urlDrawable;
+        ImageLoader.getInstance().displayImage(source, nonViewAware, op,
+                new SimpleImageLoadingListener() {
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        drawable.bitmap = loadedImage;
+                        drawable.setBounds(0, 0, loadedImage.getWidth(), loadedImage.getHeight());
+
+                        container.invalidate();
+                        container.setText(container.getText()); // 解决图文重叠
+                    }
+                });
+        return drawable;
     }
 
     /**
@@ -248,6 +277,18 @@ public class HtmlHttpImageGetter implements ImageGetter {
             // override the draw to facilitate refresh function later
             if (drawable != null) {
                 drawable.draw(canvas);
+            }
+        }
+    }
+
+    public class URLDrawable extends BitmapDrawable {
+
+        protected Bitmap bitmap;
+
+        @Override
+        public void draw(Canvas canvas) {
+            if (bitmap != null) {
+                canvas.drawBitmap(bitmap, 0, 0, getPaint());
             }
         }
     }

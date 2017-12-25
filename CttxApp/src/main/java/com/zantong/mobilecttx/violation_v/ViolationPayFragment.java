@@ -151,15 +151,15 @@ public class ViolationPayFragment extends RefreshFragment
     }
 
     private void succeedData() {
-        ViolationBean mViolationBean = getViolationBean();
-        String violationamt = mViolationBean.getViolationamt();
+        ViolationBean violationBean = getViolationBean();
+        String violationamt = violationBean.getViolationamt();
         if (violationamt.contains("元")) {
             mFragmentViolationPaytypeAmount.setText(violationamt);
         } else {//除以100
             mFragmentViolationPaytypeAmount.setText(FormatUtils.displayPrice(violationamt) + "元");
         }
 
-        mFragmentViolationNum.setText(mViolationBean.getViolationnum());
+        mFragmentViolationNum.setText(violationBean.getViolationnum());
         mFragmentViolationCommit.setText("确 认 支 付");
 
         businessCard();
@@ -231,11 +231,19 @@ public class ViolationPayFragment extends RefreshFragment
                 } else if (mFragmentViolationCommit.getText().toString().contains("畅通卡")) {
                     //去邦卡
                     Act.getInstance().gotoIntentLogin(getActivity(), UnblockedCardActivity.class);
+                } else if (remark.equals("3|")) {
+                    String violationnum = getViolationBean().getViolationnum();
+                    String penaltyNum = violationnum.substring(6, 7);
+                    if ("1".equals(penaltyNum) || "2".equals(penaltyNum)) {
+                        toastShort("当前并非电子警察通知书编号,请选择工行卡缴费");
+                    } else {
+                        createOrder();
+                    }
                 } else if (remark.equals("4|")) {
                     String violationnum = getViolationBean().getViolationnum();
                     String penaltyNum = violationnum.substring(6, 7);
-                    if (!"1".equals(penaltyNum) && !"2".equals(penaltyNum)) {
-                        toastShort("你输入的为电子警察通知书编号,仅支持畅通卡缴费");
+                    if (!"1".equals(penaltyNum)&&!"2".equals(penaltyNum)) {
+                        toastShort("当前为电子警察通知书编号,请选择畅通卡缴费");
                     } else {
                         createOrder();
                     }
@@ -344,9 +352,8 @@ public class ViolationPayFragment extends RefreshFragment
                 + "&merCustomId=" + merCustomId
                 + "&remark=" + remark;
 
-        MainRouter.gotoPayHtmlActivity(getActivity(), "支付页面", payUrl, violationnum);
-
-        getActivity().finish();
+        MainRouter.gotoPayHtmlActivity(getActivity(), "支付页面",
+                payUrl, violationnum, getViolationBean().getEnginenum());
     }
 
 }

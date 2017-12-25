@@ -11,13 +11,13 @@ import com.tzly.ctcyh.pay.bean.BaseResponse;
 
 public class CodeDetailResponse extends BaseResponse {
 
-    private CouponDetailBean data;
+    private CodeDetailBean data;
 
-    public void setData(CouponDetailBean data) {
+    public void setData(CodeDetailBean data) {
         this.data = data;
     }
 
-    public CouponDetailBean getData() {
+    public CodeDetailBean getData() {
         return data;
     }
 }

@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.contract;
+package com.zantong.mobilecttx.browser;
 
 import android.Manifest;
 import android.content.Context;
@@ -18,12 +18,12 @@ import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
 import com.zantong.mobilecttx.daijia.activity.DrivingActivity;
 import com.zantong.mobilecttx.eventbus.DriveLicensePhotoEvent;
+import com.zantong.mobilecttx.eventbus.PayChannelEvent;
 import com.zantong.mobilecttx.eventbus.PayMotoOrderEvent;
 import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.violation_v.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import org.greenrobot.eventbus.EventBus;
@@ -43,6 +43,11 @@ public class InterfaceForJS {
     @JavascriptInterface
     public void ToastMsg(String msg) {
         ToastUtils.toastShort(msg);
+    }
+
+    @JavascriptInterface
+    public void LogUtilsMsg(String msg) {
+        LogUtils.e(msg);
     }
 
     @JavascriptInterface
@@ -184,11 +189,10 @@ public class InterfaceForJS {
 
         violationDTO.setCarnumtype(carnumtype);
 
-        Intent intent = new Intent(mJSContext, ViolationListActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("params", violationDTO);
-        intent.putExtras(bundle);
-        mJSContext.startActivity(intent);
+
+        MainRouter.gotoViolationListActivity(mJSContext, bundle);
     }
 
     //js调摄像机
@@ -200,7 +204,19 @@ public class InterfaceForJS {
     //跳转支付页面
     @JavascriptInterface
     public void payMOTOrder(String coupon, String orderId, String amount) {
-        EventBus.getDefault().post(new PayMotoOrderEvent(coupon, orderId, amount));
+        EventBus.getDefault().post(new PayMotoOrderEvent(coupon, orderId, amount, 1));
+    }
+
+    //微信支付
+    @JavascriptInterface
+    public void weChatPay(String coupon, String orderId, String amount) {
+        EventBus.getDefault().post(new PayMotoOrderEvent(coupon, orderId, amount, 4));
+    }
+
+    //支付渠道
+    @JavascriptInterface
+    public void channelAction(String channel) {
+        EventBus.getDefault().post(new PayChannelEvent(channel));
     }
 
 }

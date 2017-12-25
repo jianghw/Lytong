@@ -9,43 +9,46 @@ package com.tzly.ctcyh.pay.bean.response;
 
 public class CouponCodeBean {
 
+    private boolean isEnable;
     /**
-     * id : 14
-     * orderId : 17121215471762
-     * code : 1796
+     * id : 6
+     * goodsId : 25
+     * orderId : 17121911152264
+     * code : 126
      * totalCount : 1
      * usedCount : 0
-     * bindTime : 2017-12-12 15:48:54
+     * bindTime : 2017-12-19 11:16:14
      * createTime : 2017-10-15 20:45:33
-     * goodsId : 32
-     * startTime : 2017-12-04
-     * endTime : 2018-12-12
-     * channel : 4
-     * userId : 00146618811025031
+     * channel : 惠保养
+     * uid : 00090018811095999
+     * status : 1
+     * regulation : <p>这是一个段落</p><img src="https://ss0.baidu.com/73x1bjeh1BF3odCf/it/u=138126325,1485620701&fm=85&s=7FAB2EC3909A35D01E299C1A030010D2"/>
+     * startTime : 2017.12.04
+     * endTime : 2018.12.12
      */
 
     private String id;
-    private String orderId;
+    private String goodsId;
+    private long orderId;
     private String code;
     private int totalCount;
     private int usedCount;
     private String bindTime;
     private String createTime;
-    private String goodsId;
+    private String channel;
+    private String uid;
+    private int status;
+    private String regulation;
     private String startTime;
     private String endTime;
-    private int channel;
-    private String userId;
-
-    private boolean isEnable;
 
     public boolean isEnable() {
         return isEnable;
     }
-
     public void setEnable(boolean enable) {
         isEnable = enable;
     }
+
 
     public String getId() {
         return id;
@@ -55,11 +58,19 @@ public class CouponCodeBean {
         this.id = id;
     }
 
-    public String getOrderId() {
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    public long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(String orderId) {
+    public void setOrderId(long orderId) {
         this.orderId = orderId;
     }
 
@@ -103,12 +114,36 @@ public class CouponCodeBean {
         this.createTime = createTime;
     }
 
-    public String getGoodsId() {
-        return goodsId;
+    public String getChannel() {
+        return channel;
     }
 
-    public void setGoodsId(String goodsId) {
-        this.goodsId = goodsId;
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getRegulation() {
+        return regulation;
+    }
+
+    public void setRegulation(String regulation) {
+        this.regulation = regulation;
     }
 
     public String getStartTime() {
@@ -125,21 +160,5 @@ public class CouponCodeBean {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
-    }
-
-    public int getChannel() {
-        return channel;
-    }
-
-    public void setChannel(int channel) {
-        this.channel = channel;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 }

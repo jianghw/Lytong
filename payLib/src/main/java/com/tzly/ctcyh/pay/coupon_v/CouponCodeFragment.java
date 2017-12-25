@@ -50,7 +50,7 @@ public class CouponCodeFragment extends RecyclerListFragment<CouponCodeBean>
     protected void onRecyclerItemClick(View view, Object data) {
         if (!(data instanceof CouponCodeBean)) return;
         CouponCodeBean statusBean = (CouponCodeBean) data;
-        PayRouter.gotoCouponDetailActivity(getActivity(), statusBean.getGoodsId());
+        PayRouter.gotoCouponDetailActivity(getActivity(), statusBean.getId());
     }
 
     @Override
@@ -113,7 +113,7 @@ public class CouponCodeFragment extends RecyclerListFragment<CouponCodeBean>
         int position = adapterPosition - 1;
         if (messageList != null && position >= 0) {
             CouponCodeBean codeBean = messageList.get(position);
-            mPresenter.deleteCode(codeBean.getGoodsId(), position);
+            mPresenter.deleteCode(codeBean.getId(), position);
         }
     }
 

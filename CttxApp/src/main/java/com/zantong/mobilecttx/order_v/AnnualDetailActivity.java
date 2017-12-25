@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.JxBaseActivity;
+import com.tzly.ctcyh.router.custom.htmltxt.HtmlHttpImageGetter;
 import com.tzly.ctcyh.router.custom.htmltxt.HtmlResImageGetter;
 import com.tzly.ctcyh.router.custom.htmltxt.HtmlTextView;
 import com.tzly.ctcyh.router.custom.htmltxt.IHtmlTextClick;
@@ -266,7 +267,7 @@ public class AnnualDetailActivity extends JxBaseActivity
         String beanDetail = bean.getDetail();
 
         mTvContentBottom.setClickHtml(beanDetail,
-                new HtmlResImageGetter(mTvContentBottom),
+                new HtmlHttpImageGetter(mTvContentBottom),
                 new IHtmlTextClick() {
                     @Override
                     public void clickLine(String url) {

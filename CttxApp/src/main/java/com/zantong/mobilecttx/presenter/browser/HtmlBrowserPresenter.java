@@ -2,12 +2,15 @@
 package com.zantong.mobilecttx.presenter.browser;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
+import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.contract.browser.IHtmlBrowserContract;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import java.io.File;
@@ -33,15 +36,15 @@ public class HtmlBrowserPresenter
         implements IHtmlBrowserContract.IHtmlBrowserPresenter {
 
     private final RepositoryManager mRepository;
-    private final IHtmlBrowserContract.IHtmlBrowserView mAtyView;
+    private final IHtmlBrowserContract.IHtmlBrowserView mContractView;
     private final CompositeSubscription mSubscriptions;
 
     public HtmlBrowserPresenter(@NonNull RepositoryManager repositoryManager,
                                 @NonNull IHtmlBrowserContract.IHtmlBrowserView view) {
         mRepository = repositoryManager;
-        mAtyView = view;
+        mContractView = view;
         mSubscriptions = new CompositeSubscription();
-        mAtyView.setPresenter(this);
+        mContractView.setPresenter(this);
     }
 
     @Override
@@ -51,7 +54,7 @@ public class HtmlBrowserPresenter
 
     @Override
     public void unSubscribe() {
-        mAtyView.dismissLoading();
+        mContractView.dismissLoading();
         mSubscriptions.clear();
     }
 
@@ -62,7 +65,7 @@ public class HtmlBrowserPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoading();
+                        mContractView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -83,21 +86,21 @@ public class HtmlBrowserPresenter
                 .subscribe(new BaseSubscriber<DrivingOcrResult>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoading();
+                        mContractView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.dismissLoading();
-                        mAtyView.uploadDrivingImgError(e.getMessage());
+                        mContractView.dismissLoading();
+                        mContractView.uploadDrivingImgError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(DrivingOcrResult result) {
                         if ("OK".equals(result.getStatus())) {
-                            mAtyView.uploadDrivingImgSucceed(result);
+                            mContractView.uploadDrivingImgSucceed(result);
                         } else {
-                            mAtyView.uploadDrivingImgError("行驶证图片解析失败(55)");
+                            mContractView.uploadDrivingImgError("行驶证图片解析失败(55)");
                         }
                     }
                 });
@@ -115,12 +118,12 @@ public class HtmlBrowserPresenter
     @Override
     public void getBankPayHtml(String coupon, final String orderId, String orderPrice) {
         Subscription subscription = mRepository
-                .getBankPayHtml(orderId, orderPrice, Integer.valueOf(coupon))
+                .getBankPayHtml(orderId, orderPrice, TextUtils.isEmpty(coupon) ? 0 : Integer.valueOf(coupon))
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoading();
+                        mContractView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -128,22 +131,62 @@ public class HtmlBrowserPresenter
                 .subscribe(new BaseSubscriber<PayOrderResponse>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoading();
+                        mContractView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.dismissLoading();
-                        mAtyView.getBankPayHtmlError(e.getMessage());
+                        mContractView.dismissLoading();
+                        mContractView.getBankPayHtmlError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(PayOrderResponse result) {
-                        if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.getBankPayHtmlSucceed(result, orderId);
+                        if (result != null && result.getResponseCode()
+                                == MainGlobal.Response.base_succeed) {
+                            mContractView.getBankPayHtmlSucceed(result, orderId);
                         } else {
-                            mAtyView.getBankPayHtmlError(result != null
+                            mContractView.getBankPayHtmlError(result != null
                                     ? result.getResponseDesc() : "未知错误(N5)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    @Override
+    public void weChatPay(String couponUserId, final String orderId, String amount) {
+        Subscription subscription = mRepository
+                .weChatPay(orderId, amount, TextUtils.isEmpty(couponUserId) ? 0 : Integer.valueOf(couponUserId))
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<PayWeixinResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.weChatPayError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(PayWeixinResponse response) {
+                        if (response != null && response.getResponseCode()
+                                == MainGlobal.Response.base_succeed) {
+                            mContractView.weChatPaySucceed(response,orderId);
+                        } else {
+                            mContractView.weChatPayError(response != null
+                                    ? response.getResponseDesc() : "未知错误(weChatPay)");
                         }
                     }
                 });

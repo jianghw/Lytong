@@ -3,7 +3,9 @@ package com.tzly.ctcyh.cargo.router;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 
+import com.tzly.ctcyh.cargo.active_v.ActiveActivity;
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.UiRouter;
 import com.tzly.ctcyh.service.ICargoService;
@@ -31,7 +33,23 @@ public final class CargoRouter {
             IUserService service = (IUserService) object;
             return service.isUserByLogin();
         } else {//注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            registerUser();
+            return true;
+        }
+    }
+
+    private static void registerUser() {
+        ServiceRouter.registerComponent(ServiceRouter.USER_LIKE);
+    }
+
+    public static boolean isLogin() {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        Object object = serviceRouter.getService(IUserService.class.getSimpleName());
+        if (object != null && object instanceof IUserService) {
+            IUserService service = (IUserService) object;
+            return service.isLogin();
+        } else {//注册机开始工作
+            registerUser();
             return true;
         }
     }
@@ -46,7 +64,7 @@ public final class CargoRouter {
             IUserService service = (IUserService) object;
             return service.getUserID();
         } else {//注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            registerUser();
             return "";
         }
     }
@@ -58,7 +76,7 @@ public final class CargoRouter {
             IUserService service = (IUserService) object;
             return service.getPhoneDeviceId();
         } else {//注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            registerUser();
             return "0123456789";
         }
     }
@@ -162,20 +180,35 @@ public final class CargoRouter {
     /**
      * 活动页面逻辑
      */
-    public static void gotoActiveActivity(Context context, String channel) {
+    public static void gotoActiveActivity(Context context, String channel, String date) {
         Bundle bundle = new Bundle();
         bundle.putString(RouterGlobal.putExtra.channel_active, channel);
+        if (TextUtils.isEmpty(date)) date = "";
+        bundle.putString(RouterGlobal.putExtra.channel_register_date, date);
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.active_host,
                 bundle);
     }
 
-    public static void gotoActiveActivity(Context context, String channel,String date) {
-        Bundle bundle = new Bundle();
-        bundle.putString(RouterGlobal.putExtra.channel_active, channel);
-        bundle.putString(RouterGlobal.putExtra.channel_register_date, date);
-        UiRouter.getInstance().openUriBundle(context,
-                RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.active_host,
-                bundle);
+    /**
+     * html
+     */
+    public static void gotoHtmlActivity(Activity context, String title, String url) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoHtmlActivity(context, title, url);
+        } else {//注册机开始工作
+            registerMain();
+        }
+    }
+
+    private static Object getMainObject() {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        return serviceRouter.getService(IMainService.class.getSimpleName());
+    }
+
+    private static void registerMain() {
+        ServiceRouter.registerComponent(ServiceRouter.MAIN_LIKE);
     }
 }

@@ -41,7 +41,7 @@
             android:layout_below="@+id/tv_date"
             android:singleLine="true"
             android:textSize="@dimen/fs_14sp"
-            tools:text="券码:" />
+            android:text="券码:" />
 
         <TextView
             android:id="@+id/tv_code"

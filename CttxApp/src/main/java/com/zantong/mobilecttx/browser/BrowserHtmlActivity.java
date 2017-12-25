@@ -31,18 +31,21 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.EncryptUtils;
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
 import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
+import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.base.bean.BindCarBean;
-import com.zantong.mobilecttx.contract.InterfaceForJS;
+import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
 import com.zantong.mobilecttx.contract.browser.IHtmlBrowserContract;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrBean;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.eventbus.DriveLicensePhotoEvent;
+import com.zantong.mobilecttx.eventbus.PayChannelEvent;
 import com.zantong.mobilecttx.eventbus.PayMotoOrderEvent;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.huodong.activity.HundredAgreementActivity;
@@ -77,15 +80,26 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
 
     //浏览器右上角菜单的状态 0：活动说明  1：活动规则
     private int mRightBtnStatus = -1;
+    /**
+     * 渠道
+     */
+    private String mChannel;
+
+    @Override
+    protected int initContentView() {
+        return R.layout.activity_browser;
+    }
 
     @Override
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
-            if (intent.hasExtra(MainGlobal.putExtra.browser_title_extra))
-                mStrTitle = bundle.getString(MainGlobal.putExtra.browser_title_extra);
-            if (intent.hasExtra(MainGlobal.putExtra.browser_url_extra))
-                mStrUrl = bundle.getString(MainGlobal.putExtra.browser_url_extra);
+            if (bundle != null) {
+                if (intent.hasExtra(MainGlobal.putExtra.browser_title_extra))
+                    mStrTitle = bundle.getString(MainGlobal.putExtra.browser_title_extra);
+                if (intent.hasExtra(MainGlobal.putExtra.browser_url_extra))
+                    mStrUrl = bundle.getString(MainGlobal.putExtra.browser_url_extra);
+            }
         }
     }
 
@@ -100,12 +114,6 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
         titleClose();
         titleMore("分享");
     }
-
-    @Override
-    protected int initContentView() {
-        return R.layout.activity_browser;
-    }
-
 
     @Override
     protected void initContentData() {
@@ -131,8 +139,13 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
         settings.setDefaultTextEncodingName("utf-8");//设置编码格式
         settings.setLoadsImagesAutomatically(true);//支持自动加载图片
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); //支持内容重新布局
+//        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);//无缓存模式
 
         mWebView.addJavascriptInterface(new InterfaceForJS(this), "CTTX");
+//调试哦
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WebView.setWebContentsDebuggingEnabled(BuildConfig.App_Url);
+        }
 
         saveData(settings);
         newWin(settings);
@@ -148,7 +161,6 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
         }
 
         mWebView.loadUrl(mStrUrl);
-
         //支持获取手势焦点，输入用户名、密码或其他
         mWebView.requestFocusFromTouch();
     }
@@ -221,8 +233,21 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
 
     @Override
     public void getBankPayHtmlSucceed(PayOrderResponse result, String orderId) {
+        if (TextUtils.isEmpty(mChannel)) toastShort("渠道标记值为空");
+        MainRouter.gotoHtmlActivity(this,
+                "银行支付", result.getData(), orderId, 1, mChannel);
+    }
 
-        MainRouter.gotoHtmlActivity(this, "银行支付", result.getData(), orderId, 1);
+    @Override
+    public void weChatPayError(String message) {
+        errorToast(message);
+    }
+
+    @Override
+    public void weChatPaySucceed(PayWeixinResponse response, String orderId) {
+        if (TextUtils.isEmpty(mChannel)) toastShort("渠道标记值为空");
+        MainRouter.gotoHtmlActivity(this,
+                "微信支付", response.getData().getMweburl(), orderId, 4, mChannel);
     }
 
     /**
@@ -260,6 +285,7 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
         // 重写shouldOverrideUrlLoading方法，使点击链接后不使用其他的浏览器打开。
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            LogUtils.e(url);
             Intent intent = new Intent();
             if (url.startsWith("tel:")) {
                 intent.setAction(Intent.ACTION_DIAL);
@@ -272,7 +298,14 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
                     startActivity(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    toastShort("请确认手机安装支付宝app");
+                }
+            } else if (url.startsWith("weixin://wap/pay?")) {//微信
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                try {
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             } else {
                 view.loadUrl(url);
@@ -363,18 +396,22 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
 
     @Override
     protected void onDestroy() {
+        setResult(MainGlobal.resultCode.web_browser_back);
         super.onDestroy();
+        EventBus.getDefault().removeStickyEvent(DriveLicensePhotoEvent.class);
+        EventBus.getDefault().removeStickyEvent(PayMotoOrderEvent.class);
+        EventBus.getDefault().removeStickyEvent(PayChannelEvent.class);
         EventBus.getDefault().unregister(this);
 
         if (mPresenter != null) mPresenter.unSubscribe();
-        setResult(MainGlobal.resultCode.web_browser_back);
 
         if (mWebView != null) {
-            mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             mWebView.clearFormData();
             mWebView.clearHistory();
-            ((ViewGroup) mWebView.getParent()).removeView(mWebView);
-            mWebView.loadUrl("about:blank");
+            mWebView.clearCache(true);
+            mWebView.clearMatches();
+            mWebView.clearSslPreferences();
+
             mWebView.stopLoading();
             mWebView.setWebChromeClient(null);
             mWebView.setWebViewClient(null);
@@ -387,10 +424,6 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
     /**
      * 当返回true时，表示已经完整地处理了这个事件，并不希望其他的回调方法再次进行处理，
      * 当返回false时，表示并没有完全处理完该事件，更希望其他回调方法继续对其进行处理，例如Activity中的回调方法。
-     *
-     * @param keyCode
-     * @param event
-     * @return
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -398,6 +431,7 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
             mWebView.goBack();//返回webView的上一页面
             return true;
         }
+        finish();
         return super.onKeyDown(keyCode, event);
     }
 
@@ -410,7 +444,7 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
     }
 
     /**
-     * 支付
+     * 银行支付 微信支付
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataSynEvent(PayMotoOrderEvent event) {
@@ -418,7 +452,19 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
         float orderPrice = Float.valueOf(event.getAmount());
         int price = (int) (orderPrice * 100);
         String coupon = event.getCoupon();
-        mPresenter.getBankPayHtml(coupon, orderId, String.valueOf(price));
+
+        if (event.getType() == 1)
+            mPresenter.getBankPayHtml(coupon, orderId, String.valueOf(price));
+        else if (event.getType() == 4)
+            mPresenter.weChatPay(coupon, orderId, String.valueOf(price));
+    }
+
+    /**
+     * 渠道
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void channelAction(PayChannelEvent event) {
+        mChannel = event.getChannel();
     }
 
     /**

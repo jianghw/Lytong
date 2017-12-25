@@ -45,9 +45,13 @@ public final class PayRouter {
             IUserService service = (IUserService) object;
             return service.isLogin();
         } else {//注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            registerUser();
             return false;
         }
+    }
+
+    private static void registerUser() {
+        ServiceRouter.registerComponent(ServiceRouter.USER_LIKE);
     }
 
     /**
@@ -59,7 +63,7 @@ public final class PayRouter {
             IUserService service = (IUserService) object;
             return service.isUserByLogin();
         } else {//注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            registerUser();
             return true;
         }
     }
@@ -73,7 +77,7 @@ public final class PayRouter {
             IUserService service = (IUserService) object;
             return service.getUserID();
         } else {//注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            registerUser();
             return "";
         }
     }
@@ -84,7 +88,7 @@ public final class PayRouter {
             IUserService service = (IUserService) object;
             return service.getRASUserID();
         } else {//注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            registerUser();
             return "";
         }
     }
@@ -98,7 +102,7 @@ public final class PayRouter {
             IUserService service = (IUserService) object;
             return service.getUserFilenum();
         } else {//注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            registerUser();
             return "";
         }
     }
@@ -112,7 +116,7 @@ public final class PayRouter {
             IUserService service = (IUserService) object;
             return service.getUserPhoenum();
         } else {//注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            registerUser();
             return "";
         }
     }
@@ -126,7 +130,7 @@ public final class PayRouter {
             IUserService service = (IUserService) object;
             return service.getPhoneDeviceId();
         } else {//注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.user.like.UserAppLike");
+            registerUser();
             return "0123456789";
         }
     }
@@ -134,6 +138,10 @@ public final class PayRouter {
     private static Object getMainObject() {
         ServiceRouter serviceRouter = ServiceRouter.getInstance();
         return serviceRouter.getService(IMainService.class.getSimpleName());
+    }
+
+    private static void registerMain() {
+        ServiceRouter.registerComponent(ServiceRouter.MAIN_LIKE);
     }
 
     /**
@@ -144,9 +152,8 @@ public final class PayRouter {
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoOrderDetailActivity(context, orderId, couponType);
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
+        } else {//注册机开始工作
+            registerMain();
         }
     }
 
@@ -158,9 +165,8 @@ public final class PayRouter {
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoOrderSucceedActivity(context, orderId, couponType);
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
+        } else {//注册机开始工作
+            registerMain();
         }
     }
 
@@ -172,9 +178,8 @@ public final class PayRouter {
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoUnblockedCardActivity(context);
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
+        } else {//注册机开始工作
+            registerMain();
         }
     }
 
@@ -183,23 +188,57 @@ public final class PayRouter {
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoMyCardActivity(context);
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
+        } else {//注册机开始工作
+            registerMain();
         }
     }
 
     /**
      * 违章列表夜间
      */
-    public static void gotoViolationListActivity(Activity context, String carnum, String enginenum, String carnumtype) {
+    public static void gotoViolationListActivity(Context context, String carnum, String enginenum, String carnumtype) {
         Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoViolationListActivity(context, carnum, enginenum, carnumtype);
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
+        } else {//注册机开始工作
+            registerMain();
+        }
+    }
+
+    /**
+     * 去往活动规则页面
+     */
+    public static void gotoActiveActivity(Context activity, int i) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoActiveActivity(activity, i);
+        } else {//注册机开始工作
+            registerMain();
+        }
+    }
+
+    /**
+     * 去往主页
+     */
+    public static void gotoMainActivity(Context activity, int i) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoMainActivity(activity, i);
+        } else {//注册机开始工作
+            registerMain();
+        }
+    }
+
+    public static void gotoHtmlActivity(Context activity, String title, String msg) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoHtmlActivity(activity, title, msg);
+        } else {//注册机开始工作
+            registerMain();
         }
     }
 
@@ -211,9 +250,8 @@ public final class PayRouter {
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoOcrCameraActivity(context);
-        } else {
-            //注册机开始工作
-            ServiceRouter.registerComponent("com.zantong.mobilecttx.like.MainAppLike");
+        } else {//注册机开始工作
+            registerMain();
         }
     }
 
@@ -245,38 +283,40 @@ public final class PayRouter {
         sb.append("&amount=").append(price);
         if (couponBeanId > 0) sb.append("&couponUserId=").append(couponBeanId);
 
-        gotoHtmlActivity(context, title, sb.toString(), extraOrderId, payType);
+        gotoPayHtmlActivity(context, title, sb.toString(), extraOrderId, payType);
     }
 
     /**
-     * 支付
+     * 去支付
      */
-    public static void gotoHtmlActivity(Activity context, String title,
-                                        String url, String extraOrderId, int payType) {
+    public static void gotoPayHtmlActivity(Activity context, String title, String url,
+                                           String extraOrderId, int payType) {
         Bundle bundle = new Bundle();
         bundle.putString(PayGlobal.putExtra.web_title_extra, title);
         bundle.putString(PayGlobal.putExtra.web_url_extra, url);
         bundle.putString(PayGlobal.putExtra.web_orderId_extra, extraOrderId);
         bundle.putInt(PayGlobal.putExtra.web_pay_type_extra, payType);
 
-        gotoHtmlActivity(context, bundle);
+        gotoPayHtmlActivity(context, bundle);
     }
 
-    /**
-     * html
-     */
-    public static void gotoHtmlActivity(Activity context, String title, String url) {
+    public static void gotoPayHtmlActivity(Activity context, String title, String url,
+                                           String extraOrderId, int payType, String channel) {
         Bundle bundle = new Bundle();
         bundle.putString(PayGlobal.putExtra.web_title_extra, title);
         bundle.putString(PayGlobal.putExtra.web_url_extra, url);
+        bundle.putString(PayGlobal.putExtra.web_orderId_extra, extraOrderId);
+        bundle.putInt(PayGlobal.putExtra.web_pay_type_extra, payType);
+        bundle.putString(PayGlobal.putExtra.web_pay_channel_extra, channel);
 
-        gotoHtmlActivity(context, bundle);
+        gotoPayHtmlActivity(context, bundle);
     }
 
+
     /**
-     * payhtml
+     * pay_html_5 支付
      */
-    private static void gotoHtmlActivity(Activity context, Bundle bundle) {
+    private static void gotoPayHtmlActivity(Activity context, Bundle bundle) {
         UiRouter.getInstance().openUriForResult(context,
                 RouterGlobal.Scheme.pay_scheme + "://" + RouterGlobal.Host.html_5_host,
                 bundle, PayGlobal.requestCode.pay_html_price);
@@ -290,9 +330,9 @@ public final class PayRouter {
         bundle.putString(PayGlobal.putExtra.pay_type_order, orderId);
         bundle.putString(PayGlobal.Host.pay_type_host, PayGlobal.Host.pay_type_host);
 
-        UiRouter.getInstance().openUriForResult(context,
+        UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.pay_scheme + "://" + RouterGlobal.Host.pay_type_host,
-                bundle, PayGlobal.requestCode.pay_type_choice);
+                bundle);
     }
 
     /**

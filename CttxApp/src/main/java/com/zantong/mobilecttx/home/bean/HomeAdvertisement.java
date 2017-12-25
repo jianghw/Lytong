@@ -13,6 +13,16 @@ public class HomeAdvertisement {
     private String  displayTime;
     private String clickVolume;
 
+    private int statisticsId;
+
+    public int getStatisticsId() {
+        return statisticsId;
+    }
+
+    public void setStatisticsId(int statisticsId) {
+        this.statisticsId = statisticsId;
+    }
+
     public String getUrl() {
         return url;
     }

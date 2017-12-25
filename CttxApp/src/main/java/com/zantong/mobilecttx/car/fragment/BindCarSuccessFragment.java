@@ -72,11 +72,10 @@ public class BindCarSuccessFragment extends BaseExtraFragment {
         UserApiClient.getPayCars(this.getActivity(), dto, new CallBack<PayCarResult>() {
             @Override
             public void onSuccess(PayCarResult result) {
-
                 onShowContent();
-                List<PayCar> list = new ArrayList<PayCar>();
-                list = result.getRspInfo().getUserCarsInfo();
-                if (list.size() == 0) {
+
+                List<PayCar> list = result.getRspInfo().getUserCarsInfo();
+                if (list == null || list.size() == 0) {
                     mEmptyView.setVisibility(View.VISIBLE);
                     mCarManager.setVisibility(View.GONE);
                     mCarsRecyclerView.setVisibility(View.GONE);
@@ -115,5 +114,9 @@ public class BindCarSuccessFragment extends BaseExtraFragment {
                 getActivity().finish();
                 break;
         }
+    }
+
+    public static BindCarSuccessFragment newInstance() {
+        return new BindCarSuccessFragment();
     }
 }

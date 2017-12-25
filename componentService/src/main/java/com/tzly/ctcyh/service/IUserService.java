@@ -50,5 +50,4 @@ public interface IUserService {
 
     void cleanUserLogin();
 
-    void saveLoginBean(Activity activity, String user, String userString);
 }

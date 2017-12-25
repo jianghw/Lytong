@@ -7,18 +7,21 @@ package com.zantong.mobilecttx.home.bean;
  * Update day:
  */
 public class ChildrenBean {
+
     /**
-     * id : 9
+     * id : 6
      * parentId : 1
-     * title : 子目录12
-     * subTitle : 副标题
-     * showType : 0
-     * moduleType : 0
-     * img : http://h5.liyingtong.com/alipay/img/pic_2.jpg
-     * targetType : 1
-     * targetPath : http://h5.liyingtong.com/alipay/
+     * title : 加油充值
+     * subTitle : 9折优惠
+     * showType : 1
+     * moduleType : 1
+     * img : http://h5.liyingtong.com/tmp/icon_oil.png
+     * targetType : 2
+     * targetPath : native_app_recharge
      * state : 1
-     * sort : 2
+     * sort : 1
+     * clickVolume : 198
+     * statisticsId : 21
      */
 
     private int id;
@@ -32,6 +35,8 @@ public class ChildrenBean {
     private String targetPath;
     private int state;
     private int sort;
+    private int clickVolume;
+    private int statisticsId;
 
     public int getId() {
         return id;
@@ -119,5 +124,21 @@ public class ChildrenBean {
 
     public void setSort(int sort) {
         this.sort = sort;
+    }
+
+    public int getClickVolume() {
+        return clickVolume;
+    }
+
+    public void setClickVolume(int clickVolume) {
+        this.clickVolume = clickVolume;
+    }
+
+    public int getStatisticsId() {
+        return statisticsId;
+    }
+
+    public void setStatisticsId(int statisticsId) {
+        this.statisticsId = statisticsId;
     }
 }

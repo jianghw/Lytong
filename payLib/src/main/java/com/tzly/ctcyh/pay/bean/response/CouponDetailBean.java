@@ -9,95 +9,148 @@ package com.tzly.ctcyh.pay.bean.response;
 
 public class CouponDetailBean {
 
+
     /**
-     * mCouponBean : {"couponId":"25","couponName":"代驾优惠券",
-     * "couponContent":"1234567890","couponValidityEnd":"2017-11-30",
-     * "couponStatus":"1",
-     * "couponImage":"http://139.196.183.121:8011/admin/uploads/20170612/20170612173803691.png",
-     * "couponCode":"EX3PVFPU9E95NG2F","couponUse":"1234567890","couponType":"1",
-     * "couponValue":"0","couponLimit":"0","couponBusiness":"代驾"}
+     * id : 15
+     * goodsId : 32
+     * orderId : 17121913015860
+     * code : 1966
+     * totalCount : 1
+     * usedCount : 0
+     * bindTime : 2017-12-19 13:02:13
+     * createTime : 2017-10-15 20:45:33
+     * startTime : 2017.12.04
+     * endTime : 2018.12.12
+     * channel : 电影券
+     * uid : 00090018811095999
+     * status : 1
+     * regulation : <p>这是一个段落</p><img src="https://ss0.baidu.com/73x1bjeh1BF3odCf/it/u=138126325,1485620701&fm=85&s=7FAB2EC3909A35D01E299C1A030010D2"/>
      */
 
-    private CouponBean couponDetail;
+    private int id;
+    private int goodsId;
+    private long orderId;
+    private String code;
+    private int totalCount;
+    private int usedCount;
+    private String bindTime;
+    private String createTime;
+    private String startTime;
+    private String endTime;
+    private String channel;
+    private String uid;
+    private int status;
+    private String regulation;
 
-    public CouponBean getCouponBean() { return couponDetail;}
+    public int getId() {
+        return id;
+    }
 
-    public void setCouponBean(CouponBean couponBean) { this.couponDetail = couponBean;}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public static class CouponBean {
-        /**
-         * couponId : 25
-         * couponName : 代驾优惠券
-         * couponContent : 1234567890
-         * couponValidityEnd : 2017-11-30
-         * couponStatus : 1
-         * couponImage : http://139.196.183.121:8011/admin/uploads/20170612/20170612173803691.png
-         * couponCode : EX3PVFPU9E95NG2F
-         * couponUse : 1234567890
-         * couponType : 1
-         * couponValue : 0
-         * couponLimit : 0
-         * couponBusiness : 代驾
-         */
-        private String couponId;
-        private String couponName;
-        private String couponContent;
-        private String couponValidityEnd;
-        private String couponStatus;
-        private String couponImage;
-        private String couponCode;
-        private String couponUse;
-        private String couponType;
-        private String couponValue;
-        private String couponLimit;
-        private String couponBusiness;
+    public int getGoodsId() {
+        return goodsId;
+    }
 
-        public String getCouponId() { return couponId;}
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
+    }
 
-        public void setCouponId(String couponId) { this.couponId = couponId;}
+    public long getOrderId() {
+        return orderId;
+    }
 
-        public String getCouponName() { return couponName;}
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
+    }
 
-        public void setCouponName(String couponName) { this.couponName = couponName;}
+    public String getCode() {
+        return code;
+    }
 
-        public String getCouponContent() { return couponContent;}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-        public void setCouponContent(String couponContent) { this.couponContent = couponContent;}
+    public int getTotalCount() {
+        return totalCount;
+    }
 
-        public String getCouponValidityEnd() { return couponValidityEnd;}
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
 
-        public void setCouponValidityEnd(String couponValidityEnd) { this.couponValidityEnd = couponValidityEnd;}
+    public int getUsedCount() {
+        return usedCount;
+    }
 
-        public String getCouponStatus() { return couponStatus;}
+    public void setUsedCount(int usedCount) {
+        this.usedCount = usedCount;
+    }
 
-        public void setCouponStatus(String couponStatus) { this.couponStatus = couponStatus;}
+    public String getBindTime() {
+        return bindTime;
+    }
 
-        public String getCouponImage() { return couponImage;}
+    public void setBindTime(String bindTime) {
+        this.bindTime = bindTime;
+    }
 
-        public void setCouponImage(String couponImage) { this.couponImage = couponImage;}
+    public String getCreateTime() {
+        return createTime;
+    }
 
-        public String getCouponCode() { return couponCode;}
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
 
-        public void setCouponCode(String couponCode) { this.couponCode = couponCode;}
+    public String getStartTime() {
+        return startTime;
+    }
 
-        public String getCouponUse() { return couponUse;}
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
 
-        public void setCouponUse(String couponUse) { this.couponUse = couponUse;}
+    public String getEndTime() {
+        return endTime;
+    }
 
-        public String getCouponType() { return couponType;}
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
 
-        public void setCouponType(String couponType) { this.couponType = couponType;}
+    public String getChannel() {
+        return channel;
+    }
 
-        public String getCouponValue() { return couponValue;}
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
 
-        public void setCouponValue(String couponValue) { this.couponValue = couponValue;}
+    public String getUid() {
+        return uid;
+    }
 
-        public String getCouponLimit() { return couponLimit;}
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
-        public void setCouponLimit(String couponLimit) { this.couponLimit = couponLimit;}
+    public int getStatus() {
+        return status;
+    }
 
-        public String getCouponBusiness() { return couponBusiness;}
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
-        public void setCouponBusiness(String couponBusiness) { this.couponBusiness = couponBusiness;}
+    public String getRegulation() {
+        return regulation;
+    }
+
+    public void setRegulation(String regulation) {
+        this.regulation = regulation;
     }
 }

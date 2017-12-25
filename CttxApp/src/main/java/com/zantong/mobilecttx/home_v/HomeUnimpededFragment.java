@@ -21,7 +21,6 @@ import com.tzly.ctcyh.router.custom.banner.CBViewHolderCreator;
 import com.tzly.ctcyh.router.custom.banner.ConvenientBanner;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.MobUtils;
-import com.tzly.ctcyh.router.util.NetUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
@@ -186,7 +185,7 @@ public class HomeUnimpededFragment extends RefreshFragment
         initView(fragment);
 
         UnimpededFtyPresenter mPresenter = new UnimpededFtyPresenter(
-                Injection.provideRepository(getActivity().getApplicationContext()), this);
+                Injection.provideRepository(Utils.getContext()), this);
 
         //广告页本地加载
         List<Integer> localImages = new ArrayList<>();
@@ -252,18 +251,6 @@ public class HomeUnimpededFragment extends RefreshFragment
         //        if (mPagerList == null) mPagerList = new ArrayList<>();
         //        initPagerFragment();
         //        initViewPager();
-
-//        final RelativeLayout mTv = (RelativeLayout) view.findViewById(R.id.ry_banner);
-//        LogUtils.e("===>" + mTv.getWidth() + "/" + mTv.getHeight());
-//        ViewTreeObserver vto = mTv.getViewTreeObserver();
-//        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-//            public boolean onPreDraw() {
-//                int height = mTv.getMeasuredHeight();
-//                int width = mTv.getMeasuredWidth();
-//                LogUtils.e("===>" + width + "/" + height);
-//                return true;
-//            }
-//        });
     }
 
     private void initPagerFragment() {
@@ -418,7 +405,13 @@ public class HomeUnimpededFragment extends RefreshFragment
                     new CBViewHolderCreator<MainBannerImgHolderView>() {
                         @Override
                         public MainBannerImgHolderView createHolder() {
-                            return new MainBannerImgHolderView();
+                            return new MainBannerImgHolderView(new IDiscountsBanner() {
+                                @Override
+                                public void getStatistId(int statisticsId) {
+                                    if (mPresenter != null)
+                                        mPresenter.saveStatisticsCount(String.valueOf(statisticsId));
+                                }
+                            });
                         }
                     },
                     advertisementResponse)
@@ -647,8 +640,7 @@ public class HomeUnimpededFragment extends RefreshFragment
 
         int contenId = goodId + 36;
         if (mPresenter != null && contenId >= 37)
-            mPresenter.saveStatisticsCount(String.valueOf(contenId),
-                    NetUtils.getPhontIP(Utils.getContext()));
+            mPresenter.saveStatisticsCount(String.valueOf(contenId));
 
         if (goodId >= 1) {
             CarApiClient.commitAdClick(Utils.getContext(), goodId, "3",

@@ -116,13 +116,15 @@ public class ViolationListPresenter
         dto.setSYS_HEAD(requestHeadDTO);
 
         ViolationDTO violationDTO = mAtyView.getViolationDTO();
-        ViolationDTO bean = new ViolationDTO();
-        bean.setProcessste("2");
-        bean.setToken(mRepository.getRASByStr(MainRouter.getPhoneDeviceId()));
-        bean.setCarnum(mRepository.getRASByStr(violationDTO.getCarnum()));
-        bean.setEnginenum(mRepository.getRASByStr(violationDTO.getEnginenum()));
-        bean.setCarnumtype(violationDTO.getCarnumtype());
-        dto.setReqInfo(bean);
+        if (violationDTO != null) {
+            ViolationDTO bean = new ViolationDTO();
+            bean.setProcessste("2");
+            bean.setToken(mRepository.getRASByStr(MainRouter.getPhoneDeviceId()));
+            bean.setCarnum(mRepository.getRASByStr(violationDTO.getCarnum()));
+            bean.setEnginenum(mRepository.getRASByStr(violationDTO.getEnginenum()));
+            bean.setCarnumtype(violationDTO.getCarnumtype());
+            dto.setReqInfo(bean);
+        }
         return new Gson().toJson(dto);
     }
 
@@ -180,7 +182,8 @@ public class ViolationListPresenter
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<List<ViolationBean>>() {
                     @Override
-                    public void doCompleted() {}
+                    public void doCompleted() {
+                    }
 
                     @Override
                     public void doError(Throwable e) {
@@ -212,13 +215,16 @@ public class ViolationListPresenter
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
-                    public void doCompleted() {}
+                    public void doCompleted() {
+                    }
 
                     @Override
-                    public void doError(Throwable e) {}
+                    public void doError(Throwable e) {
+                    }
 
                     @Override
-                    public void doNext(BaseResponse result) {}
+                    public void doNext(BaseResponse result) {
+                    }
                 });
         mSubscriptions.add(subscription);
     }

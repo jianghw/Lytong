@@ -125,13 +125,13 @@ public class LicenseCheckGradeActivity extends JxBaseActivity implements View.On
         dialogFragment.setClickListener(new IOnDateSetListener() {
             @Override
             public void onDateSet(
-                    DatePicker view, int year, int month, int dayOfMonth, boolean usable) {
+                    DatePicker view, Date date, boolean usable) {
 
                 if (!usable) return;
                 SimpleDateFormat format = new SimpleDateFormat(
                         "yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
                 Calendar calendar = Calendar.getInstance();
-                calendar.set(year, month, dayOfMonth);
+                calendar.setTime(date);
                 mTvDate.setText(format.format(calendar.getTime()));
             }
         });

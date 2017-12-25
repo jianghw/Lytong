@@ -40,7 +40,7 @@ public interface ICouponService {
     @FormUrlEncoded
     @POST("february/delUsrCoupon")
     Observable<BaseResponse> delUsrCoupon(@Field("userId") String userId,
-                                          @Field("couponId") String couponId);
+                                          @Field("couponUserId") String couponId);
 
     /**
      * 优惠券详情

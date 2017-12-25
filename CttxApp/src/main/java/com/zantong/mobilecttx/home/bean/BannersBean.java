@@ -16,6 +16,15 @@ public class BannersBean {
     private int id;
     private String url;
     private String advertisementSkipUrl;
+    private int statisticsId;
+
+    public int getStatisticsId() {
+        return statisticsId;
+    }
+
+    public void setStatisticsId(int statisticsId) {
+        this.statisticsId = statisticsId;
+    }
 
     public int getId() {
         return id;

@@ -29,8 +29,6 @@ import com.tzly.ctcyh.pay.pay_type_p.PayTypePresenter;
 import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.util.FormatUtils;
-import com.tzly.ctcyh.router.util.LogUtils;
-import com.tzly.ctcyh.router.util.NetUtils;
 import com.tzly.ctcyh.router.util.Utils;
 
 import java.util.List;
@@ -192,6 +190,9 @@ public class PayTypeFragment extends RefreshFragment
                 } else if (checkedId == R.id.rb_weixinpay) {
                     mPayType = 4;
                 }
+                //恢复不使用优惠劵
+                setSubmitPrice(getOriginalPrice());
+                mCouponBeanId = -1;
                 //获取优惠
                 mTvPay.setEnabled(true);
                 if (mPresenter != null && mLayReCoupon.isEnabled()) mPresenter.getCouponByType();
@@ -250,8 +251,7 @@ public class PayTypeFragment extends RefreshFragment
             int priceInteger = getSubmitPrice();
             mPresenter.weChatPay(
                     getExtraOrderId(),
-                    String.valueOf(priceInteger),
-                    NetUtils.getPhontIP(Utils.getContext()));
+                    String.valueOf(priceInteger));
         }
     }
 
@@ -374,9 +374,10 @@ public class PayTypeFragment extends RefreshFragment
         } else if (requestCode == PayGlobal.requestCode.pay_html_price &&
                 resultCode == PayGlobal.resultCode.web_pay_error) {
             toastShort("未完成支付");
+            PayRouter.gotoMainActivity(getActivity(), 1);
             //前往 订单详情页面
-            String orderId = getExtraOrderId();
-            PayRouter.gotoOrderDetailActivity(getActivity(), orderId, mCouponType);
+//            String orderId = getExtraOrderId();
+//            PayRouter.gotoOrderDetailActivity(getActivity(), orderId, mCouponType);
         }
     }
 
@@ -388,7 +389,7 @@ public class PayTypeFragment extends RefreshFragment
         CouponBean bean = data.getExtras().getParcelable(PayGlobal.putExtra.coupon_list_bean);
         if (bean == null) return;
 
-        mCouponBeanId = bean.getId();
+        mCouponBeanId = bean.getCouponUserId();
         setCouponText("已选择:" + bean.getCouponUse());
         int couponValue = bean.getCouponValue();
         int couponLimit = bean.getCouponLimit();
@@ -415,7 +416,7 @@ public class PayTypeFragment extends RefreshFragment
     private float getPriceValue(CouponBean bean, int couponValue, float originalPrice) {
         float priceValue;
         priceValue = bean.getCouponType() == 2
-                ? originalPrice * couponValue :
+                ? originalPrice * (couponValue / 100.00f) :
                 bean.getCouponType() == 3 ? originalPrice - couponValue
                         : originalPrice;
         priceValue = priceValue <= 0 ? 0 : priceValue;
@@ -432,7 +433,7 @@ public class PayTypeFragment extends RefreshFragment
 
     @Override
     public void getBankPayHtmlSucceed(PayUrlResponse response) {
-        PayRouter.gotoHtmlActivity(getActivity(),
+        PayRouter.gotoPayHtmlActivity(getActivity(),
                 "工行卡支付", response.getData(), getExtraOrderId(), mPayType);
     }
 
@@ -448,7 +449,7 @@ public class PayTypeFragment extends RefreshFragment
 
     @Override
     public void weChatPaySucceed(PayWeixinResponse response) {
-        PayRouter.gotoHtmlActivity(getActivity(),
+        PayRouter.gotoPayHtmlActivity(getActivity(),
                 "微信支付", response.getData().getMweburl(), getExtraOrderId(), mPayType);
     }
 

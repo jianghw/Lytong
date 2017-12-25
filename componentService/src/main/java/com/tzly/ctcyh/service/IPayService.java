@@ -14,7 +14,10 @@ public interface IPayService {
 
     void gotoPayTypeActivity(Activity context, String orderId);
 
-    void gotoHtmlActivity(Activity context, String title, String url, String extraOrderId, int payType);
+    /**
+     * 去支付吧
+     */
+    void gotoPayHtmlActivity(Activity context, String title, String url, String extraOrderId, int payType, String mChannel);
 
     void gotoHtmlActivity(Activity context, String title, String url);
 

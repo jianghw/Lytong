@@ -13,13 +13,4 @@ import java.util.List;
 
 public class ReceiveCouponResponse extends BaseResponse {
 
-    private List<RefuelOilBean> data;
-
-    public void setData(List<RefuelOilBean> data) {
-        this.data = data;
-    }
-
-    public List<RefuelOilBean> getData() {
-        return data;
-    }
 }

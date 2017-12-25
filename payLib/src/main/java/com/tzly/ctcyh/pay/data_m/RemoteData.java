@@ -121,7 +121,7 @@ public class RemoteData implements IRemoteSource {
      * 微信支付
      */
     @Override
-    public Observable<PayWeixinResponse> weChatPay(String orderId, String amount, String phontIP, int couponUserId) {
+    public Observable<PayWeixinResponse> weChatPay(String orderId, String amount, int couponUserId) {
         return couponUserId <= 0 ? baseRetrofit().create(IPayApiService.class).weChatPay(orderId, amount)
                 : baseRetrofit().create(IPayApiService.class).weChatPay(orderId, amount, String.valueOf(couponUserId));
     }

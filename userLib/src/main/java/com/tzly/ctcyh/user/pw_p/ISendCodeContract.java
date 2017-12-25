@@ -36,7 +36,7 @@ public interface ISendCodeContract {
 
     interface ISendCodePresenter extends IBasePresenter {
 
-        void sendVerificationCode();
+        void sendVerificationCode(boolean register);
 
         void startCountDown();
 

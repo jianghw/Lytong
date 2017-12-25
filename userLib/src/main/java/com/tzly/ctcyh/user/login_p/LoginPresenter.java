@@ -169,6 +169,7 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
                         if (baseResult != null && baseResult.getResponseCode() == 2000) {
                             //备份数据
                             mRepository.saveLoginResponseToSp(loginResponse);
+                            mRepository.isLogin();
                             mContractView.registerSucceed();
                         } else {
                             mContractView.registerError(baseResult != null
@@ -204,13 +205,16 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BankResponse>() {
                     @Override
-                    public void doCompleted() {}
+                    public void doCompleted() {
+                    }
 
                     @Override
-                    public void doError(Throwable e) {}
+                    public void doError(Throwable e) {
+                    }
 
                     @Override
-                    public void doNext(BankResponse baseResult) {}
+                    public void doNext(BankResponse baseResult) {
+                    }
                 });
         mSubscriptions.add(subscription);
     }

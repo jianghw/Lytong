@@ -2,7 +2,6 @@ package com.zantong.mobilecttx.home.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.text.TextUtils;
@@ -13,20 +12,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.tzly.ctcyh.router.util.ScreenUtils;
 import com.tzly.ctcyh.router.custom.popup.MoreWindow;
 import com.tzly.ctcyh.router.util.MobUtils;
+import com.tzly.ctcyh.router.util.ScreenUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.home.activity.Codequery;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.violation_v.ViolationActivity;
-import com.zantong.mobilecttx.violation_v.ViolationListActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.util.ArrayList;
@@ -183,17 +182,19 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
 
         ViolationDTO dto = new ViolationDTO();
         dto.setCarnum(userCarInfoBean.getCarnum());
+
         String enginenum = userCarInfoBean.getEnginenum();
         if (!TextUtils.isEmpty(enginenum) && enginenum.length() > 5)
             enginenum = enginenum.substring(enginenum.length() - 5, enginenum.length());
         dto.setEnginenum(enginenum);
-        dto.setCarnumtype(userCarInfoBean.getCarnumtype());
 
-        Intent intent = new Intent(mContext, ViolationListActivity.class);
+        dto.setCarnumtype(userCarInfoBean.getCarnumtype());
+        dto.setRegisterDate(userCarInfoBean.getBuydate());
+
         Bundle bundle = new Bundle();
         bundle.putSerializable("params", dto);
-        intent.putExtras(bundle);
-        mContext.startActivity(intent);
+
+        MainRouter.gotoViolationListActivity(mContext, bundle);
     }
 
     @Override

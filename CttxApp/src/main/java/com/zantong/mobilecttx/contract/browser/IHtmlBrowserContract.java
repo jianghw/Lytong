@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.contract.browser;
 
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
+import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
@@ -22,6 +23,10 @@ public interface IHtmlBrowserContract {
         void getBankPayHtmlError(String message);
 
         void getBankPayHtmlSucceed(PayOrderResponse result, String orderId);
+
+        void weChatPayError(String message);
+
+        void weChatPaySucceed(PayWeixinResponse response, String orderId);
     }
 
     interface IHtmlBrowserPresenter extends IBasePresenter {
@@ -30,6 +35,8 @@ public interface IHtmlBrowserContract {
         void uploadDrivingImg();
 
         void getBankPayHtml(String coupon, String orderId, String s);
+
+        void weChatPay(String coupon, String orderId, String s);
     }
 
 }

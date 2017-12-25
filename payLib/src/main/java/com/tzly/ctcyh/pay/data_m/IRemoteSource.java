@@ -56,7 +56,7 @@ public interface IRemoteSource {
     /**
      * 微信支付
      */
-    Observable<PayWeixinResponse> weChatPay(String orderId, String amount, String phontIP, int couponUserId);
+    Observable<PayWeixinResponse> weChatPay(String orderId, String amount, int couponUserId);
 
     /**
      * 码券列表

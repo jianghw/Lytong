@@ -132,12 +132,8 @@
         <activity
             android:name=".user.activity.AboutActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".user.activity.RegisterActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".user.activity.Register2Activity"
-            android:screenOrientation="portrait"/>
+
+
 
         <activity
             android:name=".user.activity.ChangePwdActivity"
@@ -354,6 +350,7 @@
         <!-- ==========android:process=":com.zantong.mobilecttx.web"=====浏览器============ -->
         <activity
             android:name=".browser.BrowserHtmlActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.zantong.mobilecttx.browser.BrowserHtmlActivity"/>
@@ -365,7 +362,6 @@
         <activity
             android:name=".browser.PayHtmlActivity"
             android:screenOrientation="portrait"/>
-
 
         <!-- ===================优惠模块========================================= -->
         <!-- 优惠模块 -->

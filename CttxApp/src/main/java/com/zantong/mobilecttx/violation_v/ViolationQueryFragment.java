@@ -201,10 +201,12 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
     }
 
     @Override
-    protected void onRefreshData() {}
+    protected void onRefreshData() {
+    }
 
     @Override
-    protected void onLoadMoreData() {}
+    protected void onLoadMoreData() {
+    }
 
     @Override
     public void setPresenter(IViolationQueryFtyContract.IViolationQueryFtyPresenter presenter) {
@@ -373,13 +375,13 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
                 dialogFragment.setClickListener(new IOnDateSetListener() {
                     @Override
                     public void onDateSet(
-                            DatePicker view, int year, int month, int dayOfMonth, boolean usable) {
+                            DatePicker view, Date date, boolean usable) {
 
                         if (!usable) return;
                         SimpleDateFormat format = new SimpleDateFormat(
                                 "yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
                         Calendar calendar = Calendar.getInstance();
-                        calendar.set(year, month, dayOfMonth);
+                        calendar.setTime(date);
                         setTvData(format.format(calendar.getTime()));
                     }
                 });
@@ -404,10 +406,12 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
                 break;
             case R.id.btn_query://提交
                 getActivity().setResult(MainGlobal.resultCode.violation_query_submit);
+
                 if (dataFormValidation()) updateVehicle();
                 break;
             case R.id.btn_delete://删除
                 getActivity().setResult(MainGlobal.resultCode.violation_query_del);
+
                 if (dataFormValidation()) deleteCar();
                 break;
             default:
@@ -478,7 +482,8 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
                     "修改车牌或车型",
                     new View.OnClickListener() {
                         @Override
-                        public void onClick(View v) {}
+                        public void onClick(View v) {
+                        }
                     },
                     new View.OnClickListener() {
                         @Override
@@ -571,14 +576,12 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
             enginenum = enginenum.substring(enginenum.length() - 5, enginenum.length());
         violationDTO.setEnginenum(enginenum);
         violationDTO.setCarnumtype(mCarInfoDTO.getCarnumtype());
+        violationDTO.setRegisterDate(getTvData());
 
-        Intent intent = new Intent(getActivity(), ViolationListActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("params", violationDTO);
-        intent.putExtras(bundle);
-        startActivity(intent);
 
-        getActivity().finish();
+        MainRouter.gotoViolationListActivity(getContext(), bundle);
     }
 
     /**
@@ -597,6 +600,8 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
      * enginenum	是	string	发动机号 加密
      */
     private void initCarInfoDto(String carNum, String engine, String vehicleCode) {
+        if (mCarInfoDTO == null) mCarInfoDTO = new CarInfoDTO();
+
         if (MainRouter.isUserLogin())
             mCarInfoDTO.setUsrid(MainRouter.getUserID());
 
@@ -667,6 +672,8 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
      * issueDate	否	string	初次领证日期
      */
     private void initBindCarDTO(String carNum, String engine, String vehicleCode) {
+        if (mBindCarDTO == null) mBindCarDTO = new BindCarDTO();
+
         mBindCarDTO.setPlateNo(carNum);
         mBindCarDTO.setEngineNo(engine);
         mBindCarDTO.setVehicleType(vehicleCode);
@@ -861,12 +868,14 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
             e.printStackTrace();
         }
 
-        mBindCarDTO.setOwnerName(carBean.getName());
-        mBindCarDTO.setAddress(carBean.getAddr());
-        mBindCarDTO.setUseCharacter(carBean.getUseCharace());
-        mBindCarDTO.setVin(carBean.getVin());
-        mBindCarDTO.setRegisterDate(carBean.getRegisterDate());
-        mBindCarDTO.setIssueDate(carBean.getIssueDate());
+        if (mBindCarDTO != null) {
+            mBindCarDTO.setOwnerName(carBean.getName());
+            mBindCarDTO.setAddress(carBean.getAddr());
+            mBindCarDTO.setUseCharacter(carBean.getUseCharace());
+            mBindCarDTO.setVin(carBean.getVin());
+            mBindCarDTO.setRegisterDate(carBean.getRegisterDate());
+            mBindCarDTO.setIssueDate(carBean.getIssueDate());
+        }
     }
 
 }
