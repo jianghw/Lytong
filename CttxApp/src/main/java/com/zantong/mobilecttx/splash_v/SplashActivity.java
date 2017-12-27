@@ -76,15 +76,6 @@ public class SplashActivity extends AbstractBaseActivity
                 Injection.provideRepository(Utils.getContext()), this);
     }
 
-    @Override
-    protected void initContentData() {
-        initThirdPartyData();
-
-        int width = DensityUtils.getScreenWidth(this);
-        int height = DensityUtils.getScreenHeight(this);
-        LogUtils.e("===》" + width + "/" + height);
-    }
-
     private void initView() {
         mImgLogo = (ImageView) findViewById(R.id.img_logo);
         mImgAdvert = (ImageView) findViewById(R.id.img_advert);
@@ -101,11 +92,22 @@ public class SplashActivity extends AbstractBaseActivity
         mPresenter = presenter;
     }
 
+    @Override
+    protected void initContentData() {
+        initThirdPartyData();
+
+        int width = DensityUtils.getScreenWidth(this);
+        int height = DensityUtils.getScreenHeight(this);
+        LogUtils.e("===》" + width + "/" + height);
+    }
+
     /**
      * 数据初始
      */
     private void initThirdPartyData() {
         if (mPresenter != null) mPresenter.startCountDown();
+
+        if(mPresenter!=null) mPresenter.updateToken();
         startAnimation();
     }
 

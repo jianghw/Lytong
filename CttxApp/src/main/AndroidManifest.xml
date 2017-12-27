@@ -133,8 +133,6 @@
             android:name=".user.activity.AboutActivity"
             android:screenOrientation="portrait"/>
 
-
-
         <activity
             android:name=".user.activity.ChangePwdActivity"
             android:screenOrientation="portrait"/>
@@ -185,7 +183,6 @@
             android:screenOrientation="portrait"/>
 
         <!-- ======================优惠劵模块=========================== -->
-
         <!-- 活动报名 -->
         <activity
             android:name=".huodong.activity.HundredPlanActivity"
@@ -275,9 +272,6 @@
         <activity
             android:name=".car.activity.SetPayCarActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".weizhang.activity.ViolationHistoryAcitvity"
-            android:screenOrientation="portrait"/>
 
         <!-- ========================违章查询页面================================= -->
         <!-- 违法查询页面 输入 -->
@@ -295,16 +289,14 @@
             android:name=".violation_v.ViolationPayActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".violation_v.LicenseCheckGradeActivity"
+            android:name=".payment_v.LicenseGradeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".violation_v.LicenseDetailActivity"
+            android:name=".payment_v.PaymentActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
-        <!-- 缴费须知 -->
-        <activity
-            android:name=".weizhang.activity.PaymentActivity"
-            android:screenOrientation="portrait"/>
+
 
         <!-- ===================活动模块========================================= -->
         <!-- 活动页面;驾校报名 -->

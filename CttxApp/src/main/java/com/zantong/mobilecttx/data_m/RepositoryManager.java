@@ -600,4 +600,11 @@ public class RepositoryManager {
     public Observable<PayWeixinResponse> weChatPay(String orderId, String amount, int couponUserId) {
         return mRemoteData.weChatPay(orderId, amount, couponUserId);
     }
+
+    /**
+     * t0ken
+     */
+    public Observable<BaseResponse> updateToken(String token, String userNum) {
+        return mRemoteData.updateToken(token, userNum);
+    }
 }

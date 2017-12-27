@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -56,9 +55,6 @@ import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.violation_v.LicenseCheckGradeActivity;
-import com.zantong.mobilecttx.violation_v.LicenseDetailActivity;
-import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 import com.zantong.mobilecttx.widght.MainScrollUpAdvertisementView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -695,25 +691,6 @@ public class HomeUnimpededFragment extends RefreshFragment
         MainRouter.gotoHtmlActivity(getActivity(), "年检服务",
                 BuildConfig.App_Url ? "http://139.196.183.121:3000/myCar"
                         : "http://nianjian.liyingtong.com/myCar");
-    }
-
-    protected void licenseCheckGrade() {
-        LicenseFileNumDTO bean = SPUtils.getInstance().getLicenseFileNumDTO();
-        if (!TextUtils.isEmpty(MainRouter.getUserFilenum())
-                && !TextUtils.isEmpty(MainRouter.getUserGetdate()) || bean != null) {
-            LicenseFileNumDTO loginBean = new LicenseFileNumDTO();
-            loginBean.setFilenum(MainRouter.getUserFilenum());
-            loginBean.setStrtdt(MainRouter.getUserGetdate());
-
-            Intent intent = new Intent(getActivity(), LicenseDetailActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(LicenseCheckGradeActivity.KEY_BUNDLE, bean != null ? bean : loginBean);
-            bundle.putBoolean(LicenseCheckGradeActivity.KEY_BUNDLE_FINISH, true);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        } else {
-            Act.getInstance().gotoIntentLogin(getActivity(), LicenseCheckGradeActivity.class);
-        }
     }
 
     protected void InternationalDrivingDocument() {

@@ -640,4 +640,12 @@ public class RemoteData implements IRemoteSource {
         return couponUserId <= 0 ? baseRetrofit().create(IPayService.class).weChatPay(orderId, amount)
                 : baseRetrofit().create(IPayService.class).weChatPay(orderId, amount, String.valueOf(couponUserId));
     }
+
+    /**
+     * token
+     */
+    @Override
+    public Observable<BaseResponse> updateToken(String token, String userNum) {
+        return baseRetrofit().create(ICttxService.class).updateToken(token, userNum);
+    }
 }

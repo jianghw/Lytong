@@ -2,9 +2,11 @@ package com.zantong.mobilecttx.splash_p;
 
 import android.support.annotation.NonNull;
 
+import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.home.bean.StartPicResponse;
+import com.zantong.mobilecttx.router.MainRouter;
 
 import java.util.concurrent.TimeUnit;
 
@@ -120,6 +122,30 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
                     }
                 });
         mSubscriptions.add(subCount);
+    }
+
+    @Override
+    public void updateToken() {
+        if (!MainRouter.isUserLogin()) return;
+        Subscription subscription = mRepository
+                .updateToken(mRepository.getRASByStr(MainRouter.getPushId()), mRepository.getRASUserID())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<BaseResponse>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        LogUtils.e(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse result) {
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 
     @Override

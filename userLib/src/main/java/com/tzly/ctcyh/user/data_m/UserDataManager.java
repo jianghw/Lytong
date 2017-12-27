@@ -70,7 +70,7 @@ public class UserDataManager {
      */
     public String getPhoneDeviceId() {
         String deviceId = mLocalData.getPhoneDeviceId();
-        LogUtils.d("DeviceId=============:" + deviceId);
+        LogUtils.i("DeviceId=============:" + deviceId);
         return deviceId;
     }
 
@@ -86,7 +86,7 @@ public class UserDataManager {
 
     public void savePushId(String pushId) {
         mLocalData.setPushId(pushId);
-        LogUtils.d("PushId=============:" + pushId);
+        LogUtils.i("PushId=============:" + pushId);
     }
 
     /**

@@ -52,6 +52,8 @@ public final class RouterGlobal {
         public static final String problem_feed_host = "problem_feed_host";
         public static final String driving_camera_host = "driving_camera_host";
         public static final String vehicle_camera_host = "vehicle_camera_host";
+        //违章查分页
+        public static final String license_grade_host = "license_grade_host";
     }
 
     public static final class putExtra {

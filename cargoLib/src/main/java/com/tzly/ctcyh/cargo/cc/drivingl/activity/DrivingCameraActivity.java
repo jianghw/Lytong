@@ -3,11 +3,16 @@ package com.tzly.ctcyh.cargo.cc.drivingl.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.hardware.Camera;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.Display;
 import android.view.SurfaceHolder;
@@ -18,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,13 +32,18 @@ import com.tzly.ctcyh.cargo.camera_p.CameraPresenter;
 import com.tzly.ctcyh.cargo.camera_p.ICameraContract;
 import com.tzly.ctcyh.cargo.cc.drivingl.view.ViewfinderView;
 import com.tzly.ctcyh.cargo.data_m.InjectionRepository;
+import com.tzly.ctcyh.router.util.FileUtils;
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.ym.cc.drivingl.controler.CameraManager;
 import com.ym.cc.drivingl.controler.OcrConstant;
 import com.ym.cc.drivingl.controler.OcrManager;
 import com.ym.cc.drivingl.vo.DrivingLicenseInfo;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
+
+import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 
 
 /**
@@ -60,6 +71,18 @@ public class DrivingCameraActivity extends Activity
      * 控制器
      */
     private ICameraContract.ICameraPresenter mPresenter;
+
+    private Thread mCameraOpenThread = new Thread(new Runnable() {
+        public void run() {
+            try {
+                cameraManager.openCamera();
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                cameraError = true;
+            }
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +129,7 @@ public class DrivingCameraActivity extends Activity
 
     }
 
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         // TODO Auto-generated method stub
@@ -113,19 +137,6 @@ public class DrivingCameraActivity extends Activity
         //		barcode_line.startAnimation(barcodeAnimation);
         //		barcode_line.getBackground().setAlpha(255);
     }
-
-
-    private Thread mCameraOpenThread = new Thread(new Runnable() {
-        public void run() {
-            try {
-                cameraManager.openCamera();
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                cameraError = true;
-            }
-        }
-    });
 
 
     private void setParameters() {
@@ -236,6 +247,7 @@ public class DrivingCameraActivity extends Activity
             super.handleMessage(msg);
             switch (msg.what) {
                 case OcrConstant.TAKE_PREVIEW_DATA_OK:
+                    LogUtils.e("===>" + 1);
                     if (ocrManager == null) {
                         ocrManager = new OcrManager(mHandler);
                         rect = cameraManager.getViewfinder(finderView.getFinder());
@@ -255,6 +267,7 @@ public class DrivingCameraActivity extends Activity
                     }
                     break;
                 case OcrConstant.RECOGN_OK:
+                    LogUtils.e("===>" + 2);
                     mHandler.removeMessages(OcrConstant.TAKE_PREVIEW_DATA_OK);
                     mHandler.removeMessages(OcrConstant.START_AUTOFOCUS);
                     //				if(over){
@@ -263,6 +276,7 @@ public class DrivingCameraActivity extends Activity
                     //				over = true;
                     String path = "/sdcard/ajztest.jpg";
                     //				path = "";
+
                     DrivingLicenseInfo bankCardInfo = ocrManager.getResult(path);
                     try {
                         String info = new String(bankCardInfo.getCharInfo(), "gbk").trim();
@@ -277,22 +291,27 @@ public class DrivingCameraActivity extends Activity
                     finish();
                     break;
                 case OcrConstant.REPEAT_AUTOFOCUS:
+                    LogUtils.e("===>" + 3);
                     cameraManager.autoFoucs();
                     mHandler.sendEmptyMessageDelayed(OcrConstant.REPEAT_AUTOFOCUS, 2000);
                     break;
                 case OcrConstant.RECOGN_EG_TIME_OUT:
+                    LogUtils.e("===>" + 4);
                     Toast.makeText(getBaseContext(), "������ڣ��뾡����£�", Toast.LENGTH_LONG).show();
                     finish();
                     break;
                 case OcrConstant.RECOGN_EG_LICENSE:
+                    LogUtils.e("===>" + 5);
                     Toast.makeText(getBaseContext(), "��Ȩʧ�ܣ�", Toast.LENGTH_LONG).show();
                     finish();
                     break;
                 case OcrConstant.RECOGN_EG_INIT_ERROR:
+                    LogUtils.e("===>" + 6);
                     Toast.makeText(getBaseContext(), "�����ʼ��ʧ�ܣ�", Toast.LENGTH_LONG).show();
                     finish();
                     break;
                 case OcrConstant.START_AUTOFOCUS:
+                    LogUtils.e("===>" + 7);
                     if (autoFoucs) {
                         cameraManager.autoFoucs();
                         autoFoucs = false;
@@ -305,14 +324,17 @@ public class DrivingCameraActivity extends Activity
                     }
                     break;
                 case OcrConstant.RECOGN_LINE_IN_RECT:
+                    LogUtils.e("===>" + 8);
                     int restult = (Integer) msg.obj;
                     finderView.setLineRect(restult);
                     break;
                 case 100:
+                    LogUtils.e("===>" + 9);
                     finderView.scan();
                     mHandler.sendEmptyMessageDelayed(100, 8);
                     break;
                 default:
+                    LogUtils.e("===>" + 0);
                     cameraManager.initDisplay();
                     mHandler.sendEmptyMessageDelayed(OcrConstant.START_AUTOFOCUS, 500);
                     Toast.makeText(getBaseContext(), "<>" + msg.what, Toast.LENGTH_SHORT).show();
@@ -321,6 +343,36 @@ public class DrivingCameraActivity extends Activity
         }
 
     };
+
+    private File getHeadImageFile(ImageView userImage) {
+//        String ImgPath = FileUtils.photoImagePath(Utils.getContext(), FileUtils.CROP_DIR);
+        String ImgPath = "/sdcard/ajztest.jpg";
+
+        File mCropFile = new File(ImgPath);
+        if (!mCropFile.exists()) {
+            return null;
+        }
+        Uri outputUri;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            outputUri = getUriForFileByN(mCropFile);
+        } else {
+            outputUri = Uri.fromFile(mCropFile);
+        }
+
+        Bitmap bitmap = FileUtils.decodeUriAsBitmap(outputUri, Utils.getContext());
+        if (bitmap != null) userImage.setImageBitmap(bitmap);
+        return mCropFile;
+    }
+
+    private Uri getUriForFileByN(File mCameraFile) {
+        try {
+            return FileProvider.getUriForFile(Utils.getContext(),
+                    getApplication().getPackageName() + ".fileprovider", mCameraFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Uri.fromFile(mCameraFile);
+        }
+    }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -380,10 +432,12 @@ public class DrivingCameraActivity extends Activity
      * +++++++++++++++++++++++++++++
      */
     @Override
-    public void showLoading() {}
+    public void showLoading() {
+    }
 
     @Override
-    public void dismissLoading() {}
+    public void dismissLoading() {
+    }
 
     @Override
     public void setPresenter(ICameraContract.ICameraPresenter presenter) {

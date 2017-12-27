@@ -70,6 +70,7 @@ public class ViewfinderView extends View{
 	public void initFinder(int pWidth,int pHeight,Handler mHandler){
 		m_nImageWidth = pWidth;
 		m_nImageHeight = pHeight;
+
 		WindowManager manager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 		Display display = manager.getDefaultDisplay();
 		width = display.getWidth();
@@ -98,10 +99,7 @@ public class ViewfinderView extends View{
 		lineRight = (float) (mWidth + k/2.0);
 		lineTop = (float) (mHeight - g/2.0);
 		lineBottom = (float) (mHeight + g/2.0);
-		
-		
-		
-		
+
 		int nDisplayWidth = display.getWidth();
 		int nDisplayHeight = display.getHeight();
 		
@@ -128,14 +126,7 @@ public class ViewfinderView extends View{
 			nUseHeight = 3*nUseWidth/4.0f;
 		}
 		dRealRegionWidth = nUseWidth/480.0f*420.0f;
-//		dRealRegionHeight = nUseHeight/360.0f*270.0f;
-		
-//		lineLeft = (int)((nDisplayWidth - dRealRegionWidth)/2.0f);//- (nDisplayWidth - nFitWidth)/2.0f);
-//		lineRight = (int)( nDisplayWidth - lineLeft);//- (nDisplayWidth - nFitWidth) );
-//		lineTop = (int)(nDisplayHeight - dRealRegionHeight)/2.0f;
-//		lineBottom = nDisplayHeight - lineTop;
-		
-		
+
 		paint = new Paint();
 		dLineWidth = (int)dRealRegionWidth/28; //30
 		dLineWidth = 4;
@@ -145,21 +136,19 @@ public class ViewfinderView extends View{
 		scanY1 = mHeight - mHeight/4;
 		scanY2 = mHeight + mHeight/4;
 	}
-	
-	
+
 	public void initFinder(int w,int h,int d){}
 	
 	public Rect getFinder(){
-		return new Rect((int)(lineLeft - marginW), (int)(lineTop - marginH), (int)(lineRight + marginW), (int)(lineBottom + marginH));
+		return new Rect((int)(lineLeft - marginW), (int)(lineTop - marginH),
+				(int)(lineRight + marginW), (int)(lineBottom + marginH));
 	}
-	
-	
+
 	public void setLineRect(int model){
 		lineModel = model;
 		invalidate();
 	}
-	
-	
+
 	public void scanInit(){
 		this.scan = true;
 		startX = lineLeft;
@@ -184,11 +173,6 @@ public class ViewfinderView extends View{
 				}
 				canvas.drawLine(startX, scanY1, startX, scanY2, paint);
 			}
-//			
-			
-			
-			
-			
 			
 			canvas.drawLine(lineLeft - dLineWidth/2, lineTop, lineLeft + dLen, lineTop, paint);
 			canvas.drawLine(lineLeft, lineTop- dLineWidth/2, lineLeft, lineTop + dLen, paint);
@@ -201,12 +185,9 @@ public class ViewfinderView extends View{
 			
 			canvas.drawLine(lineRight +  dLineWidth/2, lineBottom, lineRight - dLen, lineBottom, paint);
 			canvas.drawLine(lineRight, lineBottom +  dLineWidth/2, lineRight, lineBottom - dLen, paint);
-			
-			
-			
+
 			switch (lineModel) {
 			case 0:
-				
 				break;
 			case 1://��߿���
 				canvas.drawLine(lineLeft, lineTop, lineLeft, lineBottom, paint);
@@ -270,9 +251,7 @@ public class ViewfinderView extends View{
 				canvas.drawLine(lineLeft, lineTop, lineRight, lineTop, paint);
 				canvas.drawLine(lineLeft, lineBottom, lineRight, lineBottom, paint);
 				break;
-	
 			default:
-				
 				break;
 			}
 			paint.setColor(Color.BLACK);
@@ -287,10 +266,5 @@ public class ViewfinderView extends View{
 //			canvas.drawRect(0, lineBottom + dLineWidth / 2, width, height, paint);
 //			
 //			canvas.drawRect(lineRight + dLineWidth / 2, lineTop - dLineWidth / 2, width, lineBottom + dLineWidth / 2, paint);
-		
-		
 	}
-
-
-	
 }

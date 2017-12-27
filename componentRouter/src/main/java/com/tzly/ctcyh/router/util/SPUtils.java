@@ -31,11 +31,13 @@ public final class SPUtils {
     public static String USER_INFO = "user_info";
     public static String OLD_USER_INFO = "userinfo";
 
-    private static String USERPD = "userpd";
-    public static String USER_DEVICE_ID = "user_device_id";
     public static String USER_OIL_NUM = "user_oil_num";
+    public static String USER_DEVICE_ID = "user_device_id";
     public static String USER_PUSH_ID = "user_push_id";
     public static String USER_LOGIN_DIALOG = "user_login_dialog";
+    public static String USER_GRADE = "user_grade";
+
+    private static String USERPD = "userpd";
     public static String USER_CHANCLE_ID = "USER_CHANCLE_ID";
 
     /**
@@ -115,6 +117,10 @@ public final class SPUtils {
         return getInstance("");
     }
 
+    public static SPUtils instance() {
+        return getInstance(SPUtils.FILENAME);
+    }
+
     /**
      * 获取SP实例
      *
@@ -123,6 +129,7 @@ public final class SPUtils {
      */
     public static SPUtils getInstance(String spName) {
         if (isSpace(spName)) spName = "spUtils";
+
         SPUtils spUtils = SP_UTILS_MAP.get(spName);
         if (spUtils == null) {
             spUtils = new SPUtils(spName);

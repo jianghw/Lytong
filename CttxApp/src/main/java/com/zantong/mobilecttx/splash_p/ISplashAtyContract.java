@@ -55,6 +55,7 @@ public interface ISplashAtyContract {
          */
         void startGuidePic();
 
+        void updateToken();
     }
 
 }

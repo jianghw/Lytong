@@ -71,4 +71,6 @@ dependencies {
     compile files('libs/BaiduLBS_Android.jar')
     //日期控件
     compile 'com.github.codbking:PickTime:v1.0.1'
+    //收缩控件
+    compile 'com.drawthink:expandable-recyclerview:0.0.3'
 }

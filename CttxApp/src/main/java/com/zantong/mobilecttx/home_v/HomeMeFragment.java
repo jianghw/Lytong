@@ -1,10 +1,12 @@
 package com.zantong.mobilecttx.home_v;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.content.FileProvider;
 import android.text.Html;
 import android.text.TextUtils;
@@ -13,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.jianghw.multi.state.layout.MultiState;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
@@ -20,6 +23,7 @@ import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.FileUtils;
+import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.umeng.analytics.MobclickAgent;
@@ -38,9 +42,8 @@ import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
 import com.zantong.mobilecttx.home_p.HomeMeFtyPresenter;
 import com.zantong.mobilecttx.home_p.IHomeMeFtyContract;
 import com.zantong.mobilecttx.order.activity.MyOrderActivity;
-import com.zantong.mobilecttx.order.bean.CouponFragmentBean;
-import com.zantong.mobilecttx.order.bean.CouponFragmentLBean;
-import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
+import com.zantong.mobilecttx.payment_v.LicenseGradeActivity;
+import com.zantong.mobilecttx.payment_v.PaymentActivity;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_v.ShareParentActivity;
 import com.zantong.mobilecttx.user.activity.AboutActivity;
@@ -50,11 +53,11 @@ import com.zantong.mobilecttx.user.activity.SettingActivity;
 import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
 import com.zantong.mobilecttx.user.bean.MessageCountBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResponse;
+
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.weizhang.activity.ViolationHistoryAcitvity;
+import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.io.File;
-import java.util.List;
 
 import static com.tencent.bugly.beta.tinker.TinkerManager.getApplication;
 
@@ -390,7 +393,7 @@ public class HomeMeFragment extends RefreshFragment
                 break;
             case R.id.lay_query://违章缴费查询
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(34));
-                Act.getInstance().gotoIntentLogin(getActivity(), ViolationHistoryAcitvity.class);
+                licenseCheckGrade();
                 break;
             case R.id.lay_msg://消息
                 MobclickAgent.onEvent(Utils.getContext(), Config.getUMengID(24));
@@ -420,6 +423,34 @@ public class HomeMeFragment extends RefreshFragment
             default:
                 break;
         }
+    }
+
+    protected void licenseCheckGrade() {
+//        LicenseFileNumDTO bean = SPUtils.getInstance().getLicenseFileNumDTO();
+        String grade = SPUtils.instance().getString(SPUtils.USER_GRADE);
+
+        if (!TextUtils.isEmpty(grade) || (!TextUtils.isEmpty(MainRouter.getUserFilenum())
+                && !TextUtils.isEmpty(MainRouter.getUserGetdate()))) {
+
+            LicenseFileNumDTO fromJson = new Gson().fromJson(grade, LicenseFileNumDTO.class);
+
+        }
+
+//        if (!TextUtils.isEmpty(MainRouter.getUserFilenum())
+//                && !TextUtils.isEmpty(MainRouter.getUserGetdate()) || bean != null) {
+//
+//            LicenseFileNumDTO loginBean = new LicenseFileNumDTO();
+//            loginBean.setFilenum(MainRouter.getUserFilenum());
+//            loginBean.setStrtdt(MainRouter.getUserGetdate());
+//
+//            Intent intent = new Intent(getActivity(), PaymentActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putParcelable(LicenseGradeActivity.KEY_BUNDLE, bean != null ? bean : loginBean);
+//            intent.putExtras(bundle);
+//            startActivity(intent);
+//        } else {
+//            MainRouter.gotoLicenseGradeActivity(getActivity());
+//        }
     }
 
     /**

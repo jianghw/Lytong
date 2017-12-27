@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.custom.htmltxt.HtmlHttpImageGetter;
-import com.tzly.ctcyh.router.custom.htmltxt.HtmlResImageGetter;
 import com.tzly.ctcyh.router.custom.htmltxt.HtmlTextView;
 import com.tzly.ctcyh.router.custom.htmltxt.IHtmlTextClick;
 import com.zantong.mobilecttx.R;

@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.router;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -598,6 +599,16 @@ public final class MainRouter {
         bundle.putInt(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.oil_map_host,
+                bundle);
+    }
+
+    /**
+     * 违章查分输入面
+     */
+    public static void gotoLicenseGradeActivity(Context context) {
+        Bundle bundle = new Bundle();
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.license_grade_host,
                 bundle);
     }
 

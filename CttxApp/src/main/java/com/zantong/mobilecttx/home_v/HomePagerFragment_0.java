@@ -1,8 +1,5 @@
 package com.zantong.mobilecttx.home_v;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,11 +9,6 @@ import com.tzly.ctcyh.router.util.MobUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.utils.SPUtils;
-import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.violation_v.LicenseCheckGradeActivity;
-import com.zantong.mobilecttx.violation_v.LicenseDetailActivity;
-import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 
 /**
@@ -52,10 +44,12 @@ public class HomePagerFragment_0 extends RefreshFragment implements View.OnClick
     }
 
     @Override
-    protected void loadingFirstData() {}
+    protected void loadingFirstData() {
+    }
 
     @Override
-    protected void responseData(Object response) {}
+    protected void responseData(Object response) {
+    }
 
     public static HomePagerFragment_0 newInstance() {
         return new HomePagerFragment_0();
@@ -78,7 +72,6 @@ public class HomePagerFragment_0 extends RefreshFragment implements View.OnClick
 
             case R.id.tv_license://驾驶证查分
                 MobUtils.getInstance().eventIdByUMeng(7);
-                licenseCheckGrade();
                 break;
             case R.id.tv_appraisement://爱车估值
                 MobUtils.getInstance().eventIdByUMeng(34);
@@ -99,25 +92,6 @@ public class HomePagerFragment_0 extends RefreshFragment implements View.OnClick
         MainRouter.gotoHtmlActivity(getActivity(), "年检服务",
                 BuildConfig.App_Url ? "http://139.196.183.121:3000/myCar"
                         : "http://nianjian.liyingtong.com/myCar");
-    }
-
-    protected void licenseCheckGrade() {
-        LicenseFileNumDTO bean = SPUtils.getInstance().getLicenseFileNumDTO();
-        if (!TextUtils.isEmpty(MainRouter.getUserFilenum())
-                && !TextUtils.isEmpty(MainRouter.getUserGetdate()) || bean != null) {
-            LicenseFileNumDTO loginBean = new LicenseFileNumDTO();
-            loginBean.setFilenum(MainRouter.getUserFilenum());
-            loginBean.setStrtdt(MainRouter.getUserGetdate());
-
-            Intent intent = new Intent(getActivity(), LicenseDetailActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(LicenseCheckGradeActivity.KEY_BUNDLE, bean != null ? bean : loginBean);
-            bundle.putBoolean(LicenseCheckGradeActivity.KEY_BUNDLE_FINISH, true);
-            intent.putExtras(bundle);
-            startActivity(intent);
-        } else {
-            Act.getInstance().gotoIntentLogin(getActivity(), LicenseCheckGradeActivity.class);
-        }
     }
 
     protected void carValuation() {

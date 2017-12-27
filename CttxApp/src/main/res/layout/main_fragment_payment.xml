@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_120"
+        android:background="@drawable/bg_title_shade">
+
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/ResTextTheme.16.White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/res_x_20"
+            android:layout_marginRight="@dimen/res_x_20"
+            android:textSize="@dimen/res_fs_28"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/tv_totamt"
+            style="@style/ResTextTheme.16.White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_price"
+            android:layout_toLeftOf="@+id/tv_price"
+            android:text="总缴费" />
+
+        <TextView
+            android:id="@+id/tv_unit"
+            style="@style/ResTextTheme.16.White"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_price"
+            android:layout_toRightOf="@+id/tv_price"
+            android:text="元" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_88"
+        android:background="@color/res_color_white">
+
+        <TextView
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:text="选择查看周期" />
+
+        <TextView
+            android:id="@+id/tv_month"
+            style="@style/ResTextTheme.16.Red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/res_x_30"
+            android:background="@drawable/shape_clean_btn"
+            android:drawablePadding="@dimen/res_x_20"
+            android:drawableRight="@mipmap/arrow_down_gray"
+            android:paddingBottom="@dimen/res_y_10"
+            android:paddingLeft="@dimen/res_x_20"
+            android:paddingRight="@dimen/res_x_20"
+            android:paddingTop="@dimen/res_y_10"
+            android:text="12个月" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_1"
+        android:background="@color/res_color_gray_e6" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_88"
+        android:background="@color/res_color_white">
+
+        <TextView
+            android:id="@+id/tv_carTitle"
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:text="车辆总数:" />
+
+        <TextView
+            android:id="@+id/tv_carCount"
+            style="@style/ResTextTheme.16.Red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:layout_toRightOf="@+id/tv_carTitle"
+            android:text="0" />
+
+        <TextView
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:layout_toRightOf="@+id/tv_carCount"
+            android:text="辆" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/res_y_30"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_car"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_empty"
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawablePadding="20dp"
+            android:drawableTop="@mipmap/ic_layout_empty"
+            android:text="数据为空,下拉刷新下~" />
+    </RelativeLayout>
+
+</LinearLayout>

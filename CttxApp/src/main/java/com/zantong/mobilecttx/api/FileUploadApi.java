@@ -14,7 +14,7 @@ import retrofit2.http.PartMap;
  */
 public interface FileUploadApi {
 
-    @Multipart
+//    @Multipart
 //    @FormUrlEncoded
 //    @POST("ecip/uploadImage_uploadImage")
 

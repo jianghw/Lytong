@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_child"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/res_color_white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_1"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/res_x_50"
+        android:layout_marginRight="@dimen/res_x_50"
+        android:background="@color/res_color_gray_e6" />
+
+    <TextView
+        android:id="@+id/tv_date_v_t"
+        style="@style/ResTextTheme.16.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/res_x_50"
+        android:layout_marginTop="@dimen/res_y_30"
+        android:text="违章日期：" />
+
+    <TextView
+        android:id="@+id/tv_date_v"
+        style="@style/ResTextTheme.16.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_date_v_t"
+        android:layout_toRightOf="@+id/tv_date_v_t"
+        tools:text="2017-02-52" />
+
+    <TextView
+        android:id="@+id/tv_date_p_t"
+        style="@style/ResTextTheme.16.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_date_v_t"
+        android:layout_marginLeft="@dimen/res_x_50"
+        android:layout_marginTop="@dimen/res_y_20"
+        android:text="缴费日期：" />
+
+    <TextView
+        android:id="@+id/tv_date_p"
+        style="@style/ResTextTheme.16.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_date_p_t"
+        android:layout_toRightOf="@+id/tv_date_p_t"
+        tools:text="2017-02-52" />
+
+    <TextView
+        android:id="@+id/tv_num_t"
+        style="@style/ResTextTheme.16.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_date_p_t"
+        android:layout_marginBottom="@dimen/res_y_30"
+        android:layout_marginLeft="@dimen/res_x_50"
+        android:layout_marginTop="@dimen/res_y_20"
+        android:text="违章编号：" />
+
+    <TextView
+        android:id="@+id/tv_num"
+        style="@style/ResTextTheme.16.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_num_t"
+        android:layout_toRightOf="@+id/tv_num_t"
+        tools:text="2017-02-52" />
+
+    <TextView
+        android:id="@+id/tv_price"
+        style="@style/ResTextTheme.16.Red"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_num_t"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/res_x_50"
+        android:text="0 元" />
+
+    <TextView
+        android:id="@+id/tv_score"
+        style="@style/ResTextTheme.16.Red"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_date_v_t"
+        android:layout_marginRight="@dimen/res_x_50"
+        android:text="-2 分" />
+
+</RelativeLayout>

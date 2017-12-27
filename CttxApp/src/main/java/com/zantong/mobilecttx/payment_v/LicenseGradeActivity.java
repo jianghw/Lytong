@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.violation_v;
+package com.zantong.mobilecttx.payment_v;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,7 +33,7 @@ import java.util.Locale;
  * 驾驶证查分
  */
 
-public class LicenseCheckGradeActivity extends JxBaseActivity implements View.OnClickListener {
+public class LicenseGradeActivity extends JxBaseActivity implements View.OnClickListener {
 
     private EditText mEditArchivesNumber;
     private TextView mTvDate;
@@ -45,7 +45,8 @@ public class LicenseCheckGradeActivity extends JxBaseActivity implements View.On
     public static final String KEY_BUNDLE_FINISH = "Close_Activity";
 
     @Override
-    protected void bundleIntent(Bundle savedInstanceState) {}
+    protected void bundleIntent(Bundle savedInstanceState) {
+    }
 
     @Override
     protected int initContentView() {
@@ -70,9 +71,13 @@ public class LicenseCheckGradeActivity extends JxBaseActivity implements View.On
         mTvImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DialogMgr(LicenseCheckGradeActivity.this, R.mipmap.code_query_notice_iamge);
+                showDialog();
             }
         });
+    }
+
+    private void showDialog() {
+        new DialogMgr(this, R.mipmap.code_query_notice_iamge);
     }
 
     @Override

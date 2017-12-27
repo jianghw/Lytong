@@ -1,12 +1,12 @@
-package com.zantong.mobilecttx.violation_v;
+package com.zantong.mobilecttx.payment_v;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
+import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
-import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.text.ParseException;
@@ -15,29 +15,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.zantong.mobilecttx.violation_v.LicenseCheckGradeActivity.KEY_BUNDLE;
+import static com.zantong.mobilecttx.payment_v.LicenseGradeActivity.KEY_BUNDLE;
 
 /**
- * Created by jianghw on 2017/5/4.
- * 驾驶证查分
+ * 缴费记录
  */
+public class PaymentActivity extends AbstractBaseActivity {
 
-public class LicenseDetailActivity extends AbstractBaseActivity {
-    /**
-     * 是否手动关闭当前页面
-     */
-    private boolean isClose;
-    private LicenseFileNumDTO bean;
-    private LicenseDetailFragment mLicenseDetailFragment;
-
-    @Override
-    protected void bundleIntent(Intent intent) {
-        if (intent != null) {
-            Bundle bundle = intent.getExtras();
-            bean = bundle.getParcelable(KEY_BUNDLE);
-            isClose = bundle.getBoolean(LicenseCheckGradeActivity.KEY_BUNDLE_FINISH, false);
-        }
-    }
+    private PaymentFragment fragment;
+    private LicenseFileNumDTO fileNumDTO;
 
     @Override
     protected int initContentView() {
@@ -45,39 +31,58 @@ public class LicenseDetailActivity extends AbstractBaseActivity {
     }
 
     @Override
+    protected void rightClickListener() {
+
+    }
+
+    @Override
+    protected void bundleIntent(Intent intent) {
+        if (intent != null) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                fileNumDTO = bundle.getParcelable(KEY_BUNDLE);
+            }
+        }
+    }
+
+    @Override
     protected void bindFragment() {
-        titleContent("本计分周期累计扣分");
+        titleContent("违章缴费记录");
         titleMore("编辑");
     }
 
     @Override
     protected void initContentData() {
-        if (bean != null) {
-            String beanStrtdt = bean.getStrtdt();
-            String startDay = removeDateAcross(beanStrtdt);
-
-            LicenseFileNumDTO newBean = new LicenseFileNumDTO();
-            newBean.setFilenum(bean.getFilenum());
-            newBean.setStrtdt(getStartDate(startDay));
-            newBean.setEnddt(localDateFormat(getEndDate(startDay)));
-
-            FragmentManager fragmentManager = getSupportFragmentManager();
-
-            if (mLicenseDetailFragment == null) {
-                mLicenseDetailFragment = LicenseDetailFragment.newInstance(newBean);
-                FragmentUtils.add(fragmentManager, mLicenseDetailFragment, R.id.lay_base_frame);
-            }
-        }
+        initFragment();
     }
 
-    protected void rightClickListener() {
-        Intent intent = new Intent(this, LicenseCheckGradeActivity.class);
-        startActivity(intent);
-        if (isClose) finish();
+    private void initFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        String beanStrtdt = fileNumDTO.getStrtdt();
+        String startDay = removeDateAcross(beanStrtdt);
+
+        LicenseFileNumDTO newBean = new LicenseFileNumDTO();
+        newBean.setFilenum(fileNumDTO.getFilenum());
+        newBean.setStrtdt(getStartDate(startDay));
+        newBean.setEnddt(localDateFormat(getEndDate(startDay)));
+
+        //默认页面显示
+        if (fragment == null) {
+            fragment = PaymentFragment.newInstance(newBean);
+        }
+        FragmentUtils.add(fragmentManager, fragment, R.id.lay_base_frame);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (fragment != null) fragment = null;
     }
 
     /**
-     * 去除分隔符
+     * 日期格式标准化
      */
     private String removeDateAcross(String beanStrtdt) {
         if (beanStrtdt.contains("-")) {
@@ -133,31 +138,6 @@ public class LicenseDetailActivity extends AbstractBaseActivity {
         SimpleDateFormat simpleDateFormat =
                 new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
         return simpleDateFormat.format(new Date());
-        //去年的今天时间
-        //        Calendar today = Calendar.getInstance();
-        //        today.setTime(new Date());
-        //        today.add(Calendar.YEAR, -1);
-        //        long lastDate = today.getTime().getTime();
-        //        int yearLast = today.get(Calendar.YEAR);
-        //        //输入时间
-        //        String dateString = dateFormat(startDate);
-        //        Date date = null;
-        //        try {
-        //            date = simpleDateFormat.parse(dateString);
-        //        } catch (ParseException e) {
-        //            e.printStackTrace();
-        //        }
-        //        Calendar calendar = Calendar.getInstance();
-        //        calendar.setTime(date);
-        //        long dateTime = calendar.getTime().getTime();
-        //        int day = calendar.get(Calendar.DATE);
-        //        int month = calendar.get(Calendar.MONTH) + 1;
-        //        //判断逻辑
-        //        if (dateTime >= lastDate) return simpleDateFormat.format(new Date());
-        //        calendar.set(yearLast, month - 1, day);
-        //        if (calendar.getTime().getTime() >= lastDate) return simpleDateFormat.format(new Date());
-        //        calendar.add(Calendar.YEAR, 1);
-        //        return simpleDateFormat.format(calendar.getTime());
     }
 
     public String localDateFormat(String oldDate) {
@@ -183,4 +163,5 @@ public class LicenseDetailActivity extends AbstractBaseActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
         return simpleDateFormat.format(date);
     }
+
 }

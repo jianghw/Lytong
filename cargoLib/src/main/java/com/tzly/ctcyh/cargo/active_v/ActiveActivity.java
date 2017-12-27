@@ -99,7 +99,7 @@ public class ActiveActivity extends AbstractBaseActivity implements IActiveContr
         ActiveConfigBean bean = response.getData();
         //标记id
         mId_Only = bean.getId();
-        boolean chancleID = SPUtils.getInstance(SPUtils.FILENAME).getBoolean(mId_Only, false);
+        boolean chancleID = SPUtils.instance().getBoolean(mId_Only, false);
         if (chancleID) {
             finish();
             return;

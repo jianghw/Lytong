@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.violation_v;
+package com.zantong.mobilecttx.payment_v;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +17,7 @@ import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.violation_p.ILicenseGradeAtyContract;
 import com.zantong.mobilecttx.violation_p.LicenseGradeAtyPresenter;
+import com.zantong.mobilecttx.violation_v.ViolationDetailsActivity;
 import com.zantong.mobilecttx.weizhang.adapter.LicenseDetailAdapter;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.RspInfoBean;

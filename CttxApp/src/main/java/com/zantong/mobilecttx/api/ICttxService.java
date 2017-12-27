@@ -14,7 +14,10 @@ import com.zantong.mobilecttx.map.dto.AnnualDTO;
 import java.util.List;
 
 import com.tzly.ctcyh.router.bean.BaseResponse;
+
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -92,4 +95,11 @@ public interface ICttxService {
      */
     @GET("banner/getIndexLayer")
     Observable<IndexLayerResponse> getIndexLayer();
+
+    /**
+     * 同步token
+     */
+    @FormUrlEncoded
+    @POST("cttx/updateToken")
+    Observable<BaseResponse> updateToken(@Field("token") String token, @Field("userNum") String userNum);
 }
