@@ -87,7 +87,7 @@ public class RefuelOilFragment extends RefreshFragment
         RefuelOilPresenter presenter = new RefuelOilPresenter(
                 InjectionRepository.provideRepository(Utils.getContext()), this);
 
-        String oilNum = SPUtils.getInstance(SPUtils.FILENAME).getString(SPUtils.USER_OIL_NUM);
+        String oilNum = SPUtils.instance().getString(SPUtils.USER_OIL_NUM);
         if (!TextUtils.isEmpty(oilNum)) {
             mOilType = oilNum.length() == 19 ? 1 : 2;
             mTvType.setText(mOilType == 1 ? "中石化" : "中石油");
@@ -323,7 +323,7 @@ public class RefuelOilFragment extends RefreshFragment
     @Override
     public void createOrderSucceed(RefuelOrderResponse response) {
         toastShort(response.getResponseDesc());
-        SPUtils.getInstance(SPUtils.FILENAME).put(SPUtils.USER_OIL_NUM, getEditOil());
+        SPUtils.instance().put(SPUtils.USER_OIL_NUM, getEditOil());
 
         RefuelOrderBean bean = response.getData();
         if (bean != null)

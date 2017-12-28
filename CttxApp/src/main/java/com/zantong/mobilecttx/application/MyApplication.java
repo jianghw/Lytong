@@ -91,7 +91,7 @@ public class MyApplication extends MultiDexApplication {
      */
     private void initImageLoader(Context context) {
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
+                .cacheInMemory(false)
                 .cacheOnDisk(true)
                 .build();
 

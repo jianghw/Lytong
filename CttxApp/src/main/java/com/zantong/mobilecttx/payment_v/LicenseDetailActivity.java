@@ -15,8 +15,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.zantong.mobilecttx.payment_v.LicenseGradeActivity.KEY_BUNDLE;
-
 /**
  * Created by jianghw on 2017/5/4.
  * 驾驶证查分
@@ -30,12 +28,15 @@ public class LicenseDetailActivity extends AbstractBaseActivity {
     private LicenseFileNumDTO bean;
     private LicenseDetailFragment mLicenseDetailFragment;
 
+    public static final String KEY_BUNDLE = "LicenseFileNumDTO";
+    public static final String KEY_BUNDLE_FINISH = "Close_Activity";
+
     @Override
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             bean = bundle.getParcelable(KEY_BUNDLE);
-            isClose = bundle.getBoolean(LicenseGradeActivity.KEY_BUNDLE_FINISH, false);
+            isClose = bundle.getBoolean(KEY_BUNDLE_FINISH, false);
         }
     }
 

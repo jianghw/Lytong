@@ -3,13 +3,11 @@ package com.zantong.mobilecttx.weizhang.dto;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 /**
  * 驾驶证查分 请求bean
  */
 
-public class LicenseFileNumDTO implements Parcelable, Serializable {
+public class LicenseFileNumDTO implements Parcelable {
 
     private String filenum;
     private String strtdt;
@@ -60,7 +58,7 @@ public class LicenseFileNumDTO implements Parcelable, Serializable {
         this.enddt = in.readString();
     }
 
-    public static final Creator<LicenseFileNumDTO> CREATOR = new Creator<LicenseFileNumDTO>() {
+    public static final Parcelable.Creator<LicenseFileNumDTO> CREATOR = new Parcelable.Creator<LicenseFileNumDTO>() {
         @Override
         public LicenseFileNumDTO createFromParcel(Parcel source) {
             return new LicenseFileNumDTO(source);

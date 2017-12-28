@@ -645,6 +645,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         CleanUtils.cleanCustomCache(FileUtils.photoImageDirectory(Utils.getContext()));
 
         mLogout.setVisibility(View.GONE);
+
         MainRouter.cleanUserLogin();
         MainRouter.gotoMainActivity(this, 0);
     }

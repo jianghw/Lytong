@@ -290,7 +290,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".payment_v.LicenseGradeActivity"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".payment_v.PaymentActivity"

@@ -34,8 +34,8 @@ import drawthink.expandablerecyclerview.listener.OnRecyclerViewListener;
  * 加油充值
  */
 public class PaymentFragment extends RefreshFragment
-        implements IPaymentContract.IPaymentView, View.OnClickListener, OnRecyclerViewListener.OnItemClickListener {
-
+        implements IPaymentContract.IPaymentView, View.OnClickListener,
+        OnRecyclerViewListener.OnItemClickListener {
 
     private static final String FILE_NUM_DOT = "FILE_NUM_DOT";
     /**
@@ -96,7 +96,6 @@ public class PaymentFragment extends RefreshFragment
         mRecyclerview.setLayoutManager(linearLayoutManager);
         mRecyclerview.setNestedScrollingEnabled(false);
 
-//        mRecyclerview.addItemDecoration(new SimplePaddingDecoration(getActivity()));
         mAdapter = new PaymentAdapter(getActivity(), mCarDatas);
         mAdapter.setOnItemClickListener(this);
         mRecyclerview.setAdapter(mAdapter);
@@ -292,6 +291,5 @@ public class PaymentFragment extends RefreshFragment
 
     @Override
     public void onChildItemClick(int position, int groupPosition, int childPosition, View view) {
-
     }
 }

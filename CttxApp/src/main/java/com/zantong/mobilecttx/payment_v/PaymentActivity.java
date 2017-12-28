@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
+import com.google.gson.Gson;
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
+import com.zantong.mobilecttx.global.MainGlobal;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.text.ParseException;
@@ -14,8 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
-import static com.zantong.mobilecttx.payment_v.LicenseGradeActivity.KEY_BUNDLE;
 
 /**
  * 缴费记录
@@ -30,9 +31,13 @@ public class PaymentActivity extends AbstractBaseActivity {
         return R.layout.activity_base_frame;
     }
 
+    /**
+     * 编辑
+     */
     @Override
     protected void rightClickListener() {
-
+        MainRouter.gotoLicenseGradeActivity(this);
+        finish();
     }
 
     @Override
@@ -40,7 +45,8 @@ public class PaymentActivity extends AbstractBaseActivity {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
-                fileNumDTO = bundle.getParcelable(KEY_BUNDLE);
+                String extra = bundle.getString(MainGlobal.putExtra.license_bean_extra);
+                fileNumDTO = new Gson().fromJson(extra, LicenseFileNumDTO.class);
             }
         }
     }
@@ -59,8 +65,8 @@ public class PaymentActivity extends AbstractBaseActivity {
     private void initFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        String beanStrtdt = fileNumDTO.getStrtdt();
-        String startDay = removeDateAcross(beanStrtdt);
+        String strtdt = fileNumDTO.getStrtdt();
+        String startDay = removeDateAcross(strtdt);
 
         LicenseFileNumDTO newBean = new LicenseFileNumDTO();
         newBean.setFilenum(fileNumDTO.getFilenum());

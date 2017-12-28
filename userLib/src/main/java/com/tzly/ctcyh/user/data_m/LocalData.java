@@ -98,7 +98,7 @@ public class LocalData implements ILocalSource {
     @Override
     public void savePhoneDeviceId() {
         String deviceId = AppUtils.getDeviceId();
-        SPUtils.getInstance(SPUtils.FILENAME).put(SPUtils.USER_DEVICE_ID, deviceId);
+        SPUtils.instance().put(SPUtils.USER_DEVICE_ID, deviceId);
     }
 
     /**
@@ -106,7 +106,7 @@ public class LocalData implements ILocalSource {
      */
     @Override
     public String getPhoneDeviceId() {
-        String deviceId = SPUtils.getInstance(SPUtils.FILENAME).getString(SPUtils.USER_DEVICE_ID);
+        String deviceId = SPUtils.instance().getString(SPUtils.USER_DEVICE_ID);
         if (TextUtils.isEmpty(deviceId)) deviceId = AppUtils.getDeviceId();
         return deviceId;
     }
@@ -120,11 +120,11 @@ public class LocalData implements ILocalSource {
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .create();
         String user = gson.toJson(loginResponse);
-        SPUtils.getInstance(SPUtils.FILENAME).put(SPUtils.USER_INFO, user);
+        SPUtils.instance().put(SPUtils.USER_INFO, user);
     }
 
     public String getLoginResponseFromSp() {
-        return SPUtils.getInstance(SPUtils.FILENAME).getString(SPUtils.USER_INFO);
+        return SPUtils.instance().getString(SPUtils.USER_INFO);
     }
 
     /**
@@ -135,7 +135,7 @@ public class LocalData implements ILocalSource {
         String user = getLoginResponseFromSp();
         if (!TextUtils.isEmpty(user)) return user;
         //获取旧数据，走旧业务逻辑
-        Object oldLoginBean = SPUtils.getInstance(SPUtils.FILENAME).readObject(SPUtils.OLD_USER_INFO);
+        Object oldLoginBean = SPUtils.instance().readObject(SPUtils.OLD_USER_INFO);
         if (oldLoginBean == null) return null;
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
@@ -146,7 +146,7 @@ public class LocalData implements ILocalSource {
         LoginResponse responseFromSp = new LoginResponse();
         responseFromSp.setRspInfo(loginBean);
         saveLoginResponseToSp(responseFromSp);
-        SPUtils.getInstance(SPUtils.FILENAME).remove(SPUtils.OLD_USER_INFO);
+        SPUtils.instance().remove(SPUtils.OLD_USER_INFO);
         return getLoginResponseFromSp();
     }
 
@@ -172,7 +172,6 @@ public class LocalData implements ILocalSource {
      */
     @Override
     public LoginBean getLoginBean() {
-
         return mLoginBean != null ? mLoginBean : new LoginBean();
     }
 
@@ -190,12 +189,12 @@ public class LocalData implements ILocalSource {
      */
     @Override
     public void setPushId(String pushId) {
-        SPUtils.getInstance(SPUtils.FILENAME).put(SPUtils.USER_PUSH_ID, pushId);
+        SPUtils.instance().put(SPUtils.USER_PUSH_ID, pushId);
     }
 
     @Override
     public String getPushId() {
-        return SPUtils.getInstance(SPUtils.FILENAME).getString(SPUtils.USER_PUSH_ID);
+        return SPUtils.instance().getString(SPUtils.USER_PUSH_ID);
     }
 
     public boolean isLogin() {
@@ -214,7 +213,7 @@ public class LocalData implements ILocalSource {
         isLogin = false;
         mLoginBean = null;
 
-        SPUtils.getInstance(SPUtils.FILENAME).clear();
+        SPUtils.instance().clear();
     }
 
 }

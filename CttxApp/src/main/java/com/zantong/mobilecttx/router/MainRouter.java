@@ -260,7 +260,7 @@ public final class MainRouter {
      */
     public static void loginFilenumDialog(final Activity activity) {
 
-        boolean show = SPUtils.getInstance(SPUtils.FILENAME).getBoolean(SPUtils.USER_LOGIN_DIALOG, true);
+        boolean show = SPUtils.instance().getBoolean(SPUtils.USER_LOGIN_DIALOG, true);
         if (show && TextUtils.isEmpty(getUserFilenum())) {
             new DialogMgr(activity,
                     "登录成功", "畅通车友会欢迎您，赶快去注册您的牡丹卡吧！", "添加畅通卡", "继续",
@@ -280,7 +280,7 @@ public final class MainRouter {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            SPUtils.getInstance(SPUtils.FILENAME).put(SPUtils.USER_LOGIN_DIALOG, false);
+                            SPUtils.instance().put(SPUtils.USER_LOGIN_DIALOG, false);
                             if (activity != null) activity.finish();
                         }
                     });
@@ -609,6 +609,17 @@ public final class MainRouter {
         Bundle bundle = new Bundle();
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.license_grade_host,
+                bundle);
+    }
+
+    /**
+     * 缴费查询
+     */
+    public static void gotoPaymentActivity(Context context, String bean) {
+        Bundle bundle = new Bundle();
+        bundle.putString(MainGlobal.putExtra.license_bean_extra, bean);
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.pay_ment_host,
                 bundle);
     }
 

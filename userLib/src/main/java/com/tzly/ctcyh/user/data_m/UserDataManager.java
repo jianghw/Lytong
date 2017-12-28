@@ -79,8 +79,8 @@ public class UserDataManager {
      */
     public String getPushId() {
         String pushId = mLocalData.getPushId();
-        if (TextUtils.isEmpty(pushId)) pushId = UserRouter.getPushId();
-        LogUtils.d("PushId=============:" + pushId);
+        if (TextUtils.isEmpty(pushId) || pushId.length() != 32) pushId = UserRouter.getPushId();
+        LogUtils.i("PushId=============:" + pushId);
         return pushId;
     }
 

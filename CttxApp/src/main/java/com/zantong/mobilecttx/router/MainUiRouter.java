@@ -25,6 +25,7 @@ import com.zantong.mobilecttx.msg_v.MegTypeActivity;
 import com.zantong.mobilecttx.order_v.AnnualDetailActivity;
 import com.zantong.mobilecttx.order_v.OrderDetailActivity;
 import com.zantong.mobilecttx.payment_v.LicenseGradeActivity;
+import com.zantong.mobilecttx.payment_v.PaymentActivity;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.violation_v.ViolationActivity;
 import com.zantong.mobilecttx.violation_v.ViolationListActivity;
@@ -71,7 +72,8 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 RouterGlobal.Host.my_card_host,
                 RouterGlobal.Host.problem_feed_host,
                 RouterGlobal.Host.oil_map_host,
-                RouterGlobal.Host.license_grade_host
+                RouterGlobal.Host.license_grade_host,
+                RouterGlobal.Host.pay_ment_host
         };
     }
 
@@ -127,6 +129,8 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, BaiduMapParentActivity.class);
         } else if (RouterGlobal.Host.license_grade_host.equals(host)) {
             intent.setClass(context, LicenseGradeActivity.class);
+        } else if (RouterGlobal.Host.pay_ment_host.equals(host)) {
+            intent.setClass(context, PaymentActivity.class);
         } else {
             return true;
         }

@@ -13,7 +13,7 @@ public final class MainGlobal {
         public static final int meg_detail_del = 1010;
         public static final int violation_query_camera = 1020;
         public static final int violation_query_bean = 1030;
-        public static final int set_pay_car=1040;
+        public static final int set_pay_car = 1040;
     }
 
     public static final class resultCode {
@@ -23,7 +23,7 @@ public final class MainGlobal {
         public static final int web_browser_back = 2040;
         public static final int violation_query_submit = 2050;
         public static final int violation_query_del = 2051;
-        public static final int set_pay_car_succeed =2060;
+        public static final int set_pay_car_succeed = 2060;
     }
 
     public static final class putExtra {
@@ -37,6 +37,7 @@ public final class MainGlobal {
         public static final String violation_num_extra = "violation_num_extra";
         public static final String car_enginenum_extra = "car_enginenum_extra";
         public static final String car_item_bean_extra = "car_item_bean_extra";
+        public static final String license_bean_extra = "license_bean_extra";
     }
 
     public static final class Host {

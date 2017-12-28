@@ -11,15 +11,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.tzly.ctcyh.router.base.JxBaseActivity;
+import com.google.gson.Gson;
+import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.custom.dialog.DateDialogFragment;
 import com.tzly.ctcyh.router.custom.dialog.IOnDateSetListener;
 import com.tzly.ctcyh.router.util.MobUtils;
+import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogMgr;
-import com.zantong.mobilecttx.utils.SPUtils;
+
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.text.ParseException;
@@ -33,7 +35,7 @@ import java.util.Locale;
  * 驾驶证查分
  */
 
-public class LicenseGradeActivity extends JxBaseActivity implements View.OnClickListener {
+public class LicenseGradeActivity extends AbstractBaseActivity implements View.OnClickListener {
 
     private EditText mEditArchivesNumber;
     private TextView mTvDate;
@@ -41,12 +43,7 @@ public class LicenseGradeActivity extends JxBaseActivity implements View.OnClick
     private Button mBtnCommit;
     private RelativeLayout mLyData;
 
-    public static final String KEY_BUNDLE = "LicenseFileNumDTO";
-    public static final String KEY_BUNDLE_FINISH = "Close_Activity";
-
-    @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-    }
+    private LicenseFileNumDTO fromJson;
 
     @Override
     protected int initContentView() {
@@ -54,20 +51,31 @@ public class LicenseGradeActivity extends JxBaseActivity implements View.OnClick
     }
 
     @Override
-    protected void bindContentView(View childView) {
-        titleContent("驾驶证查分");
+    protected void bundleIntent(Intent intent) {
+        String grade = SPUtils.instance().getString(SPUtils.USER_GRADE);
+        if (!TextUtils.isEmpty(grade)) {
+            fromJson = new Gson().fromJson(grade, LicenseFileNumDTO.class);
+        } else {
+            fromJson = new LicenseFileNumDTO();
+            if (!TextUtils.isEmpty(MainRouter.getUserFilenum()))
+                fromJson.setFilenum(MainRouter.getUserFilenum());
+            if (!TextUtils.isEmpty(MainRouter.getUserGetdate()))
+                fromJson.setStrtdt(MainRouter.getUserGetdate());
+        }
+    }
 
+    @Override
+    protected void bindFragment() {
+        titleContent("违章缴费查询");
         assignViews();
 
         mBtnCommit.setOnClickListener(this);
-
         mLyData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDataDialog();
             }
         });
-
         mTvImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,53 +84,16 @@ public class LicenseGradeActivity extends JxBaseActivity implements View.OnClick
         });
     }
 
-    private void showDialog() {
-        new DialogMgr(this, R.mipmap.code_query_notice_iamge);
-    }
-
-    @Override
-    protected void initContentData() {
-        initIntentData();
-    }
-
-    /**
-     * 初始化填入数据
-     */
-    private void initIntentData() {
-        String fileNum = MainRouter.getUserFilenum();
-        mEditArchivesNumber.setText(fileNum);
-
-        String startDate = MainRouter.getUserGetdate();
-        String beanStrtdt = removeDateAcross(startDate);
-        if (!TextUtils.isEmpty(beanStrtdt)) mTvDate.setText(dateFormat(beanStrtdt));
-
-        LicenseFileNumDTO bean = SPUtils.getInstance().getLicenseFileNumDTO();
-        if (bean != null) {
-            mEditArchivesNumber.setText(bean.getFilenum());
-            mTvDate.setText(dateFormat(bean.getStrtdt()));
-        }
-    }
-
-    /**
-     * 日期格式标准化
-     */
-    private String removeDateAcross(String beanStrtdt) {
-        if (beanStrtdt.contains("-")) {
-            String[] days = beanStrtdt.split("-");
-            return days[0] + days[1] + days[2];
-        } else if (beanStrtdt.contains("/")) {
-            String[] days = beanStrtdt.split("/");
-            return days[0] + days[1] + days[2];
-        }
-        return beanStrtdt;
-    }
-
     private void assignViews() {
         mEditArchivesNumber = (EditText) findViewById(R.id.edit_archives_number);
         mTvDate = (TextView) findViewById(R.id.tv_date);
         mTvImage = (ImageView) findViewById(R.id.img_cartype_desc);
         mLyData = (RelativeLayout) findViewById(R.id.lay_date);
         mBtnCommit = (Button) findViewById(R.id.btn_commit);
+    }
+
+    private void showDialog() {
+        new DialogMgr(this, R.mipmap.code_query_notice_iamge);
     }
 
     private void showDataDialog() {
@@ -144,6 +115,30 @@ public class LicenseGradeActivity extends JxBaseActivity implements View.OnClick
     }
 
     @Override
+    protected void initContentData() {
+        if (fromJson != null) {
+            mEditArchivesNumber.setText(fromJson.getFilenum());
+
+            mTvDate.setText(dateFormat(fromJson.getStrtdt()));
+        }
+    }
+
+    /**
+     * yyyyMMdd-->yyyy-MM-dd
+     */
+    public String dateFormat(String oldDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.SIMPLIFIED_CHINESE);
+        Date date = null;
+        try {
+            date = sdf.parse(oldDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
+        return simpleDateFormat.format(date);
+    }
+
+    @Override
     public void onClick(View v) {
         if (TextUtils.isEmpty(getArchivesNumber()) || getArchivesNumber().length() != 12) {
             ToastUtils.toastShort("请输入正确12位驾驶证档案编号");
@@ -155,26 +150,12 @@ public class LicenseGradeActivity extends JxBaseActivity implements View.OnClick
             LicenseFileNumDTO dto = new LicenseFileNumDTO();
             dto.setFilenum(getArchivesNumber());
             dto.setStrtdt(localDateFormat(getTvDate()));//真时的时间
-            SPUtils.getInstance().saveLicenseFileNumDTO(dto);
 
-            startIntentToAty();
+            String gson = new Gson().toJson(dto);
+            SPUtils.instance().put(SPUtils.USER_GRADE, gson);
+            MainRouter.gotoPaymentActivity(this, gson);
+            finish();
         }
-    }
-
-    private void startIntentToAty() {
-        Intent intent = new Intent(this, LicenseDetailActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(KEY_BUNDLE, initLicenseFileNumDTO());
-        bundle.putBoolean(KEY_BUNDLE_FINISH, false);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-    public LicenseFileNumDTO initLicenseFileNumDTO() {
-        LicenseFileNumDTO dto = new LicenseFileNumDTO();
-        dto.setFilenum(getArchivesNumber());
-        dto.setStrtdt(localDateFormat(getTvDate()));//真时的时间
-        return dto;
     }
 
     public String getArchivesNumber() {
@@ -183,6 +164,40 @@ public class LicenseGradeActivity extends JxBaseActivity implements View.OnClick
 
     public String getTvDate() {
         return mTvDate.getText().toString().trim();
+    }
+
+    public String localDateFormat(String oldDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
+        Date date = null;
+        try {
+            date = sdf.parse(oldDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.SIMPLIFIED_CHINESE);
+        return simpleDateFormat.format(date);
+    }
+
+
+    /**
+     * 日期格式标准化
+     */
+    private String removeDateAcross(String beanStrtdt) {
+        if (beanStrtdt.contains("-")) {
+            String[] days = beanStrtdt.split("-");
+            return days[0] + days[1] + days[2];
+        } else if (beanStrtdt.contains("/")) {
+            String[] days = beanStrtdt.split("/");
+            return days[0] + days[1] + days[2];
+        }
+        return beanStrtdt;
+    }
+
+    public LicenseFileNumDTO initLicenseFileNumDTO() {
+        LicenseFileNumDTO dto = new LicenseFileNumDTO();
+        dto.setFilenum(getArchivesNumber());
+        dto.setStrtdt(localDateFormat(getTvDate()));//真时的时间
+        return dto;
     }
 
     /**
@@ -242,30 +257,6 @@ public class LicenseGradeActivity extends JxBaseActivity implements View.OnClick
         if (calendar.getTime().getTime() >= lastDate) simpleDateFormat.format(new Date());
         calendar.add(Calendar.YEAR, 1);
         return simpleDateFormat.format(calendar.getTime());
-    }
-
-    public String localDateFormat(String oldDate) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
-        Date date = null;
-        try {
-            date = sdf.parse(oldDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.SIMPLIFIED_CHINESE);
-        return simpleDateFormat.format(date);
-    }
-
-    public String dateFormat(String oldDate) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.SIMPLIFIED_CHINESE);
-        Date date = null;
-        try {
-            date = sdf.parse(oldDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
-        return simpleDateFormat.format(date);
     }
 
 }

@@ -127,6 +127,7 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
     @Override
     public void updateToken() {
         if (!MainRouter.isUserLogin()) return;
+
         Subscription subscription = mRepository
                 .updateToken(mRepository.getRASByStr(MainRouter.getPushId()), mRepository.getRASUserID())
                 .subscribeOn(Schedulers.io())

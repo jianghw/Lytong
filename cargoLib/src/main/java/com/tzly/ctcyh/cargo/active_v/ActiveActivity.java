@@ -185,7 +185,7 @@ public class ActiveActivity extends AbstractBaseActivity implements IActiveContr
     }
 
     private void saveSubmit() {
-        SPUtils.getInstance(SPUtils.FILENAME).put(mId_Only, true);
+        SPUtils.instance().put(mId_Only, true);
     }
 
     @Override

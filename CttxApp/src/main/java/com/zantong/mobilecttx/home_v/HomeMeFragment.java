@@ -1,12 +1,10 @@
 package com.zantong.mobilecttx.home_v;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v4.content.FileProvider;
 import android.text.Html;
 import android.text.TextUtils;
@@ -41,19 +39,16 @@ import com.zantong.mobilecttx.common.activity.CommonProblemActivity;
 import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
 import com.zantong.mobilecttx.home_p.HomeMeFtyPresenter;
 import com.zantong.mobilecttx.home_p.IHomeMeFtyContract;
+import com.zantong.mobilecttx.msg_v.MegTypeActivity;
 import com.zantong.mobilecttx.order.activity.MyOrderActivity;
-import com.zantong.mobilecttx.payment_v.LicenseGradeActivity;
-import com.zantong.mobilecttx.payment_v.PaymentActivity;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_v.ShareParentActivity;
 import com.zantong.mobilecttx.user.activity.AboutActivity;
-import com.zantong.mobilecttx.msg_v.MegTypeActivity;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.user.activity.SettingActivity;
 import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
 import com.zantong.mobilecttx.user.bean.MessageCountBean;
 import com.zantong.mobilecttx.user.bean.MessageCountResponse;
-
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
@@ -426,14 +421,21 @@ public class HomeMeFragment extends RefreshFragment
     }
 
     protected void licenseCheckGrade() {
-//        LicenseFileNumDTO bean = SPUtils.getInstance().getLicenseFileNumDTO();
         String grade = SPUtils.instance().getString(SPUtils.USER_GRADE);
+        LicenseFileNumDTO fromJson = null;
+        if (!TextUtils.isEmpty(grade)) {
+            fromJson = new Gson().fromJson(grade, LicenseFileNumDTO.class);
+        } else if (!TextUtils.isEmpty(MainRouter.getUserFilenum()) &&
+                !TextUtils.isEmpty(MainRouter.getUserGetdate())) {
+            fromJson = new LicenseFileNumDTO();
+            fromJson.setFilenum(MainRouter.getUserFilenum());
+            fromJson.setStrtdt(MainRouter.getUserGetdate());
+        }
 
-        if (!TextUtils.isEmpty(grade) || (!TextUtils.isEmpty(MainRouter.getUserFilenum())
-                && !TextUtils.isEmpty(MainRouter.getUserGetdate()))) {
-
-            LicenseFileNumDTO fromJson = new Gson().fromJson(grade, LicenseFileNumDTO.class);
-
+        if (fromJson != null) {
+            MainRouter.gotoPaymentActivity(getActivity(), new Gson().toJson(fromJson));
+        } else {
+            MainRouter.gotoLicenseGradeActivity(getActivity());
         }
 
 //        if (!TextUtils.isEmpty(MainRouter.getUserFilenum())
