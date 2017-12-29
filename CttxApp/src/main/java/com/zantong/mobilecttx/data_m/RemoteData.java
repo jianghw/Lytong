@@ -23,6 +23,7 @@ import com.zantong.mobilecttx.api.ITextService;
 import com.zantong.mobilecttx.api.IUserService;
 import com.zantong.mobilecttx.api.IViolationService;
 import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
+import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
 import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -647,5 +648,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<BaseResponse> updateToken(String token, String userNum) {
         return baseRetrofit().create(ICttxService.class).updateToken(token, userNum);
+    }
+
+    /**
+     * 模块配置接口
+     */
+    @Override
+    public Observable<UnimpededBannerResponse> getBanner() {
+        return baseRetrofit().create(IModuleService.class).getBanner();
     }
 }

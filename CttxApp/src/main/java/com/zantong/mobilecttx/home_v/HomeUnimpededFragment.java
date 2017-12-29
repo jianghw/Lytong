@@ -21,6 +21,7 @@ import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.custom.banner.CBViewHolderCreator;
 import com.tzly.ctcyh.router.custom.banner.ConvenientBanner;
 import com.tzly.ctcyh.router.global.JxGlobal;
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
@@ -34,12 +35,14 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
+import com.zantong.mobilecttx.base.bean.UnimpededBannerBean;
+import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
-import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
+import com.zantong.mobilecttx.home_p.IUnimpededFtyContract;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
-import com.zantong.mobilecttx.home.adapter.HorizontalCarViolationAdapter;
+import com.zantong.mobilecttx.home_p.HorizontalCarViolationAdapter;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
-import com.zantong.mobilecttx.home.adapter.MainBannerImgHolderView;
+import com.zantong.mobilecttx.home_p.MainBannerImgHolderView;
 import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.home.bean.HomeBean;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
@@ -48,7 +51,8 @@ import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.home.bean.IndexLayerBean;
 import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
-import com.zantong.mobilecttx.presenter.home.UnimpededFtyPresenter;
+import com.zantong.mobilecttx.home_p.UnimpededFtyPresenter;
+import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.push_v.PushBean;
 import com.zantong.mobilecttx.push_v.PushTipService;
 import com.zantong.mobilecttx.router.MainRouter;
@@ -109,15 +113,10 @@ public class HomeUnimpededFragment extends RefreshFragment
      * 违章车adapter
      */
     private HorizontalCarViolationAdapter mCarViolationAdapter;
-
     private List<UserCarInfoBean> mUserCarInfoBeanList = new ArrayList<>();
 
-    //    private ViewPager mViewPager;
-    //    private LinearLayout mTabLayout;
-    private List<Fragment> mPagerList;
     private HomePagerFragment_0 pagerFragment_0;
     private HomePagerFragment_1 pagerFragment_1;
-
     private TextView mTvLicense;
     private TextView mTvAppraisement;
     private TextView mTvCheck;
@@ -126,6 +125,14 @@ public class HomeUnimpededFragment extends RefreshFragment
     private TextView mTvMap;
     private TextView mTvVehicle;
     private TextView mTvRoadside;
+
+    private ViewPager mViewPager;
+    private LinearLayout mTabLayout;
+
+    private List<Fragment> mPagerList;
+    // 放圆点的View的list
+    private List<View> dotViewList = new ArrayList<>();
+    private OrderFragmentAdapter mainBannerAdapter;
 
     @Override
     public void onAttach(Activity activity) {
@@ -154,6 +161,9 @@ public class HomeUnimpededFragment extends RefreshFragment
     public void onDestroyView() {
         super.onDestroyView();
 
+        if (mPagerList != null) mPagerList.clear();
+        if (!dotViewList.isEmpty()) dotViewList.clear();
+
         if (mPresenter != null) mPresenter.unSubscribe();
         if (!mHomeNotices.isEmpty()) mHomeNotices.clear();
         if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
@@ -181,6 +191,7 @@ public class HomeUnimpededFragment extends RefreshFragment
         EventBus.getDefault().register(this);
 
         initView(fragment);
+        initViewPager();
 
         UnimpededFtyPresenter mPresenter = new UnimpededFtyPresenter(
                 Injection.provideRepository(Utils.getContext()), this);
@@ -226,83 +237,25 @@ public class HomeUnimpededFragment extends RefreshFragment
         mCustomGrapevine = (MainScrollUpAdvertisementView) view.findViewById(R.id.custom_grapevine);
         mCustomViolation = (HorizontalInfiniteCycleViewPager) view.findViewById(R.id.custom_violation);
 
-        mTvLicense = (TextView) view.findViewById(R.id.tv_license);
-        mTvLicense.setOnClickListener(this);
-        mTvAppraisement = (TextView) view.findViewById(R.id.tv_appraisement);
-        mTvAppraisement.setOnClickListener(this);
-        mTvCheck = (TextView) view.findViewById(R.id.tv_check);
-        mTvCheck.setOnClickListener(this);
-        mTvDrive = (TextView) view.findViewById(R.id.tv_drive);
-        mTvDrive.setOnClickListener(this);
-        mTvOil = (TextView) view.findViewById(R.id.tv_oil);
-        mTvOil.setOnClickListener(this);
-        mTvMap = (TextView) view.findViewById(R.id.tv_map);
-        mTvMap.setOnClickListener(this);
-        mTvVehicle = (TextView) view.findViewById(R.id.tv_vehicle);
-        mTvVehicle.setOnClickListener(this);
-        mTvRoadside = (TextView) view.findViewById(R.id.tv_roadside);
-        mTvRoadside.setOnClickListener(this);
+//        mTvLicense = (TextView) view.findViewById(R.id.tv_license);
+//        mTvLicense.setOnClickListener(this);
+//        mTvAppraisement = (TextView) view.findViewById(R.id.tv_appraisement);
+//        mTvAppraisement.setOnClickListener(this);
+//        mTvCheck = (TextView) view.findViewById(R.id.tv_check);
+//        mTvCheck.setOnClickListener(this);
+//        mTvDrive = (TextView) view.findViewById(R.id.tv_drive);
+//        mTvDrive.setOnClickListener(this);
+//        mTvOil = (TextView) view.findViewById(R.id.tv_oil);
+//        mTvOil.setOnClickListener(this);
+//        mTvMap = (TextView) view.findViewById(R.id.tv_map);
+//        mTvMap.setOnClickListener(this);
+//        mTvVehicle = (TextView) view.findViewById(R.id.tv_vehicle);
+//        mTvVehicle.setOnClickListener(this);
+//        mTvRoadside = (TextView) view.findViewById(R.id.tv_roadside);
+//        mTvRoadside.setOnClickListener(this);
 
-//                mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-//                mTabLayout = (LinearLayout) view.findViewById(R.id.tabLayout);
-//
-//                if (mPagerList == null) mPagerList = new ArrayList<>();
-//                initPagerFragment();
-//                initViewPager();
-    }
-
-    private void initPagerFragment() {
-        if (mPagerList != null && !mPagerList.isEmpty()) mPagerList.clear();
-
-        pagerFragment_0 = HomePagerFragment_0.newInstance();
-        mPagerList.add(pagerFragment_0);
-        pagerFragment_1 = HomePagerFragment_1.newInstance();
-        mPagerList.add(pagerFragment_1);
-    }
-
-   /* private void initViewPager() {
-        OrderFragmentAdapter mainFragmentAdapter =
-                new OrderFragmentAdapter(getChildFragmentManager(), mPagerList, null);
-        mViewPager.setAdapter(mainFragmentAdapter);
-        mViewPager.setOffscreenPageLimit(mPagerList.size() - 1);//设置预加载
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
-
-            @Override
-            public void onPageSelected(int position) {
-                for (int i = 0; i < dotViewList.size(); i++) {
-                    dotViewList.get(i).setBackgroundResource(
-                            i == position ? R.mipmap.icon_dot_sel : R.mipmap.icon_dot_nor);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {}
-        });
-        mTabLayout.setupWithViewPager(mViewPager);
-        initTabLayDots(mPagerList.size());
-    }*/
-
-    // 放圆点的View的list
-    private List<View> dotViewList = new ArrayList<>();
-
-    private void initTabLayDots(int len) {
-        //        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(16, 16);
-        //        layoutParams.setMargins(12, 12, 12, 12);
-        //        mTabLayout.removeAllViews();
-        //        if (!dotViewList.isEmpty()) dotViewList.clear();
-        //        for (int i = 0; i < len; i++) {
-        //            ImageView dot = new ImageView(getContext());
-        //            dot.setLayoutParams(layoutParams);
-        //            if (i == 0) {
-        //                dot.setBackgroundResource(R.mipmap.icon_dot_sel);
-        //            } else {
-        //                dot.setBackgroundResource(R.mipmap.icon_dot_nor);
-        //            }
-        //            dotViewList.add(dot);
-        //            mTabLayout.addView(dot);
-        //        }
+        mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        mTabLayout = (LinearLayout) view.findViewById(R.id.tabLayout);
     }
 
     private void initScrollUp(final List<HomeNotice> mDataLists) {
@@ -345,11 +298,13 @@ public class HomeUnimpededFragment extends RefreshFragment
     @Override
     protected void loadingFirstData() {
         if (mPresenter != null) mPresenter.getIndexLayer();
+        if (mPresenter != null) mPresenter.getBanner();
 
         if (MainRouter.isUserLogin())
             mPresenter.getTextNoticeInfo();
         else
             getLocalCarInfo();
+
         if (mPresenter != null) mPresenter.homePage();
     }
 
@@ -361,11 +316,75 @@ public class HomeUnimpededFragment extends RefreshFragment
     }
 
     /**
-     * 操作首页数据
+     * 数据出错
      */
     @Override
-    public void homePageError(String message) {
+    public void dataError(String message) {
         toastShort(message);
+    }
+
+    /**
+     * 坑位处理
+     */
+    @Override
+    public void bannerSucceed(UnimpededBannerResponse result) {
+        List<UnimpededBannerBean> lis = result.getData();
+        if (lis != null && !lis.isEmpty()) {
+            int pager = lis.size() % 10 != 0 ? lis.size() / 10 + 1 : lis.size() / 10;
+
+            if (mPagerList == null) mPagerList = new ArrayList<>();
+            if (!mPagerList.isEmpty()) mPagerList.clear();
+
+            for (int i = 0; i < pager; i++) {
+                //判断是否第一页和最后一页的特殊性
+                HomePagerFragment_2 f = HomePagerFragment_2.newInstance(
+                        lis.subList(i * 10, i == pager - 1 ? lis.size() : (i + 1) * 10));
+                mPagerList.add(f);
+            }
+        }
+        mainBannerAdapter.notifyDataSetChanged();
+        initTabLayDots(mPagerList.size());
+    }
+
+    private void initViewPager() {
+        if (mPagerList == null) mPagerList = new ArrayList<>();
+        mainBannerAdapter = new OrderFragmentAdapter(getChildFragmentManager(), mPagerList, null);
+        mViewPager.setAdapter(mainBannerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < dotViewList.size(); i++) {
+                    dotViewList.get(i).setBackgroundResource(
+                            i == position ? R.mipmap.icon_dot_sel : R.mipmap.icon_dot_nor);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+    }
+
+    private void initTabLayDots(int len) {
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(16, 16);
+        layoutParams.setMargins(6, 6, 12, 6);
+        mTabLayout.removeAllViews();
+        if (!dotViewList.isEmpty()) dotViewList.clear();
+        for (int i = 0; i < len; i++) {
+            ImageView dot = new ImageView(getContext());
+            dot.setLayoutParams(layoutParams);
+            if (i == 0) {
+                dot.setBackgroundResource(R.mipmap.icon_dot_sel);
+            } else {
+                dot.setBackgroundResource(R.mipmap.icon_dot_nor);
+            }
+            dotViewList.add(dot);
+            mTabLayout.addView(dot);
+        }
     }
 
     /**
@@ -463,15 +482,8 @@ public class HomeUnimpededFragment extends RefreshFragment
         mCustomViolation.notifyDataSetChanged();
     }
 
-    /**
-     * 优惠活动
-     */
-    @Override
-    public void indexLayerError(String message) {
-        ToastUtils.toastShort(message);
-    }
-
     public TextView mCountTv;
+
     public TextView mmCloseTv;
 
     @Override

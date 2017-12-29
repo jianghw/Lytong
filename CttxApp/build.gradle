@@ -153,12 +153,6 @@ android {
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
         }
     }
-
-//    dexOptions {
-//        dexInProcess true
-//        preDexLibraries true
-//        javaMaxHeapSize "4g"//越大越好
-//    }
 }
 
 repositories {

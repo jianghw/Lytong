@@ -18,6 +18,14 @@ public class ImageLoadUtils {
         );
     }
 
+    public static void loadDefault(String imageUrl, ImageView imageView) {
+        ImageLoader.getInstance().displayImage(
+                imageUrl,
+                imageView,
+                ImageOptions.getMessageOptions()
+        );
+    }
+
     public static void loadNativeCircle(String imageUrl, ImageView imageView) {
         ImageLoader.getInstance().displayImage(
                 imageUrl, imageView,

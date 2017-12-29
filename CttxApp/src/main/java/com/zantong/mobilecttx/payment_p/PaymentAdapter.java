@@ -52,6 +52,8 @@ public class PaymentAdapter extends BaseRecyclerViewAdapter<String, RspInfoBean.
     @Override
     public void onBindGroupHolder(PaymentViewHolder holder, int groupPos, int position, String groupData) {
         holder.tvCarTitle.setText(Des3.decode(groupData));
+        holder.status.setText("详情");
+        holder.arrow.setImageResource(R.mipmap.arrow_down);
     }
 
     @Override

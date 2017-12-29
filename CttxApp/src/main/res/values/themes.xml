@@ -14,11 +14,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  -->
-<resources>
-  <style name="CaptureTheme" parent="android:Theme.Holo">
-    <item name="android:windowFullscreen">true</item>
-  </style>
-</resources>
+<resources></resources>
 <!--<item name="android:windowContentOverlay">@null</item>-->
 <!--<item name="android:windowActionBarOverlay">true</item>-->
 <!--<item name="android:windowActionModeOverlay">true</item>-->

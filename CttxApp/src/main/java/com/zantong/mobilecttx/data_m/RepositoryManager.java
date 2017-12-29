@@ -7,6 +7,7 @@ import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.bean.response.SubjectGoodsResponse;
 import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
+import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
 import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
@@ -606,5 +607,12 @@ public class RepositoryManager {
      */
     public Observable<BaseResponse> updateToken(String token, String userNum) {
         return mRemoteData.updateToken(token, userNum);
+    }
+
+    /**
+     * 模块配置接口
+     */
+    public Observable<UnimpededBannerResponse> getBanner() {
+        return mRemoteData.getBanner();
     }
 }

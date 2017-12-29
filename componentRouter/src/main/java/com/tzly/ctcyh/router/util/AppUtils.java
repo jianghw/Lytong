@@ -42,8 +42,7 @@ public class AppUtils {
             String allChar = "0123456789";
             Random random = new Random();
             for (int i = 0; i < 12; i++) {
-                sb.append(allChar.charAt(
-                        random.nextInt(allChar.length())));
+                sb.append(allChar.charAt(random.nextInt(allChar.length())));
             }
             deviceId = sb.toString();
         }

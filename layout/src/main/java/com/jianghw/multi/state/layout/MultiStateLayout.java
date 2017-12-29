@@ -338,13 +338,13 @@ public class MultiStateLayout extends FrameLayout {
      */
     private void showViewByState(@MultiState int state) {
         switch (state) {
-            case MultiState.CONTENT:
+            case MultiState.CONTENT://0
                 showContentView();
                 break;
             case MultiState.EMPTY:
                 showEmptyView();
                 break;
-            case MultiState.LOADING:
+            case MultiState.LOADING://1
                 showLoadingView();
                 break;
             case MultiState.ERROR:
@@ -388,9 +388,7 @@ public class MultiStateLayout extends FrameLayout {
         }
         if (null != mLoadingView) {
             mLoadingView.setVisibility(VISIBLE);
-            if (mAnimEnable) {
-                execAlphaAnimation(mLoadingView);
-            }
+            if (mAnimEnable) execAlphaAnimation(mLoadingView);
         } else {
             throw new NullPointerException("Expect to have an loading view.");
         }

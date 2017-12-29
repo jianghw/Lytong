@@ -37,7 +37,7 @@ import com.zantong.mobilecttx.home.bean.BannersBean;
 import com.zantong.mobilecttx.home.bean.ChildrenBean;
 import com.zantong.mobilecttx.home.bean.ModuleBean;
 import com.zantong.mobilecttx.home.bean.ModuleResponse;
-import com.zantong.mobilecttx.presenter.home.HomeFavorableFtyPresenter;
+import com.zantong.mobilecttx.home_p.HomeFavorableFtyPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_v.CarBeautyActivity;
 import com.zantong.mobilecttx.share_v.ShareParentActivity;
@@ -161,7 +161,7 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
                 MainRouter.gotoSubjectActivity(getActivity(), 0);
             } else if (path.equals("native_app_sparring")) {//陪练
                 MobUtils.getInstance().eventIdByUMeng(38);
-                Act.getInstance().gotoIntentLogin(getActivity(), SparringActivity.class);
+
                 MainRouter.gotoSparringActivity(getActivity(), 0);
             } else if (path.equals("native_app_drive_share")) {//分享
                 Intent intent = new Intent();

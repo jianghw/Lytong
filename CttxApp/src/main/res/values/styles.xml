@@ -208,12 +208,6 @@
         <item name="android:textColorHint">@color/hintColor</item>
     </style>
 
-    <style name="open_no_bind_notice">
-        <item name="android:textColor">@color/civory</item>
-        <item name="android:textSize">10sp</item>
-        <item name="android:textColorHint">@color/civory</item>
-    </style>
-
     <style name="open_three_title_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -239,15 +233,6 @@
         <item name="android:textColor">@color/mineGray</item>
     </style>
 
-    <style name="open_three_number_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">left</item>
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:textSize">17sp</item>
-        <item name="android:textColor">@color/colorQueryNumberFont</item>
-    </style>
-
     <style name="vertical_bottom_line2">
         <item name="android:layout_width">0.5dp</item>
         <item name="android:layout_height">45dip</item>
@@ -261,34 +246,13 @@
         <item name="android:textColor">@color/colorOpenBindCarFont</item>
     </style>
     <!-- 查看车辆里面的车牌号字体 -->
-    <style name="gray_color_text_font">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:textColor">@color/colorGrayFontSmmall</item>
-    </style>
 
-    <style name="gray_color_text_vertical_font">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:textColor">@color/colorGrayFontSmmall</item>
-    </style>
     <!-- 我的个人信息页昵称 -->
     <style name="mine_user_vertical_font">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">16sp</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:textColor">@color/colorGrayFontSmmall</item>
-    </style>
-
-    <style name="mine_user_font">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/colorGrayFontSmmall</item>
     </style>
 
@@ -300,22 +264,11 @@
         <item name="android:textColor">@color/gray_66</item>
     </style>
 
-    <style name="consum_gray_color_text_vertical_font" parent="mine_gray_color_text_vertical_font">
-        <item name="android:textSize">14sp</item>
-    </style>
-
     <style name="gray_color_time_text_font">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">14sp</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:textColor">@color/colorAddCarGrayNumberFont</item>
-    </style>
-
-    <style name="mine_invitation_code_title">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/colorAddCarGrayNumberFont</item>
     </style>
 
@@ -420,16 +373,6 @@
         <item name="android:windowExitAnimation">@anim/pophidden_anim</item>
     </style>
 
-    <style name="Theme.SpalshActivity" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- 是否允许有标题栏 -->
-        <item name="android:windowNoTitle">true</item>
-        <!-- 提示背景图片 -->
-        <item name="android:windowBackground">@color/transparent</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <!-- 是否允许背景灰暗 -->
-        <item name="android:backgroundDimEnabled">false</item>
-    </style>
-
     <!-- webview中的进度条 -->
     <style name="CommonWebViewProgressBarStyle" parent="@android:style/Widget.SeekBar">
         <item name="android:indeterminateOnly">false</item>
@@ -444,7 +387,4 @@
         <item name="android:textColor">@color/gray_33</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 </resources>

@@ -37,6 +37,11 @@
         <item name="android:textColor">@color/res_color_red_f3</item>
     </style>
 
+    <style name="ResTextTheme.14.Subtitle">
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/res_color_black_4d</item>
+    </style>
+
     <!--16sp大小字体-->
     <style name="ResTextTheme.16">
         <!-- Customize your theme here. -->
@@ -62,7 +67,8 @@
     <style name="ResTextTheme.16.Red">
         <!-- Customize your theme here. -->
         <item name="android:textColor">@color/res_color_red_f3</item>
-    </style>`1
+    </style>
+    `1
 
     <!--使用layout_weight-->
     <style name="ResTextTheme.16.Subtitle.width">

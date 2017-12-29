@@ -2,6 +2,7 @@ package com.tzly.ctcyh.router.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,11 +60,18 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
         bindExtraTopView(view);
 
         mCustomRecycler = (XRecyclerView) contentView.findViewById(R.id.rv_base);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(mOrientation == 0 ?
-                LinearLayoutManager.VERTICAL : LinearLayoutManager.HORIZONTAL);
 
-        mCustomRecycler.setLayoutManager(layoutManager);
+        if (reSetOrientation() == 0) {
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            mCustomRecycler.setLayoutManager(layoutManager);
+        } else if (reSetOrientation() == 1) {
+            //每行显示5个，水平显示
+            GridItemManager layoutManager = new GridItemManager(view.getContext(), 5);
+            layoutManager.setOrientation(GridLayoutManager.VERTICAL);
+            mCustomRecycler.setLayoutManager(layoutManager);
+        }
+
         mCustomRecycler.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mCustomRecycler.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         mCustomRecycler.setArrowImageView(R.mipmap.ic_refresh_loading);
@@ -118,6 +126,13 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
         initPresenter();
     }
 
+    /**
+     * 显示类型
+     */
+    protected int reSetOrientation() {
+        return mOrientation;
+    }
+
     protected int getCustomDecoration() {
         return 0;
     }
@@ -129,7 +144,8 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
         return 0;
     }
 
-    protected void bindExtraTopView(View view) {}
+    protected void bindExtraTopView(View view) {
+    }
 
     protected View customViewHeader() {
         return null;

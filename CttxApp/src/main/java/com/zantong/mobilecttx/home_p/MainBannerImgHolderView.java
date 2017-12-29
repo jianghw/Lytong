@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.home.adapter;
+package com.zantong.mobilecttx.home_p;
 
 import android.content.Context;
 import android.text.TextUtils;

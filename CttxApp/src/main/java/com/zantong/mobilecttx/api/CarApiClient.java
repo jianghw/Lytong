@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.base.bean.CouponResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.CarLinkageResponse;
 import com.zantong.mobilecttx.car.dto.CarLinkageDTO;
@@ -51,7 +50,6 @@ import com.zantong.mobilecttx.user.bean.MessageCountResponse;
 import com.zantong.mobilecttx.user.bean.MessageTypeResponse;
 import com.zantong.mobilecttx.user.dto.BonusDTO;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;
-import com.zantong.mobilecttx.user.dto.CouponDTO;
 import com.zantong.mobilecttx.user.dto.LiYingRegDTO;
 import com.zantong.mobilecttx.user.dto.MegDTO;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
@@ -279,12 +277,6 @@ public class CarApiClient extends BaseApiClient {
         BaseCallBack<BaseResponse> result = new BaseCallBack<BaseResponse>(
                 context, callback, BaseResponse.class);
         post(context, getUrl("february/signUpActivity"), dto, result);
-    }
-
-    public static void getCouponList(Context context, CouponDTO dto, CallBack<CouponResponse> callback) {
-        BaseCallBack<CouponResponse> result = new BaseCallBack<CouponResponse>(
-                context, callback, CouponResponse.class);
-        post(context, getUrl("february/usrCouponInfo"), dto, result);
     }
 
     public static void checkCtk(Context context, CheckCtkDTO dto, CallBack<BaseResponse> callback) {

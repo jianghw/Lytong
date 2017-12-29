@@ -145,9 +145,7 @@
  -keep class com.zantong.mobilecttx.user.adapter.HelpAdapter$* {
      *;
  }
- -keep class com.zantong.mobilecttx.home.adapter.HomeFragmentPagerAdapter$* {
-     *;
- }
+
  -keep class com.zantong.mobilecttx.weizhang.adapter.IllegalViolationAdapter$* {
      *;
  }

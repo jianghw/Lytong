@@ -1,9 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <!--头部banner-->
     <RelativeLayout
         android:id="@+id/ry_banner"
@@ -13,23 +13,24 @@
         <com.tzly.ctcyh.router.custom.banner.ConvenientBanner
             android:id="@+id/custom_convenientBanner"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
-        <include layout="@layout/include_unimpeded_title"/>
+        <include layout="@layout/include_unimpeded_title" />
     </RelativeLayout>
-    <!--导航控件-->
-    <!--  <android.support.v4.view.ViewPager
-          android:id="@+id/viewPager"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"/>-->
 
-    <include layout="@layout/fragment_home_pager_0"/>
-    <!--<LinearLayout-->
-    <!--android:id="@+id/tabLayout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:gravity="center"-->
-    <!--android:orientation="horizontal"/>-->
+    <!--导航控件-->
+    <android.support.v4.view.ViewPager
+        android:background="@color/res_color_white"
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_330" />
+
+    <LinearLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal" />
 
     <!--小广播-->
     <RelativeLayout
@@ -46,7 +47,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/res_x_30"
-            android:src="@mipmap/icon_toutiao"/>
+            android:src="@mipmap/icon_toutiao" />
 
         <ImageView
             android:id="@+id/img_label"
@@ -55,7 +56,7 @@
             android:layout_alignTop="@+id/img_trumpet"
             android:layout_toRightOf="@+id/img_trumpet"
             android:src="@mipmap/icon_dot_sel"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <com.zantong.mobilecttx.widght.MainScrollUpAdvertisementView
             android:id="@+id/custom_grapevine"
@@ -67,7 +68,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:singleLine="true"
-            android:textColor="@color/gray_99"/>
+            android:textColor="@color/gray_99" />
     </RelativeLayout>
 
     <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
@@ -76,11 +77,13 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/colorBgGray_f8"
-        app:icvp_center_page_scale_offset="1dp"
+        android:layout_marginLeft="@dimen/res_x_30"
+        android:layout_marginRight="@dimen/res_x_30"
         app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
-        app:icvp_max_page_scale="0.8"
-        app:icvp_medium_scaled="false"
+        app:icvp_max_page_scale="0.9"
+        app:icvp_medium_scaled="true"
         app:icvp_min_page_scale="0.6"
-        app:icvp_min_page_scale_offset="1dp"
-        app:icvp_scroll_duration="100"/>
+        app:icvp_center_page_scale_offset="20dp"
+        app:icvp_min_page_scale_offset="3dp"
+        app:icvp_scroll_duration="300" />
 </LinearLayout>

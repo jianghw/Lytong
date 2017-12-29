@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.payment_p;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.utils.L;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
@@ -214,8 +215,9 @@ public class PaymentPresenter implements IPaymentContract.IPaymentPresenter {
             }
 
             @Override
-            public void onNext(List<RspInfoBean.ViolationInfoBean> violationInfoBeans) {
-                mCarDatas.add(new RecyclerViewData(violationInfoBeans.get(0).getCarnum(), violationInfoBeans, false));
+            public void onNext(List<RspInfoBean.ViolationInfoBean> infoBeanList) {
+
+                mCarDatas.add(new RecyclerViewData(infoBeanList.get(0).getCarnum(), infoBeanList, false));
             }
         });
     }

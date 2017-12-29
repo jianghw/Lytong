@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.payment_p;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zantong.mobilecttx.R;
@@ -15,6 +16,8 @@ import drawthink.expandablerecyclerview.holder.BaseViewHolder;
 public class PaymentViewHolder extends BaseViewHolder {
 
     public final TextView tvCarTitle;
+    public final TextView status;
+    public final ImageView arrow;
 
     public final TextView tvDateV;
     public final TextView tvDateP;
@@ -26,6 +29,8 @@ public class PaymentViewHolder extends BaseViewHolder {
         super(ctx, itemView, viewType);
 
         tvCarTitle = (TextView) itemView.findViewById(R.id.tv_carTitle);
+        status = (TextView) itemView.findViewById(R.id.tv_status);
+        arrow = (ImageView) itemView.findViewById(R.id.img_arrow);
 
         tvDateV = (TextView) itemView.findViewById(R.id.tv_date_v);
         tvDateP = (TextView) itemView.findViewById(R.id.tv_date_p);

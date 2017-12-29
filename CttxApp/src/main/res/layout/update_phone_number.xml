@@ -8,7 +8,6 @@
     <EditText
         android:id="@+id/edit_old_phone"
         style="@style/EditextNormalStyle"
-        android:layout_below="@id/underline"
         android:layout_width="match_parent"
         android:layout_height="48dip"
         android:paddingLeft="@dimen/ds_48"
@@ -23,9 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ds_45"
-        android:layout_below="@id/title"
-        android:background="@color/civory"
-        >
+        android:background="@color/civory">
 
         <RelativeLayout
             android:id="@+id/phone_number_edittext"

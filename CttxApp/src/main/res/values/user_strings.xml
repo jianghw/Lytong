@@ -7,6 +7,4 @@
 
 
     <string name="no_data">没有找到符合条件的数据</string>
-    <string name="version_name">version</string>
-    <string name="can_not_find_version_name">暂无版本信息</string>
 </resources>

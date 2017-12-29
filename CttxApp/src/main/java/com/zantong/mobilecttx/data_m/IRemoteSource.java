@@ -4,6 +4,7 @@ import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.bean.response.SubjectGoodsResponse;
 import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
+import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
 import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -373,4 +374,10 @@ public interface IRemoteSource {
     Observable<PayWeixinResponse> weChatPay(String orderId, String amount, int couponUserId);
 
     Observable<BaseResponse> updateToken(String token, String userNum);
+
+    /**
+     * 模块配置接口
+     */
+    Observable<UnimpededBannerResponse> getBanner();
+
 }

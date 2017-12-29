@@ -1,8 +1,10 @@
 package com.zantong.mobilecttx.api;
 
+import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
 import com.zantong.mobilecttx.home.bean.ModuleResponse;
 
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import rx.Observable;
 
 /**
@@ -18,4 +20,9 @@ public interface IModuleService {
     @GET("module/moduleTree")
     Observable<ModuleResponse> moduleTree();
 
+    /**
+     * 模块配置接口
+     */
+    @GET("module/getBanner")
+    Observable<UnimpededBannerResponse> getBanner();
 }

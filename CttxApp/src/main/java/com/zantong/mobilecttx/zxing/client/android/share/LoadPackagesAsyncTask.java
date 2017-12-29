@@ -95,21 +95,21 @@ final class LoadPackagesAsyncTask extends AsyncTask<Object,Object,List<AppInfo>>
 
   @Override
   protected void onPostExecute(final List<AppInfo> results) {    
-    ListAdapter listAdapter = new ArrayAdapter<AppInfo>(activity, 
-                                                        R.layout.app_picker_list_item, 
-                                                        R.id.app_picker_list_item_label, 
-                                                        results) {
-      @Override
-      public View getView(int position, View convertView, ViewGroup parent) {
-        View view = super.getView(position, convertView, parent);
-        Drawable icon = results.get(position).getIcon();
-        if (icon != null) {
-          ((ImageView) view.findViewById(R.id.app_picker_list_item_icon)).setImageDrawable(icon);
-        }
-        return view;
-      }
-    };
-    activity.setListAdapter(listAdapter);
+//    ListAdapter listAdapter = new ArrayAdapter<AppInfo>(activity,
+//                                                        R.layout.app_picker_list_item,
+//                                                        R.id.app_picker_list_item_label,
+//                                                        results) {
+//      @Override
+//      public View getView(int position, View convertView, ViewGroup parent) {
+//        View view = super.getView(position, convertView, parent);
+//        Drawable icon = results.get(position).getIcon();
+//        if (icon != null) {
+//          ((ImageView) view.findViewById(R.id.app_picker_list_item_icon)).setImageDrawable(icon);
+//        }
+//        return view;
+//      }
+//    };
+//    activity.setListAdapter(listAdapter);
   }
 
 }

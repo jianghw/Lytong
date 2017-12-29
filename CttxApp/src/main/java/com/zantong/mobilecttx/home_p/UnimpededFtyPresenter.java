@@ -1,13 +1,14 @@
 
-package com.zantong.mobilecttx.presenter.home;
+package com.zantong.mobilecttx.home_p;
 
 import android.support.annotation.NonNull;
 
 import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.util.LogUtils;
-import com.zantong.mobilecttx.contract.IUnimpededFtyContract;
+import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
@@ -32,15 +33,15 @@ import rx.subscriptions.CompositeSubscription;
 public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFtyPresenter {
 
     private final RepositoryManager mRepository;
-    private final IUnimpededFtyContract.IUnimpededFtyView mAtyView;
+    private final IUnimpededFtyContract.IUnimpededFtyView ftyView;
     private final CompositeSubscription mSubscriptions;
 
     public UnimpededFtyPresenter(@NonNull RepositoryManager repositoryManager,
                                  @NonNull IUnimpededFtyContract.IUnimpededFtyView view) {
         mRepository = repositoryManager;
-        mAtyView = view;
+        ftyView = view;
         mSubscriptions = new CompositeSubscription();
-        mAtyView.setPresenter(this);
+        ftyView.setPresenter(this);
     }
 
     @Override
@@ -50,8 +51,72 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
     @Override
     public void unSubscribe() {
-        mAtyView.dismissLoading();
+        ftyView.dismissLoading();
         mSubscriptions.clear();
+    }
+
+    /**
+     * 是否提供活动
+     */
+    @Override
+    public void getIndexLayer() {
+        Subscription subscription = mRepository.getIndexLayer()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<IndexLayerResponse>() {
+                    @Override
+                    public void doCompleted() {
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        ftyView.dataError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(IndexLayerResponse result) {
+                        if (result != null && result.getResponseCode()
+                                == MainGlobal.Response.base_succeed) {
+                            ftyView.indexLayerSucceed(result);
+                        } else {
+                            ftyView.dataError(result != null
+                                    ? result.getResponseDesc() : "未知错误(IndexLayer)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 坑位
+     */
+    @Override
+    public void getBanner() {
+        Subscription subscription = mRepository.getBanner()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<UnimpededBannerResponse>() {
+                    @Override
+                    public void doCompleted() {
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        ftyView.dataError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(UnimpededBannerResponse result) {
+                        if (result != null && result.getResponseCode()
+                                == MainGlobal.Response.base_succeed) {
+                            ftyView.bannerSucceed(result);
+                        } else {
+                            ftyView.dataError(result != null
+                                    ? result.getResponseDesc() : "未知错误(banner)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 
     /**
@@ -69,15 +134,17 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.homePageError(e.getMessage());
+                        ftyView.dataError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(HomeResponse result) {
-                        if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.homePageSucceed(result);
+                        if (result != null && result.getResponseCode()
+                                == MainGlobal.Response.base_succeed) {
+                            ftyView.homePageSucceed(result);
                         } else {
-                            mAtyView.homePageError(result != null ? result.getResponseDesc() : "未知错误(1)");
+                            ftyView.dataError(result != null
+                                    ? result.getResponseDesc() : "未知错误(homePage)");
                         }
                     }
                 });
@@ -108,44 +175,16 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.remoteCarInfoError(e.getMessage());
+                        ftyView.remoteCarInfoError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(HomeCarResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.getTextNoticeInfo(result);
+                            ftyView.getTextNoticeInfo(result);
                         } else {
-                            mAtyView.remoteCarInfoError(result != null
+                            ftyView.remoteCarInfoError(result != null
                                     ? result.getResponseDesc() : "未知错误(NoticeInfo)");
-                        }
-                    }
-                });
-        mSubscriptions.add(subscription);
-    }
-
-    @Override
-    public void getIndexLayer() {
-        Subscription subscription = mRepository.getIndexLayer()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<IndexLayerResponse>() {
-                    @Override
-                    public void doCompleted() {
-                    }
-
-                    @Override
-                    public void doError(Throwable e) {
-                        mAtyView.indexLayerError(e.getMessage());
-                    }
-
-                    @Override
-                    public void doNext(IndexLayerResponse result) {
-                        if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.indexLayerSucceed(result);
-                        } else {
-                            mAtyView.indexLayerError(result != null
-                                    ? result.getResponseDesc() : "未知错误(IndexLayer)");
                         }
                     }
                 });
@@ -165,7 +204,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                 .subscribe(new Subscriber<Long>() {
                     @Override
                     public void onCompleted() {
-                        mAtyView.countDownCompleted();
+                        ftyView.countDownCompleted();
                     }
 
                     @Override
@@ -175,7 +214,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
                     @Override
                     public void onNext(Long aLong) {
-                        mAtyView.countDownTextView(3 - aLong);
+                        ftyView.countDownTextView(3 - aLong);
                     }
                 });
         mSubscriptions.add(subCount);
