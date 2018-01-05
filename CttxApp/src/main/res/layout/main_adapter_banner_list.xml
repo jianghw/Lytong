@@ -7,6 +7,7 @@
     <TextView
         android:id="@+id/tv_title"
         style="@style/ResTextTheme.14.Subtitle"
+        android:textSize="@dimen/res_fs_13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

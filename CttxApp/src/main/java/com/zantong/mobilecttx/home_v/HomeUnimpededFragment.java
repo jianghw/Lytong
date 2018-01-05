@@ -266,7 +266,7 @@ public class HomeUnimpededFragment extends RefreshFragment
         } else {
             mCustomGrapevine.setData(mDataLists);
         }
-        mCustomGrapevine.setTextSize(12);
+        mCustomGrapevine.setTextSize(11);
         mCustomGrapevine.setTimer(5000);
     }
 
@@ -373,6 +373,7 @@ public class HomeUnimpededFragment extends RefreshFragment
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(16, 16);
         layoutParams.setMargins(6, 6, 12, 6);
         mTabLayout.removeAllViews();
+
         if (!dotViewList.isEmpty()) dotViewList.clear();
         for (int i = 0; i < len; i++) {
             ImageView dot = new ImageView(getContext());
@@ -385,6 +386,8 @@ public class HomeUnimpededFragment extends RefreshFragment
             dotViewList.add(dot);
             mTabLayout.addView(dot);
         }
+
+        mTabLayout.setVisibility(len <= 1 ? View.GONE : View.VISIBLE);
     }
 
     /**
@@ -453,25 +456,6 @@ public class HomeUnimpededFragment extends RefreshFragment
         if (result != null && result.getData() != null) {
             List<UserCarInfoBean> infoBeanList = result.getData();
             //车辆数据保存处理
-            LoginData.getInstance().mCarNum = infoBeanList.size();
-            LoginData.getInstance().mServerCars = decodeCarInfo(infoBeanList);
-
-            mUserCarInfoBeanList.addAll(infoBeanList);
-        }
-        //违章车辆
-        mCarViolationAdapter.notifyDataSetChanged(mUserCarInfoBeanList);
-        mCustomViolation.notifyDataSetChanged();
-    }
-
-    /**
-     * @deprecated 旧方法遗弃
-     */
-    @Override
-    public void getRemoteCarInfoSucceed(UserCarsResult result) {
-        if (!mUserCarInfoBeanList.isEmpty()) mUserCarInfoBeanList.clear();
-        if (result != null && result.getRspInfo() != null) {
-            List<UserCarInfoBean> infoBeanList = result.getRspInfo().getUserCarsInfo();
-
             LoginData.getInstance().mCarNum = infoBeanList.size();
             LoginData.getInstance().mServerCars = decodeCarInfo(infoBeanList);
 
@@ -651,15 +635,6 @@ public class HomeUnimpededFragment extends RefreshFragment
         int contenId = goodId + 36;
         if (mPresenter != null && contenId >= 37)
             mPresenter.saveStatisticsCount(String.valueOf(contenId));
-
-        if (goodId >= 1) {
-            CarApiClient.commitAdClick(Utils.getContext(), goodId, "3",
-                    new CallBack<BaseResponse>() {
-                        @Override
-                        public void onSuccess(BaseResponse result) {
-                        }
-                    });
-        }
     }
 
     /**

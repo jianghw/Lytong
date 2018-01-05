@@ -3,7 +3,6 @@ package com.zantong.mobilecttx.router;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -18,6 +17,7 @@ import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.service.RouterGlobal;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
+import com.zantong.mobilecttx.payment_v.LicenseGradeActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
@@ -605,8 +605,9 @@ public final class MainRouter {
     /**
      * 违章查分输入面
      */
-    public static void gotoLicenseGradeActivity(Context context) {
+    public static void gotoLicenseGradeActivity(Context context, int position) {
         Bundle bundle = new Bundle();
+        bundle.putInt(MainGlobal.putExtra.license_position_extra, position);
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.license_grade_host,
                 bundle);
@@ -620,6 +621,17 @@ public final class MainRouter {
         bundle.putString(MainGlobal.putExtra.license_bean_extra, bean);
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.pay_ment_host,
+                bundle);
+    }
+
+    /**
+     * 违章查分页面
+     */
+    public static void gotoLicenseDetailActivity(Context context, String gson) {
+        Bundle bundle = new Bundle();
+        bundle.putString(MainGlobal.putExtra.license_bean_extra, gson);
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.license_detail_host,
                 bundle);
     }
 

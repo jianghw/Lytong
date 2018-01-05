@@ -73,9 +73,6 @@ public class GuideCTActivity extends JxBaseActivity
     }
 
     public void initData() {
-        Beta.checkUpgrade(false, true);
-        Beta.init(getApplicationContext(), false);
-
         UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
         mVersionCode = AppUtils.getAppVersionCode();
         if (upgradeInfo != null) {

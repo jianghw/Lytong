@@ -40,7 +40,7 @@ public abstract class BaseAutoScrollUpTextView<T> extends ListView implements
     /**
      * 字体大小
      */
-    private float mSize = 18;
+    private float mSize = 16;
 
     /**
      * 数据总数

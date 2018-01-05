@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.tzly.ctcyh.router.base.RecyclerListFragment;
 import com.tzly.ctcyh.router.bean.BaseResponse;
@@ -18,6 +19,8 @@ import com.tzly.ctcyh.router.custom.banner.CBViewHolderCreator;
 import com.tzly.ctcyh.router.custom.banner.ConvenientBanner;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.MobUtils;
+import com.tzly.ctcyh.router.util.SPUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
@@ -28,8 +31,7 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.contract.home.INativeItemListener;
-import com.zantong.mobilecttx.fahrschule_v.SparringActivity;
-import com.zantong.mobilecttx.home.adapter.FavorableBannerImgHolderView;
+import com.zantong.mobilecttx.home_p.FavorableBannerImgHolderView;
 import com.zantong.mobilecttx.home.adapter.HomeDiscountsAdapter;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.bean.BannerBean;
@@ -38,10 +40,12 @@ import com.zantong.mobilecttx.home.bean.ChildrenBean;
 import com.zantong.mobilecttx.home.bean.ModuleBean;
 import com.zantong.mobilecttx.home.bean.ModuleResponse;
 import com.zantong.mobilecttx.home_p.HomeFavorableFtyPresenter;
+import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_v.CarBeautyActivity;
 import com.zantong.mobilecttx.share_v.ShareParentActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +54,7 @@ import java.util.List;
  * 优惠页面
  */
 public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
-        implements IHomeFavorableFtyContract.IHomeFavorableFtyView{
+        implements IHomeFavorableFtyContract.IHomeFavorableFtyView {
 
     private ConvenientBanner mCustomConvenientBanner;
 
@@ -161,7 +165,6 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
                 MainRouter.gotoSubjectActivity(getActivity(), 0);
             } else if (path.equals("native_app_sparring")) {//陪练
                 MobUtils.getInstance().eventIdByUMeng(38);
-
                 MainRouter.gotoSparringActivity(getActivity(), 0);
             } else if (path.equals("native_app_drive_share")) {//分享
                 Intent intent = new Intent();
@@ -173,6 +176,14 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
             } else if (path.equals("native_app_driver")) {//驾校报名
                 MobUtils.getInstance().eventIdByUMeng(28);
                 MainRouter.gotoFahrschuleActivity(getActivity(), 0);
+            } else if (path.equals("native_app_yearCheckMap")) {//年检地图
+                enterMapActivity();
+            } else if (path.equals("native_app_oilStation")) {//优惠加油站
+                showOilContacts();
+            } else if (path.equals("native_app_endorsement")) {//违章缴费记录
+                licenseCheckGrade(2);
+            } else if (path.equals("native_app_drivingLicense")) {//驾驶证查分
+                licenseCheckGrade(1);
             } else {//其他
                 toastShort("此版本暂无此状态页面,请更新最新版本");
             }
@@ -278,6 +289,67 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
         if (mPresenter != null) mPresenter.unSubscribe();
     }
 
+    protected void licenseCheckGrade(int position) {
+        String grade = SPUtils.instance().getString(SPUtils.USER_GRADE);
+        LicenseFileNumDTO fromJson = null;
+        if (!TextUtils.isEmpty(grade)) {
+            fromJson = new Gson().fromJson(grade, LicenseFileNumDTO.class);
+        } else if (!TextUtils.isEmpty(MainRouter.getUserFilenum()) &&
+                !TextUtils.isEmpty(MainRouter.getUserGetdate())) {
+            fromJson = new LicenseFileNumDTO();
+            fromJson.setFilenum(MainRouter.getUserFilenum());
+            fromJson.setStrtdt(MainRouter.getUserGetdate());
+        }
+
+        if (fromJson != null && position == 2) {
+            MainRouter.gotoPaymentActivity(getActivity(), new Gson().toJson(fromJson));
+        } else if (fromJson != null && position == 1) {
+            MainRouter.gotoLicenseDetailActivity(getActivity(), new Gson().toJson(fromJson));
+        } else {
+            MainRouter.gotoLicenseGradeActivity(getActivity(), position);
+        }
+    }
+
+    /**
+     * 加油地图
+     */
+    public void showOilContacts() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, 3000, new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE});
+        } else {
+            gotoOilMap();
+        }
+    }
+
+    private void gotoOilMap() {
+        Intent intent = new Intent();
+        intent.putExtra(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
+        Act.getInstance().gotoLoginByIntent(getActivity(), BaiduMapParentActivity.class, intent);
+    }
+
+    /**
+     * 进入地图年检页面
+     */
+    public void enterMapActivity() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, 4000, new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE});
+        } else {
+            gotoMap();
+        }
+    }
+
+    private void gotoMap() {
+        MainRouter.gotoMapActivity(getActivity());
+    }
+
     /**
      * 进入代驾页面
      */
@@ -311,6 +383,27 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
     @PermissionFail(requestCode = 2000)
     public void doDrivingFail() {
         toastShort("您已关闭定位权限,请手机设置中打开");
+    }
+
+    @PermissionSuccess(requestCode = 4000)
+    public void doMapSuccess() {
+        gotoMap();
+    }
+
+    @PermissionFail(requestCode = 4000)
+    public void doMapFail() {
+        ToastUtils.toastShort("您已关闭定位权限,请手机设置中打开");
+    }
+
+    @PermissionSuccess(requestCode = 3000)
+    public void doOilMapSuccess() {
+        gotoOilMap();
+    }
+
+
+    @PermissionFail(requestCode = 3000)
+    public void doOilMapFail() {
+        ToastUtils.toastShort("此功能需要打开相关的地图权限");
     }
 
 }

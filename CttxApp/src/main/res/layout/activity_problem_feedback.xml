@@ -100,8 +100,8 @@
     </LinearLayout>
 
     <ImageView
-        android:layout_width="@dimen/ds_500"
-        android:layout_height="@dimen/ds_500"
-        android:background="@mipmap/icon_gongzuohao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_code_contact"
         android:gravity="center_horizontal" />
 </LinearLayout>

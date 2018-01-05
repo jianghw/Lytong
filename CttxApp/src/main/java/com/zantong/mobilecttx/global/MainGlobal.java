@@ -38,6 +38,7 @@ public final class MainGlobal {
         public static final String car_enginenum_extra = "car_enginenum_extra";
         public static final String car_item_bean_extra = "car_item_bean_extra";
         public static final String license_bean_extra = "license_bean_extra";
+        public static final String license_position_extra = "license_position_extra";
     }
 
     public static final class Host {

@@ -24,7 +24,8 @@ public class LoginData {
 
     private static LoginData instance;
 
-    private LoginData() {}
+    private LoginData() {
+    }
 
     public static synchronized LoginData getInstance() {
         if (instance == null) {
@@ -48,6 +49,10 @@ public class LoginData {
     public String bitmap;
     public Class<?> className;
     public int mCarNum = 0;
+    /**
+     * 小红点数量
+     */
+    public int tipCount = 0;
 
     public RspInfoBean mLoginInfoBean;//用户Bean对象
     public NetLocationBean mNetLocationBean;
@@ -61,7 +66,6 @@ public class LoginData {
     public int commonListType = 0;//1、驾照有效期限 2、准驾车型
     public String commonListData = "小型汽车";//
 
-    public boolean isDelCar = false;//是否操作了删除车辆操作
     public boolean isSetPayCar = false;//是否操作了更改可缴费车辆
 
     public void clearData(Context mContext) {
@@ -77,7 +81,9 @@ public class LoginData {
         updateMsg = false;//设置-更新通知开启状态
         bitmap = null;
         className = null;
+
         mCarNum = 0;
+        tipCount = 0;
 
         mLoginInfoBean = null;//用户Bean对象
         mNetLocationBean = null;
@@ -91,7 +97,6 @@ public class LoginData {
         commonListType = 0;//1、驾照有效期限 2、准驾车型
         commonListData = "小型汽车";//
 
-        isDelCar = false;//是否操作了删除车辆操作
         isSetPayCar = false;//是否操作了更改可缴费车辆
 
         SPUtils.getInstance().setUserPwd("");

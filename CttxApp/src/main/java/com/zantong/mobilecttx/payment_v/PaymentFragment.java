@@ -202,6 +202,9 @@ public class PaymentFragment extends RefreshFragment
     @Override
     public void dataProcessingError(String message) {
         toastShort(message);
+        if (!mCarDatas.isEmpty()) mCarDatas.clear();
+        //在对元数据mDatas进行增删操作时
+        mAdapter.notifyRecyclerViewData();
         showEmptyData(true);
     }
 
@@ -257,7 +260,7 @@ public class PaymentFragment extends RefreshFragment
         third.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTvMonth.setText("3个月");
+                mTvMonth.setText("1个月");
                 dataByDate();
                 window.dismiss();
             }

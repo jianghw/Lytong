@@ -15,6 +15,7 @@ import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.car.fragment.ManageCarListFragment;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.router.MainRouter;
+import com.zantong.mobilecttx.router.MainUiRouter;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
 
 /**
@@ -24,6 +25,7 @@ public class ManageCarActivity extends BaseJxActivity {
 
     private int mCurBottomPosition;
     private ManageCarListFragment mCarListFragment;
+    private int resultMain;
 
     @Override
     protected void bundleIntent(Bundle savedInstanceState) {
@@ -72,9 +74,7 @@ public class ManageCarActivity extends BaseJxActivity {
      */
     protected void imageClickListener() {
         //TODO 确保每次能添加
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(MainGlobal.putExtra.car_item_bean_extra, null);
-        MainRouter.gotoViolationActivity(this, bundle);
+        MainRouter.gotoViolationActivity(this);
     }
 
     private void initFragment() {
@@ -95,8 +95,11 @@ public class ManageCarActivity extends BaseJxActivity {
     @Override
     protected void DestroyViewAndThing() {
         mCarListFragment = null;
-
-        MainRouter.gotoMainActivity(this,2);
+        //车辆同步
+        if (resultMain == MainGlobal.resultCode.violation_query_del
+                || resultMain == MainGlobal.resultCode.violation_query_submit) {
+            MainRouter.gotoMainActivity(this, 2);
+        }
     }
 
     @Override
@@ -111,6 +114,8 @@ public class ManageCarActivity extends BaseJxActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (mCarListFragment != null) mCarListFragment.onActivityResult(requestCode, resultCode, data);
+        resultMain = resultCode;
+        if (mCarListFragment != null)
+            mCarListFragment.onActivityResult(requestCode, resultCode, data);
     }
 }

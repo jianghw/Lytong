@@ -193,6 +193,5 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
                 || resultCode == MainGlobal.resultCode.set_pay_car_succeed) {
             if (mPresenter != null) mPresenter.getAllVehicles();
         }
-
     }
 }

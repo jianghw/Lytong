@@ -300,7 +300,7 @@
     </string>
 
     <string name="tv_coupon_count">
-        <font color='#f3362b'>%1$d</font>&#160;张优惠劵
+        <font color='#f3362b'>%1$d</font>&#160;张可用劵
     </string>
 
     <string name="tv_car_count">

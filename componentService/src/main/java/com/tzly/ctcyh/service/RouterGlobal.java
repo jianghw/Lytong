@@ -56,6 +56,8 @@ public final class RouterGlobal {
         public static final String license_grade_host = "license_grade_host";
         //缴费查询
         public static final String pay_ment_host = "pay_ment_host";
+        //违章查分
+        public static final String license_detail_host = "license_detail_host";
     }
 
     public static final class putExtra {

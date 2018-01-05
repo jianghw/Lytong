@@ -22,7 +22,8 @@ public class ImageOptions {
                 .cacheOnDisk(true)
                 .cacheInMemory(false)
                 .considerExifParams(false)
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
         return options;
     }
 
@@ -37,7 +38,8 @@ public class ImageOptions {
                 .cacheOnDisk(true)
                 .cacheInMemory(false)
                 .considerExifParams(false)
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
         return options;
     }
 
@@ -52,7 +54,8 @@ public class ImageOptions {
                 .cacheOnDisk(true)
                 .cacheInMemory(false)
                 .considerExifParams(false)
-                .bitmapConfig(Bitmap.Config.RGB_565).build();
+                .bitmapConfig(Bitmap.Config.RGB_565)
+                .build();
         return options;
     }
 
@@ -66,10 +69,9 @@ public class ImageOptions {
                 .showImageForEmptyUri(defiamge)
                 .showImageOnFail(defiamge)
                 .showImageOnLoading(defiamge)
-                .resetViewBeforeLoading(true)
                 .cacheInMemory(false)
                 .cacheOnDisk(true)
-                .considerExifParams(true)
+                .considerExifParams(false)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
         return options;

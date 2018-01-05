@@ -31,5 +31,5 @@
         android:background="@color/white"
         android:textColor="@color/gray_99"
         android:textSize="@dimen/fs_42"
-        android:text="3个月" />
+        android:text="1个月" />
 </LinearLayout>

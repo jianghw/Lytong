@@ -36,7 +36,7 @@ public class PaymentActivity extends AbstractBaseActivity {
      */
     @Override
     protected void rightClickListener() {
-        MainRouter.gotoLicenseGradeActivity(this);
+        MainRouter.gotoLicenseGradeActivity(this, 2);
         finish();
     }
 

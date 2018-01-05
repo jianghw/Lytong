@@ -82,7 +82,7 @@ public class ViolationListActivity extends AbstractBaseActivity
         initViewPager();
 
         ViolationListPresenter presenter = new ViolationListPresenter(
-                Injection.provideRepository(getApplicationContext()), this);
+                Injection.provideRepository(Utils.getContext()), this);
     }
 
     public void initView() {
@@ -219,14 +219,14 @@ public class ViolationListActivity extends AbstractBaseActivity
      */
     @Override
     protected void onDestroy() {
-        MainRouter.gotoActiveActivity(this, 1, mViolationDTO.getRegisterDate());
+        if (mViolationDTO != null)
+            MainRouter.gotoActiveActivity(this, 1, mViolationDTO.getRegisterDate());
         super.onDestroy();
 
+        if (mPresenter != null) mPresenter.unSubscribe();
         orderUnStatusFragment = null;
         orderPayStatusFragment = null;
         orderAllStatusFragment = null;
-
-        if (mPresenter != null) mPresenter.unSubscribe();
         if (mFragmentList != null) mFragmentList.clear();
     }
 

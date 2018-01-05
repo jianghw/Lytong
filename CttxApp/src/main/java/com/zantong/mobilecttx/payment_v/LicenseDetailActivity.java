@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
+import com.google.gson.Gson;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.global.MainGlobal;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.text.ParseException;
@@ -21,28 +24,30 @@ import java.util.Locale;
  */
 
 public class LicenseDetailActivity extends AbstractBaseActivity {
-    /**
-     * 是否手动关闭当前页面
-     */
-    private boolean isClose;
-    private LicenseFileNumDTO bean;
-    private LicenseDetailFragment mLicenseDetailFragment;
 
-    public static final String KEY_BUNDLE = "LicenseFileNumDTO";
-    public static final String KEY_BUNDLE_FINISH = "Close_Activity";
-
-    @Override
-    protected void bundleIntent(Intent intent) {
-        if (intent != null) {
-            Bundle bundle = intent.getExtras();
-            bean = bundle.getParcelable(KEY_BUNDLE);
-            isClose = bundle.getBoolean(KEY_BUNDLE_FINISH, false);
-        }
-    }
+    private LicenseFileNumDTO fileNumDTO;
+    private LicenseDetailFragment fragment;
 
     @Override
     protected int initContentView() {
         return R.layout.activity_base_frame;
+    }
+
+    protected void rightClickListener() {
+        MainRouter.gotoLicenseGradeActivity(this, 1);
+        finish();
+    }
+
+    @Override
+    protected void bundleIntent(Intent intent) {
+
+        if (intent != null) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                String extra = bundle.getString(MainGlobal.putExtra.license_bean_extra);
+                fileNumDTO = new Gson().fromJson(extra, LicenseFileNumDTO.class);
+            }
+        }
     }
 
     @Override
@@ -53,28 +58,21 @@ public class LicenseDetailActivity extends AbstractBaseActivity {
 
     @Override
     protected void initContentData() {
-        if (bean != null) {
-            String beanStrtdt = bean.getStrtdt();
-            String startDay = removeDateAcross(beanStrtdt);
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
-            LicenseFileNumDTO newBean = new LicenseFileNumDTO();
-            newBean.setFilenum(bean.getFilenum());
-            newBean.setStrtdt(getStartDate(startDay));
-            newBean.setEnddt(localDateFormat(getEndDate(startDay)));
+        String strtdt = fileNumDTO.getStrtdt();
+        String startDay = removeDateAcross(strtdt);
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
+        LicenseFileNumDTO newBean = new LicenseFileNumDTO();
+        newBean.setFilenum(fileNumDTO.getFilenum());
+        newBean.setStrtdt(getStartDate(startDay));
+        newBean.setEnddt(localDateFormat(getEndDate(startDay)));
 
-            if (mLicenseDetailFragment == null) {
-                mLicenseDetailFragment = LicenseDetailFragment.newInstance(newBean);
-                FragmentUtils.add(fragmentManager, mLicenseDetailFragment, R.id.lay_base_frame);
-            }
+        //默认页面显示
+        if (fragment == null) {
+            fragment = LicenseDetailFragment.newInstance(newBean);
         }
-    }
-
-    protected void rightClickListener() {
-        Intent intent = new Intent(this, LicenseGradeActivity.class);
-        startActivity(intent);
-        if (isClose) finish();
+        FragmentUtils.add(fragmentManager, fragment, com.tzly.ctcyh.cargo.R.id.lay_base_frame);
     }
 
     /**
@@ -134,31 +132,6 @@ public class LicenseDetailActivity extends AbstractBaseActivity {
         SimpleDateFormat simpleDateFormat =
                 new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
         return simpleDateFormat.format(new Date());
-        //去年的今天时间
-        //        Calendar today = Calendar.getInstance();
-        //        today.setTime(new Date());
-        //        today.add(Calendar.YEAR, -1);
-        //        long lastDate = today.getTime().getTime();
-        //        int yearLast = today.get(Calendar.YEAR);
-        //        //输入时间
-        //        String dateString = dateFormat(startDate);
-        //        Date date = null;
-        //        try {
-        //            date = simpleDateFormat.parse(dateString);
-        //        } catch (ParseException e) {
-        //            e.printStackTrace();
-        //        }
-        //        Calendar calendar = Calendar.getInstance();
-        //        calendar.setTime(date);
-        //        long dateTime = calendar.getTime().getTime();
-        //        int day = calendar.get(Calendar.DATE);
-        //        int month = calendar.get(Calendar.MONTH) + 1;
-        //        //判断逻辑
-        //        if (dateTime >= lastDate) return simpleDateFormat.format(new Date());
-        //        calendar.set(yearLast, month - 1, day);
-        //        if (calendar.getTime().getTime() >= lastDate) return simpleDateFormat.format(new Date());
-        //        calendar.add(Calendar.YEAR, 1);
-        //        return simpleDateFormat.format(calendar.getTime());
     }
 
     public String localDateFormat(String oldDate) {

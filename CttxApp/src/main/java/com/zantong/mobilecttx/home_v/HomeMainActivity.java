@@ -22,6 +22,7 @@ import com.tzly.ctcyh.router.util.StatusBarUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.push_v.IPushBroadcastReceiver;
 import com.zantong.mobilecttx.push_v.PushBroadcastReceiver;
@@ -52,6 +53,18 @@ public class HomeMainActivity extends AbstractBaseActivity
     private PushBroadcastReceiver mBroadcastReceiver;
 
     /**
+     * 不要基础title栏
+     */
+    protected boolean isCustomTitle() {
+        return true;
+    }
+
+    @Override
+    protected int initContentView() {
+        return R.layout.activity_main_immersion;
+    }
+
+    /**
      * 再次启动时调用
      */
     @Override
@@ -74,18 +87,6 @@ public class HomeMainActivity extends AbstractBaseActivity
                 this, StatusBarUtils.DEFAULT_BAR_ALPHA, null);
     }
 
-    /**
-     * 不要基础title栏
-     */
-    protected boolean isCustomTitle() {
-        return true;
-    }
-
-    @Override
-    protected int initContentView() {
-        return R.layout.activity_main_immersion;
-    }
-
     @Override
     protected void bindFragment() {
         //推送广播核心部分代码：
@@ -106,6 +107,8 @@ public class HomeMainActivity extends AbstractBaseActivity
      */
     @Override
     public void tipByNumber(int position, int number) {
+        LoginData.getInstance().tipCount = number;
+
         if (mCustomBottom != null)
             mCustomBottom.setTipOfNumber(position, number);
         if (mHomeUnimpededFragment != null)
@@ -136,7 +139,7 @@ public class HomeMainActivity extends AbstractBaseActivity
             } else {
                 DialogUtils.updateDialog(this,
                         upgradeInfo.title, upgradeInfo.newFeature,
-                         new View.OnClickListener() {
+                        new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Beta.checkUpgrade();

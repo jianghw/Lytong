@@ -211,7 +211,7 @@ public class HomeMeFragment extends RefreshFragment
 
         //畅通卡
         boolean isUnBound = TextUtils.isEmpty(MainRouter.getUserFilenum());
-        mTvCard.setText(isUnBound ? "未绑定牡丹畅通卡" : "已绑定牡丹畅通卡");
+        mTvCard.setText(isUnBound ? "未绑定畅通卡" : "已绑定畅通卡");
         mTvCard.setTextColor(isUnBound
                 ? getResources().getColor(R.color.colorTvGray_b2)
                 : getResources().getColor(R.color.colorTvBlack_4d));
@@ -249,12 +249,11 @@ public class HomeMeFragment extends RefreshFragment
         } else if (!TextUtils.isEmpty(phone) && phone.length() >= 7) {
             mTvLogin.setText(phone.substring(7));
         } else {
-            mTvCard.setText("未绑定牡丹畅通卡");
-            mTvCard.setTextColor(getResources().getColor(R.color.colorTvGray_b2));
-
             mImgHead.setImageResource(R.mipmap.portrait);
             mTvLogin.setText("您还未登录");
         }
+
+        unMessageCount(3, LoginData.getInstance().tipCount);
     }
 
     /**
@@ -388,7 +387,7 @@ public class HomeMeFragment extends RefreshFragment
                 break;
             case R.id.lay_query://违章缴费查询
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(34));
-                licenseCheckGrade();
+                licenseCheckGrade(2);
                 break;
             case R.id.lay_msg://消息
                 MobclickAgent.onEvent(Utils.getContext(), Config.getUMengID(24));
@@ -420,7 +419,7 @@ public class HomeMeFragment extends RefreshFragment
         }
     }
 
-    protected void licenseCheckGrade() {
+    protected void licenseCheckGrade(int position) {
         String grade = SPUtils.instance().getString(SPUtils.USER_GRADE);
         LicenseFileNumDTO fromJson = null;
         if (!TextUtils.isEmpty(grade)) {
@@ -432,27 +431,13 @@ public class HomeMeFragment extends RefreshFragment
             fromJson.setStrtdt(MainRouter.getUserGetdate());
         }
 
-        if (fromJson != null) {
+        if (fromJson != null && position == 2) {
             MainRouter.gotoPaymentActivity(getActivity(), new Gson().toJson(fromJson));
+        } else if (fromJson != null && position == 1) {
+            MainRouter.gotoLicenseDetailActivity(getActivity(), new Gson().toJson(fromJson));
         } else {
-            MainRouter.gotoLicenseGradeActivity(getActivity());
+            MainRouter.gotoLicenseGradeActivity(getActivity(), position);
         }
-
-//        if (!TextUtils.isEmpty(MainRouter.getUserFilenum())
-//                && !TextUtils.isEmpty(MainRouter.getUserGetdate()) || bean != null) {
-//
-//            LicenseFileNumDTO loginBean = new LicenseFileNumDTO();
-//            loginBean.setFilenum(MainRouter.getUserFilenum());
-//            loginBean.setStrtdt(MainRouter.getUserGetdate());
-//
-//            Intent intent = new Intent(getActivity(), PaymentActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putParcelable(LicenseGradeActivity.KEY_BUNDLE, bean != null ? bean : loginBean);
-//            intent.putExtras(bundle);
-//            startActivity(intent);
-//        } else {
-//            MainRouter.gotoLicenseGradeActivity(getActivity());
-//        }
     }
 
     /**

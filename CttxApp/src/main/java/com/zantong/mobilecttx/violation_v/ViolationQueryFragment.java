@@ -17,13 +17,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
+import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.custom.dialog.DateDialogFragment;
 import com.tzly.ctcyh.router.custom.dialog.IOnDateSetListener;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.MobUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
 import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
@@ -72,7 +75,7 @@ import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CO
 /**
  * 违法查询页面
  */
-public class ViolationQueryFragment extends JxBaseRefreshFragment
+public class ViolationQueryFragment extends RefreshFragment
         implements View.OnClickListener, IViolationQueryFtyContract.IViolationQueryFtyView {
 
     private static final String ARG_PARAM1 = "param1";
@@ -173,21 +176,27 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
         }
     }
 
+    @MultiState
+    protected int initMultiState() {
+        return MultiState.CONTENT;
+    }
+
     protected boolean isRefresh() {
         return false;
     }
 
     @Override
-    protected int initFragmentView() {
+    protected int fragmentView() {
         return R.layout.fragment_violation_query;
     }
 
     @Override
-    protected void bindFragmentView(View fragment) {
+    protected void bindFragment(View fragment) {
         initView(fragment);
 
         ViolationQueryFtyPresenter mPresenter = new ViolationQueryFtyPresenter(
-                Injection.provideRepository(getActivity().getApplicationContext()), this);
+                Injection.provideRepository(Utils.getContext()), this);
+
         //车牌号
         //小写转化为大写
         mEditPlate.setTransformationMethod(new AllCapTransformationMethod());
@@ -200,19 +209,6 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
         initLayEnable(false, mLayoutVehicle);
     }
 
-    @Override
-    protected void onRefreshData() {
-    }
-
-    @Override
-    protected void onLoadMoreData() {
-    }
-
-    @Override
-    public void setPresenter(IViolationQueryFtyContract.IViolationQueryFtyPresenter presenter) {
-        mPresenter = presenter;
-    }
-
     /**
      * 是否可以点击
      */
@@ -221,7 +217,13 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
     }
 
     @Override
-    protected void onFirstDataVisible() {
+    public void setPresenter(IViolationQueryFtyContract.IViolationQueryFtyPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+
+    @Override
+    protected void loadingFirstData() {
         //可添加控件操作
         int size;
         if (MainRouter.isUserLogin())
@@ -232,14 +234,14 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
         mCustomSwitchBtn.setChecked(size < 3);
         mCustomSwitchBtn.setEnabled(size < 3);
 
-        if (mParam1 != null) initBundleData();
+        if (mParam1 != null) responseData(mParam1);
     }
 
     /**
      * 用于删除 编辑
      */
-    private void initBundleData() {
-
+    @Override
+    protected void responseData(Object response) {
         mBtnDelete.setVisibility(mParam1 != null && mParam1.getIsPayable() == 1 ? View.GONE : View.VISIBLE);
         mBtnQuery.setText(mParam1 != null ? "编辑保存" : "查  询");
 
@@ -352,6 +354,7 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
                 InputMethodManager inputMethodManager = (InputMethodManager)
                         getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
                 new KeyWordPop(getActivity(), v, new KeyWordPop.KeyWordLintener() {
                     @Override
                     public void onKeyWordLintener(String cityStr) {
@@ -405,8 +408,6 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
                 startActivityForResult(intentX, CarChooseActivity.REQUEST_X_CODE);
                 break;
             case R.id.btn_query://提交
-                getActivity().setResult(MainGlobal.resultCode.violation_query_submit);
-
                 if (dataFormValidation()) updateVehicle();
                 break;
             case R.id.btn_delete://删除
@@ -502,6 +503,7 @@ public class ViolationQueryFragment extends JxBaseRefreshFragment
 
     private void updateVehicle() {
         if (mParam1 != null) {//编辑
+            getActivity().setResult(MainGlobal.resultCode.violation_query_submit);
             if (mPresenter != null) mPresenter.updateVehicleLicense();
         } else {
             MobUtils.getInstance().eventIdByUMeng(13);

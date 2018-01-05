@@ -36,9 +36,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/res_y_100"
-        android:background="@color/colorWhite"
-        android:paddingBottom="@dimen/res_y_10"
-        android:paddingTop="@dimen/res_y_10">
+        android:background="@color/colorWhite">
 
         <ImageView
             android:id="@+id/img_trumpet"

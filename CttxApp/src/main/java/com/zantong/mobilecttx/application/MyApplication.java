@@ -17,12 +17,14 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.BuglyStrategy;
+import com.tencent.bugly.beta.Beta;
 import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.RudenessScreenHelper;
 import com.tzly.ctcyh.router.util.Utils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.BuildConfig;
+import com.zantong.mobilecttx.home_v.HomeMainActivity;
 import com.zantong.mobilecttx.router.MainRouter;
 
 
@@ -67,6 +69,27 @@ public class MyApplication extends MultiDexApplication {
         SDKInitializer.setCoordType(CoordType.BD09LL);
 
         //bugly初始化
+        Beta.autoInit = true;
+        /**
+         * true表示初始化时自动检查升级; false表示不会自动检查升级,需要手动调用Beta.checkUpgrade()方法;
+         */
+        Beta.autoCheckUpgrade = true;
+        /**
+         * 设置升级检查周期为60s(默认检查周期为0s)，60s内SDK不重复向后台请求策略);
+         */
+        Beta.upgradeCheckPeriod = 10 * 1000;
+        /**
+         * 设置启动延时为1s（默认延时3s），APP启动1s后初始化SDK，避免影响APP启动速度;
+         */
+        Beta.initDelay = 2 * 1000;
+        /**
+         * 已经确认过的弹窗在APP下次启动自动检查更新时会再次显示;
+         */
+        Beta.showInterruptedStrategy = true;
+        /**
+         * 只允许在MainActivity上显示更新弹窗，其他activity上不显示弹窗; 不设置会默认所有activity都可以显示弹窗;
+         */
+        Beta.canShowUpgradeActs.add(HomeMainActivity.class);
         BuglyStrategy strategy = new BuglyStrategy();
         //设置渠道
         strategy.setAppChannel(channel);
@@ -74,10 +97,7 @@ public class MyApplication extends MultiDexApplication {
                 + "_" + AppUtils.getAppVersionCode();
         //App的版本
         strategy.setAppVersion(version);
-//        Beta.autoInit = false;
-//        //自动检查更新开关
-//        Beta.autoCheckUpgrade = false;
-        Bugly.init(getApplicationContext(),
+        Bugly.init(this,
                 BuildConfig.App_Url ? "b7b596e1eb"
                         : "62323a33e6", BuildConfig.App_Url, strategy);
         //Log环境初始化

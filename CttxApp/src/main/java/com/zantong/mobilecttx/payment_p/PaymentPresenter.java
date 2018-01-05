@@ -159,7 +159,7 @@ public class PaymentPresenter implements IPaymentContract.IPaymentPresenter {
                     public Boolean call(RspInfoBean.ViolationInfoBean violationInfoBean) {
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(new Date());
-                        int d = month.contains("3") ? -3 : month.contains("6") ? -6 : month.contains("12") ? -12 : -12;
+                        int d = month.equals("1个月") ? -1 : month.equals("6个月") ? -6 : month.equals("12个月") ? -12 : -12;
                         calendar.add(Calendar.MONTH, d);  //设置为前3月
 
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.SIMPLIFIED_CHINESE);
@@ -175,6 +175,7 @@ public class PaymentPresenter implements IPaymentContract.IPaymentPresenter {
                         return c.getTimeInMillis() >= calendar.getTimeInMillis();
                     }
                 })
+                .switchIfEmpty(Observable.<RspInfoBean.ViolationInfoBean>error(new Throwable("数据为空")))
                 .groupBy(new Func1<RspInfoBean.ViolationInfoBean, String>() {
                     @Override
                     public String call(RspInfoBean.ViolationInfoBean keySelector) {
@@ -186,6 +187,7 @@ public class PaymentPresenter implements IPaymentContract.IPaymentPresenter {
                         new Action1<GroupedObservable<String, RspInfoBean.ViolationInfoBean>>() {
                             @Override
                             public void call(GroupedObservable<String, RspInfoBean.ViolationInfoBean> groupedObservable) {
+
                                 groupedData(groupedObservable, mCarDatas);
                             }
                         },
@@ -216,7 +218,6 @@ public class PaymentPresenter implements IPaymentContract.IPaymentPresenter {
 
             @Override
             public void onNext(List<RspInfoBean.ViolationInfoBean> infoBeanList) {
-
                 mCarDatas.add(new RecyclerViewData(infoBeanList.get(0).getCarnum(), infoBeanList, false));
             }
         });

@@ -23,8 +23,6 @@ public interface IUnimpededFtyContract {
 
         void getTextNoticeInfo(HomeCarResponse result);
 
-        void getRemoteCarInfoSucceed(UserCarsResult result);
-
         void dataError(String message);
 
         void indexLayerSucceed(IndexLayerResponse result);

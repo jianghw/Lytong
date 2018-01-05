@@ -25,7 +25,6 @@ import com.zantong.mobilecttx.utils.AllCapTransformationMethod;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.utils.VehicleTypeTools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.violation_v.ViolationActivity;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.util.ArrayList;
@@ -128,7 +127,7 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
             @Override
             public void clickInquire() {//违章查询
                 MobUtils.getInstance().eventIdByUMeng(12);
-                Act.getInstance().gotoIntent(mContext, ViolationActivity.class);
+                MainRouter.gotoViolationActivity(mContext);
             }
 
             @Override

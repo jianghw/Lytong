@@ -19,6 +19,7 @@ import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.DialogMgr;
 
@@ -44,6 +45,7 @@ public class LicenseGradeActivity extends AbstractBaseActivity implements View.O
     private RelativeLayout mLyData;
 
     private LicenseFileNumDTO fromJson;
+    private int position;
 
     @Override
     protected int initContentView() {
@@ -52,6 +54,11 @@ public class LicenseGradeActivity extends AbstractBaseActivity implements View.O
 
     @Override
     protected void bundleIntent(Intent intent) {
+        if (intent != null && intent.getExtras() != null) {
+            Bundle bundle = intent.getExtras();
+            position = bundle.getInt(MainGlobal.putExtra.license_position_extra, 1);
+        }
+
         String grade = SPUtils.instance().getString(SPUtils.USER_GRADE);
         if (!TextUtils.isEmpty(grade)) {
             fromJson = new Gson().fromJson(grade, LicenseFileNumDTO.class);
@@ -117,9 +124,10 @@ public class LicenseGradeActivity extends AbstractBaseActivity implements View.O
     @Override
     protected void initContentData() {
         if (fromJson != null) {
-            mEditArchivesNumber.setText(fromJson.getFilenum());
-
-            mTvDate.setText(dateFormat(fromJson.getStrtdt()));
+            if (!TextUtils.isEmpty(fromJson.getFilenum()))
+                mEditArchivesNumber.setText(fromJson.getFilenum());
+            if (!TextUtils.isEmpty(fromJson.getStrtdt()))
+                mTvDate.setText(dateFormat(fromJson.getStrtdt()));
         }
     }
 
@@ -153,7 +161,11 @@ public class LicenseGradeActivity extends AbstractBaseActivity implements View.O
 
             String gson = new Gson().toJson(dto);
             SPUtils.instance().put(SPUtils.USER_GRADE, gson);
-            MainRouter.gotoPaymentActivity(this, gson);
+            if (position == 2) {
+                MainRouter.gotoPaymentActivity(this, gson);
+            } else if (position == 1) {
+                MainRouter.gotoLicenseDetailActivity(this, gson);
+            }
             finish();
         }
     }
