@@ -22,14 +22,13 @@ public final class FormatUtils {
         return TextUtils.isEmpty(msg) ? "-无数据-" : msg;
     }
 
-    /**
-     * 价格 0.00
-     *
-     * @param price
-     * @return
-     */
     public static String submitPrice(float price) {
-        return new DecimalFormat("#0.00").format(floatValue(price));
+        return new DecimalFormat("#0.00").format(price);
+    }
+
+    public static String submitPrice(String price) {
+        Float d = Float.valueOf(price);
+        return new DecimalFormat("#0.00").format(d);
     }
 
     /**
@@ -40,26 +39,19 @@ public final class FormatUtils {
         return newPrice.floatValue();
     }
 
-    public static String submitPrice(double price) {
-        return new DecimalFormat("#0.00").format(doubleValue(price));
-    }
-
-    public static String submitPrice(String price) {
-        Double d = Double.valueOf(price);
-        return new DecimalFormat("#0.00").format(doubleValue(d));
-    }
-
-    public static double doubleValue(double price) {
-        BigDecimal newPrice = new BigDecimal(price).setScale(2, BigDecimal.ROUND_UP);
-        return newPrice.doubleValue();
-    }
-
     public static String displayPrice(String price) {
         String money = "0.00";
         if (TextUtils.isEmpty(price)) return money;
-        double amount;
-        amount = Double.valueOf(price) / 100;
+        float amount;
+        amount = Float.valueOf(price) / 100;
         return submitPrice(amount);
+    }
+
+    /**
+     * 展现折扣
+     */
+    public static String showDiscount(String discount) {
+        return new DecimalFormat("#0.##").format(Float.valueOf(discount) * 10);
     }
 
 }

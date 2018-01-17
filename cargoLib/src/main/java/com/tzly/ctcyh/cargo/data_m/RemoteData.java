@@ -4,11 +4,14 @@ import android.support.annotation.Nullable;
 
 import com.tzly.ctcyh.cargo.api.IActivityService;
 import com.tzly.ctcyh.cargo.api.IAddOilService;
+import com.tzly.ctcyh.cargo.api.IRegionService;
 import com.tzly.ctcyh.cargo.bean.BaseResponse;
 import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
 import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
 import com.tzly.ctcyh.cargo.bean.response.ActiveConfigResponse;
+import com.tzly.ctcyh.cargo.bean.response.BidOilResponse;
+import com.tzly.ctcyh.cargo.bean.response.OrderExpressResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
@@ -68,8 +71,19 @@ public class RemoteData implements IRemoteSource {
      * 创建订单
      */
     @Override
-    public Observable<RefuelOrderResponse> createOrder(RefuelOilDTO oilDTO) {
-        return baseRetrofit().create(IAddOilService.class).createOrder(oilDTO);
+    public Observable<RefuelOrderResponse> createOrder(RefuelOilDTO oilDTO, int i) {
+
+        return i == 1
+                ? baseRetrofit().create(IAddOilService.class).createOrder(
+                oilDTO.getUserNum(), oilDTO.getGoodsId(),
+                oilDTO.getPrice(), oilDTO.getOilCard(), oilDTO.getType()
+        )
+                : baseRetrofit().create(IAddOilService.class).createOrder(
+                oilDTO.getUserNum(), oilDTO.getGoodsId(),
+                oilDTO.getPrice(), oilDTO.getType(),
+                oilDTO.getName(), oilDTO.getPhone(),
+                oilDTO.getSheng(), oilDTO.getShi(), oilDTO.getXian(), oilDTO.getAddressDetail()
+        );
     }
 
     /**
@@ -103,6 +117,30 @@ public class RemoteData implements IRemoteSource {
     public Observable<ActiveConfigResponse> getConfig(String channel, String resisterDate) {
         return channel.equals("1") ? baseRetrofit().create(IActivityService.class).getConfig(channel, resisterDate)
                 : baseRetrofit().create(IActivityService.class).getConfig(channel);
+    }
+
+    /**
+     * 加油及充值
+     */
+    @Override
+    public Observable<RefuelOilResponse> findAndSaveCards(String rasUserID, String oilCard) {
+        return baseRetrofit().create(IAddOilService.class).findAndSaveCards(rasUserID, oilCard);
+    }
+
+    /**
+     * 办理油卡
+     */
+    @Override
+    public Observable<BidOilResponse> handleOilCard() {
+        return baseRetrofit().create(IAddOilService.class).handleOilCard();
+    }
+
+    /**
+     * 32.获取地区列表
+     */
+    @Override
+    public Observable<OrderExpressResponse> getAllAreas() {
+        return baseRetrofit().create(IRegionService.class).getAllAreas();
     }
 
 

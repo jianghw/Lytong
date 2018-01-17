@@ -6,12 +6,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
+import android.widget.Button;
 
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.router.CargoRouter;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
-import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
@@ -22,20 +23,23 @@ import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CO
 /**
  * 加油充值
  */
-public class RefuelOilActivity extends AbstractBaseActivity {
+public class RefuelOilActivity extends AbstractBaseActivity
+        implements View.OnClickListener, IRechargeAToF {
 
-    private RefuelOilFragment mOilFragment;
+    private RefuelOilFragment mFragment;
+    private Button btnCommit;
 
     @Override
     protected int initContentView() {
-        return R.layout.activity_base_frame;
+        return R.layout.activity_base_frame_btn;
     }
 
+    /**
+     * 右击
+     */
     @Override
     protected void rightClickListener() {
-        MobUtils.getInstance().eventIdByUMeng(3);
-
-        showContacts();
+        CargoRouter.gotoBidOilActivity(this);
     }
 
     @Override
@@ -47,8 +51,19 @@ public class RefuelOilActivity extends AbstractBaseActivity {
 
     @Override
     protected void bindFragment() {
+        btnCommit = (Button) findViewById(R.id.btn_commit);
+        btnCommit.setOnClickListener(this);
+
         titleContent("加油充值");
-        titleMore("优惠加油");
+        titleMore("申购97折油卡");
+    }
+
+    /**
+     * 点击事件
+     */
+    @Override
+    public void onClick(View view) {
+        if (mFragment != null) mFragment.verificationSubmitData();
     }
 
     @Override
@@ -59,16 +74,16 @@ public class RefuelOilActivity extends AbstractBaseActivity {
     private void initFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         //默认页面显示
-        if (mOilFragment == null) {
-            mOilFragment = RefuelOilFragment.newInstance();
+        if (mFragment == null) {
+            mFragment = RefuelOilFragment.newInstance();
         }
-        FragmentUtils.add(fragmentManager, mOilFragment, R.id.lay_base_frame);
+        FragmentUtils.add(fragmentManager, mFragment, R.id.lay_base_frame);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mOilFragment != null) mOilFragment = null;
+        if (mFragment != null) mFragment = null;
     }
 
     public void showContacts() {
@@ -98,10 +113,19 @@ public class RefuelOilActivity extends AbstractBaseActivity {
         gotoMap();
     }
 
-    private void gotoMap() {CargoRouter.gotoBaiduMapParentActivity(this);}
+    private void gotoMap() {
+        CargoRouter.gotoBaiduMapParentActivity(this);
+    }
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)
     public void doPermissionFail() {
         ToastUtils.toastShort("此功能需要打开相关的地图权限");
     }
+
+    @Override
+    public void setCommitEnable(boolean b) {
+        if (btnCommit != null) btnCommit.setEnabled(b);
+    }
+
+
 }

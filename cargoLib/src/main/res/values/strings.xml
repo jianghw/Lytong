@@ -8,7 +8,21 @@
     <string name="cargo_tv_oil_card_number">
         <font color='#f3362b'>*</font>油卡号
     </string>
+    <!--<string name="cargo_tv_oil_tip">-->
+    <!--<font color='#f3362b'>*请填写正确的油卡卡号，错充金额将无法退还</font>-->
+    <!--</string>-->
     <string name="cargo_tv_oil_tip">
-        <font color='#f3362b'>*请填写正确的油卡卡号，错充金额将无法退还</font>
+        <font color='#f3362b'>*97折优惠 需够卡才可享受</font>
+    </string>
+
+    <string name="cargo_bid_oil_tip">
+        畅通联名卡是<font color='#f3362b'>中石化</font>油卡账户, 可在全国中石化加油站使用加油, 充值享优惠<font color='#f3362b'>97</font>折.\n
+        1、畅通联名卡只能在\"畅通车友会APP\"用工行信用卡或借记卡充值, 请开通工行卡的网银功能和信用卡的易支付功能, 并预留正确的手机号用于接收验证码;\n
+        2、普卡定额充值, 充值到账时间: 9点-20点充值, 20分钟内到账可圈存, 20点-次日9点, 次日9:30分前到账可圈存;\n
+        3、 黑、吉、辽、藏、新、陕、蒙、甘、宁、青十省中石化加油站暂不支持当地圈存, 可在外省圈存之后在以上省市使用, 消费完后可另购新卡.\n
+        4、请勿使用其他渠道给畅通联名卡充值, 其他渠道充值无法进入联名卡.
+    </string>
+    <string name="cargo_bid_oil_card">
+        购买500元加油卡用户可在下次充值时享受97折优惠\n暂时只支持工行卡支付，若无工行，请先申请办卡
     </string>
 </resources>

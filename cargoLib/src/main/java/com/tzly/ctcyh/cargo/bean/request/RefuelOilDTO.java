@@ -8,38 +8,110 @@ package com.tzly.ctcyh.cargo.bean.request;
  */
 
 public class RefuelOilDTO {
-
+    private String oilCard;
     /**
-     * methodType : rechargeOrder
-     * oilCardNum : 4234324234234234
-     * rechargeMoney : 500.00
-     * goodsId : 7
-     * userId : F7HOzMGquY8K38CewfURIjS9N73bw1u9WR7hz/NNuz61csdspwDDOuhSnHdx0EfYVNRl0dqrEt4ThJdBGxgXGgNX91w/4NErVah3JGfzRhOpoDqtoYY4UQ3NXh8wmfO2a7OvwrgWQwZkBP9RccDNXXh93bObAYOqiEtZJppSg1M=
+     * 加油
      */
-
-    private String methodType;
-    private String oilCardNum;
-    private String rechargeMoney;
+    private String type;
+    private String price;
     private String goodsId;
-    private String userId;
+    private String userNum;
+    /**
+     * 办卡
+     */
+    private String name;
+    private String phone;
+    private String sheng;
+    private String shi;
+    private String xian;
+    private String addressDetail;
 
-    public String getMethodType() { return methodType;}
+    public String getType() {
+        return type;
+    }
 
-    public void setMethodType(String methodType) { this.methodType = methodType;}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-    public String getOilCardNum() { return oilCardNum;}
+    public String getOilCard() {
+        return oilCard;
+    }
 
-    public void setOilCardNum(String oilCardNum) { this.oilCardNum = oilCardNum;}
+    public void setOilCard(String oilCard) {
+        this.oilCard = oilCard;
+    }
 
-    public String getRechargeMoney() { return rechargeMoney;}
+    public String getPrice() {
+        return price;
+    }
 
-    public void setRechargeMoney(String rechargeMoney) { this.rechargeMoney = rechargeMoney;}
+    public void setPrice(String price) {
+        this.price = price;
+    }
 
-    public String getGoodsId() { return goodsId;}
+    public String getGoodsId() {
+        return goodsId;
+    }
 
-    public void setGoodsId(String goodsId) { this.goodsId = goodsId;}
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
+    }
 
-    public String getUserId() { return userId;}
+    public String getUserNum() {
+        return userNum;
+    }
 
-    public void setUserId(String userId) { this.userId = userId;}
+    public void setUserNum(String userNum) {
+        this.userNum = userNum;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getSheng() {
+        return sheng;
+    }
+
+    public void setSheng(String sheng) {
+        this.sheng = sheng;
+    }
+
+    public String getShi() {
+        return shi;
+    }
+
+    public void setShi(String shi) {
+        this.shi = shi;
+    }
+
+    public String getXian() {
+        return xian;
+    }
+
+    public void setXian(String xian) {
+        this.xian = xian;
+    }
+
+    public String getAddressDetail() {
+        return addressDetail;
+    }
+
+    public void setAddressDetail(String addressDetail) {
+        this.addressDetail = addressDetail;
+    }
 }

@@ -134,7 +134,7 @@ public class SubjectOrderFragment extends JxBaseRefreshFragment
             mTvPhone.setText(event.getPhone());
         }
         String price = event.getPrice();
-        mTvPrice.setText(FormatUtils.submitPrice(Float.valueOf(price)));
+        mTvPrice.setText(FormatUtils.submitPrice(price));
     }
 
     private String displayPriceValue(double discount, int couponType, int price) {

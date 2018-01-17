@@ -6,8 +6,6 @@ import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 import com.tzly.ctcyh.router.base.IResponseView;
 
-import java.util.List;
-
 /**
  * Created by jianghw on 2017/10/12.
  * Description:优惠劵列表
@@ -18,15 +16,10 @@ import java.util.List;
 public interface IRefuelOilContract {
 
     interface IRefuelOilView extends IBaseView<IRefuelOilPresenter>, IResponseView {
-        void dataDistributionSucceed(List<RefuelOilBean> beanList);
 
-        void dataDistributionError(Throwable throwable);
+        RefuelOilBean.CardInfoBean getCardInfo();
 
-        String getRechargeMoney();
-
-        String getGoodsId();
-
-        String getOilCardNum();
+        String getOilCard();
 
         void createOrderError(String message);
 
@@ -36,9 +29,9 @@ public interface IRefuelOilContract {
     interface IRefuelOilPresenter extends IBasePresenter {
         void getGoods();
 
-        void dataDistribution(int oilType, List<RefuelOilBean> data);
-
         void createOrder();
+
+        void findAndSaveCards();
     }
 
 }

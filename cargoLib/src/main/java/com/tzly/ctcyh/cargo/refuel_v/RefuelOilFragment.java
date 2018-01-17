@@ -1,20 +1,25 @@
 package com.tzly.ctcyh.cargo.refuel_v;
 
+import android.app.Activity;
 import android.support.v7.widget.GridLayoutManager;
+import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
-import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.ctcyh.cargo.BuildConfig;
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
@@ -26,10 +31,7 @@ import com.tzly.ctcyh.cargo.refuel_p.RefuelOilAdapter;
 import com.tzly.ctcyh.cargo.refuel_p.RefuelOilPresenter;
 import com.tzly.ctcyh.cargo.router.CargoRouter;
 import com.tzly.ctcyh.router.base.RefreshFragment;
-import com.tzly.ctcyh.router.custom.SpaceItemDecoration;
-import com.tzly.ctcyh.router.custom.popup.CustomDialog;
-import com.tzly.ctcyh.router.imple.IPayTypeListener;
-import com.tzly.ctcyh.router.util.SPUtils;
+import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.util.Utils;
 
 import java.util.List;
@@ -41,12 +43,12 @@ public class RefuelOilFragment extends RefreshFragment
         implements IRefuelOilContract.IRefuelOilView, View.OnClickListener {
 
     private IRefuelOilContract.IRefuelOilPresenter mPresenter;
-    private TextView mTvTitle;
-    private ImageView mImgType;
-    /**
-     * 小型汽车
-     */
-    private TextView mTvType;
+
+    private ImageView mImgBanner;
+    private RadioGroup radioGroup;
+    private RadioButton radioSinopec;
+    private RadioButton radioPetro;
+
     /**
      * 请输入19位加油卡号
      */
@@ -57,22 +59,27 @@ public class RefuelOilFragment extends RefreshFragment
      * 我已阅读用户充值协议
      */
     private TextView mTvAgreement;
-    /**
-     * 充    值
-     */
-    private Button mBtnCommit;
+
     private RefuelOilAdapter mAdapter;
-    /**
-     * oilType：1 中石化  2 中石油
-     */
-    private int mOilType = 1;
     /**
      * 当前选择项
      */
-    private RefuelOilBean mRefuelOilBean;
+    private RefuelOilBean.CardInfoBean infoBean;
+    /**
+     * 通讯接口
+     */
+    private IRechargeAToF iRechargeAToF;
 
     public static RefuelOilFragment newInstance() {
         return new RefuelOilFragment();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof IRechargeAToF) {
+            iRechargeAToF = (IRechargeAToF) activity;
+        }
     }
 
     @Override
@@ -86,30 +93,19 @@ public class RefuelOilFragment extends RefreshFragment
 
         RefuelOilPresenter presenter = new RefuelOilPresenter(
                 InjectionRepository.provideRepository(Utils.getContext()), this);
-
-        String oilNum = SPUtils.instance().getString(SPUtils.USER_OIL_NUM);
-        if (!TextUtils.isEmpty(oilNum)) {
-            mOilType = oilNum.length() == 19 ? 1 : 2;
-            mTvType.setText(mOilType == 1 ? "中石化" : "中石油");
-            setEditOil(oilNum);
-        }
-    }
-
-    /**
-     * 是否可刷新
-     */
-    protected boolean isRefresh() {
-        return false;
-    }
-
-    @Override
-    protected void loadingFirstData() {
-        if (mPresenter != null) mPresenter.getGoods();
     }
 
     @Override
     public void setPresenter(IRefuelOilContract.IRefuelOilPresenter presenter) {
         mPresenter = presenter;
+    }
+
+    /**
+     * 初始话数据
+     */
+    @Override
+    protected void loadingFirstData() {
+        if (mPresenter != null) mPresenter.findAndSaveCards();
     }
 
     @Override
@@ -119,51 +115,65 @@ public class RefuelOilFragment extends RefreshFragment
     }
 
     public void initView(View view) {
-        mTvTitle = (TextView) view.findViewById(R.id.tv_title);
-        mImgType = (ImageView) view.findViewById(R.id.img_type);
-        mTvType = (TextView) view.findViewById(R.id.tv_type);
-        RelativeLayout mLayType = (RelativeLayout) view.findViewById(R.id.lay_0);
-        mLayType.setOnClickListener(this);
-        mEditOil = (EditText) view.findViewById(R.id.edit_oil);
+        radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
+        radioSinopec = (RadioButton) view.findViewById(R.id.radio_sinopec);
+        radioSinopec.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                setStrEditOil("");
+                mEditOil.setHint("请填写正确的" + String.valueOf(b ? 19 : 16) + "位卡号");
+            }
+        });
+        radioPetro = (RadioButton) view.findViewById(R.id.radio_petro);
 
+        mImgBanner = (ImageView) view.findViewById(R.id.img_banner);
+        mEditOil = (EditText) view.findViewById(R.id.edit_oil);
+        mEditOil.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            /**
+             * 输入监听
+             */
+            @Override
+            public void afterTextChanged(Editable editable) {
+                int len = editable != null ? editable.length() : 0;
+                if (radioSinopec.isChecked() && len == 19 || !radioSinopec.isChecked() && len == 16)
+                    if (mPresenter != null) mPresenter.findAndSaveCards();
+            }
+        });
         mXRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_list);
         mTvHint = (TextView) view.findViewById(R.id.tv_hint);
         mTvAgreement = (TextView) view.findViewById(R.id.tv_agreement);
         mTvAgreement.setOnClickListener(this);
-        mBtnCommit = (Button) view.findViewById(R.id.btn_commit);
-        mBtnCommit.setOnClickListener(this);
-//        final ScrollView scrollView = (ScrollView) view.findViewById(R.id.sv_hint);
-//        scrollView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if (event.getAction() == MotionEvent.ACTION_UP) {
-//                    scrollView.requestDisallowInterceptTouchEvent(false);
-//                } else {
-//                    scrollView.requestDisallowInterceptTouchEvent(true);
-//                }
-//                return false;
-//            }
-//        });
 
         GridLayoutManager manager = new GridLayoutManager(Utils.getContext(), 3);
         mXRecyclerView.setLayoutManager(manager);
         mXRecyclerView.setPullRefreshEnabled(false);
         mXRecyclerView.setLoadingMoreEnabled(false);
         mXRecyclerView.noMoreLoadings();
-        mXRecyclerView.addItemDecoration(
-                new SpaceItemDecoration(getResources().getDimensionPixelSize(R.dimen.res_x_30)));
+//        mXRecyclerView.addItemDecoration(
+//                new SpaceItemDecoration(getResources().getDimensionPixelSize(R.dimen.res_x_30))
+//        );
 
         mAdapter = new RefuelOilAdapter();
         mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, Object data) {
-                if (!(data instanceof RefuelOilBean)) return;
-                setEnableCommit(true);
-                RefuelOilBean bean = (RefuelOilBean) data;
-                for (RefuelOilBean oilBean : mAdapter.getAll()) {
-                    boolean me = bean.getGoodsId() == oilBean.getGoodsId();
-                    oilBean.setSelect(me);
-                    if (me) mRefuelOilBean = oilBean;
+                if (!(data instanceof RefuelOilBean.CardInfoBean)) return;
+
+                RefuelOilBean.CardInfoBean cardInfoBean = (RefuelOilBean.CardInfoBean) data;
+                for (RefuelOilBean.CardInfoBean oilBean : mAdapter.getAll()) {
+                    boolean isMe = cardInfoBean.getGoodsId().equals(oilBean.getGoodsId());
+                    oilBean.setSelect(isMe);
+                    if (isMe) infoBean = oilBean;
                 }
                 mAdapter.notifyDataSetChanged();
             }
@@ -190,7 +200,8 @@ public class RefuelOilFragment extends RefreshFragment
                         + "2. 副卡、增值税票卡不支持在线充值；\n"
                         + "3. 22：00--03：00进行系统维护，充值后将延迟到账;\n"
                         + "4. 本服务为全国加油卡代充服务，故暂不支持开具发票;\n"
-                        + "5. 支付成功后将于30分钟内到账，超过24小时未到账请与我们「联系」"
+                        + "5. 本服务由车行易提供;\n"
+                        + "6. 支付成功后将于30分钟内到账，超过24小时未到账请与我们「联系」"
         );
         //可以为多部分设置超链接
         spanableInfo.setSpan(
@@ -199,7 +210,6 @@ public class RefuelOilFragment extends RefreshFragment
                 Spanned.SPAN_MARK_MARK);
         return spanableInfo;
     }
-
 
     private class Clickable extends ClickableSpan implements View.OnClickListener {
 
@@ -213,55 +223,32 @@ public class RefuelOilFragment extends RefreshFragment
         public void onClick(View view) {
             mListener.onClick(view);
         }
-    }
 
-    private void setEnableCommit(boolean enable) {
-        mBtnCommit.setEnabled(enable);
-    }
-
-    private String getEditOil() {
-        return mEditOil.getText().toString().trim();
-    }
-
-    private void setEditOil(String num) {
-        mEditOil.setText(num);
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_commit) {
-            formDataValidation();
-        } else if (v.getId() == R.id.tv_agreement) {//加油协议
+        if (v.getId() == R.id.tv_agreement) {//加油协议
             CargoRouter.gotoRechargeAgreementActivity(getActivity());
-        } else if (v.getId() == R.id.lay_0) {//提供商
-            CustomDialog.payTypeDialog(getActivity(), new IPayTypeListener() {
-                @Override
-                public void submitPayType(boolean type) {
-                    mOilType = type ? 1 : 2;
-                    mTvType.setText(type ? "中石化" : "中石油");
-                    mEditOil.setHint("请输入" + (type ? 19 : 16) + "位加油卡号");
-                    setEditOil("");
-                    setEnableCommit(false);
-                    loadingFirstData();
-                }
-            });
         }
     }
 
-    /**
-     * 表单验证
-     */
-    private void formDataValidation() {
-        String card = getEditOil();
-        if (TextUtils.isEmpty(card)) {
-            toastShort("请填写正确的卡号");
-        } else if (mOilType == 1 && card.length() != 19) {
-            toastShort("请填写正确的19位卡号");
-        } else if (mOilType == 2 && card.length() != 16) {
-            toastShort("请填写正确的16位卡号");
-        } else {
-            if (mPresenter != null) mPresenter.createOrder();
-        }
+    @Override
+    public RefuelOilBean.CardInfoBean getCardInfo() {
+        return infoBean != null ? infoBean : new RefuelOilBean.CardInfoBean();
+    }
+
+    @Override
+    public String getOilCard() {
+        return TextUtils.isEmpty(getStrEditOil()) ? "0" : getStrEditOil();
+    }
+
+    public String getStrEditOil() {
+        return mEditOil.getText().toString().trim();
+    }
+
+    public void setStrEditOil(String str) {
+        if (mEditOil != null) mEditOil.setText(str);
     }
 
     /**
@@ -271,13 +258,46 @@ public class RefuelOilFragment extends RefreshFragment
     protected void responseData(Object response) {
         if (response instanceof RefuelOilResponse) {
             RefuelOilResponse oilResponse = (RefuelOilResponse) response;
-            List<RefuelOilBean> data = oilResponse.getData();
-            if (mPresenter != null) mPresenter.dataDistribution(mOilType, data);
+            RefuelOilBean bean = oilResponse.getData();
+            dataRendering(bean);
         } else
             responseError();
     }
 
-    private void setSimpleDataResult(List<RefuelOilBean> data) {
+    /**
+     * 数据错误时
+     */
+    public void responseError(String message) {
+        toastShort(message);
+    }
+
+
+    /**
+     * 数据渲染
+     */
+    private void dataRendering(RefuelOilBean bean) {
+        String url = bean.getImg();
+        if (!BuildConfig.App_Url) ImageLoadUtils.loadTwoRectangle(url, mImgBanner);
+
+        String oilType = bean.getOilType();
+        radioGroup.check(TextUtils.isEmpty(oilType) || (oilType.contains("化"))
+                ? R.id.radio_sinopec : R.id.radio_petro);
+
+        String oilCard = bean.getOilCard();
+        if (!TextUtils.isEmpty(oilCard)) setStrEditOil(oilCard);
+
+        List<RefuelOilBean.CardInfoBean> lis = bean.getCardInfo();
+        if (!lis.isEmpty()) {//默认第一个
+            RefuelOilBean.CardInfoBean cardInfoBean = lis.get(0);
+            cardInfoBean.setSelect(true);
+            infoBean = cardInfoBean;
+        }
+        setSimpleDataResult(lis);
+
+        if (iRechargeAToF != null) iRechargeAToF.setCommitEnable(true);
+    }
+
+    private void setSimpleDataResult(List<RefuelOilBean.CardInfoBean> data) {
         mAdapter.removeAllOnly();
         if (data == null || data.isEmpty()) {
             showStateEmpty();
@@ -286,30 +306,27 @@ public class RefuelOilFragment extends RefreshFragment
         }
     }
 
-    @Override
-    public void dataDistributionSucceed(List<RefuelOilBean> beanList) {
-        setSimpleDataResult(beanList);
+    /**
+     * 出错时
+     */
+    protected void errorData(String message) {
+        if (iRechargeAToF != null) iRechargeAToF.setCommitEnable(false);
     }
 
-    @Override
-    public void dataDistributionError(Throwable throwable) {
-        toastShort(throwable.getMessage());
-        responseError();
-    }
-
-    @Override
-    public String getRechargeMoney() {
-        return String.valueOf(mRefuelOilBean.getPrice());
-    }
-
-    @Override
-    public String getGoodsId() {
-        return String.valueOf(mRefuelOilBean.getGoodsId());
-    }
-
-    @Override
-    public String getOilCardNum() {
-        return getEditOil();
+    /**
+     * 提交数据验证
+     */
+    public void verificationSubmitData() {
+        String card = getStrEditOil();
+        if (TextUtils.isEmpty(card)) {
+            toastShort("请填写正确的卡号");
+        } else if (radioSinopec.isChecked() && card.length() != 19) {
+            toastShort("请填写正确的19位卡号");
+        } else if (!radioSinopec.isChecked() && card.length() != 16) {
+            toastShort("请填写正确的16位卡号");
+        } else {
+            if (mPresenter != null) mPresenter.createOrder();
+        }
     }
 
     /**
@@ -323,7 +340,6 @@ public class RefuelOilFragment extends RefreshFragment
     @Override
     public void createOrderSucceed(RefuelOrderResponse response) {
         toastShort(response.getResponseDesc());
-        SPUtils.instance().put(SPUtils.USER_OIL_NUM, getEditOil());
 
         RefuelOrderBean bean = response.getData();
         if (bean != null)
@@ -331,4 +347,6 @@ public class RefuelOilFragment extends RefreshFragment
         else
             toastShort("数据出错,创建订单未知错误");
     }
+
+
 }

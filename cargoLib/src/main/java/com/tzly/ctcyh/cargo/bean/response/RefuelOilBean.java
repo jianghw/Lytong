@@ -1,5 +1,7 @@
 package com.tzly.ctcyh.cargo.bean.response;
 
+import java.util.List;
+
 /**
  * Created by jianghw on 2017/10/24.
  * Description:
@@ -9,46 +11,104 @@ package com.tzly.ctcyh.cargo.bean.response;
 
 public class RefuelOilBean {
 
+
     /**
-     * goodsId : 1
-     * price : 100
-     * oilType : 1
-     * name : 中石化100元加油充值卡
-     * type : 1
+     * oilCard : 1111222222222222222
+     * oilType : 中石化
+     * img : static-resources/images/oil.png
+     * cardInfo : [{"price":"10.00","goodsId":"40","discount":"0.993","type":"13"},{"price":"0.20","goodsId":"41","discount":"0.993","type":"13"},{"price":"0.30","goodsId":"42","discount":"0.993","type":"13"}]
      */
 
-    private int goodsId;
-    private float price;
-    private int oilType;
-    private String name;
-    private int type;
-    private boolean select;
+    private String oilCard;
+    private String oilType;
+    private String img;
+    private List<CardInfoBean> cardInfo;
 
-    public boolean isSelect() {
-        return select;
+    public String getOilCard() {
+        return oilCard;
     }
 
-    public void setSelect(boolean select) {
-        this.select = select;
+    public void setOilCard(String oilCard) {
+        this.oilCard = oilCard;
     }
 
-    public int getGoodsId() { return goodsId;}
+    public String getOilType() {
+        return oilType;
+    }
 
-    public void setGoodsId(int goodsId) { this.goodsId = goodsId;}
+    public void setOilType(String oilType) {
+        this.oilType = oilType;
+    }
 
-    public float getPrice() { return price;}
+    public String getImg() {
+        return img;
+    }
 
-    public void setPrice(float price) { this.price = price;}
+    public void setImg(String img) {
+        this.img = img;
+    }
 
-    public int getOilType() { return oilType;}
+    public List<CardInfoBean> getCardInfo() {
+        return cardInfo;
+    }
 
-    public void setOilType(int oilType) { this.oilType = oilType;}
+    public void setCardInfo(List<CardInfoBean> cardInfo) {
+        this.cardInfo = cardInfo;
+    }
 
-    public String getName() { return name;}
+    public static class CardInfoBean {
+        /**
+         * price : 10.00
+         * goodsId : 40
+         * discount : 0.993
+         * type : 13
+         */
 
-    public void setName(String name) { this.name = name;}
+        private String price;
+        private String goodsId;
+        private String discount;
+        private String type;
 
-    public int getType() { return type;}
+        private boolean select;
 
-    public void setType(int type) { this.type = type;}
+        public boolean isSelect() {
+            return select;
+        }
+
+        public void setSelect(boolean select) {
+            this.select = select;
+        }
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
+        public String getGoodsId() {
+            return goodsId;
+        }
+
+        public void setGoodsId(String goodsId) {
+            this.goodsId = goodsId;
+        }
+
+        public String getDiscount() {
+            return discount;
+        }
+
+        public void setDiscount(String discount) {
+            this.discount = discount;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+    }
 }

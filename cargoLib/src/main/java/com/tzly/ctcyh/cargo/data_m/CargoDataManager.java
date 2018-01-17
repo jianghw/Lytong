@@ -8,6 +8,8 @@ import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
 import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
 import com.tzly.ctcyh.cargo.bean.response.ActiveConfigResponse;
+import com.tzly.ctcyh.cargo.bean.response.BidOilResponse;
+import com.tzly.ctcyh.cargo.bean.response.OrderExpressResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
@@ -71,8 +73,8 @@ public class CargoDataManager {
     /**
      * 创建订单
      */
-    public Observable<RefuelOrderResponse> createOrder(RefuelOilDTO oilDTO) {
-        return mRemoteData.createOrder(oilDTO);
+    public Observable<RefuelOrderResponse> createOrder(RefuelOilDTO oilDTO, int i) {
+        return mRemoteData.createOrder(oilDTO,i);
     }
 
     /**
@@ -102,5 +104,26 @@ public class CargoDataManager {
      */
     public Observable<ActiveConfigResponse> getConfig(String channel, String resisterDate) {
         return mRemoteData.getConfig(channel, resisterDate);
+    }
+
+    /**
+     * 加油及充值
+     */
+    public Observable<RefuelOilResponse> findAndSaveCards(String rasUserID, String oilCard) {
+        return mRemoteData.findAndSaveCards(rasUserID, oilCard);
+    }
+
+    /**
+     * 办理油卡
+     */
+    public Observable<BidOilResponse> handleOilCard() {
+        return mRemoteData.handleOilCard();
+    }
+
+    /**
+     * 32.获取地区列表
+     */
+    public Observable<OrderExpressResponse> getAllAreas() {
+        return mRemoteData.getAllAreas();
     }
 }

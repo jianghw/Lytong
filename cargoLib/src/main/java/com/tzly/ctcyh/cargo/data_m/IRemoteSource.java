@@ -6,6 +6,8 @@ import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
 import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
 import com.tzly.ctcyh.cargo.bean.response.ActiveConfigResponse;
+import com.tzly.ctcyh.cargo.bean.response.BidOilResponse;
+import com.tzly.ctcyh.cargo.bean.response.OrderExpressResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
@@ -25,7 +27,7 @@ public interface IRemoteSource {
     /**
      * 创建订单
      */
-    Observable<RefuelOrderResponse> createOrder(RefuelOilDTO oilDTO);
+    Observable<RefuelOrderResponse> createOrder(RefuelOilDTO oilDTO, int i);
 
     /**
      * 驾驶证
@@ -43,4 +45,15 @@ public interface IRemoteSource {
     Observable<ReceiveCouponResponse> receiveCoupon(String rasUserID, String couponId, String channel);
 
     Observable<ActiveConfigResponse> getConfig(String channel, String resisterDate);
+
+    /**
+     * 加油及充值
+     */
+    Observable<RefuelOilResponse> findAndSaveCards(String rasUserID, String oilCard);
+    /**
+     * 办理油卡
+     */
+    Observable<BidOilResponse> handleOilCard();
+
+    Observable<OrderExpressResponse> getAllAreas();
 }

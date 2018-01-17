@@ -16,6 +16,10 @@
         <item name="android:layout_alignParentRight">true</item>
     </style>
 
+    <style name="cargo_line_gray_all" parent="cargo_line_gray">
+        <item name="android:layout_marginLeft">0dp</item>
+    </style>
+
     <!--透明主题-->
     <style name="cargo_translucent_theme" parent="cargo_AppBaseTheme">
         <item name="android:windowBackground">@android:color/transparent</item>

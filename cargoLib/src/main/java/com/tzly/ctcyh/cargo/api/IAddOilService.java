@@ -5,10 +5,13 @@ import com.tzly.ctcyh.cargo.bean.BaseResponse;
 import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
 import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
+import com.tzly.ctcyh.cargo.bean.response.BidOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import rx.Observable;
@@ -27,10 +30,35 @@ public interface IAddOilService {
     Observable<RefuelOilResponse> getGoods();
 
     /**
-     * 创建订单
+     * 创建加油订单
      */
-    @POST("addOil/createOrder")
-    Observable<RefuelOrderResponse> createOrder(@Body RefuelOilDTO oilDTO);
+    @FormUrlEncoded
+    @POST("order/createOrder")
+    Observable<RefuelOrderResponse> createOrder(
+            @Field("userNum") String userNum,
+            @Field("goodsId") String goodsId,
+            @Field("price") String price,
+            @Field("oilCard") String oilCard,
+            @Field("type") String type
+    );
+
+    /**
+     * 办卡
+     */
+    @FormUrlEncoded
+    @POST("order/createOrder")
+    Observable<RefuelOrderResponse> createOrder(
+            @Field("userNum") String userNum,
+            @Field("goodsId") String goodsId,
+            @Field("price") String price,
+            @Field("type") String type,
+            @Field("name") String name,
+            @Field("phone") String phone,
+            @Field("sheng") String sheng,
+            @Field("shi") String shi,
+            @Field("xian") String xian,
+            @Field("addressDetail") String addressDetail
+    );
 
     /**
      * 驾驶证
@@ -43,4 +71,18 @@ public interface IAddOilService {
      */
     @POST("cttx/addVehiclelicense")
     Observable<BaseResponse> addVehicleLicense(@Body BindCarDTO bindCarDTO);
+
+    /**
+     * 加油及充值
+     */
+    @FormUrlEncoded
+    @POST("oil/findAndSaveCards")
+    Observable<RefuelOilResponse> findAndSaveCards(@Field("userId") String rasUserID,
+                                                   @Field("oilCard") String oilCard);
+
+    /**
+     * 办理油卡
+     */
+    @GET("handleOilCard/buyCard")
+    Observable<BidOilResponse> handleOilCard();
 }

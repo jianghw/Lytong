@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/lay_base_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/btn_commit"
+        style="@style/ResButtonTheme.Single"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/res_x_30"
+        android:enabled="false"
+        android:text="充    值" />
+</RelativeLayout>
+

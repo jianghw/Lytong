@@ -2,15 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/res_y_100">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/fay_recharge"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/res_y_80"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="@dimen/res_x_15"
-        android:layout_marginRight="@dimen/res_x_15"
+        android:layout_margin="@dimen/res_x_15"
         android:background="@drawable/selector_item_shape_red_gray">
 
         <TextView
@@ -18,7 +17,8 @@
             style="@style/ResTextTheme.16.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/res_y_15"
             android:gravity="center"
             android:textSize="@dimen/fs_20sp"
             tools:text="100" />
@@ -31,16 +31,28 @@
             android:layout_alignBaseline="@+id/tv_amount"
             android:layout_toLeftOf="@+id/tv_amount"
             android:text="¥" />
+
+
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_amount"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/res_y_15"
+            android:gravity="center"
+            tools:text="实冲油费：¥500" />
     </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_discount"
-        android:textSize="@dimen/res_fs_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/bg_discount_tv_shade"
         android:text="9.93折"
-        android:textColor="@color/res_color_white" />
+        android:textColor="@color/res_color_white"
+        android:textSize="@dimen/res_fs_10" />
 </RelativeLayout>

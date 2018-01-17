@@ -211,4 +211,14 @@ public final class CargoRouter {
     private static void registerMain() {
         ServiceRouter.registerComponent(ServiceRouter.MAIN_LIKE);
     }
+
+    /**
+     * 加油办卡页面
+     */
+    public static void gotoBidOilActivity(Context context) {
+        Bundle bundle = new Bundle();
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.bid_oil_host,
+                bundle);
+    }
 }

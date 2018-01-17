@@ -11,15 +11,15 @@ import java.util.List;
  * Update day:
  */
 
-public class RefuelOilResponse extends BaseResponse {
+public class BidOilResponse extends BaseResponse {
 
-    private RefuelOilBean data;
+    private List<BidOilBean> data;
 
-    public void setData(RefuelOilBean data) {
+    public void setData(List<BidOilBean> data) {
         this.data = data;
     }
 
-    public RefuelOilBean getData() {
+    public List<BidOilBean> getData() {
         return data;
     }
 }

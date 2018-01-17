@@ -1,0 +1,296 @@
+package com.tzly.ctcyh.cargo.refuel_v;
+
+import android.app.Activity;
+import android.support.v7.widget.GridLayoutManager;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.ctcyh.cargo.R;
+import com.tzly.ctcyh.cargo.bean.response.BidOilBean;
+import com.tzly.ctcyh.cargo.bean.response.BidOilResponse;
+import com.tzly.ctcyh.cargo.bean.response.RefuelOrderBean;
+import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
+import com.tzly.ctcyh.cargo.data_m.InjectionRepository;
+import com.tzly.ctcyh.cargo.refuel_p.BidOilAdapter;
+import com.tzly.ctcyh.cargo.refuel_p.BidOilPresenter;
+import com.tzly.ctcyh.cargo.refuel_p.IBidOilContract;
+import com.tzly.ctcyh.cargo.router.CargoRouter;
+import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.custom.popup.CustomDialog;
+import com.tzly.ctcyh.router.imple.IAreaDialogListener;
+import com.tzly.ctcyh.router.util.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 加油申办
+ */
+public class BidOilFragment extends RefreshFragment
+        implements IBidOilContract.IBidOilView, View.OnClickListener {
+
+    private IBidOilContract.IBidOilPresenter mPresenter;
+
+    private ImageView mImgBanner;
+    private TextView mTvNotice;
+    private XRecyclerView mXRecyclerView;
+    /**
+     * 购卡金额（包含油费）
+     */
+    private TextView mTvBid;
+    /**
+     * 请输入姓名
+     */
+    private EditText mEdtName;
+    /**
+     * 请输入手机号
+     */
+    private EditText mEditPhone;
+    private ImageView mImgBrand;
+    /**
+     * 请选择地区
+     */
+    private TextView mTvArea;
+    private RelativeLayout mLayArea;
+    /**
+     * 请输入详细地址
+     */
+    private EditText mEditDetailedAddress;
+    /**
+     * 申请办卡
+     */
+    private Button mBtnCommit;
+    private BidOilAdapter mAdapter;
+    /**
+     * 选择项目
+     */
+    private BidOilBean infoBean;
+
+    public static BidOilFragment newInstance() {
+        return new BidOilFragment();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
+
+    @Override
+    protected int fragmentView() {
+        return R.layout.cargo_fragment_bid_oil;
+    }
+
+    @Override
+    protected void bindFragment(View fragment) {
+        initView(fragment);
+
+        BidOilPresenter presenter = new BidOilPresenter(
+                InjectionRepository.provideRepository(Utils.getContext()), this);
+
+        GridLayoutManager manager = new GridLayoutManager(Utils.getContext(), 2);
+        mXRecyclerView.setLayoutManager(manager);
+        mXRecyclerView.setPullRefreshEnabled(false);
+        mXRecyclerView.setLoadingMoreEnabled(false);
+        mXRecyclerView.noMoreLoadings();
+
+        mAdapter = new BidOilAdapter();
+        mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, Object data) {
+                if (!(data instanceof BidOilBean)) return;
+
+                BidOilBean bidOilBean = (BidOilBean) data;
+                for (BidOilBean oilBean : mAdapter.getAll()) {
+                    boolean isMe = bidOilBean.getId().equals(oilBean.getId());
+                    oilBean.setSelect(isMe);
+                    if (isMe) infoBean = oilBean;
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+        mXRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void loadingFirstData() {
+        if (mPresenter != null) mPresenter.handleOilCard();
+    }
+
+    @Override
+    public void setPresenter(IBidOilContract.IBidOilPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mPresenter != null) mPresenter.unSubscribe();
+    }
+
+
+    /**
+     * 数据加载成功
+     */
+    @Override
+    protected void responseData(Object response) {
+        if (response instanceof BidOilResponse) {
+            BidOilResponse oilResponse = (BidOilResponse) response;
+            List<BidOilBean> lst = oilResponse.getData();
+            //手动标记默认选择项目
+            if (!lst.isEmpty() && lst.size() >= 2) {
+                BidOilBean oilBean = lst.get(1);
+                oilBean.setSelect(true);
+                infoBean = oilBean;
+            }
+            setSimpleDataResult(lst);
+        } else
+            responseError();
+    }
+
+    private void setSimpleDataResult(List<BidOilBean> data) {
+        mAdapter.removeAllOnly();
+        if (data == null || data.isEmpty()) {
+            showStateEmpty();
+        } else {
+            mAdapter.append(data);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        int viD = view.getId();
+        if (viD == R.id.img_banner) {//图片
+
+        } else if (viD == R.id.lay_area) {//城市
+            if (mPresenter != null) mPresenter.getAllAreas();
+        } else if (viD == R.id.btn_commit) {//提交
+            verificationSubmitData();
+        }
+    }
+
+    /**
+     * 数据验证
+     */
+    private void verificationSubmitData() {
+        String name = getStrEdtName();
+        if (TextUtils.isEmpty(name)) {
+            toastShort("请填写真实的姓名");
+            return;
+        }
+        String phone = getStrEditPhone();
+        if (TextUtils.isEmpty(phone)) {
+            toastShort("请填写真实的手机");
+            return;
+        }
+        String area = getTvArea();
+        if (TextUtils.isEmpty(area)) {
+            toastShort("请填写真实的城市");
+            return;
+        }
+        String address = getEditDetailedAddress();
+        if (TextUtils.isEmpty(address)) {
+            toastShort("请填写真实的地址详情");
+            return;
+        }
+        if (mPresenter != null) mPresenter.createOrder();
+    }
+
+    public void initView(View view) {
+        mImgBanner = (ImageView) view.findViewById(R.id.img_banner);
+        mImgBanner.setOnClickListener(this);
+        mTvNotice = (TextView) view.findViewById(R.id.tv_notice);
+        mXRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_list);
+        mTvBid = (TextView) view.findViewById(R.id.tv_bid);
+        mEdtName = (EditText) view.findViewById(R.id.edt_name);
+        mEditPhone = (EditText) view.findViewById(R.id.edit_phone);
+        mImgBrand = (ImageView) view.findViewById(R.id.img_brand);
+        mTvArea = (TextView) view.findViewById(R.id.tv_area);
+        mLayArea = (RelativeLayout) view.findViewById(R.id.lay_area);
+        mLayArea.setOnClickListener(this);
+        mEditDetailedAddress = (EditText) view.findViewById(R.id.edit_detailed_address);
+        mBtnCommit = (Button) view.findViewById(R.id.btn_commit);
+        mBtnCommit.setOnClickListener(this);
+    }
+
+    @Override
+    public String getStrEdtName() {
+        return mEdtName.getText().toString().trim();
+    }
+
+    @Override
+    public String getStrEditPhone() {
+        return mEditPhone.getText().toString().trim();
+    }
+
+    @Override
+    public String getTvArea() {
+        return mTvArea.getText().toString().trim();
+    }
+
+    @Override
+    public String getEditDetailedAddress() {
+        return mEditDetailedAddress.getText().toString().trim();
+    }
+
+    @Override
+    public BidOilBean getSubmitBean() {
+        return infoBean != null ? infoBean : new BidOilBean();
+    }
+
+    /**
+     * 创建订单
+     */
+    @Override
+    public void createOrderError(String message) {
+        toastShort(message);
+    }
+
+    @Override
+    public void createOrderSucceed(RefuelOrderResponse response) {
+        toastShort(response.getResponseDesc());
+
+        RefuelOrderBean bean = response.getData();
+        if (bean != null)
+            CargoRouter.gotoPayTypeActivity(getActivity(), bean.getOrderId());
+        else
+            toastShort("数据出错,创建订单未知错误");
+    }
+
+    @Override
+    public void allAreasError(String message) {
+        toastShort(message);
+    }
+
+    @Override
+    public void allAreasSucceed(Object[] result) {
+        if (result.length < 6) return;
+        final ArrayList<String> first = (ArrayList<String>) result[3];
+        final ArrayList<ArrayList<String>> second = (ArrayList<ArrayList<String>>) result[4];
+        final ArrayList<ArrayList<ArrayList<String>>> third = (ArrayList<ArrayList<ArrayList<String>>>) result[5];
+
+        final ArrayList<String> firstList = new ArrayList<>();
+        firstList.addAll((ArrayList<String>) result[0]);
+        final ArrayList<ArrayList<String>> secondList = new ArrayList<>();
+        secondList.addAll((ArrayList<ArrayList<String>>) result[1]);
+        final ArrayList<ArrayList<ArrayList<String>>> thirdList = new ArrayList<>();
+        thirdList.addAll((ArrayList<ArrayList<ArrayList<String>>>) result[2]);
+
+        CustomDialog.popupBottomAllArea(getActivity(), firstList, secondList, thirdList, new IAreaDialogListener() {
+            @Override
+            public void setCurPosition(String position) {
+                String[] postions = position.split("/");
+                int f = Integer.valueOf(postions[0]);
+                int s = Integer.valueOf(postions[1]);
+                int t = Integer.valueOf(postions[2]);
+                mTvArea.setText(firstList.get(f) + "/" + secondList.get(f).get(s) + "/" + thirdList.get(f).get(s).get(t));
+            }
+        });
+    }
+}
