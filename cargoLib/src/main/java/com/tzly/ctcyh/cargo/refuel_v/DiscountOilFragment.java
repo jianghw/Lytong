@@ -3,7 +3,6 @@ package com.tzly.ctcyh.cargo.refuel_v;
 import android.app.Activity;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -43,14 +42,12 @@ import java.util.List;
 /**
  * 加油充值
  */
-public class RefuelOilFragment extends RefreshFragment
+public class DiscountOilFragment extends RefreshFragment
         implements IRefuelOilContract.IRefuelOilView, View.OnClickListener {
 
     private IRefuelOilContract.IRefuelOilPresenter mPresenter;
 
-    private RadioGroup radioGroup;
-    private RadioButton radioSinopec;
-    private RadioButton radioPetro;
+    private ImageView mImgBanner;
 
     /**
      * 请输入19位加油卡号
@@ -65,20 +62,16 @@ public class RefuelOilFragment extends RefreshFragment
 
     private RefuelOilAdapter mAdapter;
     /**
-     * 通讯接口
-     */
-    private IRechargeAToF iRechargeAToF;
-    /**
-     * 数据
-     */
-    private NorOilBean mDataBean;
-    /**
      * 当前选择项
      */
     private NorOilBean.CNPCBean infoBean;
+    /**
+     * 通讯接口
+     */
+    private IRechargeAToF iRechargeAToF;
 
-    public static RefuelOilFragment newInstance() {
-        return new RefuelOilFragment();
+    public static DiscountOilFragment newInstance() {
+        return new DiscountOilFragment();
     }
 
     @Override
@@ -91,7 +84,7 @@ public class RefuelOilFragment extends RefreshFragment
 
     @Override
     protected int fragmentView() {
-        return R.layout.cargo_fragment_refuel_oil;
+        return R.layout.cargo_fragment_discount_oil;
     }
 
     @Override
@@ -112,7 +105,7 @@ public class RefuelOilFragment extends RefreshFragment
      */
     @Override
     protected void loadingFirstData() {
-        if (mPresenter != null) mPresenter.findOilCards();
+        if (mPresenter != null) mPresenter.findCaiNiaoCard();
     }
 
     @Override
@@ -122,23 +115,14 @@ public class RefuelOilFragment extends RefreshFragment
     }
 
     public void initView(View view) {
-        radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
-        radioSinopec = (RadioButton) view.findViewById(R.id.radio_sinopec);
-        radioSinopec.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        mImgBanner = (ImageView) view.findViewById(R.id.img_banner);
+        mImgBanner.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (TextUtils.isEmpty(getStrEditOil())
-                        || b && getStrEditOil().length() != 19 || !b && getStrEditOil().length() != 16) {
-                    setStrEditOil("");
-                    mEditOil.setHint("请填写正确的" + String.valueOf(b ? 19 : 16) + "位卡号");
-                    mEditOil.setFilters(new InputFilter[]{new InputFilter.LengthFilter(b ? 19 : 16)}); //最大输入长度
-                }
-                segmentedDisplayData(b);
+            public void onClick(View view) {
+                CargoRouter.gotoBidOilActivity(getActivity());
             }
         });
-        radioPetro = (RadioButton) view.findViewById(R.id.radio_petro);
-
-//        mImgBanner = (ImageView) view.findViewById(R.id.img_banner);
         mEditOil = (EditText) view.findViewById(R.id.edit_oil);
 
         mXRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_list);
@@ -151,9 +135,6 @@ public class RefuelOilFragment extends RefreshFragment
         mXRecyclerView.setPullRefreshEnabled(false);
         mXRecyclerView.setLoadingMoreEnabled(false);
         mXRecyclerView.noMoreLoadings();
-//        mXRecyclerView.addItemDecoration(
-//                new SpaceItemDecoration(getResources().getDimensionPixelSize(R.dimen.res_x_30))
-//        );
 
         mAdapter = new RefuelOilAdapter();
         mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
@@ -268,9 +249,9 @@ public class RefuelOilFragment extends RefreshFragment
     public void codeError() {
         CustomDialog.createDialog(getActivity(),
                 "温馨提示",
-                "您输入的当前卡号为畅通97折加油卡,是否去为此卡充值",
+                "您输入的当前卡号不是畅通97折加油卡,是否申办97折优惠加油卡",
                 "取消",
-                "97充值",
+                "去申办",
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -279,7 +260,7 @@ public class RefuelOilFragment extends RefreshFragment
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CargoRouter.gotoDiscountOilActivity(getActivity());
+                        CargoRouter.gotoBidOilActivity(getActivity());
                     }
                 });
     }
@@ -288,35 +269,19 @@ public class RefuelOilFragment extends RefreshFragment
      * 数据渲染
      */
     private void dataRendering(NorOilBean bean) {
-//        String url = bean.getImg();
-//        if (!BuildConfig.App_Url) ImageLoadUtils.loadTwoRectangle(url, mImgBanner);
+        String url = bean.getImg();
+        if (!BuildConfig.App_Url) ImageLoadUtils.loadTwoRectangle(url, mImgBanner);
 
-        mDataBean = bean;
         String oilCard = bean.getOilCard();
         if (!TextUtils.isEmpty(oilCard)) setStrEditOil(oilCard);
 
-        String oilType = bean.getOilType();
-        radioGroup.check(TextUtils.isEmpty(oilType) || (oilType.contains("化"))
-                ? R.id.radio_sinopec : R.id.radio_petro);
-    }
-
-    /**
-     * 显示价格数据
-     *
-     * @param b true 中石化
-     */
-    private void segmentedDisplayData(boolean b) {
-        if (mDataBean == null) {
-            mPresenter.findOilCards();
-        } else {
-            List<NorOilBean.CNPCBean> lis = b ? mDataBean.getSINOPEC() : mDataBean.getCNPC();
-            if (!lis.isEmpty()) {//默认第一个
-                NorOilBean.CNPCBean cardInfoBean = lis.get(0);
-                cardInfoBean.setSelect(true);
-                infoBean = cardInfoBean;
-            }
-            setSimpleDataResult(lis);
+        List<NorOilBean.CNPCBean> lis = bean.getSINOPEC();
+        if (!lis.isEmpty()) {//默认第一个
+            NorOilBean.CNPCBean cardInfoBean = lis.get(0);
+            cardInfoBean.setSelect(true);
+            infoBean = cardInfoBean;
         }
+        setSimpleDataResult(lis);
 
         if (iRechargeAToF != null) iRechargeAToF.setCommitEnable(true);
     }
@@ -344,10 +309,8 @@ public class RefuelOilFragment extends RefreshFragment
         String card = getStrEditOil();
         if (TextUtils.isEmpty(card)) {
             toastShort("请填写正确的卡号");
-        } else if (radioSinopec.isChecked() && card.length() != 19) {
+        } else if (card.length() != 19) {
             toastShort("请填写正确的19位卡号");
-        } else if (!radioSinopec.isChecked() && card.length() != 16) {
-            toastShort("请填写正确的16位卡号");
         } else {
             if (mPresenter != null) mPresenter.createOrder();
         }

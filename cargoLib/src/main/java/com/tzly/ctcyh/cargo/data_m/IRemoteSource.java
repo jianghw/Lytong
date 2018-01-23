@@ -7,6 +7,7 @@ import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
 import com.tzly.ctcyh.cargo.bean.response.ActiveConfigResponse;
 import com.tzly.ctcyh.cargo.bean.response.BidOilResponse;
+import com.tzly.ctcyh.cargo.bean.response.NorOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.OrderExpressResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
@@ -50,10 +51,18 @@ public interface IRemoteSource {
      * 加油及充值
      */
     Observable<RefuelOilResponse> findAndSaveCards(String rasUserID, String oilCard);
+
     /**
      * 办理油卡
      */
     Observable<BidOilResponse> handleOilCard();
 
     Observable<OrderExpressResponse> getAllAreas();
+
+    /**
+     * 加油
+     */
+    Observable<NorOilResponse> findOilCards(String rasUserID);
+
+    Observable<NorOilResponse> findCaiNiaoCard(String rasUserID);
 }

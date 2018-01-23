@@ -42,6 +42,7 @@ import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
 import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResponse;
 import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResponse;
 import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResponse;
+import com.zantong.mobilecttx.fahrschule.bean.StatistCountResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResponse;
 import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
@@ -656,5 +657,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<UnimpededBannerResponse> getBanner() {
         return baseRetrofit().create(IModuleService.class).getBanner();
+    }
+
+    /**
+     * 分享统计数据
+     */
+    @Override
+    public Observable<StatistCountResponse> getStatisticsCount(String phone) {
+        return baseRetrofit().create(IFebruaryService.class).getStatisticsCount(phone);
     }
 }

@@ -3,6 +3,7 @@ package com.tzly.ctcyh.cargo.refuel_p;
 import android.support.annotation.NonNull;
 
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
+import com.tzly.ctcyh.cargo.bean.response.NorOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.cargo.data_m.BaseSubscriber;
@@ -171,10 +172,94 @@ public class RefuelOilPresenter implements IRefuelOilContract.IRefuelOilPresente
     private RefuelOilDTO initDTO() {
         RefuelOilDTO oilDTO = new RefuelOilDTO();
         oilDTO.setUserNum(mRepository.getRASUserID());
-        oilDTO.setGoodsId(mContractView.getCardInfo().getGoodsId());
+        oilDTO.setGoodsId(mContractView.getCardInfo().getId());
         oilDTO.setOilCard(mContractView.getOilCard());
         oilDTO.setPrice(mContractView.getCardInfo().getPrice());
         oilDTO.setType(mContractView.getCardInfo().getType());
         return oilDTO;
+    }
+
+    /**
+     * 993加油
+     */
+    @Override
+    public void findOilCards() {
+        Subscription subscription = mRepository
+                .findOilCards(mRepository.getRASUserID())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<NorOilResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.responseError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(NorOilResponse response) {
+                        if (response != null && response.getResponseCode()
+                                == CargoGlobal.Response.base_succeed) {
+                            mContractView.responseSucceed(response);
+                        } else {
+                            mContractView.responseError(response != null
+                                    ? response.getResponseDesc() : "未知错误(油卡信息获取失败)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 997加油
+     */
+    @Override
+    public void findCaiNiaoCard() {
+        Subscription subscription = mRepository
+                .findCaiNiaoCard(mRepository.getRASUserID())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<NorOilResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.responseError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(NorOilResponse response) {
+                        if (response != null && response.getResponseCode()
+                                == CargoGlobal.Response.base_succeed) {
+                            mContractView.responseSucceed(response);
+                        } else {
+                            mContractView.responseError(response != null
+                                    ? response.getResponseDesc() : "未知错误(油卡信息获取失败)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 }

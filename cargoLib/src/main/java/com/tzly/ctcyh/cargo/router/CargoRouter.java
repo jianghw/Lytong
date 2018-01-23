@@ -138,7 +138,7 @@ public final class CargoRouter {
     }
 
     /**
-     * 加油充值页面
+     * 993加油充值页面
      */
     public static void gotoRechargeActivity(Context context) {
         Bundle bundle = new Bundle();
@@ -219,6 +219,16 @@ public final class CargoRouter {
         Bundle bundle = new Bundle();
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.bid_oil_host,
+                bundle);
+    }
+
+    /**
+     * 97 加油
+     */
+    public static void gotoDiscountOilActivity(Context context) {
+        Bundle bundle = new Bundle();
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.discount_oil_host,
                 bundle);
     }
 }

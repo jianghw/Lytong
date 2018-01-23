@@ -11,6 +11,11 @@
             android:name=".refuel_v.RefuelOilActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"></activity>
+        <!--97加油-->
+        <activity
+            android:name=".refuel_v.DiscountOilActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".refuel_v.RechargeAgreementActivity"

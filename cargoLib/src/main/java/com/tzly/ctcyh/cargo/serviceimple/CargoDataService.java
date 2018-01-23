@@ -45,4 +45,20 @@ public class CargoDataService implements ICargoService {
     public void gotoActiveActivity(Context context, String channel, String date) {
         CargoRouter.gotoActiveActivity(context, channel, date);
     }
+
+    /**
+     * 97 加油
+     */
+    @Override
+    public void gotoDiscountOilActivity(Context context) {
+        CargoRouter.gotoDiscountOilActivity(context);
+    }
+
+    /**
+     * 97申请办卡
+     */
+    @Override
+    public void gotoBidOilActivity(Context activity) {
+        CargoRouter.gotoBidOilActivity(activity);
+    }
 }

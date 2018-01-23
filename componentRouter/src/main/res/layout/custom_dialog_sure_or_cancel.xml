@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/line_content"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialog_bg_shape_white"
+    android:background="@drawable/shape_radius_white"
     android:orientation="vertical">
 
     <TextView
@@ -23,7 +22,7 @@
 
     <TextView
         android:id="@+id/dialog_msg"
-        style="@style/appblack_word"
+        style="@style/ResTextTheme.16.Subtitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -31,13 +30,13 @@
         android:gravity="center"
         android:paddingBottom="@dimen/ds_30"
         android:paddingTop="@dimen/ds_30"
-        android:text="对话框内容"
-        android:textSize="@dimen/fs_42" />
+        android:text="对话框内容" />
 
     <LinearLayout
-        style="@style/bottom_line2"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
         android:layout_marginTop="10dp"
-        android:orientation="vertical" />
+        android:background="@color/res_color_gray_e6" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -45,30 +44,29 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/dialog_btn1"
-            style="@style/appblack_word"
-            android:layout_width="0dip"
-            android:layout_height="@dimen/ds_126"
-            android:layout_weight="1"
-            android:background="@null"
-            android:text="确  定"
-            android:textColor="@color/color_blue_light"
-            android:textSize="@dimen/fs_48" />
-
-        <LinearLayout
-            android:id="@+id/line"
-            style="@style/vertical_bottom_line2"
-            android:orientation="vertical" />
-
-        <Button
-            android:id="@+id/dialog_btn2"
-            style="@style/appblack_word"
+            android:id="@+id/btn_cancel"
+            style="@style/ResTextTheme.16.Subtitle"
             android:layout_width="0dip"
             android:layout_height="@dimen/ds_126"
             android:layout_weight="1"
             android:background="@null"
             android:text="取  消"
-            android:textColor="@color/color_blue_light"
             android:textSize="@dimen/fs_48" />
+
+        <TextView
+            android:id="@+id/line"
+            android:layout_width="@dimen/res_x_1"
+            android:layout_height="match_parent"
+            android:background="@color/res_color_gray_e6" />
+
+        <Button
+            android:id="@+id/btn_sure"
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="0dip"
+            android:layout_height="@dimen/ds_126"
+            android:textColor="@color/res_color_blue_59"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="确  定" />
     </LinearLayout>
 </LinearLayout>

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.tzly.ctcyh.cargo.R;
+import com.tzly.ctcyh.cargo.bean.response.NorOilBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilBean;
 import com.tzly.ctcyh.router.util.FormatUtils;
 
@@ -23,7 +24,7 @@ import com.tzly.ctcyh.router.util.FormatUtils;
  * Update day:
  */
 
-public class RefuelOilAdapter extends BaseAdapter<RefuelOilBean.CardInfoBean> {
+public class RefuelOilAdapter extends BaseAdapter<NorOilBean.CNPCBean> {
     private Context mAdapterContext;
 
     @Override
@@ -42,7 +43,7 @@ public class RefuelOilAdapter extends BaseAdapter<RefuelOilBean.CardInfoBean> {
     @SuppressLint("SetTextI18n")
     @Override
     public void bindViewData(BaseRecyclerViewHolder viewHolder,
-                             int position, RefuelOilBean.CardInfoBean statusBean) {
+                             int position, NorOilBean.CNPCBean statusBean) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (statusBean == null) return;
         holder.mFayRecharge.setSelected(statusBean.isSelect());
@@ -56,7 +57,7 @@ public class RefuelOilAdapter extends BaseAdapter<RefuelOilBean.CardInfoBean> {
         String discount = FormatUtils.showDiscount(dis);
         holder.mTvDiscount.setText(discount + "折");
         //小于10时为又折扣
-        double d = Double.valueOf(discount) ;
+        double d = Double.valueOf(discount);
         holder.mTvDiscount.setVisibility(d < 10 ? View.VISIBLE : View.INVISIBLE);
     }
 

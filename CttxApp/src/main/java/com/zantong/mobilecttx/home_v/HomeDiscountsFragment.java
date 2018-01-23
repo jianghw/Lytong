@@ -29,6 +29,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Injection;
+import com.zantong.mobilecttx.base.bean.UnimpededBannerBean;
 import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.contract.home.INativeItemListener;
 import com.zantong.mobilecttx.home_p.FavorableBannerImgHolderView;
@@ -147,6 +148,10 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
         if (mPresenter != null && contenId >= 0)
             mPresenter.saveStatisticsCount(String.valueOf(contenId));
 
+        gotoWhere(childrenBean);
+    }
+
+    private void gotoWhere(ChildrenBean childrenBean) {
         if (childrenBean != null && !TextUtils.isEmpty(childrenBean.getTargetPath())) {
             String path = childrenBean.getTargetPath();
             if (path.contains("http")) {//启动公司自己html
@@ -184,6 +189,10 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
                 licenseCheckGrade(2);
             } else if (path.equals("native_app_drivingLicense")) {//驾驶证查分
                 licenseCheckGrade(1);
+            } else if (path.equals("native_app_97recharge")) {//97加油
+                MainRouter.gotoDiscountOilActivity(getActivity());
+            } else if (path.equals("native_app_97buyCard")) {//97加油购卡
+                MainRouter.gotoBidOilActivity(getActivity());
             } else {//其他
                 toastShort("此版本暂无此状态页面,请更新最新版本");
             }
@@ -245,8 +254,17 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
                         return new FavorableBannerImgHolderView(new IDiscountsBanner() {
                             @Override
                             public void getStatistId(int statisticsId) {
-                                if (mPresenter != null)
+                                if (mPresenter != null) {
                                     mPresenter.saveStatisticsCount(String.valueOf(statisticsId));
+                                }
+                            }
+
+                            @Override
+                            public void gotoByPath(String url) {
+                                ChildrenBean banner = new ChildrenBean();
+                                banner.setTargetPath(url);
+                                banner.setTitle("优惠页面");
+                                gotoWhere(banner);
                             }
                         });
                     }

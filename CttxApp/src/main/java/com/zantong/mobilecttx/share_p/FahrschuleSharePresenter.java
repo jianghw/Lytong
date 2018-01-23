@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
+import com.zantong.mobilecttx.fahrschule.bean.StatistCountResponse;
 import com.zantong.mobilecttx.router.MainRouter;
 
 import rx.Subscription;
@@ -55,6 +56,7 @@ public class FahrschuleSharePresenter
     public String getPhone() {
         return MainRouter.getUserPhoenum();
     }
+
     /**
      * 7.获取用户指定活动的统计总数
      */
@@ -79,16 +81,56 @@ public class FahrschuleSharePresenter
                     @Override
                     public void doError(Throwable e) {
                         mAtyView.dismissLoading();
-                        mAtyView.getRecordCountError(e.getMessage());
+                        mAtyView.recordCountError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(RecordCountResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.getRecordCountSucceed(result);
+                            mAtyView.recordCountSucceed(result);
                         } else {
-                            mAtyView.getRecordCountError(result != null
+                            mAtyView.recordCountError(result != null
                                     ? result.getResponseDesc() : "未知错误(N.7)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 分享
+     */
+    @Override
+    public void getStatisticsCount() {
+        Subscription subscription = mRepository.getStatisticsCount(getPhone())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mAtyView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<StatistCountResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mAtyView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.dismissLoading();
+                        mAtyView.recordCountError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(StatistCountResponse result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.recordCountSucceed(result);
+                        } else {
+                            mAtyView.recordCountError(result != null
+                                    ? result.getResponseDesc() : "未知错误(StatisticsCount)");
                         }
                     }
                 });

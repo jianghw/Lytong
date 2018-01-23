@@ -159,7 +159,6 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
             String token = EncryptUtils.encryptMD5ToString(SEC_KEY + cust_id + SEC_KEY);
             mStrUrl = mStrUrl + "?cust_id=" + cust_id + "&token=" + token;
         }
-
         mWebView.loadUrl(mStrUrl);
         //支持获取手势焦点，输入用户名、密码或其他
         mWebView.requestFocusFromTouch();

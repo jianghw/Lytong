@@ -86,10 +86,8 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
             } else {
                 MainRouter.gotoLoginActivity(mAdapterContext);
             }
-        } else if (url.contains("fahrschule")) {//驾校报名
-            Act.getInstance().gotoIntentLogin(mAdapterContext, FahrschuleActivity.class);
-        } else {
-            MainRouter.gotoHtmlActivity(mAdapterContext, "优惠活动", url);
+        }else {
+            if (discountsBanner != null)discountsBanner.gotoByPath(url);
         }
     }
 

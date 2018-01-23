@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.BuildConfig;
@@ -22,7 +23,7 @@ import com.tzly.ctcyh.router.global.JxGlobal;
  * Update day:
  */
 
-public class ShareParentActivity extends JxBaseActivity implements View.OnClickListener {
+public class ShareParentActivity extends AbstractBaseActivity implements View.OnClickListener {
     private ImageView mImgAdmissions;
     private ImageView mImgViolation;
     private ImageView mImgShare;
@@ -39,30 +40,27 @@ public class ShareParentActivity extends JxBaseActivity implements View.OnClickL
     private SubjectShareFragment mSubjectShareFragment = null;
 
     @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-        Intent intent = getIntent();
+    protected int initContentView() {
+        return R.layout.activity_share_parent;
+    }
+
+    @Override
+    protected void bundleIntent(Intent intent) {
         if (intent != null) {
             mCurPosition = intent.getIntExtra(JxGlobal.putExtra.share_position_extra, 0);
         }
     }
 
     @Override
-    protected int initContentView() {
-        return R.layout.activity_share_parent;
-    }
-
-    @Override
-    protected void bindContentView(View childView) {
+    protected void bindFragment() {
         initTitle(mCurPosition);
 
-        initView(childView);
-
-        if (mCurPosition != 0) initFragment();
+        initView();
     }
 
     @Override
     protected void initContentData() {
-
+        if (mCurPosition != 0) initFragment();
     }
 
     protected void initTitle(int curPosition) {
@@ -178,18 +176,18 @@ public class ShareParentActivity extends JxBaseActivity implements View.OnClickL
         }
     }
 
-    public void initView(View view) {
-        mImgAdmissions = (ImageView) view.findViewById(R.id.img_admissions);
+    public void initView() {
+        mImgAdmissions = (ImageView) findViewById(R.id.img_admissions);
         mImgAdmissions.setOnClickListener(this);
-        mImgViolation = (ImageView) view.findViewById(R.id.img_violation);
+        mImgViolation = (ImageView) findViewById(R.id.img_violation);
         mImgViolation.setOnClickListener(this);
-        mImgShare = (ImageView) view.findViewById(R.id.img_share);
+        mImgShare = (ImageView) findViewById(R.id.img_share);
         mImgShare.setOnClickListener(this);
-        mImgSparring = (ImageView) view.findViewById(R.id.img_sparring);
+        mImgSparring = (ImageView) findViewById(R.id.img_sparring);
         mImgSparring.setOnClickListener(this);
-        mImgSubject = (ImageView) view.findViewById(R.id.img_subject);
+        mImgSubject = (ImageView) findViewById(R.id.img_subject);
         mImgSubject.setOnClickListener(this);
-        mContent = (FrameLayout) view.findViewById(R.id.content);
+        mContent = (FrameLayout) findViewById(R.id.content);
     }
 
     @Override

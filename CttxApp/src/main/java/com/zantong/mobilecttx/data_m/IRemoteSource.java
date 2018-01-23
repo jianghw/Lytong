@@ -22,6 +22,7 @@ import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
 import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResponse;
 import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResponse;
 import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResponse;
+import com.zantong.mobilecttx.fahrschule.bean.StatistCountResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResponse;
 import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
@@ -380,4 +381,8 @@ public interface IRemoteSource {
      */
     Observable<UnimpededBannerResponse> getBanner();
 
+    /**
+     * 分享统计数据
+     */
+    Observable<StatistCountResponse> getStatisticsCount(String phone);
 }

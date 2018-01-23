@@ -48,8 +48,13 @@
             android:visibility="invisible"/>
     </LinearLayout>
 
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/rv_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <!--信息显示-->
-    <LinearLayout
+   <!-- <LinearLayout
         android:layout_width="@dimen/ds_900"
         android:layout_height="@dimen/ds_210"
         android:layout_marginTop="@dimen/ds_75"
@@ -127,6 +132,6 @@
                 android:textSize="@dimen/fs_16sp"/>
 
         </RelativeLayout>
-    </LinearLayout>
+    </LinearLayout>-->
 
 </LinearLayout>

@@ -5,6 +5,8 @@
     <string name="cargo_tv_provider">
         <font color='#f3362b'>*</font>提供商
     </string>
+    <string name="cargo_tv_97_provider">畅通中石化联名卡充值
+    </string>
     <string name="cargo_tv_oil_card_number">
         <font color='#f3362b'>*</font>油卡号
     </string>
@@ -12,7 +14,10 @@
     <!--<font color='#f3362b'>*请填写正确的油卡卡号，错充金额将无法退还</font>-->
     <!--</string>-->
     <string name="cargo_tv_oil_tip">
-        <font color='#f3362b'>*97折优惠 需够卡才可享受</font>
+        <font color='#f3362b'>*97折优惠 需购卡才可享受</font>
+    </string>
+    <string name="cargo_tv_oil_97_tip">
+        <font color='#f3362b'>*请填写正确的油卡卡号,错充金额无法退还</font>
     </string>
 
     <string name="cargo_bid_oil_tip">

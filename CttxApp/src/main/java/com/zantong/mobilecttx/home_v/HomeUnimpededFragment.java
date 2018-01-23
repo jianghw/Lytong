@@ -408,7 +408,7 @@ public class HomeUnimpededFragment extends RefreshFragment
         i.setAction("com.custom.service.push.tip");
         getActivity().startService(i);
 
-        HomeBean bean = result.getData();
+        final HomeBean bean = result.getData();
         //小喇叭通知
         if (bean != null && bean.getNotices() != null) {
             if (!bean.getNotices().isEmpty())
@@ -428,8 +428,21 @@ public class HomeUnimpededFragment extends RefreshFragment
                             return new MainBannerImgHolderView(new IDiscountsBanner() {
                                 @Override
                                 public void getStatistId(int statisticsId) {
-                                    if (mPresenter != null)
+                                    if (mPresenter != null) {
                                         mPresenter.saveStatisticsCount(String.valueOf(statisticsId));
+                                    }
+                                }
+
+                                @Override
+                                public void gotoByPath(String url) {
+                                    if (!mPagerList.isEmpty()) {
+                                        HomePagerFragment_2 fragment = (HomePagerFragment_2) mPagerList.get(0);
+                                        UnimpededBannerBean banner = new UnimpededBannerBean();
+                                        banner.setTargetPath(url);
+                                        banner.setTitle("优惠页面");
+                                        fragment.clickItemData(banner);
+                                    } else
+                                        toastShort("url地址为空");
                                 }
                             });
                         }

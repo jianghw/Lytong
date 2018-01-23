@@ -6,4 +6,6 @@ package com.zantong.mobilecttx.home_v;
 
 public interface IDiscountsBanner {
     void getStatistId(int statisticsId);
+
+    void gotoByPath(String url);
 }

@@ -39,7 +39,7 @@ public class RefuelOilActivity extends AbstractBaseActivity
      */
     @Override
     protected void rightClickListener() {
-        CargoRouter.gotoBidOilActivity(this);
+        showContacts();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class RefuelOilActivity extends AbstractBaseActivity
         btnCommit.setOnClickListener(this);
 
         titleContent("加油充值");
-        titleMore("申购97折油卡");
+        titleMore("优惠加油站");
     }
 
     /**

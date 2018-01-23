@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.home_p;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +10,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.custom.banner.CBPageAdapter;
 import com.tzly.ctcyh.router.custom.image.ImageOptions;
+import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.api.CallBack;
@@ -17,11 +19,14 @@ import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.fahrschule_v.FahrschuleActivity;
 import com.zantong.mobilecttx.home.activity.CustomCordovaActivity;
+import com.zantong.mobilecttx.home.bean.ChildrenBean;
 import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.home_v.IDiscountsBanner;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResponse;
 import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
 import com.zantong.mobilecttx.router.MainRouter;
+import com.zantong.mobilecttx.share_v.CarBeautyActivity;
+import com.zantong.mobilecttx.share_v.ShareParentActivity;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
@@ -87,10 +92,8 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
             } else {
                 MainRouter.gotoLoginActivity(mAdapterContext);
             }
-        } else if (url.contains("fahrschule")) {//驾校报名
-            Act.getInstance().gotoIntentLogin(mAdapterContext, FahrschuleActivity.class);
-        } else {
-            MainRouter.gotoHtmlActivity(mAdapterContext, "优惠", url);
+        }else{
+            if (discountsBanner != null)discountsBanner.gotoByPath(url);
         }
     }
 
@@ -119,5 +122,6 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
             }
         });
     }
+
 
 }

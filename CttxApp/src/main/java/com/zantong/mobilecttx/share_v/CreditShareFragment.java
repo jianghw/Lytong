@@ -21,6 +21,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountBean;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
+import com.zantong.mobilecttx.fahrschule.bean.StatistCountResponse;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_p.FahrschuleSharePresenter;
 import com.zantong.mobilecttx.share_p.IFahrschuleShareFtyContract;
@@ -157,7 +158,7 @@ public class CreditShareFragment extends JxBaseRefreshFragment
      * N 7.获取用户指定活动的统计总数
      */
     @Override
-    public void getRecordCountError(String message) {
+    public void recordCountError(String message) {
         toastShort(message);
     }
 
@@ -165,8 +166,11 @@ public class CreditShareFragment extends JxBaseRefreshFragment
      * 1 分享数，2 注册数，3 绑卡数，4 驾校报名数
      */
     @Override
-    public void getRecordCountSucceed(RecordCountResponse result) {
-        List<RecordCountBean> countBeanList = result.getData();
+    public void recordCountSucceed(Object result) {
+        if (!(result instanceof RecordCountResponse)) return;
+        RecordCountResponse response = (RecordCountResponse) result;
+
+        List<RecordCountBean> countBeanList = response.getData();
         if (countBeanList != null && countBeanList.size() > 0) {
             for (RecordCountBean bean : countBeanList) {
                 if (bean.getStatisticalType() == 3) {

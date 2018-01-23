@@ -7,28 +7,20 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.router.base.RecyclerListFragment;
-import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.global.JxGlobal;
-import com.tzly.ctcyh.router.util.LogUtils;
-import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
 import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
-import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.api.CallBack;
-import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.base.bean.UnimpededBannerBean;
-import com.zantong.mobilecttx.fahrschule_v.SparringActivity;
 import com.zantong.mobilecttx.home_p.IUnimpededBannerContract;
 import com.zantong.mobilecttx.home_p.UnimpededBannerAdapter;
 import com.zantong.mobilecttx.home_p.UnimpededBannerPresenter;
@@ -115,15 +107,7 @@ public class HomePagerFragment_2 extends RecyclerListFragment<UnimpededBannerBea
     /**
      * 点击处理事件
      */
-    private void clickItemData(UnimpededBannerBean bannerBean) {
-//        CarApiClient.commitAdClick(Utils.getContext(),
-//                bannerBean != null ? bannerBean.getId() : -1, "3",
-//                new CallBack<BaseResponse>() {
-//                    @Override
-//                    public void onSuccess(BaseResponse result) {
-//                    }
-//                });
-
+    public void clickItemData(UnimpededBannerBean bannerBean) {
         if (bannerBean != null && !TextUtils.isEmpty(bannerBean.getTargetPath())) {
             String path = bannerBean.getTargetPath();
             if (path.contains("http")) {//启动公司自己html
@@ -154,8 +138,12 @@ public class HomePagerFragment_2 extends RecyclerListFragment<UnimpededBannerBea
                 showOilContacts();
             } else if (path.equals("native_app_endorsement")) {//违章缴费记录
                 licenseCheckGrade(2);
-            }  else if (path.equals("native_app_drivingLicense")) {//驾驶证查分
+            } else if (path.equals("native_app_drivingLicense")) {//驾驶证查分
                 licenseCheckGrade(1);
+            } else if (path.equals("native_app_97recharge")) {//97加油
+                MainRouter.gotoDiscountOilActivity(getActivity());
+            } else if (path.equals("native_app_97buyCard")) {//97加油购卡
+                MainRouter.gotoBidOilActivity(getActivity());
             } else {//其他
                 toastShort("此版本暂无此状态页面,请更新最新版本");
             }

@@ -1,5 +1,6 @@
 package com.tzly.ctcyh.cargo.refuel_p;
 
+import com.tzly.ctcyh.cargo.bean.response.NorOilBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
@@ -17,7 +18,7 @@ public interface IRefuelOilContract {
 
     interface IRefuelOilView extends IBaseView<IRefuelOilPresenter>, IResponseView {
 
-        RefuelOilBean.CardInfoBean getCardInfo();
+        NorOilBean.CNPCBean getCardInfo();
 
         String getOilCard();
 
@@ -32,6 +33,11 @@ public interface IRefuelOilContract {
         void createOrder();
 
         void findAndSaveCards();
+
+        void findOilCards();
+
+        void findCaiNiaoCard();
+
     }
 
 }

@@ -3,8 +3,10 @@ package com.tzly.ctcyh.router.custom.popup;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -302,4 +304,47 @@ public class CustomDialog {
         });
     }
 
+    /**
+     * 创建确定 取消 提示框
+     */
+    public static void createDialog(final Context context, String title, String content,
+                                    String leftMenu, String rightMenu,
+                                    final View.OnClickListener listener1, final View.OnClickListener listener2) {
+
+        final AlertDialog dialog = new AlertDialog.Builder(context).create();
+        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.custom_dialog_sure_or_cancel, null);
+        TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
+        TextView mContent = (TextView) view.findViewById(R.id.dialog_msg);
+        Button btn1 = (Button) view.findViewById(R.id.btn_cancel);
+        Button btn2 = (Button) view.findViewById(R.id.btn_sure);
+
+        mTitle.setText(title);
+        mContent.setText(content);
+        btn1.setText(leftMenu);
+        btn2.setText(rightMenu);
+
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener1 != null) listener1.onClick(v);
+                if (dialog != null) dialog.dismiss();
+            }
+        });
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener2 != null) listener2.onClick(v);
+                if (dialog != null) dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = DensityUtils.getScreenWidth(context) * 3 / 4;
+        dialog.getWindow().setAttributes(params);
+
+        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        dialog.getWindow().setContentView(view);
+        dialog.setCanceledOnTouchOutside(false);
+    }
 }

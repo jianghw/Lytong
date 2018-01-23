@@ -22,4 +22,8 @@ public interface ICargoService {
     void gotoVehicleCameraActivity(Activity activity);
 
     void gotoActiveActivity(Context context, String channel,String date);
+
+    void gotoDiscountOilActivity(Context activity);
+
+    void gotoBidOilActivity(Context activity);
 }

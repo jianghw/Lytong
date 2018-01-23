@@ -26,6 +26,7 @@ import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
 import com.zantong.mobilecttx.fahrschule.bean.ServerTimeResponse;
 import com.zantong.mobilecttx.fahrschule.bean.SparringAreaResponse;
 import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResponse;
+import com.zantong.mobilecttx.fahrschule.bean.StatistCountResponse;
 import com.zantong.mobilecttx.fahrschule.dto.CreateOrderDTO;
 import com.zantong.mobilecttx.home.bean.BannerResponse;
 import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
@@ -614,5 +615,12 @@ public class RepositoryManager {
      */
     public Observable<UnimpededBannerResponse> getBanner() {
         return mRemoteData.getBanner();
+    }
+
+    /**
+     * 分享统计数据
+     */
+    public Observable<StatistCountResponse> getStatisticsCount(String phone) {
+        return mRemoteData.getStatisticsCount(phone);
     }
 }

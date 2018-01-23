@@ -11,6 +11,7 @@ import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
 import com.tzly.ctcyh.cargo.bean.response.ActiveConfigResponse;
 import com.tzly.ctcyh.cargo.bean.response.BidOilResponse;
+import com.tzly.ctcyh.cargo.bean.response.NorOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.OrderExpressResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
@@ -76,8 +77,7 @@ public class RemoteData implements IRemoteSource {
         return i == 1
                 ? baseRetrofit().create(IAddOilService.class).createOrder(
                 oilDTO.getUserNum(), oilDTO.getGoodsId(),
-                oilDTO.getPrice(), oilDTO.getOilCard(), oilDTO.getType()
-        )
+                oilDTO.getPrice(), oilDTO.getOilCard(), oilDTO.getType())
                 : baseRetrofit().create(IAddOilService.class).createOrder(
                 oilDTO.getUserNum(), oilDTO.getGoodsId(),
                 oilDTO.getPrice(), oilDTO.getType(),
@@ -141,6 +141,22 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<OrderExpressResponse> getAllAreas() {
         return baseRetrofit().create(IRegionService.class).getAllAreas();
+    }
+
+    /**
+     * 993加油
+     */
+    @Override
+    public Observable<NorOilResponse> findOilCards(String rasUserID) {
+        return baseRetrofit().create(IAddOilService.class).findOilCards(rasUserID);
+    }
+
+    /**
+     * 997
+     */
+    @Override
+    public Observable<NorOilResponse> findCaiNiaoCard(String rasUserID) {
+        return baseRetrofit().create(IAddOilService.class).findCaiNiaoCard(rasUserID);
     }
 
 

@@ -172,8 +172,8 @@ public class DialogUtils {
         View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_update, null);
         TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
         TextView mContent = (TextView) view.findViewById(R.id.dialog_msg);
-        Button btn1 = (Button) view.findViewById(R.id.dialog_btn1);
-        Button btn2 = (Button) view.findViewById(R.id.dialog_btn2);
+        Button btn1 = (Button) view.findViewById(R.id.btn_cancel);
+        Button btn2 = (Button) view.findViewById(R.id.btn_sure);
         mTitle.setText(title);
         mContent.setText(msg);
 
@@ -385,8 +385,8 @@ public class DialogUtils {
                 R.layout.dialog_update, null);
         TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
         TextView mContent = (TextView) view.findViewById(R.id.dialog_msg);
-        Button btn1 = (Button) view.findViewById(R.id.dialog_btn1);
-        Button btn2 = (Button) view.findViewById(R.id.dialog_btn2);
+        Button btn1 = (Button) view.findViewById(R.id.btn_cancel);
+        Button btn2 = (Button) view.findViewById(R.id.btn_sure);
         mTitle.setText(title);
         mContent.setText(message);
         btn1.setText("删  除");
@@ -425,8 +425,8 @@ public class DialogUtils {
                 R.layout.dialog_update, null);
         TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
         TextView mContent = (TextView) view.findViewById(R.id.dialog_msg);
-        Button btn1 = (Button) view.findViewById(R.id.dialog_btn1);
-        Button btn2 = (Button) view.findViewById(R.id.dialog_btn2);
+        Button btn1 = (Button) view.findViewById(R.id.btn_cancel);
+        Button btn2 = (Button) view.findViewById(R.id.btn_sure);
         mTitle.setText(title);
         mContent.setText(message);
         btn1.setText("确  定");
@@ -824,8 +824,8 @@ public class DialogUtils {
         View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_update, null);
         TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
         TextView mContent = (TextView) view.findViewById(R.id.dialog_msg);
-        Button btn1 = (Button) view.findViewById(R.id.dialog_btn1);
-        Button btn2 = (Button) view.findViewById(R.id.dialog_btn2);
+        Button btn1 = (Button) view.findViewById(R.id.btn_cancel);
+        Button btn2 = (Button) view.findViewById(R.id.btn_sure);
         mTitle.setText(title);
         mContent.setText(message);
         btn1.setText(leftBtn);
@@ -877,8 +877,8 @@ public class DialogUtils {
         LinearLayout mLayoutView = (LinearLayout) view.findViewById(R.id.line_content);
         TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
         TextView mContent = (TextView) view.findViewById(R.id.dialog_msg);
-        Button btn1 = (Button) view.findViewById(R.id.dialog_btn1);
-        Button btn2 = (Button) view.findViewById(R.id.dialog_btn2);
+        Button btn1 = (Button) view.findViewById(R.id.btn_cancel);
+        Button btn2 = (Button) view.findViewById(R.id.btn_sure);
         mTitle.setVisibility(View.GONE);
         mContent.setVisibility(View.GONE);
         Drawable drawable = new BitmapDrawable(bmp);
@@ -925,8 +925,8 @@ public class DialogUtils {
         View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_update, null);
         TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
         TextView mContent = (TextView) view.findViewById(R.id.dialog_msg);
-        Button btn1 = (Button) view.findViewById(R.id.dialog_btn1);
-        Button btn2 = (Button) view.findViewById(R.id.dialog_btn2);
+        Button btn1 = (Button) view.findViewById(R.id.btn_cancel);
+        Button btn2 = (Button) view.findViewById(R.id.btn_sure);
         mTitle.setText(title);
         mContent.setText(content);
         btn1.setText(leftMenu);
@@ -965,8 +965,6 @@ public class DialogUtils {
         dialog.getWindow().setBackgroundDrawableResource(R.color.trans);
         dialog.getWindow().setContentView(view);
         dialog.setCanceledOnTouchOutside(false);
-
-
     }
 
     /**

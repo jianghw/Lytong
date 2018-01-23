@@ -9,12 +9,14 @@ import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
 import com.tzly.ctcyh.cargo.bean.response.ActiveConfigResponse;
 import com.tzly.ctcyh.cargo.bean.response.BidOilResponse;
+import com.tzly.ctcyh.cargo.bean.response.NorOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.OrderExpressResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 
+import rx.Completable;
 import rx.Observable;
 
 /**
@@ -74,7 +76,7 @@ public class CargoDataManager {
      * 创建订单
      */
     public Observable<RefuelOrderResponse> createOrder(RefuelOilDTO oilDTO, int i) {
-        return mRemoteData.createOrder(oilDTO,i);
+        return mRemoteData.createOrder(oilDTO, i);
     }
 
     /**
@@ -125,5 +127,16 @@ public class CargoDataManager {
      */
     public Observable<OrderExpressResponse> getAllAreas() {
         return mRemoteData.getAllAreas();
+    }
+
+    /**
+     * 加油
+     */
+    public Observable<NorOilResponse> findOilCards(String rasUserID) {
+        return mRemoteData.findOilCards(rasUserID);
+    }
+
+    public Observable<NorOilResponse> findCaiNiaoCard(String rasUserID) {
+        return mRemoteData.findCaiNiaoCard(rasUserID);
     }
 }

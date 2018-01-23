@@ -6,6 +6,7 @@ import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
 import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
 import com.tzly.ctcyh.cargo.bean.response.BidOilResponse;
+import com.tzly.ctcyh.cargo.bean.response.NorOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 
@@ -14,6 +15,8 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -85,4 +88,13 @@ public interface IAddOilService {
      */
     @GET("handleOilCard/buyCard")
     Observable<BidOilResponse> handleOilCard();
+
+    /**
+     * 993
+     */
+    @GET("oil/findOilCards")
+    Observable<NorOilResponse> findOilCards(@Query("userId") String rasUserID);
+
+    @GET("oil/findCaiNiaoCard")
+    Observable<NorOilResponse> findCaiNiaoCard(@Query("userId") String rasUserID);
 }

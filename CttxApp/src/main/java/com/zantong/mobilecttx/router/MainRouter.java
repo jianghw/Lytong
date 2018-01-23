@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.router;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -701,6 +702,32 @@ public final class MainRouter {
         if (object != null && object instanceof ICargoService) {
             ICargoService service = (ICargoService) object;
             service.gotoActiveActivity(activity, String.valueOf(i), date);
+        } else {//注册机开始工作
+            registerCargo();
+        }
+    }
+
+    /**
+     * 97 加油
+     */
+    public static void gotoDiscountOilActivity(Context activity) {
+        Object object = getCargoObject();
+        if (object != null && object instanceof ICargoService) {
+            ICargoService service = (ICargoService) object;
+            service.gotoDiscountOilActivity(activity);
+        } else {//注册机开始工作
+            registerCargo();
+        }
+    }
+
+    /**
+     * 97申请办卡
+     */
+    public static void gotoBidOilActivity(Context activity) {
+        Object object = getCargoObject();
+        if (object != null && object instanceof ICargoService) {
+            ICargoService service = (ICargoService) object;
+            service.gotoBidOilActivity(activity);
         } else {//注册机开始工作
             registerCargo();
         }
