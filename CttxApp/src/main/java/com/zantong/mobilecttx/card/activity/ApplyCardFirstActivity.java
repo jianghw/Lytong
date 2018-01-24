@@ -280,7 +280,6 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         });
     }
 
-
     /**
      * 客户办卡记录校验
      */

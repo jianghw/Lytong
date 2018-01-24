@@ -13,13 +13,13 @@ import java.util.List;
 
 public class BidOilResponse extends BaseResponse {
 
-    private List<BidOilBean> data;
+    private BidOilData data;
 
-    public void setData(List<BidOilBean> data) {
+    public void setData(BidOilData data) {
         this.data = data;
     }
 
-    public List<BidOilBean> getData() {
+    public BidOilData getData() {
         return data;
     }
 }

@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.ctcyh.cargo.BuildConfig;
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.bean.response.BidOilBean;
+import com.tzly.ctcyh.cargo.bean.response.BidOilData;
 import com.tzly.ctcyh.cargo.bean.response.BidOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
@@ -23,6 +25,7 @@ import com.tzly.ctcyh.cargo.refuel_p.BidOilPresenter;
 import com.tzly.ctcyh.cargo.refuel_p.IBidOilContract;
 import com.tzly.ctcyh.cargo.router.CargoRouter;
 import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.custom.popup.CustomDialog;
 import com.tzly.ctcyh.router.imple.IAreaDialogListener;
 import com.tzly.ctcyh.router.util.Utils;
@@ -142,14 +145,19 @@ public class BidOilFragment extends RefreshFragment
     protected void responseData(Object response) {
         if (response instanceof BidOilResponse) {
             BidOilResponse oilResponse = (BidOilResponse) response;
-            List<BidOilBean> lst = oilResponse.getData();
+            BidOilData bidOilData = oilResponse.getData();
+            String url = bidOilData.getImg();
+            if (!BuildConfig.App_Url) ImageLoadUtils.loadTwoRectangle(url, mImgBanner);
+
+            List<BidOilBean> lis = bidOilData.getGoods();
             //手动标记默认选择项目
-            if (!lst.isEmpty() && lst.size() >= 2) {
-                BidOilBean oilBean = lst.get(1);
-                oilBean.setSelect(true);
-                infoBean = oilBean;
+            if (!lis.isEmpty()) {//默认第一个
+                for (int i = 0; i < lis.size(); i++) {
+                    lis.get(i).setSelect(i == 0);
+                    if (i == 0) infoBean = lis.get(i);
+                }
             }
-            setSimpleDataResult(lst);
+            setSimpleDataResult(lis);
         } else
             responseError();
     }

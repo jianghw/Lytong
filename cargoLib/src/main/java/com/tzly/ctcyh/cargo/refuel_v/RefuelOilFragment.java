@@ -2,30 +2,23 @@ package com.tzly.ctcyh.cargo.refuel_v;
 
 import android.app.Activity;
 import android.support.v7.widget.GridLayoutManager;
-import android.text.Editable;
 import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.tzly.ctcyh.cargo.BuildConfig;
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.bean.response.NorOilBean;
 import com.tzly.ctcyh.cargo.bean.response.NorOilResponse;
-import com.tzly.ctcyh.cargo.bean.response.RefuelOilBean;
-import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.cargo.data_m.InjectionRepository;
@@ -34,7 +27,6 @@ import com.tzly.ctcyh.cargo.refuel_p.RefuelOilAdapter;
 import com.tzly.ctcyh.cargo.refuel_p.RefuelOilPresenter;
 import com.tzly.ctcyh.cargo.router.CargoRouter;
 import com.tzly.ctcyh.router.base.RefreshFragment;
-import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.custom.popup.CustomDialog;
 import com.tzly.ctcyh.router.util.Utils;
 
@@ -123,19 +115,20 @@ public class RefuelOilFragment extends RefreshFragment
 
     public void initView(View view) {
         radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
-        radioSinopec = (RadioButton) view.findViewById(R.id.radio_sinopec);
-        radioSinopec.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                boolean bis = i == R.id.radio_sinopec;
                 if (TextUtils.isEmpty(getStrEditOil())
-                        || b && getStrEditOil().length() != 19 || !b && getStrEditOil().length() != 16) {
+                        || bis && getStrEditOil().length() != 19 || !bis && getStrEditOil().length() != 16) {
                     setStrEditOil("");
-                    mEditOil.setHint("请填写正确的" + String.valueOf(b ? 19 : 16) + "位卡号");
-                    mEditOil.setFilters(new InputFilter[]{new InputFilter.LengthFilter(b ? 19 : 16)}); //最大输入长度
+                    mEditOil.setHint("请填写正确的" + String.valueOf(bis ? 19 : 16) + "位卡号");
+                    mEditOil.setFilters(new InputFilter[]{new InputFilter.LengthFilter(bis ? 19 : 16)}); //最大输入长度
                 }
-                segmentedDisplayData(b);
+                segmentedDisplayData(bis);
             }
         });
+        radioSinopec = (RadioButton) view.findViewById(R.id.radio_sinopec);
         radioPetro = (RadioButton) view.findViewById(R.id.radio_petro);
 
 //        mImgBanner = (ImageView) view.findViewById(R.id.img_banner);
@@ -261,6 +254,7 @@ public class RefuelOilFragment extends RefreshFragment
      */
     public void responseError(String message) {
         toastShort(message);
+        showStateError();
 
         if (message.contains("不是97折卡号")) codeError();
     }
@@ -288,9 +282,6 @@ public class RefuelOilFragment extends RefreshFragment
      * 数据渲染
      */
     private void dataRendering(NorOilBean bean) {
-//        String url = bean.getImg();
-//        if (!BuildConfig.App_Url) ImageLoadUtils.loadTwoRectangle(url, mImgBanner);
-
         mDataBean = bean;
         String oilCard = bean.getOilCard();
         if (!TextUtils.isEmpty(oilCard)) setStrEditOil(oilCard);
@@ -311,9 +302,10 @@ public class RefuelOilFragment extends RefreshFragment
         } else {
             List<NorOilBean.CNPCBean> lis = b ? mDataBean.getSINOPEC() : mDataBean.getCNPC();
             if (!lis.isEmpty()) {//默认第一个
-                NorOilBean.CNPCBean cardInfoBean = lis.get(0);
-                cardInfoBean.setSelect(true);
-                infoBean = cardInfoBean;
+                for (int i = 0; i < lis.size(); i++) {
+                    lis.get(i).setSelect(i == 0);
+                    if (i == 0) infoBean = lis.get(i);
+                }
             }
             setSimpleDataResult(lis);
         }

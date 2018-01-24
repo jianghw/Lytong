@@ -242,7 +242,7 @@ public class DiscountOilFragment extends RefreshFragment
      */
     public void responseError(String message) {
         toastShort(message);
-
+        showStateError();
         if (message.contains("不是97折卡号")) codeError();
     }
 
@@ -277,9 +277,10 @@ public class DiscountOilFragment extends RefreshFragment
 
         List<NorOilBean.CNPCBean> lis = bean.getSINOPEC();
         if (!lis.isEmpty()) {//默认第一个
-            NorOilBean.CNPCBean cardInfoBean = lis.get(0);
-            cardInfoBean.setSelect(true);
-            infoBean = cardInfoBean;
+            for (int i = 0; i < lis.size(); i++) {
+                lis.get(i).setSelect(i == 0);
+                if (i == 0) infoBean = lis.get(i);
+            }
         }
         setSimpleDataResult(lis);
 

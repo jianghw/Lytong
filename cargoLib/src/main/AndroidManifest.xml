@@ -16,6 +16,11 @@
             android:name=".refuel_v.DiscountOilActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"></activity>
+        <!--购油卡-->
+        <activity
+            android:name=".refuel_v.BidOilActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".refuel_v.RechargeAgreementActivity"
