@@ -2,28 +2,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/res_y_100">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_80"
         android:layout_centerInParent="true"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_count"
-            android:text="@string/main_tv_count_share"
-            style="@style/ResTextTheme.16.Red"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="00ren" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="@dimen/res_x_15"
+        android:layout_marginRight="@dimen/res_x_15"
+        android:background="@drawable/selector_item_shape_red_gray">
 
         <TextView
             android:id="@+id/tv_name"
-            style="@style/ResTextTheme.16.Subtitle"
+            style="@style/ResTextTheme.14.Red"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="xixiixix" />
+            android:layout_marginLeft="@dimen/res_x_15"
+            android:text="@string/main_tv_count_share" />
+
+        <TextView
+            android:id="@+id/tv_count"
+            style="@style/ResTextTheme.14.Subtitle"
+            android:layout_marginLeft="@dimen/res_x_15"
+            android:layout_marginRight="@dimen/res_x_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/main_tv_count_share" />
     </LinearLayout>
 
 </RelativeLayout>

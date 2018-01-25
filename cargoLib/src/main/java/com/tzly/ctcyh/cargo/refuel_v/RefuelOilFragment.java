@@ -185,8 +185,8 @@ public class RefuelOilFragment extends RefreshFragment
                         + "2. 副卡、增值税票卡不支持在线充值；\n"
                         + "3. 22：00--03：00进行系统维护，充值后将延迟到账;\n"
                         + "4. 本服务为全国加油卡代充服务，故暂不支持开具发票;\n"
-                        + "5. 本服务由车行易提供;\n"
-                        + "6. 支付成功后将于30分钟内到账，超过24小时未到账请与我们「联系」"
+                        + "5. 本服务由车行易和鼎信提供;\n"
+                        + "6. 支付成功后将于2小时内到账，超过24小时未到账请与我们「联系」"
         );
         //可以为多部分设置超链接
         spanableInfo.setSpan(
@@ -247,35 +247,6 @@ public class RefuelOilFragment extends RefreshFragment
             dataRendering(bean);
         } else
             responseError();
-    }
-
-    /**
-     * 数据错误时
-     */
-    public void responseError(String message) {
-        toastShort(message);
-        showStateError();
-
-        if (message.contains("不是97折卡号")) codeError();
-    }
-
-    public void codeError() {
-        CustomDialog.createDialog(getActivity(),
-                "温馨提示",
-                "您输入的当前卡号为畅通97折加油卡,是否去为此卡充值",
-                "取消",
-                "97充值",
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                    }
-                },
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CargoRouter.gotoDiscountOilActivity(getActivity());
-                    }
-                });
     }
 
     /**
@@ -351,6 +322,27 @@ public class RefuelOilFragment extends RefreshFragment
     @Override
     public void createOrderError(String message) {
         toastShort(message);
+
+        if (message.contains("97折")) codeError();
+    }
+
+    public void codeError() {
+        CustomDialog.createDialog(getActivity(),
+                "温馨提示",
+                "该卡号是97折卡号,请前往97折加油充值界面充值",
+                "取消",
+                "97充值",
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                },
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CargoRouter.gotoDiscountOilActivity(getActivity());
+                    }
+                });
     }
 
     @Override

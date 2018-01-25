@@ -8,4 +8,9 @@ package com.tzly.ctcyh.pay.pay_type_v;
  */
 
 public interface IPayTypeUi {
+    void setPayEnable(boolean b);
+
+    String getSubmitPrice();
+
+    void setSubmitPrice(String s);
 }

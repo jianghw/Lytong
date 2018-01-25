@@ -12,12 +12,14 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.custom.htmltxt.HtmlHttpImageGetter;
 import com.tzly.ctcyh.router.custom.htmltxt.HtmlTextView;
 import com.tzly.ctcyh.router.custom.htmltxt.IHtmlTextClick;
+import com.tzly.ctcyh.router.util.FormatUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.global.MainGlobal;
@@ -77,6 +79,15 @@ public class OrderDetailActivity extends JxBaseActivity
     private IOrderDetailContract.IOrderDetailPresenter mPresenter;
     private String mOrderId;
 
+    private RelativeLayout mRyName;
+    private TextView mTvName;
+    private RelativeLayout mRyPhone;
+    private TextView mTvPhone;
+    private RelativeLayout mRyArea;
+    private TextView mTvArea;
+    private RelativeLayout mRyAddress;
+    private TextView mTvAddress;
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -134,6 +145,15 @@ public class OrderDetailActivity extends JxBaseActivity
         mTvContentBottom = (HtmlTextView) view.findViewById(R.id.tv_content_bottom);
         mTvQuery = (TextView) view.findViewById(R.id.tv_query);
         mTvQuery.setOnClickListener(this);
+
+        mRyName = (RelativeLayout) view.findViewById(R.id.ry_name);
+        mTvName = (TextView) view.findViewById(R.id.tv_pay_name);
+        mRyPhone = (RelativeLayout) view.findViewById(R.id.ry_phone);
+        mTvPhone = (TextView) view.findViewById(R.id.tv_pay_phone);
+        mRyArea = (RelativeLayout) view.findViewById(R.id.ry_area);
+        mTvArea = (TextView) view.findViewById(R.id.tv_pay_area);
+        mRyAddress = (RelativeLayout) view.findViewById(R.id.ry_address);
+        mTvAddress = (TextView) view.findViewById(R.id.tv_pay_address);
     }
 
     @Override
@@ -194,6 +214,19 @@ public class OrderDetailActivity extends JxBaseActivity
             payType = "其他支付";
         }
         mTvPayType.setText(payType);
+
+        String name = bean.getName();
+        mTvName.setText(name);
+        mRyName.setVisibility(TextUtils.isEmpty(name) ? View.GONE : View.VISIBLE);
+        String phone = bean.getPhone();
+        mTvPhone.setText(phone);
+        mRyPhone.setVisibility(TextUtils.isEmpty(phone) ? View.GONE : View.VISIBLE);
+        String sheng = bean.getSheng();
+        mTvArea.setText(sheng + "/" + FormatUtils.textForNull(bean.getShi()) + "/" + FormatUtils.textForNull(bean.getXian()));
+        mRyArea.setVisibility(TextUtils.isEmpty(sheng) ? View.GONE : View.VISIBLE);
+        String address = bean.getAddressDetail();
+        mTvAddress.setText(address);
+        mRyAddress.setVisibility(TextUtils.isEmpty(address) ? View.GONE : View.VISIBLE);
 
         String beanDetail = bean.getDetail();
         mTvContentBottom.setClickHtml(beanDetail,

@@ -37,4 +37,6 @@ public interface IMainService {
     void gotoActiveActivity(Context activity, int i);
 
     void gotoHtmlActivity(Context activity, String title, String msg);
+
+    void gotoApplyCardFirstActivity(Context activity);
 }

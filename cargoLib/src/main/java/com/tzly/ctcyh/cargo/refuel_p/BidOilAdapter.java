@@ -50,7 +50,7 @@ public class BidOilAdapter extends BaseAdapter<BidOilBean> {
         holder.mFayRecharge.setSelected(statusBean.isSelect());
 
         holder.mTvAmount.setText(FormatUtils.submitPrice(statusBean.getPrice()));
-        holder.mTvPrice.setText(statusBean.getDescription());
+        holder.mTvPrice.setText(statusBean.getName());
 
         int color = mAdapterContext.getResources().getColor(
                 statusBean.isSelect() ? R.color.res_color_red_f3 : R.color.res_color_black_4d);

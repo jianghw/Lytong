@@ -46,8 +46,8 @@ public class StatisCountAdapter extends BaseAdapter<StatistCountBean> {
         if (statusBean == null) return;
         String string = mAdapterContext.getResources().getString(R.string.main_tv_count_share);
         String count = String.format(string, statusBean.getCount());
-
         holder.mTvCount.setText(count);
+
         holder.mTvName.setText(statusBean.getName());
     }
 

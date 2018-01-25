@@ -3,7 +3,9 @@ package com.tzly.ctcyh.cargo.router;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.tzly.ctcyh.cargo.active_v.ActiveActivity;
 import com.tzly.ctcyh.router.ServiceRouter;
@@ -198,6 +200,19 @@ public final class CargoRouter {
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoHtmlActivity(context, title, url);
+        } else {//注册机开始工作
+            registerMain();
+        }
+    }
+
+    /**
+     * 去办畅通卡
+     */
+    public static void gotoApplyCardFirstActivity(Context activity) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoApplyCardFirstActivity(activity);
         } else {//注册机开始工作
             registerMain();
         }

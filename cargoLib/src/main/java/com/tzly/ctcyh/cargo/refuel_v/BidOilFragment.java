@@ -147,7 +147,7 @@ public class BidOilFragment extends RefreshFragment
             BidOilResponse oilResponse = (BidOilResponse) response;
             BidOilData bidOilData = oilResponse.getData();
             String url = bidOilData.getImg();
-            if (!BuildConfig.App_Url) ImageLoadUtils.loadTwoRectangle(url, mImgBanner);
+            ImageLoadUtils.loadTwoRectangle(url, mImgBanner);
 
             List<BidOilBean> lis = bidOilData.getGoods();
             //手动标记默认选择项目
@@ -176,6 +176,8 @@ public class BidOilFragment extends RefreshFragment
         int viD = view.getId();
         if (viD == R.id.img_banner) {//图片
 
+        } else if (viD == R.id.tv_bid) {//去办畅通卡
+         CargoRouter.gotoApplyCardFirstActivity(getActivity());
         } else if (viD == R.id.lay_area) {//城市
             if (mPresenter != null) mPresenter.getAllAreas();
         } else if (viD == R.id.btn_commit) {//提交
@@ -216,6 +218,7 @@ public class BidOilFragment extends RefreshFragment
         mTvNotice = (TextView) view.findViewById(R.id.tv_notice);
         mXRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_list);
         mTvBid = (TextView) view.findViewById(R.id.tv_bid);
+        mTvBid.setOnClickListener(this);
         mEdtName = (EditText) view.findViewById(R.id.edt_name);
         mEditPhone = (EditText) view.findViewById(R.id.edit_phone);
         mImgBrand = (ImageView) view.findViewById(R.id.img_brand);

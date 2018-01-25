@@ -29,8 +29,11 @@ import com.tzly.ctcyh.pay.pay_type_p.PayTypePresenter;
 import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.util.FormatUtils;
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.Utils;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -47,12 +50,17 @@ public class PayTypeFragment extends RefreshFragment
     private LinearLayout mLayLinearName;
     private TextView mTvPhone;
     private LinearLayout mLayLinearPhone;
+    private LinearLayout mLayLinearAddress;
+    private LinearLayout mLayLinearArea;
+    private TextView mTvArea;
+    private TextView mTvAddress;
     private TextView mTvPrice;
     private LinearLayout mLayLinearPrice;
     /**
      * 畅通卡支付
      */
     private RadioButton mRbCarpay;
+    private TextView mTvCarpay;
     private RelativeLayout mLineCarpay;
     /**
      * 银联卡支付
@@ -71,22 +79,7 @@ public class PayTypeFragment extends RefreshFragment
     private ImageView mImgRight;
     private TextView mTvCoupon;
     private RelativeLayout mLayReCoupon;
-    /**
-     * 金额:
-     */
-    private TextView mPriceTitle;
-    /**
-     * ￥
-     */
-    private TextView mPriceUnit;
-    /**
-     * 0.00
-     */
-    private TextView mTvSubmitPrice;
-    /**
-     * 支付
-     */
-    private TextView mTvPay;
+
     /**
      * 支付模块
      */
@@ -105,6 +98,10 @@ public class PayTypeFragment extends RefreshFragment
      * 当前
      */
     private int mCouponBeanId = -1;
+    /**
+     * 通讯接口
+     */
+    private IPayTypeUi iPayTypeUi;
 
     public static PayTypeFragment newInstance(String extraOrder) {
         PayTypeFragment f = new PayTypeFragment();
@@ -117,7 +114,9 @@ public class PayTypeFragment extends RefreshFragment
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
+        if (activity instanceof IPayTypeUi) {
+            iPayTypeUi = (IPayTypeUi) activity;
+        }
     }
 
     @Override
@@ -145,10 +144,14 @@ public class PayTypeFragment extends RefreshFragment
         mCombo = (TextView) view.findViewById(R.id.combo);
         mLayLinearCombo = (LinearLayout) view.findViewById(R.id.lay_linear_combo);
 
-        //        mTvName = (TextView) view.findViewById(R.id.tv_name);
-        //        mLayLinearName = (LinearLayout) view.findViewById(R.id.lay_linear_name);
-        //        mTvPhone = (TextView) view.findViewById(R.id.tv_phone);
-        //        mLayLinearPhone = (LinearLayout) view.findViewById(R.id.lay_linear_phone);
+        mLayLinearName = (LinearLayout) view.findViewById(R.id.lay_linear_name);
+        mTvName = (TextView) view.findViewById(R.id.tv_name);
+        mLayLinearPhone = (LinearLayout) view.findViewById(R.id.lay_linear_phone);
+        mTvPhone = (TextView) view.findViewById(R.id.tv_phone);
+        mLayLinearArea = (LinearLayout) view.findViewById(R.id.lay_linear_area);
+        mTvArea = (TextView) view.findViewById(R.id.tv_area);
+        mLayLinearAddress = (LinearLayout) view.findViewById(R.id.lay_linear_address);
+        mTvAddress = (TextView) view.findViewById(R.id.tv_address);
 
         mTvPrice = (TextView) view.findViewById(R.id.tv_price);
         mLayLinearPrice = (LinearLayout) view.findViewById(R.id.lay_linear_price);
@@ -156,6 +159,14 @@ public class PayTypeFragment extends RefreshFragment
         mRadioGroup = (RadioGroup) view.findViewById(R.id.rg_pay);
         mRbCarpay = (RadioButton) view.findViewById(R.id.rb_carpay);
         mLineCarpay = (RelativeLayout) view.findViewById(R.id.line_carpay);
+        mTvCarpay = (TextView) view.findViewById(R.id.tv_carpay);
+        mTvCarpay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PayRouter.gotoApplyCardFirstActivity(getActivity());
+            }
+        });
+
         mRbUnionpay = (RadioButton) view.findViewById(R.id.rb_unionpay);
         mLineUnionpay = (RelativeLayout) view.findViewById(R.id.line_unionpay);
         mRbAlipay = (RadioButton) view.findViewById(R.id.rb_alipay);
@@ -165,11 +176,12 @@ public class PayTypeFragment extends RefreshFragment
         mTvCoupon = (TextView) view.findViewById(R.id.tv_coupon);
         mLayReCoupon = (RelativeLayout) view.findViewById(R.id.lay_re_coupon);
         mLayReCoupon.setOnClickListener(this);
-        mPriceTitle = (TextView) view.findViewById(R.id.price_title);
-        mPriceUnit = (TextView) view.findViewById(R.id.price_unit);
-        mTvSubmitPrice = (TextView) view.findViewById(R.id.tv_submit_price);
-        mTvPay = (TextView) view.findViewById(R.id.tv_pay);
-        mTvPay.setOnClickListener(this);
+
+//        mPriceTitle = (TextView) view.findViewById(R.id.price_title);
+//        mPriceUnit = (TextView) view.findViewById(R.id.price_unit);
+//        mTvSubmitPrice = (TextView) view.findViewById(R.id.tv_submit_price);
+//        mTvPay = (TextView) view.findViewById(R.id.tv_pay);
+//        mTvPay.setOnClickListener(this);
 
         radioButtonToPay();
     }
@@ -194,7 +206,8 @@ public class PayTypeFragment extends RefreshFragment
                 setSubmitPrice(getOriginalPrice());
                 mCouponBeanId = -1;
                 //获取优惠
-                mTvPay.setEnabled(true);
+                if (iPayTypeUi != null) iPayTypeUi.setPayEnable(true);
+
                 if (mPresenter != null && mLayReCoupon.isEnabled()) mPresenter.getCouponByType();
             }
         });
@@ -211,16 +224,21 @@ public class PayTypeFragment extends RefreshFragment
             } else {
                 PayRouter.gotoCouponListActivity(getActivity(), mCouponType, mPayType);
             }
-        } else if (v.getId() == R.id.tv_pay) {
-            if (mPayType == 1) {
-                gotoCarPay();
-            } else if (mPayType == 2) {
-                gotoUnionPay();
-            } else if (mPayType == 3) {
-                gotoAliPay();
-            } else if (mPayType == 4) {
-                gotoWeixinPay();
-            }
+        }
+    }
+
+    /**
+     * 支付事件
+     */
+    public void submitPrice() {
+        if (mPayType == 1) {
+            gotoCarPay();
+        } else if (mPayType == 2) {
+            gotoUnionPay();
+        } else if (mPayType == 3) {
+            gotoAliPay();
+        } else if (mPayType == 4) {
+            gotoWeixinPay();
         }
     }
 
@@ -300,14 +318,21 @@ public class PayTypeFragment extends RefreshFragment
 
             mCouponType = payTypeBean.getBusiness();
             mTvOrder.setText(FormatUtils.textForNull(getExtraOrderId()));
+            mCombo.setText(FormatUtils.textForNull(payTypeBean.getDescription()));
 
-            StringBuilder sb = new StringBuilder();
-            if (!TextUtils.isEmpty(payTypeBean.getName())) sb.append(payTypeBean.getName());
-            if (!TextUtils.isEmpty(payTypeBean.getDescription())) {
-                sb.append("/");
-                sb.append(payTypeBean.getDescription());
-            }
-            mCombo.setText(FormatUtils.textForNull(sb.toString()));
+            String name = payTypeBean.getName();
+            mTvName.setText(name);
+            mLayLinearName.setVisibility(TextUtils.isEmpty(name) ? View.GONE : View.VISIBLE);
+            String phone = payTypeBean.getPhone();
+            mTvPhone.setText(phone);
+            mLayLinearPhone.setVisibility(TextUtils.isEmpty(phone) ? View.GONE : View.VISIBLE);
+            String sheng = payTypeBean.getSheng();
+            mTvArea.setText(sheng + "/" + FormatUtils.textForNull(payTypeBean.getShi()) + "/" + FormatUtils.textForNull(payTypeBean.getXian()));
+            mLayLinearArea.setVisibility(TextUtils.isEmpty(sheng) ? View.GONE : View.VISIBLE);
+            String address = payTypeBean.getAddressDetail();
+            mTvAddress.setText(address);
+            mLayLinearAddress.setVisibility(TextUtils.isEmpty(address) ? View.GONE : View.VISIBLE);
+
             //原价格
             setOriginalPrice(payTypeBean.getPrice());
             //显示价格
@@ -317,6 +342,7 @@ public class PayTypeFragment extends RefreshFragment
             for (PayTypesBean bean : typesBeanList) {
                 if (bean.getPayId() == 1) {
                     mRbCarpay.setVisibility(View.VISIBLE);
+                    mTvCarpay.setVisibility(View.VISIBLE);
                     mLineCarpay.setVisibility(View.VISIBLE);
                 } else if (bean.getPayId() == 2) {
                     mRbUnionpay.setVisibility(View.VISIBLE);
@@ -416,11 +442,17 @@ public class PayTypeFragment extends RefreshFragment
     private float getPriceValue(CouponBean bean, int couponValue, float originalPrice) {
         float priceValue;
         priceValue = bean.getCouponType() == 2
-                ? originalPrice * (couponValue / 100.00f) :
+                ? floatByDouble(originalPrice * (couponValue / 100.00f)) :
                 bean.getCouponType() == 3 ? originalPrice - couponValue
                         : originalPrice;
         priceValue = priceValue <= 0 ? 0 : priceValue;
         return priceValue;
+    }
+
+    private float floatByDouble(float value) {
+        BigDecimal bd = new BigDecimal(value);
+        BigDecimal decimal = bd.setScale(2, BigDecimal.ROUND_UP);
+        return decimal.floatValue();
     }
 
     /**
@@ -469,12 +501,12 @@ public class PayTypeFragment extends RefreshFragment
      * 提交价格
      */
     private int getSubmitPrice() {
-        String price = mTvSubmitPrice.getText().toString();
+        String price = iPayTypeUi.getSubmitPrice();
         return (int) (Float.valueOf(price) * 100);
     }
 
     protected void setSubmitPrice(float price) {
-        mTvSubmitPrice.setText(FormatUtils.submitPrice(price));
+        if (iPayTypeUi != null) iPayTypeUi.setSubmitPrice(FormatUtils.submitPrice(price));
     }
 
     /**

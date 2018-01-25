@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <FrameLayout
+        android:id="@+id/lay_base_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:id="@+id/lay_re_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_120"
+        android:layout_alignParentBottom="true"
+        android:background="@color/res_color_white">
+
+        <TextView
+            android:id="@+id/price_title"
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:text="金额:" />
+
+        <TextView
+            android:id="@+id/price_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/res_x_20"
+            android:layout_toRightOf="@+id/price_title"
+            android:text="￥"
+            android:textColor="@color/res_color_red_f3"
+            android:textSize="@dimen/res_fs_12" />
+
+        <TextView
+            android:id="@+id/tv_submit_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/res_x_10"
+            android:layout_toRightOf="@+id/price_unit"
+            android:text="0.00"
+            android:textColor="@color/res_color_red_f3"
+            android:textSize="@dimen/res_fs_22" />
+
+        <TextView
+            android:id="@+id/tv_pay"
+            style="@style/ResTextTheme.16.White"
+            android:layout_width="@dimen/res_x_200"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/selector_btn_pay"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="支付" />
+    </RelativeLayout>
+</RelativeLayout>
+

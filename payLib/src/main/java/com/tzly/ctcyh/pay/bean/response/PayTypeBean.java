@@ -38,6 +38,52 @@ public class PayTypeBean {
     private String description;
     private int couponUserId;
 
+    private String addressDetail;
+    private String phone;
+    private String sheng;
+    private String shi;
+    private String xian;
+
+    public String getAddressDetail() {
+        return addressDetail;
+    }
+
+    public void setAddressDetail(String addressDetail) {
+        this.addressDetail = addressDetail;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getSheng() {
+        return sheng;
+    }
+
+    public void setSheng(String sheng) {
+        this.sheng = sheng;
+    }
+
+    public String getShi() {
+        return shi;
+    }
+
+    public void setShi(String shi) {
+        this.shi = shi;
+    }
+
+    public String getXian() {
+        return xian;
+    }
+
+    public void setXian(String xian) {
+        this.xian = xian;
+    }
+
     public int getCouponUserId() {
         return couponUserId;
     }

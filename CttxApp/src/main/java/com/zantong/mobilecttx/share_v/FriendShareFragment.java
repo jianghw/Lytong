@@ -105,6 +105,13 @@ public class FriendShareFragment extends RefreshFragment
         }
     }
 
+    /**
+     * 是否可刷新
+     */
+    protected boolean isRefresh() {
+        return false;
+    }
+
     @Override
     protected int fragmentView() {
         return R.layout.fragment_friend_share;
@@ -210,7 +217,7 @@ public class FriendShareFragment extends RefreshFragment
         mBtnPay.setOnClickListener(this);
 
         mXRecyclerView = (XRecyclerView) view.findViewById(com.tzly.ctcyh.cargo.R.id.rv_list);
-        GridLayoutManager manager = new GridLayoutManager(Utils.getContext(), 3);
+        GridLayoutManager manager = new GridLayoutManager(Utils.getContext(), 2);
         mXRecyclerView.setLayoutManager(manager);
         mXRecyclerView.setPullRefreshEnabled(false);
         mXRecyclerView.setLoadingMoreEnabled(false);
@@ -220,6 +227,7 @@ public class FriendShareFragment extends RefreshFragment
         mXRecyclerView.noMoreLoadings();
         mAdapter = new StatisCountAdapter();
         mXRecyclerView.setAdapter(mAdapter);
+
 //        mTvPrompt = (TextView) view.findViewById(R.id.tv_prompt);
 //        mTvPeopleCount = (TextView) view.findViewById(R.id.tv_people_count);
 //        mTvInvited = (TextView) view.findViewById(R.id.tv_invited);

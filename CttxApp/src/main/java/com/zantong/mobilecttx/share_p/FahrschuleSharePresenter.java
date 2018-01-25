@@ -98,7 +98,7 @@ public class FahrschuleSharePresenter
     }
 
     /**
-     * 分享
+     * 分享  新
      */
     @Override
     public void getStatisticsCount() {

@@ -62,7 +62,9 @@ import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CO
  * Update day:
  */
 
-public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContract.IHtmlPayView {
+public class
+
+Html5Activity extends AbstractBaseActivity implements IHtmlPayContract.IHtmlPayView {
     private LinearLayout mLayout;
     private WebView mWebView;
     private ProgressBar mProgressBar;

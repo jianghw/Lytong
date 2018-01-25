@@ -39,6 +39,63 @@ public class OrderDetailBean {
     private String sendOffExpress;
     private String sendBackExpress;
 
+    private String addressDetail;
+    private String phone;
+    private String sheng;
+    private String shi;
+    private String xian;
+
+    private String discount;
+    private String goodsId;
+    private String merchantId;
+    private String name;
+    private String couponId;
+    private String uid;
+
+    public String getAddressDetail() {
+        return addressDetail;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getSheng() {
+        return sheng;
+    }
+
+    public String getShi() {
+        return shi;
+    }
+
+    public String getXian() {
+        return xian;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public String getMerchantId() {
+        return merchantId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCouponId() {
+        return couponId;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
     public String getSendOffExpress() {
         return sendOffExpress;
     }

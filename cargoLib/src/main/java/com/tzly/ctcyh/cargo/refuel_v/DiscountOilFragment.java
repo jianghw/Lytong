@@ -1,6 +1,8 @@
 package com.tzly.ctcyh.cargo.refuel_v;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.Editable;
 import android.text.SpannableString;
@@ -164,22 +166,28 @@ public class DiscountOilFragment extends RefreshFragment
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CargoRouter.gotoProblemFeedbackActivity(getActivity());
+//                CargoRouter.gotoProblemFeedbackActivity(getActivity());
+                Intent intent = new Intent(); // 意图对象：动作 + 数据
+                intent.setAction(Intent.ACTION_DIAL); // 设置动作
+                Uri data = Uri.parse("tel:" + "4008216158"); // 设置数据
+                intent.setData(data);
+                startActivity(intent);
             }
         };
 
         SpannableString spanableInfo = new SpannableString(
-                "1. 充值成功后，在加油前把加油卡交给油站工作人员协助圈存；\n"
-                        + "2. 副卡、增值税票卡不支持在线充值；\n"
-                        + "3. 22：00--03：00进行系统维护，充值后将延迟到账;\n"
-                        + "4. 本服务为全国加油卡代充服务，故暂不支持开具发票;\n"
-                        + "5. 本服务由车行易提供;\n"
-                        + "6. 支付成功后将于30分钟内到账，超过24小时未到账请与我们「联系」"
+                "1、畅通联名卡由中石化官方发行，使用工行卡在畅通车友会APP线充值享97折，其他渠道不能充值;\n"
+                        + "2、非畅通车友会联名卡，不支持此页面充值;\n"
+                        + "3、每月15号，30号开放两次充值服务，可提前支付下单，自动于15号，30号当天充值到账;\n"
+                        + "4、充值成功后，需加油站圈存后方可使用，详询加油站工作人员;\n"
+                        + "5、目前黑吉辽、陕甘宁、新疆、内蒙、西藏、青海省不支持当地圈存，可在外省圈存后在以上城市使用加油;\n"
+                        + "6、本服务为全国加油卡代充，顾不支持开具发票;\n"
+                        + "7、本服务由畅通车友会加油服务商提供，如有问题请致电4008216158"
         );
         //可以为多部分设置超链接
         spanableInfo.setSpan(
                 new Clickable(listener),
-                spanableInfo.length() - 4, spanableInfo.length(),
+                spanableInfo.length() - 10, spanableInfo.length(),
                 Spanned.SPAN_MARK_MARK);
         return spanableInfo;
     }
@@ -238,39 +246,11 @@ public class DiscountOilFragment extends RefreshFragment
     }
 
     /**
-     * 数据错误时
-     */
-    public void responseError(String message) {
-        toastShort(message);
-        showStateError();
-        if (message.contains("不是97折卡号")) codeError();
-    }
-
-    public void codeError() {
-        CustomDialog.createDialog(getActivity(),
-                "温馨提示",
-                "您输入的当前卡号不是畅通97折加油卡,是否申办97折优惠加油卡",
-                "取消",
-                "去申办",
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                    }
-                },
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CargoRouter.gotoBidOilActivity(getActivity());
-                    }
-                });
-    }
-
-    /**
      * 数据渲染
      */
     private void dataRendering(NorOilBean bean) {
         String url = bean.getImg();
-        if (!BuildConfig.App_Url) ImageLoadUtils.loadTwoRectangle(url, mImgBanner);
+        ImageLoadUtils.loadTwoRectangle(url, mImgBanner);
 
         String oilCard = bean.getOilCard();
         if (!TextUtils.isEmpty(oilCard)) setStrEditOil(oilCard);
@@ -323,6 +303,27 @@ public class DiscountOilFragment extends RefreshFragment
     @Override
     public void createOrderError(String message) {
         toastShort(message);
+
+        if (message.contains("97折")) codeError();
+    }
+
+    public void codeError() {
+        CustomDialog.createDialog(getActivity(),
+                "温馨提示",
+                "该卡号不是97折卡号,请前往普通加油充值界面充值如无卡97折加油卡,请去申购页面购买",
+                "取消",
+                "前往",
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                },
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CargoRouter.gotoRechargeActivity(getActivity());
+                    }
+                });
     }
 
     @Override
@@ -335,6 +336,5 @@ public class DiscountOilFragment extends RefreshFragment
         else
             toastShort("数据出错,创建订单未知错误");
     }
-
 
 }

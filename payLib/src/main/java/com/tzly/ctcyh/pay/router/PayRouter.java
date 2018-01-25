@@ -232,6 +232,19 @@ public final class PayRouter {
         }
     }
 
+    /**
+     * 去办畅通卡
+     */
+    public static void gotoApplyCardFirstActivity(Context activity) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoApplyCardFirstActivity(activity);
+        } else {//注册机开始工作
+            registerMain();
+        }
+    }
+
     public static void gotoHtmlActivity(Context activity, String title, String msg) {
         Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
@@ -275,7 +288,7 @@ public final class PayRouter {
     public static void gotoAliHtmlActivity(Activity context, String title,
                                            String extraOrderId, int payType, int price, int couponBeanId) {
         String url = BuildConfig.App_Url
-                ? "http://dev.liyingtong.com/" : "http://api2.liyingtong.com/";
+                ? "http://dev.liyingtong.com:8888/" : "http://api2.liyingtong.com/";
         StringBuilder sb = new StringBuilder();
         sb.append(url);
         sb.append("aliPay/aliPayHtml");
@@ -300,6 +313,7 @@ public final class PayRouter {
         gotoPayHtmlActivity(context, bundle);
     }
 
+
     public static void gotoPayHtmlActivity(Activity context, String title, String url,
                                            String extraOrderId, int payType, String channel) {
         Bundle bundle = new Bundle();
@@ -311,7 +325,6 @@ public final class PayRouter {
 
         gotoPayHtmlActivity(context, bundle);
     }
-
 
     /**
      * pay_html_5 支付

@@ -5,7 +5,9 @@ import android.content.Context;
 
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.tzly.ctcyh.service.IMainService;
+import com.zantong.mobilecttx.card.activity.ApplyCardFirstActivity;
 import com.zantong.mobilecttx.router.MainRouter;
+import com.zantong.mobilecttx.utils.jumptools.Act;
 
 /**
  * Created by jianghw on 2017/10/12.
@@ -114,6 +116,13 @@ public class MainDataService implements IMainService {
     @Override
     public void gotoHtmlActivity(Context activity, String title, String msg) {
         MainRouter.gotoHtmlActivity(activity, title, msg);
+    }
+    /**
+     * 去办畅通卡
+     */
+    @Override
+    public void gotoApplyCardFirstActivity(Context activity) {
+        Act.getInstance().gotoIntent(activity, ApplyCardFirstActivity.class);
     }
 
 

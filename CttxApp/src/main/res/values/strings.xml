@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="main_tv_count_share">%1$d :人</string>
+    <string name="main_tv_count_share">%1$d人</string>
 </resources>
