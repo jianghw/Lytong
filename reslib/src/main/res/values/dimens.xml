@@ -6,6 +6,7 @@
     <dimen name="res_fs_18">18sp</dimen>
     <dimen name="res_fs_20">20sp</dimen>
     <dimen name="res_fs_22">22sp</dimen>
+    <dimen name="res_fs_48">48sp</dimen>
 
     <dimen name="custom_bar_height">0dp</dimen>
     <dimen name="bar_marginTop">12dp</dimen>
@@ -144,5 +145,7 @@
     <dimen name="fs_20sp">20sp</dimen>
     <dimen name="fs_22sp">22sp</dimen>
     <dimen name="fs_24sp">24sp</dimen>
+    <dimen name="fs_32sp">32sp</dimen>
+    <dimen name="fs_36sp">36sp</dimen>
     <dimen name="fs_48sp">48sp</dimen>
 </resources>

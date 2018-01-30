@@ -100,7 +100,6 @@ public class LoginPresenter
 
                             register();
                             if (!TextUtils.isEmpty(MemoryData.getInstance().filenum)) loginV004();
-                            mAtyView.userLoginSucceed(loginInfoBean);
                         } else {
                             mAtyView.userLoginError(loginInfoBean != null
                                     ? loginInfoBean.getSYS_HEAD().getReturnMessage() : "未知错误(u011)");
@@ -166,6 +165,7 @@ public class LoginPresenter
 
                     @Override
                     public void doNext(BaseResult baseResult) {
+                        mAtyView.userLoginSucceed();
                         mAtyView.registerSucceed();
                     }
                 });

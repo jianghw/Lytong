@@ -48,6 +48,8 @@ import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.browser.BrowserHtmlActivity;
 import com.zantong.mobile.chongzhi.activity.RechargeActivity;
+import com.zantong.mobile.code_v.AlipayCodeActivity;
+import com.zantong.mobile.code_v.WeixinCodeActivity;
 import com.zantong.mobile.common.activity.CommonProblemActivity;
 import com.zantong.mobile.contract.IUnimpededFtyContract;
 import com.zantong.mobile.fahrschule.activity.FahrschuleActivity;
@@ -105,15 +107,8 @@ public class MainClubActivity extends RefreshBaseActivity
     private LinearLayout mLayViolations;
     private ImageView mImgViolations;
     private TextView mTvViolations;
-    private LinearLayout mLayApply;
-    private ImageView mImgApply;
-    private TextView mTvApply;
-    private LinearLayout mLaySparring;
-    private ImageView mImgSparring;
-    private TextView mTvSparring;
-    private LinearLayout mLaySubject;
-    private ImageView mImgSubject;
-    private TextView mTvSubject;
+
+//
 
     private IUnimpededFtyContract.IUnimpededFtyPresenter mPresenter;
     /**
@@ -140,7 +135,7 @@ public class MainClubActivity extends RefreshBaseActivity
                 .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
 
         List<Integer> bannerImages = new ArrayList<>();
-        bannerImages.add(R.mipmap.ic_banner_2);
+        bannerImages.add(R.mipmap.default_330_160);
         mCustomBanner_2.setPages(
                 new CBViewHolderCreator<LocalImageHolder>() {
                     @Override
@@ -240,9 +235,7 @@ public class MainClubActivity extends RefreshBaseActivity
     }
 
     private void upGradeInfo() {//更新检查
-        Beta.checkUpgrade(false, true);
-        Beta.init(getApplicationContext(), false);
-
+        //更新检查
         UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
         int appCode = AppUtils.getAppVersionCode();
         int mVersionCode = appCode;
@@ -254,7 +247,8 @@ public class MainClubActivity extends RefreshBaseActivity
             if (upgradeInfo.upgradeType == 2) {
                 Beta.checkUpgrade();
             } else {
-                DialogUtils.updateDialog(this, upgradeInfo.title, upgradeInfo.newFeature,
+                DialogUtils.updateDialog(this,
+                        upgradeInfo.title, upgradeInfo.newFeature,
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -380,36 +374,38 @@ public class MainClubActivity extends RefreshBaseActivity
         mLayViolations.setOnClickListener(this);
         mImgViolations = (ImageView) view.findViewById(R.id.img_violations);
         mTvViolations = (TextView) view.findViewById(R.id.tv_violations);
-        mLayApply = (LinearLayout) view.findViewById(R.id.lay_apply);
-        mLayApply.setOnClickListener(this);
-        mImgApply = (ImageView) view.findViewById(R.id.img_apply);
-        mTvApply = (TextView) view.findViewById(R.id.tv_apply);
-        mLaySparring = (LinearLayout) view.findViewById(R.id.lay_sparring);
-        mLaySparring.setOnClickListener(this);
-        mImgSparring = (ImageView) view.findViewById(R.id.img_sparring);
-        mTvSparring = (TextView) view.findViewById(R.id.tv_sparring);
-        mLaySubject = (LinearLayout) view.findViewById(R.id.lay_subject);
-        mLaySubject.setOnClickListener(this);
-        mImgSubject = (ImageView) view.findViewById(R.id.img_subject);
-        mTvSubject = (TextView) view.findViewById(R.id.tv_subject);
+
+//        mLayApply = (LinearLayout) view.findViewById(R.id.lay_apply);
+//        mLayApply.setOnClickListener(this);
+//        mImgApply = (ImageView) view.findViewById(R.id.img_apply);
+//        mTvApply = (TextView) view.findViewById(R.id.tv_apply);
+//        mLaySparring = (LinearLayout) view.findViewById(R.id.lay_sparring);
+//        mLaySparring.setOnClickListener(this);
+//        mImgSparring = (ImageView) view.findViewById(R.id.img_sparring);
+//        mTvSparring = (TextView) view.findViewById(R.id.tv_sparring);
+//        mLaySubject = (LinearLayout) view.findViewById(R.id.lay_subject);
+//        mLaySubject.setOnClickListener(this);
+//        mImgSubject = (ImageView) view.findViewById(R.id.img_subject);
+//        mTvSubject = (TextView) view.findViewById(R.id.tv_subject);
     }
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.lay_oil) {//加油充值
-            Act.getInstance().gotoIntentLogin(this, RechargeActivity.class);
+            Act.getInstance().gotoIntent(this, WeixinCodeActivity.class);
         } else if (id == R.id.lay_annual) {//爱车估值
-            carValuation();
+            Act.getInstance().gotoIntent(this, AlipayCodeActivity.class);
         } else if (id == R.id.lay_violations) {//违章查询
             Act.getInstance().gotoIntent(this, ViolationActivity.class);
-        } else if (id == R.id.lay_apply) {//驾校报名
-            Act.getInstance().gotoIntentLogin(this, FahrschuleActivity.class);
-        } else if (id == R.id.lay_sparring) {//陪练
-            Act.getInstance().gotoIntentLogin(this, SparringActivity.class);
-        } else if (id == R.id.lay_subject) {
-            Act.getInstance().gotoIntentLogin(this, SubjectActivity.class);
         }
+//        else if (id == R.id.lay_apply) {//驾校报名
+//            Act.getInstance().gotoIntentLogin(this, FahrschuleActivity.class);
+//        } else if (id == R.id.lay_sparring) {//陪练
+//            Act.getInstance().gotoIntentLogin(this, SparringActivity.class);
+//        } else if (id == R.id.lay_subject) {
+//            Act.getInstance().gotoIntentLogin(this, SubjectActivity.class);
+//        }
     }
 
     protected void carValuation() {
@@ -604,7 +600,9 @@ public class MainClubActivity extends RefreshBaseActivity
 
         //广告页面
         if (bean != null && bean.getAdvertisementResponse() != null) {
-            List<HomeAdvertisement> advertisementResponse = bean.getAdvertisementResponse();
+            List<HomeAdvertisement> lis = bean.getAdvertisementResponse();
+            int size = lis.size();
+            List<HomeAdvertisement> advertisementResponse = lis.subList(0, size % 2 == 0 ? size / 2 : size / 2 + 1);
             mCustomBanner.setPages(
                     new CBViewHolderCreator<MainBannerHolder>() {
                         @Override
@@ -613,6 +611,21 @@ public class MainClubActivity extends RefreshBaseActivity
                         }
                     },
                     advertisementResponse)
+                    //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
+                    .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
+                    //设置翻页的效果，不需要翻页效果可用不设
+                    .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
+
+
+            List<HomeAdvertisement> advertis = lis.subList(size % 2 == 0 ? size / 2  : size / 2 + 1, size);
+            mCustomBanner_2.setPages(
+                    new CBViewHolderCreator<MainBannerHolder>() {
+                        @Override
+                        public MainBannerHolder createHolder() {
+                            return new MainBannerHolder();
+                        }
+                    },
+                    advertis)
                     //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
                     .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
                     //设置翻页的效果，不需要翻页效果可用不设
@@ -681,7 +694,8 @@ public class MainClubActivity extends RefreshBaseActivity
      * DrawerLayout 滑动监听
      */
     @Override
-    public void onDrawerSlide(View drawerView, float slideOffset) {}
+    public void onDrawerSlide(View drawerView, float slideOffset) {
+    }
 
     @Override
     public void onDrawerOpened(View drawerView) {
@@ -689,8 +703,10 @@ public class MainClubActivity extends RefreshBaseActivity
     }
 
     @Override
-    public void onDrawerClosed(View drawerView) {}
+    public void onDrawerClosed(View drawerView) {
+    }
 
     @Override
-    public void onDrawerStateChanged(int newState) {}
+    public void onDrawerStateChanged(int newState) {
+    }
 }

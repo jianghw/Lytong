@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/img_code"
+        android:layout_width="@dimen/x600"
+        android:layout_height="@dimen/y600"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/y140"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_code_alipay" />
+
+    <TextView
+        android:id="@+id/tv_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_code"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/y40"
+        android:text="支付宝扫描缴费"
+        android:textSize="@dimen/fs_36sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_code"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/y40"
+        android:text="@string/tv_code_tip"
+        android:textColor="@color/res_color_red_f3"
+        android:textSize="@dimen/fs_16sp" />
+
+</RelativeLayout>

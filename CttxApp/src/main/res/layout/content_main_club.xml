@@ -53,13 +53,8 @@
     <com.tzly.annual.base.custom.banner.ConvenientBanner
         android:id="@+id/custom_banner_2"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y200"
+        android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/y20"
         android:layout_marginTop="@dimen/y20"/>
-
-    <include
-        layout="@layout/content_main_club_down"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
 </LinearLayout>

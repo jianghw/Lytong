@@ -31,7 +31,6 @@ import com.zantong.mobile.presenter.login_p.ILoginContract;
 import com.zantong.mobile.presenter.login_p.LoginPresenter;
 import com.zantong.mobile.register_v.RegisterActivity;
 import com.zantong.mobile.reset_v.ResetActivity;
-import com.zantong.mobile.user.bean.LoginInfoBean;
 import com.zantong.mobile.utils.Tools;
 import com.zantong.mobile.utils.jumptools.Act;
 import com.zantong.mobile.widght.CustomCharKeyBoard;
@@ -390,7 +389,7 @@ public class LoginActivity extends JxBaseActivity implements
     }
 
     @Override
-    public void userLoginSucceed(LoginInfoBean loginInfoBean) {
+    public void userLoginSucceed() {
         ToastUtils.toastShort("登录成功!");
 
         if (MemoryData.getInstance().className != null) {

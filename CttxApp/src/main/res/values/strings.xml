@@ -182,6 +182,7 @@
     <string name="tv_license_instructions">
         <u>在线处理违章，只需要10S</u>
     </string>
+    <string name="tv_code_tip" >小哥帮您跑腿30分钟内处理完成。\n处理完后会以短信方式告知您。</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 
