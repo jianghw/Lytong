@@ -205,7 +205,7 @@ public class FriendShareFragment extends RefreshFragment
     private void setSimpleDataResult(List<StatistCountBean> data) {
         mAdapter.removeAllOnly();
         if (data == null || data.isEmpty()) {
-            showStateEmpty();
+            toastShort("当前统计数据为空");
         } else {
             mAdapter.append(data);
         }

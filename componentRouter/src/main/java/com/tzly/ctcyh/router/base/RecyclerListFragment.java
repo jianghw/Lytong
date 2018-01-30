@@ -67,7 +67,7 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
             mCustomRecycler.setLayoutManager(layoutManager);
         } else if (reSetOrientation() == 1) {
             //每行显示5个，水平显示
-            GridItemManager layoutManager = new GridItemManager(view.getContext(), 5);
+            GridItemManager layoutManager = new GridItemManager(getActivity(), 5);
             layoutManager.setOrientation(GridLayoutManager.VERTICAL);
             mCustomRecycler.setLayoutManager(layoutManager);
         }

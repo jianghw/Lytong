@@ -296,15 +296,17 @@ public class DialogMgr {
     public AlertDialog popDlgUpdate(final Context ctx, String title, String futitle, String msg,
                                     String btn1, String btn2, final OnClickListener listener1,
                                     final OnClickListener listener2) {
+
         alg = new AlertDialog.Builder(ctx).create();
-        View view = ((Activity) ctx).getLayoutInflater().inflate(
-                R.layout.dialog_update, null);
+        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.dialog_update, null);
         TextView title_tv = (TextView) view.findViewById(R.id.dialog_title);
-        ImageView dialog_iv = (ImageView) view.findViewById(R.id.dialog_icon);
         TextView msg_tv = (TextView) view.findViewById(R.id.dialog_msg);
-        Button btn_ok = (Button) view.findViewById(R.id.dialog_ok);
-        Button btn_cancel = (Button) view.findViewById(R.id.dialog_cancel);
-        dialog_iv.setBackgroundResource(R.mipmap.dialog_icon2);
+
+        Button btn_ok = (Button) view.findViewById(R.id.dialog_btn1);
+        Button btn_cancel = (Button) view.findViewById(R.id.dialog_btn2);
+
+//        dialog_iv.setBackgroundResource(R.mipmap.dialog_icon2);
+
         if (Tools.isStrEmpty(title)) {
             title_tv.setVisibility(View.GONE);
         } else {
