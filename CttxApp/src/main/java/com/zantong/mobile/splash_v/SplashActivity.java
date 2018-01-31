@@ -23,6 +23,7 @@ import com.zantong.mobile.R;
 import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.contract.ISplashAtyContract;
 import com.zantong.mobile.home.bean.StartPicResult;
+import com.zantong.mobile.login_v.LoginActivity;
 import com.zantong.mobile.main_v.MainClubActivity;
 import com.zantong.mobile.presenter.home.SplashPresenter;
 import com.zantong.mobile.utils.jumptools.Act;
@@ -198,31 +199,8 @@ public class SplashActivity extends AppCompatActivity
      */
     @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     public void gotoMain() {
-        Act.getInstance().gotoIntent(this, MainClubActivity.class);
+        Act.getInstance().gotoIntent(this, LoginActivity.class);
         finish();
-
-      /*  int appCode = AppUtils.getAppVersionCode();//当前手机的
-
-        String guide = SPUtils.getInstance().getIsGuide();
-        int versionCode = 1;//保存版本
-        try {
-            versionCode = Integer.valueOf(guide);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-
-        if (appCode <= versionCode) {
-            Act.getInstance().gotoIntent(this, MainClubActivity.class);
-            finish();
-        } else {
-            Intent intent = new Intent(this, GuideCTActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList("guide_pic_url", mResultList);
-            intent.putExtras(bundle);
-            startActivity(intent);
-            overridePendingTransition(0, 0);
-            finish();
-        }*/
     }
 
     @Override

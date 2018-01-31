@@ -27,9 +27,9 @@ import com.tzly.annual.base.util.primission.PermissionSuccess;
 import com.zantong.mobile.R;
 import com.zantong.mobile.application.Injection;
 import com.zantong.mobile.application.MemoryData;
-import com.zantong.mobile.presenter.login_p.ILoginContract;
-import com.zantong.mobile.presenter.login_p.LoginPresenter;
-import com.zantong.mobile.register_v.RegisterActivity;
+import com.zantong.mobile.main_v.MainClubActivity;
+import com.zantong.mobile.login_p.ILoginContract;
+import com.zantong.mobile.login_p.LoginPresenter;
 import com.zantong.mobile.reset_v.ResetActivity;
 import com.zantong.mobile.utils.Tools;
 import com.zantong.mobile.utils.jumptools.Act;
@@ -142,11 +142,11 @@ public class LoginActivity extends JxBaseActivity implements
             ToastUtils.toastLong("请输入符合规则的密码");
             return;
         }
-        if (mPresenter != null) mPresenter.userLogin();
+        if (mPresenter != null) mPresenter.innerUserLogin();
     }
 
     private void gotoResetActivity() {
-        Act.getInstance().lauchIntent(this, ResetActivity.class);
+        Act.getInstance().gotoIntent(this, ResetActivity.class);
     }
 
     private void hitCustomKeyboard() {
@@ -204,7 +204,7 @@ public class LoginActivity extends JxBaseActivity implements
      * 右边文字点击
      */
     protected void rightClickListener() {
-        Act.getInstance().lauchIntent(this, RegisterActivity.class);
+        Act.getInstance().gotoIntent(this, MainClubActivity.class);
     }
 
     @Override
@@ -393,7 +393,7 @@ public class LoginActivity extends JxBaseActivity implements
         ToastUtils.toastShort("登录成功!");
 
         if (MemoryData.getInstance().className != null) {
-            Act.getInstance().lauchIntent(this, MemoryData.getInstance().className);
+            Act.getInstance().gotoIntent(this, MemoryData.getInstance().className);
         }
     }
 

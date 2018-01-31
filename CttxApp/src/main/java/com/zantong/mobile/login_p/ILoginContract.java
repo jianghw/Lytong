@@ -1,4 +1,4 @@
-package com.zantong.mobile.presenter.login_p;
+package com.zantong.mobile.login_p;
 
 import com.tzly.annual.base.bean.request.RegisterDTO;
 import com.zantong.mobile.base.interf.IMvpPresenter;
@@ -41,5 +41,7 @@ public interface ILoginContract {
         String initLoginV004DTO();
 
         void loginV004();
+
+        void innerUserLogin();
     }
 }

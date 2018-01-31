@@ -23,11 +23,6 @@ public class Act {
         return instance;
     }
 
-    public void lauchIntent(Context packageContext, Class<?> className) {
-        Intent intent = new Intent(packageContext, className);
-        packageContext.startActivity(intent);
-    }
-
     public void gotoIntent(Context packageContext, Class<?> className) {
         Intent intent = new Intent(packageContext, className);
         packageContext.startActivity(intent);

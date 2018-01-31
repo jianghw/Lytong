@@ -1,5 +1,6 @@
 package com.zantong.mobile.contract;
 
+import com.tzly.annual.base.bean.response.AnnouncementResult;
 import com.zantong.mobile.base.interf.IMvpPresenter;
 import com.zantong.mobile.base.interf.IMvpView;
 import com.zantong.mobile.home.bean.HomeResult;
@@ -12,20 +13,10 @@ import com.zantong.mobile.home.dto.HomeDataDTO;
 public interface IUnimpededFtyContract {
 
     interface IUnimpededFtyView extends IMvpView<IUnimpededFtyPresenter> {
-        /**
-         * 显示loading框
-         */
-        void loadingProgress();
 
-        /**
-         * 隐藏loading框
-         */
-        void hideLoadingProgress();
+        void announcementsError(String message);
 
-        void homePageError(String message);
-
-        void homePageSucceed(HomeResult result);
-
+        void announcementsSucceed(AnnouncementResult result);
     }
 
     interface IUnimpededFtyPresenter extends IMvpPresenter {
@@ -35,6 +26,8 @@ public interface IUnimpededFtyContract {
         void homePage();
 
         HomeDataDTO initHomeDataDTO();
+
+        void findAnnouncements();
     }
 
 }

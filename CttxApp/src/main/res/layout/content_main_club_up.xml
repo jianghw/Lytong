@@ -22,7 +22,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/y20"
             android:scaleType="center"
-            android:src="@mipmap/ic_wechat"/>
+            android:src="@mipmap/icon_wechat"/>
 
         <TextView
             android:id="@+id/tv_oil"
@@ -56,7 +56,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/y20"
             android:scaleType="center"
-            android:src="@mipmap/ic_alipay"/>
+            android:src="@mipmap/icon_alipay"/>
 
         <TextView
             android:id="@+id/tv_annual"
@@ -89,7 +89,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/y20"
             android:scaleType="center"
-            android:src="@mipmap/ic_search"/>
+            android:src="@mipmap/icon_search"/>
 
         <TextView
             android:id="@+id/tv_violations"

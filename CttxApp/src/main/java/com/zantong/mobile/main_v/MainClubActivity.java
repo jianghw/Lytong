@@ -27,10 +27,10 @@ import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
 import com.tzly.annual.base.RefreshBaseActivity;
 import com.tzly.annual.base.bean.HomeNotice;
-import com.tzly.annual.base.custom.ScrollDrawerLayout;
-import com.tzly.annual.base.custom.banner.CBViewHolderCreator;
-import com.tzly.annual.base.custom.banner.ConvenientBanner;
+import com.tzly.annual.base.bean.response.AnnouncementBean;
+import com.tzly.annual.base.bean.response.AnnouncementResult;
 import com.tzly.annual.base.custom.image.CircleImageView;
+import com.tzly.annual.base.custom.trumpet.TrumpetListView;
 import com.tzly.annual.base.custom.trumpet.TrumpetScrollUpView;
 import com.tzly.annual.base.global.JxGlobal;
 import com.tzly.annual.base.util.AppUtils;
@@ -44,10 +44,9 @@ import com.tzly.annual.base.util.primission.PermissionFail;
 import com.tzly.annual.base.util.primission.PermissionGen;
 import com.tzly.annual.base.util.primission.PermissionSuccess;
 import com.zantong.mobile.R;
-import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.application.Injection;
+import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.browser.BrowserHtmlActivity;
-import com.zantong.mobile.chongzhi.activity.RechargeActivity;
 import com.zantong.mobile.code_v.AlipayCodeActivity;
 import com.zantong.mobile.code_v.WeixinCodeActivity;
 import com.zantong.mobile.common.activity.CommonProblemActivity;
@@ -56,16 +55,14 @@ import com.zantong.mobile.fahrschule.activity.FahrschuleActivity;
 import com.zantong.mobile.fahrschule.activity.SparringActivity;
 import com.zantong.mobile.fahrschule.activity.SubjectActivity;
 import com.zantong.mobile.home.activity.Codequery;
-import com.zantong.mobile.home.bean.HomeAdvertisement;
 import com.zantong.mobile.home.bean.HomeBean;
 import com.zantong.mobile.home.bean.HomeResult;
-import com.zantong.mobile.main_v.adapter.LocalImageHolder;
-import com.zantong.mobile.main_v.adapter.MainBannerHolder;
 import com.zantong.mobile.map.activity.BaiduMapParentActivity;
 import com.zantong.mobile.msg_v.MegTypeActivity;
 import com.zantong.mobile.order.activity.CattleOrderActivity;
 import com.zantong.mobile.order.activity.MyOrderActivity;
-import com.zantong.mobile.presenter.home.UnimpededFtyPresenter;
+import com.zantong.mobile.main_p.UnimpededFtyPresenter;
+import com.zantong.mobile.share_v.DtShareActivity;
 import com.zantong.mobile.user.activity.AboutActivity;
 import com.zantong.mobile.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobile.user.activity.SettingActivity;
@@ -94,77 +91,35 @@ public class MainClubActivity extends RefreshBaseActivity
     private CircleImageView mUserImage;
     private TextView mUserText;
 
-    private ConvenientBanner mCustomBanner;
-    private ConvenientBanner mCustomBanner_2;
-    private TrumpetScrollUpView mCustomTrumpet;
+    private TrumpetListView mCustomTrumpet;
 
     private LinearLayout mLayOil;
-    private ImageView mImgOil;
-    private TextView mTvOil;
     private LinearLayout mLayAnnual;
-    private ImageView mImgAnnual;
-    private TextView mTvAnnual;
     private LinearLayout mLayViolations;
-    private ImageView mImgViolations;
-    private TextView mTvViolations;
-
-//
 
     private IUnimpededFtyContract.IUnimpededFtyPresenter mPresenter;
-    /**
-     * 小喇叭数据
-     */
-    private List<HomeNotice> mHomeNotices = Collections.synchronizedList(new ArrayList<HomeNotice>());
+
+    private LinearLayout mLayOrder;
+    private LinearLayout mLayShare;
+    private LinearLayout mLayProblem;
 
     @Override
     protected void initContentData() {
         UnimpededFtyPresenter mPresenter = new UnimpededFtyPresenter(
                 Injection.provideRepository(ContextUtils.getContext()), this);
-
-        //广告页本地加载
-        List<Integer> localImages = new ArrayList<>();
-        localImages.add(R.mipmap.default_330_160);
-        mCustomBanner.setPages(
-                new CBViewHolderCreator<LocalImageHolder>() {
-                    @Override
-                    public LocalImageHolder createHolder() {
-                        return new LocalImageHolder();
-                    }
-                }, localImages)
-                .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
-                .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
-
-        List<Integer> bannerImages = new ArrayList<>();
-        bannerImages.add(R.mipmap.default_330_160);
-        mCustomBanner_2.setPages(
-                new CBViewHolderCreator<LocalImageHolder>() {
-                    @Override
-                    public LocalImageHolder createHolder() {
-                        return new LocalImageHolder();
-                    }
-                }, bannerImages)
-                .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
-                .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
-
         //小喇叭
-        initScrollUp(mHomeNotices);
+        initScrollUp();
     }
 
-    private void initScrollUp(List<HomeNotice> mDataLists) {
-        if (mDataLists != null && mDataLists.size() == 0) {
-            List<HomeNotice> mList = new ArrayList<>();
-            mList.add(new HomeNotice("-1", 0, "暂无通知"));
-            mCustomTrumpet.setData(mList);
-        } else {
-            mCustomTrumpet.setData(mDataLists);
-        }
-        mCustomTrumpet.setTextSize(12);
-        mCustomTrumpet.setTimer(5000);
+    private void initScrollUp() {
+        List<AnnouncementBean> mList = new ArrayList<>();
+        mList.add(new AnnouncementBean(-1, "暂无通知消息", -1));
+        mCustomTrumpet.setData(mList);
     }
 
     @Override
     protected void userRefreshContentData() {
-        mPresenter.homePage();
+        mPresenter.findAnnouncements();
     }
 
     /**
@@ -199,9 +154,11 @@ public class MainClubActivity extends RefreshBaseActivity
      */
     @Override
     protected void bindChildView(View childView) {
-        ScrollDrawerLayout drawer = (ScrollDrawerLayout) findViewById(R.id.drawer_layout);
+        upGradeInfo();
+
+        DrawerLayout drawer = (DrawerLayout) childView.findViewById(R.id.drawer_layout);
         drawer.addDrawerListener(this);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) childView.findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         //显示item 图标色
         navigationView.setItemIconTintList(null);
@@ -216,11 +173,6 @@ public class MainClubActivity extends RefreshBaseActivity
         });
         mUserText = (TextView) headerView.findViewById(R.id.tv_user);
 
-        //        RelativeLayout statusBar = (RelativeLayout) findViewById(R.id.lay_re);
-        //        ViewGroup.LayoutParams layoutParams = statusBar.getLayoutParams();
-        //        layoutParams.height = StatusBarUtils.getStatusBarHeight(getApplicationContext());
-        //        statusBar.setLayoutParams(layoutParams);
-
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         LogUtils.e("widthPixels===" + metrics.widthPixels);
@@ -230,8 +182,6 @@ public class MainClubActivity extends RefreshBaseActivity
 
         initTitle(childView);
         initView(childView);
-
-        upGradeInfo();
     }
 
     private void upGradeInfo() {//更新检查
@@ -355,38 +305,21 @@ public class MainClubActivity extends RefreshBaseActivity
     }
 
     private void initView(View view) {
-        mCustomBanner = (ConvenientBanner) view.findViewById(R.id.custom_banner);
-        mCustomBanner_2 = (ConvenientBanner) view.findViewById(R.id.custom_banner_2);
-
-        mCustomTrumpet = (TrumpetScrollUpView) view.findViewById(R.id.custom_trumpet);
-        ViewGroup.LayoutParams layoutParams = mCustomTrumpet.getLayoutParams();
-        mCustomTrumpet.setTrumpetHeight(layoutParams.height);
+        mCustomTrumpet = (TrumpetListView) view.findViewById(R.id.custom_trumpet);
 
         mLayOil = (LinearLayout) view.findViewById(R.id.lay_oil);
         mLayOil.setOnClickListener(this);
-        mImgOil = (ImageView) view.findViewById(R.id.img_oil);
-        mTvOil = (TextView) view.findViewById(R.id.tv_oil);
         mLayAnnual = (LinearLayout) view.findViewById(R.id.lay_annual);
         mLayAnnual.setOnClickListener(this);
-        mImgAnnual = (ImageView) view.findViewById(R.id.img_annual);
-        mTvAnnual = (TextView) view.findViewById(R.id.tv_annual);
         mLayViolations = (LinearLayout) view.findViewById(R.id.lay_violations);
         mLayViolations.setOnClickListener(this);
-        mImgViolations = (ImageView) view.findViewById(R.id.img_violations);
-        mTvViolations = (TextView) view.findViewById(R.id.tv_violations);
 
-//        mLayApply = (LinearLayout) view.findViewById(R.id.lay_apply);
-//        mLayApply.setOnClickListener(this);
-//        mImgApply = (ImageView) view.findViewById(R.id.img_apply);
-//        mTvApply = (TextView) view.findViewById(R.id.tv_apply);
-//        mLaySparring = (LinearLayout) view.findViewById(R.id.lay_sparring);
-//        mLaySparring.setOnClickListener(this);
-//        mImgSparring = (ImageView) view.findViewById(R.id.img_sparring);
-//        mTvSparring = (TextView) view.findViewById(R.id.tv_sparring);
-//        mLaySubject = (LinearLayout) view.findViewById(R.id.lay_subject);
-//        mLaySubject.setOnClickListener(this);
-//        mImgSubject = (ImageView) view.findViewById(R.id.img_subject);
-//        mTvSubject = (TextView) view.findViewById(R.id.tv_subject);
+        mLayOrder = (LinearLayout) view.findViewById(R.id.lay_order);
+        mLayOrder.setOnClickListener(this);
+        mLayShare = (LinearLayout) view.findViewById(R.id.lay_share);
+        mLayShare.setOnClickListener(this);
+        mLayProblem = (LinearLayout) view.findViewById(R.id.lay_problem);
+        mLayProblem.setOnClickListener(this);
     }
 
     @Override
@@ -398,22 +331,15 @@ public class MainClubActivity extends RefreshBaseActivity
             Act.getInstance().gotoIntent(this, AlipayCodeActivity.class);
         } else if (id == R.id.lay_violations) {//违章查询
             Act.getInstance().gotoIntent(this, ViolationActivity.class);
+        } else if (id == R.id.lay_order) {
+            gotoCattleOrder();
+        } else if (id == R.id.lay_share) {
+            Act.getInstance().gotoIntent(this, DtShareActivity.class);
+        } else if (id == R.id.lay_problem) {
+            Act.getInstance().gotoIntent(this, CommonProblemActivity.class);
         }
-//        else if (id == R.id.lay_apply) {//驾校报名
-//            Act.getInstance().gotoIntentLogin(this, FahrschuleActivity.class);
-//        } else if (id == R.id.lay_sparring) {//陪练
-//            Act.getInstance().gotoIntentLogin(this, SparringActivity.class);
-//        } else if (id == R.id.lay_subject) {
-//            Act.getInstance().gotoIntentLogin(this, SubjectActivity.class);
-//        }
     }
 
-    protected void carValuation() {
-        Intent intent = new Intent();
-        intent.putExtra(JxGlobal.putExtra.browser_title_extra, "爱车估值");
-        intent.putExtra(JxGlobal.putExtra.browser_url_extra, "http://m.jingzhengu.com/xiansuo/sellcar-changtongcheyouhui.html");
-        Act.getInstance().gotoLoginByIntent(this, BrowserHtmlActivity.class, intent);
-    }
 
     private void popUpMore() {
         View inflate = getLayoutInflater().inflate(R.layout.popup_club_more, null);
@@ -472,11 +398,11 @@ public class MainClubActivity extends RefreshBaseActivity
     }
 
     private void gotoCattleOrder() {
-        Act.getInstance().gotoIntentLogin(this, CattleOrderActivity.class);
+        Act.getInstance().gotoIntent(this, CattleOrderActivity.class);
     }
 
     private void gotoMyOrder() {
-        Act.getInstance().gotoIntentLogin(this, MyOrderActivity.class);
+        Act.getInstance().gotoIntent(this, MyOrderActivity.class);
     }
 
     private void gotoQRCodeScan() {
@@ -546,7 +472,6 @@ public class MainClubActivity extends RefreshBaseActivity
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.unSubscribe();
-        if (!mHomeNotices.isEmpty()) mHomeNotices.clear();
     }
 
     @Override
@@ -558,79 +483,23 @@ public class MainClubActivity extends RefreshBaseActivity
         if (hidden) {//不可见时
             if (mCustomTrumpet != null) mCustomTrumpet.stop();
             //停止翻页
-            if (mCustomBanner != null) mCustomBanner.stopTurning();
-            if (mCustomBanner_2 != null) mCustomBanner_2.stopTurning();
         } else {
             if (mCustomTrumpet != null && !mCustomTrumpet.isRunning()) mCustomTrumpet.start();
-            //开始自动翻页
-            if (mCustomBanner != null && !mCustomBanner.isRunning())
-                mCustomBanner.startTurning(4000);
-            if (mCustomBanner_2 != null && !mCustomBanner_2.isRunning())
-                mCustomBanner_2.startTurning(4000);
         }
     }
 
+    /**
+     * 内部通知数据
+     */
     @Override
-    public void loadingProgress() {
-    }
-
-    @Override
-    public void hideLoadingProgress() {
-    }
-
-    @Override
-    public void homePageError(String message) {
+    public void announcementsError(String message) {
         ToastUtils.toastShort(message);
     }
 
     @Override
-    public void homePageSucceed(HomeResult result) {
-        HomeBean bean = result.getData();
-        //未读消息
-        unreadMessage(bean);
-
-        //小喇叭通知
-        if (bean != null && bean.getNotices() != null) {
-            if (!bean.getNotices().isEmpty())
-                mCustomTrumpet.setData(bean.getNotices());
-
-            if (!mHomeNotices.isEmpty()) mHomeNotices.clear();
-            mHomeNotices.addAll(bean.getNotices());
-        }
-
-        //广告页面
-        if (bean != null && bean.getAdvertisementResponse() != null) {
-            List<HomeAdvertisement> lis = bean.getAdvertisementResponse();
-            int size = lis.size();
-            List<HomeAdvertisement> advertisementResponse = lis.subList(0, size % 2 == 0 ? size / 2 : size / 2 + 1);
-            mCustomBanner.setPages(
-                    new CBViewHolderCreator<MainBannerHolder>() {
-                        @Override
-                        public MainBannerHolder createHolder() {
-                            return new MainBannerHolder();
-                        }
-                    },
-                    advertisementResponse)
-                    //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
-                    .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
-                    //设置翻页的效果，不需要翻页效果可用不设
-                    .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
-
-
-            List<HomeAdvertisement> advertis = lis.subList(size % 2 == 0 ? size / 2  : size / 2 + 1, size);
-            mCustomBanner_2.setPages(
-                    new CBViewHolderCreator<MainBannerHolder>() {
-                        @Override
-                        public MainBannerHolder createHolder() {
-                            return new MainBannerHolder();
-                        }
-                    },
-                    advertis)
-                    //设置两个点图片作为翻页指示器，不设置则没有指示器，可以根据自己需求自行配合自己的指示器,不需要圆点指示器可用不设
-                    .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
-                    //设置翻页的效果，不需要翻页效果可用不设
-                    .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
-        }
+    public void announcementsSucceed(AnnouncementResult result) {
+        List<AnnouncementBean> lis = result.getData();
+        mCustomTrumpet.setData(lis);
     }
 
     private void unreadMessage(HomeBean bean) {

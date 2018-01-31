@@ -1,4 +1,4 @@
-package com.zantong.mobile.contract;
+package com.zantong.mobile.share_p;
 
 import com.zantong.mobile.base.interf.IMvpPresenter;
 import com.zantong.mobile.base.interf.IMvpView;

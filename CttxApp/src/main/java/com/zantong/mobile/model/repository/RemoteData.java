@@ -2,11 +2,14 @@ package com.zantong.mobile.model.repository;
 
 import android.text.TextUtils;
 
+import com.tzly.annual.base.bean.BaseResponse;
 import com.tzly.annual.base.bean.BaseResult;
 import com.tzly.annual.base.bean.Result;
 import com.tzly.annual.base.bean.request.RegisterDTO;
+import com.tzly.annual.base.bean.response.AnnouncementResult;
 import com.tzly.annual.base.bean.response.CattleOrderResponse;
 import com.tzly.annual.base.bean.response.OrderListResult;
+import com.tzly.annual.base.bean.response.StatistCountResult;
 import com.tzly.annual.base.bean.response.SubjectGoodsResult;
 import com.zantong.mobile.api.IAddOilService;
 import com.zantong.mobile.api.IBankService;
@@ -646,5 +649,29 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<ViolationNumBean> numberedQuery(String msg) {
         return initAppUrlRetrofit().create(IBankService.class).numberedQuery(msg);
+    }
+
+    /**
+     * 登录
+     */
+    @Override
+    public Observable<BaseResponse> innerUserLogin(String userPhone, String userPassword) {
+        return initRetrofit().create(IUserService.class).innerUserLogin(userPhone, userPassword);
+    }
+
+    /**
+     * 获取内部通知
+     */
+    @Override
+    public Observable<AnnouncementResult> findAnnouncements() {
+        return initRetrofit().create(IUserService.class).findAnnouncements();
+    }
+
+    /**
+     * 分享  新
+     */
+    @Override
+    public Observable<StatistCountResult> getStatisticsCount(String phone) {
+        return initRetrofit().create(IUserService.class).getStatisticsCount(phone);
     }
 }

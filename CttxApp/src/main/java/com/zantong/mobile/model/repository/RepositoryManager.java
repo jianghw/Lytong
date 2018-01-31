@@ -3,11 +3,14 @@ package com.zantong.mobile.model.repository;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.tzly.annual.base.bean.BaseResponse;
 import com.tzly.annual.base.bean.BaseResult;
 import com.tzly.annual.base.bean.Result;
 import com.tzly.annual.base.bean.request.RegisterDTO;
+import com.tzly.annual.base.bean.response.AnnouncementResult;
 import com.tzly.annual.base.bean.response.CattleOrderResponse;
 import com.tzly.annual.base.bean.response.OrderListResult;
+import com.tzly.annual.base.bean.response.StatistCountResult;
 import com.tzly.annual.base.bean.response.SubjectGoodsResult;
 import com.zantong.mobile.base.dto.BaseDTO;
 import com.zantong.mobile.base.dto.RequestHeadDTO;
@@ -65,6 +68,7 @@ import com.zantong.mobile.weizhang.dto.ViolationPayDTO;
 import java.util.List;
 
 import okhttp3.MultipartBody;
+import rx.Completable;
 import rx.Observable;
 
 /**
@@ -607,6 +611,7 @@ public class RepositoryManager {
 
     /**
      * 46.更新违章缴费状态
+     *
      * @param json
      */
     public Observable<BaseResult> updateState(List<ViolationNum> json) {
@@ -618,5 +623,25 @@ public class RepositoryManager {
      */
     public Observable<ViolationNumBean> numberedQuery(String msg) {
         return mRemoteData.numberedQuery(msg);
+    }
+
+    /**
+     * 登录
+     */
+    public Observable<BaseResponse> innerUserLogin(String userPhone, String userPassword) {
+        return mRemoteData.innerUserLogin(userPhone, userPassword);
+    }
+
+    /**
+     * 获取内部通知
+     */
+    public Observable<AnnouncementResult> findAnnouncements() {
+        return mRemoteData.findAnnouncements();
+    }
+    /**
+     * 分享  新
+     */
+    public Observable<StatistCountResult> getStatisticsCount(String phone) {
+        return mRemoteData.getStatisticsCount(phone);
     }
 }

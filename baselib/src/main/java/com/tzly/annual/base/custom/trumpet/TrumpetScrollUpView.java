@@ -3,6 +3,7 @@ package com.tzly.annual.base.custom.trumpet;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import com.tzly.annual.base.R;
 import com.tzly.annual.base.bean.HomeNotice;
 
 /**
@@ -40,7 +41,7 @@ public class TrumpetScrollUpView extends BaseIScrollUpTextView<HomeNotice> {
 
     @Override
     public int getTrumpetHeight() {
-        return mHeight;
+        return mHeight != 0 ? mHeight : getResources().getDimensionPixelSize(R.dimen.ds_48);
     }
 
 }

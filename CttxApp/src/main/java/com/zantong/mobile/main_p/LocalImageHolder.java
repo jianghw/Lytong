@@ -1,4 +1,4 @@
-package com.zantong.mobile.main_v.adapter;
+package com.zantong.mobile.main_p;
 
 import android.content.Context;
 import android.content.Intent;

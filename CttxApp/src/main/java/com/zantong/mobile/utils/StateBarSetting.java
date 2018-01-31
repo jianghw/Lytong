@@ -53,7 +53,7 @@ public class StateBarSetting {
             text_right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Act.getInstance().lauchIntent(mContext, clazz);
+                    Act.getInstance().gotoIntent(mContext, clazz);
                     if(popFlag){
                         ScreenManager.popActivity();
                     }

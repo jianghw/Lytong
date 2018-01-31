@@ -1,11 +1,10 @@
 
-package com.zantong.mobile.presenter.fahrschule;
+package com.zantong.mobile.share_p;
 
 import android.support.annotation.NonNull;
 
 import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.fahrschule.bean.RecordCountResult;
-import com.zantong.mobile.contract.IFahrschuleShareFtyContract;
 import com.zantong.mobile.model.repository.BaseSubscriber;
 import com.zantong.mobile.model.repository.RepositoryManager;
 

@@ -1,11 +1,9 @@
 
-package com.zantong.mobile.presenter.home;
+package com.zantong.mobile.share_p;
 
 import android.support.annotation.NonNull;
 
-import com.zantong.mobile.contract.IUnimpededFtyContract;
-import com.zantong.mobile.home.bean.HomeResult;
-import com.zantong.mobile.home.dto.HomeDataDTO;
+import com.tzly.annual.base.bean.response.StatistCountResult;
 import com.zantong.mobile.model.repository.BaseSubscriber;
 import com.zantong.mobile.model.repository.RepositoryManager;
 
@@ -16,22 +14,22 @@ import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by jianghw on 16/6/1.
- * Description: 畅通页面 p
+ * Description: 驾校报名
  * Update by:
  * Update day:
  */
-public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFtyPresenter {
+public class SharePresenter implements IShareFtyContract.IShareFtyPresenter {
 
     private final RepositoryManager mRepository;
-    private final IUnimpededFtyContract.IUnimpededFtyView mAtyView;
+    private final IShareFtyContract.IShareFtyView mContentView;
     private final CompositeSubscription mSubscriptions;
 
-    public UnimpededFtyPresenter(@NonNull RepositoryManager repositoryManager,
-                                 @NonNull IUnimpededFtyContract.IUnimpededFtyView view) {
+    public SharePresenter(@NonNull RepositoryManager repositoryManager,
+                          @NonNull IShareFtyContract.IShareFtyView view) {
         mRepository = repositoryManager;
-        mAtyView = view;
+        mContentView = view;
         mSubscriptions = new CompositeSubscription();
-        mAtyView.setPresenter(this);
+        mContentView.setPresenter(this);
     }
 
     @Override
@@ -41,45 +39,37 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
     @Override
     public void unSubscribe() {
-        mAtyView.hideLoadingProgress();
         mSubscriptions.clear();
     }
 
     /**
-     * 1.首页信息
+     * 分享  新
      */
     @Override
-    public void homePage() {
-        Subscription subscription = mRepository.homePage(initHomeDataDTO())
+    public void getStatisticsCount() {
+        Subscription subscription = mRepository.getStatisticsCount(mContentView.getPhone())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<HomeResult>() {
+                .subscribe(new BaseSubscriber<StatistCountResult>() {
                     @Override
                     public void doCompleted() {
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.homePageError(e.getMessage());
+                        mContentView.statisticsCountError(e.getMessage());
                     }
 
                     @Override
-                    public void doNext(HomeResult result) {
+                    public void doNext(StatistCountResult result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.homePageSucceed(result);
+                            mContentView.statisticsCountSucceed(result);
                         } else {
-                            mAtyView.homePageError(result != null ? result.getResponseDesc() : "未知错误(1)");
+                            mContentView.statisticsCountError(result != null
+                                    ? result.getResponseDesc() : "未知错误(StatisticsCount)");
                         }
                     }
                 });
         mSubscriptions.add(subscription);
     }
-
-    @Override
-    public HomeDataDTO initHomeDataDTO() {
-        HomeDataDTO params = new HomeDataDTO();
-        params.setUserId(mRepository.getDefaultRASUserID());
-        return params;
-    }
-
 }

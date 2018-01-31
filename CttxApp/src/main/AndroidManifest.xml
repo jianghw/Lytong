@@ -272,6 +272,9 @@
         <activity
             android:name="com.zantong.mobile.share.activity.ShareParentActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".share_v.DtShareActivity"
+            android:screenOrientation="portrait" />
 
         <!-- ===================订单模块========================================= -->
         <!-- 我的订单列表页面 -->

@@ -246,13 +246,13 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
             case R.id.setting_breakrules_notice: //违章主动通知
                 break;
             case R.id.user_info_change_pwd:
-                Act.getInstance().lauchIntent(this, ChangePwdActivity.class);
+                Act.getInstance().gotoIntent(this, ChangePwdActivity.class);
                 break;
             case R.id.user_info_head_rl:
                 chooseHeadImge();
                 break;
             case R.id.user_info_name_rl:
-                Act.getInstance().lauchIntent(this, UpdateNickName.class);
+                Act.getInstance().gotoIntent(this, UpdateNickName.class);
                 break;
             default:
                 break;

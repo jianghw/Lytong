@@ -2,6 +2,7 @@ package com.tzly.annual.base.custom.trumpet;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.tzly.annual.base.R;
 import com.tzly.annual.base.bean.HomeNotice;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +38,12 @@ public abstract class BaseIScrollUpTextView<T> extends ListView implements IScro
     /**
      * 字体大小
      */
-    private float mSize = 18;
+    private float mSize = 12;
 
     /**
      * 数据总数
      */
-    private int mMax;
+    private int mMaxItemCount;
 
     private int position = -1;
 
@@ -49,7 +51,9 @@ public abstract class BaseIScrollUpTextView<T> extends ListView implements IScro
      * 向上滚动距离
      */
     private int scroll_Y;
-
+    /**
+     * 设置固定的滚动距离
+     */
     private int mScrollHeight;
 
     /**
@@ -62,15 +66,15 @@ public abstract class BaseIScrollUpTextView<T> extends ListView implements IScro
      */
     private TrumpetItemListener mTrumpetItemListener;
 
-    private long mTimer = 5000;
-
     private Context mContext;
+
+    private int mTimer = 3000;
     /**
      * 标记是否在滚动
      */
-    private boolean turning;
+    private boolean turning = false;
 
-    private Handler handler = new Handler();
+    private TimeHandler handler = new TimeHandler(this);
 
     Runnable runnable = new Runnable() {
         @Override
@@ -80,6 +84,60 @@ public abstract class BaseIScrollUpTextView<T> extends ListView implements IScro
         }
     };
 
+    private static class TimeHandler extends Handler {
+
+        private final WeakReference<ViewGroup> weakReference;
+
+        public TimeHandler(ViewGroup viewGroup) {
+            weakReference = new WeakReference<>(viewGroup);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            BaseIScrollUpTextView group = (BaseIScrollUpTextView) weakReference.get();
+            if (group == null) {
+                super.handleMessage(msg);
+                return;
+            }
+            if (msg.what == 100) {
+                group.startUpItem();
+            }
+        }
+    }
+
+    /**
+     * 是否正在跑
+     */
+    public boolean isRunning() {
+        return turning;
+    }
+
+    /**
+     * 开启轮播
+     */
+    public void start() {
+        //如果是正在翻页的话先停掉
+        if (isRunning()) {
+            stop();
+        }
+        turning = true;
+        handler.sendEmptyMessageDelayed(100, 1000);
+    }
+
+    /**
+     * 关闭轮播
+     */
+    public void stop() {
+        turning = false;
+        handler.removeCallbacksAndMessages(null);
+    }
+
+    public void startUpItem() {
+        switchItem();
+        handler.sendEmptyMessageDelayed(100, mTimer);
+    }
+
     public BaseIScrollUpTextView(Context context) {
         this(context, null);
     }
@@ -87,11 +145,6 @@ public abstract class BaseIScrollUpTextView<T> extends ListView implements IScro
     public BaseIScrollUpTextView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
-
-    /**
-     * 获取高度
-     */
-    protected abstract int getTrumpetHeight();
 
     public BaseIScrollUpTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -101,6 +154,14 @@ public abstract class BaseIScrollUpTextView<T> extends ListView implements IScro
         initDefault();
     }
 
+    /**
+     * 获取高度
+     */
+    protected abstract int getTrumpetHeight();
+
+    /**
+     * 默认样式设置
+     */
     private void initDefault() {
         this.setDivider(null);
         this.setFastScrollEnabled(false);
@@ -125,9 +186,21 @@ public abstract class BaseIScrollUpTextView<T> extends ListView implements IScro
         } else {
             scroll_Y = mScrollHeight;
         }
-        smoothScrollBy(scroll_Y, 2000);
+        smoothScrollBy(scroll_Y, mTimer);
         setSelection(position);
         position++;
+    }
+
+    /**
+     * 添加数据
+     */
+    public void setData(List<T> tList) {
+        if (!mDataList.isEmpty()) mDataList.clear();
+        mDataList.addAll(tList);
+
+        mMaxItemCount = mDataList == null ? 0 : mDataList.size();
+        this.setAdapter(mAutoScrollAdapter);
+        mAutoScrollAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -138,17 +211,17 @@ public abstract class BaseIScrollUpTextView<T> extends ListView implements IScro
         @Override
         public int getCount() {
             final int count = mDataList == null ? 0 : mDataList.size();
-            return count > 1 ? Integer.MAX_VALUE : count;
+            return count > 2 ? Integer.MAX_VALUE : count;
         }
 
         @Override
         public Object getItem(int position) {
-            return mDataList.get(position % mMax);
+            return mDataList.get(position % mMaxItemCount);
         }
 
         @Override
         public long getItemId(int position) {
-            return position % mMax;
+            return position % mMaxItemCount;
         }
 
         @Override
@@ -164,27 +237,25 @@ public abstract class BaseIScrollUpTextView<T> extends ListView implements IScro
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            T data = mDataList.get(position % mMax);
+            T data = mDataList.get(position % mMaxItemCount);
 
             viewHolder.mInfoView.setTextSize(mSize);
             viewHolder.mInfoView.setText(getTextInfo(data));
-
-            HomeNotice bean = (HomeNotice) data;
-            viewHolder.mImgMsg.setVisibility(bean.isNewMeg() ? VISIBLE : INVISIBLE);
 
             convertView.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     if (mTrumpetItemListener != null)
-                        mTrumpetItemListener.onItemClick(position % mMax);
+                        mTrumpetItemListener.onItemClick(position % mMaxItemCount);
                 }
             });
             return convertView;
         }
+
     }
 
-    static class ViewHolder {
+    private static class ViewHolder {
         TextView mInfoView;// 内容
         ImageView mImgMsg;
     }
@@ -192,17 +263,6 @@ public abstract class BaseIScrollUpTextView<T> extends ListView implements IScro
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         return false;
-    }
-
-    /**
-     * 添加数据
-     */
-    public void setData(List<T> _datas) {
-        mDataList.clear();
-        mDataList.addAll(_datas);
-        mMax = mDataList == null ? 0 : mDataList.size();
-        this.setAdapter(mAutoScrollAdapter);
-        mAutoScrollAdapter.notifyDataSetChanged();
     }
 
     public List<T> getList() {
@@ -228,35 +288,8 @@ public abstract class BaseIScrollUpTextView<T> extends ListView implements IScro
      *
      * @param _time 毫秒单位
      */
-    public void setTimer(long _time) {
+    public void setTimer(int _time) {
         this.mTimer = _time;
-    }
-
-    /**
-     * 开启轮播
-     */
-    public void start() {
-        //如果是正在翻页的话先停掉
-        if (turning) {
-            stop();
-        }
-        turning = true;
-        handler.postDelayed(runnable, 1000);
-    }
-
-    /**
-     * 是否正在跑
-     */
-    public boolean isRunning() {
-        return turning;
-    }
-
-    /**
-     * 关闭轮播
-     */
-    public void stop() {
-        turning = false;
-        handler.removeCallbacks(runnable);
     }
 
 }

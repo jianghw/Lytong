@@ -1,10 +1,11 @@
 
-package com.zantong.mobile.presenter.login_p;
+package com.zantong.mobile.login_p;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.tzly.annual.base.bean.BaseResponse;
 import com.tzly.annual.base.bean.BaseResult;
 import com.tzly.annual.base.bean.request.RegisterDTO;
 import com.tzly.annual.base.bean.request.UserLoginDTO;
@@ -36,19 +37,18 @@ import rx.subscriptions.CompositeSubscription;
  * Update by:
  * Update day:
  */
-public class LoginPresenter
-        implements ILoginContract.ILoginPresenter {
+public class LoginPresenter implements ILoginContract.ILoginPresenter {
 
     private final RepositoryManager mRepository;
-    private final ILoginContract.ILoginView mAtyView;
+    private final ILoginContract.ILoginView mContentView;
     private final CompositeSubscription mSubscriptions;
 
     public LoginPresenter(@NonNull RepositoryManager repositoryManager,
                           @NonNull ILoginContract.ILoginView view) {
         mRepository = repositoryManager;
-        mAtyView = view;
+        mContentView = view;
         mSubscriptions = new CompositeSubscription();
-        mAtyView.setPresenter(this);
+        mContentView.setPresenter(this);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class LoginPresenter
 
     @Override
     public void unSubscribe() {
-        mAtyView.dismissLoadingDialog();
+        mContentView.dismissLoadingDialog();
         mSubscriptions.clear();
     }
 
@@ -70,7 +70,7 @@ public class LoginPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoadingDialog();
+                        mContentView.showLoadingDialog();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -78,12 +78,12 @@ public class LoginPresenter
                 .subscribe(new BaseSubscriber<LoginInfoBean>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoadingDialog();
+                        mContentView.dismissLoadingDialog();
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.userLoginError(e.getMessage());
+                        mContentView.userLoginError(e.getMessage());
                     }
 
                     @Override
@@ -101,7 +101,7 @@ public class LoginPresenter
                             register();
                             if (!TextUtils.isEmpty(MemoryData.getInstance().filenum)) loginV004();
                         } else {
-                            mAtyView.userLoginError(loginInfoBean != null
+                            mContentView.userLoginError(loginInfoBean != null
                                     ? loginInfoBean.getSYS_HEAD().getReturnMessage() : "未知错误(u011)");
                         }
                     }
@@ -129,12 +129,12 @@ public class LoginPresenter
         bean.setToken(token);
         bean.setPushmode("2");
         bean.setPushswitch("0");
-        String phone = RSAUtils.strByEncryption(mAtyView.getUserPhone(), true);
+        String phone = RSAUtils.strByEncryption(mContentView.getUserPhone(), true);
         bean.setPhoenum(phone);
         SHATools shaTools = new SHATools();
         try {
             String pwd = RSAUtils.strByEncryption(
-                    SHATools.hexString(shaTools.eccryptSHA1(mAtyView.getUserPassword())), true);
+                    SHATools.hexString(shaTools.eccryptSHA1(mContentView.getUserPassword())), true);
             bean.setPswd(pwd);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -155,18 +155,18 @@ public class LoginPresenter
                 .subscribe(new BaseSubscriber<BaseResult>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoadingDialog();
+                        mContentView.dismissLoadingDialog();
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.registerError(e.getMessage());
+                        mContentView.registerError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(BaseResult baseResult) {
-                        mAtyView.userLoginSucceed();
-                        mAtyView.registerSucceed();
+                        mContentView.userLoginSucceed();
+                        mContentView.registerSucceed();
                     }
                 });
         mSubscriptions.add(subscription);
@@ -175,8 +175,8 @@ public class LoginPresenter
     @Override
     public RegisterDTO initRegisterDTO() {
         RegisterDTO registerDTO = new RegisterDTO();
-        registerDTO.setPhoenum(Des3.encode(mAtyView.getUserPhone()));
-        registerDTO.setPswd(Des3.encode(mAtyView.getUserPassword()));
+        registerDTO.setPhoenum(Des3.encode(mContentView.getUserPhone()));
+        registerDTO.setPswd(Des3.encode(mContentView.getUserPassword()));
         registerDTO.setUsrid(mRepository.getDefaultRASUserID());
 
         String token = RSAUtils.strByEncryption(MemoryData.getInstance().deviceId, true);
@@ -219,5 +219,39 @@ public class LoginPresenter
 
         dto.setReqInfo(bean);
         return new Gson().toJson(dto);
+    }
+
+    /**
+     * 登录
+     */
+    @Override
+    public void innerUserLogin() {
+        Subscription subscription = mRepository
+                .innerUserLogin(mContentView.getUserPhone(), mContentView.getUserPassword())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContentView.showLoadingDialog();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContentView.dismissLoadingDialog();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContentView.dismissLoadingDialog();
+                    }
+
+                    @Override
+                    public void doNext(BaseResponse baseResult) {
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 }

@@ -1,8 +1,11 @@
 package com.zantong.mobile.model.repository;
 
+import com.tzly.annual.base.bean.BaseResponse;
 import com.tzly.annual.base.bean.BaseResult;
 import com.tzly.annual.base.bean.request.RegisterDTO;
+import com.tzly.annual.base.bean.response.AnnouncementResult;
 import com.tzly.annual.base.bean.response.CattleOrderResponse;
+import com.tzly.annual.base.bean.response.StatistCountResult;
 import com.tzly.annual.base.bean.response.SubjectGoodsResult;
 import com.tzly.annual.base.bean.Result;
 import com.zantong.mobile.base.dto.BaseDTO;
@@ -366,4 +369,18 @@ public interface IRemoteSource {
     Observable<BaseResult> updateState(List<ViolationNum> json);
 
     Observable<ViolationNumBean> numberedQuery(String msg);
+
+    /**
+     * 登录
+     */
+    Observable<BaseResponse> innerUserLogin(String userPhone, String userPassword);
+
+    /**
+     * 获取内部通知
+     */
+    Observable<AnnouncementResult> findAnnouncements();
+    /**
+     * 分享  新
+     */
+    Observable<StatistCountResult> getStatisticsCount(String phone);
 }

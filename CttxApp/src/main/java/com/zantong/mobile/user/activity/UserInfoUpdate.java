@@ -174,12 +174,12 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
                         });
                 break;
             case R.id.user_info_name_rl:
-                Act.getInstance().lauchIntent(UserInfoUpdate.this, UpdateNickName.class);
+                Act.getInstance().gotoIntent(UserInfoUpdate.this, UpdateNickName.class);
                 break;
             case R.id.user_info_phone_rl:
                 break;
             case R.id.user_info_change_pwd:
-                Act.getInstance().lauchIntent(UserInfoUpdate.this, ChangePwdActivity.class);
+                Act.getInstance().gotoIntent(UserInfoUpdate.this, ChangePwdActivity.class);
                 break;
         }
     }
