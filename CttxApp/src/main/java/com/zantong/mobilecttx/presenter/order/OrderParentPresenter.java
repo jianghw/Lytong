@@ -55,10 +55,12 @@ public class OrderParentPresenter
 
     /**
      * 8.查询订单列表
+     *
+     * @param pager
      */
     @Override
-    public void getOrderList() {
-        Subscription subscription = mRepository.getOrderList(initUserId())
+    public void getOrderList(final int pager) {
+        Subscription subscription = mRepository.getOrderList(initUserId(), String.valueOf(pager))
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -83,10 +85,14 @@ public class OrderParentPresenter
                     @Override
                     public void doNext(OrderListResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.allPaymentData(result.getData());
-                            dataDistribution(result, 0);
-                            dataDistribution(result, 1);
-                            dataDistribution(result, 2);
+                            if (pager != 1 && result.getData().isEmpty()) {
+                                mAtyView.toastError("无更多数据");
+                            } else {
+                                mAtyView.allPaymentData(result.getData());
+                                dataDistribution(result, 0);
+                                dataDistribution(result, 1);
+                                dataDistribution(result, 2);
+                            }
                         } else {
                             mAtyView.getOrderListError(result != null
                                     ? result.getResponseDesc() : "未知错误(N8)");
@@ -338,5 +344,6 @@ public class OrderParentPresenter
      * 支付宝接口
      */
     @Override
-    public void aliPayHtml(String orderId) {}
+    public void aliPayHtml(String orderId) {
+    }
 }

@@ -38,10 +38,12 @@ public interface IOrderParentFtyContract {
         void onPayOrderByCouponSucceed(PayOrderResponse result);
 
         void getBankPayHtmlSucceed(PayOrderResponse result, String orderId);
+
+        void toastError(String message);
     }
 
     interface IOrderParentFtyPresenter extends IBasePresenter {
-        void getOrderList();
+        void getOrderList(int pager);
 
         String initUserId();
 

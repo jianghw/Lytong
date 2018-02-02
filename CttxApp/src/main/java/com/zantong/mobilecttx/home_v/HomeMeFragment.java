@@ -40,7 +40,7 @@ import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
 import com.zantong.mobilecttx.home_p.HomeMeFtyPresenter;
 import com.zantong.mobilecttx.home_p.IHomeMeFtyContract;
 import com.zantong.mobilecttx.msg_v.MegTypeActivity;
-import com.zantong.mobilecttx.order.activity.MyOrderActivity;
+import com.zantong.mobilecttx.order_v.MyOrderActivity;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_v.ShareParentActivity;
 import com.zantong.mobilecttx.user.activity.AboutActivity;

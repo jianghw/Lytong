@@ -67,6 +67,7 @@
         <activity
             android:name=".splash_v.SplashActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -332,7 +333,7 @@
         <!-- ===================订单模块========================================= -->
         <!-- 订单模块列表页面 -->
         <activity
-            android:name=".order.activity.MyOrderActivity"
+            android:name=".order_v.MyOrderActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".order_v.OrderDetailActivity"

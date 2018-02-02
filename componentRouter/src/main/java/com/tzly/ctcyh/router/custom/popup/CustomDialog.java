@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.router.imple.IBankAreaDialogListener;
 import com.tzly.ctcyh.router.util.DensityUtils;
 import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.util.ScreenUtils;
@@ -173,6 +174,22 @@ public class CustomDialog {
             @Override
             public void onPicked(String first, String second, String third) {
                 if (dialogListener != null) dialogListener.setCurPosition(second);
+            }
+        });
+        areaPicker.setOffset(1);
+        areaPicker.setHalfScreen(true);
+        areaPicker.show();
+    }
+
+    public static void popupBottomBankArea(Activity context, ArrayList<String> firstList,
+                                           ArrayList<ArrayList<String>> secondList,
+                                           final IBankAreaDialogListener dialogListener) {
+
+        SparringAreaPicker areaPicker = new SparringAreaPicker(context, firstList, secondList);
+        areaPicker.setOnLinkageListener(new LinkagePicker.OnLinkageListener() {
+            @Override
+            public void onPicked(String first, String second, String third) {
+                if (dialogListener != null) dialogListener.setCurPosition(first, second);
             }
         });
         areaPicker.setOffset(1);

@@ -223,7 +223,7 @@ public interface IRemoteSource {
     /**
      * 8.查询订单列表
      */
-    Observable<OrderListResponse> getOrderList(String userId);
+    Observable<OrderListResponse> getOrderList(String userId,String pager);
 
     /**
      * 9.获取订单详情

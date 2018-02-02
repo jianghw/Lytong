@@ -381,8 +381,8 @@ public class RepositoryManager {
      *
      * @param userId
      */
-    public Observable<OrderListResponse> getOrderList(String userId) {
-        return mRemoteData.getOrderList(userId);
+    public Observable<OrderListResponse> getOrderList(String userId,String pager) {
+        return mRemoteData.getOrderList(userId,pager);
     }
 
     /**

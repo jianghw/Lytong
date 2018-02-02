@@ -6,6 +6,7 @@ import com.zantong.mobilecttx.order.bean.ReceiveInfoResponse;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
 
 import com.tzly.ctcyh.router.bean.BaseResponse;
+
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -26,7 +27,7 @@ public interface IOrderService {
      */
     @FormUrlEncoded
     @POST("order/getOrderList")
-    Observable<OrderListResponse> getOrderList(@Field("userNum") String userId);
+    Observable<OrderListResponse> getOrderList(@Field("userNum") String userId, @Field("page") String pager);
 
     /**
      * 9.获取订单详情

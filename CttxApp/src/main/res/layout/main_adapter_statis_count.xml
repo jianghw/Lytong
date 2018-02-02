@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/res_x_15"
-            android:text="@string/main_tv_count_share" />
+            tools:text="@string/main_tv_count_share" />
 
         <TextView
             android:id="@+id/tv_count"

@@ -38,7 +38,7 @@ import java.util.List;
  * @since 2015/12/17
  */
 public class WheelView extends ScrollView {
-    public static final int TEXT_SIZE = 18;
+    public static final int TEXT_SIZE = 14;
     public static final int TEXT_COLOR_FOCUS = Color.parseColor("#59b5e2");
     public static final int TEXT_COLOR_NORMAL = Color.parseColor("#4d4d4d");
     public static final int LINE_COLOR = Color.parseColor("#e6e6e6");
@@ -127,7 +127,8 @@ public class WheelView extends ScrollView {
         tv.setTextSize(textSize);
         tv.setGravity(Gravity.CENTER);
         int padding = dip2px(14);
-        tv.setPadding(padding, padding, padding, padding);
+        int padd= dip2px(4);
+        tv.setPadding(padd, padding, padd, padding);
 
         if (0 == itemHeight) {
             itemHeight = getViewMeasuredHeight(tv);

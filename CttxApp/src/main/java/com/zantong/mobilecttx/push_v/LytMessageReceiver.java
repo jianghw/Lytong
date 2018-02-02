@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
@@ -27,6 +28,7 @@ import java.util.Map;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.alibaba.sdk.android.ams.common.global.AmsGlobalHolder.getPackageName;
+import static com.tzly.ctcyh.router.util.ActivityUtils.startActivity;
 
 /**
  * 用于接收推送的通知和消息
@@ -107,7 +109,6 @@ public class LytMessageReceiver extends MessageReceiver {
         String type = pushExtBean.getType();
         if (TextUtils.isEmpty(type)) return;
         //前台工作
-        //        if (AppUtils.isAppForeground()) {
         if (type.equals("1"))//主页
             MainRouter.gotoMainActivity(context, 0);
         else if (type.equals("2"))//消息详情
@@ -118,6 +119,20 @@ public class LytMessageReceiver extends MessageReceiver {
             MainRouter.gotoHtmlActivity(context, title, pushExtBean.getUrl());
         else if (type.equals("5"))//违章查询
             MainRouter.gotoViolationActivity(context);
+        else
+            gotoAppLauncher(context);
+    }
+
+    private void gotoAppLauncher(Context context) {
+        try {
+            Intent LaunchIntent = context.getPackageManager()
+                    .getLaunchIntentForPackage("com.zantong.mobilecttx");
+            startActivity(LaunchIntent);
+        } catch (Exception e) {
+            Intent intent = new Intent();
+            intent.setData(Uri.parse("geo1://......"));
+            startActivity(intent);
+        }
     }
 
     /**

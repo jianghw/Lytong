@@ -97,6 +97,7 @@ public class NetlocationPicker extends LinearLayout {
         mWheelYear.setData(getProvinceData());
         mWheelYear.setDefault(0);
         mWheelMonth.setData(getCityData(curWheelprovince));
+
         selectProvince = curWheelprovince;
         selectCity = getCityData(curWheelprovince).get(0);
         dataList = cityMap.get(selectProvince);
@@ -148,30 +149,6 @@ public class NetlocationPicker extends LinearLayout {
                 }
             }
         });
-//        mWheelDay.setOnSelectListener(new OnSelectListener() {
-//
-//			@Override
-//			public void selecting(int id, String text) {
-//				// TODO Auto-generated method stub
-//
-//			}
-//
-//			@Override
-//			public void endSelect(int id, String text) {
-//				if (text.equals("") || text == null)
-//                    return;
-//                if (mDistrincIndex != id) {
-//					mDistrincIndex = id;
-//					selectProvince = mWheelYear.getSelectedText();
-//					selectCity = mWheelMonth.getSelectedText();
-//					selectDistrinc = mWheelDay.getSelectedText();
-//	                if (selectDistrinc == null || selectDistrinc.equals(""))
-//	                     return;
-//
-//                	}
-//
-//			}
-//		});
     }
 
     private ArrayList<String> getProvinceData() {
@@ -187,12 +164,11 @@ public class NetlocationPicker extends LinearLayout {
         } else {
             LogUtils.i("网点数据是空");
         }
-
         return list;
     }
 
     private ArrayList<String> getCityData(String province) {
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         for (int i = 0; i < cityMap.get(province).size(); i++) {
             list.add(cityMap.get(province).get(i).getNetLocationName());
         }

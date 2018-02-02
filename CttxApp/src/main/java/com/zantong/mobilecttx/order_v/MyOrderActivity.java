@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.order.activity;
+package com.zantong.mobilecttx.order_v;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -18,7 +18,6 @@ import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
 import com.zantong.mobilecttx.order.fragment.MyOrderStatusFragment;
-import com.zantong.mobilecttx.order_v.OrderExpressActivity;
 import com.zantong.mobilecttx.presenter.order.OrderParentPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -52,7 +51,8 @@ public class MyOrderActivity extends JxBaseActivity
     private OrderListBean mOrderListBean;
 
     @Override
-    protected void bundleIntent(Bundle savedInstanceState) {}
+    protected void bundleIntent(Bundle savedInstanceState) {
+    }
 
     @Override
     protected int initContentView() {
@@ -75,7 +75,11 @@ public class MyOrderActivity extends JxBaseActivity
 
     @Override
     protected void initContentData() {
-        if (mPresenter != null) mPresenter.getOrderList();
+        if (mPresenter != null) mPresenter.getOrderList(1);
+    }
+
+    protected void initContentData(int pager) {
+        if (mPresenter != null) mPresenter.getOrderList(pager);
     }
 
     public void initView(View view) {
@@ -111,7 +115,7 @@ public class MyOrderActivity extends JxBaseActivity
              */
             @Override
             public void refreshListData(int position) {
-                initContentData();
+                initContentData(position);
             }
 
             /**
@@ -179,48 +183,6 @@ public class MyOrderActivity extends JxBaseActivity
     private void payTypeByUser(OrderListBean orderListBean) {
 
         MainRouter.gotoPayTypeActivity(this, orderListBean.getOrderId());
-
-        //        if (orderListBean.getCanPayType().contains("1")
-        //                && orderListBean.getCanPayType().contains("2")) {
-        //
-        //            CustomDialog.payTypeDialog(this, new IPayTypeListener() {
-        //                @Override
-        //                public void submitPayType(boolean type) {
-        //                    if (type) gotoPayByCard(orderListBean);
-        //                    else gotoPayByAlipay(orderListBean);
-        //                }
-        //            });
-        //        } else if (orderListBean.getCanPayType().contains("1")) {
-        //            gotoPayByCard(orderListBean);
-        //        } else if (orderListBean.getCanPayType().contains("2")) {
-        //            gotoPayByAlipay(orderListBean);
-        //        }
-
-    }
-
-    private void gotoPayByCard(OrderListBean bean) {
-        String orderId = mOrderListBean.getOrderId();
-        String payType = String.valueOf(mOrderListBean.getPayType());
-        float orderPrice = mOrderListBean.getAmount();
-        int price = (int) (orderPrice * 100);
-
-        if (mPresenter != null && mOrderListBean.getType() == 1) {
-            mPresenter.onPayOrderByCoupon(orderId, String.valueOf(price), payType);
-        } else if (mPresenter != null) {
-            mPresenter.getBankPayHtml(orderId, String.valueOf(price));
-        }
-    }
-
-    /**
-     * 支付宝支付
-     */
-    private void gotoPayByAlipay(OrderListBean bean) {
-        //        Intent intent = new Intent(this, PayBrowserActivity.class);
-        //        intent.putExtra(JxGlobal.putExtra.web_title_extra, "支付宝支付");
-        //        intent.putExtra(JxGlobal.putExtra.web_url_extra, BuildConfig.CAR_MANGER_URL + "aliPay/aliPayHtml?orderId=" + bean.getOrderId());
-        //        intent.putExtra(JxGlobal.putExtra.web_order_id_extra, bean.getOrderId());
-        //        intent.putExtra(JxGlobal.putExtra.web_single_url_extra, true);
-        //        startActivityForResult(intent, JxGlobal.requestCode.fahrschule_order_num_web);
     }
 
     /**
@@ -238,13 +200,16 @@ public class MyOrderActivity extends JxBaseActivity
         mViewPager.setOffscreenPageLimit(mFragmentList.size() - 1);//设置预加载
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             @Override
-            public void onPageSelected(int position) {}
+            public void onPageSelected(int position) {
+            }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+            }
         });
 
         mTabLayout.setupWithViewPager(mViewPager);
@@ -268,12 +233,17 @@ public class MyOrderActivity extends JxBaseActivity
         mPresenter = presenter;
     }
 
+    @Override
+    public void toastError(String message) {
+        ToastUtils.toastShort(message);
+    }
+
     /**
      * 加载订单失败状态
      */
     @Override
     public void getOrderListError(String message) {
-        ToastUtils.toastShort(message);
+        toastError(message);
 
         if (mMyOrderStatusFragment != null) mMyOrderStatusFragment.setPayOrderListData(null);
         if (orderUnStatusFragment != null) orderUnStatusFragment.setPayOrderListData(null);
@@ -283,7 +253,7 @@ public class MyOrderActivity extends JxBaseActivity
 
     @Override
     public void dataDistribution(String message, int orderStatus) {
-        ToastUtils.toastShort(message);
+        toastError(message);
 
         if (orderStatus == 0) {
             if (orderUnStatusFragment != null)
@@ -343,10 +313,12 @@ public class MyOrderActivity extends JxBaseActivity
     }
 
     @Override
-    public void onPayOrderByCouponSucceed(PayOrderResponse result) {}
+    public void onPayOrderByCouponSucceed(PayOrderResponse result) {
+    }
 
     @Override
-    public void getBankPayHtmlSucceed(PayOrderResponse result, String orderId) {}
+    public void getBankPayHtmlSucceed(PayOrderResponse result, String orderId) {
+    }
 
     /**
      * 页面回调

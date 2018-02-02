@@ -392,8 +392,8 @@ public class RemoteData implements IRemoteSource {
      * 8.查询订单列表
      */
     @Override
-    public Observable<OrderListResponse> getOrderList(String userId) {
-        return baseRetrofit().create(IOrderService.class).getOrderList(userId);
+    public Observable<OrderListResponse> getOrderList(String userId,String pager) {
+        return baseRetrofit().create(IOrderService.class).getOrderList(userId,pager);
     }
 
     /**

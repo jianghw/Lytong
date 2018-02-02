@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
-import com.zantong.mobilecttx.order.activity.MyOrderActivity;
+import com.zantong.mobilecttx.order_v.MyOrderActivity;
 import com.zantong.mobilecttx.order.adapter.OrderStatusAdapter;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
 import com.zantong.mobilecttx.router.MainRouter;
@@ -78,9 +78,25 @@ public class MyOrderStatusFragment extends BaseRecyclerListJxFragment<OrderListB
         }
     }
 
+    /**
+     * 下拉
+     */
     @Override
     protected void onRefreshData() {
-        if (mRefreshListener != null) mRefreshListener.refreshListData(0);
+        mCurrentPage = 1;
+        if (mRefreshListener != null) mRefreshListener.refreshListData(mCurrentPage);
+    }
+
+    /**
+     * 上拉
+     */
+    protected boolean isLoadMore() {
+        return true;
+    }
+
+    @Override
+    protected void onLoadMoreData() {
+        if (mRefreshListener != null) mRefreshListener.refreshListData(mCurrentPage);
     }
 
     @Override
@@ -127,7 +143,7 @@ public class MyOrderStatusFragment extends BaseRecyclerListJxFragment<OrderListB
     }
 
     public void setPayOrderListData(List<OrderListBean> data) {
-        setSimpleDataResult(data);
+        setDataResult(data);
     }
 
     public void setRefreshListener(MyOrderActivity.RefreshListener refreshListener) {

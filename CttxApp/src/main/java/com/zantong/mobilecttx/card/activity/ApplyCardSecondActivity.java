@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.router.custom.popup.CustomDialog;
+import com.tzly.ctcyh.router.imple.IAreaDialogListener;
+import com.tzly.ctcyh.router.imple.IBankAreaDialogListener;
 import com.tzly.ctcyh.router.util.FileUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.RegexUtils;
@@ -30,11 +33,15 @@ import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
 import com.zantong.mobilecttx.base.interf.IBaseView;
+import com.zantong.mobilecttx.card.bean.CityModel;
+import com.zantong.mobilecttx.card.bean.ProvinceModel;
 import com.zantong.mobilecttx.card.bean.YingXiaoResponse;
 import com.zantong.mobilecttx.card.dto.ApplyCTCardDTO;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
 import com.zantong.mobilecttx.common.activity.CommonTwoLevelMenuActivity;
 import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
+import com.zantong.mobilecttx.daijia.bean.DistrictModel;
+import com.zantong.mobilecttx.map.bean.NetLocationBean;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;
@@ -55,6 +62,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -181,6 +190,10 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      * 领卡网点地址
      */
     private String wangdianAdress;
+    /**
+     * 地址信息
+     */
+    private NetLocationBean mNetLocationBean;
 
     @Override
     protected void onDestroy() {
@@ -551,30 +564,63 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      * 领取网点dialog
      */
     private void lingQuWangDianDialog() {
-        try {
-            NetLocationDialog dialog = new NetLocationDialog(this, null, new NetLocationDialog.OnChooseDialogListener() {
+//        try {
+//            NetLocationDialog dialog = new NetLocationDialog(this, null, new NetLocationDialog.OnChooseDialogListener() {
+//
+//                @Override
+//                public void back(String[] data) {
+//                    String address = data[0] + data[2];
+//                    wangdianAdress = address;
+//                    if (address.length() > 20) {
+//                        address = address.substring(0, 20) + "...";
+//                    }
+//                    mLingKaWangDian.setRightText(address);
+//                    mLingKaWangDian.setRightTextColor(getResources().getColor(R.color.gray_33));
+////领卡网点
+//                    applyCTCardDTO.setGetbrno(data[1]);
+//                }
+//            });
+//            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//            dialog.show();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            downloadTxt();
+//            ToastUtils.toastShort("获取网点失败,正在为你重新获取");
+//        }
 
-                @Override
-                public void back(String[] data) {
-                    String address = data[0] + data[2];
-                    wangdianAdress = address;
-                    if (address.length() > 20) {
-                        address = address.substring(0, 20) + "...";
-                    }
-                    mLingKaWangDian.setRightText(address);
-                    mLingKaWangDian.setRightTextColor(getResources().getColor(R.color.gray_33));
-//领卡网点
-                    applyCTCardDTO.setGetbrno(data[1]);
-                }
-            });
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            downloadTxt();
-            ToastUtils.toastShort("获取网点失败,正在为你重新获取");
+        if (mNetLocationBean == null) {
+            mNetLocationBean = ReadFfile.readNetLocationFile(getApplicationContext());
         }
+        ArrayList<String> firstList = new ArrayList<>();
+        for (NetLocationBean.NetLocationElement element : mNetLocationBean.getNetLocationlist()) {
+            firstList.add(element.getNetLocationQu());
+        }
+        ArrayList<ArrayList<String>> secondList = new ArrayList<>();
+        for (NetLocationBean.NetLocationElement element :  mNetLocationBean.getNetLocationlist()) {
+            ArrayList<String> arrayList = new ArrayList<>();
+            for (NetLocationBean.NetLocationElement.NetQuBean cityModel : element.getListNet()) {
+                arrayList.add(cityModel.getNetLocationName());
+            }
+            secondList.add(arrayList);
+        }
+
+        CustomDialog.popupBottomBankArea(this,
+                firstList, secondList, new IBankAreaDialogListener() {
+                    @Override
+                    public void setCurPosition(String first, String second) {
+                        String address = first + second;
+                        wangdianAdress = address;
+                        if (address.length() > 20) {
+                            address = address.substring(0, 20) + "...";
+                        }
+                        mLingKaWangDian.setRightText(address);
+                        mLingKaWangDian.setRightTextColor(getResources().getColor(R.color.gray_33));
+//领卡网点
+                        applyCTCardDTO.setGetbrno(first);
+                    }
+                });
     }
+
 
     /**
      * 选择地址 1==住宅  2==单位
@@ -596,32 +642,95 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         } catch (SAXException e) {
             e.printStackTrace();
         }
-        // 获取解析出来的数据
-        LoginData.getInstance().provinceModel = parserHandler.getDataList();
+        addressDialog(parserHandler, mType);
 
-        CityDialog dialog = new CityDialog(this, null, new CityDialog.OnChooseDialogListener() {
+        // 获取解析出来的数据
+//        LoginData.getInstance().provinceModel = parserHandler.getDataList();
+//        CityDialog dialog = new CityDialog(this, null,
+//                new CityDialog.OnChooseDialogListener() {
+//                    @Override
+//                    public void back(String[] data) {
+//                        if (mType == 1) {
+//                            applyCTCardDTO.setHmadrprov(data[0]);
+//                            applyCTCardDTO.setHmadrcity(data[1]);
+//                            applyCTCardDTO.setHmadrcnty(data[2]);
+//                            mAddr.setRightText(data[0] + "、" + data[1] + "、" + data[2]);
+//                            mAddr.setRightTextColor(getResources().getColor(R.color.gray_33));
+//                        } else {
+//                            applyCTCardDTO.setCoadrprov(data[0]);
+//                            applyCTCardDTO.setCoadrcity(data[1]);
+//                            applyCTCardDTO.setCoadrcnty(data[2]);
+//
+//                            mCompanyAddr.setRightText(data[0] + "、" + data[1] + "、" + data[2]);
+//                            mCompanyAddr.setRightTextColor(getResources().getColor(R.color.gray_33));
+//                        }
+//
+//                        matchingZipCode(data[2], mType);
+//                    }
+//                });
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.show();
+    }
+
+    private void addressDialog(XmlParserHandler parserHandler, final int mType) {
+        List<ProvinceModel> lis = parserHandler.getDataList();
+
+        final ArrayList<String> firstList = new ArrayList<>();
+        for (ProvinceModel provinceModel : lis) {
+            firstList.add(provinceModel.getName());
+        }
+
+        final ArrayList<ArrayList<String>> secondList = new ArrayList<>();
+        for (ProvinceModel provinceModel : lis) {
+            ArrayList<String> arrayList = new ArrayList<>();
+            for (CityModel cityModel : provinceModel.getCityList()) {
+                arrayList.add(cityModel.getName());
+            }
+            secondList.add(arrayList);
+        }
+
+        final ArrayList<ArrayList<ArrayList<String>>> thirdList = new ArrayList<>();
+        for (ProvinceModel provinceModel : lis) {
+            ArrayList<ArrayList<String>> arrayList = new ArrayList<>();
+            for (CityModel cityModel : provinceModel.getCityList()) {
+                ArrayList<String> aryList = new ArrayList<>();
+                for (DistrictModel districtModel : cityModel.getDistrictList()) {
+                    aryList.add(districtModel.getName());
+                }
+                arrayList.add(aryList);
+            }
+            thirdList.add(arrayList);
+        }
+
+        CustomDialog.popupBottomAllArea(this, firstList, secondList, thirdList, new IAreaDialogListener() {
             @Override
-            public void back(String[] data) {
+            public void setCurPosition(String position) {
+                String[] postions = position.split("/");
+                int f = Integer.valueOf(postions[0]);
+                int s = Integer.valueOf(postions[1]);
+                int t = Integer.valueOf(postions[2]);
+                String data0 = firstList.get(f);
+                String data1 = secondList.get(f).get(s);
+                String data2 = thirdList.get(f).get(s).get(t);
+
                 if (mType == 1) {
-                    applyCTCardDTO.setHmadrprov(data[0]);
-                    applyCTCardDTO.setHmadrcity(data[1]);
-                    applyCTCardDTO.setHmadrcnty(data[2]);
-                    mAddr.setRightText(data[0] + "、" + data[1] + "、" + data[2]);
+                    applyCTCardDTO.setHmadrprov(data0);
+                    applyCTCardDTO.setHmadrcity(data1);
+                    applyCTCardDTO.setHmadrcnty(data2);
+                    mAddr.setRightText(data0 + "、" + data1 + "、" + data2);
                     mAddr.setRightTextColor(getResources().getColor(R.color.gray_33));
                 } else {
-                    applyCTCardDTO.setCoadrprov(data[0]);
-                    applyCTCardDTO.setCoadrcity(data[1]);
-                    applyCTCardDTO.setCoadrcnty(data[2]);
+                    applyCTCardDTO.setCoadrprov(data0);
+                    applyCTCardDTO.setCoadrcity(data1);
+                    applyCTCardDTO.setCoadrcnty(data2);
 
-                    mCompanyAddr.setRightText(data[0] + "、" + data[1] + "、" + data[2]);
+                    mCompanyAddr.setRightText(data0 + "、" + data1 + "、" + data2);
                     mCompanyAddr.setRightTextColor(getResources().getColor(R.color.gray_33));
                 }
 
-                matchingZipCode(data[2], mType);
+                matchingZipCode(data2, mType);
             }
         });
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.show();
     }
 
     /**
@@ -883,8 +992,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
-                        LoginData.getInstance().mNetLocationBean
-                                = ReadFfile.readNetLocationFile(getApplicationContext());
+                        mNetLocationBean = ReadFfile.readNetLocationFile(getApplicationContext());
                     }
 
                     @Override

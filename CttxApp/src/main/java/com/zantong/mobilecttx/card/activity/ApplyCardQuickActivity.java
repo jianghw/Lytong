@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.custom.picker.DatePicker;
+import com.tzly.ctcyh.router.custom.popup.CustomDialog;
+import com.tzly.ctcyh.router.imple.IBankAreaDialogListener;
 import com.tzly.ctcyh.router.util.FileUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
@@ -32,6 +34,7 @@ import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.card.bean.YingXiaoResponse;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
 import com.zantong.mobilecttx.card.dto.QuickApplyCardDTO;
+import com.zantong.mobilecttx.map.bean.NetLocationBean;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;
@@ -47,6 +50,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -101,6 +105,10 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
     private QuickApplyCardDTO quickApplyCardDTO = new QuickApplyCardDTO();
     private String wangdianAdress;//网点地址
     private String mEmpNum;//获取的营销代码
+    /**
+     * 地址
+     */
+    private NetLocationBean mNetLocationBean;
 
     @Override
     public HelpPresenter initPresenter() {
@@ -193,28 +201,60 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
      * 领取网点dialog
      */
     private void lingQuWangDianDialog() {
-        try {
-            NetLocationDialog dialog = new NetLocationDialog(this, null, new NetLocationDialog.OnChooseDialogListener() {
+//        try {
+//            NetLocationDialog dialog = new NetLocationDialog(this, null, new NetLocationDialog.OnChooseDialogListener() {
+//
+//                @Override
+//                public void back(String[] data) {
+//                    String address = data[0] + data[2];
+//                    wangdianAdress = address;
+//                    if (address.length() > 20) {
+//                        address = address.substring(0, 20) + "...";
+//                    }
+//                    mLingKaWangDian.setRightText(address);
+//                    mLingKaWangDian.setRightTextColor(getResources().getColor(R.color.gray_33));
+//                    quickApplyCardDTO.setGetbrno(data[1]);
+//                }
+//            });
+//            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//            dialog.show();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            downloadTxt();
+//            ToastUtils.toastShort("获取网点失败,正在为你重新获取");
+//        }
 
-                @Override
-                public void back(String[] data) {
-                    String address = data[0] + data[2];
-                    wangdianAdress = address;
-                    if (address.length() > 20) {
-                        address = address.substring(0, 20) + "...";
-                    }
-                    mLingKaWangDian.setRightText(address);
-                    mLingKaWangDian.setRightTextColor(getResources().getColor(R.color.gray_33));
-                    quickApplyCardDTO.setGetbrno(data[1]);
-                }
-            });
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            downloadTxt();
-            ToastUtils.toastShort("获取网点失败,正在为你重新获取");
+        if (mNetLocationBean == null) {
+            mNetLocationBean = ReadFfile.readNetLocationFile(getApplicationContext());
         }
+        ArrayList<String> firstList = new ArrayList<>();
+        for (NetLocationBean.NetLocationElement element : mNetLocationBean.getNetLocationlist()) {
+            firstList.add(element.getNetLocationQu());
+        }
+        ArrayList<ArrayList<String>> secondList = new ArrayList<>();
+        for (NetLocationBean.NetLocationElement element : mNetLocationBean.getNetLocationlist()) {
+            ArrayList<String> arrayList = new ArrayList<>();
+            for (NetLocationBean.NetLocationElement.NetQuBean cityModel : element.getListNet()) {
+                arrayList.add(cityModel.getNetLocationName());
+            }
+            secondList.add(arrayList);
+        }
+
+        CustomDialog.popupBottomBankArea(this,
+                firstList, secondList, new IBankAreaDialogListener() {
+                    @Override
+                    public void setCurPosition(String first, String second) {
+                        String address = first + second;
+                        wangdianAdress = address;
+                        if (address.length() > 20) {
+                            address = address.substring(0, 20) + "...";
+                        }
+                        mLingKaWangDian.setRightText(address);
+                        mLingKaWangDian.setRightTextColor(getResources().getColor(R.color.gray_33));
+//领卡网点
+                        quickApplyCardDTO.setGetbrno(first);
+                    }
+                });
     }
 
     /**
@@ -333,8 +373,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
-                        LoginData.getInstance().mNetLocationBean
-                                = ReadFfile.readNetLocationFile(getApplicationContext());
+                        mNetLocationBean = ReadFfile.readNetLocationFile(getApplicationContext());
                     }
 
                     @Override
