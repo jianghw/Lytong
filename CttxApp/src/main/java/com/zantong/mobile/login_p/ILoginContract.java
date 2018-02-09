@@ -1,6 +1,7 @@
 package com.zantong.mobile.login_p;
 
 import com.tzly.annual.base.bean.request.RegisterDTO;
+import com.tzly.annual.base.bean.response.LoginResult;
 import com.zantong.mobile.base.interf.IMvpPresenter;
 import com.zantong.mobile.base.interf.IMvpView;
 
@@ -27,6 +28,10 @@ public interface ILoginContract {
         void registerSucceed();
 
         void registerError(String message);
+
+        void loginError(String message);
+
+        void loginSucceed(LoginResult result);
     }
 
     interface ILoginPresenter extends IMvpPresenter {

@@ -25,6 +25,7 @@ import com.zantong.mobile.contract.ISplashAtyContract;
 import com.zantong.mobile.home.bean.StartPicResult;
 import com.zantong.mobile.login_v.LoginActivity;
 import com.zantong.mobile.main_v.MainClubActivity;
+import com.zantong.mobile.model.repository.LocalData;
 import com.zantong.mobile.presenter.home.SplashPresenter;
 import com.zantong.mobile.utils.jumptools.Act;
 
@@ -199,7 +200,10 @@ public class SplashActivity extends AppCompatActivity
      */
     @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
     public void gotoMain() {
-        Act.getInstance().gotoIntent(this, LoginActivity.class);
+        if (LocalData.getInstance().isLogin())
+            Act.getInstance().gotoIntent(this, MainClubActivity.class);
+        else
+            Act.getInstance().gotoIntent(this, LoginActivity.class);
         finish();
     }
 

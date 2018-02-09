@@ -142,38 +142,6 @@ android {
                                     alibaba_API_KEY: "24643719",
                                     alibaba_APP_SECRET: "3b709b3a0697c348774bf0dba400008d"]
         }
-
-        develop {
-            buildConfigField "boolean", "LOG_DEBUG", "true"
-            //下载地址  分享
-            buildConfigField "String", "APP_DOWNLOD", "\"http://dev.liyingtong.com/download/\""
-
-            buildConfigField "String", "CAR_MANGER_URL", "\"http://dev.liyingtong.com/\""
-            //新接口正式地址
-            buildConfigField "String", "BASE_URL", "\"https://ctkapptest.icbc-axa.com/ecip/mobilecall_call\""
-            //老接口正式地址
-            buildConfigField "String", "APP_URL", "\"https://ctkapptest.icbc-axa.com/ecip/\""
-            //老接口海洋正式地址
-            buildConfigField "String", "APPFileUrl", "\"https://ctkapp.icbc-axa.com:9000/\""
-            //领卡网点文件（正式地址）
-            buildConfigField "String", "ImageLoadUrl", "\"https://ctkapp.icbc-axa.com/\""
-
-            signingConfig signingConfigs.debug
-            //apk的后缀
-            applicationIdSuffix ".debug"
-            //混淆
-            minifyEnabled false
-            //Zipalign优化
-            zipAlignEnabled false
-            // 移除无用的resource文件
-            shrinkResources false
-            //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
-            manifestPlaceholders = [baidu_API_KEY: "KmfeAyYOscG1rEGjBpfjGiyPErGsqxqy",
-                                    alibaba_API_KEY: "24642970",
-                                    alibaba_APP_SECRET: "1e85b8940c06d13f1fb7a7047d13da0e"]
-        }
     }
 
     productFlavors {

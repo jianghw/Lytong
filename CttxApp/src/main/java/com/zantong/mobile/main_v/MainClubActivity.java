@@ -58,6 +58,7 @@ import com.zantong.mobile.home.activity.Codequery;
 import com.zantong.mobile.home.bean.HomeBean;
 import com.zantong.mobile.home.bean.HomeResult;
 import com.zantong.mobile.map.activity.BaiduMapParentActivity;
+import com.zantong.mobile.model.repository.LocalData;
 import com.zantong.mobile.msg_v.MegTypeActivity;
 import com.zantong.mobile.order.activity.CattleOrderActivity;
 import com.zantong.mobile.order.activity.MyOrderActivity;
@@ -165,18 +166,14 @@ public class MainClubActivity extends RefreshBaseActivity
         //获取头布局文件
         View headerView = navigationView.getHeaderView(0);
         mUserImage = (CircleImageView) headerView.findViewById(R.id.img_user);
-        mUserImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoUserInfo();
-            }
-        });
+
         mUserText = (TextView) headerView.findViewById(R.id.tv_user);
 
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         LogUtils.e("widthPixels===" + metrics.widthPixels);
         LogUtils.e("heightPixels===" + metrics.heightPixels);
+
         int mStatusBarColor = getResources().getColor(R.color.colorPrimaryDark);
         StatusBarUtils.setColorForDrawerLayout(this, drawer, mStatusBarColor, StatusBarUtils.DEFAULT_BAR_ALPHA);
 
@@ -248,12 +245,10 @@ public class MainClubActivity extends RefreshBaseActivity
             ImageLoadUtils.loadHead(infoBean.getPortrait(), mUserImage);
         }
 
-        if (infoBean != null && !Tools.isStrEmpty(infoBean.getNickname())) {
-            mUserText.setText(infoBean.getNickname());
-        } else if (infoBean != null) {
-            String phoenum = infoBean.getPhoenum();
+        if (LocalData.getInstance().isLogin()) {
+            String phoenum = LocalData.getInstance().getUserPhone();
             if (!TextUtils.isEmpty(phoenum) && phoenum.length() >= 7)
-                mUserText.setText(infoBean.getPhoenum().substring(7));
+                mUserText.setText(phoenum.substring(7));
         } else {
             mUserImage.setImageResource(R.mipmap.portrait);
             mUserText.setText("您还未登录");
@@ -334,7 +329,7 @@ public class MainClubActivity extends RefreshBaseActivity
         } else if (id == R.id.lay_order) {
             gotoCattleOrder();
         } else if (id == R.id.lay_share) {
-            Act.getInstance().gotoIntent(this, DtShareActivity.class);
+            Act.getInstance().gotoIntentLogin(this, DtShareActivity.class);
         } else if (id == R.id.lay_problem) {
             Act.getInstance().gotoIntent(this, CommonProblemActivity.class);
         }
@@ -398,11 +393,11 @@ public class MainClubActivity extends RefreshBaseActivity
     }
 
     private void gotoCattleOrder() {
-        Act.getInstance().gotoIntent(this, CattleOrderActivity.class);
+        Act.getInstance().gotoIntentLogin(this, CattleOrderActivity.class);
     }
 
     private void gotoMyOrder() {
-        Act.getInstance().gotoIntent(this, MyOrderActivity.class);
+        Act.getInstance().gotoIntentLogin(this, MyOrderActivity.class);
     }
 
     private void gotoQRCodeScan() {

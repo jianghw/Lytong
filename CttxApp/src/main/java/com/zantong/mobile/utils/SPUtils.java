@@ -56,6 +56,11 @@ public class SPUtils {
     public static final String OIL_CARD = "oilcard";//加油卡卡号
 
     public static final String LOGIN_INFO_BEAN = "login_info_bean";
+    /**
+     * user id
+     */
+    public static final String LOGIN_INFO_ID = "login_info_id";
+    public static final String LOGIN_INFO_PHONE = "login_info_phone";
 
     private static List<CarInfoDTO> carsinfo = null;
 
@@ -83,6 +88,19 @@ public class SPUtils {
         this.mEditor.commit();
     }
 
+
+    public void putString(String key, String values) {
+        this.mEditor.putString(key, values);
+        this.mEditor.commit();
+    }
+
+    public String getString(String key) {
+        return mSharedPreferences.getString(key, "");
+    }
+
+    public String getString(String key, String values) {
+        return mSharedPreferences.getString(key, values);
+    }
 
     /**
      * 保存车辆信息
@@ -180,20 +198,20 @@ public class SPUtils {
         this.mEditor.commit();
     }
 
+
     public boolean getGuideWeiZhang() {
         return this.mSharedPreferences.getBoolean(GUIDE_WEIZHANG, false);
     }
-
 
     public void setGuideXingShiZheng(boolean isGuide) {
         this.mEditor.putBoolean(GUIDE_XINGSHIZHENG, isGuide);
         this.mEditor.commit();
     }
 
+
     public boolean getGuideXingShiZheng() {
         return this.mSharedPreferences.getBoolean(GUIDE_XINGSHIZHENG, false);
     }
-
 
     public void setGuideJiaShiZheng(boolean isGuide) {
         this.mEditor.putBoolean(GUIDE_JIASHIZHEGN, isGuide);
@@ -245,10 +263,10 @@ public class SPUtils {
         this.mEditor.commit();
     }
 
+
     public boolean getSignStatus() {
         return this.mSharedPreferences.getBoolean(SIGN_STATUS, false);
     }
-
 
     public void setXinnengyuanFlag(boolean isSign) {
         this.mEditor.putBoolean(XINNENGYUAN_FLAG, isSign);

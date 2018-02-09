@@ -39,6 +39,7 @@ import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.contract.ILoginView;
 import com.zantong.mobile.login_v.LoginActivity;
 import com.zantong.mobile.login_v.LoginUserSPreference;
+import com.zantong.mobile.model.repository.LocalData;
 import com.zantong.mobile.presenter.LogoutPresenter;
 import com.zantong.mobile.user.dto.PersonInfoDTO;
 import com.zantong.mobile.user.dto.UpdateUserHeadImgDTO;
@@ -105,7 +106,6 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
     private static final int PHOTO_REQUEST_CUT = 3;// 结果
     private static final String PHOTO_CROP_FILE_NAME = "cttx_crop_photo_head.jpg";
 
-    DatePicker picker;
 
     private static final int REQ_TAKE_PHOTO = 100;// 拍照
     private static final int REQ_ALBUM_1 = 101;
@@ -120,35 +120,15 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
 
     @Override
     public void initView() {
-        picker = new DatePicker(SettingActivity.this);
         setTitleText("设置");
-
-        if (Tools.isStrEmpty(MemoryData.getInstance().userID)) {
-            mLogout.setVisibility(View.GONE);
-        } else {
-            String date = MemoryData.getInstance().mLoginInfoBean.getGetdate();
-            try {
-                if (date.contains("-")) {
-                    mSelDate.setText(date);
-                } else {
-                    mSelDate.setText(date.substring(0, 4) + "-" + date.substring(4, 6) + "-" + date.substring(6, 8));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        mLogout.setVisibility(LocalData.getInstance().isLogin() ? View.VISIBLE : View.GONE);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        if (!Tools.isStrEmpty(MemoryData.getInstance().mLoginInfoBean.getNickname())) {
-            user_info_name_text.setText(MemoryData.getInstance().mLoginInfoBean.getNickname());
-        } else {
-            user_info_name_text.setText(MemoryData.getInstance().mLoginInfoBean.getPhoenum().substring(7));
-        }
-        String phone = StringUtils.getEncrypPhone(MemoryData.getInstance().mLoginInfoBean.getPhoenum());
+        String phone = LocalData.getInstance().getUserPhone();
         user_info_phone_text.setText(phone);
     }
 
@@ -162,7 +142,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         userChangePwdRl.setOnClickListener(this);
         userInfoRl.setOnClickListener(this);
 
-        if (!MemoryData.getInstance().loginFlag) {
+        if (!LocalData.getInstance().isLogin()) {
             SPUtils.getInstance().setWeizhangPush(false);
             SPUtils.getInstance().setJifenPush(false);
         }
@@ -172,7 +152,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
         mBreakRulesNotice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (MemoryData.getInstance().loginFlag) {
+                if (LocalData.getInstance().isLogin()) {
                     SPUtils.getInstance().setWeizhangPush(isChecked);
                     mBreakRulesNotice.setChecked(isChecked);
                     if (!isChecked) {
@@ -190,7 +170,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Intent intent = new Intent(SettingActivity.this, DateService.class);
-                if (MemoryData.getInstance().loginFlag && !"".equals(MemoryData.getInstance().userID)) {
+                if (LocalData.getInstance().isLogin()) {
                     SPUtils.getInstance().setJifenPush(isChecked);
                     MemoryData.getInstance().updateMsg = isChecked;
                     if (isChecked) {
@@ -246,13 +226,13 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
             case R.id.setting_breakrules_notice: //违章主动通知
                 break;
             case R.id.user_info_change_pwd:
-                Act.getInstance().gotoIntent(this, ChangePwdActivity.class);
+                ToastUtils.toastShort("暂不支持");
                 break;
             case R.id.user_info_head_rl:
-                chooseHeadImge();
+                ToastUtils.toastShort("暂不支持");
                 break;
             case R.id.user_info_name_rl:
-                Act.getInstance().gotoIntent(this, UpdateNickName.class);
+                ToastUtils.toastShort("暂不支持");
                 break;
             default:
                 break;
@@ -277,27 +257,6 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
 
                     }
                 }
-                picker.setRangeStart(DateUtils.getYear() - 100, DateUtils.getMonth(), DateUtils.getDay());
-                picker.setRangeEnd(DateUtils.getYear(), DateUtils.getMonth(), DateUtils.getDay());
-                try {
-                    String date = MemoryData.getInstance().mLoginInfoBean.getGetdate();
-                    if (!"".equals(date)) {
-                        date = date.replace("-", "");
-                        picker.setSelectedItem(Integer.valueOf(date.substring(0, 4)), Integer.valueOf(date.substring(4, 6)), Integer.valueOf(date.substring(6, 8)));
-                    } else {
-                        picker.setSelectedItem(DateUtils.getYear(), DateUtils.getMonth(), DateUtils.getDay());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
-                    @Override
-                    public void onDatePicked(String year, String month, String day) {
-                        commitGetCardDate(year + "-" + month + "-" + day);
-                    }
-                });
-                picker.show();
             }
         });
     }
@@ -601,7 +560,6 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 mSelDate.setText(date);
                 hideDialogLoading();
                 if (Config.OK.equals(result.getSYS_HEAD().getReturnCode())) {
-                    picker.dismiss();
                     MemoryData.getInstance().mLoginInfoBean.setGetdate(date);
                     LoginUserSPreference.saveObject(MemoryData.getInstance().mLoginInfoBean);
                 }
@@ -633,6 +591,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                     CleanUtils.cleanCustomCache(FileUtils.photoImageDirectory(getApplicationContext()));
 
                     mLogout.setVisibility(View.GONE);
+                    gotoLogin();
                     finish();
                 } else {
                     ToastUtils.toastShort("退出失败");
@@ -645,6 +604,10 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
                 ToastUtils.toastShort(msg + "退出失败");
             }
         });
+    }
+
+    private void gotoLogin() {
+        Act.getInstance().gotoIntent(this, LoginActivity.class);
     }
 
     private void crop(Uri uri) {

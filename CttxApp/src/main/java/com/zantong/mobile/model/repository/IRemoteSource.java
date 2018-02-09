@@ -5,6 +5,7 @@ import com.tzly.annual.base.bean.BaseResult;
 import com.tzly.annual.base.bean.request.RegisterDTO;
 import com.tzly.annual.base.bean.response.AnnouncementResult;
 import com.tzly.annual.base.bean.response.CattleOrderResponse;
+import com.tzly.annual.base.bean.response.LoginResult;
 import com.tzly.annual.base.bean.response.StatistCountResult;
 import com.tzly.annual.base.bean.response.SubjectGoodsResult;
 import com.tzly.annual.base.bean.Result;
@@ -373,7 +374,7 @@ public interface IRemoteSource {
     /**
      * 登录
      */
-    Observable<BaseResponse> innerUserLogin(String userPhone, String userPassword);
+    Observable<LoginResult> innerUserLogin(String userPhone, String userPassword);
 
     /**
      * 获取内部通知

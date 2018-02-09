@@ -2,6 +2,8 @@ package com.zantong.mobile.share_v;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.jianghw.multi.state.layout.MultiState;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
@@ -22,10 +25,13 @@ import com.tzly.annual.base.util.ContextUtils;
 import com.tzly.annual.base.util.ToastUtils;
 import com.zantong.mobile.R;
 import com.zantong.mobile.application.Injection;
+import com.zantong.mobile.model.repository.LocalData;
+import com.zantong.mobile.share.activity.ShareParentActivity;
 import com.zantong.mobile.share_p.IShareFtyContract;
 import com.zantong.mobile.share_p.SharePresenter;
 import com.zantong.mobile.share_p.StatisCountAdapter;
 import com.zantong.mobile.utils.DialogMgr;
+import com.zantong.mobile.utils.rsa.Des3;
 import com.zantong.mobile.widght.SpaceItemDecoration;
 import com.zantong.mobile.wxapi.WXEntryActivity;
 import com.zantong.mobile.zxing.EncodingUtils;
@@ -88,9 +94,24 @@ public class DtShareActivity extends RefreshBaseActivity
         }
     }
 
+    @MultiState
+    protected int initMultiState() {
+        return MultiState.CONTENT;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null) mPresenter.unSubscribe();
+    }
+
+    protected void backClickListener() {
+        finish();
+    }
+
     @Override
     protected void userRefreshContentData() {
-
+        if (mPresenter != null) mPresenter.getStatisticsCount();
     }
 
     @Override
@@ -101,22 +122,9 @@ public class DtShareActivity extends RefreshBaseActivity
     @Override
     protected void bindChildView(View childView) {
         titleContent("分享返现");
-
+        initView(childView);
         SharePresenter presenter = new SharePresenter(
                 Injection.provideRepository(ContextUtils.getContext()), this);
-
-        String contentString = null;
-//        if (MainRouter.isUserLogin())
-//            contentString = ShareParentActivity.getShareAppUrl(1) + "?phoneNum="
-//                    + Des3.encode(MainRouter.getUserPhoenum());
-//        else
-//            contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
-
-        if (!TextUtils.isEmpty(contentString)) {
-            Bitmap qrCodeBitmap = EncodingUtils.createQRCode(
-                    contentString, 360, 360, BitmapFactory.decodeResource(getResources(), R.mipmap.app_icon));
-            mImgScan.setImageBitmap(qrCodeBitmap);
-        }
     }
 
     public void initView(View view) {
@@ -139,6 +147,19 @@ public class DtShareActivity extends RefreshBaseActivity
     protected void initContentData() {
         mAdapter = new StatisCountAdapter();
         mXRecyclerView.setAdapter(mAdapter);
+
+        String contentString = null;
+        if (LocalData.getInstance().isLogin())
+            contentString = ShareParentActivity.getShareAppUrl(1) + "?phoneNum="
+                    + Des3.encode(LocalData.getInstance().getUserPhone());
+        else
+            contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
+
+        if (!TextUtils.isEmpty(contentString)) {
+            Bitmap qrCodeBitmap = EncodingUtils.createQRCode(
+                    contentString, 360, 360, BitmapFactory.decodeResource(getResources(), R.mipmap.app_icon));
+            mImgScan.setImageBitmap(qrCodeBitmap);
+        }
     }
 
     @Override
@@ -161,12 +182,12 @@ public class DtShareActivity extends RefreshBaseActivity
         }
 
         WXWebpageObject webpage = new WXWebpageObject();
-//        if (MainRouter.isUserLogin()) {
-//            webpage.webpageUrl = ShareParentActivity.getShareAppUrl(1) + "?phoneNum="
-//                    + Des3.encode(MainRouter.getUserPhoenum());
-//        } else {
-//            webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
-//        }
+        if (LocalData.getInstance().isLogin()) {
+            webpage.webpageUrl = ShareParentActivity.getShareAppUrl(1) + "?phoneNum="
+                    + Des3.encode(LocalData.getInstance().getUserPhone());
+        } else {
+            webpage.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
+        }
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = getResources().getString(R.string.tv_share_cash_weixin_title);
         msg.description = getResources().getString(R.string.tv_share_cash_weixin_content);
@@ -183,7 +204,7 @@ public class DtShareActivity extends RefreshBaseActivity
 
     @Override
     public String getPhone() {
-        return null;
+        return LocalData.getInstance().getUserPhone();
     }
 
     @Override

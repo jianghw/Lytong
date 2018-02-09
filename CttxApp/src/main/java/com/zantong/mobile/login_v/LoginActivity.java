@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.annual.base.JxBaseActivity;
+import com.tzly.annual.base.bean.response.LoginResult;
 import com.tzly.annual.base.util.ContextUtils;
 import com.tzly.annual.base.util.RegexUtils;
 import com.tzly.annual.base.util.ToastUtils;
@@ -214,7 +215,7 @@ public class LoginActivity extends JxBaseActivity implements
 
     @Override
     protected void bindContentView(View childView) {
-        titleContent("欢迎加入熊猫小助手", "注册");
+        titleContent("欢迎加入熊猫小助手");
         initView(childView);
 
         LoginPresenter presenter = new LoginPresenter(
@@ -283,24 +284,30 @@ public class LoginActivity extends JxBaseActivity implements
     private void initTextListener() {
         mEdtPhone.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         mEdtCode.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
     }
 
@@ -405,5 +412,16 @@ public class LoginActivity extends JxBaseActivity implements
     @Override
     public void registerError(String message) {
         ToastUtils.toastShort("数据同步失败," + message);
+    }
+
+    @Override
+    public void loginError(String message) {
+        ToastUtils.toastShort("登录失败," + message);
+    }
+
+    @Override
+    public void loginSucceed(LoginResult result) {
+        ToastUtils.toastShort("登录成功");
+        Act.getInstance().gotoIntent(this, MainClubActivity.class);
     }
 }

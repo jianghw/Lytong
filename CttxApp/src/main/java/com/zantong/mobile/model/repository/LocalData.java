@@ -3,7 +3,10 @@ package com.zantong.mobile.model.repository;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
+import com.tzly.annual.base.bean.response.LoginResult;
+import com.tzly.annual.base.util.ContextUtils;
 import com.zantong.mobile.base.dto.BaseDTO;
 import com.zantong.mobile.base.dto.RequestHeadDTO;
 import com.zantong.mobile.application.MemoryData;
@@ -20,6 +23,8 @@ import com.zantong.mobile.weizhang.dto.LicenseFileNumDTO;
 
 import java.lang.ref.WeakReference;
 
+import static com.zantong.mobile.utils.SPUtils.LOGIN_INFO_ID;
+import static com.zantong.mobile.utils.SPUtils.LOGIN_INFO_PHONE;
 import static com.zantong.mobile.utils.rsa.RSAUtils.strByEncryption;
 
 /**
@@ -37,6 +42,10 @@ public class LocalData {
             INSTANCE = new LocalData(context.getApplicationContext());
         }
         return INSTANCE;
+    }
+
+    public static LocalData getInstance() {
+        return getInstance(ContextUtils.getContext());
     }
 
     private LocalData(Context context) {
@@ -150,5 +159,26 @@ public class LocalData {
         initGlobalLoginInfo(result.getRspInfo());
         LoginUserSPreference.saveObject(LoginUserSPreference.USERDEVICE, MemoryData.getInstance().imei);
         LoginUserSPreference.saveObject(result.getRspInfo());
+    }
+
+    public void saveLoginBean(LoginResult result, String userPhone) {
+        MemoryData.getInstance().userID = result.getData();
+        SPUtils.getInstance().putString(LOGIN_INFO_ID, result.getData());
+        SPUtils.getInstance().putString(LOGIN_INFO_PHONE, userPhone);
+    }
+
+    public String getLoginId() {
+        String userId = SPUtils.getInstance().getString(LOGIN_INFO_ID);
+        MemoryData.getInstance().userID =userId;
+        return userId;
+    }
+
+    public boolean isLogin() {
+        if (!TextUtils.isEmpty(MemoryData.getInstance().userID)) return true;
+        return !TextUtils.isEmpty(getLoginId());
+    }
+
+    public String getUserPhone() {
+        return SPUtils.getInstance().getString(LOGIN_INFO_PHONE);
     }
 }

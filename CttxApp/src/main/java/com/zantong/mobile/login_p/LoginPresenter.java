@@ -9,6 +9,7 @@ import com.tzly.annual.base.bean.BaseResponse;
 import com.tzly.annual.base.bean.BaseResult;
 import com.tzly.annual.base.bean.request.RegisterDTO;
 import com.tzly.annual.base.bean.request.UserLoginDTO;
+import com.tzly.annual.base.bean.response.LoginResult;
 import com.tzly.annual.base.util.LogUtils;
 import com.tzly.annual.base.bean.Result;
 import com.zantong.mobile.base.dto.RequestDTO;
@@ -237,7 +238,7 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse>() {
+                .subscribe(new BaseSubscriber<LoginResult>() {
                     @Override
                     public void doCompleted() {
                         mContentView.dismissLoadingDialog();
@@ -246,10 +247,19 @@ public class LoginPresenter implements ILoginContract.ILoginPresenter {
                     @Override
                     public void doError(Throwable e) {
                         mContentView.dismissLoadingDialog();
+                        mContentView.loginError(e.getMessage());
                     }
 
                     @Override
-                    public void doNext(BaseResponse baseResult) {
+                    public void doNext(LoginResult result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            result.setData("00002818811025033");
+                            mRepository.saveLoginBean(result, mContentView.getUserPhone());
+                            mContentView.loginSucceed(result);
+                        } else {
+                            mContentView.loginError(result != null
+                                    ? result.getResponseDesc() : "未知错误(login)");
+                        }
                     }
                 });
         mSubscriptions.add(subscription);

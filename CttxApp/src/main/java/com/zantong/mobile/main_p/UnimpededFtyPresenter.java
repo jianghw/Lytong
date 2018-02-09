@@ -21,7 +21,7 @@ import rx.subscriptions.CompositeSubscription;
  * Update by:
  * Update day:
  */
-public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFtyPresenter {
+public class  UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFtyPresenter {
 
     private final RepositoryManager mRepository;
     private final IUnimpededFtyContract.IUnimpededFtyView mContentView;

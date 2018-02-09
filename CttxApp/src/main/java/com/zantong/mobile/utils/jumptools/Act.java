@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import com.tzly.annual.base.global.JxGlobal;
 import com.zantong.mobile.application.MemoryData;
 import com.zantong.mobile.login_v.LoginActivity;
+import com.zantong.mobile.model.repository.LocalData;
 
 /**
  * Created by Administrator on 2016/5/4.
@@ -39,8 +40,7 @@ public class Act {
      */
     public void gotoIntentLogin(Context packageContext, Class<?> className) {
 
-        if (MemoryData.getInstance().loginFlag
-                && !TextUtils.isEmpty(MemoryData.getInstance().userID)) {
+        if (LocalData.getInstance().isLogin()) {
             Intent intent = new Intent(packageContext, className);
             packageContext.startActivity(intent);
         } else {
@@ -68,8 +68,7 @@ public class Act {
     }
 
     public void gotoLoginByIntent(Context packageContext, Class<?> className, Intent intent) {
-        if (MemoryData.getInstance().loginFlag
-                && !TextUtils.isEmpty(MemoryData.getInstance().userID)) {
+        if (LocalData.getInstance().isLogin()) {
             intent.setClass(packageContext, className);
             packageContext.startActivity(intent);
         } else {

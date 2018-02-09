@@ -2,6 +2,7 @@ package com.zantong.mobile.api;
 
 import com.tzly.annual.base.bean.BaseResponse;
 import com.tzly.annual.base.bean.response.AnnouncementResult;
+import com.tzly.annual.base.bean.response.LoginResult;
 import com.tzly.annual.base.bean.response.StatistCountResult;
 import com.zantong.mobile.home.bean.DriverCoachResult;
 
@@ -9,6 +10,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -29,12 +31,11 @@ public interface IUserService {
      */
     @FormUrlEncoded
     @POST("innerUser/login")
-    Observable<BaseResponse> innerUserLogin(@Field("phone") String userPhone, @Field("pwd") String userPassword);
+    Observable<LoginResult> innerUserLogin(@Field("phone") String userPhone, @Field("pwd") String userPassword);
 
     @GET("innerUser/findAnnouncements")
     Observable<AnnouncementResult> findAnnouncements();
 
-    @FormUrlEncoded
-    @POST("innerUser/getStatisticsCount")
-    Observable<StatistCountResult> getStatisticsCount(@Field("phone")String phone);
+    @GET("innerUser/getStatisticsCount")
+    Observable<StatistCountResult> getStatisticsCount(@Query("phone")String phone);
 }

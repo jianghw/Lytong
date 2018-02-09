@@ -9,6 +9,7 @@ import com.tzly.annual.base.bean.Result;
 import com.tzly.annual.base.bean.request.RegisterDTO;
 import com.tzly.annual.base.bean.response.AnnouncementResult;
 import com.tzly.annual.base.bean.response.CattleOrderResponse;
+import com.tzly.annual.base.bean.response.LoginResult;
 import com.tzly.annual.base.bean.response.OrderListResult;
 import com.tzly.annual.base.bean.response.StatistCountResult;
 import com.tzly.annual.base.bean.response.SubjectGoodsResult;
@@ -230,6 +231,13 @@ public class RepositoryManager {
      */
     public void initGlobalLoginInfo(RspInfoBean rspInfoBean) {
         mLocalData.initGlobalLoginInfo(rspInfoBean);
+    }
+
+    /**
+     * 保存登录id
+     */
+    public void saveLoginBean(LoginResult result, String userPhone) {
+        mLocalData.saveLoginBean(result,userPhone);
     }
 
     /**
@@ -628,7 +636,7 @@ public class RepositoryManager {
     /**
      * 登录
      */
-    public Observable<BaseResponse> innerUserLogin(String userPhone, String userPassword) {
+    public Observable<LoginResult> innerUserLogin(String userPhone, String userPassword) {
         return mRemoteData.innerUserLogin(userPhone, userPassword);
     }
 
@@ -638,6 +646,7 @@ public class RepositoryManager {
     public Observable<AnnouncementResult> findAnnouncements() {
         return mRemoteData.findAnnouncements();
     }
+
     /**
      * 分享  新
      */

@@ -8,6 +8,7 @@ import com.tzly.annual.base.bean.Result;
 import com.tzly.annual.base.bean.request.RegisterDTO;
 import com.tzly.annual.base.bean.response.AnnouncementResult;
 import com.tzly.annual.base.bean.response.CattleOrderResponse;
+import com.tzly.annual.base.bean.response.LoginResult;
 import com.tzly.annual.base.bean.response.OrderListResult;
 import com.tzly.annual.base.bean.response.StatistCountResult;
 import com.tzly.annual.base.bean.response.SubjectGoodsResult;
@@ -655,7 +656,7 @@ public class RemoteData implements IRemoteSource {
      * 登录
      */
     @Override
-    public Observable<BaseResponse> innerUserLogin(String userPhone, String userPassword) {
+    public Observable<LoginResult> innerUserLogin(String userPhone, String userPassword) {
         return initRetrofit().create(IUserService.class).innerUserLogin(userPhone, userPassword);
     }
 
