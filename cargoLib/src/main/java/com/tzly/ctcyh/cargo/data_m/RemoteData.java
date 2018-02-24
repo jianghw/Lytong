@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.tzly.ctcyh.cargo.api.IActivityService;
 import com.tzly.ctcyh.cargo.api.IAddOilService;
+import com.tzly.ctcyh.cargo.api.ILienseService;
 import com.tzly.ctcyh.cargo.api.IRegionService;
 import com.tzly.ctcyh.cargo.bean.BaseResponse;
 import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
@@ -16,6 +17,8 @@ import com.tzly.ctcyh.cargo.bean.response.OrderExpressResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
+import com.tzly.ctcyh.cargo.bean.response.ScoreCaptchaResponse;
+import com.tzly.ctcyh.cargo.bean.response.ScoreResponse;
 
 import retrofit2.Retrofit;
 import rx.Observable;
@@ -48,7 +51,7 @@ public class RemoteData implements IRemoteSource {
         return RetrofitFactory.getInstance().createRetrofit(2);
     }
 
-    private Retrofit initBaseUrlRetrofit() {
+    private Retrofit xiaoFengRetrofit() {
         return RetrofitFactory.getInstance().createRetrofit(3);
     }
 
@@ -157,6 +160,22 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<NorOilResponse> findCaiNiaoCard(String rasUserID) {
         return baseRetrofit().create(IAddOilService.class).findCaiNiaoCard(rasUserID);
+    }
+
+    /**
+     * 2.1 获取验证码
+     */
+    @Override
+    public Observable<ScoreCaptchaResponse> scoresCaptcha(String code) {
+        return xiaoFengRetrofit().create(ILienseService.class).scoresCaptcha(code);
+    }
+
+    /**
+     * 2.2 获取驾照扣分
+     */
+    @Override
+    public Observable<ScoreResponse> apiScores(String s, String s1, String s2, String cookie) {
+        return xiaoFengRetrofit().create(ILienseService.class).apiScores(s, s1, s2, cookie);
     }
 
 

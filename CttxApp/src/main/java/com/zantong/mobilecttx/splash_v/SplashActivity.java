@@ -66,7 +66,8 @@ public class SplashActivity extends AbstractBaseActivity
     }
 
     @Override
-    protected void bundleIntent(Intent intent) {}
+    protected void bundleIntent(Intent intent) {
+    }
 
     @Override
     protected void bindFragment() {
@@ -85,6 +86,7 @@ public class SplashActivity extends AbstractBaseActivity
 
         mImgHuawei = (ImageView) findViewById(R.id.img_huawei);
         String umengChannel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
+        mImgHuawei.setVisibility(umengChannel.equals("tzly_huawei") ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -107,7 +109,7 @@ public class SplashActivity extends AbstractBaseActivity
     private void initThirdPartyData() {
         if (mPresenter != null) mPresenter.startCountDown();
 
-        if(mPresenter!=null) mPresenter.updateToken();
+        if (mPresenter != null) mPresenter.updateToken();
         startAnimation();
     }
 
@@ -122,7 +124,8 @@ public class SplashActivity extends AbstractBaseActivity
         mImgLogo.setAnimation(splashAnimation);
         splashAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
-            public void onAnimationStart(Animation animation) {}
+            public void onAnimationStart(Animation animation) {
+            }
 
             @Override
             public void onAnimationEnd(Animation animation) {
@@ -130,7 +133,8 @@ public class SplashActivity extends AbstractBaseActivity
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {}
+            public void onAnimationRepeat(Animation animation) {
+            }
         });
     }
 

@@ -85,7 +85,7 @@ android {
         debug {
             buildConfigField "boolean", "App_Url", rootProject.ext.buildConfig.mianDebug
 
-            buildConfigField "String", "CAR_MANGER_URL", "\"http://dev.liyingtong.com:8888/\""
+            buildConfigField "String", "CAR_MANGER_URL", "\"http://dev.liyingtong.com/\""
             //新接口正式地址
             buildConfigField "String", "BASE_URL", "\"https://ctkapptest.icbc-axa.com/ecip/mobilecall_call\""
             //老接口正式地址

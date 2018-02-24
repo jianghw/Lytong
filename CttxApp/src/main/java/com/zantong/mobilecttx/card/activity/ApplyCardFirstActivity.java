@@ -296,6 +296,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
 //        in.putExtra("idCard", getUserIdCard());
 //        startActivity(in);
 
+
         BidCTCardDTO bidCTCardDTO = new BidCTCardDTO();
         bidCTCardDTO.setCtftp("0");
         bidCTCardDTO.setUsrname(getUserName());

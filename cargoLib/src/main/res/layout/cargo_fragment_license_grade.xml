@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/lay_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/res_y_80"
+            android:layout_marginTop="@dimen/res_y_30"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/res_x_30"
+            android:paddingRight="@dimen/res_x_30">
+
+            <TextView
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cargo_tv_license_num" />
+
+            <ImageView
+                android:id="@+id/img_question_num"
+                android:layout_width="@dimen/res_x_30"
+                android:layout_height="@dimen/res_x_30"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:layout_marginRight="@dimen/res_x_30"
+                android:src="@drawable/selector_illegal_query_notice" />
+
+            <EditText
+                android:id="@+id/edit_license"
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right|center_vertical"
+                android:hint="请输入驾驶证号"
+                android:inputType="number"
+                android:maxEms="19"
+                android:maxLength="19"
+                android:maxLines="1"
+                android:minWidth="@dimen/res_x_124"
+                android:textColorHint="@color/res_color_gray_e6" />
+        </LinearLayout>
+
+        <TextView style="@style/cargo_line_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/res_y_80"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/res_x_30"
+            android:paddingRight="@dimen/res_x_30">
+
+            <TextView
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cargo_tv_serial" />
+
+            <ImageView
+                android:id="@+id/img_question_serial"
+                android:layout_width="@dimen/res_x_30"
+                android:layout_height="@dimen/res_x_30"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:layout_marginRight="@dimen/res_x_30"
+                android:src="@drawable/selector_illegal_query_notice" />
+
+            <EditText
+                android:id="@+id/edit_serial"
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right|center_vertical"
+                android:hint="请输入驾驶证档案编号"
+                android:inputType="number"
+                android:maxEms="19"
+                android:maxLength="19"
+                android:maxLines="1"
+                android:minWidth="@dimen/res_x_124"
+                android:textColorHint="@color/res_color_gray_e6" />
+        </LinearLayout>
+
+        <TextView style="@style/cargo_line_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/res_y_80"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/res_x_30"
+            android:paddingRight="@dimen/res_x_30">
+
+            <TextView
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cargo_tv_vertical" />
+
+            <EditText
+                android:id="@+id/edit_verification"
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right|center_vertical"
+                android:hint="请输入验证码"
+                android:maxEms="10"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:minWidth="@dimen/res_x_124"
+                android:textColorHint="@color/res_color_gray_e6" />
+
+            <ImageView
+                android:id="@+id/img_code"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/res_x_30" />
+
+            <ImageView
+                android:id="@+id/img_refresh"
+                android:layout_width="@dimen/res_x_30"
+                android:layout_height="@dimen/res_y_30"
+                android:src="@mipmap/icon_refresh" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/lay_mid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@mipmap/bg_koufen">
+
+        <TextView
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/res_y_40"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:text="本计分周期累计扣分"
+            android:textSize="@dimen/res_fs_20" />
+
+        <TextView
+            android:id="@+id/tv_score"
+            style="@style/ResTextTheme.16.Red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/res_y_130"
+            android:text="*"
+            android:textSize="@dimen/res_fs_36" />
+
+        <TextView
+            style="@style/ResTextTheme.16.Red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_score"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:layout_marginTop="@dimen/res_y_130"
+            android:layout_toRightOf="@+id/tv_score"
+            android:text="分"
+            android:textSize="@dimen/res_fs_22" />
+
+    </RelativeLayout>
+
+    <TextView
+        style="@style/ResTextTheme.14.Hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lay_mid"
+        android:layout_below="@+id/lay_mid"
+        android:text="输入以上信息，点击“查询”后显示扣分" />
+
+    <Button
+        android:id="@+id/btn_commit"
+        style="@style/ResButtonTheme.Single"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/res_y_45"
+        android:layout_marginLeft="@dimen/res_x_30"
+        android:layout_marginRight="@dimen/res_x_30"
+        android:layout_marginTop="@dimen/res_y_60"
+        android:text="查    询" />
+
+</RelativeLayout>

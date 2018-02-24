@@ -12,6 +12,8 @@ import com.tzly.ctcyh.cargo.bean.response.OrderExpressResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
+import com.tzly.ctcyh.cargo.bean.response.ScoreCaptchaResponse;
+import com.tzly.ctcyh.cargo.bean.response.ScoreResponse;
 
 import rx.Observable;
 
@@ -65,4 +67,14 @@ public interface IRemoteSource {
     Observable<NorOilResponse> findOilCards(String rasUserID);
 
     Observable<NorOilResponse> findCaiNiaoCard(String rasUserID);
+
+    /**
+     * 2.1 获取验证码
+     */
+    Observable<ScoreCaptchaResponse> scoresCaptcha(String code);
+
+    /**
+     * 2.2 获取驾照扣分
+     */
+    Observable<ScoreResponse> apiScores(String s, String s1, String s2, String cookie);
 }

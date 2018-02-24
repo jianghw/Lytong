@@ -32,4 +32,13 @@
         购买500元加油卡用户可在下次充值时享受97折优惠\n暂时只支持工行卡支付，若无工行，请<font color='#f3362b'>申办工行畅通卡</font>
     </string>
     <string name="cargo_tv_97_date">*油卡将在7个工作日内寄出，如有疑问，请咨询客服</string>
+    <string name="cargo_tv_license_num">
+            <font color='#f3362b'>*</font>驾驶证号
+    </string>
+    <string name="cargo_tv_serial">
+            <font color='#f3362b'>*</font>驾驶证档案编号
+    </string>
+    <string name="cargo_tv_vertical">
+           <font color='#f3362b'>*</font>验证码
+    </string>
 </resources>

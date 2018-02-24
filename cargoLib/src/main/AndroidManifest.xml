@@ -59,6 +59,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/cargo_translucent_theme"></activity>
 
+        <!--驾照查分-->
+        <activity
+            android:name=".license_v.LicenseGradeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
     <uses-permission android:name="android.permission.CAMERA" />

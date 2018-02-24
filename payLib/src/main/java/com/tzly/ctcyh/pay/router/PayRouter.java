@@ -288,7 +288,7 @@ public final class PayRouter {
     public static void gotoAliHtmlActivity(Activity context, String title,
                                            String extraOrderId, int payType, int price, int couponBeanId) {
         String url = BuildConfig.App_Url
-                ? "http://dev.liyingtong.com:8888/" : "http://api2.liyingtong.com/";
+                ? "http://dev.liyingtong.com/" : "http://api2.liyingtong.com/";
         StringBuilder sb = new StringBuilder();
         sb.append(url);
         sb.append("aliPay/aliPayHtml");

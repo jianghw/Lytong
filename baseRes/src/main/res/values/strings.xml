@@ -1,5 +1,5 @@
 <resources>
-    <string name="main_app_name">畅通车友会</string>
+    <string name="main_app_name">畅通车友会-汽车年检，违章查询缴费助手</string>
 
     <string name="refreshing">正在刷新…</string>
     <string name="refresh_fail">刷新失败</string>

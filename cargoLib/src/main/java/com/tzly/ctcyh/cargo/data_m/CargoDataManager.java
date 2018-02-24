@@ -14,6 +14,8 @@ import com.tzly.ctcyh.cargo.bean.response.OrderExpressResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
+import com.tzly.ctcyh.cargo.bean.response.ScoreCaptchaResponse;
+import com.tzly.ctcyh.cargo.bean.response.ScoreResponse;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 
 import rx.Completable;
@@ -138,5 +140,19 @@ public class CargoDataManager {
 
     public Observable<NorOilResponse> findCaiNiaoCard(String rasUserID) {
         return mRemoteData.findCaiNiaoCard(rasUserID);
+    }
+
+    /**
+     * 2.1 获取验证码
+     */
+    public Observable<ScoreCaptchaResponse> scoresCaptcha(String code) {
+        return mRemoteData.scoresCaptcha(code);
+    }
+
+    /**
+     * 2.2 获取驾照扣分
+     */
+    public Observable<ScoreResponse> apiScores(String s, String s1, String s2, String cookie) {
+        return mRemoteData.apiScores(s, s1, s2, cookie);
     }
 }

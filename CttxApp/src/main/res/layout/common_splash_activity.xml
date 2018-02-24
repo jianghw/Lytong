@@ -16,6 +16,7 @@
     <ImageView
         android:id="@+id/img_huawei"
         android:layout_width="wrap_content"
+        android:src="@mipmap/ic_huawei_logo"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

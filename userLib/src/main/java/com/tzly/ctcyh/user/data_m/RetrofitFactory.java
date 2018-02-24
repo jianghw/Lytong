@@ -43,7 +43,7 @@ public class RetrofitFactory {
         switch (type) {
             case 1://同赞自己服务器
                 return isDebug
-                        ? "http://dev.liyingtong.com:8888/"
+                        ? "http://dev.liyingtong.com/"
                         : "http://api2.liyingtong.com/";
             case 2:
                 return isDebug
