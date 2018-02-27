@@ -92,7 +92,7 @@ public abstract class BaseAutoScrollUpTextView<T> extends ListView implements
     };
 
     public interface OnItemClickListener {
-        public void onItemClick(int position);
+        void onItemClick(int position);
     }
 
     public BaseAutoScrollUpTextView(Context context, AttributeSet attrs,
@@ -182,11 +182,11 @@ public abstract class BaseAutoScrollUpTextView<T> extends ListView implements
 
             viewHolder.mInfoView.setTextSize(mSize);
             viewHolder.mInfoView.setText(getTextInfo(data));
+
             HomeNotice bean = (HomeNotice) data;
             viewHolder.mImgMsg.setVisibility(bean.isNewMeg() ? VISIBLE : INVISIBLE);
 
             convertView.setOnClickListener(new OnClickListener() {
-
                 @Override
                 public void onClick(View v) {
                     if (mOnItemClickListener != null)

@@ -9,11 +9,12 @@ public class HomeNotice implements Serializable {
     private String id;            //通知ID
     private int type;    //通知类型  1.年检  2.驾照换证  3.油价通知  4.违章详情
     private String desc;    //通知内容
+    private String detail;    //通知内容
     private String date; //日期
     private boolean isNewMeg;  //是否是一个新的消息
 
-    public HomeNotice() {
-
+    public String getDetail() {
+        return detail;
     }
 
     public HomeNotice(String id, int type, String desc) {

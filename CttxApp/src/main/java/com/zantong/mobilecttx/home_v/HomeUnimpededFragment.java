@@ -36,6 +36,7 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
+import com.zantong.mobilecttx.base.BaseAutoScrollUpTextView;
 import com.zantong.mobilecttx.base.bean.UnimpededBannerBean;
 import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
@@ -229,6 +230,12 @@ public class HomeUnimpededFragment extends RefreshFragment
         mImgTrumpet = (ImageView) view.findViewById(R.id.img_trumpet);
         mImgLabel = (ImageView) view.findViewById(R.id.img_label);
         mCustomGrapevine = (MainScrollUpAdvertisementView) view.findViewById(R.id.custom_grapevine);
+        mCustomGrapevine.setOnItemClickListener(new BaseAutoScrollUpTextView.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+//点击效果
+            }
+        });
         mCustomViolation = (HorizontalInfiniteCycleViewPager) view.findViewById(R.id.custom_violation);
 
 //        mTvLicense = (TextView) view.findViewById(R.id.tv_license);
@@ -405,11 +412,12 @@ public class HomeUnimpededFragment extends RefreshFragment
         final HomeBean bean = result.getData();
         //小喇叭通知
         if (bean != null && bean.getNotices() != null) {
-            if (!bean.getNotices().isEmpty())
-                mCustomGrapevine.setData(bean.getNotices());
-
             if (!mHomeNotices.isEmpty()) mHomeNotices.clear();
             mHomeNotices.addAll(bean.getNotices());
+
+            if (!mHomeNotices.isEmpty()) {
+                mCustomGrapevine.setData(mHomeNotices);
+            }
         }
 
         //广告页面

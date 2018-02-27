@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.bean.BankResponse;
 import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.router.custom.dialog.IOnCouponSubmitListener;
+import com.tzly.ctcyh.router.custom.dialog.MessageDialogFragment;
 import com.tzly.ctcyh.router.util.FormatUtils;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.tzly.ctcyh.router.util.NetUtils;
@@ -237,18 +239,18 @@ public class ViolationPayFragment extends RefreshFragment
                     if ("1".equals(penaltyNum) || "2".equals(penaltyNum)) {
                         toastShort("当前并非电子警察通知书编号,请选择工行卡缴费");
                     } else {
-                        createOrder();
+                        createDialog();
                     }
                 } else if (remark.equals("4|")) {
                     String violationnum = getViolationBean().getViolationnum();
                     String penaltyNum = violationnum.substring(6, 7);
-                    if (!"1".equals(penaltyNum)&&!"2".equals(penaltyNum)) {
+                    if (!"1".equals(penaltyNum) && !"2".equals(penaltyNum)) {
                         toastShort("当前为电子警察通知书编号,请选择畅通卡缴费");
                     } else {
-                        createOrder();
+                        createDialog();
                     }
                 } else {
-                    createOrder();
+                    createDialog();
                 }
                 break;
             case R.id.fragment_violation_paytype_layout://支付方式
@@ -264,12 +266,27 @@ public class ViolationPayFragment extends RefreshFragment
         }
     }
 
+    private void createDialog() {
+        String msg = remark.equals("3|") ? "使用通卡请预先在卡里充值相应金额" : "使用工行其他卡支付请先开通E支付";
+        MessageDialogFragment dialogFragment = MessageDialogFragment.newInstance(msg);
+        dialogFragment.setClickListener(new IOnCouponSubmitListener() {
+            @Override
+            public void submit(String couponId) {
+                createOrder();
+            }
+
+            @Override
+            public void cancel() {
+            }
+        });
+        dialogFragment.show(getChildFragmentManager(), "message_dialog");
+    }
+
     /**
      * 43.生成违章缴费订单
      */
     private void createOrder() {
         String enginenum = getViolationBean().getEnginenum();
-
         if (TextUtils.isEmpty(enginenum)) {
             gotoPay();
         } else {

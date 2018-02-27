@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.tzly.ctcyh.router.custom.htmltxt.HtmlTextView
+        android:id="@+id/tv_html"
+        style="@style/ResTextTheme.16.Subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAppearance="@android:style/TextAppearance.Small"
+        tools:text="使用规则fsfsdfsfjsdfsjfiisjdffdssff" />
+
+</android.support.constraint.ConstraintLayout>
