@@ -45,17 +45,17 @@ public class ManageCarActivity extends BaseJxActivity {
         tvCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int count = 0;
-                for (UserCarInfoBean bean : LoginData.getInstance().mServerCars) {
-                    if (bean.getIspaycar().equals("1")) count = count + 1;
-                }
-                if (count < 2) {
-                    ToastUtils.toastShort("你绑定车辆小于2辆,现任意车辆均可缴费无需改邦操作");
-                } else if (count == 2 && count == LoginData.getInstance().mServerCars.size()) {
-                    ToastUtils.toastShort("你已绑定2辆车辆,请再去添加添加新未绑定车辆");
-                } else {
+//                int count = 0;
+//                for (UserCarInfoBean bean : LoginData.getInstance().mServerCars) {
+//                    if (bean.getIspaycar().equals("1")) count = count + 1;
+//                }
+//                if (count < 2) {
+//                    ToastUtils.toastShort("你绑定车辆小于2辆,现任意车辆均可缴费无需改邦操作");
+//                } else if (count == 2 && count == LoginData.getInstance().mServerCars.size()) {
+//                    ToastUtils.toastShort("你已绑定2辆车辆,请再去添加添加新未绑定车辆");
+//                } else {
                     MainRouter.gotoSetPayCarActivity(ManageCarActivity.this);
-                }
+//                }
             }
         });
 

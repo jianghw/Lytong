@@ -454,22 +454,18 @@ public class ViolationQueryFragment extends RefreshFragment
 
         if (TextUtils.isEmpty(plate)) {
             toastShort("请输入正确的车牌号");
-            return false;
         }
         if (TextUtils.isEmpty(plate) || engine.length() != 6) {
             toastShort("请输入正确的6位发动机号");
-            return false;
         }
 
         String data = getTvData();
         if (TextUtils.isEmpty(data) || data.equals("0") || data.equals("null")) {
             toastShort("请选择车辆注册日期");
-            return false;
         }
 
         if (TextUtils.isEmpty(carType)) {
             toastShort("请选择车辆类型");
-            return false;
         }
 
         String vehicleCode = VehicleTypeTools.switchVehicleCode(carType);
@@ -492,7 +488,6 @@ public class ViolationQueryFragment extends RefreshFragment
                             setEditPlate("");
                         }
                     });
-            return false;
         }
 
         String carNum = getTvProvince() + plate;

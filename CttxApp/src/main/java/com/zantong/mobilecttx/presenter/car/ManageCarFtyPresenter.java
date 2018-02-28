@@ -233,7 +233,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
         List<BindCarDTO> bindCarDTOList = new ArrayList<>();
 
         UserCarsBean userCarsBean = userCarsResult.getRspInfo();
-        if (userCarsBean != null && userCarsResult.getSYS_HEAD().getReturnCode().equals("000000")) {
+//        if (userCarsBean != null && userCarsResult.getSYS_HEAD().getReturnCode().equals("000000")) {
             List<UserCarInfoBean> carInfoBeanList = userCarsBean.getUserCarsInfo();
             if (carInfoBeanList != null && carInfoBeanList.size() > 0) {
                 for (UserCarInfoBean userCarInfoBean : carInfoBeanList) {
@@ -252,10 +252,10 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     bindCarDTOList.add(bindCarDTO);
                 }
             }
-        }
+//        }
 
         PayCarBean payCarBean = payCarResult.getRspInfo();
-        if (payCarBean != null && payCarResult.getSYS_HEAD().getReturnCode().equals("000000")) {
+//        if (payCarBean != null && payCarResult.getSYS_HEAD().getReturnCode().equals("000000")) {
             List<PayCar> payCarList = payCarBean.getUserCarsInfo();
             if (payCarList != null && payCarList.size() > 0) {
                 for (PayCar userCarInfoBean : payCarList) {
@@ -272,7 +272,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                     bindCarDTOList.add(bindCarDTO);
                 }
             }
-        }
+//        }
         return bindCarDTOList;
     }
 
