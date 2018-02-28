@@ -1,3 +1,35 @@
+def versionName() {
+    def festXmlFile = project.file("AndroidManifest.xml")
+    def rootManifest = new XmlSlurper().parse(festXmlFile)
+    return rootManifest['@android:versionName']
+}
+
+def copyFile(String srcFile, String dstFile) {
+
+}
+
+def copyOutput(boolean rmJar = true) {
+
+}
+
+def rmFile(String targetFile) {
+
+}
+
+def rmOutput(boolean rmJar = false) {
+
+}
+/**
+ * 对满足条件的task，设置它为disable 这个Task就不会被执行
+ */
+def disableDebugBuild() {
+    def targetTasks = project.tasks.findAll { task -> task.name.contains('Debug') }
+    targetTasks.each {
+        println("==>disable debug task :${it.name}")
+        it.setEnabled false
+    }
+}
+
 ext {
     android = [
             compileSdkVersion: 25,
@@ -20,9 +52,10 @@ ext {
     ]
 
     buildConfig = [
-            mianDebug : "false",
-            userDebug : "false",
-            payDebug  : "false",
-            cargoDebug: "false"
+            mianDebug : 'false',
+            userDebug : 'false',
+            payDebug  : 'false',
+            cargoDebug: 'false'
     ]
+
 }

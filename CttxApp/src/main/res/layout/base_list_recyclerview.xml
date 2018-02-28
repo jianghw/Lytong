@@ -27,7 +27,7 @@
                 android:id="@+id/pull_refresh_empty_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/common_empty_icom" />
+                android:src="@mipmap/ic_layout_empty" />
 
             <TextView
                 android:id="@+id/pull_refresh_empty_text"

@@ -99,7 +99,7 @@ public class XImageView  extends ImageView implements View.OnClickListener {
                 if (!isAutoPlay) {
                     // 当不允许自动播放的时候，得到开始播放按钮的图片，并注册点击事件  
                     mStartButton = BitmapFactory.decodeResource(getResources(),
-                            R.mipmap.common_empty_icom);
+                            R.mipmap.ic_layout_empty);
                     setOnClickListener(this);
                 }
             }

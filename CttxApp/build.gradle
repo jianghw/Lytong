@@ -18,19 +18,17 @@ android {
         //阿里推送用
         ndk {
             //选择要添加的对应cpu类型的.so库。
-//            abiFilters 'arm64-v8a', 'armeabi', 'armeabi-v7a', 'x86', 'x86_64'
+            // abiFilters 'arm64-v8a', 'armeabi', 'armeabi-v7a', 'x86', 'x86_64'
             abiFilters 'armeabi', 'x86_64'
         }
     }
 
     sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-            assets.srcDirs = ['assets']
-        }
-        // Move the tests to tests/java, tests/res, etc...
+        main.jniLibs.srcDirs = ['libs']
+        main.assets.srcDirs = ['assets']
+
+        // setRoot()方法将移动整个组件（包括它的子文件夹）到一个新的文件夹
         instrumentTest.setRoot('tests')
-        // by a similar customization.
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
     }
