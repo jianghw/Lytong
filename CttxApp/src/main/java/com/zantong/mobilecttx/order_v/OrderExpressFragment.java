@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.router.imple.IAreaDialogListener;
 import com.tzly.ctcyh.router.util.RegexUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;

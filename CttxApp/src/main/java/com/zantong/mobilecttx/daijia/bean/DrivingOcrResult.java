@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.daijia.bean;
 
+import com.tzly.ctcyh.java.response.orc.DrivingOcrBean;
 import com.zantong.mobilecttx.base.bean.BaseOcrResult;
 
 /**

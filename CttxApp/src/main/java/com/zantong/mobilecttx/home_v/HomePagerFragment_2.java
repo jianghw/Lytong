@@ -111,7 +111,7 @@ public class HomePagerFragment_2 extends RecyclerListFragment<UnimpededBannerBea
         if (bannerBean != null && !TextUtils.isEmpty(bannerBean.getTargetPath())) {
             String path = bannerBean.getTargetPath();
             if (path.contains("http")) {//启动公司自己html
-                MainRouter.gotoHtmlActivity(getActivity(), bannerBean.getTitle(), path);
+                MainRouter.gotoWebHtmlActivity(getActivity(), bannerBean.getTitle(), path);
             } else if (path.equals("native_app_recharge")) {//加油充值
                 MainRouter.gotoRechargeActivity(getActivity());
             } else if (path.equals("native_app_loan")) {

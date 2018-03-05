@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.tzly.ctcyh.router.R;
-import com.tzly.ctcyh.router.bean.response.SparringGoodsBean;
+import com.tzly.ctcyh.java.response.SparringGoodsBean;
 
 import java.util.List;
 

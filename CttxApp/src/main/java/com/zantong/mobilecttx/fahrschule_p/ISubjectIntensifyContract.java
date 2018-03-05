@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.fahrschule_p;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 
-import com.tzly.ctcyh.router.bean.response.SubjectGoodsResponse;
+import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 
 /**
  * 畅通页面

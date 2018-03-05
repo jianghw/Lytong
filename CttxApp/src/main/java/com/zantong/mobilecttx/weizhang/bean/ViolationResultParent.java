@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.weizhang.bean;
 
-import com.tzly.ctcyh.router.bean.BankResponse;
+import com.tzly.ctcyh.java.response.BankResponse;
 
 /**
  *

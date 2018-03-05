@@ -14,24 +14,19 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField "boolean", "App_Url", rootProject.ext.buildConfig.payDebug
         }
         release {
-            buildConfigField "boolean", "App_Url", rootProject.ext.buildConfig.payDebug
-
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
     //区分模块资源
-    resourcePrefix "pay_"
+//    resourcePrefix "pay_"
 
     sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-            assets.srcDirs = ['assets']
-        }
+        main.jniLibs.srcDirs = ['libs']
+        main.assets.srcDirs = ['assets']
     }
 }
 

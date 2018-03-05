@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.user.bean;
 
-import com.tzly.ctcyh.router.bean.BankResponse;
+import com.tzly.ctcyh.java.response.BankResponse;
 
 /**
  * 我的车辆返回实体

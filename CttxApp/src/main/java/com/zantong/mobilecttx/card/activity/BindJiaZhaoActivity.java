@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.primission.PermissionFail;
@@ -109,7 +109,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
                 break;
             case R.id.activity_bind_jia_zhao_agreement://保密隐私条例
 
-                MainRouter.gotoHtmlActivity(this,
+                MainRouter.gotoWebHtmlActivity(this,
                         "《用户隐私保密协议》", "file:///android_asset/www/bindcard_agreement.html");
                 break;
             case R.id.bind_jia_zhao_commit://提交信息

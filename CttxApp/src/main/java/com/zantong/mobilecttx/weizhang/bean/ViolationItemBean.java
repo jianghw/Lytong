@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.weizhang.bean;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 import java.util.ArrayList;
 

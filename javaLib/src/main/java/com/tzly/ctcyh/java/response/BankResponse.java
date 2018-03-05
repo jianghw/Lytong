@@ -1,4 +1,4 @@
-package com.tzly.ctcyh.router.bean;
+package com.tzly.ctcyh.java.response;
 
 /**
  * 银行接口响应 base

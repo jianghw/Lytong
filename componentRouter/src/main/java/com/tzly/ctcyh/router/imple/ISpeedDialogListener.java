@@ -1,6 +1,6 @@
 package com.tzly.ctcyh.router.imple;
 
-import com.tzly.ctcyh.router.bean.response.SubjectGoodsBean;
+import com.tzly.ctcyh.java.response.SubjectGoodsBean;
 
 /**
  * Created by jianghw on 2017/8/2.

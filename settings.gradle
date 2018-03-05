@@ -1,4 +1,14 @@
-include ':CttxApp', ':buildGradle', ':componentService', ':componentRouter', ':userLib', ':javalib', ':baseRes', ':baseLib', ':payLib', ':layout', ':cargoLib'
+include ':CttxApp', ':buildGradle',
+        ':componentService',
+        ':componentRouter',
+        ':userLib',
+        ':javalib',
+        ':baseRes',
+        ':baseLib',
+        ':payLib',
+        ':layout',
+        ':cargoLib',
+        ':javaLib'
 include ':CordovaLib'
 include ':XRecyclerView'
 

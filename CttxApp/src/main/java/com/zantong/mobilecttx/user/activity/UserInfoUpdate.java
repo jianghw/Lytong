@@ -417,7 +417,7 @@ public class UserInfoUpdate extends BaseMvpActivity<UserInfoUpdateView, UserInfo
 
         Retrofit2Utils retrofit2Utils = new Retrofit2Utils();
         FileUploadApi api = retrofit2Utils
-                .getRetrofitHttps(BuildConfig.ImageLoadUrl)
+                .getRetrofitHttps(BuildConfig.bank_img_url)
                 .create(FileUploadApi.class);
 
         api.uploadImage(params).enqueue(new Callback<ResponseBody>() {

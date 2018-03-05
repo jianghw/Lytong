@@ -18,7 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.tzly.ctcyh.router.bean.BankResponse;
+import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.router.util.CleanUtils;
 import com.tzly.ctcyh.router.util.FileUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
@@ -509,7 +509,7 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
 
         Retrofit2Utils retrofit2Utils = new Retrofit2Utils();
         FileUploadApi api = retrofit2Utils
-                .getRetrofitHttps(BuildConfig.ImageLoadUrl)
+                .getRetrofitHttps(BuildConfig.bank_img_url)
                 .create(FileUploadApi.class);
 
         api.uploadImage(params).enqueue(new Callback<ResponseBody>() {

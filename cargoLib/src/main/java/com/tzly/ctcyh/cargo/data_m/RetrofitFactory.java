@@ -36,21 +36,13 @@ public class RetrofitFactory {
      * 手动修改值
      */
     private String getBaseUrl(int type) {
-        return getBaseUrl(type, BuildConfig.App_Url);
-    }
-
-    private String getBaseUrl(int type, boolean isDebug) {
         switch (type) {
-            case 1://同赞自己服务器
-                return isDebug
-                        ? "http://dev.liyingtong.com/"
-                        : "http://api2.liyingtong.com/";
+            case 1:
+                return BuildConfig.isDeta ? BuildConfig.beta_base_url : BuildConfig.release_base_url;
             case 2:
-                return isDebug
-                        ? "https://ctkapptest.icbc-axa.com/ecip/"
-                        : "https://ctkapp.icbc-axa.com/ecip/";
+                return BuildConfig.isDeta ? BuildConfig.beta_bank_url : BuildConfig.release_bank_url;
             case 3:
-                return isDebug
+                return BuildConfig.isDeta
                         ? "http://dev.liyingtong.com:8011/admin/index.php/"
                         : "http://liyingtong.com:8011/admin/index.php/";
             default:

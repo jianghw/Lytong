@@ -1,6 +1,6 @@
 package com.tzly.ctcyh.cargo.bean.response;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 import java.util.List;
 

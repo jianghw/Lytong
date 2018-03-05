@@ -17,7 +17,7 @@ public final class RouterGlobal {
 
         public static final String coupon_list_host = "coupon_list_host";
         public static final String pay_type_host = "pay_type_host";
-        public static final String html_5_host = "html_5_host";
+        public static final String web_html_host = "web_html_host";
 
 
         public static final String active_host = "active_host";
@@ -41,7 +41,6 @@ public final class RouterGlobal {
         public static final String ocr_camera_host = "ocr_camera_host";
         public static final String meg_detail_host = "meg_detail_host";
         public static final String coupon_status_host = "coupon_status_host";
-        public static final String html_self_host = "html_self_host";
         public static final String html_pay_host = "html_pay_host";
 
         public static final String violation_query_host = "violation_query_host";

@@ -11,7 +11,7 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.zantong.mobilecttx.daijia.bean.DaiJiaOrderListBean;
 import com.zantong.mobilecttx.daijia.dto.DaiJiaOrderDetailDTO;
 import com.zantong.mobilecttx.utils.DialogUtils;

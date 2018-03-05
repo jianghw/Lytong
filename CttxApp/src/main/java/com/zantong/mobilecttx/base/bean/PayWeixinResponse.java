@@ -1,7 +1,7 @@
 package com.zantong.mobilecttx.base.bean;
 
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 public class PayWeixinResponse extends BaseResponse {
 

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.R;
-import com.tzly.ctcyh.router.bean.response.SubjectGoodsBean;
+import com.tzly.ctcyh.java.response.SubjectGoodsBean;
 
 import java.util.List;
 

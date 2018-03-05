@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tzly.ctcyh.router.bean.BankResponse;
+import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
@@ -151,7 +151,7 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
                             .append("&clientIP=").append(NetUtils.getPhontIP(this))
                             .append("&clientType=").append(CLIENT_TYPE_0);
 
-                    MainRouter.gotoHtmlActivity(this, "支付", stringBuilder.toString());
+                    MainRouter.gotoWebHtmlActivity(this, "支付", stringBuilder.toString());
                 } else {
                     commitInsOrder();
                 }

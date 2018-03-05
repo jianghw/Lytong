@@ -240,7 +240,7 @@ public class BaiduMapParentActivity extends BaseJxActivity
     protected void rightClickListener() {
         if (mMapType == JxGlobal.MapType.annual_inspection_map) {
 
-            MainRouter.gotoHtmlActivity(this, "年检须知", "file:///android_asset/www/nianjian_desc.html");
+            MainRouter.gotoWebHtmlActivity(this, "年检须知", "file:///android_asset/www/nianjian_desc.html");
         }
     }
 
@@ -553,8 +553,8 @@ public class BaiduMapParentActivity extends BaseJxActivity
     }
 
     protected void annualInspection() {
-        MainRouter.gotoHtmlActivity(this, "年检服务",
-                BuildConfig.App_Url ? "http://139.196.183.121:3000/myCar"
+        MainRouter.gotoWebHtmlActivity(this, "年检服务",
+                BuildConfig.isDeta ? "http://139.196.183.121:3000/myCar"
                         : "http://nianjian.liyingtong.com/myCar");
     }
 

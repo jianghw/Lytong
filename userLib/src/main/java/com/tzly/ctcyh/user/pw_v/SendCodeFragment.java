@@ -137,7 +137,7 @@ public class SendCodeFragment extends RefreshFragment
                 mNext.setEnabled(true);
             }
         } else if (v.getId() == R.id.reset_next_btn) {//提交
-            if (BuildConfig.App_Url) gotoRegister();
+            if (BuildConfig.isDeta) gotoRegister();
             else
                 verificationData();
         }

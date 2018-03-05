@@ -66,7 +66,6 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 RouterGlobal.Host.violation_list_host,
                 RouterGlobal.Host.ocr_camera_host,
                 RouterGlobal.Host.meg_detail_host,
-                RouterGlobal.Host.html_self_host,
                 RouterGlobal.Host.html_pay_host,
                 RouterGlobal.Host.violation_query_host,
                 RouterGlobal.Host.set_pay_car_host,
@@ -118,9 +117,6 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, MegDetailActivity.class);
         } else if (RouterGlobal.Host.html_pay_host.equals(host)) {
             intent.setClass(context, PayHtmlActivity.class);
-        } else if (RouterGlobal.Host.html_self_host.equals(host)) {
-            intent.setAction("com.zantong.mobilecttx.browser.BrowserHtmlActivity");
-            intent.setClass(context, BrowserHtmlActivity.class);
         } else if (RouterGlobal.Host.violation_query_host.equals(host)) {
             intent.setClass(context, ViolationActivity.class);
         } else if (RouterGlobal.Host.set_pay_car_host.equals(host)) {

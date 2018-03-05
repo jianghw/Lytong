@@ -1,4 +1,4 @@
-package com.tzly.ctcyh.router.bean;
+package com.tzly.ctcyh.java.response;
 
 /**
  * Description: tzly 服务器响应 base

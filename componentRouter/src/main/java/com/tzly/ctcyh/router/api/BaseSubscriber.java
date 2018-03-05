@@ -1,4 +1,4 @@
-package com.tzly.ctcyh.pay.data_m;
+package com.tzly.ctcyh.router.api;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -7,7 +7,6 @@ import java.net.UnknownHostException;
 import rx.Subscriber;
 
 /**
- * Created by jianghw on 2017/5/15.
  * 统一封装处理类
  */
 

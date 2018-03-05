@@ -50,11 +50,11 @@
 
         <!--启动新进程 畅通卡支付-->
         <activity
-            android:name="com.tzly.ctcyh.pay.html_v.Html5Activity"
+            android:name="com.tzly.ctcyh.pay.html_v.WebHtmlActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="com.tzly.ctcyh.pay.html_v.Html5Activity" />
+                <action android:name="com.tzly.ctcyh.pay.html_v.WebHtmlActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

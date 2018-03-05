@@ -5,7 +5,7 @@ import com.zantong.mobilecttx.fahrschule.bean.CreateOrderResponse;
 import com.zantong.mobilecttx.fahrschule.bean.GoodsDetailResponse;
 import com.zantong.mobilecttx.fahrschule.bean.MerchantAresResponse;
 import com.zantong.mobilecttx.fahrschule.bean.SparringGoodsResponse;
-import com.tzly.ctcyh.router.bean.response.SubjectGoodsResponse;
+import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 
 import java.util.Map;
 

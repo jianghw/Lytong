@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.home.bean;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 /**
  * 判断是否为司机

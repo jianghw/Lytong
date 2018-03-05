@@ -366,10 +366,9 @@ public class HomeMeFragment extends RefreshFragment
                 Act.getInstance().gotoIntentLogin(getActivity(), MyOrderActivity.class);
                 break;
             case R.id.lay_driver_order://司机订单
-                MainRouter.gotoHtmlActivity(getActivity(),
-                        "司机订单", BuildConfig.App_Url
-                                ? "http://dev.liyingtong.com/h5/driver/index.html"
-                                : "http://api2.liyingtong.com/h5/driver/index.html");
+                MainRouter.gotoWebHtmlActivity(getActivity(),
+                        "司机订单", BuildConfig.base_url+"h5/driver/index.html"
+                );
                 break;
             case R.id.tv_card://我的畅通卡
                 if (TextUtils.isEmpty(MainRouter.getUserFilenum()))
@@ -411,7 +410,7 @@ public class HomeMeFragment extends RefreshFragment
                 Beta.checkUpgrade();
                 break;
             case R.id.about_advertising://隐私说明
-                MainRouter.gotoHtmlActivity(getActivity(),
+                MainRouter.gotoWebHtmlActivity(getActivity(),
                         "隐私声明", "file:///android_asset/bindcard_agreement.html");
                 break;
             default:

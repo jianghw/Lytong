@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
-import com.tzly.ctcyh.router.bean.response.SubjectGoodsBean;
+import com.tzly.ctcyh.java.response.SubjectGoodsBean;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.RegexUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
@@ -111,7 +111,7 @@ public class SubjectCommitFragment extends JxBaseRefreshFragment
         ViewUtils.editTextInputSpace(mEditName);
         ViewUtils.editTextInputSpace(mEditPhone);
 
-        if (BuildConfig.App_Url) {
+        if (BuildConfig.isDeta) {
             mEditName.setText("小姐哦啊金粉世家");
             mEditPhone.setText("15252525569");
         }

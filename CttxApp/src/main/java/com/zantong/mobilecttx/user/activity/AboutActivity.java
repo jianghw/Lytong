@@ -46,7 +46,7 @@ public class AboutActivity extends AbstractBaseActivity {
         String version = AppUtils.getAppVersionName()
                 + "_" + AppUtils.getAppVersionCode();
         String channel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
-        String config = BuildConfig.App_Url ? "debug" : "release";
+        String config = BuildConfig.isDeta ? "debug" : "release";
         return version + "/" + channel + "/" + config;
     }
 

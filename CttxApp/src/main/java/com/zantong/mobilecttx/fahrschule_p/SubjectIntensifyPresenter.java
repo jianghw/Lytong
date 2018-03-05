@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 
-import com.tzly.ctcyh.router.bean.response.SubjectGoodsResponse;
+import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;

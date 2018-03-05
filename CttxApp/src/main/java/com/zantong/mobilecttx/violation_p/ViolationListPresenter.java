@@ -4,7 +4,7 @@ package com.zantong.mobilecttx.violation_p;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.zantong.mobilecttx.base.dto.RequestDTO;
 import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;

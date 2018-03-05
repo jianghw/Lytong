@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.home_p;
 
 import android.support.annotation.NonNull;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.home.bean.BannerBean;
 import com.zantong.mobilecttx.home.bean.BannerResponse;

@@ -1,7 +1,7 @@
 package com.zantong.mobilecttx.weizhang.bean;
 
-import com.tzly.ctcyh.router.bean.APPHEADBean;
-import com.tzly.ctcyh.router.bean.SYSHEADBean;
+import com.tzly.ctcyh.java.response.APPHEADBean;
+import com.tzly.ctcyh.java.response.SYSHEADBean;
 
 /**
  * Created by jianghw on 2017/5/5.

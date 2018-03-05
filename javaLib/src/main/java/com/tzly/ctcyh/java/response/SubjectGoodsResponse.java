@@ -1,6 +1,4 @@
-package com.tzly.ctcyh.router.bean.response;
-
-import com.tzly.ctcyh.router.bean.BaseResponse;
+package com.tzly.ctcyh.java.response;
 
 /**
  * 科目强化商品列表

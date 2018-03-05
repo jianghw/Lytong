@@ -15,7 +15,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;

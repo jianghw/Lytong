@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.home.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 import java.util.ArrayList;
 import java.util.List;

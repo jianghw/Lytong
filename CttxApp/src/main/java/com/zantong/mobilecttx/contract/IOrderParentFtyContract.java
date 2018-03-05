@@ -7,7 +7,7 @@ import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import java.util.List;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 /**
  * 订单页面

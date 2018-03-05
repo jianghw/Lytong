@@ -41,7 +41,7 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.PayHistoryDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
-import com.tzly.ctcyh.router.bean.BankResponse;
+import com.tzly.ctcyh.java.response.BankResponse;
 
 
 /**
@@ -95,7 +95,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u001.01"));
         t.setReqInfo(params);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     /**
@@ -111,7 +111,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u001.01"));
         t.setReqInfo(params);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     /**
@@ -126,7 +126,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u015.01"));
         t.setReqInfo(params);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     /**
@@ -141,7 +141,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u014.01"));
         t.setReqInfo(params);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     /**
@@ -156,7 +156,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.p002.01"));
         t.setReqInfo(params);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     /**
@@ -174,7 +174,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u013.01"));
         t.setReqInfo(params);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     /**
@@ -189,7 +189,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u012.01"));
         t.setReqInfo(params);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     /**
@@ -206,7 +206,7 @@ public class UserApiClient extends BaseApiClient {
 
         dto.setUsrid(MainRouter.getUserID());
         t.setReqInfo(dto);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     public static void getPayHistory(Context context, PayHistoryDTO params, CallBack<PayHistoryResult> callback) {
@@ -216,7 +216,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.v001.01"));
         t.setReqInfo(params);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     public static void getPayCars(Context context, LogoutDTO params, CallBack<PayCarResult> callback) {
@@ -225,7 +225,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.c002.01"));
         t.setReqInfo(params);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     /**
@@ -240,7 +240,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.i001.01"));
         t.setReqInfo(params);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     /**
@@ -255,7 +255,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.i004.01"));
         t.setReqInfo(params);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     /**
@@ -270,7 +270,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.i006.01"));
         t.setReqInfo(params);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     /**
@@ -288,7 +288,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u003.01"));
         t.setReqInfo(dto);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     /**
@@ -303,7 +303,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u008.01"));
         t.setReqInfo(dto);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     /**
@@ -339,7 +339,7 @@ public class UserApiClient extends BaseApiClient {
 
         t.setSYS_HEAD(getBean("cip.cfc.u005.01"));
         t.setReqInfo(dto);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     public static void bindCard(Context context, BindCardDTO dto, CallBack<BindCardResult> callback) {
@@ -348,7 +348,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u004.01"));
         t.setReqInfo(dto);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     public static void editCarInfo(Context context, CarInfoDTO dto, CallBack<BankResponse> callback) {
@@ -360,7 +360,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.c001.01"));
         t.setReqInfo(dto);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     public static void getCarInfo(Context context, UserCarsDTO dto, CallBack<UserCarsResult> callback) {
@@ -369,7 +369,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.c003.01"));
         t.setReqInfo(dto);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     public static void html(Context context, String serviceCode, String reqinfo, CallBack<BankResponse> callback) {
@@ -382,7 +382,7 @@ public class UserApiClient extends BaseApiClient {
 
         }
 
-        htmlpost(context, BuildConfig.BASE_URL, MessageFormat.getInstance().getMessageFormat(), asyncCallBack);
+        htmlpost(context, BuildConfig.bank_mc_url, MessageFormat.getInstance().getMessageFormat(), asyncCallBack);
     }
 
     /**
@@ -397,7 +397,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.u003.01"));
         t.setReqInfo(dto);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     public static void getViolation(Context context, ViolationDTO dto, CallBack<BankResponse> callback) {
@@ -406,7 +406,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.v002.01"));
         t.setReqInfo(dto);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     public static void searchViolation(Context context, ViolationDTO dto, CallBack<ViolationResultParent> callback) {
@@ -415,7 +415,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.v002.01"));
         t.setReqInfo(dto);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
     public static void setJiaoYiDaiMa(Context context, String strFileNum, CallBack<BankResponse> callback) {
@@ -426,7 +426,7 @@ public class UserApiClient extends BaseApiClient {
         RequestDTO t = new RequestDTO();
         t.setSYS_HEAD(getBean("cip.cfc.v004.01"));
         t.setReqInfo(jiaoYiDaiMaDTO);
-        post(context, BuildConfig.BASE_URL, t, asyncCallBack);
+        post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
 }

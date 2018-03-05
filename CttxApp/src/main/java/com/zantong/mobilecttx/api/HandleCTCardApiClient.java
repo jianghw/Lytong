@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.base.MessageFormat;
 
-import com.tzly.ctcyh.router.bean.BankResponse;
+import com.tzly.ctcyh.java.response.BankResponse;
 
 /**
  * Created by zhoujie on 2017/1/3.
@@ -42,7 +42,7 @@ public class HandleCTCardApiClient extends BaseApiClient {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        htmlpost(context, BuildConfig.BASE_URL, MessageFormat.getInstance().getMessageFormat(), asyncCallBack);
+        htmlpost(context, BuildConfig.bank_mc_url, MessageFormat.getInstance().getMessageFormat(), asyncCallBack);
     }
 
     public interface ResultInterface {

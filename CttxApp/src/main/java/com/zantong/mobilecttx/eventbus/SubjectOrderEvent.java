@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.eventbus;
 
-import com.tzly.ctcyh.router.bean.response.SubjectGoodsBean;
+import com.tzly.ctcyh.java.response.SubjectGoodsBean;
 
 public class SubjectOrderEvent {
 

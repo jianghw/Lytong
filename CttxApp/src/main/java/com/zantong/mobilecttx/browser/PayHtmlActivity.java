@@ -18,7 +18,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;

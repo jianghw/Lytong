@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import com.google.gson.Gson;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.tzly.ctcyh.router.base.RecyclerListFragment;
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.router.custom.banner.CBViewHolderCreator;
 import com.tzly.ctcyh.router.custom.banner.ConvenientBanner;
 import com.tzly.ctcyh.router.global.JxGlobal;
@@ -29,7 +29,6 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.base.bean.UnimpededBannerBean;
 import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.contract.home.INativeItemListener;
 import com.zantong.mobilecttx.home_p.FavorableBannerImgHolderView;
@@ -155,7 +154,7 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
         if (childrenBean != null && !TextUtils.isEmpty(childrenBean.getTargetPath())) {
             String path = childrenBean.getTargetPath();
             if (path.contains("http")) {//启动公司自己html
-                MainRouter.gotoHtmlActivity(getActivity(), childrenBean.getTitle(), path);
+                MainRouter.gotoWebHtmlActivity(getActivity(), childrenBean.getTitle(), path);
             } else if (path.equals("native_app_recharge")) {//加油充值
                 MainRouter.gotoRechargeActivity(getActivity());
             } else if (path.equals("native_app_loan")) {

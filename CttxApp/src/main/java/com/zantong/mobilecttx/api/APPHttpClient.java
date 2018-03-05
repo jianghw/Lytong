@@ -42,7 +42,7 @@ public class APPHttpClient {
 
             OkHttpClient mClient = getUnsafeOkHttpClient();
             Retrofit  restAdapter =new Retrofit.Builder()
-                    .baseUrl(BuildConfig.APP_URL)
+                    .baseUrl(BuildConfig.bank_app_url)
                     .client(mClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -57,7 +57,7 @@ public class APPHttpClient {
         if(cttxHttpPOSTInterface == null){
             OkHttpClient mClient = getUnsafeOkHttpClient();
             Retrofit  restAdapter =new Retrofit.Builder()
-                    .baseUrl(BuildConfig.APP_URL)
+                    .baseUrl(BuildConfig.bank_app_url)
                     .client(mClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -75,7 +75,7 @@ public class APPHttpClient {
         if(cttxHttpPOSTInterface == null){
             OkHttpClient mClient = getUnsafeOkHttpClient();
             Retrofit  restAdapter =new Retrofit.Builder()
-                    .baseUrl(BuildConfig.APPFileUrl)
+                    .baseUrl(BuildConfig.bank_file_url)
                     .client(mClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -117,7 +117,7 @@ public class APPHttpClient {
             final javax.net.ssl.SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            if (BuildConfig.App_Url) {
+            if (BuildConfig.isDeta) {
                 HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
                 logging.setLevel(HttpLoggingInterceptor.Level.BODY);
                 builder.addInterceptor(logging);

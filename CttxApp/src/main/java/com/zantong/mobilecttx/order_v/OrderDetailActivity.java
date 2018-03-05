@@ -240,7 +240,7 @@ public class OrderDetailActivity extends JxBaseActivity
     }
 
     private void gotoHtml(String tableHtml) {
-        MainRouter.gotoHtmlActivity(this, "Web页面", tableHtml);
+        MainRouter.gotoWebHtmlActivity(this, "Web页面", tableHtml);
     }
 
     private void gotoBrowser(String beanDetail, TextView tvContent) {
@@ -299,7 +299,7 @@ public class OrderDetailActivity extends JxBaseActivity
     private void internalBrowser(String contentHrefLine) {
         String title = "信息";
 
-        MainRouter.gotoHtmlActivity(this, title, contentHrefLine);
+        MainRouter.gotoWebHtmlActivity(this, title, contentHrefLine);
     }
 
     /**

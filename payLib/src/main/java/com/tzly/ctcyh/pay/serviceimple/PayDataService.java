@@ -36,4 +36,17 @@ public class PayDataService implements IPayService {
     public void gotoCouponStatusActivity(Context context) {
         PayRouter.gotoCouponStatusActivity(context);
     }
+
+    /**
+     * web html
+     */
+    @Override
+    public void gotoWebHtmlActivity(Activity activity, String title, String url) {
+        PayRouter.gotoWebHtmlActivity(activity, title, url);
+    }
+
+    @Override
+    public void gotoWebHtmlActivity(Context context, String title, String url) {
+        PayRouter.gotoWebHtmlActivity(context, title, url);
+    }
 }

@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.map.bean;
 
 import java.util.List;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 /**
  * 年检

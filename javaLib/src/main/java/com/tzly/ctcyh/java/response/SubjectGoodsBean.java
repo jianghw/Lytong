@@ -1,4 +1,4 @@
-package com.tzly.ctcyh.router.bean.response;
+package com.tzly.ctcyh.java.response;
 
 import java.util.List;
 

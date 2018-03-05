@@ -116,7 +116,7 @@ public class LytMessageReceiver extends MessageReceiver {
         else if (type.equals("3"))//优惠详情
             MainRouter.gotoCouponStatusActivity(context);
         else if (type.equals("4"))//html详情
-            MainRouter.gotoHtmlActivity(context, title, pushExtBean.getUrl());
+            MainRouter.gotoWebHtmlActivity(context, title, pushExtBean.getUrl());
         else if (type.equals("5"))//违章查询
             MainRouter.gotoViolationActivity(context);
         else

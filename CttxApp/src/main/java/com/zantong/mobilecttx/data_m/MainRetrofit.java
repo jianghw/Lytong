@@ -52,7 +52,7 @@ public class MainRetrofit implements IRetrofitUrl {
                         Log.d("MainRetrofit", message);
                     }
                 })
-                .setLevel(BuildConfig.App_Url
+                .setLevel(BuildConfig.isDeta
                         ? HttpLoggingInterceptor.Level.BASIC
                         : HttpLoggingInterceptor.Level.NONE);
 

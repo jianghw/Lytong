@@ -3,22 +3,11 @@ package com.zantong.mobilecttx.home_p;
 
 import android.support.annotation.NonNull;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
-import com.tzly.ctcyh.router.util.LogUtils;
-import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
-import com.zantong.mobilecttx.global.MainGlobal;
-import com.zantong.mobilecttx.home.bean.HomeCarResponse;
-import com.zantong.mobilecttx.home.bean.HomeResponse;
-import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
-import com.zantong.mobilecttx.home.dto.HomeDataDTO;
 import com.zantong.mobilecttx.router.MainRouter;
 
-import java.util.concurrent.TimeUnit;
-
-import rx.Observable;
-import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

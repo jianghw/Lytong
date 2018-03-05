@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.tzly.ctcyh.router.bean.BankResponse;
+import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;

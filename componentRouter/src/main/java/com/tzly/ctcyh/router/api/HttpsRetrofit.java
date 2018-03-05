@@ -1,11 +1,12 @@
-package com.tzly.ctcyh.pay.data_m;
+package com.tzly.ctcyh.router.api;
 
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.tzly.ctcyh.pay.BuildConfig;
-import com.tzly.ctcyh.pay.router.PayRouter;
+import com.tzly.ctcyh.router.BuildConfig;
+import com.tzly.ctcyh.router.util.AppUtils;
+
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -28,31 +29,30 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by jianghw on 2017/4/26.
  * 网络请求配置
  */
 
-public class PayRetrofit implements IRetrofitUrl {
+public class HttpsRetrofit implements IRetrofitUrl {
 
     private OkHttpClient client = null;
 
     private static class SingletonHolder {
-        private static final PayRetrofit INSTANCE = new PayRetrofit();
+        private static final HttpsRetrofit INSTANCE = new HttpsRetrofit();
     }
 
-    public static PayRetrofit getInstance() {
+    public static HttpsRetrofit getInstance() {
         return SingletonHolder.INSTANCE;
     }
 
-    private PayRetrofit() {
+    private HttpsRetrofit() {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(
                 new HttpLoggingInterceptor.Logger() {
                     @Override
                     public void log(String message) {
-                        Log.d("PayRetrofit", message);
+                        Log.d("HttpsRetrofit", message);
                     }
                 })
-                .setLevel(BuildConfig.App_Url
+                .setLevel(BuildConfig.isDeta
                         ? HttpLoggingInterceptor.Level.BASIC
                         : HttpLoggingInterceptor.Level.NONE);
 
@@ -107,18 +107,23 @@ public class PayRetrofit implements IRetrofitUrl {
         }
     }
 
+    /**
+     * 获取设备id
+     */
     private String getDeviceId() {
-        return PayRouter.getDeviceId();
+        return AppUtils.getDeviceId();
     }
 
     private TrustManager[] trustAllCerts = new TrustManager[]{
             new X509TrustManager() {
                 @Override
-                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+                public void checkClientTrusted(java.security.cert.X509Certificate[] chain,
+                                               String authType) {
                 }
 
                 @Override
-                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) {
+                public void checkServerTrusted(java.security.cert.X509Certificate[] chain,
+                                               String authType) {
                 }
 
                 @Override
@@ -130,7 +135,9 @@ public class PayRetrofit implements IRetrofitUrl {
 
     @Override
     public Retrofit createRetrofit(String url) {
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .create();
         return new Retrofit.Builder()
                 .baseUrl(url)
                 .client(client)

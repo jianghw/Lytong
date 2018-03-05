@@ -11,8 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.RefreshFragment;
-import com.tzly.ctcyh.router.bean.BankResponse;
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BankResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.router.custom.dialog.IOnCouponSubmitListener;
 import com.tzly.ctcyh.router.custom.dialog.MessageDialogFragment;
 import com.tzly.ctcyh.router.util.FormatUtils;
@@ -362,7 +362,7 @@ public class ViolationPayFragment extends RefreshFragment
         int amt = (int) (Float.valueOf(violationamt) * 100);
         String value = String.valueOf(amt);
 
-        String payUrl = BuildConfig.APP_URL
+        String payUrl = BuildConfig.bank_app_url
                 + "payment_payForViolation?orderid=" + violationnum
                 + "&amount=" + value
                 + "&merCustomIp=" + merCustomIp

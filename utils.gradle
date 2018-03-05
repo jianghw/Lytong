@@ -50,12 +50,40 @@ ext {
             recyclerview    : 'com.android.support:recyclerview-v7:25.3.1',
             multidex        : 'com.android.support:multidex:1.0.1',
     ]
+    //单独配置模块 true-->测试环境 false-->正式环境
+    config = [
+            api_deta  : 'false',
+            mian_deta : 'false',
+            user_deta : 'false',
+            cargo_deta: 'false',
+    ]
+    //测试
+    beta = [
+            isDeta       : 'true',
+            base_url     : '"http://dev.liyingtong.com/"',
+            bank_img_url : '"https://ctkapptest.icbc-axa.com/"',
+            bank_file_url: '"https://ctkapptest.icbc-axa.com:9000/"',
+            bank_app_url : '"https://ctkapptest.icbc-axa.com/ecip/"',
+            bank_mc_url  : '"https://ctkapptest.icbc-axa.com/ecip/mobilecall_call"'
+    ]
 
-    buildConfig = [
-            mianDebug : 'false',
-            userDebug : 'false',
-            payDebug  : 'false',
-            cargoDebug: 'false'
+    //内部版
+    alpha = [
+            isDeta       : 'true',
+            base_url     : '"http://api2.liyingtong.com/"',
+            bank_img_url : '"https://ctkapp.icbc-axa.com/"',
+            bank_file_url: '"https://ctkapp.icbc-axa.com:9000/"',
+            bank_app_url : '"https://ctkapp.icbc-axa.com/ecip/"',
+            bank_mc_url  : '"https://ctkapp.icbc-axa.com/ecip/mobilecall_call"'
+    ]
+    //发布
+    release = [
+            isDeta       : 'false',
+            base_url     : '"http://api2.liyingtong.com/"',
+            bank_img_url : '"https://ctkapp.icbc-axa.com/"',
+            bank_file_url: '"https://ctkapp.icbc-axa.com:9000/"',
+            bank_app_url : '"https://ctkapp.icbc-axa.com/ecip/"',
+            bank_mc_url  : '"https://ctkapp.icbc-axa.com/ecip/mobilecall_call"'
     ]
 
 }

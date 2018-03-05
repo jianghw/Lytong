@@ -225,7 +225,7 @@ public class ShareParentActivity extends AbstractBaseActivity implements View.On
 
     public static String getShareAppUrl(int postion) {
 
-        return BuildConfig.CAR_MANGER_URL + "h5/share" + postion + "/share.html";
+        return BuildConfig.base_url + "h5/share" + postion + "/share.html";
     }
 
 }

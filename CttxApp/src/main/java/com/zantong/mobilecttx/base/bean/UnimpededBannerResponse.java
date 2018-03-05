@@ -1,7 +1,6 @@
 package com.zantong.mobilecttx.base.bean;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
-import com.zantong.mobilecttx.home.bean.IndexLayerBean;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 import java.util.List;
 

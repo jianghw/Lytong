@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
-import com.tzly.ctcyh.router.bean.response.SubjectGoodsBean;
+import com.tzly.ctcyh.java.response.SubjectGoodsBean;
 import com.tzly.ctcyh.router.util.FormatUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;

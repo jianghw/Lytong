@@ -14,7 +14,6 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.GeolocationPermissions;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
@@ -39,10 +38,10 @@ import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.base.bean.BindCarBean;
+import com.tzly.ctcyh.java.response.orc.BindCarBean;
 import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
 import com.zantong.mobilecttx.contract.browser.IHtmlBrowserContract;
-import com.zantong.mobilecttx.daijia.bean.DrivingOcrBean;
+import com.tzly.ctcyh.java.response.orc.DrivingOcrBean;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.eventbus.DriveLicensePhotoEvent;
 import com.zantong.mobilecttx.eventbus.PayChannelEvent;
@@ -144,7 +143,7 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
         mWebView.addJavascriptInterface(new InterfaceForJS(this), "CTTX");
 //调试哦
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            WebView.setWebContentsDebuggingEnabled(BuildConfig.App_Url);
+            WebView.setWebContentsDebuggingEnabled(BuildConfig.isDeta);
         }
 
         saveData(settings);
@@ -233,7 +232,7 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
     @Override
     public void getBankPayHtmlSucceed(PayOrderResponse result, String orderId) {
         if (TextUtils.isEmpty(mChannel)) toastShort("渠道标记值为空");
-        MainRouter.gotoHtmlActivity(this,
+        MainRouter.gotoWebHtmlActivity(this,
                 "银行支付", result.getData(), orderId, 1, mChannel);
     }
 
@@ -245,7 +244,7 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
     @Override
     public void weChatPaySucceed(PayWeixinResponse response, String orderId) {
         if (TextUtils.isEmpty(mChannel)) toastShort("渠道标记值为空");
-        MainRouter.gotoHtmlActivity(this,
+        MainRouter.gotoWebHtmlActivity(this,
                 "微信支付", response.getData().getMweburl(), orderId, 4, mChannel);
     }
 
@@ -334,6 +333,22 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+            LogUtils.e("onPageFinished==>" + url);
+
+            if (url.contains("?dse_operationName=ApplyCreditCardOp&firstFlag")) {
+
+                String js = "var script=document.createElement(\"script\");";
+                js += "script.type = 'text/javascript';";
+                js += "var btn= document.getElementsByTagName('button')[2];";
+                js += "console.log(btn.innerHTML);";
+                js += "btn.onclick=function(){bankCardClick();mysubmit();};";
+                js += "function bankCardClick(){var newname = $(\"#name\").val();var mobiles = $(\"#mobile\").val(); var certNum = $(\"#certNum\").val();window.CTTX.ToastMsg(newname+'-'+mobiles+'-'+certNum);};";
+
+                mWebView.loadUrl("javascript:" + js);
+                LogUtils.e("onPageFinished==>" + js);
+            } else if (url.contains("")) {
+
+            }
         }
 
         @Override
@@ -343,6 +358,7 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
     };
 
     WebChromeClient webChromeClient = new WebChromeClient() {
+
         /**
          * 获得网页的加载进度
          */

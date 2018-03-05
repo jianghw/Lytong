@@ -19,39 +19,26 @@ public class RetrofitFactory {
     }
 
     public Retrofit createRetrofit(int type) {
-        switch (type) {
-            case 1:
-                return MainRetrofit.getInstance().createRetrofit(getBaseUrl(type));
-            case 2:
-                return MainRetrofit.getInstance().createRetrofit(getBaseUrl(type));
-            case 3:
-                return MainRetrofit.getInstance().createRetrofit(getBaseUrl(type));
-            case 4:
-                return MainRetrofit.getInstance().createRetrofit(getBaseUrl(type));
-            default:
-                throw new IllegalArgumentException("pay retrofit type is not right");
-        }
+        return MainRetrofit.getInstance().createRetrofit(getBaseUrl(type));
     }
 
     /**
      * 手动修改值
      */
     private String getBaseUrl(int type) {
-        return getBaseUrl(type, BuildConfig.App_Url);
-    }
-
-    private String getBaseUrl(int type, boolean isDebug) {
         switch (type) {
             case 1://同赞自己服务器
-                return isDebug
-                        ? "http://dev.liyingtong.com/" : "http://api2.liyingtong.com/";
-            case 2:
-                return isDebug
-                        ? "https://ctkapptest.icbc-axa.com/ecip/" : "https://ctkapp.icbc-axa.com/ecip/";
-            case 3:
+                return BuildConfig.base_url;
+            case 2://银行服务
+                return BuildConfig.bank_app_url;
+            case 3://上传图片
                 return "http://liyingtong.com:8080/";
             case 4:
                 return "http://192.168.1.127:8082/";
+            case 5:
+                return BuildConfig.isDeta ? BuildConfig.beta_base_url : BuildConfig.release_base_url;
+            case 6:
+                return BuildConfig.isDeta ? BuildConfig.beta_bank_url : BuildConfig.release_bank_url;
             default:
                 return "http://192.168.1.147:80/";
         }

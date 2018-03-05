@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.base.bean;
+package com.tzly.ctcyh.java.response.orc;
 
 /**
  * 号牌号码： getCardNo()

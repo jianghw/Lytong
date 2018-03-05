@@ -1,11 +1,10 @@
-package com.tzly.ctcyh.pay.data_m;
+package com.tzly.ctcyh.router.api;
 
-import com.tzly.ctcyh.pay.BuildConfig;
+import com.tzly.ctcyh.router.BuildConfig;
 
 import retrofit2.Retrofit;
 
 /**
- * Created by jianghw on 2017/4/26.
  * 构建bases url工厂
  */
 
@@ -21,11 +20,11 @@ public class RetrofitFactory {
     public Retrofit createRetrofit(int type) {
         switch (type) {
             case 1:
-                return PayRetrofit.getInstance().createRetrofit(getBaseUrl(type));
+                return HttpsRetrofit.getInstance().createRetrofit(getBaseUrl(type));
             case 2:
-                return PayRetrofit.getInstance().createRetrofit(getBaseUrl(type));
+                return HttpsRetrofit.getInstance().createRetrofit(getBaseUrl(type));
             case 3:
-                return PayRetrofit.getInstance().createRetrofit(getBaseUrl(type));
+                return HttpsRetrofit.getInstance().createRetrofit(getBaseUrl(type));
             default:
                 throw new IllegalArgumentException("pay retrofit type is not right");
         }
@@ -35,17 +34,13 @@ public class RetrofitFactory {
      * 手动修改值
      */
     private String getBaseUrl(int type) {
-        return getBaseUrl(type, BuildConfig.App_Url);
-    }
-
-    private String getBaseUrl(int type, boolean isDebug) {
         switch (type) {
-            case 1://同赞自己服务器
-                return isDebug
-                        ?"http://dev.liyingtong.com/":"http://api2.liyingtong.com/";
+            case 1:
+                return BuildConfig.isDeta
+                        ? BuildConfig.beta_base_url : BuildConfig.release_base_url;
             case 2:
-                return isDebug
-                        ?"https://ctkapptest.icbc-axa.com/ecip/":"https://ctkapp.icbc-axa.com/ecip/";
+                return BuildConfig.isDeta
+                        ? BuildConfig.beta_bank_url : BuildConfig.release_bank_url;
             default:
                 return "http://192.168.1.147:80/";
         }

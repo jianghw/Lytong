@@ -72,7 +72,7 @@ public class MyOrderStatusFragment extends BaseRecyclerListJxFragment<OrderListB
                 else
                     MainRouter.gotoOrderDetailActivity(getActivity(), orderId);
             } else {
-                MainRouter.gotoHtmlActivity(getActivity(),
+                MainRouter.gotoWebHtmlActivity(getActivity(),
                         bean.getGoodsName(), bean.getTargetUrl() + "?orderId=" + orderId);
             }
         }

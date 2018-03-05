@@ -5,7 +5,7 @@ import com.zantong.mobilecttx.order.bean.OrderListResponse;
 import com.zantong.mobilecttx.order.bean.ReceiveInfoResponse;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 import retrofit2.http.Body;
 import retrofit2.http.Field;

@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.order.bean;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 /**
  * 8.查询订单列表 N

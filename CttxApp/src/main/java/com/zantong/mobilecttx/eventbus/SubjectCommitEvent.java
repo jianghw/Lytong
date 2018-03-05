@@ -1,7 +1,7 @@
 package com.zantong.mobilecttx.eventbus;
 
-import com.tzly.ctcyh.router.bean.response.SubjectGoodsBean;
-import com.tzly.ctcyh.router.bean.response.SubjectGoodsData;
+import com.tzly.ctcyh.java.response.SubjectGoodsBean;
+import com.tzly.ctcyh.java.response.SubjectGoodsData;
 
 public class SubjectCommitEvent {
 

@@ -217,7 +217,7 @@ public class BaseApiClient {
 
 
     public static String getUrl(String relativeUrl) {
-        return BuildConfig.CAR_MANGER_URL + relativeUrl;
+        return BuildConfig.base_url + relativeUrl;
     }
 
     public static String getDownUrl(String relativeUrl) {

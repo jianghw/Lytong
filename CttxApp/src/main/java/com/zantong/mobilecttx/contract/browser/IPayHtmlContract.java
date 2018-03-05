@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.contract.browser;
 
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
 
 import java.util.List;

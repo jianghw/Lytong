@@ -11,9 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.tzly.ctcyh.router.bean.BankResponse;
-import com.tzly.ctcyh.router.bean.BaseResponse;
-import com.tzly.ctcyh.router.util.RegexUtils;
+import com.tzly.ctcyh.java.response.BankResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.util.ViewUtils;
@@ -95,11 +94,11 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         //测试数据下
 
         boolean positon = new Random().nextBoolean();
-        if (BuildConfig.App_Url && positon) {
+        if (BuildConfig.isDeta && positon) {
             mName.setText("遇紫紫");
             mIdCard.setText("301364198811040740");
             mDriverFileNum.setText("310002038631");
-        } else if (BuildConfig.App_Url && !positon) {
+        } else if (BuildConfig.isDeta && !positon) {
             mName.setText("毛乾帅");
             mIdCard.setText("310109198503162039");
             mDriverFileNum.setText("310010007285");
@@ -114,7 +113,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 new DialogMgr(this, R.mipmap.code_query_notice_iamge);
                 break;
             case R.id.apply_card_first_desc:   //说明
-                MainRouter.gotoHtmlActivity(this, "隐私声明", "file:///android_asset/bindcard_agreement.html");
+                MainRouter.gotoWebHtmlActivity(this, "隐私声明", "file:///android_asset/bindcard_agreement.html");
                 break;
             case R.id.apply_card_first_commit://下一步
                 commitValue();
@@ -231,7 +230,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
 //        }
 
         //七天之内不能重复办卡 不用
-        if (BuildConfig.App_Url) {
+        if (BuildConfig.isDeta) {
             showDialogLoading();
             checkApplyCardRecord();
         } else {

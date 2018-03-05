@@ -16,12 +16,12 @@ import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
+import com.tzly.ctcyh.router.api.RetrofitFactory;
 
 import retrofit2.Retrofit;
 import rx.Observable;
 
 /**
- * Created by jianghw on 2017/4/26.
  * 远程数据处理
  */
 

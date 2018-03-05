@@ -115,7 +115,7 @@ public class MainDataService implements IMainService {
      */
     @Override
     public void gotoHtmlActivity(Context activity, String title, String msg) {
-        MainRouter.gotoHtmlActivity(activity, title, msg);
+        MainRouter.gotoWebHtmlActivity(activity, title, msg);
     }
     /**
      * 去办畅通卡

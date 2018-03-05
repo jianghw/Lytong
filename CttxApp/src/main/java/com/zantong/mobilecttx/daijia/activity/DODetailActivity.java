@@ -27,7 +27,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.HashMap;
 
 import butterknife.Bind;
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.router.global.JxGlobal;
 
 /**
@@ -104,7 +104,7 @@ public class DODetailActivity extends BaseMvpActivity<IBaseView, HelpPresenter> 
                                     @Override
                                     public void onSuccess(PayOrderResponse result) {
                                         if (result.getResponseCode() == 2000) {;
-                                            MainRouter.gotoHtmlActivity(DODetailActivity.this,"支付",result.getData());
+                                            MainRouter.gotoWebHtmlActivity(DODetailActivity.this,"支付",result.getData());
                                         }
                                     }
                                 });

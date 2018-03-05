@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.user.bean;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 /**
  * 红包实体

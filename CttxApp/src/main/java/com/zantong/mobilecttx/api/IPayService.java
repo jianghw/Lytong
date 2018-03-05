@@ -6,7 +6,7 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
 
 import java.util.List;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 import retrofit2.http.Body;
 import retrofit2.http.Field;

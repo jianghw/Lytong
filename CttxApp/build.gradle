@@ -79,73 +79,64 @@ android {
     }
 
     buildTypes {
-//release
         debug {
-            buildConfigField "boolean", "App_Url", rootProject.ext.buildConfig.mianDebug
+            buildConfigField 'boolean', 'isDeta', rootProject.ext.beta.isDeta
+            buildConfigField 'String', 'base_url', rootProject.ext.beta.base_url
+            buildConfigField 'String', 'bank_img_url', rootProject.ext.beta.bank_img_url
+            buildConfigField 'String', 'bank_file_url', rootProject.ext.beta.bank_file_url
+            buildConfigField 'String', 'bank_app_url', rootProject.ext.beta.bank_app_url
+            buildConfigField 'String', 'bank_mc_url', rootProject.ext.beta.bank_mc_url
 
-            buildConfigField "String", "CAR_MANGER_URL", "\"http://dev.liyingtong.com/\""
-            //新接口正式地址
-            buildConfigField "String", "BASE_URL", "\"https://ctkapptest.icbc-axa.com/ecip/mobilecall_call\""
-            //老接口正式地址
-            buildConfigField "String", "APP_URL", "\"https://ctkapptest.icbc-axa.com/ecip/\""
-            //老接口海洋正式地址
-            buildConfigField "String", "APPFileUrl", "\"https://ctkapp.icbc-axa.com:9000/\""
-            //领卡网点文件（正式地址）
-            buildConfigField "String", "ImageLoadUrl", "\"https://ctkapp.icbc-axa.com/\""
+            buildConfigField 'String', 'beta_base_url', rootProject.ext.beta.base_url
+            buildConfigField 'String', 'release_base_url', rootProject.ext.release.base_url
+            buildConfigField 'String', 'beta_bank_url', rootProject.ext.beta.bank_app_url
+            buildConfigField 'String', 'release_bank_url', rootProject.ext.release.bank_app_url
 
-            //图片下载地址（正式地址）
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
             signingConfig signingConfigs.debug
+            manifestPlaceholders = [baidu_API_KEY     : "E6lDRqyaSjj8jR8O5wdz5jpgiT0LOuQn",
+                                    alibaba_API_KEY   : "23481202",
+                                    alibaba_APP_SECRET: "a51ce60b119cf15b9ab220ed70d8078c"]
+        }
+        //内部版
+        alpha {
+            buildConfigField 'boolean', 'isDeta', rootProject.ext.alpha.isDeta
+            buildConfigField 'String', 'base_url', rootProject.ext.alpha.base_url
+            buildConfigField 'String', 'bank_img_url', rootProject.ext.alpha.bank_img_url
+            buildConfigField 'String', 'bank_file_url', rootProject.ext.alpha.bank_file_url
+            buildConfigField 'String', 'bank_app_url', rootProject.ext.alpha.bank_app_url
+            buildConfigField 'String', 'bank_mc_url', rootProject.ext.alpha.bank_mc_url
 
+            buildConfigField 'String', 'beta_base_url', rootProject.ext.beta.base_url
+            buildConfigField 'String', 'release_base_url', rootProject.ext.release.base_url
+            buildConfigField 'String', 'beta_bank_url', rootProject.ext.beta.bank_app_url
+            buildConfigField 'String', 'release_bank_url', rootProject.ext.release.bank_app_url
+
+            debuggable = true
+            minifyEnabled false
+            zipAlignEnabled true
+            shrinkResources false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [baidu_API_KEY     : "E6lDRqyaSjj8jR8O5wdz5jpgiT0LOuQn",
                                     alibaba_API_KEY   : "23481202",
                                     alibaba_APP_SECRET: "a51ce60b119cf15b9ab220ed70d8078c"]
         }
 
+        release.initWith(android.buildTypes.alpha)
         release {
-            buildConfigField "boolean", "App_Url", rootProject.ext.buildConfig.mianDebug
-
-            buildConfigField "String", "CAR_MANGER_URL", "\"http://api2.liyingtong.com/\""
-            //新接口正式地址
-            buildConfigField "String", "BASE_URL", "\"https://ctkapp.icbc-axa.com/ecip/mobilecall_call\""
-            //老接口正式地址
-            buildConfigField "String", "APP_URL", "\"https://ctkapp.icbc-axa.com/ecip/\""
-            //老接口海洋正式地址
-            buildConfigField "String", "APPFileUrl", "\"https://ctkapp.icbc-axa.com:9000/\""
-            //领卡网点文件（正式地址）
-            buildConfigField "String", "ImageLoadUrl", "\"https://ctkapp.icbc-axa.com/\""
-
-            //混淆
-            minifyEnabled false
-            //Zipalign优化
-            zipAlignEnabled true
-            // 移除无用的resource文件
-            shrinkResources false
-            //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            //签名
-            signingConfig signingConfigs.release
-
-            manifestPlaceholders = [baidu_API_KEY     : "E6lDRqyaSjj8jR8O5wdz5jpgiT0LOuQn",
-                                    alibaba_API_KEY   : "23481202",
-                                    alibaba_APP_SECRET: "a51ce60b119cf15b9ab220ed70d8078c"]
+            buildConfigField 'boolean', 'isDeta', rootProject.ext.release.isDeta
+            debuggable = false
         }
     }
 
     productFlavors {
         //开发者版本
-        dev {
-            minSdkVersion 21
-        }
-        //应用宝
-        tzly_yyb {}
-        //360应用市场
-        tzly_360 {}
+        dev {}
         //华为
         tzly_huawei {}
-        //小米市场
-        tzly_xiaomi {}
-        //百度市场
-        tzly_baidu {}
 
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]

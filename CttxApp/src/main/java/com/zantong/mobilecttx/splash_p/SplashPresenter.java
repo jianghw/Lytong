@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.splash_p;
 
 import android.support.annotation.NonNull;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.home.bean.StartPicResponse;

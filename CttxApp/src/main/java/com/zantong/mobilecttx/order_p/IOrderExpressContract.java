@@ -5,7 +5,7 @@ import com.tzly.ctcyh.router.base.IBaseView;
 import com.zantong.mobilecttx.order.bean.ReceiveInfoResponse;
 import com.zantong.mobilecttx.order.dto.ExpressDTO;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 /**
  * 快递会叫页面

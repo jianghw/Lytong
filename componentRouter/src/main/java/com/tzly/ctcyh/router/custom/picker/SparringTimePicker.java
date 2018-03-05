@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.adapter.PopupCarTimeAdapter;
-import com.tzly.ctcyh.router.bean.response.SparringGoodsBean;
+import com.tzly.ctcyh.java.response.SparringGoodsBean;
 import com.tzly.ctcyh.router.util.ConvertUtils;
 
 import java.util.ArrayList;

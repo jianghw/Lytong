@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.presenter.order;
 
 import android.support.annotation.NonNull;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;

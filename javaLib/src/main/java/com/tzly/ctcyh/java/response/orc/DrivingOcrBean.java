@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.daijia.bean;
+package com.tzly.ctcyh.java.response.orc;
 
 /**
  * Created by zhengyingbing on 16/9/13.

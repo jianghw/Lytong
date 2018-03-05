@@ -39,7 +39,7 @@ public class CardFlowActivity extends BaseJxActivity {
     @OnClick(R.id.tv_web)
     public void onClick(View v) {
 
-        MainRouter.gotoHtmlActivity(this,
+        MainRouter.gotoWebHtmlActivity(this,
                 "办卡进度查询", "http://www.sh.icbc.com.cn");
     }
 

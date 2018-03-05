@@ -52,7 +52,7 @@ public class CargoRetrofit implements IRetrofitUrl {
                         Log.d("CargoRetrofit", message);
                     }
                 })
-                .setLevel(BuildConfig.App_Url
+                .setLevel(BuildConfig.isDeta
                         ? HttpLoggingInterceptor.Level.BASIC
                         : HttpLoggingInterceptor.Level.NONE);
 

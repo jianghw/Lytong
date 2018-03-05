@@ -156,7 +156,7 @@ public class FahrschuleApplyFragment extends JxBaseRefreshFragment
 
     @Override
     protected void onFirstDataVisible() {
-        if (BuildConfig.App_Url) {
+        if (BuildConfig.isDeta) {
             mEditName.setText("测试人员" + new Random().nextInt(10));
             mEditPhone.setText("1525252552" + new Random().nextInt(10));
             mEditIdentityCard.setText("342628198004160012");
@@ -206,7 +206,7 @@ public class FahrschuleApplyFragment extends JxBaseRefreshFragment
                 } else if (mPresenter != null) mPresenter.getAreaGoods();
                 break;
             case R.id.tv_info://官网
-                MainRouter.gotoHtmlActivity(getActivity(),
+                MainRouter.gotoWebHtmlActivity(getActivity(),
                         "驾校报名官网", "http://www.antingjx.com/jianjie/");
                 break;
             case R.id.btn_commit:

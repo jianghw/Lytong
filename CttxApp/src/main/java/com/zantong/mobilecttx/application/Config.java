@@ -48,10 +48,10 @@ public class Config {
     public static final String ERROR_IO_MSG = "系统繁忙，请您稍后再试";
     public static final String ERROR_NET_MSG = "请检查您的网络设置";
 
-    public static final String HOME_CAR_WASH_URL = BuildConfig.CAR_MANGER_URL+"h5/car_wash/car_wash.html";
+    public static final String HOME_CAR_WASH_URL = BuildConfig.base_url+"h5/car_wash/car_wash.html";
 
-    public static final String HUNDRED_PLAN_HOME = BuildConfig.CAR_MANGER_URL + "h5/build/index.html";
-    public static final String HUNDRED_PLAN_DEADLINE = BuildConfig.CAR_MANGER_URL + "h5/build/pages/deadline.html";
+    public static final String HUNDRED_PLAN_HOME = BuildConfig.base_url + "h5/build/index.html";
+    public static final String HUNDRED_PLAN_DEADLINE = BuildConfig.base_url + "h5/build/pages/deadline.html";
 
     public static String getErrMsg(String errorCode) {
         String errorMsg = "出错了...请稍后重试";

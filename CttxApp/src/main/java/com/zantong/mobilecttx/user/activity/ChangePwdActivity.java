@@ -9,8 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.tzly.ctcyh.router.bean.BankResponse;
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BankResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.R;

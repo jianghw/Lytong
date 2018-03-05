@@ -176,7 +176,7 @@ public class MegDetailFragment extends RefreshFragment
         String title = "信息";
         if (titleTv != null) title = titleTv.getText().toString().trim();
 
-        MainRouter.gotoHtmlActivity(getActivity(), title, contentHrefLine);
+        MainRouter.gotoWebHtmlActivity(getActivity(), title, contentHrefLine);
     }
 
     /**

@@ -346,16 +346,6 @@
             android:name=".order_v.OrderExpressActivity"
             android:screenOrientation="portrait" />
 
-        <!-- ==========android:process=":com.zantong.mobilecttx.web"=====浏览器============ -->
-        <activity
-            android:name=".browser.BrowserHtmlActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="com.zantong.mobilecttx.browser.BrowserHtmlActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <!-- ===================付款web模块========================================= -->
         <!-- 付款web模块页面 -->
         <activity

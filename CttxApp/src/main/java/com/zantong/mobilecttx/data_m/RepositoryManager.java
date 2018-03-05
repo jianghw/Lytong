@@ -3,9 +3,9 @@ package com.zantong.mobilecttx.data_m;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.tzly.ctcyh.router.bean.BankResponse;
-import com.tzly.ctcyh.router.bean.BaseResponse;
-import com.tzly.ctcyh.router.bean.response.SubjectGoodsResponse;
+import com.tzly.ctcyh.java.response.BankResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
 import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
 import com.zantong.mobilecttx.base.bean.ValidCountResponse;

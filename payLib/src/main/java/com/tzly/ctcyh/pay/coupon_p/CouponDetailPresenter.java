@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.tzly.ctcyh.pay.bean.response.CodeDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponDetailResponse;
-import com.tzly.ctcyh.pay.data_m.BaseSubscriber;
+import com.tzly.ctcyh.router.api.BaseSubscriber;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
 import com.tzly.ctcyh.pay.global.PayGlobal;
 

@@ -27,13 +27,15 @@ public class AppUtils {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
-    @SuppressLint("HardwareIds")
+    @SuppressLint({"HardwareIds", "MissingPermission"})
     public static String getDeviceId() {
         String deviceId = null;
         TelephonyManager telephonyManager =
                 (TelephonyManager) Utils.getContext().getSystemService(Context.TELEPHONY_SERVICE);
         try {
-            deviceId = telephonyManager.getDeviceId();
+            if (telephonyManager != null) {
+                deviceId = telephonyManager.getDeviceId();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

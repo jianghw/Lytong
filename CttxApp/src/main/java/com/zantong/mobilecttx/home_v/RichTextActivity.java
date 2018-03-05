@@ -49,6 +49,6 @@ public class RichTextActivity extends AbstractBaseActivity {
     }
 
     private void gotoHtml(String tableHtml) {
-        MainRouter.gotoHtmlActivity(this, "Web页面", tableHtml);
+        MainRouter.gotoWebHtmlActivity(this, "Web页面", tableHtml);
     }
 }

@@ -52,7 +52,7 @@ public class UserRetrofit implements IRetrofitUrl {
                         Log.d("UserRetrofit", message);
                     }
                 })
-                .setLevel(BuildConfig.App_Url
+                .setLevel(BuildConfig.isDeta
                         ? HttpLoggingInterceptor.Level.BASIC
                         : HttpLoggingInterceptor.Level.NONE);
 

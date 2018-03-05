@@ -58,7 +58,7 @@ public class CarBeautyActivity extends JxBaseActivity implements View.OnClickLis
             //                i.putExtra(JxGlobal.putExtra.browser_url_extra, "http://m.hiservice.com.cn/activity/freekongtiaoyanghu?source=gonghangcx");
             //                break;
             case R.id.img_violation:
-                MainRouter.gotoHtmlActivity(this,
+                MainRouter.gotoWebHtmlActivity(this,
                         "汽车冰蜡", "http://m.hiservice.com.cn/market/icbc58");
                 break;
             default:

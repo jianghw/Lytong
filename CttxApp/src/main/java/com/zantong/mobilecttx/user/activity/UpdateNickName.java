@@ -25,7 +25,7 @@ import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 import static com.zantong.mobilecttx.router.MainRouter.getUserPhoenum;
 

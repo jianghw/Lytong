@@ -18,11 +18,9 @@ import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
 import com.google.gson.Gson;
 import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.router.base.RefreshFragment;
-import com.tzly.ctcyh.router.bean.BaseResponse;
 import com.tzly.ctcyh.router.custom.banner.CBViewHolderCreator;
 import com.tzly.ctcyh.router.custom.banner.ConvenientBanner;
 import com.tzly.ctcyh.router.global.JxGlobal;
-import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
@@ -30,10 +28,7 @@ import com.tzly.ctcyh.router.util.primission.PermissionFail;
 import com.tzly.ctcyh.router.util.primission.PermissionGen;
 import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
 import com.tzly.ctcyh.router.util.rea.Des3;
-import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.api.CallBack;
-import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.BaseAutoScrollUpTextView;
@@ -61,7 +56,6 @@ import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_v.CarBeautyActivity;
 import com.zantong.mobilecttx.share_v.ShareParentActivity;
 import com.zantong.mobilecttx.user.bean.UserCarInfoBean;
-import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -466,7 +460,7 @@ public class HomeUnimpededFragment extends RefreshFragment
         if (bannerBean != null && !TextUtils.isEmpty(bannerBean.getTargetPath())) {
             String path = bannerBean.getTargetPath();
             if (path.contains("http")) {//启动公司自己html
-                MainRouter.gotoHtmlActivity(getActivity(), bannerBean.getTitle(), path);
+                MainRouter.gotoWebHtmlActivity(getActivity(), bannerBean.getTitle(), path);
             } else if (path.equals("native_app_recharge")) {//加油充值
                 MainRouter.gotoRechargeActivity(getActivity());
             } else if (path.equals("native_app_loan")) {
@@ -540,7 +534,7 @@ public class HomeUnimpededFragment extends RefreshFragment
         String imgUrl = bean.getImgUrl();
         String pageUrl = bean.getPageUrl();
         if (TextUtils.isEmpty(imgUrl) && !TextUtils.isEmpty(pageUrl)) {
-            MainRouter.gotoHtmlActivity(getActivity(), "优惠活动", pageUrl);
+            MainRouter.gotoWebHtmlActivity(getActivity(), "优惠活动", pageUrl);
         } else {
             DialogUtils.createActionDialog(getActivity(), 3, imgUrl, pageUrl,
                     new DialogUtils.ActionADOnClick() {

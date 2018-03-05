@@ -14,7 +14,7 @@ import com.zantong.mobilecttx.order.dto.ExpressDTO;
 
 import java.util.List;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

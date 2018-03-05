@@ -8,8 +8,8 @@ import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 
 import java.io.File;
 
-import com.tzly.ctcyh.router.bean.BankResponse;
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BankResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 /**
  * 违章查询

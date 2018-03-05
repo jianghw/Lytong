@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.daijia.bean;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 /**
  * Created by zhoujie on 2017/2/21.

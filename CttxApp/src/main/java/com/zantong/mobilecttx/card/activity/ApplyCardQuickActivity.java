@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.tzly.ctcyh.router.bean.BankResponse;
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BankResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.router.custom.picker.DatePicker;
 import com.tzly.ctcyh.router.custom.popup.CustomDialog;
 import com.tzly.ctcyh.router.imple.IBankAreaDialogListener;
@@ -27,7 +26,6 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.api.FileDownloadApi;
 import com.zantong.mobilecttx.api.HandleCTCardApiClient;
 import com.zantong.mobilecttx.application.Config;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.basehttprequest.Retrofit2Utils;
 import com.zantong.mobilecttx.base.interf.IBaseView;
@@ -40,7 +38,6 @@ import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.dto.CancelRechargeOrderDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.ReadFfile;
-import com.zantong.mobilecttx.utils.dialog.NetLocationDialog;
 import com.zantong.mobilecttx.widght.CttxEditText;
 import com.zantong.mobilecttx.widght.CttxTextView;
 import com.zantong.mobilecttx.widght.SettingItemView;
@@ -388,7 +385,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
     }
 
     private void downloadFile(Subscriber<? super String> subscriber) {
-        FileDownloadApi api = new Retrofit2Utils().getRetrofitHttps(BuildConfig.APP_URL).create(FileDownloadApi.class);
+        FileDownloadApi api = new Retrofit2Utils().getRetrofitHttps(BuildConfig.bank_app_url).create(FileDownloadApi.class);
         Response<ResponseBody> response = null;
         try {
             response = api.downloadFileWithFixedUrl("download/icbcorg.txt").execute();

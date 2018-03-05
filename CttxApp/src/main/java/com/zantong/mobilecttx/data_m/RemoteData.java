@@ -2,9 +2,9 @@ package com.zantong.mobilecttx.data_m;
 
 import android.text.TextUtils;
 
-import com.tzly.ctcyh.router.bean.BankResponse;
-import com.tzly.ctcyh.router.bean.BaseResponse;
-import com.tzly.ctcyh.router.bean.response.SubjectGoodsResponse;
+import com.tzly.ctcyh.java.response.BankResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 import com.zantong.mobilecttx.api.IAddOilService;
 import com.zantong.mobilecttx.api.IBankService;
 import com.zantong.mobilecttx.api.IBannerService;
@@ -114,12 +114,12 @@ public class RemoteData implements IRemoteSource {
         return RetrofitFactory.getInstance().createRetrofit(2);
     }
 
-    private Retrofit testRetrofit() {
-        return RetrofitFactory.getInstance().createRetrofit(4);
+    private Retrofit imageRetrofit() {
+        return RetrofitFactory.getInstance().createRetrofit(3);
     }
 
-    private Retrofit initImageRetrofit() {
-        return RetrofitFactory.getInstance().createRetrofit(3);
+    private Retrofit localRetrofit() {
+        return RetrofitFactory.getInstance().createRetrofit(4);
     }
 
     /**
@@ -272,7 +272,7 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<DrivingOcrResult> uploadDrivingImg(MultipartBody.Part part) {
-        return initImageRetrofit().create(IDrivingImageService.class).uploadDrivingImg(part);
+        return imageRetrofit().create(IDrivingImageService.class).uploadDrivingImg(part);
     }
 
     /**

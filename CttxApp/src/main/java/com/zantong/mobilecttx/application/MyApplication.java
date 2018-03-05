@@ -103,14 +103,14 @@ public class MyApplication extends MultiDexApplication {
         //有盟+统计初始化
         MobclickAgent.UMAnalyticsConfig umAnalyticsConfig =
                 new MobclickAgent.UMAnalyticsConfig(
-                        getApplicationContext(), BuildConfig.App_Url
+                        getApplicationContext(), BuildConfig.isDeta
                         ? "592544d7b27b0a65a200069e" : "58b3880304e20581760018e7",
                         channel);
 
         MobclickAgent.startWithConfigure(umAnalyticsConfig);
-        MobclickAgent.setDebugMode(BuildConfig.App_Url);
+        MobclickAgent.setDebugMode(BuildConfig.isDeta);
         MobclickAgent.enableEncrypt(true);//日志加密
-        MobclickAgent.setCatchUncaughtExceptions(BuildConfig.App_Url);
+        MobclickAgent.setCatchUncaughtExceptions(BuildConfig.isDeta);
         MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计方式
 
         //图片
@@ -152,10 +152,10 @@ public class MyApplication extends MultiDexApplication {
         //App的版本
         strategy.setAppVersion(version);
         Bugly.init(this,
-                BuildConfig.App_Url ? "b7b596e1eb"
-                        : "62323a33e6", BuildConfig.App_Url, strategy);
+                BuildConfig.isDeta ? "b7b596e1eb"
+                        : "62323a33e6", BuildConfig.isDeta, strategy);
         //Log环境初始化
-        LogUtils.initLogUtils(BuildConfig.App_Url);
+        LogUtils.initLogUtils(BuildConfig.isDeta);
     }
 
     /**

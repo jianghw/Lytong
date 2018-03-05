@@ -6,7 +6,7 @@ import android.webkit.JavascriptInterface;
 
 import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
-import com.tzly.ctcyh.pay.data_m.BaseSubscriber;
+import com.tzly.ctcyh.router.api.BaseSubscriber;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
 import com.tzly.ctcyh.pay.global.PayGlobal;
 

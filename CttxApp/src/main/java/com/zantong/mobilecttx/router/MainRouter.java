@@ -3,7 +3,6 @@ package com.zantong.mobilecttx.router;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -18,7 +17,6 @@ import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.service.RouterGlobal;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
-import com.zantong.mobilecttx.payment_v.LicenseGradeActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
@@ -562,8 +560,8 @@ public final class MainRouter {
     /**
      * 银行卡支付页面
      */
-    public static void gotoHtmlActivity(Activity activity, String title, String content,
-                                        String orderId, int type, String mChannel) {
+    public static void gotoWebHtmlActivity(Activity activity, String title, String content,
+                                           String orderId, int type, String mChannel) {
         Object object = getPayObject();
         if (object != null && object instanceof IPayService) {
             IPayService service = (IPayService) object;
@@ -574,15 +572,33 @@ public final class MainRouter {
     }
 
     /**
-     * html 广告 优惠等页面
+     * 统一 基础 html 广告 优惠等页面
      */
-    public static void gotoHtmlActivity(Context activity, String title, String url) {
-        Bundle bundle = new Bundle();
-        bundle.putString(MainGlobal.putExtra.browser_title_extra, title);
-        bundle.putString(MainGlobal.putExtra.browser_url_extra, url);
-        UiRouter.getInstance().openUriBundle(activity,
-                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.html_self_host,
-                bundle);
+    public static void gotoWebHtmlActivity(Context context, String title, String url) {
+        //        Bundle bundle = new Bundle();
+        //        bundle.putString(MainGlobal.putExtra.browser_title_extra, title);
+        //        bundle.putString(MainGlobal.putExtra.browser_url_extra, url);
+        //        UiRouter.getInstance().openUriBundle(activity,
+        //                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.html_self_host,
+        //                bundle);
+
+        Object object = getPayObject();
+        if (object != null && object instanceof IPayService) {
+            IPayService service = (IPayService) object;
+            service.gotoWebHtmlActivity(context, title, url);
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent(ServiceRouter.PAY_LIKE);
+        }
+    }
+
+    public static void gotoWebHtmlActivity(Activity activity, String title, String url) {
+        Object object = getPayObject();
+        if (object != null && object instanceof IPayService) {
+            IPayService service = (IPayService) object;
+            service.gotoWebHtmlActivity(activity, title, url);
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent(ServiceRouter.PAY_LIKE);
+        }
     }
 
     /**

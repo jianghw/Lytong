@@ -1,4 +1,4 @@
-package com.tzly.ctcyh.router.bean.response;
+package com.tzly.ctcyh.java.response;
 
 /**
  * Created by jianghw on 2017/8/2.

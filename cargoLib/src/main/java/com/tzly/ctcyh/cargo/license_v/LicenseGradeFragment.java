@@ -151,7 +151,7 @@ public class LicenseGradeFragment extends RefreshFragment
         LienseGradePresenter presenter = new LienseGradePresenter(
                 InjectionRepository.provideRepository(Utils.getContext()), this);
 
-        if (BuildConfig.App_Url) {
+        if (BuildConfig.isDeta) {
             mEditLicense.setText("310109198503162039");
             mEditSerial.setText("310010007285");
         } else {

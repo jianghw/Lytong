@@ -10,8 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
-import com.tzly.ctcyh.router.bean.response.SubjectGoodsBean;
-import com.tzly.ctcyh.router.bean.response.SubjectGoodsData;
+import com.tzly.ctcyh.java.response.SubjectGoodsBean;
+import com.tzly.ctcyh.java.response.SubjectGoodsData;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.imple.IAreaDialogListener;
 import com.tzly.ctcyh.router.imple.ISpeedDialogListener;
@@ -192,7 +192,7 @@ public class SparringSubscribeFragment extends JxBaseRefreshFragment
 
     @Override
     protected void onFirstDataVisible() {
-        if (BuildConfig.App_Url) {
+        if (BuildConfig.isDeta) {
             setEditAddress("城市车师傅师傅");
             setEditName("测试人员");
             setEditPhone("15252565532");

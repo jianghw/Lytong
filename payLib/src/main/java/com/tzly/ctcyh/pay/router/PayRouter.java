@@ -5,10 +5,13 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.tzly.ctcyh.pay.BuildConfig;
+
 import com.tzly.ctcyh.pay.global.PayGlobal;
+import com.tzly.ctcyh.pay.html_v.WebHtmlFragment;
+import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.UiRouter;
+import com.tzly.ctcyh.service.ICargoService;
 import com.tzly.ctcyh.service.IMainService;
 import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.service.RouterGlobal;
@@ -287,8 +290,7 @@ public final class PayRouter {
      */
     public static void gotoAliHtmlActivity(Activity context, String title,
                                            String extraOrderId, int payType, int price, int couponBeanId) {
-        String url = BuildConfig.App_Url
-                ? "http://dev.liyingtong.com/" : "http://api2.liyingtong.com/";
+        String url = BuildConfig.isDeta ? BuildConfig.beta_base_url : BuildConfig.release_base_url;
         StringBuilder sb = new StringBuilder();
         sb.append(url);
         sb.append("aliPay/aliPayHtml");
@@ -331,7 +333,7 @@ public final class PayRouter {
      */
     private static void gotoPayHtmlActivity(Activity context, Bundle bundle) {
         UiRouter.getInstance().openUriForResult(context,
-                RouterGlobal.Scheme.pay_scheme + "://" + RouterGlobal.Host.html_5_host,
+                RouterGlobal.Scheme.pay_scheme + "://" + RouterGlobal.Host.web_html_host,
                 bundle, PayGlobal.requestCode.pay_html_price);
     }
 
@@ -368,5 +370,61 @@ public final class PayRouter {
         UiRouter.getInstance().openUriBundle(activity,
                 RouterGlobal.Scheme.pay_scheme + "://" + RouterGlobal.Host.coupon_detail_host,
                 bundle);
+    }
+
+    /**
+     * web_html
+     */
+    public static void gotoWebHtmlActivity(Activity activity, String title, String url) {
+        Bundle bundle = new Bundle();
+        bundle.putString(PayGlobal.putExtra.web_title_extra, title);
+        bundle.putString(PayGlobal.putExtra.web_url_extra, url);
+
+        gotoWebHtmlActivity(activity, bundle);
+    }
+
+    public static void gotoWebHtmlActivity(Activity activity, String title, String url,
+                                           String orderId, int payType, String channel) {
+        Bundle bundle = new Bundle();
+        bundle.putString(PayGlobal.putExtra.web_title_extra, title);
+        bundle.putString(PayGlobal.putExtra.web_url_extra, url);
+        bundle.putString(PayGlobal.putExtra.web_orderId_extra, orderId);
+        bundle.putInt(PayGlobal.putExtra.web_pay_type_extra, payType);
+        bundle.putString(PayGlobal.putExtra.web_pay_channel_extra, channel);
+
+        gotoWebHtmlActivity(activity, bundle);
+
+    }
+
+    public static void gotoWebHtmlActivity(Activity activity, Bundle bundle) {
+        UiRouter.getInstance().openUriForResult(activity,
+                RouterGlobal.Scheme.pay_scheme + "://" + RouterGlobal.Host.web_html_host,
+                bundle, PayGlobal.requestCode.pay_html_price);
+    }
+
+    public static void gotoWebHtmlActivity(Context context, String title, String url) {
+
+    }
+
+    /**
+     * 行驶证证扫描 110
+     */
+    public static void gotoVehicleCameraActivity(Activity activity) {
+        Object object = getCargoObject();
+        if (object != null && object instanceof ICargoService) {
+            ICargoService service = (ICargoService) object;
+            service.gotoVehicleCameraActivity(activity);
+        } else {//注册机开始工作
+            registerCargo();
+        }
+    }
+
+    private static Object getCargoObject() {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        return serviceRouter.getService(ICargoService.class.getSimpleName());
+    }
+
+    private static void registerCargo() {
+        ServiceRouter.registerComponent(ServiceRouter.CARGO_LIKE);
     }
 }

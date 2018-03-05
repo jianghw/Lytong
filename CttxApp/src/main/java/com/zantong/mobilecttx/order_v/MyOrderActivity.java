@@ -26,7 +26,7 @@ import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tzly.ctcyh.router.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 /**
  * 订单列表页面
@@ -158,7 +158,7 @@ public class MyOrderActivity extends JxBaseActivity
              */
             @Override
             public void doClickSubscribe(OrderListBean bean) {
-                MainRouter.gotoHtmlActivity(
+                MainRouter.gotoWebHtmlActivity(
                         MyOrderActivity.this, bean.getGoodsName(), bean.getTargetUrl());
             }
 
