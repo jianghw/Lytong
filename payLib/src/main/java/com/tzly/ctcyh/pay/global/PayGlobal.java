@@ -27,13 +27,17 @@ public final class PayGlobal {
         public static final String coupon_list_type = "coupon_list_type";
         public static final String coupon_list_bean = "coupon_list_bean";
         public static final String pay_type_order = "pay_type_order";
-        public static final String web_orderId_extra = "web_orderId_extra";
-        public static final String web_pay_type_extra = "web_pay_type_extra";
-        public static final String web_pay_channel_extra = "web_pay_channel_extra";
         public static final String coupon_detail_id = "coupon_detail_id";
         //web url title
         public static final String web_title_extra = "web_title_extra";
         public static final String web_url_extra = "web_url_extra";
+
+        public static final String web_orderId_extra = "web_orderId_extra";
+        public static final String web_pay_type_extra = "web_pay_type_extra";
+        public static final String web_pay_channel_extra = "web_pay_channel_extra";
+
+        public static final String web_violationnum_extra = "web_violationnum_extra";
+        public static final String web_enginenum_extra = "web_enginenum_extra";
     }
 
     public static final class Response {

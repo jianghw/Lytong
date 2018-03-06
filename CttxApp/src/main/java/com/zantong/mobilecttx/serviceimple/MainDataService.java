@@ -114,8 +114,8 @@ public class MainDataService implements IMainService {
      * html 广告页面
      */
     @Override
-    public void gotoHtmlActivity(Context activity, String title, String msg) {
-        MainRouter.gotoWebHtmlActivity(activity, title, msg);
+    public void gotoHtmlActivity(Context context, String title, String msg) {
+        MainRouter.gotoWebHtmlActivity(context, title, msg);
     }
     /**
      * 去办畅通卡

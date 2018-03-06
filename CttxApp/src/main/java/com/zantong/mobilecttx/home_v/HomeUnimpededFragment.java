@@ -227,27 +227,27 @@ public class HomeUnimpededFragment extends RefreshFragment
         mCustomGrapevine.setOnItemClickListener(new BaseAutoScrollUpTextView.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-//点击效果
+                //点击效果
             }
         });
         mCustomViolation = (HorizontalInfiniteCycleViewPager) view.findViewById(R.id.custom_violation);
 
-//        mTvLicense = (TextView) view.findViewById(R.id.tv_license);
-//        mTvLicense.setOnClickListener(this);
-//        mTvAppraisement = (TextView) view.findViewById(R.id.tv_appraisement);
-//        mTvAppraisement.setOnClickListener(this);
-//        mTvCheck = (TextView) view.findViewById(R.id.tv_check);
-//        mTvCheck.setOnClickListener(this);
-//        mTvDrive = (TextView) view.findViewById(R.id.tv_drive);
-//        mTvDrive.setOnClickListener(this);
-//        mTvOil = (TextView) view.findViewById(R.id.tv_oil);
-//        mTvOil.setOnClickListener(this);
-//        mTvMap = (TextView) view.findViewById(R.id.tv_map);
-//        mTvMap.setOnClickListener(this);
-//        mTvVehicle = (TextView) view.findViewById(R.id.tv_vehicle);
-//        mTvVehicle.setOnClickListener(this);
-//        mTvRoadside = (TextView) view.findViewById(R.id.tv_roadside);
-//        mTvRoadside.setOnClickListener(this);
+        //        mTvLicense = (TextView) view.findViewById(R.id.tv_license);
+        //        mTvLicense.setOnClickListener(this);
+        //        mTvAppraisement = (TextView) view.findViewById(R.id.tv_appraisement);
+        //        mTvAppraisement.setOnClickListener(this);
+        //        mTvCheck = (TextView) view.findViewById(R.id.tv_check);
+        //        mTvCheck.setOnClickListener(this);
+        //        mTvDrive = (TextView) view.findViewById(R.id.tv_drive);
+        //        mTvDrive.setOnClickListener(this);
+        //        mTvOil = (TextView) view.findViewById(R.id.tv_oil);
+        //        mTvOil.setOnClickListener(this);
+        //        mTvMap = (TextView) view.findViewById(R.id.tv_map);
+        //        mTvMap.setOnClickListener(this);
+        //        mTvVehicle = (TextView) view.findViewById(R.id.tv_vehicle);
+        //        mTvVehicle.setOnClickListener(this);
+        //        mTvRoadside = (TextView) view.findViewById(R.id.tv_roadside);
+        //        mTvRoadside.setOnClickListener(this);
 
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
         mTabLayout = (LinearLayout) view.findViewById(R.id.tabLayout);
@@ -460,7 +460,7 @@ public class HomeUnimpededFragment extends RefreshFragment
         if (bannerBean != null && !TextUtils.isEmpty(bannerBean.getTargetPath())) {
             String path = bannerBean.getTargetPath();
             if (path.contains("http")) {//启动公司自己html
-                MainRouter.gotoWebHtmlActivity(getActivity(), bannerBean.getTitle(), path);
+                MainRouter.gotoWebHtmlActivity(getContext(), bannerBean.getTitle(), path);
             } else if (path.equals("native_app_recharge")) {//加油充值
                 MainRouter.gotoRechargeActivity(getActivity());
             } else if (path.equals("native_app_loan")) {
@@ -534,7 +534,7 @@ public class HomeUnimpededFragment extends RefreshFragment
         String imgUrl = bean.getImgUrl();
         String pageUrl = bean.getPageUrl();
         if (TextUtils.isEmpty(imgUrl) && !TextUtils.isEmpty(pageUrl)) {
-            MainRouter.gotoWebHtmlActivity(getActivity(), "优惠活动", pageUrl);
+            MainRouter.gotoWebHtmlActivity(getContext(), "优惠活动", pageUrl);
         } else {
             DialogUtils.createActionDialog(getActivity(), 3, imgUrl, pageUrl,
                     new DialogUtils.ActionADOnClick() {

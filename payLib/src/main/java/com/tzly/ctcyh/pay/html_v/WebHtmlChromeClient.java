@@ -35,7 +35,7 @@ public class WebHtmlChromeClient extends WebChromeClient {
     @Override
     public void onProgressChanged(WebView view, int newProgress) {
         super.onProgressChanged(view, newProgress);
-        if(chromeClientable!=null) chromeClientable.onProgressChanged(view, newProgress);
+        if (chromeClientable != null) chromeClientable.onProgressChanged(view, newProgress);
     }
 
     /**
@@ -44,6 +44,7 @@ public class WebHtmlChromeClient extends WebChromeClient {
     @Override
     public void onReceivedTitle(WebView view, String title) {
         super.onReceivedTitle(view, title);
+        if (chromeClientable != null) chromeClientable.onReceivedTitle(view, title);
     }
 
     /**

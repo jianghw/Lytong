@@ -1,6 +1,9 @@
 package com.tzly.ctcyh.pay.data_m;
 
-import com.tzly.ctcyh.pay.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.java.response.coupon.CouponInfoResponse;
+import com.tzly.ctcyh.java.response.violation.ViolationNum;
+import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
 import com.tzly.ctcyh.pay.bean.response.CodeDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponCodeResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponDetailResponse;
@@ -10,6 +13,8 @@ import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
+
+import java.util.List;
 
 import rx.Observable;
 
@@ -73,4 +78,11 @@ public interface IRemoteSource {
      */
     Observable<CodeDetailResponse> getCodeDetail(String codeId);
 
+    Observable<ViolationNumBean> bank_v003_01(String msg);
+
+    Observable<BaseResponse> updateState(List<ViolationNum> json);
+    /**
+     * 分享人优惠券信息
+     */
+    Observable<CouponInfoResponse> getCouponInfo(String orderId);
 }

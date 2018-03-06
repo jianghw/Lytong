@@ -1,8 +1,13 @@
 package com.tzly.ctcyh.pay.api;
 
+import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.java.response.violation.ViolationNum;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
 
+import java.util.List;
+
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -42,4 +47,7 @@ public interface IPayApiService {
     Observable<PayWeixinResponse> weChatPay(@Field("orderId") String orderId,
                                          @Field("amount") String amount,
                                          @Field("couponUserId") String couponUserId);
+
+    @POST("payment/updateState")
+    Observable<BaseResponse> updateState(@Body List<ViolationNum> json);
 }

@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.tzly.ctcyh.router.util.LogUtils;
-import com.zantong.mobilecttx.base.dto.RequestDTO;
-import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
+import com.tzly.ctcyh.java.request.RequestDTO;
+import com.tzly.ctcyh.java.request.RequestHeadDTO;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;

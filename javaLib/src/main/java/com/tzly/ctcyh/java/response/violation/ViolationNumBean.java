@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.weizhang.bean;
+package com.tzly.ctcyh.java.response.violation;
 
 
 import com.tzly.ctcyh.java.response.BankResponse;

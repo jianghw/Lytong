@@ -267,4 +267,12 @@ public abstract class AbstractBaseFragment extends Fragment {
     }
 
     protected abstract void responseData(Object response);
+
+    @Override
+    public Context getContext() {
+        if (super.getContext() != null && super.getContext().getApplicationContext() != null) {
+            return super.getContext().getApplicationContext();
+        }
+        return super.getContext();
+    }
 }

@@ -6,16 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.pay.R;
-import com.tzly.ctcyh.pay.bean.BaseResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponCodeBean;
 import com.tzly.ctcyh.pay.bean.response.CouponCodeResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponStatusBean;
-import com.tzly.ctcyh.pay.bean.response.CouponStatusList;
-import com.tzly.ctcyh.pay.bean.response.CouponStatusResponse;
 import com.tzly.ctcyh.pay.coupon_p.CouponCodeAdapter;
 import com.tzly.ctcyh.pay.coupon_p.CouponCodePresenter;
-import com.tzly.ctcyh.pay.coupon_p.CouponStatusAdapter;
 import com.tzly.ctcyh.pay.coupon_p.ICouponCodeContract;
 import com.tzly.ctcyh.pay.data_m.InjectionRepository;
 import com.tzly.ctcyh.pay.router.PayRouter;

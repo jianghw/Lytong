@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/pay_bg_share_succeed"
+    android:fillViewport="true">
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/ResTextTheme.16.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/res_y_90"
+        android:text="@string/pay_succeed_title"
+        android:textColor="@color/res_color_white"
+        android:textSize="@dimen/res_fs_20" />
+
+    <TextView
+        style="@style/ResTextTheme.16.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/res_y_40"
+        android:text="支付成功"
+        android:textColor="@color/res_color_white"
+        android:textSize="@dimen/res_fs_30" />
+
+    <RelativeLayout
+        android:id="@+id/layout_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/res_x_40"
+            android:layout_marginRight="@dimen/res_x_40"
+            android:layout_marginTop="@dimen/res_y_40"
+            android:background="@drawable/shape_bg_alpha_80">
+
+            <TextView
+                android:id="@+id/tv_coupon"
+                style="@style/ResTextTheme.16.Red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/res_y_30"
+                android:layout_marginRight="@dimen/res_y_30"
+                android:layout_marginTop="@dimen/res_y_90"
+                android:textSize="@dimen/res_fs_30"
+                tools:text="是否接受地偶发技术的附件是冬季偶是地方" />
+
+            <TextView
+                android:id="@+id/tv_tip"
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_coupon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/res_y_90"
+                android:layout_marginLeft="@dimen/res_y_30"
+                android:layout_marginRight="@dimen/res_y_30"
+                android:layout_marginTop="@dimen/res_y_30"
+                android:text="成功邀请3位好友后发放至本账户下" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <TextView
+        style="@style/ResTextTheme.16.White"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/res_y_80"
+        android:layout_alignTop="@+id/layout_center"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/pay_ic_share_title"
+        android:text="分享得好礼" />
+
+    <Button
+        android:id="@+id/btn_shape"
+        style="@style/ResTextTheme.16.Red"
+        android:layout_width="@dimen/res_x_550"
+        android:layout_height="@dimen/res_y_100"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/res_y_180"
+        android:background="@drawable/shape_tv_favorable_red"
+        android:text="立即分享" />
+
+    <TextView
+        android:id="@+id/tv_home"
+        style="@style/ResTextTheme.16.White"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/res_y_90"
+        android:text="有钱任性,不需要" />
+
+
+</RelativeLayout>

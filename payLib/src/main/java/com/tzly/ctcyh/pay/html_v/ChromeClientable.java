@@ -9,4 +9,5 @@ import android.webkit.WebView;
 public interface ChromeClientable {
     void onProgressChanged(WebView view, int newProgress);
 
+    void onReceivedTitle(WebView view, String title);
 }

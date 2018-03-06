@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.base.dto;
+package com.tzly.ctcyh.java.request.violation;
 
 /**
  * 驾驶证查分 请求bean

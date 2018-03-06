@@ -25,7 +25,7 @@
             android:layout_marginLeft="@dimen/ds_75"
             android:layout_marginRight="@dimen/ds_75"
             android:layout_marginTop="@dimen/ds_48"
-            android:background="@drawable/shape_bg_course_apply"
+            android:background="@drawable/shape_bg_course_bule"
             android:paddingBottom="@dimen/ds_75"
             android:paddingTop="@dimen/ds_75">
             <!--订单号-->

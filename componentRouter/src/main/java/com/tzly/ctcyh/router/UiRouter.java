@@ -140,6 +140,9 @@ public class UiRouter implements IUiRouter {
         return false;
     }
 
+    /**
+     * 注意ForResult 的影响
+     */
     @Override
     public boolean openUriForResult(Activity activity, String url, Bundle bundle, int requestCode) {
         url = url.trim();

@@ -2,7 +2,7 @@ package com.tzly.ctcyh.pay.coupon_p;
 
 import android.support.annotation.NonNull;
 
-import com.tzly.ctcyh.pay.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponStatusBean;
 import com.tzly.ctcyh.pay.bean.response.CouponStatusList;
 import com.tzly.ctcyh.pay.bean.response.CouponStatusResponse;

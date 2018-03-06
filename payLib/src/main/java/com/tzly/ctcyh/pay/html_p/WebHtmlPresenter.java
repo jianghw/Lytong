@@ -1,20 +1,29 @@
 package com.tzly.ctcyh.pay.html_p;
 
-import android.location.Location;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.webkit.JavascriptInterface;
 
+import com.google.gson.Gson;
+import com.tzly.ctcyh.java.request.RequestDTO;
+import com.tzly.ctcyh.java.request.RequestHeadDTO;
+import com.tzly.ctcyh.java.request.violation.ViolationDetailsDTO;
+import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.java.response.violation.ViolationNum;
+import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
 import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
 import com.tzly.ctcyh.pay.global.PayGlobal;
+import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.api.BaseSubscriber;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
@@ -52,7 +61,7 @@ public class WebHtmlPresenter implements IWebHtmlContract.IWebHtmlPresenter {
     }
 
     @Override
-    public void intervalOrderDetail() {
+    public void intervalOrder(final String orderId) {
         Subscription subscription = Observable.interval(2, 3000, TimeUnit.MILLISECONDS)
                 .take(3)
                 .subscribeOn(Schedulers.newThread())
@@ -80,7 +89,7 @@ public class WebHtmlPresenter implements IWebHtmlContract.IWebHtmlPresenter {
 
                     @Override
                     public void doNext(Long aLong) {
-                        orderDetail();
+                        orderDetail(orderId);
                     }
                 });
         mSubscriptions.add(subscription);
@@ -90,8 +99,8 @@ public class WebHtmlPresenter implements IWebHtmlContract.IWebHtmlPresenter {
      * 9.获取订单详情
      */
     @Override
-    public void orderDetail() {
-        Subscription subscription = mRepository.getOrderDetail(getOrderId())
+    public void orderDetail(String orderId) {
+        Subscription subscription = mRepository.getOrderDetail(orderId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<OrderDetailResponse>() {
@@ -118,11 +127,6 @@ public class WebHtmlPresenter implements IWebHtmlContract.IWebHtmlPresenter {
                     }
                 });
         mSubscriptions.add(subscription);
-    }
-
-    @Override
-    public String getOrderId() {
-        return mContractView.getOrderId();
     }
 
     /**
@@ -157,7 +161,7 @@ public class WebHtmlPresenter implements IWebHtmlContract.IWebHtmlPresenter {
                     public void doNext(PayUrlResponse response) {
                         if (response != null && response.getResponseCode()
                                 == PayGlobal.Response.base_succeed) {
-                            mContractView.bankPayHtmlSucceed(response,orderId);
+                            mContractView.bankPayHtmlSucceed(response, orderId);
                         } else {
                             mContractView.bankPayHtmlError(response != null
                                     ? response.getResponseDesc() : "未知错误(bankPayHtml)");
@@ -203,6 +207,93 @@ public class WebHtmlPresenter implements IWebHtmlContract.IWebHtmlPresenter {
                         } else {
                             mContractView.weChatPayError(response != null
                                     ? response.getResponseDesc() : "未知错误(weChatPay)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    @Override
+    public void bank_v003_01(String violationNum) {
+        Subscription subscription = mRepository
+                .bank_v003_01(violationNumDTO(violationNum))
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ViolationNumBean>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.bank_v003_01Error(
+                                e.getMessage() != null ? e.getMessage() : "未知错误(V003)");
+                    }
+
+                    @Override
+                    public void onNext(ViolationNumBean result) {
+                        ViolationNum violationNum = result.getRspInfo();
+                        List<ViolationNum> list = new ArrayList<>();
+                        list.add(violationNum);
+                        updateState(list);
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    public String violationNumDTO(String violationNum) {
+        RequestDTO dto = new RequestDTO();
+
+        RequestHeadDTO requestHeadDTO = mRepository.requestHeadDTO("cip.cfc.v003.01");
+        dto.setSYS_HEAD(requestHeadDTO);
+
+        ViolationDetailsDTO bean = new ViolationDetailsDTO();
+
+        bean.setViolationnum(violationNum);
+        bean.setToken(mRepository.rasByStr(PayRouter.getDeviceId()));
+
+        dto.setReqInfo(bean);
+        return new Gson().toJson(dto);
+    }
+
+
+    /**
+     * 46.更新违章缴费状态
+     */
+    public void updateState(List<ViolationNum> violationUpdateDTO) {
+        Subscription subscription = mRepository
+                .updateState(violationUpdateDTO)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.updateStateError(e.getMessage() != null
+                                ? e.getMessage() : "未知错误(updateState)");
+                    }
+
+                    @Override
+                    public void doNext(BaseResponse result) {
+                        if (result != null && result.getResponseCode()
+                                == PayGlobal.Response.base_succeed) {
+                            mContractView.updateStateSucceed(result);
+                        } else {
+                            mContractView.updateStateError(result != null
+                                    ? result.getResponseDesc() : "未知错误(updateState)");
                         }
                     }
                 });

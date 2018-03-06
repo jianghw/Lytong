@@ -6,8 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.pay.R;
-import com.tzly.ctcyh.pay.bean.BaseResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponStatusBean;
 import com.tzly.ctcyh.pay.bean.response.CouponStatusList;
 import com.tzly.ctcyh.pay.bean.response.CouponStatusResponse;
@@ -15,7 +15,6 @@ import com.tzly.ctcyh.pay.coupon_p.CouponStatusAdapter;
 import com.tzly.ctcyh.pay.coupon_p.CouponStatusPresenter;
 import com.tzly.ctcyh.pay.coupon_p.ICouponStatusContract;
 import com.tzly.ctcyh.pay.data_m.InjectionRepository;
-import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.base.RecyclerListFragment;
 import com.tzly.ctcyh.router.util.Utils;
 

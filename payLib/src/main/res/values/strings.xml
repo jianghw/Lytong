@@ -3,4 +3,5 @@
 
     <string name="pay_apk">APK接入</string>
     <string name="pay_jar">JAR接入</string>
+    <string name="pay_succeed_title">您的&#160;&#160;&#160;%1$s&#160;&#160;&#160;订单</string>
 </resources>

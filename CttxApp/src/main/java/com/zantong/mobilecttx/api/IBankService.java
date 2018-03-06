@@ -5,7 +5,7 @@ import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.user.bean.UserCarsResult;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
-import com.zantong.mobilecttx.weizhang.bean.ViolationNumBean;
+import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 
 import retrofit2.http.Field;

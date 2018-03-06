@@ -1,7 +1,7 @@
 package com.tzly.ctcyh.pay.bean.response;
 
 
-import com.tzly.ctcyh.pay.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 /**
  * 8.查询订单列表 N

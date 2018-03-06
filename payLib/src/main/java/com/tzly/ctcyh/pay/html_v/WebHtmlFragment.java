@@ -15,12 +15,15 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 
 import com.google.gson.Gson;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.orc.BindCarBean;
 import com.tzly.ctcyh.java.response.orc.DrivingOcrBean;
+import com.tzly.ctcyh.pay.bean.response.OrderDetailBean;
 import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
 import com.tzly.ctcyh.pay.data_m.InjectionRepository;
+import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.pay.html_p.IWebHtmlContract;
 import com.tzly.ctcyh.pay.html_p.WebHtmlPresenter;
 import com.tzly.ctcyh.pay.router.PayRouter;
@@ -139,13 +142,21 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     }
 
     @Override
-    public void showLoading() {
+    public Context getContext() {
+        if (super.getContext() != null && super.getContext().getApplicationContext() != null) {
+            return super.getContext().getApplicationContext();
+        }
+        return super.getContext();
+    }
 
+    @Override
+    public void showLoading() {
+        if (mFmentToAtyable != null) mFmentToAtyable.showLoading();
     }
 
     @Override
     public void dismissLoading() {
-
+        if (mFmentToAtyable != null) mFmentToAtyable.dismissLoading();
     }
 
     @Override
@@ -158,27 +169,64 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
         return null;
     }
 
+    public void bank_v003(String violationNum) {
+        if (mPresenter != null) mPresenter.bank_v003_01(violationNum);
+    }
+
+    public void orderDetail(String orderId) {
+        if (mPresenter != null) mPresenter.intervalOrder(orderId);
+    }
+
     /**
      * 网络响应
      */
     @Override
     public void orderDetailCompleted() {
-
+        errorStatus();
     }
 
     @Override
     public void intervalError(String message) {
         toastShort(message);
+        errorStatus();
     }
 
     @Override
     public void orderDetailError(String message) {
         toastShort(message);
+        errorStatus();
     }
 
     @Override
-    public void orderDetailSucceed(OrderDetailResponse result) {
+    public void orderDetailSucceed(OrderDetailResponse response) {
+        OrderDetailBean orderDetailBean = response.getData();
+        if (orderDetailBean != null) {
+            int orderStatus = orderDetailBean.getOrderStatus();
+            //成功页面
+            if (orderStatus == 1) succeedStatus(orderDetailBean);
+        }
+    }
 
+    protected void succeedStatus(OrderDetailBean orderDetailBean) {
+        String channel = mFmentToAtyable.getChannel();
+        if (TextUtils.isEmpty(channel)) {
+            //            setResult(PayGlobal.resultCode.web_pay_succeed, null);
+            //            finish();
+        } else {
+            toastShort("支付完成");
+            PayRouter.gotoActiveActivity(getContext(), TextUtils.isEmpty(channel) ? 0 : Integer.valueOf(channel));
+        }
+    }
+
+    protected void errorStatus() {
+        String channel = mFmentToAtyable.getChannel();
+        if (TextUtils.isEmpty(channel)) {
+            //            setResult(PayGlobal.resultCode.web_pay_error, null);
+            //            finish();
+        } else {
+            toastShort("未完成支付");
+            PayRouter.gotoActiveActivity(getContext(), TextUtils.isEmpty(channel) ? 0 : Integer.valueOf(channel));
+        }
     }
 
     @Override
@@ -189,7 +237,7 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     @Override
     public void bankPayHtmlSucceed(PayUrlResponse response, String orderId) {
         if (TextUtils.isEmpty(this.channel)) toastShort("渠道标记值为空");
-        PayRouter.gotoWebHtmlActivity(getActivity(),
+        PayRouter.gotoWebHtmlActivity(getContext(),
                 "银行支付", response.getData(), orderId, 1, this.channel);
     }
 
@@ -201,8 +249,32 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     @Override
     public void weChatPaySucceed(PayWeixinResponse response, String orderId) {
         if (TextUtils.isEmpty(this.channel)) toastShort("渠道标记值为空");
-        PayRouter.gotoWebHtmlActivity(getActivity(),
+        PayRouter.gotoWebHtmlActivity(getContext(),
                 "微信支付", response.getData().getMweburl(), orderId, 4, this.channel);
+    }
+
+    @Override
+    public void bank_v003_01Error(String msg) {
+        toastShort("获取违章数据失败" + msg);
+        gotoActive();
+    }
+
+    @Override
+    public void updateStateError(String msg) {
+        toastShort("更新同步数据失败" + msg);
+        gotoActive();
+    }
+
+    @Override
+    public void updateStateSucceed(BaseResponse result) {
+        gotoActive();
+    }
+
+    private void gotoActive() {
+        if (TextUtils.isEmpty(mFmentToAtyable.getEnginenum()))
+            PayRouter.gotoMainActivity(getContext(), 1);
+        else
+            PayRouter.gotoActiveActivity(getContext(), 2);
     }
 
     /**
@@ -277,6 +349,7 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
         toastShort("您已关闭摄像头权限,请设置中打开");
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -310,7 +383,6 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
         }
     }
 
-
     //银行支付
     @JavascriptInterface
     public void payMOTOrder(String coupon, String orderId, String amount) {
@@ -332,143 +404,4 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     public void channelAction(String channel) {
         this.channel = channel;
     }
-
-  /*  @JavascriptInterface
-    public Location getLocaltion() {
-        LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(getContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            return null;
-        }
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        } else {
-            LocationListener locationListener = new LocationListener() {
-                // Provider的状态在可用、暂时不可用和无服务三个状态直接切换时触发此函数
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-                }
-
-                // Provider被enable时触发此函数，比如GPS被打开
-                @Override
-                public void onProviderEnabled(String provider) {
-                }
-
-                // Provider被disable时触发此函数，比如GPS被关闭
-                @Override
-                public void onProviderDisabled(String provider) {
-                }
-
-                //当坐标改变时触发此函数，如果Provider传进相同的坐标，它就不会被触发
-                @Override
-                public void onLocationChanged(Location location) {
-                }
-            };
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
-            return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        }
-    }
-
-    //绑畅通卡
-    @JavascriptInterface
-    public void bindCard() {
-        if (Tools.isStrEmpty(LoginData.getInstance().filenum)) {
-            Act.getInstance().gotoIntentLogin(mJSContext, UnblockedCardActivity.class);
-        } else {
-            Act.getInstance().gotoIntentLogin(mJSContext, MyCardActivity.class);
-        }
-    }
-
-    //加油充值
-    @JavascriptInterface
-    public void addOil() {
-        mJSContext.startActivity(new Intent(mJSContext, RechargeActivity.class));
-    }
-
-    //代驾
-    @JavascriptInterface
-    public void chaser() {
-        mJSContext.startActivity(new Intent(mJSContext, DrivingActivity.class));
-    }
-
-    //分享领积分
-    @JavascriptInterface
-    public void shareActivity() {
-    }
-
-    //获取用户ID
-    @JavascriptInterface
-    public String getUserId() {
-        return LoginData.getInstance().userID;
-    }
-
-    //获取绑卡状态 0已绑卡  1未绑卡
-    @JavascriptInterface
-    public int getBindCardStatus() {
-        return "".equals(LoginData.getInstance().filenum) ? 1 : 0;
-    }
-
-    //查询违章
-    @JavascriptInterface
-    public void queryViolations() {
-    }
-
-    //获取用户ID
-    @JavascriptInterface
-    public String getEncreptUserId() {
-        return RSAUtils.strByEncryptionLiYing(LoginData.getInstance().userID, true);
-    }
-
-    //跳转到积分规则页面
-    @JavascriptInterface
-    public void popAttention() {
-        mJSContext.startActivity(new Intent(mJSContext, HundredRuleActivity.class));
-    }
-
-    @JavascriptInterface
-    public void getSource(String html) {
-        LogUtils.e("------" + html);
-    }
-
-    //去年检地图地址
-    @JavascriptInterface
-    public void goNianjianMap() {
-        Act.getInstance().gotoIntentLogin(mJSContext, BaiduMapParentActivity.class);
-    }
-
-    //去往违章列表页面
-    @JavascriptInterface
-    public void searchViolationList(String carnum, String enginenum, String carnumtype) {
-        LoginData.getInstance().mHashMap.put("IllegalViolationName", carnum);
-        LoginData.getInstance().mHashMap.put("carnum", carnum);
-        LoginData.getInstance().mHashMap.put("enginenum", enginenum);
-        LoginData.getInstance().mHashMap.put("carnumtype", carnumtype);
-
-        ViolationDTO dto = new ViolationDTO();
-        dto.setCarnum(RSAUtils.strByEncryption(carnum, true));
-        dto.setEnginenum(RSAUtils.strByEncryption(enginenum, true));
-        dto.setCarnumtype(carnumtype);
-
-        Intent intent = new Intent(mJSContext, ViolationListActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("params", dto);
-        intent.putExtras(bundle);
-        intent.putExtra("plateNum", carnum);
-        mJSContext.startActivity(intent);
-    }
-
-    //js调摄像机
-    @JavascriptInterface
-    public void callCamera() {
-        EventBus.getDefault().post(new DriveLicensePhotoEvent());
-    }
-
-    //跳转支付页面
-    @JavascriptInterface
-    public void payMOTOrder(String orderId, String amount) {
-        EventBus.getDefault().post(new PayMotoOrderEvent(orderId, amount));
-    }*/
-
 }

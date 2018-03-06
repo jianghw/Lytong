@@ -232,8 +232,6 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
     @Override
     public void getBankPayHtmlSucceed(PayOrderResponse result, String orderId) {
         if (TextUtils.isEmpty(mChannel)) toastShort("渠道标记值为空");
-        MainRouter.gotoWebHtmlActivity(this,
-                "银行支付", result.getData(), orderId, 1, mChannel);
     }
 
     @Override
@@ -244,8 +242,6 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
     @Override
     public void weChatPaySucceed(PayWeixinResponse response, String orderId) {
         if (TextUtils.isEmpty(mChannel)) toastShort("渠道标记值为空");
-        MainRouter.gotoWebHtmlActivity(this,
-                "微信支付", response.getData().getMweburl(), orderId, 4, mChannel);
     }
 
     /**

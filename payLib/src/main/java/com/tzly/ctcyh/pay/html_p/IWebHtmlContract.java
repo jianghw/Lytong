@@ -1,5 +1,6 @@
 package com.tzly.ctcyh.pay.html_p;
 
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
@@ -34,18 +35,24 @@ public interface IWebHtmlContract {
         void weChatPayError(String message);
 
         void weChatPaySucceed(PayWeixinResponse response, String orderId);
+
+        void bank_v003_01Error(String s);
+
+        void updateStateError(String s);
+
+        void updateStateSucceed(BaseResponse result);
     }
 
     interface IWebHtmlPresenter extends IBasePresenter {
-        public void intervalOrderDetail();
+        public void intervalOrder(String orderId);
 
-        public void orderDetail();
-
-        public String getOrderId();
+        public void orderDetail(String orderId);
 
         public void bankPayHtml(String orderId, String amount, String coupon);
 
         public void weChatPay(String couponUserId, final String orderId, String amount);
+
+        void bank_v003_01(String violationNum);
     }
 
 }

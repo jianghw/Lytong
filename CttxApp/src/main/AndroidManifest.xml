@@ -346,11 +346,6 @@
             android:name=".order_v.OrderExpressActivity"
             android:screenOrientation="portrait" />
 
-        <!-- ===================付款web模块========================================= -->
-        <!-- 付款web模块页面 -->
-        <activity
-            android:name=".browser.PayHtmlActivity"
-            android:screenOrientation="portrait" />
 
         <!-- ===================优惠模块========================================= -->
         <!-- 优惠模块 -->

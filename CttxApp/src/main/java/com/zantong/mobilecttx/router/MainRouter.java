@@ -473,22 +473,6 @@ public final class MainRouter {
     }
 
     /**
-     * 违章支付页面
-     */
-    public static void gotoPayHtmlActivity(Context activity,
-                                           String title, String url, String num, String enginenum) {
-        Bundle bundle = new Bundle();
-        bundle.putString(MainGlobal.putExtra.browser_title_extra, title);
-        bundle.putString(MainGlobal.putExtra.browser_url_extra, url);
-        bundle.putString(MainGlobal.putExtra.violation_num_extra, num);
-        bundle.putString(MainGlobal.putExtra.car_enginenum_extra, enginenum);
-
-        UiRouter.getInstance().openUriBundle(activity,
-                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.html_pay_host,
-                bundle);
-    }
-
-    /**
      * 改绑页面
      */
     public static void gotoSetPayCarActivity(Activity activity) {
@@ -558,47 +542,34 @@ public final class MainRouter {
     }
 
     /**
-     * 银行卡支付页面
-     */
-    public static void gotoWebHtmlActivity(Activity activity, String title, String content,
-                                           String orderId, int type, String mChannel) {
-        Object object = getPayObject();
-        if (object != null && object instanceof IPayService) {
-            IPayService service = (IPayService) object;
-            service.gotoPayHtmlActivity(activity, title, content, orderId, type, mChannel);
-        } else {//注册机开始工作
-            ServiceRouter.registerComponent("com.tzly.ctcyh.pay.like.PayAppLike");
-        }
-    }
-
-    /**
      * 统一 基础 html 广告 优惠等页面
      */
     public static void gotoWebHtmlActivity(Context context, String title, String url) {
-        //        Bundle bundle = new Bundle();
-        //        bundle.putString(MainGlobal.putExtra.browser_title_extra, title);
-        //        bundle.putString(MainGlobal.putExtra.browser_url_extra, url);
-        //        UiRouter.getInstance().openUriBundle(activity,
-        //                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.html_self_host,
-        //                bundle);
-
         Object object = getPayObject();
         if (object != null && object instanceof IPayService) {
             IPayService service = (IPayService) object;
             service.gotoWebHtmlActivity(context, title, url);
         } else {//注册机开始工作
-            ServiceRouter.registerComponent(ServiceRouter.PAY_LIKE);
+            registerPay();
         }
     }
 
-    public static void gotoWebHtmlActivity(Activity activity, String title, String url) {
+    /**
+     * 违章支付页面
+     */
+    public static void gotoWebHtmlActivity(Context context, String title, String url,
+                                           String num, String enginenum) {
         Object object = getPayObject();
         if (object != null && object instanceof IPayService) {
             IPayService service = (IPayService) object;
-            service.gotoWebHtmlActivity(activity, title, url);
+            service.gotoWebHtmlActivity(context, title, url,num,enginenum);
         } else {//注册机开始工作
-            ServiceRouter.registerComponent(ServiceRouter.PAY_LIKE);
+            registerPay();
         }
+    }
+
+    private static void registerPay() {
+        ServiceRouter.registerComponent(ServiceRouter.PAY_LIKE);
     }
 
     /**

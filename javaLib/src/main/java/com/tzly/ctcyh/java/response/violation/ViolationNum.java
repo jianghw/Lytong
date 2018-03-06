@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.weizhang.bean;
+package com.tzly.ctcyh.java.response.violation;
 
 /**
  * Created by jianghw on 2017/9/27.

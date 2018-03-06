@@ -147,7 +147,8 @@ public abstract class RefreshFragment extends AbstractBaseFragment {
         loadingFirstData();
     }
 
-    protected void onLoadMoreData() {}
+    protected void onLoadMoreData() {
+    }
 
     /**
      * 是否可刷新
@@ -171,4 +172,5 @@ public abstract class RefreshFragment extends AbstractBaseFragment {
      * @param fragment
      */
     protected abstract void bindFragment(View fragment);
+
 }

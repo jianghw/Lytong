@@ -2,11 +2,15 @@ package com.tzly.ctcyh.pay.data_m;
 
 import android.support.annotation.Nullable;
 
+import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.java.response.coupon.CouponInfoResponse;
+import com.tzly.ctcyh.java.response.violation.ViolationNum;
+import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
+import com.tzly.ctcyh.pay.api.IBankService;
 import com.tzly.ctcyh.pay.api.ICouponService;
 import com.tzly.ctcyh.pay.api.IFebruaryService;
 import com.tzly.ctcyh.pay.api.IOrderService;
 import com.tzly.ctcyh.pay.api.IPayApiService;
-import com.tzly.ctcyh.pay.bean.BaseResponse;
 import com.tzly.ctcyh.pay.bean.response.CodeDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponCodeResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponDetailResponse;
@@ -17,6 +21,8 @@ import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
 import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
 import com.tzly.ctcyh.router.api.RetrofitFactory;
+
+import java.util.List;
 
 import retrofit2.Retrofit;
 import rx.Observable;
@@ -148,6 +154,24 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<CodeDetailResponse> getCodeDetail(String codeId) {
         return baseRetrofit().create(IFebruaryService.class).getCodeDetail(codeId);
+    }
+
+    @Override
+    public Observable<ViolationNumBean> bank_v003_01(String msg) {
+        return bankRetrofit().create(IBankService.class).bank_v003_01(msg);
+    }
+
+    @Override
+    public Observable<BaseResponse> updateState(List<ViolationNum> json) {
+        return baseRetrofit().create(IPayApiService.class).updateState(json);
+    }
+
+    /**
+     * 分享人优惠券信息
+     */
+    @Override
+    public Observable<CouponInfoResponse> getCouponInfo(String orderId) {
+        return baseRetrofit().create(IFebruaryService.class).getCouponInfo(orderId);
     }
 
 

@@ -1,6 +1,6 @@
 package com.tzly.ctcyh.pay.bean.response;
 
-import com.tzly.ctcyh.pay.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 
 /**
  * Created by jianghw on 2017/6/1.

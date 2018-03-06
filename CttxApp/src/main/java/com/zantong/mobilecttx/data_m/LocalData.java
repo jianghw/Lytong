@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
-import com.zantong.mobilecttx.base.dto.RequestHeadDTO;
+import com.tzly.ctcyh.java.request.RequestHeadDTO;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.bean.RspInfoBean;
 import com.zantong.mobilecttx.user.dto.MessageDetailDTO;

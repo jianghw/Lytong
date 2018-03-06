@@ -1,6 +1,6 @@
 package com.tzly.ctcyh.pay.coupon_p;
 
-import com.tzly.ctcyh.pay.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 import com.tzly.ctcyh.router.base.IResponseView;

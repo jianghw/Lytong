@@ -369,8 +369,8 @@ public class ViolationPayFragment extends RefreshFragment
                 + "&merCustomId=" + merCustomId
                 + "&remark=" + remark;
 
-        MainRouter.gotoPayHtmlActivity(getActivity(), "支付页面",
-                payUrl, violationnum, getViolationBean().getEnginenum());
+        MainRouter.gotoWebHtmlActivity(getActivity(), "支付页面", payUrl,
+                violationnum, getViolationBean().getEnginenum());
     }
 
 }

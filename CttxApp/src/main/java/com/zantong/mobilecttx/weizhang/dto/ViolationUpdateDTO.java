@@ -1,6 +1,6 @@
 package com.zantong.mobilecttx.weizhang.dto;
 
-import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
+import com.tzly.ctcyh.java.response.violation.ViolationNum;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.base.dto;
+package com.tzly.ctcyh.java.request;
 
 /**
  * 请求实体封装

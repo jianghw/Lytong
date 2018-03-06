@@ -38,7 +38,7 @@
         android:layout_width="@dimen/ds_900"
         android:layout_height="@dimen/ds_210"
         android:layout_marginTop="@dimen/ds_75"
-        android:background="@drawable/shape_bg_course_apply"
+        android:background="@drawable/shape_bg_course_bule"
         android:orientation="horizontal">
 
         <RelativeLayout

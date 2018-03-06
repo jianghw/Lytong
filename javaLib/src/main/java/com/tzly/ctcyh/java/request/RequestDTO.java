@@ -1,4 +1,6 @@
-package com.zantong.mobilecttx.base.dto;
+package com.tzly.ctcyh.java.request;
+
+import com.tzly.ctcyh.java.request.RequestHeadDTO;
 
 /**
  * 请求实体封装

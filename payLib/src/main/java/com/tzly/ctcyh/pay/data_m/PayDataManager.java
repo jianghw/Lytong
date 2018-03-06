@@ -3,7 +3,11 @@ package com.tzly.ctcyh.pay.data_m;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.tzly.ctcyh.pay.bean.BaseResponse;
+import com.tzly.ctcyh.java.request.RequestHeadDTO;
+import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.java.response.coupon.CouponInfoResponse;
+import com.tzly.ctcyh.java.response.violation.ViolationNum;
+import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
 import com.tzly.ctcyh.pay.bean.response.CodeDetailResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponCodeResponse;
 import com.tzly.ctcyh.pay.bean.response.CouponDetailResponse;
@@ -15,6 +19,9 @@ import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
 import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 
+import java.util.List;
+
+import rx.Completable;
 import rx.Observable;
 
 /**
@@ -131,5 +138,36 @@ public class PayDataManager {
      */
     public Observable<CodeDetailResponse> getCodeDetail(String codeId) {
         return mRemoteData.getCodeDetail(codeId);
+    }
+
+    public RequestHeadDTO requestHeadDTO(String urlCode) {
+        RequestHeadDTO dto = mLocalData.requestHeadDTO();
+        dto.setTransServiceCode(urlCode);
+        return dto;
+    }
+
+    /**
+     * 这段加密封装
+     */
+    public String rasByStr(String str) {
+        return mLocalData.rasByStr(str);
+    }
+
+    public Observable<ViolationNumBean> bank_v003_01(String msg) {
+        return mRemoteData.bank_v003_01(msg);
+    }
+
+    /**
+     * 46.更新违章缴费状态
+     */
+    public Observable<BaseResponse> updateState(List<ViolationNum> json) {
+        return mRemoteData.updateState(json);
+    }
+
+    /**
+     * 分享人优惠券信息
+     */
+    public Observable<CouponInfoResponse> getCouponInfo(String orderId) {
+        return mRemoteData.getCouponInfo(orderId);
     }
 }

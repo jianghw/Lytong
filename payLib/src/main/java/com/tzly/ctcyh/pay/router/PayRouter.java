@@ -11,6 +11,7 @@ import com.tzly.ctcyh.pay.html_v.WebHtmlFragment;
 import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.UiRouter;
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.service.ICargoService;
 import com.tzly.ctcyh.service.IMainService;
 import com.tzly.ctcyh.service.IUserService;
@@ -212,11 +213,11 @@ public final class PayRouter {
     /**
      * 去往活动规则页面
      */
-    public static void gotoActiveActivity(Context activity, int i) {
+    public static void gotoActiveActivity(Context context, int i) {
         Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
-            service.gotoActiveActivity(activity, i);
+            service.gotoActiveActivity(context, i);
         } else {//注册机开始工作
             registerMain();
         }
@@ -225,11 +226,11 @@ public final class PayRouter {
     /**
      * 去往主页
      */
-    public static void gotoMainActivity(Context activity, int i) {
+    public static void gotoMainActivity(Context context, int i) {
         Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
-            service.gotoMainActivity(activity, i);
+            service.gotoMainActivity(context, i);
         } else {//注册机开始工作
             registerMain();
         }
@@ -363,7 +364,7 @@ public final class PayRouter {
     /**
      * 优惠劵详情
      */
-    public static void gotoCouponDetailActivity(FragmentActivity activity, String couponId) {
+    public static void gotoCouponDetailActivity(Activity activity, String couponId) {
         Bundle bundle = new Bundle();
         bundle.putString(PayGlobal.putExtra.coupon_detail_id, couponId);
 
@@ -375,35 +376,59 @@ public final class PayRouter {
     /**
      * web_html
      */
-    public static void gotoWebHtmlActivity(Activity activity, String title, String url) {
+    public static void gotoWebHtmlActivity(Context context, String title, String url) {
         Bundle bundle = new Bundle();
         bundle.putString(PayGlobal.putExtra.web_title_extra, title);
         bundle.putString(PayGlobal.putExtra.web_url_extra, url);
 
-        gotoWebHtmlActivity(activity, bundle);
+        gotoWebHtmlActivity(context, bundle);
     }
 
-    public static void gotoWebHtmlActivity(Activity activity, String title, String url,
+    /**
+     * 渠道支付
+     */
+    public static void gotoWebHtmlActivity(Context context, String title, String url,
                                            String orderId, int payType, String channel) {
         Bundle bundle = new Bundle();
         bundle.putString(PayGlobal.putExtra.web_title_extra, title);
         bundle.putString(PayGlobal.putExtra.web_url_extra, url);
+
         bundle.putString(PayGlobal.putExtra.web_orderId_extra, orderId);
         bundle.putInt(PayGlobal.putExtra.web_pay_type_extra, payType);
         bundle.putString(PayGlobal.putExtra.web_pay_channel_extra, channel);
 
-        gotoWebHtmlActivity(activity, bundle);
+        gotoWebHtmlActivity(context, bundle);
+    }
 
+    /**
+     * 违章
+     */
+    public static void gotoWebHtmlActivity(Context context, String title, String url,
+                                           String num, String enginenum) {
+        Bundle bundle = new Bundle();
+        bundle.putString(PayGlobal.putExtra.web_title_extra, title);
+        bundle.putString(PayGlobal.putExtra.web_url_extra, url);
+
+        bundle.putString(PayGlobal.putExtra.web_violationnum_extra, num);
+        bundle.putString(PayGlobal.putExtra.web_enginenum_extra, enginenum);
+
+        gotoWebHtmlActivity(context, bundle);
+    }
+
+    public static void gotoWebHtmlActivity(Context context, Bundle bundle) {
+        if (context instanceof Activity) {
+            gotoWebHtmlActivity((Activity) context, bundle);
+        } else {
+            UiRouter.getInstance().openUriBundle(context,
+                    RouterGlobal.Scheme.pay_scheme + "://" + RouterGlobal.Host.web_html_host,
+                    bundle);
+        }
     }
 
     public static void gotoWebHtmlActivity(Activity activity, Bundle bundle) {
         UiRouter.getInstance().openUriForResult(activity,
                 RouterGlobal.Scheme.pay_scheme + "://" + RouterGlobal.Host.web_html_host,
                 bundle, PayGlobal.requestCode.pay_html_price);
-    }
-
-    public static void gotoWebHtmlActivity(Context context, String title, String url) {
-
     }
 
     /**

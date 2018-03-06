@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
@@ -23,6 +24,9 @@ import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.EncryptUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * html页面
@@ -44,19 +48,12 @@ public class WebHtmlActivity extends AbstractBaseActivity
     private String mOrderId;
     private int mPayType;
     private String mPayChannel;
+    private String mPayViolationNum;
+    private String mPayEnginenum;
     /**
      * 右控件
      */
     private int mRightBtnStatus;
-
-    /**
-     * 回退建
-     */
-    @Override
-    protected void backClickListener() {
-        if (mWebView != null && mWebView.canGoBack()) mWebView.goBack();
-        else finish();
-    }
 
     /**
      * 右侧点击
@@ -96,27 +93,52 @@ public class WebHtmlActivity extends AbstractBaseActivity
             if (bundle != null) {
                 if (intent.hasExtra(PayGlobal.putExtra.web_title_extra))
                     mStrTitle = bundle.getString(PayGlobal.putExtra.web_title_extra);
+                else mStrTitle = "";
                 if (intent.hasExtra(PayGlobal.putExtra.web_url_extra))
                     mStrUrl = bundle.getString(PayGlobal.putExtra.web_url_extra);
+                else mStrUrl = "";
 
                 if (intent.hasExtra(PayGlobal.putExtra.web_orderId_extra))
                     mOrderId = bundle.getString(PayGlobal.putExtra.web_orderId_extra);
+                else mOrderId = "";
                 if (intent.hasExtra(PayGlobal.putExtra.web_pay_type_extra))
                     mPayType = bundle.getInt(PayGlobal.putExtra.web_pay_type_extra);
+                else mPayType = -1;
                 if (intent.hasExtra(PayGlobal.putExtra.web_pay_channel_extra))
                     mPayChannel = bundle.getString(PayGlobal.putExtra.web_pay_channel_extra);
+                else mPayChannel = "";
+
+                if (intent.hasExtra(PayGlobal.putExtra.web_violationnum_extra))
+                    mPayViolationNum = bundle.getString(PayGlobal.putExtra.web_violationnum_extra);
+                else mPayViolationNum = "";
+                if (intent.hasExtra(PayGlobal.putExtra.web_enginenum_extra))
+                    mPayEnginenum = bundle.getString(PayGlobal.putExtra.web_enginenum_extra);
+                else mPayEnginenum = "";
             }
         }
-        if (TextUtils.isEmpty(mStrUrl)) mStrUrl = "";
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        initTitle();
+        webLoadUrl(mStrUrl);
     }
 
     @Override
     protected void bindFragment() {
+        initTitle();
+
+        LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
+        mProgressBar = (ProgressBar) layout.findViewById(R.id.pb_html);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        mWebView = new WebView(getApplicationContext());
+        mWebView.setLayoutParams(params);
+        layout.addView(mWebView);
+    }
+
+    private void initTitle() {
         titleContent(mStrTitle);
         titleClose();
 
@@ -133,14 +155,6 @@ public class WebHtmlActivity extends AbstractBaseActivity
             titleContent(mStrTitle);
             titleMore("分享");
         }
-
-        LinearLayout layout = (LinearLayout) findViewById(R.id.layout);
-        mProgressBar = (ProgressBar) findViewById(R.id.pb_html5);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        mWebView = new WebView(getApplicationContext());
-        mWebView.setLayoutParams(params);
-        layout.addView(mWebView);
     }
 
     @Override
@@ -154,12 +168,26 @@ public class WebHtmlActivity extends AbstractBaseActivity
 
     private void webLoadUrl(String mStrUrl) {
         //额外的第三方要求
-        if (mStrUrl.contains("m.wedrive.com.cn") || mStrUrl.contains("tester.wedrive.com.cn")) {
+        if (!TextUtils.isEmpty(mPayViolationNum)) {//违章支付
+            mWebView.loadUrl(mStrUrl);
+        } else if (mPayType == 1) {//银行支付
+            String url = "<%@ page language=\"java\" contentType=\"text/html; charset=GBK\" pageEncoding=\"GBK\"%>" +
+                    "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\" http://www.w3.org/TR/html4/loose.dtd\">" +
+                    "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\">" +
+                    "<title>表单提交</title></head><body>" + mStrUrl + "</body></html>";
+            mWebView.loadDataWithBaseURL(null, url, "text/html", "utf-8", null);
+        } else if (mPayType == 3) {//阿里支付
+            mWebView.loadUrl(mStrUrl);
+        } else if (mPayType == 4) {//微信支付
+            Map<String, String> extraHeaders = new HashMap<String, String>();
+            extraHeaders.put("Referer", "http://liyingtong.com");
+            mWebView.loadUrl(mStrUrl, extraHeaders);
+        } else if (mStrUrl.contains("m.wedrive.com.cn") || mStrUrl.contains("tester.wedrive.com.cn")) {
             String cust_id = PayRouter.getUserPhoenum();
             String SEC_KEY = "BE7D6564766740037581842CE0ACA1DD";
             String token = EncryptUtils.encryptMD5ToString(SEC_KEY + cust_id + SEC_KEY);
-            mStrUrl = mStrUrl + "?cust_id=" + cust_id + "&token=" + token;
-            mWebView.loadUrl(mStrUrl);
+            String url = mStrUrl + "?cust_id=" + cust_id + "&token=" + token;
+            mWebView.loadUrl(url);
         } else {
             mWebView.loadUrl(mStrUrl);
         }
@@ -174,7 +202,7 @@ public class WebHtmlActivity extends AbstractBaseActivity
         FragmentTransaction transaction = manager.beginTransaction();
         //创建fragment但是不绘制UI
         WebHtmlFragment htmlFragment = new WebHtmlFragment();
-        transaction.add(htmlFragment, "web_html");
+        transaction.add(htmlFragment, "web_html").commit();
         //调用JS方法.安卓版本大于17,加上注解 @JavascriptInterface
         settings.setJavaScriptEnabled(true);
         mWebView.addJavascriptInterface(htmlFragment, "CTTX");
@@ -224,6 +252,7 @@ public class WebHtmlActivity extends AbstractBaseActivity
     /**
      * HTML5数据存储
      */
+
     private void saveData(WebSettings settings) {
         settings.setDomStorageEnabled(true); //开启 DOM storage API 功能
         settings.setDatabaseEnabled(true); //开启database storage API 功能
@@ -275,8 +304,52 @@ public class WebHtmlActivity extends AbstractBaseActivity
             mWebView.goBack();//返回webView的上一页面
             return true;
         }
-        finish();
+        finishBySelf();
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 回退
+     */
+    @Override
+    protected void backClickListener() {
+        if (mWebView != null && mWebView.canGoBack()) {
+            mWebView.goBack(); //返回前一个页面
+            return;
+        }
+        finishBySelf();
+    }
+
+    private void finishBySelf() {
+        if (!TextUtils.isEmpty(mPayViolationNum)) {//违章支付
+            updateState();
+        } else if (!TextUtils.isEmpty(mOrderId)) {
+            orderDetail();
+        } else {
+            finish();
+        }
+    }
+
+    /**
+     * 关闭
+     */
+    @Override
+    protected void closeClickListener() {
+        finishBySelf();
+    }
+
+    private void updateState() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag("web_html");
+        if (fragment != null && fragment instanceof WebHtmlFragment) {
+            ((WebHtmlFragment) fragment).bank_v003(mPayViolationNum);
+        }
+    }
+
+    private void orderDetail() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag("web_html");
+        if (fragment != null && fragment instanceof WebHtmlFragment) {
+            ((WebHtmlFragment) fragment).orderDetail(mOrderId);
+        }
     }
 
     /**
@@ -320,7 +393,7 @@ public class WebHtmlActivity extends AbstractBaseActivity
 
     @Override
     public void onPageFinished(WebView view, String url) {
-        if (mWebView != null) mWebView.loadUrl("javascript:" + url);
+        if (view != null) view.loadUrl("javascript:" + url);
 
         //页面加载好以后，在放开图片
         view.getSettings().setBlockNetworkImage(false);
@@ -328,14 +401,30 @@ public class WebHtmlActivity extends AbstractBaseActivity
 
     @Override
     public void onProgressChanged(WebView view, int newProgress) {
-        if (mWebView != null) mProgressBar.setProgress(newProgress);
+        if (mProgressBar != null) mProgressBar.setProgress(newProgress);
+    }
+
+    @Override
+    public void onReceivedTitle(WebView view, String title) {
+        //        if (!TextUtils.isEmpty(title)) titleContent(title);
     }
 
     /**
-     * javascript--java
+     * fragment--activity
      */
     @Override
     public void callbackCamera(String js) {
         if (mWebView != null) mWebView.loadUrl(js);
     }
+
+    @Override
+    public String getEnginenum() {
+        return mPayEnginenum;
+    }
+
+    @Override
+    public String getChannel() {
+        return mPayChannel;
+    }
+
 }

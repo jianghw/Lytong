@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.api;
 
 import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
-import com.zantong.mobilecttx.weizhang.bean.ViolationNum;
+import com.tzly.ctcyh.java.response.violation.ViolationNum;
 
 import java.util.List;
 
