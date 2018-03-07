@@ -14,6 +14,7 @@ import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.pay.pay_type_p.IPaySucceedContract;
 import com.tzly.ctcyh.pay.pay_type_p.PaySucceedPresenter;
 import com.tzly.ctcyh.router.base.AbstractBaseFragment;
+import com.tzly.ctcyh.router.custom.dialog.WeiXinDialogFragment;
 import com.tzly.ctcyh.router.util.Utils;
 
 /**
@@ -57,7 +58,13 @@ public class PaySucceedFragment extends AbstractBaseFragment
 
     @Override
     public void onClick(View view) {
+        int vId = view.getId();
+        if (vId == R.id.btn_shape) {
+            WeiXinDialogFragment fragment = WeiXinDialogFragment.newInstance();
+            fragment.showDialog(fragment);
+        } else if (vId == R.id.tv_home) {//关闭页面
 
+        }
     }
 
     @Override

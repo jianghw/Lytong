@@ -43,7 +43,7 @@
                 <ImageView
                     android:layout_width="@dimen/ds_120"
                     android:layout_height="@dimen/ds_120"
-                    android:background="@mipmap/icon_wechat"/>
+                    android:background="@mipmap/ic_wx_wechat"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
                 <ImageView
                     android:layout_width="@dimen/ds_120"
                     android:layout_height="@dimen/ds_120"
-                    android:background="@mipmap/icon_friends"/>
+                    android:background="@mipmap/ic_wx_friends"/>
 
                 <TextView
                     android:layout_width="wrap_content"
