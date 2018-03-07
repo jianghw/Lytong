@@ -152,7 +152,7 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
     private SwipeMenuCreator swipeMenuCreator = new SwipeMenuCreator() {
         @Override
         public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
-            int width = getResources().getDimensionPixelSize(R.dimen.item_delete_width);
+            int width = getResources().getDimensionPixelSize(R.dimen.res_x_166);
             int height = resetDeleteItemHeight();
             // 设置菜单方向为竖型的。
             swipeRightMenu.setOrientation(SwipeMenu.HORIZONTAL);

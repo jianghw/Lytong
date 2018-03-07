@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseMvpActivity;
 import com.zantong.mobilecttx.base.interf.IBaseView;
-import com.zantong.mobilecttx.home_v.HomeMainActivity;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 
@@ -48,8 +47,7 @@ public class ApplySuccessActvity extends BaseMvpActivity<IBaseView, HelpPresente
 
     @Override
     protected void baseGoEnsure() {
-        startActivity(new Intent(this, HomeMainActivity.class));
-        finish();
+        MainRouter.gotoMainActivity(this,1);
     }
 
     @Override

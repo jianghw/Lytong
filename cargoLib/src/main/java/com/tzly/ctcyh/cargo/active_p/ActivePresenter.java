@@ -4,10 +4,9 @@ import android.support.annotation.NonNull;
 
 import com.tzly.ctcyh.cargo.bean.response.ActiveConfigResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
-import com.tzly.ctcyh.cargo.data_m.BaseSubscriber;
 import com.tzly.ctcyh.cargo.data_m.CargoDataManager;
 import com.tzly.ctcyh.cargo.global.CargoGlobal;
-import com.tzly.ctcyh.cargo.router.CargoRouter;
+import com.tzly.ctcyh.router.api.BaseSubscriber;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

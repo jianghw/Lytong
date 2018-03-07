@@ -3,7 +3,6 @@ package com.tzly.ctcyh.cargo.data_m;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.tzly.ctcyh.cargo.bean.BaseResponse;
 import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
 import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
@@ -16,9 +15,9 @@ import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.cargo.bean.response.ScoreCaptchaResponse;
 import com.tzly.ctcyh.cargo.bean.response.ScoreResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.router.util.rea.RSAUtils;
 
-import rx.Completable;
 import rx.Observable;
 
 /**

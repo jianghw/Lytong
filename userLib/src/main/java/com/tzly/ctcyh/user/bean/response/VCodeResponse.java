@@ -1,7 +1,7 @@
 package com.tzly.ctcyh.user.bean.response;
 
 
-import com.tzly.ctcyh.user.bean.BankResponse;
+import com.tzly.ctcyh.java.response.BankResponse;
 
 /**
  * Created by jianghw on 2017/6/1.

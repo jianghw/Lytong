@@ -230,7 +230,7 @@ public class HundredPlanActivity extends BaseMvpActivity {
         msg.title = "不违章就送油";
         msg.description = "我是第" + signCount + "位参加\"百日无违章，共赢百吨油\"的活动的人。文明行车从我做起";
         //这里替换一张自己工程里的图片资源
-        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_sharelogo);
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.app_icon);
         msg.setThumbImage(thumb);
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();

@@ -66,8 +66,8 @@
         <!-- 启动页面 -->
         <activity
             android:name=".splash_v.SplashActivity"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -76,6 +76,7 @@
             </intent-filter>
             <intent-filter android:priority="0">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -86,6 +87,7 @@
         <!-- 引导页面 -->
         <activity
             android:name=".guide_v.GuideCTActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme" />
         <!-- 主页，这个很吊呀 -->

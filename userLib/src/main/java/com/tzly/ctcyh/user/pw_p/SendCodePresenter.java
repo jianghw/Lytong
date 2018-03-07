@@ -3,12 +3,12 @@ package com.tzly.ctcyh.user.pw_p;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.tzly.ctcyh.user.bean.BankResponse;
+import com.tzly.ctcyh.java.response.BankResponse;
+import com.tzly.ctcyh.router.api.BaseSubscriber;
 import com.tzly.ctcyh.user.bean.RequestDTO;
 import com.tzly.ctcyh.user.bean.RequestHeadDTO;
 import com.tzly.ctcyh.user.bean.request.VCodeDTO;
 import com.tzly.ctcyh.user.bean.response.VCodeResponse;
-import com.tzly.ctcyh.user.data_m.BaseSubscriber;
 import com.tzly.ctcyh.user.data_m.UserDataManager;
 import com.tzly.ctcyh.user.global.UserGlobal;
 

@@ -14,13 +14,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jianghw.multi.state.layout.MultiState;
-import com.tzly.ctcyh.cargo.BuildConfig;
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.bean.response.ScoreCaptchaResponse;
 import com.tzly.ctcyh.cargo.bean.response.ScoreResponse;
 import com.tzly.ctcyh.cargo.data_m.InjectionRepository;
 import com.tzly.ctcyh.cargo.license_p.ILienseGradeContract;
 import com.tzly.ctcyh.cargo.license_p.LienseGradePresenter;
+import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.util.Utils;
 

@@ -1,8 +1,8 @@
 package com.tzly.ctcyh.user.pw_p;
 
+import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
-import com.tzly.ctcyh.user.bean.BankResponse;
 import com.tzly.ctcyh.user.bean.response.VCodeResponse;
 
 /**

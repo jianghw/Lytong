@@ -8,12 +8,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jianghw.multi.state.layout.MultiState;
+import com.tzly.ctcyh.java.response.BankResponse;
+import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.util.RegexUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.user.BuildConfig;
 import com.tzly.ctcyh.user.R;
-import com.tzly.ctcyh.user.bean.BankResponse;
 import com.tzly.ctcyh.user.bean.response.VCodeResponse;
 import com.tzly.ctcyh.user.data_m.InjectionRepository;
 import com.tzly.ctcyh.user.global.UserGlobal;

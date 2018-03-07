@@ -6,7 +6,6 @@ import com.tzly.ctcyh.cargo.api.IActivityService;
 import com.tzly.ctcyh.cargo.api.IAddOilService;
 import com.tzly.ctcyh.cargo.api.ILienseService;
 import com.tzly.ctcyh.cargo.api.IRegionService;
-import com.tzly.ctcyh.cargo.bean.BaseResponse;
 import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
 import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
@@ -19,6 +18,8 @@ import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.cargo.bean.response.ScoreCaptchaResponse;
 import com.tzly.ctcyh.cargo.bean.response.ScoreResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.router.api.RetrofitFactory;
 
 import retrofit2.Retrofit;
 import rx.Observable;

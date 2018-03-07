@@ -16,17 +16,6 @@
 
 package com.zantong.mobilecttx.zxing.client.android.result;
 
-import com.zantong.mobilecttx.zxing.Result;
-import com.zantong.mobilecttx.zxing.client.android.Contents;
-import com.zantong.mobilecttx.zxing.client.android.Intents;
-import com.zantong.mobilecttx.zxing.client.android.LocaleManager;
-import com.zantong.mobilecttx.zxing.client.android.PreferencesActivity;
-import com.zantong.mobilecttx.zxing.client.android.book.SearchBookContentsActivity;
-import com.zantong.mobilecttx.zxing.client.result.ParsedResult;
-import com.zantong.mobilecttx.zxing.client.result.ParsedResultType;
-import com.zantong.mobilecttx.zxing.client.result.ResultParser;
-import com.zantong.mobilecttx.R;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -38,10 +27,20 @@ import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.util.Log;
 
+import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.zxing.Result;
+import com.zantong.mobilecttx.zxing.client.android.Contents;
+import com.zantong.mobilecttx.zxing.client.android.Intents;
+import com.zantong.mobilecttx.zxing.client.android.LocaleManager;
+import com.zantong.mobilecttx.zxing.client.android.PreferencesActivity;
+import com.zantong.mobilecttx.zxing.client.result.ParsedResult;
+import com.zantong.mobilecttx.zxing.client.result.ParsedResultType;
+import com.zantong.mobilecttx.zxing.client.result.ResultParser;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Locale;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * A base class for the Android-specific barcode handlers. These allow the app to polymorphically
@@ -62,21 +61,21 @@ public abstract class ResultHandler {
   private static final String[] PHONE_TYPE_STRINGS = {"home", "work", "mobile", "fax", "pager", "main"};
   private static final String[] ADDRESS_TYPE_STRINGS = {"home", "work"};
   private static final int[] EMAIL_TYPE_VALUES = {
-      ContactsContract.CommonDataKinds.Email.TYPE_HOME,
-      ContactsContract.CommonDataKinds.Email.TYPE_WORK,
-      ContactsContract.CommonDataKinds.Email.TYPE_MOBILE,
+          ContactsContract.CommonDataKinds.Email.TYPE_HOME,
+          ContactsContract.CommonDataKinds.Email.TYPE_WORK,
+          ContactsContract.CommonDataKinds.Email.TYPE_MOBILE,
   };
   private static final int[] PHONE_TYPE_VALUES = {
-      ContactsContract.CommonDataKinds.Phone.TYPE_HOME,
-      ContactsContract.CommonDataKinds.Phone.TYPE_WORK,
-      ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE,
-      ContactsContract.CommonDataKinds.Phone.TYPE_FAX_WORK,
-      ContactsContract.CommonDataKinds.Phone.TYPE_PAGER,
-      ContactsContract.CommonDataKinds.Phone.TYPE_MAIN,
+          ContactsContract.CommonDataKinds.Phone.TYPE_HOME,
+          ContactsContract.CommonDataKinds.Phone.TYPE_WORK,
+          ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE,
+          ContactsContract.CommonDataKinds.Phone.TYPE_FAX_WORK,
+          ContactsContract.CommonDataKinds.Phone.TYPE_PAGER,
+          ContactsContract.CommonDataKinds.Phone.TYPE_MAIN,
   };
   private static final int[] ADDRESS_TYPE_VALUES = {
-      ContactsContract.CommonDataKinds.StructuredPostal.TYPE_HOME,
-      ContactsContract.CommonDataKinds.StructuredPostal.TYPE_WORK,
+          ContactsContract.CommonDataKinds.StructuredPostal.TYPE_HOME,
+          ContactsContract.CommonDataKinds.StructuredPostal.TYPE_WORK,
   };
   private static final int NO_TYPE = -1;
 
@@ -277,7 +276,7 @@ public abstract class ResultHandler {
       // Remove extra leading '\n'
       putExtra(intent, ContactsContract.Intents.Insert.NOTES, aggregatedNotes.substring(1));
     }
-    
+
     putExtra(intent, ContactsContract.Intents.Insert.IM_HANDLE, instantMessenger);
     putExtra(intent, ContactsContract.Intents.Insert.POSTAL, address);
     if (addressType != null) {
@@ -397,25 +396,24 @@ public abstract class ResultHandler {
 
   final void getDirections(double latitude, double longitude) {
     launchIntent(new Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google." +
-        LocaleManager.getCountryTLD(activity) + "/maps?f=d&daddr=" + latitude + ',' + longitude)));
+            LocaleManager.getCountryTLD(activity) + "/maps?f=d&daddr=" + latitude + ',' + longitude)));
   }
 
   // Uses the mobile-specific version of Product Search, which is formatted for small screens.
   final void openProductSearch(String upc) {
     Uri uri = Uri.parse("http://www.google." + LocaleManager.getProductSearchCountryTLD(activity) +
-        "/m/products?q=" + upc + "&source=zxing");
+            "/m/products?q=" + upc + "&source=zxing");
     launchIntent(new Intent(Intent.ACTION_VIEW, uri));
   }
 
   final void openBookSearch(String isbn) {
     Uri uri = Uri.parse("http://books.google." + LocaleManager.getBookSearchCountryTLD(activity) +
-        "/books?vid=isbn" + isbn);
+            "/books?vid=isbn" + isbn);
     launchIntent(new Intent(Intent.ACTION_VIEW, uri));
   }
 
   final void searchBookContents(String isbnOrUrl) {
     Intent intent = new Intent(Intents.SearchBookContents.ACTION);
-    intent.setClassName(activity, SearchBookContentsActivity.class.getName());
     putExtra(intent, Intents.SearchBookContents.ISBN, isbnOrUrl);
     launchIntent(intent);
   }
@@ -480,7 +478,7 @@ public abstract class ResultHandler {
   private String parseCustomSearchURL() {
     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
     String customProductSearch = prefs.getString(PreferencesActivity.KEY_CUSTOM_PRODUCT_SEARCH,
-        null);
+            null);
     if (customProductSearch != null && customProductSearch.trim().isEmpty()) {
       return null;
     }

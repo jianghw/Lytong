@@ -64,6 +64,12 @@ public class HomeMainActivity extends AbstractBaseActivity
         return R.layout.activity_main_immersion;
     }
 
+    @Override
+    protected void initStatusBarColor() {
+        StatusBarUtils.setTranslucentForImageViewInFragment(
+                this, StatusBarUtils.DEFAULT_BAR_ALPHA, null);
+    }
+
     /**
      * 再次启动时调用
      */
@@ -76,15 +82,14 @@ public class HomeMainActivity extends AbstractBaseActivity
                     mCurBottomPosition = bundle.getInt(MainGlobal.putExtra.home_position_extra, 0);
             }
         }
-
-        if (mCustomBottom != null) mCustomBottom.selectTab(mCurBottomPosition);
-        if (mHomeUnimpededFragment != null) mHomeUnimpededFragment.loadingFirstData();
     }
 
     @Override
-    protected void initStatusBarColor() {
-        StatusBarUtils.setTranslucentForImageViewInFragment(
-                this, StatusBarUtils.DEFAULT_BAR_ALPHA, null);
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        if (mCustomBottom != null) mCustomBottom.selectTab(mCurBottomPosition);
+        if (mHomeUnimpededFragment != null) mHomeUnimpededFragment.loadingFirstData();
     }
 
     @Override
@@ -231,26 +236,30 @@ public class HomeMainActivity extends AbstractBaseActivity
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK
-                && event.getAction() == KeyEvent.ACTION_DOWN) {
+        //        if (keyCode == KeyEvent.KEYCODE_BACK
+        //                && event.getAction() == KeyEvent.ACTION_DOWN) {
+        //
+        //            if ((System.currentTimeMillis() - exitTime) > 2000) {
+        //                toastShort("请再点击一次,退出应用");
+        //                exitTime = System.currentTimeMillis();
+        //            } else {
+        //                finish();
+        //                System.exit(0);
+        //            }
+        //            return true;
+        //        }
+        //        return super.onKeyDown(keyCode, event);
 
-            if ((System.currentTimeMillis() - exitTime) > 2000) {
-                toastShort("请再点击一次,退出应用");
-                exitTime = System.currentTimeMillis();
-            } else {
-                finish();
-                System.exit(0);
-            }
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+        onBackPressed();
+        return true;
     }
 
     @Override
     public void onBackPressed() {
-        //实现Home键效果  super.onBackPressed();这句话一定要注掉,不然又去调用默认的back处理方式了
+        //        super.onBackPressed();
         Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         intent.addCategory(Intent.CATEGORY_HOME);
         startActivity(intent);
     }

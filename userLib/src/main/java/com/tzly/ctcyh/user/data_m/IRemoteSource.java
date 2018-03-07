@@ -1,7 +1,7 @@
 package com.tzly.ctcyh.user.data_m;
 
-import com.tzly.ctcyh.user.bean.BankResponse;
-import com.tzly.ctcyh.user.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BankResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.user.bean.request.RegisterDTO;
 import com.tzly.ctcyh.user.bean.response.LoginResponse;
 import com.tzly.ctcyh.user.bean.response.VCodeResponse;

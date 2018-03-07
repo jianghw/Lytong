@@ -32,12 +32,11 @@ public class ImageOptions {
      */
     public static DisplayImageOptions getSplashOptions() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.ic_splash_default)
-                .showImageForEmptyUri(R.mipmap.ic_splash_default)
-                .showImageOnFail(R.mipmap.ic_splash_default)
+                .showImageOnLoading(null)
+                .showImageForEmptyUri(null)
+                .showImageOnFail(null)
                 .cacheOnDisk(true)
                 .cacheInMemory(false)
-                .considerExifParams(false)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
         return options;

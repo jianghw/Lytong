@@ -155,7 +155,7 @@ public class SubjectSucceedFragment extends JxBaseRefreshFragment implements Vie
         msg.title = getResources().getString(R.string.tv_share_fahrschule_weixin_title);
         msg.description = getResources().getString(R.string.tv_share_fahrschule_weixin_content);
         //这里替换一张自己工程里的图片资源
-        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_sharelogo);
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.app_icon);
         msg.setThumbImage(thumb);
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();

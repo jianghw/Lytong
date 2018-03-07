@@ -40,11 +40,6 @@ import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import java.util.Collection;
 import java.util.Map;
 
-/**
- * This class handles all the messaging which comprises the state machine for capture.
- *
- * @author dswitkin@google.com (Daniel Switkin)
- */
 public final class CaptureActivityHandler extends Handler {
 
   private static final String TAG = CaptureActivityHandler.class.getSimpleName();

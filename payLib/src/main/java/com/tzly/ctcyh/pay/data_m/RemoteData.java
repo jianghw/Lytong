@@ -54,7 +54,7 @@ public class RemoteData implements IRemoteSource {
         return RetrofitFactory.getInstance().createRetrofit(2);
     }
 
-    private Retrofit initBaseUrlRetrofit() {
+    private Retrofit xiaoFengRetrofit() {
         return RetrofitFactory.getInstance().createRetrofit(3);
     }
 

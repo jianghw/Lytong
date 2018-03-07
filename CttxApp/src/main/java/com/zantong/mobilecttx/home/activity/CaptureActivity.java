@@ -142,7 +142,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setContentView(R.layout.capture);
+        setContentView(R.layout.main_activity_capture);
         StateBarSetting.settingBar(this, R.color.black, Codequery.class, true);
 
         TitleSetting.getInstance().initTitle(this, "扫罚单", 0, "取消", null, "输入编码", R.color.black);
@@ -367,40 +367,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         }
         return super.onKeyDown(keyCode, event);
     }
-
-//  @Override
-//  public boolean onCreateOptionsMenu(Menu menu) {
-//    MenuInflater menuInflater = getMenuInflater();
-//    menuInflater.inflate(R.menu.capture, menu);
-//    return super.onCreateOptionsMenu(menu);
-//  }
-//
-//  @Override
-//  public boolean onOptionsItemSelected(MenuItem item) {
-//    Intent intent = new Intent(Intent.ACTION_VIEW);
-//    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-//    switch (item.getItemId()) {
-//      case R.id.menu_share:
-//        intent.setClassName(this, ShareActivity.class.getName());
-//        startActivity(intent);
-//        break;
-//      case R.id.menu_history:
-//        intent.setClassName(this, HistoryActivity.class.getName());
-//        startActivityForResult(intent, HISTORY_REQUEST_CODE);
-//        break;
-//      case R.id.menu_settings:
-//        intent.setClassName(this, PreferencesActivity.class.getName());
-//        startActivity(intent);
-//        break;
-//      case R.id.menu_help:
-//        intent.setClassName(this, HelpActivity.class.getName());
-//        startActivity(intent);
-//        break;
-//      default:
-//        return super.onOptionsItemSelected(item);
-//    }
-//    return true;
-//  }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {

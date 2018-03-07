@@ -1,23 +1,13 @@
 package com.tzly.ctcyh.user.serviceimple;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.tzly.ctcyh.router.UiRouter;
-import com.tzly.ctcyh.router.util.ToastUtils;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
 import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.service.RouterGlobal;
-import com.tzly.ctcyh.user.bean.BaseResponse;
-import com.tzly.ctcyh.user.bean.request.RegisterDTO;
-import com.tzly.ctcyh.user.data_m.BaseSubscriber;
 import com.tzly.ctcyh.user.data_m.UserDataManager;
-import com.tzly.ctcyh.user.router.UserRouter;
-
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by jianghw on 2017/10/12.

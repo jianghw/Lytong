@@ -571,7 +571,7 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
         msg.title = mStrTitle;
         msg.description = "优惠活动推荐";
         //这里替换一张自己工程里的图片资源
-        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.icon_sharelogo);
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.app_icon);
         msg.setThumbImage(thumb);
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();

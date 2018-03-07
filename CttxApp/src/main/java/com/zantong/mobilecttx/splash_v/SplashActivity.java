@@ -1,13 +1,13 @@
 package com.zantong.mobilecttx.splash_v;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,8 +19,8 @@ import com.tzly.ctcyh.router.custom.image.ImageOptions;
 import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.DensityUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
-import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.router.util.animation.PropertyUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
@@ -62,7 +62,7 @@ public class SplashActivity extends AbstractBaseActivity
 
     @Override
     protected int initContentView() {
-        return R.layout.common_splash_activity;
+        return R.layout.main_activity_splash;
     }
 
     @Override
@@ -110,6 +110,7 @@ public class SplashActivity extends AbstractBaseActivity
         if (mPresenter != null) mPresenter.startCountDown();
 
         if (mPresenter != null) mPresenter.updateToken();
+
         startAnimation();
     }
 
@@ -117,23 +118,27 @@ public class SplashActivity extends AbstractBaseActivity
      * 动画
      */
     public void startAnimation() {
-        Animation splashAnimation = AnimationUtils.loadAnimation(
-                Utils.getContext(), R.anim.splash_fade);
-        splashAnimation.setStartOffset(100);
-        splashAnimation.setFillAfter(true);
-        mImgLogo.setAnimation(splashAnimation);
-        splashAnimation.setAnimationListener(new Animation.AnimationListener() {
+        ObjectAnimator animator = PropertyUtils.createShakeView(mImgLogo, 1000,1);
+        animator.start();
+        animator.addListener(new Animator.AnimatorListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void onAnimationStart(Animator animator) {
+
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
+            public void onAnimationEnd(Animator animator) {
                 if (mPresenter != null) mPresenter.startGetPic();
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
             }
         });
     }

@@ -3,13 +3,13 @@ package com.tzly.ctcyh.cargo.camera_p;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.tzly.ctcyh.cargo.bean.BaseResponse;
 import com.tzly.ctcyh.cargo.bean.request.BindCarBean;
 import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
 import com.tzly.ctcyh.cargo.bean.request.BindDrivingBean;
 import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
-import com.tzly.ctcyh.cargo.data_m.BaseSubscriber;
 import com.tzly.ctcyh.cargo.data_m.CargoDataManager;
+import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.router.api.BaseSubscriber;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

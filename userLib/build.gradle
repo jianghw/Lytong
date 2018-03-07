@@ -15,32 +15,19 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField 'boolean', 'isDeta', rootProject.ext.config.user_deta
-            buildConfigField 'String', 'beta_base_url', rootProject.ext.beta.base_url
-            buildConfigField 'String', 'release_base_url', rootProject.ext.release.base_url
-            buildConfigField 'String', 'beta_bank_url', rootProject.ext.beta.bank_app_url
-            buildConfigField 'String', 'release_bank_url', rootProject.ext.release.bank_app_url
         }
 
         release {
-            buildConfigField 'boolean', 'isDeta', rootProject.ext.config.user_deta
-            buildConfigField 'String', 'beta_base_url', rootProject.ext.beta.base_url
-            buildConfigField 'String', 'release_base_url', rootProject.ext.release.base_url
-            buildConfigField 'String', 'beta_bank_url', rootProject.ext.beta.bank_app_url
-            buildConfigField 'String', 'release_bank_url', rootProject.ext.release.bank_app_url
-
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     //区分模块资源
-    resourcePrefix "user_"
+//    resourcePrefix "user_"
 
     sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-            assets.srcDirs = ['assets']
-        }
+        main.jniLibs.srcDirs = ['libs']
+        main.assets.srcDirs = ['assets']
     }
 }
 

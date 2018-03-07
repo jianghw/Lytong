@@ -16,8 +16,6 @@
 
 package com.zantong.mobilecttx.zxing.client.result;
 
-import com.zantong.mobilecttx.zxing.client.result.ResultParser;
-
 /**
  * <p>See
  * <a href="http://www.nttdocomo.co.jp/english/service/imode/make/content/barcode/about/s2.html">

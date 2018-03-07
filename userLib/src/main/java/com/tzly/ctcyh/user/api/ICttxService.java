@@ -1,6 +1,6 @@
 package com.tzly.ctcyh.user.api;
 
-import com.tzly.ctcyh.user.bean.BaseResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.user.bean.request.RegisterDTO;
 
 import retrofit2.http.Body;

@@ -19,22 +19,25 @@ import com.zantong.mobilecttx.utils.jumptools.Act;
  */
 public class StateBarSetting {
 
-    public static void settingBar(Activity mContex){
+    public static void settingBar(Activity mContex) {
         settingBar(mContex, 0, null, false);
     }
-    public static void settingBar(Activity mContext, int res){
+
+    public static void settingBar(Activity mContext, int res) {
         settingBar(mContext, res, null, false);
     }
-    public static void settingBar(Activity mContext, Class<?> clazz, boolean popFlag){
+
+    public static void settingBar(Activity mContext, Class<?> clazz, boolean popFlag) {
         settingBar(mContext, 0, clazz, popFlag);
     }
-    public static void settingBar(final Activity mContext, int res, final Class<?> clazz, final boolean popFlag){
-        if(!(mContext instanceof HomeMainActivity)){
+
+    public static void settingBar(final Activity mContext, int res, final Class<?> clazz, final boolean popFlag) {
+        if (!(mContext instanceof HomeMainActivity)) {
             ScreenManager.pushActivity(mContext);
         }
         View view = mContext.findViewById(R.id.tv_back);
         View text_right = mContext.findViewById(R.id.text_right);
-        if(view != null){
+        if (view != null) {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -48,12 +51,12 @@ public class StateBarSetting {
                 }
             });
         }
-        if(text_right != null && null != clazz){
+        if (text_right != null && null != clazz) {
             text_right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Act.getInstance().lauchIntent(mContext, clazz);
-                    if(popFlag){
+                    if (popFlag) {
                         ScreenManager.popActivity();
                     }
                 }
@@ -62,18 +65,13 @@ public class StateBarSetting {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true, mContext);
-
-//            mContext.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            mContext.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
         SystemBarTintManager tintManager = new SystemBarTintManager(mContext);
         tintManager.setStatusBarTintEnabled(true);
-        if(res == 0){
+        if (res == 0) {
             tintManager.setStatusBarTintResource(R.color.appmain);//通知栏所需颜色
-//            viewTitle.setBackgroundColor(mContext.getResources().getColor(R.color.appmain));
-        }else{
+        } else {
             tintManager.setStatusBarTintResource(res);//通知栏所需颜色
-//            viewTitle.setBackgroundColor(mContext.getResources().getColor(res));
         }
     }
 

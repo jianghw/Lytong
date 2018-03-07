@@ -21,7 +21,7 @@
     android:fitsSystemWindows="true">
   <include
       android:id="@+id/title"
-      layout="@layout/cttx_title"/>
+      layout="@layout/main_layout_cttx_title"/>
 
 
   <SurfaceView android:id="@+id/preview_view"
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:padding="@dimen/standard_padding">
+        android:padding="@dimen/res_x_16">
 
       <LinearLayout
           android:orientation="vertical"
@@ -58,7 +58,7 @@
                    android:layout_height="wrap_content"
                    android:maxWidth="160dip"
                    android:maxHeight="160dip"
-                   android:layout_marginBottom="@dimen/half_padding"
+                   android:layout_marginBottom="@dimen/res_y_8"
                    android:adjustViewBounds="true"
                    android:scaleType="centerInside"
                    tools:ignore="ContentDescription"/>
@@ -73,7 +73,7 @@
                     android:text="@string/msg_default_format"
                     android:textColor="@color/result_minor_text"
                     android:textStyle="bold"
-                    android:paddingRight="@dimen/half_padding"/>
+                    android:paddingRight="@dimen/res_y_8"/>
 
           <TextView
               android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
                     android:text="@string/msg_default_type"
                     android:textColor="@color/result_minor_text"
                     android:textStyle="bold"
-                    android:paddingRight="@dimen/half_padding"/>
+                    android:paddingRight="@dimen/res_y_8"/>
 
           <TextView
               android:layout_width="wrap_content"
@@ -111,7 +111,7 @@
                     android:text="@string/msg_default_time"
                     android:textColor="@color/result_minor_text"
                     android:textStyle="bold"
-                    android:paddingRight="@dimen/half_padding"/>
+                    android:paddingRight="@dimen/res_y_8"/>
 
           <TextView
               android:layout_width="wrap_content"
@@ -131,7 +131,7 @@
                     android:text="@string/msg_default_meta"
                     android:textColor="@color/result_minor_text"
                     android:textStyle="bold"
-                    android:paddingRight="@dimen/half_padding"/>
+                    android:paddingRight="@dimen/res_y_8"/>
 
           <TextView
               android:layout_width="wrap_content"

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="main_tv_count_share">%1$d人</string>
+
+    <string name="mine_help_str1">为什么绑定不上畅通卡?</string>
+    <string name="mine_help_str2">可缴费车辆可以修改么?</string>
+    <string name="mine_help_str3">如何处理违章缴费出错?</string>
+    <string name="mine_help_str4">积分提醒怎么处理?</string>
+    <string name="no_data">没有找到符合条件的数据</string>
 </resources>

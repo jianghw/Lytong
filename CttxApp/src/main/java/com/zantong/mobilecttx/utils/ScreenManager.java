@@ -2,9 +2,6 @@ package com.zantong.mobilecttx.utils;
 
 import android.app.Activity;
 
-import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
-import com.zantong.mobilecttx.home_v.HomeMainActivity;
-
 import java.util.Stack;
 
 public class ScreenManager {
@@ -59,23 +56,6 @@ public class ScreenManager {
                 break;
             }
             if (activity.getClass().equals(cls)) {
-                break;
-            }
-            popActivity(activity);
-        }
-    }
-
-    public void specialMethod() {
-        while (true) {
-            if (activityStack.size() == 0) {
-                break;
-            }
-            Activity activity = currentActivity();
-            if (activity == null) {
-                break;
-            }
-            if (activity.getClass().equals(UnblockedCardActivity.class)
-                    || activity.getClass().equals(HomeMainActivity.class)) {
                 break;
             }
             popActivity(activity);

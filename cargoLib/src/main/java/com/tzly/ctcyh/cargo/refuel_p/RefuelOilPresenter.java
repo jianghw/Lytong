@@ -6,9 +6,9 @@ import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
 import com.tzly.ctcyh.cargo.bean.response.NorOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
-import com.tzly.ctcyh.cargo.data_m.BaseSubscriber;
 import com.tzly.ctcyh.cargo.data_m.CargoDataManager;
 import com.tzly.ctcyh.cargo.global.CargoGlobal;
+import com.tzly.ctcyh.router.api.BaseSubscriber;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
