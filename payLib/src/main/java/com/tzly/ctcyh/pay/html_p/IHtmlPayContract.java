@@ -2,8 +2,8 @@ package com.tzly.ctcyh.pay.html_p;
 
 import android.location.Location;
 
-import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
-import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
+import com.tzly.ctcyh.pay.response.OrderDetailResponse;
+import com.tzly.ctcyh.pay.response.PayUrlResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 

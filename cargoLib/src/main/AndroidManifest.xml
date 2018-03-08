@@ -5,10 +5,14 @@
     <application
         android:allowBackup="true"
         android:supportsRtl="true">
-
         <!--加油-->
         <activity
             android:name=".refuel_v.RefuelOilActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+        <!--97加油 前-->
+        <activity
+            android:name=".refuel_v.FoldRefuelOilActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"></activity>
         <!--97加油-->
@@ -61,10 +65,9 @@
 
         <!--驾照查分-->
         <activity
-            android:name=".license_v.LicenseGradeActivity"
+            android:name=".license_v.LicenseCargoActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
     </application>
 

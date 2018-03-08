@@ -20,9 +20,9 @@ import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.util.FileUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
-import com.tzly.ctcyh.router.util.primission.PermissionFail;
-import com.tzly.ctcyh.router.util.primission.PermissionGen;
-import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
+import com.tzly.ctcyh.router.custom.primission.PermissionFail;
+import com.tzly.ctcyh.router.custom.primission.PermissionGen;
+import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.FileUploadApi;
@@ -54,7 +54,7 @@ import retrofit2.Response;
 
 import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
 import static android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
-import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.ctcyh.router.custom.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 个人中心页面

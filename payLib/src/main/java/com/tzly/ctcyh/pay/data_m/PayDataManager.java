@@ -8,20 +8,19 @@ import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.coupon.CouponInfoResponse;
 import com.tzly.ctcyh.java.response.violation.ViolationNum;
 import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
-import com.tzly.ctcyh.pay.bean.response.CodeDetailResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponCodeResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponDetailResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponStatusResponse;
-import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
-import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
-import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
-import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.pay.response.CodeDetailResponse;
+import com.tzly.ctcyh.pay.response.CouponCodeResponse;
+import com.tzly.ctcyh.pay.response.CouponDetailResponse;
+import com.tzly.ctcyh.pay.response.CouponResponse;
+import com.tzly.ctcyh.pay.response.CouponStatusResponse;
+import com.tzly.ctcyh.pay.response.OrderDetailResponse;
+import com.tzly.ctcyh.pay.response.PayTypeResponse;
+import com.tzly.ctcyh.pay.response.PayUrlResponse;
+import com.tzly.ctcyh.pay.response.PayWeixinResponse;
+import com.tzly.ctcyh.router.custom.rea.RSAUtils;
 
 import java.util.List;
 
-import rx.Completable;
 import rx.Observable;
 
 /**

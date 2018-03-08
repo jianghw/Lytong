@@ -3,10 +3,10 @@ package com.tzly.ctcyh.pay.pay_type_v;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.text.TextUtils;
 
 import com.tzly.ctcyh.pay.R;
 import com.tzly.ctcyh.pay.global.PayGlobal;
+import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 
@@ -17,9 +17,8 @@ import com.tzly.ctcyh.router.util.FragmentUtils;
 
 public class PaySucceedActivity extends AbstractBaseActivity {
 
-
     private PaySucceedFragment mPaySucceedFragment;
-    private String mOrderId;
+    private String mGoodsType;
 
     @Override
     protected int initContentView() {
@@ -31,13 +30,12 @@ public class PaySucceedActivity extends AbstractBaseActivity {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
-                if (intent.hasExtra(PayGlobal.putExtra.web_orderId_extra))
-                    mOrderId = bundle.getString(PayGlobal.putExtra.web_orderId_extra);
+                if (intent.hasExtra(PayGlobal.putExtra.web_goods_type_extra))
+                    mGoodsType = bundle.getString(PayGlobal.putExtra.web_goods_type_extra);
                 else
-                    mOrderId = "";
+                    mGoodsType = "";
             }
         }
-        mOrderId = "18013113520337";
     }
 
     @Override
@@ -54,7 +52,7 @@ public class PaySucceedActivity extends AbstractBaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         //默认页面显示
         if (mPaySucceedFragment == null) {
-            mPaySucceedFragment = PaySucceedFragment.newInstance(mOrderId);
+            mPaySucceedFragment = PaySucceedFragment.newInstance(mGoodsType);
             FragmentUtils.add(fragmentManager, mPaySucceedFragment, R.id.lay_base_frame);
         }
     }
@@ -67,5 +65,10 @@ public class PaySucceedActivity extends AbstractBaseActivity {
         super.onDestroy();
 
         mPaySucceedFragment = null;
+    }
+
+    @Override
+    public void closeFragment() {
+        PayRouter.gotoMainActivity(getApplicationContext(), 1);
     }
 }

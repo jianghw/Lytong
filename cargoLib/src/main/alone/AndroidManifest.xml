@@ -16,6 +16,12 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"></activity>
 
+        <!--97加油 前-->
+        <activity
+            android:name=".refuel_v.FoldRefuelOilActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
+
         <!--97加油-->
         <activity
             android:name=".refuel_v.DiscountOilActivity"
@@ -74,7 +80,7 @@
 
         <!--驾照查分-->
         <activity
-            android:name=".license_v.LicenseGradeActivity"
+            android:name=".license_v.LicenseCargoActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>

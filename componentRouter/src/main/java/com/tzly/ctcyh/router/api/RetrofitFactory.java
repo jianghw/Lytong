@@ -26,7 +26,7 @@ public class RetrofitFactory {
             case 3:
                 return HttpsRetrofit.getInstance().createRetrofit(getBaseUrl(type));
             default:
-                throw new IllegalArgumentException("pay retrofit type is not right");
+                return HttpsRetrofit.getInstance().createRetrofit(getBaseUrl(type));
         }
     }
 
@@ -41,7 +41,15 @@ public class RetrofitFactory {
             case 2:
                 return BuildConfig.isDeta
                         ? BuildConfig.beta_bank_url : BuildConfig.release_bank_url;
-            case 3:
+            case 3://上传图片
+                return "http://liyingtong.com:8080/";
+            case 4://测试
+                return "http://192.168.1.127:8082/";
+            case 5:
+                return BuildConfig.beta_base_url;
+            case 6:
+                return BuildConfig.beta_bank_url;
+            case 7:
                 return BuildConfig.isDeta
                         ? "http://dev.liyingtong.com:8011/admin/index.php/"
                         : "http://liyingtong.com:8011/admin/index.php/";

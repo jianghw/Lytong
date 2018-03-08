@@ -16,9 +16,9 @@ import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.primission.PermissionFail;
-import com.tzly.ctcyh.router.util.primission.PermissionGen;
-import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
+import com.tzly.ctcyh.router.custom.primission.PermissionFail;
+import com.tzly.ctcyh.router.custom.primission.PermissionGen;
+import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.base.bean.UnimpededBannerBean;
 import com.zantong.mobilecttx.home_p.IUnimpededBannerContract;
@@ -111,7 +111,7 @@ public class HomePagerFragment_2 extends RecyclerListFragment<UnimpededBannerBea
         if (bannerBean != null && !TextUtils.isEmpty(bannerBean.getTargetPath())) {
             String path = bannerBean.getTargetPath();
             if (path.contains("http")) {//启动公司自己html
-                MainRouter.gotoWebHtmlActivity(getActivity(), bannerBean.getTitle(), path);
+                MainRouter.gotoWebHtmlActivity(getContext(), bannerBean.getTitle(), path);
             } else if (path.equals("native_app_recharge")) {//加油充值
                 MainRouter.gotoRechargeActivity(getActivity());
             } else if (path.equals("native_app_loan")) {
@@ -121,17 +121,17 @@ public class HomePagerFragment_2 extends RecyclerListFragment<UnimpededBannerBea
             } else if (path.equals("native_app_daijia")) {//代驾
                 enterDrivingActivity();
             } else if (path.equals("native_app_enhancement")) {//科目强化
-                MainRouter.gotoSubjectActivity(getActivity(), 0);
+                MainRouter.gotoSubjectActivity(getContext(), 0);
             } else if (path.equals("native_app_sparring")) {//陪练
-                MainRouter.gotoSparringActivity(getActivity(), 0);
+                MainRouter.gotoSparringActivity(getContext(), 0);
             } else if (path.equals("native_app_drive_share")) {//分享
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.share_position_extra, 1);
-                Act.getInstance().gotoLoginByIntent(getActivity(), ShareParentActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(getContext(), ShareParentActivity.class, intent);
             } else if (path.equals("native_app_car_beauty")) {//汽车美容
-                Act.getInstance().gotoIntentLogin(getActivity(), CarBeautyActivity.class);
+                Act.getInstance().gotoIntentLogin(getContext(), CarBeautyActivity.class);
             } else if (path.equals("native_app_driver")) {//驾校报名
-                MainRouter.gotoFahrschuleActivity(getActivity(), 0);
+                MainRouter.gotoFahrschuleActivity(getContext(), 0);
             } else if (path.equals("native_app_yearCheckMap")) {//年检地图
                 enterMapActivity();
             } else if (path.equals("native_app_oilStation")) {//优惠加油站
@@ -141,9 +141,13 @@ public class HomePagerFragment_2 extends RecyclerListFragment<UnimpededBannerBea
             } else if (path.equals("native_app_drivingLicense")) {//驾驶证查分
                 licenseCheckGrade(1);
             } else if (path.equals("native_app_97recharge")) {//97加油
-                MainRouter.gotoDiscountOilActivity(getActivity());
+                MainRouter.gotoDiscountOilActivity(getContext());
             } else if (path.equals("native_app_97buyCard")) {//97加油购卡
-                MainRouter.gotoBidOilActivity(getActivity());
+                MainRouter.gotoBidOilActivity(getContext());
+            } else if (path.equals("native_app_mainRecharge")) {//97加油购卡前页
+                MainRouter.gotoFoldOilActivity(getContext());
+            } else if (path.equals("native_app_drivingNewScore")) {//驾照查分
+                MainRouter.gotoLicenseCargoActivity(getContext());
             } else {//其他
                 toastShort("此版本暂无此状态页面,请更新最新版本");
             }
@@ -166,7 +170,7 @@ public class HomePagerFragment_2 extends RecyclerListFragment<UnimpededBannerBea
     }
 
     private void gotoMap() {
-        MainRouter.gotoMapActivity(getActivity());
+        MainRouter.gotoMapActivity(getContext());
     }
 
     /**
@@ -187,7 +191,7 @@ public class HomePagerFragment_2 extends RecyclerListFragment<UnimpededBannerBea
     private void gotoOilMap() {
         Intent intent = new Intent();
         intent.putExtra(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
-        Act.getInstance().gotoLoginByIntent(getActivity(), BaiduMapParentActivity.class, intent);
+        Act.getInstance().gotoLoginByIntent(getContext(), BaiduMapParentActivity.class, intent);
     }
 
     protected void licenseCheckGrade(int position) {
@@ -203,11 +207,11 @@ public class HomePagerFragment_2 extends RecyclerListFragment<UnimpededBannerBea
         }
 
         if (fromJson != null && position == 2) {
-            MainRouter.gotoPaymentActivity(getActivity(), new Gson().toJson(fromJson));
+            MainRouter.gotoPaymentActivity(getContext(), new Gson().toJson(fromJson));
         } else if (fromJson != null && position == 1) {
-            MainRouter.gotoLicenseDetailActivity(getActivity(), new Gson().toJson(fromJson));
+            MainRouter.gotoLicenseDetailActivity(getContext(), new Gson().toJson(fromJson));
         } else {
-            MainRouter.gotoLicenseGradeActivity(getActivity(), position);
+            MainRouter.gotoLicenseGradeActivity(getContext(), position);
         }
     }
 
@@ -227,7 +231,7 @@ public class HomePagerFragment_2 extends RecyclerListFragment<UnimpededBannerBea
     }
 
     private void gotoDriving() {
-        MainRouter.gotoDrivingActivity(getActivity());
+        MainRouter.gotoDrivingActivity(getContext());
     }
 
     @Override

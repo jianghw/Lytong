@@ -3,10 +3,6 @@ package com.tzly.ctcyh.pay.pay_type_p;
 import android.support.annotation.NonNull;
 
 import com.tzly.ctcyh.java.response.coupon.CouponInfoResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponResponse;
-import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
-import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
-import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
 import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.router.api.BaseSubscriber;
@@ -51,7 +47,7 @@ public class PaySucceedPresenter implements IPaySucceedContract.IPaySucceedPrese
     @Override
     public void getCouponInfo() {
         Subscription subscription = mRepository
-                .getCouponInfo(mContractView.getOrderId())
+                .getCouponInfo(mContractView.getGoodsType())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override

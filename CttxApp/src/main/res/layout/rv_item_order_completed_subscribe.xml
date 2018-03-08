@@ -57,7 +57,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:scaleType="fitXY"
-            android:src="@mipmap/app_icon" />
+            android:src="@mipmap/ic_global_app" />
 
         <TextView
             android:id="@+id/tv_brand"

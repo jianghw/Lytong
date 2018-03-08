@@ -59,6 +59,14 @@ public final class RouterGlobal {
         public static final String bid_oil_host = "bid_oil_host";
         //97加油
         public static final String discount_oil_host = "discount_oil_host";
+        //富文本页面
+        public static final String home_rich_host = "home_rich_host";
+        //97折 加油
+        public static final String fold_oil_host = "fold_oil_host";
+        //成功页面
+        public static final String pay_succeed_host = "pay_succeed_host";
+        //驾驶证查分
+        public static final String license_cargo_host = "license_cargo_host";
     }
 
     public static final class putExtra {

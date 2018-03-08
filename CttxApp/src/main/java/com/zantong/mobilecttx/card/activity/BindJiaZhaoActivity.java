@@ -16,10 +16,10 @@ import com.google.gson.Gson;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.primission.PermissionFail;
-import com.tzly.ctcyh.router.util.primission.PermissionGen;
-import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.router.custom.primission.PermissionFail;
+import com.tzly.ctcyh.router.custom.primission.PermissionGen;
+import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
+import com.tzly.ctcyh.router.custom.rea.RSAUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -40,7 +40,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
-import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.ctcyh.router.custom.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 绑定畅通卡

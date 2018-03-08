@@ -24,10 +24,10 @@ import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.primission.PermissionFail;
-import com.tzly.ctcyh.router.util.primission.PermissionGen;
-import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
-import com.tzly.ctcyh.router.util.rea.Des3;
+import com.tzly.ctcyh.router.custom.primission.PermissionFail;
+import com.tzly.ctcyh.router.custom.primission.PermissionGen;
+import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
+import com.tzly.ctcyh.router.custom.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
@@ -70,7 +70,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.ctcyh.router.custom.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 畅通主页面
@@ -227,33 +227,23 @@ public class HomeUnimpededFragment extends RefreshFragment
         mCustomGrapevine.setOnItemClickListener(new BaseAutoScrollUpTextView.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                //点击效果
+                if (!mHomeNotices.isEmpty()) {
+                    HomeNotice listener = mHomeNotices.get(position);
+                    if (TextUtils.isEmpty(listener.getDetail())) {
+                        toastShort("没有详情");
+                    } else {
+                        MainRouter.gotoRichTextActivity(getContext(), listener.getDetail());
+                    }
+                }
             }
         });
         mCustomViolation = (HorizontalInfiniteCycleViewPager) view.findViewById(R.id.custom_violation);
-
-        //        mTvLicense = (TextView) view.findViewById(R.id.tv_license);
-        //        mTvLicense.setOnClickListener(this);
-        //        mTvAppraisement = (TextView) view.findViewById(R.id.tv_appraisement);
-        //        mTvAppraisement.setOnClickListener(this);
-        //        mTvCheck = (TextView) view.findViewById(R.id.tv_check);
-        //        mTvCheck.setOnClickListener(this);
-        //        mTvDrive = (TextView) view.findViewById(R.id.tv_drive);
-        //        mTvDrive.setOnClickListener(this);
-        //        mTvOil = (TextView) view.findViewById(R.id.tv_oil);
-        //        mTvOil.setOnClickListener(this);
-        //        mTvMap = (TextView) view.findViewById(R.id.tv_map);
-        //        mTvMap.setOnClickListener(this);
-        //        mTvVehicle = (TextView) view.findViewById(R.id.tv_vehicle);
-        //        mTvVehicle.setOnClickListener(this);
-        //        mTvRoadside = (TextView) view.findViewById(R.id.tv_roadside);
-        //        mTvRoadside.setOnClickListener(this);
 
         mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
         mTabLayout = (LinearLayout) view.findViewById(R.id.tabLayout);
     }
 
-    private void initScrollUp(final List<HomeNotice> mDataLists) {
+    private void initScrollUp(List<HomeNotice> mDataLists) {
         if (mDataLists != null && mDataLists.size() == 0) {
             List<HomeNotice> mList = new ArrayList<>();
             mList.add(new HomeNotice("-1", 0, "暂无通知"));

@@ -15,13 +15,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.pay.R;
-import com.tzly.ctcyh.pay.bean.response.CouponBean;
-import com.tzly.ctcyh.pay.bean.response.CouponResponse;
-import com.tzly.ctcyh.pay.bean.response.PayTypeBean;
-import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
-import com.tzly.ctcyh.pay.bean.response.PayTypesBean;
-import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
-import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
+import com.tzly.ctcyh.pay.response.CouponBean;
+import com.tzly.ctcyh.pay.response.CouponResponse;
+import com.tzly.ctcyh.pay.response.PayTypeBean;
+import com.tzly.ctcyh.pay.response.PayTypeResponse;
+import com.tzly.ctcyh.pay.response.PayTypesBean;
+import com.tzly.ctcyh.pay.response.PayUrlResponse;
+import com.tzly.ctcyh.pay.response.PayWeixinResponse;
 import com.tzly.ctcyh.pay.data_m.InjectionRepository;
 import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.pay.pay_type_p.IPayTypeContract;
@@ -29,11 +29,9 @@ import com.tzly.ctcyh.pay.pay_type_p.PayTypePresenter;
 import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.util.FormatUtils;
-import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.Utils;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -177,11 +175,11 @@ public class PayTypeFragment extends RefreshFragment
         mLayReCoupon = (RelativeLayout) view.findViewById(R.id.lay_re_coupon);
         mLayReCoupon.setOnClickListener(this);
 
-//        mPriceTitle = (TextView) view.findViewById(R.id.price_title);
-//        mPriceUnit = (TextView) view.findViewById(R.id.price_unit);
-//        mTvSubmitPrice = (TextView) view.findViewById(R.id.tv_submit_price);
-//        mTvPay = (TextView) view.findViewById(R.id.tv_pay);
-//        mTvPay.setOnClickListener(this);
+        //        mPriceTitle = (TextView) view.findViewById(R.id.price_title);
+        //        mPriceUnit = (TextView) view.findViewById(R.id.price_unit);
+        //        mTvSubmitPrice = (TextView) view.findViewById(R.id.tv_submit_price);
+        //        mTvPay = (TextView) view.findViewById(R.id.tv_pay);
+        //        mTvPay.setOnClickListener(this);
 
         radioButtonToPay();
     }
@@ -277,8 +275,9 @@ public class PayTypeFragment extends RefreshFragment
      * 支付宝
      */
     private void gotoAliPay() {
-        PayRouter.gotoAliHtmlActivity(getActivity(),
-                "支付宝支付", getExtraOrderId(), mPayType, getSubmitPrice(), mCouponBeanId);
+        //single_top
+        PayRouter.gotoAliHtmlActivity(getContext(),
+                "支付宝支付", getExtraOrderId(), mPayType, getSubmitPrice(), mCouponBeanId, null);
     }
 
     @Override
@@ -402,8 +401,8 @@ public class PayTypeFragment extends RefreshFragment
             toastShort("未完成支付");
             PayRouter.gotoMainActivity(getActivity(), 1);
             //前往 订单详情页面
-//            String orderId = getExtraOrderId();
-//            PayRouter.gotoOrderDetailActivity(getActivity(), orderId, mCouponType);
+            //            String orderId = getExtraOrderId();
+            //            PayRouter.gotoOrderDetailActivity(getActivity(), orderId, mCouponType);
         }
     }
 
@@ -465,8 +464,9 @@ public class PayTypeFragment extends RefreshFragment
 
     @Override
     public void getBankPayHtmlSucceed(PayUrlResponse response) {
-        PayRouter.gotoPayHtmlActivity(getActivity(),
-                "工行卡支付", response.getData(), getExtraOrderId(), mPayType);
+        //直接打开singletop
+        PayRouter.gotoWebHtmlActivity(getContext(),
+                "银行支付", response.getData(), getExtraOrderId(), mPayType, null);
     }
 
     protected void closeActivity() {
@@ -481,8 +481,9 @@ public class PayTypeFragment extends RefreshFragment
 
     @Override
     public void weChatPaySucceed(PayWeixinResponse response) {
-        PayRouter.gotoPayHtmlActivity(getActivity(),
-                "微信支付", response.getData().getMweburl(), getExtraOrderId(), mPayType);
+        //直接打开singletop
+        PayRouter.gotoWebHtmlActivity(getActivity(),
+                "微信支付", response.getData().getMweburl(), getExtraOrderId(), mPayType, null);
     }
 
     /**

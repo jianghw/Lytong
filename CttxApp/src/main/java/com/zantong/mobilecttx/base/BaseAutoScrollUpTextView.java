@@ -102,7 +102,6 @@ public abstract class BaseAutoScrollUpTextView<T> extends ListView implements
         //        mScrollY = dip2px(getAdertisementHeight());
         mScrollY = getAdertisementHeight();
         init();
-
     }
 
     public BaseAutoScrollUpTextView(Context context, AttributeSet attrs) {
@@ -171,7 +170,8 @@ public abstract class BaseAutoScrollUpTextView<T> extends ListView implements
             ViewHolder viewHolder;
             if (null == convertView) {
                 viewHolder = new ViewHolder();
-                convertView = LayoutInflater.from(mContext).inflate(R.layout.item_auto_scroll_up_layout, null);
+                convertView = LayoutInflater.from(mContext).inflate(
+                        R.layout.item_auto_scroll_up_layout, null);
                 viewHolder.mInfoView = (TextView) convertView.findViewById(R.id.tv_info);
                 viewHolder.mImgMsg = (ImageView) convertView.findViewById(R.id.img_label);
                 convertView.setTag(viewHolder);

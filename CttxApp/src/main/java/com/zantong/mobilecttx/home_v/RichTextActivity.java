@@ -1,20 +1,23 @@
 package com.zantong.mobilecttx.home_v;
 
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.custom.htmltxt.HtmlHttpImageGetter;
 import com.tzly.ctcyh.router.custom.htmltxt.HtmlTextView;
 import com.tzly.ctcyh.router.custom.htmltxt.IHtmlTextClick;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.router.MainRouter;
 
 /**
- * Created by jianghw on 18-2-24.
+ * 富文本页面
  */
 
 public class RichTextActivity extends AbstractBaseActivity {
     private HtmlTextView mTvHtml;
+    private String mCurRich;
 
     @Override
     protected int initContentView() {
@@ -23,18 +26,26 @@ public class RichTextActivity extends AbstractBaseActivity {
 
     @Override
     protected void bundleIntent(Intent intent) {
-
+        if (intent != null) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                if (intent.hasExtra(MainGlobal.putExtra.home_rich_extra))
+                    mCurRich = bundle.getString(MainGlobal.putExtra.home_rich_extra);
+            }
+        }
     }
 
     @Override
     protected void bindFragment() {
+        titleContent("广播详情");
+
         initView();
     }
 
     @Override
     protected void initContentData() {
 
-        mTvHtml.setClickHtml("",
+        mTvHtml.setClickHtml(mCurRich,
                 new HtmlHttpImageGetter(mTvHtml),
                 new IHtmlTextClick() {
                     @Override
@@ -49,6 +60,6 @@ public class RichTextActivity extends AbstractBaseActivity {
     }
 
     private void gotoHtml(String tableHtml) {
-        MainRouter.gotoWebHtmlActivity(this, "Web页面", tableHtml);
+        MainRouter.gotoWebHtmlActivity(getApplicationContext(), "Web页面", tableHtml);
     }
 }

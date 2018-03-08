@@ -3,14 +3,10 @@ package com.tzly.ctcyh.cargo.router;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
-import android.view.View;
 
-import com.tzly.ctcyh.cargo.active_v.ActiveActivity;
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.UiRouter;
-import com.tzly.ctcyh.service.ICargoService;
 import com.tzly.ctcyh.service.IMainService;
 import com.tzly.ctcyh.service.IPayService;
 import com.tzly.ctcyh.service.IUserService;
@@ -244,6 +240,26 @@ public final class CargoRouter {
         Bundle bundle = new Bundle();
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.discount_oil_host,
+                bundle);
+    }
+
+    /**
+     * 97 加油 申请办卡
+     */
+    public static void gotoFoldOilActivity(Context context) {
+        Bundle bundle = new Bundle();
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.fold_oil_host,
+                bundle);
+    }
+
+    /**
+     * 驾照查分
+     */
+    public static void gotoLicenseCargoActivity(Context context) {
+        Bundle bundle = new Bundle();
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.license_cargo_host,
                 bundle);
     }
 }

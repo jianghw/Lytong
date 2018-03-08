@@ -1,9 +1,9 @@
 package com.tzly.ctcyh.pay.api;
 
 import com.tzly.ctcyh.java.response.BaseResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponDetailResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponStatusResponse;
+import com.tzly.ctcyh.pay.response.CouponDetailResponse;
+import com.tzly.ctcyh.pay.response.CouponResponse;
+import com.tzly.ctcyh.pay.response.CouponStatusResponse;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

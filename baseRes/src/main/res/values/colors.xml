@@ -8,6 +8,7 @@
     <!--字体 用-->
     <color name="res_color_red_f3">#F3362B</color>
     <color name="res_color_red_ef">#EF8E3D</color>
+    <color name="res_color_red_fe">#FE5F1B</color>
     <color name="res_color_yellow_f1">#FFF100</color>
     <!--下划线用-->
     <color name="res_color_gray_e6">#E6E6E6</color>

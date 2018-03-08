@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.SPUtils;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.router.custom.rea.RSAUtils;
 import com.tzly.ctcyh.user.bean.RequestHeadDTO;
 import com.tzly.ctcyh.user.bean.response.LoginBean;
 import com.tzly.ctcyh.user.bean.response.LoginResponse;
@@ -48,6 +48,11 @@ public class LocalData implements ILocalSource {
 
     private LocalData(Context context) {
         weakReference = new WeakReference<>(context);
+
+        isLogin = true;
+        mLoginBean = new LoginBean();
+        mLoginBean.setUsrid("00090018811095999");
+
     }
 
     @Override

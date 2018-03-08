@@ -3,9 +3,9 @@ package com.tzly.ctcyh.pay.coupon_p;
 import android.support.annotation.NonNull;
 
 import com.tzly.ctcyh.java.response.BaseResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponStatusBean;
-import com.tzly.ctcyh.pay.bean.response.CouponStatusList;
-import com.tzly.ctcyh.pay.bean.response.CouponStatusResponse;
+import com.tzly.ctcyh.pay.response.CouponStatusBean;
+import com.tzly.ctcyh.pay.response.CouponStatusList;
+import com.tzly.ctcyh.pay.response.CouponStatusResponse;
 import com.tzly.ctcyh.router.api.BaseSubscriber;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
 import com.tzly.ctcyh.pay.global.PayGlobal;

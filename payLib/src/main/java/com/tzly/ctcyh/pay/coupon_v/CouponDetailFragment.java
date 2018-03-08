@@ -6,8 +6,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.pay.R;
-import com.tzly.ctcyh.pay.bean.response.CodeDetailBean;
-import com.tzly.ctcyh.pay.bean.response.CodeDetailResponse;
+import com.tzly.ctcyh.pay.response.CodeDetailBean;
+import com.tzly.ctcyh.pay.response.CodeDetailResponse;
 import com.tzly.ctcyh.pay.coupon_p.CouponDetailPresenter;
 import com.tzly.ctcyh.pay.coupon_p.ICouponDetailContract;
 import com.tzly.ctcyh.pay.data_m.InjectionRepository;

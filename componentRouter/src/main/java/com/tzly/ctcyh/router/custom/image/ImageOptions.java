@@ -47,9 +47,9 @@ public class ImageOptions {
      */
     public static DisplayImageOptions getMessageOptions() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageForEmptyUri(R.mipmap.app_icon)
-                .showImageOnFail(R.mipmap.app_icon)
-                .showImageOnLoading(R.mipmap.app_icon)
+                .showImageForEmptyUri(R.mipmap.ic_global_app)
+                .showImageOnFail(R.mipmap.ic_global_app)
+                .showImageOnLoading(R.mipmap.ic_global_app)
                 .cacheOnDisk(true)
                 .cacheInMemory(false)
                 .considerExifParams(false)

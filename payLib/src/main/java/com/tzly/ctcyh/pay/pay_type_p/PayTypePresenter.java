@@ -2,10 +2,10 @@ package com.tzly.ctcyh.pay.pay_type_p;
 
 import android.support.annotation.NonNull;
 
-import com.tzly.ctcyh.pay.bean.response.CouponResponse;
-import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
-import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
-import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
+import com.tzly.ctcyh.pay.response.CouponResponse;
+import com.tzly.ctcyh.pay.response.PayTypeResponse;
+import com.tzly.ctcyh.pay.response.PayUrlResponse;
+import com.tzly.ctcyh.pay.response.PayWeixinResponse;
 import com.tzly.ctcyh.router.api.BaseSubscriber;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
 import com.tzly.ctcyh.pay.global.PayGlobal;

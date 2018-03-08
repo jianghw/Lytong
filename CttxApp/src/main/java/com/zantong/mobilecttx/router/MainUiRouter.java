@@ -6,8 +6,6 @@ import android.content.Intent;
 import com.tzly.ctcyh.router.IComponentRouter;
 import com.tzly.ctcyh.router.LibUiRouter;
 import com.tzly.ctcyh.service.RouterGlobal;
-import com.zantong.mobilecttx.browser.BrowserHtmlActivity;
-import com.zantong.mobilecttx.browser.PayHtmlActivity;
 import com.zantong.mobilecttx.car.activity.SetPayCarActivity;
 import com.zantong.mobilecttx.card.activity.MyCardActivity;
 import com.zantong.mobilecttx.card.activity.UnblockedCardActivity;
@@ -19,6 +17,7 @@ import com.zantong.mobilecttx.fahrschule_v.SubjectActivity;
 import com.zantong.mobilecttx.guide_v.GuideCTActivity;
 import com.zantong.mobilecttx.home.activity.CaptureActivity;
 import com.zantong.mobilecttx.home_v.HomeMainActivity;
+import com.zantong.mobilecttx.home_v.RichTextActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.msg_v.MegDetailActivity;
 import com.zantong.mobilecttx.msg_v.MegTypeActivity;
@@ -73,7 +72,8 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 RouterGlobal.Host.oil_map_host,
                 RouterGlobal.Host.license_grade_host,
                 RouterGlobal.Host.license_detail_host,
-                RouterGlobal.Host.pay_ment_host
+                RouterGlobal.Host.pay_ment_host,
+                RouterGlobal.Host.home_rich_host
         };
     }
 
@@ -114,7 +114,7 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, OcrCameraActivity.class);
         } else if (RouterGlobal.Host.meg_detail_host.equals(host)) {
             intent.setClass(context, MegDetailActivity.class);
-        }  else if (RouterGlobal.Host.violation_query_host.equals(host)) {
+        } else if (RouterGlobal.Host.violation_query_host.equals(host)) {
             intent.setClass(context, ViolationActivity.class);
         } else if (RouterGlobal.Host.set_pay_car_host.equals(host)) {
             intent.setClass(context, SetPayCarActivity.class);
@@ -128,6 +128,8 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, PaymentActivity.class);
         } else if (RouterGlobal.Host.license_detail_host.equals(host)) {
             intent.setClass(context, LicenseDetailActivity.class);
+        } else if (RouterGlobal.Host.home_rich_host.equals(host)) {
+            intent.setClass(context, RichTextActivity.class);
         } else {
             return true;
         }
@@ -146,6 +148,7 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 && !RouterGlobal.Host.violation_list_host.equals(host)
                 && !RouterGlobal.Host.ocr_camera_host.equals(host)
                 && !RouterGlobal.Host.violation_query_host.equals(host)
+                && !RouterGlobal.Host.home_rich_host.equals(host)
                 && !MainRouter.gotoByIsLogin();
     }
 

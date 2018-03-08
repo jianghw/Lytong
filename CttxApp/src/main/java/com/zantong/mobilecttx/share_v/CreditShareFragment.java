@@ -16,12 +16,11 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
 import com.tzly.ctcyh.router.util.ToastUtils;
-import com.tzly.ctcyh.router.util.rea.Des3;
+import com.tzly.ctcyh.router.custom.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountBean;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
-import com.zantong.mobilecttx.fahrschule.bean.StatistCountResponse;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_p.FahrschuleSharePresenter;
 import com.zantong.mobilecttx.share_p.IFahrschuleShareFtyContract;
@@ -140,7 +139,7 @@ public class CreditShareFragment extends JxBaseRefreshFragment
             contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         if (!TextUtils.isEmpty(contentString)) {
             Bitmap qrCodeBitmap = EncodingUtils.createQRCode(
-                    contentString, 360, 360, BitmapFactory.decodeResource(getResources(), R.mipmap.app_icon));
+                    contentString, 360, 360, BitmapFactory.decodeResource(getResources(), R.mipmap.ic_global_app));
             mImgScan.setImageBitmap(qrCodeBitmap);
         }
     }
@@ -244,7 +243,7 @@ public class CreditShareFragment extends JxBaseRefreshFragment
         msg.title = getResources().getString(R.string.tv_share_pertussis_weixin_title);
         msg.description = getResources().getString(R.string.tv_share_pertussis_weixin_content);
         //这里替换一张自己工程里的图片资源
-        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.app_icon);
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_global_app);
         msg.setThumbImage(thumb);
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();

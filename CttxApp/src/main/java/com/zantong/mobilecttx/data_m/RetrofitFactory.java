@@ -35,10 +35,6 @@ public class RetrofitFactory {
                 return "http://liyingtong.com:8080/";
             case 4:
                 return "http://192.168.1.127:8082/";
-            case 5:
-                return BuildConfig.isDeta ? BuildConfig.beta_base_url : BuildConfig.release_base_url;
-            case 6:
-                return BuildConfig.isDeta ? BuildConfig.beta_bank_url : BuildConfig.release_bank_url;
             default:
                 return "http://192.168.1.147:80/";
         }

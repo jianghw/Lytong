@@ -4,11 +4,9 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.google.zxing.common.StringUtils;
 import com.tzly.ctcyh.java.request.RequestHeadDTO;
 import com.tzly.ctcyh.pay.router.PayRouter;
-import com.tzly.ctcyh.router.util.AppUtils;
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.router.custom.rea.RSAUtils;
 
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;

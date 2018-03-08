@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.tzly.ctcyh.pay.R;
-import com.tzly.ctcyh.pay.bean.response.CouponBean;
+import com.tzly.ctcyh.pay.response.CouponBean;
 
 import java.text.DecimalFormat;
 

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.tzly.ctcyh.pay.R;
-import com.tzly.ctcyh.pay.bean.response.CouponCodeBean;
+import com.tzly.ctcyh.pay.response.CouponCodeBean;
 
 /**
  * 优惠卷

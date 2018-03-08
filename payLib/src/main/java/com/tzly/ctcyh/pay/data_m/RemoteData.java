@@ -11,15 +11,15 @@ import com.tzly.ctcyh.pay.api.ICouponService;
 import com.tzly.ctcyh.pay.api.IFebruaryService;
 import com.tzly.ctcyh.pay.api.IOrderService;
 import com.tzly.ctcyh.pay.api.IPayApiService;
-import com.tzly.ctcyh.pay.bean.response.CodeDetailResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponCodeResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponDetailResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponStatusResponse;
-import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
-import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
-import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
-import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
+import com.tzly.ctcyh.pay.response.CodeDetailResponse;
+import com.tzly.ctcyh.pay.response.CouponCodeResponse;
+import com.tzly.ctcyh.pay.response.CouponDetailResponse;
+import com.tzly.ctcyh.pay.response.CouponResponse;
+import com.tzly.ctcyh.pay.response.CouponStatusResponse;
+import com.tzly.ctcyh.pay.response.OrderDetailResponse;
+import com.tzly.ctcyh.pay.response.PayTypeResponse;
+import com.tzly.ctcyh.pay.response.PayUrlResponse;
+import com.tzly.ctcyh.pay.response.PayWeixinResponse;
 import com.tzly.ctcyh.router.api.RetrofitFactory;
 
 import java.util.List;
@@ -55,15 +55,15 @@ public class RemoteData implements IRemoteSource {
     }
 
     private Retrofit xiaoFengRetrofit() {
+        return RetrofitFactory.getInstance().createRetrofit(7);
+    }
+
+    private Retrofit imageRetrofit() {
         return RetrofitFactory.getInstance().createRetrofit(3);
     }
 
-    private Retrofit initTestRetrofit(int type) {
-        return RetrofitFactory.getInstance().createRetrofit(type);
-    }
-
-    private Retrofit initImageRetrofit() {
-        return RetrofitFactory.getInstance().createRetrofit(5);
+    private Retrofit localRetrofit() {
+        return RetrofitFactory.getInstance().createRetrofit(4);
     }
 
     /**

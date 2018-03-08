@@ -12,9 +12,8 @@ public class CouponInfoResponse extends BaseResponse {
 
     /**
      * responseCode : 2000
-     * data : {"coupon":{"id":1,"couponName":"加油50元优惠券","couponContent":"加油","couponImage":"烦烦烦","couponUse":"仅限:加油充值业务使用\r\n其他业务不可用zheliyouyigejiayoudeyouhuiquanhahaha","couponValidityStart":"2017-04-26","couponValidityEnd":"2018-11-11","isDeleted":1,"couponLimit":1,"couponValue":75,"couponType":2,"couponBusiness":1}}
+     * data : {"image":"http://dev.liyingtong.com/h5/share/img/share1.jpg","coupon":{"id":1,"couponName":"加油50元优惠券","couponContent":"加油","couponImage":"烦烦烦","couponUse":"仅限:加油充值业务使用\r\n其他业务不可用zheliyouyigejiayoudeyouhuiquanhahaha","couponValidityStart":"2017-04-26","couponValidityEnd":"2018-11-11","isDeleted":1,"couponLimit":1,"couponValue":75,"couponType":2,"couponBusiness":1}}
      */
-
 
     private DataBean data;
 
@@ -28,10 +27,20 @@ public class CouponInfoResponse extends BaseResponse {
 
     public static class DataBean {
         /**
+         * image : http://dev.liyingtong.com/h5/share/img/share1.jpg
          * coupon : {"id":1,"couponName":"加油50元优惠券","couponContent":"加油","couponImage":"烦烦烦","couponUse":"仅限:加油充值业务使用\r\n其他业务不可用zheliyouyigejiayoudeyouhuiquanhahaha","couponValidityStart":"2017-04-26","couponValidityEnd":"2018-11-11","isDeleted":1,"couponLimit":1,"couponValue":75,"couponType":2,"couponBusiness":1}
          */
 
+        private String image;
         private CouponBean coupon;
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
 
         public CouponBean getCoupon() {
             return coupon;

@@ -7,7 +7,6 @@ import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
 import com.zantong.mobilecttx.fahrschule.bean.StatistCountResponse;
-import com.zantong.mobilecttx.router.MainRouter;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -54,7 +53,8 @@ public class FahrschuleSharePresenter
 
     @Override
     public String getPhone() {
-        return MainRouter.getUserPhoenum();
+//        return MainRouter.getUserPhoenum();
+        return "18811025033";
     }
 
     /**

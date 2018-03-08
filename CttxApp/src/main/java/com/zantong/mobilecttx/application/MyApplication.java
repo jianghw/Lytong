@@ -1,11 +1,8 @@
 package com.zantong.mobilecttx.application;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.ComponentCallbacks;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.os.Bundle;
 import android.support.multidex.MultiDexApplication;
 
 import com.alibaba.sdk.android.push.CloudPushService;
@@ -25,7 +22,6 @@ import com.tencent.bugly.BuglyStrategy;
 import com.tencent.bugly.beta.Beta;
 import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
-import com.tzly.ctcyh.router.util.RudenessScreenHelper;
 import com.tzly.ctcyh.router.util.Utils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.BuildConfig;

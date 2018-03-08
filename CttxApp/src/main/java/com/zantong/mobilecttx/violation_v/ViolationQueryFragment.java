@@ -26,10 +26,10 @@ import com.tzly.ctcyh.router.custom.dialog.IOnDateSetListener;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.primission.PermissionFail;
-import com.tzly.ctcyh.router.util.primission.PermissionGen;
-import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
-import com.tzly.ctcyh.router.util.rea.Des3;
+import com.tzly.ctcyh.router.custom.primission.PermissionFail;
+import com.tzly.ctcyh.router.custom.primission.PermissionGen;
+import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
+import com.tzly.ctcyh.router.custom.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
@@ -69,7 +69,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.ctcyh.router.custom.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 违法查询页面

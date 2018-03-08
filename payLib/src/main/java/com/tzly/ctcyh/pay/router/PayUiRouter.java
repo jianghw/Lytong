@@ -7,6 +7,7 @@ import com.tzly.ctcyh.pay.coupon_v.CouponDetailActivity;
 import com.tzly.ctcyh.pay.coupon_v.CouponListActivity;
 import com.tzly.ctcyh.pay.coupon_v.CouponStatusActivity;
 import com.tzly.ctcyh.pay.html_v.WebHtmlActivity;
+import com.tzly.ctcyh.pay.pay_type_v.PaySucceedActivity;
 import com.tzly.ctcyh.pay.pay_type_v.PayTypeActivity;
 import com.tzly.ctcyh.router.IComponentRouter;
 import com.tzly.ctcyh.router.LibUiRouter;
@@ -36,7 +37,8 @@ public class PayUiRouter extends LibUiRouter implements IComponentRouter {
                 RouterGlobal.Host.coupon_list_host,
                 RouterGlobal.Host.web_html_host,
                 RouterGlobal.Host.coupon_detail_host,
-                RouterGlobal.Host.coupon_status_host
+                RouterGlobal.Host.coupon_status_host,
+                RouterGlobal.Host.pay_succeed_host
         };
     }
 
@@ -56,6 +58,8 @@ public class PayUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, CouponDetailActivity.class);
         } else if (RouterGlobal.Host.coupon_status_host.equals(host)) {
             intent.setClass(context, CouponStatusActivity.class);
+        } else if (RouterGlobal.Host.pay_succeed_host.equals(host)) {
+            intent.setClass(context, PaySucceedActivity.class);
         } else {
             return true;
         }

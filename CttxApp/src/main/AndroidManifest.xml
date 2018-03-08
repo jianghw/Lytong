@@ -56,7 +56,7 @@
         android:name=".application.MyApplication"
         android:allowBackup="true"
         android:configChanges="keyboardHidden|orientation|screenLayout"
-        android:icon="@mipmap/app_icon"
+        android:icon="@mipmap/ic_global_app"
         android:label="@string/main_app_name"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
@@ -66,7 +66,7 @@
         <!-- 启动页面 -->
         <activity
             android:name=".splash_v.SplashActivity"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
@@ -93,9 +93,16 @@
         <!-- 主页，这个很吊呀 -->
         <activity
             android:name=".home_v.HomeMainActivity"
+            android:alwaysRetainTaskState="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <!--富文本页面-->
+        <activity
+            android:name=".home_v.RichTextActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
 
         <activity
             android:name=".violation_v.ViolationDetailsActivity"
@@ -113,16 +120,12 @@
         <activity
             android:name=".user.activity.SettingActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".user.activity.HelpActivity"
-            android:screenOrientation="portrait" />
+
         <!-- 个人中心页面 -->
         <activity
             android:name=".user.activity.UserInfoUpdate"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".user.activity.MsgActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".user.activity.UpdateNickName"
             android:screenOrientation="portrait" />

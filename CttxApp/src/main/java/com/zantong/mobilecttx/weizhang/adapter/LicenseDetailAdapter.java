@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
-import com.tzly.ctcyh.router.util.rea.Des3;
+import com.tzly.ctcyh.router.custom.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.weizhang.bean.RspInfoBean;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;

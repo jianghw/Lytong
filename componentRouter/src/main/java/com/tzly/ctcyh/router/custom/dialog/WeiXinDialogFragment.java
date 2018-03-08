@@ -1,21 +1,20 @@
 package com.tzly.ctcyh.router.custom.dialog;
 
 import android.app.Dialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
-import android.view.Gravity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.tzly.ctcyh.router.R;
+import com.tzly.ctcyh.router.custom.image.BitmapUtils;
+import com.tzly.ctcyh.router.util.WechatUtils;
 
 /**
  * 微信分享
@@ -23,23 +22,24 @@ import com.tzly.ctcyh.router.R;
 
 public class WeiXinDialogFragment extends DialogFragment {
 
-    public void showDialog(WeiXinDialogFragment fragment) {
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction.  We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment prev = getFragmentManager().findFragmentByTag("wechat_dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
+    private static final String BITMAP_BYTE_ARRAY = "BITMAP_BYTE_ARRAY";
+    private static final String S_URL = "S_URL";
 
-        // Create and show the dialog.
-        if (fragment != null) fragment.show(ft, "wechat_dialog");
+    public static WeiXinDialogFragment newInstance(Bitmap bitmap) {
+        WeiXinDialogFragment f = new WeiXinDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putByteArray(BITMAP_BYTE_ARRAY,
+                BitmapUtils.bmpToByteArray(bitmap, true));
+        f.setArguments(bundle);
+        return f;
     }
 
-    public static WeiXinDialogFragment newInstance() {
-        return new WeiXinDialogFragment();
+    public static WeiXinDialogFragment newInstance(String url) {
+        WeiXinDialogFragment f = new WeiXinDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(S_URL, url);
+        f.setArguments(bundle);
+        return f;
     }
 
     /**
@@ -70,17 +70,28 @@ public class WeiXinDialogFragment extends DialogFragment {
         wechat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                sendWeChat(0);
             }
         });
         View friend = rootView.findViewById(R.id.tv_friend);
         friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                sendWeChat(1);
             }
         });
         return rootView;
+    }
+
+    public void sendWeChat(int flag) {
+        String url = getArguments().getString(S_URL);
+        if (!TextUtils.isEmpty(url)) {
+            WechatUtils.sendReqPage(true, url, "畅通车友会", flag);
+        } else {
+            byte[] bytes = getArguments().getByteArray(BITMAP_BYTE_ARRAY);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            WechatUtils.sendReqBitmap(bitmap, flag);
+        }
     }
 
     @NonNull

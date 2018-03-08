@@ -372,7 +372,7 @@ public final class MainRouter {
     /**
      * 驾校报名页面
      */
-    public static void gotoFahrschuleActivity(Activity context, int position) {
+    public static void gotoFahrschuleActivity(Context context, int position) {
         Bundle bundle = new Bundle();
         bundle.putInt(MainGlobal.Host.fahrschule_host, position);
         UiRouter.getInstance().openUriBundle(context,
@@ -383,7 +383,7 @@ public final class MainRouter {
     /**
      * 陪练页面
      */
-    public static void gotoSparringActivity(Activity context, int position) {
+    public static void gotoSparringActivity(Context context, int position) {
         Bundle bundle = new Bundle();
         bundle.putInt(MainGlobal.Host.sparring_host, position);
         UiRouter.getInstance().openUriBundle(context,
@@ -562,7 +562,7 @@ public final class MainRouter {
         Object object = getPayObject();
         if (object != null && object instanceof IPayService) {
             IPayService service = (IPayService) object;
-            service.gotoWebHtmlActivity(context, title, url,num,enginenum);
+            service.gotoWebHtmlActivity(context, title, url, num, enginenum);
         } else {//注册机开始工作
             registerPay();
         }
@@ -624,6 +624,17 @@ public final class MainRouter {
     }
 
     /**
+     * 富文本
+     */
+    public static void gotoRichTextActivity(Context context, String gson) {
+        Bundle bundle = new Bundle();
+        bundle.putString(MainGlobal.putExtra.home_rich_extra, gson);
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.home_rich_host,
+                bundle);
+    }
+
+    /**
      * 加油页面
      */
     public static void gotoRechargeActivity(Context context) {
@@ -677,18 +688,18 @@ public final class MainRouter {
      * 2--支付
      * 3--绑卡成功
      */
-    public static void gotoActiveActivity(Context activity, int i) {
-        gotoActiveActivity(activity, i, null);
+    public static void gotoActiveActivity(Context context, int i) {
+        gotoActiveActivity(context, i, null);
     }
 
-    public static void gotoActiveActivity(Context activity, int i, String date) {
+    public static void gotoActiveActivity(Context context, int i, String date) {
         //优惠页面
-        gotoMainActivity(activity, 1);
+        gotoMainActivity(context, 1);
 
         Object object = getCargoObject();
         if (object != null && object instanceof ICargoService) {
             ICargoService service = (ICargoService) object;
-            service.gotoActiveActivity(activity, String.valueOf(i), date);
+            service.gotoActiveActivity(context, String.valueOf(i), date);
         } else {//注册机开始工作
             registerCargo();
         }
@@ -697,11 +708,11 @@ public final class MainRouter {
     /**
      * 97 加油
      */
-    public static void gotoDiscountOilActivity(Context activity) {
+    public static void gotoDiscountOilActivity(Context context) {
         Object object = getCargoObject();
         if (object != null && object instanceof ICargoService) {
             ICargoService service = (ICargoService) object;
-            service.gotoDiscountOilActivity(activity);
+            service.gotoDiscountOilActivity(context);
         } else {//注册机开始工作
             registerCargo();
         }
@@ -710,11 +721,37 @@ public final class MainRouter {
     /**
      * 97申请办卡
      */
-    public static void gotoBidOilActivity(Context activity) {
+    public static void gotoBidOilActivity(Context context) {
         Object object = getCargoObject();
         if (object != null && object instanceof ICargoService) {
             ICargoService service = (ICargoService) object;
-            service.gotoBidOilActivity(activity);
+            service.gotoBidOilActivity(context);
+        } else {//注册机开始工作
+            registerCargo();
+        }
+    }
+
+    /**
+     * 97 加油 申请办卡
+     */
+    public static void gotoFoldOilActivity(Context context) {
+        Object object = getCargoObject();
+        if (object != null && object instanceof ICargoService) {
+            ICargoService service = (ICargoService) object;
+            service.gotoFoldOilActivity(context);
+        } else {//注册机开始工作
+            registerCargo();
+        }
+    }
+
+    /**
+     * 驾照查分
+     */
+    public static void gotoLicenseCargoActivity(Context context) {
+        Object object = getCargoObject();
+        if (object != null && object instanceof ICargoService) {
+            ICargoService service = (ICargoService) object;
+            service.gotoLicenseCargoActivity(context);
         } else {//注册机开始工作
             registerCargo();
         }

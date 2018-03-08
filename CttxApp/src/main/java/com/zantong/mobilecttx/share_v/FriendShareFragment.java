@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jianghw.multi.state.layout.MultiState;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
@@ -18,17 +17,13 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.tzly.ctcyh.router.base.JxBaseRefreshFragment;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.custom.SpaceItemDecoration;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.rea.Des3;
+import com.tzly.ctcyh.router.custom.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.fahrschule.bean.RecordCountBean;
-import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
-import com.zantong.mobilecttx.fahrschule.bean.StatistCountBean;
 import com.zantong.mobilecttx.fahrschule.bean.StatistCountResponse;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_p.FahrschuleSharePresenter;
@@ -39,6 +34,7 @@ import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 import com.zantong.mobilecttx.zxing.EncodingUtils;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 分享返现页面
@@ -132,7 +128,7 @@ public class FriendShareFragment extends RefreshFragment
             contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         if (!TextUtils.isEmpty(contentString)) {
             Bitmap qrCodeBitmap = EncodingUtils.createQRCode(
-                    contentString, 360, 360, BitmapFactory.decodeResource(getResources(), R.mipmap.app_icon));
+                    contentString, 360, 360, BitmapFactory.decodeResource(getResources(), R.mipmap.ic_global_app));
             mImgScan.setImageBitmap(qrCodeBitmap);
         }
     }
@@ -188,21 +184,11 @@ public class FriendShareFragment extends RefreshFragment
         if (!(result instanceof StatistCountResponse)) return;
 
         StatistCountResponse response = (StatistCountResponse) result;
-        List<StatistCountBean> countBeanList = response.getData();
-        setSimpleDataResult(countBeanList);
-
-//        if (countBeanList != null && countBeanList.size() > 0) {
-//            for (RecordCountBean bean : countBeanList) {
-//                if (bean.getStatisticalType() == 3) {
-//                    mTvPeoplePay.setText(String.valueOf(bean.getStatisticalNum()));
-//                } else if (bean.getStatisticalType() == 2) {
-//                    mTvPeopleCount.setText(String.valueOf(bean.getStatisticalNum()));
-//                }
-//            }
-//        }
+        List<Map<String, String>> list = response.getData().getList();
+        setSimpleDataResult(list);
     }
 
-    private void setSimpleDataResult(List<StatistCountBean> data) {
+    private void setSimpleDataResult(List<Map<String, String>> data) {
         mAdapter.removeAllOnly();
         if (data == null || data.isEmpty()) {
             toastShort("当前统计数据为空");
@@ -215,8 +201,7 @@ public class FriendShareFragment extends RefreshFragment
         mImgScan = (ImageView) view.findViewById(R.id.img_scan);
         mBtnPay = (Button) view.findViewById(R.id.btn_pay);
         mBtnPay.setOnClickListener(this);
-
-        mXRecyclerView = (XRecyclerView) view.findViewById(com.tzly.ctcyh.cargo.R.id.rv_list);
+        mXRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_list);
         GridLayoutManager manager = new GridLayoutManager(Utils.getContext(), 2);
         mXRecyclerView.setLayoutManager(manager);
         mXRecyclerView.setPullRefreshEnabled(false);
@@ -281,7 +266,7 @@ public class FriendShareFragment extends RefreshFragment
         msg.title = getResources().getString(R.string.tv_share_cash_weixin_title);
         msg.description = getResources().getString(R.string.tv_share_cash_weixin_content);
         //这里替换一张自己工程里的图片资源
-        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.app_icon);
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_global_app);
         msg.setThumbImage(thumb);
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();

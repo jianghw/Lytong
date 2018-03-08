@@ -73,7 +73,7 @@ public class PushTipService extends Service {
                             MessageCountBean countBean = result.getData();
 
                             BadgeUtils.setBadgeCount(Utils.getContext(),
-                                    countBean.getCount(), R.mipmap.app_icon);
+                                    countBean.getCount(), R.mipmap.ic_global_app);
                             //广播通讯
                             Intent i = new Intent();
                             i.setAction(PushBroadcastReceiver.PUSH_TIP_ACTION);

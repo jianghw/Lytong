@@ -142,7 +142,7 @@ public class LytMessageReceiver extends MessageReceiver {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
 
         RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.custom_ali_push_notification);
-        remoteViews.setImageViewResource(R.id.custom_icon, R.mipmap.app_icon);
+        remoteViews.setImageViewResource(R.id.custom_icon, R.mipmap.ic_global_app);
         remoteViews.setTextViewText(R.id.tv_custom_title, message.getTitle());
         remoteViews.setTextViewText(R.id.tv_custom_content, message.getContent());
         remoteViews.setTextViewText(R.id.tv_custom_time, new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINESE).format(new Date()));
@@ -152,7 +152,7 @@ public class LytMessageReceiver extends MessageReceiver {
                 .setContentTitle(message.getTitle())
                 .setContentText(message.getContent())
                 .setTicker(message.getTitle()) //通知首次出现在通知栏，带上升动画效果的
-                .setSmallIcon(R.mipmap.app_icon)
+                .setSmallIcon(R.mipmap.ic_global_app)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setVibrate(new long[]{0, 300, 500, 700})// 设置震动的时间

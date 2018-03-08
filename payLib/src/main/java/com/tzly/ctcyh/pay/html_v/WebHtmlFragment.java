@@ -15,27 +15,26 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 
 import com.google.gson.Gson;
-import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.orc.BindCarBean;
 import com.tzly.ctcyh.java.response.orc.DrivingOcrBean;
-import com.tzly.ctcyh.pay.bean.response.OrderDetailBean;
-import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
-import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
-import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
+import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
+import com.tzly.ctcyh.pay.response.OrderDetailBean;
+import com.tzly.ctcyh.pay.response.OrderDetailResponse;
+import com.tzly.ctcyh.pay.response.PayUrlResponse;
+import com.tzly.ctcyh.pay.response.PayWeixinResponse;
 import com.tzly.ctcyh.pay.data_m.InjectionRepository;
-import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.pay.html_p.IWebHtmlContract;
 import com.tzly.ctcyh.pay.html_p.WebHtmlPresenter;
 import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.primission.PermissionFail;
-import com.tzly.ctcyh.router.util.primission.PermissionGen;
-import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
+import com.tzly.ctcyh.router.custom.primission.PermissionFail;
+import com.tzly.ctcyh.router.custom.primission.PermissionGen;
+import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
 
 import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
-import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.ctcyh.router.custom.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * Fragment 下拉刷新基类
@@ -207,25 +206,29 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
         }
     }
 
+    /**
+     * 支付成功
+     */
     protected void succeedStatus(OrderDetailBean orderDetailBean) {
         String channel = mFmentToAtyable.getChannel();
-        if (TextUtils.isEmpty(channel)) {
-            //            setResult(PayGlobal.resultCode.web_pay_succeed, null);
-            //            finish();
+        toastShort("支付完成");
+
+        if (orderDetailBean.getType() == 2 || orderDetailBean.getType() == 6) {
+            PayRouter.gotoPaySucceedActivity(getContext(), String.valueOf(orderDetailBean.getType()));
+        } else if (TextUtils.isEmpty(channel)) {
+            PayRouter.gotoMainActivity(getContext(), 1);
         } else {
-            toastShort("支付完成");
-            PayRouter.gotoActiveActivity(getContext(), TextUtils.isEmpty(channel) ? 0 : Integer.valueOf(channel));
+            PayRouter.gotoActiveActivity(getContext(), Integer.valueOf(channel));
         }
     }
 
     protected void errorStatus() {
         String channel = mFmentToAtyable.getChannel();
+        toastShort("未完成支付");
         if (TextUtils.isEmpty(channel)) {
-            //            setResult(PayGlobal.resultCode.web_pay_error, null);
-            //            finish();
+            PayRouter.gotoMainActivity(getContext(), 1);
         } else {
-            toastShort("未完成支付");
-            PayRouter.gotoActiveActivity(getContext(), TextUtils.isEmpty(channel) ? 0 : Integer.valueOf(channel));
+            PayRouter.gotoActiveActivity(getContext(), Integer.valueOf(channel));
         }
     }
 
@@ -237,7 +240,8 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     @Override
     public void bankPayHtmlSucceed(PayUrlResponse response, String orderId) {
         if (TextUtils.isEmpty(this.channel)) toastShort("渠道标记值为空");
-        PayRouter.gotoWebHtmlActivity(getContext(),
+        //web里打开
+        PayRouter.gotoWebHtmlActivity(getActivity(),
                 "银行支付", response.getData(), orderId, 1, this.channel);
     }
 
@@ -249,7 +253,8 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     @Override
     public void weChatPaySucceed(PayWeixinResponse response, String orderId) {
         if (TextUtils.isEmpty(this.channel)) toastShort("渠道标记值为空");
-        PayRouter.gotoWebHtmlActivity(getContext(),
+        //web里打开
+        PayRouter.gotoWebHtmlActivity(getActivity(),
                 "微信支付", response.getData().getMweburl(), orderId, 4, this.channel);
     }
 
@@ -266,8 +271,11 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     }
 
     @Override
-    public void updateStateSucceed(BaseResponse result) {
-        gotoActive();
+    public void updateStateSucceed(ViolationNumBean result) {
+        String processste = result.getRspInfo().getProcessste();
+        if (processste.equals("1") || processste.equals("3")) {
+            PayRouter.gotoPaySucceedActivity(getContext(), "2");
+        }
     }
 
     private void gotoActive() {
@@ -397,6 +405,16 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
         float orderPrice = Float.valueOf(amount);
         int price = (int) (orderPrice * 100);
         if (mPresenter != null) mPresenter.weChatPay(coupon, orderId, String.valueOf(price));
+    }
+
+    //阿里支付
+    @JavascriptInterface
+    public void aliPay(String coupon, String orderId, String amount) {
+        float orderPrice = Float.valueOf(amount);
+        int price = (int) (orderPrice * 100);
+
+        PayRouter.gotoAliHtmlActivity(getActivity(),
+                "支付宝支付", orderId, 3, price, Integer.valueOf(coupon), this.channel);
     }
 
     //支付渠道

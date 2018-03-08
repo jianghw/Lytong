@@ -61,4 +61,19 @@ public class CargoDataService implements ICargoService {
     public void gotoBidOilActivity(Context activity) {
         CargoRouter.gotoBidOilActivity(activity);
     }
+
+    /**
+     * 97 加油 申请办卡
+     */
+    @Override
+    public void gotoFoldOilActivity(Context context) {
+        CargoRouter.gotoFoldOilActivity(context);
+    }
+    /**
+     * 驾照查分
+     */
+    @Override
+    public void gotoLicenseCargoActivity(Context context) {
+        CargoRouter.gotoLicenseCargoActivity(context);
+    }
 }

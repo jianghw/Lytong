@@ -142,9 +142,6 @@
  -keep class com.zantong.mobilecttx.adapter.DefaultCardAdapter$* {
      *;
  }
- -keep class com.zantong.mobilecttx.user.adapter.HelpAdapter$* {
-     *;
- }
 
  -keep class com.zantong.mobilecttx.weizhang.adapter.IllegalViolationAdapter$* {
      *;
@@ -152,16 +149,8 @@
  -keep class com.zantong.mobilecttx.adapter.ManageVehiclesAdapter$* {
      *;
  }
- -keep class com.zantong.mobilecttx.user.adapter.MsgAdapter$* {
-     *;
- }
- -keep class com.zantong.mobilecttx.user.adapter.MsgFragmentAdapter$* {
-     *;
- }
+
  -keep class com.zantong.mobilecttx.adapter.MyPopWindowAdapter$* {
-     *;
- }
- -keep class com.zantong.mobilecttx.user.adapter.OrderAdapter$* {
      *;
  }
  -keep class com.zantong.mobilecttx.weizhang.adapter.PayHistoryAdapter$* {

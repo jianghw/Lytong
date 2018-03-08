@@ -32,9 +32,9 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.tzly.ctcyh.pay.bean.response.OrderDetailBean;
-import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
-import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
+import com.tzly.ctcyh.pay.response.OrderDetailBean;
+import com.tzly.ctcyh.pay.response.OrderDetailResponse;
+import com.tzly.ctcyh.pay.response.PayUrlResponse;
 import com.tzly.ctcyh.pay.data_m.InjectionRepository;
 import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.pay.html_p.HtmlPayPresenter;
@@ -44,16 +44,16 @@ import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.EncryptUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.primission.PermissionFail;
-import com.tzly.ctcyh.router.util.primission.PermissionGen;
-import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
+import com.tzly.ctcyh.router.custom.primission.PermissionFail;
+import com.tzly.ctcyh.router.custom.primission.PermissionGen;
+import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
 import static com.tzly.ctcyh.router.util.Utils.getContext;
-import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.ctcyh.router.custom.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * Created by jianghw on 2017/10/23.
@@ -715,6 +715,5 @@ public class Html5Activity extends AbstractBaseActivity implements IHtmlPayContr
 
     @Override
     public void getBankPayHtmlSucceed(PayUrlResponse response) {
-        PayRouter.gotoPayHtmlActivity(this, "工行卡支付", response.getData(), getOrderId(), mPayType);
     }
 }

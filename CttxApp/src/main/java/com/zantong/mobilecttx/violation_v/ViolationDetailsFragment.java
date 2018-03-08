@@ -12,7 +12,7 @@ import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.FormatUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.rea.Des3;
+import com.tzly.ctcyh.router.custom.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;

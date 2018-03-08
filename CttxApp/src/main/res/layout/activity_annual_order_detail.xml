@@ -211,8 +211,7 @@
             android:layout_marginLeft="@dimen/ds_45"
             android:layout_marginRight="@dimen/ds_45"
             android:textAppearance="@android:style/TextAppearance.Small"
-            tools:text="发生的哈佛i石佛粉红丝和发挥
-是放假哦啊释迦佛放假暑假放假啊"
+            tools:text="发生的哈佛i石佛粉红丝和发挥是放假哦啊释迦佛放假暑假放假啊"
             android:textIsSelectable="true"/>
 
         <TextView

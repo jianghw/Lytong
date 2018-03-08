@@ -10,9 +10,9 @@ import com.tzly.ctcyh.java.request.violation.ViolationDetailsDTO;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.violation.ViolationNum;
 import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
-import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
-import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
-import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
+import com.tzly.ctcyh.pay.response.OrderDetailResponse;
+import com.tzly.ctcyh.pay.response.PayUrlResponse;
+import com.tzly.ctcyh.pay.response.PayWeixinResponse;
 import com.tzly.ctcyh.pay.data_m.PayDataManager;
 import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.pay.router.PayRouter;
@@ -240,10 +240,7 @@ public class WebHtmlPresenter implements IWebHtmlContract.IWebHtmlPresenter {
 
                     @Override
                     public void onNext(ViolationNumBean result) {
-                        ViolationNum violationNum = result.getRspInfo();
-                        List<ViolationNum> list = new ArrayList<>();
-                        list.add(violationNum);
-                        updateState(list);
+                        updateState(result);
                     }
                 });
         mSubscriptions.add(subscription);
@@ -267,10 +264,15 @@ public class WebHtmlPresenter implements IWebHtmlContract.IWebHtmlPresenter {
 
     /**
      * 46.更新违章缴费状态
+     *
+     * @param numBean
      */
-    public void updateState(List<ViolationNum> violationUpdateDTO) {
+    public void updateState(final ViolationNumBean numBean) {
+        List<ViolationNum> list = new ArrayList<>();
+        list.add(numBean.getRspInfo());
+
         Subscription subscription = mRepository
-                .updateState(violationUpdateDTO)
+                .updateState(list)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {
@@ -290,7 +292,7 @@ public class WebHtmlPresenter implements IWebHtmlContract.IWebHtmlPresenter {
                     public void doNext(BaseResponse result) {
                         if (result != null && result.getResponseCode()
                                 == PayGlobal.Response.base_succeed) {
-                            mContractView.updateStateSucceed(result);
+                            mContractView.updateStateSucceed(numBean);
                         } else {
                             mContractView.updateStateError(result != null
                                     ? result.getResponseDesc() : "未知错误(updateState)");

@@ -26,4 +26,8 @@ public interface ICargoService {
     void gotoDiscountOilActivity(Context activity);
 
     void gotoBidOilActivity(Context activity);
+
+    void gotoFoldOilActivity(Context context);
+
+    void gotoLicenseCargoActivity(Context context);
 }

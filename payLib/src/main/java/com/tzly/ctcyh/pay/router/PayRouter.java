@@ -3,15 +3,12 @@ package com.tzly.ctcyh.pay.router;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-
+import android.text.TextUtils;
 
 import com.tzly.ctcyh.pay.global.PayGlobal;
-import com.tzly.ctcyh.pay.html_v.WebHtmlFragment;
 import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.UiRouter;
-import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.service.ICargoService;
 import com.tzly.ctcyh.service.IMainService;
 import com.tzly.ctcyh.service.IUserService;
@@ -286,57 +283,6 @@ public final class PayRouter {
                 bundle, PayGlobal.requestCode.coupon_list_choice);
     }
 
-    /**
-     * 支付宝 页面html
-     */
-    public static void gotoAliHtmlActivity(Activity context, String title,
-                                           String extraOrderId, int payType, int price, int couponBeanId) {
-        String url = BuildConfig.isDeta ? BuildConfig.beta_base_url : BuildConfig.release_base_url;
-        StringBuilder sb = new StringBuilder();
-        sb.append(url);
-        sb.append("aliPay/aliPayHtml");
-        sb.append("?orderId=").append(extraOrderId);
-        sb.append("&amount=").append(price);
-        if (couponBeanId > 0) sb.append("&couponUserId=").append(couponBeanId);
-
-        gotoPayHtmlActivity(context, title, sb.toString(), extraOrderId, payType);
-    }
-
-    /**
-     * 去支付
-     */
-    public static void gotoPayHtmlActivity(Activity context, String title, String url,
-                                           String extraOrderId, int payType) {
-        Bundle bundle = new Bundle();
-        bundle.putString(PayGlobal.putExtra.web_title_extra, title);
-        bundle.putString(PayGlobal.putExtra.web_url_extra, url);
-        bundle.putString(PayGlobal.putExtra.web_orderId_extra, extraOrderId);
-        bundle.putInt(PayGlobal.putExtra.web_pay_type_extra, payType);
-
-        gotoPayHtmlActivity(context, bundle);
-    }
-
-
-    public static void gotoPayHtmlActivity(Activity context, String title, String url,
-                                           String extraOrderId, int payType, String channel) {
-        Bundle bundle = new Bundle();
-        bundle.putString(PayGlobal.putExtra.web_title_extra, title);
-        bundle.putString(PayGlobal.putExtra.web_url_extra, url);
-        bundle.putString(PayGlobal.putExtra.web_orderId_extra, extraOrderId);
-        bundle.putInt(PayGlobal.putExtra.web_pay_type_extra, payType);
-        bundle.putString(PayGlobal.putExtra.web_pay_channel_extra, channel);
-
-        gotoPayHtmlActivity(context, bundle);
-    }
-
-    /**
-     * pay_html_5 支付
-     */
-    private static void gotoPayHtmlActivity(Activity context, Bundle bundle) {
-        UiRouter.getInstance().openUriForResult(context,
-                RouterGlobal.Scheme.pay_scheme + "://" + RouterGlobal.Host.web_html_host,
-                bundle, PayGlobal.requestCode.pay_html_price);
-    }
 
     /**
      * 支付方式页面
@@ -374,6 +320,18 @@ public final class PayRouter {
     }
 
     /**
+     * 支付成功页面
+     */
+    public static void gotoPaySucceedActivity(Context context, String type) {
+        Bundle bundle = new Bundle();
+        bundle.putString(PayGlobal.putExtra.web_goods_type_extra, type);
+
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.pay_scheme + "://" + RouterGlobal.Host.pay_succeed_host,
+                bundle);
+    }
+
+    /**
      * web_html
      */
     public static void gotoWebHtmlActivity(Context context, String title, String url) {
@@ -393,11 +351,30 @@ public final class PayRouter {
         bundle.putString(PayGlobal.putExtra.web_title_extra, title);
         bundle.putString(PayGlobal.putExtra.web_url_extra, url);
 
-        bundle.putString(PayGlobal.putExtra.web_orderId_extra, orderId);
-        bundle.putInt(PayGlobal.putExtra.web_pay_type_extra, payType);
-        bundle.putString(PayGlobal.putExtra.web_pay_channel_extra, channel);
+        if (!TextUtils.isEmpty(orderId))
+            bundle.putString(PayGlobal.putExtra.web_orderId_extra, orderId);
+        if (payType > 0)
+            bundle.putInt(PayGlobal.putExtra.web_pay_type_extra, payType);
+        if (!TextUtils.isEmpty(channel))
+            bundle.putString(PayGlobal.putExtra.web_pay_channel_extra, channel);
 
         gotoWebHtmlActivity(context, bundle);
+    }
+
+    /**
+     * 支付宝 页面html
+     */
+    public static void gotoAliHtmlActivity(Context context, String title, String extraOrderId,
+                                           int payType, int price, int couponBeanId, String channel) {
+        String url = BuildConfig.isDeta ? BuildConfig.beta_base_url : BuildConfig.release_base_url;
+        StringBuilder sb = new StringBuilder();
+        sb.append(url);
+        sb.append("aliPay/aliPayHtml");
+        sb.append("?orderId=").append(extraOrderId);
+        sb.append("&amount=").append(price);
+        if (couponBeanId > 0) sb.append("&couponUserId=").append(couponBeanId);
+
+        gotoWebHtmlActivity(context, title, url, extraOrderId, payType, channel);
     }
 
     /**
@@ -425,6 +402,9 @@ public final class PayRouter {
         }
     }
 
+    /**
+     * 有回调
+     */
     public static void gotoWebHtmlActivity(Activity activity, Bundle bundle) {
         UiRouter.getInstance().openUriForResult(activity,
                 RouterGlobal.Scheme.pay_scheme + "://" + RouterGlobal.Host.web_html_host,

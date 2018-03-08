@@ -15,7 +15,7 @@ import com.zantong.mobilecttx.order.bean.MessageResponse;
 import com.zantong.mobilecttx.presenter.MegTypeAtyPresenter;
 import com.zantong.mobilecttx.push_v.PushTipService;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.user.adapter.MegAdapter;
+import com.zantong.mobilecttx.msg_p.MegAdapter;
 import com.zantong.mobilecttx.user.bean.MessageType;
 import com.zantong.mobilecttx.user.bean.MessageTypeBean;
 import com.zantong.mobilecttx.user.bean.MessageTypeResponse;

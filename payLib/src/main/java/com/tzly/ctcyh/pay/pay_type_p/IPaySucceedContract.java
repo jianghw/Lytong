@@ -1,9 +1,6 @@
 package com.tzly.ctcyh.pay.pay_type_p;
 
 import com.tzly.ctcyh.java.response.coupon.CouponInfoResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponResponse;
-import com.tzly.ctcyh.pay.bean.response.PayUrlResponse;
-import com.tzly.ctcyh.pay.bean.response.PayWeixinResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 import com.tzly.ctcyh.router.base.IResponseView;
@@ -18,7 +15,7 @@ import com.tzly.ctcyh.router.base.IResponseView;
 public interface IPaySucceedContract {
 
     interface IPaySucceedView extends IBaseView<IPaySucceedPresenter>, IResponseView {
-        String getOrderId();
+        String getGoodsType();
 
         void couponInfoError(String message);
 

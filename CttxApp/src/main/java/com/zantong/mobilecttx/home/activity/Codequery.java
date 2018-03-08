@@ -12,9 +12,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.tzly.ctcyh.router.util.ToastUtils;
-import com.tzly.ctcyh.router.util.primission.PermissionFail;
-import com.tzly.ctcyh.router.util.primission.PermissionGen;
-import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
+import com.tzly.ctcyh.router.custom.primission.PermissionFail;
+import com.tzly.ctcyh.router.custom.primission.PermissionGen;
+import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.utils.DialogMgr;
@@ -24,7 +24,7 @@ import com.zantong.mobilecttx.violation_v.ViolationDetailsActivity;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.ctcyh.router.custom.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 输入编码查询违章页面

@@ -32,9 +32,9 @@ import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.EncryptUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.primission.PermissionFail;
-import com.tzly.ctcyh.router.util.primission.PermissionGen;
-import com.tzly.ctcyh.router.util.primission.PermissionSuccess;
+import com.tzly.ctcyh.router.custom.primission.PermissionFail;
+import com.tzly.ctcyh.router.custom.primission.PermissionGen;
+import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
@@ -61,7 +61,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
-import static com.tzly.ctcyh.router.util.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.ctcyh.router.custom.primission.PermissionGen.PER_REQUEST_CODE;
 
 
 /**
@@ -571,7 +571,7 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
         msg.title = mStrTitle;
         msg.description = "优惠活动推荐";
         //这里替换一张自己工程里的图片资源
-        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.app_icon);
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_global_app);
         msg.setThumbImage(thumb);
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();

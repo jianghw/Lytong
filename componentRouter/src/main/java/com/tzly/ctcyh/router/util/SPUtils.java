@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.util.SimpleArrayMap;
 import android.text.TextUtils;
 
-import com.tzly.ctcyh.router.util.rea.AESEncryptor;
+import com.tzly.ctcyh.router.custom.rea.AESEncryptor;
 
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;

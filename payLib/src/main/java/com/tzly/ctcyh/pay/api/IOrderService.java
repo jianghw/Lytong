@@ -1,7 +1,7 @@
 package com.tzly.ctcyh.pay.api;
 
-import com.tzly.ctcyh.pay.bean.response.OrderDetailResponse;
-import com.tzly.ctcyh.pay.bean.response.PayTypeResponse;
+import com.tzly.ctcyh.pay.response.OrderDetailResponse;
+import com.tzly.ctcyh.pay.response.PayTypeResponse;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

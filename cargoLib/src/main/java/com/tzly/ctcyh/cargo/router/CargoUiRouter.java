@@ -6,8 +6,10 @@ import android.content.Intent;
 import com.tzly.ctcyh.cargo.active_v.ActiveActivity;
 import com.tzly.ctcyh.cargo.cc.drivingl.activity.DrivingCameraActivity;
 import com.tzly.ctcyh.cargo.cc.vehicle.activity.VehicleCameraActivity;
+import com.tzly.ctcyh.cargo.license_v.LicenseCargoActivity;
 import com.tzly.ctcyh.cargo.refuel_v.BidOilActivity;
 import com.tzly.ctcyh.cargo.refuel_v.DiscountOilActivity;
+import com.tzly.ctcyh.cargo.refuel_v.FoldRefuelOilActivity;
 import com.tzly.ctcyh.cargo.refuel_v.RechargeAgreementActivity;
 import com.tzly.ctcyh.cargo.refuel_v.RefuelOilActivity;
 import com.tzly.ctcyh.router.IComponentRouter;
@@ -40,7 +42,9 @@ public class CargoUiRouter extends LibUiRouter implements IComponentRouter {
                 RouterGlobal.Host.vehicle_camera_host,
                 RouterGlobal.Host.active_host,
                 RouterGlobal.Host.bid_oil_host,
-                RouterGlobal.Host.discount_oil_host
+                RouterGlobal.Host.discount_oil_host,
+                RouterGlobal.Host.fold_oil_host,
+                RouterGlobal.Host.license_cargo_host
         };
     }
 
@@ -63,6 +67,10 @@ public class CargoUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, BidOilActivity.class);
         } else if (RouterGlobal.Host.discount_oil_host.equals(host)) {
             intent.setClass(context, DiscountOilActivity.class);
+        } else if (RouterGlobal.Host.fold_oil_host.equals(host)) {
+            intent.setClass(context, FoldRefuelOilActivity.class);
+        } else if (RouterGlobal.Host.license_cargo_host.equals(host)) {
+            intent.setClass(context, LicenseCargoActivity.class);
         } else {
             return true;
         }

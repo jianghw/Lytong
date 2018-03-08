@@ -7,17 +7,13 @@ import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.tzly.ctcyh.pay.BuildConfig;
 import com.tzly.ctcyh.pay.R;
-import com.tzly.ctcyh.pay.bean.response.CouponStatusBean;
-import com.tzly.ctcyh.router.custom.image.ImageOptions;
+import com.tzly.ctcyh.pay.response.CouponStatusBean;
 
 import java.text.DecimalFormat;
 

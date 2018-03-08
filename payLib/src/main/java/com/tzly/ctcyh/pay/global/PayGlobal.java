@@ -33,6 +33,7 @@ public final class PayGlobal {
         public static final String web_url_extra = "web_url_extra";
 
         public static final String web_orderId_extra = "web_orderId_extra";
+        public static final String web_goods_type_extra = "web_goods_type_extra";
         public static final String web_pay_type_extra = "web_pay_type_extra";
         public static final String web_pay_channel_extra = "web_pay_channel_extra";
 

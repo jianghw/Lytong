@@ -2,8 +2,8 @@ package com.tzly.ctcyh.pay.api;
 
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.coupon.CouponInfoResponse;
-import com.tzly.ctcyh.pay.bean.response.CodeDetailResponse;
-import com.tzly.ctcyh.pay.bean.response.CouponCodeResponse;
+import com.tzly.ctcyh.pay.response.CodeDetailResponse;
+import com.tzly.ctcyh.pay.response.CouponCodeResponse;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -49,5 +49,5 @@ public interface IFebruaryService {
      * 分享人优惠券信息
      */
     @GET("share/getCouponInfo")
-    Observable<CouponInfoResponse> getCouponInfo(@Query("orderId") String orderId);
+    Observable<CouponInfoResponse> getCouponInfo(@Query("type") String orderId);
 }

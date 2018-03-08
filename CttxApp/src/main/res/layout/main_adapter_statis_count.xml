@@ -1,36 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/res_y_100">
+    android:layout_height="@dimen/res_y_80"
+    android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/res_y_80"
-        android:layout_centerInParent="true"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/ResTextTheme.14.Subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginLeft="@dimen/res_x_15"
-        android:layout_marginRight="@dimen/res_x_15"
-        android:background="@drawable/selector_item_shape_red_gray">
+        android:layout_weight="1"
+        tools:text="车辆年检" />
 
-        <TextView
-            android:id="@+id/tv_name"
-            style="@style/ResTextTheme.14.Red"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/res_x_15"
-            tools:text="@string/main_tv_count_share" />
+    <TextView
+        android:layout_width="@dimen/res_x_2"
+        android:layout_height="match_parent"
+        android:background="@color/res_color_red_fe" />
 
-        <TextView
-            android:id="@+id/tv_count"
-            style="@style/ResTextTheme.14.Subtitle"
-            android:layout_marginLeft="@dimen/res_x_15"
-            android:layout_marginRight="@dimen/res_x_15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/main_tv_count_share" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_count"
+        style="@style/ResTextTheme.14.Subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:text="优惠券" />
 
-</RelativeLayout>
+</LinearLayout>

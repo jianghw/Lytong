@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:src="@mipmap/app_icon"
+            android:src="@mipmap/ic_global_app"
             android:id="@+id/img_scan"
             android:layout_width="@dimen/ds_360"
             android:layout_height="@dimen/ds_360"

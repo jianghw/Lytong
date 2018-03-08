@@ -7,13 +7,13 @@ import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.fahrschule.bean.StatistCountBean;
+
+import java.util.Map;
 
 /**
  * Created by jianghw on 2017/10/12.
@@ -22,7 +22,7 @@ import com.zantong.mobilecttx.fahrschule.bean.StatistCountBean;
  * Update day:
  */
 
-public class StatisCountAdapter extends BaseAdapter<StatistCountBean> {
+public class StatisCountAdapter extends BaseAdapter<Map<String, String>> {
     private Context mAdapterContext;
 
     @Override
@@ -41,14 +41,18 @@ public class StatisCountAdapter extends BaseAdapter<StatistCountBean> {
     @SuppressLint("SetTextI18n")
     @Override
     public void bindViewData(BaseRecyclerViewHolder viewHolder,
-                             int position, StatistCountBean statusBean) {
+                             int position, Map<String, String> stringMap) {
         ViewHolder holder = (ViewHolder) viewHolder;
-        if (statusBean == null) return;
-        String string = mAdapterContext.getResources().getString(R.string.main_tv_count_share);
-        String count = String.format(string, statusBean.getCount());
-        holder.mTvCount.setText(count);
+        if (stringMap == null) return;
+        //        String string = mAdapterContext.getResources().getString(R.string.main_tv_count_share);
+        //        String count = String.format(string, stringMap.getCount());
+        if (stringMap.size() > 1) {
+            for (Map.Entry<String, String> map : stringMap.entrySet()) {
 
-        holder.mTvName.setText(statusBean.getName());
+            }
+//            holder.mTvName.setText(stringMap.getName());
+//            holder.mTvCount.setText(count);
+        }
     }
 
     /**

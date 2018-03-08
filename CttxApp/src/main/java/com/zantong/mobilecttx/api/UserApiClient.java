@@ -2,7 +2,7 @@ package com.zantong.mobilecttx.api;
 
 import android.content.Context;
 
-import com.tzly.ctcyh.router.util.rea.RSAUtils;
+import com.tzly.ctcyh.router.custom.rea.RSAUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.base.MessageFormat;
 import com.tzly.ctcyh.java.request.RequestDTO;

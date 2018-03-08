@@ -20,7 +20,7 @@ import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.StatusBarUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.primission.PermissionGen;
+import com.tzly.ctcyh.router.custom.primission.PermissionGen;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.global.MainGlobal;

@@ -20,7 +20,7 @@ import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.DensityUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.animation.PropertyUtils;
+import com.tzly.ctcyh.router.custom.animation.PropertyUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;

@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.util.rea.AESEncryptor;
+import com.tzly.ctcyh.router.custom.rea.AESEncryptor;
 import com.zantong.mobilecttx.utils.Tools;
 
 import java.io.ByteArrayInputStream;

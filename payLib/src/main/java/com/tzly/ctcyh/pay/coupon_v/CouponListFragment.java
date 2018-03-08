@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.tzly.ctcyh.pay.R;
-import com.tzly.ctcyh.pay.bean.response.CouponBean;
-import com.tzly.ctcyh.pay.bean.response.CouponResponse;
+import com.tzly.ctcyh.pay.response.CouponBean;
+import com.tzly.ctcyh.pay.response.CouponResponse;
 import com.tzly.ctcyh.pay.coupon_p.CouponListAdapter;
 import com.tzly.ctcyh.pay.coupon_p.CouponListPresenter;
 import com.tzly.ctcyh.pay.coupon_p.ICouponListContract;

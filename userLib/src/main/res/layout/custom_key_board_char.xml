@@ -19,7 +19,7 @@
         <ImageView
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:background="@mipmap/app_icon"/>
+            android:background="@mipmap/ic_global_app"/>
 
         <TextView
             style="@style/UserCustomKeyBoardStyle"
