@@ -756,4 +756,17 @@ public final class MainRouter {
             registerCargo();
         }
     }
+
+    /**
+     * 支付成功页面
+     */
+    public static void gotoPaySucceedActivity(Context context, String type) {
+        Object object = getPayObject();
+        if (object != null && object instanceof IPayService) {
+            IPayService service = (IPayService) object;
+            service.gotoPaySucceedActivity(context, type);
+        } else {//注册机开始工作
+            registerPay();
+        }
+    }
 }

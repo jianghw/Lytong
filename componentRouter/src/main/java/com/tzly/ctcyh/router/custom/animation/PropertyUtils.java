@@ -44,9 +44,9 @@ public final class PropertyUtils {
         return PropertyValuesHolder.ofKeyframe(
                 scaleX,
                 Keyframe.ofFloat(0f, 1.0f),
-                Keyframe.ofFloat(0.25f, 0.8f),
+                Keyframe.ofFloat(0.25f, 0.98f),
                 Keyframe.ofFloat(0.5f, 1.0f),
-                Keyframe.ofFloat(0.75f, 1.2f),
+                Keyframe.ofFloat(0.75f, 1.02f),
                 Keyframe.ofFloat(1.0f, 1.0f)
         );
     }
@@ -55,15 +55,15 @@ public final class PropertyUtils {
         return PropertyValuesHolder.ofKeyframe(
                 scaleY,
                 Keyframe.ofFloat(0f, 1.0f),
-                Keyframe.ofFloat(0.25f, 0.8f),
+                Keyframe.ofFloat(0.25f, 0.98f),
                 Keyframe.ofFloat(0.5f, 1.0f),
-                Keyframe.ofFloat(0.75f, 1.2f),
+                Keyframe.ofFloat(0.75f, 1.02f),
                 Keyframe.ofFloat(1.0f, 1.0f)
         );
     }
 
     public static PropertyValuesHolder getRotationValuesHolder() {
-        float shakeDegrees = 6.0f;
+        float shakeDegrees = 1.8f;
         return PropertyValuesHolder.ofKeyframe(
                 View.ROTATION,
                 Keyframe.ofFloat(0f, 0f),
@@ -84,7 +84,7 @@ public final class PropertyUtils {
         ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(view, valuesHolders);
         objectAnimator.setDuration(duration);
         objectAnimator.setRepeatMode(ValueAnimator.RESTART);
-        objectAnimator.setRepeatCount(4);
+        objectAnimator.setRepeatCount(5);
         objectAnimator.start();
     }
 

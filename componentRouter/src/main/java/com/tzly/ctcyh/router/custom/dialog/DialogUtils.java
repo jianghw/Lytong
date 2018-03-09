@@ -24,7 +24,6 @@ public final class DialogUtils {
             transaction.remove(fragment);
         }
         transaction.addToBackStack(null);
-
         // Create and show the dialog.
         if (dialogFragment != null) dialogFragment.show(manager, tag);
     }

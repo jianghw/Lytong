@@ -196,6 +196,9 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
         errorStatus();
     }
 
+    /**
+     * 支付成功
+     */
     @Override
     public void orderDetailSucceed(OrderDetailResponse response) {
         OrderDetailBean orderDetailBean = response.getData();
@@ -207,7 +210,7 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     }
 
     /**
-     * 支付成功
+     * 违章支付成功
      */
     protected void succeedStatus(OrderDetailBean orderDetailBean) {
         String channel = mFmentToAtyable.getChannel();

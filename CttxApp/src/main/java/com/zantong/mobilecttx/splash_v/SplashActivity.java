@@ -123,7 +123,6 @@ public class SplashActivity extends AbstractBaseActivity
         animator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
-
             }
 
             @Override
@@ -133,12 +132,10 @@ public class SplashActivity extends AbstractBaseActivity
 
             @Override
             public void onAnimationCancel(Animator animator) {
-
             }
 
             @Override
             public void onAnimationRepeat(Animator animator) {
-
             }
         });
     }
@@ -225,7 +222,8 @@ public class SplashActivity extends AbstractBaseActivity
         }
 
         if (appCode <= versionCode) {
-            MainRouter.gotoMainActivity(this, 0);
+//            MainRouter.gotoMainActivity(this, 0);
+            MainRouter.gotoPaySucceedActivity(this, "2");
             MobclickAgent.onEvent(this, Config.getUMengID(0));
         } else {
             MainRouter.gotoGuideActivity(this, mResultList);

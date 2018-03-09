@@ -5,6 +5,7 @@
 
     <ImageView
         android:id="@+id/img_banner"
+        android:src="@mipmap/cargo_ic_banner_97card_intro"
         android:layout_width="match_parent"
         android:layout_height="@dimen/res_y_300"
         android:layout_alignParentTop="true"

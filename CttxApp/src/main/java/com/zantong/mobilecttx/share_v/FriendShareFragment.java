@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.share_v;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -18,10 +18,9 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tzly.ctcyh.router.base.RefreshFragment;
-import com.tzly.ctcyh.router.custom.SpaceItemDecoration;
+import com.tzly.ctcyh.router.custom.rea.Des3;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.custom.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.fahrschule.bean.StatistCountResponse;
@@ -31,10 +30,10 @@ import com.zantong.mobilecttx.share_p.IFahrschuleShareFtyContract;
 import com.zantong.mobilecttx.share_p.StatisCountAdapter;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
-import com.zantong.mobilecttx.zxing.EncodingUtils;
+import com.tzly.ctcyh.router.custom.image.EncodingUtils;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 分享返现页面
@@ -55,28 +54,13 @@ public class FriendShareFragment extends RefreshFragment
      * 去邀请好友
      */
     private Button mBtnPay;
-    private TextView mTvPrompt;
-    /**
-     * 0
-     */
-    private TextView mTvPeopleCount;
-    /**
-     * 已经邀请
-     */
-    private TextView mTvInvited;
-    /**
-     * 0
-     */
-    private TextView mTvPeoplePay;
-    /**
-     * 已成功支付
-     */
-    private TextView mTvPayed;
 
     private IFahrschuleShareFtyContract.IFahrschuleShareFtyPresenter mPresenter;
     private ShareParentActivity.FragmentDestroy mCloseListener;
     private XRecyclerView mXRecyclerView;
     private StatisCountAdapter mAdapter;
+    private TextView mTvRecommend;
+    private TextView mTvTied;
 
     public static FriendShareFragment newInstance() {
         return new FriendShareFragment();
@@ -184,11 +168,30 @@ public class FriendShareFragment extends RefreshFragment
         if (!(result instanceof StatistCountResponse)) return;
 
         StatistCountResponse response = (StatistCountResponse) result;
-        List<Map<String, String>> list = response.getData().getList();
-        setSimpleDataResult(list);
+        List<StatistCountResponse.DataBean.ListBean> list = response.getData().getList();
+
+        boolean flag = response.getData().isFlag();
+
+        boolean isFirst = true;
+        List<StatistCountResponse.DataBean.ListBean> newList = new ArrayList<>();
+        for (StatistCountResponse.DataBean.ListBean map : list) {
+            if (!TextUtils.isEmpty(map.getCoupon())) {
+                newList.add(map);
+            } else if (isFirst && !TextUtils.isEmpty(map.getName())) {
+                String string = getResources().getString(R.string.main_tv_share);
+                String text = String.format(string, map.getName(), map.getCount());
+                mTvRecommend.setText(text);
+                isFirst = false;
+            } else if (!TextUtils.isEmpty(map.getName())) {
+                String string = getResources().getString(R.string.main_tv_share);
+                String text = String.format(string, map.getName(), map.getCount());
+                mTvTied.setText(text);
+            }
+        }
+        setSimpleDataResult(newList);
     }
 
-    private void setSimpleDataResult(List<Map<String, String>> data) {
+    private void setSimpleDataResult(List<StatistCountResponse.DataBean.ListBean> data) {
         mAdapter.removeAllOnly();
         if (data == null || data.isEmpty()) {
             toastShort("当前统计数据为空");
@@ -201,23 +204,23 @@ public class FriendShareFragment extends RefreshFragment
         mImgScan = (ImageView) view.findViewById(R.id.img_scan);
         mBtnPay = (Button) view.findViewById(R.id.btn_pay);
         mBtnPay.setOnClickListener(this);
+
         mXRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_list);
-        GridLayoutManager manager = new GridLayoutManager(Utils.getContext(), 2);
+        LinearLayoutManager manager = new LinearLayoutManager(Utils.getContext());
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
         mXRecyclerView.setLayoutManager(manager);
         mXRecyclerView.setPullRefreshEnabled(false);
         mXRecyclerView.setLoadingMoreEnabled(false);
-        mXRecyclerView.addItemDecoration(
-                new SpaceItemDecoration(getResources().getDimensionPixelSize(R.dimen.res_x_30))
-        );
+//        mXRecyclerView.addItemDecoration(
+//                new SpaceItemDecoration(getResources().getDimensionPixelSize(R.dimen.res_x_30))
+//        );
         mXRecyclerView.noMoreLoadings();
         mAdapter = new StatisCountAdapter();
         mXRecyclerView.setAdapter(mAdapter);
+        mXRecyclerView.setNestedScrollingEnabled(false);
 
-//        mTvPrompt = (TextView) view.findViewById(R.id.tv_prompt);
-//        mTvPeopleCount = (TextView) view.findViewById(R.id.tv_people_count);
-//        mTvInvited = (TextView) view.findViewById(R.id.tv_invited);
-//        mTvPeoplePay = (TextView) view.findViewById(R.id.tv_people_pay);
-//        mTvPayed = (TextView) view.findViewById(R.id.tv_payed);
+        mTvRecommend = (TextView) view.findViewById(R.id.tv_recommend);
+        mTvTied = (TextView) view.findViewById(R.id.tv_tied);
     }
 
     @Override

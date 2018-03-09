@@ -1,5 +1,7 @@
 package com.tzly.ctcyh.pay.pay_type_p;
 
+import android.graphics.Bitmap;
+
 import com.tzly.ctcyh.java.response.coupon.CouponInfoResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
@@ -20,10 +22,17 @@ public interface IPaySucceedContract {
         void couponInfoError(String message);
 
         void couponInfoSucceed(CouponInfoResponse response);
+
+        void mergeSucceed(Bitmap bitmap);
     }
 
     interface IPaySucceedPresenter extends IBasePresenter {
         void getCouponInfo();
+
+        void mergeBitmap(Bitmap bitmap, String codeUrl, Bitmap logio);
+
+        void shareUser();
+
     }
 
 }

@@ -3,13 +3,6 @@ package com.tzly.ctcyh.service;
 import android.app.Activity;
 import android.content.Context;
 
-import com.tzly.ctcyh.java.response.BaseResponse;
-import com.tzly.ctcyh.java.response.violation.ViolationNum;
-
-import java.util.List;
-
-import rx.Observable;
-
 /**
  * Created by jianghw on 2017/10/26.
  * Description:
@@ -29,5 +22,8 @@ public interface IPayService {
     void gotoWebHtmlActivity(Context context, String title, String url);
 
     void gotoWebHtmlActivity(Context context, String title, String url, String num, String enginenum);
-
+    /**
+     * 支付成功页面
+     */
+    void gotoPaySucceedActivity(Context context, String type);
 }

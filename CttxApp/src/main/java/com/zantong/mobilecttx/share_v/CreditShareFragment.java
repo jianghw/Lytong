@@ -26,7 +26,7 @@ import com.zantong.mobilecttx.share_p.FahrschuleSharePresenter;
 import com.zantong.mobilecttx.share_p.IFahrschuleShareFtyContract;
 import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
-import com.zantong.mobilecttx.zxing.EncodingUtils;
+import com.tzly.ctcyh.router.custom.image.EncodingUtils;
 
 import java.util.List;
 

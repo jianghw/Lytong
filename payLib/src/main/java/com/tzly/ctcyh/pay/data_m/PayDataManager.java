@@ -169,4 +169,11 @@ public class PayDataManager {
     public Observable<CouponInfoResponse> getCouponInfo(String orderId) {
         return mRemoteData.getCouponInfo(orderId);
     }
+
+    /**
+     * 分享人信息统计
+     */
+    public Observable<BaseResponse> shareUser(String userID, String goodsType, String statu) {
+        return mRemoteData.shareUser(userID, goodsType, statu);
+    }
 }

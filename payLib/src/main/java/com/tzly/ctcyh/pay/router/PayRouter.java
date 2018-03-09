@@ -403,7 +403,7 @@ public final class PayRouter {
     }
 
     /**
-     * 有回调
+     * 有回调 single失效
      */
     public static void gotoWebHtmlActivity(Activity activity, Bundle bundle) {
         UiRouter.getInstance().openUriForResult(activity,

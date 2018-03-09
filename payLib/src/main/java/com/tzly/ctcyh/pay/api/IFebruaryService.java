@@ -50,4 +50,9 @@ public interface IFebruaryService {
      */
     @GET("share/getCouponInfo")
     Observable<CouponInfoResponse> getCouponInfo(@Query("type") String orderId);
+
+    @FormUrlEncoded
+    @POST("share/shareUser")
+    Observable<BaseResponse> shareUser(@Field("userId") String userID, @Field("type")
+            String goodsType, @Field("payStatus") String statu, @Field("source") String source);
 }

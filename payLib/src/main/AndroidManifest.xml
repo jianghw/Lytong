@@ -50,7 +50,8 @@
         <activity
             android:name=".pay_type_v.PaySucceedActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
 
         <!--启动新进程 畅通卡支付-->
         <activity

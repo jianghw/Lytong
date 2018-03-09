@@ -1,9 +1,8 @@
-package com.zantong.mobilecttx.zxing;
+package com.tzly.ctcyh.router.custom.image;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-import com.google.zxing.*;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;

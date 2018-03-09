@@ -16,13 +16,19 @@ public final class BitmapUtils {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
-    private Bitmap mergeBitmap(Bitmap firstBitmap, Bitmap secondBitmap) {
+    public static Bitmap mergeBitmap(Bitmap firstBitmap, Bitmap secondBitmap) {
+        int width = firstBitmap.getWidth();
+        int height = firstBitmap.getHeight();
+
         Bitmap bitmap = Bitmap.createBitmap(
                 firstBitmap.getWidth(), firstBitmap.getHeight(),
                 firstBitmap.getConfig());
         Canvas canvas = new Canvas(bitmap);
         canvas.drawBitmap(firstBitmap, new Matrix(), null);
-        canvas.drawBitmap(secondBitmap, 0, 0, null);
+        int s_width = secondBitmap.getWidth();
+        int s_height = secondBitmap.getHeight();
+
+        canvas.drawBitmap(secondBitmap, (width-s_width)/2, height-s_height, null);
         return bitmap;
     }
 

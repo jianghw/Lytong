@@ -1,7 +1,9 @@
 package com.tzly.ctcyh.router.util;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.TextUtils;
 
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXImageObject;
@@ -30,11 +32,12 @@ public final class WechatUtils {
     /**
      * 发送图片
      *
+     * @param activity
      * @param bitmap
-     * @param flag   0--个人  1--朋友圈
+     * @param flag     0--个人  1--朋友圈
      */
-    public static void sendReqBitmap(Bitmap bitmap, int flag) {
-        IWXAPI api = WXAPIFactory.createWXAPI(Utils.getContext(), APP_ID, true);
+    public static void sendReqBitmap(Activity activity, Bitmap bitmap, int flag) {
+        IWXAPI api = WXAPIFactory.createWXAPI(activity, APP_ID, true);
         api.registerApp(APP_ID);
 
         if (!api.isWXAppInstalled()) {
@@ -46,7 +49,7 @@ public final class WechatUtils {
         msg.mediaObject = imgObj;
 
         //设置缩图
-        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, THUMB_SIZE, THUMB_SIZE, true);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 100, THUMB_SIZE, true);
         bitmap.recycle();
         msg.thumbData = BitmapUtils.bmpToByteArray(thumbBmp, true);
 
@@ -57,8 +60,8 @@ public final class WechatUtils {
         api.sendReq(req);
     }
 
-    private static String buildTransaction(final String type) {
-        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
+    private static String buildTransaction(String type) {
+        return (TextUtils.isEmpty(type)) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
 
     public static void sendReqText(boolean isLogin, String text, int flag) {

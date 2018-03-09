@@ -70,7 +70,7 @@
 
         <!--启动新进程 畅通卡支付-->
         <activity
-            android:name="com.tzly.ctcyh.pay.html_v.WebHtmlActivity"
+            android:name=".html_v.WebHtmlActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>

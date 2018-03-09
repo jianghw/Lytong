@@ -8,9 +8,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.custom.image.BitmapUtils;
@@ -28,8 +31,7 @@ public class WeiXinDialogFragment extends DialogFragment {
     public static WeiXinDialogFragment newInstance(Bitmap bitmap) {
         WeiXinDialogFragment f = new WeiXinDialogFragment();
         Bundle bundle = new Bundle();
-        bundle.putByteArray(BITMAP_BYTE_ARRAY,
-                BitmapUtils.bmpToByteArray(bitmap, true));
+        bundle.putByteArray(BITMAP_BYTE_ARRAY, BitmapUtils.bmpToByteArray(bitmap, true));
         f.setArguments(bundle);
         return f;
     }
@@ -57,7 +59,16 @@ public class WeiXinDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         getDialog().setCanceledOnTouchOutside(true);
-
+        Window window = getDialog().getWindow();
+        if (window != null) {
+            window.setBackgroundDrawableResource(R.color.transparent);
+            window.getDecorView().setPadding(0, 0, 0, 0);
+            WindowManager.LayoutParams wlp = window.getAttributes();
+            wlp.gravity = Gravity.BOTTOM;
+            wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            window.setAttributes(wlp);
+        }
         View rootView = inflater.inflate(R.layout.custom_dialog_weixin, container, false);
         View close = rootView.findViewById(R.id.img_close);
         close.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +82,7 @@ public class WeiXinDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 sendWeChat(0);
+                dismiss();
             }
         });
         View friend = rootView.findViewById(R.id.tv_friend);
@@ -78,6 +90,7 @@ public class WeiXinDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 sendWeChat(1);
+                dismiss();
             }
         });
         return rootView;
@@ -90,7 +103,7 @@ public class WeiXinDialogFragment extends DialogFragment {
         } else {
             byte[] bytes = getArguments().getByteArray(BITMAP_BYTE_ARRAY);
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            WechatUtils.sendReqBitmap(bitmap, flag);
+            WechatUtils.sendReqBitmap(getActivity(), bitmap, flag);
         }
     }
 

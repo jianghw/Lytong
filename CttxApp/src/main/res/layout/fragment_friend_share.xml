@@ -1,136 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@mipmap/bg_fxfx"
-              android:gravity="center_horizontal"
-              android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_fxfx"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ds_540"
-        android:orientation="vertical">
+        android:layout_marginTop="@dimen/res_y_320" />
 
-        <ImageView
-            android:id="@+id/img_scan"
-            android:layout_width="@dimen/ds_360"
-            android:layout_height="@dimen/ds_360"
-            android:layout_gravity="center_horizontal"
-            android:src="@mipmap/ic_global_app"/>
+    <ImageView
+        android:id="@+id/img_scan"
+        android:layout_width="@dimen/res_x_230"
+        android:layout_height="@dimen/res_x_230"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/ic_global_app" />
 
-        <Button
-            android:id="@+id/btn_pay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/ds_50"
-            android:background="@mipmap/btn_fxfx"
-            android:text="去邀请好友"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/fs_18sp"/>
+    <Button
+        android:id="@+id/btn_pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/ds_50"
+        android:background="@mipmap/btn_fxfx"
+        android:text="去邀请好友"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/fs_18sp" />
+
+    <!--信息显示-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_80"
+        android:layout_marginLeft="@dimen/res_x_60"
+        android:layout_marginRight="@dimen/res_x_60"
+        android:layout_marginTop="@dimen/res_x_60"
+        android:background="@mipmap/fxfx_info"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="好友报名付款成功后您可以获得100元的现金返现"
-            android:textColor="@color/colorTvRed_f33"
-            android:textSize="@dimen/fs_16sp"
-            android:visibility="invisible"/>
+            android:id="@+id/tv_recommend"
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            tools:text="@string/main_tv_share" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_tied"
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            tools:text="@string/main_tv_share" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_80"
+        android:layout_marginLeft="@dimen/res_x_60"
+        android:layout_marginRight="@dimen/res_x_60"
+        android:layout_marginTop="@dimen/res_x_60"
+        android:background="@color/res_color_red_fe"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ResTextTheme.14.White"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/tv_where_cash"
-            android:textColor="@color/colorTvCyan_08"
-            android:textSize="@dimen/fs_16sp"
-            android:visibility="invisible"/>
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/res_x_15"
+            android:layout_weight="1"
+            android:text="已分享业务" />
+
+        <TextView
+            android:layout_width="@dimen/res_x_2"
+            android:layout_height="match_parent"
+            android:background="@color/res_color_white" />
+
+        <TextView
+            style="@style/ResTextTheme.14.White"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="已领取礼品" />
+
     </LinearLayout>
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/rv_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <!--信息显示-->
-   <!-- <LinearLayout
-        android:layout_width="@dimen/ds_900"
-        android:layout_height="@dimen/ds_210"
-        android:layout_marginTop="@dimen/ds_75"
-        android:background="@mipmap/fxfx_info"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:paddingTop="@dimen/ds_36">
-
-            <TextView
-                android:id="@+id/tv_people_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="0"
-                android:textColor="@color/colorTvRed_f33"
-                android:textSize="@dimen/fs_18sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ds_25"
-                android:layout_toRightOf="@+id/tv_people_count"
-                android:text="人"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"/>
-
-            <TextView
-                android:id="@+id/tv_invited"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_people_count"
-                android:layout_centerHorizontal="true"
-                android:text="成功推荐"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.01"
-            android:paddingTop="@dimen/ds_36">
-
-            <TextView
-                android:id="@+id/tv_people_pay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="0"
-                android:textColor="@color/colorTvRed_f33"
-                android:textSize="@dimen/fs_18sp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/ds_25"
-                android:layout_toRightOf="@+id/tv_people_pay"
-                android:text="人"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"/>
-
-            <TextView
-                android:id="@+id/tv_payed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_people_pay"
-                android:layout_centerHorizontal="true"
-                android:text="成功绑卡"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"/>
-
-        </RelativeLayout>
-    </LinearLayout>-->
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/res_x_60"
+        android:layout_marginRight="@dimen/res_x_60"
+        android:background="@color/res_color_white" />
 
 </LinearLayout>

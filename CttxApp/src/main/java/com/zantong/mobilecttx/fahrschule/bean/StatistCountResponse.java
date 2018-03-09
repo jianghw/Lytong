@@ -3,16 +3,16 @@ package com.zantong.mobilecttx.fahrschule.bean;
 import com.tzly.ctcyh.java.response.BaseResponse;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 7.获取用户指定活动的统计总数
  */
 public class StatistCountResponse extends BaseResponse {
 
+
     /**
      * responseCode : 2000
-     * data : {"flag":false,"list":[{"分享数":2},{"注册数":2},{"coupon":"加油50元优惠券","年检数":0},{"加油数":0,"coupon":"加油50元优惠券"}]}
+     * data : {"flag":false,"list":[{"name":"分享数","count":6},{"name":"注册数","count":0},{"coupon":"加油50元优惠券","name":"年检数","count":0},{"coupon":"加油50元优惠券","name":"加油数","count":0}]}
      */
 
     private DataBean data;
@@ -28,11 +28,11 @@ public class StatistCountResponse extends BaseResponse {
     public static class DataBean {
         /**
          * flag : false
-         * list : [{"分享数":2},{"注册数":2},{"coupon":"加油50元优惠券","年检数":0},{"加油数":0,"coupon":"加油50元优惠券"}]
+         * list : [{"name":"分享数","count":6},{"name":"注册数","count":0},{"coupon":"加油50元优惠券","name":"年检数","count":0},{"coupon":"加油50元优惠券","name":"加油数","count":0}]
          */
 
         private boolean flag;
-        private List<Map<String, String>> list;
+        private List<ListBean> list;
 
         public boolean isFlag() {
             return flag;
@@ -42,12 +42,49 @@ public class StatistCountResponse extends BaseResponse {
             this.flag = flag;
         }
 
-        public List<Map<String, String>> getList() {
+        public List<ListBean> getList() {
             return list;
         }
 
-        public void setList(List<Map<String, String>> list) {
+        public void setList(List<ListBean> list) {
             this.list = list;
+        }
+
+        public static class ListBean {
+            /**
+             * name : 分享数
+             * count : 6
+             * coupon : 加油50元优惠券
+             */
+
+            private String name;
+            private int count;
+            private String coupon;
+            private int type;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public int getCount() {
+                return count;
+            }
+
+            public void setCount(int count) {
+                this.count = count;
+            }
+
+            public String getCoupon() {
+                return coupon;
+            }
+
+            public void setCoupon(String coupon) {
+                this.coupon = coupon;
+            }
         }
     }
 }

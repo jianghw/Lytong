@@ -81,8 +81,14 @@ public interface IRemoteSource {
     Observable<ViolationNumBean> bank_v003_01(String msg);
 
     Observable<BaseResponse> updateState(List<ViolationNum> json);
+
     /**
      * 分享人优惠券信息
      */
     Observable<CouponInfoResponse> getCouponInfo(String orderId);
+
+    /**
+     * 分享人信息统计
+     */
+    Observable<BaseResponse> shareUser(String userID, String goodsType, String statu);
 }

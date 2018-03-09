@@ -174,5 +174,15 @@ public class RemoteData implements IRemoteSource {
         return baseRetrofit().create(IFebruaryService.class).getCouponInfo(orderId);
     }
 
+    /**
+     * 分享人信息统计
+     * payStatus(1 为已付款分享  2 为未付款分享 )
+     * source(1 app  2 H5)
+     */
+    @Override
+    public Observable<BaseResponse> shareUser(String userID, String goodsType, String status) {
+        return baseRetrofit().create(IFebruaryService.class).shareUser(userID, goodsType, status, "1");
+    }
+
 
 }

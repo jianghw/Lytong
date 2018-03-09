@@ -135,8 +135,11 @@
 
     <string name="errcode_success">分享成功</string>
     <string name="errcode_cancel">分享取消</string>
+    <string name="sent_failed">发送失败</string>
     <string name="errcode_deny">分享被拒绝</string>
     <string name="errcode_unknown">分享返回</string>
+
+    <string name="errcode_unsupported">不支持错误</string>
 
     <string name="phone_num"><u>95588</u></string>
     <string name="recharge_agreement_content">\n&#160;&#160;&#160;&#160;本协议是使用畅通车友会的车主（以下简称车主）和畅通车友会就账户充值等相关事宜所订立的油卡充值服务协议，请您仔细阅读本协议，您勾选“我已阅读并同意《油卡充值协议》”复选框后，即表示完全接受本协议项下的全部条款，本协议即构成对双方有约束力的法律文件。

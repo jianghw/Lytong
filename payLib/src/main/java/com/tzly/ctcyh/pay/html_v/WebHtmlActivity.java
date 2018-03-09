@@ -1,6 +1,6 @@
 package com.tzly.ctcyh.pay.html_v;
 
-import  android.annotation.SuppressLint;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -60,25 +60,12 @@ public class WebHtmlActivity extends AbstractBaseActivity
      */
     @Override
     protected void rightClickListener() {
-        //        if (mRightBtnStatus == 1) {
-        //            Act.getInstance().gotoIntent(this, HundredRuleActivity.class);
-        //        } else if (mRightBtnStatus == 2) {
-        //            Act.getInstance().gotoIntent(this, HundredAgreementActivity.class);
-        //        } else if (mRightBtnStatus == 3) {
-        //            new DialogMgr(this,
-        //                    new View.OnClickListener() {
-        //                        @Override
-        //                        public void onClick(View v) {
-        //                            wechatShare(0);
-        //                        }
-        //                    },
-        //                    new View.OnClickListener() {
-        //                        @Override
-        //                        public void onClick(View v) {
-        //                            wechatShare(1);
-        //                        }
-        //                    });
-        //        }
+        if (mRightBtnStatus == 1) {//积分规则
+            //            Act.getInstance().gotoIntent(this, HundredAgreementActivity.class);
+        } else if (mRightBtnStatus == 2) {//百日
+            //            Act.getInstance().gotoIntent(this, HundredRuleActivity.class);
+        } else if (mRightBtnStatus == 3) {
+        }
     }
 
     @Override
@@ -121,6 +108,7 @@ public class WebHtmlActivity extends AbstractBaseActivity
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+
         initTitle();
         webLoadUrl(mStrUrl);
     }
@@ -151,9 +139,11 @@ public class WebHtmlActivity extends AbstractBaseActivity
             titleContent("百日无违章");
             titleMore("活动说明");
         } else {
-            mRightBtnStatus = 3;
             titleContent(mStrTitle);
-            titleMore("分享");
+            if (mPayType <= 0 && TextUtils.isEmpty(mPayViolationNum)) {
+                mRightBtnStatus = 3;
+                titleMore("分享");
+            }
         }
     }
 
@@ -164,33 +154,6 @@ public class WebHtmlActivity extends AbstractBaseActivity
         mWebView.requestFocusFromTouch();
 
         webLoadUrl(mStrUrl);
-    }
-
-    private void webLoadUrl(String mStrUrl) {
-        //额外的第三方要求
-        if (!TextUtils.isEmpty(mPayViolationNum)) {//违章支付
-            mWebView.loadUrl(mStrUrl);
-        } else if (mPayType == 1) {//银行支付
-            String url = "<%@ page language=\"java\" contentType=\"text/html; charset=GBK\" pageEncoding=\"GBK\"%>" +
-                    "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\" http://www.w3.org/TR/html4/loose.dtd\">" +
-                    "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\">" +
-                    "<title>表单提交</title></head><body>" + mStrUrl + "</body></html>";
-            mWebView.loadDataWithBaseURL(null, url, "text/html", "utf-8", null);
-        } else if (mPayType == 3) {//阿里支付
-            mWebView.loadUrl(mStrUrl);
-        } else if (mPayType == 4) {//微信支付
-            Map<String, String> extraHeaders = new HashMap<String, String>();
-            extraHeaders.put("Referer", "http://liyingtong.com");
-            mWebView.loadUrl(mStrUrl, extraHeaders);
-        } else if (mStrUrl.contains("m.wedrive.com.cn") || mStrUrl.contains("tester.wedrive.com.cn")) {
-            String cust_id = PayRouter.getUserPhoenum();
-            String SEC_KEY = "BE7D6564766740037581842CE0ACA1DD";
-            String token = EncryptUtils.encryptMD5ToString(SEC_KEY + cust_id + SEC_KEY);
-            String url = mStrUrl + "?cust_id=" + cust_id + "&token=" + token;
-            mWebView.loadUrl(url);
-        } else {
-            mWebView.loadUrl(mStrUrl);
-        }
     }
 
     @SuppressLint({"JavascriptInterface", "SetJavaScriptEnabled", "AddJavascriptInterface"})
@@ -249,6 +212,33 @@ public class WebHtmlActivity extends AbstractBaseActivity
         mWebView.setWebChromeClient(new WebHtmlChromeClient(this));
     }
 
+    private void webLoadUrl(String mStrUrl) {
+        //额外的第三方要求
+        if (!TextUtils.isEmpty(mPayViolationNum)) {//违章支付
+            mWebView.loadUrl(mStrUrl);
+        } else if (mPayType == 1) {//银行支付
+            String url = "<%@ page language=\"java\" contentType=\"text/html; charset=GBK\" pageEncoding=\"GBK\"%>" +
+                    "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\" http://www.w3.org/TR/html4/loose.dtd\">" +
+                    "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=GBK\">" +
+                    "<title>表单提交</title></head><body>" + mStrUrl + "</body></html>";
+            mWebView.loadDataWithBaseURL(null, url, "text/html", "utf-8", null);
+        } else if (mPayType == 3) {//阿里支付
+            mWebView.loadUrl(mStrUrl);
+        } else if (mPayType == 4) {//微信支付
+            Map<String, String> extraHeaders = new HashMap<String, String>();
+            extraHeaders.put("Referer", "http://liyingtong.com");
+            mWebView.loadUrl(mStrUrl, extraHeaders);
+        } else if (mStrUrl.contains("m.wedrive.com.cn") || mStrUrl.contains("tester.wedrive.com.cn")) {
+            String cust_id = PayRouter.getUserPhoenum();
+            String SEC_KEY = "BE7D6564766740037581842CE0ACA1DD";
+            String token = EncryptUtils.encryptMD5ToString(SEC_KEY + cust_id + SEC_KEY);
+            String url = mStrUrl + "?cust_id=" + cust_id + "&token=" + token;
+            mWebView.loadUrl(url);
+        } else {
+            mWebView.loadUrl(mStrUrl);
+        }
+    }
+
     /**
      * HTML5数据存储
      */
@@ -305,7 +295,7 @@ public class WebHtmlActivity extends AbstractBaseActivity
             return true;
         }
         finishBySelf();
-        return super.onKeyDown(keyCode, event);
+        return true;
     }
 
     /**
@@ -323,7 +313,7 @@ public class WebHtmlActivity extends AbstractBaseActivity
     private void finishBySelf() {
         if (!TextUtils.isEmpty(mPayViolationNum)) {//违章支付
             updateState();
-        } else if (!TextUtils.isEmpty(mOrderId)) {
+        } else if (!TextUtils.isEmpty(mOrderId)) {//支付
             orderDetail();
         } else {
             finish();

@@ -91,7 +91,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/res_y_180"
         android:background="@drawable/shape_tv_favorable_red"
-        android:text="立即分享" />
+        android:text="立 即 分 享" />
 
     <TextView
         android:id="@+id/tv_home"
@@ -103,5 +103,8 @@
         android:layout_marginBottom="@dimen/res_y_70"
         android:text="有钱任性,不需要" />
 
-
+    <!--<ImageView-->
+        <!--android:id="@+id/img_XXX"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
 </RelativeLayout>

@@ -7,4 +7,6 @@
     <string name="mine_help_str3">如何处理违章缴费出错?</string>
     <string name="mine_help_str4">积分提醒怎么处理?</string>
     <string name="no_data">没有找到符合条件的数据</string>
+
+    <string name="main_tv_share">%1$s&#160;&#160;&#160;%2$d&#160;人</string>
 </resources>
