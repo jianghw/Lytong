@@ -23,14 +23,12 @@ public class IOSpopwindow extends PopupWindow{
 
     public IOSpopwindow(final Context mContext, View parent) {
 
-        View view = View
-                .inflate(mContext, R.layout.item_popupwindows, null);
-        view.startAnimation(AnimationUtils.loadAnimation(mContext,
-                R.anim.fade_ins));
+        View view = View.inflate(mContext, R.layout.item_popupwindows, null);
+        view.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.anim_alpha_show));
         LinearLayout ll_popup = (LinearLayout) view
                 .findViewById(R.id.ll_popup);
         ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
-                R.anim.push_bottom_in));
+                R.anim.set_translate_in));
 
         setWidth(ViewGroup.LayoutParams.FILL_PARENT);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -64,11 +62,11 @@ public class IOSpopwindow extends PopupWindow{
         final View view = View
                 .inflate(mContext, R.layout.item_popupwindows, null);
         view.startAnimation(AnimationUtils.loadAnimation(mContext,
-                R.anim.fade_ins));
+                R.anim.anim_alpha_show));
         final LinearLayout ll_popup = (LinearLayout) view
                 .findViewById(R.id.ll_popup);
         ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
-                R.anim.push_bottom_in));
+                R.anim.set_translate_in));
 
         setWidth(ViewGroup.LayoutParams.FILL_PARENT);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -129,11 +127,11 @@ public class IOSpopwindow extends PopupWindow{
         final View view = View
                 .inflate(mContext, R.layout.item_popupwindows, null);
         view.startAnimation(AnimationUtils.loadAnimation(mContext,
-                R.anim.fade_ins));
+                R.anim.anim_alpha_show));
         final LinearLayout ll_popup = (LinearLayout) view
                 .findViewById(R.id.ll_popup);
         ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
-                R.anim.push_bottom_in));
+                R.anim.set_translate_in));
 
         setWidth(ViewGroup.LayoutParams.FILL_PARENT);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -206,11 +204,11 @@ public class IOSpopwindow extends PopupWindow{
         final View view = View
                 .inflate(mContext, R.layout.item_popupwindows, null);
         view.startAnimation(AnimationUtils.loadAnimation(mContext,
-                R.anim.fade_ins));
+                R.anim.anim_alpha_show));
         final LinearLayout ll_popup = (LinearLayout) view
                 .findViewById(R.id.ll_popup);
         ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
-                R.anim.push_bottom_in));
+                R.anim.set_translate_in));
 
         setWidth(ViewGroup.LayoutParams.FILL_PARENT);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -291,11 +289,11 @@ public class IOSpopwindow extends PopupWindow{
         final View view = View
                 .inflate(mContext, R.layout.item_nomal_popupwindows, null);
         view.startAnimation(AnimationUtils.loadAnimation(mContext,
-                R.anim.fade_ins));
+                R.anim.anim_alpha_show));
         final LinearLayout ll_popup = (LinearLayout) view
                 .findViewById(R.id.ll_popup);
         ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
-                R.anim.push_bottom_in));
+                R.anim.set_translate_in));
 
         setWidth(ViewGroup.LayoutParams.FILL_PARENT);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);

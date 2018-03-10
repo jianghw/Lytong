@@ -11,7 +11,7 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="@dimen/res_x_15"
         android:layout_marginRight="@dimen/res_x_15"
-        android:background="@drawable/selector_item_shape_red_gray">
+        android:background="@drawable/sel_bg_rec_stroke_corners_wr">
 
         <TextView
             android:id="@+id/tv_amount"

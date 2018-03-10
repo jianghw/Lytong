@@ -23,7 +23,7 @@
         android:layout_width="@dimen/ds_120"
         android:layout_height="match_parent"
         android:scaleType="center"
-        android:src="@drawable/selector_illegal_query_notice"/>
+        android:src="@drawable/sel_bg_query_notice"/>
 
     <EditText
         android:id="@+id/view_edittext_content"

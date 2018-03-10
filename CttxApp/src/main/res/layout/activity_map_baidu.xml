@@ -38,7 +38,7 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:gravity="center"
-                android:textColor="@color/tv_selector_rg"
+                android:textColor="@color/sel_tv_color_rg"
                 android:textSize="@dimen/fs_16sp"
                 tools:text="92#优惠"/>
 
@@ -50,7 +50,7 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:gravity="center"
-                android:textColor="@color/tv_selector_rg"
+                android:textColor="@color/sel_tv_color_rg"
                 android:textSize="@dimen/fs_16sp"
                 tools:text="92#优惠"/>
 
@@ -62,7 +62,7 @@
                 android:layout_weight="1"
                 android:button="@null"
                 android:gravity="center"
-                android:textColor="@color/tv_selector_rg"
+                android:textColor="@color/sel_tv_color_rg"
                 android:textSize="@dimen/fs_16sp"
                 tools:text="92#优惠"/>
         </RadioGroup>

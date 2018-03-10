@@ -42,6 +42,5 @@ dependencies {
     compile rootProject.ext.dependencies["appcompat"]
     //本地依赖库
     compile project(':baseLib')
-    compile project(':baseRes')
     compile project(':javaLib')
 }

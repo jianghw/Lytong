@@ -4,9 +4,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -317,6 +322,64 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
         PayRouter.gotoLoginActivity(getContext());
     }
 
+    @JavascriptInterface
+    public Location getLocaltion() {
+        LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            return null;
+        }
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        } else {
+            LocationListener locationListener = new LocationListener() {
+                // Provider的状态在可用、暂时不可用和无服务三个状态直接切换时触发此函数
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+                }
+
+                // Provider被enable时触发此函数，比如GPS被打开
+                @Override
+                public void onProviderEnabled(String provider) {
+                }
+
+                // Provider被disable时触发此函数，比如GPS被关闭
+                @Override
+                public void onProviderDisabled(String provider) {
+                }
+
+                //当坐标改变时触发此函数，如果Provider传进相同的坐标，它就不会被触发
+                @Override
+                public void onLocationChanged(Location location) {
+                }
+            };
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
+            return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
+    }
+
+    //绑畅通卡
+    @JavascriptInterface
+    public void bindCard() {
+    }
+
+    //加油充值
+    @JavascriptInterface
+    public void addOil() {
+    }
+
+    //代驾
+    @JavascriptInterface
+    public void chaser() {
+    }
+
+    //分享领积分
+    @JavascriptInterface
+    public void shareActivity() {
+    }
+
     //获取用户ID
     @JavascriptInterface
     public String getUserId() {
@@ -333,6 +396,33 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     @JavascriptInterface
     public String getRASByStr(String str) {
         return PayRouter.getRASByStr(str);
+    }
+
+    //获取绑卡状态 0已绑卡  1未绑卡
+    @JavascriptInterface
+    public int getBindCardStatus() {
+        return TextUtils.isEmpty(PayRouter.getUserFilenum()) ? 1 : 0;
+    }
+
+    //查询违章
+    @JavascriptInterface
+    public void queryViolations() {
+    }
+
+    //跳转到积分规则页面
+    @JavascriptInterface
+    public void popAttention() {
+    }
+
+    //去年检地图地址
+    @JavascriptInterface
+    public void goNianjianMap() {
+    }
+
+    //去往违章列表页面
+    @JavascriptInterface
+    public void searchViolationList(String carnum, String enginenum, String carnumtype) {
+        PayRouter.gotoViolationListActivity(getContext(), carnum, enginenum, carnumtype);
     }
 
     //js调摄像机

@@ -56,7 +56,7 @@ public class KeyWordPop extends PopupWindow implements OnClickListener{
         view = View
                 .inflate(mContext, R.layout.key_word_pop, null);
         view.startAnimation(AnimationUtils.loadAnimation(mContext,
-                R.anim.fade_ins));
+                R.anim.anim_alpha_show));
 		LinearLayout ll_popup = (LinearLayout) view
 				.findViewById(R.id.ll_popup);
 //        ll_popup.setAnimation(AnimationUtils.loadAnimation(mContext,

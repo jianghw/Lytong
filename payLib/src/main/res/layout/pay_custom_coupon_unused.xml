@@ -11,7 +11,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="@dimen/res_x_30"
         android:layout_marginRight="@dimen/res_x_30"
-        android:background="@drawable/selector_bg_gray_stroke"
+        android:background="@drawable/sel_bg_rec_stroke_gr"
         android:gravity="center"
         android:text="不使用优惠劵"
         style="@style/ResTextTheme.16.Subtitle"/>

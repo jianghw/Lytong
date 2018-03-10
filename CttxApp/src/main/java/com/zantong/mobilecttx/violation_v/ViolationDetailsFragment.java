@@ -300,7 +300,7 @@ public class ViolationDetailsFragment extends RefreshFragment
         intent.putExtras(bundle);
         startActivity(intent);
 
-        getActivity().overridePendingTransition(R.anim.push_bottom_in, 0);
+        getActivity().overridePendingTransition(R.anim.set_translate_in, 0);
     }
 
     @Override

@@ -89,6 +89,6 @@
         android:layout_below="@id/underline1"
         android:layout_marginTop="50dip"
         android:enabled="false"
-        android:textColor="@color/next_btn_selector"
+        android:textColor="@color/sel_tv_color_wg"
         android:text="绑定"/>
 </LinearLayout>

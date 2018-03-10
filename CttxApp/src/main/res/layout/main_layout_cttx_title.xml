@@ -99,7 +99,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dip"
-                android:textColor="@color/text_fabu_selector"
+                android:textColor="@color/sel_tv_color_wt"
                 android:textSize="16sp"
                 android:visibility="gone"/>
         </RelativeLayout>

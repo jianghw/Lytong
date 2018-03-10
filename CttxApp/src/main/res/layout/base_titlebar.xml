@@ -46,7 +46,7 @@
             android:gravity="center"
             android:onClick="onLeftTitle"
             android:clickable="true"
-            android:textColor="@color/query_activity_font_selector"
+            android:textColor="@color/sel_tv_color_rw"
             android:background="@drawable/illegal_query_title_selector"
             android:text="违章查询"/>
         <TextView
@@ -60,7 +60,7 @@
             android:gravity="center"
             android:onClick="onRightTitle"
             android:clickable="true"
-            android:textColor="@color/query_activity_font_selector"
+            android:textColor="@color/sel_tv_color_rw"
             android:background="@drawable/query_history_title_selector"
             android:text="查询历史"/>
     </LinearLayout>

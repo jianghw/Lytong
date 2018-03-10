@@ -153,8 +153,8 @@ public class PullToRefreshLayout extends RelativeLayout {
         mUpdateHandler = new UpdateHandler(this);
         mMyTimer = new MyTimer(mUpdateHandler);
 
-        reverseUpAnimation = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.reverse_up_anim);
-        reverseDownAnimation = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.reverse_down_anim);
+        reverseUpAnimation = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.anim_rotate_up);
+        reverseDownAnimation = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.anim_rotate_down);
         refreshingAnimation = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.anim_rotating);
 
         // 添加匀速转动动画

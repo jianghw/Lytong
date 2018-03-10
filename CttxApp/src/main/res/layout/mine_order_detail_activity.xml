@@ -264,7 +264,7 @@
             android:layout_marginBottom="@dimen/ds_150"
             android:layout_marginTop="@dimen/ds_150"
             android:text="开始"
-            android:textColor="@color/next_btn_selector" />
+            android:textColor="@color/sel_tv_color_wg" />
 
     </LinearLayout>
 </ScrollView>

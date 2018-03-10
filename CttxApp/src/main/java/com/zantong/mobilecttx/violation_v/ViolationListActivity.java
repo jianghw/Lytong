@@ -181,7 +181,7 @@ public class ViolationListActivity extends AbstractBaseActivity
         intent.putExtras(bundle);
         startActivity(intent);
 
-        overridePendingTransition(R.anim.push_bottom_in, 0);
+        overridePendingTransition(R.anim.set_translate_in, 0);
     }
 
     /**

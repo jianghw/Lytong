@@ -23,7 +23,7 @@
             android:background="@android:color/transparent"
             android:button="@null"
             android:checked="true"
-            android:drawableLeft="@drawable/selector_radio_pay" />
+            android:drawableLeft="@drawable/sel_bg_radio_circle" />
 
         <TextView
             android:id="@+id/coupon_title"

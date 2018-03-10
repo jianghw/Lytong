@@ -23,7 +23,7 @@
         style="@style/ButtonBigStyle"
         android:layout_marginTop="@dimen/ds_144"
         android:textSize="@dimen/ds_54"
-        android:textColor="@color/next_btn_selector"
+        android:textColor="@color/sel_tv_color_wg"
         android:text="提交"/>
 
 </LinearLayout>

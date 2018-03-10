@@ -130,7 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/violation_state_title"
-                android:textColor="@color/violation_details_state_selector"
+                android:textColor="@color/sel_tv_color_rg"
                 tools:text="未处理"/>
         </RelativeLayout>
 
@@ -182,7 +182,7 @@
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/violation_money_zhinajin"
                 android:scaleType="center"
-                android:src="@drawable/selector_illegal_query_notice"/>
+                android:src="@drawable/sel_bg_query_notice"/>
 
             <TextView
                 android:id="@+id/violation_money_zhinajin_text"
