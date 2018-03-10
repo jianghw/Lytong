@@ -114,7 +114,7 @@ public final class WechatUtils {
         }
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = title;
-        msg.description = "优惠推荐";
+        msg.description = "畅通车友会,优惠推荐";
         //这里替换一张自己工程里的图片资源
         Bitmap thumb = BitmapFactory.decodeResource(Utils.getContext().getResources(), R.mipmap.ic_global_app);
         msg.thumbData = BitmapUtils.bmpToByteArray(thumb, true);

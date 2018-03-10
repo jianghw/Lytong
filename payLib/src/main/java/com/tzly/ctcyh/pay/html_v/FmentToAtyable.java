@@ -15,4 +15,6 @@ public interface FmentToAtyable {
     String getEnginenum();
 
     String getChannel();
+
+    void backApp();
 }

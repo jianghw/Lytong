@@ -1,5 +1,6 @@
 package com.tzly.ctcyh.pay.html_p;
 
+import com.tzly.ctcyh.java.request.card.ApplyCTCardDTO;
 import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
 import com.tzly.ctcyh.pay.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.response.PayUrlResponse;
@@ -53,6 +54,9 @@ public interface IWebHtmlContract {
         public void weChatPay(String couponUserId, final String orderId, String amount);
 
         void bank_v003_01(String violationNum);
+
+        void applyRecord(ApplyCTCardDTO applyCTCardDTO);
+
     }
 
 }

@@ -2,6 +2,7 @@ package com.tzly.ctcyh.pay.data_m;
 
 import android.support.annotation.Nullable;
 
+import com.tzly.ctcyh.java.request.card.ApplyCTCardDTO;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.coupon.CouponInfoResponse;
 import com.tzly.ctcyh.java.response.violation.ViolationNum;
@@ -182,6 +183,14 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<BaseResponse> shareUser(String userID, String goodsType, String status) {
         return baseRetrofit().create(IFebruaryService.class).shareUser(userID, goodsType, status, "1");
+    }
+
+    /**
+     * 提交银行数据
+     */
+    @Override
+    public Observable<BaseResponse> applyRecord(ApplyCTCardDTO applyCTCardDTO) {
+        return baseRetrofit().create(IFebruaryService.class).applyRecord(applyCTCardDTO);
     }
 
 

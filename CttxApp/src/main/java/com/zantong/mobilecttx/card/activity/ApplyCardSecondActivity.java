@@ -34,7 +34,7 @@ import com.zantong.mobilecttx.base.interf.IBaseView;
 import com.zantong.mobilecttx.card.bean.CityModel;
 import com.zantong.mobilecttx.card.bean.ProvinceModel;
 import com.zantong.mobilecttx.card.bean.YingXiaoResponse;
-import com.zantong.mobilecttx.card.dto.ApplyCTCardDTO;
+import com.tzly.ctcyh.java.request.card.ApplyCTCardDTO;
 import com.zantong.mobilecttx.card.dto.CheckCtkDTO;
 import com.zantong.mobilecttx.common.activity.CommonTwoLevelMenuActivity;
 import com.zantong.mobilecttx.common.bean.CommonTwoLevelMenuBean;
@@ -217,7 +217,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         mFileNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DialogMgr(ApplyCardSecondActivity.this, R.mipmap.code_query_notice_iamge);
+                new DialogMgr(ApplyCardSecondActivity.this, R.mipmap.ic_mark_driving_license);
             }
         });
     }
@@ -228,17 +228,17 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         String userName = intent.getStringExtra("name");
         String idCard = intent.getStringExtra("idCard");
         String drivingNum = intent.getStringExtra("filenum");
-//驾档号
+        //驾档号
         mFileNum.setContentText(drivingNum);
         applyCTCardDTO.setFilenum(RSAUtils.strByEncryption(drivingNum, true));
-//姓名
+        //姓名
         mUserName.setContentText(userName);
         applyCTCardDTO.setUsrname(userName);
 
         String pinyin = ChineseToPinYin.getPingYin(userName);
         mUserNamePinYin.setContentText(pinyin);
         applyCTCardDTO.setEnghnm(pinyin);
-//性别
+        //性别
         String mYear;
         String mMonth;
         String mDay;
@@ -262,35 +262,35 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             applyCTCardDTO.setGnd("1");
         }
         mUserGender.setRightText(applyCTCardDTO.getGnd().equals("1") ? "男" : "女");
-//身份证
+        //身份证
         initIDNumber();
 
         mIdCardNum.setContentText(idCard);
         applyCTCardDTO.setCtfnum(RSAUtils.strByEncryption(idCard, true));
-//手机号
+        //手机号
         mUserPhone.setContentText(MainRouter.getUserPhoenum());
 
-//婚姻状况
+        //婚姻状况
         applyCTCardDTO.setMarlst("1");
         mMaritalStatus.setRightText("未婚");
         mMaritalStatus.setRightTextColor(getResources().getColor(R.color.gray_33));
-//受教育程度
+        //受教育程度
         applyCTCardDTO.setEdunlvl("3");
         mEducationStatus.setRightText("大学本科");
         mEducationStatus.setRightTextColor(getResources().getColor(R.color.gray_33));
-//请选择住宅情况
+        //请选择住宅情况
         applyCTCardDTO.setResltp("1");
         mHouseStatus.setRightText("自有住房");
         mHouseStatus.setRightTextColor(getResources().getColor(R.color.gray_33));
 
         chooseQiyeValue();
-//朋友
+        //朋友
         applyCTCardDTO.setCtc1("8");
         applyCTCardDTO.setCtc2("8");
         mRelationShip.setRightText("朋友");
         mRelationShip.setRightTextColor(getResources().getColor(R.color.gray_33));
 
-//证件类型
+        //证件类型
         applyCTCardDTO.setCtftp("0");
 
         applyCTCardDTO.setUsrid(MainRouter.getUserID());
@@ -308,12 +308,12 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         applyCTCardDTO.setCoareacode("021");
         applyCTCardDTO.setCtc1("8");
         applyCTCardDTO.setCtc2("8");
-//联系人1单位电话分机号
+        //联系人1单位电话分机号
         applyCTCardDTO.setCtccophoeexn1("");
         applyCTCardDTO.setCtccophoeexn2("");
         applyCTCardDTO.setCtchmadr1("无");
         applyCTCardDTO.setCtchmadr2("无");
-//联系人1住宅邮编
+        //联系人1住宅邮编
         applyCTCardDTO.setCtchmadrzip1("201900");
         applyCTCardDTO.setCtchmadrzip2("201900");
 
@@ -507,13 +507,13 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
 
         mDepartName.setContentText("无");
         applyCTCardDTO.setCorpsecr("无");
-//公司电话
+        //公司电话
         mCompanyTel.setContentText("00000000");
         applyCTCardDTO.setCophoe("00000000");
-//公司邮编
+        //公司邮编
         mZipCode.setContentText("201900");
         applyCTCardDTO.setCoadrzip("201900");
-//公司地址区域
+        //公司地址区域
         applyCTCardDTO.setCoadrprov("无");
         applyCTCardDTO.setCoadrcity("无");
         applyCTCardDTO.setCoadrcnty("无");
@@ -546,11 +546,11 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         applyCTCardDTO.setCorptp("20");
         mCompanyType.setRightText("集体");
         mCompanyType.setRightTextColor(getResources().getColor(R.color.gray_33));
-//职务
+        //职务
         applyCTCardDTO.setCottl("6");
         mZhiWu.setRightText("职员/科员级");
         mZhiWu.setRightTextColor(getResources().getColor(R.color.gray_33));
-//职业
+        //职业
         applyCTCardDTO.setOcp("1");
         mZhiYe.setRightText("公务员");
         mZhiYe.setRightTextColor(getResources().getColor(R.color.gray_33));
@@ -560,29 +560,29 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
      * 领取网点dialog
      */
     private void lingQuWangDianDialog() {
-//        try {
-//            NetLocationDialog dialog = new NetLocationDialog(this, null, new NetLocationDialog.OnChooseDialogListener() {
-//
-//                @Override
-//                public void back(String[] data) {
-//                    String address = data[0] + data[2];
-//                    wangdianAdress = address;
-//                    if (address.length() > 20) {
-//                        address = address.substring(0, 20) + "...";
-//                    }
-//                    mLingKaWangDian.setRightText(address);
-//                    mLingKaWangDian.setRightTextColor(getResources().getColor(R.color.gray_33));
-////领卡网点
-//                    applyCTCardDTO.setGetbrno(data[1]);
-//                }
-//            });
-//            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//            dialog.show();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            downloadTxt();
-//            ToastUtils.toastShort("获取网点失败,正在为你重新获取");
-//        }
+        //        try {
+        //            NetLocationDialog dialog = new NetLocationDialog(this, null, new NetLocationDialog.OnChooseDialogListener() {
+        //
+        //                @Override
+        //                public void back(String[] data) {
+        //                    String address = data[0] + data[2];
+        //                    wangdianAdress = address;
+        //                    if (address.length() > 20) {
+        //                        address = address.substring(0, 20) + "...";
+        //                    }
+        //                    mLingKaWangDian.setRightText(address);
+        //                    mLingKaWangDian.setRightTextColor(getResources().getColor(R.color.gray_33));
+        ////领卡网点
+        //                    applyCTCardDTO.setGetbrno(data[1]);
+        //                }
+        //            });
+        //            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //            dialog.show();
+        //        } catch (Exception e) {
+        //            e.printStackTrace();
+        //            downloadTxt();
+        //            ToastUtils.toastShort("获取网点失败,正在为你重新获取");
+        //        }
 
         if (mNetLocationBean == null) {
             mNetLocationBean = ReadFfile.readNetLocationFile(getApplicationContext());
@@ -592,7 +592,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             firstList.add(element.getNetLocationQu());
         }
         ArrayList<ArrayList<String>> secondList = new ArrayList<>();
-        for (NetLocationBean.NetLocationElement element :  mNetLocationBean.getNetLocationlist()) {
+        for (NetLocationBean.NetLocationElement element : mNetLocationBean.getNetLocationlist()) {
             ArrayList<String> arrayList = new ArrayList<>();
             for (NetLocationBean.NetLocationElement.NetQuBean cityModel : element.getListNet()) {
                 arrayList.add(cityModel.getNetLocationName());
@@ -611,7 +611,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
                         }
                         mLingKaWangDian.setRightText(address);
                         mLingKaWangDian.setRightTextColor(getResources().getColor(R.color.gray_33));
-//领卡网点
+                        //领卡网点
                         applyCTCardDTO.setGetbrno(first);
                     }
                 });
@@ -641,31 +641,31 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         addressDialog(parserHandler, mType);
 
         // 获取解析出来的数据
-//        LoginData.getInstance().provinceModel = parserHandler.getDataList();
-//        CityDialog dialog = new CityDialog(this, null,
-//                new CityDialog.OnChooseDialogListener() {
-//                    @Override
-//                    public void back(String[] data) {
-//                        if (mType == 1) {
-//                            applyCTCardDTO.setHmadrprov(data[0]);
-//                            applyCTCardDTO.setHmadrcity(data[1]);
-//                            applyCTCardDTO.setHmadrcnty(data[2]);
-//                            mAddr.setRightText(data[0] + "、" + data[1] + "、" + data[2]);
-//                            mAddr.setRightTextColor(getResources().getColor(R.color.gray_33));
-//                        } else {
-//                            applyCTCardDTO.setCoadrprov(data[0]);
-//                            applyCTCardDTO.setCoadrcity(data[1]);
-//                            applyCTCardDTO.setCoadrcnty(data[2]);
-//
-//                            mCompanyAddr.setRightText(data[0] + "、" + data[1] + "、" + data[2]);
-//                            mCompanyAddr.setRightTextColor(getResources().getColor(R.color.gray_33));
-//                        }
-//
-//                        matchingZipCode(data[2], mType);
-//                    }
-//                });
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        dialog.show();
+        //        LoginData.getInstance().provinceModel = parserHandler.getDataList();
+        //        CityDialog dialog = new CityDialog(this, null,
+        //                new CityDialog.OnChooseDialogListener() {
+        //                    @Override
+        //                    public void back(String[] data) {
+        //                        if (mType == 1) {
+        //                            applyCTCardDTO.setHmadrprov(data[0]);
+        //                            applyCTCardDTO.setHmadrcity(data[1]);
+        //                            applyCTCardDTO.setHmadrcnty(data[2]);
+        //                            mAddr.setRightText(data[0] + "、" + data[1] + "、" + data[2]);
+        //                            mAddr.setRightTextColor(getResources().getColor(R.color.gray_33));
+        //                        } else {
+        //                            applyCTCardDTO.setCoadrprov(data[0]);
+        //                            applyCTCardDTO.setCoadrcity(data[1]);
+        //                            applyCTCardDTO.setCoadrcnty(data[2]);
+        //
+        //                            mCompanyAddr.setRightText(data[0] + "、" + data[1] + "、" + data[2]);
+        //                            mCompanyAddr.setRightTextColor(getResources().getColor(R.color.gray_33));
+        //                        }
+        //
+        //                        matchingZipCode(data[2], mType);
+        //                    }
+        //                });
+        //        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //        dialog.show();
     }
 
     private void addressDialog(XmlParserHandler parserHandler, final int mType) {
@@ -773,7 +773,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         } else if (quStr.contains("浦东新区")) {
             zipCode = "200135";
         }
-//住宅邮编
+        //住宅邮编
         if (mType == 1) {
             applyCTCardDTO.setHmadrzip(zipCode);
         } else {
@@ -789,7 +789,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         String pinyin = mUserNamePinYin.getContentText();
         if (checkIsEmpty(pinyin, "姓名拼音不可为空")) return;
         applyCTCardDTO.setEnghnm(pinyin);
-//手机号码
+        //手机号码
         String userPhone = mUserPhone.getContentText();
         if (checkIsEmpty(userPhone, "手机号不可为空")) return;
         if (!RegexUtils.isMobileSimple(userPhone)) {
@@ -798,7 +798,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
         }
         applyCTCardDTO.setPhoenum(RSAUtils.strByEncryption(userPhone, true));
 
-//住宅地址
+        //住宅地址
         String addr = mAddr.getRightText();
         if (checkIsEmpty(addr, "住宅区域不可为空")) return;
 
@@ -844,7 +844,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             return;
         }
         applyCTCardDTO.setCophoe(companyTel);
-//联系人
+        //联系人
         String contactName = mContactName.getContentText();
         if (checkIsEmpty(contactName, "联系人姓名不可为空")) return;
         applyCTCardDTO.setCtcnm1(contactName);
@@ -1051,7 +1051,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
                 if (result.getResponseCode() == 2000 && result.getData() != null) {
                     mMarketingCode = result.getData().getEmpNum();
                     //TODO 手动不显示
-//                    mYingXiaoCode.setContentText(mMarketingCode);
+                    //                    mYingXiaoCode.setContentText(mMarketingCode);
 
                     applyCTCardDTO.setDscode(mMarketingCode);
                     applyCTCardDTO.setDscodegs(mMarketingCode);
@@ -1095,7 +1095,7 @@ public class ApplyCardSecondActivity extends BaseMvpActivity<IBaseView, HelpPres
             public void onDatePicked(String year, String month, String day) {
                 mIdCardLayout2.setRightText(year + "-" + month + "-" + day);
                 mIdCardLayout2.setRightTextColor(getResources().getColor(R.color.gray_33));
-//证件有效期
+                //证件有效期
                 applyCTCardDTO.setCtfvldprd(mIdCardLayout2.getRightText());
 
             }

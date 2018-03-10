@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.card.dto;
+package com.tzly.ctcyh.java.request.card;
 
 import java.io.Serializable;
 
@@ -77,6 +77,14 @@ public class ApplyCTCardDTO implements Serializable {
     private String getbrno;//	领卡网点
     private String dscode;
     private String dscodegs;
+    /**
+     * h5 银行
+     */
+    private String cardname;
+
+    public void setCardname(String cardname) {
+        this.cardname = cardname;
+    }
 
     public String getEdunlvl() {
         return edunlvl;

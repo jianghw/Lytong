@@ -158,3 +158,14 @@ component {
     isRegisterCompoAuto = true
     applicationName = 'com.zantong.mobilecttx.application.MyApplication'
 }
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")&&!requested.name.startsWith("constraint")) {
+                details.useVersion '25.3.1'
+            }
+        }
+    }
+}

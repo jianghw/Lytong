@@ -95,6 +95,20 @@ public final class PayRouter {
     }
 
     /**
+     * 加密
+     */
+    public static String getRASByStr(String str) {
+        Object object = getUserObject();
+        if (object != null && object instanceof IUserService) {
+            IUserService service = (IUserService) object;
+            return service.getRASByStr(str);
+        } else {//注册机开始工作
+            registerUser();
+            return "";
+        }
+    }
+
+    /**
      * 用户驾档编号
      */
     public static String getUserFilenum() {
@@ -367,6 +381,7 @@ public final class PayRouter {
     public static void gotoAliHtmlActivity(Context context, String title, String extraOrderId,
                                            int payType, int price, int couponBeanId, String channel) {
         String url = BuildConfig.isDeta ? BuildConfig.beta_base_url : BuildConfig.release_base_url;
+
         StringBuilder sb = new StringBuilder();
         sb.append(url);
         sb.append("aliPay/aliPayHtml");
@@ -374,7 +389,7 @@ public final class PayRouter {
         sb.append("&amount=").append(price);
         if (couponBeanId > 0) sb.append("&couponUserId=").append(couponBeanId);
 
-        gotoWebHtmlActivity(context, title, url, extraOrderId, payType, channel);
+        gotoWebHtmlActivity(context, title, sb.toString(), extraOrderId, payType, channel);
     }
 
     /**

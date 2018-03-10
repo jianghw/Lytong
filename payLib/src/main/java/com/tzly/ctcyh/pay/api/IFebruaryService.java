@@ -1,10 +1,12 @@
 package com.tzly.ctcyh.pay.api;
 
+import com.tzly.ctcyh.java.request.card.ApplyCTCardDTO;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.coupon.CouponInfoResponse;
 import com.tzly.ctcyh.pay.response.CodeDetailResponse;
 import com.tzly.ctcyh.pay.response.CouponCodeResponse;
 
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -55,4 +57,10 @@ public interface IFebruaryService {
     @POST("share/shareUser")
     Observable<BaseResponse> shareUser(@Field("userId") String userID, @Field("type")
             String goodsType, @Field("payStatus") String statu, @Field("source") String source);
+
+    /**
+     * 同步数据
+     */
+    @POST("applyRecord/add")
+    Observable<BaseResponse> applyRecord(@Body ApplyCTCardDTO applyCTCardDTO);
 }

@@ -100,7 +100,7 @@ public class LicenseGradeActivity extends AbstractBaseActivity implements View.O
     }
 
     private void showDialog() {
-        new DialogMgr(this, R.mipmap.code_query_notice_iamge);
+        new DialogMgr(this, R.mipmap.ic_mark_driving_license);
     }
 
     private void showDataDialog() {

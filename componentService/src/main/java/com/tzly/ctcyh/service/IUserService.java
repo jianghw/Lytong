@@ -1,6 +1,5 @@
 package com.tzly.ctcyh.service;
 
-import android.app.Activity;
 import android.content.Context;
 
 /**
@@ -37,6 +36,8 @@ public interface IUserService {
     String getUserID();
 
     String getRASUserID();
+
+    String getRASByStr(String str);
 
     String getUserPhoenum();
 

@@ -24,6 +24,7 @@ import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.pay.pay_type_p.IPaySucceedContract;
 import com.tzly.ctcyh.pay.pay_type_p.PaySucceedPresenter;
 import com.tzly.ctcyh.pay.router.PayRouter;
+import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.base.AbstractBaseFragment;
 import com.tzly.ctcyh.router.custom.animation.PropertyUtils;
 import com.tzly.ctcyh.router.custom.dialog.DialogUtils;
@@ -159,11 +160,12 @@ public class PaySucceedFragment extends AbstractBaseFragment
     }
 
     private void bitmapFactory(Bitmap bitmap) {
+        String host = BuildConfig.isDeta ? "h5dev" : "h5";
         //TODO 合成图片
         String codeUrl = getGoodsType().equals("2")
-                ? "http://h5dev.liyingtong.com/share/weizhang.html?userId=" + PayRouter.getUserID() + "&type=" + 2 + "payStatus=1&source=1"
+                ? "http://" + host + ".liyingtong.com/share/weizhang.html?userId=" + PayRouter.getUserID() + "&type=" + 2 + "payStatus=1&source=1"
                 : getGoodsType().equals("6")
-                ? "http://h5dev.liyingtong.com/share/nianjian.html?userId=" + PayRouter.getUserID() + "&type=" + 6 + "payStatus=1&source=1"
+                ? "http://" + host + ".liyingtong.com/share/nianjian.html?userId=" + PayRouter.getUserID() + "&type=" + 6 + "payStatus=1&source=1"
                 : "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
 
         Bitmap logio = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_global_app);
@@ -215,17 +217,15 @@ public class PaySucceedFragment extends AbstractBaseFragment
         DialogUtils.showDialog(getActivity(), fragment, "wechat_dialog");
     }
 
-     class WechatBroadcastReceiver extends BroadcastReceiver {
+    class WechatBroadcastReceiver extends BroadcastReceiver {
 
         public final static String WECHAT_ACTION = "com.tzly.ctcyh.pay.pay_type_v.PaySucceedActivity";
 
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(WECHAT_ACTION)) {
-                if (presenter!=null) presenter.shareUser();
+                if (presenter != null) presenter.shareUser();
             }
         }
-
-
     }
 }

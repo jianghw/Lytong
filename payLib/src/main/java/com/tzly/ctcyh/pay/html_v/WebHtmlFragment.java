@@ -15,31 +15,37 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 
 import com.google.gson.Gson;
+import com.tzly.ctcyh.java.request.card.ApplyCTCardDTO;
 import com.tzly.ctcyh.java.response.orc.BindCarBean;
 import com.tzly.ctcyh.java.response.orc.DrivingOcrBean;
 import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
+import com.tzly.ctcyh.pay.data_m.InjectionRepository;
+import com.tzly.ctcyh.pay.html_p.IWebHtmlContract;
+import com.tzly.ctcyh.pay.html_p.WebHtmlPresenter;
 import com.tzly.ctcyh.pay.response.OrderDetailBean;
 import com.tzly.ctcyh.pay.response.OrderDetailResponse;
 import com.tzly.ctcyh.pay.response.PayUrlResponse;
 import com.tzly.ctcyh.pay.response.PayWeixinResponse;
-import com.tzly.ctcyh.pay.data_m.InjectionRepository;
-import com.tzly.ctcyh.pay.html_p.IWebHtmlContract;
-import com.tzly.ctcyh.pay.html_p.WebHtmlPresenter;
 import com.tzly.ctcyh.pay.router.PayRouter;
-import com.tzly.ctcyh.router.util.LogUtils;
-import com.tzly.ctcyh.router.util.ToastUtils;
-import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.custom.primission.PermissionFail;
 import com.tzly.ctcyh.router.custom.primission.PermissionGen;
 import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
+import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.Utils;
 
-import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
 import static com.tzly.ctcyh.router.custom.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
 
 /**
  * Fragment 下拉刷新基类
  */
 public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHtmlView {
+
+    private static final String BANK_NAME = "bank_name";
+    private static final String BANK_MOBILE = "bank_mobile";
+    private static final String BANK_CERTNUM = "bank_certnum";
+    private static final String BANK_CARDNAME = "bank_cardname";
 
     private FmentToAtyable mFmentToAtyable;
     private IWebHtmlContract.IWebHtmlPresenter mPresenter;
@@ -323,6 +329,12 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
         return PayRouter.getRASUserID();
     }
 
+    //加密工具
+    @JavascriptInterface
+    public String getRASByStr(String str) {
+        return PayRouter.getRASByStr(str);
+    }
+
     //js调摄像机
     @JavascriptInterface
     public void callCamera() {
@@ -424,5 +436,40 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     @JavascriptInterface
     public void channelAction(String channel) {
         this.channel = channel;
+    }
+
+    /**
+     * 保存用户资料
+     */
+    @JavascriptInterface
+    public void saveBankByCard(String name, String mobile, String certNum, String cardName) {
+        Bundle bundle = new Bundle();
+        bundle.putString(BANK_NAME, name);
+        bundle.putString(BANK_MOBILE, mobile);
+        bundle.putString(BANK_CERTNUM, certNum);
+        bundle.putString(BANK_CARDNAME, cardName);
+        setArguments(bundle);
+    }
+
+    /**
+     * 提交用户资料
+     */
+    @JavascriptInterface
+    public void submitBankByCard() {
+        ApplyCTCardDTO applyCTCardDTO = new ApplyCTCardDTO();
+        applyCTCardDTO.setUsrid(getUserId());
+        Bundle bundle = getArguments();
+        applyCTCardDTO.setUsrname(bundle.getString(BANK_NAME));
+        applyCTCardDTO.setCtfnum(getRASByStr(bundle.getString(BANK_CERTNUM)));
+        applyCTCardDTO.setPhoenum(getRASByStr(bundle.getString(BANK_MOBILE)));
+        applyCTCardDTO.setCardname(bundle.getString(BANK_CARDNAME));
+
+        if (mPresenter != null) mPresenter.applyRecord(applyCTCardDTO);
+    }
+
+    //关闭页面
+    @JavascriptInterface
+    public void backApp() {
+        if (mFmentToAtyable != null) mFmentToAtyable.backApp();
     }
 }

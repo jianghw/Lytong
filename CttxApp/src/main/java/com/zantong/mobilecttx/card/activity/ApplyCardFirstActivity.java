@@ -110,7 +110,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.apply_card_first_img:  //驾驶证问号
-                new DialogMgr(this, R.mipmap.code_query_notice_iamge);
+                new DialogMgr(this, R.mipmap.ic_mark_driving_license);
                 break;
             case R.id.apply_card_first_desc:   //说明
                 MainRouter.gotoWebHtmlActivity(this, "隐私声明", "file:///android_asset/bindcard_agreement.html");
@@ -119,7 +119,7 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 commitValue();
                 break;
             case R.id.apply_card_idcard_img://提示框
-                new DialogMgr(this, R.mipmap.img_jiazhao_idcard);
+                new DialogMgr(this, R.mipmap.ic_mark_jiazhao_idcard);
                 break;
             case R.id.apply_card_first_camera://扫描驾驶证
                 takePhoto();

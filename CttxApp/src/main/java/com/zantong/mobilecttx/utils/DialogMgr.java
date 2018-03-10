@@ -32,8 +32,7 @@ public class DialogMgr {
         popImageDlg(ctx, res);
     }
 
-    public DialogMgr(Context ctx, final OnClickListener listener1,
-                     final OnClickListener listener2) {
+    public DialogMgr(Context ctx,  OnClickListener listener1, OnClickListener listener2) {
         shareDialog(ctx, listener1, listener2);
     }
 
@@ -65,13 +64,6 @@ public class DialogMgr {
             btn.setText(btnName);
         }
         dialog_iv.setBackgroundResource(R.mipmap.dialog_icon2);
-//        switch (type) {
-//        case 2://警告对话框
-//            break;
-//        case 1://提示对话框
-//            dialog_iv.setBackgroundResource(R.drawable.dialog_icon1);
-//            break;
-//        }
         if (Tools.isStrEmpty(title)) {
             title_tv.setVisibility(View.GONE);
         } else {
@@ -83,14 +75,12 @@ public class DialogMgr {
         btn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-//            	alg.dismiss();
                 onclick(v);
             }
         });
         alg.show();
         alg.getWindow().setContentView(view);
         alg.setCanceledOnTouchOutside(false);
-//        alg.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
         alg.setOnKeyListener(new OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
@@ -111,7 +101,6 @@ public class DialogMgr {
         ImageView image_close = (ImageView) view.findViewById(R.id.image_close);
         if (0 != res) {
             image_title.setImageResource(res);
-//			image_title.setImageDrawable(ctx.getResources().getDrawable(res));
         }
         image_close.setOnClickListener(new OnClickListener() {
             @Override
@@ -124,7 +113,6 @@ public class DialogMgr {
         alg.getWindow().setContentView(view);
         alg.setCanceledOnTouchOutside(false);
         alg.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-//        alg.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
         alg.setOnKeyListener(new OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
@@ -149,13 +137,6 @@ public class DialogMgr {
             btn.setText(btnName);
         }
         dialog_iv.setBackgroundResource(R.mipmap.dialog_icon2);
-//        switch (type) {
-//        case 2://警告对话框
-//            break;
-//        case 1://提示对话框
-//            dialog_iv.setBackgroundResource(R.drawable.dialog_icon1);
-//            break;
-//        }
         if (Tools.isStrEmpty(title)) {
             title_tv.setVisibility(View.GONE);
         } else {
@@ -255,8 +236,7 @@ public class DialogMgr {
                               String btn1, String btn2, final OnClickListener listener1,
                               final OnClickListener listener2) {
         alg = new AlertDialog.Builder(ctx).create();
-        View view = ((Activity) ctx).getLayoutInflater().inflate(
-                R.layout.dialog_three, null);
+        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.dialog_three, null);
         TextView title_tv = (TextView) view.findViewById(R.id.dialog_title);
         ImageView dialog_iv = (ImageView) view.findViewById(R.id.dialog_icon);
         TextView msg_tv = (TextView) view.findViewById(R.id.dialog_msg);
@@ -305,8 +285,6 @@ public class DialogMgr {
         Button btn_ok = (Button) view.findViewById(R.id.dialog_btn1);
         Button btn_cancel = (Button) view.findViewById(R.id.dialog_btn2);
 
-//        dialog_iv.setBackgroundResource(R.mipmap.dialog_icon2);
-
         if (Tools.isStrEmpty(title)) {
             title_tv.setVisibility(View.GONE);
         } else {
@@ -342,7 +320,6 @@ public class DialogMgr {
         });
         WindowManager.LayoutParams params = alg.getWindow().getAttributes();
         params.width = DensityUtils.getScreenWidth(ctx) * 3 / 4;
-//		params.height = 1000 ;
         alg.getWindow().setAttributes(params);
         return alg;
     }
@@ -353,8 +330,7 @@ public class DialogMgr {
         alg = new AlertDialog.Builder(ctx)
                 .setOnKeyListener(keylistener)
                 .create();
-        View view = ((Activity) ctx).getLayoutInflater().inflate(
-                R.layout.dialog_two, null);
+        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.dialog_two, null);
         TextView title_tv = (TextView) view.findViewById(R.id.dialog_title);
         ImageView dialog_iv = (ImageView) view.findViewById(R.id.dialog_icon);
         TextView msg_tv = (TextView) view.findViewById(R.id.dialog_msg);

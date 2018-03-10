@@ -119,6 +119,11 @@ public class UserDataService implements IUserService {
         return mRepository.getRASUserID();
     }
 
+    @Override
+    public String getRASByStr(String str) {
+        return mRepository.getRASByStr(str);
+    }
+
     /**
      * 手机号码
      */

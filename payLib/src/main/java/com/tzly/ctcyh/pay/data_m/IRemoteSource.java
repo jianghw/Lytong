@@ -1,5 +1,6 @@
 package com.tzly.ctcyh.pay.data_m;
 
+import com.tzly.ctcyh.java.request.card.ApplyCTCardDTO;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.coupon.CouponInfoResponse;
 import com.tzly.ctcyh.java.response.violation.ViolationNum;
@@ -91,4 +92,9 @@ public interface IRemoteSource {
      * 分享人信息统计
      */
     Observable<BaseResponse> shareUser(String userID, String goodsType, String statu);
+
+    /**
+     * 提交银行数据
+     */
+    Observable<BaseResponse> applyRecord(ApplyCTCardDTO applyCTCardDTO);
 }

@@ -22,6 +22,8 @@ import com.tzly.ctcyh.pay.global.PayGlobal;
 import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
+import com.tzly.ctcyh.router.custom.dialog.DialogUtils;
+import com.tzly.ctcyh.router.custom.dialog.WeiXinDialogFragment;
 import com.tzly.ctcyh.router.util.EncryptUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
 
@@ -65,6 +67,8 @@ public class WebHtmlActivity extends AbstractBaseActivity
         } else if (mRightBtnStatus == 2) {//百日
             //            Act.getInstance().gotoIntent(this, HundredRuleActivity.class);
         } else if (mRightBtnStatus == 3) {
+            WeiXinDialogFragment fragment = WeiXinDialogFragment.newInstance(mStrUrl);
+            DialogUtils.showDialog(this, fragment, "wechat_dialog");
         }
     }
 
@@ -415,6 +419,11 @@ public class WebHtmlActivity extends AbstractBaseActivity
     @Override
     public String getChannel() {
         return mPayChannel;
+    }
+
+    @Override
+    public void backApp() {
+        finishBySelf();
     }
 
 }

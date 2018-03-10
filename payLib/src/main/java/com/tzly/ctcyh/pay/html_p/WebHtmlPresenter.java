@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.tzly.ctcyh.java.request.RequestDTO;
 import com.tzly.ctcyh.java.request.RequestHeadDTO;
+import com.tzly.ctcyh.java.request.card.ApplyCTCardDTO;
 import com.tzly.ctcyh.java.request.violation.ViolationDetailsDTO;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.violation.ViolationNum;
@@ -261,11 +262,8 @@ public class WebHtmlPresenter implements IWebHtmlContract.IWebHtmlPresenter {
         return new Gson().toJson(dto);
     }
 
-
     /**
      * 46.更新违章缴费状态
-     *
-     * @param numBean
      */
     public void updateState(final ViolationNumBean numBean) {
         List<ViolationNum> list = new ArrayList<>();
@@ -296,6 +294,37 @@ public class WebHtmlPresenter implements IWebHtmlContract.IWebHtmlPresenter {
                         } else {
                             mContractView.updateStateError(result != null
                                     ? result.getResponseDesc() : "未知错误(updateState)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+
+    /**
+     * 提交数据 BaseResponse
+     */
+    @Override
+    public void applyRecord(ApplyCTCardDTO applyCTCardDTO) {
+        Subscription subscription = mRepository.applyRecord(applyCTCardDTO)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doNext(BaseResponse result) {
+                        if (result != null && result.getResponseCode()
+                                == PayGlobal.Response.base_succeed) {
+                        } else {
                         }
                     }
                 });

@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.tzly.ctcyh.java.request.RequestHeadDTO;
+import com.tzly.ctcyh.java.request.card.ApplyCTCardDTO;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.coupon.CouponInfoResponse;
 import com.tzly.ctcyh.java.response.violation.ViolationNum;
@@ -175,5 +176,12 @@ public class PayDataManager {
      */
     public Observable<BaseResponse> shareUser(String userID, String goodsType, String statu) {
         return mRemoteData.shareUser(userID, goodsType, statu);
+    }
+
+    /**
+     * 提交银行数据
+     */
+    public Observable<BaseResponse> applyRecord(ApplyCTCardDTO applyCTCardDTO) {
+        return mRemoteData.applyRecord(applyCTCardDTO);
     }
 }

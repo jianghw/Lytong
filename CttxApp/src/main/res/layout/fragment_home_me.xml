@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/bar_marginTop"
+            android:layout_marginTop="@dimen/res_y_24"
             android:text="个人中心"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/fs_18sp"/>

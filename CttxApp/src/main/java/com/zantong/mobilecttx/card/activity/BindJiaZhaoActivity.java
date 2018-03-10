@@ -94,10 +94,10 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bind_jia_zhao_file_num_img:
-                new DialogMgr(BindJiaZhaoActivity.this, R.mipmap.code_query_notice_iamge);
+                new DialogMgr(BindJiaZhaoActivity.this, R.mipmap.ic_mark_driving_license);
                 break;
             case R.id.bind_jia_zhao_idcard_img:
-                new DialogMgr(BindJiaZhaoActivity.this, R.mipmap.img_jiazhao_idcard);
+                new DialogMgr(BindJiaZhaoActivity.this, R.mipmap.ic_mark_jiazhao_idcard);
                 break;
             case R.id.bind_jia_zhao_phone_img:
                 toastShort("预留手机号是指在办理银行卡过程中，" +

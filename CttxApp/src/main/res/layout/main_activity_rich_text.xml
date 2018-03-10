@@ -5,12 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.tzly.ctcyh.router.custom.htmltxt.HtmlTextView
+    <!--<com.tzly.ctcyh.router.custom.htmltxt.HtmlTextView-->
+    <!--android:id="@+id/tv_html"-->
+    <!--style="@style/ResTextTheme.16.Subtitle"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:textAppearance="@android:style/TextAppearance.Small"-->
+    <!--tools:text="使用规则fsfsdfsfjsdfsjfiisjdffdssff" />-->
+
+    <TextView
         android:id="@+id/tv_html"
-        style="@style/ResTextTheme.16.Subtitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textAppearance="@android:style/TextAppearance.Small"
-        tools:text="使用规则fsfsdfsfjsdfsjfiisjdffdssff" />
+        android:layout_height="match_parent" />
 
 </android.support.constraint.ConstraintLayout>

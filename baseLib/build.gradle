@@ -73,4 +73,17 @@ dependencies {
     compile 'com.github.codbking:PickTime:v1.0.1'
     //收缩控件
     compile 'com.drawthink:expandable-recyclerview:0.0.3'
+    //富文本
+    compile 'com.zzhoujay.richtext:richtext:3.0.5'
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")&&!requested.name.startsWith("constraint")) {
+                details.useVersion '25.3.1'
+            }
+        }
+    }
 }

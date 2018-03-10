@@ -252,11 +252,12 @@ public class BaseApiClient {
         }
 
         if (NetUtils.getNetStatus(context) == NetUtils.NET_NONE) {
-            baseCallBack.getCallback().sendFailMessage(Config.ERROR_NET,
-                    Config.ERROR_NET_MSG);
+            baseCallBack.getCallback().sendFailMessage(Config.ERROR_NET, Config.ERROR_NET_MSG);
             EventBus.getDefault().post(
-                    new ErrorEvent(Config.ERROR_NET, Config.ERROR_NET_MSG,
-                            baseCallBack.getTag(), context));
+                    new ErrorEvent(
+                            Config.ERROR_NET, Config.ERROR_NET_MSG,
+                            baseCallBack.getTag(),
+                            context));
         } else {
             client.newCall(request).enqueue(baseCallBack);
         }
