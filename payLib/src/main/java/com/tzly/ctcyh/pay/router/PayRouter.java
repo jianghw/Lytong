@@ -188,7 +188,7 @@ public final class PayRouter {
     /**
      * 绑定畅通卡页面
      */
-    public static void gotoUnblockedCardActivity(Activity context) {
+    public static void gotoUnblockedCardActivity(Context context) {
         Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
@@ -198,7 +198,7 @@ public final class PayRouter {
         }
     }
 
-    public static void gotoMyCardActivity(Activity context) {
+    public static void gotoMyCardActivity(Context context) {
         Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
@@ -418,7 +418,7 @@ public final class PayRouter {
     }
 
     /**
-     * 有回调 single失效
+     * 需要有回调 single将失效
      */
     public static void gotoWebHtmlActivity(Activity activity, Bundle bundle) {
         UiRouter.getInstance().openUriForResult(activity,
@@ -446,5 +446,80 @@ public final class PayRouter {
 
     private static void registerCargo() {
         ServiceRouter.registerComponent(ServiceRouter.CARGO_LIKE);
+    }
+
+    /**
+     * 百日
+     */
+    public static void gotoHundredAgreementActivity(Context context) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoHundredAgreementActivity(context);
+        } else {//注册机开始工作
+            registerMain();
+        }
+    }
+
+    /**
+     * 积分规则
+     */
+    public static void gotoHundredRuleActivity(Context context) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoHundredRuleActivity(context);
+        } else {//注册机开始工作
+            registerMain();
+        }
+    }
+
+    public static void gotoRechargeActivity(Context context) {
+        Object object = getCargoObject();
+        if (object != null && object instanceof ICargoService) {
+            ICargoService service = (ICargoService) object;
+            service.gotoRechargeActivity(context);
+        } else {//注册机开始工作
+            registerCargo();
+        }
+    }
+
+    /**
+     * 代驾
+     */
+    public static void gotoDrivingActivity(Context context) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoDrivingActivity(context);
+        } else {//注册机开始工作
+            registerMain();
+        }
+    }
+
+    /**
+     * 添加车辆
+     */
+    public static void gotoViolationActivity(Context context) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoViolationActivity(context);
+        } else {//注册机开始工作
+            registerMain();
+        }
+    }
+
+    /**
+     * 年检地图
+     */
+    public static void gotoNianjianMapActivity(Context context) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoNianjianMapActivity(context);
+        } else {//注册机开始工作
+            registerMain();
+        }
     }
 }

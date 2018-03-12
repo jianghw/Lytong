@@ -61,7 +61,7 @@ public class WeiXinDialogFragment extends DialogFragment {
         getDialog().setCanceledOnTouchOutside(true);
         Window window = getDialog().getWindow();
         if (window != null) {
-            window.setBackgroundDrawableResource(R.color.transparent);
+            window.setBackgroundDrawableResource(R.color.res_color_trans);
             window.getDecorView().setPadding(0, 0, 0, 0);
             WindowManager.LayoutParams wlp = window.getAttributes();
             wlp.gravity = Gravity.BOTTOM;

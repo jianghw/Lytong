@@ -59,6 +59,13 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
      */
     private String channel;
 
+    public static WebHtmlFragment newInstance() {
+        WebHtmlFragment f = new WebHtmlFragment();
+        Bundle bundle = new Bundle();
+        f.setArguments(bundle);
+        return f;
+    }
+
     /**
      * 当该fragment被添加到Activity时回调，该方法只会被调用一次
      */
@@ -363,16 +370,23 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     //绑畅通卡
     @JavascriptInterface
     public void bindCard() {
+        if (getBindCardStatus()==1) {
+            PayRouter.gotoUnblockedCardActivity(getContext());
+        } else {
+            PayRouter.gotoMyCardActivity(getContext());
+        }
     }
 
     //加油充值
     @JavascriptInterface
     public void addOil() {
+        PayRouter.gotoRechargeActivity(getContext());
     }
 
     //代驾
     @JavascriptInterface
     public void chaser() {
+        PayRouter.gotoDrivingActivity(getContext());
     }
 
     //分享领积分
@@ -407,16 +421,19 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     //查询违章
     @JavascriptInterface
     public void queryViolations() {
+        PayRouter.gotoViolationActivity(getContext());
     }
 
     //跳转到积分规则页面
     @JavascriptInterface
     public void popAttention() {
+        PayRouter.gotoHundredRuleActivity(getContext());
     }
 
     //去年检地图地址
     @JavascriptInterface
     public void goNianjianMap() {
+        PayRouter.gotoNianjianMapActivity(getContext());
     }
 
     //去往违章列表页面
@@ -533,12 +550,11 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
      */
     @JavascriptInterface
     public void saveBankByCard(String name, String mobile, String certNum, String cardName) {
-        Bundle bundle = new Bundle();
+        Bundle bundle = getArguments();
         bundle.putString(BANK_NAME, name);
         bundle.putString(BANK_MOBILE, mobile);
         bundle.putString(BANK_CERTNUM, certNum);
         bundle.putString(BANK_CARDNAME, cardName);
-        setArguments(bundle);
     }
 
     /**

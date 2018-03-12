@@ -35,7 +35,7 @@ import com.zantong.mobilecttx.user.dto.UpdateUserHeadImgDTO;
 import com.zantong.mobilecttx.user.dto.VcodeDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
-import com.zantong.mobilecttx.utils.Tools;
+import com.tzly.ctcyh.router.util.Tools;
 import com.zantong.mobilecttx.weizhang.bean.PayHistoryResult;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.PayHistoryDTO;

@@ -236,7 +236,7 @@
         android:background="@color/colorBgBlue_a4">
 
         <Button
-            android:id="@+id/btn_pay"
+            android:id="@+id/btn_pay_true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

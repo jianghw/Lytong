@@ -58,7 +58,7 @@
                 android:layout_width="@dimen/ds_24"
                 android:layout_height="@dimen/ds_24"
                 android:layout_marginRight="@dimen/ds_40"
-                android:src="@mipmap/arrow_left_big_iamge"/>
+                android:src="@mipmap/ic_arrow_gray_left"/>
         </LinearLayout>
 
         <TextView style="@style/line_splite_gray"/>

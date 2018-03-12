@@ -28,7 +28,7 @@ import com.zantong.mobilecttx.huodong.dto.HundredPlanDTO;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.activity.SettingActivity;
-import com.zantong.mobilecttx.utils.DialogMgr;
+import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;

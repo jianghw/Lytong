@@ -24,7 +24,7 @@
         android:background="@drawable/bg_tv_msg_count"
         android:visibility="invisible"
         android:gravity="center"
-        android:textColor="@color/red_normal"
+        android:textColor="@color/res_color_red_f3"
         android:textSize="@dimen/fs_10sp"
         tools:text="5"/>
 

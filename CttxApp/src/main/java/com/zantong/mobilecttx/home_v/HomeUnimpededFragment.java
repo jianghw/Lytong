@@ -200,7 +200,7 @@ public class HomeUnimpededFragment extends RefreshFragment
         //小喇叭
         initScrollUp(mHomeNotices);
         //违章车辆
-        mCarViolationAdapter = new HorizontalCarViolationAdapter(getContext(), mUserCarInfoBeanList);
+        mCarViolationAdapter = new HorizontalCarViolationAdapter(getActivity(), mUserCarInfoBeanList);
         mCustomViolation.setAdapter(mCarViolationAdapter);
     }
 

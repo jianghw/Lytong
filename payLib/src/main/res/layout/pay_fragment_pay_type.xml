@@ -137,7 +137,7 @@
         android:layout_below="@+id/lay_linear_top"
         android:layout_marginBottom="@dimen/res_y_150"
         android:layout_marginTop="@dimen/res_y_30"
-        android:background="@drawable/sel_bg_rectangle_gw">
+        android:background="@drawable/sel_bg_rec_gw">
 
         <TextView
             style="@style/ResTextTheme.16.Subtitle"

@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="600元"
-            android:textColor="@color/red"
+            android:textColor="@color/res_color_red_f3"
             android:textSize="@dimen/fs_42" />
 
         <ImageView

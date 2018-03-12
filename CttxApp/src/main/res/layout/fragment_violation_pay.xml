@@ -145,7 +145,7 @@
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/pay_late_fee_money_text_s"
                 android:scaleType="center"
-                android:src="@drawable/sel_bg_query_notice"/>
+                android:src="@drawable/sel_dm_ic_query_notice"/>
 
             <TextView
                 style="@style/TextInfoRightStyle"

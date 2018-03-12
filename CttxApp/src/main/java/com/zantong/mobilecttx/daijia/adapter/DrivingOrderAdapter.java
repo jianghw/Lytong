@@ -43,7 +43,7 @@ public class DrivingOrderAdapter extends BaseAdapter<DaiJiaOrderListBean> {
             if ("已取消".equals(data.getOrderStatus())) {
                 holder.mStatus.setTextColor(mContext.getResources().getColor(R.color.gray_cc));
             } else if ("派单中".equals(data.getOrderStatus())) {
-                holder.mStatus.setTextColor(mContext.getResources().getColor(R.color.red));
+                holder.mStatus.setTextColor(mContext.getResources().getColor(R.color.res_color_red_f3));
             } else {
                 holder.mStatus.setTextColor(mContext.getResources().getColor(R.color.gray_66));
             }

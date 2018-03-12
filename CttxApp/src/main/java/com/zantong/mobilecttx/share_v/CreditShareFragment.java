@@ -24,7 +24,7 @@ import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_p.FahrschuleSharePresenter;
 import com.zantong.mobilecttx.share_p.IFahrschuleShareFtyContract;
-import com.zantong.mobilecttx.utils.DialogMgr;
+import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 import com.tzly.ctcyh.router.custom.image.EncodingUtils;
 
@@ -186,8 +186,8 @@ public class CreditShareFragment extends JxBaseRefreshFragment
     }
 
     public void initView(View view) {
-        mImgScan = (ImageView) view.findViewById(R.id.img_scan);
-        mBtnPay = (Button) view.findViewById(R.id.btn_pay);
+        mImgScan = (ImageView) view.findViewById(R.id.img_scan_true);
+        mBtnPay = (Button) view.findViewById(R.id.btn_pay_true);
         mBtnPay.setOnClickListener(this);
         mTvPrompt = (TextView) view.findViewById(R.id.tv_prompt);
         mTvPeopleCount = (TextView) view.findViewById(R.id.tv_people_count);
@@ -200,7 +200,7 @@ public class CreditShareFragment extends JxBaseRefreshFragment
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_pay:
+            case R.id.btn_pay_true:
                 new DialogMgr(getActivity(),
                         new View.OnClickListener() {
                             @Override

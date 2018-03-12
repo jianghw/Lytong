@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:text="new"
-            android:textColor="@color/red"
+            android:textColor="@color/res_color_red_f3"
             android:textSize="@dimen/fs_48"/>
     </LinearLayout>
 
@@ -81,7 +81,7 @@
         android:layout_marginLeft="@dimen/ds_40"
         android:layout_marginTop="@dimen/ds_40"
         android:text="@string/tv_driving_hint"
-        android:textColor="@color/red_normal"
+        android:textColor="@color/res_color_red_f3"
         android:textSize="@dimen/fs_14sp"/>
 
     <LinearLayout

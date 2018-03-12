@@ -17,7 +17,7 @@ import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.service.RouterGlobal;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
-import com.zantong.mobilecttx.utils.DialogMgr;
+import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.util.ArrayList;
@@ -485,14 +485,14 @@ public final class MainRouter {
     /**
      * 绑定畅通卡页面
      */
-    public static void gotoUnblockedCardActivity(Activity context) {
+    public static void gotoUnblockedCardActivity(Context context) {
         Bundle bundle = new Bundle();
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.unblocked_card_host,
                 bundle);
     }
 
-    public static void gotoMyCardActivity(Activity context) {
+    public static void gotoMyCardActivity(Context context) {
         Bundle bundle = new Bundle();
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.my_card_host,

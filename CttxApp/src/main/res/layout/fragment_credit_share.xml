@@ -14,13 +14,13 @@
 
         <ImageView
             android:src="@mipmap/ic_global_app"
-            android:id="@+id/img_scan"
+            android:id="@+id/img_scan_true"
             android:layout_width="@dimen/ds_360"
             android:layout_height="@dimen/ds_360"
             android:layout_gravity="center_horizontal"/>
 
         <Button
-            android:id="@+id/btn_pay"
+            android:id="@+id/btn_pay_true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -147,7 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/ds_48"
             android:text="--"
-            android:textColor="@color/red"/>
+            android:textColor="@color/res_color_red_f3"/>
     </LinearLayout>
 
 </LinearLayout>

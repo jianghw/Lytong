@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -18,6 +19,8 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
+import com.tzly.ctcyh.router.custom.image.EncodingUtils;
 import com.tzly.ctcyh.router.custom.rea.Des3;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
@@ -28,9 +31,7 @@ import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_p.FahrschuleSharePresenter;
 import com.zantong.mobilecttx.share_p.IFahrschuleShareFtyContract;
 import com.zantong.mobilecttx.share_p.StatisCountAdapter;
-import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
-import com.tzly.ctcyh.router.custom.image.EncodingUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,7 @@ public class FriendShareFragment extends RefreshFragment
     private StatisCountAdapter mAdapter;
     private TextView mTvRecommend;
     private TextView mTvTied;
+    private LinearLayout mLayFalse;
 
     public static FriendShareFragment newInstance() {
         return new FriendShareFragment();
@@ -170,8 +172,6 @@ public class FriendShareFragment extends RefreshFragment
         StatistCountResponse response = (StatistCountResponse) result;
         List<StatistCountResponse.DataBean.ListBean> list = response.getData().getList();
 
-        boolean flag = response.getData().isFlag();
-
         boolean isFirst = true;
         List<StatistCountResponse.DataBean.ListBean> newList = new ArrayList<>();
         for (StatistCountResponse.DataBean.ListBean map : list) {
@@ -189,6 +189,15 @@ public class FriendShareFragment extends RefreshFragment
             }
         }
         setSimpleDataResult(newList);
+
+        boolean flag = response.getData().isFlag();
+        //地推人员
+        mImgScan.setVisibility(flag ? View.VISIBLE : View.GONE);
+        mBtnPay.setVisibility(flag ? View.VISIBLE : View.GONE);
+
+        mLayFalse.setVisibility(!flag ? View.VISIBLE : View.INVISIBLE);
+        mXRecyclerView.setVisibility(!flag ? View.VISIBLE : View.INVISIBLE);
+
     }
 
     private void setSimpleDataResult(List<StatistCountResponse.DataBean.ListBean> data) {
@@ -201,19 +210,21 @@ public class FriendShareFragment extends RefreshFragment
     }
 
     public void initView(View view) {
-        mImgScan = (ImageView) view.findViewById(R.id.img_scan);
-        mBtnPay = (Button) view.findViewById(R.id.btn_pay);
+        mImgScan = (ImageView) view.findViewById(R.id.img_scan_true);
+        mBtnPay = (Button) view.findViewById(R.id.btn_pay_true);
         mBtnPay.setOnClickListener(this);
 
-        mXRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_list);
+        mLayFalse = (LinearLayout) view.findViewById(R.id.lay_false);
+
+        mXRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_list_false);
         LinearLayoutManager manager = new LinearLayoutManager(Utils.getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mXRecyclerView.setLayoutManager(manager);
         mXRecyclerView.setPullRefreshEnabled(false);
         mXRecyclerView.setLoadingMoreEnabled(false);
-//        mXRecyclerView.addItemDecoration(
-//                new SpaceItemDecoration(getResources().getDimensionPixelSize(R.dimen.res_x_30))
-//        );
+        //        mXRecyclerView.addItemDecoration(
+        //                new SpaceItemDecoration(getResources().getDimensionPixelSize(R.dimen.res_x_30))
+        //        );
         mXRecyclerView.noMoreLoadings();
         mAdapter = new StatisCountAdapter();
         mXRecyclerView.setAdapter(mAdapter);
@@ -226,7 +237,7 @@ public class FriendShareFragment extends RefreshFragment
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_pay:
+            case R.id.btn_pay_true:
                 new DialogMgr(getActivity(),
                         new View.OnClickListener() {
                             @Override

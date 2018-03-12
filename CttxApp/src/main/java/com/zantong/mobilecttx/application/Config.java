@@ -1,7 +1,7 @@
 package com.zantong.mobilecttx.application;
 
 import com.zantong.mobilecttx.BuildConfig;
-import com.zantong.mobilecttx.utils.Tools;
+import com.tzly.ctcyh.router.util.Tools;
 
 import java.util.HashMap;
 

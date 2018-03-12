@@ -63,9 +63,9 @@ public class WebHtmlActivity extends AbstractBaseActivity
     @Override
     protected void rightClickListener() {
         if (mRightBtnStatus == 1) {//积分规则
-            //            Act.getInstance().gotoIntent(this, HundredAgreementActivity.class);
+            PayRouter.gotoHundredRuleActivity(this);
         } else if (mRightBtnStatus == 2) {//百日
-            //            Act.getInstance().gotoIntent(this, HundredRuleActivity.class);
+            PayRouter.gotoHundredAgreementActivity(this);
         } else if (mRightBtnStatus == 3) {
             WeiXinDialogFragment fragment = WeiXinDialogFragment.newInstance(mStrUrl);
             DialogUtils.showDialog(this, fragment, "wechat_dialog");
@@ -168,7 +168,7 @@ public class WebHtmlActivity extends AbstractBaseActivity
         @SuppressLint("CommitTransaction")
         FragmentTransaction transaction = manager.beginTransaction();
         //创建fragment但是不绘制UI
-        WebHtmlFragment htmlFragment = new WebHtmlFragment();
+        WebHtmlFragment htmlFragment =  WebHtmlFragment.newInstance();
         transaction.add(htmlFragment, "web_html").commit();
         //调用JS方法.安卓版本大于17,加上注解 @JavascriptInterface
         settings.setJavaScriptEnabled(true);
@@ -351,7 +351,7 @@ public class WebHtmlActivity extends AbstractBaseActivity
      */
     @Override
     public void shouldOverrideUrlLoading(WebView view, String url) {
-        LogUtils.e(url);
+        LogUtils.e("OverrideUrl-->"+url);
 
         Intent intent = new Intent();
         if (url.startsWith("tel:")) {

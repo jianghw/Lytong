@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:drawablePadding="@dimen/ds_15"
-                android:drawableRight="@drawable/sel_bg_query_notice"
+                android:drawableRight="@drawable/sel_dm_ic_query_notice"
                 android:text="计入本周期"
                 android:textColor="@color/colorTvBlack_4d"
                 android:textSize="@dimen/fs_16sp"/>

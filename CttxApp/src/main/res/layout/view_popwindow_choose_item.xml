@@ -21,6 +21,6 @@
         android:id="@+id/view_popu_choose_img"
         android:layout_width="@dimen/ds_48"
         android:layout_height="@dimen/ds_36"
-        android:background="@mipmap/pay_type_choose_image" />
+        android:background="@mipmap/ic_choose_strike_t" />
 
 </LinearLayout>

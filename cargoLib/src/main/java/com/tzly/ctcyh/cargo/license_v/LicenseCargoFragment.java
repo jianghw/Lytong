@@ -22,6 +22,7 @@ import com.tzly.ctcyh.cargo.license_p.ILienseGradeContract;
 import com.tzly.ctcyh.cargo.license_p.LienseGradePresenter;
 import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
 import com.tzly.ctcyh.router.util.Utils;
 
 /**
@@ -85,9 +86,9 @@ public class LicenseCargoFragment extends RefreshFragment
     public void onClick(View view) {
         int vId = view.getId();
         if (vId == R.id.img_question_num) {
-
+            new DialogMgr(getActivity(), R.mipmap.ic_mark_jiazhao_idcard);
         } else if (vId == R.id.img_question_serial) {
-
+            new DialogMgr(getActivity(), R.mipmap.ic_mark_driving_license);
         } else if (vId == R.id.img_code || vId == R.id.img_refresh) {//刷新验证码
             refreshVerificationCode();
         } else if (vId == R.id.btn_commit) {

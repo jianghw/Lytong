@@ -199,14 +199,14 @@ public class FahrschuleOrderNumFragment extends JxBaseRefreshFragment
         mTvMoneyTitle = (TextView) view.findViewById(R.id.tv_money_title);
         mTvMoney = (TextView) view.findViewById(R.id.tv_money);
         mTvIntroduce = (TextView) view.findViewById(R.id.tv_introduce);
-        mBtnPay = (Button) view.findViewById(R.id.btn_pay);
+        mBtnPay = (Button) view.findViewById(R.id.btn_pay_true);
         mBtnPay.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_pay://支付
+            case R.id.btn_pay_true://支付
                 MainRouter.gotoPayTypeActivity(getActivity(), mTvOrder.getText().toString());
                 if (getActivity() != null) getActivity().finish();
 

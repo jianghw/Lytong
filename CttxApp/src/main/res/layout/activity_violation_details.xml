@@ -182,7 +182,7 @@
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/violation_money_zhinajin"
                 android:scaleType="center"
-                android:src="@drawable/sel_bg_query_notice"/>
+                android:src="@drawable/sel_dm_ic_query_notice"/>
 
             <TextView
                 android:id="@+id/violation_money_zhinajin_text"

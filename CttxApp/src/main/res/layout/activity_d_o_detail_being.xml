@@ -59,7 +59,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="right"
                             android:text="派单中"
-                            android:textColor="@color/red" />
+                            android:textColor="@color/res_color_red_f3" />
 
                     </LinearLayout>
 

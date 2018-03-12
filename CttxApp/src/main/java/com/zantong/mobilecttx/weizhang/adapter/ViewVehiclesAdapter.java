@@ -12,7 +12,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
 import com.zantong.mobilecttx.utils.AmountUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.BaseRecyclerAdapter;
-import com.zantong.mobilecttx.utils.Tools;
+import com.tzly.ctcyh.router.util.Tools;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

@@ -70,7 +70,7 @@ public class MegAdapter extends BaseAdapter<MessageType> {
             //1 已读  0未读
             holder.mSign.setText("1".equals(data.getFlag()) ? "已读" : "未读");
             holder.mSign.setTextColor(mContext.getResources().getColor(
-                    "1".equals(data.getFlag()) ? R.color.gray_4a : R.color.red));
+                    "1".equals(data.getFlag()) ? R.color.gray_4a : R.color.res_color_red_f3));
 
             holder.mDate.setText(DateTools.displayFormatDate(data.getTime()));
         }

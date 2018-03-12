@@ -22,7 +22,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:visibility="gone"
-            android:src="@mipmap/pay_type_choose_image"/>
+            android:src="@mipmap/ic_choose_strike_t"/>
     </RelativeLayout>
 
     <TextView

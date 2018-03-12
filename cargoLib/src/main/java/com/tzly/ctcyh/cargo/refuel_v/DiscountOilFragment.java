@@ -4,29 +4,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
-import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.tzly.ctcyh.cargo.BuildConfig;
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.bean.response.NorOilBean;
 import com.tzly.ctcyh.cargo.bean.response.NorOilResponse;
-import com.tzly.ctcyh.cargo.bean.response.RefuelOilBean;
-import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.cargo.data_m.InjectionRepository;
@@ -176,8 +168,8 @@ public class DiscountOilFragment extends RefreshFragment
         };
 
         SpannableString spanableInfo = new SpannableString(
-                "1、畅通联名卡由中石化官方发行，使用工行卡在畅通车友会APP线充值享97折，其他渠道不能充值;\n"
-                        + "2、非畅通车友会联名卡，不支持此页面充值;\n"
+                "1、畅通97折油卡由中石化官方发行，使用工行卡在畅通车友会APP线充值享97折，其他渠道不能充值;\n"
+                        + "2、非畅通车友会油卡，不支持此页面充值;\n"
                         + "3、每月15号，30号开放两次充值服务，可提前支付下单，自动于15号，30号当天充值到账;\n"
                         + "4、充值成功后，需加油站圈存后方可使用，详询加油站工作人员;\n"
                         + "5、目前黑吉辽、陕甘宁、新疆、内蒙、西藏、青海省不支持当地圈存，可在外省圈存后在以上城市使用加油;\n"

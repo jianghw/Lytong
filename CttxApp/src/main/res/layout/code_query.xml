@@ -66,7 +66,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/ds_15"
             android:layout_toRightOf="@+id/citation_text"
-            android:src="@drawable/sel_bg_query_notice"/>
+            android:src="@drawable/sel_dm_ic_query_notice"/>
 
         <EditText
             android:id="@+id/pay_code_number"

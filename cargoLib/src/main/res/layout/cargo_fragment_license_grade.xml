@@ -31,7 +31,7 @@
                 android:layout_height="@dimen/res_x_30"
                 android:layout_marginLeft="@dimen/res_x_30"
                 android:layout_marginRight="@dimen/res_x_30"
-                android:src="@drawable/sel_bg_query_notice" />
+                android:src="@drawable/sel_dm_ic_query_notice" />
 
             <EditText
                 android:id="@+id/edit_license"
@@ -73,7 +73,7 @@
                 android:layout_height="@dimen/res_x_30"
                 android:layout_marginLeft="@dimen/res_x_30"
                 android:layout_marginRight="@dimen/res_x_30"
-                android:src="@drawable/sel_bg_query_notice" />
+                android:src="@drawable/sel_dm_ic_query_notice" />
 
             <EditText
                 android:id="@+id/edit_serial"

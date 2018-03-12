@@ -61,28 +61,26 @@ public class WebHtmlViewClient extends WebViewClient {
 
     @Override
     public void onPageFinished(WebView view, String url) {
-        super.onPageFinished(view, url);
-
+        LogUtils.e("onPageFinished-->"+url);
+        String js = null;
         if (url.contains("?dse_operationName=ApplyCreditCardOp&firstFlag")) {//保存用户资料
-            String js = "var script=document.createElement(\"script\");";
+            js = "var script=document.createElement(\"script\");";
             js += "script.type = 'text/javascript';";
             js += "var btn= document.getElementsByTagName('button')[2];";
-            js += "console.log(btn.innerHTML);";
             js += "btn.onclick=function(){bankCardClick();mysubmit();};";
-            js += "function bankCardClick(){var newname = $(\"#name\").val();var mobiles = $(\"#mobile\").val(); var certNum = $(\"#certNum\").val();var list=document.getElementsByClassName(\"CreditCardName\");var cardName = \"\";for(var i=0;i<list.length;i++){cardName =list[i].innerHTML};"
+            js += "function bankCardClick(){var newname = $(\"#name\").val();var mobiles = $(\"#mobile\").val(); var certNum = $(\"#certNum\").val();var list=document.getElementsByClassName(\"CreditCardName\");var cardName = \"\";for(var i=0;i<list.length;i++){cardName =list[i].innerHTML;}"
                     + "window.CTTX.saveBankByCard(newname,mobiles,certNum,cardName);};";
-
-            LogUtils.e("onPageFinished==>" + js);
-        } else if (url.contains("")) {//提交用户资料
-            String js = "var script=document.createElement(\"script\");";
+        } else if (url.equals("https://mims.icbc.com.cn/IMServiceServer/servlet/ICBCBaseReqNSServlet")) {//提交用户资料
+            js = "var script=document.createElement(\"script\");";
             js += "script.type = 'text/javascript';";
             js += "var btnList=document.getElementsByClassName(\"new_red_btn\");";
             js += "var btn1;for(var i=0;i<btnList.length;i++){btn1 =btnList[i];};";
             js += "if(typeof(eval(submitApply))==\"function\"){btn1.onclick=function(){overSubmit();submitApply();};};";
             js += "function overSubmit(){window.CTTX.submitBankByCard();};";
         }
-
-        if (viewClientable != null) viewClientable.onPageFinished(view, url);
+        LogUtils.e("onPageFinished==>" + js);
+        if (viewClientable != null) viewClientable.onPageFinished(view, js);
+        super.onPageFinished(view, url);
     }
 
     /**

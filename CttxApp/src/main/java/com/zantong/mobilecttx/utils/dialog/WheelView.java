@@ -14,7 +14,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-
 import com.zantong.mobilecttx.R;
 
 import java.util.ArrayList;
@@ -485,27 +484,18 @@ public class WheelView extends View {
      */
     private void init(Context context, AttributeSet attrs) {
 
-        TypedArray attribute = context.obtainStyledAttributes(attrs,
-                R.styleable.WheelView);
-        unitHeight = (int) attribute.getDimension(
-                R.styleable.WheelView_unitHight, 32);
-        normalFont = attribute.getDimension(
-                R.styleable.WheelView_normalTextSize, 14.0f);
-        selectedFont = attribute.getDimension(
-                R.styleable.WheelView_selectedTextSize, 22.0f);
+        TypedArray attribute = context.obtainStyledAttributes(attrs, R.styleable.WheelView);
+        unitHeight = (int) attribute.getDimension(R.styleable.WheelView_unitHight, 32);
+        normalFont = attribute.getDimension(R.styleable.WheelView_normalTextSize, 14.0f);
+        selectedFont = attribute.getDimension(R.styleable.WheelView_selectedTextSize, 22.0f);
         itemNumber = attribute.getInt(R.styleable.WheelView_itemNumber, 7);
-        normalColor = attribute.getColor(
-                R.styleable.WheelView_normalTextColor, 0xff000000);
-        selectedColor = attribute.getColor(
-                R.styleable.WheelView_selectedTextColor, 0xffff0000);
-        lineColor = attribute.getColor(R.styleable.WheelView_lineColor,
-                0xff000000);
+        normalColor = attribute.getColor(R.styleable.WheelView_normalTextColor, 0xff000000);
+        selectedColor = attribute.getColor(R.styleable.WheelView_selectedTextColor, 0xffff0000);
+        lineColor = attribute.getColor(R.styleable.WheelView_lineColor, 0xff000000);
         lineWidth = attribute.getDimension(R.styleable.WheelView_lineHeight, 2f);
-        maskHight = attribute.getDimension(R.styleable.WheelView_maskHight,
-                48.0f);
+        maskHight = attribute.getDimension(R.styleable.WheelView_maskHight, 48.0f);
         noEmpty = attribute.getBoolean(R.styleable.WheelView_noEmpty, true);
-        isEnable = attribute
-                .getBoolean(R.styleable.WheelView_isEnable, true);
+        isEnable = attribute.getBoolean(R.styleable.WheelView_isEnable, true);
         attribute.recycle();
 
         controlHeight = itemNumber * unitHeight;

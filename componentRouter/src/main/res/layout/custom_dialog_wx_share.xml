@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/ds_40"
             android:layout_marginRight="@dimen/ds_40"
-            android:background="@drawable/btn_share_dialog_white"
+            android:background="@drawable/shape_rec_w_stroke_cor_10"
             android:orientation="vertical">
 
             <TextView
@@ -90,7 +90,7 @@
             android:layout_marginLeft="@dimen/ds_40"
             android:layout_marginRight="@dimen/ds_40"
             android:layout_marginTop="@dimen/ds_30"
-            android:background="@drawable/btn_share_dialog_white"
+            android:background="@drawable/shape_rec_w_stroke_cor_10"
             android:gravity="center"
             android:text="取消"
             android:textColor="@color/gray_66"

@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ds_45"
-        android:background="@color/civory">
+        android:background="@color/res_color_white">
 
         <RelativeLayout
             android:id="@+id/phone_number_edittext"

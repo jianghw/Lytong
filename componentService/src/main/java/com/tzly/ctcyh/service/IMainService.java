@@ -16,9 +16,9 @@ public interface IMainService {
 
     void gotoOrderSucceedActivity(Activity context, String orderId, int couponType);
 
-    void gotoUnblockedCardActivity(Activity context);
+    void gotoUnblockedCardActivity(Context context);
 
-    void gotoMyCardActivity(Activity context);
+    void gotoMyCardActivity(Context context);
 
     void gotoViolationListActivity(Context context, String carnum, String enginenum, String carnumtype);
 
@@ -39,4 +39,14 @@ public interface IMainService {
     void gotoHtmlActivity(Context activity, String title, String msg);
 
     void gotoApplyCardFirstActivity(Context activity);
+
+    void gotoHundredAgreementActivity(Context context);
+
+    void gotoHundredRuleActivity(Context context);
+
+    void gotoDrivingActivity(Context context);
+
+    void gotoViolationActivity(Context context);
+
+    void gotoNianjianMapActivity(Context context);
 }

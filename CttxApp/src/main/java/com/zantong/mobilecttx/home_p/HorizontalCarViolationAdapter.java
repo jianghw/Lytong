@@ -88,7 +88,7 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
      */
     @Override
     public Object instantiateItem(final ViewGroup container, final int position) {
-        final View view;
+        View view;
         if (mUserCarInfoBeanList.size() != carCount && position == carCount) {
             view = mLayoutInflater.inflate(R.layout.vp_car_default_item, container, false);
             setupDefaultCarItem(view, mUserCarInfoBeanList.get(position));
@@ -108,9 +108,8 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MobUtils.getInstance().eventIdByUMeng(11);
-
                 showMoreWindow(v);
+                MobUtils.getInstance().eventIdByUMeng(11);
             }
         });
     }
@@ -137,7 +136,6 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
             }
         });
     }
-
 
     private void setupViolationCarItem(View view, final UserCarInfoBean userCarInfoBean) {
         LinearLayout layContent = (LinearLayout) view.findViewById(R.id.lay_content);

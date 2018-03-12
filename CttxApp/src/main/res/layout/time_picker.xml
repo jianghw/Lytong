@@ -9,7 +9,10 @@
 
     <com.zantong.mobilecttx.utils.dialog.WheelView
         android:id="@+id/year"
-        style="@style/WheelView"
+        app:lineColor="@color/gray_33"
+        app:lineHeight="0.5dp"
+        app:normalTextColor="@color/hintColor"
+        app:selectedTextColor="@color/gray_33"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -29,7 +32,10 @@
 
     <com.zantong.mobilecttx.utils.dialog.WheelView
         android:id="@+id/month"
-        style="@style/WheelView"
+        app:lineColor="@color/gray_33"
+        app:lineHeight="0.5dp"
+        app:normalTextColor="@color/hintColor"
+        app:selectedTextColor="@color/gray_33"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -49,7 +55,10 @@
 
     <com.zantong.mobilecttx.utils.dialog.WheelView
         android:id="@+id/day"
-        style="@style/WheelView"
+        app:lineColor="@color/gray_33"
+        app:lineHeight="0.5dp"
+        app:normalTextColor="@color/hintColor"
+        app:selectedTextColor="@color/gray_33"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"

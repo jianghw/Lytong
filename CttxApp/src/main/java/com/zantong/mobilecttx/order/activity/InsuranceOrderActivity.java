@@ -106,7 +106,7 @@ public class InsuranceOrderActivity extends BaseMvpActivity<IOrderView, OrderPre
                     break;
                 case 1:
                     mState.setText("未支付");
-                    mState.setTextColor(getResources().getColor(R.color.red));
+                    mState.setTextColor(getResources().getColor(R.color.res_color_red_f3));
                     mSignLayout.setVisibility(View.GONE);
                     mCommit.setText("继续支付");
                     break;

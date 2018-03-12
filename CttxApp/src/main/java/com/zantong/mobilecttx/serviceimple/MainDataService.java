@@ -6,6 +6,8 @@ import android.content.Context;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.tzly.ctcyh.service.IMainService;
 import com.zantong.mobilecttx.card.activity.ApplyCardFirstActivity;
+import com.zantong.mobilecttx.huodong.activity.HundredAgreementActivity;
+import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
@@ -42,14 +44,16 @@ public class MainDataService implements IMainService {
 
     /**
      * 绑定畅通卡页面
+     *
+     * @param context
      */
     @Override
-    public void gotoUnblockedCardActivity(Activity context) {
+    public void gotoUnblockedCardActivity(Context context) {
         MainRouter.gotoUnblockedCardActivity(context);
     }
 
     @Override
-    public void gotoMyCardActivity(Activity context) {
+    public void gotoMyCardActivity(Context context) {
         MainRouter.gotoMyCardActivity(context);
     }
 
@@ -117,12 +121,38 @@ public class MainDataService implements IMainService {
     public void gotoHtmlActivity(Context context, String title, String msg) {
         MainRouter.gotoWebHtmlActivity(context, title, msg);
     }
+
     /**
      * 去办畅通卡
      */
     @Override
     public void gotoApplyCardFirstActivity(Context activity) {
         Act.getInstance().gotoIntent(activity, ApplyCardFirstActivity.class);
+    }
+
+    @Override
+    public void gotoHundredAgreementActivity(Context context) {
+        Act.getInstance().gotoIntent(context, HundredAgreementActivity.class);
+    }
+
+    @Override
+    public void gotoHundredRuleActivity(Context context) {
+        Act.getInstance().gotoIntent(context, HundredRuleActivity.class);
+    }
+
+    @Override
+    public void gotoDrivingActivity(Context context) {
+        MainRouter.gotoDrivingActivity(context);
+    }
+
+    @Override
+    public void gotoViolationActivity(Context context) {
+        MainRouter.gotoViolationActivity(context);
+    }
+
+    @Override
+    public void gotoNianjianMapActivity(Context context) {
+        MainRouter.gotoMapActivity(context);
     }
 
 

@@ -77,7 +77,7 @@
             android:layout_marginRight="@dimen/ds_30"
             android:textSize="@dimen/fs_48"
             android:text="900元"
-            android:textColor="@color/red" />
+            android:textColor="@color/res_color_red_f3" />
     </LinearLayout>
 
     <include layout="@layout/view_line1" />

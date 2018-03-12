@@ -33,7 +33,7 @@ import com.zantong.mobilecttx.contract.UserInfoUpdateView;
 import com.zantong.mobilecttx.presenter.UserInfoUpdatePresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.StringUtils;
-import com.zantong.mobilecttx.utils.Tools;
+import com.tzly.ctcyh.router.util.Tools;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.utils.popwindow.IOSpopwindow;
 

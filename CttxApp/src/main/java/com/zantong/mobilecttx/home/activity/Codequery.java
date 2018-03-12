@@ -17,7 +17,7 @@ import com.tzly.ctcyh.router.custom.primission.PermissionGen;
 import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseJxActivity;
-import com.zantong.mobilecttx.utils.DialogMgr;
+import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.violation_v.ViolationDetailsActivity;
 

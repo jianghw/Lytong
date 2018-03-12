@@ -144,7 +144,7 @@ public class DialogUtils {
         Button mCommit = (Button) view.findViewById(R.id.dialog_one_btn_commit);
         mTitle.setText(title);
         mContent.setText(message);
-        mCommit.setTextColor(context.getResources().getColor(R.color.red));
+        mCommit.setTextColor(context.getResources().getColor(R.color.res_color_red_f3));
         mCommit.setText("我知道了");
         mCommit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,7 +169,7 @@ public class DialogUtils {
                                     final View.OnClickListener leftListener,
                                     final View.OnClickListener rightListener) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
-        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_update, null);
+        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.custom_dialog_update, null);
         TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
         TextView mContent = (TextView) view.findViewById(R.id.dialog_msg);
         Button btn1 = (Button) view.findViewById(R.id.dialog_btn1);
@@ -381,7 +381,7 @@ public class DialogUtils {
      */
     public static void delDialog(final Context context, String title, String message, final View.OnClickListener listener) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
-        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_update, null);
+        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.custom_dialog_update, null);
 
         TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
         TextView mContent = (TextView) view.findViewById(R.id.dialog_msg);
@@ -421,7 +421,7 @@ public class DialogUtils {
      */
     public static void telDialog(final Context context, String title, String message, final View.OnClickListener listener) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
-        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_update, null);
+        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.custom_dialog_update, null);
 
         TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
         TextView mContent = (TextView) view.findViewById(R.id.dialog_msg);
@@ -822,7 +822,7 @@ public class DialogUtils {
                                     final View.OnClickListener listener1, final View.OnClickListener listener2) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
 
-        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_update, null);
+        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.custom_dialog_update, null);
         TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
         TextView mContent = (TextView) view.findViewById(R.id.dialog_msg);
         Button btn1 = (Button) view.findViewById(R.id.dialog_btn1);
@@ -873,7 +873,7 @@ public class DialogUtils {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static void previewImg(final Context context, Bitmap bmp, final View.OnClickListener listener) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
-        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_update, null);
+        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.custom_dialog_update, null);
         LinearLayout mLayoutView = (LinearLayout) view.findViewById(R.id.line_content);
         TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
         TextView mContent = (TextView) view.findViewById(R.id.dialog_msg);
@@ -922,7 +922,7 @@ public class DialogUtils {
                                     final View.OnClickListener listener1, final View.OnClickListener listener2) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
 
-        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_update, null);
+        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.custom_dialog_update, null);
         TextView mTitle = (TextView) view.findViewById(R.id.dialog_title);
         TextView mContent = (TextView) view.findViewById(R.id.dialog_msg);
         Button btn1 = (Button) view.findViewById(R.id.dialog_btn1);

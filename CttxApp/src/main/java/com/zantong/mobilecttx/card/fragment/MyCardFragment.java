@@ -23,7 +23,7 @@ import com.zantong.mobilecttx.card.bean.BindCardBean;
 import com.zantong.mobilecttx.contract.ModelView;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.dto.LogoutDTO;
-import com.zantong.mobilecttx.utils.Tools;
+import com.tzly.ctcyh.router.util.Tools;
 import com.zantong.mobilecttx.widght.refresh.OnPullListener;
 import com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout;
 

@@ -17,7 +17,7 @@ import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.utils.Tools;
+import com.tzly.ctcyh.router.util.Tools;
 
 import org.greenrobot.eventbus.EventBus;
 

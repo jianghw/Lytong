@@ -3,14 +3,11 @@ package com.zantong.mobilecttx.share_p;
 
 import android.support.annotation.NonNull;
 
-import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.fahrschule.bean.RecordCountResponse;
 import com.zantong.mobilecttx.fahrschule.bean.StatistCountResponse;
 import com.zantong.mobilecttx.router.MainRouter;
-
-import java.util.Random;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -60,14 +57,7 @@ public class FahrschuleSharePresenter
      */
     @Override
     public String getPhone() {
-        boolean positon = new Random().nextBoolean();
-        if (BuildConfig.isDeta && positon) {
-            return "18811025031";
-        } else if (BuildConfig.isDeta) {
-            return "18811025033";
-        } else {
-            return MainRouter.getUserPhoenum();
-        }
+        return MainRouter.getUserPhoenum();
     }
 
     /**

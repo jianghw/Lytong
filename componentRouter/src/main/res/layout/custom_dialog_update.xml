@@ -4,7 +4,7 @@
     android:id="@+id/line_content"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialog_bg_shape_white"
+    android:background="@drawable/shape_rec_w_stroke_cor_10"
     android:orientation="vertical">
 
     <TextView

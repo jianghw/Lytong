@@ -36,7 +36,7 @@ import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
 import com.zantong.mobilecttx.presenter.HelpPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.utils.DialogMgr;
+import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
 
 import java.util.Random;
 

@@ -21,7 +21,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.card.activity.ApplyCardFirstActivity;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_v.ShareParentActivity;
-import com.zantong.mobilecttx.utils.DialogMgr;
+import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 

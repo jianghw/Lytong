@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="--"
-            android:textColor="@color/red"
+            android:textColor="@color/res_color_red_f3"
             android:textSize="@dimen/fs_150"/>
 
         <TextView
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/ds_30"
             android:text="现在报名预约参加4月17日百日无违章活动，百吨汽油等你拿，每周还能参与抽奖"
-            android:textColor="@color/red"/>
+            android:textColor="@color/res_color_red_f3"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -127,7 +127,7 @@
             android:layout_marginBottom="@dimen/ds_60"
             android:layout_marginTop="@dimen/ds_60"
             android:text="您已报名成功!"
-            android:textColor="@color/red"
+            android:textColor="@color/res_color_red_f3"
             android:textSize="@dimen/fs_48"/>
 
         <TextView

@@ -607,7 +607,7 @@
             android:paddingLeft="@dimen/ds_50"
             android:paddingTop="@dimen/ds_30"
             android:text="申请人声明:"
-            android:textColor="@color/red"
+            android:textColor="@color/res_color_red_f3"
             android:textSize="@dimen/fs_40"/>
 
         <TextView

@@ -102,7 +102,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/ds_18"
-                android:src="@mipmap/arrow_left_big_iamge" />
+                android:src="@mipmap/ic_arrow_gray_left" />
 
         </LinearLayout>
 

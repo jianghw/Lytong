@@ -14,7 +14,7 @@ import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.RefreshNewTools.UserInfoRememberCtrl;
 import com.zantong.mobilecttx.utils.SPUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
-import com.zantong.mobilecttx.utils.Tools;
+import com.tzly.ctcyh.router.util.Tools;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.lang.ref.WeakReference;

@@ -93,7 +93,7 @@
         <ImageView
             android:id="@+id/setting_date_more"
             style="@style/mineItemArrow"
-            android:src="@mipmap/arrow_left_big_iamge"/>
+            android:src="@mipmap/ic_arrow_gray_left"/>
 
         <TextView
             android:id="@+id/setting_date_text"
@@ -135,7 +135,7 @@
 
         <ImageView
             style="@style/mineItemArrow"
-            android:src="@mipmap/arrow_left_big_iamge"/>
+            android:src="@mipmap/ic_arrow_gray_left"/>
     </RelativeLayout>
 
     <include layout="@layout/view_line1"/>
@@ -157,7 +157,7 @@
 
         <ImageView
             style="@style/mineItemArrow"
-            android:src="@mipmap/arrow_left_big_iamge"/>
+            android:src="@mipmap/ic_arrow_gray_left"/>
     </RelativeLayout>
 
     <TextView
@@ -173,7 +173,7 @@
         android:id="@+id/user_info_head_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fs_144"
-        android:background="@color/civory"
+        android:background="@color/res_color_white"
         android:paddingLeft="@dimen/fs_48"
         android:paddingRight="@dimen/fs_48">
 
@@ -191,7 +191,7 @@
         android:id="@+id/user_info_name_rl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fs_144"
-        android:background="@color/civory"
+        android:background="@color/res_color_white"
         android:paddingLeft="@dimen/fs_48"
         android:paddingRight="@dimen/fs_48">
 
@@ -214,7 +214,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/fs_144"
         android:layout_marginTop="@dimen/fs_45"
-        android:background="@color/civory"
+        android:background="@color/res_color_white"
         android:paddingLeft="@dimen/fs_48"
         android:paddingRight="@dimen/fs_48">
 
@@ -239,7 +239,7 @@
         android:id="@+id/user_info_change_pwd"
         android:layout_width="match_parent"
         android:layout_height="@dimen/fs_144"
-        android:background="@color/civory"
+        android:background="@color/res_color_white"
         android:paddingLeft="@dimen/fs_48"
         android:paddingRight="@dimen/fs_48">
 

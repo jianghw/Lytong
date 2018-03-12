@@ -61,7 +61,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="4dip"
                     android:text="欢迎加入畅通车友会"
-                    android:textColor="@color/civory"
+                    android:textColor="@color/res_color_white"
                     android:textSize="10sp"/>
 
             </RelativeLayout>

@@ -1,11 +1,10 @@
-package com.zantong.mobilecttx.order.fragment;
+package com.zantong.mobilecttx.order_v;
 
 import android.os.Bundle;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
-import com.zantong.mobilecttx.order_v.MyOrderActivity;
 import com.zantong.mobilecttx.order.adapter.OrderStatusAdapter;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
 import com.zantong.mobilecttx.router.MainRouter;

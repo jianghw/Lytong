@@ -19,7 +19,7 @@
         android:layout_height="@dimen/ds_24"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@mipmap/arrow_left_big_iamge" />
+        android:src="@mipmap/ic_arrow_gray_left" />
     <TextView
         android:id="@+id/setting_item_title_hint"
         android:layout_width="240dp"

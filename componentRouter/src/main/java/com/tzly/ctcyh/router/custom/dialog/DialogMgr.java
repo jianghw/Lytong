@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.utils;
+package com.tzly.ctcyh.router.custom.dialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,9 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.zantong.mobilecttx.R;
-
+import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.util.DensityUtils;
+import com.tzly.ctcyh.router.util.Tools;
 
 
 /**
@@ -32,18 +32,12 @@ public class DialogMgr {
         popImageDlg(ctx, res);
     }
 
-    public DialogMgr(Context ctx,  OnClickListener listener1, OnClickListener listener2) {
+    public DialogMgr(Context ctx, OnClickListener listener1, OnClickListener listener2) {
         shareDialog(ctx, listener1, listener2);
     }
 
     /**
      * 功能：提示对话框
-     *
-     * @param ctx
-     * @param title
-     * @param msg
-     * @param
-     * @return
      */
     public DialogMgr(Context ctx, String title, String msg, String btnName) {
         popDlg(ctx, title, msg, btnName);
@@ -55,7 +49,7 @@ public class DialogMgr {
 
     public AlertDialog popDlg(final Context ctx, String title, String msg, String btnName) {
         alg = new AlertDialog.Builder(ctx).create();
-        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.dialog_one, null);
+        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.custom_dialog_one, null);
         TextView title_tv = (TextView) view.findViewById(R.id.dialog_title);
         ImageView dialog_iv = (ImageView) view.findViewById(R.id.dialog_icon);
         TextView msg_tv = (TextView) view.findViewById(R.id.dialog_msg);
@@ -63,7 +57,7 @@ public class DialogMgr {
         if (!Tools.isStrEmpty(btnName)) {
             btn.setText(btnName);
         }
-        dialog_iv.setBackgroundResource(R.mipmap.dialog_icon2);
+        dialog_iv.setBackgroundResource(R.mipmap.ic_plaint_hint_gray);
         if (Tools.isStrEmpty(title)) {
             title_tv.setVisibility(View.GONE);
         } else {
@@ -96,7 +90,7 @@ public class DialogMgr {
 
     public AlertDialog popImageDlg(final Context ctx, int res) {
         alg = new AlertDialog.Builder(ctx).create();
-        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.dialog_image, null);
+        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.custom_dialog_image, null);
         ImageView image_title = (ImageView) view.findViewById(R.id.image_title);
         ImageView image_close = (ImageView) view.findViewById(R.id.image_close);
         if (0 != res) {
@@ -128,7 +122,7 @@ public class DialogMgr {
 
     public AlertDialog popBMIDlg(final Context ctx, String title, String msg, String btnName) {
         alg = new AlertDialog.Builder(ctx).create();
-        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.dialog_bmi, null);
+        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.custom_dialog_bmi, null);
         TextView title_tv = (TextView) view.findViewById(R.id.dialog_title);
         ImageView dialog_iv = (ImageView) view.findViewById(R.id.dialog_icon);
         TextView msg_tv = (TextView) view.findViewById(R.id.dialog_msg);
@@ -136,7 +130,7 @@ public class DialogMgr {
         if (!Tools.isStrEmpty(btnName)) {
             btn.setText(btnName);
         }
-        dialog_iv.setBackgroundResource(R.mipmap.dialog_icon2);
+        dialog_iv.setBackgroundResource(R.mipmap.ic_plaint_hint_gray);
         if (Tools.isStrEmpty(title)) {
             title_tv.setVisibility(View.GONE);
         } else {
@@ -236,13 +230,13 @@ public class DialogMgr {
                               String btn1, String btn2, final OnClickListener listener1,
                               final OnClickListener listener2) {
         alg = new AlertDialog.Builder(ctx).create();
-        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.dialog_three, null);
+        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.custom_dialog_three, null);
         TextView title_tv = (TextView) view.findViewById(R.id.dialog_title);
         ImageView dialog_iv = (ImageView) view.findViewById(R.id.dialog_icon);
         TextView msg_tv = (TextView) view.findViewById(R.id.dialog_msg);
         Button btn_ok = (Button) view.findViewById(R.id.dialog_ok);
         Button btn_cancel = (Button) view.findViewById(R.id.dialog_cancel);
-        dialog_iv.setBackgroundResource(R.mipmap.dialog_icon2);
+        dialog_iv.setBackgroundResource(R.mipmap.ic_plaint_hint_gray);
 
         if (Tools.isStrEmpty(title)) {
             title_tv.setVisibility(View.GONE);
@@ -278,7 +272,7 @@ public class DialogMgr {
                                     final OnClickListener listener2) {
 
         alg = new AlertDialog.Builder(ctx).create();
-        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.dialog_update, null);
+        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.custom_dialog_update, null);
         TextView title_tv = (TextView) view.findViewById(R.id.dialog_title);
         TextView msg_tv = (TextView) view.findViewById(R.id.dialog_msg);
 
@@ -330,14 +324,14 @@ public class DialogMgr {
         alg = new AlertDialog.Builder(ctx)
                 .setOnKeyListener(keylistener)
                 .create();
-        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.dialog_two, null);
+        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.custom_dialog_two, null);
         TextView title_tv = (TextView) view.findViewById(R.id.dialog_title);
         ImageView dialog_iv = (ImageView) view.findViewById(R.id.dialog_icon);
         TextView msg_tv = (TextView) view.findViewById(R.id.dialog_msg);
         Button add_open_card = (Button) view.findViewById(R.id.add_open_card);
         Button btn_next = (Button) view.findViewById(R.id.btn_next);
         RelativeLayout login_dialog_notice_close_rl = (RelativeLayout) view.findViewById(R.id.login_dialog_notice_close_rl);
-        dialog_iv.setBackgroundResource(R.mipmap.dialog_icon2);
+        dialog_iv.setBackgroundResource(R.mipmap.ic_plaint_hint_gray);
 
         if (Tools.isStrEmpty(title)) {
             title_tv.setVisibility(View.GONE);
@@ -393,14 +387,13 @@ public class DialogMgr {
                                String btn1, String btn2, final OnClickListener listener1,
                                final OnClickListener listener2) {
         alg = new AlertDialog.Builder(ctx).create();
-        View view = ((Activity) ctx).getLayoutInflater().inflate(
-                R.layout.dialog_two, null);
+        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.custom_dialog_two, null);
         TextView title_tv = (TextView) view.findViewById(R.id.dialog_title);
         ImageView dialog_iv = (ImageView) view.findViewById(R.id.dialog_icon);
         TextView msg_tv = (TextView) view.findViewById(R.id.dialog_msg);
         Button btn_ok = (Button) view.findViewById(R.id.dialog_ok);
         Button btn_cancel = (Button) view.findViewById(R.id.dialog_cancel);
-        dialog_iv.setBackgroundResource(R.mipmap.dialog_icon2);
+        dialog_iv.setBackgroundResource(R.mipmap.ic_plaint_hint_gray);
 
         title_tv.setText(title1);
         msg_tv.setText(msg);
@@ -430,7 +423,7 @@ public class DialogMgr {
     public void shareDialog(final Context ctx, final OnClickListener listener1,
                             final OnClickListener listener2) {
         alg = new AlertDialog.Builder(ctx).create();
-        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.activity_wx_share, null);
+        View view = ((Activity) ctx).getLayoutInflater().inflate(R.layout.custom_dialog_wx_share, null);
         LinearLayout haoYouLayout = (LinearLayout) view.findViewById(R.id.share_wx_haoyou);
         LinearLayout penYouQuanLayout = (LinearLayout) view.findViewById(R.id.share_wx_penyouquan);
 

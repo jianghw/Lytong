@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ds_60"
         android:text="您的办卡申请已成功提交"
-        android:textColor="@color/red"
+        android:textColor="@color/res_color_red_f3"
         android:textSize="@dimen/fs_50" />
 
     <TextView

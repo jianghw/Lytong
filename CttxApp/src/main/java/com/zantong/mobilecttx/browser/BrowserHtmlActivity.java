@@ -13,7 +13,6 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.View;
 import android.webkit.GeolocationPermissions;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
@@ -28,20 +27,20 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tzly.ctcyh.java.response.orc.BindCarBean;
+import com.tzly.ctcyh.java.response.orc.DrivingOcrBean;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
-import com.tzly.ctcyh.router.util.EncryptUtils;
-import com.tzly.ctcyh.router.util.LogUtils;
-import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.custom.primission.PermissionFail;
 import com.tzly.ctcyh.router.custom.primission.PermissionGen;
 import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
+import com.tzly.ctcyh.router.util.EncryptUtils;
+import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
-import com.tzly.ctcyh.java.response.orc.BindCarBean;
 import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
 import com.zantong.mobilecttx.contract.browser.IHtmlBrowserContract;
-import com.tzly.ctcyh.java.response.orc.DrivingOcrBean;
 import com.zantong.mobilecttx.daijia.bean.DrivingOcrResult;
 import com.zantong.mobilecttx.eventbus.DriveLicensePhotoEvent;
 import com.zantong.mobilecttx.eventbus.PayChannelEvent;
@@ -51,7 +50,6 @@ import com.zantong.mobilecttx.huodong.activity.HundredAgreementActivity;
 import com.zantong.mobilecttx.huodong.activity.HundredRuleActivity;
 import com.zantong.mobilecttx.presenter.browser.HtmlBrowserPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.utils.DialogMgr;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
@@ -60,8 +58,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
 import static com.tzly.ctcyh.router.custom.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
 
 
 /**
@@ -256,20 +254,7 @@ public class BrowserHtmlActivity extends AbstractBaseActivity
                 Act.getInstance().gotoIntent(this, HundredRuleActivity.class);
                 break;
             case -1:
-                new DialogMgr(this,
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                wechatShare(0);
-                            }
-                        },
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                wechatShare(1);
-                            }
-                        });
-                break;
+
             default:
                 break;
         }

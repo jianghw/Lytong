@@ -138,7 +138,7 @@
             android:layout_height="@dimen/ds_48"
             android:layout_marginLeft="@dimen/ds_30"
             android:layout_marginRight="@dimen/ds_30"
-            android:src="@drawable/sel_bg_query_notice"/>
+            android:src="@drawable/sel_dm_ic_query_notice"/>
 
         <EditText
             android:id="@+id/edit_engine"
@@ -183,7 +183,7 @@
             android:layout_marginLeft="@dimen/ds_30"
             android:layout_marginRight="@dimen/ds_30"
             android:layout_toRightOf="@+id/tv_type_title"
-            android:src="@drawable/sel_bg_query_notice"/>
+            android:src="@drawable/sel_dm_ic_query_notice"/>
 
         <ImageView
             android:id="@+id/img_type"
@@ -438,7 +438,7 @@
         android:layout_height="@dimen/ds_150"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/ds_48"
-        android:background="@drawable/btn_shape_dialog_white"
+        android:background="@drawable/shape_rec_g_stroke_cor_6"
         android:enabled="true"
         android:text="删  除"
         android:textColor="@color/colorTvBlack_4d"

@@ -12,7 +12,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        style="@style/WheelView"
+        app:lineColor="@color/gray_33"
+        app:lineHeight="0.5dp"
+        app:normalTextColor="@color/hintColor"
+        app:selectedTextColor="@color/gray_33"
         app:itemNumber="3"
         app:maskHight="32dp"
         app:noEmpty="true"
@@ -36,11 +39,13 @@
         app:itemNumber="3"
         app:maskHight="32dp"
         app:noEmpty="true"
-        style="@style/WheelView"
+        app:lineColor="@color/gray_33"
+        app:lineHeight="0.5dp"
+        app:normalTextColor="@color/hintColor"
+        app:selectedTextColor="@color/gray_33"
         app:normalTextSize="10sp"
         app:selectedTextSize="13sp"
-        app:unitHight="50dp"
-        />
+        app:unitHight="50dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -59,7 +64,10 @@
         app:maskHight="32dp"
         app:noEmpty="true"
         app:normalTextSize="10sp"
-        style="@style/WheelView"
+        app:lineColor="@color/gray_33"
+        app:lineHeight="0.5dp"
+        app:normalTextColor="@color/hintColor"
+        app:selectedTextColor="@color/gray_33"
         app:selectedTextSize="13sp"
         app:unitHight="50dp"
         />

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="88dip"
-    android:background="@color/civory">
+    android:background="@color/res_color_white">
 
     <ImageView
         android:id="@+id/view_vehicles_image_head"
@@ -83,7 +83,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="16dip"
             android:layout_marginLeft="6dip"
-            android:src="@mipmap/arrow_left_big_iamge"/>
+            android:src="@mipmap/ic_arrow_gray_left"/>
 
     </RelativeLayout>
 

@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
-            android:background="@mipmap/dialog_icon2" />
+            android:background="@mipmap/ic_plaint_hint_gray" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/line_content"
-        android:src="@mipmap/login_dialog_closs_up"/>
+        android:src="@mipmap/ic_red_imaginary_line"/>
     <RelativeLayout
         android:id="@+id/login_dialog_notice_close_rl"
         android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:src="@mipmap/login_dialog_closs_blow"/>
+            android:src="@mipmap/ic_red_circle_del"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
         android:id="@+id/line_content"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/dialog_bg_shape"
+        android:background="@drawable/shape_rec_r_stroke_cor"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -73,7 +73,7 @@
             android:layout_height="76dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="18dip"
-            android:src="@mipmap/login_dialog_sucess"/>
+            android:src="@mipmap/ic_g_circle_ok_r"/>
 
         <TextView
 		    android:id="@+id/dialog_title"
@@ -101,7 +101,7 @@
         <Button
             android:layout_width="232dip"
             android:layout_height="40dip"
-            android:background="@drawable/btn_shape_dialog_white"
+            android:background="@drawable/shape_rec_g_stroke_cor_6"
             android:layout_gravity="center_horizontal"
             android:textColor="@color/colorTranFontRed"
             android:textSize="20sp"
@@ -112,9 +112,9 @@
             android:layout_height="33dp"
             android:layout_marginTop="30dip"
             android:layout_marginBottom="30dip"
-            android:background="@drawable/btn_shape_dialog_red"
+            android:background="@drawable/shape_r_cor_48"
             android:layout_gravity="center_horizontal"
-            android:textColor="@color/civory"
+            android:textColor="@color/res_color_white"
             android:textSize="18sp"
             android:text="继续"
             android:id="@+id/btn_next" />

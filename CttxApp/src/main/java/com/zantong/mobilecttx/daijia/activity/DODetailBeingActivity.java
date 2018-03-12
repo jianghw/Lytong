@@ -162,23 +162,23 @@ public class DODetailBeingActivity extends BaseMvpActivity<IBaseView, HelpPresen
                         mMileageLayout.setVisibility(View.GONE);
                         mPriceLayout.setVisibility(View.GONE);
                         mDriverLayout.setVisibility(View.GONE);
-                        mState.setTextColor(R.color.red);
+                        mState.setTextColor(R.color.res_color_red_f3);
                     } else if (state.contains("司机途中")) {
                         mMileageLayout.setVisibility(View.GONE);
                         mPriceLayout.setVisibility(View.GONE);
                         mDriverLayout.setVisibility(View.GONE);
-                        mState.setTextColor(R.color.red);
+                        mState.setTextColor(R.color.res_color_red_f3);
                     } else if (state.contains("司机等待")) {
                         mMileageLayout.setVisibility(View.GONE);
                         mPriceLayout.setVisibility(View.GONE);
                         mDriverLayout.setVisibility(View.GONE);
-                        mState.setTextColor(R.color.red);
+                        mState.setTextColor(R.color.res_color_red_f3);
                     } else if (state.contains("代驾中")) {
                         mMileageLayout.setVisibility(View.GONE);
                         mPriceLayout.setVisibility(View.GONE);
                         mDriverLayout.setVisibility(View.GONE);
                         mClean.setVisibility(View.GONE);
-                        mState.setTextColor(R.color.red);
+                        mState.setTextColor(R.color.res_color_red_f3);
                     } else if (state.contains("代驾完成")) {
                         mMileageLayout.setVisibility(View.GONE);
                         mPriceLayout.setVisibility(View.GONE);
@@ -190,7 +190,7 @@ public class DODetailBeingActivity extends BaseMvpActivity<IBaseView, HelpPresen
                         mPriceLayout.setVisibility(View.GONE);
                         mDriverLayout.setVisibility(View.GONE);
                         mClean.setVisibility(View.GONE);
-                        mState.setTextColor(R.color.red);
+                        mState.setTextColor(R.color.res_color_red_f3);
                     }else if (state.contains("支付完成")) {
                         mMileageLayout.setVisibility(View.VISIBLE);
                         mPriceLayout.setVisibility(View.VISIBLE);

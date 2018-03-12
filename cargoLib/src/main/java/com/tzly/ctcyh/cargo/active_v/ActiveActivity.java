@@ -17,6 +17,7 @@ import com.tzly.ctcyh.cargo.data_m.InjectionRepository;
 import com.tzly.ctcyh.cargo.router.CargoRouter;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.custom.dialog.CouponDialogFragment;
+import com.tzly.ctcyh.router.custom.dialog.DialogUtils;
 import com.tzly.ctcyh.router.custom.dialog.IOnCouponSubmitListener;
 import com.tzly.ctcyh.router.custom.dialog.MessageDialogFragment;
 import com.tzly.ctcyh.router.util.SPUtils;
@@ -111,6 +112,7 @@ public class ActiveActivity extends AbstractBaseActivity implements IActiveContr
             List<ActiveConfigBean.CouponInfoBean> infoBeanList = bean.getCouponInfo();
             if (!infoBeanList.isEmpty()) {
                 ActiveConfigBean.CouponInfoBean infoBean = infoBeanList.get(0);
+
                 CouponDialogFragment dialogFragment = CouponDialogFragment.newInstance(
                         infoBean.getCouponId(), infoBean.getCouponName(), infoBean.getCouponBusiness(),
                         infoBean.getCouponType(), infoBean.getCouponValue());
@@ -132,8 +134,8 @@ public class ActiveActivity extends AbstractBaseActivity implements IActiveContr
                 finish();
             }
         } else if (configType.equals("2")) {//消息
-            MessageDialogFragment dialogFragment = MessageDialogFragment.newInstance(beanExtra);
-            dialogFragment.setClickListener(new IOnCouponSubmitListener() {
+            MessageDialogFragment fragment = MessageDialogFragment.newInstance(beanExtra);
+            fragment.setClickListener(new IOnCouponSubmitListener() {
                 @Override
                 public void submit(String couponId) {
                     saveSubmit();
@@ -144,7 +146,8 @@ public class ActiveActivity extends AbstractBaseActivity implements IActiveContr
                 public void cancel() {
                 }
             });
-            dialogFragment.show(getSupportFragmentManager(), "message_dialog");
+
+            DialogUtils.showDialog(this, fragment, "message_dialog");
         } else if (configType.equals("3")) {//网页
             if (!TextUtils.isEmpty(beanExtra)) gotoHtml(beanExtra);
             finish();

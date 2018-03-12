@@ -39,7 +39,7 @@
 
         <ImageView
             style="@style/mineItemArrow"
-            android:src="@mipmap/arrow_left_big_iamge" />
+            android:src="@mipmap/ic_arrow_gray_left" />
     </LinearLayout>
 
     <include layout="@layout/view_line1" />

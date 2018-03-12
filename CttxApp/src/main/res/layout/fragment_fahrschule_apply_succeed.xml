@@ -45,7 +45,7 @@
         android:textSize="@dimen/fs_16sp"/>
 
     <Button
-        android:id="@+id/btn_pay"
+        android:id="@+id/btn_pay_true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_prompt_contact"
@@ -58,7 +58,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_pay"
+        android:layout_below="@+id/btn_pay_true"
         android:layout_centerHorizontal="true"
         android:text="好友报名付款成功后您可以获得100元的现金返现"
         android:textColor="@color/colorTvRed_f33"

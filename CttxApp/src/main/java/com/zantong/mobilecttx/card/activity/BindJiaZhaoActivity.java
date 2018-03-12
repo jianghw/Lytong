@@ -32,7 +32,7 @@ import com.zantong.mobilecttx.card.dto.BindDrivingDTO;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.utils.DialogMgr;
+import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
@@ -94,10 +94,10 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bind_jia_zhao_file_num_img:
-                new DialogMgr(BindJiaZhaoActivity.this, R.mipmap.ic_mark_driving_license);
+                new DialogMgr(this, R.mipmap.ic_mark_driving_license);
                 break;
             case R.id.bind_jia_zhao_idcard_img:
-                new DialogMgr(BindJiaZhaoActivity.this, R.mipmap.ic_mark_jiazhao_idcard);
+                new DialogMgr(this, R.mipmap.ic_mark_jiazhao_idcard);
                 break;
             case R.id.bind_jia_zhao_phone_img:
                 toastShort("预留手机号是指在办理银行卡过程中，" +
@@ -109,8 +109,7 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
                 break;
             case R.id.activity_bind_jia_zhao_agreement://保密隐私条例
 
-                MainRouter.gotoWebHtmlActivity(this,
-                        "《用户隐私保密协议》", "file:///android_asset/www/bindcard_agreement.html");
+                MainRouter.gotoWebHtmlActivity(this, "《用户隐私保密协议》", "file:///android_asset/www/bindcard_agreement.html");
                 break;
             case R.id.bind_jia_zhao_commit://提交信息
                 bindChangTongKa();

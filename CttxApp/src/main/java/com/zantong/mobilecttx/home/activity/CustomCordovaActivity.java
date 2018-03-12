@@ -61,7 +61,7 @@ public class CustomCordovaActivity extends CordovaActivity {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintColor(getResources().getColor(R.color.red));
+            tintManager.setStatusBarTintColor(getResources().getColor(R.color.res_color_red_f3));
         }
     }
 

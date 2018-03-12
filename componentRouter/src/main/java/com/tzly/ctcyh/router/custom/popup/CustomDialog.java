@@ -358,7 +358,7 @@ public class CustomDialog {
         params.width = DensityUtils.getScreenWidth(context) * 3 / 4;
         dialog.getWindow().setAttributes(params);
 
-        dialog.getWindow().setBackgroundDrawableResource(R.color.transparent);
+        dialog.getWindow().setBackgroundDrawableResource(R.color.res_color_trans);
         dialog.getWindow().setContentView(view);
         dialog.setCanceledOnTouchOutside(false);
     }

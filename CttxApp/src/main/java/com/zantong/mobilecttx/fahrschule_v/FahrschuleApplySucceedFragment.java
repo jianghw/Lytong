@@ -19,7 +19,7 @@ import com.tzly.ctcyh.router.custom.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_v.ShareParentActivity;
-import com.zantong.mobilecttx.utils.DialogMgr;
+import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 
 import com.tzly.ctcyh.router.util.MobUtils;
@@ -99,7 +99,7 @@ public class FahrschuleApplySucceedFragment
         mTvPrompt = (TextView) view.findViewById(R.id.tv_prompt);
         mTvPromptMine = (TextView) view.findViewById(R.id.tv_prompt_mine);
         mTvPromptContact = (TextView) view.findViewById(R.id.tv_prompt_contact);
-        mBtnPay = (Button) view.findViewById(R.id.btn_pay);
+        mBtnPay = (Button) view.findViewById(R.id.btn_pay_true);
         mBtnPay.setOnClickListener(this);
     }
 
@@ -116,7 +116,7 @@ public class FahrschuleApplySucceedFragment
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_pay:
+            case R.id.btn_pay_true:
                 MobUtils.getInstance().eventIdByUMeng(31);
 
                 new DialogMgr(getActivity(),

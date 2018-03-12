@@ -74,7 +74,7 @@
             android:layout_height="@dimen/ds_48"
             android:layout_marginLeft="@dimen/ds_30"
             android:layout_marginRight="@dimen/ds_30"
-            android:src="@drawable/sel_bg_query_notice"/>
+            android:src="@drawable/sel_dm_ic_query_notice"/>
 
         <EditText
             android:id="@+id/bind_jia_zhao_licenseno"
@@ -116,7 +116,7 @@
             android:layout_height="@dimen/ds_48"
             android:layout_marginLeft="@dimen/ds_30"
             android:layout_marginRight="@dimen/ds_30"
-            android:src="@drawable/sel_bg_query_notice"/>
+            android:src="@drawable/sel_dm_ic_query_notice"/>
 
         <EditText
             android:id="@+id/bind_jia_zhao_file_num"
@@ -158,7 +158,7 @@
             android:layout_height="@dimen/ds_48"
             android:layout_marginLeft="@dimen/ds_30"
             android:layout_marginRight="@dimen/ds_30"
-            android:src="@drawable/sel_bg_query_notice"/>
+            android:src="@drawable/sel_dm_ic_query_notice"/>
 
         <EditText
             android:id="@+id/bind_jia_zhao_phone"
@@ -203,7 +203,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="@dimen/ds_45"
-        android:drawableRight="@drawable/sel_bg_query_notice"
+        android:drawableRight="@drawable/sel_dm_ic_query_notice"
         android:text="畅通卡解冻说明"
         android:drawablePadding="10dp"
         android:textColor="@color/colorTvBlack_b3"

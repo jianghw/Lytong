@@ -28,7 +28,7 @@ public class MyPopWindowAdapter extends ArrayAdapter<String> {
 	private OnItemClickListener mOnItemClickListener;
 
 	public MyPopWindowAdapter(Context context, List<String> listData, int sId, int nId) {
-		super(context, R.string.no_data, listData);
+		super(context, R.string.main_list_no_data, listData);
 		mContext = context;
 		mListData = listData;
 		selectedDrawble = mContext.getResources().getDrawable(sId);
@@ -52,7 +52,7 @@ public class MyPopWindowAdapter extends ArrayAdapter<String> {
 	}
 
 	public MyPopWindowAdapter(Context context, String[] arrayData) {
-		super(context, R.string.no_data,arrayData);
+		super(context, R.string.main_list_no_data,arrayData);
 		mContext = context;
 		mArrayData = arrayData;
 		init();

@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
@@ -17,7 +18,6 @@ import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
-import com.zantong.mobilecttx.order.fragment.MyOrderStatusFragment;
 import com.zantong.mobilecttx.presenter.order.OrderParentPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
@@ -25,8 +25,6 @@ import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.tzly.ctcyh.java.response.BaseResponse;
 
 /**
  * 订单列表页面

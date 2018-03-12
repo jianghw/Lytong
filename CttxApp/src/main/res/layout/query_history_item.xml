@@ -41,7 +41,7 @@
             android:layout_height="12dip"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_left_big_iamge"/>
+            android:src="@mipmap/ic_arrow_gray_left"/>
     <TextView
         android:id="@+id/query_history_time"
         android:layout_width="wrap_content"

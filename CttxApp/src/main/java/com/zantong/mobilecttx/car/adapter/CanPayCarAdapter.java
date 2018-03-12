@@ -11,7 +11,7 @@ import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.card.bean.OpenQueryBean;
 import com.zantong.mobilecttx.utils.AmountUtils;
-import com.zantong.mobilecttx.utils.Tools;
+import com.tzly.ctcyh.router.util.Tools;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

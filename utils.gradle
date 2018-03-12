@@ -52,7 +52,7 @@ ext {
     ]
     //单独配置模块 true-->测试环境 false-->正式环境
     config = [
-            api_deta  : 'false'
+            api_deta  : 'true'
     ]
     //测试
     beta = [
@@ -67,7 +67,7 @@ ext {
     //内部版
     alpha = [
             isDeta       : 'true',
-            base_url     : '"http://api2.liyingtong.com/"',
+            base_url     : '"http://dev.liyingtong.com/"',
             bank_img_url : '"https://ctkapp.icbc-axa.com/"',
             bank_file_url: '"https://ctkapp.icbc-axa.com:9000/"',
             bank_app_url : '"https://ctkapp.icbc-axa.com/ecip/"',

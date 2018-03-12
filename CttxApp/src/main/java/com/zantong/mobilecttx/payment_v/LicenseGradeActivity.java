@@ -21,7 +21,7 @@ import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.utils.DialogMgr;
+import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
 
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
