@@ -128,6 +128,12 @@ android {
         //华为
         tzly_huawei {}
 
+        ctx_xiaomi{
+            applicationId "com.tzly.mobileapp.mjb"
+            versionCode 1
+            versionName '1.0.1'
+        }
+
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
         }

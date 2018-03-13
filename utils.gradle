@@ -68,10 +68,10 @@ ext {
     alpha = [
             isDeta       : 'true',
             base_url     : '"http://dev.liyingtong.com/"',
-            bank_img_url : '"https://ctkapp.icbc-axa.com/"',
-            bank_file_url: '"https://ctkapp.icbc-axa.com:9000/"',
-            bank_app_url : '"https://ctkapp.icbc-axa.com/ecip/"',
-            bank_mc_url  : '"https://ctkapp.icbc-axa.com/ecip/mobilecall_call"'
+            bank_img_url : '"https://ctkapptest.icbc-axa.com/"',
+            bank_file_url: '"https://ctkapptest.icbc-axa.com:9000/"',
+            bank_app_url : '"https://ctkapptest.icbc-axa.com/ecip/"',
+            bank_mc_url  : '"https://ctkapptest.icbc-axa.com/ecip/mobilecall_call"'
     ]
     //发布
     release = [

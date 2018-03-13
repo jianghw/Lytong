@@ -59,6 +59,8 @@ public class LicenseCargoFragment extends RefreshFragment
      */
     private Button mBtnCommit;
     private ILienseGradeContract.ILienseGradePresenter gradePresenter;
+    private RelativeLayout mLayCode;
+    private TextView mTvCode;
 
     @Override
     public void onDestroyView() {
@@ -89,7 +91,7 @@ public class LicenseCargoFragment extends RefreshFragment
             new DialogMgr(getActivity(), R.mipmap.ic_mark_jiazhao_idcard);
         } else if (vId == R.id.img_question_serial) {
             new DialogMgr(getActivity(), R.mipmap.ic_mark_driving_license);
-        } else if (vId == R.id.img_code || vId == R.id.img_refresh) {//刷新验证码
+        } else if (vId == R.id.lay_code || vId == R.id.img_refresh) {//刷新验证码
             refreshVerificationCode();
         } else if (vId == R.id.btn_commit) {
             verificationSubmitData();
@@ -167,12 +169,13 @@ public class LicenseCargoFragment extends RefreshFragment
 
             Bundle args = getArguments();
             args.putString(ARG_COOKIE, captchaResponse.getCookie());
-
+            mTvCode.setVisibility(View.INVISIBLE);
             //图片
             String captche = captchaResponse.getCaptche();
             mImgCode.setImageBitmap(stringtoBitmap(captche));
 
         } else if (response instanceof ScoreResponse) {
+            mLayMid.setVisibility(View.VISIBLE);
             ScoreResponse scoreResponse = (ScoreResponse) response;
             ScoreResponse.DataBean data = scoreResponse.getData();
             mTvScore.setText(data.getLjjf());
@@ -214,8 +217,10 @@ public class LicenseCargoFragment extends RefreshFragment
         mEditSerial = (EditText) view.findViewById(R.id.edit_serial);
         mEditVerification = (EditText) view.findViewById(R.id.edit_verification);
 
+        mLayCode = (RelativeLayout) view.findViewById(R.id.lay_code);
+        mLayCode.setOnClickListener(this);
         mImgCode = (ImageView) view.findViewById(R.id.img_code);
-        mImgCode.setOnClickListener(this);
+        mTvCode = (TextView) view.findViewById(R.id.tv_get_code);
         mImgRefresh = (ImageView) view.findViewById(R.id.img_refresh);
         mImgRefresh.setOnClickListener(this);
 

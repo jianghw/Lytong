@@ -267,19 +267,23 @@ public class ViolationPayFragment extends RefreshFragment
     }
 
     private void createDialog() {
-        String msg = remark.equals("3|") ? "使用通卡请预先在卡里充值相应金额" : "使用工行其他卡支付请先开通E支付";
-        MessageDialogFragment dialogFragment = MessageDialogFragment.newInstance(msg);
-        dialogFragment.setClickListener(new IOnCouponSubmitListener() {
-            @Override
-            public void submit(String couponId) {
-                createOrder();
-            }
+        if (remark.equals("4|")) {
+            String msg =  "使用畅通卡请预先在卡里充值相应金额、使用工行其他卡支付请先开通E支付";
+            MessageDialogFragment dialogFragment = MessageDialogFragment.newInstance(msg);
+            dialogFragment.setClickListener(new IOnCouponSubmitListener() {
+                @Override
+                public void submit(String couponId) {
+                    createOrder();
+                }
 
-            @Override
-            public void cancel() {
-            }
-        });
-        dialogFragment.show(getChildFragmentManager(), "message_dialog");
+                @Override
+                public void cancel() {
+                }
+            });
+            dialogFragment.show(getChildFragmentManager(), "message_dialog");
+        } else {
+            createOrder();
+        }
     }
 
     /**

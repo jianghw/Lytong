@@ -118,7 +118,7 @@ public class SplashActivity extends AbstractBaseActivity
      * 动画
      */
     public void startAnimation() {
-        ObjectAnimator animator = PropertyUtils.createShakeView(mImgLogo, 1000,1);
+        ObjectAnimator animator = PropertyUtils.createShakeView(mImgLogo, 1000, 1);
         animator.start();
         animator.addListener(new Animator.AnimatorListener() {
             @Override
@@ -222,8 +222,8 @@ public class SplashActivity extends AbstractBaseActivity
         }
 
         if (appCode <= versionCode) {
-//            MainRouter.gotoMainActivity(this, 0);
-            MainRouter.gotoPaySucceedActivity(this, "2");
+            MainRouter.gotoMainActivity(this, 0);
+            //            MainRouter.gotoPaySucceedActivity(this, "2");
             MobclickAgent.onEvent(this, Config.getUMengID(0));
         } else {
             MainRouter.gotoGuideActivity(this, mResultList);
