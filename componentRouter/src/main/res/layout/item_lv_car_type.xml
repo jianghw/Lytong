@@ -36,7 +36,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/ds_45"
-            android:src="@mipmap/tick"/>
+            android:src="@mipmap/ic_blue_tick"/>
     </RelativeLayout>
 
     <TextView

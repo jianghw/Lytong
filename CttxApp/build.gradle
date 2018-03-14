@@ -122,16 +122,60 @@ android {
         }
     }
 
+    flavorDimensions("app", "store")
     productFlavors {
-        //开发者版本
-        dev {}
-        //华为
-        tzly_huawei {}
+        tzly {
+            dimension "app"
+        }
 
-        ctx_xiaomi{
-            applicationId "com.tzly.mobileapp.mjb"
-            versionCode 1
-            versionName '1.0.1'
+        shwzcx {
+            dimension "app"
+            applicationId "com.tzly.mobileapp.shwzcx"
+        }
+        shbmt {
+            dimension "app"
+            applicationId "com.tzly.mobileapp.shbmt"
+        }
+
+        number {
+            dimension "app"
+            applicationId "com.tzly.mobileapp.number"
+        }
+
+        cgdj {
+            dimension "app"
+            applicationId "com.tzly.mobileapp.cgdj"
+        }
+
+        qgclwz {
+            dimension "app"
+            applicationId "com.tzly.mobileapp.qgclwz"
+        }
+
+        ghwzcx {
+            dimension "app"
+            applicationId "com.tzly.mobileapp.ghwzcx"
+        }
+
+        //应用宝
+        yyb {
+            dimension "store"
+        }
+        //华为
+        huawei {
+            dimension "store"
+        }
+        //小米
+        xiaomi {
+            dimension "store"
+        }
+        //百度
+        baidu {
+            dimension "store"
+        }
+        //360
+        sjzs {
+            dimension "store"
         }
 
         productFlavors.all { flavor ->
@@ -140,21 +184,8 @@ android {
     }
 }
 
-repositories {
-    flatDir {
-        dirs 'libs' //this way we can find the .aar file in libs folder
-    }
-}
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    //butterknife
-    compile 'com.jakewharton:butterknife:7.0.1'
-    //阿里云推送
-    compile 'com.aliyun.ams:alicloud-android-third-push:3.0.5@aar'
-    compile 'com.aliyun.ams:alicloud-android-push:3.0.11@aar'
-    compile 'com.aliyun.ams:alicloud-android-utdid:1.1.5.3'
-    compile 'com.aliyun.ams:alicloud-android-ut:5.1.0'
     //接口沟通依赖
     compile project(':componentService')
     compile project(':CordovaLib')
@@ -165,13 +196,3 @@ component {
     applicationName = 'com.zantong.mobilecttx.application.MyApplication'
 }
 
-configurations.all {
-    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-        def requested = details.requested
-        if (requested.group == 'com.android.support') {
-            if (!requested.name.startsWith("multidex")&&!requested.name.startsWith("constraint")) {
-                details.useVersion '25.3.1'
-            }
-        }
-    }
-}

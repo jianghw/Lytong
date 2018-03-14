@@ -152,6 +152,8 @@ public class MyApplication extends MultiDexApplication {
                         : "62323a33e6", BuildConfig.isDeta, strategy);
         //Log环境初始化
         LogUtils.initLogUtils(BuildConfig.isDeta);
+
+        LogUtils.e("channel--->"+channel);
     }
 
     /**

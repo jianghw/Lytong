@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.widght;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -11,15 +12,15 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.view.ViewParent;
-import android.widget.CheckBox;
 
 import com.zantong.mobilecttx.R;
 
-public class UISwitchButton extends CheckBox {
+public class UISwitchButton extends AppCompatCheckBox {
     private Paint mPaint;
     private RectF mSaveLayerRectF;
     private float mFirstDownY;
@@ -267,6 +268,7 @@ public class UISwitchButton extends CheckBox {
         return true;
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.saveLayerAlpha(mSaveLayerRectF, mAlpha, Canvas.MATRIX_SAVE_FLAG

@@ -27,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/classification_choose_address_shape">
+            android:background="@drawable/shape_rec_w_stroke_cor_3">
 
             <EditText
                 android:id="@+id/choose_address_input"

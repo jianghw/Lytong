@@ -23,7 +23,6 @@ android {
 
     //区分模块资源
     //resourcePrefix "cargo_"
-
     sourceSets {
         main.jniLibs.srcDirs = ['libs']
         main.assets.srcDirs = ['assets']
