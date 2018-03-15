@@ -13,6 +13,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 
+import com.tzly.ctcyh.router.R;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -102,7 +104,7 @@ public class BadgeUtils {
         NotificationManager mNotificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-        builder.setContentTitle("畅通车友会").setContentText("你有通知消息啦~").setSmallIcon(iconResId);
+        builder.setContentTitle(context.getResources().getString(R.string.main_app_name)).setContentText("你有通知消息啦~").setSmallIcon(iconResId);
         Notification notification = builder.build();
         try {
             Field field = notification.getClass().getDeclaredField("extraNotification");

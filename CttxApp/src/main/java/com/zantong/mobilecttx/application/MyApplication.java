@@ -22,6 +22,7 @@ import com.tencent.bugly.BuglyStrategy;
 import com.tencent.bugly.beta.Beta;
 import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.BuildConfig;
@@ -94,8 +95,10 @@ public class MyApplication extends MultiDexApplication {
     private void initThirdTools() {
         //工具类
         Utils.init(this);
+        //        String channel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
+        String channel = BuildConfig.FLAVOR;
+        SPUtils.instance().put(SPUtils.APP_CHANNEL, channel);
 
-        String channel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
         //有盟+统计初始化
         MobclickAgent.UMAnalyticsConfig umAnalyticsConfig =
                 new MobclickAgent.UMAnalyticsConfig(
@@ -152,8 +155,6 @@ public class MyApplication extends MultiDexApplication {
                         : "62323a33e6", BuildConfig.isDeta, strategy);
         //Log环境初始化
         LogUtils.initLogUtils(BuildConfig.isDeta);
-
-        LogUtils.e("channel--->"+channel);
     }
 
     /**

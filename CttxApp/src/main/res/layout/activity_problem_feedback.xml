@@ -52,7 +52,7 @@
         android:paddingLeft="@dimen/ds_60"
         android:layout_marginBottom="@dimen/ds_30"
         android:layout_marginTop="@dimen/ds_60"
-        android:text="畅通车友会App使用问题帮助:"
+        android:text="@string/main_app_help"
         android:textColor="@color/black_80"
         android:textSize="@dimen/fs_50"
         />

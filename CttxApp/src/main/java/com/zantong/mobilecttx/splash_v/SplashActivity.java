@@ -52,6 +52,7 @@ public class SplashActivity extends AbstractBaseActivity
      * 引导页图片地址
      */
     private ArrayList<StartPicBean> mResultList = new ArrayList<>();
+    private TextView mTvName;
 
     /**
      * 是否要子布局定义title
@@ -73,6 +74,11 @@ public class SplashActivity extends AbstractBaseActivity
     protected void bindFragment() {
         initView();
 
+        mTvName.setText(getResources().getString(R.string.main_app_name));
+        String channel = com.tzly.ctcyh.router.util.SPUtils.instance().getString(com.tzly.ctcyh.router.util.SPUtils.APP_CHANNEL);
+        mTvName.setVisibility(channel.contains("tzly") ? View.GONE : View.VISIBLE);
+        mImgHuawei.setVisibility(channel.contains("huawei")||channel.contains("Huawei") ? View.VISIBLE : View.GONE);
+
         SplashPresenter mPresenter = new SplashPresenter(
                 Injection.provideRepository(Utils.getContext()), this);
     }
@@ -81,12 +87,12 @@ public class SplashActivity extends AbstractBaseActivity
         mImgLogo = (ImageView) findViewById(R.id.img_logo);
         mImgAdvert = (ImageView) findViewById(R.id.img_advert);
         mTvCount = (TextView) findViewById(R.id.tv_count);
+        mTvName = (TextView) findViewById(R.id.tv_name);
+
         mTvSkip = (TextView) findViewById(R.id.tv_skip);
         if (mTvSkip != null) mTvSkip.setOnClickListener(this);
 
         mImgHuawei = (ImageView) findViewById(R.id.img_huawei);
-        String umengChannel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
-        mImgHuawei.setVisibility(umengChannel.equals("tzly_huawei") ? View.VISIBLE : View.GONE);
     }
 
     @Override

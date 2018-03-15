@@ -158,7 +158,7 @@ public class DiscountOilFragment extends RefreshFragment
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                CargoRouter.gotoProblemFeedbackActivity(getActivity());
+                //                CargoRouter.gotoProblemFeedbackActivity(getActivity());
                 Intent intent = new Intent(); // 意图对象：动作 + 数据
                 intent.setAction(Intent.ACTION_DIAL); // 设置动作
                 Uri data = Uri.parse("tel:" + "4008216158"); // 设置数据
@@ -167,14 +167,15 @@ public class DiscountOilFragment extends RefreshFragment
             }
         };
 
+        String app_name = getResources().getString(R.string.main_app_name);
         SpannableString spanableInfo = new SpannableString(
-                "1、畅通97折油卡由中石化官方发行，使用工行卡在畅通车友会APP线充值享97折，其他渠道不能充值;\n"
-                        + "2、非畅通车友会油卡，不支持此页面充值;\n"
+                "1、畅通97折油卡由中石化官方发行，使用工行卡在" + app_name + "APP线充值享97折，其他渠道不能充值;\n"
+                        + "2、非" + app_name + "油卡，不支持此页面充值;\n"
                         + "3、每月15号，30号开放两次充值服务，可提前支付下单，自动于15号，30号当天充值到账;\n"
                         + "4、充值成功后，需加油站圈存后方可使用，详询加油站工作人员;\n"
                         + "5、目前黑吉辽、陕甘宁、新疆、内蒙、西藏、青海省不支持当地圈存，可在外省圈存后在以上城市使用加油;\n"
                         + "6、本服务为全国加油卡代充，顾不支持开具发票;\n"
-                        + "7、本服务由畅通车友会加油服务商提供，如有问题请致电4008216158"
+                        + "7、本服务由" + app_name + "加油服务商提供，如有问题请致电4008216158"
         );
         //可以为多部分设置超链接
         spanableInfo.setSpan(

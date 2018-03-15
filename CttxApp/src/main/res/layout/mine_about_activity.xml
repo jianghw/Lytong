@@ -18,7 +18,7 @@
         android:layout_marginTop="@dimen/ds_45"
         android:textColor="@color/gray_33"
         android:textSize="@dimen/fs_60"
-        android:text="畅通车友会" />
+        android:text="@string/main_app_name" />
 
     <TextView
         android:id="@+id/mine_about_version"
@@ -38,8 +38,7 @@
         android:paddingRight="@dimen/ds_54"
         android:textSize="@dimen/fs_51"
         android:textColor="@color/gray_4d"
-        android:text="畅通车友会APP是由中国工商银行上海分行和工银安盛人寿保险有限公司联合开发，以违章缴费、车辆服务和保险服务为切入点，为广大的上海司机朋友提供优质服务。"
-        />
+        android:text="@string/main_app_about" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -50,6 +49,6 @@
         android:paddingRight="@dimen/ds_54"
         android:textSize="@dimen/fs_51"
         android:textColor="@color/gray_4d"
-        android:text="畅通车友会APP数据与上海交通总队实时同步，确保数据准确。" />
+        android:text="@string/main_app_about_2" />
 
 </LinearLayout>

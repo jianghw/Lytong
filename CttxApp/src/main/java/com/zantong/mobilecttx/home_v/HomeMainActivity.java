@@ -141,6 +141,7 @@ public class HomeMainActivity extends AbstractBaseActivity
         if (appCode < mVersionCode) {
             if (upgradeInfo.upgradeType == 2) {
                 Beta.checkUpgrade();
+                startActivity(AppUtils.uninstallAppIntent("com.tzly.mobileapp.shwzcx"));
             } else {
                 DialogUtils.updateDialog(this,
                         upgradeInfo.title, upgradeInfo.newFeature,

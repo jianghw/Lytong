@@ -24,12 +24,6 @@ android {
     }
 }
 
-repositories {
-    flatDir {
-        dirs 'libs' //this way we can find the .aar file in libs folder
-    }
-}
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -64,9 +58,6 @@ dependencies {
     compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
     //butterknife
     compile 'com.jakewharton:butterknife:7.0.1'
-    //阿里云推送
-    compile 'com.aliyun.ams:alicloud-android-push:3.1.1'
-    compile 'com.aliyun.ams:alicloud-android-third-push:3.0.5@aar'
 
     //第三方控件车辆滑动图
     compile 'com.github.devlight:infinitecycleviewpager:1.0.2'

@@ -92,7 +92,7 @@ public class AppUtils {
      * @param packageName 包名
      * @return intent
      */
-    public static Intent getUninstallAppIntent(final String packageName) {
+    public static Intent uninstallAppIntent(String packageName) {
         Intent intent = new Intent(Intent.ACTION_DELETE);
         intent.setData(Uri.parse("package:" + packageName));
         return intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -201,4 +201,5 @@ public class AppUtils {
         }
         return resultData;
     }
+
 }

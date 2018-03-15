@@ -296,6 +296,8 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
         String processste = result.getRspInfo().getProcessste();
         if (processste.equals("1") || processste.equals("3")) {
             PayRouter.gotoPaySucceedActivity(getContext(), "2");
+        }else{
+            gotoActive();
         }
     }
 

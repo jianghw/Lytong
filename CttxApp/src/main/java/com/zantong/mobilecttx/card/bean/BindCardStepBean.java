@@ -25,7 +25,7 @@ public class BindCardStepBean {
      * ResponseTime : 221026
      * TransServiceScene :
      * ServerSeqNo :
-     * ReturnMessage : 字段[getdate[ 畅通车友会银行预留信息验证请求首次领证日期 ]]超过限定长度
+     * ReturnMessage : 字段[getdate银行预留信息验证请求首次领证日期 ]]超过限定长度
      * RequestTime : 101907
      * ConsumerIP : 192.9.200.131
      * ResponseDate : 20160610

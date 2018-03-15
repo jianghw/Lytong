@@ -60,6 +60,6 @@ public interface IFebruaryService {
      * 分享统计数据
      */
     @FormUrlEncoded
-    @POST("activity/getStatisticsCount")
+    @POST("activity/getStatisticsCountNew")
     Observable<StatistCountResponse> getStatisticsCount(@Field("phone") String phone);
 }

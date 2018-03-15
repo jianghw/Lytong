@@ -13,6 +13,18 @@
         android:layout_marginTop="@dimen/ds_225"
         android:src="@mipmap/main_ic_splash"/>
 
+    <TextView
+        android:id="@+id/tv_name"
+        android:textSize="@dimen/res_fs_16"
+        android:textColor="@color/res_color_black_4d"
+        android:textStyle="bold"
+        android:text="@string/main_app_name"
+        android:visibility="invisible"
+        android:layout_below="@+id/img_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <ImageView
         android:id="@+id/img_huawei"
         android:layout_width="wrap_content"
@@ -26,7 +38,6 @@
         android:id="@+id/img_advert"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:scaleType="fitXY"/>
 

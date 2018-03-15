@@ -84,9 +84,7 @@ public class HomeUnimpededFragment extends RefreshFragment
     private ConvenientBanner mCustomConvenientBanner;
     private ImageView mImgMsg;
     private TextView mTvMsgCount;
-    /**
-     * 畅通车友会
-     */
+
     private TextView mTvTitle;
 
     /**

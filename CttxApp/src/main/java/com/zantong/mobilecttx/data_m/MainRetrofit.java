@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tzly.ctcyh.router.util.SPUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.router.MainRouter;
 
@@ -67,6 +68,9 @@ public class MainRetrofit implements IRetrofitUrl {
 
                 //TODO userPhone
                 headBuilder.add("DvcToken", getDeviceId());
+                headBuilder.add("version", BuildConfig.VERSION_NAME);
+                headBuilder.add("code", String.valueOf(BuildConfig.VERSION_CODE));
+                headBuilder.add("channel", SPUtils.instance().getString(SPUtils.APP_CHANNEL));
                 requestBuilder.headers(headBuilder.build());
 
                 CacheControl.Builder builder = new CacheControl.Builder();

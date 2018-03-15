@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.common.activity.CommonProblemDetailActivity;
 import com.zantong.mobilecttx.common.adapter.CommonProblemAdapter;
@@ -53,13 +54,15 @@ public class CommonProblemFragment extends BaseRecyclerListJxFragment<CommonProb
 
     @Override
     protected void onFirstDataVisible() {
+        String app_name = getResources().getString(R.string.main_app_name);
+
         List<CommonProblem> commonProblemList = new ArrayList<>();
 
         commonProblemList.add(
                 new CommonProblem(1,
-                        "畅通车友会",
-                        "什么是畅通车友会App?",
-                        "        畅通车友会是由中国工商银行上海分行协助打造的一款在线查缴违章App，旨在为牡丹畅通卡用户提供便捷的驾乘金融服务体验。\n" +
+                        app_name,
+                        "什么是" + app_name + "App?",
+                        "        " + app_name + "是由中国工商银行上海分行协助打造的一款在线查缴违章App，旨在为牡丹畅通卡用户提供便捷的驾乘金融服务体验。\n" +
                                 "功能覆盖了交通违章查询与缴费、驾乘人员保险保障、特色增值服务等多项快捷的在线服务。非牡丹畅通卡持卡用户还可以在线申请办卡。"));
         commonProblemList.add(
                 new CommonProblem(2,
@@ -80,8 +83,8 @@ public class CommonProblemFragment extends BaseRecyclerListJxFragment<CommonProb
         commonProblemList.add(
                 new CommonProblem(5,
                         "违章缴费类型",
-                        "畅通车友会App可以处理哪些违章?",
-                        "        交通违法分为“电子警察”、“违法停车”、“现场执法”三种，使用畅通车友会App可自助处理全部类型的交通违法，并同步完成缴纳罚款的动作。是唯一一款查扣缴一体化的App。"));
+                        app_name + "App可以处理哪些违章?",
+                        "        交通违法分为“电子警察”、“违法停车”、“现场执法”三种，使用" + app_name + "App可自助处理全部类型的交通违法，并同步完成缴纳罚款的动作。是唯一一款查扣缴一体化的App。"));
 
         commonProblemList.add(
                 new CommonProblem(6,
@@ -93,7 +96,7 @@ public class CommonProblemFragment extends BaseRecyclerListJxFragment<CommonProb
                 new CommonProblem(7,
                         "缴费安全",
                         "违章缴费是否安全？与代缴的区别是什么?",
-                        "        畅通车友会App是由中国工商银行上海市分行打造的违章查扣缴一体化App平台，您的个人敏感信息及畅通卡信息不会保存在银行系统之外。使用畅通车友会App是用您个人的畅通卡（绑定了驾照）进行违章处理和罚款缴纳，免费且安全。市面常见的各种代缴则需要提供您的个人信息给第三方，由第三方为您代为处理，不安全且要收费。"));
+                        "        " + app_name + "App是由中国工商银行上海市分行打造的违章查扣缴一体化App平台，您的个人敏感信息及畅通卡信息不会保存在银行系统之外。使用"+app_name+"App是用您个人的畅通卡（绑定了驾照）进行违章处理和罚款缴纳，免费且安全。市面常见的各种代缴则需要提供您的个人信息给第三方，由第三方为您代为处理，不安全且要收费。"));
 
         commonProblemList.add(
                 new CommonProblem(8,
@@ -129,7 +132,7 @@ public class CommonProblemFragment extends BaseRecyclerListJxFragment<CommonProb
                 new CommonProblem(13,
                         "在线缴费",
                         "如何缴纳罚款?",
-                        "        用畅通车友会App扫描处罚决定书，即可按照系统提示按步骤操作。支持工商银行所有银行卡。请确认该卡已开通“工银e支付”功能。"));
+                        "        用" + app_name + "App扫描处罚决定书，即可按照系统提示按步骤操作。支持工商银行所有银行卡。请确认该卡已开通“工银e支付”功能。"));
 
         setSimpleDataResult(commonProblemList);
     }

@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.util.AppUtils;
+import com.tzly.ctcyh.router.util.SPUtils;
 
 
 import java.io.IOException;
@@ -66,6 +67,9 @@ public class HttpsRetrofit implements IRetrofitUrl {
                 Headers.Builder headBuilder = oldRequest.headers().newBuilder();
                 //TODO userPhone
                 headBuilder.add("DvcToken", getDeviceId());
+                headBuilder.add("version", BuildConfig.VERSION_NAME);
+                headBuilder.add("code", String.valueOf(BuildConfig.VERSION_CODE));
+                headBuilder.add("channel", SPUtils.instance().getString(SPUtils.APP_CHANNEL));
                 requestBuilder.headers(headBuilder.build());
 
                 CacheControl.Builder builder = new CacheControl.Builder();

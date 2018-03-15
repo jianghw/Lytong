@@ -36,8 +36,8 @@ ext {
             buildToolsVersion: "25.0.3",
             minSdkVersion    : 16,
             targetSdkVersion : 25,
-            versionCode      : 68,
-            versionName      : "3.3.4"
+            versionCode      : 69,
+            versionName      : "3.3.5"
     ]
 
     dependencies = [
@@ -52,7 +52,7 @@ ext {
     ]
     //单独配置模块 true-->测试环境 false-->正式环境
     config = [
-            api_deta  : 'true'
+            api_deta  : 'false'
     ]
     //测试
     beta = [
@@ -67,11 +67,11 @@ ext {
     //内部版
     alpha = [
             isDeta       : 'true',
-            base_url     : '"http://dev.liyingtong.com/"',
-            bank_img_url : '"https://ctkapptest.icbc-axa.com/"',
-            bank_file_url: '"https://ctkapptest.icbc-axa.com:9000/"',
-            bank_app_url : '"https://ctkapptest.icbc-axa.com/ecip/"',
-            bank_mc_url  : '"https://ctkapptest.icbc-axa.com/ecip/mobilecall_call"'
+            base_url     : '"http://api2.liyingtong.com/"',
+            bank_img_url : '"https://ctkapp.icbc-axa.com/"',
+            bank_file_url: '"https://ctkapp.icbc-axa.com:9000/"',
+            bank_app_url : '"https://ctkapp.icbc-axa.com/ecip/"',
+            bank_mc_url  : '"https://ctkapp.icbc-axa.com/ecip/mobilecall_call"'
     ]
     //发布
     release = [

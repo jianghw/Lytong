@@ -99,7 +99,7 @@ public class WeiXinDialogFragment extends DialogFragment {
     public void sendWeChat(int flag) {
         String url = getArguments().getString(S_URL);
         if (!TextUtils.isEmpty(url)) {
-            WechatUtils.sendReqPage(true, url, "畅通车友会", flag);
+            WechatUtils.sendReqPage(true, url, getResources().getString(R.string.main_app_name), flag);
         } else {
             byte[] bytes = getArguments().getByteArray(BITMAP_BYTE_ARRAY);
             Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);

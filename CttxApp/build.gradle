@@ -127,31 +127,34 @@ android {
         tzly {
             dimension "app"
         }
-
+        //上海违章查询
         shwzcx {
             dimension "app"
             applicationId "com.tzly.mobileapp.shwzcx"
+            versionCode 1
+            versionName "1.0.1"
         }
+        //上海ems便民通
         shbmt {
             dimension "app"
             applicationId "com.tzly.mobileapp.shbmt"
         }
-
+        //12123
         number {
             dimension "app"
             applicationId "com.tzly.mobileapp.number"
         }
-
+        //车管到家
         cgdj {
             dimension "app"
             applicationId "com.tzly.mobileapp.cgdj"
         }
-
+        //全国车辆违章
         qgclwz {
             dimension "app"
             applicationId "com.tzly.mobileapp.qgclwz"
         }
-
+        //工行违章缴费
         ghwzcx {
             dimension "app"
             applicationId "com.tzly.mobileapp.ghwzcx"
@@ -184,11 +187,21 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs' //this way we can find the .aar file in libs folder
+    }
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //接口沟通依赖
     compile project(':componentService')
     compile project(':CordovaLib')
+
+    //阿里云推送
+    compile 'com.aliyun.ams:alicloud-android-push:3.1.1'
+    compile 'com.aliyun.ams:alicloud-android-third-push:3.0.5@aar'
 }
 //自定义组件构建
 component {

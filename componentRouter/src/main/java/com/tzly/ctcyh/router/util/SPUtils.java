@@ -40,6 +40,8 @@ public final class SPUtils {
     private static String USERPD = "userpd";
     public static String USER_CHANCLE_ID = "USER_CHANCLE_ID";
 
+    public static String APP_CHANNEL = "app_channel";
+
     /**
      * desc:获取保存的Object对象 临时解决旧加密
      */

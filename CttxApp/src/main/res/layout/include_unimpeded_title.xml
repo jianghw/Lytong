@@ -35,7 +35,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/res_y_54"
         android:gravity="center"
-        android:text="畅通车友会"
+        android:text="@string/main_app_name"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/fs_18sp"/>
 

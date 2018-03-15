@@ -262,7 +262,7 @@ public final class MainRouter {
         boolean show = SPUtils.instance().getBoolean(SPUtils.USER_LOGIN_DIALOG, true);
         if (show && TextUtils.isEmpty(getUserFilenum())) {
             new DialogMgr(activity,
-                    "登录成功", "畅通车友会欢迎您，赶快去注册您的牡丹卡吧！", "添加畅通卡", "继续",
+                    "登录成功", "欢迎您，赶快去注册您的牡丹卡吧！", "添加畅通卡", "继续",
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

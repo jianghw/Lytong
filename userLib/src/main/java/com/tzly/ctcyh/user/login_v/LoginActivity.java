@@ -63,7 +63,7 @@ public class LoginActivity extends AbstractBaseActivity {
 
     @Override
     protected void bindFragment() {
-        titleContent("欢迎加入畅通车友会");
+        titleContent(getResources().getString(R.string.main_app_title_welcome));
         titleMore("注册");
     }
 

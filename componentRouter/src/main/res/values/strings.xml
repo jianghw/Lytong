@@ -2,6 +2,12 @@
     <string name="cargo_app_name">My Library</string>
 
     <string name="main_app_name">畅通车友会</string>
+    <string name="main_app_title_welcome">欢迎加入畅通车友会</string>
+
+    <string name="main_app_about">畅通车友会APP是由中国工商银行上海分行和工银安盛人寿保险有限公司联合开发，
+        以违章缴费、车辆服务和保险服务为切入点，为广大的上海司机朋友提供优质服务。</string>
+    <string name="main_app_about_2">畅通车友会APP数据与上海交通总队实时同步，确保数据准确。</string>
+    <string name="main_app_help">畅通车友会App使用问题帮助:</string>
 
     <string name="refreshing">正在刷新…</string>
     <string name="refresh_fail">刷新失败</string>

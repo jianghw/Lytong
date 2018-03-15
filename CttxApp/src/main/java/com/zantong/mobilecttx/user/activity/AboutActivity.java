@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.AppUtils;
+import com.tzly.ctcyh.router.util.SPUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 
@@ -45,7 +46,7 @@ public class AboutActivity extends AbstractBaseActivity {
     private String getVersion() {
         String version = AppUtils.getAppVersionName()
                 + "_" + AppUtils.getAppVersionCode();
-        String channel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
+        String channel = SPUtils.instance().getString(SPUtils.APP_CHANNEL);
         String config = BuildConfig.isDeta ? "debug" : "release";
         return version + "/" + channel + "/" + config;
     }
