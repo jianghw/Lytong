@@ -72,7 +72,7 @@ public class LicenseDetailActivity extends AbstractBaseActivity {
         if (fragment == null) {
             fragment = LicenseDetailFragment.newInstance(newBean);
         }
-        FragmentUtils.add(fragmentManager, fragment, com.tzly.ctcyh.cargo.R.id.lay_base_frame);
+        FragmentUtils.add(fragmentManager, fragment, R.id.lay_base_frame);
     }
 
     /**

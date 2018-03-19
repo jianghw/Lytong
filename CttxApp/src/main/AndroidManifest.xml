@@ -55,8 +55,9 @@
         <!-- 启动页面 -->
         <activity
             android:name=".splash_v.SplashActivity"
-            android:launchMode="singleTop"
             android:screenOrientation="portrait"
+            android:alwaysRetainTaskState="true"
+            android:clearTaskOnLaunch="false"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -76,13 +77,14 @@
         <!-- 引导页面 -->
         <activity
             android:name=".guide_v.GuideCTActivity"
-            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme" />
+
         <!-- 主页，这个很吊呀 -->
         <activity
             android:name=".home_v.HomeMainActivity"
             android:alwaysRetainTaskState="true"
+            android:clearTaskOnLaunch="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />

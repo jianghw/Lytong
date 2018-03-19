@@ -9,13 +9,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.custom.rea.Des3;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.FormatUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.custom.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.utils.DialogUtils;
 import com.zantong.mobilecttx.violation_p.IViolationDetailsContract;
 import com.zantong.mobilecttx.violation_p.IViolationDetailsPresenter;
@@ -190,7 +189,7 @@ public class ViolationDetailsFragment extends RefreshFragment
                             getActivity().finish();
                         }
                     });
-        }else{
+        } else {
             toastShort(response.getSYS_HEAD().getReturnMessage());
         }
     }
@@ -202,8 +201,10 @@ public class ViolationDetailsFragment extends RefreshFragment
         mViolationLocationText.setText(rspInfo.getViolationplace());
         mViolationContentText.setText(rspInfo.getViolationtype());
 
-        if ("0".equals(rspInfo.getProcessste())
-                || "2".equals(rspInfo.getProcessste())) {
+        String processste = rspInfo.getProcessste();
+
+        if ("0".equals(processste)
+                || "2".equals(processste)) {
             mViolationStateText.setText("未缴费");
         } else {
             mViolationStateText.setText("已缴费");
@@ -229,7 +230,10 @@ public class ViolationDetailsFragment extends RefreshFragment
             e.printStackTrace();
         }
 
-        if ("1".equals(LoginData.getInstance().mHashMap.get("mRes"))) {
+
+        if ("0".equals(processste) || "2".equals(processste)) {
+            mViolationPayRl.setVisibility(View.GONE);
+        } else {
             mViolationPayRl.setVisibility(View.VISIBLE);
             try {
                 dateDate = formatDate.parse(rspInfo.getPaydate());
@@ -238,10 +242,8 @@ public class ViolationDetailsFragment extends RefreshFragment
                 timeString = timeDate.format(dateTime);
                 mViolationPayText.setText(dateString + " " + timeString);
             } catch (ParseException e) {
-                e.printStackTrace();
+                mViolationPayRl.setVisibility(View.GONE);
             }
-        } else {
-            mViolationPayRl.setVisibility(View.GONE);
         }
 
         try {
@@ -257,7 +259,6 @@ public class ViolationDetailsFragment extends RefreshFragment
             mViolationPointsText.setText(rspInfo.getViolationcent() + "分");
         }
 
-        String processste = rspInfo.getProcessste();
         if (("0".equals(processste) || "2".equals(processste))) {//未交费//是否处罚决定书
             mNextBtn.setEnabled(true);
             mNextBtn.setText("违 章 缴 费");

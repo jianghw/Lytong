@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.guide_v;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -102,8 +103,7 @@ public class GuideCTActivity extends JxBaseActivity
             mGuideOpen.setVisibility(View.GONE);
         }
     }
-
-
+    
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.guide_open:
@@ -117,5 +117,13 @@ public class GuideCTActivity extends JxBaseActivity
 
         SPUtils.getInstance().setIsGuide(String.valueOf(mVersionCode));
         finish();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -76,8 +76,8 @@ public class SplashActivity extends AbstractBaseActivity
 
         mTvName.setText(getResources().getString(R.string.main_app_name));
         String channel = com.tzly.ctcyh.router.util.SPUtils.instance().getString(com.tzly.ctcyh.router.util.SPUtils.APP_CHANNEL);
-        mTvName.setVisibility(channel.contains("tzly") ? View.GONE : View.VISIBLE);
-        mImgHuawei.setVisibility(channel.contains("huawei")||channel.contains("Huawei") ? View.VISIBLE : View.GONE);
+        mTvName.setVisibility(channel.contains("tzly") ? View.INVISIBLE : View.VISIBLE);
+        mImgHuawei.setVisibility(channel.contains("huawei") || channel.contains("Huawei") ? View.VISIBLE : View.GONE);
 
         SplashPresenter mPresenter = new SplashPresenter(
                 Injection.provideRepository(Utils.getContext()), this);
@@ -235,13 +235,13 @@ public class SplashActivity extends AbstractBaseActivity
             MainRouter.gotoGuideActivity(this, mResultList);
             overridePendingTransition(0, 0);
         }
-        finish();
     }
 
     @Override
     public void onBackPressed() {
-        finish();
-        super.onBackPressed();
+        //        super.onBackPressed();
+        //按返回键返回桌面
+        moveTaskToBack(true);
     }
 
     @Override
@@ -254,7 +254,7 @@ public class SplashActivity extends AbstractBaseActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_skip:
-                gotoMain();
+//                gotoMain();
                 break;
             default:
                 break;

@@ -109,7 +109,6 @@ android {
             zipAlignEnabled true
             shrinkResources false
             signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [baidu_API_KEY     : "E6lDRqyaSjj8jR8O5wdz5jpgiT0LOuQn",
                                     alibaba_API_KEY   : "23481202",
                                     alibaba_APP_SECRET: "a51ce60b119cf15b9ab220ed70d8078c"]
@@ -119,6 +118,7 @@ android {
         release {
             buildConfigField 'boolean', 'isDeta', rootProject.ext.release.isDeta
             debuggable = false
+            zipAlignEnabled false
         }
     }
 

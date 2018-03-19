@@ -203,7 +203,7 @@ public class FriendShareFragment extends RefreshFragment
     private void setSimpleDataResult(List<StatistCountResponse.DataBean.ListBean> data) {
         mAdapter.removeAllOnly();
         if (data == null || data.isEmpty()) {
-            toastShort("当前统计数据为空");
+//            toastShort("当前统计数据为空");
         } else {
             mAdapter.append(data);
         }

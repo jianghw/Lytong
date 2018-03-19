@@ -228,7 +228,7 @@ public class HomeUnimpededFragment extends RefreshFragment
                 if (!mHomeNotices.isEmpty()) {
                     HomeNotice listener = mHomeNotices.get(position);
                     if (TextUtils.isEmpty(listener.getDetail())) {
-                        toastShort("没有详情");
+                        toastShort("暂时没有配置详情");
                     } else {
                         MainRouter.gotoRichTextActivity(getContext(), listener.getDetail());
                     }

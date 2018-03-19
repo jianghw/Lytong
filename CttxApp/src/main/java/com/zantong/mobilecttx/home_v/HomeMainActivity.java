@@ -14,13 +14,13 @@ import android.widget.FrameLayout;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
+import com.tzly.ctcyh.router.custom.primission.PermissionGen;
 import com.tzly.ctcyh.router.custom.tablebottom.UiTableBottom;
 import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.StatusBarUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.custom.primission.PermissionGen;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.global.MainGlobal;
@@ -141,7 +141,7 @@ public class HomeMainActivity extends AbstractBaseActivity
         if (appCode < mVersionCode) {
             if (upgradeInfo.upgradeType == 2) {
                 Beta.checkUpgrade();
-                startActivity(AppUtils.uninstallAppIntent("com.tzly.mobileapp.shwzcx"));
+                //                startActivity(AppUtils.uninstallAppIntent("com.tzly.mobileapp.shwzcx"));
             } else {
                 DialogUtils.updateDialog(this,
                         upgradeInfo.title, upgradeInfo.newFeature,
@@ -237,31 +237,31 @@ public class HomeMainActivity extends AbstractBaseActivity
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        //        if (keyCode == KeyEvent.KEYCODE_BACK
-        //                && event.getAction() == KeyEvent.ACTION_DOWN) {
-        //
-        //            if ((System.currentTimeMillis() - exitTime) > 2000) {
-        //                toastShort("请再点击一次,退出应用");
-        //                exitTime = System.currentTimeMillis();
-        //            } else {
-        //                finish();
-        //                System.exit(0);
-        //            }
-        //            return true;
-        //        }
-        //        return super.onKeyDown(keyCode, event);
-
-        onBackPressed();
-        return true;
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            //                        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            //                            toastShort("请再点击一次,退出应用");
+            //                            exitTime = System.currentTimeMillis();
+            //                        } else {
+            //                            finish();
+            //                            System.exit(0);
+            //                        }
+            //                        return true;
+            onBackPressed();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
     public void onBackPressed() {
         //        super.onBackPressed();
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        startActivity(intent);
+//        Intent intent = new Intent(Intent.ACTION_MAIN);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+//                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+//        intent.addCategory(Intent.CATEGORY_HOME);
+//        startActivity(intent);
+
+        //按返回键返回桌面
+                moveTaskToBack(true);
     }
 }

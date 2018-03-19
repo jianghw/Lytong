@@ -95,8 +95,8 @@ public class MyApplication extends MultiDexApplication {
     private void initThirdTools() {
         //工具类
         Utils.init(this);
-        //        String channel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
-        String channel = BuildConfig.FLAVOR;
+        String channel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");
+        //        String channel = BuildConfig.FLAVOR;
         SPUtils.instance().put(SPUtils.APP_CHANNEL, channel);
 
         //有盟+统计初始化
