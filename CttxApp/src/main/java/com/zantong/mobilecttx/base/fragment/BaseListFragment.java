@@ -25,10 +25,11 @@ import butterknife.Bind;
 
 /**
  * ListFragment基类
+ *
  * @author Sandy
- * create at 16/6/2 下午1:35
+ *         create at 16/6/2 下午1:35
  */
-public abstract class BaseListFragment<T> extends BaseFragment{
+public abstract class BaseListFragment<T> extends BaseFragment {
     @Bind(R.id.recyclerview)
     XRecyclerView mRecyclerView;
     @Bind(R.id.pull_refresh_empty_layout)
@@ -73,6 +74,7 @@ public abstract class BaseListFragment<T> extends BaseFragment{
         mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
+                if (mRecyclerView == null) return;
                 mRecyclerView.postDelayed(new Runnable() {
                     public void run() {
                         if (mRecyclerView == null) return;
@@ -85,6 +87,7 @@ public abstract class BaseListFragment<T> extends BaseFragment{
 
             @Override
             public void onLoadMore() {
+                if (mRecyclerView == null) return;
                 mRecyclerView.postDelayed(new Runnable() {
                     public void run() {
                         if (mRecyclerView == null) return;
@@ -151,7 +154,7 @@ public abstract class BaseListFragment<T> extends BaseFragment{
     protected abstract void onLoadMoreData();
 
     protected void onSwipeItemClickListener(int adapterPosition, int menuPosition, int direction) {
-//TODO 供子类实现
+        //TODO 供子类实现
     }
 
     protected View getEmptyView() {

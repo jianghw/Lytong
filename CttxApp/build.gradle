@@ -117,6 +117,12 @@ android {
         release.initWith(android.buildTypes.alpha)
         release {
             buildConfigField 'boolean', 'isDeta', rootProject.ext.release.isDeta
+            buildConfigField 'String', 'base_url', rootProject.ext.release.base_url
+            buildConfigField 'String', 'bank_img_url', rootProject.ext.release.bank_img_url
+            buildConfigField 'String', 'bank_file_url', rootProject.ext.release.bank_file_url
+            buildConfigField 'String', 'bank_app_url', rootProject.ext.release.bank_app_url
+            buildConfigField 'String', 'bank_mc_url', rootProject.ext.release.bank_mc_url
+
             debuggable = false
             zipAlignEnabled false
         }
@@ -130,34 +136,34 @@ android {
         //上海违章查询
         shwzcx {
             dimension "app"
-            applicationId "com.tzly.mobileapp.shwzcx"
+            applicationId "com.abcd.mobileapp.shwzcx"
             versionCode 1
             versionName "1.0.1"
         }
         //上海ems便民通
         shbmt {
             dimension "app"
-            applicationId "com.tzly.mobileapp.shbmt"
+            applicationId "com.efgh.mobileapp.shbmt"
         }
         //12123
         number {
             dimension "app"
-            applicationId "com.tzly.mobileapp.number"
+            applicationId "com.ijkl.mobileapp.number"
         }
         //车管到家
         cgdj {
             dimension "app"
-            applicationId "com.tzly.mobileapp.cgdj"
+            applicationId "com.mnop.mobileapp.cgdj"
         }
         //全国车辆违章
         qgclwz {
             dimension "app"
-            applicationId "com.tzly.mobileapp.qgclwz"
+            applicationId "com.qrst.mobileapp.qgclwz"
         }
         //工行违章缴费
         ghwzcx {
             dimension "app"
-            applicationId "com.tzly.mobileapp.ghwzcx"
+            applicationId "com.uvwx.mobileapp.ghwzcx"
         }
 
         //应用宝

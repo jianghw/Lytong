@@ -76,9 +76,10 @@ public class BindCarSuccessFragment extends BaseExtraFragment {
 
                 List<PayCar> list = result.getRspInfo().getUserCarsInfo();
                 if (list == null || list.size() == 0) {
-                    mEmptyView.setVisibility(View.VISIBLE);
-                    mCarManager.setVisibility(View.GONE);
-                    mCarsRecyclerView.setVisibility(View.GONE);
+                    if (mEmptyView != null) mEmptyView.setVisibility(View.VISIBLE);
+                    if (mCarManager != null) mCarManager.setVisibility(View.GONE);
+                    if (mCarsRecyclerView != null) mCarsRecyclerView.setVisibility(View.GONE);
+
                     if (mDescView != null)
                         mDescView.setText("按交管局规定，每张畅通卡可为2辆绑定车辆缴付罚款，修改绑定车辆要12小时后才能生效。为保障您及时处理违章，建议现在就绑定您的爱车。");
                 } else if (list.size() == 1) {

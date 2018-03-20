@@ -75,7 +75,7 @@ ext {
     ]
     //发布
     release = [
-            isDeta       : 'false',
+            isDeta       : 'false ',
             base_url     : '"http://api2.liyingtong.com/"',
             bank_img_url : '"https://ctkapp.icbc-axa.com/"',
             bank_file_url: '"https://ctkapp.icbc-axa.com:9000/"',

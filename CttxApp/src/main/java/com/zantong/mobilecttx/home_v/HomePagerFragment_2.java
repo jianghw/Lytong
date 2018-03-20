@@ -127,9 +127,9 @@ public class HomePagerFragment_2 extends RecyclerListFragment<UnimpededBannerBea
             } else if (path.equals("native_app_drive_share")) {//分享
                 Intent intent = new Intent();
                 intent.putExtra(JxGlobal.putExtra.share_position_extra, 1);
-                Act.getInstance().gotoLoginByIntent(getContext(), ShareParentActivity.class, intent);
+                Act.getInstance().gotoLoginByIntent(getActivity(), ShareParentActivity.class, intent);
             } else if (path.equals("native_app_car_beauty")) {//汽车美容
-                Act.getInstance().gotoIntentLogin(getContext(), CarBeautyActivity.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), CarBeautyActivity.class);
             } else if (path.equals("native_app_driver")) {//驾校报名
                 MainRouter.gotoFahrschuleActivity(getContext(), 0);
             } else if (path.equals("native_app_yearCheckMap")) {//年检地图
@@ -191,7 +191,7 @@ public class HomePagerFragment_2 extends RecyclerListFragment<UnimpededBannerBea
     private void gotoOilMap() {
         Intent intent = new Intent();
         intent.putExtra(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
-        Act.getInstance().gotoLoginByIntent(getContext(), BaiduMapParentActivity.class, intent);
+        Act.getInstance().gotoLoginByIntent(getActivity(), BaiduMapParentActivity.class, intent);
     }
 
     protected void licenseCheckGrade(int position) {

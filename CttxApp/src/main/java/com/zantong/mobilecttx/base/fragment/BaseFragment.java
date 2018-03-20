@@ -25,8 +25,9 @@ import butterknife.ButterKnife;
 
 /**
  * Fragment基类
+ *
  * @author Sandy
- * create at 16/6/2 下午2:14
+ *         create at 16/6/2 下午2:14
  */
 public abstract class BaseFragment extends Fragment implements OnClickListener, IBaseFragment {
 
@@ -48,7 +49,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
      * 加载成功,无数据
      */
     public static final int LOADING_SUCCESS_NULL = 4;
-    
+
     /**
      * 加载中布局，加载失败布局，加载成功显示数据布局
      */
@@ -156,6 +157,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
         // 统计页面
         MobclickAgent.onPageStart(this.getClass().getSimpleName());
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -175,7 +177,6 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
     protected abstract int getLayoutResId();
 
 
-
     /**
      * 刷新数据
      */
@@ -188,9 +189,12 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
      * @param index
      */
     private void showView(int index) {
-        mLoadingLayout.setVisibility(index == LOADING ? View.VISIBLE : View.GONE);
-        mLoadingFailedLayout.setVisibility(index == LOADING_FAILED ? View.VISIBLE : View.GONE);
-        mBaseContent.setVisibility(index == LOADING_SUCCESS ? View.VISIBLE : View.GONE);
+        if (mLoadingLayout != null)
+            mLoadingLayout.setVisibility(index == LOADING ? View.VISIBLE : View.GONE);
+        if (mLoadingFailedLayout != null)
+            mLoadingFailedLayout.setVisibility(index == LOADING_FAILED ? View.VISIBLE : View.GONE);
+        if (mBaseContent != null)
+            mBaseContent.setVisibility(index == LOADING_SUCCESS ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -199,6 +203,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
     public void onShowFailed() {
         showView(LOADING_FAILED);
     }
+
     /**
      * 显示加载失败布局
      */
@@ -222,7 +227,7 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
+        //        super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
         mLoadingLayout = view.findViewById(R.id.base_loading_bg);
@@ -252,11 +257,13 @@ public abstract class BaseFragment extends Fragment implements OnClickListener, 
 
         initData();
     }
+
     /**
      * Toast提示信息
+     *
      * @param message
      */
-    public void showMsg(String message){
+    public void showMsg(String message) {
         ToastUtils.toastShort(message);
     }
 

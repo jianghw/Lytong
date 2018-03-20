@@ -261,7 +261,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/ds_30"
         android:layout_marginTop="@dimen/ds_90"
-        android:text="\© ICBC-AXA LIFE"
+        android:text="@string/main_app_me_bot"
         android:textColor="@color/colorQueryNumberFont"
         android:textSize="12sp"/>
 

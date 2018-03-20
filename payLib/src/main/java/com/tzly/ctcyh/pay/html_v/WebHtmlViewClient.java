@@ -61,7 +61,7 @@ public class WebHtmlViewClient extends WebViewClient {
 
     @Override
     public void onPageFinished(WebView view, String url) {
-        LogUtils.e("onPageFinished-->"+url);
+        LogUtils.e("onPageFinished-->" + url);
         String js = null;
         if (url.contains("?dse_operationName=ApplyCreditCardOp&firstFlag")) {//保存用户资料
             js = "var script=document.createElement(\"script\");";
@@ -79,7 +79,7 @@ public class WebHtmlViewClient extends WebViewClient {
             js += "function overSubmit(){window.CTTX.submitBankByCard();};";
         }
         LogUtils.e("onPageFinished==>" + js);
-        if (viewClientable != null) viewClientable.onPageFinished(view, js);
+        if (viewClientable != null ) viewClientable.onPageFinished(view, js);
         super.onPageFinished(view, url);
     }
 

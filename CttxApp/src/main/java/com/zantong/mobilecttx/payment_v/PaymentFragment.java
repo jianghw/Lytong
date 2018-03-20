@@ -180,7 +180,11 @@ public class PaymentFragment extends RefreshFragment
     }
 
     private void showEmptyData(boolean b) {
-        mTvEmpty.setVisibility(b ? View.VISIBLE : View.GONE);
+        try {
+            mTvEmpty.setVisibility(b ? View.VISIBLE : View.GONE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

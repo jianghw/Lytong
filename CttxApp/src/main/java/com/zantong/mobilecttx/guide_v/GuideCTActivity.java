@@ -103,7 +103,7 @@ public class GuideCTActivity extends JxBaseActivity
             mGuideOpen.setVisibility(View.GONE);
         }
     }
-    
+
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.guide_open:

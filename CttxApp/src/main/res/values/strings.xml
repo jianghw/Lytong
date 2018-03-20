@@ -8,5 +8,6 @@
     <string name="mine_help_str4">积分提醒怎么处理?</string>
     <string name="main_list_no_data">没有找到符合条件的数据</string>
     <string name="main_tv_share">%1$s&#160;&#160;&#160;%2$d&#160;人</string>
+    <string name="main_app_me_bot">© ICBC-AXA LIFE</string>
 
 </resources>

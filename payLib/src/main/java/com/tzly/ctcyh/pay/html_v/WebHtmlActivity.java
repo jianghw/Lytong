@@ -168,7 +168,7 @@ public class WebHtmlActivity extends AbstractBaseActivity
         @SuppressLint("CommitTransaction")
         FragmentTransaction transaction = manager.beginTransaction();
         //创建fragment但是不绘制UI
-        WebHtmlFragment htmlFragment =  WebHtmlFragment.newInstance();
+        WebHtmlFragment htmlFragment = WebHtmlFragment.newInstance();
         transaction.add(htmlFragment, "web_html").commit();
         //调用JS方法.安卓版本大于17,加上注解 @JavascriptInterface
         settings.setJavaScriptEnabled(true);
@@ -351,7 +351,7 @@ public class WebHtmlActivity extends AbstractBaseActivity
      */
     @Override
     public void shouldOverrideUrlLoading(WebView view, String url) {
-        LogUtils.e("OverrideUrl-->"+url);
+        LogUtils.e("OverrideUrl-->" + url);
 
         Intent intent = new Intent();
         if (url.startsWith("tel:")) {
@@ -387,7 +387,7 @@ public class WebHtmlActivity extends AbstractBaseActivity
 
     @Override
     public void onPageFinished(WebView view, String url) {
-        if (view != null) view.loadUrl("javascript:" + url);
+        if (view != null && url != null) view.loadUrl("javascript:" + url);
 
         //页面加载好以后，在放开图片
         view.getSettings().setBlockNetworkImage(false);

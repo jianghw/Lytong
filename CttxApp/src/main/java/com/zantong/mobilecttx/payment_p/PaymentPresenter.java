@@ -200,8 +200,8 @@ public class PaymentPresenter implements IPaymentContract.IPaymentPresenter {
         mSubscriptions.add(subscription);
     }
 
-    private void groupedData(GroupedObservable<String,
-            RspInfoBean.ViolationInfoBean> groupedObservable, final List<RecyclerViewData> mCarDatas) {
+    private void groupedData(GroupedObservable<String, RspInfoBean.ViolationInfoBean> groupedObservable,
+                             final List<RecyclerViewData> mCarDatas) {
         groupedObservable.toList().subscribe(new Subscriber<List<RspInfoBean.ViolationInfoBean>>() {
             @Override
             public void onCompleted() {

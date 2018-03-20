@@ -283,9 +283,9 @@ public class HomeUnimpededFragment extends RefreshFragment
         if (mPresenter != null) mPresenter.getIndexLayer();
         if (mPresenter != null) mPresenter.getBanner();
 
-        if (MainRouter.isUserLogin())
-            mPresenter.getTextNoticeInfo();
-        else
+        if (MainRouter.isUserLogin()) {
+            if (mPresenter != null) mPresenter.getTextNoticeInfo();
+        } else
             getLocalCarInfo();
 
         if (mPresenter != null) mPresenter.homePage();

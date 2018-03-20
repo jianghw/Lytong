@@ -107,12 +107,12 @@ public class LicenseGradeActivity extends AbstractBaseActivity implements View.O
         DateDialogFragment dialogFragment = DateDialogFragment.newInstance();
         dialogFragment.setClickListener(new IOnDateSetListener() {
             @Override
-            public void onDateSet(
-                    DatePicker view, Date date, boolean usable) {
+            public void onDateSet(DatePicker view, Date date, boolean usable) {
 
                 if (!usable) return;
                 SimpleDateFormat format = new SimpleDateFormat(
                         "yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
+
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(date);
                 mTvDate.setText(format.format(calendar.getTime()));
@@ -143,7 +143,7 @@ public class LicenseGradeActivity extends AbstractBaseActivity implements View.O
             e.printStackTrace();
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
-        return simpleDateFormat.format(date);
+        return date != null ? simpleDateFormat.format(date) : "";
     }
 
     @Override
@@ -187,7 +187,7 @@ public class LicenseGradeActivity extends AbstractBaseActivity implements View.O
             e.printStackTrace();
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.SIMPLIFIED_CHINESE);
-        return simpleDateFormat.format(date);
+        return date != null ? simpleDateFormat.format(date) : "";
     }
 
 
