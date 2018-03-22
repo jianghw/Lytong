@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * 加油充值
  */
-public class RefuelOilFragment extends RefreshFragment
+public class      RefuelOilFragment extends RefreshFragment
         implements IRefuelOilContract.IRefuelOilView, View.OnClickListener {
 
     private IRefuelOilContract.IRefuelOilPresenter mPresenter;

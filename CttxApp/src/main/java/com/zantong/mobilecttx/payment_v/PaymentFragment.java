@@ -31,7 +31,7 @@ import drawthink.expandablerecyclerview.bean.RecyclerViewData;
 import drawthink.expandablerecyclerview.listener.OnRecyclerViewListener;
 
 /**
- * 加油充值
+ * 缴费记录
  */
 public class PaymentFragment extends RefreshFragment
         implements IPaymentContract.IPaymentView, View.OnClickListener,

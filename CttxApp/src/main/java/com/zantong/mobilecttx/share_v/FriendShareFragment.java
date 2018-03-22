@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.share_v;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.custom.SpaceItemDecoration;
 import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
 import com.tzly.ctcyh.router.custom.image.EncodingUtils;
 import com.tzly.ctcyh.router.custom.rea.Des3;
@@ -31,6 +33,7 @@ import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_p.FahrschuleSharePresenter;
 import com.zantong.mobilecttx.share_p.IFahrschuleShareFtyContract;
 import com.zantong.mobilecttx.share_p.StatisCountAdapter;
+import com.zantong.mobilecttx.share_p.StatisTextCountAdapter;
 import com.zantong.mobilecttx.wxapi.WXEntryActivity;
 
 import java.util.ArrayList;
@@ -60,9 +63,11 @@ public class FriendShareFragment extends RefreshFragment
     private ShareParentActivity.FragmentDestroy mCloseListener;
     private XRecyclerView mXRecyclerView;
     private StatisCountAdapter mAdapter;
+    private StatisTextCountAdapter mGridAdapter;
     private TextView mTvRecommend;
     private TextView mTvTied;
     private LinearLayout mLayFalse;
+    private XRecyclerView mLayTwoTv;
 
     public static FriendShareFragment newInstance() {
         return new FriendShareFragment();
@@ -172,24 +177,29 @@ public class FriendShareFragment extends RefreshFragment
         StatistCountResponse response = (StatistCountResponse) result;
         List<StatistCountResponse.DataBean.ListBean> list = response.getData().getList();
 
-        boolean isFirst = true;
-        List<StatistCountResponse.DataBean.ListBean> newList = new ArrayList<>();
+        List<StatistCountResponse.DataBean.ListBean> topList = new ArrayList<>();
+        List<StatistCountResponse.DataBean.ListBean> botList = new ArrayList<>();
+
         for (StatistCountResponse.DataBean.ListBean map : list) {
             if (!TextUtils.isEmpty(map.getCoupon())) {
-                newList.add(map);
-            } else if (isFirst && !TextUtils.isEmpty(map.getName())) {
-                String string = getResources().getString(R.string.main_tv_share);
-                String text = String.format(string, map.getName(), map.getCount());
-                mTvRecommend.setText(text);
-                isFirst = false;
-            } else if (!TextUtils.isEmpty(map.getName())) {
-                String string = getResources().getString(R.string.main_tv_share);
-                String text = String.format(string, map.getName(), map.getCount());
-                mTvTied.setText(text);
+                botList.add(map);
+            } else {
+                topList.add(map);
             }
+            //            else if (isFirst && !TextUtils.isEmpty(map.getName())) {
+            //                String string = getResources().getString(R.string.main_tv_share);
+            //                String text = String.format(string, map.getName(), map.getCount());
+            //                mTvRecommend.setText(text);
+            //                isFirst = false;
+            //            } else if (!TextUtils.isEmpty(map.getName())) {
+            //                String string = getResources().getString(R.string.main_tv_share);
+            //                String text = String.format(string, map.getName(), map.getCount());
+            //                mTvTied.setText(text);
+            //            }
         }
-        setSimpleDataResult(newList);
+        setTopDataResult(topList);
 
+        setSimpleDataResult(botList);
         boolean flag = response.getData().isFlag();
         //地推人员
         mImgScan.setVisibility(flag ? View.VISIBLE : View.GONE);
@@ -197,13 +207,21 @@ public class FriendShareFragment extends RefreshFragment
 
         mLayFalse.setVisibility(!flag ? View.VISIBLE : View.INVISIBLE);
         mXRecyclerView.setVisibility(!flag ? View.VISIBLE : View.INVISIBLE);
+    }
 
+    private void setTopDataResult(List<StatistCountResponse.DataBean.ListBean> data) {
+        mGridAdapter.removeAllOnly();
+        if (data == null || data.isEmpty()) {
+            //            toastShort("当前统计数据为空");
+        } else {
+            mGridAdapter.append(data);
+        }
     }
 
     private void setSimpleDataResult(List<StatistCountResponse.DataBean.ListBean> data) {
         mAdapter.removeAllOnly();
         if (data == null || data.isEmpty()) {
-//            toastShort("当前统计数据为空");
+            //            toastShort("当前统计数据为空");
         } else {
             mAdapter.append(data);
         }
@@ -215,10 +233,23 @@ public class FriendShareFragment extends RefreshFragment
         mBtnPay.setOnClickListener(this);
 
         mLayFalse = (LinearLayout) view.findViewById(R.id.lay_false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(Utils.getContext(), 2);
+        gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
+        mLayTwoTv = (XRecyclerView) view.findViewById(R.id.lay_two_tv);
+        mLayTwoTv.setLayoutManager(gridLayoutManager);
+        mLayTwoTv.setPullRefreshEnabled(false);
+        mLayTwoTv.setLoadingMoreEnabled(false);
+        mLayTwoTv.noMoreLoadings();
+        mLayTwoTv.addItemDecoration(
+                new SpaceItemDecoration(getResources().getDimensionPixelSize(R.dimen.res_x_30))
+        );
+        mGridAdapter = new StatisTextCountAdapter();
+        mLayTwoTv.setAdapter(mGridAdapter);
+        mLayTwoTv.setNestedScrollingEnabled(false);
 
-        mXRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_list_false);
         LinearLayoutManager manager = new LinearLayoutManager(Utils.getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
+        mXRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_list_false);
         mXRecyclerView.setLayoutManager(manager);
         mXRecyclerView.setPullRefreshEnabled(false);
         mXRecyclerView.setLoadingMoreEnabled(false);
@@ -230,8 +261,8 @@ public class FriendShareFragment extends RefreshFragment
         mXRecyclerView.setAdapter(mAdapter);
         mXRecyclerView.setNestedScrollingEnabled(false);
 
-        mTvRecommend = (TextView) view.findViewById(R.id.tv_recommend);
-        mTvTied = (TextView) view.findViewById(R.id.tv_tied);
+//        mTvRecommend = (TextView) view.findViewById(R.id.tv_recommend);
+//        mTvTied = (TextView) view.findViewById(R.id.tv_tied);
     }
 
     @Override

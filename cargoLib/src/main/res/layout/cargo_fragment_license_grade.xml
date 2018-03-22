@@ -42,7 +42,6 @@
                 android:background="@null"
                 android:gravity="right|center_vertical"
                 android:hint="请输入驾驶证号"
-                android:inputType="number"
                 android:maxEms="19"
                 android:maxLength="19"
                 android:maxLines="1"

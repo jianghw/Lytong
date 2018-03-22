@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.tzly.ctcyh.cargo.BuildConfig;
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.bean.response.BidOilBean;
 import com.tzly.ctcyh.cargo.bean.response.BidOilData;
@@ -24,6 +23,7 @@ import com.tzly.ctcyh.cargo.refuel_p.BidOilAdapter;
 import com.tzly.ctcyh.cargo.refuel_p.BidOilPresenter;
 import com.tzly.ctcyh.cargo.refuel_p.IBidOilContract;
 import com.tzly.ctcyh.cargo.router.CargoRouter;
+import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.custom.popup.CustomDialog;
@@ -146,7 +146,11 @@ public class BidOilFragment extends RefreshFragment
         if (response instanceof BidOilResponse) {
             BidOilResponse oilResponse = (BidOilResponse) response;
             BidOilData bidOilData = oilResponse.getData();
+
             String url = bidOilData.getImg();
+            if (!url.contains("http")) {
+                url = (BuildConfig.isDeta ? BuildConfig.beta_base_url : BuildConfig.release_base_url) + url;
+            }
             ImageLoadUtils.loadTwoRectangle(url, mImgBanner);
 
             List<BidOilBean> lis = bidOilData.getGoods();
@@ -177,7 +181,7 @@ public class BidOilFragment extends RefreshFragment
         if (viD == R.id.img_banner) {//图片
 
         } else if (viD == R.id.tv_bid) {//去办畅通卡
-         CargoRouter.gotoApplyCardFirstActivity(getActivity());
+            CargoRouter.gotoApplyCardFirstActivity(getActivity());
         } else if (viD == R.id.lay_area) {//城市
             if (mPresenter != null) mPresenter.getAllAreas();
         } else if (viD == R.id.btn_commit) {//提交

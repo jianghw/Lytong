@@ -85,6 +85,8 @@ public class StatistCountResponse extends BaseResponse {
             public void setCoupon(String coupon) {
                 this.coupon = coupon;
             }
+
+
         }
     }
 }

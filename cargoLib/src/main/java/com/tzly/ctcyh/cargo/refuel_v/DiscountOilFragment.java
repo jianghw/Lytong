@@ -26,6 +26,7 @@ import com.tzly.ctcyh.cargo.refuel_p.IRefuelOilContract;
 import com.tzly.ctcyh.cargo.refuel_p.RefuelOilAdapter;
 import com.tzly.ctcyh.cargo.refuel_p.RefuelOilPresenter;
 import com.tzly.ctcyh.cargo.router.CargoRouter;
+import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.custom.popup.CustomDialog;
@@ -243,6 +244,10 @@ public class DiscountOilFragment extends RefreshFragment
      */
     private void dataRendering(NorOilBean bean) {
         String url = bean.getImg();
+
+        if (!url.contains("http")) {
+            url = (BuildConfig.isDeta ? BuildConfig.beta_base_url : BuildConfig.release_base_url) + url;
+        }
         ImageLoadUtils.loadTwoRectangle(url, mImgBanner);
 
         String oilCard = bean.getOilCard();

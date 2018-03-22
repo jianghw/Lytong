@@ -29,7 +29,7 @@
         6、本服务由畅通车友会加油服务商提供，如有问题请致电4008216158;
     </string>
     <string name="cargo_bid_oil_card">
-        购买500元加油卡用户可在下次充值时享受97折优惠\n暂时只支持工行卡支付，若无工行，请<font color='#f3362b'>申办工行畅通卡</font>
+        购买加油卡用户可在下次充值时享受97折优惠\n暂时只支持工行卡支付，若无工行卡，请<font color='#f3362b'>申办工行畅通卡</font>
     </string>
     <string name="cargo_tv_97_date">*油卡将在7个工作日内寄出，如有疑问，请咨询客服</string>
     <string name="cargo_tv_license_num">

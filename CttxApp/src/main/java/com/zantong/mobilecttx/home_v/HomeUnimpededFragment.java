@@ -481,6 +481,10 @@ public class HomeUnimpededFragment extends RefreshFragment
                 MainRouter.gotoDiscountOilActivity(getActivity());
             } else if (path.equals("native_app_97buyCard")) {//97加油购卡
                 MainRouter.gotoBidOilActivity(getActivity());
+            } else if (path.equals("native_app_mainRecharge")) {//97加油购卡前页
+                MainRouter.gotoFoldOilActivity(getContext());
+            } else if (path.equals("native_app_drivingNewScore")) {//驾照查分
+                MainRouter.gotoLicenseCargoActivity(getContext());
             } else {//其他
                 toastShort("此版本暂无此状态页面,请更新最新版本");
             }

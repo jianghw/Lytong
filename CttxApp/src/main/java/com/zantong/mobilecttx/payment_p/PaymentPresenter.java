@@ -202,7 +202,9 @@ public class PaymentPresenter implements IPaymentContract.IPaymentPresenter {
 
     private void groupedData(GroupedObservable<String, RspInfoBean.ViolationInfoBean> groupedObservable,
                              final List<RecyclerViewData> mCarDatas) {
-        groupedObservable.toList().subscribe(new Subscriber<List<RspInfoBean.ViolationInfoBean>>() {
+        groupedObservable.toList()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<RspInfoBean.ViolationInfoBean>>() {
             @Override
             public void onCompleted() {
                 mContractView.dismissLoading();
