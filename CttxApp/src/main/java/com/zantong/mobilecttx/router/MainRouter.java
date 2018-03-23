@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.UiRouter;
+import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.service.ICargoService;
@@ -17,7 +18,7 @@ import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.service.RouterGlobal;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
-import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
+import com.zantong.mobilecttx.push_v.AliPushExtBean;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
 import java.util.ArrayList;
@@ -768,5 +769,19 @@ public final class MainRouter {
         } else {//注册机开始工作
             registerPay();
         }
+    }
+
+    /**
+     * 启动页面
+     */
+    public static void gotoSplashActivity(Context context, AliPushExtBean extBean) {
+        Bundle bundle = new Bundle();
+        bundle.putString(MainGlobal.putExtra.splash_type_extra, extBean.getType());
+        bundle.putString(MainGlobal.putExtra.splash_id_extra, extBean.getId());
+        bundle.putString(MainGlobal.putExtra.splash_url_extra, extBean.getUrl());
+
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.splash_activity_host,
+                bundle);
     }
 }

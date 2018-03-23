@@ -12,7 +12,9 @@ import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
+import com.zantong.mobilecttx.home.bean.VersionResponse;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+import com.zantong.mobilecttx.home.dto.VersionDTO;
 import com.zantong.mobilecttx.router.MainRouter;
 
 import java.util.concurrent.TimeUnit;
@@ -243,6 +245,32 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
                     @Override
                     public void doNext(BaseResponse result) {
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    @Override
+    public void versionInfo() {
+        VersionDTO versionDTO = new VersionDTO();
+        Subscription subscription = mRepository.versionInfo(versionDTO)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<VersionResponse>() {
+                    @Override
+                    public void doCompleted() {
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                    }
+
+                    @Override
+                    public void doNext(VersionResponse result) {
+                        if (result != null && result.getResponseCode()
+                                == MainGlobal.Response.base_succeed) {
+                            ftyView.versionInfoSucceed(result);
+                        }
                     }
                 });
         mSubscriptions.add(subscription);

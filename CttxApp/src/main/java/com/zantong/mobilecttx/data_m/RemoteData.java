@@ -51,7 +51,9 @@ import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
 import com.zantong.mobilecttx.home.bean.ModuleResponse;
 import com.zantong.mobilecttx.home.bean.StartPicResponse;
+import com.zantong.mobilecttx.home.bean.VersionResponse;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+import com.zantong.mobilecttx.home.dto.VersionDTO;
 import com.zantong.mobilecttx.map.bean.GasStationDetailResponse;
 import com.zantong.mobilecttx.map.bean.GasStationResponse;
 import com.zantong.mobilecttx.map.bean.YearCheckDetailResponse;
@@ -392,8 +394,8 @@ public class RemoteData implements IRemoteSource {
      * 8.查询订单列表
      */
     @Override
-    public Observable<OrderListResponse> getOrderList(String userId,String pager) {
-        return baseRetrofit().create(IOrderService.class).getOrderList(userId,pager);
+    public Observable<OrderListResponse> getOrderList(String userId, String pager) {
+        return baseRetrofit().create(IOrderService.class).getOrderList(userId, pager);
     }
 
     /**
@@ -665,5 +667,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<StatistCountResponse> getStatisticsCount(String phone) {
         return baseRetrofit().create(IFebruaryService.class).getStatisticsCount(phone);
+    }
+
+    /**
+     * 版本更新
+     */
+    @Override
+    public Observable<VersionResponse> versionInfo(VersionDTO versionDTO) {
+        return baseRetrofit().create(ICttxService.class).versionInfo(versionDTO);
     }
 }

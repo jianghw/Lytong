@@ -606,8 +606,7 @@ public class DialogUtils {
      */
     public static void createDialog(final Context context, List<AppInfo> appInfos) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
-        View view = ((Activity) context).getLayoutInflater().inflate(
-                R.layout.dialog_map_nav, null);
+        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_map_nav, null);
 
 
         TextView mCancel = (TextView) view.findViewById(R.id.dialog_map_cancel);

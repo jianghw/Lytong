@@ -55,9 +55,9 @@
         <!-- 启动页面 -->
         <activity
             android:name=".splash_v.SplashActivity"
-            android:screenOrientation="portrait"
             android:alwaysRetainTaskState="true"
             android:clearTaskOnLaunch="false"
+            android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

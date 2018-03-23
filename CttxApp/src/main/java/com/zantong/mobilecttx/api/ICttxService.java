@@ -1,10 +1,13 @@
 package com.zantong.mobilecttx.api;
 
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseResponse;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
+import com.zantong.mobilecttx.home.bean.VersionResponse;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+import com.zantong.mobilecttx.home.dto.VersionDTO;
 import com.zantong.mobilecttx.map.bean.GasStationDetailResponse;
 import com.zantong.mobilecttx.map.bean.GasStationResponse;
 import com.zantong.mobilecttx.map.bean.YearCheckDetailResponse;
@@ -12,8 +15,6 @@ import com.zantong.mobilecttx.map.bean.YearCheckResponse;
 import com.zantong.mobilecttx.map.dto.AnnualDTO;
 
 import java.util.List;
-
-import com.tzly.ctcyh.java.response.BaseResponse;
 
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -102,4 +103,10 @@ public interface ICttxService {
     @FormUrlEncoded
     @POST("cttx/updateToken")
     Observable<BaseResponse> updateToken(@Field("token") String token, @Field("userNum") String userNum);
+
+    /**
+     * 版本更新
+     */
+    @POST("download/versionInfo")
+    Observable<VersionResponse> versionInfo(@Body VersionDTO versionDTO);
 }

@@ -26,6 +26,7 @@ import com.zantong.mobilecttx.order_v.OrderDetailActivity;
 import com.zantong.mobilecttx.payment_v.LicenseDetailActivity;
 import com.zantong.mobilecttx.payment_v.LicenseGradeActivity;
 import com.zantong.mobilecttx.payment_v.PaymentActivity;
+import com.zantong.mobilecttx.splash_v.SplashActivity;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.violation_v.ViolationActivity;
 import com.zantong.mobilecttx.violation_v.ViolationListActivity;
@@ -73,6 +74,7 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 RouterGlobal.Host.license_grade_host,
                 RouterGlobal.Host.license_detail_host,
                 RouterGlobal.Host.pay_ment_host,
+                RouterGlobal.Host.splash_activity_host,
                 RouterGlobal.Host.home_rich_host
         };
     }
@@ -130,6 +132,8 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, LicenseDetailActivity.class);
         } else if (RouterGlobal.Host.home_rich_host.equals(host)) {
             intent.setClass(context, RichTextActivity.class);
+        } else if (RouterGlobal.Host.splash_activity_host.equals(host)) {
+            intent.setClass(context, SplashActivity.class);
         } else {
             return true;
         }
@@ -149,6 +153,7 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 && !RouterGlobal.Host.ocr_camera_host.equals(host)
                 && !RouterGlobal.Host.violation_query_host.equals(host)
                 && !RouterGlobal.Host.home_rich_host.equals(host)
+                && !RouterGlobal.Host.splash_activity_host.equals(host)
                 && !MainRouter.gotoByIsLogin();
     }
 

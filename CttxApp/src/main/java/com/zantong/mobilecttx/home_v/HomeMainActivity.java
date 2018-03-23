@@ -24,6 +24,7 @@ import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.global.MainGlobal;
+import com.zantong.mobilecttx.home.bean.VersionResponse;
 import com.zantong.mobilecttx.push_v.IPushBroadcastReceiver;
 import com.zantong.mobilecttx.push_v.PushBroadcastReceiver;
 import com.zantong.mobilecttx.utils.DialogUtils;
@@ -130,6 +131,14 @@ public class HomeMainActivity extends AbstractBaseActivity
 
     @Override
     protected void initContentData() {
+        if (mHomeUnimpededFragment != null) {
+            mHomeUnimpededFragment.versionInfo();
+        } else {
+            oldVersionInfo();
+        }
+    }
+
+    protected void oldVersionInfo() {
         //更新检查
         UpgradeInfo upgradeInfo = Beta.getUpgradeInfo();
         int appCode = AppUtils.getAppVersionCode();
@@ -159,6 +168,53 @@ public class HomeMainActivity extends AbstractBaseActivity
                         });
             }
         }
+    }
+
+    public void versionInfoSucceed(VersionResponse.Version version) {
+        int update = version.getIsUpdate();
+        String ver = version.getVersion();
+
+        if (update == 1) {//强制更新
+            shareAppShop(Utils.getContext().getPackageName());
+        } else if (update == 2) {//原推荐更新
+            Beta.checkUpgrade();
+        } else if (update == 3) {//bugly推荐更新
+            oldVersionInfo();
+        } else if (update == 4) {//推荐应用更新
+            gotoOfficial(ver);
+        } else if (update == 5) {//应用市场更新
+            gotoOfficialApp(ver);
+        }
+    }
+
+    // 4
+    private void gotoOfficial(String ver) {
+        DialogUtils.createDialog(this, "更新提示",
+                "官方最新版本" + ver + "已发布，为了完整体验App功能请去应用市场更新！",
+                "更新", "取消",
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        shareAppShop("com.zantong.mobilecttx");
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+    }
+
+    // 5
+    private void gotoOfficialApp(String ver) {
+        DialogUtils.createDialog(this,
+                "官方最新版本" + ver + "已发布，为了完整体验App功能请去应用市场更新！",
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        shareAppShop("com.zantong.mobilecttx");
+                    }
+                });
     }
 
     /**
@@ -233,8 +289,6 @@ public class HomeMainActivity extends AbstractBaseActivity
         }
     }
 
-    private long exitTime;
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -255,13 +309,13 @@ public class HomeMainActivity extends AbstractBaseActivity
     @Override
     public void onBackPressed() {
         //        super.onBackPressed();
-//        Intent intent = new Intent(Intent.ACTION_MAIN);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-//                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-//        intent.addCategory(Intent.CATEGORY_HOME);
-//        startActivity(intent);
+        //        Intent intent = new Intent(Intent.ACTION_MAIN);
+        //        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+        //                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        //        intent.addCategory(Intent.CATEGORY_HOME);
+        //        startActivity(intent);
 
         //按返回键返回桌面
-                moveTaskToBack(true);
+        moveTaskToBack(true);
     }
 }

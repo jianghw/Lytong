@@ -20,8 +20,8 @@ public class PopupPushActivity extends AndroidPopupActivity {
      */
     @Override
     protected void onSysNoticeOpened(String title, String s1, Map<String, String> extraMap) {
-        AliPushExtBean pushExtBean= new AliPushExtBean();
 
+        AliPushExtBean pushExtBean= new AliPushExtBean();
         for (Map.Entry<String, String> entry : extraMap.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
@@ -34,19 +34,20 @@ public class PopupPushActivity extends AndroidPopupActivity {
         }
         String type = pushExtBean.getType();
 
+        MainRouter.gotoSplashActivity(this,pushExtBean);
         //前台工作
-        if (type.equals("1"))//主页
-            MainRouter.gotoMainActivity(this, 0);
-        else if (type.equals("2"))//消息详情
-            MainRouter.gotoMegDetailActivity(this, title, pushExtBean.getId());
-        else if (type.equals("3"))//优惠详情
-            MainRouter.gotoCouponStatusActivity(this);
-        else if (type.equals("4"))//html详情
-            MainRouter.gotoWebHtmlActivity(this, title, pushExtBean.getUrl());
-        else if (type.equals("5"))//违章查询
-            MainRouter.gotoViolationActivity(this);
-        else
-            gotoAppLauncher(this);
+//        if (type.equals("1"))//主页
+//            MainRouter.gotoMainActivity(this, 0);
+//        else if (type.equals("2"))//消息详情
+//            MainRouter.gotoMegDetailActivity(this, title, pushExtBean.getId());
+//        else if (type.equals("3"))//优惠详情
+//            MainRouter.gotoCouponStatusActivity(this);
+//        else if (type.equals("4"))//html详情
+//            MainRouter.gotoWebHtmlActivity(this, title, pushExtBean.getUrl());
+//        else if (type.equals("5"))//违章查询
+//            MainRouter.gotoViolationActivity(this);
+//        else
+//            gotoAppLauncher(this);
     }
 
     private void gotoAppLauncher(Context context) {

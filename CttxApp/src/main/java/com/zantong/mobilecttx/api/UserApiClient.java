@@ -313,7 +313,7 @@ public class UserApiClient extends BaseApiClient {
      * create at 16/6/15 下午4:05
      */
     public static void getCurrentVerson(Context context, VersionDTO dto, CallBack<VersionResponse> callback) {
-        BaseCallBack<VersionResponse> versionCallBack = new BaseCallBack<VersionResponse>(
+        BaseCallBack<VersionResponse> versionCallBack = new BaseCallBack<>(
                 context, callback, VersionResponse.class);
         post(context, getDownUrl("versionInfo"), dto, versionCallBack);
     }

@@ -31,7 +31,9 @@ import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
 import com.zantong.mobilecttx.home.bean.ModuleResponse;
 import com.zantong.mobilecttx.home.bean.StartPicResponse;
+import com.zantong.mobilecttx.home.bean.VersionResponse;
 import com.zantong.mobilecttx.home.dto.HomeDataDTO;
+import com.zantong.mobilecttx.home.dto.VersionDTO;
 import com.zantong.mobilecttx.map.bean.GasStationDetailResponse;
 import com.zantong.mobilecttx.map.bean.GasStationResponse;
 import com.zantong.mobilecttx.map.bean.YearCheckDetailResponse;
@@ -223,7 +225,7 @@ public interface IRemoteSource {
     /**
      * 8.查询订单列表
      */
-    Observable<OrderListResponse> getOrderList(String userId,String pager);
+    Observable<OrderListResponse> getOrderList(String userId, String pager);
 
     /**
      * 9.获取订单详情
@@ -385,4 +387,9 @@ public interface IRemoteSource {
      * 分享统计数据
      */
     Observable<StatistCountResponse> getStatisticsCount(String phone);
+
+    /**
+     * 版本更新
+     */
+    Observable<VersionResponse> versionInfo(VersionDTO versionDTO);
 }

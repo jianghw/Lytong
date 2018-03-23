@@ -6,7 +6,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,16 +17,17 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
+import com.tzly.ctcyh.router.custom.animation.PropertyUtils;
 import com.tzly.ctcyh.router.custom.image.ImageOptions;
 import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.DensityUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.custom.animation.PropertyUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.Injection;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
 import com.zantong.mobilecttx.home.bean.StartPicResponse;
 import com.zantong.mobilecttx.router.MainRouter;
@@ -54,6 +57,10 @@ public class SplashActivity extends AbstractBaseActivity
     private ArrayList<StartPicBean> mResultList = new ArrayList<>();
     private TextView mTvName;
 
+    private String mCurType;
+    private String mCurId;
+    private String mCurUrl;
+
     /**
      * 是否要子布局定义title
      */
@@ -68,6 +75,17 @@ public class SplashActivity extends AbstractBaseActivity
 
     @Override
     protected void bundleIntent(Intent intent) {
+        if (intent != null) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                if (intent.hasExtra(MainGlobal.putExtra.splash_type_extra))
+                    mCurType = bundle.getString(MainGlobal.putExtra.splash_type_extra);
+                if (intent.hasExtra(MainGlobal.putExtra.splash_id_extra))
+                    mCurId = bundle.getString(MainGlobal.putExtra.splash_id_extra);
+                if (intent.hasExtra(MainGlobal.putExtra.splash_url_extra))
+                    mCurUrl = bundle.getString(MainGlobal.putExtra.splash_url_extra);
+            }
+        }
     }
 
     @Override
@@ -76,8 +94,10 @@ public class SplashActivity extends AbstractBaseActivity
 
         mTvName.setText(getResources().getString(R.string.main_app_name));
         String channel = com.tzly.ctcyh.router.util.SPUtils.instance().getString(com.tzly.ctcyh.router.util.SPUtils.APP_CHANNEL);
-        mTvName.setVisibility(channel.contains("tzly") ? View.INVISIBLE : View.VISIBLE);
-        mImgHuawei.setVisibility(channel.contains("huawei") || channel.contains("Huawei") ? View.VISIBLE : View.GONE);
+        mTvName.setVisibility(channel.contains("tzly")
+                ? View.INVISIBLE : View.VISIBLE);
+        mImgHuawei.setVisibility(channel.contains("huawei") || channel.contains("Huawei")
+                ? View.VISIBLE : View.GONE);
 
         SplashPresenter mPresenter = new SplashPresenter(
                 Injection.provideRepository(Utils.getContext()), this);
@@ -229,11 +249,29 @@ public class SplashActivity extends AbstractBaseActivity
 
         if (appCode <= versionCode) {
             MainRouter.gotoMainActivity(this, 0);
-            //            MainRouter.gotoPaySucceedActivity(this, "2");
-            MobclickAgent.onEvent(this, Config.getUMengID(0));
+            if (!TextUtils.isEmpty(mCurType)) gotoWhere(mCurType);
         } else {
             MainRouter.gotoGuideActivity(this, mResultList);
             overridePendingTransition(0, 0);
+        }
+        MobclickAgent.onEvent(this, Config.getUMengID(0));
+    }
+
+    public void gotoWhere(String type) {
+        if (type.equals("1"))//主页
+        {
+
+        } else if (type.equals("2"))//消息详情
+            MainRouter.gotoMegDetailActivity(this, "消息详情", mCurId);
+        else if (type.equals("3"))//优惠详情
+            MainRouter.gotoCouponStatusActivity(this);
+        else if (type.equals("4"))//html详情
+            MainRouter.gotoWebHtmlActivity(this, "推送页面", mCurUrl);
+        else if (type.equals("5"))//违章查询
+            MainRouter.gotoViolationActivity(this);
+        else//其他
+        {
+
         }
     }
 
@@ -247,14 +285,19 @@ public class SplashActivity extends AbstractBaseActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         if (mPresenter != null) mPresenter.unSubscribe();
+
+        mCurId = null;
+        mCurType = null;
+        mCurUrl = null;
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_skip:
-//                gotoMain();
+                //                gotoMain();
                 break;
             default:
                 break;

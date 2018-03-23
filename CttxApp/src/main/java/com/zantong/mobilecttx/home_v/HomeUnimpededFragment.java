@@ -35,6 +35,7 @@ import com.zantong.mobilecttx.base.BaseAutoScrollUpTextView;
 import com.zantong.mobilecttx.base.bean.UnimpededBannerBean;
 import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
+import com.zantong.mobilecttx.home.bean.VersionResponse;
 import com.zantong.mobilecttx.home_p.IUnimpededFtyContract;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.home_p.HorizontalCarViolationAdapter;
@@ -675,7 +676,6 @@ public class HomeUnimpededFragment extends RefreshFragment
         ToastUtils.toastShort("相机权限被拒绝，请手机设置中打开");
     }
 
-
     /**
      * 进入地图年检页面
      */
@@ -690,6 +690,7 @@ public class HomeUnimpededFragment extends RefreshFragment
             gotoMap();
         }
     }
+
 
     private void gotoMap() {
         MainRouter.gotoMapActivity(getActivity());
@@ -773,7 +774,6 @@ public class HomeUnimpededFragment extends RefreshFragment
         toastShort("您已关闭定位权限,请手机设置中打开");
     }
 
-
     @PermissionSuccess(requestCode = 3000)
     public void doOilMapSuccess() {
         gotoOilMap();
@@ -785,6 +785,7 @@ public class HomeUnimpededFragment extends RefreshFragment
         ToastUtils.toastShort("此功能需要打开相关的地图权限");
     }
 
+
     @PermissionSuccess(requestCode = 4000)
     public void doMapSuccess() {
         gotoMap();
@@ -793,5 +794,21 @@ public class HomeUnimpededFragment extends RefreshFragment
     @PermissionFail(requestCode = 4000)
     public void doMapFail() {
         ToastUtils.toastShort("您已关闭定位权限,请手机设置中打开");
+    }
+
+    /**
+     * 获取版本信息
+     */
+    public void versionInfo() {
+        if (mPresenter != null) mPresenter.versionInfo();
+    }
+
+    @Override
+    public void versionInfoSucceed(VersionResponse result) {
+        Activity activity = getActivity();
+        if (activity instanceof HomeMainActivity) {
+            HomeMainActivity p = (HomeMainActivity) activity;
+            if(p!=null) p.versionInfoSucceed(result.getData());
+        }
     }
 }

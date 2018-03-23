@@ -40,6 +40,10 @@ public final class MainGlobal {
         public static final String license_bean_extra = "license_bean_extra";
         public static final String license_position_extra = "license_position_extra";
         public static final String home_rich_extra = "home_rich_extra";
+
+        public static final String splash_type_extra = "splash_type_extra";
+        public static final String splash_id_extra = "splash_id_extra";
+        public static final String splash_url_extra = "splash_url_extra";
     }
 
     public static final class Host {
