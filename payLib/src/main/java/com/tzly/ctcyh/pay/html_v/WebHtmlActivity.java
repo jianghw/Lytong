@@ -25,7 +25,6 @@ import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.custom.dialog.DialogUtils;
 import com.tzly.ctcyh.router.custom.dialog.WeiXinDialogFragment;
 import com.tzly.ctcyh.router.util.EncryptUtils;
-import com.tzly.ctcyh.router.util.LogUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -351,8 +350,6 @@ public class WebHtmlActivity extends AbstractBaseActivity
      */
     @Override
     public void shouldOverrideUrlLoading(WebView view, String url) {
-        LogUtils.e("OverrideUrl-->" + url);
-
         Intent intent = new Intent();
         if (url.startsWith("tel:")) {
             intent.setAction(Intent.ACTION_DIAL);

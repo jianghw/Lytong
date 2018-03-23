@@ -9,27 +9,26 @@
     <TextView
         android:id="@+id/dialog_title"
         style="@style/black_word"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:textStyle="bold"
         android:textColor="@color/gray_33"
         android:text="温馨提示"
-        android:textSize="15sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/dialog_one_btn_content"
         style="@style/appblack_word"
-        android:layout_width="fill_parent"
-        android:layout_height="50dip"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:gravity="center"
         android:text="对话框内容"
-        android:textSize="@dimen/fs_48"/>
+        android:textSize="@dimen/res_fs_14"/>
 
     <include layout="@layout/view_line3" />
 

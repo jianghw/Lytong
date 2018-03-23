@@ -253,6 +253,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
     @Override
     public void versionInfo() {
         VersionDTO versionDTO = new VersionDTO();
+        versionDTO.setVersionType("0");
         Subscription subscription = mRepository.versionInfo(versionDTO)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -263,6 +264,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
                     @Override
                     public void doError(Throwable e) {
+                        ftyView.versionInfoError();
                     }
 
                     @Override

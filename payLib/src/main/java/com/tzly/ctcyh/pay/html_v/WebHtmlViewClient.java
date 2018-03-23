@@ -26,6 +26,8 @@ public class WebHtmlViewClient extends WebViewClient {
     /**
      * 返回false由当前WebView处理
      * 此方法在API24被废弃，不处理POST请求
+     * <p>
+     * Android app 内嵌WebView 加载html页面时，执行shouldOverrideUrlLoading(WebView view, String url)方法时
      */
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -79,7 +81,7 @@ public class WebHtmlViewClient extends WebViewClient {
             js += "function overSubmit(){window.CTTX.submitBankByCard();};";
         }
         LogUtils.e("onPageFinished==>" + js);
-        if (viewClientable != null ) viewClientable.onPageFinished(view, js);
+        if (viewClientable != null) viewClientable.onPageFinished(view, js);
         super.onPageFinished(view, url);
     }
 

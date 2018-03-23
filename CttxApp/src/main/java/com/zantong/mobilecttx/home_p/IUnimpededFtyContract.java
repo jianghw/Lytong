@@ -34,6 +34,9 @@ public interface IUnimpededFtyContract {
         void bannerSucceed(UnimpededBannerResponse result);
 
         void versionInfoSucceed(VersionResponse result);
+
+        void versionInfoError();
+
     }
 
     interface IUnimpededFtyPresenter extends IBasePresenter {

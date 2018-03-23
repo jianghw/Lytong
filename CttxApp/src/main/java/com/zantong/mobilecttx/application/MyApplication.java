@@ -151,12 +151,8 @@ public class MyApplication extends MultiDexApplication {
         //App的版本
         strategy.setAppVersion(version);
 
-        if (channel.contains("shwzcx")) {
-            Bugly.init(this,"0bc169796d",BuildConfig.isDeta, strategy);
-        } else {
-            Bugly.init(this, BuildConfig.isDeta ? "b7b596e1eb"
-                    : "62323a33e6", BuildConfig.isDeta, strategy);
-        }
+        Bugly.init(this, BuildConfig.isDeta ? "b7b596e1eb"
+                : "62323a33e6", BuildConfig.isDeta, strategy);
         //Log环境初始化
         LogUtils.initLogUtils(BuildConfig.isDeta);
     }

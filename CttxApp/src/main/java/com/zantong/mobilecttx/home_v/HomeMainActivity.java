@@ -104,8 +104,6 @@ public class HomeMainActivity extends AbstractBaseActivity
 
         mFrameLayout = (FrameLayout) findViewById(R.id.content);
         mCustomBottom = (UiTableBottom) findViewById(R.id.custom_bottom);
-
-        initBottomTable();
     }
 
     /**
@@ -131,11 +129,75 @@ public class HomeMainActivity extends AbstractBaseActivity
 
     @Override
     protected void initContentData() {
-        if (mHomeUnimpededFragment != null) {
-            mHomeUnimpededFragment.versionInfo();
-        } else {
+        initBottomTable();
+    }
+
+    public void versionInfoError() {
+        oldVersionInfo();
+    }
+
+    /**
+     * 1、强制 官方包
+     * 2、
+     * 3、强制 马甲包
+     * 4、
+     */
+    public void versionInfoSucceed(VersionResponse.Version version) {
+        int update = version.getIsUpdate();
+        String ver = version.getVersion();
+
+        String verName = AppUtils.getAppVersionName();
+        if (ver.equals(verName)) return;
+
+        if (update == 1) {//强制更新
+            constraintUpate(ver);
+        } else if (update == 2) {//原推荐更新
+            recommendUpdate(ver);
+        } else if (update == 3) {//强制更新官方包
+            constraintUpate(ver, Utils.getContext().getPackageName());
+        } else if (update == 4) {//推荐更新官方包
+            recommendUpdate(ver, Utils.getContext().getPackageName());
+        } else if (update == 5) {//bugly
             oldVersionInfo();
         }
+    }
+
+    // 推荐更新
+    private void recommendUpdate(String version) {
+        recommendUpdate(version, "com.zantong.mobilecttx");
+    }
+
+    private void recommendUpdate(String version, final String packageName) {
+        DialogUtils.createDialog(this, "更新提示",
+                "官方最新版本" + version + "已发布，为了完整体验App功能请应用市场更新！",
+                "更新", "取消",
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        shareAppShop(packageName);
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+    }
+
+    //强制更新
+    private void constraintUpate(String version) {
+        constraintUpate(version, "com.zantong.mobilecttx");
+    }
+
+    private void constraintUpate(String version, final String packageName) {
+        DialogUtils.createDialogNoDismiss(this,
+                "官方最新版本" + version + "已发布，为了完整体验App功能请应用市场更新！",
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        shareAppShop(packageName);
+                    }
+                });
     }
 
     protected void oldVersionInfo() {
@@ -150,7 +212,6 @@ public class HomeMainActivity extends AbstractBaseActivity
         if (appCode < mVersionCode) {
             if (upgradeInfo.upgradeType == 2) {
                 Beta.checkUpgrade();
-                //                startActivity(AppUtils.uninstallAppIntent("com.tzly.mobileapp.shwzcx"));
             } else {
                 DialogUtils.updateDialog(this,
                         upgradeInfo.title, upgradeInfo.newFeature,
@@ -168,53 +229,6 @@ public class HomeMainActivity extends AbstractBaseActivity
                         });
             }
         }
-    }
-
-    public void versionInfoSucceed(VersionResponse.Version version) {
-        int update = version.getIsUpdate();
-        String ver = version.getVersion();
-
-        if (update == 1) {//强制更新
-            shareAppShop(Utils.getContext().getPackageName());
-        } else if (update == 2) {//原推荐更新
-            Beta.checkUpgrade();
-        } else if (update == 3) {//bugly推荐更新
-            oldVersionInfo();
-        } else if (update == 4) {//推荐应用更新
-            gotoOfficial(ver);
-        } else if (update == 5) {//应用市场更新
-            gotoOfficialApp(ver);
-        }
-    }
-
-    // 4
-    private void gotoOfficial(String ver) {
-        DialogUtils.createDialog(this, "更新提示",
-                "官方最新版本" + ver + "已发布，为了完整体验App功能请去应用市场更新！",
-                "更新", "取消",
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        shareAppShop("com.zantong.mobilecttx");
-                    }
-                }, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                });
-    }
-
-    // 5
-    private void gotoOfficialApp(String ver) {
-        DialogUtils.createDialog(this,
-                "官方最新版本" + ver + "已发布，为了完整体验App功能请去应用市场更新！",
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        shareAppShop("com.zantong.mobilecttx");
-                    }
-                });
     }
 
     /**

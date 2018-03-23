@@ -201,6 +201,9 @@ public class HomeUnimpededFragment extends RefreshFragment
         //违章车辆
         mCarViolationAdapter = new HorizontalCarViolationAdapter(getActivity(), mUserCarInfoBeanList);
         mCustomViolation.setAdapter(mCarViolationAdapter);
+
+        //版本更新
+        versionInfo();
     }
 
     @Override
@@ -808,7 +811,16 @@ public class HomeUnimpededFragment extends RefreshFragment
         Activity activity = getActivity();
         if (activity instanceof HomeMainActivity) {
             HomeMainActivity p = (HomeMainActivity) activity;
-            if(p!=null) p.versionInfoSucceed(result.getData());
+            p.versionInfoSucceed(result.getData());
+        }
+    }
+
+    @Override
+    public void versionInfoError() {
+        Activity activity = getActivity();
+        if (activity instanceof HomeMainActivity) {
+            HomeMainActivity p = (HomeMainActivity) activity;
+            p.versionInfoError();
         }
     }
 }

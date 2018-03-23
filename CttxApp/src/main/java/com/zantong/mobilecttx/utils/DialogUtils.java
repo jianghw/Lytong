@@ -456,9 +456,8 @@ public class DialogUtils {
 
     /**
      * 确认对话框
-     *
-     * @param context
-     * @param message
+     * <p>
+     * 必须确认
      */
     public static void createDialog(final Context context, String message, final View.OnClickListener listener) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
@@ -482,6 +481,49 @@ public class DialogUtils {
         dialog.getWindow().setBackgroundDrawableResource(R.color.trans);
         dialog.getWindow().setContentView(view);
         dialog.setCanceledOnTouchOutside(false);
+
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    public static void createDialogNoDismiss(final Context context, String message, final View.OnClickListener listener) {
+        final AlertDialog dialog = new AlertDialog.Builder(context).create();
+
+        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_one_btn, null);
+        TextView mContent = (TextView) view.findViewById(R.id.dialog_one_btn_content);
+        Button mCommit = (Button) view.findViewById(R.id.dialog_one_btn_commit);
+        mContent.setText(message);
+        mCommit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(v);
+            }
+        });
+        dialog.show();
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = DensityUtils.getScreenWidth(context) * 3 / 4;
+        dialog.getWindow().setAttributes(params);
+
+        dialog.getWindow().setBackgroundDrawableResource(R.color.trans);
+        dialog.getWindow().setContentView(view);
+        dialog.setCanceledOnTouchOutside(false);
+
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     /**

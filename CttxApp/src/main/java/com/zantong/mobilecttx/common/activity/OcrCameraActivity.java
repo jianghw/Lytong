@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tzly.ctcyh.router.custom.image.ImageTools;
+import com.tzly.ctcyh.router.util.DensityUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.global.MainGlobal;
@@ -34,9 +36,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-
-import com.tzly.ctcyh.router.custom.image.ImageTools;
-import com.tzly.ctcyh.router.util.DensityUtils;
 
 /**
  * 拍照扫描
@@ -86,9 +85,9 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
         mSurfaceView.setBackgroundColor(TRIM_MEMORY_BACKGROUND);
         mSurfaceHolder.addCallback(new SurfaceCallback());//为SurfaceView的句柄添加一个回调函数
         //设置参数,并拍照
-        Bundle bundle=getIntent().getExtras();
+        Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mResType =   bundle.getInt(MainGlobal.putExtra.ocr_camera_extra, 0);
+            mResType = bundle.getInt(MainGlobal.putExtra.ocr_camera_extra, 0);
         }
         if (mResType == 0) {
             mDriverBtn.setVisibility(View.GONE);
@@ -220,19 +219,21 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
                 });
 
             } catch (Exception e) {
-                DialogUtils.createDialog(OcrCameraActivity.this, "请先设置拍照权限", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mResType == 0) {//行驶证
-                            setResult(MainGlobal.resultCode.ocr_camera_license, new Intent());
-                        } else if (mResType == 1) {//驾驶证
-                            setResult(1206, new Intent());
-                        } else if (mResType == 2) {//驾驶证
-                            setResult(1204, new Intent());
-                        }
-                        finish();
-                    }
-                });
+                DialogUtils.createDialog(OcrCameraActivity.this,
+                        "请先设置拍照权限",
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (mResType == 0) {//行驶证
+                                    setResult(MainGlobal.resultCode.ocr_camera_license, new Intent());
+                                } else if (mResType == 1) {//驾驶证
+                                    setResult(1206, new Intent());
+                                } else if (mResType == 2) {//驾驶证
+                                    setResult(1204, new Intent());
+                                }
+                                finish();
+                            }
+                        });
             }
         }
 
@@ -320,9 +321,9 @@ public class OcrCameraActivity extends Activity implements View.OnClickListener 
             }
         }
         // 当未找到与手机分辨率相等的数值,取列表中间的分辨率
-//        if (index == -1) {
-//            index = sizes.size()  - 1;
-//        }
+        //        if (index == -1) {
+        //            index = sizes.size()  - 1;
+        //        }
         if (sizes.size() >= 2) {
             if (sizes.get(0).width > sizes.get(1).width) {
                 index = 0;
