@@ -54,8 +54,7 @@
         android:layout_marginTop="@dimen/ds_60"
         android:text="@string/main_app_help"
         android:textColor="@color/black_80"
-        android:textSize="@dimen/fs_50"
-        />
+        android:textSize="@dimen/fs_50" />
 
     <TextView
         android:layout_width="match_parent"
@@ -100,6 +99,7 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/img_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_code_contact"

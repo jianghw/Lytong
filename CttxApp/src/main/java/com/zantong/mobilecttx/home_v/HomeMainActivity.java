@@ -147,7 +147,7 @@ public class HomeMainActivity extends AbstractBaseActivity
         String ver = version.getVersion();
 
         String verName = AppUtils.getAppVersionName();
-        if (ver.equals(verName)) return;
+        if (ver.equals("3.3.5")) return;
 
         if (update == 1) {//强制更新
             constraintUpate(ver);

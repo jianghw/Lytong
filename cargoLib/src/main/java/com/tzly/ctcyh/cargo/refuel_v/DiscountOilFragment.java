@@ -176,13 +176,14 @@ public class DiscountOilFragment extends RefreshFragment
                         + "4、充值成功后，需加油站圈存后方可使用，详询加油站工作人员;\n"
                         + "5、目前黑吉辽、陕甘宁、新疆、内蒙、西藏、青海省不支持当地圈存，可在外省圈存后在以上城市使用加油;\n"
                         + "6、本服务为全国加油卡代充，顾不支持开具发票;\n"
-                        + "7、本服务由" + app_name + "加油服务商提供，如有问题请致电4008216158"
+                        + "7、本服务由" + app_name + "加油服务商提供"
         );
         //可以为多部分设置超链接
-        spanableInfo.setSpan(
-                new Clickable(listener),
-                spanableInfo.length() - 10, spanableInfo.length(),
-                Spanned.SPAN_MARK_MARK);
+//        spanableInfo.setSpan(
+//                new Clickable(listener),
+//                spanableInfo.length() - 10, spanableInfo.length(),
+//                Spanned.SPAN_MARK_MARK);
+
         return spanableInfo;
     }
 
