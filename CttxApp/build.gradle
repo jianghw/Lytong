@@ -114,7 +114,6 @@ android {
                                     alibaba_APP_SECRET: "a51ce60b119cf15b9ab220ed70d8078c"]
         }
 
-        release.initWith(android.buildTypes.alpha)
         release {
             buildConfigField 'boolean', 'isDeta', rootProject.ext.release.isDeta
             buildConfigField 'String', 'base_url', rootProject.ext.release.base_url
@@ -124,7 +123,13 @@ android {
             buildConfigField 'String', 'bank_mc_url', rootProject.ext.release.bank_mc_url
 
             debuggable = false
-            zipAlignEnabled false
+            minifyEnabled false
+            zipAlignEnabled true
+            shrinkResources false
+            signingConfig signingConfigs.release
+            manifestPlaceholders = [baidu_API_KEY     : "E6lDRqyaSjj8jR8O5wdz5jpgiT0LOuQn",
+                                    alibaba_API_KEY   : "23481202",
+                                    alibaba_APP_SECRET: "a51ce60b119cf15b9ab220ed70d8078c"]
         }
     }
 
