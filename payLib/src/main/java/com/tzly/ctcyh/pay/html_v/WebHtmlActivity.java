@@ -25,6 +25,7 @@ import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.custom.dialog.DialogUtils;
 import com.tzly.ctcyh.router.custom.dialog.WeiXinDialogFragment;
 import com.tzly.ctcyh.router.util.EncryptUtils;
+import com.tzly.ctcyh.router.util.LogUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -113,7 +114,7 @@ public class WebHtmlActivity extends AbstractBaseActivity
         super.onNewIntent(intent);
 
         initTitle();
-        webLoadUrl(mStrUrl);
+        if (!TextUtils.isEmpty(mStrUrl)) webLoadUrl(mStrUrl);
     }
 
     @Override
@@ -161,6 +162,9 @@ public class WebHtmlActivity extends AbstractBaseActivity
 
     @SuppressLint({"JavascriptInterface", "SetJavaScriptEnabled", "AddJavascriptInterface"})
     private void bindWebSettings() {
+        mWebView.setWebViewClient(new WebHtmlViewClient(this));
+        mWebView.setWebChromeClient(new WebHtmlChromeClient(this));
+
         WebSettings settings = mWebView.getSettings();
 
         FragmentManager manager = getSupportFragmentManager();
@@ -209,10 +213,8 @@ public class WebHtmlActivity extends AbstractBaseActivity
         //调试调试用
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(BuildConfig.isDeta);
+            //            WebView.setWebContentsDebuggingEnabled(true);
         }
-
-        mWebView.setWebViewClient(new WebHtmlViewClient(this));
-        mWebView.setWebChromeClient(new WebHtmlChromeClient(this));
     }
 
     private void webLoadUrl(String mStrUrl) {
@@ -350,6 +352,7 @@ public class WebHtmlActivity extends AbstractBaseActivity
      */
     @Override
     public void shouldOverrideUrlLoading(WebView view, String url) {
+        LogUtils.e("shouldOverrideUrlLoading-->" + url);
         Intent intent = new Intent();
         if (url.startsWith("tel:")) {
             intent.setAction(Intent.ACTION_DIAL);

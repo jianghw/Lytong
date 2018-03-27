@@ -6,6 +6,7 @@ import android.net.http.SslError;
 import android.os.Build;
 import android.view.KeyEvent;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -56,6 +57,7 @@ public class WebHtmlViewClient extends WebViewClient {
      */
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        LogUtils.e("onPageStarted==>"+url);
         super.onPageStarted(view, url, favicon);
 
         if (viewClientable != null) viewClientable.onPageStarted(view, url, favicon);
@@ -80,7 +82,7 @@ public class WebHtmlViewClient extends WebViewClient {
             js += "if(typeof(eval(submitApply))==\"function\"){btn1.onclick=function(){overSubmit();submitApply();};};";
             js += "function overSubmit(){window.CTTX.submitBankByCard();};";
         }
-        LogUtils.e("onPageFinished==>" + js);
+        LogUtils.e("js==>" + js);
         if (viewClientable != null) viewClientable.onPageFinished(view, js);
         super.onPageFinished(view, url);
     }
@@ -99,7 +101,12 @@ public class WebHtmlViewClient extends WebViewClient {
     @Override
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
         //        super.onReceivedSslError(view, handler, error);
-        handler.proceed();
+        handler.proceed();// 接受所有证书
+    }
+
+    @Override
+    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+        super.onReceivedError(view, request, error);
     }
 
     /**

@@ -3,6 +3,8 @@ package com.tzly.ctcyh.cargo.refuel_p;
 import com.tzly.ctcyh.cargo.bean.response.NorOilBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
+import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
+import com.tzly.ctcyh.java.response.oil.SINOPECBean;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 import com.tzly.ctcyh.router.base.IResponseView;
@@ -18,13 +20,17 @@ public interface IRefuelOilContract {
 
     interface IRefuelOilView extends IBaseView<IRefuelOilPresenter>, IResponseView {
 
-        NorOilBean.CNPCBean getCardInfo();
+        SINOPECBean getCardInfo();
 
-        String getOilCard();
+        String getStrEditOil();
 
         void createOrderError(String message);
 
         void createOrderSucceed(RefuelOrderResponse response);
+
+        void remainderSucceed(OilRemainderResponse response);
+
+        void remainderError(String message);
     }
 
     interface IRefuelOilPresenter extends IBasePresenter {
@@ -37,6 +43,10 @@ public interface IRefuelOilContract {
         void findOilCards();
 
         void findCaiNiaoCard();
+
+        void findOilCardsAll();
+
+        void getRemainder();
 
     }
 

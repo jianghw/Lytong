@@ -15,6 +15,7 @@ import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.bean.response.NorOilBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilBean;
+import com.tzly.ctcyh.java.response.oil.SINOPECBean;
 import com.tzly.ctcyh.router.util.FormatUtils;
 
 /**
@@ -24,7 +25,7 @@ import com.tzly.ctcyh.router.util.FormatUtils;
  * Update day:
  */
 
-public class RefuelOilAdapter extends BaseAdapter<NorOilBean.CNPCBean> {
+public class RefuelOilAdapter extends BaseAdapter<SINOPECBean> {
     private Context mAdapterContext;
 
     @Override
@@ -43,7 +44,7 @@ public class RefuelOilAdapter extends BaseAdapter<NorOilBean.CNPCBean> {
     @SuppressLint("SetTextI18n")
     @Override
     public void bindViewData(BaseRecyclerViewHolder viewHolder,
-                             int position, NorOilBean.CNPCBean statusBean) {
+                             int position, SINOPECBean statusBean) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (statusBean == null) return;
         holder.mFayRecharge.setSelected(statusBean.isSelect());

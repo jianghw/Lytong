@@ -52,7 +52,7 @@ ext {
     ]
     //单独配置模块 true-->测试环境 false-->正式环境
     config = [
-            api_deta  : 'false'
+            api_deta  : 'true'
     ]
     //测试
     beta = [

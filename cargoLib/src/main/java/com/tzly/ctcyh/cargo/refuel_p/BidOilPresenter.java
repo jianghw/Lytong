@@ -11,6 +11,7 @@ import com.tzly.ctcyh.cargo.bean.response.OrderExpressResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.cargo.data_m.CargoDataManager;
 import com.tzly.ctcyh.cargo.global.CargoGlobal;
+import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
 import com.tzly.ctcyh.router.api.BaseSubscriber;
 
 import java.util.List;
@@ -129,6 +130,8 @@ public class BidOilPresenter implements IBidOilContract.IBidOilPresenter {
                     public void doNext(RefuelOrderResponse response) {
                         if (response != null && response.getResponseCode()
                                 == CargoGlobal.Response.base_succeed) {
+
+                            getRemainder();
                             mContractView.createOrderSucceed(response);
                         } else {
                             mContractView.createOrderError(response != null
@@ -154,6 +157,36 @@ public class BidOilPresenter implements IBidOilContract.IBidOilPresenter {
         dto.setXian(area[2]);
         dto.setAddressDetail(mContractView.getEditDetailedAddress());
         return dto;
+    }
+
+    public void getRemainder() {
+        Subscription subscription = mRepository
+                .getRemainder(mContractView.getSubmitBean().getId(), "")
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<OilRemainderResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doNext(OilRemainderResponse response) {
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 
     /**

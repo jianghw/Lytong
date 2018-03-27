@@ -4,10 +4,12 @@ package com.tzly.ctcyh.cargo.api;
 import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
 import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.response.BidOilResponse;
-import com.tzly.ctcyh.cargo.bean.response.NorOilResponse;
+import com.tzly.ctcyh.java.response.oil.NorOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.java.response.oil.OilCardsResponse;
+import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
 
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -95,4 +97,17 @@ public interface IAddOilService {
 
     @GET("oil/findCaiNiaoCard")
     Observable<NorOilResponse> findCaiNiaoCard(@Query("userId") String rasUserID);
+
+    /**
+     * 获取加油卡号及商品信息
+     */
+    @GET("oil/findOilCards")
+    Observable<OilCardsResponse> findOilCardsAll(@Query("userId") String rasUserID);
+
+    /**
+     * 判断余额是否充足
+     */
+    @FormUrlEncoded
+    @POST("oil/getRemainder")
+    Observable<OilRemainderResponse> getRemainder(@Field("goodsId") String goodsId, @Field("card") String card);
 }

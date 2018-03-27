@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
@@ -18,7 +17,7 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.bean.response.NorOilBean;
-import com.tzly.ctcyh.cargo.bean.response.NorOilResponse;
+import com.tzly.ctcyh.java.response.oil.NorOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.cargo.data_m.InjectionRepository;
@@ -26,10 +25,13 @@ import com.tzly.ctcyh.cargo.refuel_p.IRefuelOilContract;
 import com.tzly.ctcyh.cargo.refuel_p.RefuelOilAdapter;
 import com.tzly.ctcyh.cargo.refuel_p.RefuelOilPresenter;
 import com.tzly.ctcyh.cargo.router.CargoRouter;
+import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
+import com.tzly.ctcyh.java.response.oil.SINOPECBean;
 import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.custom.popup.CustomDialog;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 
 import java.util.List;
@@ -59,7 +61,7 @@ public class DiscountOilFragment extends RefreshFragment
     /**
      * 当前选择项
      */
-    private NorOilBean.CNPCBean infoBean;
+    private SINOPECBean infoBean;
     /**
      * 通讯接口
      */
@@ -135,10 +137,10 @@ public class DiscountOilFragment extends RefreshFragment
         mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, Object data) {
-                if (!(data instanceof NorOilBean.CNPCBean)) return;
+                if (!(data instanceof SINOPECBean)) return;
 
-                NorOilBean.CNPCBean cardInfoBean = (NorOilBean.CNPCBean) data;
-                for (NorOilBean.CNPCBean oilBean : mAdapter.getAll()) {
+                SINOPECBean cardInfoBean = (SINOPECBean) data;
+                for (SINOPECBean oilBean : mAdapter.getAll()) {
                     boolean isMe = cardInfoBean.getId().equals(oilBean.getId());
                     oilBean.setSelect(isMe);
                     if (isMe) infoBean = oilBean;
@@ -179,10 +181,10 @@ public class DiscountOilFragment extends RefreshFragment
                         + "7、本服务由" + app_name + "加油服务商提供"
         );
         //可以为多部分设置超链接
-//        spanableInfo.setSpan(
-//                new Clickable(listener),
-//                spanableInfo.length() - 10, spanableInfo.length(),
-//                Spanned.SPAN_MARK_MARK);
+        //        spanableInfo.setSpan(
+        //                new Clickable(listener),
+        //                spanableInfo.length() - 10, spanableInfo.length(),
+        //                Spanned.SPAN_MARK_MARK);
 
         return spanableInfo;
     }
@@ -210,15 +212,11 @@ public class DiscountOilFragment extends RefreshFragment
     }
 
     @Override
-    public NorOilBean.CNPCBean getCardInfo() {
-        return infoBean != null ? infoBean : new NorOilBean.CNPCBean();
+    public SINOPECBean getCardInfo() {
+        return infoBean != null ? infoBean : new SINOPECBean();
     }
 
     @Override
-    public String getOilCard() {
-        return TextUtils.isEmpty(getStrEditOil()) ? "0" : getStrEditOil();
-    }
-
     public String getStrEditOil() {
         return mEditOil.getText().toString().trim();
     }
@@ -234,16 +232,18 @@ public class DiscountOilFragment extends RefreshFragment
     protected void responseData(Object response) {
         if (response instanceof NorOilResponse) {
             NorOilResponse oilResponse = (NorOilResponse) response;
-            NorOilBean bean = oilResponse.getData();
+            NorOilResponse.DataBean bean = oilResponse.getData();
             dataRendering(bean);
         } else
-            responseError();
+            ToastUtils.toastShort("数据类型出错,退出页面再试一试");
     }
 
     /**
      * 数据渲染
+     *
+     * @param bean
      */
-    private void dataRendering(NorOilBean bean) {
+    private void dataRendering(NorOilResponse.DataBean bean) {
         String url = bean.getImg();
 
         if (!url.contains("http")) {
@@ -254,7 +254,7 @@ public class DiscountOilFragment extends RefreshFragment
         String oilCard = bean.getOilCard();
         if (!TextUtils.isEmpty(oilCard)) setStrEditOil(oilCard);
 
-        List<NorOilBean.CNPCBean> lis = bean.getSINOPEC();
+        List<SINOPECBean> lis = bean.getSINOPEC();
         if (!lis.isEmpty()) {//默认第一个
             for (int i = 0; i < lis.size(); i++) {
                 lis.get(i).setSelect(i == 0);
@@ -266,7 +266,7 @@ public class DiscountOilFragment extends RefreshFragment
         if (iRechargeAToF != null) iRechargeAToF.setCommitEnable(true);
     }
 
-    private void setSimpleDataResult(List<NorOilBean.CNPCBean> data) {
+    private void setSimpleDataResult(List<SINOPECBean> data) {
         mAdapter.removeAllOnly();
         if (data == null || data.isEmpty()) {
             showStateEmpty();
@@ -334,6 +334,14 @@ public class DiscountOilFragment extends RefreshFragment
             CargoRouter.gotoPayTypeActivity(getActivity(), bean.getOrderId());
         else
             toastShort("数据出错,创建订单未知错误");
+    }
+
+    @Override
+    public void remainderSucceed(OilRemainderResponse response) {
+    }
+
+    @Override
+    public void remainderError(String message) {
     }
 
 }

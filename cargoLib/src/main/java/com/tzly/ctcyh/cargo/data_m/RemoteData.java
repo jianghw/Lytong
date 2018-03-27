@@ -11,7 +11,7 @@ import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
 import com.tzly.ctcyh.cargo.bean.response.ActiveConfigResponse;
 import com.tzly.ctcyh.cargo.bean.response.BidOilResponse;
-import com.tzly.ctcyh.cargo.bean.response.NorOilResponse;
+import com.tzly.ctcyh.java.response.oil.NorOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.OrderExpressResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
@@ -19,6 +19,8 @@ import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.cargo.bean.response.ScoreCaptchaResponse;
 import com.tzly.ctcyh.cargo.bean.response.ScoreResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.java.response.oil.OilCardsResponse;
+import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
 import com.tzly.ctcyh.router.api.RetrofitFactory;
 
 import retrofit2.Retrofit;
@@ -177,6 +179,22 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<ScoreResponse> apiScores(String s, String s1, String s2, String cookie) {
         return xiaoFengRetrofit().create(ILienseService.class).apiScores(s, s1, s2, cookie);
+    }
+
+    /**
+     * 获取加油卡号及商品信息
+     */
+    @Override
+    public Observable<OilCardsResponse> findOilCardsAll(String rasUserID) {
+        return baseRetrofit().create(IAddOilService.class).findOilCardsAll(rasUserID);
+    }
+
+    /**
+     * 判断余额是否充足
+     */
+    @Override
+    public Observable<OilRemainderResponse> getRemainder(String goodsId, String card) {
+        return baseRetrofit().create(IAddOilService.class).getRemainder(goodsId,card);
     }
 
 
