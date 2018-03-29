@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/res_color_white">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/res_color_white">
 
     <ImageView
         android:id="@+id/img_logo"
@@ -11,35 +11,36 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/ds_225"
-        android:src="@mipmap/main_ic_splash"/>
+        android:src="@mipmap/main_ic_splash" />
 
     <TextView
         android:id="@+id/tv_name"
-        android:textSize="@dimen/res_fs_16"
-        android:textColor="@color/res_color_black_4d"
-        android:textStyle="bold"
-        android:text="@string/main_app_name"
-        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/img_logo"
         android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:text="@string/main_app_name"
+        android:textColor="@color/res_color_black_4d"
+        android:textSize="@dimen/res_fs_16"
+        android:textStyle="bold"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/img_huawei"
         android:layout_width="wrap_content"
-        android:src="@mipmap/ic_huawei_logo"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/ds_180"/>
+        android:layout_marginBottom="@dimen/ds_180"
+        android:src="@mipmap/ic_huawei_logo"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/img_advert"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/tv_count"
@@ -50,7 +51,7 @@
         android:layout_alignParentTop="true"
         android:layout_margin="@dimen/ds_96"
         android:background="@drawable/bg_tv_countdown"
-        tools:text="3s"/>
+        tools:text="3s" />
 
     <TextView
         android:id="@+id/tv_skip"
@@ -62,7 +63,7 @@
         android:text="跳过"
         android:textColor="@color/res_color_red_f3"
         android:textSize="@dimen/fs_14sp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </RelativeLayout>
 

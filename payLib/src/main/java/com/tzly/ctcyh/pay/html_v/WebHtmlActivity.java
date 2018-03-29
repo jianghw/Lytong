@@ -374,6 +374,14 @@ public class WebHtmlActivity extends AbstractBaseActivity
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else if (url.startsWith("com.icbc.androidclient://")) {//工行页面
+            //            intent.setAction(Intent.ACTION_VIEW);
+            //            intent.setData(Uri.parse(url));
+            //            try {
+            //                startActivity(intent);
+            //            } catch (Exception e) {
+            //                e.printStackTrace();
+            //            }
         } else {
             view.loadUrl(url);
         }

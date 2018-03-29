@@ -96,8 +96,9 @@ public class SplashActivity extends AbstractBaseActivity
         String channel = com.tzly.ctcyh.router.util.SPUtils.instance().getString(com.tzly.ctcyh.router.util.SPUtils.APP_CHANNEL);
         mTvName.setVisibility(channel.contains("tzly")
                 ? View.INVISIBLE : View.VISIBLE);
-        mImgHuawei.setVisibility(channel.contains("huawei") || channel.contains("Huawei")
-                ? View.VISIBLE : View.GONE);
+
+//        mImgHuawei.setVisibility(channel.contains("huawei") || channel.contains("Huawei")
+//                ? View.VISIBLE : View.GONE);
 
         SplashPresenter mPresenter = new SplashPresenter(
                 Injection.provideRepository(Utils.getContext()), this);

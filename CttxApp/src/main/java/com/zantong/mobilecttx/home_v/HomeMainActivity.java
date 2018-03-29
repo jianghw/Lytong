@@ -20,6 +20,7 @@ import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.StatusBarUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.LoginData;
@@ -159,6 +160,8 @@ public class HomeMainActivity extends AbstractBaseActivity
             recommendUpdate(ver, Utils.getContext().getPackageName());
         } else if (update == 5) {//bugly
             oldVersionInfo();
+        } else {
+            ToastUtils.toastShort("请点击'个人'-->'版本更新',获取应用最新版本信息");
         }
     }
 
@@ -208,8 +211,10 @@ public class HomeMainActivity extends AbstractBaseActivity
         if (upgradeInfo != null) {
             mVersionCode = upgradeInfo.versionCode;
         }
+        if (appCode < mVersionCode) Beta.checkUpgrade();
+
         //  public int upgradeType = 1;//升级策略 1建议 2强制 3手工
-        if (appCode < mVersionCode) {
+    /*    if (appCode < mVersionCode) {
             if (upgradeInfo.upgradeType == 2) {
                 Beta.checkUpgrade();
             } else {
@@ -228,7 +233,7 @@ public class HomeMainActivity extends AbstractBaseActivity
                             }
                         });
             }
-        }
+        }*/
     }
 
     /**
