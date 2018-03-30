@@ -15,15 +15,10 @@
         android:text="数据为空,点击刷新下~" />
 
     <com.tzly.ctcyh.router.custom.scroll.ScrollBottomLayout
+        android:id="@+id/scroll_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:handlerHeight="60dp">
-
-        <ImageView
-            android:src="@mipmap/guide_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        android:layout_alignParentBottom="true">
 
     </com.tzly.ctcyh.router.custom.scroll.ScrollBottomLayout>
 

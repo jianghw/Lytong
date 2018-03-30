@@ -30,10 +30,10 @@ public class PopupPushActivity extends AndroidPopupActivity {
                 pushExtBean.setId(value);
             } else if (key.equals("type")) {
                 pushExtBean.setType(value);
+            } else if (key.equals("url")) {
+                pushExtBean.setUrl(value);
             }
         }
-        String type = pushExtBean.getType();
-
         MainRouter.gotoSplashActivity(this,pushExtBean);
         //前台工作
 //        if (type.equals("1"))//主页

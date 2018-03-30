@@ -73,7 +73,7 @@ public abstract class JxBaseActivity extends AppCompatActivity {
             bindTitleView(titleView);
         }
         //multi
-        View multiStateView = inflater.inflate(R.layout.activity_jx_content, parentLayout, true);
+        View multiStateView = inflater.inflate(R.layout.activity_multistate_content, parentLayout, true);
         multiStateLayout = (MultiStateLayout) multiStateView.findViewById(R.id.lay_state);
         multiStateLayout.setOnStateViewCreatedListener(new OnStateViewCreatedListener() {
             @Override

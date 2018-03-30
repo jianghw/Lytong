@@ -86,7 +86,12 @@ public class StatistCountResponse extends BaseResponse {
                 this.coupon = coupon;
             }
 
-
+            public ListBean(String name, int count, String coupon, int type) {
+                this.name = name;
+                this.count = count;
+                this.coupon = coupon;
+                this.type = type;
+            }
         }
     }
 }

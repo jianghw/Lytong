@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.fahrschule.bean.StatistCountResponse;
 
@@ -40,7 +41,7 @@ public class StatisTextCountAdapter extends BaseAdapter<StatistCountResponse.Dat
     @SuppressLint("SetTextI18n")
     @Override
     public void bindViewData(BaseRecyclerViewHolder viewHolder,
-                             int position, StatistCountResponse.DataBean.ListBean stringMap) {
+                             final int position, StatistCountResponse.DataBean.ListBean stringMap) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (stringMap == null) return;
 

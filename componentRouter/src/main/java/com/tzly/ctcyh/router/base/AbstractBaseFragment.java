@@ -52,7 +52,7 @@ public abstract class AbstractBaseFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //此处不用container,
-        View view = inflater.inflate(R.layout.activity_jx_content, null);
+        View view = inflater.inflate(R.layout.activity_multistate_content, null);
         multiStateLayout = (MultiStateLayout) view.findViewById(R.id.lay_state);
         multiStateLayout.setOnStateViewCreatedListener(new OnStateViewCreatedListener() {
             @Override
@@ -62,6 +62,9 @@ public abstract class AbstractBaseFragment extends Fragment {
                 } else if (state == MultiState.LOADING) {
                     enhanceLoadingView(view, state);
                 } else if (state == MultiState.EMPTY) {
+                    View scrollBottom = view.findViewById(R.id.scroll_bottom);
+                    initScrollChildView(scrollBottom);
+
                     enhanceEmptyView(view, state);
                 } else if (state == MultiState.ERROR) {
                     enhanceErrorView(view, state);
@@ -80,6 +83,9 @@ public abstract class AbstractBaseFragment extends Fragment {
         multiStateLayout.setState(multiState);
         if (multiState == MultiState.CONTENT) loadingFirstData();
         return view;
+    }
+
+    protected void initScrollChildView(View scrollBottom) {
     }
 
     @Override
@@ -164,7 +170,8 @@ public abstract class AbstractBaseFragment extends Fragment {
         loadingFirstData();
     }
 
-    private void enhanceContentView(View view, int state) {}
+    private void enhanceContentView(View view, int state) {
+    }
 
     private void doClickRefreshView(View view, int state) {
         View tvEmpty = view.findViewById(R.id.tv_empty);
@@ -254,7 +261,8 @@ public abstract class AbstractBaseFragment extends Fragment {
         errorData(message);
     }
 
-    protected void errorData(String message) {}
+    protected void errorData(String message) {
+    }
 
     public void responseSucceed(Object response) {
         if (response == null) {
