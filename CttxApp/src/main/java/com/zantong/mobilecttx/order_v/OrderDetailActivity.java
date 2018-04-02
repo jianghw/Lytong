@@ -105,7 +105,7 @@ public class OrderDetailActivity extends JxBaseActivity
 
         if (intent != null) {
             Bundle bundle = intent.getExtras();
-            if (intent.hasExtra(MainGlobal.putExtra.web_order_id_extra))
+            if (bundle != null && intent.hasExtra(MainGlobal.putExtra.web_order_id_extra))
                 mOrderId = bundle.getString(MainGlobal.putExtra.web_order_id_extra);
         }
     }
@@ -118,7 +118,9 @@ public class OrderDetailActivity extends JxBaseActivity
     @Override
     protected void bindContentView(View childView) {
         titleContent("订单详情");
+
         initView(childView);
+
         OrderDetailPresenter presenter = new OrderDetailPresenter(
                 Injection.provideRepository(getApplicationContext()), this);
     }

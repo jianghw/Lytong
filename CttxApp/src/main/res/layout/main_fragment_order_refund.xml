@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/res_y_80"
+            android:layout_marginTop="@dimen/res_y_20"
+            android:background="@color/colorWhite"
+            android:paddingLeft="@dimen/res_x_30"
+            android:paddingRight="@dimen/res_x_30">
+
+            <TextView
+                style="@style/ResTextTheme.16.Red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="退款理由" />
+        </RelativeLayout>
+
+        <TextView style="@style/line_splite_gray" />
+
+        <EditText
+            android:id="@+id/edit_detailed_address"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/res_y_360"
+            android:background="@color/colorWhite"
+            android:gravity="top"
+            android:hint="请输入退款理由(必填)"
+            android:maxEms="60"
+            android:maxLength="60"
+            android:maxLines="3"
+            android:padding="@dimen/res_x_30"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textColorHint="@color/colorLineGray_e6"
+            android:textSize="@dimen/fs_16sp" />
+
+        <TextView
+            style="@style/ResTextTheme.14.Red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/res_x_30"
+            android:text="客服确认后会在2个工作日内完成退款" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_query"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_100"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/res_x_30"
+        android:background="@mipmap/ic_btn_bg"
+        android:enabled="true"
+        android:text="提    交"
+        android:textColor="@color/res_color_white"
+        android:textSize="@dimen/res_fs_18" />
+</RelativeLayout>

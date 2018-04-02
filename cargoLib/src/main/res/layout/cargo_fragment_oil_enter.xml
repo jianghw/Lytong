@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/res_color_gray_f8"
+    android:orientation="vertical">
+
+    <!--第一个控件-->
+    <LinearLayout
+        android:id="@+id/lay_oil_997"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/res_x_30"
+        android:layout_marginRight="@dimen/res_x_30"
+        android:layout_marginTop="@dimen/res_y_20"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/res_y_160"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_oil_pic_all" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_rec_str_cor_bottom_w">
+
+            <TextView
+                android:id="@+id/tv_oil_997"
+                style="@style/ResTextTheme.16.Red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="@dimen/res_y_10"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:layout_marginTop="@dimen/res_y_10"
+                android:text="9.97"
+                android:textSize="@dimen/res_fs_26" />
+
+            <TextView
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_oil_997"
+                android:layout_marginLeft="@dimen/res_x_10"
+                android:layout_toRightOf="@+id/tv_oil_997"
+                android:text="折起 油卡充值" />
+
+            <TextView
+                android:id="@+id/tv_997_chongzhi"
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_oil_997"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/res_x_20"
+                android:text="去充值 >" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!--第二个控件-->
+    <LinearLayout
+        android:id="@+id/lay_oil_97"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_260"
+        android:layout_marginLeft="@dimen/res_x_30"
+        android:layout_marginRight="@dimen/res_x_30"
+        android:layout_marginTop="@dimen/res_y_20"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_rec_str_cor_left_w">
+
+            <TextView
+                android:id="@+id/tv_oil_97"
+                style="@style/ResTextTheme.16.Red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:layout_marginTop="@dimen/res_y_30"
+                android:text="畅通97折油卡" />
+
+            <TextView
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_oil_97"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_oil_97"
+                android:text=" + 加油站优惠" />
+
+            <TextView
+                style="@style/ResTextTheme.14.Hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_oil_97"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:layout_marginTop="@dimen/res_y_20"
+                android:gravity="left"
+                android:text="需持有畅通车友会中石化加油卡叠加享受加油站优惠" />
+
+            <ImageView
+                android:id="@+id/img_oil_97"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/res_y_20"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:src="@mipmap/ic_oil_zhongshihua" />
+
+            <TextView
+                style="@style/ResTextTheme.14.Hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/res_y_20"
+                android:layout_marginLeft="@dimen/res_x_20"
+                android:layout_toRightOf="@+id/img_oil_97"
+                android:text="仅限中石化" />
+
+            <TextView
+                android:id="@+id/tv_97_gou"
+                style="@style/ResTextTheme.14.Hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/res_y_20"
+                android:layout_marginRight="@dimen/res_x_20"
+                android:text="已购卡" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/res_x_200"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_rec_str_cor_gra_right_r">
+
+            <TextView
+                android:id="@+id/tv_97_zhe"
+                style="@style/ResTextTheme.14.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/res_x_20"
+                android:text="折起" />
+
+            <TextView
+                style="@style/ResTextTheme.16.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_97_zhe"
+                android:layout_marginRight="@dimen/res_x_10"
+                android:layout_toLeftOf="@+id/tv_97_zhe"
+                android:text="8.8"
+                android:textSize="@dimen/res_fs_26" />
+
+            <TextView
+                android:id="@+id/tv_97_gouka"
+                style="@style/ResTextTheme.16.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_97_zhe"
+                android:layout_centerHorizontal="true"
+                android:text="购卡充油>" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!--第三个控件-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_270"
+        android:layout_marginLeft="@dimen/res_x_30"
+        android:layout_marginRight="@dimen/res_x_30"
+        android:layout_marginTop="@dimen/res_y_20"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/shape_rec_str_cor_left_w">
+
+            <TextView
+                android:id="@+id/tv_oil_bank"
+                style="@style/ResTextTheme.16.Red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:layout_marginTop="@dimen/res_y_30"
+                android:text="工行爱车卡" />
+
+            <TextView
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_oil_bank"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_oil_bank"
+                android:text=" + 加油站优惠" />
+
+            <TextView
+                style="@style/ResTextTheme.14.Hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_oil_bank"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:layout_marginTop="@dimen/res_y_20"
+                android:gravity="left"
+                android:text="需办理工行爱车信用卡指定加油站可享受优惠折扣叠加享受加油站优惠" />
+
+            <ImageView
+                android:id="@+id/img_oil_bank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/res_y_20"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:src="@mipmap/ic_oil_zhongshiyou" />
+
+            <TextView
+                style="@style/ResTextTheme.14.Hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/res_y_20"
+                android:layout_marginLeft="@dimen/res_x_20"
+                android:layout_toRightOf="@+id/img_oil_bank"
+                android:text="仅限中石油" />
+
+            <TextView
+                android:id="@+id/tv_bank_gou"
+                style="@style/ResTextTheme.14.Hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/res_y_20"
+                android:layout_marginRight="@dimen/res_x_20"
+                android:text="已购卡" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/res_x_200"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_rec_str_cor_gra_right_r">
+
+            <TextView
+                android:id="@+id/tv_bank_zhe"
+                style="@style/ResTextTheme.14.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/res_x_20"
+                android:text="折起" />
+
+            <TextView
+                style="@style/ResTextTheme.16.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_bank_zhe"
+                android:layout_marginRight="@dimen/res_x_10"
+                android:layout_toLeftOf="@+id/tv_bank_zhe"
+                android:text="9"
+                android:textSize="@dimen/res_fs_26" />
+
+            <TextView
+                android:id="@+id/tv_bank_gouka"
+                style="@style/ResTextTheme.16.White"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_bank_zhe"
+                android:layout_centerHorizontal="true"
+                android:text="办卡充油>" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!--第四个控件-->
+    <LinearLayout
+        android:id="@+id/lay_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/res_x_30"
+        android:layout_marginRight="@dimen/res_x_30"
+        android:layout_marginTop="@dimen/res_y_20"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/res_y_160"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_oil_pic_station" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_rec_str_cor_bottom_w">
+
+            <TextView
+                android:id="@+id/tv_oil_map"
+                style="@style/ResTextTheme.16.Red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="@dimen/res_y_10"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:layout_marginTop="@dimen/res_y_10"
+                android:text="9.96"
+                android:textSize="@dimen/res_fs_28" />
+
+            <TextView
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_oil_map"
+                android:layout_marginLeft="@dimen/res_x_10"
+                android:layout_toRightOf="@+id/tv_oil_map"
+                android:text="折起 优惠加油站查询" />
+
+            <TextView
+                android:id="@+id/tv_map"
+                style="@style/ResTextTheme.16.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_oil_map"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/res_x_20"
+                android:text="查看地图 >" />
+
+            <TextView
+                android:id="@+id/tv_map_hint"
+                style="@style/ResTextTheme.14.Hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_oil_map"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:gravity="left"
+                android:text="可查询: 97折油卡及爱车卡支持加油站点" />
+
+            <TextView
+                style="@style/ResTextTheme.14.Hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_map_hint"
+                android:layout_marginBottom="@dimen/res_y_10"
+                android:layout_marginLeft="@dimen/res_x_130"
+                android:gravity="left"
+                android:text="加油站优惠力度及优惠时间段" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

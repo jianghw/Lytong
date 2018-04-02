@@ -37,6 +37,17 @@
             android:name=".refuel_v.RechargeAgreementActivity"
             android:screenOrientation="portrait" />
 
+        <!--加油统一入口-->
+        <activity
+            android:name=".refuel_v.OilEnterActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".active_v.ActiveActivity"
             android:screenOrientation="portrait"
@@ -82,12 +93,7 @@
         <activity
             android:name=".license_v.LicenseCargoActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait"></activity>
     </application>
 
     <uses-permission android:name="android.permission.CAMERA" />
