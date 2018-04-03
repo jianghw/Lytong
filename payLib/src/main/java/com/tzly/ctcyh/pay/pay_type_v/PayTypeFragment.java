@@ -175,12 +175,6 @@ public class PayTypeFragment extends RefreshFragment
         mLayReCoupon = (RelativeLayout) view.findViewById(R.id.lay_re_coupon);
         mLayReCoupon.setOnClickListener(this);
 
-        //        mPriceTitle = (TextView) view.findViewById(R.id.price_title);
-        //        mPriceUnit = (TextView) view.findViewById(R.id.price_unit);
-        //        mTvSubmitPrice = (TextView) view.findViewById(R.id.tv_submit_price);
-        //        mTvPay = (TextView) view.findViewById(R.id.tv_pay);
-        //        mTvPay.setOnClickListener(this);
-
         radioButtonToPay();
     }
 
@@ -200,8 +194,10 @@ public class PayTypeFragment extends RefreshFragment
                 } else if (checkedId == R.id.rb_weixinpay) {
                     mPayType = 4;
                 }
+                float original = getOriginalPrice();
                 //恢复不使用优惠劵
-                setSubmitPrice(getOriginalPrice());
+                setSubmitPrice(original);
+
                 mCouponBeanId = -1;
                 //获取优惠
                 if (iPayTypeUi != null) iPayTypeUi.setPayEnable(true);
@@ -507,6 +503,10 @@ public class PayTypeFragment extends RefreshFragment
     }
 
     protected void setSubmitPrice(float price) {
+        //可点击时扣费
+        if (mLayReCoupon != null && mLayReCoupon.isEnabled() && mPayType > 1) {
+            price = price + getOriginalPrice() * 0.01f;
+        }
         if (iPayTypeUi != null) iPayTypeUi.setSubmitPrice(FormatUtils.submitPrice(price));
     }
 

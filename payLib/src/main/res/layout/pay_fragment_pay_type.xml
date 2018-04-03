@@ -61,10 +61,10 @@
                     android:id="@+id/tv_carpay"
                     style="@style/ResTextTheme.14.Red"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/res_y_60"
+                    android:layout_height="@dimen/res_y_90"
                     android:background="@color/res_color_white"
                     android:gravity="left|center_vertical"
-                    android:text="申请办理工行畅通卡"
+                    android:text="@string/string_pay_tv_feiyong"
                     android:visibility="gone" />
 
                 <RelativeLayout

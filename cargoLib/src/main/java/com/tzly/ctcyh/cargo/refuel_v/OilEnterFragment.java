@@ -132,15 +132,12 @@ public class OilEnterFragment extends RefreshFragment implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            default:
-                break;
-            case R.id.tv_bank_gouka:
-                break;
-            case R.id.tv_map:
-                break;
-            case R.id.lay_map:
-                break;
+        int vId = v.getId();
+        if (vId == R.id.tv_bank_gouka) {
+
+        } else if (vId == R.id.tv_map) {
+        } else if (vId == R.id.lay_map) {
+        } else {
         }
     }
 }

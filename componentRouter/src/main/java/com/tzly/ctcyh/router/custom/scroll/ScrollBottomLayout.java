@@ -118,6 +118,7 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
+        if (childView == null) return;
         visibilityHeight = childView.getMeasuredHeight() / 4;
         movedMaxDis = childView.getMeasuredHeight() - (int) visibilityHeight;
     }
@@ -126,6 +127,7 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
 
+        if (childView == null) return;
         //绘制子控件的位置
         childView.layout(0, movedMaxDis, childView.getMeasuredWidth(),
                 childView.getMeasuredHeight() + movedMaxDis);
@@ -211,7 +213,7 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
                 LogUtils.e("_MOVE-->" + movedDis);
                 return true;
             case MotionEvent.ACTION_UP:
-                LogUtils.e(arriveTop+"_UP-->" + state);
+                LogUtils.e(arriveTop + "_UP-->" + state);
 
                 if (!state) {
                     if (movedDis >= movedMaxDis * 0.25f) {

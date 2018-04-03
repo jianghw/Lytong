@@ -9,5 +9,7 @@
     <string name="main_list_no_data">没有找到符合条件的数据</string>
     <string name="main_tv_share">%1$s&#160;&#160;&#160;%2$d&#160;人</string>
     <string name="main_app_me_bot">© ICBC-AXA LIFE</string>
+    <string name="main_tv_cuidan"><i>催单 ></i></string>
+    <string name="main_tv_wuliu"><i>查看物流 ></i></string>
 
 </resources>

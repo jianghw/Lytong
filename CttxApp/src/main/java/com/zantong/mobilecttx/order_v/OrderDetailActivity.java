@@ -30,6 +30,9 @@ import com.zantong.mobilecttx.order_p.OrderDetailPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zzhoujay.richtext.ImageHolder;
+import com.zzhoujay.richtext.RichText;
+import com.zzhoujay.richtext.callback.OnUrlClickListener;
 
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
@@ -70,7 +73,7 @@ public class OrderDetailActivity extends JxBaseActivity
      */
     private TextView mTvPayTypeTitle;
     private TextView mTvPayType;
-    private HtmlTextView mTvContentBottom;
+    private TextView mTvContentBottom;
     /**
      * 对订单有疑问?
      */
@@ -91,6 +94,8 @@ public class OrderDetailActivity extends JxBaseActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        RichText.clear(this);
         if (mPresenter != null) mPresenter.unSubscribe();
     }
 
@@ -127,6 +132,8 @@ public class OrderDetailActivity extends JxBaseActivity
 
     @Override
     protected void initContentData() {
+
+        RichText.initCacheDir(this);
         if (mPresenter != null) mPresenter.getOrderDetail();
     }
 
@@ -144,7 +151,7 @@ public class OrderDetailActivity extends JxBaseActivity
         mTvDate = (TextView) view.findViewById(R.id.tv_date);
         mTvPayTypeTitle = (TextView) view.findViewById(R.id.tv_pay_type_title);
         mTvPayType = (TextView) view.findViewById(R.id.tv_pay_type);
-        mTvContentBottom = (HtmlTextView) view.findViewById(R.id.tv_content_bottom);
+        mTvContentBottom = (TextView) view.findViewById(R.id.tv_content_bottom);
         mTvQuery = (TextView) view.findViewById(R.id.tv_query);
         mTvQuery.setOnClickListener(this);
 
@@ -231,14 +238,32 @@ public class OrderDetailActivity extends JxBaseActivity
         mRyAddress.setVisibility(TextUtils.isEmpty(address) ? View.GONE : View.VISIBLE);
 
         String beanDetail = bean.getDetail();
-        mTvContentBottom.setClickHtml(beanDetail,
-                new HtmlHttpImageGetter(mTvContentBottom),
-                new IHtmlTextClick() {
+        //        mTvContentBottom.setClickHtml(beanDetail,
+        //                new HtmlHttpImageGetter(mTvContentBottom),
+        //                new IHtmlTextClick() {
+        //                    @Override
+        //                    public void clickLine(String url) {
+        //                        gotoHtml(url);
+        //                    }
+        //                });
+
+        RichText.fromHtml(beanDetail) // 数据源
+                .autoFix(true) // 是否自动修复，默认true
+                .autoPlay(true) // gif图片是否自动播放
+                .showBorder(false) // 是否显示图片边框
+                .scaleType(ImageHolder.ScaleType.fit_xy) // 图片缩放方式
+                .size(ImageHolder.MATCH_PARENT, ImageHolder.WRAP_CONTENT) // 图片占位区域的宽高
+                .resetSize(false) // 默认false，是否忽略img标签中的宽高尺寸（只在img标签中存在宽高时才有效），true：忽略标签中的尺寸并触发SIZE_READY回调，false：使用img标签中的宽高尺寸，不触发SIZE_READY回调
+                .clickable(true) // 是否可点击，默认只有设置了点击监听才可点击
+                .urlClick(new OnUrlClickListener() {// 设置链接点击回调
                     @Override
-                    public void clickLine(String url) {
+                    public boolean urlClicked(String url) {
                         gotoHtml(url);
+                        return false;
                     }
-                });
+                })
+                .bind(this) // 绑定richText对象到某个object上，方便后面的清理
+                .into(mTvContentBottom); // 设置目标TextView
     }
 
     private void gotoHtml(String tableHtml) {
