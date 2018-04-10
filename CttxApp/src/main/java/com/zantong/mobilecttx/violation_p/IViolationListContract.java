@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.violation_p;
 
+import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
@@ -30,6 +31,10 @@ public interface IViolationListContract {
         ViolationDTO getViolationDTO();
 
         ViolationCarDTO getViolationCarDTO();
+
+        void validAdvertError(String message);
+
+        void validAdvertSucceed(ValidAdvResponse result);
     }
 
     interface IViolationListPresenter extends IBasePresenter {
@@ -40,5 +45,6 @@ public interface IViolationListContract {
 
         void handleViolations(List<ViolationBean> beanList);
 
+        void findIsValidAdvert();
     }
 }

@@ -15,6 +15,7 @@ import android.widget.Scroller;
 
 import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.ScreenUtils;
 
 /**
  * 上拉处广告
@@ -119,7 +120,10 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         if (childView == null) return;
-        visibilityHeight = childView.getMeasuredHeight() / 4;
+        int heightPixels = ScreenUtils.heightPixels(getContext());
+        int measuredHeight = childView.getMeasuredHeight();
+
+        visibilityHeight = measuredHeight <= heightPixels * 2 / 3 ? heightPixels / 4 : measuredHeight / 4;
         movedMaxDis = childView.getMeasuredHeight() - (int) visibilityHeight;
     }
 
@@ -152,22 +156,22 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
             //直接自己消费
             case MotionEvent.ACTION_DOWN:
                 downDY = (int) event.getY();
-                //未出现状态时都自己处理
-                LogUtils.e("ACTION_DOWN-->" + state);
-                if (!arriveTop) return true;
+                LogUtils.e("ACTION_DOWN-->" + downDY);
+                //未出现状态--立马自己处理
+//                if (movedMaxDis <= downDY && !arriveTop
+//                        || movedMaxDis > downDY && arriveTop)
+//                    return true;
             case MotionEvent.ACTION_MOVE:
-                LogUtils.e("ACTION_MOVE-->" + state);
                 int moveDY = (int) event.getY();
                 int dy = downDY - moveDY;
-                LogUtils.e("--dy-->" + dy);
                 boolean ischild = !(arriveTop && Math.abs(dy) < 1 || arriveTop && dy > 0 || arriveTop && state);
-                LogUtils.e("--ischild-->" + ischild);
+                LogUtils.e("--dy-->" + dy + "--child->" + ischild);
                 return ischild;
             case MotionEvent.ACTION_UP:
-                LogUtils.e(arriveTop + "--ACTION_UP-->" + state);
+                LogUtils.e("--ACTION_UP-->" + arriveTop);
                 if (!arriveTop) return true;
         }
-        LogUtils.e("state-->" + state);
+        LogUtils.e("onInterceptTouchEvent-->" + state);
         return super.onInterceptTouchEvent(event);
     }
 
@@ -189,15 +193,11 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 LogUtils.e("movedMaxDis-->" + movedMaxDis);
-                LogUtils.e("downDY-->" + downDY);
-                LogUtils.e("arriveTop-->" + arriveTop);
-
-                if (movedMaxDis <= downDY && !arriveTop) return true;
-                else if (movedMaxDis > downDY && arriveTop) return true;
             case MotionEvent.ACTION_MOVE:
                 int moveDY = (int) event.getY();
                 int dy = downDY - moveDY;
                 movedDis += dy;//移动距离
+                LogUtils.e("dy-->" + dy);
                 if (dy > 0) {//up
                     if (movedDis >= movedMaxDis) movedDis = movedMaxDis;
                     if (movedDis < movedMaxDis) {
@@ -210,7 +210,7 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
                     }
                 }
                 downDY = moveDY;
-                LogUtils.e("_MOVE-->" + movedDis);
+                LogUtils.e(arriveTop + "_MOVE-->" + movedDis);
                 return true;
             case MotionEvent.ACTION_UP:
                 LogUtils.e(arriveTop + "_UP-->" + state);
@@ -226,6 +226,7 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
         }
         //true 消费
         //        boolean consume = mGestureDetector.onTouchEvent(event);
+        LogUtils.e("onTouchEvent-->" + state);
         return super.onTouchEvent(event);
     }
 

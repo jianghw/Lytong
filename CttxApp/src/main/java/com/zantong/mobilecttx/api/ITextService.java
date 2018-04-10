@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.api;
 
 import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 
@@ -27,4 +28,7 @@ public interface ITextService {
      */
     @POST("text/handleViolations")
     Observable<BaseResponse> HandleViolationDTO(@Body ViolationCarDTO violationResult);
+
+    @GET("text/findIsValidAdvert")
+    Observable<ValidAdvResponse> findIsValidAdvert();
 }

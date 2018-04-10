@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.global.MainGlobal;
 
 /**
  * 订单退款
@@ -14,6 +15,7 @@ import com.zantong.mobilecttx.R;
 public class OrderRefundActivity extends AbstractBaseActivity {
 
     private OrderRefundFragment mFragment;
+    private String mOrderId;
 
     @Override
     protected int initContentView() {
@@ -24,6 +26,8 @@ public class OrderRefundActivity extends AbstractBaseActivity {
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
+            if (bundle != null && intent.hasExtra(MainGlobal.putExtra.web_order_id_extra))
+                mOrderId = bundle.getString(MainGlobal.putExtra.web_order_id_extra);
         }
     }
 
@@ -41,7 +45,7 @@ public class OrderRefundActivity extends AbstractBaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         //默认页面显示
         if (mFragment == null) {
-            mFragment = OrderRefundFragment.newInstance();
+            mFragment = OrderRefundFragment.newInstance(mOrderId);
         }
         FragmentUtils.add(fragmentManager, mFragment, R.id.lay_base_frame);
     }

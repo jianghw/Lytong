@@ -11,8 +11,11 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -32,6 +35,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.custom.image.ImageTools;
 import com.tzly.ctcyh.router.util.DensityUtils;
+import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
@@ -244,33 +248,59 @@ public class DialogUtils {
     /**
      * 活动页面
      */
-    public static void createActionDialog(final Context context, int count,
-                                          String imageUrl, final String url, ActionADOnClick onClickBack) {
+    public static void createActionDialog(final Context context, String imageUrl, final ActionImageClick imageClick) {
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
-        View view = ((Activity) context).getLayoutInflater().inflate(R.layout.dialog_action_ad, null);
-        ImageView mImage = (ImageView) view.findViewById(R.id.img_url);
-        mImage.setOnClickListener(new View.OnClickListener() {
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_action_ad, null);
+        ImageView imgUrl = (ImageView) view.findViewById(R.id.img_url);
+        imgUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(url))
-                    MainRouter.gotoWebHtmlActivity(context, "优惠活动", url);
+                if (imageClick != null) imageClick.onUrlClick(v);
             }
         });
-        ImageLoadUtils.loadThreeRectangle(imageUrl, mImage);
+        ImageLoadUtils.loadThreeRectangle(imageUrl, imgUrl);
 
-        TextView mCount = (TextView) view.findViewById(R.id.tv_count);
-        TextView mClose = (TextView) view.findViewById(R.id.tv_close);
-        mClose.setOnClickListener(new View.OnClickListener() {
+        final ImageView imgClose = (ImageView) view.findViewById(R.id.tv_close);
+        imgClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (dialog != null) dialog.dismiss();
             }
         });
+        final TextView mCount = (TextView) view.findViewById(R.id.tv_count);
+        final CountDownTimer countDownTimer = new CountDownTimer(4000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                LogUtils.e("-->" + millisUntilFinished);
+                int time = (int) (millisUntilFinished / 1000);
+                time = time <= 0 ? 0 : time;
+                mCount.setText(time + "s");
+            }
 
-        if (onClickBack != null) onClickBack.textCount(mCount, mClose);
+            @Override
+            public void onFinish() {
+                mCount.setVisibility(View.GONE);
+                imgClose.setVisibility(View.VISIBLE);
+            }
+        };
+        countDownTimer.start();
 
-        mCount.setVisibility(count <= 0 ? View.GONE : View.VISIBLE);
-        mClose.setVisibility(count <= 0 ? View.VISIBLE : View.GONE);
+        mCount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.equals("1s")) countDownTimer.cancel();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
@@ -279,8 +309,8 @@ public class DialogUtils {
         Window window = dialog.getWindow();
         if (window == null) return;
         WindowManager.LayoutParams params = window.getAttributes();
-        params.width = DensityUtils.getScreenWidth(context) * 3 / 4;
-        params.height = DensityUtils.getScreenHeight(context) * 2 / 3;
+        params.width = (int) (DensityUtils.getScreenWidth(context) * 0.7);
+        params.height = (int) (DensityUtils.getScreenHeight(context) * 0.65);
         dialog.getWindow().setAttributes(params);
         dialog.getWindow().setBackgroundDrawableResource(R.color.trans);
         dialog.getWindow().setContentView(view);
@@ -369,8 +399,8 @@ public class DialogUtils {
         void onActivityCouponClick(View view);
     }
 
-    public interface ActionADOnClick {
-        void textCount(TextView mCount, TextView mClose);
+    public interface ActionImageClick {
+        void onUrlClick(View v);
     }
 
     /**

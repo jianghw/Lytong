@@ -58,8 +58,8 @@ public class PayHtmlActivity extends AbstractBaseActivity implements IPayHtmlCon
                     mStrUrl = bundle.getString(MainGlobal.putExtra.browser_url_extra);
                 if (intent.hasExtra(MainGlobal.putExtra.violation_num_extra))
                     mViolationNum = bundle.getString(MainGlobal.putExtra.violation_num_extra);
-                if (intent.hasExtra(MainGlobal.putExtra.car_enginenum_extra))
-                    mViolationEngine = bundle.getString(MainGlobal.putExtra.car_enginenum_extra);
+                if (intent.hasExtra(MainGlobal.putExtra.car_engine_extra))
+                    mViolationEngine = bundle.getString(MainGlobal.putExtra.car_engine_extra);
             }
         }
     }

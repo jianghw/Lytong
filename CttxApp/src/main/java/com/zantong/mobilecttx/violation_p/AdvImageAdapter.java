@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.share_p;
+package com.zantong.mobilecttx.violation_p;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,13 +7,14 @@ import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
-import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
+import com.tzly.ctcyh.router.BuildConfig;
+import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.fahrschule.bean.StatistCountResponse;
 
 /**
  * Created by jianghw on 2017/10/12.
@@ -22,14 +23,14 @@ import com.zantong.mobilecttx.fahrschule.bean.StatistCountResponse;
  * Update day:
  */
 
-public class StatisTextCountAdapter extends BaseAdapter<StatistCountResponse.DataBean.ListBean> {
+public class AdvImageAdapter extends BaseAdapter<ValidAdvResponse.DataBean> {
     private Context mAdapterContext;
 
     @Override
     public View createView(ViewGroup viewGroup, int i) {
         mAdapterContext = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        return inflater.inflate(R.layout.main_adapter_statis_text_count, viewGroup, false);
+        return inflater.inflate(R.layout.main_adapter_adv_image_item, viewGroup, false);
     }
 
     @Override
@@ -41,24 +42,26 @@ public class StatisTextCountAdapter extends BaseAdapter<StatistCountResponse.Dat
     @SuppressLint("SetTextI18n")
     @Override
     public void bindViewData(BaseRecyclerViewHolder viewHolder,
-                             final int position, StatistCountResponse.DataBean.ListBean stringMap) {
+                             final int position, ValidAdvResponse.DataBean dataBean) {
         ViewHolder holder = (ViewHolder) viewHolder;
-        if (stringMap == null) return;
+        if (dataBean == null) return;
 
-        String string = mAdapterContext.getResources().getString(R.string.main_tv_share);
-        String text = String.format(string, stringMap.getName(), stringMap.getCount());
-        holder.mTvTied.setText(text);
+        String url = dataBean.getImage();
+        if (!url.contains("http")) {
+            url = (BuildConfig.isDeta ? BuildConfig.beta_base_url : BuildConfig.release_base_url) + url;
+        }
+        ImageLoadUtils.loadShareRectangle(url, holder.imageView);
     }
 
     /**
      * 自定义的ViewHolder，持有每个Item的的所有界面元素
      */
     public static class ViewHolder extends BaseRecyclerViewHolder {
-        TextView mTvTied;
+        ImageView imageView;
 
         ViewHolder(View view) {
             super(view);
-            this.mTvTied = (TextView) view.findViewById(R.id.tv_name);
+            this.imageView = (ImageView) view.findViewById(R.id.img_adv);
         }
     }
 }

@@ -1,66 +1,45 @@
-package com.tzly.ctcyh.pay.html_v;
+package com.zantong.mobilecttx.home_v;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
 
 import com.google.gson.Gson;
-import com.tzly.ctcyh.java.request.card.ApplyCTCardDTO;
-import com.tzly.ctcyh.java.response.orc.BindCarBean;
-import com.tzly.ctcyh.java.response.orc.DrivingOcrBean;
-import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
-import com.tzly.ctcyh.pay.data_m.InjectionRepository;
-import com.tzly.ctcyh.pay.html_p.IWebHtmlContract;
-import com.tzly.ctcyh.pay.html_p.WebHtmlPresenter;
-import com.tzly.ctcyh.pay.response.OrderDetailBean;
-import com.tzly.ctcyh.pay.response.OrderDetailResponse;
-import com.tzly.ctcyh.pay.response.PayUrlResponse;
-import com.tzly.ctcyh.pay.response.PayWeixinResponse;
-import com.tzly.ctcyh.pay.router.PayRouter;
 import com.tzly.ctcyh.router.custom.primission.PermissionFail;
 import com.tzly.ctcyh.router.custom.primission.PermissionGen;
 import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
-import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.global.JxGlobal;
+import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
-import com.tzly.ctcyh.router.util.Utils;
-
-import static com.tzly.ctcyh.router.custom.primission.PermissionGen.PER_REQUEST_CODE;
-import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
+import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
+import com.zantong.mobilecttx.router.MainRouter;
+import com.zantong.mobilecttx.share_v.CarBeautyActivity;
+import com.zantong.mobilecttx.share_v.ShareParentActivity;
+import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 /**
  * Fragment 下拉刷新基类
  */
-public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHtmlView {
+public class RouterFragment extends Fragment {
 
     private static final String BANK_NAME = "bank_name";
     private static final String BANK_MOBILE = "bank_mobile";
     private static final String BANK_CERTNUM = "bank_certnum";
     private static final String BANK_CARDNAME = "bank_cardname";
 
-    private FmentToAtyable mFmentToAtyable;
-    private IWebHtmlContract.IWebHtmlPresenter mPresenter;
-    /**
-     * 支付分渠道
-     */
-    private String channel;
-
-    public static WebHtmlFragment newInstance() {
-        WebHtmlFragment f = new WebHtmlFragment();
+    public static RouterFragment newInstance() {
+        RouterFragment f = new RouterFragment();
         Bundle bundle = new Bundle();
         f.setArguments(bundle);
         return f;
@@ -72,9 +51,6 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (activity instanceof FmentToAtyable) {
-            mFmentToAtyable = (FmentToAtyable) activity;
-        }
     }
 
     @Override
@@ -89,8 +65,6 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        WebHtmlPresenter presenter = new WebHtmlPresenter(
-                InjectionRepository.provideRepository(Utils.getContext()), this);
     }
 
     /**
@@ -166,418 +140,171 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
         return super.getContext();
     }
 
-    @Override
-    public void showLoading() {
-        if (mFmentToAtyable != null) mFmentToAtyable.showLoading();
-    }
-
-    @Override
-    public void dismissLoading() {
-        if (mFmentToAtyable != null) mFmentToAtyable.dismissLoading();
-    }
-
-    @Override
-    public void setPresenter(IWebHtmlContract.IWebHtmlPresenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
-    public String getOrderId() {
-        return null;
-    }
-
-    public void bank_v003(String violationNum) {
-        if (mPresenter != null) mPresenter.bank_v003_01(violationNum);
-    }
-
-    public void orderDetail(String orderId) {
-        if (mPresenter != null) mPresenter.intervalOrder(orderId);
-    }
-
     /**
-     * 网络响应
+     * 点击处理事件
      */
-    @Override
-    public void orderDetailCompleted() {
-        errorStatus();
-    }
+    public void clickItemData(String path, String title) {
 
-    @Override
-    public void intervalError(String message) {
-        toastShort(message);
-        errorStatus();
-    }
+        if (!TextUtils.isEmpty(path)) {
+            if (path.contains("http")) {//启动公司自己html
+                MainRouter.gotoWebHtmlActivity(getContext(), title, path);
+            } else if (path.equals("native_app_recharge")) {//加油充值
+                MainRouter.gotoRechargeActivity(getActivity());
+            } else if (path.equals("native_app_loan")) {
 
-    @Override
-    public void orderDetailError(String message) {
-        toastShort(message);
-        errorStatus();
-    }
-
-    /**
-     * 支付成功
-     */
-    @Override
-    public void orderDetailSucceed(OrderDetailResponse response) {
-        OrderDetailBean orderDetailBean = response.getData();
-        if (orderDetailBean != null) {
-            int orderStatus = orderDetailBean.getOrderStatus();
-            //成功页面
-            if (orderStatus == 1) succeedStatus(orderDetailBean);
+            } else if (path.equals("native_app_toast")) {//敬请期待
+                ToastUtils.toastShort("此功能开发中,敬请期待~");
+            } else if (path.equals("native_app_daijia")) {//代驾
+                enterDrivingActivity();
+            } else if (path.equals("native_app_enhancement")) {//科目强化
+                MainRouter.gotoSubjectActivity(getContext(), 0);
+            } else if (path.equals("native_app_sparring")) {//陪练
+                MainRouter.gotoSparringActivity(getContext(), 0);
+            } else if (path.equals("native_app_drive_share")) {//分享
+                Intent intent = new Intent();
+                intent.putExtra(JxGlobal.putExtra.share_position_extra, 1);
+                Act.getInstance().gotoLoginByIntent(getActivity(), ShareParentActivity.class, intent);
+            } else if (path.equals("native_app_car_beauty")) {//汽车美容
+                Act.getInstance().gotoIntentLogin(getActivity(), CarBeautyActivity.class);
+            } else if (path.equals("native_app_driver")) {//驾校报名
+                MainRouter.gotoFahrschuleActivity(getContext(), 0);
+            } else if (path.equals("native_app_yearCheckMap")) {//年检地图
+                enterMapActivity();
+            } else if (path.equals("native_app_oilStation")) {//优惠加油站
+                showOilContacts();
+            } else if (path.equals("native_app_endorsement")) {//违章缴费记录
+                licenseCheckGrade(2);
+            } else if (path.equals("native_app_drivingLicense")) {//驾驶证查分
+                licenseCheckGrade(1);
+            } else if (path.equals("native_app_97recharge")) {//97加油
+                MainRouter.gotoDiscountOilActivity(getContext());
+            } else if (path.equals("native_app_97buyCard")) {//97加油购卡
+                MainRouter.gotoBidOilActivity(getContext());
+            } else if (path.equals("native_app_mainRecharge")) {//97加油购卡前页
+                MainRouter.gotoFoldOilActivity(getContext());
+            } else if (path.equals("native_app_drivingNewScore")) {//驾照查分
+                MainRouter.gotoLicenseCargoActivity(getContext());
+            } else {//其他
+                ToastUtils.toastShort("此版本暂无此状态页面,请更新最新版本");
+            }
         }
     }
 
     /**
-     * 违章支付成功
+     * 进入地图年检页面
      */
-    protected void succeedStatus(OrderDetailBean orderDetailBean) {
-        String channel = mFmentToAtyable.getChannel();
-        toastShort("支付完成");
-
-        if (orderDetailBean.getType() == 2 || orderDetailBean.getType() == 6) {
-            PayRouter.gotoPaySucceedActivity(getContext(), String.valueOf(orderDetailBean.getType()));
-        } else if (TextUtils.isEmpty(channel)) {
-            PayRouter.gotoMainActivity(getContext(), 1);
-        } else {
-            PayRouter.gotoActiveActivity(getContext(), Integer.valueOf(channel));
-        }
-    }
-
-    protected void errorStatus() {
-        String channel = mFmentToAtyable.getChannel();
-        toastShort("未完成支付");
-        if (TextUtils.isEmpty(channel)) {
-            PayRouter.gotoMainActivity(getContext(), 1);
-        } else {
-            PayRouter.gotoActiveActivity(getContext(), Integer.valueOf(channel));
-        }
-    }
-
-    @Override
-    public void bankPayHtmlError(String message) {
-        toastShort(message);
-    }
-
-    @Override
-    public void bankPayHtmlSucceed(PayUrlResponse response, String orderId) {
-        if (TextUtils.isEmpty(this.channel)) toastShort("渠道标记值为空");
-        //web里打开
-        PayRouter.gotoWebHtmlActivity(getActivity(),
-                "银行支付", response.getData(), orderId, 1, this.channel);
-    }
-
-    @Override
-    public void weChatPayError(String message) {
-        toastShort(message);
-    }
-
-    @Override
-    public void weChatPaySucceed(PayWeixinResponse response, String orderId) {
-        if (TextUtils.isEmpty(this.channel)) toastShort("渠道标记值为空");
-        //web里打开
-        PayRouter.gotoWebHtmlActivity(getActivity(),
-                "微信支付", response.getData().getMweburl(), orderId, 4, this.channel);
-    }
-
-    @Override
-    public void bank_v003_01Error(String msg) {
-        toastShort("获取违章数据失败" + msg);
-        gotoActive();
-    }
-
-    @Override
-    public void updateStateError(String msg) {
-        toastShort("更新同步数据失败" + msg);
-        gotoActive();
-    }
-
-    @Override
-    public void updateStateSucceed(ViolationNumBean result) {
-        String processste = result.getRspInfo().getProcessste();
-        if (processste.equals("1") || processste.equals("3")) {
-            PayRouter.gotoPaySucceedActivity(getContext(), "2");
-        }else{
-            gotoActive();
-        }
-    }
-
-    private void gotoActive() {
-        if (TextUtils.isEmpty(mFmentToAtyable.getEnginenum()))
-            PayRouter.gotoMainActivity(getContext(), 1);
-        else
-            PayRouter.gotoActiveActivity(getContext(), 2);
-    }
-
-    /**
-     * javascript--java
-     */
-    @JavascriptInterface
-    public void ToastMsg(String msg) {
-        ToastUtils.toastShort(msg);
-    }
-
-    @JavascriptInterface
-    public void LogUtilsMsg(String msg) {
-        LogUtils.e(msg);
-    }
-
-    @JavascriptInterface
-    public boolean isLogin() {
-        return PayRouter.isLogin();
-    }
-
-    @JavascriptInterface
-    public void gotoLogin() {
-        PayRouter.gotoLoginActivity(getContext());
-    }
-
-    @JavascriptInterface
-    public Location getLocaltion() {
-        LocationManager locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(getContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            return null;
-        }
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        } else {
-            LocationListener locationListener = new LocationListener() {
-                // Provider的状态在可用、暂时不可用和无服务三个状态直接切换时触发此函数
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-                }
-
-                // Provider被enable时触发此函数，比如GPS被打开
-                @Override
-                public void onProviderEnabled(String provider) {
-                }
-
-                // Provider被disable时触发此函数，比如GPS被关闭
-                @Override
-                public void onProviderDisabled(String provider) {
-                }
-
-                //当坐标改变时触发此函数，如果Provider传进相同的坐标，它就不会被触发
-                @Override
-                public void onLocationChanged(Location location) {
-                }
-            };
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
-            return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        }
-    }
-
-    //绑畅通卡
-    @JavascriptInterface
-    public void bindCard() {
-        if (getBindCardStatus()==1) {
-            PayRouter.gotoUnblockedCardActivity(getContext());
-        } else {
-            PayRouter.gotoMyCardActivity(getContext());
-        }
-    }
-
-    //加油充值
-    @JavascriptInterface
-    public void addOil() {
-        PayRouter.gotoRechargeActivity(getContext());
-    }
-
-    //代驾
-    @JavascriptInterface
-    public void chaser() {
-        PayRouter.gotoDrivingActivity(getContext());
-    }
-
-    //分享领积分
-    @JavascriptInterface
-    public void shareActivity() {
-    }
-
-    //获取用户ID
-    @JavascriptInterface
-    public String getUserId() {
-        return PayRouter.getUserID();
-    }
-
-    //获取用户ID
-    @JavascriptInterface
-    public String getEncreptUserId() {
-        return PayRouter.getRASUserID();
-    }
-
-    //加密工具
-    @JavascriptInterface
-    public String getRASByStr(String str) {
-        return PayRouter.getRASByStr(str);
-    }
-
-    //获取绑卡状态 0已绑卡  1未绑卡
-    @JavascriptInterface
-    public int getBindCardStatus() {
-        return TextUtils.isEmpty(PayRouter.getUserFilenum()) ? 1 : 0;
-    }
-
-    //查询违章
-    @JavascriptInterface
-    public void queryViolations() {
-        PayRouter.gotoViolationActivity(getContext());
-    }
-
-    //跳转到积分规则页面
-    @JavascriptInterface
-    public void popAttention() {
-        PayRouter.gotoHundredRuleActivity(getContext());
-    }
-
-    //去年检地图地址
-    @JavascriptInterface
-    public void goNianjianMap() {
-        PayRouter.gotoNianjianMapActivity(getContext());
-    }
-
-    //去往违章列表页面
-    @JavascriptInterface
-    public void searchViolationList(String carnum, String enginenum, String carnumtype) {
-        PayRouter.gotoViolationListActivity(getContext(), carnum, enginenum, carnumtype);
-    }
-
-    //js调摄像机
-    @JavascriptInterface
-    public void callCamera() {
-        takePhoto();
-    }
-
-    /**
-     * 拍照
-     */
-    public void takePhoto() {
+    public void enterMapActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            PermissionGen.needPermission(this, PER_REQUEST_CODE, new String[]{
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE});
+            PermissionGen.needPermission(this, 4000, new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE});
         } else {
-            goToCamera();
+            gotoMap();
+        }
+    }
+
+    private void gotoMap() {
+        MainRouter.gotoMapActivity(getContext());
+    }
+
+    /**
+     * 加油地图
+     */
+    public void showOilContacts() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, 3000, new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE});
+        } else {
+            gotoOilMap();
+        }
+    }
+
+    private void gotoOilMap() {
+        Intent intent = new Intent();
+        intent.putExtra(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
+        Act.getInstance().gotoLoginByIntent(getActivity(), BaiduMapParentActivity.class, intent);
+    }
+
+    protected void licenseCheckGrade(int position) {
+        String grade = SPUtils.instance().getString(SPUtils.USER_GRADE);
+        LicenseFileNumDTO fromJson = null;
+        if (!TextUtils.isEmpty(grade)) {
+            fromJson = new Gson().fromJson(grade, LicenseFileNumDTO.class);
+        } else if (!TextUtils.isEmpty(MainRouter.getUserFilenum()) &&
+                !TextUtils.isEmpty(MainRouter.getUserGetdate())) {
+            fromJson = new LicenseFileNumDTO();
+            fromJson.setFilenum(MainRouter.getUserFilenum());
+            fromJson.setStrtdt(MainRouter.getUserGetdate());
+        }
+
+        if (fromJson != null && position == 2) {
+            MainRouter.gotoPaymentActivity(getContext(), new Gson().toJson(fromJson));
+        } else if (fromJson != null && position == 1) {
+            MainRouter.gotoLicenseDetailActivity(getContext(), new Gson().toJson(fromJson));
+        } else {
+            MainRouter.gotoLicenseGradeActivity(getContext(), position);
         }
     }
 
     /**
-     * 行驶证 拍照前权限调用
+     * 进入代驾页面
      */
-    @PermissionSuccess(requestCode = PER_REQUEST_CODE)
-    public void doPermissionSuccess() {
-        goToCamera();
+    public void enterDrivingActivity() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, 2000, new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE});
+        } else {
+            gotoDriving();
+        }
     }
 
-    protected void goToCamera() {
-        PayRouter.gotoVehicleCameraActivity(getActivity());
+    private void gotoDriving() {
+        MainRouter.gotoDrivingActivity(getContext());
     }
-
-    @PermissionFail(requestCode = PER_REQUEST_CODE)
-    public void doPermissionFail() {
-        toastShort("您已关闭摄像头权限,请设置中打开");
-    }
-
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //拍照回调
-        if (requestCode == 110 && resultCode == 200) {
-            vehicleCameraSucceed(data);
-        }
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    private void vehicleCameraSucceed(Intent intent) {
-        String vehicleInfo = intent.getStringExtra("vehicleInfo");
-        BindCarBean carBean = new Gson().fromJson(vehicleInfo, BindCarBean.class);
-
-        DrivingOcrBean bean = new DrivingOcrBean();
-        bean.setIssueDate(carBean.getIssueDate());
-        bean.setName(carBean.getName());
-        bean.setRegisterDate(carBean.getRegisterDate());
-        bean.setVin(carBean.getVin());
-        bean.setVehicleType(carBean.getVehicleType());
-        bean.setCardNo(carBean.getCardNo());
-        bean.setEnginePN(carBean.getEnginePN());
-        bean.setModel(carBean.getModel());
-        bean.setAddress(carBean.getAddr());
-        bean.setUseCharacte(carBean.getUseCharace());
-
-        if (!TextUtils.isEmpty(vehicleInfo)) {
-            if (mFmentToAtyable != null)
-                mFmentToAtyable.callbackCamera("javascript:callbackCamera(" + new Gson().toJson(bean) + ");");
-        } else {
-            toastShort("行驶证图片解析失败(55)，请重试");
-        }
+    @PermissionSuccess(requestCode = 2000)
+    public void doDrivingSuccess() {
+        gotoDriving();
     }
 
-    //银行支付
-    @JavascriptInterface
-    public void payMOTOrder(String coupon, String orderId, String amount) {
-        float orderPrice = Float.valueOf(amount);
-        int price = (int) (orderPrice * 100);
-        if (mPresenter != null) mPresenter.bankPayHtml(orderId, String.valueOf(price), coupon);
+    @PermissionFail(requestCode = 2000)
+    public void doDrivingFail() {
+        ToastUtils.toastShort("您已关闭定位权限,请手机设置中打开");
     }
 
-    //微信支付
-    @JavascriptInterface
-    public void weChatPay(String coupon, String orderId, String amount) {
-        float orderPrice = Float.valueOf(amount);
-        int price = (int) (orderPrice * 100);
-        if (mPresenter != null) mPresenter.weChatPay(coupon, orderId, String.valueOf(price));
+    @PermissionSuccess(requestCode = 3000)
+    public void doOilMapSuccess() {
+        gotoOilMap();
     }
 
-    //阿里支付
-    @JavascriptInterface
-    public void aliPay(String coupon, String orderId, String amount) {
-        float orderPrice = Float.valueOf(amount);
-        int price = (int) (orderPrice * 100);
 
-        PayRouter.gotoAliHtmlActivity(getActivity(),
-                "支付宝支付", orderId, 3, price, Integer.valueOf(coupon), this.channel);
+    @PermissionFail(requestCode = 3000)
+    public void doOilMapFail() {
+        ToastUtils.toastShort("此功能需要打开相关的地图权限");
     }
 
-    //支付渠道
-    @JavascriptInterface
-    public void channelAction(String channel) {
-        this.channel = channel;
+    @PermissionSuccess(requestCode = 4000)
+    public void doMapSuccess() {
+        gotoMap();
     }
 
-    /**
-     * 保存用户资料
-     */
-    @JavascriptInterface
-    public void saveBankByCard(String name, String mobile, String certNum, String cardName) {
-        Bundle bundle = getArguments();
-        bundle.putString(BANK_NAME, name);
-        bundle.putString(BANK_MOBILE, mobile);
-        bundle.putString(BANK_CERTNUM, certNum);
-        bundle.putString(BANK_CARDNAME, cardName);
-    }
-
-    /**
-     * 提交用户资料
-     */
-    @JavascriptInterface
-    public void submitBankByCard() {
-        ApplyCTCardDTO applyCTCardDTO = new ApplyCTCardDTO();
-        applyCTCardDTO.setUsrid(getUserId());
-        Bundle bundle = getArguments();
-        applyCTCardDTO.setUsrname(bundle.getString(BANK_NAME));
-        applyCTCardDTO.setCtfnum(getRASByStr(bundle.getString(BANK_CERTNUM)));
-        applyCTCardDTO.setPhoenum(getRASByStr(bundle.getString(BANK_MOBILE)));
-        applyCTCardDTO.setCardname(bundle.getString(BANK_CARDNAME));
-
-        if (mPresenter != null) mPresenter.applyRecord(applyCTCardDTO);
-    }
-
-    //关闭页面
-    @JavascriptInterface
-    public void backApp() {
-        if (mFmentToAtyable != null) mFmentToAtyable.backApp();
+    @PermissionFail(requestCode = 4000)
+    public void doMapFail() {
+        ToastUtils.toastShort("您已关闭定位权限,请手机设置中打开");
     }
 }

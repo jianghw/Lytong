@@ -1,10 +1,14 @@
 package com.zantong.mobilecttx.home_v;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -85,7 +89,15 @@ public class HomePagerFragment_2 extends RecyclerListFragment<UnimpededBannerBea
         if (presenter != null) presenter.saveStatisticsCount(
                 String.valueOf(bannerBean.getStatisticsId()));
 
-        clickItemData(bannerBean);
+        //点击事件
+        FragmentManager manager = getChildFragmentManager();
+        Fragment fragment = manager.findFragmentByTag("router_fgt");
+        if (fragment != null && fragment instanceof RouterFragment) {
+            RouterFragment routerFragment = (RouterFragment) fragment;
+            routerFragment.clickItemData(bannerBean.getTargetPath(), bannerBean.getTitle());
+        } else {
+            ToastUtils.toastShort("未知错误");
+        }
     }
 
     @Override
@@ -97,6 +109,12 @@ public class HomePagerFragment_2 extends RecyclerListFragment<UnimpededBannerBea
     @Override
     protected void loadingFirstData() {
         responseData(null);
+
+        FragmentManager manager = getChildFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        //创建fragment但是不绘制UI
+        RouterFragment htmlFragment = RouterFragment.newInstance();
+        transaction.add(htmlFragment, "router_fgt").commit();
     }
 
     @Override

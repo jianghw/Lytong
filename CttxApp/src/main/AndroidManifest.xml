@@ -332,6 +332,16 @@
         <activity
             android:name=".order_v.MyOrderActivity"
             android:screenOrientation="portrait" />
+        <!--修改用户信息-->
+        <activity
+            android:name=".order_v.AmendOrderActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <!--订单退款-->
+        <activity
+            android:name=".order_v.OrderRefundActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".order_v.OrderDetailActivity"
             android:screenOrientation="portrait" />

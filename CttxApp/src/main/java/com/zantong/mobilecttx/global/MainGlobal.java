@@ -35,7 +35,7 @@ public final class MainGlobal {
         public static final String browser_title_extra = "browser_title_extra";
         public static final String browser_url_extra = "browser_url_extra";
         public static final String violation_num_extra = "violation_num_extra";
-        public static final String car_enginenum_extra = "car_enginenum_extra";
+        public static final String car_engine_extra = "car_engine_extra";
         public static final String car_item_bean_extra = "car_item_bean_extra";
         public static final String license_bean_extra = "license_bean_extra";
         public static final String license_position_extra = "license_position_extra";

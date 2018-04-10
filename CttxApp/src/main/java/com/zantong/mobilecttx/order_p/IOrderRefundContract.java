@@ -1,42 +1,29 @@
 package com.zantong.mobilecttx.order_p;
 
-import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
+import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
-import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
 
 /**
  * 修改订单信息
  */
 
-public interface IAmendOrderContract {
+public interface IOrderRefundContract {
 
-    interface IAmendOrderView extends IBaseView<IAmendOrderPresenter> {
-        String getName();
+    interface IOrderRefundView extends IBaseView<IOrderRefundPresenter> {
+        String getChannel();
 
-        String getPhone();
+        String getOrderId();
 
-        String getAddress();
+        String getRemark();
 
-        String getAddressDetail();
+        void infoError(String message);
 
-        String getBespeakDate();
-
-        String getSupplement();
-
-        void allAreasSucceed(Object[] objects);
-
-        void allAreasError(String message);
-
-        void updateOrderError(String message);
-
-        void updateOrderSucceed(UpdateOrderResponse result);
+        void infoSucceed(OrderRefundResponse result);
     }
 
-    interface IAmendOrderPresenter extends IBasePresenter {
-        void updateOrderDetail();
-
-        void getAllAreas();
+    interface IOrderRefundPresenter extends IBasePresenter {
+        void info();
     }
 
 }

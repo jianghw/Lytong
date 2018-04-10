@@ -13,4 +13,6 @@ public interface IViolationListUi {
     void refreshListData(int position);
 
     void doClickPay(ViolationBean bean);
+
+    void findIsValidAdvert();
 }

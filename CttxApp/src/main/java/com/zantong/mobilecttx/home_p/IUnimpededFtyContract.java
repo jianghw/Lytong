@@ -27,10 +27,6 @@ public interface IUnimpededFtyContract {
 
         void indexLayerSucceed(IndexLayerResponse result);
 
-        void countDownTextView(long l);
-
-        void countDownCompleted();
-
         void bannerSucceed(UnimpededBannerResponse result);
 
         void versionInfoSucceed(VersionResponse result);

@@ -1,12 +1,12 @@
-package com.tzly.ctcyh.java.response.oil;
+package com.tzly.ctcyh.java.response.order;
 
 
 import com.tzly.ctcyh.java.response.BaseResponse;
 
 /**
- * 油卡
+ * 更新
  */
 
-public class OilRemainderResponse extends BaseResponse {
+public class UpdateOrderResponse extends BaseResponse {
 
 }

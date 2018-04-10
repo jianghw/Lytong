@@ -245,6 +245,61 @@ public class HomeUnimpededFragment extends RefreshFragment
         mTabLayout = (LinearLayout) view.findViewById(R.id.tabLayout);
     }
 
+    private void initViewPager() {
+        if (mPagerList == null) mPagerList = new ArrayList<>();
+        mainBannerAdapter = new OrderFragmentAdapter(getChildFragmentManager(), mPagerList, null);
+        mViewPager.setAdapter(mainBannerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < dotViewList.size(); i++) {
+                    dotViewList.get(i).setBackgroundResource(
+                            i == position ? R.mipmap.icon_dot_sel : R.mipmap.icon_dot_nor);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+    }
+
+    private void initTabLayDots(int len) {
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(16, 16);
+        layoutParams.setMargins(6, 6, 12, 6);
+        mTabLayout.removeAllViews();
+
+        if (!dotViewList.isEmpty()) dotViewList.clear();
+        for (int i = 0; i < len; i++) {
+            ImageView dot = new ImageView(getContext());
+            dot.setLayoutParams(layoutParams);
+            if (i == 0) {
+                dot.setBackgroundResource(R.mipmap.icon_dot_sel);
+            } else {
+                dot.setBackgroundResource(R.mipmap.icon_dot_nor);
+            }
+            dotViewList.add(dot);
+            mTabLayout.addView(dot);
+        }
+
+        mTabLayout.setVisibility(len <= 1 ? View.GONE : View.VISIBLE);
+    }
+
+    /**
+     * 未读消息
+     */
+    public void unMessageCount(int position, int number) {
+        //未读消息
+        if (mTvMsgCount != null) {
+            mTvMsgCount.setText(String.valueOf(number));
+            mTvMsgCount.setVisibility(number <= 0 ? View.INVISIBLE : View.VISIBLE);
+        }
+    }
+
     private void initScrollUp(List<HomeNotice> mDataLists) {
         if (mDataLists != null && mDataLists.size() == 0) {
             List<HomeNotice> mList = new ArrayList<>();
@@ -331,61 +386,6 @@ public class HomeUnimpededFragment extends RefreshFragment
         }
         mainBannerAdapter.notifyDataSetChanged();
         initTabLayDots(mPagerList.size());
-    }
-
-    private void initViewPager() {
-        if (mPagerList == null) mPagerList = new ArrayList<>();
-        mainBannerAdapter = new OrderFragmentAdapter(getChildFragmentManager(), mPagerList, null);
-        mViewPager.setAdapter(mainBannerAdapter);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                for (int i = 0; i < dotViewList.size(); i++) {
-                    dotViewList.get(i).setBackgroundResource(
-                            i == position ? R.mipmap.icon_dot_sel : R.mipmap.icon_dot_nor);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
-    }
-
-    private void initTabLayDots(int len) {
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(16, 16);
-        layoutParams.setMargins(6, 6, 12, 6);
-        mTabLayout.removeAllViews();
-
-        if (!dotViewList.isEmpty()) dotViewList.clear();
-        for (int i = 0; i < len; i++) {
-            ImageView dot = new ImageView(getContext());
-            dot.setLayoutParams(layoutParams);
-            if (i == 0) {
-                dot.setBackgroundResource(R.mipmap.icon_dot_sel);
-            } else {
-                dot.setBackgroundResource(R.mipmap.icon_dot_nor);
-            }
-            dotViewList.add(dot);
-            mTabLayout.addView(dot);
-        }
-
-        mTabLayout.setVisibility(len <= 1 ? View.GONE : View.VISIBLE);
-    }
-
-    /**
-     * 未读消息
-     */
-    public void unMessageCount(int position, int number) {
-        //未读消息
-        if (mTvMsgCount != null) {
-            mTvMsgCount.setText(String.valueOf(number));
-            mTvMsgCount.setVisibility(number <= 0 ? View.INVISIBLE : View.VISIBLE);
-        }
     }
 
     @Override
@@ -519,43 +519,28 @@ public class HomeUnimpededFragment extends RefreshFragment
         mCustomViolation.notifyDataSetChanged();
     }
 
-    public TextView mCountTv;
-
-    public TextView mmCloseTv;
-
     @Override
     public void indexLayerSucceed(IndexLayerResponse result) {
         IndexLayerBean bean = result.getData();
         if (bean == null) return;
         String imgUrl = bean.getImgUrl();
-        String pageUrl = bean.getPageUrl();
+        final String pageUrl = bean.getPageUrl();
+
         if (TextUtils.isEmpty(imgUrl) && !TextUtils.isEmpty(pageUrl)) {
-            MainRouter.gotoWebHtmlActivity(getContext(), "优惠活动", pageUrl);
+            gotoWebUrl(pageUrl, "最新活动推荐");
         } else {
-            DialogUtils.createActionDialog(getActivity(), 3, imgUrl, pageUrl,
-                    new DialogUtils.ActionADOnClick() {
+            DialogUtils.createActionDialog(
+                    getActivity(), imgUrl, new DialogUtils.ActionImageClick() {
                         @Override
-                        public void textCount(TextView mCount, TextView mClose) {
-                            mCountTv = mCount;
-                            mmCloseTv = mClose;
+                        public void onUrlClick(View view) {
+                            if (!TextUtils.isEmpty(pageUrl)) gotoWebUrl(pageUrl, "最新活动推荐");
                         }
                     });
         }
-        if (mPresenter != null) mPresenter.startCountDown();
     }
 
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void countDownTextView(long count) {
-        if (mCountTv != null) mCountTv.setText(count + "s");
-    }
-
-    @Override
-    public void countDownCompleted() {
-        if (mmCloseTv != null)
-            mmCloseTv.setVisibility(View.VISIBLE);
-        if (mCountTv != null)
-            mCountTv.setVisibility(View.GONE);
+    private void gotoWebUrl(String pageUrl, String title) {
+        MainRouter.gotoWebHtmlActivity(getContext(), title, pageUrl);
     }
 
     /**

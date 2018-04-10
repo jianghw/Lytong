@@ -130,7 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:drawablePadding="20dp"
-            android:drawableTop="@mipmap/ic_layout_empty"
+            android:drawableTop="@mipmap/ic_layout_error"
             android:text="数据为空,下拉刷新下~" />
     </RelativeLayout>
 

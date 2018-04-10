@@ -54,7 +54,7 @@ public class LocalData implements ILocalSource {
         if (BuildConfig.isDeta) {
             isLogin = true;
             mLoginBean = new LoginBean();
-            int positon = new Random().nextInt(5);
+            int positon = new Random().nextInt(4);
             if (positon == 0) {
                 mLoginBean.setUsrid("00031813622244433");
                 mLoginBean.setPhoenum("13622244433");
@@ -68,8 +68,6 @@ public class LocalData implements ILocalSource {
                 mLoginBean.setUsrid("00146618811025031");
                 mLoginBean.setPhoenum("18811025031");
             } else if (positon == 4) {
-                mLoginBean.setUsrid("00090018811095999");
-                mLoginBean.setPhoenum("18811025033");
             }
         }
     }

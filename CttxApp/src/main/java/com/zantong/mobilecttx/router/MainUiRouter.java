@@ -21,8 +21,10 @@ import com.zantong.mobilecttx.home_v.RichTextActivity;
 import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.msg_v.MegDetailActivity;
 import com.zantong.mobilecttx.msg_v.MegTypeActivity;
+import com.zantong.mobilecttx.order_v.AmendOrderActivity;
 import com.zantong.mobilecttx.order_v.AnnualDetailActivity;
 import com.zantong.mobilecttx.order_v.OrderDetailActivity;
+import com.zantong.mobilecttx.order_v.OrderRefundActivity;
 import com.zantong.mobilecttx.payment_v.LicenseDetailActivity;
 import com.zantong.mobilecttx.payment_v.LicenseGradeActivity;
 import com.zantong.mobilecttx.payment_v.PaymentActivity;
@@ -75,7 +77,9 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 RouterGlobal.Host.license_detail_host,
                 RouterGlobal.Host.pay_ment_host,
                 RouterGlobal.Host.splash_activity_host,
-                RouterGlobal.Host.home_rich_host
+                RouterGlobal.Host.home_rich_host,
+                RouterGlobal.Host.order_refund_host,
+                RouterGlobal.Host.order_amend_host
         };
     }
 
@@ -134,6 +138,10 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, RichTextActivity.class);
         } else if (RouterGlobal.Host.splash_activity_host.equals(host)) {
             intent.setClass(context, SplashActivity.class);
+        } else if (RouterGlobal.Host.order_amend_host.equals(host)) {
+            intent.setClass(context, AmendOrderActivity.class);
+        } else if (RouterGlobal.Host.order_refund_host.equals(host)) {
+            intent.setClass(context, OrderRefundActivity.class);
         } else {
             return true;
         }

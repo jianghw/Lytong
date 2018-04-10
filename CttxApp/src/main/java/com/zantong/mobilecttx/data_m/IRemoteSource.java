@@ -1,8 +1,13 @@
 package com.zantong.mobilecttx.data_m;
 
+import com.tzly.ctcyh.java.request.order.UpdateOrderDTO;
 import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
+import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
+import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
+import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
+import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
 import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
 import com.zantong.mobilecttx.base.bean.ValidCountResponse;
@@ -392,4 +397,24 @@ public interface IRemoteSource {
      * 版本更新
      */
     Observable<VersionResponse> versionInfo(VersionDTO versionDTO);
+
+    /**
+     * 修改订单详情
+     */
+    Observable<UpdateOrderResponse> updateOrderDetail(UpdateOrderDTO updateOrderDTO);
+
+    /**
+     * 催单,退款
+     */
+    Observable<OrderRefundResponse> info(String channel, String orderId, String remark);
+
+    /**
+     * 反显用户信息
+     */
+    Observable<OrderInfoResponse> getUserOrderInfo(String orderId);
+
+    /**
+     * 查违章小广告
+     */
+    Observable<ValidAdvResponse> findIsValidAdvert();
 }

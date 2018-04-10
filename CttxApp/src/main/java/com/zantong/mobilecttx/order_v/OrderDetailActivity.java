@@ -15,10 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
+import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
-import com.tzly.ctcyh.router.custom.htmltxt.HtmlHttpImageGetter;
-import com.tzly.ctcyh.router.custom.htmltxt.HtmlTextView;
-import com.tzly.ctcyh.router.custom.htmltxt.IHtmlTextClick;
 import com.tzly.ctcyh.router.util.FormatUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
@@ -43,7 +42,6 @@ import java.util.regex.Pattern;
  */
 public class OrderDetailActivity extends JxBaseActivity
         implements View.OnClickListener, IOrderDetailContract.IOrderDetailView {
-
 
     private TextView mTvPrice;
     private LinearLayout mLayPrice;
@@ -90,6 +88,16 @@ public class OrderDetailActivity extends JxBaseActivity
     private TextView mTvArea;
     private RelativeLayout mRyAddress;
     private TextView mTvAddress;
+    private TextView mTvXiugai;
+    private TextView mTvTuiKuan;
+    private TextView mTvCuidan;
+    private TextView mTvWuliu;
+
+    private TextView mPayConsignee;
+    private TextView mPayAddress;
+    private TextView mPayPick;
+    private TextView mPayRemark;
+    private TextView mUserName;
 
     @Override
     protected void onDestroy() {
@@ -135,6 +143,8 @@ public class OrderDetailActivity extends JxBaseActivity
 
         RichText.initCacheDir(this);
         if (mPresenter != null) mPresenter.getOrderDetail();
+
+        if (mPresenter != null) mPresenter.getUserOrderInfo();
     }
 
     public void initView(View view) {
@@ -152,8 +162,6 @@ public class OrderDetailActivity extends JxBaseActivity
         mTvPayTypeTitle = (TextView) view.findViewById(R.id.tv_pay_type_title);
         mTvPayType = (TextView) view.findViewById(R.id.tv_pay_type);
         mTvContentBottom = (TextView) view.findViewById(R.id.tv_content_bottom);
-        mTvQuery = (TextView) view.findViewById(R.id.tv_query);
-        mTvQuery.setOnClickListener(this);
 
         mRyName = (RelativeLayout) view.findViewById(R.id.ry_name);
         mTvName = (TextView) view.findViewById(R.id.tv_pay_name);
@@ -163,13 +171,42 @@ public class OrderDetailActivity extends JxBaseActivity
         mTvArea = (TextView) view.findViewById(R.id.tv_pay_area);
         mRyAddress = (RelativeLayout) view.findViewById(R.id.ry_address);
         mTvAddress = (TextView) view.findViewById(R.id.tv_pay_address);
+
+        mUserName = (TextView) view.findViewById(R.id.tv_user_name);
+        mPayConsignee = (TextView) view.findViewById(R.id.tv_pay_consignee);
+        mPayAddress = (TextView) view.findViewById(R.id.tv_pay_ce_address);
+        mPayPick = (TextView) view.findViewById(R.id.tv_pay_pick_up);
+        mPayRemark = (TextView) view.findViewById(R.id.tv_pay_remark);
+
+        mTvCuidan = (TextView) view.findViewById(R.id.tv_pay_cuid);
+        mTvCuidan.setOnClickListener(this);
+        mTvWuliu = (TextView) view.findViewById(R.id.tv_pay_wuliu);
+        mTvWuliu.setOnClickListener(this);
+
+        mTvXiugai = (TextView) view.findViewById(R.id.tv_xiugai);
+        mTvXiugai.setOnClickListener(this);
+        mTvTuiKuan = (TextView) view.findViewById(R.id.tv_tuikuan);
+        mTvTuiKuan.setOnClickListener(this);
+        mTvQuery = (TextView) view.findViewById(R.id.tv_query);
+        mTvQuery.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_query:
+            case R.id.tv_query://客服
                 Act.getInstance().gotoIntent(this, ProblemFeedbackActivity.class);
+                break;
+            case R.id.tv_xiugai://修改
+                MainRouter.gotoAmendOrderActivity(this, mOrderId);
+                break;
+            case R.id.tv_tuikuan://退钱
+                MainRouter.gotoOrderRefundActivity(this, mOrderId);
+                break;
+            case R.id.tv_pay_cuid://催单
+                if (mPresenter != null) mPresenter.info();
+                break;
+            case R.id.tv_pay_wuliu://物流
                 break;
             default:
                 break;
@@ -399,5 +436,44 @@ public class OrderDetailActivity extends JxBaseActivity
     @Override
     public String getOrderId() {
         return mOrderId;
+    }
+
+    /**
+     * 催单,退款
+     */
+    @Override
+    public String getChannel() {
+        return "1";
+    }
+
+    @Override
+    public void infoError(String message) {
+        toastShore(message);
+    }
+
+    @Override
+    public void infoSucceed(OrderRefundResponse result) {
+
+    }
+
+    @Override
+    public void UserOrderInfoError(String message) {
+        toastShore(message);
+    }
+
+    @Override
+    public void UserOrderInfoSucceed(OrderInfoResponse result) {
+        OrderInfoResponse.DataBean resultData = result.getData();
+        if (resultData == null) return;
+
+        try {
+            mUserName.setText(resultData.getName());
+            mPayConsignee.setText(resultData.getPhone());
+            mPayAddress.setText(resultData.getSheng() + "/" + resultData.getShi() + "/" + resultData.getXian());
+            mPayPick.setText(resultData.getAddressDetail());
+            mPayRemark.setText(resultData.getSupplement());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

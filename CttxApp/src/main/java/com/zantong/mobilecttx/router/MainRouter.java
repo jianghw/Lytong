@@ -784,4 +784,26 @@ public final class MainRouter {
                 RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.splash_activity_host,
                 bundle);
     }
+
+    /**
+     * 退订单
+     */
+    public static void gotoOrderRefundActivity(Activity activity, String mOrderId) {
+        Bundle bundle = new Bundle();
+        bundle.putString(MainGlobal.putExtra.web_order_id_extra, mOrderId);
+        UiRouter.getInstance().openUriBundle(activity,
+                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.order_refund_host,
+                bundle);
+    }
+
+    /**
+     * 修改订单
+     */
+    public static void gotoAmendOrderActivity(Activity activity, String mOrderId) {
+        Bundle bundle = new Bundle();
+        bundle.putString(MainGlobal.putExtra.web_order_id_extra, mOrderId);
+        UiRouter.getInstance().openUriBundle(activity,
+                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.order_amend_host,
+                bundle);
+    }
 }

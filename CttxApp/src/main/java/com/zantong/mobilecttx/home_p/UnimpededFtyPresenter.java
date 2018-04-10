@@ -29,21 +29,19 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by jianghw on 16/6/1.
  * Description: 畅通页面 p
- * Update by:
- * Update day:
  */
 public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFtyPresenter {
 
     private final RepositoryManager mRepository;
-    private final IUnimpededFtyContract.IUnimpededFtyView ftyView;
+    private final IUnimpededFtyContract.IUnimpededFtyView mContractView;
     private final CompositeSubscription mSubscriptions;
 
     public UnimpededFtyPresenter(@NonNull RepositoryManager repositoryManager,
                                  @NonNull IUnimpededFtyContract.IUnimpededFtyView view) {
         mRepository = repositoryManager;
-        ftyView = view;
+        mContractView = view;
         mSubscriptions = new CompositeSubscription();
-        ftyView.setPresenter(this);
+        mContractView.setPresenter(this);
     }
 
     @Override
@@ -53,7 +51,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
     @Override
     public void unSubscribe() {
-        ftyView.dismissLoading();
+        mContractView.dismissLoading();
         mSubscriptions.clear();
     }
 
@@ -72,17 +70,17 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
                     @Override
                     public void doError(Throwable e) {
-                        ftyView.dataError(e.getMessage());
+                        mContractView.dataError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(IndexLayerResponse result) {
                         if (result != null && result.getResponseCode()
                                 == MainGlobal.Response.base_succeed) {
-                            ftyView.indexLayerSucceed(result);
+                            mContractView.indexLayerSucceed(result);
                         } else {
-                            ftyView.dataError(result != null
-                                    ? result.getResponseDesc() : "未知错误(IndexLayer)");
+                            mContractView.dataError(result != null
+                                    ? result.getResponseDesc() : "未知错误(是否提供活动)");
                         }
                     }
                 });
@@ -104,16 +102,16 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
                     @Override
                     public void doError(Throwable e) {
-                        ftyView.dataError(e.getMessage());
+                        mContractView.dataError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(UnimpededBannerResponse result) {
                         if (result != null && result.getResponseCode()
                                 == MainGlobal.Response.base_succeed) {
-                            ftyView.bannerSucceed(result);
+                            mContractView.bannerSucceed(result);
                         } else {
-                            ftyView.dataError(result != null
+                            mContractView.dataError(result != null
                                     ? result.getResponseDesc() : "未知错误(banner)");
                         }
                     }
@@ -136,16 +134,16 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
                     @Override
                     public void doError(Throwable e) {
-                        ftyView.dataError(e.getMessage());
+                        mContractView.dataError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(HomeResponse result) {
                         if (result != null && result.getResponseCode()
                                 == MainGlobal.Response.base_succeed) {
-                            ftyView.homePageSucceed(result);
+                            mContractView.homePageSucceed(result);
                         } else {
-                            ftyView.dataError(result != null
+                            mContractView.dataError(result != null
                                     ? result.getResponseDesc() : "未知错误(homePage)");
                         }
                     }
@@ -177,15 +175,15 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
                     @Override
                     public void doError(Throwable e) {
-                        ftyView.remoteCarInfoError(e.getMessage());
+                        mContractView.remoteCarInfoError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(HomeCarResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            ftyView.getTextNoticeInfo(result);
+                            mContractView.getTextNoticeInfo(result);
                         } else {
-                            ftyView.remoteCarInfoError(result != null
+                            mContractView.remoteCarInfoError(result != null
                                     ? result.getResponseDesc() : "未知错误(NoticeInfo)");
                         }
                     }
@@ -206,7 +204,6 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                 .subscribe(new Subscriber<Long>() {
                     @Override
                     public void onCompleted() {
-                        ftyView.countDownCompleted();
                     }
 
                     @Override
@@ -216,7 +213,6 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
                     @Override
                     public void onNext(Long aLong) {
-                        ftyView.countDownTextView(3 - aLong);
                     }
                 });
         mSubscriptions.add(subCount);
@@ -250,6 +246,9 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
         mSubscriptions.add(subscription);
     }
 
+    /**
+     * 获取版本信息
+     */
     @Override
     public void versionInfo() {
         VersionDTO versionDTO = new VersionDTO();
@@ -264,14 +263,14 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
 
                     @Override
                     public void doError(Throwable e) {
-                        ftyView.versionInfoError();
+                        mContractView.versionInfoError();
                     }
 
                     @Override
                     public void doNext(VersionResponse result) {
                         if (result != null && result.getResponseCode()
                                 == MainGlobal.Response.base_succeed) {
-                            ftyView.versionInfoSucceed(result);
+                            mContractView.versionInfoSucceed(result);
                         }
                     }
                 });

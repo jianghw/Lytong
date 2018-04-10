@@ -29,7 +29,7 @@ import java.util.Date;
  * Update day:
  */
 
-public class DateDialogFragment extends DialogFragment
+public class PickUpDateDialogFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
     private IOnDateSetListener mIOnDateSetListener;
@@ -56,8 +56,8 @@ public class DateDialogFragment extends DialogFragment
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    public static DateDialogFragment newInstance() {
-        return new DateDialogFragment();
+    public static PickUpDateDialogFragment newInstance() {
+        return new PickUpDateDialogFragment();
     }
 
     @Override
@@ -85,9 +85,9 @@ public class DateDialogFragment extends DialogFragment
         //设置标题
         dialog.setTitle("选择时间");
         //设置类型
-        dialog.setType(DateType.TYPE_YMD);
+        dialog.setType(DateType.TYPE_YMDHM);
         //设置消息体的显示格式，日期格式
-        dialog.setMessageFormat("yyyy-MM-dd");
+        dialog.setMessageFormat("yyyy-MM-dd HH:mm");
         //设置选择回调
         dialog.setOnChangeLisener(null);
         //设置点击确定按钮回调
@@ -100,10 +100,11 @@ public class DateDialogFragment extends DialogFragment
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(dateSure);
                 long date = calendar.getTime().getTime();
-                boolean usable = date <= today;
 
+                boolean usable = date < today;
+                if (usable)
+                    Toast.makeText(getContext(), "选择日期不可早于当前", Toast.LENGTH_SHORT).show();
                 if (mIOnDateSetListener != null) {
-                    if (!usable) Toast.makeText(getContext(), "选择日期不可超过今日", Toast.LENGTH_SHORT).show();
                     mIOnDateSetListener.onDateSet(null, dateSure, usable);
                 }
             }

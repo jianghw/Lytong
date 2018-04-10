@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.Utils;
@@ -90,13 +91,13 @@ public class ViolationListActivity extends AbstractBaseActivity
     private void initFragment() {
         if (mFragmentList != null && !mFragmentList.isEmpty()) mFragmentList.clear();
 
-        orderAllStatusFragment = ViolationListFragment.newInstance();
+        orderAllStatusFragment = ViolationListFragment.newInstance("0");
         mFragmentList.add(orderAllStatusFragment);
 
-        orderUnStatusFragment = ViolationListFragment.newInstance();
+        orderUnStatusFragment = ViolationListFragment.newInstance("1");
         mFragmentList.add(orderUnStatusFragment);
 
-        orderPayStatusFragment = ViolationListFragment.newInstance();
+        orderPayStatusFragment = ViolationListFragment.newInstance("2");
         mFragmentList.add(orderPayStatusFragment);
     }
 
@@ -153,6 +154,14 @@ public class ViolationListActivity extends AbstractBaseActivity
         } else {
             showPayFragment(bean);
         }
+    }
+
+    /**
+     * 广告
+     */
+    @Override
+    public void findIsValidAdvert() {
+        if (mPresenter != null) mPresenter.findIsValidAdvert();
     }
 
     /**
@@ -307,6 +316,16 @@ public class ViolationListActivity extends AbstractBaseActivity
         violationCarDTO.setCarnumtype(mViolationDTO.getCarnumtype());
         violationCarDTO.setEnginenum(mViolationDTO.getEnginenum());
         return violationCarDTO;
+    }
+
+    @Override
+    public void validAdvertError(String message) {
+    }
+
+    @Override
+    public void validAdvertSucceed(ValidAdvResponse result) {
+        if (orderUnStatusFragment != null)
+            orderUnStatusFragment.validAdvertSucceed(result);
     }
 
 }

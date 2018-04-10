@@ -69,6 +69,9 @@ public final class RouterGlobal {
         public static final String license_cargo_host = "license_cargo_host";
         //启动页面
         public static final String splash_activity_host = "splash_activity_host";
+        //订单修改
+        public static final String order_refund_host = "order_refund_host";
+        public static final String order_amend_host = "order_amend_host";
     }
 
     public static final class putExtra {

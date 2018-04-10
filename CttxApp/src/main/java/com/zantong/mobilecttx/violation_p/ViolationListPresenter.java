@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.request.RequestDTO;
 import com.tzly.ctcyh.java.request.RequestHeadDTO;
+import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
+import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.router.MainRouter;
@@ -36,15 +38,15 @@ public class ViolationListPresenter
         implements IViolationListContract.IViolationListPresenter {
 
     private final RepositoryManager mRepository;
-    private final IViolationListContract.IViolationListView mAtyView;
+    private final IViolationListContract.IViolationListView mContractView;
     private final CompositeSubscription mSubscriptions;
 
     public ViolationListPresenter(@NonNull RepositoryManager repositoryManager,
                                   @NonNull IViolationListContract.IViolationListView view) {
         mRepository = repositoryManager;
-        mAtyView = view;
+        mContractView = view;
         mSubscriptions = new CompositeSubscription();
-        mAtyView.setPresenter(this);
+        mContractView.setPresenter(this);
     }
 
     @Override
@@ -54,7 +56,7 @@ public class ViolationListPresenter
 
     @Override
     public void unSubscribe() {
-        mAtyView.dismissLoading();
+        mContractView.dismissLoading();
         mSubscriptions.clear();
     }
 
@@ -70,7 +72,7 @@ public class ViolationListPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoading();
+                        mContractView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -78,27 +80,28 @@ public class ViolationListPresenter
                 .subscribe(new BaseSubscriber<ViolationResultParent>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoading();
+                        mContractView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.dismissLoading();
-                        mAtyView.searchViolationError(e.getMessage());
+                        mContractView.dismissLoading();
+                        mContractView.searchViolationError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(ViolationResultParent result) {
                         if (result != null && "000000".equals(result.getSYS_HEAD().getReturnCode())) {
-                            mAtyView.allPaymentData(result.getRspInfo());
+
+                            mContractView.allPaymentData(result.getRspInfo());
                             List<ViolationBean> beanList = result.getRspInfo().getViolationInfo();
                             if (beanList != null && !beanList.isEmpty()) handleViolations(beanList);
 
                             dataDistribution(result, 0);
                             dataDistribution(result, 1);
                         } else {
-                            mAtyView.searchViolationError(result != null
-                                    ? result.getSYS_HEAD().getReturnMessage()
+                            mContractView.searchViolationError(
+                                    result != null ? result.getSYS_HEAD().getReturnMessage()
                                     : "未知错误(cip.cfc.v002.01)");
                         }
                     }
@@ -115,7 +118,7 @@ public class ViolationListPresenter
         RequestHeadDTO requestHeadDTO = mRepository.initServiceCodeDTO("cip.cfc.v002.01");
         dto.setSYS_HEAD(requestHeadDTO);
 
-        ViolationDTO violationDTO = mAtyView.getViolationDTO();
+        ViolationDTO violationDTO = mContractView.getViolationDTO();
         if (violationDTO != null) {
             ViolationDTO bean = new ViolationDTO();
             bean.setProcessste("2");
@@ -187,15 +190,15 @@ public class ViolationListPresenter
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.dataDistributionError(e.getMessage(), value);
+                        mContractView.dataDistributionError(e.getMessage(), value);
                     }
 
                     @Override
                     public void doNext(List<ViolationBean> beanList) {
                         if (value == 0) {
-                            mAtyView.nonPaymentData(beanList);
+                            mContractView.nonPaymentData(beanList);
                         } else if (value == 1) {
-                            mAtyView.havePaymentData(beanList);
+                            mContractView.havePaymentData(beanList);
                         }
                     }
                 });
@@ -207,7 +210,7 @@ public class ViolationListPresenter
      */
     @Override
     public void handleViolations(List<ViolationBean> beanList) {
-        ViolationCarDTO violationCarDTO = mAtyView.getViolationCarDTO();
+        ViolationCarDTO violationCarDTO = mContractView.getViolationCarDTO();
         violationCarDTO.setViolationInfo(beanList);
 
         Subscription subscription = mRepository.handleViolations(violationCarDTO)
@@ -224,6 +227,37 @@ public class ViolationListPresenter
 
                     @Override
                     public void doNext(BaseResponse result) {
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 查违章小广告
+     */
+    @Override
+    public void findIsValidAdvert() {
+        Subscription subscription = mRepository.findIsValidAdvert()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<ValidAdvResponse>() {
+                    @Override
+                    public void doCompleted() {
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.validAdvertError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(ValidAdvResponse result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mContractView.validAdvertSucceed(result);
+                        } else {
+                            mContractView.validAdvertError(result != null
+                                    ? result.getResponseDesc() : "未知错误(优惠信息)");
+                        }
                     }
                 });
         mSubscriptions.add(subscription);

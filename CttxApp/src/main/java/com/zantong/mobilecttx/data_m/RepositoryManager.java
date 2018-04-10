@@ -4,9 +4,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.tzly.ctcyh.java.request.RequestHeadDTO;
+import com.tzly.ctcyh.java.request.order.UpdateOrderDTO;
 import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
+import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
+import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
+import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
+import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.tzly.ctcyh.java.response.violation.ViolationNum;
 import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
 import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
@@ -383,8 +388,8 @@ public class RepositoryManager {
      *
      * @param userId
      */
-    public Observable<OrderListResponse> getOrderList(String userId,String pager) {
-        return mRemoteData.getOrderList(userId,pager);
+    public Observable<OrderListResponse> getOrderList(String userId, String pager) {
+        return mRemoteData.getOrderList(userId, pager);
     }
 
     /**
@@ -631,5 +636,33 @@ public class RepositoryManager {
      */
     public Observable<VersionResponse> versionInfo(VersionDTO versionDTO) {
         return mRemoteData.versionInfo(versionDTO);
+    }
+
+    /**
+     * 修改订单详情
+     */
+    public Observable<UpdateOrderResponse> updateOrderDetail(UpdateOrderDTO updateOrderDTO) {
+        return mRemoteData.updateOrderDetail(updateOrderDTO);
+    }
+
+    /**
+     * 催单,退款
+     */
+    public Observable<OrderRefundResponse> info(String channel, String orderId, String remark) {
+        return mRemoteData.info(channel, orderId, remark);
+    }
+
+    /**
+     * 反显用户信息
+     */
+    public Observable<OrderInfoResponse> getUserOrderInfo(String orderId) {
+        return mRemoteData.getUserOrderInfo(orderId);
+    }
+
+    /**
+     * 查违章小广告
+     */
+    public Observable<ValidAdvResponse> findIsValidAdvert() {
+        return mRemoteData.findIsValidAdvert();
     }
 }

@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
+import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.global.MainGlobal;
 
 /**
  * 修改订单信息
@@ -14,6 +16,7 @@ import com.zantong.mobilecttx.R;
 public class AmendOrderActivity extends AbstractBaseActivity {
 
     private AmendOrderFragment mFragment;
+    private String mOrderId;
 
     @Override
     protected int initContentView() {
@@ -24,6 +27,8 @@ public class AmendOrderActivity extends AbstractBaseActivity {
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
+            if (bundle != null && intent.hasExtra(MainGlobal.putExtra.web_order_id_extra))
+                mOrderId = bundle.getString(MainGlobal.putExtra.web_order_id_extra);
         }
     }
 
@@ -41,7 +46,7 @@ public class AmendOrderActivity extends AbstractBaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         //默认页面显示
         if (mFragment == null) {
-            mFragment = AmendOrderFragment.newInstance();
+            mFragment = AmendOrderFragment.newInstance(mOrderId);
         }
         FragmentUtils.add(fragmentManager, mFragment, R.id.lay_base_frame);
     }

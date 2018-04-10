@@ -7,6 +7,6 @@ import com.tzly.ctcyh.java.response.BaseResponse;
  * 更新
  */
 
-public class UpdateOrderResponse extends BaseResponse {
+public class OrderRefundResponse extends BaseResponse {
 
 }

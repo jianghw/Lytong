@@ -72,26 +72,26 @@ public class HomeMainActivity extends AbstractBaseActivity
                 this, StatusBarUtils.DEFAULT_BAR_ALPHA, null);
     }
 
-    /**
-     * 再次启动时调用
-     */
-    @Override
-    protected void bundleIntent(Intent intent) {
-        if (intent != null) {
-            Bundle bundle = intent.getExtras();
-            if (bundle != null) {
-                if (intent.hasExtra(MainGlobal.putExtra.home_position_extra))
-                    mCurBottomPosition = bundle.getInt(MainGlobal.putExtra.home_position_extra, 0);
-            }
-        }
-    }
-
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
         if (mCustomBottom != null) mCustomBottom.selectTab(mCurBottomPosition);
         if (mHomeUnimpededFragment != null) mHomeUnimpededFragment.loadingFirstData();
+    }
+
+    /**
+     * 再次启动时调用
+     */
+    @Override
+    protected void bundleIntent(Intent intent) {
+        if (intent != null && intent.hasExtra(MainGlobal.putExtra.home_position_extra)) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                mCurBottomPosition = bundle.getInt(
+                        MainGlobal.putExtra.home_position_extra, 0);
+            }
+        }
     }
 
     @Override
@@ -212,28 +212,6 @@ public class HomeMainActivity extends AbstractBaseActivity
             mVersionCode = upgradeInfo.versionCode;
         }
         if (appCode < mVersionCode) Beta.checkUpgrade();
-
-        //  public int upgradeType = 1;//升级策略 1建议 2强制 3手工
-    /*    if (appCode < mVersionCode) {
-            if (upgradeInfo.upgradeType == 2) {
-                Beta.checkUpgrade();
-            } else {
-                DialogUtils.updateDialog(this,
-                        upgradeInfo.title, upgradeInfo.newFeature,
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Beta.checkUpgrade();
-                            }
-                        },
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                shareAppShop(Utils.getContext().getPackageName());
-                            }
-                        });
-            }
-        }*/
     }
 
     /**
@@ -311,14 +289,6 @@ public class HomeMainActivity extends AbstractBaseActivity
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            //                        if ((System.currentTimeMillis() - exitTime) > 2000) {
-            //                            toastShort("请再点击一次,退出应用");
-            //                            exitTime = System.currentTimeMillis();
-            //                        } else {
-            //                            finish();
-            //                            System.exit(0);
-            //                        }
-            //                        return true;
             onBackPressed();
             return true;
         }

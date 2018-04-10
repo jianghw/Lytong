@@ -2,6 +2,7 @@ package com.tzly.ctcyh.router.base;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.jianghw.multi.state.layout.MultiState;
 import com.jianghw.multi.state.layout.MultiStateLayout;
@@ -58,13 +60,11 @@ public abstract class AbstractBaseFragment extends Fragment {
             @Override
             public void onViewCreated(View view, int state) {
                 if (state == MultiState.CONTENT) {
-                    enhanceContentView(view, state);
                 } else if (state == MultiState.LOADING) {
                     enhanceLoadingView(view, state);
                 } else if (state == MultiState.EMPTY) {
-                    View scrollBottom = view.findViewById(R.id.scroll_bottom);
+                    View scrollBottom = view.findViewById(R.id.scroll_empty_bottom);
                     initScrollChildView(scrollBottom);
-
                     enhanceEmptyView(view, state);
                 } else if (state == MultiState.ERROR) {
                     enhanceErrorView(view, state);
@@ -158,6 +158,12 @@ public abstract class AbstractBaseFragment extends Fragment {
         doClickRefreshView(view, state);
     }
 
+    /**
+     * 自定义页面显示
+     */
+    protected void statusViewSelf(View view, int state) {
+    }
+
     private void enhanceErrorView(View view, int state) {
         doClickRefreshView(view, state);
     }
@@ -174,13 +180,15 @@ public abstract class AbstractBaseFragment extends Fragment {
     }
 
     private void doClickRefreshView(View view, int state) {
-        View tvEmpty = view.findViewById(R.id.tv_empty);
-        tvEmpty.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickRefreshData();
-            }
-        });
+        view.findViewById(R.id.tv_empty).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        clickRefreshData();
+                    }
+                });
+
+        statusViewSelf(view, state);
     }
 
     /**

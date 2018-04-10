@@ -1,5 +1,8 @@
 package com.zantong.mobilecttx.api;
 
+import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
+import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
+import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
 import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
 import com.zantong.mobilecttx.order.bean.OrderListResponse;
 import com.zantong.mobilecttx.order.bean.ReceiveInfoResponse;
@@ -7,8 +10,11 @@ import com.zantong.mobilecttx.order.dto.ExpressDTO;
 
 import com.tzly.ctcyh.java.response.BaseResponse;
 
+import java.util.Map;
+
 import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -61,4 +67,25 @@ public interface IOrderService {
      */
     @GET("order/getReceiveInfo")
     Observable<ReceiveInfoResponse> getReceiveInfo(@Query("orderId") String orderId);
+
+    /**
+     * 更改用户信息
+     */
+    @FormUrlEncoded
+    @POST("order/updateOrderDetail")
+    Observable<UpdateOrderResponse> updateOrderDetail(@FieldMap Map<String, String> map);
+
+    /**
+     * 催单,退款
+     */
+    @FormUrlEncoded
+    @POST("order/info")
+    Observable<OrderRefundResponse> info(@Field("channel") String channel,
+                                         @Field("orderId") String orderId, @Field("remark") String remark);
+
+    /**
+     * 反显用户信息
+     */
+    @GET("order/getUserOrderInfo")
+    Observable<OrderInfoResponse> getUserOrderInfo(@Query("orderId") String orderId);
 }

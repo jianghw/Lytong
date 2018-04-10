@@ -3,6 +3,8 @@ package com.zantong.mobilecttx.order_p;
 
 import android.support.annotation.NonNull;
 
+import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
+import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
@@ -23,15 +25,15 @@ public class OrderDetailPresenter
         implements IOrderDetailContract.IOrderDetailPresenter {
 
     private final RepositoryManager mRepository;
-    private final IOrderDetailContract.IOrderDetailView mAtyView;
+    private final IOrderDetailContract.IOrderDetailView mContractView;
     private final CompositeSubscription mSubscriptions;
 
     public OrderDetailPresenter(@NonNull RepositoryManager repositoryManager,
                                 @NonNull IOrderDetailContract.IOrderDetailView view) {
         mRepository = repositoryManager;
-        mAtyView = view;
+        mContractView = view;
         mSubscriptions = new CompositeSubscription();
-        mAtyView.setPresenter(this);
+        mContractView.setPresenter(this);
     }
 
     @Override
@@ -41,7 +43,7 @@ public class OrderDetailPresenter
 
     @Override
     public void unSubscribe() {
-        mAtyView.dismissLoading();
+        mContractView.dismissLoading();
         mSubscriptions.clear();
     }
 
@@ -55,7 +57,7 @@ public class OrderDetailPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoading();
+                        mContractView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -63,21 +65,21 @@ public class OrderDetailPresenter
                 .subscribe(new BaseSubscriber<OrderDetailResponse>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoading();
+                        mContractView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.dismissLoading();
-                        mAtyView.getOrderDetailError(e.getMessage());
+                        mContractView.dismissLoading();
+                        mContractView.getOrderDetailError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(OrderDetailResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.getOrderDetailSucceed(result);
+                            mContractView.getOrderDetailSucceed(result);
                         } else {
-                            mAtyView.getOrderDetailError(result != null
+                            mContractView.getOrderDetailError(result != null
                                     ? result.getResponseDesc() : "未知错误(N9)");
                         }
                     }
@@ -87,7 +89,85 @@ public class OrderDetailPresenter
 
     @Override
     public String getOrderId() {
-        return mAtyView.getOrderId();
+        return mContractView.getOrderId();
+    }
+
+    /**
+     * 催单,退款
+     */
+    @Override
+    public void info() {
+        Subscription subscription = mRepository.info(mContractView.getChannel(),
+                mContractView.getOrderId(), "")
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<OrderRefundResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.infoError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(OrderRefundResponse result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mContractView.infoSucceed(result);
+                        } else {
+                            mContractView.infoError(result != null
+                                    ? result.getResponseDesc() : "未知错误(订单操作)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    @Override
+    public void getUserOrderInfo() {
+        Subscription subscription = mRepository.getUserOrderInfo(mContractView.getOrderId())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<OrderInfoResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.UserOrderInfoError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(OrderInfoResponse result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mContractView. UserOrderInfoSucceed(result);
+                        } else {
+                            mContractView.UserOrderInfoError(result != null
+                                    ? result.getResponseDesc() : "未知错误(用户信息)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 
 }

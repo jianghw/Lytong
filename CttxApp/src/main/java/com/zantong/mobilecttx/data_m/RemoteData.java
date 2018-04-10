@@ -2,9 +2,14 @@ package com.zantong.mobilecttx.data_m;
 
 import android.text.TextUtils;
 
+import com.tzly.ctcyh.java.request.order.UpdateOrderDTO;
 import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
+import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
+import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
+import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
+import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.zantong.mobilecttx.api.IAddOilService;
 import com.zantong.mobilecttx.api.IBankService;
 import com.zantong.mobilecttx.api.IBannerService;
@@ -675,5 +680,47 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<VersionResponse> versionInfo(VersionDTO versionDTO) {
         return baseRetrofit().create(ICttxService.class).versionInfo(versionDTO);
+    }
+
+    /**
+     * 修改订单详情
+     */
+    @Override
+    public Observable<UpdateOrderResponse> updateOrderDetail(UpdateOrderDTO updateOrderDTO) {
+        Map<String, String> map = new HashMap<>();
+        map.put("orderId", updateOrderDTO.getOrderId());
+        map.put("name", updateOrderDTO.getName());
+        map.put("phone", updateOrderDTO.getPhone());
+        map.put("sheng", updateOrderDTO.getSheng());
+        map.put("shi", updateOrderDTO.getShi());
+        map.put("xian", updateOrderDTO.getXian());
+        map.put("addressDetail", updateOrderDTO.getAddressDetail());
+        map.put("supplement", updateOrderDTO.getSupplement());
+        map.put("bespeakDate", updateOrderDTO.getBespeakDate());
+        return baseRetrofit().create(IOrderService.class).updateOrderDetail(map);
+    }
+
+    /**
+     * 催单,退款
+     */
+    @Override
+    public Observable<OrderRefundResponse> info(String channel, String orderId, String remark) {
+        return baseRetrofit().create(IOrderService.class).info(channel, orderId, remark);
+    }
+
+    /**
+     * 反显用户信息
+     */
+    @Override
+    public Observable<OrderInfoResponse> getUserOrderInfo(String orderId) {
+        return baseRetrofit().create(IOrderService.class).getUserOrderInfo(orderId);
+    }
+
+    /**
+     * 查违章小广告
+     */
+    @Override
+    public Observable<ValidAdvResponse> findIsValidAdvert() {
+        return baseRetrofit().create(ITextService.class).findIsValidAdvert();
     }
 }

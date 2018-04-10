@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
+import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.custom.htmltxt.HtmlHttpImageGetter;
 import com.tzly.ctcyh.router.custom.htmltxt.HtmlTextView;
@@ -535,5 +537,30 @@ public class AnnualDetailActivity extends JxBaseActivity
     @Override
     public String getOrderId() {
         return mOrderId;
+    }
+
+    @Override
+    public String getChannel() {
+        return null;
+    }
+
+    @Override
+    public void infoError(String message) {
+
+    }
+
+    @Override
+    public void infoSucceed(OrderRefundResponse result) {
+
+    }
+
+    @Override
+    public void UserOrderInfoError(String message) {
+
+    }
+
+    @Override
+    public void UserOrderInfoSucceed(OrderInfoResponse result) {
+
     }
 }
