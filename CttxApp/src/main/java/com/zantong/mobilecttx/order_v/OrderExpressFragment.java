@@ -150,7 +150,8 @@ public class OrderExpressFragment extends JxBaseRefreshFragment
         final ArrayList<ArrayList<ArrayList<String>>> thirdList = new ArrayList<>();
         thirdList.addAll((ArrayList<ArrayList<ArrayList<String>>>) result[2]);
 
-        CustomDialog.popupBottomAllArea(getActivity(), firstList, secondList, thirdList, new IAreaDialogListener() {
+        CustomDialog.popupBottomAllArea(getActivity(),
+                firstList, secondList, thirdList, new IAreaDialogListener() {
             @Override
             public void setCurPosition(String position) {
                 String[] postions = position.split("/");

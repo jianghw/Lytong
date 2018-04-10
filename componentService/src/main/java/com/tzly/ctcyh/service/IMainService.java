@@ -32,9 +32,9 @@ public interface IMainService {
 
     void gotoProblemFeedbackActivity(Activity activity);
 
-    void gotoBaiduMapParentActivity(Activity context);
+    void gotoOilMapActivity(Context context);
 
-    void gotoActiveActivity(Context activity, int i);
+    void gotoActiveActivity(Context activity, int type);
 
     void gotoHtmlActivity(Context activity, String title, String msg);
 

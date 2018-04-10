@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <com.baidu.mapapi.map.MapView
         android:id="@+id/lay_map"
@@ -14,59 +14,95 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cv_head"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_120"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/ds_45"
-        android:layout_marginRight="@dimen/ds_45"
-        android:layout_marginTop="@dimen/ds_30"
-        card_view:cardBackgroundColor="@color/colorWhite"
+        android:layout_marginLeft="@dimen/res_x_30"
+        android:layout_marginRight="@dimen/res_x_30"
+        android:layout_marginTop="@dimen/res_y_20"
+        card_view:cardBackgroundColor="@color/res_color_white"
         card_view:cardCornerRadius="6dp"
         card_view:cardElevation="4dp">
 
-        <!--头部控件指标-->
-        <RadioGroup
-            android:id="@+id/lay_rg"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/rb_start"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
-                android:textColor="@color/sel_tv_color_rg"
-                android:textSize="@dimen/fs_16sp"
-                tools:text="92#优惠"/>
+            <!--头部控件指标-->
+            <RadioGroup
+                android:id="@+id/lay_rg"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/res_y_80"
+                android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/rb_center"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
-                android:textColor="@color/sel_tv_color_rg"
-                android:textSize="@dimen/fs_16sp"
-                tools:text="92#优惠"/>
+                <RadioButton
+                    android:id="@+id/rb_start"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:textColor="@color/sel_tv_color_rg"
+                    android:textSize="@dimen/fs_16sp"
+                    tools:text="92#优惠" />
 
-            <RadioButton
-                android:id="@+id/rb_end"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:button="@null"
-                android:gravity="center"
-                android:textColor="@color/sel_tv_color_rg"
-                android:textSize="@dimen/fs_16sp"
-                tools:text="92#优惠"/>
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/rb_center"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:textColor="@color/sel_tv_color_rg"
+                    android:textSize="@dimen/fs_16sp"
+                    tools:text="92#优惠" />
 
+                <RadioButton
+                    android:id="@+id/rb_end"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:textColor="@color/sel_tv_color_rg"
+                    android:textSize="@dimen/fs_16sp"
+                    tools:text="92#优惠" />
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/res_y_1"
+                android:layout_marginLeft="@dimen/res_x_30"
+                android:layout_marginRight="@dimen/res_x_30"
+                android:background="@color/res_color_gray_e6" />
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/lay_94"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/res_y_80">
+
+                <CheckBox
+                    android:id="@+id/cb_94"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/res_x_30" />
+
+                <TextView
+                    style="@style/ResTextTheme.14.Hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/res_x_10"
+                    android:layout_toRightOf="@+id/cb_94"
+                    android:text="显示支持爱车卡94折优惠加油站" />
+            </RelativeLayout>
+
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -82,7 +118,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/btn_locate"/>
+            android:src="@mipmap/btn_locate" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -98,7 +134,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/btn_zoomout"/>
+            android:src="@mipmap/btn_zoomout" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -114,7 +150,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/btn_zoomin"/>
+            android:src="@mipmap/btn_zoomin" />
     </android.support.v7.widget.CardView>
 
 

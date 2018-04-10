@@ -17,8 +17,10 @@ import android.widget.TextView;
 
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
-import com.tzly.ctcyh.router.base.JxBaseActivity;
+import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FormatUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.global.MainGlobal;
@@ -40,7 +42,7 @@ import java.util.regex.Pattern;
 /**
  * 订单详情页面
  */
-public class OrderDetailActivity extends JxBaseActivity
+public class OrderDetailActivity extends AbstractBaseActivity
         implements View.OnClickListener, IOrderDetailContract.IOrderDetailView {
 
     private TextView mTvPrice;
@@ -99,6 +101,12 @@ public class OrderDetailActivity extends JxBaseActivity
     private TextView mPayRemark;
     private TextView mUserName;
 
+    private RelativeLayout mLayUserName;
+    private RelativeLayout mLayAddress;
+    private RelativeLayout mLayTime;
+    private TextView mPickTitle;
+    private LinearLayout mLayOther;
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -108,86 +116,81 @@ public class OrderDetailActivity extends JxBaseActivity
     }
 
     @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-        onNewIntent(getIntent());
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        if (intent != null) {
-            Bundle bundle = intent.getExtras();
-            if (bundle != null && intent.hasExtra(MainGlobal.putExtra.web_order_id_extra))
-                mOrderId = bundle.getString(MainGlobal.putExtra.web_order_id_extra);
-        }
-    }
-
-    @Override
     protected int initContentView() {
         return R.layout.activity_order_detail;
     }
 
     @Override
-    protected void bindContentView(View childView) {
-        titleContent("订单详情");
+    protected void bundleIntent(Intent intent) {
+        if (intent != null && intent.hasExtra(MainGlobal.putExtra.web_order_id_extra)) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) mOrderId = bundle.getString(MainGlobal.putExtra.web_order_id_extra);
+        }
+    }
 
-        initView(childView);
+    @Override
+    protected void bindFragment() {
+        RichText.initCacheDir(this);
+
+        titleContent("订单详情");
+        initView();
 
         OrderDetailPresenter presenter = new OrderDetailPresenter(
-                Injection.provideRepository(getApplicationContext()), this);
+                Injection.provideRepository(Utils.getContext()), this);
     }
 
     @Override
     protected void initContentData() {
-
-        RichText.initCacheDir(this);
         if (mPresenter != null) mPresenter.getOrderDetail();
-
         if (mPresenter != null) mPresenter.getUserOrderInfo();
     }
 
-    public void initView(View view) {
-        mTvPrice = (TextView) view.findViewById(R.id.tv_price);
-        mLayPrice = (LinearLayout) view.findViewById(R.id.lay_price);
-        mTvPayStatus = (TextView) view.findViewById(R.id.tv_pay_status);
-        mTvContentTitle = (TextView) view.findViewById(R.id.tv_content_title);
-        mTvContent = (TextView) view.findViewById(R.id.tv_content);
-        mTvSupplierTitle = (TextView) view.findViewById(R.id.tv_supplier_title);
-        mTvSupplier = (TextView) view.findViewById(R.id.tv_supplier);
-        mTvOrderNumTitle = (TextView) view.findViewById(R.id.tv_order_num_title);
-        mTvOrderNum = (TextView) view.findViewById(R.id.tv_order_num);
-        mTvDateTitle = (TextView) view.findViewById(R.id.tv_date_title);
-        mTvDate = (TextView) view.findViewById(R.id.tv_date);
-        mTvPayTypeTitle = (TextView) view.findViewById(R.id.tv_pay_type_title);
-        mTvPayType = (TextView) view.findViewById(R.id.tv_pay_type);
-        mTvContentBottom = (TextView) view.findViewById(R.id.tv_content_bottom);
+    public void initView() {
+        mTvPrice = (TextView) findViewById(R.id.tv_price);
+        mLayPrice = (LinearLayout) findViewById(R.id.lay_price);
+        mTvPayStatus = (TextView) findViewById(R.id.tv_pay_status);
+        mTvContentTitle = (TextView) findViewById(R.id.tv_content_title);
+        mTvContent = (TextView) findViewById(R.id.tv_content);
+        mTvSupplierTitle = (TextView) findViewById(R.id.tv_supplier_title);
+        mTvSupplier = (TextView) findViewById(R.id.tv_supplier);
+        mTvOrderNumTitle = (TextView) findViewById(R.id.tv_order_num_title);
+        mTvOrderNum = (TextView) findViewById(R.id.tv_order_num);
+        mTvDateTitle = (TextView) findViewById(R.id.tv_date_title);
+        mTvDate = (TextView) findViewById(R.id.tv_date);
+        mTvPayTypeTitle = (TextView) findViewById(R.id.tv_pay_type_title);
+        mTvPayType = (TextView) findViewById(R.id.tv_pay_type);
+        mTvContentBottom = (TextView) findViewById(R.id.tv_content_bottom);
 
-        mRyName = (RelativeLayout) view.findViewById(R.id.ry_name);
-        mTvName = (TextView) view.findViewById(R.id.tv_pay_name);
-        mRyPhone = (RelativeLayout) view.findViewById(R.id.ry_phone);
-        mTvPhone = (TextView) view.findViewById(R.id.tv_pay_phone);
-        mRyArea = (RelativeLayout) view.findViewById(R.id.ry_area);
-        mTvArea = (TextView) view.findViewById(R.id.tv_pay_area);
-        mRyAddress = (RelativeLayout) view.findViewById(R.id.ry_address);
-        mTvAddress = (TextView) view.findViewById(R.id.tv_pay_address);
+        mRyName = (RelativeLayout) findViewById(R.id.ry_name);
+        mTvName = (TextView) findViewById(R.id.tv_pay_name);
+        mRyPhone = (RelativeLayout) findViewById(R.id.ry_phone);
+        mTvPhone = (TextView) findViewById(R.id.tv_pay_phone);
+        mRyArea = (RelativeLayout) findViewById(R.id.ry_area);
+        mTvArea = (TextView) findViewById(R.id.tv_pay_area);
+        mRyAddress = (RelativeLayout) findViewById(R.id.ry_address);
+        mTvAddress = (TextView) findViewById(R.id.tv_pay_address);
 
-        mUserName = (TextView) view.findViewById(R.id.tv_user_name);
-        mPayConsignee = (TextView) view.findViewById(R.id.tv_pay_consignee);
-        mPayAddress = (TextView) view.findViewById(R.id.tv_pay_ce_address);
-        mPayPick = (TextView) view.findViewById(R.id.tv_pay_pick_up);
-        mPayRemark = (TextView) view.findViewById(R.id.tv_pay_remark);
+        mLayOther = (LinearLayout) findViewById(R.id.lay_other);
+        mLayUserName = (RelativeLayout) findViewById(R.id.ry_consignee);
+        mUserName = (TextView) findViewById(R.id.tv_user_name);
+        mPayConsignee = (TextView) findViewById(R.id.tv_pay_consignee);
+        mLayAddress = (RelativeLayout) findViewById(R.id.ry_ce_address);
+        mPayAddress = (TextView) findViewById(R.id.tv_pay_ce_address);
+        mLayTime = (RelativeLayout) findViewById(R.id.ry_pick_up);
+        mPickTitle = (TextView) findViewById(R.id.tv_pay_pick_up_title);
+        mPayPick = (TextView) findViewById(R.id.tv_pay_pick_up);
+        mPayRemark = (TextView) findViewById(R.id.tv_pay_remark);
 
-        mTvCuidan = (TextView) view.findViewById(R.id.tv_pay_cuid);
+        mTvCuidan = (TextView) findViewById(R.id.tv_pay_cuid);
         mTvCuidan.setOnClickListener(this);
-        mTvWuliu = (TextView) view.findViewById(R.id.tv_pay_wuliu);
+        mTvWuliu = (TextView) findViewById(R.id.tv_pay_wuliu);
         mTvWuliu.setOnClickListener(this);
 
-        mTvXiugai = (TextView) view.findViewById(R.id.tv_xiugai);
+        mTvXiugai = (TextView) findViewById(R.id.tv_xiugai);
         mTvXiugai.setOnClickListener(this);
-        mTvTuiKuan = (TextView) view.findViewById(R.id.tv_tuikuan);
+        mTvTuiKuan = (TextView) findViewById(R.id.tv_tuikuan);
         mTvTuiKuan.setOnClickListener(this);
-        mTvQuery = (TextView) view.findViewById(R.id.tv_query);
+        mTvQuery = (TextView) findViewById(R.id.tv_query);
         mTvQuery.setOnClickListener(this);
     }
 
@@ -207,6 +210,8 @@ public class OrderDetailActivity extends JxBaseActivity
                 if (mPresenter != null) mPresenter.info();
                 break;
             case R.id.tv_pay_wuliu://物流
+                String url = "http://www.sf-express.com/cn/sc/dynamic_function/waybill/#search/bill-number/" + mOrderId;
+                MainRouter.gotoWebHtmlActivity(this, "物流信息", url);
                 break;
             default:
                 break;
@@ -220,7 +225,7 @@ public class OrderDetailActivity extends JxBaseActivity
 
     @Override
     public void getOrderDetailError(String message) {
-        toastShore(message);
+        ToastUtils.toastShort(message);
     }
 
     @Override
@@ -448,7 +453,7 @@ public class OrderDetailActivity extends JxBaseActivity
 
     @Override
     public void infoError(String message) {
-        toastShore(message);
+        ToastUtils.toastShort(message);
     }
 
     @Override
@@ -458,22 +463,51 @@ public class OrderDetailActivity extends JxBaseActivity
 
     @Override
     public void UserOrderInfoError(String message) {
-        toastShore(message);
+        ToastUtils.toastShort(message);
     }
 
     @Override
     public void UserOrderInfoSucceed(OrderInfoResponse result) {
         OrderInfoResponse.DataBean resultData = result.getData();
+
+        mLayOther.setVisibility(resultData == null ? View.GONE : View.VISIBLE);
         if (resultData == null) return;
 
-        try {
-            mUserName.setText(resultData.getName());
-            mPayConsignee.setText(resultData.getPhone());
-            mPayAddress.setText(resultData.getSheng() + "/" + resultData.getShi() + "/" + resultData.getXian());
-            mPayPick.setText(resultData.getAddressDetail());
-            mPayRemark.setText(resultData.getSupplement());
-        } catch (Exception e) {
-            e.printStackTrace();
+        String name = resultData.getName();
+        mLayUserName.setVisibility(TextUtils.isEmpty(name) ? View.GONE : View.VISIBLE);
+        mUserName.setText(name);
+
+        String phone = resultData.getPhone();
+        mPayConsignee.setVisibility(TextUtils.isEmpty(phone) ? View.GONE : View.VISIBLE);
+        mPayConsignee.setText(phone);
+
+        String sheng = resultData.getSheng();
+        mLayAddress.setVisibility(TextUtils.isEmpty(sheng) ? View.GONE : View.VISIBLE);
+        StringBuilder sb = new StringBuilder();
+        if (!TextUtils.isEmpty(sheng)) sb.append(sheng).append("/");
+        String shi = resultData.getShi();
+        if (!TextUtils.isEmpty(shi)) sb.append(shi).append("/");
+        String xian = resultData.getXian();
+        if (!TextUtils.isEmpty(xian)) sb.append(xian);
+        mPayAddress.setText(sb.toString());
+
+        String bespeakDate = resultData.getBespeakDate();
+        String expressTime = resultData.getExpressTime();
+        boolean viTime = !TextUtils.isEmpty(bespeakDate) || !TextUtils.isEmpty(expressTime);
+        mLayTime.setVisibility(viTime ? View.VISIBLE : View.GONE);
+        mPickTitle.setText(!TextUtils.isEmpty(bespeakDate) ? "预约时间" : "取件时间");
+        mPayPick.setText(!TextUtils.isEmpty(bespeakDate) ? bespeakDate : expressTime);
+
+        mPayRemark.setText(resultData.getSupplement());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == MainGlobal.requestCode.order_detail_amend &&
+                resultCode == MainGlobal.resultCode.amend_order_detail) {
+            initContentData();
         }
     }
 }

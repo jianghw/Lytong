@@ -43,6 +43,17 @@ public class OrderInfoResponse extends BaseResponse {
         private String name;
         private String sheng;
 
+        private String bespeakDate;
+        private String expressTime;
+
+        public String getBespeakDate() {
+            return bespeakDate;
+        }
+
+        public String getExpressTime() {
+            return expressTime;
+        }
+
         public String getAddressDetail() {
             return addressDetail;
         }

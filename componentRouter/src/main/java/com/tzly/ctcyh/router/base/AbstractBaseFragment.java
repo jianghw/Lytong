@@ -275,14 +275,16 @@ public abstract class AbstractBaseFragment extends Fragment {
     public void responseSucceed(Object response) {
         if (response == null) {
             toastShort("数据为空,未知错误");
-            showStateEmpty();
+            showStateError();
         } else {
             showStateContent();
             responseData(response);
         }
     }
 
-    protected abstract void responseData(Object response);
+    protected void responseData(Object response){
+
+    }
 
     @Override
     public Context getContext() {

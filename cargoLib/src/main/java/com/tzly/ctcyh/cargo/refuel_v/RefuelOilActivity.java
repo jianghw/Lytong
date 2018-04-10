@@ -94,7 +94,7 @@ public class RefuelOilActivity extends AbstractBaseActivity
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_PHONE_STATE});
         } else {
-            gotoMap();
+            gotoOilMap();
         }
     }
 
@@ -110,11 +110,11 @@ public class RefuelOilActivity extends AbstractBaseActivity
      */
     @PermissionSuccess(requestCode = PER_REQUEST_CODE)
     public void doPermissionSuccess() {
-        gotoMap();
+        gotoOilMap();
     }
 
-    private void gotoMap() {
-        CargoRouter.gotoBaiduMapParentActivity(this);
+    private void gotoOilMap() {
+        CargoRouter.gotoOilMapActivity(this);
     }
 
     @PermissionFail(requestCode = PER_REQUEST_CODE)

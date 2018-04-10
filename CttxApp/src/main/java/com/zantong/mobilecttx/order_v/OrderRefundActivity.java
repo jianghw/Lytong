@@ -24,10 +24,9 @@ public class OrderRefundActivity extends AbstractBaseActivity {
 
     @Override
     protected void bundleIntent(Intent intent) {
-        if (intent != null) {
+        if (intent != null && intent.hasExtra(MainGlobal.putExtra.web_order_id_extra)) {
             Bundle bundle = intent.getExtras();
-            if (bundle != null && intent.hasExtra(MainGlobal.putExtra.web_order_id_extra))
-                mOrderId = bundle.getString(MainGlobal.putExtra.web_order_id_extra);
+            if (bundle != null) mOrderId = bundle.getString(MainGlobal.putExtra.web_order_id_extra);
         }
     }
 

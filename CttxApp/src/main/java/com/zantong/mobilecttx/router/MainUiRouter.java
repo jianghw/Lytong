@@ -55,7 +55,7 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
         return new String[]{
                 RouterGlobal.Host.home_host,
                 RouterGlobal.Host.guide_host,
-                RouterGlobal.Host.map_host,
+                RouterGlobal.Host.baidu_map_host,
                 RouterGlobal.Host.driving_host,
                 RouterGlobal.Host.meg_type_host,
                 RouterGlobal.Host.capture_host,
@@ -72,7 +72,6 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
                 RouterGlobal.Host.set_pay_car_host,
                 RouterGlobal.Host.my_card_host,
                 RouterGlobal.Host.problem_feed_host,
-                RouterGlobal.Host.oil_map_host,
                 RouterGlobal.Host.license_grade_host,
                 RouterGlobal.Host.license_detail_host,
                 RouterGlobal.Host.pay_ment_host,
@@ -92,7 +91,7 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, HomeMainActivity.class);
         } else if (RouterGlobal.Host.guide_host.equals(host)) {
             intent.setClass(context, GuideCTActivity.class);
-        } else if (RouterGlobal.Host.map_host.equals(host)) {
+        } else if (RouterGlobal.Host.baidu_map_host.equals(host)) {
             intent.setClass(context, BaiduMapParentActivity.class);
         } else if (RouterGlobal.Host.driving_host.equals(host)) {
             intent.setClass(context, DrivingActivity.class);
@@ -126,8 +125,6 @@ public class MainUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, SetPayCarActivity.class);
         } else if (RouterGlobal.Host.problem_feed_host.equals(host)) {
             intent.setClass(context, ProblemFeedbackActivity.class);
-        } else if (RouterGlobal.Host.oil_map_host.equals(host)) {
-            intent.setClass(context, BaiduMapParentActivity.class);
         } else if (RouterGlobal.Host.license_grade_host.equals(host)) {
             intent.setClass(context, LicenseGradeActivity.class);
         } else if (RouterGlobal.Host.pay_ment_host.equals(host)) {

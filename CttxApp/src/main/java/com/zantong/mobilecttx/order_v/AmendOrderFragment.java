@@ -1,12 +1,17 @@
 package com.zantong.mobilecttx.order_v;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,6 +26,7 @@ import com.tzly.ctcyh.router.imple.IAreaDialogListener;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.order_p.AmendOrderPresenter;
 import com.zantong.mobilecttx.order_p.IAmendOrderContract;
 
@@ -70,6 +76,16 @@ public class AmendOrderFragment extends RefreshFragment
      */
     private Button mBtnQuery;
     private IAmendOrderContract.IAmendOrderPresenter mPresenter;
+    /**
+     * 地区代码
+     */
+    private String mFirstCode;
+    private String mSecondCode;
+    private String mThirdCode;
+
+    private LinearLayout mLayName;
+    private LinearLayout mLayPhone;
+    private TextView mTvTitleTime;
 
     @MultiState
     protected int initMultiState() {
@@ -91,12 +107,11 @@ public class AmendOrderFragment extends RefreshFragment
 
     @Override
     protected void loadingFirstData() {
+        mFirstCode = null;
+        mSecondCode = null;
+        mThirdCode = null;
+
         if (mPresenter != null) mPresenter.getUserOrderInfo();
-    }
-
-    @Override
-    protected void responseData(Object response) {
-
     }
 
     public static AmendOrderFragment newInstance(String mOrderId) {
@@ -116,12 +131,16 @@ public class AmendOrderFragment extends RefreshFragment
         mLayArea.setOnClickListener(this);
         mEditDetailedAddress = (EditText) view.findViewById(R.id.edit_detailed_address);
         mImgTime = (ImageView) view.findViewById(R.id.img_time);
+        mTvTitleTime = (TextView) view.findViewById(R.id.tv_time_title);
         mTvTime = (TextView) view.findViewById(R.id.tv_time);
         mLayTime = (RelativeLayout) view.findViewById(R.id.lay_time);
         mLayTime.setOnClickListener(this);
         mEditRemark = (EditText) view.findViewById(R.id.edit_remark);
         mBtnQuery = (Button) view.findViewById(R.id.btn_query);
         mBtnQuery.setOnClickListener(this);
+
+        mLayName = (LinearLayout) view.findViewById(R.id.lay_name);
+        mLayPhone = (LinearLayout) view.findViewById(R.id.lay_phone);
     }
 
     @Override
@@ -151,29 +170,34 @@ public class AmendOrderFragment extends RefreshFragment
 
     private void verificationSubmitData() {
         String name = getName();
-        if (TextUtils.isEmpty(name)) {
+        if (mLayName.getVisibility() == View.VISIBLE && TextUtils.isEmpty(name)) {
             toastShort("请填写真实的姓名");
             return;
         }
         String phone = getPhone();
-        if (TextUtils.isEmpty(phone)) {
+        if (mLayPhone.getVisibility() == View.VISIBLE && TextUtils.isEmpty(phone)) {
             toastShort("请填写真实的手机");
             return;
         }
         String area = getAddress();
-        if (TextUtils.isEmpty(area)) {
+        if (mLayArea.getVisibility() == View.VISIBLE && TextUtils.isEmpty(area)) {
             toastShort("请填写真实的城市");
             return;
         }
         String address = getAddressDetail();
-        if (TextUtils.isEmpty(address)) {
+        if (mEditDetailedAddress.getVisibility() == View.VISIBLE && TextUtils.isEmpty(address)) {
             toastShort("请填写真实的地址详情");
             return;
         }
         String date = getBespeakDate();
-        if (TextUtils.isEmpty(date)) {
-            toastShort("请填写取件时间");
+        if (mLayTime.getVisibility() == View.VISIBLE && TextUtils.isEmpty(date)) {
+            toastShort("请填写时间");
             return;
+        }
+
+        if (TextUtils.isEmpty(mFirstCode) || TextUtils.isEmpty(mSecondCode)) {
+            toastShort("地址信息失效,请重新选择地区");
+            mTvArea.setText("");
         }
         if (mPresenter != null) mPresenter.updateOrderDetail();
     }
@@ -228,20 +252,60 @@ public class AmendOrderFragment extends RefreshFragment
         OrderInfoResponse.DataBean resultData = result.getData();
         if (resultData == null) return;
 
-        try {
-            mEdtName.setText(resultData.getName());
-            mEditPhone.setText(resultData.getPhone());
-            mTvArea.setText(resultData.getSheng() + "/" + resultData.getShi() + "/" + resultData.getXian());
-            mEditDetailedAddress.setText(resultData.getAddressDetail());
-            mEditRemark.setText(resultData.getSupplement());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String name = resultData.getName();
+        mLayName.setVisibility(TextUtils.isEmpty(name) ? View.GONE : View.VISIBLE);
+        mEdtName.setText(name);
+
+        String phone = resultData.getPhone();
+        mLayPhone.setVisibility(TextUtils.isEmpty(phone) ? View.GONE : View.VISIBLE);
+        mEditPhone.setText(phone);
+
+        String sheng = resultData.getSheng();
+        mLayArea.setVisibility(TextUtils.isEmpty(sheng) ? View.GONE : View.VISIBLE);
+        StringBuilder sb = new StringBuilder();
+        if (!TextUtils.isEmpty(sheng)) sb.append(sheng).append("/");
+        String shi = resultData.getShi();
+        if (!TextUtils.isEmpty(shi)) sb.append(shi).append("/");
+        String xian = resultData.getXian();
+        if (!TextUtils.isEmpty(xian)) sb.append(xian);
+        mTvArea.setText(sb.toString());
+
+        String addressDetail = resultData.getAddressDetail();
+        mEditDetailedAddress.setVisibility(TextUtils.isEmpty(addressDetail) ? View.GONE : View.VISIBLE);
+        mEditDetailedAddress.setText(addressDetail);
+
+        String bespeakDate = resultData.getBespeakDate();
+        String expressTime = resultData.getExpressTime();
+        boolean viTime = !TextUtils.isEmpty(bespeakDate) || !TextUtils.isEmpty(expressTime);
+        mLayTime.setVisibility(viTime ? View.VISIBLE : View.GONE);
+        mTvTitleTime.setText(!TextUtils.isEmpty(bespeakDate) ? "预约时间" : "取件时间");
+        mTvTime.setText(!TextUtils.isEmpty(bespeakDate) ? bespeakDate : expressTime);
+
+        mEditRemark.setText(resultData.getSupplement());
+    }
+
+    @Override
+    public String getShengCode() {
+        return mFirstCode;
+    }
+
+    @Override
+    public String getShicode() {
+        return mSecondCode;
+    }
+
+    @Override
+    public String getTimeTitle() {
+        return mTvTitleTime.getText().toString().trim();
     }
 
     @Override
     public void allAreasSucceed(Object[] result) {
         if (result.length < 6) return;
+
+        final ArrayList<String> first = (ArrayList<String>) result[3];
+        final ArrayList<ArrayList<String>> second = (ArrayList<ArrayList<String>>) result[4];
+        final ArrayList<ArrayList<ArrayList<String>>> third = (ArrayList<ArrayList<ArrayList<String>>>) result[5];
 
         final ArrayList<String> firstList = new ArrayList<>();
         firstList.addAll((ArrayList<String>) result[0]);
@@ -258,6 +322,10 @@ public class AmendOrderFragment extends RefreshFragment
                 int s = Integer.valueOf(postions[1]);
                 int t = Integer.valueOf(postions[2]);
                 mTvArea.setText(firstList.get(f) + "/" + secondList.get(f).get(s) + "/" + thirdList.get(f).get(s).get(t));
+
+                mFirstCode = first.get(f);
+                mSecondCode = second.get(f).get(s);
+                mThirdCode = third.get(f).get(s).get(t);
             }
         });
     }
@@ -274,6 +342,10 @@ public class AmendOrderFragment extends RefreshFragment
 
     @Override
     public void updateOrderSucceed(UpdateOrderResponse result) {
+        toastShort(result.getResponseDesc());
 
+        AmendOrderActivity activity = (AmendOrderActivity) getActivity();
+        if (activity != null) activity.backLast();
     }
+
 }

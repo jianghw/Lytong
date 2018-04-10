@@ -39,7 +39,7 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
 
     @Override
     public void unSubscribe() {
-        mAtyView.dismissLoadingDialog();
+        mAtyView.dismissLoading();
         mSubscriptions.clear();
     }
 

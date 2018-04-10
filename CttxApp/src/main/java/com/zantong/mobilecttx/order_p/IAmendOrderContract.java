@@ -38,6 +38,12 @@ public interface IAmendOrderContract {
         void UserOrderInfoError(String message);
 
         void UserOrderInfoSucceed(OrderInfoResponse result);
+
+        String getShengCode();
+
+        String getShicode();
+
+        String getTimeTitle();
     }
 
     interface IAmendOrderPresenter extends IBasePresenter {

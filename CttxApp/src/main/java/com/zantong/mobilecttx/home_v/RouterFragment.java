@@ -21,7 +21,6 @@ import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
-import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_v.CarBeautyActivity;
 import com.zantong.mobilecttx.share_v.ShareParentActivity;
@@ -169,9 +168,9 @@ public class RouterFragment extends Fragment {
             } else if (path.equals("native_app_driver")) {//驾校报名
                 MainRouter.gotoFahrschuleActivity(getContext(), 0);
             } else if (path.equals("native_app_yearCheckMap")) {//年检地图
-                enterMapActivity();
+                gotoAnnualInspectionMap();
             } else if (path.equals("native_app_oilStation")) {//优惠加油站
-                showOilContacts();
+                gotoAnnualOilMap();
             } else if (path.equals("native_app_endorsement")) {//违章缴费记录
                 licenseCheckGrade(2);
             } else if (path.equals("native_app_drivingLicense")) {//驾驶证查分
@@ -182,6 +181,8 @@ public class RouterFragment extends Fragment {
                 MainRouter.gotoBidOilActivity(getContext());
             } else if (path.equals("native_app_mainRecharge")) {//97加油购卡前页
                 MainRouter.gotoFoldOilActivity(getContext());
+            } else if (path.equals("native_app_allOil")) {//加油统一入口
+                MainRouter.gotoOilEnterActivity(getContext());
             } else if (path.equals("native_app_drivingNewScore")) {//驾照查分
                 MainRouter.gotoLicenseCargoActivity(getContext());
             } else {//其他
@@ -193,7 +194,7 @@ public class RouterFragment extends Fragment {
     /**
      * 进入地图年检页面
      */
-    public void enterMapActivity() {
+    public void gotoAnnualInspectionMap() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             PermissionGen.needPermission(this, 4000, new String[]{
                     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -201,18 +202,18 @@ public class RouterFragment extends Fragment {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_PHONE_STATE});
         } else {
-            gotoMap();
+            annualInspectionMap();
         }
     }
 
-    private void gotoMap() {
-        MainRouter.gotoMapActivity(getContext());
+    private void annualInspectionMap() {
+        MainRouter.gotoInspectionMapActivity(getContext());
     }
 
     /**
      * 加油地图
      */
-    public void showOilContacts() {
+    public void gotoAnnualOilMap() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             PermissionGen.needPermission(this, 3000, new String[]{
                     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -220,14 +221,12 @@ public class RouterFragment extends Fragment {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_PHONE_STATE});
         } else {
-            gotoOilMap();
+            annualOilMap();
         }
     }
 
-    private void gotoOilMap() {
-        Intent intent = new Intent();
-        intent.putExtra(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
-        Act.getInstance().gotoLoginByIntent(getActivity(), BaiduMapParentActivity.class, intent);
+    private void annualOilMap() {
+        MainRouter.gotoOilMapActivity(getContext());
     }
 
     protected void licenseCheckGrade(int position) {
@@ -289,7 +288,7 @@ public class RouterFragment extends Fragment {
 
     @PermissionSuccess(requestCode = 3000)
     public void doOilMapSuccess() {
-        gotoOilMap();
+        annualOilMap();
     }
 
 
@@ -300,7 +299,7 @@ public class RouterFragment extends Fragment {
 
     @PermissionSuccess(requestCode = 4000)
     public void doMapSuccess() {
-        gotoMap();
+        annualInspectionMap();
     }
 
     @PermissionFail(requestCode = 4000)

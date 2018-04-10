@@ -23,6 +23,34 @@ public class UpdateOrderDTO {
     private String supplement;
     private String bespeakDate;
 
+    private String expressTime;
+    private String shengCode;
+    private String shicode;
+
+    public String getExpressTime() {
+        return expressTime;
+    }
+
+    public void setExpressTime(String expressTime) {
+        this.expressTime = expressTime;
+    }
+
+    public String getShengCode() {
+        return shengCode;
+    }
+
+    public void setShengCode(String shengCode) {
+        this.shengCode = shengCode;
+    }
+
+    public String getShicode() {
+        return shicode;
+    }
+
+    public void setShicode(String shicode) {
+        this.shicode = shicode;
+    }
+
     public void setOrderId(String orderId) {
         this.orderId = orderId;
     }

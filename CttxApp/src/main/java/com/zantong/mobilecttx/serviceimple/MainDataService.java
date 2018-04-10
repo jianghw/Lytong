@@ -102,16 +102,16 @@ public class MainDataService implements IMainService {
      * 加油地图
      */
     @Override
-    public void gotoBaiduMapParentActivity(Activity context) {
-        MainRouter.gotoBaiduMapParentActivity(context);
+    public void gotoOilMapActivity(Context context) {
+        MainRouter.gotoOilMapActivity(context);
     }
 
     /**
      * 去往活动规则页面
      */
     @Override
-    public void gotoActiveActivity(Context activity, int i) {
-        MainRouter.gotoActiveActivity(activity, i);
+    public void gotoActiveActivity(Context activity, int type) {
+        MainRouter.gotoActiveActivity(activity, type);
     }
 
     /**
@@ -152,7 +152,7 @@ public class MainDataService implements IMainService {
 
     @Override
     public void gotoNianjianMapActivity(Context context) {
-        MainRouter.gotoMapActivity(context);
+        MainRouter.gotoInspectionMapActivity(context);
     }
 
 

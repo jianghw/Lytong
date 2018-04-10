@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -119,8 +122,14 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
 
     @Override
     protected void initPresenter() {
+        FragmentManager manager = getChildFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        //创建fragment但是不绘制UI
+        RouterFragment htmlFragment = RouterFragment.newInstance();
+        transaction.add(htmlFragment, "router_fgt").commit();
+
         HomeFavorableFtyPresenter presenter = new HomeFavorableFtyPresenter(
-                Injection.provideRepository(getContext()), this);
+                Injection.provideRepository(Utils.getContext()), this);
 
         if (mDiscountsAdapter != null)
             mDiscountsAdapter.setNativeItemListener(new INativeItemListener() {
@@ -147,58 +156,33 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
         if (mPresenter != null && contenId >= 0)
             mPresenter.saveStatisticsCount(String.valueOf(contenId));
 
-        gotoWhere(childrenBean);
+        gotoClick(childrenBean.getTargetPath(), childrenBean.getTitle());
     }
 
-    private void gotoWhere(ChildrenBean childrenBean) {
-        if (childrenBean != null && !TextUtils.isEmpty(childrenBean.getTargetPath())) {
-            String path = childrenBean.getTargetPath();
-            if (path.contains("http")) {//启动公司自己html
-                MainRouter.gotoWebHtmlActivity(getContext(), childrenBean.getTitle(), path);
-            } else if (path.equals("native_app_recharge")) {//加油充值
-                MainRouter.gotoRechargeActivity(getContext());
-            } else if (path.equals("native_app_loan")) {
+    private void gotoClick(String url, String title) {
+        //点击事件
+        FragmentManager manager = getChildFragmentManager();
+        Fragment fragment = manager.findFragmentByTag("router_fgt");
+        if (fragment != null && fragment instanceof RouterFragment) {
+            RouterFragment routerFragment = (RouterFragment) fragment;
+            routerFragment.clickItemData(url, title);
+        } else {
+            ToastUtils.toastShort("出错~点击事件失败");
+        }
+    }
 
-            } else if (path.equals("native_app_toast")) {
-                toastShort("此功能开发中,敬请期待~");
-            } else if (path.equals("native_app_daijia")) {//代驾
-                MobUtils.getInstance().eventIdByUMeng(25);
-                enterDrivingActivity();
-            } else if (path.equals("native_app_enhancement")) {//科目强化
-                MobUtils.getInstance().eventIdByUMeng(37);
-                MainRouter.gotoSubjectActivity(getContext(), 0);
-            } else if (path.equals("native_app_sparring")) {//陪练
-                MobUtils.getInstance().eventIdByUMeng(38);
-                MainRouter.gotoSparringActivity(getContext(), 0);
-            } else if (path.equals("native_app_drive_share")) {//分享
-                Intent intent = new Intent();
-                intent.putExtra(JxGlobal.putExtra.share_position_extra, 1);
-                Act.getInstance().gotoLoginByIntent(getActivity(), ShareParentActivity.class, intent);
-            } else if (path.equals("native_app_car_beauty")) {//汽车美容
-                MobUtils.getInstance().eventIdByUMeng(27);
-                Act.getInstance().gotoIntentLogin(getActivity(), CarBeautyActivity.class);
-            } else if (path.equals("native_app_driver")) {//驾校报名
-                MobUtils.getInstance().eventIdByUMeng(28);
-                MainRouter.gotoFahrschuleActivity(getContext(), 0);
-            } else if (path.equals("native_app_yearCheckMap")) {//年检地图
-                enterMapActivity();
-            } else if (path.equals("native_app_oilStation")) {//优惠加油站
-                showOilContacts();
-            } else if (path.equals("native_app_endorsement")) {//违章缴费记录
-                licenseCheckGrade(2);
-            } else if (path.equals("native_app_drivingLicense")) {//驾驶证查分
-                licenseCheckGrade(1);
-            } else if (path.equals("native_app_97recharge")) {//97加油
-                MainRouter.gotoDiscountOilActivity(getContext());
-            } else if (path.equals("native_app_97buyCard")) {//97加油购卡
-                MainRouter.gotoBidOilActivity(getContext());
-            } else if (path.equals("native_app_mainRecharge")) {//97加油购卡前页
-                MainRouter.gotoFoldOilActivity(getContext());
-            } else if (path.equals("native_app_drivingNewScore")) {//驾照查分
-                MainRouter.gotoLicenseCargoActivity(getContext());
-            } else {//其他
-                toastShort("此版本暂无此状态页面,请更新最新版本");
-            }
+    /**
+     * 是否显示活动内容
+     */
+    protected void activeToShow(String channel, String date) {
+        //点击事件
+        FragmentManager manager = getChildFragmentManager();
+        Fragment fragment = manager.findFragmentByTag("router_fgt");
+        if (fragment != null && fragment instanceof RouterFragment) {
+            RouterFragment routerFragment = (RouterFragment) fragment;
+            routerFragment.clickItemData(channel, date);
+        } else {
+            ToastUtils.toastShort("出错~优惠活动未打开");
         }
     }
 
@@ -264,10 +248,7 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
 
                             @Override
                             public void gotoByPath(String url) {
-                                ChildrenBean banner = new ChildrenBean();
-                                banner.setTargetPath(url);
-                                banner.setTitle("优惠页面");
-                                gotoWhere(banner);
+                                gotoClick(url, "产品页面");
                             }
                         });
                     }
@@ -308,123 +289,6 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
     public void onDestroyView() {
         super.onDestroyView();
         if (mPresenter != null) mPresenter.unSubscribe();
-    }
-
-    protected void licenseCheckGrade(int position) {
-        String grade = SPUtils.instance().getString(SPUtils.USER_GRADE);
-        LicenseFileNumDTO fromJson = null;
-        if (!TextUtils.isEmpty(grade)) {
-            fromJson = new Gson().fromJson(grade, LicenseFileNumDTO.class);
-        } else if (!TextUtils.isEmpty(MainRouter.getUserFilenum()) &&
-                !TextUtils.isEmpty(MainRouter.getUserGetdate())) {
-            fromJson = new LicenseFileNumDTO();
-            fromJson.setFilenum(MainRouter.getUserFilenum());
-            fromJson.setStrtdt(MainRouter.getUserGetdate());
-        }
-
-        if (fromJson != null && position == 2) {
-            MainRouter.gotoPaymentActivity(getActivity(), new Gson().toJson(fromJson));
-        } else if (fromJson != null && position == 1) {
-            MainRouter.gotoLicenseDetailActivity(getActivity(), new Gson().toJson(fromJson));
-        } else {
-            MainRouter.gotoLicenseGradeActivity(getActivity(), position);
-        }
-    }
-
-    /**
-     * 加油地图
-     */
-    public void showOilContacts() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            PermissionGen.needPermission(this, 3000, new String[]{
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_PHONE_STATE});
-        } else {
-            gotoOilMap();
-        }
-    }
-
-    private void gotoOilMap() {
-        Intent intent = new Intent();
-        intent.putExtra(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
-        Act.getInstance().gotoLoginByIntent(getActivity(), BaiduMapParentActivity.class, intent);
-    }
-
-    /**
-     * 进入地图年检页面
-     */
-    public void enterMapActivity() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            PermissionGen.needPermission(this, 4000, new String[]{
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_PHONE_STATE});
-        } else {
-            gotoMap();
-        }
-    }
-
-    private void gotoMap() {
-        MainRouter.gotoMapActivity(getActivity());
-    }
-
-    /**
-     * 进入代驾页面
-     */
-    public void enterDrivingActivity() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            PermissionGen.needPermission(this, 2000, new String[]{
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_PHONE_STATE});
-        } else {
-            gotoDriving();
-        }
-    }
-
-    private void gotoDriving() {
-        MainRouter.gotoDrivingActivity(getActivity());
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    @PermissionSuccess(requestCode = 2000)
-    public void doDrivingSuccess() {
-        gotoDriving();
-    }
-
-    @PermissionFail(requestCode = 2000)
-    public void doDrivingFail() {
-        toastShort("您已关闭定位权限,请手机设置中打开");
-    }
-
-    @PermissionSuccess(requestCode = 4000)
-    public void doMapSuccess() {
-        gotoMap();
-    }
-
-    @PermissionFail(requestCode = 4000)
-    public void doMapFail() {
-        ToastUtils.toastShort("您已关闭定位权限,请手机设置中打开");
-    }
-
-    @PermissionSuccess(requestCode = 3000)
-    public void doOilMapSuccess() {
-        gotoOilMap();
-    }
-
-
-    @PermissionFail(requestCode = 3000)
-    public void doOilMapFail() {
-        ToastUtils.toastShort("此功能需要打开相关的地图权限");
     }
 
 }

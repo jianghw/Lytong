@@ -173,7 +173,6 @@ public class InterfaceForJS {
     //去年检地图地址
     @JavascriptInterface
     public void goNianjianMap() {
-        Act.getInstance().gotoIntentLogin(mJSContext, BaiduMapParentActivity.class);
     }
 
     //去往违章列表页面

@@ -32,16 +32,19 @@ public class BindCardSuccess extends AbstractBaseActivity {
     protected void initContentData() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (fragment == null) {
-            fragment =  BindCarSuccessFragment.newInstance();
+            fragment = BindCarSuccessFragment.newInstance();
         }
         FragmentUtils.add(fragmentManager, fragment, R.id.lay_base_frame);
     }
 
+    /**
+     * 3-->绑卡卡成功
+     */
     @Override
     protected void onDestroy() {
         MainRouter.gotoActiveActivity(this, 3);
-        super.onDestroy();
 
+        super.onDestroy();
         fragment = null;
     }
 }

@@ -39,14 +39,6 @@ public class CargoDataService implements ICargoService {
     }
 
     /**
-     * 活动页面逻辑
-     */
-    @Override
-    public void gotoActiveActivity(Context context, String channel, String date) {
-        CargoRouter.gotoActiveActivity(context, channel, date);
-    }
-
-    /**
      * 97 加油
      */
     @Override
@@ -69,11 +61,20 @@ public class CargoDataService implements ICargoService {
     public void gotoFoldOilActivity(Context context) {
         CargoRouter.gotoFoldOilActivity(context);
     }
+
     /**
      * 驾照查分
      */
     @Override
     public void gotoLicenseCargoActivity(Context context) {
         CargoRouter.gotoLicenseCargoActivity(context);
+    }
+
+    /**
+     * 加油统一入口
+     */
+    @Override
+    public void gotoOilEnterActivity(Context context) {
+        CargoRouter.gotoOilEnterActivity(context);
     }
 }

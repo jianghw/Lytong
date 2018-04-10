@@ -24,11 +24,11 @@ import com.zantong.mobilecttx.R;
  */
 
 public class AdvImageAdapter extends BaseAdapter<ValidAdvResponse.DataBean> {
-    private Context mAdapterContext;
+
+    private ClickUrlAdapter clickUrlAdapter;
 
     @Override
     public View createView(ViewGroup viewGroup, int i) {
-        mAdapterContext = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         return inflater.inflate(R.layout.main_adapter_adv_image_item, viewGroup, false);
     }
@@ -42,7 +42,7 @@ public class AdvImageAdapter extends BaseAdapter<ValidAdvResponse.DataBean> {
     @SuppressLint("SetTextI18n")
     @Override
     public void bindViewData(BaseRecyclerViewHolder viewHolder,
-                             final int position, ValidAdvResponse.DataBean dataBean) {
+                             final int position, final ValidAdvResponse.DataBean dataBean) {
         ViewHolder holder = (ViewHolder) viewHolder;
         if (dataBean == null) return;
 
@@ -51,6 +51,17 @@ public class AdvImageAdapter extends BaseAdapter<ValidAdvResponse.DataBean> {
             url = (BuildConfig.isDeta ? BuildConfig.beta_base_url : BuildConfig.release_base_url) + url;
         }
         ImageLoadUtils.loadShareRectangle(url, holder.imageView);
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (clickUrlAdapter != null) clickUrlAdapter.clickUrl(dataBean.getUrl());
+            }
+        });
+    }
+
+    public void setItemClickListener(ClickUrlAdapter clickUrlAdapter) {
+        this.clickUrlAdapter = clickUrlAdapter;
     }
 
     /**
@@ -63,5 +74,9 @@ public class AdvImageAdapter extends BaseAdapter<ValidAdvResponse.DataBean> {
             super(view);
             this.imageView = (ImageView) view.findViewById(R.id.img_adv);
         }
+    }
+
+    public interface ClickUrlAdapter {
+        void clickUrl(String url);
     }
 }

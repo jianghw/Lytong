@@ -689,14 +689,40 @@ public class RemoteData implements IRemoteSource {
     public Observable<UpdateOrderResponse> updateOrderDetail(UpdateOrderDTO updateOrderDTO) {
         Map<String, String> map = new HashMap<>();
         map.put("orderId", updateOrderDTO.getOrderId());
-        map.put("name", updateOrderDTO.getName());
-        map.put("phone", updateOrderDTO.getPhone());
-        map.put("sheng", updateOrderDTO.getSheng());
-        map.put("shi", updateOrderDTO.getShi());
-        map.put("xian", updateOrderDTO.getXian());
-        map.put("addressDetail", updateOrderDTO.getAddressDetail());
-        map.put("supplement", updateOrderDTO.getSupplement());
-        map.put("bespeakDate", updateOrderDTO.getBespeakDate());
+
+        if (!TextUtils.isEmpty(updateOrderDTO.getName()))
+            map.put("name", updateOrderDTO.getName());
+
+        if (!TextUtils.isEmpty(updateOrderDTO.getPhone()))
+            map.put("phone", updateOrderDTO.getPhone());
+
+        if (!TextUtils.isEmpty(updateOrderDTO.getSheng()))
+            map.put("sheng", updateOrderDTO.getSheng());
+
+        if (!TextUtils.isEmpty(updateOrderDTO.getShi()))
+            map.put("shi", updateOrderDTO.getShi());
+
+        if (!TextUtils.isEmpty(updateOrderDTO.getXian()))
+            map.put("xian", updateOrderDTO.getXian());
+
+        if (!TextUtils.isEmpty(updateOrderDTO.getAddressDetail()))
+            map.put("addressDetail", updateOrderDTO.getAddressDetail());
+
+        if (!TextUtils.isEmpty(updateOrderDTO.getSupplement()))
+            map.put("supplement", updateOrderDTO.getSupplement());
+
+        if (!TextUtils.isEmpty(updateOrderDTO.getBespeakDate()))
+            map.put("bespeakDate", updateOrderDTO.getBespeakDate());
+
+        if (!TextUtils.isEmpty(updateOrderDTO.getExpressTime()))
+            map.put("expressTime", updateOrderDTO.getExpressTime());
+
+        if (!TextUtils.isEmpty(updateOrderDTO.getShengCode()))
+            map.put("shengCode", updateOrderDTO.getShengCode());
+
+        if (!TextUtils.isEmpty(updateOrderDTO.getShicode()))
+            map.put("shicode", updateOrderDTO.getShicode());
+
         return baseRetrofit().create(IOrderService.class).updateOrderDetail(map);
     }
 

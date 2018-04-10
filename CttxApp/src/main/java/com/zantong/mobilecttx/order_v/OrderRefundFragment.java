@@ -54,10 +54,6 @@ public class OrderRefundFragment extends RefreshFragment
     protected void loadingFirstData() {
     }
 
-    @Override
-    protected void responseData(Object response) {
-    }
-
     public static OrderRefundFragment newInstance(String mOrderId) {
         OrderRefundFragment fragment = new OrderRefundFragment();
         Bundle bundle = new Bundle();
@@ -119,6 +115,6 @@ public class OrderRefundFragment extends RefreshFragment
 
     @Override
     public void infoSucceed(OrderRefundResponse result) {
-
+        toastShort(result.getResponseDesc());
     }
 }

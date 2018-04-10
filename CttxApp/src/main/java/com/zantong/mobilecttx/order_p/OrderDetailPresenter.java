@@ -133,6 +133,9 @@ public class OrderDetailPresenter
         mSubscriptions.add(subscription);
     }
 
+    /**
+     * 反显用户信息
+     */
     @Override
     public void getUserOrderInfo() {
         Subscription subscription = mRepository.getUserOrderInfo(mContractView.getOrderId())
@@ -160,7 +163,7 @@ public class OrderDetailPresenter
                     @Override
                     public void doNext(OrderInfoResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mContractView. UserOrderInfoSucceed(result);
+                            mContractView.UserOrderInfoSucceed(result);
                         } else {
                             mContractView.UserOrderInfoError(result != null
                                     ? result.getResponseDesc() : "未知错误(用户信息)");

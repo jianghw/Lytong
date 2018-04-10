@@ -14,6 +14,8 @@ public final class MainGlobal {
         public static final int violation_query_camera = 1020;
         public static final int violation_query_bean = 1030;
         public static final int set_pay_car = 1040;
+
+        public static final int order_detail_amend = 1070;
     }
 
     public static final class resultCode {
@@ -24,6 +26,8 @@ public final class MainGlobal {
         public static final int violation_query_submit = 2050;
         public static final int violation_query_del = 2051;
         public static final int set_pay_car_succeed = 2060;
+
+        public static final int amend_order_detail = 2070;
     }
 
     public static final class putExtra {
@@ -44,6 +48,8 @@ public final class MainGlobal {
         public static final String splash_type_extra = "splash_type_extra";
         public static final String splash_id_extra = "splash_id_extra";
         public static final String splash_url_extra = "splash_url_extra";
+
+        public static final String map_type_extra = "map_type_extra";
     }
 
     public static final class Host {
@@ -55,6 +61,29 @@ public final class MainGlobal {
     public static final class Response {
         public static final String bank_succeed = "000000";
         public static final int base_succeed = 2000;
+    }
+
+    public static final class MapType {
+        //年检地图
+        public static final int annual_inspection_map = -1;
+        //加油地图
+        public static final int annual_oil_map = -2;
+        /**
+         * 免检领标
+         */
+        public static final int annual_led_service = 2;
+        /**
+         * 年检站点
+         */
+        public static final int annual_site_service = 1;
+        /**
+         * 外牌代办点
+         */
+        public static final int annual_agent_service = 3;
+
+        public static final int annual_0_service = 1;
+        public static final int annual_92_service = 5;
+        public static final int annual_95_service = 6;
     }
 
 }

@@ -28,6 +28,7 @@
 
         <!--姓名-->
         <LinearLayout
+            android:id="@+id/lay_name"
             android:layout_width="match_parent"
             android:layout_height="@dimen/res_y_80"
             android:background="@color/colorWhite"
@@ -62,6 +63,7 @@
 
         <!--手机号-->
         <LinearLayout
+            android:id="@+id/lay_phone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/res_y_80"
             android:background="@color/colorWhite"
@@ -162,6 +164,7 @@
             android:paddingRight="@dimen/res_x_30">
 
             <TextView
+                android:id="@+id/tv_time_title"
                 style="@style/ResTextTheme.16.Subtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

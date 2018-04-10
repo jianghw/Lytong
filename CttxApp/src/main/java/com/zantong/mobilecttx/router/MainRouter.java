@@ -10,7 +10,6 @@ import android.view.inputmethod.InputMethodManager;
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.UiRouter;
 import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
-import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.service.ICargoService;
 import com.tzly.ctcyh.service.IPayService;
@@ -309,6 +308,20 @@ public final class MainRouter {
     }
 
     /**
+     * 调动活动的主页
+     */
+    public static void gotoMainActivity(Context context, int postion, String channel, String date) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(MainGlobal.putExtra.home_position_extra, postion);
+        bundle.putString(RouterGlobal.putExtra.channel_active, channel);
+        bundle.putString(RouterGlobal.putExtra.channel_register_date, date);
+
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.home_host,
+                bundle);
+    }
+
+    /**
      * 引导页
      */
     public static void gotoGuideActivity(Context context, ArrayList<StartPicBean> list) {
@@ -320,12 +333,24 @@ public final class MainRouter {
     }
 
     /**
-     * 地图页面
+     * 年检地图页面
      */
-    public static void gotoMapActivity(Context context) {
+    public static void gotoInspectionMapActivity(Context context) {
         Bundle bundle = new Bundle();
+        bundle.putInt(MainGlobal.putExtra.map_type_extra, MainGlobal.MapType.annual_inspection_map);
         UiRouter.getInstance().openUriBundle(context,
-                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.map_host,
+                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.baidu_map_host,
+                bundle);
+    }
+
+    /**
+     * 加油地图
+     */
+    public static void gotoOilMapActivity(Context context) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(MainGlobal.putExtra.map_type_extra, MainGlobal.MapType.annual_oil_map);
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.baidu_map_host,
                 bundle);
     }
 
@@ -583,14 +608,6 @@ public final class MainRouter {
                 bundle);
     }
 
-    public static void gotoBaiduMapParentActivity(Activity context) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(JxGlobal.putExtra.map_type_extra, JxGlobal.MapType.annual_oil_map);
-        UiRouter.getInstance().openUriBundle(context,
-                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.oil_map_host,
-                bundle);
-    }
-
     /**
      * 违章查分输入面
      */
@@ -684,26 +701,18 @@ public final class MainRouter {
     }
 
     /**
-     * 去往规则页面
+     * 去往活动规则页面
      * 1--违章列表结果
      * 2--支付
      * 3--绑卡成功
      */
-    public static void gotoActiveActivity(Context context, int i) {
-        gotoActiveActivity(context, i, null);
+    public static void gotoActiveActivity(Context context, int channel) {
+        gotoActiveActivity(context, channel, "");
     }
 
-    public static void gotoActiveActivity(Context context, int i, String date) {
+    public static void gotoActiveActivity(Context context, int channel, String date) {
         //优惠页面
-        gotoMainActivity(context, 1);
-
-        Object object = getCargoObject();
-        if (object != null && object instanceof ICargoService) {
-            ICargoService service = (ICargoService) object;
-            service.gotoActiveActivity(context, String.valueOf(i), date);
-        } else {//注册机开始工作
-            registerCargo();
-        }
+        gotoMainActivity(context, 1, String.valueOf(channel), date);
     }
 
     /**
@@ -740,6 +749,19 @@ public final class MainRouter {
         if (object != null && object instanceof ICargoService) {
             ICargoService service = (ICargoService) object;
             service.gotoFoldOilActivity(context);
+        } else {//注册机开始工作
+            registerCargo();
+        }
+    }
+
+    /**
+     * 加油统一入口
+     */
+    public static void gotoOilEnterActivity(Context context) {
+        Object object = getCargoObject();
+        if (object != null && object instanceof ICargoService) {
+            ICargoService service = (ICargoService) object;
+            service.gotoOilEnterActivity(context);
         } else {//注册机开始工作
             registerCargo();
         }
@@ -802,8 +824,9 @@ public final class MainRouter {
     public static void gotoAmendOrderActivity(Activity activity, String mOrderId) {
         Bundle bundle = new Bundle();
         bundle.putString(MainGlobal.putExtra.web_order_id_extra, mOrderId);
-        UiRouter.getInstance().openUriBundle(activity,
+        UiRouter.getInstance().openUriForResult(activity,
                 RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.order_amend_host,
-                bundle);
+                bundle,
+                MainGlobal.requestCode.order_detail_amend);
     }
 }

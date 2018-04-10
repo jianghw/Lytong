@@ -17,10 +17,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
@@ -37,6 +39,7 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.DensityUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
@@ -44,8 +47,8 @@ import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.contract.IBaiduMapContract;
+import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.map.bean.GasStation;
 import com.zantong.mobilecttx.map.bean.GasStationDetail;
 import com.zantong.mobilecttx.map.bean.GasStationDetailResponse;
@@ -64,10 +67,8 @@ import java.util.List;
 /**
  * Created by jianghw on 2017/7/7.
  * Description: 百度地图
- * Update by:
- * Update day:
  */
-public class BaiduMapParentActivity extends BaseJxActivity
+public class BaiduMapParentActivity extends AbstractBaseActivity
         implements View.OnClickListener, SensorEventListener,
         IBaiduMapContract.IBaiduMapView, BaiduMap.OnMarkerClickListener {
 
@@ -102,91 +103,40 @@ public class BaiduMapParentActivity extends BaseJxActivity
      * 地图中的服务类型
      */
     private String mServiceType;
+    private RelativeLayout mLay94;
+    private CheckBox mCB94;
+
 
     @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-        Intent intent = getIntent();
-        if (intent != null && intent.hasExtra(JxGlobal.putExtra.map_type_extra)) {
-            mMapType = intent.getIntExtra(JxGlobal.putExtra.map_type_extra, 0);
-        }
-
-        //        MapStatus.Builder builder = new MapStatus.Builder();
-        //        if (intent != null && intent.hasExtra("x") && intent.hasExtra("y")) {
-        //            // 当用intent参数时，设置中心点为指定点
-        //            Bundle b = intent.getExtras();
-        //            LatLng latLng = new LatLng(b.getDouble("y"), b.getDouble("x"));
-        //            builder.target(latLng);
-        //        }
-        //        builder.overlook(-20).zoom(mCurZoom);
-        //        baiduMapOptions = new BaiduMapOptions().mapStatus(builder.build())
-        //                .compassEnabled(false).zoomControlsEnabled(false);
-    }
-
-    @Override
-    protected int getContentResId() {
+    protected int initContentView() {
         return R.layout.activity_map_baidu;
     }
 
-    public void initView() {
-        mMapView = (MapView) findViewById(R.id.lay_map);
-        mLayRg = (RadioGroup) findViewById(R.id.lay_rg);
-        mRbStart = (RadioButton) findViewById(R.id.rb_start);
-        mRbCenter = (RadioButton) findViewById(R.id.rb_center);
-        mRbEnd = (RadioButton) findViewById(R.id.rb_end);
-        mImgLocation = (CardView) findViewById(R.id.img_location);
-        mImgLocation.setOnClickListener(this);
-        mImgBlowUp = (CardView) findViewById(R.id.img_blowUp);
-        mImgBlowUp.setOnClickListener(this);
-        mImgZoomOut = (CardView) findViewById(R.id.img_zoomOut);
-        mImgZoomOut.setOnClickListener(this);
+    @Override
+    protected void bundleIntent(Intent intent) {
 
-        mRbStart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (mPresenter != null && isChecked
-                        && mMapType == JxGlobal.MapType.annual_inspection_map) {
-                    mServiceType = String.valueOf(JxGlobal.MapType.annual_led_service);
-                    mPresenter.annualInspectionList();
-                } else if (mPresenter != null && isChecked
-                        && mMapType == JxGlobal.MapType.annual_oil_map) {
-                    mServiceType = String.valueOf(JxGlobal.MapType.annual_92_service);
-                    mPresenter.gasStationList();
-                }
+        if (intent != null && intent.hasExtra(MainGlobal.putExtra.map_type_extra)) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                mMapType = bundle.getInt(
+                        MainGlobal.putExtra.map_type_extra, 0);
             }
-        });
-        mRbCenter.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (mPresenter != null && isChecked
-                        && mMapType == JxGlobal.MapType.annual_inspection_map) {
-                    mServiceType = String.valueOf(JxGlobal.MapType.annual_site_service);
-                    mPresenter.annualInspectionList();
-                } else if (mPresenter != null && isChecked
-                        && mMapType == JxGlobal.MapType.annual_oil_map) {
-                    mServiceType = String.valueOf(JxGlobal.MapType.annual_95_service);
-                    mPresenter.gasStationList();
-                }
-            }
-        });
-        mRbEnd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (mPresenter != null && isChecked
-                        && mMapType == JxGlobal.MapType.annual_inspection_map) {
-                    mServiceType = String.valueOf(JxGlobal.MapType.annual_agent_service);
-                    mPresenter.annualInspectionList();
-                } else if (mPresenter != null && isChecked
-                        && mMapType == JxGlobal.MapType.annual_oil_map) {
-                    mServiceType = String.valueOf(JxGlobal.MapType.annual_0_service);
-                    mPresenter.gasStationList();
-                }
-            }
-        });
+        }
 
+        /*MapStatus.Builder builder = new MapStatus.Builder();
+        if (intent != null && intent.hasExtra("x") && intent.hasExtra("y")) {
+            // 当用intent参数时，设置中心点为指定点
+            Bundle b = intent.getExtras();
+            LatLng latLng = new LatLng(b.getDouble("y"), b.getDouble("x"));
+            builder.target(latLng);
+        }
+        builder.overlook(-20).zoom(mCurZoom);
+        baiduMapOptions = new BaiduMapOptions().mapStatus(builder.build())
+                .compassEnabled(false).zoomControlsEnabled(false);*/
     }
 
     @Override
-    protected void initFragmentView(View view) {
+    protected void bindFragment() {
         initView();
 
         BaiduMapPresenter presenter = new BaiduMapPresenter(
@@ -219,28 +169,99 @@ public class BaiduMapParentActivity extends BaseJxActivity
     }
 
     @Override
-    protected void initViewStatus() {
-        if (mMapType == JxGlobal.MapType.annual_inspection_map) {
-            initTitleContent("年检");
-            setTvRightVisible("年检须知");
+    protected void initContentData() {
+        if (mMapType == MainGlobal.MapType.annual_inspection_map) {
+            titleContent("年检");
+            titleMore("年检须知");
 
             mRbStart.setText("免检领标");
             mRbCenter.setText("年检站点");
             mRbEnd.setText("外牌代办点");
-        } else if (mMapType == JxGlobal.MapType.annual_oil_map) {
-            initTitleContent("加油优惠");
+        } else if (mMapType == MainGlobal.MapType.annual_oil_map) {
+            titleContent("加油优惠");
 
             mRbStart.setText("92#优惠");
             mRbCenter.setText("95#优惠");
             mRbEnd.setText("0#优惠");
+
+            mLay94.setVisibility(View.VISIBLE);
         }
         mRbStart.setChecked(true);
     }
 
-    protected void rightClickListener() {
-        if (mMapType == JxGlobal.MapType.annual_inspection_map) {
+    public void initView() {
+        mMapView = (MapView) findViewById(R.id.lay_map);
+        mLayRg = (RadioGroup) findViewById(R.id.lay_rg);
+        mRbStart = (RadioButton) findViewById(R.id.rb_start);
+        mRbCenter = (RadioButton) findViewById(R.id.rb_center);
+        mRbEnd = (RadioButton) findViewById(R.id.rb_end);
+        mImgLocation = (CardView) findViewById(R.id.img_location);
+        mImgLocation.setOnClickListener(this);
+        mImgBlowUp = (CardView) findViewById(R.id.img_blowUp);
+        mImgBlowUp.setOnClickListener(this);
+        mImgZoomOut = (CardView) findViewById(R.id.img_zoomOut);
+        mImgZoomOut.setOnClickListener(this);
 
-            MainRouter.gotoWebHtmlActivity(this, "年检须知", "file:///android_asset/www/nianjian_desc.html");
+        mLay94 = (RelativeLayout) findViewById(R.id.lay_94);
+        mCB94 = (CheckBox) findViewById(R.id.cb_94);
+
+        mRbStart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (mPresenter != null && isChecked
+                        && mMapType == MainGlobal.MapType.annual_inspection_map) {
+                    mServiceType = String.valueOf(MainGlobal.MapType.annual_led_service);
+
+                    if (mPresenter != null) mPresenter.annualInspectionList();
+                } else if (mPresenter != null && isChecked
+                        && mMapType == MainGlobal.MapType.annual_oil_map) {
+                    mServiceType = String.valueOf(MainGlobal.MapType.annual_92_service);
+
+                    if (mPresenter != null) mPresenter.gasStationList();
+                }
+            }
+        });
+        mRbCenter.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (mPresenter != null && isChecked
+                        && mMapType == MainGlobal.MapType.annual_inspection_map) {
+                    mServiceType = String.valueOf(MainGlobal.MapType.annual_site_service);
+
+                    if (mPresenter != null) mPresenter.annualInspectionList();
+                } else if (mPresenter != null && isChecked
+                        && mMapType == MainGlobal.MapType.annual_oil_map) {
+                    mServiceType = String.valueOf(MainGlobal.MapType.annual_95_service);
+
+                    if (mPresenter != null) mPresenter.gasStationList();
+                }
+            }
+        });
+        mRbEnd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (mPresenter != null && isChecked
+                        && mMapType == MainGlobal.MapType.annual_inspection_map) {
+                    mServiceType = String.valueOf(MainGlobal.MapType.annual_agent_service);
+
+                    if (mPresenter != null) mPresenter.annualInspectionList();
+                } else if (mPresenter != null && isChecked
+                        && mMapType == MainGlobal.MapType.annual_oil_map) {
+                    mServiceType = String.valueOf(MainGlobal.MapType.annual_0_service);
+
+                    if (mPresenter != null) mPresenter.gasStationList();
+                }
+            }
+        });
+
+    }
+
+    @Override
+    protected void rightClickListener() {
+        if (mMapType == MainGlobal.MapType.annual_inspection_map) {
+
+            MainRouter.gotoWebHtmlActivity(this, "年检须知",
+                    "file:///android_asset/www/nianjian_desc.html");
         }
     }
 
@@ -261,7 +282,9 @@ public class BaiduMapParentActivity extends BaseJxActivity
     }
 
     @Override
-    protected void DestroyViewAndThing() {
+    protected void onDestroy() {
+        super.onDestroy();
+
         if (mPresenter != null) mPresenter.unSubscribe();
         // 退出时销毁定位
         mLocClient.stop();
@@ -272,15 +295,6 @@ public class BaiduMapParentActivity extends BaseJxActivity
         mMapView = null;
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -340,9 +354,9 @@ public class BaiduMapParentActivity extends BaseJxActivity
     @Override
     public boolean onMarkerClick(Marker marker) {
         int id = marker.getPeriod();
-        if (mPresenter != null && mMapType == JxGlobal.MapType.annual_inspection_map)
+        if (mPresenter != null && mMapType == MainGlobal.MapType.annual_inspection_map)
             mPresenter.annualInspection(id);
-        else if (mPresenter != null && mMapType == JxGlobal.MapType.annual_oil_map)
+        else if (mPresenter != null && mMapType == MainGlobal.MapType.annual_oil_map)
             mPresenter.gasStation(id);
         return true;
     }
@@ -384,16 +398,6 @@ public class BaiduMapParentActivity extends BaseJxActivity
     @Override
     public void setPresenter(IBaiduMapContract.IBaiduMapPresenter presenter) {
         mPresenter = presenter;
-    }
-
-    @Override
-    public void showLoadingDialog() {
-        showDialogLoading();
-    }
-
-    @Override
-    public void dismissLoadingDialog() {
-        hideDialogLoading();
     }
 
     @Override
@@ -472,7 +476,6 @@ public class BaiduMapParentActivity extends BaseJxActivity
     }
 
     protected void serverError(String message) {
-        dismissLoadingDialog();
         ToastUtils.toastShort(message);
     }
 
@@ -486,16 +489,16 @@ public class BaiduMapParentActivity extends BaseJxActivity
         ImageView imageView = (ImageView) view.findViewById(R.id.img_location);
 
         TextView textView = (TextView) view.findViewById(R.id.tv_price);
-        if (mMapType == JxGlobal.MapType.annual_inspection_map) {
+        if (mMapType == MainGlobal.MapType.annual_inspection_map) {
             textView.setText("免");
-        } else if (mMapType == JxGlobal.MapType.annual_oil_map) {
+        } else if (mMapType == MainGlobal.MapType.annual_oil_map) {
             if (object instanceof GasStation) {
                 GasStation bean = (GasStation) object;
-                if (String.valueOf(JxGlobal.MapType.annual_92_service).equals(mServiceType)) {
+                if (String.valueOf(MainGlobal.MapType.annual_92_service).equals(mServiceType)) {
                     textView.setText(Double.valueOf(bean.getNinetyTwoNum()) == 0 ? "无" : "-" + bean.getNinetyTwoNum());
-                } else if (String.valueOf(JxGlobal.MapType.annual_95_service).equals(mServiceType)) {
+                } else if (String.valueOf(MainGlobal.MapType.annual_95_service).equals(mServiceType)) {
                     textView.setText(Double.valueOf(bean.getNinetyFiveNum()) == 0 ? "无" : "-" + bean.getNinetyFiveNum());
-                } else if (String.valueOf(JxGlobal.MapType.annual_0_service).equals(mServiceType)) {
+                } else if (String.valueOf(MainGlobal.MapType.annual_0_service).equals(mServiceType)) {
                     textView.setText(Double.valueOf(bean.getZeroNum()) == 0 ? "无" : "-" + bean.getZeroNum());
                 }
             }

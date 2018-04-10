@@ -2,6 +2,7 @@
 package com.zantong.mobilecttx.order_p;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.tzly.ctcyh.java.request.order.UpdateOrderDTO;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
@@ -101,14 +102,25 @@ public class AmendOrderPresenter
         updateOrderDTO.setOrderId(mContractView.getOrderId());
         updateOrderDTO.setName(mContractView.getName());
         updateOrderDTO.setPhone(mContractView.getPhone());
+
         String address = mContractView.getAddress();
         String[] addr = address.split("/");
-        updateOrderDTO.setSheng(addr[0]);
-        updateOrderDTO.setShi(addr[1]);
-        updateOrderDTO.setXian(addr[2]);
+        updateOrderDTO.setSheng(addr.length >= 1 ? addr[0] : "");
+        updateOrderDTO.setShi(addr.length >= 2 ? addr[1] : "");
+        updateOrderDTO.setXian(addr.length >= 3 ? addr[2] : "");
+
         updateOrderDTO.setAddressDetail(mContractView.getAddressDetail());
-        updateOrderDTO.setBespeakDate(mContractView.getBespeakDate());
+        String title = mContractView.getTimeTitle();
+        if (!TextUtils.isEmpty(title)) {
+            if (title.contains("预约"))
+                updateOrderDTO.setBespeakDate(mContractView.getBespeakDate());
+            else
+                updateOrderDTO.setExpressTime(mContractView.getBespeakDate());
+        }
         updateOrderDTO.setSupplement(mContractView.getSupplement());
+
+        updateOrderDTO.setShengCode(mContractView.getShengCode());
+        updateOrderDTO.setShicode(mContractView.getShicode());
         return updateOrderDTO;
     }
 
@@ -381,7 +393,7 @@ public class AmendOrderPresenter
                     @Override
                     public void doNext(OrderInfoResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mContractView. UserOrderInfoSucceed(result);
+                            mContractView.UserOrderInfoSucceed(result);
                         } else {
                             mContractView.UserOrderInfoError(result != null
                                     ? result.getResponseDesc() : "未知错误(用户信息)");

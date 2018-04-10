@@ -3,6 +3,9 @@ package com.zantong.mobilecttx.violation_v;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +21,9 @@ import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.tzly.ctcyh.router.base.RecyclerListFragment;
 import com.tzly.ctcyh.router.custom.SpaceItemDecoration;
 import com.tzly.ctcyh.router.custom.scroll.ScrollBottomLayout;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.home_v.RouterFragment;
 import com.zantong.mobilecttx.violation_p.AdvImageAdapter;
 import com.zantong.mobilecttx.weizhang.adapter.ViolationResultAdapter;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
@@ -124,6 +129,12 @@ public class ViolationListFragment extends RecyclerListFragment<ViolationBean> {
         bottomLayout.setRecycler(recycler);
 
         if (mViolationListUi != null) mViolationListUi.findIsValidAdvert();
+
+        FragmentManager manager = getChildFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        //创建fragment但是不绘制UI
+        RouterFragment htmlFragment = RouterFragment.newInstance();
+        transaction.add(htmlFragment, "router_fgt").commit();
     }
 
     public void validAdvertSucceed(ValidAdvResponse result) {
@@ -133,6 +144,24 @@ public class ViolationListFragment extends RecyclerListFragment<ViolationBean> {
         AdvImageAdapter adapter = new AdvImageAdapter();
         if (recycler != null) recycler.setAdapter(adapter);
         adapter.append(resultData);
+        adapter.setItemClickListener(new AdvImageAdapter.ClickUrlAdapter() {
+            @Override
+            public void clickUrl(String url) {
+                gotoByPath(url);
+            }
+        });
+    }
+
+    public void gotoByPath(String url) {
+        //点击事件
+        FragmentManager manager = getChildFragmentManager();
+        Fragment fragment = manager.findFragmentByTag("router_fgt");
+        if (fragment != null && fragment instanceof RouterFragment) {
+            RouterFragment routerFragment = (RouterFragment) fragment;
+            routerFragment.clickItemData(url, "产品页面");
+        } else {
+            ToastUtils.toastShort("未知错误");
+        }
     }
 
     protected void statusViewSelf(View view, int state) {

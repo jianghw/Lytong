@@ -1,5 +1,7 @@
 package com.zantong.mobilecttx.contract;
 
+import com.tzly.ctcyh.router.base.IBasePresenter;
+import com.tzly.ctcyh.router.base.IBaseView;
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.map.bean.GasStationDetailResponse;
@@ -14,11 +16,7 @@ import com.zantong.mobilecttx.map.dto.AnnualDTO;
 
 public interface IBaiduMapContract {
 
-    interface IBaiduMapView extends IMvpView<IBaiduMapPresenter> {
-
-        void showLoadingDialog();
-
-        void dismissLoadingDialog();
+    interface IBaiduMapView extends IBaseView<IBaiduMapPresenter> {
 
         AnnualDTO getAnnualDTO();
 
@@ -39,7 +37,7 @@ public interface IBaiduMapContract {
         void gasStationListSucceed(GasStationResponse result);
     }
 
-    interface IBaiduMapPresenter extends IMvpPresenter {
+    interface IBaiduMapPresenter extends IBasePresenter {
 
         void annualInspectionList();
 

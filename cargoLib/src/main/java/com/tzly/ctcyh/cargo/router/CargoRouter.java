@@ -110,12 +110,12 @@ public final class CargoRouter {
     /**
      * 加油地图
      */
-    public static void gotoBaiduMapParentActivity(Activity context) {
+    public static void gotoOilMapActivity(Context context) {
         ServiceRouter serviceRouter = ServiceRouter.getInstance();
         Object object = serviceRouter.getService(IMainService.class.getSimpleName());
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
-            service.gotoBaiduMapParentActivity(context);
+            service.gotoOilMapActivity(context);
         } else {//注册机开始工作
             ServiceRouter.registerComponent(ServiceRouter.MAIN_LIKE);
         }
@@ -152,6 +152,16 @@ public final class CargoRouter {
         Bundle bundle = new Bundle();
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.recharge_agree_host,
+                bundle);
+    }
+
+    /**
+     * 加油统一接入口
+     */
+    public static void gotoOilEnterActivity(Context context) {
+        Bundle bundle = new Bundle();
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.oil_enter_host,
                 bundle);
     }
 

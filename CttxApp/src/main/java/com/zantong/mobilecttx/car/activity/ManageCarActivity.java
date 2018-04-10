@@ -98,6 +98,7 @@ public class ManageCarActivity extends BaseJxActivity {
         //车辆同步
         if (resultMain == MainGlobal.resultCode.violation_query_del
                 || resultMain == MainGlobal.resultCode.violation_query_submit) {
+
             MainRouter.gotoMainActivity(this, 2);
         }
     }

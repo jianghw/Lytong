@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.util.ArrayMap;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -22,6 +23,7 @@ import com.tzly.ctcyh.router.util.MobUtils;
 import com.tzly.ctcyh.router.util.StatusBarUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.service.RouterGlobal;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.global.MainGlobal;
@@ -77,7 +79,7 @@ public class HomeMainActivity extends AbstractBaseActivity
         super.onNewIntent(intent);
 
         if (mCustomBottom != null) mCustomBottom.selectTab(mCurBottomPosition);
-        if (mHomeUnimpededFragment != null) mHomeUnimpededFragment.loadingFirstData();
+        if (mHomeUnimpededFragment != null) mHomeUnimpededFragment.carLoadData();
     }
 
     /**
@@ -90,6 +92,18 @@ public class HomeMainActivity extends AbstractBaseActivity
             if (bundle != null) {
                 mCurBottomPosition = bundle.getInt(
                         MainGlobal.putExtra.home_position_extra, 0);
+
+                //渠道
+                String channel = null;
+                if (intent.hasExtra(RouterGlobal.putExtra.channel_active))
+                    channel = bundle.getString(RouterGlobal.putExtra.channel_active);
+                //日期
+                String registerDate = null;
+                if (intent.hasExtra(RouterGlobal.putExtra.channel_register_date))
+                    registerDate = bundle.getString(RouterGlobal.putExtra.channel_register_date);
+
+                if (mHomeDiscountsFragment != null && !TextUtils.isEmpty(channel))
+                    mHomeDiscountsFragment.activeToShow(channel, registerDate);
             }
         }
     }

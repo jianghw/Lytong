@@ -57,4 +57,9 @@ public class AmendOrderActivity extends AbstractBaseActivity {
         if (mFragment != null) mFragment = null;
     }
 
+    protected void backLast() {
+        setResult(MainGlobal.resultCode.amend_order_detail);
+        finish();
+    }
+
 }

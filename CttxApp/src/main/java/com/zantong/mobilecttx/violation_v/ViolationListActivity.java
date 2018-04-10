@@ -226,7 +226,9 @@ public class ViolationListActivity extends AbstractBaseActivity
     @Override
     protected void onDestroy() {
         if (mViolationDTO != null)
-            MainRouter.gotoActiveActivity(this, 1, mViolationDTO.getRegisterDate());
+            MainRouter.gotoActiveActivity(this,
+                    1, mViolationDTO.getRegisterDate());
+
         super.onDestroy();
 
         if (mPresenter != null) mPresenter.unSubscribe();

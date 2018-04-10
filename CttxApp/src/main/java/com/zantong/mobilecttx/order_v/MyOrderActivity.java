@@ -139,7 +139,7 @@ public class MyOrderActivity extends JxBaseActivity
              */
             @Override
             public void doClickDriving(OrderListBean bean) {
-                Act.getInstance().gotoIntentLogin(MyOrderActivity.this, BaiduMapParentActivity.class);
+                MainRouter.gotoOilMapActivity(getApplicationContext());
             }
 
             /**

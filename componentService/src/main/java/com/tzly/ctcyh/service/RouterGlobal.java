@@ -20,12 +20,12 @@ public final class RouterGlobal {
         public static final String web_html_host = "web_html_host";
 
         public static final String active_host = "active_host";
-        public static final String oil_map_host = "oil_map_host";
+
         public static final String recharge_agree_host = "recharge_agree_host";
 
         public static final String home_host = "home_host";
         public static final String guide_host = "guide_host";
-        public static final String map_host = "map_host";
+        public static final String baidu_map_host = "baidu_map_host";
         public static final String driving_host = "driving_host";
         public static final String meg_type_host = "meg_type_host";
         public static final String capture_host = "capture_host";
@@ -72,6 +72,8 @@ public final class RouterGlobal {
         //订单修改
         public static final String order_refund_host = "order_refund_host";
         public static final String order_amend_host = "order_amend_host";
+        //加油统一入口
+        public static final String oil_enter_host = "oil_enter_host";
     }
 
     public static final class putExtra {
