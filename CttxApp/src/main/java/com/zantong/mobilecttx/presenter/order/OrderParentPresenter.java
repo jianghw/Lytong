@@ -89,6 +89,7 @@ public class OrderParentPresenter
                                 mAtyView.toastError("无更多数据");
                             } else {
                                 mAtyView.allPaymentData(result.getData());
+
                                 dataDistribution(result, 0);
                                 dataDistribution(result, 1);
                                 dataDistribution(result, 2);
@@ -161,9 +162,9 @@ public class OrderParentPresenter
 
                     @Override
                     public void doNext(List<OrderListBean> orderList) {
-                        if (orderStatus == 0)
+                        if (orderStatus == 0)//待支付
                             mAtyView.nonPaymentData(orderList);
-                        else if (orderStatus == 2)
+                        else if (orderStatus == 2)//取消
                             mAtyView.cancelPaymentData(orderList);
                         else
                             mAtyView.havePaymentData(orderList);

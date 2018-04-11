@@ -4,11 +4,14 @@ import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
+import com.zantong.mobilecttx.map.bean.GasStation;
 import com.zantong.mobilecttx.map.bean.GasStationDetailResponse;
 import com.zantong.mobilecttx.map.bean.GasStationResponse;
 import com.zantong.mobilecttx.map.bean.YearCheckDetailResponse;
 import com.zantong.mobilecttx.map.bean.YearCheckResponse;
 import com.zantong.mobilecttx.map.dto.AnnualDTO;
+
+import java.util.List;
 
 /**
  * 地图页面
@@ -34,7 +37,9 @@ public interface IBaiduMapContract {
 
         void gasStationListError(String message);
 
-        void gasStationListSucceed(GasStationResponse result);
+        void gasStationListSucceed(List<GasStation> result);
+
+        boolean isCheckNinetyFour();
     }
 
     interface IBaiduMapPresenter extends IBasePresenter {

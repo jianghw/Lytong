@@ -6,6 +6,7 @@ import com.tzly.ctcyh.java.request.order.UpdateOrderDTO;
 import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
+import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
@@ -748,5 +749,22 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<ValidAdvResponse> findIsValidAdvert() {
         return baseRetrofit().create(ITextService.class).findIsValidAdvert();
+    }
+
+    /**
+     * 获取配置接口
+     */
+    @Override
+    public Observable<ActiveConfigResponse> getConfig(String channel, String resisterDate) {
+        return channel.equals("1") ? baseRetrofit().create(ITextService.class).getConfig(channel, resisterDate)
+                : baseRetrofit().create(ITextService.class).getConfig(channel);
+    }
+
+    /**
+     * 领券
+     */
+    @Override
+    public Observable<BaseResponse> receiveCoupon(String rasUserID, String couponId, String channel) {
+        return baseRetrofit().create(ITextService.class).receiveCoupon(rasUserID, couponId, channel);
     }
 }

@@ -195,9 +195,11 @@ public class AmendOrderFragment extends RefreshFragment
             return;
         }
 
-        if (TextUtils.isEmpty(mFirstCode) || TextUtils.isEmpty(mSecondCode)) {
+        if (mLayArea.getVisibility() == View.VISIBLE
+                && (TextUtils.isEmpty(mFirstCode) || TextUtils.isEmpty(mSecondCode))) {
             toastShort("地址信息失效,请重新选择地区");
             mTvArea.setText("");
+            return;
         }
         if (mPresenter != null) mPresenter.updateOrderDetail();
     }

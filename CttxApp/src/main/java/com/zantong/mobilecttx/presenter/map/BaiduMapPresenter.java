@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.presenter.map;
 import android.support.annotation.NonNull;
 
 import com.zantong.mobilecttx.contract.IBaiduMapContract;
+import com.zantong.mobilecttx.map.bean.GasStation;
 import com.zantong.mobilecttx.map.bean.GasStationDetailResponse;
 import com.zantong.mobilecttx.map.bean.GasStationResponse;
 import com.zantong.mobilecttx.map.bean.YearCheckDetailResponse;
@@ -11,8 +12,13 @@ import com.zantong.mobilecttx.map.dto.AnnualDTO;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 
+import java.util.List;
+
+import rx.Observable;
+import rx.Scheduler;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -21,15 +27,15 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
     private final RepositoryManager mRepository;
-    private final IBaiduMapContract.IBaiduMapView mAtyView;
+    private final IBaiduMapContract.IBaiduMapView mContractView;
     private final CompositeSubscription mSubscriptions;
 
     public BaiduMapPresenter(@NonNull RepositoryManager repositoryManager,
                              @NonNull IBaiduMapContract.IBaiduMapView view) {
         mRepository = repositoryManager;
-        mAtyView = view;
+        mContractView = view;
         mSubscriptions = new CompositeSubscription();
-        mAtyView.setPresenter(this);
+        mContractView.setPresenter(this);
     }
 
     @Override
@@ -39,7 +45,7 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
 
     @Override
     public void unSubscribe() {
-        mAtyView.dismissLoading();
+        mContractView.dismissLoading();
         mSubscriptions.clear();
     }
 
@@ -58,15 +64,15 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.annualInspectionListError(e.getMessage());
+                        mContractView.annualInspectionListError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(YearCheckResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.annualInspectionListSucceed(result);
+                            mContractView.annualInspectionListSucceed(result);
                         } else {
-                            mAtyView.annualInspectionListError(
+                            mContractView.annualInspectionListError(
                                     result != null ? result.getResponseDesc() : "未知错误(N24)");
                         }
                     }
@@ -77,7 +83,7 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
     @Override
     public AnnualDTO getAnnualDTO() {
 
-        return mAtyView.getAnnualDTO();
+        return mContractView.getAnnualDTO();
     }
 
     /**
@@ -95,15 +101,15 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.annualInspectionError(e.getMessage());
+                        mContractView.annualInspectionError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(YearCheckDetailResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.annualInspectionSucceed(result);
+                            mContractView.annualInspectionSucceed(result);
                         } else {
-                            mAtyView.annualInspectionError(
+                            mContractView.annualInspectionError(
                                     result != null ? result.getResponseDesc() : "未知错误(年检地点详情)");
                         }
                     }
@@ -126,15 +132,15 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.gasStationError(e.getMessage());
+                        mContractView.gasStationError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(GasStationDetailResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.gasStationSucceed(result);
+                            mContractView.gasStationSucceed(result);
                         } else {
-                            mAtyView.gasStationError(
+                            mContractView.gasStationError(
                                     result != null ? result.getResponseDesc() : "未知错误(加油站地点)");
                         }
                     }
@@ -157,19 +163,74 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.gasStationListError(e.getMessage());
+                        mContractView.gasStationListError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(GasStationResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.gasStationListSucceed(result);
+
+                            boolean check = mContractView.isCheckNinetyFour();
+                            if (check) {
+                                filterNinetyData(result);
+                            } else//不过滤
+                                mContractView.gasStationListSucceed(result.getData());
                         } else {
-                            mAtyView.gasStationListError(
+                            mContractView.gasStationListError(
                                     result != null ? result.getResponseDesc() : "未知错误(N23)");
                         }
                     }
                 });
         mSubscriptions.add(subscription);
     }
+
+    protected void filterNinetyData(GasStationResponse result) {
+        Subscription subscription = Observable.just(result)
+                .filter(new Func1<GasStationResponse, Boolean>() {
+                    @Override
+                    public Boolean call(GasStationResponse stationResponse) {
+                        return null != stationResponse;
+                    }
+                })
+                .map(new Func1<GasStationResponse, List<GasStation>>() {
+                    @Override
+                    public List<GasStation> call(GasStationResponse response) {
+                        return response.getData();
+                    }
+                })
+                .flatMap(new Func1<List<GasStation>, Observable<GasStation>>() {
+                    @Override
+                    public Observable<GasStation> call(List<GasStation> gasStations) {
+                        return Observable.from(gasStations);
+                    }
+                })
+                .filter(new Func1<GasStation, Boolean>() {
+                    @Override
+                    public Boolean call(GasStation gasStation) {
+                        return gasStation.isHasNinetyFour();
+                    }
+                })
+                .toList()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<List<GasStation>>() {
+                    @Override
+                    public void doCompleted() {
+
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void doNext(List<GasStation> stations) {
+                        mContractView.gasStationListSucceed(stations);
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+
 }

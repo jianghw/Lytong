@@ -10,6 +10,7 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.base.activity.BaseActivity;
 import com.zantong.mobilecttx.map.adapter.NavAdapter;
@@ -37,6 +38,7 @@ public class NavActivity extends BaseActivity {
     String mName = "";
     String mLat = "";
     String mLng = "";
+
     @Override
     protected int getLayoutResId() {
         return R.layout.map_nav_activity;
@@ -58,15 +60,15 @@ public class NavActivity extends BaseActivity {
         mNavAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, Object data) {
-                AppInfo info = (AppInfo)data;
+                AppInfo info = (AppInfo) data;
                 //高德
-                if (info.getPkgName().equals("com.autonavi.minimap")){
-                    AMapUtil.goToNaviActivity(NavActivity.this,mName,mName,mLat ,mLng,"1","0");
+                if (info.getPkgName().equals("com.autonavi.minimap")) {
+                    AMapUtil.goToNaviActivity(NavActivity.this, mName, mName, mLat, mLng, "1", "0");
                 }
                 //百度
-                if (info.getPkgName().equals("com.baidu.BaiduMap")){
-                    BaiduIntentUtil.goToNaviActivity(NavActivity.this,"我的位置","latlng:"+mLat+","+mLng+"|name:"+mLat,
-                            "driving","上海","北京","上海","","","");
+                if (info.getPkgName().equals("com.baidu.BaiduMap")) {
+                    BaiduIntentUtil.goToNaviActivity(NavActivity.this, "我的位置", "latlng:" + mLat + "," + mLng + "|name:" + mLat,
+                            "driving", "上海", "北京", "上海", "", "", "");
 
                 }
                 NavActivity.this.finish();
@@ -77,15 +79,14 @@ public class NavActivity extends BaseActivity {
     @Override
     public void initData() {
         Intent intent = getIntent();
-        if (intent != null){
+        if (intent != null) {
             mName = intent.getStringExtra("nav_name");
             mLat = intent.getStringExtra("nav_lat");
             mLng = intent.getStringExtra("nav_lng");
         }
-        LogUtils.i("mName:"+mName + "-mLat:" + mLat + "-mLng:" + mLng);
+        LogUtils.i("mName:" + mName + "-mLat:" + mLat + "-mLng:" + mLng);
         queryFilterAppInfo();
     }
-
 
 
     // 根据查询条件，查询特定的ApplicationInfo
@@ -96,21 +97,25 @@ public class NavActivity extends BaseActivity {
         // 查询所有已经安装的应用程序
         List<ApplicationInfo> listAppcations = pm.getInstalledApplications(PackageManager.GET_UNINSTALLED_PACKAGES);
 
-        List<AppInfo> appInfos = new ArrayList<AppInfo>(); // 保存过滤查到的AppInfo
-
+        List<AppInfo> appInfos = new ArrayList<>(); // 保存过滤查到的AppInfo
         for (ApplicationInfo app : listAppcations) {
             //非系统程序
             if ((app.flags & ApplicationInfo.FLAG_SYSTEM) <= 0) {
-                if (app.packageName.equals("com.autonavi.minimap") || app.packageName.equals("com.baidu.BaiduMap")){
+                if (app.packageName.equals("com.autonavi.minimap") || app.packageName.equals("com.baidu.BaiduMap")) {
                     appInfos.add(getAppInfo(app));
                 }
             }
             //本来是系统程序，被用户手动更新后，该系统程序也成为第三方应用程序了
-            else if ((app.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0){
-                if (app.packageName.equals("com.autonavi.minimap") || app.packageName.equals("com.baidu.BaiduMap")){
+            else if ((app.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0) {
+                if (app.packageName.equals("com.autonavi.minimap") || app.packageName.equals("com.baidu.BaiduMap")) {
                     appInfos.add(getAppInfo(app));
                 }
             }
+        }
+
+        if (appInfos.isEmpty()) {
+            ToastUtils.toastShort("手机未检测到百度地图或高德地图");
+            finish();
         }
         mNavAdapter.append(appInfos);
     }
@@ -129,7 +134,7 @@ public class NavActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.map_nav_activity_layout:
                 finish();
                 break;

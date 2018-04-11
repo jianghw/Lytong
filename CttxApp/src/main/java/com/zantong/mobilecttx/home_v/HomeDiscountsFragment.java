@@ -171,21 +171,6 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
         }
     }
 
-    /**
-     * 是否显示活动内容
-     */
-    protected void activeToShow(String channel, String date) {
-        //点击事件
-        FragmentManager manager = getChildFragmentManager();
-        Fragment fragment = manager.findFragmentByTag("router_fgt");
-        if (fragment != null && fragment instanceof RouterFragment) {
-            RouterFragment routerFragment = (RouterFragment) fragment;
-            routerFragment.clickItemData(channel, date);
-        } else {
-            ToastUtils.toastShort("出错~优惠活动未打开");
-        }
-    }
-
     @Override
     public void setPresenter(IHomeFavorableFtyContract.IHomeFavorableFtyPresenter presenter) {
         mPresenter = presenter;

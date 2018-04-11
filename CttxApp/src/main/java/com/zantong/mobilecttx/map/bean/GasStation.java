@@ -19,6 +19,12 @@ public class GasStation {
     private String ninetyFiveStandard;  //95 优惠字段
     private String distance;            //距离
 
+    private boolean hasNinetyFour;
+
+    public boolean isHasNinetyFour() {
+        return hasNinetyFour;
+    }
+
     public int getId() {
         return id;
     }

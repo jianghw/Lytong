@@ -15,27 +15,45 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.tzly.ctcyh.java.response.active.ActiveBean_1;
+import com.tzly.ctcyh.java.response.active.ActiveConfigBean;
+import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
+import com.tzly.ctcyh.router.custom.dialog.CouponDialogFragment;
+import com.tzly.ctcyh.router.custom.dialog.DialogUtils;
+import com.tzly.ctcyh.router.custom.dialog.IOnCouponSubmitListener;
+import com.tzly.ctcyh.router.custom.dialog.MessageDialogFragment;
 import com.tzly.ctcyh.router.custom.primission.PermissionFail;
 import com.tzly.ctcyh.router.custom.primission.PermissionGen;
 import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.Utils;
+import com.zantong.mobilecttx.application.Injection;
+import com.zantong.mobilecttx.home_p.ActivePresenter;
+import com.zantong.mobilecttx.home_p.IActiveContract;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_v.CarBeautyActivity;
 import com.zantong.mobilecttx.share_v.ShareParentActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
 /**
  * Fragment 下拉刷新基类
  */
-public class RouterFragment extends Fragment {
+public class RouterFragment extends Fragment implements IActiveContract.IActiveView {
 
-    private static final String BANK_NAME = "bank_name";
-    private static final String BANK_MOBILE = "bank_mobile";
-    private static final String BANK_CERTNUM = "bank_certnum";
-    private static final String BANK_CARDNAME = "bank_cardname";
+    /**
+     * 控制器
+     */
+    private IActiveContract.IActivePresenter mPresenter;
+
+    private String mExtraChannel;
+    private String mExtraRegisterDate;
 
     public static RouterFragment newInstance() {
         RouterFragment f = new RouterFragment();
@@ -63,6 +81,9 @@ public class RouterFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActivePresenter presenter = new ActivePresenter(
+                Injection.provideRepository(Utils.getContext()), this);
 
     }
 
@@ -305,5 +326,120 @@ public class RouterFragment extends Fragment {
     @PermissionFail(requestCode = 4000)
     public void doMapFail() {
         ToastUtils.toastShort("您已关闭定位权限,请手机设置中打开");
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void dismissLoading() {
+
+    }
+
+    @Override
+    public void setPresenter(IActiveContract.IActivePresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public String getChannel() {
+        return mExtraChannel;
+    }
+
+    @Override
+    public void responseError(String message) {
+        ToastUtils.toastShort(message);
+    }
+
+    private void saveSubmit(String id) {
+        SPUtils.instance().put(id, true);
+    }
+
+    @Override
+    public String getResisterDate() {
+        return mExtraRegisterDate;
+    }
+
+    @Override
+    public void configError(String message) {
+        ToastUtils.toastShort(message);
+    }
+
+    @Override
+    public void configSucceed(ActiveConfigResponse response) {
+        ActiveConfigBean bean = response.getData();
+        //标记id
+        final String mId_Only = bean.getId();
+        boolean chancleID = SPUtils.instance().getBoolean(mId_Only, false);
+        if (chancleID) return;
+
+        String configType = bean.getConfigType();
+        final String beanExtra = bean.getExtra();
+        if (configType.equals("1")) {
+            List<ActiveConfigBean.CouponInfoBean> infoBeanList = bean.getCouponInfo();
+            if (!infoBeanList.isEmpty()) {
+                ActiveConfigBean.CouponInfoBean infoBean = infoBeanList.get(0);
+
+                CouponDialogFragment dialogFragment = CouponDialogFragment.newInstance(
+                        infoBean.getCouponId(), infoBean.getCouponName(), infoBean.getCouponBusiness(),
+                        infoBean.getCouponType(), infoBean.getCouponValue());
+
+                dialogFragment.setClickListener(new IOnCouponSubmitListener() {
+                    @Override
+                    public void submit(String couponId) {
+                        if (mPresenter != null) mPresenter.receiveCoupon(couponId);
+                        saveSubmit(mId_Only);
+                        gotoHtmlByExtra(beanExtra);
+                    }
+
+                    @Override
+                    public void cancel() {
+                    }
+                });
+                dialogFragment.show(getChildFragmentManager(), "coupon_dialog");
+            } else {
+            }
+        } else if (configType.equals("2")) {//消息
+            MessageDialogFragment fragment = MessageDialogFragment.newInstance(beanExtra);
+            fragment.setClickListener(new IOnCouponSubmitListener() {
+                @Override
+                public void submit(String couponId) {
+                    saveSubmit(mId_Only);
+                }
+
+                @Override
+                public void cancel() {
+                }
+            });
+
+            DialogUtils.showDialog(getActivity(), fragment, "message_dialog");
+        } else if (configType.equals("3")) {//网页
+            if (!TextUtils.isEmpty(beanExtra)) gotoHtml(beanExtra);
+        }
+    }
+
+    private void gotoHtmlByExtra(String beanExtra) {
+        Type type = new TypeToken<List<ActiveBean_1>>() {
+        }.getType();
+        List<ActiveBean_1> beanList = new Gson().fromJson(beanExtra, type);
+        if (beanList != null && !beanList.isEmpty()) {
+            ActiveBean_1 bean_1 = beanList.get(0);
+            if (!TextUtils.isEmpty(bean_1.getUrl())) gotoHtml(bean_1.getUrl());
+        }
+    }
+
+    private void gotoHtml(String beanExtra) {
+        MainRouter.gotoWebHtmlActivity(getContext(), "产品页面", beanExtra);
+    }
+
+    public void activeToShow(String channel, String date) {
+        //渠道
+        mExtraChannel = channel;
+        //日期
+        mExtraRegisterDate = date;
+
+        if (mPresenter != null) mPresenter.getConfig(channel,date);
     }
 }

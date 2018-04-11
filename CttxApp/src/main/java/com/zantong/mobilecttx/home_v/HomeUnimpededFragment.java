@@ -650,4 +650,19 @@ public class HomeUnimpededFragment extends RefreshFragment
             p.versionInfoError();
         }
     }
+
+    /**
+     * 是否显示活动内容
+     */
+    protected void activeToShow(String channel, String date) {
+        //点击事件
+        FragmentManager manager = getChildFragmentManager();
+        Fragment fragment = manager.findFragmentByTag("router_fgt");
+        if (fragment != null && fragment instanceof RouterFragment) {
+            RouterFragment routerFragment = (RouterFragment) fragment;
+            routerFragment.activeToShow(channel, date);
+        } else {
+            ToastUtils.toastShort("出错~优惠活动未打开");
+        }
+    }
 }

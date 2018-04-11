@@ -710,8 +710,10 @@ public final class MainRouter {
         gotoActiveActivity(context, channel, "");
     }
 
+    /**
+     * 优惠页面 出现活动内容
+     */
     public static void gotoActiveActivity(Context context, int channel, String date) {
-        //优惠页面
         gotoMainActivity(context, 1, String.valueOf(channel), date);
     }
 

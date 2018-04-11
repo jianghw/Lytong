@@ -28,13 +28,13 @@ public interface IMainService {
 
     String getPushId();
 
-    void gotoMainActivity(Context activity, int i);
+    void gotoMainActivity(Context activity, int position);
 
     void gotoProblemFeedbackActivity(Activity activity);
 
     void gotoOilMapActivity(Context context);
 
-    void gotoActiveActivity(Context activity, int type);
+    void gotoActiveActivity(Context activity, int channel);
 
     void gotoHtmlActivity(Context activity, String title, String msg);
 

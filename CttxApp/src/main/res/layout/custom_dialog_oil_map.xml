@@ -15,6 +15,14 @@
         android:layout_marginRight="@dimen/ds_45"
         android:background="@color/colorLineGray_e6"/>
 
+    <TextView
+        android:layout_margin="@dimen/res_x_6"
+        android:text="持工行爱车卡可叠加享受94折优惠"
+        style="@style/ResTextTheme.14.Red"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <include layout="@layout/custom_baidu_map_oil"/>
 
 </LinearLayout>

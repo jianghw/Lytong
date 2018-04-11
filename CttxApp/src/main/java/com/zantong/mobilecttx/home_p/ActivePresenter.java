@@ -1,12 +1,12 @@
-package com.tzly.ctcyh.cargo.active_p;
+package com.zantong.mobilecttx.home_p;
 
 import android.support.annotation.NonNull;
 
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
-import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
-import com.tzly.ctcyh.cargo.data_m.CargoDataManager;
-import com.tzly.ctcyh.cargo.global.CargoGlobal;
 import com.tzly.ctcyh.router.api.BaseSubscriber;
+import com.zantong.mobilecttx.data_m.RepositoryManager;
+import com.zantong.mobilecttx.global.MainGlobal;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -16,18 +16,15 @@ import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by jianghw on 2017/10/12.
- * Description:
- * Update by:
- * Update day:
  */
 
 public class ActivePresenter implements IActiveContract.IActivePresenter {
 
-    private final CargoDataManager mRepository;
+    private final RepositoryManager mRepository;
     private final IActiveContract.IActiveView mContractView;
     private final CompositeSubscription mSubscriptions;
 
-    public ActivePresenter(@NonNull CargoDataManager payDataManager,
+    public ActivePresenter(@NonNull RepositoryManager payDataManager,
                            @NonNull IActiveContract.IActiveView view) {
         mRepository = payDataManager;
         mContractView = view;
@@ -52,11 +49,13 @@ public class ActivePresenter implements IActiveContract.IActivePresenter {
      * 7.拍牌 8.二手车线下估值 9.电瓶 10.海外驾驶培训 11.嗨修保养 12.惠保养
      * <p>
      * channel=2时 传registerDate参数（车辆注册日期）yyyy-MM-dd
+     *
+     * @param channel
+     * @param date
      */
     @Override
-    public void getConfig() {
-        Subscription subscription = mRepository
-                .getConfig(mContractView.getChannel(), mContractView.getResisterDate())
+    public void getConfig(String channel, String date) {
+        Subscription subscription = mRepository.getConfig(channel, date)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -81,7 +80,7 @@ public class ActivePresenter implements IActiveContract.IActivePresenter {
                     @Override
                     public void doNext(ActiveConfigResponse response) {
                         if (response != null &&
-                                response.getResponseCode() == CargoGlobal.Response.base_succeed) {
+                                response.getResponseCode() == MainGlobal.Response.base_succeed) {
                             mContractView.configSucceed(response);
                         } else {
                             mContractView.configError(response != null
@@ -99,7 +98,6 @@ public class ActivePresenter implements IActiveContract.IActivePresenter {
      */
     @Override
     public void receiveCoupon(String couponId) {
-
         Subscription subscription = mRepository
                 .receiveCoupon(mRepository.getRASUserID(), couponId, mContractView.getChannel())
                 .subscribeOn(Schedulers.io())
@@ -111,7 +109,7 @@ public class ActivePresenter implements IActiveContract.IActivePresenter {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<ReceiveCouponResponse>() {
+                .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void doCompleted() {
                         mContractView.dismissLoading();
@@ -124,10 +122,9 @@ public class ActivePresenter implements IActiveContract.IActivePresenter {
                     }
 
                     @Override
-                    public void doNext(ReceiveCouponResponse response) {
-                        if (response != null &&
-                                response.getResponseCode() == CargoGlobal.Response.base_succeed) {
-                            mContractView.responseSucceed(response);
+                    public void doNext(BaseResponse response) {
+                        if (response != null && response.getResponseCode()
+                                == MainGlobal.Response.base_succeed) {
                         } else {
                             mContractView.responseError(response != null
                                     ? response.getResponseDesc() : "未知错误(receiveCoupon)");

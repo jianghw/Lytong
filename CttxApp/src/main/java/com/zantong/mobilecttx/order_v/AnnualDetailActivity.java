@@ -12,14 +12,17 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
+import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.custom.htmltxt.HtmlHttpImageGetter;
 import com.tzly.ctcyh.router.custom.htmltxt.HtmlTextView;
 import com.tzly.ctcyh.router.custom.htmltxt.IHtmlTextClick;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.global.MainGlobal;
@@ -30,6 +33,9 @@ import com.zantong.mobilecttx.order_p.OrderDetailPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.utils.jumptools.Act;
+import com.zzhoujay.richtext.ImageHolder;
+import com.zzhoujay.richtext.RichText;
+import com.zzhoujay.richtext.callback.OnUrlClickListener;
 
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
@@ -38,7 +44,7 @@ import java.util.regex.Pattern;
 /**
  * 年检订单详情页面
  */
-public class AnnualDetailActivity extends JxBaseActivity
+public class AnnualDetailActivity extends AbstractBaseActivity
         implements View.OnClickListener, IOrderDetailContract.IOrderDetailView {
 
     private IOrderDetailContract.IOrderDetailPresenter mPresenter;
@@ -115,7 +121,7 @@ public class AnnualDetailActivity extends JxBaseActivity
      * 寄回快递单号
      */
     private TextView mTvSendBackTitle;
-    private HtmlTextView mTvContentBottom;
+    private TextView mTvContentBottom;
     /**
      * 对订单有疑问?
      */
@@ -123,24 +129,40 @@ public class AnnualDetailActivity extends JxBaseActivity
     private TextView mTvSendOff;
     private TextView mTvSendBack;
 
+    private TextView mTvXiugai;
+    private TextView mTvTuiKuan;
+    private TextView mTvCuidan;
+    private TextView mTvWuliu;
+
+    private TextView mPayConsignee;
+    private TextView mPayAddress;
+    private TextView mPayPick;
+    private TextView mPayRemark;
+    private TextView mUserName;
+
+    private RelativeLayout mLayUserName;
+    private RelativeLayout mLayAddress;
+    private RelativeLayout mLayTime;
+    private TextView mPickTitle;
+    private LinearLayout mLayOther;
+
+    private String mBackExpressNo;
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) mPresenter.unSubscribe();
-    }
 
-    @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-        onNewIntent(getIntent());
+        RichText.clear(this);
+        if (mPresenter != null) mPresenter.unSubscribe();
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        if (intent != null) {
+        if (intent != null && intent.hasExtra(MainGlobal.putExtra.web_order_id_extra)) {
             Bundle bundle = intent.getExtras();
-            if (intent.hasExtra(MainGlobal.putExtra.web_order_id_extra))
+            if (bundle != null)
                 mOrderId = bundle.getString(MainGlobal.putExtra.web_order_id_extra);
         }
     }
@@ -151,10 +173,21 @@ public class AnnualDetailActivity extends JxBaseActivity
     }
 
     @Override
-    protected void bindContentView(View childView) {
+    protected void bundleIntent(Intent intent) {
+        if (intent != null && intent.hasExtra(MainGlobal.putExtra.web_order_id_extra)) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null)
+                mOrderId = bundle.getString(MainGlobal.putExtra.web_order_id_extra);
+        }
+    }
+
+    @Override
+    protected void bindFragment() {
+        RichText.initCacheDir(this);
+
         titleContent("订单详情");
 
-        initView(childView);
+        initView();
         OrderDetailPresenter presenter = new OrderDetailPresenter(
                 Injection.provideRepository(getApplicationContext()), this);
     }
@@ -164,52 +197,87 @@ public class AnnualDetailActivity extends JxBaseActivity
         if (mPresenter != null) mPresenter.getOrderDetail();
     }
 
-    public void initView(View view) {
-        mTvPrice = (TextView) view.findViewById(R.id.tv_price);
-        mLayPrice = (LinearLayout) view.findViewById(R.id.lay_price);
+    public void initView() {
+        mTvPrice = (TextView) findViewById(R.id.tv_price);
+        mLayPrice = (LinearLayout) findViewById(R.id.lay_price);
 
-        mTvPaid1 = (TextView) view.findViewById(R.id.tv_paid_1);
-        mLinePaid2 = (TextView) view.findViewById(R.id.line_paid_2);
-        mTvTaken3 = (TextView) view.findViewById(R.id.tv_taken_3);
-        mLineTaken4 = (TextView) view.findViewById(R.id.line_taken_4);
-        mLineLeft5 = (TextView) view.findViewById(R.id.line_left_5);
-        mLine6 = (TextView) view.findViewById(R.id.line_6);
-        mTvComplete7 = (TextView) view.findViewById(R.id.tv_complete_7);
-        mLineLeft8 = (TextView) view.findViewById(R.id.line_left_8);
-        mLineLeft9 = (TextView) view.findViewById(R.id.line_left_9);
-        mLineRight10 = (TextView) view.findViewById(R.id.line_right_10);
-        mLineRight11 = (TextView) view.findViewById(R.id.line_right_11);
-        mTvUnComplete12 = (TextView) view.findViewById(R.id.tv_unComplete_12);
-        mLineRight13 = (TextView) view.findViewById(R.id.line_right_13);
-        mTvCompleting14 = (TextView) view.findViewById(R.id.tv_completing_14);
-        mLineRight15 = (TextView) view.findViewById(R.id.line_right_15);
-        mLineRight16 = (TextView) view.findViewById(R.id.line_right_16);
-        mLineDown17 = (TextView) view.findViewById(R.id.line_down_17);
-        mTvCommission18 = (TextView) view.findViewById(R.id.tv_commission_18);
-        mLineCommission19 = (TextView) view.findViewById(R.id.line_commission_19);
-        mTvFinish = (TextView) view.findViewById(R.id.tv_finish);
-        mTvContentTitle = (TextView) view.findViewById(R.id.tv_content_title);
-        mTvContent = (TextView) view.findViewById(R.id.tv_content);
-        mTvOrderNumTitle = (TextView) view.findViewById(R.id.tv_order_num_title);
-        mTvOrderNum = (TextView) view.findViewById(R.id.tv_order_num);
-        mTvDateTitle = (TextView) view.findViewById(R.id.tv_date_title);
-        mTvDate = (TextView) view.findViewById(R.id.tv_date);
-        mTvPayTypeTitle = (TextView) view.findViewById(R.id.tv_pay_type_title);
-        mTvPayType = (TextView) view.findViewById(R.id.tv_pay_type);
-        mTvSendOffTitle = (TextView) view.findViewById(R.id.tv_send_off_title);
-        mTvSendOff = (TextView) view.findViewById(R.id.tv_send_off);
-        mTvSendBackTitle = (TextView) view.findViewById(R.id.tv_send_back_title);
-        mTvSendBack = (TextView) view.findViewById(R.id.tv_send_back);
-        mTvContentBottom = (HtmlTextView) view.findViewById(R.id.tv_content_bottom);
-        mTvQuery = (TextView) view.findViewById(R.id.tv_query);
+        mTvPaid1 = (TextView) findViewById(R.id.tv_paid_1);
+        mLinePaid2 = (TextView) findViewById(R.id.line_paid_2);
+        mTvTaken3 = (TextView) findViewById(R.id.tv_taken_3);
+        mLineTaken4 = (TextView) findViewById(R.id.line_taken_4);
+        mLineLeft5 = (TextView) findViewById(R.id.line_left_5);
+        mLine6 = (TextView) findViewById(R.id.line_6);
+        mTvComplete7 = (TextView) findViewById(R.id.tv_complete_7);
+        mLineLeft8 = (TextView) findViewById(R.id.line_left_8);
+        mLineLeft9 = (TextView) findViewById(R.id.line_left_9);
+        mLineRight10 = (TextView) findViewById(R.id.line_right_10);
+        mLineRight11 = (TextView) findViewById(R.id.line_right_11);
+        mTvUnComplete12 = (TextView) findViewById(R.id.tv_unComplete_12);
+        mLineRight13 = (TextView) findViewById(R.id.line_right_13);
+        mTvCompleting14 = (TextView) findViewById(R.id.tv_completing_14);
+        mLineRight15 = (TextView) findViewById(R.id.line_right_15);
+        mLineRight16 = (TextView) findViewById(R.id.line_right_16);
+        mLineDown17 = (TextView) findViewById(R.id.line_down_17);
+        mTvCommission18 = (TextView) findViewById(R.id.tv_commission_18);
+        mLineCommission19 = (TextView) findViewById(R.id.line_commission_19);
+        mTvFinish = (TextView) findViewById(R.id.tv_finish);
+        mTvContentTitle = (TextView) findViewById(R.id.tv_content_title);
+        mTvContent = (TextView) findViewById(R.id.tv_content);
+        mTvOrderNumTitle = (TextView) findViewById(R.id.tv_order_num_title);
+        mTvOrderNum = (TextView) findViewById(R.id.tv_order_num);
+        mTvDateTitle = (TextView) findViewById(R.id.tv_date_title);
+        mTvDate = (TextView) findViewById(R.id.tv_date);
+        mTvPayTypeTitle = (TextView) findViewById(R.id.tv_pay_type_title);
+        mTvPayType = (TextView) findViewById(R.id.tv_pay_type);
+        mTvSendOffTitle = (TextView) findViewById(R.id.tv_send_off_title);
+        mTvSendOff = (TextView) findViewById(R.id.tv_send_off);
+        mTvSendBackTitle = (TextView) findViewById(R.id.tv_send_back_title);
+        mTvSendBack = (TextView) findViewById(R.id.tv_send_back);
+        mTvContentBottom = (TextView) findViewById(R.id.tv_content_bottom);
+
+        mLayOther = (LinearLayout) findViewById(R.id.lay_other);
+        mLayUserName = (RelativeLayout) findViewById(R.id.ry_consignee);
+        mUserName = (TextView) findViewById(R.id.tv_user_name);
+        mPayConsignee = (TextView) findViewById(R.id.tv_pay_consignee);
+        mLayAddress = (RelativeLayout) findViewById(R.id.ry_ce_address);
+        mPayAddress = (TextView) findViewById(R.id.tv_pay_ce_address);
+        mLayTime = (RelativeLayout) findViewById(R.id.ry_pick_up);
+        mPickTitle = (TextView) findViewById(R.id.tv_pay_pick_up_title);
+        mPayPick = (TextView) findViewById(R.id.tv_pay_pick_up);
+        mPayRemark = (TextView) findViewById(R.id.tv_pay_remark);
+
+
+        mTvCuidan = (TextView) findViewById(R.id.tv_pay_cuid);
+        mTvCuidan.setOnClickListener(this);
+        mTvWuliu = (TextView) findViewById(R.id.tv_pay_wuliu);
+        mTvWuliu.setOnClickListener(this);
+
+        mTvXiugai = (TextView) findViewById(R.id.tv_xiugai);
+        mTvXiugai.setOnClickListener(this);
+        mTvTuiKuan = (TextView) findViewById(R.id.tv_tuikuan);
+        mTvTuiKuan.setOnClickListener(this);
+        mTvQuery = (TextView) findViewById(R.id.tv_query);
         mTvQuery.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_query:
+            case R.id.tv_query://客服
                 Act.getInstance().gotoIntent(this, ProblemFeedbackActivity.class);
+                break;
+            case R.id.tv_xiugai://修改
+                MainRouter.gotoAmendOrderActivity(this, mOrderId);
+                break;
+            case R.id.tv_tuikuan://退钱
+                MainRouter.gotoOrderRefundActivity(this, mOrderId);
+                break;
+            case R.id.tv_pay_cuid://催单
+                if (mPresenter != null) mPresenter.info();
+                break;
+            case R.id.tv_pay_wuliu://物流
+                String url = "http://www.sf-express.com/cn/sc/dynamic_function/waybill/#search/bill-number/" + mBackExpressNo;
+                MainRouter.gotoWebHtmlActivity(this, "物流信息", url);
                 break;
             default:
                 break;
@@ -223,7 +291,7 @@ public class AnnualDetailActivity extends JxBaseActivity
 
     @Override
     public void getOrderDetailError(String message) {
-        toastShore(message);
+        ToastUtils.toastShort(message);
     }
 
     @Override
@@ -267,14 +335,45 @@ public class AnnualDetailActivity extends JxBaseActivity
 
         String beanDetail = bean.getDetail();
 
-        mTvContentBottom.setClickHtml(beanDetail,
+       /* mTvContentBottom.setClickHtml(beanDetail,
                 new HtmlHttpImageGetter(mTvContentBottom),
                 new IHtmlTextClick() {
                     @Override
                     public void clickLine(String url) {
                         gotoHtml(url);
                     }
-                });
+                });*/
+
+        RichText.fromHtml(beanDetail) // 数据源
+                .autoFix(true) // 是否自动修复，默认true
+                .autoPlay(true) // gif图片是否自动播放
+                .showBorder(false) // 是否显示图片边框
+                .scaleType(ImageHolder.ScaleType.fit_xy) // 图片缩放方式
+                .size(ImageHolder.MATCH_PARENT, ImageHolder.WRAP_CONTENT) // 图片占位区域的宽高
+                .resetSize(false) // 默认false，是否忽略img标签中的宽高尺寸（只在img标签中存在宽高时才有效），true：忽略标签中的尺寸并触发SIZE_READY回调，false：使用img标签中的宽高尺寸，不触发SIZE_READY回调
+                .clickable(true) // 是否可点击，默认只有设置了点击监听才可点击
+                .urlClick(new OnUrlClickListener() {// 设置链接点击回调
+                    @Override
+                    public boolean urlClicked(String url) {
+                        gotoHtml(url);
+                        return false;
+                    }
+                })
+                .bind(this) // 绑定richText对象到某个object上，方便后面的清理
+                .into(mTvContentBottom); // 设置目标TextView
+
+        int status = bean.getOrderStatus();
+        boolean visible = status != 0 && status != 2;
+        mTvCuidan.setVisibility(visible ? View.VISIBLE : View.GONE);
+
+        mTvTuiKuan.setVisibility(visible ? View.VISIBLE : View.GONE);
+        if (mPresenter != null && visible) mPresenter.getUserOrderInfo();
+
+        mBackExpressNo = bean.getBackExpressNo();
+        if (!TextUtils.isEmpty(mBackExpressNo)) {
+            mTvCuidan.setVisibility(View.GONE);
+            mTvWuliu.setVisibility(View.VISIBLE);
+        }
     }
 
 

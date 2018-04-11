@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -12,6 +13,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,8 +41,8 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
-import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.DensityUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
@@ -90,6 +92,9 @@ public class BaiduMapParentActivity extends AbstractBaseActivity
     private int mCurrentDirection = 0;
     private double mCurrentLat = 0.0;
     private double mCurrentLon = 0.0;
+    /**
+     * 精度
+     */
     private float mCurrentAccracy;
 
     private MyLocationData locData;
@@ -103,9 +108,13 @@ public class BaiduMapParentActivity extends AbstractBaseActivity
      * 地图中的服务类型
      */
     private String mServiceType;
+
     private RelativeLayout mLay94;
     private CheckBox mCB94;
-
+    /**
+     * 是否只显示94
+     */
+    private boolean isCheckBox = false;
 
     @Override
     protected int initContentView() {
@@ -159,6 +168,8 @@ public class BaiduMapParentActivity extends AbstractBaseActivity
         // 定位初始化
         mLocClient = new LocationClient(this);
         mLocClient.registerLocationListener(new MyLocationListenner());
+        //地图状态监听
+        mBaiduMap.setOnMapStatusChangeListener(changeListener);
 
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true); // 打开gps
@@ -186,7 +197,6 @@ public class BaiduMapParentActivity extends AbstractBaseActivity
 
             mLay94.setVisibility(View.VISIBLE);
         }
-        mRbStart.setChecked(true);
     }
 
     public void initView() {
@@ -204,8 +214,22 @@ public class BaiduMapParentActivity extends AbstractBaseActivity
 
         mLay94 = (RelativeLayout) findViewById(R.id.lay_94);
         mCB94 = (CheckBox) findViewById(R.id.cb_94);
+        mCB94.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                isCheckBox = b;
+                checkRadioButton();
+            }
+        });
 
-        mRbStart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mLayRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                checkRadioButton();
+            }
+        });
+
+        /*mRbStart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (mPresenter != null && isChecked
@@ -252,8 +276,49 @@ public class BaiduMapParentActivity extends AbstractBaseActivity
                     if (mPresenter != null) mPresenter.gasStationList();
                 }
             }
-        });
+        });*/
 
+    }
+
+
+    protected void checkRadioButton() {
+        if (mRbStart.isChecked()) {
+            if (mPresenter != null
+                    && mMapType == MainGlobal.MapType.annual_inspection_map) {
+                mServiceType = String.valueOf(MainGlobal.MapType.annual_led_service);
+
+                if (mPresenter != null) mPresenter.annualInspectionList();
+            } else if (mPresenter != null
+                    && mMapType == MainGlobal.MapType.annual_oil_map) {
+                mServiceType = String.valueOf(MainGlobal.MapType.annual_92_service);
+
+                if (mPresenter != null) mPresenter.gasStationList();
+            }
+        } else if (mRbCenter.isChecked()) {
+            if (mPresenter != null
+                    && mMapType == MainGlobal.MapType.annual_inspection_map) {
+                mServiceType = String.valueOf(MainGlobal.MapType.annual_site_service);
+
+                if (mPresenter != null) mPresenter.annualInspectionList();
+            } else if (mPresenter != null
+                    && mMapType == MainGlobal.MapType.annual_oil_map) {
+                mServiceType = String.valueOf(MainGlobal.MapType.annual_95_service);
+
+                if (mPresenter != null) mPresenter.gasStationList();
+            }
+        } else if (mRbEnd.isChecked()) {
+            if (mPresenter != null
+                    && mMapType == MainGlobal.MapType.annual_inspection_map) {
+                mServiceType = String.valueOf(MainGlobal.MapType.annual_agent_service);
+
+                if (mPresenter != null) mPresenter.annualInspectionList();
+            } else if (mPresenter != null
+                    && mMapType == MainGlobal.MapType.annual_oil_map) {
+                mServiceType = String.valueOf(MainGlobal.MapType.annual_0_service);
+
+                if (mPresenter != null) mPresenter.gasStationList();
+            }
+        }
     }
 
     @Override
@@ -285,6 +350,7 @@ public class BaiduMapParentActivity extends AbstractBaseActivity
     protected void onDestroy() {
         super.onDestroy();
 
+        isFirstLoc = false;
         if (mPresenter != null) mPresenter.unSubscribe();
         // 退出时销毁定位
         mLocClient.stop();
@@ -373,7 +439,9 @@ public class BaiduMapParentActivity extends AbstractBaseActivity
             }
             mCurrentLat = location.getLatitude();
             mCurrentLon = location.getLongitude();
+
             mCurrentAccracy = location.getRadius();
+            // 构造定位数据
             locData = new MyLocationData.Builder()
                     .accuracy(location.getRadius())
                     // 此处设置开发者获取到的方向信息，顺时针0-360
@@ -387,10 +455,48 @@ public class BaiduMapParentActivity extends AbstractBaseActivity
                 MapStatus.Builder builder = new MapStatus.Builder();
                 builder.target(latLng).zoom(mCurZoom);
                 mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
+
+                /**
+                 * 最除网络请求 先定位后按键
+                 */
+                if (!mRbStart.isChecked() && !mRbCenter.isChecked() && !mRbEnd.isChecked())
+                    mRbStart.setChecked(true);
             }
             mLocClient.stop();
         }
     }
+
+    public BaiduMap.OnMapStatusChangeListener changeListener
+            = new BaiduMap.OnMapStatusChangeListener() {
+
+        @Override
+        public void onMapStatusChangeStart(MapStatus arg0) {
+        }
+
+        /**
+         * 地图状态变化中
+         * @param status 当前地图状态
+         */
+        @Override
+        public void onMapStatusChange(MapStatus status) {
+        }
+
+        /**
+         * 地图状态改变结束
+         * @param status 地图状态改变结束后的地图状态
+         */
+        @Override
+        public void onMapStatusChangeFinish(MapStatus status) {
+            int[] location = new int[2];
+            mMapView.getLocationOnScreen(location);
+            Point p = new Point(location[0] + mMapView.getWidth() / 2,
+                    location[1] + mMapView.getHeight() / 2);
+            //已经获取到屏幕中心经纬度，可上传或者地理转码
+            LatLng latLng = mBaiduMap.getProjection().fromScreenLocation(p);
+            mCurrentLat = latLng.latitude;
+            mCurrentLon = latLng.longitude;
+        }
+    };
 
     /**
      * 网络模块
@@ -406,7 +512,7 @@ public class BaiduMapParentActivity extends AbstractBaseActivity
         annualDTO.setLat(String.valueOf(mCurrentLat == 0.0 ? 31.230372 : mCurrentLat));
         annualDTO.setLng(String.valueOf(mCurrentLon == 0.0 ? 121.473662 : mCurrentLon));
         annualDTO.setType(mServiceType);
-        annualDTO.setScope("100");
+        annualDTO.setScope("10");
         return annualDTO;
     }
 
@@ -468,11 +574,14 @@ public class BaiduMapParentActivity extends AbstractBaseActivity
     }
 
     @Override
-    public void gasStationListSucceed(GasStationResponse result) {
-        List<GasStation> gasStations = result.getData();
-
+    public void gasStationListSucceed(List<GasStation> gasStations) {
         clearOverlay(null);
         initOverlayOil(gasStations);
+    }
+
+    @Override
+    public boolean isCheckNinetyFour() {
+        return isCheckBox;
     }
 
     protected void serverError(String message) {

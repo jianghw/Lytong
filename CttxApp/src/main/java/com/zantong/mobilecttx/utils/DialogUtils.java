@@ -271,7 +271,6 @@ public class DialogUtils {
         final CountDownTimer countDownTimer = new CountDownTimer(4000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                LogUtils.e("-->" + millisUntilFinished);
                 int time = (int) (millisUntilFinished / 1000);
                 time = time <= 0 ? 0 : time;
                 mCount.setText(time + "s");

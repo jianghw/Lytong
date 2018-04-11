@@ -4,7 +4,7 @@ package com.tzly.ctcyh.cargo.data_m;
 import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
 import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
-import com.tzly.ctcyh.cargo.bean.response.ActiveConfigResponse;
+import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
 import com.tzly.ctcyh.cargo.bean.response.BidOilResponse;
 import com.tzly.ctcyh.java.response.oil.NorOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.OrderExpressResponse;

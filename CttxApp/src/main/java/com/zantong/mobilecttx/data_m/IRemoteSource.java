@@ -4,6 +4,7 @@ import com.tzly.ctcyh.java.request.order.UpdateOrderDTO;
 import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
+import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
@@ -417,4 +418,14 @@ public interface IRemoteSource {
      * 查违章小广告
      */
     Observable<ValidAdvResponse> findIsValidAdvert();
+
+    /**
+     * 获取配置接口
+     */
+    Observable<ActiveConfigResponse> getConfig(String channel, String resisterDate);
+
+    /**
+     * 领券
+     */
+    Observable<BaseResponse> receiveCoupon(String rasUserID, String couponId, String channel);
 }

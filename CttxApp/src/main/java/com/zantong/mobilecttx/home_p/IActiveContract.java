@@ -1,7 +1,7 @@
-package com.tzly.ctcyh.cargo.active_p;
+package com.zantong.mobilecttx.home_p;
+
 
 import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
-import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 
@@ -20,8 +20,6 @@ public interface IActiveContract {
 
         void responseError(String message);
 
-        void responseSucceed(ReceiveCouponResponse response);
-
         String getResisterDate();
 
         void configError(String message);
@@ -30,9 +28,10 @@ public interface IActiveContract {
     }
 
     interface IActivePresenter extends IBasePresenter {
+
         void receiveCoupon(String couponId);
 
-        void getConfig();
+        void getConfig(String channel, String date);
     }
 
 }

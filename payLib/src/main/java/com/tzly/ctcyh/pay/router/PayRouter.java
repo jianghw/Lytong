@@ -211,7 +211,8 @@ public final class PayRouter {
     /**
      * 违章列表夜间
      */
-    public static void gotoViolationListActivity(Context context, String carnum, String enginenum, String carnumtype) {
+    public static void gotoViolationListActivity(Context context, String carnum,
+                                                 String enginenum, String carnumtype) {
         Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
@@ -224,11 +225,11 @@ public final class PayRouter {
     /**
      * 去往活动规则页面
      */
-    public static void gotoActiveActivity(Context context, int i) {
+    public static void gotoActiveActivity(Context context, int channel) {
         Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
-            service.gotoActiveActivity(context, i);
+            service.gotoActiveActivity(context, channel);
         } else {//注册机开始工作
             registerMain();
         }
@@ -237,11 +238,11 @@ public final class PayRouter {
     /**
      * 去往主页
      */
-    public static void gotoMainActivity(Context context, int i) {
+    public static void gotoMainActivity(Context context, int position) {
         Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
-            service.gotoMainActivity(context, i);
+            service.gotoMainActivity(context, position);
         } else {//注册机开始工作
             registerMain();
         }

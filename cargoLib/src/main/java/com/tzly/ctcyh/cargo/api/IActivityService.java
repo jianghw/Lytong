@@ -1,7 +1,7 @@
 package com.tzly.ctcyh.cargo.api;
 
 
-import com.tzly.ctcyh.cargo.bean.response.ActiveConfigResponse;
+import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 
 import retrofit2.http.Field;

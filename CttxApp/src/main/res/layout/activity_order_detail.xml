@@ -56,6 +56,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/lay_price"
                 android:layout_marginRight="@dimen/res_y_30"
+                android:visibility="gone"
                 android:text="@string/main_tv_cuidan" />
 
             <TextView
@@ -348,11 +349,11 @@
 
         <!--后扩展用户信息-->
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/lay_other"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:id="@+id/ry_consignee"
@@ -551,7 +552,7 @@
             android:layout_marginBottom="@dimen/res_y_30">
 
             <TextView
-                android:id="@+id/tv_tuikuan"
+                android:id="@+id/tv_query"
                 style="@style/ResTextTheme.16.Hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -560,20 +561,21 @@
                 android:layout_marginRight="@dimen/res_x_30"
                 android:layout_marginTop="@dimen/res_y_10"
                 android:background="@drawable/shape_rec_solw_str1_cor6_pad"
-                android:text="便捷退款" />
+                android:text="联系客服" />
 
             <TextView
-                android:id="@+id/tv_query"
+                android:id="@+id/tv_tuikuan"
+                android:visibility="gone"
                 style="@style/ResTextTheme.16.Hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/tv_tuikuan"
+                android:layout_alignBaseline="@+id/tv_query"
                 android:layout_marginBottom="@dimen/res_y_10"
                 android:layout_marginRight="@dimen/res_x_30"
                 android:layout_marginTop="@dimen/res_y_10"
-                android:layout_toLeftOf="@+id/tv_tuikuan"
+                android:layout_toLeftOf="@+id/tv_query"
                 android:background="@drawable/shape_rec_solw_str1_cor6_pad"
-                android:text="联系客服" />
+                android:text="退款申请" />
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>

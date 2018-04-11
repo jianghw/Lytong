@@ -107,6 +107,8 @@ public class OrderDetailActivity extends AbstractBaseActivity
     private TextView mPickTitle;
     private LinearLayout mLayOther;
 
+    private String mBackExpressNo;
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -142,7 +144,6 @@ public class OrderDetailActivity extends AbstractBaseActivity
     @Override
     protected void initContentData() {
         if (mPresenter != null) mPresenter.getOrderDetail();
-        if (mPresenter != null) mPresenter.getUserOrderInfo();
     }
 
     public void initView() {
@@ -210,7 +211,7 @@ public class OrderDetailActivity extends AbstractBaseActivity
                 if (mPresenter != null) mPresenter.info();
                 break;
             case R.id.tv_pay_wuliu://物流
-                String url = "http://www.sf-express.com/cn/sc/dynamic_function/waybill/#search/bill-number/" + mOrderId;
+                String url = "http://www.sf-express.com/cn/sc/dynamic_function/waybill/#search/bill-number/" + mBackExpressNo;
                 MainRouter.gotoWebHtmlActivity(this, "物流信息", url);
                 break;
             default:
@@ -233,7 +234,8 @@ public class OrderDetailActivity extends AbstractBaseActivity
         OrderDetailBean bean = result.getData();
         if (bean != null) {
             initDataByText(bean);
-        }
+        } else
+            ToastUtils.toastShort("未知错误,退出重新操作");
     }
 
     /**
@@ -247,11 +249,13 @@ public class OrderDetailActivity extends AbstractBaseActivity
 
         int status = bean.getOrderStatus();
         changeTextColorByStatus(status, mTvPayStatus);
+
         mTvContent.setText(bean.getGoodsName());
         mTvSupplier.setText(bean.getMerchantName());
         mTvOrderNum.setText(bean.getOrderId());
         mTvDate.setText(bean.getCreateDate());
         int type = bean.getPayType();
+
         String payType;
         if (type == 1) {
             payType = "工行卡支付";
@@ -280,14 +284,6 @@ public class OrderDetailActivity extends AbstractBaseActivity
         mRyAddress.setVisibility(TextUtils.isEmpty(address) ? View.GONE : View.VISIBLE);
 
         String beanDetail = bean.getDetail();
-        //        mTvContentBottom.setClickHtml(beanDetail,
-        //                new HtmlHttpImageGetter(mTvContentBottom),
-        //                new IHtmlTextClick() {
-        //                    @Override
-        //                    public void clickLine(String url) {
-        //                        gotoHtml(url);
-        //                    }
-        //                });
 
         RichText.fromHtml(beanDetail) // 数据源
                 .autoFix(true) // 是否自动修复，默认true
@@ -306,6 +302,18 @@ public class OrderDetailActivity extends AbstractBaseActivity
                 })
                 .bind(this) // 绑定richText对象到某个object上，方便后面的清理
                 .into(mTvContentBottom); // 设置目标TextView
+
+        boolean visible = status != 0 && status != 2;
+        mTvCuidan.setVisibility(visible ? View.VISIBLE : View.GONE);
+
+        mTvTuiKuan.setVisibility(visible ? View.VISIBLE : View.GONE);
+        if (mPresenter != null && visible) mPresenter.getUserOrderInfo();
+
+        mBackExpressNo = bean.getBackExpressNo();
+        if (!TextUtils.isEmpty(mBackExpressNo)) {
+            mTvCuidan.setVisibility(View.GONE);
+            mTvWuliu.setVisibility(View.VISIBLE);
+        }
     }
 
     private void gotoHtml(String tableHtml) {

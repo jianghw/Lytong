@@ -89,8 +89,8 @@ public class MainDataService implements IMainService {
     }
 
     @Override
-    public void gotoMainActivity(Context activity, int i) {
-        MainRouter.gotoMainActivity(activity, i);
+    public void gotoMainActivity(Context activity, int position) {
+        MainRouter.gotoMainActivity(activity, position);
     }
 
     @Override
@@ -110,8 +110,8 @@ public class MainDataService implements IMainService {
      * 去往活动规则页面
      */
     @Override
-    public void gotoActiveActivity(Context activity, int type) {
-        MainRouter.gotoActiveActivity(activity, type);
+    public void gotoActiveActivity(Context activity, int channel) {
+        MainRouter.gotoActiveActivity(activity, channel);
     }
 
     /**

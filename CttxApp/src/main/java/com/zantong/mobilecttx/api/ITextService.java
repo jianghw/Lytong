@@ -1,11 +1,14 @@
 package com.zantong.mobilecttx.api;
 
 import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
 import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -31,4 +34,25 @@ public interface ITextService {
 
     @GET("text/findIsValidAdvert")
     Observable<ValidAdvResponse> findIsValidAdvert();
+
+    /**
+     * 获取配置接口
+     */
+    @FormUrlEncoded
+    @POST("config/getConfig ")
+    Observable<ActiveConfigResponse> getConfig(@Field("channel") String channel);
+
+    @FormUrlEncoded
+    @POST("config/getConfig ")
+    Observable<ActiveConfigResponse> getConfig(@Field("channel") String channel,
+                                               @Field("registerDate") String registerDate);
+
+    /**
+     * 领券
+     */
+    @FormUrlEncoded
+    @POST("activity/receiveCoupon")
+    Observable<BaseResponse> receiveCoupon(@Field("userId") String rasUserID,
+                                                    @Field("couponId") String couponId,
+                                                    @Field("channel") String channel);
 }

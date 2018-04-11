@@ -1,4 +1,4 @@
-package com.tzly.ctcyh.cargo.bean.response;
+package com.tzly.ctcyh.java.response.active;
 
 import java.util.List;
 

@@ -52,6 +52,13 @@ public class OrderDetailBean {
     private String couponId;
     private String uid;
 
+    private String backExpressNo;
+    private String backExpressType;
+
+    public String getBackExpressNo() {
+        return backExpressNo;
+    }
+
     public String getAddressDetail() {
         return addressDetail;
     }

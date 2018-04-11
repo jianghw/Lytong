@@ -102,8 +102,8 @@ public class HomeMainActivity extends AbstractBaseActivity
                 if (intent.hasExtra(RouterGlobal.putExtra.channel_register_date))
                     registerDate = bundle.getString(RouterGlobal.putExtra.channel_register_date);
 
-                if (mHomeDiscountsFragment != null && !TextUtils.isEmpty(channel))
-                    mHomeDiscountsFragment.activeToShow(channel, registerDate);
+                if (mHomeUnimpededFragment != null && !TextUtils.isEmpty(channel))
+                    mHomeUnimpededFragment.activeToShow(channel, registerDate);
             }
         }
     }
