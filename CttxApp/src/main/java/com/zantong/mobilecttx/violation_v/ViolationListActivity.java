@@ -157,14 +157,6 @@ public class ViolationListActivity extends AbstractBaseActivity
     }
 
     /**
-     * 广告
-     */
-    @Override
-    public void findIsValidAdvert() {
-        if (mPresenter != null) mPresenter.findIsValidAdvert();
-    }
-
-    /**
      * 付款fragment
      */
     private void goToPayFragment(ViolationBean bean, String violationnum) {
@@ -318,16 +310,6 @@ public class ViolationListActivity extends AbstractBaseActivity
         violationCarDTO.setCarnumtype(mViolationDTO.getCarnumtype());
         violationCarDTO.setEnginenum(mViolationDTO.getEnginenum());
         return violationCarDTO;
-    }
-
-    @Override
-    public void validAdvertError(String message) {
-    }
-
-    @Override
-    public void validAdvertSucceed(ValidAdvResponse result) {
-        if (orderUnStatusFragment != null)
-            orderUnStatusFragment.validAdvertSucceed(result);
     }
 
 }

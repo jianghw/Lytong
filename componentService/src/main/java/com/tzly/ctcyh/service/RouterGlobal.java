@@ -74,6 +74,8 @@ public final class RouterGlobal {
         public static final String order_amend_host = "order_amend_host";
         //加油统一入口
         public static final String oil_enter_host = "oil_enter_host";
+        // 查分结果页面
+        public static final String license_result_host = "license_result_host";
     }
 
     public static final class putExtra {

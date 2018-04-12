@@ -17,4 +17,6 @@ public interface FmentToAtyable {
     String getChannel();
 
     void backApp();
+
+    void customerService(String url);
 }

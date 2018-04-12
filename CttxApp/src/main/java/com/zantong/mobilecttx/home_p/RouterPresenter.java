@@ -18,14 +18,14 @@ import rx.subscriptions.CompositeSubscription;
  * Created by jianghw on 2017/10/12.
  */
 
-public class ActivePresenter implements IActiveContract.IActivePresenter {
+public class RouterPresenter implements IRouterContract.IRouterPresenter {
 
     private final RepositoryManager mRepository;
-    private final IActiveContract.IActiveView mContractView;
+    private final IRouterContract.IRouterView mContractView;
     private final CompositeSubscription mSubscriptions;
 
-    public ActivePresenter(@NonNull RepositoryManager payDataManager,
-                           @NonNull IActiveContract.IActiveView view) {
+    public RouterPresenter(@NonNull RepositoryManager payDataManager,
+                           @NonNull IRouterContract.IRouterView view) {
         mRepository = payDataManager;
         mContractView = view;
         mSubscriptions = new CompositeSubscription();
@@ -100,6 +100,47 @@ public class ActivePresenter implements IActiveContract.IActivePresenter {
     public void receiveCoupon(String couponId) {
         Subscription subscription = mRepository
                 .receiveCoupon(mRepository.getRASUserID(), couponId, mContractView.getChannel())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.responseError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(BaseResponse response) {
+                        if (response != null && response.getResponseCode()
+                                == MainGlobal.Response.base_succeed) {
+                        } else {
+                            mContractView.responseError(response != null
+                                    ? response.getResponseDesc() : "未知错误(receiveCoupon)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 广告统计
+     * 渠道(1 安卓 2 ios)
+     */
+    @Override
+    public void advertCount(String keyId) {
+        Subscription subscription = mRepository.advertCount(keyId, "1")
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override

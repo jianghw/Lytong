@@ -20,6 +20,7 @@ import com.tzly.ctcyh.cargo.bean.response.ScoreCaptchaResponse;
 import com.tzly.ctcyh.cargo.bean.response.ScoreResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.oil.OilCardsResponse;
+import com.tzly.ctcyh.java.response.oil.OilEnterResponse;
 import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
 import com.tzly.ctcyh.router.api.RetrofitFactory;
 
@@ -194,7 +195,15 @@ public class RemoteData implements IRemoteSource {
      */
     @Override
     public Observable<OilRemainderResponse> getRemainder(String goodsId, String card) {
-        return baseRetrofit().create(IAddOilService.class).getRemainder(goodsId,card);
+        return baseRetrofit().create(IAddOilService.class).getRemainder(goodsId, card);
+    }
+
+    /**
+     * 获取办卡人数
+     */
+    @Override
+    public Observable<OilEnterResponse> getCounts() {
+        return baseRetrofit().create(IAddOilService.class).getCounts();
     }
 
 

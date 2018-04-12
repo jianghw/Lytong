@@ -466,7 +466,7 @@ public class OrderDetailActivity extends AbstractBaseActivity
 
     @Override
     public void infoSucceed(OrderRefundResponse result) {
-
+        ToastUtils.toastShort(result.getResponseDesc());
     }
 
     @Override

@@ -169,12 +169,7 @@ public class BaiduMapPresenter implements IBaiduMapContract.IBaiduMapPresenter {
                     @Override
                     public void doNext(GasStationResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-
-                            boolean check = mContractView.isCheckNinetyFour();
-                            if (check) {
-                                filterNinetyData(result);
-                            } else//不过滤
-                                mContractView.gasStationListSucceed(result.getData());
+                            mContractView.gasStationListSucceed(result.getData());
                         } else {
                             mContractView.gasStationListError(
                                     result != null ? result.getResponseDesc() : "未知错误(N23)");

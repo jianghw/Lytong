@@ -15,6 +15,7 @@ import com.tzly.ctcyh.cargo.bean.response.ScoreCaptchaResponse;
 import com.tzly.ctcyh.cargo.bean.response.ScoreResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.oil.OilCardsResponse;
+import com.tzly.ctcyh.java.response.oil.OilEnterResponse;
 import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
 
 import rx.Observable;
@@ -89,4 +90,9 @@ public interface IRemoteSource {
      * 判断余额是否充足
      */
     Observable<OilRemainderResponse> getRemainder(String goodsId, String card);
+
+    /**
+     * 获取办卡人数
+     */
+    Observable<OilEnterResponse> getCounts();
 }

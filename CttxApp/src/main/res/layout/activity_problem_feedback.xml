@@ -27,8 +27,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ds_30"
-        android:paddingLeft="@dimen/ds_60"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_60">
 
         <TextView
             android:layout_width="wrap_content"
@@ -49,9 +49,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/ds_60"
         android:layout_marginBottom="@dimen/ds_30"
         android:layout_marginTop="@dimen/ds_60"
+        android:paddingLeft="@dimen/ds_60"
         android:text="@string/main_app_help"
         android:textColor="@color/black_80"
         android:textSize="@dimen/fs_50" />
@@ -59,20 +59,32 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:lineSpacingExtra="@dimen/ds_12"
         android:paddingLeft="@dimen/ds_60"
         android:paddingRight="@dimen/ds_60"
-        android:text="请搜索“畅通卡车友会”公众号，留言描述您的问题，我们将在工作时间2小时内进行反馈。 "
-        android:lineSpacingExtra="@dimen/ds_12"
+        android:text="请搜索“畅通车友会”公众号，留言描述您的问题，我们将在工作时间2小时内进行反馈。 "
         android:textColor="@color/gray_66"
         android:textSize="@dimen/fs_42" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ds_12"
+        android:lineSpacingExtra="@dimen/ds_12"
         android:paddingLeft="@dimen/ds_60"
         android:paddingRight="@dimen/ds_60"
-        android:layout_marginTop="@dimen/ds_12"
         android:text="截屏保存图片，在微信扫一扫中选择扫描相册图片即可快捷关注。"
+        android:textColor="@color/gray_66"
+        android:textSize="@dimen/fs_42" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/ds_12"
         android:lineSpacingExtra="@dimen/ds_12"
+        android:paddingLeft="@dimen/ds_60"
+        android:paddingRight="@dimen/ds_60"
+        android:text="或长按此二维码,复制公众号名称,直接唤起微信粘贴"
         android:textColor="@color/gray_66"
         android:textSize="@dimen/fs_42" />
 
@@ -93,7 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/ds_30"
-            android:text="畅通卡车友会公众号"
+            android:text="畅通车友会公众号"
             android:textColor="@color/gray_66"
             android:textSize="@dimen/fs_48" />
     </LinearLayout>
@@ -102,6 +114,6 @@
         android:id="@+id/img_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_code_contact"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:src="@mipmap/ic_code_contact" />
 </LinearLayout>

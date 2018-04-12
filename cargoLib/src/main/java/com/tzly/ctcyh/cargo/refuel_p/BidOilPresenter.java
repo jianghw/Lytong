@@ -104,7 +104,7 @@ public class BidOilPresenter implements IBidOilContract.IBidOilPresenter {
      */
     @Override
     public void createOrder() {
-        Subscription subscription = mRepository.createOrder(initDTO(),2)
+        Subscription subscription = mRepository.createOrder(initDTO(), 2)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -130,8 +130,6 @@ public class BidOilPresenter implements IBidOilContract.IBidOilPresenter {
                     public void doNext(RefuelOrderResponse response) {
                         if (response != null && response.getResponseCode()
                                 == CargoGlobal.Response.base_succeed) {
-
-                            getRemainder();
                             mContractView.createOrderSucceed(response);
                         } else {
                             mContractView.createOrderError(response != null
@@ -159,6 +157,7 @@ public class BidOilPresenter implements IBidOilContract.IBidOilPresenter {
         return dto;
     }
 
+    @Override
     public void getRemainder() {
         Subscription subscription = mRepository
                 .getRemainder(mContractView.getSubmitBean().getId(), "")
@@ -184,6 +183,15 @@ public class BidOilPresenter implements IBidOilContract.IBidOilPresenter {
 
                     @Override
                     public void doNext(OilRemainderResponse response) {
+                        if (response != null && response.getResponseCode() == 8000) {
+                            mContractView.isNeedCreate(response);
+                        } else if (response != null && response.getResponseCode()
+                                == CargoGlobal.Response.base_succeed) {
+                            createOrder();
+                        } else {
+                            mContractView.createOrderError(response != null
+                                    ? response.getResponseDesc() : "未知错误(订单创建)");
+                        }
                     }
                 });
         mSubscriptions.add(subscription);

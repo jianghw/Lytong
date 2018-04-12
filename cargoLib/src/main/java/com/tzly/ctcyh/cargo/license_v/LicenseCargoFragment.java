@@ -20,6 +20,7 @@ import com.tzly.ctcyh.cargo.bean.response.ScoreResponse;
 import com.tzly.ctcyh.cargo.data_m.InjectionRepository;
 import com.tzly.ctcyh.cargo.license_p.ILienseGradeContract;
 import com.tzly.ctcyh.cargo.license_p.LienseGradePresenter;
+import com.tzly.ctcyh.cargo.router.CargoRouter;
 import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
@@ -61,6 +62,7 @@ public class LicenseCargoFragment extends RefreshFragment
     private ILienseGradeContract.ILienseGradePresenter gradePresenter;
     private RelativeLayout mLayCode;
     private TextView mTvCode;
+    private TextView mTvGoJiao;
 
     @Override
     public void onDestroyView() {
@@ -95,6 +97,8 @@ public class LicenseCargoFragment extends RefreshFragment
             refreshVerificationCode();
         } else if (vId == R.id.btn_commit) {
             verificationSubmitData();
+        } else if (vId == R.id.tv_go_jiao) {//交通管理网站
+            CargoRouter.gotoHtmlActivity(getContext(),"驾驶证查分","http://sh.122.gov.cn/");
         }
     }
 
@@ -175,10 +179,11 @@ public class LicenseCargoFragment extends RefreshFragment
             mImgCode.setImageBitmap(stringtoBitmap(captche));
 
         } else if (response instanceof ScoreResponse) {
-            mLayMid.setVisibility(View.VISIBLE);
+            //            mLayMid.setVisibility(View.VISIBLE);
             ScoreResponse scoreResponse = (ScoreResponse) response;
             ScoreResponse.DataBean data = scoreResponse.getData();
-            mTvScore.setText(data.getLjjf());
+            //            mTvScore.setText(data.getLjjf());
+            CargoRouter.gotoLicenseResultActivity(getContext(), data.getLjjf());
         } else
             responseError();
     }
@@ -229,6 +234,9 @@ public class LicenseCargoFragment extends RefreshFragment
         mLayMid = (RelativeLayout) view.findViewById(R.id.lay_mid);
         mBtnCommit = (Button) view.findViewById(R.id.btn_commit);
         mBtnCommit.setOnClickListener(this);
+
+        mTvGoJiao = (TextView) view.findViewById(R.id.tv_go_jiao);
+        mTvGoJiao.setOnClickListener(this);
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Scroller;
 
@@ -42,7 +43,7 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
     /**
      * 嵌套子布局
      */
-    private RecyclerView recyclerView;
+    private RecyclerView child_recyclerView;
 
     public ScrollBottomLayout(Context context) {
         this(context, null);
@@ -108,11 +109,43 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        if (getChildCount() > 0 && getChildAt(0) != null) {
-            childView = getChildAt(0);
+        int count = getChildCount();
+        if (count > 0 && getChildAt(count - 1) != null) {
+            childView = getChildAt(count - 1);
         } else if (getChildCount() == 0) {
-            //
+            LogUtils.e("ScrollBottomLayout==>you must add child view to it");
         }
+    }
+
+    /**
+     * 获取嵌套布局里的子view-recyclerview
+     */
+    protected RecyclerView getChildRecycler() {
+        if (this.child_recyclerView != null) return this.child_recyclerView;
+
+        int countF = getChildCount();
+        for (int i = 0; i < countF; i++) {
+            View childF = getChildAt(i);
+            if (childF != null && childF instanceof ViewGroup) {
+                ViewGroup viewGroup = (ViewGroup) childF;
+                int countL = viewGroup.getChildCount();
+                for (int j = 0; j < countL; j++) {
+                    View childL = viewGroup.getChildAt(j);
+                    if (childL != null && childL instanceof ViewGroup) {
+                        ViewGroup viewGroupL = (ViewGroup) childL;
+                        int countR = viewGroupL.getChildCount();
+                        for (int k = 0; k < countR; k++) {
+                            View childR = viewGroupL.getChildAt(k);
+                            if (childR != null && childR instanceof RecyclerView) {
+                                this.child_recyclerView = (RecyclerView) childR;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return this.child_recyclerView;
     }
 
     @Override
@@ -123,7 +156,7 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
         int heightPixels = ScreenUtils.heightPixels(getContext());
         int measuredHeight = childView.getMeasuredHeight();
 
-        visibilityHeight = measuredHeight <= heightPixels * 2 / 3 ? heightPixels / 4 : measuredHeight / 4;
+        visibilityHeight = measuredHeight <= heightPixels * 2 / 3 ? heightPixels / 3 : measuredHeight / 3;
         movedMaxDis = childView.getMeasuredHeight() - (int) visibilityHeight;
     }
 
@@ -151,16 +184,18 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        boolean state = this.recyclerView.canScrollVertically(-1);
+        getChildRecycler();
+
+        boolean state = getChildRecycler().canScrollVertically(-1);
         switch (event.getAction()) {
             //直接自己消费
             case MotionEvent.ACTION_DOWN:
                 downDY = (int) event.getY();
                 LogUtils.e("ACTION_DOWN-->" + downDY);
                 //未出现状态--立马自己处理
-//                if (movedMaxDis <= downDY && !arriveTop
-//                        || movedMaxDis > downDY && arriveTop)
-//                    return true;
+                //                if (movedMaxDis <= downDY && !arriveTop
+                //                        || movedMaxDis > downDY && arriveTop)
+                //                    return true;
             case MotionEvent.ACTION_MOVE:
                 int moveDY = (int) event.getY();
                 int dy = downDY - moveDY;
@@ -189,7 +224,7 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        boolean state = this.recyclerView.canScrollVertically(-1);
+        boolean state = getChildRecycler().canScrollVertically(-1);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 LogUtils.e("movedMaxDis-->" + movedMaxDis);
@@ -310,7 +345,10 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
         return false;
     }
 
+    /**
+     * 额外方法
+     */
     public void setRecycler(RecyclerView recyclerView) {
-        this.recyclerView = recyclerView;
+        this.child_recyclerView = recyclerView;
     }
 }

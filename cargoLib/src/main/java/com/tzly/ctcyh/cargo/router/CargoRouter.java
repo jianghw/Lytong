@@ -3,8 +3,10 @@ package com.tzly.ctcyh.cargo.router;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
+import com.tzly.ctcyh.cargo.global.CargoGlobal;
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.UiRouter;
 import com.tzly.ctcyh.service.IMainService;
@@ -124,7 +126,7 @@ public final class CargoRouter {
     /**
      * 主页优惠
      */
-    public static void gotoMainActivity(Activity context, int position) {
+    public static void gotoMainActivity(Context context, int position) {
         ServiceRouter serviceRouter = ServiceRouter.getInstance();
         Object object = serviceRouter.getService(IMainService.class.getSimpleName());
         if (object != null && object instanceof IMainService) {
@@ -201,7 +203,7 @@ public final class CargoRouter {
     /**
      * html
      */
-    public static void gotoHtmlActivity(Activity context, String title, String url) {
+    public static void gotoHtmlActivity(Context context, String title, String url) {
         Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
@@ -271,5 +273,31 @@ public final class CargoRouter {
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.license_cargo_host,
                 bundle);
+    }
+
+    /**
+     * 驾照查分结果
+     */
+    public static void gotoLicenseResultActivity(Context context, String score) {
+        Bundle bundle = new Bundle();
+        bundle.putString(CargoGlobal.putExtra.license_score_extra, score);
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.license_result_host,
+                bundle);
+    }
+
+    /**
+     * 获取fragment
+     */
+    public static Fragment getAdvActiveFragment() {
+        ServiceRouter serviceRouter = ServiceRouter.getInstance();
+        Object object = serviceRouter.getService(IMainService.class.getSimpleName());
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+           return service.getAdvActiveFragment();
+        } else {//注册机开始工作
+            ServiceRouter.registerComponent(ServiceRouter.MAIN_LIKE);
+            return new Fragment();
+        }
     }
 }

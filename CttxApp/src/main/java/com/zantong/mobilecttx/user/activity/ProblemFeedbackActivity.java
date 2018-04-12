@@ -112,11 +112,11 @@ public class ProblemFeedbackActivity extends AbstractBaseActivity implements Vie
         ClipboardManager service = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         // 将文本内容放到系统剪贴板里。
         // 创建普通字符型ClipData
-        ClipData mClipData = ClipData.newPlainText("Label", "畅通卡车友会");
+        ClipData mClipData = ClipData.newPlainText("Label", "畅通车友会");
         // 将ClipData内容放到系统剪贴板里。
         if (service == null) return false;
         service.setPrimaryClip(mClipData);
-        ToastUtils.toastShort("畅通卡车友会 复制成功");
+        ToastUtils.toastShort("畅通车友会 复制成功");
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("weixin://wap/pay?"));

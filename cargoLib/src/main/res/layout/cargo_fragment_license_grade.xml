@@ -143,8 +143,8 @@
                     android:id="@+id/tv_get_code"
                     style="@style/ResTextTheme.14.Subtitle"
                     android:layout_width="wrap_content"
-                    android:layout_centerInParent="true"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:text="获取验证码"
                     android:textSize="@dimen/res_fs_10" />
             </RelativeLayout>
@@ -161,10 +161,10 @@
     <RelativeLayout
         android:id="@+id/lay_mid"
         android:layout_width="wrap_content"
-        android:visibility="invisible"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@mipmap/bg_koufen">
+        android:background="@mipmap/bg_koufen"
+        android:visibility="invisible">
 
         <TextView
             style="@style/ResTextTheme.16.Subtitle"
@@ -200,12 +200,16 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/tv_go_jiao"
         style="@style/ResTextTheme.14.Hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/lay_mid"
         android:layout_below="@+id/lay_top"
-        android:text="输入以上信息，点击“查询”后显示扣分" />
+        android:layout_marginLeft="@dimen/res_x_30"
+        android:layout_marginRight="@dimen/res_x_30"
+        android:gravity="left"
+        android:text="@string/cargo_license_score_tip"
+        android:textSize="@dimen/res_fs_12" />
 
     <Button
         android:id="@+id/btn_commit"

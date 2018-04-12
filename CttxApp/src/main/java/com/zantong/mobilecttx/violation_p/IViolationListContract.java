@@ -31,10 +31,6 @@ public interface IViolationListContract {
         ViolationDTO getViolationDTO();
 
         ViolationCarDTO getViolationCarDTO();
-
-        void validAdvertError(String message);
-
-        void validAdvertSucceed(ValidAdvResponse result);
     }
 
     interface IViolationListPresenter extends IBasePresenter {
@@ -44,7 +40,5 @@ public interface IViolationListContract {
         String initViolationDTO();
 
         void handleViolations(List<ViolationBean> beanList);
-
-        void findIsValidAdvert();
     }
 }

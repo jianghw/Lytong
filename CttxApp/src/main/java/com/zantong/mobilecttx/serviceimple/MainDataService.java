@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.serviceimple;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.tzly.ctcyh.service.IMainService;
@@ -153,6 +154,14 @@ public class MainDataService implements IMainService {
     @Override
     public void gotoNianjianMapActivity(Context context) {
         MainRouter.gotoInspectionMapActivity(context);
+    }
+
+    /**
+     * 获取fragment 页面
+     */
+    @Override
+    public Fragment getAdvActiveFragment() {
+        return MainRouter.getAdvActiveFragment();
     }
 
 

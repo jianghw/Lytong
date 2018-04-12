@@ -229,12 +229,15 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
 
     /**
      * 违章支付成功
+     * 15--97折购卡
      */
     protected void succeedStatus(OrderDetailBean orderDetailBean) {
         String channel = mFmentToAtyable.getChannel();
         toastShort("支付完成");
 
-        if (orderDetailBean.getType() == 2 || orderDetailBean.getType() == 6) {
+        if (orderDetailBean.getType() == 2
+                || orderDetailBean.getType() == 6
+                || orderDetailBean.getType() == 15) {
             PayRouter.gotoPaySucceedActivity(getContext(), String.valueOf(orderDetailBean.getType()));
         } else if (TextUtils.isEmpty(channel)) {
             PayRouter.gotoMainActivity(getContext(), 1);
@@ -296,7 +299,7 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
         String processste = result.getRspInfo().getProcessste();
         if (processste.equals("1") || processste.equals("3")) {
             PayRouter.gotoPaySucceedActivity(getContext(), "2");
-        }else{
+        } else {
             gotoActive();
         }
     }
@@ -372,7 +375,7 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     //绑畅通卡
     @JavascriptInterface
     public void bindCard() {
-        if (getBindCardStatus()==1) {
+        if (getBindCardStatus() == 1) {
             PayRouter.gotoUnblockedCardActivity(getContext());
         } else {
             PayRouter.gotoMyCardActivity(getContext());
@@ -579,5 +582,11 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     @JavascriptInterface
     public void backApp() {
         if (mFmentToAtyable != null) mFmentToAtyable.backApp();
+    }
+
+    //打开客服
+    @JavascriptInterface
+    public void customerService(String url) {
+        if (mFmentToAtyable != null) mFmentToAtyable.customerService(url);
     }
 }

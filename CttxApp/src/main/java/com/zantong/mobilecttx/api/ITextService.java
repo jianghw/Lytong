@@ -53,6 +53,12 @@ public interface ITextService {
     @FormUrlEncoded
     @POST("activity/receiveCoupon")
     Observable<BaseResponse> receiveCoupon(@Field("userId") String rasUserID,
-                                                    @Field("couponId") String couponId,
-                                                    @Field("channel") String channel);
+                                           @Field("couponId") String couponId,
+                                           @Field("channel") String channel);
+
+    /**
+     * 广告统计
+     */
+    @GET("text/advertCount")
+    Observable<BaseResponse> advertCount(@Query("id") String keyId, @Query("channel") String channel);
 }

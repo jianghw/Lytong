@@ -679,7 +679,14 @@ public class RepositoryManager {
      * 领券
      */
     public Observable<BaseResponse> receiveCoupon(String rasUserID, String couponId,
-                                                           String channel) {
+                                                  String channel) {
         return mRemoteData.receiveCoupon(rasUserID, couponId, channel);
+    }
+
+    /**
+     * 广告统计
+     */
+    public Observable <BaseResponse> advertCount(String keyId, String channel) {
+        return mRemoteData.advertCount(keyId, channel);
     }
 }

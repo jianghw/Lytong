@@ -102,7 +102,7 @@ public class ViolationListPresenter
                         } else {
                             mContractView.searchViolationError(
                                     result != null ? result.getSYS_HEAD().getReturnMessage()
-                                    : "未知错误(cip.cfc.v002.01)");
+                                            : "未知错误(cip.cfc.v002.01)");
                         }
                     }
                 });
@@ -227,37 +227,6 @@ public class ViolationListPresenter
 
                     @Override
                     public void doNext(BaseResponse result) {
-                    }
-                });
-        mSubscriptions.add(subscription);
-    }
-
-    /**
-     * 查违章小广告
-     */
-    @Override
-    public void findIsValidAdvert() {
-        Subscription subscription = mRepository.findIsValidAdvert()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<ValidAdvResponse>() {
-                    @Override
-                    public void doCompleted() {
-                    }
-
-                    @Override
-                    public void doError(Throwable e) {
-                        mContractView.validAdvertError(e.getMessage());
-                    }
-
-                    @Override
-                    public void doNext(ValidAdvResponse result) {
-                        if (result != null && result.getResponseCode() == 2000) {
-                            mContractView.validAdvertSucceed(result);
-                        } else {
-                            mContractView.validAdvertError(result != null
-                                    ? result.getResponseDesc() : "未知错误(优惠信息)");
-                        }
                     }
                 });
         mSubscriptions.add(subscription);

@@ -7,6 +7,7 @@ import com.tzly.ctcyh.cargo.active_v.ActiveActivity;
 import com.tzly.ctcyh.cargo.cc.drivingl.activity.DrivingCameraActivity;
 import com.tzly.ctcyh.cargo.cc.vehicle.activity.VehicleCameraActivity;
 import com.tzly.ctcyh.cargo.license_v.LicenseCargoActivity;
+import com.tzly.ctcyh.cargo.license_v.LicenseResultActivity;
 import com.tzly.ctcyh.cargo.refuel_v.BidOilActivity;
 import com.tzly.ctcyh.cargo.refuel_v.DiscountOilActivity;
 import com.tzly.ctcyh.cargo.refuel_v.FoldRefuelOilActivity;
@@ -46,7 +47,8 @@ public class CargoUiRouter extends LibUiRouter implements IComponentRouter {
                 RouterGlobal.Host.discount_oil_host,
                 RouterGlobal.Host.fold_oil_host,
                 RouterGlobal.Host.license_cargo_host,
-                RouterGlobal.Host.oil_enter_host
+                RouterGlobal.Host.oil_enter_host,
+                RouterGlobal.Host.license_result_host
         };
     }
 
@@ -75,6 +77,8 @@ public class CargoUiRouter extends LibUiRouter implements IComponentRouter {
             intent.setClass(context, LicenseCargoActivity.class);
         } else if (RouterGlobal.Host.oil_enter_host.equals(host)) {
             intent.setClass(context, OilEnterActivity.class);
+        } else if (RouterGlobal.Host.license_result_host.equals(host)) {
+            intent.setClass(context, LicenseResultActivity.class);
         } else {
             return true;
         }

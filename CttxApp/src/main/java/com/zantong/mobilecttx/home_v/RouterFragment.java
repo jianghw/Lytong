@@ -31,8 +31,8 @@ import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.home_p.ActivePresenter;
-import com.zantong.mobilecttx.home_p.IActiveContract;
+import com.zantong.mobilecttx.home_p.RouterPresenter;
+import com.zantong.mobilecttx.home_p.IRouterContract;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_v.CarBeautyActivity;
 import com.zantong.mobilecttx.share_v.ShareParentActivity;
@@ -45,12 +45,12 @@ import java.util.List;
 /**
  * Fragment 下拉刷新基类
  */
-public class RouterFragment extends Fragment implements IActiveContract.IActiveView {
+public class RouterFragment extends Fragment implements IRouterContract.IRouterView {
 
     /**
      * 控制器
      */
-    private IActiveContract.IActivePresenter mPresenter;
+    private IRouterContract.IRouterPresenter mPresenter;
 
     private String mExtraChannel;
     private String mExtraRegisterDate;
@@ -82,7 +82,7 @@ public class RouterFragment extends Fragment implements IActiveContract.IActiveV
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivePresenter presenter = new ActivePresenter(
+        RouterPresenter presenter = new RouterPresenter(
                 Injection.provideRepository(Utils.getContext()), this);
 
     }
@@ -133,6 +133,8 @@ public class RouterFragment extends Fragment implements IActiveContract.IActiveV
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        if (mPresenter != null) mPresenter.unSubscribe();
     }
 
     /**
@@ -158,6 +160,14 @@ public class RouterFragment extends Fragment implements IActiveContract.IActiveV
             return super.getContext().getApplicationContext();
         }
         return super.getContext();
+    }
+
+    /**
+     * 添加广告统计
+     */
+    public void advClickItemData(String path, String title, String keyId) {
+        if (mPresenter != null) mPresenter.advertCount(keyId);
+        clickItemData(path, title);
     }
 
     /**
@@ -330,16 +340,14 @@ public class RouterFragment extends Fragment implements IActiveContract.IActiveV
 
     @Override
     public void showLoading() {
-
     }
 
     @Override
     public void dismissLoading() {
-
     }
 
     @Override
-    public void setPresenter(IActiveContract.IActivePresenter presenter) {
+    public void setPresenter(IRouterContract.IRouterPresenter presenter) {
         mPresenter = presenter;
     }
 
@@ -440,6 +448,6 @@ public class RouterFragment extends Fragment implements IActiveContract.IActiveV
         //日期
         mExtraRegisterDate = date;
 
-        if (mPresenter != null) mPresenter.getConfig(channel,date);
+        if (mPresenter != null) mPresenter.getConfig(channel, date);
     }
 }

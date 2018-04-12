@@ -38,8 +38,6 @@ public interface IBaiduMapContract {
         void gasStationListError(String message);
 
         void gasStationListSucceed(List<GasStation> result);
-
-        boolean isCheckNinetyFour();
     }
 
     interface IBaiduMapPresenter extends IBasePresenter {

@@ -17,6 +17,7 @@ import com.tzly.ctcyh.cargo.bean.response.ScoreCaptchaResponse;
 import com.tzly.ctcyh.cargo.bean.response.ScoreResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.oil.OilCardsResponse;
+import com.tzly.ctcyh.java.response.oil.OilEnterResponse;
 import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
 import com.tzly.ctcyh.router.custom.rea.RSAUtils;
 
@@ -169,5 +170,12 @@ public class CargoDataManager {
      */
     public Observable<OilRemainderResponse> getRemainder(String goodsId, String card) {
         return mRemoteData.getRemainder(goodsId, card);
+    }
+
+    /**
+     * 获取办卡人数
+     */
+    public Observable<OilEnterResponse> getCounts() {
+        return mRemoteData.getCounts();
     }
 }

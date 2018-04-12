@@ -94,6 +94,10 @@
             android:name=".license_v.LicenseCargoActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".license_v.LicenseResultActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"></activity>
     </application>
 
     <uses-permission android:name="android.permission.CAMERA" />

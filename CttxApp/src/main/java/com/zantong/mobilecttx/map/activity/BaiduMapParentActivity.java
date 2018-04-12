@@ -13,7 +13,6 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +40,6 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
-
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.DensityUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
@@ -54,7 +52,6 @@ import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.map.bean.GasStation;
 import com.zantong.mobilecttx.map.bean.GasStationDetail;
 import com.zantong.mobilecttx.map.bean.GasStationDetailResponse;
-import com.zantong.mobilecttx.map.bean.GasStationResponse;
 import com.zantong.mobilecttx.map.bean.YearCheck;
 import com.zantong.mobilecttx.map.bean.YearCheckDetail;
 import com.zantong.mobilecttx.map.bean.YearCheckDetailResponse;
@@ -217,7 +214,6 @@ public class BaiduMapParentActivity extends AbstractBaseActivity
         mCB94.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                isCheckBox = b;
                 checkRadioButton();
             }
         });
@@ -508,10 +504,16 @@ public class BaiduMapParentActivity extends AbstractBaseActivity
 
     @Override
     public AnnualDTO getAnnualDTO() {
+
         AnnualDTO annualDTO = new AnnualDTO();
         annualDTO.setLat(String.valueOf(mCurrentLat == 0.0 ? 31.230372 : mCurrentLat));
         annualDTO.setLng(String.valueOf(mCurrentLon == 0.0 ? 121.473662 : mCurrentLon));
-        annualDTO.setType(mServiceType);
+
+        if (mCB94 != null && mCB94.isChecked()) {
+            annualDTO.setType("7");
+        } else {
+            annualDTO.setType(mServiceType);
+        }
         annualDTO.setScope("10");
         return annualDTO;
     }
@@ -579,11 +581,6 @@ public class BaiduMapParentActivity extends AbstractBaseActivity
         initOverlayOil(gasStations);
     }
 
-    @Override
-    public boolean isCheckNinetyFour() {
-        return isCheckBox;
-    }
-
     protected void serverError(String message) {
         ToastUtils.toastShort(message);
     }
@@ -603,12 +600,16 @@ public class BaiduMapParentActivity extends AbstractBaseActivity
         } else if (mMapType == MainGlobal.MapType.annual_oil_map) {
             if (object instanceof GasStation) {
                 GasStation bean = (GasStation) object;
+
                 if (String.valueOf(MainGlobal.MapType.annual_92_service).equals(mServiceType)) {
-                    textView.setText(Double.valueOf(bean.getNinetyTwoNum()) == 0 ? "无" : "-" + bean.getNinetyTwoNum());
+                    String tn = bean.getNinetyTwoNum();
+                    textView.setText(TextUtils.isEmpty(tn) || Double.valueOf(tn) == 0 ? "无" : "-" + tn);
                 } else if (String.valueOf(MainGlobal.MapType.annual_95_service).equals(mServiceType)) {
-                    textView.setText(Double.valueOf(bean.getNinetyFiveNum()) == 0 ? "无" : "-" + bean.getNinetyFiveNum());
+                    String fn = bean.getNinetyFiveNum();
+                    textView.setText(TextUtils.isEmpty(fn) || Double.valueOf(fn) == 0 ? "无" : "-" + fn);
                 } else if (String.valueOf(MainGlobal.MapType.annual_0_service).equals(mServiceType)) {
-                    textView.setText(Double.valueOf(bean.getZeroNum()) == 0 ? "无" : "-" + bean.getZeroNum());
+                    String zn = bean.getZeroNum();
+                    textView.setText(TextUtils.isEmpty(zn) || Double.valueOf(zn) == 0 ? "无" : "-" + zn);
                 }
             }
         }

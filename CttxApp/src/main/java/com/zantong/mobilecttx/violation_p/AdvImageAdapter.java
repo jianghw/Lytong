@@ -1,7 +1,6 @@
 package com.zantong.mobilecttx.violation_p;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
@@ -55,7 +54,7 @@ public class AdvImageAdapter extends BaseAdapter<ValidAdvResponse.DataBean> {
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (clickUrlAdapter != null) clickUrlAdapter.clickUrl(dataBean.getUrl());
+                if (clickUrlAdapter != null) clickUrlAdapter.clickUrl(dataBean.getUrl(),dataBean.getId());
             }
         });
     }
@@ -77,6 +76,6 @@ public class AdvImageAdapter extends BaseAdapter<ValidAdvResponse.DataBean> {
     }
 
     public interface ClickUrlAdapter {
-        void clickUrl(String url);
+        void clickUrl(String url, int id);
     }
 }

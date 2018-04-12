@@ -428,4 +428,9 @@ public interface IRemoteSource {
      * 领券
      */
     Observable<BaseResponse> receiveCoupon(String rasUserID, String couponId, String channel);
+
+    /**
+     * 广告统计
+     */
+    Observable<BaseResponse> advertCount(String keyId, String channel);
 }

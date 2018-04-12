@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_300"
+        android:background="@drawable/shape_rec_gra_red_false">
+
+        <!--标题栏-->
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="@dimen/res_y_88"
+            android:layout_height="@dimen/res_y_88"
+            android:layout_alignParentLeft="true"
+            android:scaleType="center"
+            android:src="@mipmap/ic_arrow_left" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/res_y_88"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="驾驶证查分"
+            android:textColor="@color/res_color_white"
+            android:textSize="@dimen/res_fs_18" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/lay_mid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/res_y_150"
+        android:background="@mipmap/bg_koufen">
+
+        <TextView
+            style="@style/ResTextTheme.16.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/res_y_40"
+            android:text="本计分周期累计扣分"
+            android:textSize="@dimen/res_fs_20" />
+
+        <TextView
+            android:id="@+id/tv_score"
+            style="@style/ResTextTheme.16.Red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/res_y_130"
+            android:text="*"
+            android:textSize="@dimen/res_fs_36" />
+
+        <TextView
+            style="@style/ResTextTheme.16.Red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_score"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/res_x_30"
+            android:layout_marginTop="@dimen/res_y_130"
+            android:layout_toRightOf="@+id/tv_score"
+            android:text="分"
+            android:textSize="@dimen/res_fs_22" />
+
+        <TextView
+            style="@style/ResTextTheme.14.Hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_score"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/res_y_60"
+            android:text="计分非实时生效,可能存在延迟情况"
+            android:textSize="@dimen/res_fs_12" />
+
+    </RelativeLayout>
+
+    <com.tzly.ctcyh.router.custom.scroll.ScrollBottomLayout
+        android:id="@+id/scroll_empty_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <FrameLayout
+            android:id="@+id/fragment_child"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.tzly.ctcyh.router.custom.scroll.ScrollBottomLayout>
+
+</RelativeLayout>

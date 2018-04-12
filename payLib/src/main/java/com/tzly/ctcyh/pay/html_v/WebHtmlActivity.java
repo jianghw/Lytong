@@ -56,13 +56,19 @@ public class WebHtmlActivity extends AbstractBaseActivity
      * 右控件
      */
     private int mRightBtnStatus;
+    /**
+     * 客服地址
+     */
+    private String customerUrl;
 
     /**
      * 右侧点击
      */
     @Override
     protected void rightClickListener() {
-        if (mRightBtnStatus == 1) {//积分规则
+        if (!TextUtils.isEmpty(customerUrl)) {
+            PayRouter.gotoWebHtmlActivity(this, "客服系统", customerUrl);
+        } else if (mRightBtnStatus == 1) {//积分规则
             PayRouter.gotoHundredRuleActivity(this);
         } else if (mRightBtnStatus == 2) {//百日
             PayRouter.gotoHundredAgreementActivity(this);
@@ -432,6 +438,15 @@ public class WebHtmlActivity extends AbstractBaseActivity
     @Override
     public void backApp() {
         finishBySelf();
+    }
+
+    /**
+     * 客服
+     */
+    @Override
+    public void customerService(String url) {
+        titleMore("客服");
+        this.customerUrl = url;
     }
 
 }

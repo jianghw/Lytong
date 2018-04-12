@@ -7,13 +7,21 @@ import android.widget.TextView;
 
 import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.cargo.R;
+import com.tzly.ctcyh.cargo.data_m.InjectionRepository;
+import com.tzly.ctcyh.cargo.refuel_p.IOilEnterContract;
+import com.tzly.ctcyh.cargo.refuel_p.OilEnterPresenter;
+import com.tzly.ctcyh.cargo.refuel_p.RefuelOilPresenter;
 import com.tzly.ctcyh.cargo.router.CargoRouter;
+import com.tzly.ctcyh.java.response.oil.OilEnterResponse;
 import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.Utils;
 
 /**
  * 加油进入
  */
-public class OilEnterFragment extends RefreshFragment implements View.OnClickListener {
+public class OilEnterFragment extends RefreshFragment
+        implements View.OnClickListener, IOilEnterContract.IOilEnterView {
 
     /**
      * 9.97
@@ -74,9 +82,7 @@ public class OilEnterFragment extends RefreshFragment implements View.OnClickLis
     private LinearLayout mLayMap;
     private LinearLayout mLayOilBank;
 
-    protected boolean isRefresh() {
-        return false;
-    }
+    private IOilEnterContract.IOilEnterPresenter mPresenter;
 
     @MultiState
     protected int initMultiState() {
@@ -91,17 +97,28 @@ public class OilEnterFragment extends RefreshFragment implements View.OnClickLis
     @Override
     protected void bindFragment(View fragment) {
         initView(fragment);
+
+
+        OilEnterPresenter presenter = new OilEnterPresenter(
+                InjectionRepository.provideRepository(Utils.getContext()), this);
     }
 
     @Override
     protected void loadingFirstData() {
-
+        if (mPresenter != null) mPresenter.getCounts();
     }
 
     public static OilEnterFragment newInstance() {
         return new OilEnterFragment();
     }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (mPresenter != null) mPresenter.unSubscribe();
+    }
 
     public void initView(View view) {
         mTvOil997 = (TextView) view.findViewById(R.id.tv_oil_997);
@@ -147,5 +164,23 @@ public class OilEnterFragment extends RefreshFragment implements View.OnClickLis
             CargoRouter.gotoBidOilActivity(getActivity());
         } else if (vId == R.id.tv_map || vId == R.id.lay_map) {//9.96
         }
+    }
+
+    @Override
+    public void setPresenter(IOilEnterContract.IOilEnterPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void countError(String message) {
+        ToastUtils.toastShort(message);
+    }
+
+    @Override
+    public void countSucceed(OilEnterResponse response) {
+        OilEnterResponse.DataBean data = response.getData();
+        int count = data.getCount();
+        mTv97Gou.setText(count + "人 " + "已购卡");
+        mTvBankGou.setText(count + "人 " + "已购卡");
     }
 }

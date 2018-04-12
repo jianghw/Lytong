@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,14 +14,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jianghw.multi.state.layout.MultiState;
-import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.tzly.ctcyh.router.base.RecyclerListFragment;
-import com.tzly.ctcyh.router.custom.SpaceItemDecoration;
 import com.tzly.ctcyh.router.custom.scroll.ScrollBottomLayout;
-import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.home_v.RouterFragment;
-import com.zantong.mobilecttx.violation_p.AdvImageAdapter;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.weizhang.adapter.ViolationResultAdapter;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 
@@ -104,8 +97,6 @@ public class ViolationListFragment extends RecyclerListFragment<ViolationBean> {
     protected void initPresenter() {
     }
 
-    RecyclerView recycler;
-
     @Override
     protected void initScrollChildView(View view) {
         if (view == null || !(view instanceof ScrollBottomLayout))
@@ -114,12 +105,18 @@ public class ViolationListFragment extends RecyclerListFragment<ViolationBean> {
                 || getArguments().getString(TAG_POSITON).equals("1"))
             return;
 
+        FragmentManager manager = getChildFragmentManager();
+        Fragment fragment = MainRouter.getAdvActiveFragment();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(com.tzly.ctcyh.cargo.R.id.fragment_child, fragment, "scroll_child_fragment");
+        transaction.commit();
+/*
         ScrollBottomLayout bottomLayout = (ScrollBottomLayout) view;
         View childView = LayoutInflater.from(getContext())
                 .inflate(R.layout.fragment_status_by_av, bottomLayout, true);
         bottomLayout.customChildView(childView);
 
-        recycler = (RecyclerView) childView.findViewById(R.id.rv);
+        recycler = (RecyclerView) childView.findViewById(R.id.adv_rv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler.setLayoutManager(linearLayoutManager);
@@ -134,35 +131,35 @@ public class ViolationListFragment extends RecyclerListFragment<ViolationBean> {
         FragmentTransaction transaction = manager.beginTransaction();
         //创建fragment但是不绘制UI
         RouterFragment htmlFragment = RouterFragment.newInstance();
-        transaction.add(htmlFragment, "router_fgt").commit();
+        transaction.add(htmlFragment, "router_fgt").commit();*/
     }
 
-    public void validAdvertSucceed(ValidAdvResponse result) {
-        List<ValidAdvResponse.DataBean> resultData = result.getData();
-        if (resultData == null || resultData.isEmpty()) return;
-
-        AdvImageAdapter adapter = new AdvImageAdapter();
-        if (recycler != null) recycler.setAdapter(adapter);
-        adapter.append(resultData);
-        adapter.setItemClickListener(new AdvImageAdapter.ClickUrlAdapter() {
-            @Override
-            public void clickUrl(String url) {
-                gotoByPath(url);
-            }
-        });
-    }
-
-    public void gotoByPath(String url) {
-        //点击事件
-        FragmentManager manager = getChildFragmentManager();
-        Fragment fragment = manager.findFragmentByTag("router_fgt");
-        if (fragment != null && fragment instanceof RouterFragment) {
-            RouterFragment routerFragment = (RouterFragment) fragment;
-            routerFragment.clickItemData(url, "产品页面");
-        } else {
-            ToastUtils.toastShort("未知错误");
-        }
-    }
+//    public void validAdvertSucceed(ValidAdvResponse result) {
+//        List<ValidAdvResponse.DataBean> resultData = result.getData();
+//        if (resultData == null || resultData.isEmpty()) return;
+//
+//        AdvImageAdapter adapter = new AdvImageAdapter();
+//        if (recycler != null) recycler.setAdapter(adapter);
+//        adapter.append(resultData);
+//        adapter.setItemClickListener(new AdvImageAdapter.ClickUrlAdapter() {
+//            @Override
+//            public void clickUrl(String url, int id) {
+//                gotoByPath(url, id);
+//            }
+//        });
+//    }
+//
+//    public void gotoByPath(String url, int id) {
+//        //点击事件
+//        FragmentManager manager = getChildFragmentManager();
+//        Fragment fragment = manager.findFragmentByTag("router_fgt");
+//        if (fragment != null && fragment instanceof RouterFragment) {
+//            RouterFragment routerFragment = (RouterFragment) fragment;
+//            routerFragment.advClickItemData(url, "产品页面", String.valueOf(id));
+//        } else {
+//            ToastUtils.toastShort("找不到点击路由,程序员GG会尽快处理");
+//        }
+//    }
 
     protected void statusViewSelf(View view, int state) {
         TextView tvEmpty = (TextView) view.findViewById(R.id.tv_empty);

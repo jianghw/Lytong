@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.router;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -17,6 +18,7 @@ import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.service.RouterGlobal;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
+import com.zantong.mobilecttx.home_v.AdvActiveFragment;
 import com.zantong.mobilecttx.push_v.AliPushExtBean;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
 
@@ -830,5 +832,12 @@ public final class MainRouter {
                 RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.order_amend_host,
                 bundle,
                 MainGlobal.requestCode.order_detail_amend);
+    }
+
+    /**
+     * 获取 fragment 页面
+     */
+    public static Fragment getAdvActiveFragment() {
+        return AdvActiveFragment.newInstance();
     }
 }

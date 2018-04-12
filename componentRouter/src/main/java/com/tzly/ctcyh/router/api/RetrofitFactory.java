@@ -51,7 +51,7 @@ public class RetrofitFactory {
                 return BuildConfig.beta_bank_url;
             case 7:
                 return BuildConfig.isDeta
-                        ? "http://dev.liyingtong.com:8011/admin/index.php/"
+                        ? "https://dev.liyingtong.com:8011/admin/index.php/"
                         : "http://liyingtong.com:8011/admin/index.php/";
             default:
                 return "http://192.168.1.147:80/";

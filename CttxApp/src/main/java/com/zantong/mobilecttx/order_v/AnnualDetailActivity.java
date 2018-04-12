@@ -51,7 +51,7 @@ public class AnnualDetailActivity extends AbstractBaseActivity
     private String mOrderId;
 
     private TextView mTvPrice;
-    private LinearLayout mLayPrice;
+    private RelativeLayout mLayPrice;
     /**
      * 已付款
      */
@@ -157,17 +157,6 @@ public class AnnualDetailActivity extends AbstractBaseActivity
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        if (intent != null && intent.hasExtra(MainGlobal.putExtra.web_order_id_extra)) {
-            Bundle bundle = intent.getExtras();
-            if (bundle != null)
-                mOrderId = bundle.getString(MainGlobal.putExtra.web_order_id_extra);
-        }
-    }
-
-    @Override
     protected int initContentView() {
         return R.layout.activity_annual_order_detail;
     }
@@ -199,7 +188,7 @@ public class AnnualDetailActivity extends AbstractBaseActivity
 
     public void initView() {
         mTvPrice = (TextView) findViewById(R.id.tv_price);
-        mLayPrice = (LinearLayout) findViewById(R.id.lay_price);
+        mLayPrice = (RelativeLayout) findViewById(R.id.lay_price);
 
         mTvPaid1 = (TextView) findViewById(R.id.tv_paid_1);
         mLinePaid2 = (TextView) findViewById(R.id.line_paid_2);
@@ -640,26 +629,59 @@ public class AnnualDetailActivity extends AbstractBaseActivity
 
     @Override
     public String getChannel() {
-        return null;
+        return "1";
     }
 
+    /**
+     * 退单
+     */
     @Override
     public void infoError(String message) {
-
+        ToastUtils.toastShort(message);
     }
 
     @Override
     public void infoSucceed(OrderRefundResponse result) {
-
+        ToastUtils.toastShort(result.getResponseDesc());
     }
 
     @Override
     public void UserOrderInfoError(String message) {
-
+        ToastUtils.toastShort(message);
     }
 
     @Override
     public void UserOrderInfoSucceed(OrderInfoResponse result) {
+        OrderInfoResponse.DataBean resultData = result.getData();
 
+        mLayOther.setVisibility(resultData == null ? View.GONE : View.VISIBLE);
+        if (resultData == null) return;
+
+        String name = resultData.getName();
+        mLayUserName.setVisibility(TextUtils.isEmpty(name) ? View.GONE : View.VISIBLE);
+        mUserName.setText(name);
+
+        String phone = resultData.getPhone();
+        mPayConsignee.setVisibility(TextUtils.isEmpty(phone) ? View.GONE : View.VISIBLE);
+        mPayConsignee.setText(phone);
+
+        String sheng = resultData.getSheng();
+        mLayAddress.setVisibility(TextUtils.isEmpty(sheng) ? View.GONE : View.VISIBLE);
+        StringBuilder sb = new StringBuilder();
+        if (!TextUtils.isEmpty(sheng)) sb.append(sheng).append("/");
+        String shi = resultData.getShi();
+        if (!TextUtils.isEmpty(shi)) sb.append(shi).append("/");
+        String xian = resultData.getXian();
+        if (!TextUtils.isEmpty(xian)) sb.append(xian);
+        mPayAddress.setText(sb.toString());
+
+        String bespeakDate = resultData.getBespeakDate();
+        String expressTime = resultData.getExpressTime();
+        boolean viTime = !TextUtils.isEmpty(bespeakDate) || !TextUtils.isEmpty(expressTime);
+        mLayTime.setVisibility(viTime ? View.VISIBLE : View.GONE);
+        mPickTitle.setText(!TextUtils.isEmpty(bespeakDate) ? "预约时间" : "取件时间");
+        mPayPick.setText(!TextUtils.isEmpty(bespeakDate) ? bespeakDate : expressTime);
+
+        mPayRemark.setText(resultData.getSupplement());
     }
 }

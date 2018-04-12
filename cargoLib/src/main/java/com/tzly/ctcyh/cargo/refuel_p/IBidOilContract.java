@@ -1,13 +1,11 @@
 package com.tzly.ctcyh.cargo.refuel_p;
 
 import com.tzly.ctcyh.cargo.bean.response.BidOilBean;
-import com.tzly.ctcyh.cargo.bean.response.RefuelOilBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
+import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 import com.tzly.ctcyh.router.base.IResponseView;
-
-import java.util.List;
 
 /**
  * Created by jianghw on 2017/10/12.
@@ -37,12 +35,16 @@ public interface IBidOilContract {
         void allAreasError(String message);
 
         void allAreasSucceed(Object[] objects);
+
+        void isNeedCreate(OilRemainderResponse response);
     }
 
     interface IBidOilPresenter extends IBasePresenter {
         void handleOilCard();
 
         void createOrder();
+
+        void getRemainder();
 
         void getAllAreas();
     }

@@ -23,8 +23,11 @@ import com.tzly.ctcyh.cargo.refuel_p.BidOilAdapter;
 import com.tzly.ctcyh.cargo.refuel_p.BidOilPresenter;
 import com.tzly.ctcyh.cargo.refuel_p.IBidOilContract;
 import com.tzly.ctcyh.cargo.router.CargoRouter;
+import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
 import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
+import com.tzly.ctcyh.router.custom.dialog.DialogUtils;
 import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.custom.popup.CustomDialog;
 import com.tzly.ctcyh.router.imple.IAreaDialogListener;
@@ -213,7 +216,7 @@ public class BidOilFragment extends RefreshFragment
             toastShort("请填写真实的地址详情");
             return;
         }
-        if (mPresenter != null) mPresenter.createOrder();
+        if (mPresenter != null) mPresenter.getRemainder();
     }
 
     public void initView(View view) {
@@ -307,5 +310,26 @@ public class BidOilFragment extends RefreshFragment
                 mTvArea.setText(firstList.get(f) + "/" + secondList.get(f).get(s) + "/" + thirdList.get(f).get(s).get(t));
             }
         });
+    }
+
+    /**
+     * 提示框
+     */
+    @Override
+    public void isNeedCreate(OilRemainderResponse response) {
+        new DialogMgr(getActivity(), "温馨提示", "",
+                response.getResponseDesc(), "取消", "继续",
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                },
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mPresenter != null) mPresenter.createOrder();
+                    }
+                });
     }
 }

@@ -9,6 +9,7 @@ import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.oil.OilCardsResponse;
+import com.tzly.ctcyh.java.response.oil.OilEnterResponse;
 import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
 
 import retrofit2.http.Body;
@@ -110,4 +111,10 @@ public interface IAddOilService {
     @FormUrlEncoded
     @POST("oil/getRemainder")
     Observable<OilRemainderResponse> getRemainder(@Field("goodsId") String goodsId, @Field("card") String card);
+
+    /**
+     * 获取办卡人数
+     */
+    @GET("handleOilCard/getCounts")
+    Observable<OilEnterResponse> getCounts();
 }

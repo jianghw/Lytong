@@ -767,4 +767,12 @@ public class RemoteData implements IRemoteSource {
     public Observable<BaseResponse> receiveCoupon(String rasUserID, String couponId, String channel) {
         return baseRetrofit().create(ITextService.class).receiveCoupon(rasUserID, couponId, channel);
     }
+
+    /**
+     * 广告统计
+     */
+    @Override
+    public Observable<BaseResponse> advertCount(String keyId, String channel) {
+        return baseRetrofit().create(ITextService.class).advertCount(keyId, channel);
+    }
 }

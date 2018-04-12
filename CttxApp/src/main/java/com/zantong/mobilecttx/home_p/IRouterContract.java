@@ -12,9 +12,9 @@ import com.tzly.ctcyh.router.base.IBaseView;
  * Update day:
  */
 
-public interface IActiveContract {
+public interface IRouterContract {
 
-    interface IActiveView extends IBaseView<IActivePresenter> {
+    interface IRouterView extends IBaseView<IRouterPresenter> {
 
         String getChannel();
 
@@ -27,11 +27,13 @@ public interface IActiveContract {
         void configSucceed(ActiveConfigResponse response);
     }
 
-    interface IActivePresenter extends IBasePresenter {
+    interface IRouterPresenter extends IBasePresenter {
 
         void receiveCoupon(String couponId);
 
         void getConfig(String channel, String date);
+
+        void advertCount(String keyId);
     }
 
 }
