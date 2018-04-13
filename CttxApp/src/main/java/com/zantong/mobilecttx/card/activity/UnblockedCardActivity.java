@@ -8,6 +8,7 @@ import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.umeng.analytics.MobclickAgent;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
+import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 /**
@@ -39,7 +40,7 @@ public class UnblockedCardActivity extends AbstractBaseActivity implements View.
     @Override
     protected void bindFragment() {
         titleContent("我的畅通卡");
-        titleMore("办卡须知");
+        titleServer();
 
         initView();
     }
@@ -53,6 +54,12 @@ public class UnblockedCardActivity extends AbstractBaseActivity implements View.
     @Override
     protected void rightClickListener() {
         Act.getInstance().gotoIntent(this, CardNoticeActivity.class);
+    }
+
+    @Override
+    protected void imageClickListener() {
+        MainRouter.gotoWebHtmlActivity(this, "客服",
+                "http://h5.liyingtong.com/mot/faq/changtongka.html");
     }
 
     public void initView() {

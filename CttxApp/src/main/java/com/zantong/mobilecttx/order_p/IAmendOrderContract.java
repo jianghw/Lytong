@@ -44,6 +44,8 @@ public interface IAmendOrderContract {
         String getShicode();
 
         String getTimeTitle();
+
+        String getXianCode();
     }
 
     interface IAmendOrderPresenter extends IBasePresenter {

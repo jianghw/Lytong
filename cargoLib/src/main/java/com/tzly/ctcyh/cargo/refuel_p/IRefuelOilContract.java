@@ -1,7 +1,5 @@
 package com.tzly.ctcyh.cargo.refuel_p;
 
-import com.tzly.ctcyh.cargo.bean.response.NorOilBean;
-import com.tzly.ctcyh.cargo.bean.response.RefuelOilBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
 import com.tzly.ctcyh.java.response.oil.SINOPECBean;

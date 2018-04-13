@@ -267,7 +267,7 @@ public class SplashActivity extends AbstractBaseActivity
         else if (type.equals("3"))//优惠详情
             MainRouter.gotoCouponStatusActivity(this);
         else if (type.equals("4"))//html详情
-            MainRouter.gotoWebHtmlActivity(this, "推送页面", mCurUrl);
+            MainRouter.gotoWebHtmlActivity(this, "最新优惠", mCurUrl);
         else if (type.equals("5"))//违章查询
             MainRouter.gotoViolationActivity(this);
         else//其他

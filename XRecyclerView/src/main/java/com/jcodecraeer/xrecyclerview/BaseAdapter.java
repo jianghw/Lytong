@@ -24,7 +24,7 @@ public abstract class BaseAdapter<ItemDataType> extends
         RecyclerView.Adapter<BaseRecyclerViewHolder> implements View.OnClickListener {
 
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
-    private ArrayList<ItemDataType> mItemDataList = new ArrayList<>();
+    private final ArrayList<ItemDataType> mItemDataList = new ArrayList<>();
     /**
      * Swipe menu click listener。
      */
@@ -36,7 +36,7 @@ public abstract class BaseAdapter<ItemDataType> extends
      *
      * @param itemDataType 数据实体类对象
      */
-    public void append(ItemDataType itemDataType) {
+    public synchronized void append(ItemDataType itemDataType) {
         if (itemDataType != null) {
             mItemDataList.add(itemDataType);
             notifyDataSetChanged();
@@ -48,12 +48,12 @@ public abstract class BaseAdapter<ItemDataType> extends
      *
      * @param itemDataTypes 数据实体类集合
      */
-    public void append(List<ItemDataType> itemDataTypes) {
+    public synchronized void append(List<ItemDataType> itemDataTypes) {
         mItemDataList.addAll(itemDataTypes);
         notifyDataSetChanged();
     }
 
-    public void appendOnly(List<ItemDataType> itemDataTypes) {
+    public synchronized void appendOnly(List<ItemDataType> itemDataTypes) {
         mItemDataList.addAll(itemDataTypes);
     }
 
@@ -62,7 +62,7 @@ public abstract class BaseAdapter<ItemDataType> extends
      *
      * @param itemDataTypes 数据实体类集合
      */
-    public void replace(List<ItemDataType> itemDataTypes) {
+    public synchronized void replace(List<ItemDataType> itemDataTypes) {
         if (!mItemDataList.isEmpty()) mItemDataList.clear();
         mItemDataList.addAll(itemDataTypes);
         notifyDataSetChanged();
@@ -78,7 +78,7 @@ public abstract class BaseAdapter<ItemDataType> extends
      *
      * @param position
      */
-    public void remove(int position) {
+    public synchronized void remove(int position) {
         mItemDataList.remove(position);
         notifyDataSetChanged();
     }
@@ -92,25 +92,21 @@ public abstract class BaseAdapter<ItemDataType> extends
      *
      * @param item
      */
-    public void remove(ItemDataType item) {
-        if (mItemDataList != null) mItemDataList.remove(item);
+    public synchronized void remove(ItemDataType item) {
+        mItemDataList.remove(item);
+        notifyDataSetChanged();
+    }
+
+    public synchronized void removeAll() {
+        mItemDataList.clear();
         notifyDataSetChanged();
     }
 
     /**
      * 移除所有数据
      */
-    public void removeAllOnly() {
-        if (mItemDataList != null) mItemDataList.clear();
-    }
-
-    public void removeAll() {
-        if (mItemDataList != null) mItemDataList.clear();
-        notifyDataSetChanged();
-    }
-
-    public void cleanListData() {
-        if (mItemDataList != null) mItemDataList.clear();
+    public synchronized void cleanListData() {
+        mItemDataList.clear();
     }
 
     @Override

@@ -1,40 +1,23 @@
 package com.zantong.mobilecttx.home_v;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.google.gson.Gson;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
-import com.tzly.ctcyh.router.base.RecyclerListFragment;
 import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.router.base.RecyclerListFragment;
 import com.tzly.ctcyh.router.custom.banner.CBViewHolderCreator;
 import com.tzly.ctcyh.router.custom.banner.ConvenientBanner;
-import com.tzly.ctcyh.router.global.JxGlobal;
-import com.tzly.ctcyh.router.util.MobUtils;
-import com.tzly.ctcyh.router.util.SPUtils;
-import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.custom.primission.PermissionFail;
-import com.tzly.ctcyh.router.custom.primission.PermissionGen;
-import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.contract.home.INativeItemListener;
-import com.zantong.mobilecttx.home_p.FavorableBannerImgHolderView;
 import com.zantong.mobilecttx.home.adapter.HomeDiscountsAdapter;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.bean.BannerBean;
@@ -42,13 +25,8 @@ import com.zantong.mobilecttx.home.bean.BannersBean;
 import com.zantong.mobilecttx.home.bean.ChildrenBean;
 import com.zantong.mobilecttx.home.bean.ModuleBean;
 import com.zantong.mobilecttx.home.bean.ModuleResponse;
+import com.zantong.mobilecttx.home_p.FavorableBannerImgHolderView;
 import com.zantong.mobilecttx.home_p.HomeFavorableFtyPresenter;
-import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
-import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.share_v.CarBeautyActivity;
-import com.zantong.mobilecttx.share_v.ShareParentActivity;
-import com.zantong.mobilecttx.utils.jumptools.Act;
-import com.zantong.mobilecttx.weizhang.dto.LicenseFileNumDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,12 +100,6 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
 
     @Override
     protected void initPresenter() {
-        FragmentManager manager = getChildFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        //创建fragment但是不绘制UI
-        RouterFragment htmlFragment = RouterFragment.newInstance();
-        transaction.add(htmlFragment, "router_fgt").commit();
-
         HomeFavorableFtyPresenter presenter = new HomeFavorableFtyPresenter(
                 Injection.provideRepository(Utils.getContext()), this);
 
@@ -152,23 +124,9 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
                     }
                 });
 
-        int contenId = childrenBean != null ? childrenBean.getStatisticsId() : -1;
-        if (mPresenter != null && contenId >= 0)
-            mPresenter.saveStatisticsCount(String.valueOf(contenId));
-
-        gotoClick(childrenBean.getTargetPath(), childrenBean.getTitle());
-    }
-
-    private void gotoClick(String url, String title) {
-        //点击事件
-        FragmentManager manager = getChildFragmentManager();
-        Fragment fragment = manager.findFragmentByTag("router_fgt");
-        if (fragment != null && fragment instanceof RouterFragment) {
-            RouterFragment routerFragment = (RouterFragment) fragment;
-            routerFragment.clickItemData(url, title);
-        } else {
-            ToastUtils.toastShort("出错~点击事件失败");
-        }
+        int statisticsId = childrenBean != null ? childrenBean.getStatisticsId() : -1;
+        RouterUtils.gotoByStatistId(childrenBean.getTargetPath(), childrenBean.getTitle(),
+                String.valueOf(statisticsId), getActivity());
     }
 
     @Override
@@ -225,15 +183,9 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
                     public FavorableBannerImgHolderView createHolder() {
                         return new FavorableBannerImgHolderView(new IDiscountsBanner() {
                             @Override
-                            public void getStatistId(int statisticsId) {
-                                if (mPresenter != null) {
-                                    mPresenter.saveStatisticsCount(String.valueOf(statisticsId));
-                                }
-                            }
-
-                            @Override
-                            public void gotoByPath(String url) {
-                                gotoClick(url, "产品页面");
+                            public void gotoByStatistId(String url, int statisticsId) {
+                                RouterUtils.gotoByStatistId(url, "商品推荐",
+                                        String.valueOf(statisticsId), getActivity());
                             }
                         });
                     }

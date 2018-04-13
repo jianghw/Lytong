@@ -70,7 +70,6 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
                     public void onSuccess(BaseResponse result) {
                     }
                 });
-        if (discountsBanner != null) discountsBanner.getStatistId(data.getStatisticsId());
 
         String url = data.getAdvertisementSkipUrl();
         LoginData.getInstance().mHashMap.put("htmlUrl", url);
@@ -86,7 +85,8 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
                 MainRouter.gotoLoginActivity(mAdapterContext);
             }
         }else {
-            if (discountsBanner != null)discountsBanner.gotoByPath(url);
+            if (discountsBanner != null)
+                discountsBanner.gotoByStatistId(url, data.getStatisticsId());
         }
     }
 

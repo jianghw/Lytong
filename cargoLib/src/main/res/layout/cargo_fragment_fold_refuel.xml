@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/res_y_20"
-                android:text="暂无97折油卡" />
+                android:text="97折油卡" />
 
         </LinearLayout>
 

@@ -26,6 +26,15 @@ public class UpdateOrderDTO {
     private String expressTime;
     private String shengCode;
     private String shicode;
+    private String xianCode;
+
+    public String getXianCode() {
+        return xianCode;
+    }
+
+    public void setXianCode(String xianCode) {
+        this.xianCode = xianCode;
+    }
 
     public String getExpressTime() {
         return expressTime;

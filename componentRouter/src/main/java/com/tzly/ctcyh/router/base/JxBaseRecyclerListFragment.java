@@ -282,7 +282,7 @@ public abstract class JxBaseRecyclerListFragment<T> extends JxBaseFragment {
             showActivityEmpty();
         } else {
             showActivityContent();
-            if (mCurrentPage == 1) mAdapter.removeAllOnly();
+            if (mCurrentPage == 1) mAdapter.cleanListData();
             mAdapter.append(list);
             mCurrentPage += 1;
         }
@@ -293,5 +293,12 @@ public abstract class JxBaseRecyclerListFragment<T> extends JxBaseFragment {
 
     protected XRecyclerView getCustomRecycler() {
         return mCustomRecycler;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (mAdapter != null) mAdapter.cleanListData();
     }
 }

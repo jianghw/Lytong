@@ -14,7 +14,6 @@ import com.tzly.ctcyh.router.base.AbstractBaseFragment;
  */
 public class FoldRefuelOilFragment extends AbstractBaseFragment implements View.OnClickListener {
 
-    private View view;
     private ImageView mImgBanner;
     private LinearLayout mImgOilCard;
     private LinearLayout mImgBuyCard;

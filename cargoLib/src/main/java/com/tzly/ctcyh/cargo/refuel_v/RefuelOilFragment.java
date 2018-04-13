@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.tzly.ctcyh.cargo.R;
-import com.tzly.ctcyh.cargo.bean.response.NorOilBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.cargo.data_m.InjectionRepository;
@@ -121,16 +120,12 @@ public class RefuelOilFragment extends RefreshFragment
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                boolean first = (i == R.id.radio_sinopec);
+                boolean first = radioSinopec.isChecked();
 
-                if (TextUtils.isEmpty(getStrEditOil())) {
-                    mEditOil.setHint("请填写正确的" + String.valueOf(first ? 19 : 16) + "位卡号");
-                    mEditOil.setFilters(new InputFilter[]{new InputFilter.LengthFilter(first ? 19 : 16)}); //最大输入长度
-                } else if (first && !TextUtils.isEmpty(data.getSINOPECCard())) {
-                    mEditOil.setText(data.getSINOPECCard());
-                } else if (!first && !TextUtils.isEmpty(data.getCNPCCard())) {
-                    mEditOil.setText(data.getCNPCCard());
-                }
+                mEditOil.setFilters(new InputFilter[]{new InputFilter.LengthFilter(first ? 19 : 16)}); //最大输入长度
+                setStrEditOil(first ? data.getSINOPECCard() : data.getCNPCCard());
+                mEditOil.setHint("请填写正确的" + String.valueOf(first ? 19 : 16) + "位卡号");
+
                 segmentedDisplayData(first);
             }
         });
@@ -233,7 +228,8 @@ public class RefuelOilFragment extends RefreshFragment
     }
 
     public void setStrEditOil(String str) {
-        if (mEditOil != null) mEditOil.setText(str);
+        String string = TextUtils.isEmpty(str) ? "" : str;
+        if (mEditOil != null) mEditOil.setText(string);
     }
 
     /**
@@ -263,7 +259,11 @@ public class RefuelOilFragment extends RefreshFragment
         boolean second = TextUtils.isEmpty(sinopecCard) && !TextUtils.isEmpty(cnpcCard);
         setStrEditOil(second ? cnpcCard : sinopecCard == null ? "" : sinopecCard);
         //查看监听处代码
-        radioGroup.check(second ? R.id.radio_petro : R.id.radio_sinopec);
+        if (second)
+            radioPetro.setChecked(true);
+        else
+            radioSinopec.setChecked(true);
+        //        radioGroup.check(second ? R.id.radio_petro : R.id.radio_sinopec);
     }
 
     /**
@@ -288,7 +288,7 @@ public class RefuelOilFragment extends RefreshFragment
     }
 
     private void setSimpleDataResult(List<SINOPECBean> data) {
-        mAdapter.removeAllOnly();
+        mAdapter.cleanListData();
         if (data == null || data.isEmpty()) {
             showStateEmpty();
         } else {

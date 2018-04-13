@@ -15,7 +15,6 @@ import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
-import com.zantong.mobilecttx.map.activity.BaiduMapParentActivity;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
 import com.zantong.mobilecttx.presenter.order.OrderParentPresenter;
@@ -110,10 +109,11 @@ public class MyOrderActivity extends JxBaseActivity
         return new RefreshListener() {
             /**
              * 刷新
+             * @param page
              */
             @Override
-            public void refreshListData(int position) {
-                initContentData(position);
+            public void refreshListData(int page) {
+                initContentData(page);
             }
 
             /**
@@ -179,7 +179,6 @@ public class MyOrderActivity extends JxBaseActivity
      * canPayType支付方式:1-工行支付,2-支付宝;例:1,2
      */
     private void payTypeByUser(OrderListBean orderListBean) {
-
         MainRouter.gotoPayTypeActivity(this, orderListBean.getOrderId());
     }
 
@@ -269,27 +268,35 @@ public class MyOrderActivity extends JxBaseActivity
      * 数据分发
      */
     @Override
-    public void allPaymentData(List<OrderListBean> data) {
-        if (mMyOrderStatusFragment != null)
+    public void allPaymentData(List<OrderListBean> data, int pager) {
+        if (mMyOrderStatusFragment != null) {
+            mMyOrderStatusFragment.setCustomPage(pager);
             mMyOrderStatusFragment.setPayOrderListData(data);
+        }
     }
 
     @Override
-    public void nonPaymentData(List<OrderListBean> orderList) {
-        if (orderUnStatusFragment != null)
+    public void nonPaymentData(List<OrderListBean> orderList, int page) {
+        if (orderUnStatusFragment != null) {
+            orderUnStatusFragment.setCustomPage(page);
             orderUnStatusFragment.setPayOrderListData(orderList);
+        }
     }
 
     @Override
-    public void havePaymentData(List<OrderListBean> orderList) {
-        if (orderPayStatusFragment != null)
+    public void havePaymentData(List<OrderListBean> orderList, int page) {
+        if (orderPayStatusFragment != null) {
+            orderPayStatusFragment.setCustomPage(page);
             orderPayStatusFragment.setPayOrderListData(orderList);
+        }
     }
 
     @Override
-    public void cancelPaymentData(List<OrderListBean> orderList) {
-        if (orderCancleStatusFragment != null)
+    public void cancelPaymentData(List<OrderListBean> orderList, int page) {
+        if (orderCancleStatusFragment != null) {
+            orderCancleStatusFragment.setCustomPage(page);
             orderCancleStatusFragment.setPayOrderListData(orderList);
+        }
     }
 
     /**
@@ -331,7 +338,7 @@ public class MyOrderActivity extends JxBaseActivity
 
     public interface RefreshListener {
 
-        void refreshListData(int position);
+        void refreshListData(int page);
 
         void doClickCancel(OrderListBean bean);
 

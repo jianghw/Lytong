@@ -57,7 +57,7 @@ public class WebHtmlViewClient extends WebViewClient {
      */
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
-        LogUtils.e("onPageStarted==>"+url);
+        LogUtils.e("onPageStarted==>" + url);
         super.onPageStarted(view, url, favicon);
 
         if (viewClientable != null) viewClientable.onPageStarted(view, url, favicon);
@@ -81,6 +81,9 @@ public class WebHtmlViewClient extends WebViewClient {
             js += "var btn1;for(var i=0;i<btnList.length;i++){btn1 =btnList[i];};";
             js += "if(typeof(eval(submitApply))==\"function\"){btn1.onclick=function(){overSubmit();submitApply();};};";
             js += "function overSubmit(){window.CTTX.submitBankByCard();};";
+        } else if (url.equals("ssssss")) {
+            js = "var bbb=document.getElementsByTagName(\"tr\");";
+            js += "if(bbb.length > 0){for(var j = 0; j<bbb.length; j++ ){for(var i = 0;i < bbb[j].cells.length;i++){if(bbb[j].cells[0].innerText == \"商品名称 :\"){bbb[j].cells[1].innerHTML = \"<font color='#484848' size='20px'>违章查询</font>\";}}}}";
         }
         LogUtils.e("js==>" + js);
         if (viewClientable != null) viewClientable.onPageFinished(view, js);

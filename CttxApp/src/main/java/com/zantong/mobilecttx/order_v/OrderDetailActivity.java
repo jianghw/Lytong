@@ -492,11 +492,11 @@ public class OrderDetailActivity extends AbstractBaseActivity
         String sheng = resultData.getSheng();
         mLayAddress.setVisibility(TextUtils.isEmpty(sheng) ? View.GONE : View.VISIBLE);
         StringBuilder sb = new StringBuilder();
-        if (!TextUtils.isEmpty(sheng)) sb.append(sheng).append("/");
+        if (!TextUtils.isEmpty(sheng)) sb.append(sheng);
         String shi = resultData.getShi();
-        if (!TextUtils.isEmpty(shi)) sb.append(shi).append("/");
+        if (!TextUtils.isEmpty(shi)) sb.append("/").append(shi);
         String xian = resultData.getXian();
-        if (!TextUtils.isEmpty(xian)) sb.append(xian);
+        if (!TextUtils.isEmpty(xian)) sb.append("/").append(xian);
         mPayAddress.setText(sb.toString());
 
         String bespeakDate = resultData.getBespeakDate();
@@ -515,7 +515,9 @@ public class OrderDetailActivity extends AbstractBaseActivity
 
         if (requestCode == MainGlobal.requestCode.order_detail_amend &&
                 resultCode == MainGlobal.resultCode.amend_order_detail) {
+
             initContentData();
+            if (mPresenter != null) mPresenter.getUserOrderInfo();
         }
     }
 }

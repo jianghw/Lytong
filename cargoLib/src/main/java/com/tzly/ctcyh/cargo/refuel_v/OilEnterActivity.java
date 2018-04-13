@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
 import com.tzly.ctcyh.cargo.R;
+import com.tzly.ctcyh.cargo.router.CargoRouter;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 
@@ -30,6 +31,14 @@ public class OilEnterActivity extends AbstractBaseActivity {
     @Override
     protected void bindFragment() {
         titleContent("88折加油");
+
+        titleServer();
+    }
+
+    @Override
+    protected void imageClickListener() {
+        CargoRouter.gotoHtmlActivity(this, "客服",
+                "http://h5.liyingtong.com/mot/faq/recharge.html");
     }
 
     @Override

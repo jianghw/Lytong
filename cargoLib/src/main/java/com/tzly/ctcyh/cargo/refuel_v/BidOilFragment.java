@@ -170,7 +170,7 @@ public class BidOilFragment extends RefreshFragment
     }
 
     private void setSimpleDataResult(List<BidOilBean> data) {
-        mAdapter.removeAllOnly();
+        mAdapter.cleanListData();
         if (data == null || data.isEmpty()) {
             showStateEmpty();
         } else {

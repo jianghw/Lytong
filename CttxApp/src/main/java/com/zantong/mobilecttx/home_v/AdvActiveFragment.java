@@ -60,15 +60,6 @@ public class AdvActiveFragment extends Fragment implements IAdvActiveContract.IA
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FragmentManager manager = getChildFragmentManager();
-        Fragment fragment = manager.findFragmentByTag("router_fgt");
-        if (fragment == null || !(fragment instanceof RouterFragment)) {
-            //创建fragment但是不绘制UI
-            RouterFragment htmlFragment = RouterFragment.newInstance();
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.add(htmlFragment, "router_fgt").commit();
-        }
-
         AdvActivePresenter presenter = new AdvActivePresenter(
                 Injection.provideRepository(Utils.getContext()), this);
     }
@@ -202,13 +193,6 @@ public class AdvActiveFragment extends Fragment implements IAdvActiveContract.IA
 
     public void gotoByPath(String url, int id) {
         //点击事件
-        FragmentManager manager = getChildFragmentManager();
-        Fragment fragment = manager.findFragmentByTag("router_fgt");
-        if (fragment != null && fragment instanceof RouterFragment) {
-            RouterFragment routerFragment = (RouterFragment) fragment;
-            routerFragment.advClickItemData(url, "产品页面", String.valueOf(id));
-        } else {
-            ToastUtils.toastShort("找不到点击路由,程序员GG会尽快处理");
-        }
+        RouterUtils.gotoByAdvId(url, "商品推荐", String.valueOf(id), getActivity());
     }
 }

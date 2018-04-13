@@ -34,9 +34,9 @@ public final class FormatUtils {
     /**
      * 向上取值
      */
-    public static float floatValue(float price) {
+    public static String floatUpValue(float price) {
         BigDecimal newPrice = new BigDecimal(price).setScale(2, BigDecimal.ROUND_UP);
-        return newPrice.floatValue();
+        return submitPrice(newPrice.floatValue());
     }
 
     public static String displayPrice(String price) {

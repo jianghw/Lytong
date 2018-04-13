@@ -34,6 +34,8 @@ public interface IRouterContract {
         void getConfig(String channel, String date);
 
         void advertCount(String keyId);
+
+        void saveStatisticsCount(String statisticsId);
     }
 
 }

@@ -35,7 +35,7 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
     /**
      * 默认页数
      */
-    protected int mCurrentPage = 1;
+    protected volatile int mCurrentPage = 1;
 
     /**
      * 数据源
@@ -271,7 +271,7 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
      *
      * @param list
      */
-    protected void setDataResult(List<T> list) {
+    protected synchronized void setDataResult(List<T> list) {
         if (mCustomRecycler == null) showFailedView();
         else showListViewLayout(list);
     }
@@ -285,7 +285,7 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
         showSucceedView();
         hideDialogLoading();
 
-        if (mCurrentPage == 1) mAdapter.removeAllOnly();
+        if (mCurrentPage == 1) mAdapter.cleanListData();
 
         if (list != null && list.size() > 0) {
             mAdapter.append(list);
@@ -303,5 +303,13 @@ public abstract class BaseRecyclerListJxFragment<T> extends BaseJxFragment {
 
     protected XRecyclerView getCustomRecycler() {
         return mCustomRecycler;
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (mAdapter != null) mAdapter.cleanListData();
     }
 }

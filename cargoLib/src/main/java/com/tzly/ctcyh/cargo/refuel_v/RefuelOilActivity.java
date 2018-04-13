@@ -43,6 +43,12 @@ public class RefuelOilActivity extends AbstractBaseActivity
     }
 
     @Override
+    protected void imageClickListener() {
+        CargoRouter.gotoHtmlActivity(this, "客服",
+                 "http://h5.liyingtong.com/mot/faq/recharge.html");
+    }
+
+    @Override
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
@@ -55,7 +61,7 @@ public class RefuelOilActivity extends AbstractBaseActivity
         btnCommit.setOnClickListener(this);
 
         titleContent("加油充值");
-        titleMore("优惠加油站");
+        titleServer();
     }
 
     /**
@@ -126,6 +132,5 @@ public class RefuelOilActivity extends AbstractBaseActivity
     public void setCommitEnable(boolean b) {
         if (btnCommit != null) btnCommit.setEnabled(b);
     }
-
 
 }

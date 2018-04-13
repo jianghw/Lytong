@@ -121,6 +121,7 @@ public class AmendOrderPresenter
 
         updateOrderDTO.setShengCode(mContractView.getShengCode());
         updateOrderDTO.setShicode(mContractView.getShicode());
+        updateOrderDTO.setXianCode(mContractView.getXianCode());
         return updateOrderDTO;
     }
 

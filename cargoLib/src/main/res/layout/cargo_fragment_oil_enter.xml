@@ -293,6 +293,7 @@
         android:layout_marginLeft="@dimen/res_x_30"
         android:layout_marginRight="@dimen/res_x_30"
         android:layout_marginTop="@dimen/res_y_20"
+        android:layout_marginBottom="@dimen/res_y_20"
         android:orientation="vertical">
 
         <ImageView

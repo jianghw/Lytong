@@ -48,7 +48,7 @@
         android:layout_centerVertical="true"
         android:background="@drawable/sel_bg_rec_gw"
         android:scaleType="centerInside"
-        android:src="@mipmap/ic_title_add"
+        android:src="@mipmap/ic_title_server"
         android:visibility="gone" />
 
     <TextView

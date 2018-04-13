@@ -136,7 +136,7 @@ public class SetPayCarFragment extends BaseListFragment<UserCarInfoBean> impleme
     public void initData() {
         super.initData();
 
-        mSetPayCarAdapter.removeAllOnly();
+        mSetPayCarAdapter.cleanListData();
         setDataResult(noPay);
     }
 

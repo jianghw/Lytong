@@ -199,11 +199,6 @@ public class HomeUnimpededFragment extends RefreshFragment
         //版本更新
         versionInfo();
 
-        FragmentManager manager = getChildFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        //创建fragment但是不绘制UI
-        RouterFragment htmlFragment = RouterFragment.newInstance();
-        transaction.add(htmlFragment, "router_fgt").commit();
     }
 
     @Override
@@ -426,26 +421,10 @@ public class HomeUnimpededFragment extends RefreshFragment
     }
 
     /**
-     * 接口回调
+     * 路由点击
      */
-    @Override
-    public void getStatistId(int statisticsId) {
-        if (mPresenter != null) {
-            mPresenter.saveStatisticsCount(String.valueOf(statisticsId));
-        }
-    }
-
-    @Override
     public void gotoByPath(String url) {
-        //点击事件
-        FragmentManager manager = getChildFragmentManager();
-        Fragment fragment = manager.findFragmentByTag("router_fgt");
-        if (fragment != null && fragment instanceof RouterFragment) {
-            RouterFragment routerFragment = (RouterFragment) fragment;
-            routerFragment.clickItemData(url, "产品页面");
-        } else {
-            ToastUtils.toastShort("未知错误");
-        }
+        RouterUtils.gotoByUrl(url, getActivity());
     }
 
     /**
@@ -472,6 +451,9 @@ public class HomeUnimpededFragment extends RefreshFragment
         mCustomViolation.notifyDataSetChanged();
     }
 
+    /**
+     * 推荐活动
+     */
     @Override
     public void indexLayerSucceed(IndexLayerResponse result) {
         IndexLayerBean bean = result.getData();
@@ -490,10 +472,6 @@ public class HomeUnimpededFragment extends RefreshFragment
                         }
                     });
         }
-    }
-
-    private void gotoWebUrl(String pageUrl, String title) {
-        MainRouter.gotoWebHtmlActivity(getContext(), title, pageUrl);
     }
 
     /**
@@ -655,14 +633,11 @@ public class HomeUnimpededFragment extends RefreshFragment
      * 是否显示活动内容
      */
     protected void activeToShow(String channel, String date) {
-        //点击事件
-        FragmentManager manager = getChildFragmentManager();
-        Fragment fragment = manager.findFragmentByTag("router_fgt");
-        if (fragment != null && fragment instanceof RouterFragment) {
-            RouterFragment routerFragment = (RouterFragment) fragment;
-            routerFragment.activeToShow(channel, date);
-        } else {
-            ToastUtils.toastShort("出错~优惠活动未打开");
-        }
+        RouterUtils.showDialogActive(channel, date, getActivity());
+    }
+
+    @Override
+    public void gotoByStatistId(String url, int statisticsId) {
+        RouterUtils.gotoByStatistId(url, "商品推荐", String.valueOf(statisticsId), getActivity());
     }
 }

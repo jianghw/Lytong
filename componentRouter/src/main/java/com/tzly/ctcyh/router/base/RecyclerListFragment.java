@@ -306,7 +306,7 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
             mAdapter.removeAll();
             showStateEmpty();
         } else {
-            if (mCurrentPage == 1) mAdapter.removeAllOnly();
+            if (mCurrentPage == 1) mAdapter.cleanListData();
             mAdapter.append(list);
             mCurrentPage += 1;
         }

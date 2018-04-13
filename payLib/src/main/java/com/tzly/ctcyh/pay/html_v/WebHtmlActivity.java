@@ -26,6 +26,7 @@ import com.tzly.ctcyh.router.custom.dialog.DialogUtils;
 import com.tzly.ctcyh.router.custom.dialog.WeiXinDialogFragment;
 import com.tzly.ctcyh.router.util.EncryptUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +56,7 @@ public class WebHtmlActivity extends AbstractBaseActivity
     /**
      * 右控件
      */
-    private int mRightBtnStatus;
+    private int mRightBtnStatus = -1;
     /**
      * 客服地址
      */
@@ -66,15 +67,22 @@ public class WebHtmlActivity extends AbstractBaseActivity
      */
     @Override
     protected void rightClickListener() {
-        if (!TextUtils.isEmpty(customerUrl)) {
-            PayRouter.gotoWebHtmlActivity(this, "客服系统", customerUrl);
-        } else if (mRightBtnStatus == 1) {//积分规则
+        if (mRightBtnStatus == 1) {//积分规则
             PayRouter.gotoHundredRuleActivity(this);
         } else if (mRightBtnStatus == 2) {//百日
             PayRouter.gotoHundredAgreementActivity(this);
         } else if (mRightBtnStatus == 3) {
             WeiXinDialogFragment fragment = WeiXinDialogFragment.newInstance(mStrUrl);
             DialogUtils.showDialog(this, fragment, "wechat_dialog");
+        }
+    }
+
+    @Override
+    protected void imageClickListener() {
+        if (!TextUtils.isEmpty(customerUrl)) {
+            PayRouter.gotoWebHtmlActivity(this, "客服系统", customerUrl);
+        } else {
+            ToastUtils.toastShort("无客服地址" + customerUrl);
         }
     }
 
@@ -117,7 +125,6 @@ public class WebHtmlActivity extends AbstractBaseActivity
 
     @Override
     protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
 
         initTitle();
         if (!TextUtils.isEmpty(mStrUrl)) webLoadUrl(mStrUrl);
@@ -148,12 +155,8 @@ public class WebHtmlActivity extends AbstractBaseActivity
             mRightBtnStatus = 2;
             titleContent("百日无违章");
             titleMore("活动说明");
-        } else {
-            titleContent(mStrTitle);
-            if (mPayType <= 0 && TextUtils.isEmpty(mPayViolationNum)) {
-                mRightBtnStatus = 3;
-                titleMore("分享");
-            }
+        } else if (!TextUtils.isEmpty(customerUrl)) {
+            titleServer();
         }
     }
 
@@ -445,8 +448,8 @@ public class WebHtmlActivity extends AbstractBaseActivity
      */
     @Override
     public void customerService(String url) {
-        titleMore("客服");
         this.customerUrl = url;
+        titleServer();
     }
 
 }

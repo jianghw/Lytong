@@ -2,6 +2,8 @@ package com.tzly.ctcyh.pay.html_v;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -311,6 +313,13 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
             PayRouter.gotoActiveActivity(getContext(), 2);
     }
 
+    @Override
+    public void customerServiceMain(String url) {
+        if (mFmentToAtyable != null) {
+            mFmentToAtyable.customerService(url);
+        }
+    }
+
     /**
      * javascript--java
      */
@@ -587,6 +596,24 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     //打开客服
     @JavascriptInterface
     public void customerService(String url) {
-        if (mFmentToAtyable != null) mFmentToAtyable.customerService(url);
+        if (mPresenter != null) mPresenter.customerService(url);
+    }
+
+    /**
+     * 打开微信
+     */
+    @JavascriptInterface
+    public void openWeChat() {
+        try {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setComponent(cmp);
+            getActivity().startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            // TODO: handle exception
+            ToastUtils.toastShort("检查到您手机没有安装微信，请安装后使用该功能");
+        }
     }
 }

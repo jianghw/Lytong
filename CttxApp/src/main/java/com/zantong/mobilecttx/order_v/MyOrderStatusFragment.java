@@ -82,8 +82,12 @@ public class MyOrderStatusFragment extends BaseRecyclerListJxFragment<OrderListB
      */
     @Override
     protected void onRefreshData() {
-        mCurrentPage = 1;
+        this.mCurrentPage = 1;
         if (mRefreshListener != null) mRefreshListener.refreshListData(mCurrentPage);
+    }
+
+    protected void setCustomPage(int page){
+        this.mCurrentPage = page;
     }
 
     /**
@@ -141,7 +145,7 @@ public class MyOrderStatusFragment extends BaseRecyclerListJxFragment<OrderListB
     protected void DestroyViewAndThing() {
     }
 
-    public void setPayOrderListData(List<OrderListBean> data) {
+    public synchronized void setPayOrderListData(List<OrderListBean> data) {
         setDataResult(data);
     }
 

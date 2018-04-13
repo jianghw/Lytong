@@ -198,8 +198,8 @@ public class FriendShareFragment extends RefreshFragment
             //            }
         }
         setTopDataResult(topList);
-
         setSimpleDataResult(botList);
+
         boolean flag = response.getData().isFlag();
         //地推人员
         mImgScan.setVisibility(flag ? View.VISIBLE : View.GONE);
@@ -210,7 +210,7 @@ public class FriendShareFragment extends RefreshFragment
     }
 
     private void setTopDataResult(List<StatistCountResponse.DataBean.ListBean> data) {
-        mGridAdapter.removeAllOnly();
+        mGridAdapter.cleanListData();
         if (data == null || data.isEmpty()) {
             //            toastShort("当前统计数据为空");
         } else {
@@ -219,7 +219,7 @@ public class FriendShareFragment extends RefreshFragment
     }
 
     private void setSimpleDataResult(List<StatistCountResponse.DataBean.ListBean> data) {
-        mAdapter.removeAllOnly();
+        mAdapter.cleanListData();
         if (data == null || data.isEmpty()) {
             //            toastShort("当前统计数据为空");
         } else {

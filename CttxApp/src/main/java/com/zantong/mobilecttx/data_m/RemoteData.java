@@ -722,7 +722,10 @@ public class RemoteData implements IRemoteSource {
             map.put("shengCode", updateOrderDTO.getShengCode());
 
         if (!TextUtils.isEmpty(updateOrderDTO.getShicode()))
-            map.put("shicode", updateOrderDTO.getShicode());
+            map.put("shiCode", updateOrderDTO.getShicode());
+
+        if (!TextUtils.isEmpty(updateOrderDTO.getXianCode()))
+            map.put("xianCode", updateOrderDTO.getXianCode());
 
         return baseRetrofit().create(IOrderService.class).updateOrderDetail(map);
     }

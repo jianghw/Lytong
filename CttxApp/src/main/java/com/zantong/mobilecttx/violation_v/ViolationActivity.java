@@ -9,6 +9,7 @@ import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
 import com.zantong.mobilecttx.global.MainGlobal;
+import com.zantong.mobilecttx.router.MainRouter;
 
 /**
  * 违法查询页面 输入
@@ -43,6 +44,14 @@ public class ViolationActivity extends AbstractBaseActivity {
     @Override
     protected void bindFragment() {
         titleContent("车辆违法查询");
+
+        titleServer();
+    }
+
+    @Override
+    protected void imageClickListener() {
+        MainRouter.gotoWebHtmlActivity(this, "客服",
+                "http://h5.liyingtong.com/mot/faq/weizhang.html");
     }
 
     @Override

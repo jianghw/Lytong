@@ -18,6 +18,7 @@ import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.home.activity.CustomCordovaActivity;
 import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.home_v.IDiscountsBanner;
+import com.zantong.mobilecttx.home_v.RouterUtils;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResponse;
 import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
 import com.zantong.mobilecttx.router.MainRouter;
@@ -37,6 +38,7 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
     public MainBannerImgHolderView(IDiscountsBanner iDiscountsBanner) {
         discountsBanner = iDiscountsBanner;
     }
+
     @Override
     public View createView(Context context) {
         mAdapterContext = context;
@@ -72,8 +74,6 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
                     }
                 });
 
-        if (discountsBanner != null) discountsBanner.getStatistId(data.getStatisticsId());
-
         String url = data.getAdvertisementSkipUrl();
         LoginData.getInstance().mHashMap.put("htmlUrl", url);
         if (url.contains("discount")
@@ -86,8 +86,9 @@ public class MainBannerImgHolderView implements CBPageAdapter.Holder<HomeAdverti
             } else {
                 MainRouter.gotoLoginActivity(mAdapterContext);
             }
-        }else{
-            if (discountsBanner != null)discountsBanner.gotoByPath(url);
+        } else {
+            if (discountsBanner != null)
+                discountsBanner.gotoByStatistId(url, data.getStatisticsId());
         }
     }
 

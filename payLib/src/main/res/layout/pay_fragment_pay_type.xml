@@ -59,9 +59,9 @@
 
                 <TextView
                     android:id="@+id/tv_carpay"
-                    style="@style/ResTextTheme.14.Red"
+                    style="@style/ResTextTheme.14.Hint"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/res_y_90"
+                    android:layout_height="@dimen/res_y_60"
                     android:background="@color/res_color_white"
                     android:gravity="left|center_vertical"
                     android:text="@string/string_pay_tv_feiyong"
@@ -125,7 +125,6 @@
                     android:visibility="gone" />
 
             </RadioGroup>
-
         </LinearLayout>
     </LinearLayout>
 

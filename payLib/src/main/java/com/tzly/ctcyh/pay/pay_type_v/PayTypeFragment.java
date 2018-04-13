@@ -5,7 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentActivity;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -85,7 +89,7 @@ public class PayTypeFragment extends RefreshFragment
     private RadioGroup mRadioGroup;
     /**
      * 1 加油充值，2 代驾，3 学车，4 科目强化，5 陪练 6 年检，7 保养，
-     * 8 海外驾驶培训，9 换电瓶，10 一元购, 11 电影券
+     * 8 海外驾驶培训，9 换电瓶，10 一元购, 11 电影券 13,14,15
      */
     private int mCouponType;
     /**
@@ -344,9 +348,15 @@ public class PayTypeFragment extends RefreshFragment
                     mLineUnionpay.setVisibility(View.VISIBLE);
                 } else if (bean.getPayId() == 3) {
                     mRbAlipay.setVisibility(View.VISIBLE);
+                    if (mCouponType == 13 || mCouponType == 14 || mCouponType == 15) {
+                        mRbAlipay.setText(spannableTitle("支付宝支付\n(加收1%平台手续费)",5));
+                    }
                     mLineAlipay.setVisibility(View.VISIBLE);
                 } else if (bean.getPayId() == 4) {
                     mRbWeixinpay.setVisibility(View.VISIBLE);
+                    if (mCouponType == 13 || mCouponType == 14 || mCouponType == 15) {
+                        mRbWeixinpay.setText(spannableTitle("微信支付\n(加收1%平台手续费)",4));
+                    }
                 }
             }
 
@@ -355,6 +365,17 @@ public class PayTypeFragment extends RefreshFragment
             if (payTypeBean.getCouponUserId() > 0) mTvCoupon.setText("此订单已用优惠劵,可直接支付");
         }
     }
+
+    public SpannableString spannableTitle(String title, int start) {
+        //创建一个 SpannableString对象
+        SpannableString ali = new SpannableString(title);
+        ali.setSpan(new RelativeSizeSpan(0.6f),
+                start, title.length() , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ali.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.res_color_red_f3)),
+                start, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return ali;
+    }
+
 
     /**
      * 回调功能
@@ -502,10 +523,18 @@ public class PayTypeFragment extends RefreshFragment
         return (int) (Float.valueOf(price) * 100);
     }
 
+    /**
+     * 只有在加油时 加费用
+     */
     protected void setSubmitPrice(float price) {
         //可点击时扣费
-        if (mLayReCoupon != null && mLayReCoupon.isEnabled() && mPayType > 1) {
-            price = price + getOriginalPrice() * 0.01f;
+        if (mLayReCoupon != null && (mCouponType == 13 || mCouponType == 14 || mCouponType == 15)
+                && mLayReCoupon.isEnabled() && mPayType > 1) {
+
+            BigDecimal servicePrice = new BigDecimal(getOriginalPrice())
+                    .multiply(new BigDecimal(0.01).setScale(2, BigDecimal.ROUND_HALF_UP))
+                    .setScale(2, BigDecimal.ROUND_UP);
+            price = price + servicePrice.floatValue();
         }
         if (iPayTypeUi != null) iPayTypeUi.setSubmitPrice(FormatUtils.submitPrice(price));
     }

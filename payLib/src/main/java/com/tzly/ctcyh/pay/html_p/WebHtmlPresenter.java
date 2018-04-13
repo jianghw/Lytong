@@ -28,6 +28,7 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -326,6 +327,20 @@ public class WebHtmlPresenter implements IWebHtmlContract.IWebHtmlPresenter {
                                 == PayGlobal.Response.base_succeed) {
                         } else {
                         }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    @Override
+    public void customerService(String url) {
+        Subscription subscription = Observable.just(url)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String url) {
+                        mContractView.customerServiceMain(url);
                     }
                 });
         mSubscriptions.add(subscription);

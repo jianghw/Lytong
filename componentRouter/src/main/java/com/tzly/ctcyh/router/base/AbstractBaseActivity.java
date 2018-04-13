@@ -181,6 +181,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
             }
         });
         mTvTitle = (TextView) view.findViewById(R.id.tv_title);
+
         mImgHome = (ImageView) view.findViewById(R.id.img_home);
         mImgHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,6 +222,14 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
     }
 
     /**
+     * 客服入口
+     */
+    protected void titleServer() {
+        if (mTvRight != null) mTvRight.setVisibility(View.GONE);
+        if (mImgHome != null) mImgHome.setVisibility(View.VISIBLE);
+    }
+
+    /**
      * 定义渐变色红色
      */
     protected void titleBackground() {
@@ -253,12 +262,14 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
     /**
      * 右边图片点击
      */
-    protected void imageClickListener() {}
+    protected void imageClickListener() {
+    }
 
     /**
      * 右边文字点击
      */
-    protected void rightClickListener() {}
+    protected void rightClickListener() {
+    }
 
     /**
      * 关闭Fragment 默认最后只有一个fragment时 关闭页面

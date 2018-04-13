@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.order_v;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -265,11 +266,11 @@ public class AmendOrderFragment extends RefreshFragment
         String sheng = resultData.getSheng();
         mLayArea.setVisibility(TextUtils.isEmpty(sheng) ? View.GONE : View.VISIBLE);
         StringBuilder sb = new StringBuilder();
-        if (!TextUtils.isEmpty(sheng)) sb.append(sheng).append("/");
+        if (!TextUtils.isEmpty(sheng)) sb.append(sheng);
         String shi = resultData.getShi();
-        if (!TextUtils.isEmpty(shi)) sb.append(shi).append("/");
+        if (!TextUtils.isEmpty(shi)) sb.append("/").append(shi);
         String xian = resultData.getXian();
-        if (!TextUtils.isEmpty(xian)) sb.append(xian);
+        if (!TextUtils.isEmpty(xian)) sb.append("/").append(xian);
         mTvArea.setText(sb.toString());
 
         String addressDetail = resultData.getAddressDetail();
@@ -299,6 +300,11 @@ public class AmendOrderFragment extends RefreshFragment
     @Override
     public String getTimeTitle() {
         return mTvTitleTime.getText().toString().trim();
+    }
+
+    @Override
+    public String getXianCode() {
+        return mThirdCode;
     }
 
     @Override

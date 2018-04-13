@@ -1,8 +1,10 @@
 package com.zantong.mobilecttx.user.activity;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -116,15 +118,27 @@ public class ProblemFeedbackActivity extends AbstractBaseActivity implements Vie
         // 将ClipData内容放到系统剪贴板里。
         if (service == null) return false;
         service.setPrimaryClip(mClipData);
+
+        getWechatApi();
+
         ToastUtils.toastShort("畅通车友会 复制成功");
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("weixin://wap/pay?"));
-        try {
-            startActivity(intent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return true;
+    }
+
+    /**
+     * 跳转到微信
+     */
+    private void getWechatApi(){
+        try {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            ComponentName cmp = new ComponentName("com.tencent.mm","com.tencent.mm.ui.LauncherUI");
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setComponent(cmp);
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            // TODO: handle exception
+           ToastUtils.toastShort("检查到您手机没有安装微信，请安装后使用该功能");
+        }
     }
 }

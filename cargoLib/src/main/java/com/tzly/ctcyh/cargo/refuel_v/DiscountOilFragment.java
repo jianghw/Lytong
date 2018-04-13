@@ -266,7 +266,7 @@ public class DiscountOilFragment extends RefreshFragment
     }
 
     private void setSimpleDataResult(List<SINOPECBean> data) {
-        mAdapter.removeAllOnly();
+        mAdapter.cleanListData();
         if (data == null || data.isEmpty()) {
             showStateEmpty();
         } else {

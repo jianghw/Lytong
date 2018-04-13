@@ -7,6 +7,7 @@ import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
 import com.tzly.ctcyh.router.api.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.global.MainGlobal;
+import com.zantong.mobilecttx.router.MainRouter;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -170,6 +171,33 @@ public class RouterPresenter implements IRouterContract.IRouterPresenter {
                             mContractView.responseError(response != null
                                     ? response.getResponseDesc() : "未知错误(receiveCoupon)");
                         }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 小峰统计
+     */
+    @Override
+    public void saveStatisticsCount(String statisticsId) {
+        if (!MainRouter.isUserLogin()) return;
+
+        Subscription subscription = mRepository
+                .saveStatisticsCount(statisticsId, mRepository.getRASUserID())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void doCompleted() {
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                    }
+
+                    @Override
+                    public void doNext(BaseResponse result) {
                     }
                 });
         mSubscriptions.add(subscription);

@@ -110,7 +110,8 @@ public interface IAddOilService {
      */
     @FormUrlEncoded
     @POST("oil/getRemainder")
-    Observable<OilRemainderResponse> getRemainder(@Field("goodsId") String goodsId, @Field("card") String card);
+    Observable<OilRemainderResponse> getRemainder(@Field("goodsId") String goodsId,
+                                                  @Field("oilCard") String card);
 
     /**
      * 获取办卡人数

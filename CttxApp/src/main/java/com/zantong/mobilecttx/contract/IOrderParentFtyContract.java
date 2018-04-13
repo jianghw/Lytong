@@ -21,13 +21,13 @@ public interface IOrderParentFtyContract {
 
         void dataDistribution(String message, int orderStatus);
 
-        void nonPaymentData(List<OrderListBean> orderList);
+        void nonPaymentData(List<OrderListBean> orderList, int page);
 
-        void havePaymentData(List<OrderListBean> orderList);
+        void havePaymentData(List<OrderListBean> orderList, int page);
 
-        void cancelPaymentData(List<OrderListBean> orderList);
+        void cancelPaymentData(List<OrderListBean> orderList, int page);
 
-        void allPaymentData(List<OrderListBean> data);
+        void allPaymentData(List<OrderListBean> data, int pager);
 
         void updateOrderStatusError(String message);
 

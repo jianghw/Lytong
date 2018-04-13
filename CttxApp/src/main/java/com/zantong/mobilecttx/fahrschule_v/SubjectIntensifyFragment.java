@@ -206,7 +206,7 @@ public class SubjectIntensifyFragment extends JxBaseRefreshFragment
             displayDescription(beanList.get(0));
         }
 
-        mAdapter.removeAllOnly();
+        mAdapter.cleanListData();
         mAdapter.append(beanList);
     }
 

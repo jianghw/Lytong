@@ -171,6 +171,14 @@ public class RouterFragment extends Fragment implements IRouterContract.IRouterV
     }
 
     /**
+     * 小峰统计
+     */
+    public void statistClickItemData(String path, String title, String statisticsId) {
+        if (mPresenter != null) mPresenter.saveStatisticsCount(statisticsId);
+        clickItemData(path, title);
+    }
+
+    /**
      * 点击处理事件
      */
     public void clickItemData(String path, String title) {

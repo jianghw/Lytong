@@ -88,11 +88,11 @@ public class OrderParentPresenter
                             if (pager != 1 && result.getData().isEmpty()) {
                                 mAtyView.toastError("无更多数据");
                             } else {
-                                mAtyView.allPaymentData(result.getData());
+                                mAtyView.allPaymentData(result.getData(), pager);
 
-                                dataDistribution(result, 0);
-                                dataDistribution(result, 1);
-                                dataDistribution(result, 2);
+                                dataDistribution(result, 0, pager);
+                                dataDistribution(result, 1, pager);
+                                dataDistribution(result, 2, pager);
                             }
                         } else {
                             mAtyView.getOrderListError(result != null
@@ -110,7 +110,7 @@ public class OrderParentPresenter
      * 3--进行中
      * 4--完成
      */
-    private void dataDistribution(OrderListResponse result, final int orderStatus) {
+    private void dataDistribution(OrderListResponse result, final int orderStatus, final int page) {
         Subscription subscription = Observable.just(result)
                 .map(new Func1<OrderListResponse, List<OrderListBean>>() {
                     @Override
@@ -163,11 +163,11 @@ public class OrderParentPresenter
                     @Override
                     public void doNext(List<OrderListBean> orderList) {
                         if (orderStatus == 0)//待支付
-                            mAtyView.nonPaymentData(orderList);
+                            mAtyView.nonPaymentData(orderList, page);
                         else if (orderStatus == 2)//取消
-                            mAtyView.cancelPaymentData(orderList);
+                            mAtyView.cancelPaymentData(orderList, page);
                         else
-                            mAtyView.havePaymentData(orderList);
+                            mAtyView.havePaymentData(orderList, page);
                     }
                 });
         mSubscriptions.add(subscription);

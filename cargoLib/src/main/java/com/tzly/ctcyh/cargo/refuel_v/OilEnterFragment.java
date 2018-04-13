@@ -1,5 +1,8 @@
 package com.tzly.ctcyh.cargo.refuel_v;
 
+import android.Manifest;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,8 +17,13 @@ import com.tzly.ctcyh.cargo.refuel_p.RefuelOilPresenter;
 import com.tzly.ctcyh.cargo.router.CargoRouter;
 import com.tzly.ctcyh.java.response.oil.OilEnterResponse;
 import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.custom.primission.PermissionFail;
+import com.tzly.ctcyh.router.custom.primission.PermissionGen;
+import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
+
+import static com.tzly.ctcyh.router.custom.primission.PermissionGen.PER_REQUEST_CODE;
 
 /**
  * 加油进入
@@ -159,10 +167,11 @@ public class OilEnterFragment extends RefreshFragment
         if (vId == R.id.tv_997_chongzhi || vId == R.id.lay_oil_997) {//9.97
             CargoRouter.gotoRechargeActivity(getActivity());
         } else if (vId == R.id.tv_97_gouka || vId == R.id.lay_oil_97) {//8.8
-            CargoRouter.gotoDiscountOilActivity(getActivity());
+            CargoRouter.gotoFoldOilActivity(getActivity());
         } else if (vId == R.id.tv_bank_gouka || vId == R.id.lay_oil_bank) {//9
             CargoRouter.gotoBidOilActivity(getActivity());
         } else if (vId == R.id.tv_map || vId == R.id.lay_map) {//9.96
+            showContacts();
         }
     }
 
@@ -182,5 +191,41 @@ public class OilEnterFragment extends RefreshFragment
         int count = data.getCount();
         mTv97Gou.setText(count + "人 " + "已购卡");
         mTvBankGou.setText(count + "人 " + "已购卡");
+    }
+
+    public void showContacts() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            PermissionGen.needPermission(this, PER_REQUEST_CODE, new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE});
+        } else {
+            gotoOilMap();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        PermissionGen.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    /**
+     * 申请拍照运行时权限
+     */
+    @PermissionSuccess(requestCode = PER_REQUEST_CODE)
+    public void doPermissionSuccess() {
+        gotoOilMap();
+    }
+
+    private void gotoOilMap() {
+        CargoRouter.gotoOilMapActivity(getContext());
+    }
+
+    @PermissionFail(requestCode = PER_REQUEST_CODE)
+    public void doPermissionFail() {
+        ToastUtils.toastShort("此功能需要打开相关的地图权限");
     }
 }
