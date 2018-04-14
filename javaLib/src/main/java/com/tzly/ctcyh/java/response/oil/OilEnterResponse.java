@@ -30,14 +30,15 @@ public class OilEnterResponse extends BaseResponse {
          * count : 44
          */
 
-        private int count;
+        private int count1;
+        private int count2;
 
-        public int getCount() {
-            return count;
+        public int getCount1() {
+            return count1;
         }
 
-        public void setCount(int count) {
-            this.count = count;
+        public int getCount2() {
+            return count2;
         }
     }
 }

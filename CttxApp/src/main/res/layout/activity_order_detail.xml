@@ -56,8 +56,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/lay_price"
                 android:layout_marginRight="@dimen/res_y_30"
-                android:visibility="gone"
-                android:text="@string/main_tv_cuidan" />
+                android:text="@string/main_tv_cuidan"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_pay_wuliu"
@@ -353,7 +353,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <RelativeLayout
                 android:id="@+id/ry_consignee"
@@ -484,16 +484,18 @@
                 <TextView
                     android:id="@+id/tv_pay_remark"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/ds_90"
+                    android:layout_height="@dimen/res_y_160"
                     android:layout_alignBaseline="@+id/tv_pay_remark_title"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:gravity="center"
-                    android:singleLine="true"
+                    android:layout_marginLeft="@dimen/res_x_30"
+                    android:layout_toRightOf="@+id/tv_pay_remark_title"
+                    android:gravity="right"
+                    android:maxLines="4"
                     android:textColor="@color/colorTvBlack_4c"
                     android:textSize="@dimen/fs_16sp"
-                    tools:text="商品内容" />
+                    tools:text="修改信息修改信息修改信息" />
             </RelativeLayout>
 
             <TextView
@@ -565,7 +567,6 @@
 
             <TextView
                 android:id="@+id/tv_tuikuan"
-                android:visibility="gone"
                 style="@style/ResTextTheme.16.Hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -575,7 +576,8 @@
                 android:layout_marginTop="@dimen/res_y_10"
                 android:layout_toLeftOf="@+id/tv_query"
                 android:background="@drawable/shape_rec_solw_str1_cor6_pad"
-                android:text="退款申请" />
+                android:text="退款申请"
+                android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>

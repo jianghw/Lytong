@@ -55,6 +55,12 @@ public class OrderDetailBean {
     private String backExpressNo;
     private String backExpressType;
 
+    private String error;
+
+    public String getError() {
+        return error;
+    }
+
     public String getBackExpressNo() {
         return backExpressNo;
     }

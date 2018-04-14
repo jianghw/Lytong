@@ -72,6 +72,11 @@ public class RouterUtils {
     /**
      * 统计
      */
+    public static void gotoByStatistId(String url, String keyId, FragmentActivity activity) {
+
+        gotoByStatistId(url, "商品推荐", keyId, activity);
+    }
+
     public static void gotoByStatistId(String url, String title,
                                        String keyId, FragmentActivity activity) {
 

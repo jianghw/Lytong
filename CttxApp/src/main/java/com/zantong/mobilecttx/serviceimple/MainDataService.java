@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.serviceimple;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.tzly.ctcyh.service.IMainService;
@@ -162,6 +163,14 @@ public class MainDataService implements IMainService {
     @Override
     public Fragment getAdvActiveFragment() {
         return MainRouter.getAdvActiveFragment();
+    }
+
+    /**
+     * 点击 统计
+     */
+    @Override
+    public void gotoCustomerService(String url, String title, String keyId, FragmentActivity activity) {
+        MainRouter.gotoCustomerService(url, title, keyId, activity);
     }
 
 

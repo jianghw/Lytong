@@ -638,6 +638,6 @@ public class HomeUnimpededFragment extends RefreshFragment
 
     @Override
     public void gotoByStatistId(String url, int statisticsId) {
-        RouterUtils.gotoByStatistId(url, "商品推荐", String.valueOf(statisticsId), getActivity());
+        RouterUtils.gotoByStatistId(url, String.valueOf(statisticsId), getActivity());
     }
 }

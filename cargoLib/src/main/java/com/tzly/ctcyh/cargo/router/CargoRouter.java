@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 
 import com.tzly.ctcyh.cargo.global.CargoGlobal;
+import com.tzly.ctcyh.cargo.refuel_v.OilEnterActivity;
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.UiRouter;
 import com.tzly.ctcyh.service.IMainService;
@@ -290,14 +292,28 @@ public final class CargoRouter {
      * 获取fragment
      */
     public static Fragment getAdvActiveFragment() {
-        ServiceRouter serviceRouter = ServiceRouter.getInstance();
-        Object object = serviceRouter.getService(IMainService.class.getSimpleName());
+        Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
-           return service.getAdvActiveFragment();
+            return service.getAdvActiveFragment();
         } else {//注册机开始工作
-            ServiceRouter.registerComponent(ServiceRouter.MAIN_LIKE);
+            registerMain();
             return new Fragment();
+        }
+    }
+
+    /**
+     * 点击 统计
+     */
+    public static void gotoCustomerService(String url, String title, String keyId,
+                                           FragmentActivity activity) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoCustomerService(url, title, keyId, activity);
+        } else {//注册机开始工作
+            registerMain();
+
         }
     }
 }

@@ -50,7 +50,7 @@ public class ViolationActivity extends AbstractBaseActivity {
 
     @Override
     protected void imageClickListener() {
-        MainRouter.gotoWebHtmlActivity(this, "客服",
+        MainRouter.gotoWebHtmlActivity(this, "客服系统",
                 "http://h5.liyingtong.com/mot/faq/weizhang.html");
     }
 

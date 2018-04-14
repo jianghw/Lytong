@@ -81,9 +81,9 @@ public class WebHtmlViewClient extends WebViewClient {
             js += "var btn1;for(var i=0;i<btnList.length;i++){btn1 =btnList[i];};";
             js += "if(typeof(eval(submitApply))==\"function\"){btn1.onclick=function(){overSubmit();submitApply();};};";
             js += "function overSubmit(){window.CTTX.submitBankByCard();};";
-        } else if (url.equals("ssssss")) {
+        }  else if (url.equals("https://shyc.icbc.com.cn/SHB2CWeb/b2c/tc1.jsp")) {
             js = "var bbb=document.getElementsByTagName(\"tr\");";
-            js += "if(bbb.length > 0){for(var j = 0; j<bbb.length; j++ ){for(var i = 0;i < bbb[j].cells.length;i++){if(bbb[j].cells[0].innerText == \"商品名称 :\"){bbb[j].cells[1].innerHTML = \"<font color='#484848' size='20px'>违章查询</font>\";}}}}";
+            js += "if(bbb.length > 0){for(var j = 0; j<bbb.length; j++ ){for(var i = 0;i < bbb[j].cells.length;i++){if(bbb[j].cells[0].innerText == \"商品名称 :\"){bbb[j].cells[1].innerHTML = \"<font color='#484848' size='20px'>交通违章缴费</font>\";}}}}";
         }
         LogUtils.e("js==>" + js);
         if (viewClientable != null) viewClientable.onPageFinished(view, js);

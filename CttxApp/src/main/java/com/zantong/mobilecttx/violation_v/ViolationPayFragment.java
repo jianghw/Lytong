@@ -366,12 +366,14 @@ public class ViolationPayFragment extends RefreshFragment
         int amt = (int) (Float.valueOf(violationamt) * 100);
         String value = String.valueOf(amt);
 
+
+        remark = remark.substring(0, remark.length() - 1);
         String payUrl = BuildConfig.bank_app_url
                 + "payment_payForViolation?orderid=" + violationnum
                 + "&amount=" + value
                 + "&merCustomIp=" + merCustomIp
                 + "&merCustomId=" + merCustomId
-                + "&remark=" + remark;
+                + "&remark=" + remark+"%7C";
 
         MainRouter.gotoWebHtmlActivity(getActivity(), "支付页面", payUrl,
                 violationnum, getViolationBean().getEnginenum());

@@ -2,6 +2,7 @@ package com.tzly.ctcyh.cargo.refuel_v;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
 import com.tzly.ctcyh.cargo.R;
@@ -37,7 +38,7 @@ public class OilEnterActivity extends AbstractBaseActivity {
 
     @Override
     protected void imageClickListener() {
-        CargoRouter.gotoHtmlActivity(this, "客服",
+        CargoRouter.gotoHtmlActivity(this, "客服系统",
                 "http://h5.liyingtong.com/mot/faq/recharge.html");
     }
 

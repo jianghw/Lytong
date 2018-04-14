@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,43 +16,23 @@
             android:layout_centerHorizontal="true"
             android:text="已付款"
             android:textColor="@color/colorTvRed_f33"
-            android:textSize="@dimen/fs_16sp"/>
+            android:textSize="@dimen/fs_16sp" />
 
         <TextView
             android:id="@+id/line_paid_2"
             android:layout_width="@dimen/ds_1"
-            android:layout_height="@dimen/ds_45"
+            android:layout_height="@dimen/ds_90"
             android:layout_below="@+id/tv_paid_1"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/ds_15"
             android:layout_marginTop="@dimen/ds_15"
-            android:background="@color/colorTvBlack_b3"/>
-
-        <TextView
-            android:id="@+id/tv_taken_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/line_paid_2"
-            android:layout_centerHorizontal="true"
-            android:text="已取件"
-            android:textColor="@color/colorTvBlack_b3"
-            android:textSize="@dimen/fs_16sp"/>
-
-        <TextView
-            android:id="@+id/line_taken_4"
-            android:layout_width="@dimen/ds_1"
-            android:layout_height="@dimen/ds_45"
-            android:layout_below="@+id/tv_taken_3"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/ds_15"
-            android:background="@color/colorTvBlack_b3"/>
+            android:background="@color/colorTvBlack_b3" />
 
         <!--左边 300高度-->
         <RelativeLayout
             android:layout_width="@dimen/ds_390"
             android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/line_taken_4"
-            android:layout_below="@+id/line_taken_4">
+            android:layout_alignRight="@+id/line_paid_2"
+            android:layout_below="@+id/line_paid_2">
 
             <TextView
                 android:id="@+id/line_left_5"
@@ -60,7 +40,7 @@
                 android:layout_height="@dimen/ds_1"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:background="@color/colorTvBlack_b3"/>
+                android:background="@color/colorTvBlack_b3" />
 
             <TextView
                 android:id="@+id/line_6"
@@ -68,7 +48,7 @@
                 android:layout_height="@dimen/ds_105"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/ds_15"
-                android:background="@color/colorTvBlack_b3"/>
+                android:background="@color/colorTvBlack_b3" />
 
             <TextView
                 android:id="@+id/tv_complete_7"
@@ -76,9 +56,9 @@
                 android:layout_height="@dimen/ds_60"
                 android:layout_below="@+id/line_6"
                 android:layout_centerHorizontal="true"
-                android:text="证件齐全办理中"
+                android:text="证件齐全"
                 android:textColor="@color/colorTvBlack_b3"
-                android:textSize="@dimen/fs_16sp"/>
+                android:textSize="@dimen/fs_16sp" />
 
             <TextView
                 android:id="@+id/line_left_8"
@@ -87,7 +67,7 @@
                 android:layout_below="@+id/tv_complete_7"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/ds_15"
-                android:background="@color/colorTvBlack_b3"/>
+                android:background="@color/colorTvBlack_b3" />
 
             <TextView
                 android:id="@+id/line_left_9"
@@ -95,15 +75,15 @@
                 android:layout_height="@dimen/ds_1"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/line_left_8"
-                android:background="@color/colorTvBlack_b3"/>
+                android:background="@color/colorTvBlack_b3" />
         </RelativeLayout>
 
         <!--右边 300高度-->
         <RelativeLayout
             android:layout_width="@dimen/ds_390"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/line_taken_4"
-            android:layout_below="@+id/line_taken_4">
+            android:layout_alignLeft="@+id/line_paid_2"
+            android:layout_below="@+id/line_paid_2">
 
             <TextView
                 android:id="@+id/line_right_10"
@@ -111,7 +91,7 @@
                 android:layout_height="@dimen/ds_1"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:background="@color/colorTvBlack_b3"/>
+                android:background="@color/colorTvBlack_b3" />
 
             <TextView
                 android:id="@+id/line_right_11"
@@ -119,7 +99,7 @@
                 android:layout_height="@dimen/ds_40"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/ds_15"
-                android:background="@color/colorTvBlack_b3"/>
+                android:background="@color/colorTvBlack_b3" />
 
             <TextView
                 android:id="@+id/tv_unComplete_12"
@@ -129,7 +109,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="证件不全"
                 android:textColor="@color/colorTvBlack_b3"
-                android:textSize="@dimen/fs_16sp"/>
+                android:textSize="@dimen/fs_16sp" />
 
             <TextView
                 android:id="@+id/line_right_13"
@@ -139,7 +119,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/ds_15"
                 android:layout_marginTop="@dimen/ds_15"
-                android:background="@color/colorTvBlack_b3"/>
+                android:background="@color/colorTvBlack_b3" />
 
             <TextView
                 android:id="@+id/tv_completing_14"
@@ -149,16 +129,16 @@
                 android:layout_centerHorizontal="true"
                 android:text="证件补全中"
                 android:textColor="@color/colorTvBlack_b3"
-                android:textSize="@dimen/fs_16sp"/>
+                android:textSize="@dimen/fs_16sp" />
 
             <TextView
                 android:id="@+id/line_right_15"
                 android:layout_width="@dimen/ds_1"
-                android:layout_height="@dimen/ds_40"
+                android:layout_height="@dimen/ds_39"
                 android:layout_below="@+id/tv_completing_14"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/ds_15"
-                android:background="@color/colorTvBlack_b3"/>
+                android:background="@color/colorTvBlack_b3" />
 
             <TextView
                 android:id="@+id/line_right_16"
@@ -166,7 +146,7 @@
                 android:layout_height="@dimen/ds_1"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/line_right_15"
-                android:background="@color/colorTvBlack_b3"/>
+                android:background="@color/colorTvBlack_b3" />
         </RelativeLayout>
 
 
@@ -174,21 +154,41 @@
             android:id="@+id/line_down_17"
             android:layout_width="@dimen/ds_1"
             android:layout_height="@dimen/ds_45"
-            android:layout_below="@+id/line_taken_4"
+            android:layout_below="@+id/line_paid_2"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/ds_15"
             android:layout_marginTop="@dimen/ds_300"
-            android:background="@color/colorTvBlack_b3"/>
+            android:background="@color/colorTvBlack_b3" />
+
+        <TextView
+            android:id="@+id/tv_taken_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line_down_17"
+            android:layout_centerHorizontal="true"
+            android:text="办理中"
+            android:textColor="@color/colorTvBlack_b3"
+            android:textSize="@dimen/fs_16sp" />
+
+        <TextView
+            android:id="@+id/line_taken_21"
+            android:layout_width="@dimen/ds_1"
+            android:layout_height="@dimen/ds_45"
+            android:layout_below="@+id/tv_taken_20"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/ds_15"
+            android:background="@color/colorTvBlack_b3" />
 
         <TextView
             android:id="@+id/tv_commission_18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/line_down_17"
+            android:layout_below="@+id/line_taken_21"
             android:layout_centerHorizontal="true"
             android:text="代办成功资料送达中"
             android:textColor="@color/colorTvBlack_b3"
-            android:textSize="@dimen/fs_16sp"/>
+            android:textSize="@dimen/fs_16sp" />
 
         <TextView
             android:id="@+id/line_commission_19"
@@ -198,7 +198,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/ds_15"
             android:layout_marginTop="@dimen/ds_15"
-            android:background="@color/colorTvBlack_b3"/>
+            android:background="@color/colorTvBlack_b3" />
 
         <TextView
             android:id="@+id/tv_finish"
@@ -208,6 +208,6 @@
             android:layout_centerHorizontal="true"
             android:text="订单完成"
             android:textColor="@color/colorTvBlack_b3"
-            android:textSize="@dimen/fs_16sp"/>
+            android:textSize="@dimen/fs_16sp" />
     </RelativeLayout>
 </merge>

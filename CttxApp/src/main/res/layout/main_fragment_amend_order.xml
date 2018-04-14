@@ -199,7 +199,7 @@
         <!--备注-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/res_y_80"
+            android:layout_height="@dimen/res_y_160"
             android:background="@color/colorWhite"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -222,7 +222,6 @@
                 android:background="@null"
                 android:gravity="right|center_vertical"
                 android:hint="选填"
-                android:maxLines="1"
                 android:minWidth="@dimen/ds_180"
                 android:textColorHint="@color/colorLineGray_e6" />
         </LinearLayout>

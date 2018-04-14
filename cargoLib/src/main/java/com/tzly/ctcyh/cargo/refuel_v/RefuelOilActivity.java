@@ -44,8 +44,8 @@ public class RefuelOilActivity extends AbstractBaseActivity
 
     @Override
     protected void imageClickListener() {
-        CargoRouter.gotoHtmlActivity(this, "客服",
-                 "http://h5.liyingtong.com/mot/faq/recharge.html");
+        CargoRouter.gotoHtmlActivity(this, "客服系统",
+                "http://h5.liyingtong.com/mot/faq/recharge.html");
     }
 
     @Override

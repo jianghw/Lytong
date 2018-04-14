@@ -3,6 +3,7 @@ package com.tzly.ctcyh.service;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 
 /**
  * Created by jianghw on 2017/10/26.
@@ -52,4 +53,9 @@ public interface IMainService {
     void gotoNianjianMapActivity(Context context);
 
     Fragment getAdvActiveFragment();
+
+    /**
+     * 点击 统计
+     */
+    void gotoCustomerService(String url, String title, String keyId, FragmentActivity activity);
 }

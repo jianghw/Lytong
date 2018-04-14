@@ -18,10 +18,6 @@ import android.widget.TextView;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
-import com.tzly.ctcyh.router.base.JxBaseActivity;
-import com.tzly.ctcyh.router.custom.htmltxt.HtmlHttpImageGetter;
-import com.tzly.ctcyh.router.custom.htmltxt.HtmlTextView;
-import com.tzly.ctcyh.router.custom.htmltxt.IHtmlTextClick;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
@@ -60,8 +56,8 @@ public class AnnualDetailActivity extends AbstractBaseActivity
     /**
      * 已取件
      */
-    private TextView mTvTaken3;
-    private TextView mLineTaken4;
+    private TextView mTvTaken20;
+    private TextView mLineTaken21;
     private TextView mLineLeft5;
     private TextView mLine6;
     /**
@@ -192,8 +188,8 @@ public class AnnualDetailActivity extends AbstractBaseActivity
 
         mTvPaid1 = (TextView) findViewById(R.id.tv_paid_1);
         mLinePaid2 = (TextView) findViewById(R.id.line_paid_2);
-        mTvTaken3 = (TextView) findViewById(R.id.tv_taken_3);
-        mLineTaken4 = (TextView) findViewById(R.id.line_taken_4);
+        mTvTaken20 = (TextView) findViewById(R.id.tv_taken_20);
+        mLineTaken21 = (TextView) findViewById(R.id.line_taken_21);
         mLineLeft5 = (TextView) findViewById(R.id.line_left_5);
         mLine6 = (TextView) findViewById(R.id.line_6);
         mTvComplete7 = (TextView) findViewById(R.id.tv_complete_7);
@@ -210,6 +206,7 @@ public class AnnualDetailActivity extends AbstractBaseActivity
         mTvCommission18 = (TextView) findViewById(R.id.tv_commission_18);
         mLineCommission19 = (TextView) findViewById(R.id.line_commission_19);
         mTvFinish = (TextView) findViewById(R.id.tv_finish);
+
         mTvContentTitle = (TextView) findViewById(R.id.tv_content_title);
         mTvContent = (TextView) findViewById(R.id.tv_content);
         mTvOrderNumTitle = (TextView) findViewById(R.id.tv_order_num_title);
@@ -363,6 +360,11 @@ public class AnnualDetailActivity extends AbstractBaseActivity
             mTvCuidan.setVisibility(View.GONE);
             mTvWuliu.setVisibility(View.VISIBLE);
         }
+
+        if (!TextUtils.isEmpty(bean.getError())) {
+            mTvTaken20.setTextColor(getResources().getColor(R.color.colorTvRed_f33));
+            mTvTaken20.setText(bean.getError()+"详询4008216158");
+        }
     }
 
 
@@ -471,6 +473,23 @@ public class AnnualDetailActivity extends AbstractBaseActivity
      * 9-代办成功资料送达(6过来),
      * 10-代办成功资料送达(9过来),
      * 11-订单完成(6过来),12-订单完成(9过来)
+     * <p>
+     * 0 未支付
+     * 1 已支付
+     * 2 已取消
+     * 3 进行中
+     * 4 已完成
+     * 5 已取件
+     * 6 证件齐全
+     * 7 证件不全
+     * 8 证件不全中
+     * 9 代办成功资料送达中（14转到）
+     * 10 代办成功资料送达中（15 转到）
+     * 11 订单完成（9 转到）
+     * 12 订单完成（10 转到）
+     * 13 取件中
+     * 14 办理中(6转到)
+     * 15 办理中(8转到)
      */
     private void setupProcessState(OrderDetailBean bean) {
         int status = bean.getOrderStatus();
@@ -502,6 +521,7 @@ public class AnnualDetailActivity extends AbstractBaseActivity
                 colorText_1();
                 colorText_5();
                 colorText_6();
+                colorText_14();
                 colorText_9();
                 break;
             case 10:
@@ -509,12 +529,14 @@ public class AnnualDetailActivity extends AbstractBaseActivity
                 colorText_5();
                 colorText_7_green();
                 colorText_8_green();
+                colorText_15();
                 colorText_10();
                 break;
             case 11:
                 colorText_1();
                 colorText_5();
                 colorText_6();
+                colorText_14();
                 colorText_9();
                 colorText_1112();
                 break;
@@ -523,8 +545,22 @@ public class AnnualDetailActivity extends AbstractBaseActivity
                 colorText_5();
                 colorText_7_green();
                 colorText_8_green();
+                colorText_15();
                 colorText_10();
                 colorText_1112();
+                break;
+            case 14:
+                colorText_1();
+                colorText_5();
+                colorText_6();
+                colorText_14();
+                break;
+            case 15:
+                colorText_1();
+                colorText_5();
+                colorText_7_green();
+                colorText_8_green();
+                colorText_15();
                 break;
             default:
                 mTvPaid1.setTextColor(getResources().getColor(R.color.colorTvRed_f33));
@@ -540,25 +576,38 @@ public class AnnualDetailActivity extends AbstractBaseActivity
 
     private void colorText_5() {
         mLinePaid2.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
-        mTvTaken3.setTextColor(getResources().getColor(R.color.colorTvGreen_80));
+    }
+
+    private void colorText_14() {
+        mLineLeft8.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
+        mLineLeft9.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
+        mLineDown17.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
+        mTvTaken20.setTextColor(getResources().getColor(R.color.colorTvGreen_80));
+    }
+
+    private void colorText_15() {
+        mLineRight15.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
+        mLineRight16.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
+        mLineDown17.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
+        mTvTaken20.setTextColor(getResources().getColor(R.color.colorTvGreen_80));
     }
 
     private void colorText_6() {
-        mLineTaken4.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
+        mLineTaken21.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
         mLineLeft5.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
         mLine6.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
         mTvComplete7.setTextColor(getResources().getColor(R.color.colorTvGreen_80));
     }
 
     private void colorText_7_green() {
-        mLineTaken4.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
+        mLineTaken21.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
         mLineRight10.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
         mLineRight11.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
         mTvUnComplete12.setTextColor(getResources().getColor(R.color.colorTvGreen_80));
     }
 
     private void colorText_7_red() {
-        mLineTaken4.setBackgroundColor(getResources().getColor(R.color.colorTvRed_f33));
+        mLineTaken21.setBackgroundColor(getResources().getColor(R.color.colorTvRed_f33));
         mLineRight10.setBackgroundColor(getResources().getColor(R.color.colorTvRed_f33));
         mLineRight11.setBackgroundColor(getResources().getColor(R.color.colorTvRed_f33));
         mTvUnComplete12.setTextColor(getResources().getColor(R.color.colorTvRed_f33));
@@ -575,16 +624,12 @@ public class AnnualDetailActivity extends AbstractBaseActivity
     }
 
     private void colorText_9() {
-        mLineLeft8.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
-        mLineLeft9.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
-        mLineDown17.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
+        mLineTaken21.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
         mTvCommission18.setTextColor(getResources().getColor(R.color.colorTvGreen_80));
     }
 
     private void colorText_10() {
-        mLineRight15.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
-        mLineRight16.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
-        mLineDown17.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
+        mLineTaken21.setBackgroundColor(getResources().getColor(R.color.colorTvGreen_80));
         mTvCommission18.setTextColor(getResources().getColor(R.color.colorTvGreen_80));
     }
 

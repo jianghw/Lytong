@@ -184,7 +184,7 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
                         return new FavorableBannerImgHolderView(new IDiscountsBanner() {
                             @Override
                             public void gotoByStatistId(String url, int statisticsId) {
-                                RouterUtils.gotoByStatistId(url, "商品推荐",
+                                RouterUtils.gotoByStatistId(url,
                                         String.valueOf(statisticsId), getActivity());
                             }
                         });

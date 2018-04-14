@@ -63,9 +63,11 @@ public class FoldRefuelOilFragment extends AbstractBaseFragment implements View.
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.img_oil_card) {
-           CargoRouter.gotoDiscountOilActivity(getContext());
+            CargoRouter.gotoCustomerService(
+                    "native_app_97recharge", "97折充值", "152", getActivity());
         } else if (v.getId() == R.id.img_buy_card) {
-            CargoRouter.gotoBidOilActivity(getContext());
+            CargoRouter.gotoCustomerService(
+                    "native_app_97buyCard", "97折购卡", "151", getActivity());
         }
     }
 }

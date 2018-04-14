@@ -58,8 +58,7 @@ public class HomePagerFragment extends RecyclerListFragment<UnimpededBannerBean>
         if (!(data instanceof UnimpededBannerBean)) return;
         UnimpededBannerBean bannerBean = (UnimpededBannerBean) data;
 
-        RouterUtils.gotoByStatistId(
-                bannerBean.getTargetPath(), bannerBean.getTitle(),
+        RouterUtils.gotoByStatistId(bannerBean.getTargetPath(), bannerBean.getTitle(),
                 String.valueOf(bannerBean.getStatisticsId()), getActivity());
     }
 

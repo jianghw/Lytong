@@ -34,20 +34,20 @@
 
             <TextView
                 android:id="@+id/tv_pay_cuid"
-                android:layout_alignParentRight="true"
-                android:layout_alignBaseline="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:layout_alignBaseline="@+id/tv_price"
+                android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/res_y_30"
-                android:text="@string/main_tv_cuidan" />
+                android:text="@string/main_tv_cuidan"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_pay_wuliu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_alignBaseline="@+id/tv_price"
+                android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/res_y_30"
                 android:text="@string/main_tv_wuliu"
                 android:visibility="gone" />
@@ -228,10 +228,10 @@
         <!--后扩展用户信息-->
         <LinearLayout
             android:id="@+id/lay_other"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <RelativeLayout
                 android:id="@+id/ry_consignee"
@@ -412,30 +412,6 @@
             android:layout_marginRight="@dimen/res_x_30"
             android:layout_marginTop="@dimen/ds_24"
             android:background="@color/res_color_gray_e6" />
-
-
-        <!--   <com.tzly.ctcyh.router.custom.htmltxt.HtmlTextView
-               android:id="@+id/tv_content_bottom"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_marginLeft="@dimen/ds_45"
-               android:layout_marginRight="@dimen/ds_45"
-               android:textAppearance="@android:style/TextAppearance.Small"
-               tools:text="发生的哈佛i石佛粉红丝和发挥是放假哦啊释迦佛放假暑假放假啊"
-               android:textIsSelectable="true"/>-->
-
-        <!--      <TextView
-                  android:id="@+id/tv_query"
-                  android:layout_width="match_parent"
-                  android:layout_height="0dp"
-                  android:layout_weight="1"
-                  android:background="@color/colorLineGray_e6"
-                  android:gravity="center_horizontal"
-                  android:paddingTop="@dimen/ds_45"
-                  android:text="对订单有疑问?"
-                  android:textColor="@color/colorTvRed_f33"
-                  android:textSize="@dimen/fs_14sp"/>-->
-
 
         <RelativeLayout
             android:layout_width="match_parent"
