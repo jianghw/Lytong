@@ -97,19 +97,18 @@ public class ViolationListFragment extends RecyclerListFragment<ViolationBean> {
     protected void initPresenter() {
     }
 
-    @Override
     protected void initScrollChildView(View view) {
-        if (view == null || !(view instanceof ScrollBottomLayout))
-            return;
-        if (getArguments().getString(TAG_POSITON) == null
-                || getArguments().getString(TAG_POSITON).equals("1"))
-            return;
 
-        FragmentManager manager = getChildFragmentManager();
-        Fragment fragment = MainRouter.getAdvActiveFragment();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(com.tzly.ctcyh.cargo.R.id.fragment_child, fragment, "scroll_child_fragment");
-        transaction.commit();
+        if (getArguments().getString(TAG_POSITON) != null
+                && getArguments().getString(TAG_POSITON).equals("1")) {
+
+            FragmentManager manager = getChildFragmentManager();
+            Fragment fragment = MainRouter.getAdvActiveFragment();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.add(R.id.fragment_child, fragment, "scroll_child_fragment");
+            transaction.commit();
+        }
+
 /*
         ScrollBottomLayout bottomLayout = (ScrollBottomLayout) view;
         View childView = LayoutInflater.from(getContext())
@@ -134,42 +133,47 @@ public class ViolationListFragment extends RecyclerListFragment<ViolationBean> {
         transaction.add(htmlFragment, "router_fgt").commit();*/
     }
 
-//    public void validAdvertSucceed(ValidAdvResponse result) {
-//        List<ValidAdvResponse.DataBean> resultData = result.getData();
-//        if (resultData == null || resultData.isEmpty()) return;
-//
-//        AdvImageAdapter adapter = new AdvImageAdapter();
-//        if (recycler != null) recycler.setAdapter(adapter);
-//        adapter.append(resultData);
-//        adapter.setItemClickListener(new AdvImageAdapter.ClickUrlAdapter() {
-//            @Override
-//            public void clickUrl(String url, int id) {
-//                gotoByPath(url, id);
-//            }
-//        });
-//    }
-//
-//    public void gotoByPath(String url, int id) {
-//        //点击事件
-//        FragmentManager manager = getChildFragmentManager();
-//        Fragment fragment = manager.findFragmentByTag("router_fgt");
-//        if (fragment != null && fragment instanceof RouterFragment) {
-//            RouterFragment routerFragment = (RouterFragment) fragment;
-//            routerFragment.advClickItemData(url, "产品页面", String.valueOf(id));
-//        } else {
-//            ToastUtils.toastShort("找不到点击路由,程序员GG会尽快处理");
-//        }
-//    }
+    //    public void validAdvertSucceed(ValidAdvResponse result) {
+    //        List<ValidAdvResponse.DataBean> resultData = result.getData();
+    //        if (resultData == null || resultData.isEmpty()) return;
+    //
+    //        AdvImageAdapter adapter = new AdvImageAdapter();
+    //        if (recycler != null) recycler.setAdapter(adapter);
+    //        adapter.append(resultData);
+    //        adapter.setItemClickListener(new AdvImageAdapter.ClickUrlAdapter() {
+    //            @Override
+    //            public void clickUrl(String url, int id) {
+    //                gotoByPath(url, id);
+    //            }
+    //        });
+    //    }
+    //
+    //    public void gotoByPath(String url, int id) {
+    //        //点击事件
+    //        FragmentManager manager = getChildFragmentManager();
+    //        Fragment fragment = manager.findFragmentByTag("router_fgt");
+    //        if (fragment != null && fragment instanceof RouterFragment) {
+    //            RouterFragment routerFragment = (RouterFragment) fragment;
+    //            routerFragment.advClickItemData(url, "产品页面", String.valueOf(id));
+    //        } else {
+    //            ToastUtils.toastShort("找不到点击路由,程序员GG会尽快处理");
+    //        }
+    //    }
 
     protected void statusViewSelf(View view, int state) {
         TextView tvEmpty = (TextView) view.findViewById(R.id.tv_empty);
 
-        if (state == MultiState.EMPTY) {
+        if (state == MultiState.EMPTY && getArguments().getString(TAG_POSITON).equals("1")) {
             Drawable nav_up = getResources().getDrawable(R.mipmap.ic_layout_empty);
             nav_up.setBounds(0, 0, nav_up.getMinimumWidth(), nav_up.getMinimumHeight());
             tvEmpty.setCompoundDrawables(null, nav_up, null, null);
             tvEmpty.setText("您没有违章需要处理");
-        }
 
+            FragmentManager manager = getChildFragmentManager();
+            Fragment fragment = MainRouter.getAdvActiveFragment();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.add(R.id.fragment_child, fragment, "scroll_child_fragment");
+            transaction.commit();
+        }
     }
 }

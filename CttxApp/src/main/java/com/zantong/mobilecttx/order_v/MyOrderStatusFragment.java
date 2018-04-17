@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.order.adapter.OrderStatusAdapter;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
@@ -86,7 +87,7 @@ public class MyOrderStatusFragment extends BaseRecyclerListJxFragment<OrderListB
         if (mRefreshListener != null) mRefreshListener.refreshListData(mCurrentPage);
     }
 
-    protected void setCustomPage(int page){
+    protected void setCustomPage(int page) {
         this.mCurrentPage = page;
     }
 
@@ -146,7 +147,10 @@ public class MyOrderStatusFragment extends BaseRecyclerListJxFragment<OrderListB
     }
 
     public synchronized void setPayOrderListData(List<OrderListBean> data) {
-        setDataResult(data);
+        if (this.mCurrentPage > 1 &&(data==null|| data.isEmpty())) {
+        } else {
+            setDataResult(data);
+        }
     }
 
     public void setRefreshListener(MyOrderActivity.RefreshListener refreshListener) {

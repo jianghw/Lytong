@@ -119,7 +119,8 @@ public class FriendShareFragment extends RefreshFragment
             contentString = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
         if (!TextUtils.isEmpty(contentString)) {
             Bitmap qrCodeBitmap = EncodingUtils.createQRCode(
-                    contentString, 360, 360, BitmapFactory.decodeResource(getResources(), R.mipmap.ic_global_app));
+                    contentString, 360, 360,
+                    BitmapFactory.decodeResource(getResources(), R.mipmap.ic_global_app));
             mImgScan.setImageBitmap(qrCodeBitmap);
         }
     }
@@ -186,24 +187,14 @@ public class FriendShareFragment extends RefreshFragment
             } else {
                 topList.add(map);
             }
-            //            else if (isFirst && !TextUtils.isEmpty(map.getName())) {
-            //                String string = getResources().getString(R.string.main_tv_share);
-            //                String text = String.format(string, map.getName(), map.getCount());
-            //                mTvRecommend.setText(text);
-            //                isFirst = false;
-            //            } else if (!TextUtils.isEmpty(map.getName())) {
-            //                String string = getResources().getString(R.string.main_tv_share);
-            //                String text = String.format(string, map.getName(), map.getCount());
-            //                mTvTied.setText(text);
-            //            }
         }
         setTopDataResult(topList);
         setSimpleDataResult(botList);
 
         boolean flag = response.getData().isFlag();
         //地推人员
-        mImgScan.setVisibility(flag ? View.VISIBLE : View.GONE);
-        mBtnPay.setVisibility(flag ? View.VISIBLE : View.GONE);
+        //        mImgScan.setVisibility(flag ? View.VISIBLE : View.GONE);
+        //        mBtnPay.setVisibility(flag ? View.VISIBLE : View.GONE);
 
         mLayFalse.setVisibility(!flag ? View.VISIBLE : View.INVISIBLE);
         mXRecyclerView.setVisibility(!flag ? View.VISIBLE : View.INVISIBLE);
@@ -261,8 +252,8 @@ public class FriendShareFragment extends RefreshFragment
         mXRecyclerView.setAdapter(mAdapter);
         mXRecyclerView.setNestedScrollingEnabled(false);
 
-//        mTvRecommend = (TextView) view.findViewById(R.id.tv_recommend);
-//        mTvTied = (TextView) view.findViewById(R.id.tv_tied);
+        //        mTvRecommend = (TextView) view.findViewById(R.id.tv_recommend);
+        //        mTvTied = (TextView) view.findViewById(R.id.tv_tied);
     }
 
     @Override

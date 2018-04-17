@@ -36,8 +36,8 @@ ext {
             buildToolsVersion: "25.0.3",
             minSdkVersion    : 16,
             targetSdkVersion : 25,
-            versionCode      : 72,
-            versionName      : "3.3.6"
+            versionCode      : 74,
+            versionName      : "3.3.7"
     ]
 
     dependencies = [
@@ -52,7 +52,7 @@ ext {
     ]
     //单独配置模块 true-->测试环境 false-->正式环境
     config = [
-            api_deta  : 'true'
+            api_deta  : 'false'
     ]
     //测试
     beta = [

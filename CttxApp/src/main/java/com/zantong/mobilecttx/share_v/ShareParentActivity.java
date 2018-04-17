@@ -47,7 +47,7 @@ public class ShareParentActivity extends AbstractBaseActivity implements View.On
     @Override
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
-            mCurPosition = intent.getIntExtra(JxGlobal.putExtra.share_position_extra, 0);
+            mCurPosition = intent.getIntExtra(JxGlobal.putExtra.share_position_extra, 3);
         }
     }
 

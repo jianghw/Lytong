@@ -65,7 +65,9 @@ public class WebHtmlViewClient extends WebViewClient {
 
     @Override
     public void onPageFinished(WebView view, String url) {
+        super.onPageFinished(view, url);
         LogUtils.e("onPageFinished-->" + url);
+
         String js = null;
         if (url.contains("?dse_operationName=ApplyCreditCardOp&firstFlag")) {//保存用户资料
             js = "var script=document.createElement(\"script\");";
@@ -81,13 +83,16 @@ public class WebHtmlViewClient extends WebViewClient {
             js += "var btn1;for(var i=0;i<btnList.length;i++){btn1 =btnList[i];};";
             js += "if(typeof(eval(submitApply))==\"function\"){btn1.onclick=function(){overSubmit();submitApply();};};";
             js += "function overSubmit(){window.CTTX.submitBankByCard();};";
-        }  else if (url.equals("https://shyc.icbc.com.cn/SHB2CWeb/b2c/tc1.jsp")) {
-            js = "var bbb=document.getElementsByTagName(\"tr\");";
-            js += "if(bbb.length > 0){for(var j = 0; j<bbb.length; j++ ){for(var i = 0;i < bbb[j].cells.length;i++){if(bbb[j].cells[0].innerText == \"商品名称 :\"){bbb[j].cells[1].innerHTML = \"<font color='#484848' size='20px'>交通违章缴费</font>\";}}}}";
+        } else if (url.equals("https://shyc.icbc.com.cn/SHB2CWeb/b2c/tc1.jsp") ||
+                url.equals("https://shyc.icbc.com.cn/SHB2CWeb/servlet/ICBCSZ_TCPayServlet")) {
+            //            js = "var bbb=document.getElementsByTagName(\"tr\");";
+            //            js += "if(bbb.length > 0){for(var j = 0; j<bbb.length; j++ ){for(var i = 0;i < bbb[j].cells.length;i++){if(bbb[j].cells[0].innerText == \"商品名称 :\"){bbb[j].cells[1].innerHTML = \"<font color='#484848' size='20px'>交通违章缴费</font>\";}}}}";
+//            js = "function changeHtmlCustom(){" +
+//                    "var font=document.getElementsByTagName(\"font\")[8];" +
+//                    "font.textContent=\"交通违章缴费\";}" +
+//                    "changeHtmlCustom();";
         }
-        LogUtils.e("js==>" + js);
         if (viewClientable != null) viewClientable.onPageFinished(view, js);
-        super.onPageFinished(view, url);
     }
 
     /**

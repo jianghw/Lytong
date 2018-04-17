@@ -163,7 +163,7 @@ public class OilEnterFragment extends RefreshFragment
                     "native_app_mainRecharge", "97加油充值", "148", getActivity());
         } else if (vId == R.id.tv_bank_gouka || vId == R.id.lay_oil_bank) {//9
             CargoRouter.gotoCustomerService(
-                    "native_app_recharge", "工行爱车卡", "149", getActivity());
+                    "http://icbccard.una-campaign.com/?cid=283", "申办S工行卡", "149", getActivity());
         } else if (vId == R.id.tv_map || vId == R.id.lay_map) {//9.96
             CargoRouter.gotoCustomerService(
                     "native_app_oilStation", "优惠加油站", "150", getActivity());

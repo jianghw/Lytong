@@ -297,7 +297,7 @@ public class OrderDetailActivity extends AbstractBaseActivity
                     @Override
                     public boolean urlClicked(String url) {
                         gotoHtml(url);
-                        return false;
+                        return true;
                     }
                 })
                 .bind(this) // 绑定richText对象到某个object上，方便后面的清理

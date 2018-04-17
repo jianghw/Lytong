@@ -63,8 +63,6 @@ public abstract class AbstractBaseFragment extends Fragment {
                 } else if (state == MultiState.LOADING) {
                     enhanceLoadingView(view, state);
                 } else if (state == MultiState.EMPTY) {
-                    View scrollBottom = view.findViewById(R.id.scroll_empty_bottom);
-                    initScrollChildView(scrollBottom);
                     enhanceEmptyView(view, state);
                 } else if (state == MultiState.ERROR) {
                     enhanceErrorView(view, state);
@@ -83,9 +81,6 @@ public abstract class AbstractBaseFragment extends Fragment {
         multiStateLayout.setState(multiState);
         if (multiState == MultiState.CONTENT) loadingFirstData();
         return view;
-    }
-
-    protected void initScrollChildView(View scrollBottom) {
     }
 
     @Override

@@ -319,6 +319,10 @@ public class HomeMainActivity extends AbstractBaseActivity
         //        startActivity(intent);
 
         //按返回键返回桌面
-        moveTaskToBack(true);
+        try {
+            moveTaskToBack(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

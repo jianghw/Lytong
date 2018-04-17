@@ -45,6 +45,10 @@ public class LicenseGradeActivity extends AbstractBaseActivity implements View.O
     private RelativeLayout mLyData;
 
     private LicenseFileNumDTO fromJson;
+    /**
+     * 2--
+     * 1--
+     */
     private int position;
 
     @Override
@@ -126,8 +130,11 @@ public class LicenseGradeActivity extends AbstractBaseActivity implements View.O
         if (fromJson != null) {
             if (!TextUtils.isEmpty(fromJson.getFilenum()))
                 mEditArchivesNumber.setText(fromJson.getFilenum());
-            if (!TextUtils.isEmpty(fromJson.getStrtdt()))
-                mTvDate.setText(dateFormat(fromJson.getStrtdt()));
+
+            if (!TextUtils.isEmpty(fromJson.getStrtdt())) {
+                String date = removeDateAcross(fromJson.getStrtdt());
+                mTvDate.setText(dateFormat(date));
+            }
         }
     }
 

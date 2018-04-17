@@ -46,7 +46,7 @@ public class CouponListAdapter extends BaseAdapter<CouponBean> {
             int value = couponBean.getCouponValue();
 
             if (couponType == 2) {
-                holder.mTvPrice.setText(new DecimalFormat("#0.#").format(value / 10));
+                holder.mTvPrice.setText(new DecimalFormat("#0.#").format(Float.valueOf(value) / 10));
                 holder.mTvUnit.setText("折");
             } else if (couponType == 3) {
                 holder.mTvPrice.setText(String.valueOf(value));

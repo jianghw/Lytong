@@ -31,6 +31,7 @@ import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.application.Injection;
+import com.zantong.mobilecttx.home.activity.CustomCordovaActivity;
 import com.zantong.mobilecttx.home_p.RouterPresenter;
 import com.zantong.mobilecttx.home_p.IRouterContract;
 import com.zantong.mobilecttx.router.MainRouter;
@@ -186,6 +187,8 @@ public class RouterFragment extends Fragment implements IRouterContract.IRouterV
         if (!TextUtils.isEmpty(path)) {
             if (path.contains("http")) {//启动公司自己html
                 MainRouter.gotoWebHtmlActivity(getContext(), title, path);
+            } else if (path.contains("discount") || path.contains("happysend")) {//保险模块
+                Act.getInstance().gotoIntent(getActivity(), CustomCordovaActivity.class, path);
             } else if (path.equals("native_app_recharge")) {//加油充值
                 MainRouter.gotoRechargeActivity(getActivity());
             } else if (path.equals("native_app_loan")) {
@@ -227,6 +230,8 @@ public class RouterFragment extends Fragment implements IRouterContract.IRouterV
             } else {//其他
                 ToastUtils.toastShort("此版本暂无此状态页面,请更新最新版本");
             }
+        }else{
+            ToastUtils.toastShort("敬请期待~");
         }
     }
 
@@ -406,6 +411,7 @@ public class RouterFragment extends Fragment implements IRouterContract.IRouterV
                     @Override
                     public void submit(String couponId) {
                         if (mPresenter != null) mPresenter.receiveCoupon(couponId);
+
                         saveSubmit(mId_Only);
                         gotoHtmlByExtra(beanExtra);
                     }
@@ -446,8 +452,8 @@ public class RouterFragment extends Fragment implements IRouterContract.IRouterV
         }
     }
 
-    private void gotoHtml(String beanExtra) {
-        MainRouter.gotoWebHtmlActivity(getContext(), "产品页面", beanExtra);
+    private void gotoHtml(String url) {
+        clickItemData(url, "商品推荐");
     }
 
     public void activeToShow(String channel, String date) {

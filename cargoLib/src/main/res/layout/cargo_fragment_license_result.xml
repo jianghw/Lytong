@@ -76,6 +76,7 @@
             android:layout_below="@+id/tv_score"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/res_y_60"
+            android:layout_marginBottom="@dimen/res_y_60"
             android:text="计分非实时生效,可能存在延迟情况"
             android:textSize="@dimen/res_fs_12" />
 

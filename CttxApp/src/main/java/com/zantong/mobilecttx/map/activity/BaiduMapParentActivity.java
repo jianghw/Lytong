@@ -603,13 +603,13 @@ public class BaiduMapParentActivity extends AbstractBaseActivity
 
                 if (String.valueOf(MainGlobal.MapType.annual_92_service).equals(mServiceType)) {
                     String tn = bean.getNinetyTwoNum();
-                    textView.setText(TextUtils.isEmpty(tn) || Double.valueOf(tn) == 0 ? "无" : "-" + tn);
+                    textView.setText(TextUtils.isEmpty(tn) || Double.valueOf(tn) == 0 ? " " : "-" + tn);
                 } else if (String.valueOf(MainGlobal.MapType.annual_95_service).equals(mServiceType)) {
                     String fn = bean.getNinetyFiveNum();
-                    textView.setText(TextUtils.isEmpty(fn) || Double.valueOf(fn) == 0 ? "无" : "-" + fn);
+                    textView.setText(TextUtils.isEmpty(fn) || Double.valueOf(fn) == 0 ? " " : "-" + fn);
                 } else if (String.valueOf(MainGlobal.MapType.annual_0_service).equals(mServiceType)) {
                     String zn = bean.getZeroNum();
-                    textView.setText(TextUtils.isEmpty(zn) || Double.valueOf(zn) == 0 ? "无" : "-" + zn);
+                    textView.setText(TextUtils.isEmpty(zn) || Double.valueOf(zn) == 0 ? " " : "-" + zn);
                 }
             }
         }

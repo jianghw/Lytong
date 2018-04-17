@@ -216,7 +216,30 @@ public class BidOilFragment extends RefreshFragment
             toastShort("请填写真实的地址详情");
             return;
         }
-        if (mPresenter != null) mPresenter.getRemainder();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("姓名:").append(name).append("\n");
+        sb.append("手机:").append(phone).append("\n");
+        sb.append("城市:").append(area).append("\n");
+        sb.append("地址:").append(address);
+        makeSureUser(sb.toString());
+    }
+
+    public void makeSureUser(String response) {
+        new DialogMgr(getActivity(), "信息确认", "",
+                response, "修改", "确认",
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                },
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mPresenter != null) mPresenter.getRemainder();
+                    }
+                });
     }
 
     public void initView(View view) {

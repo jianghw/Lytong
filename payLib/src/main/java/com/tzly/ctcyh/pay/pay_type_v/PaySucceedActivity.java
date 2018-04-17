@@ -69,6 +69,6 @@ public class PaySucceedActivity extends AbstractBaseActivity {
 
     @Override
     public void closeFragment() {
-        PayRouter.gotoMainActivity(getApplicationContext(), 1);
+        PayRouter.gotoMainActivity(this, 1);
     }
 }

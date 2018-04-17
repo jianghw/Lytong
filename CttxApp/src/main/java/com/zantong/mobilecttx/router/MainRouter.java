@@ -614,6 +614,8 @@ public final class MainRouter {
 
     /**
      * 违章查分输入面
+     * 2--
+     * 1--
      */
     public static void gotoLicenseGradeActivity(Context context, int position) {
         Bundle bundle = new Bundle();

@@ -10,6 +10,7 @@ import android.view.View;
 import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.global.JxGlobal;
+import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.custom.rea.Des3;
 import com.zantong.mobilecttx.R;
@@ -181,7 +182,6 @@ public class ViolationListActivity extends AbstractBaseActivity
         bundle.putParcelable(JxGlobal.putExtra.violation_pay_bean_extra, bean);
         intent.putExtras(bundle);
         startActivity(intent);
-
         overridePendingTransition(R.anim.set_translate_in, 0);
     }
 
@@ -217,10 +217,13 @@ public class ViolationListActivity extends AbstractBaseActivity
      */
     @Override
     protected void onDestroy() {
-        if (mViolationDTO != null)
+        boolean iShow = SPUtils.getInstance().getBoolean(SPUtils.IS_WZ_ACTIVE, true);
+
+        if (mViolationDTO != null && iShow)
             MainRouter.gotoActiveActivity(this,
                     1, mViolationDTO.getRegisterDate());
 
+        SPUtils.getInstance().put(SPUtils.IS_WZ_ACTIVE, true);
         super.onDestroy();
 
         if (mPresenter != null) mPresenter.unSubscribe();

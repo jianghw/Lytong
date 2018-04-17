@@ -353,7 +353,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <RelativeLayout
                 android:id="@+id/ry_consignee"
@@ -484,7 +484,7 @@
                 <TextView
                     android:id="@+id/tv_pay_remark"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/res_y_160"
+                    android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/tv_pay_remark_title"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"

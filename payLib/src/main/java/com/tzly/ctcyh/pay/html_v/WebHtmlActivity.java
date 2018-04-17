@@ -144,10 +144,12 @@ public class WebHtmlActivity extends AbstractBaseActivity
     }
 
     private void initTitle() {
-        titleContent(mStrTitle);
+        if (!TextUtils.isEmpty(mStrTitle)) titleContent(mStrTitle);
         titleClose();
 
-        if (mStrUrl.contains("detail")) {
+        if (TextUtils.isEmpty(mStrUrl)) {
+            titleContent("网站空地址");
+        } else if (mStrUrl.contains("detail")) {
             mRightBtnStatus = 1;
             titleContent("积分明细");
             titleMore("积分规则");
@@ -222,7 +224,6 @@ public class WebHtmlActivity extends AbstractBaseActivity
         //调试调试用
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(BuildConfig.isDeta);
-            //            WebView.setWebContentsDebuggingEnabled(true);
         }
     }
 
@@ -404,7 +405,10 @@ public class WebHtmlActivity extends AbstractBaseActivity
 
     @Override
     public void onPageFinished(WebView view, String url) {
-        if (view != null && url != null) view.loadUrl("javascript:" + url);
+        String script = "javascript:" + url;
+        if (view != null && url != null) view.loadUrl(script);
+
+        LogUtils.e("javascript==>" + script);
 
         //页面加载好以后，在放开图片
         view.getSettings().setBlockNetworkImage(false);

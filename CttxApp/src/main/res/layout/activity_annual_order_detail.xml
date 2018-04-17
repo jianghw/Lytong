@@ -362,16 +362,18 @@
                 <TextView
                     android:id="@+id/tv_pay_remark"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/ds_90"
+                    android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/tv_pay_remark_title"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:gravity="center"
-                    android:singleLine="true"
+                    android:layout_marginLeft="@dimen/res_x_30"
+                    android:layout_toRightOf="@+id/tv_pay_remark_title"
+                    android:gravity="right"
+                    android:maxLines="4"
                     android:textColor="@color/colorTvBlack_4c"
                     android:textSize="@dimen/fs_16sp"
-                    tools:text="商品内容" />
+                    tools:text="修改信息修改信息修改信息" />
             </RelativeLayout>
 
             <TextView

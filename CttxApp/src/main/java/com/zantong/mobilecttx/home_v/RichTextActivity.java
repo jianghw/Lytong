@@ -2,9 +2,11 @@ package com.zantong.mobilecttx.home_v;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.router.MainRouter;
@@ -47,6 +49,11 @@ public class RichTextActivity extends AbstractBaseActivity {
     protected void initContentData() {
         RichText.initCacheDir(this);
 
+        if (TextUtils.isEmpty(mCurRich)) {
+            ToastUtils.toastShort("文本内容为空!");
+            return;
+        }
+
         RichText.fromHtml(mCurRich) // 数据源
                 .autoFix(true) // 是否自动修复，默认true
                 .autoPlay(true) // gif图片是否自动播放
@@ -59,7 +66,7 @@ public class RichTextActivity extends AbstractBaseActivity {
                     @Override
                     public boolean urlClicked(String url) {
                         gotoHtml(url);
-                        return false;
+                        return true;
                     }
                 })
                 .bind(this) // 绑定richText对象到某个object上，方便后面的清理

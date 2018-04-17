@@ -42,6 +42,8 @@ public final class SPUtils {
 
     public static String APP_CHANNEL = "app_channel";
 
+    public static String IS_WZ_ACTIVE = "is_wz_active";
+
     /**
      * desc:获取保存的Object对象 临时解决旧加密
      */

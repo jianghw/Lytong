@@ -38,6 +38,7 @@ import com.tzly.ctcyh.router.custom.primission.PermissionFail;
 import com.tzly.ctcyh.router.custom.primission.PermissionGen;
 import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
 import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 
@@ -240,12 +241,16 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
         if (orderDetailBean.getType() == 2
                 || orderDetailBean.getType() == 6
                 || orderDetailBean.getType() == 15) {
-            PayRouter.gotoPaySucceedActivity(getContext(), String.valueOf(orderDetailBean.getType()));
+
+            PayRouter.gotoPaySucceedActivity(getContext(),
+                    String.valueOf(orderDetailBean.getType()));
         } else if (TextUtils.isEmpty(channel)) {
             PayRouter.gotoMainActivity(getContext(), 1);
         } else {
             PayRouter.gotoActiveActivity(getContext(), Integer.valueOf(channel));
         }
+
+        if (mPresenter != null) mPresenter.unSubscribe();
     }
 
     protected void errorStatus() {
@@ -306,11 +311,18 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
         }
     }
 
+    /**
+     * 无发动机号--罚单
+     */
     private void gotoActive() {
         if (TextUtils.isEmpty(mFmentToAtyable.getEnginenum()))
             PayRouter.gotoMainActivity(getContext(), 1);
-        else
+        else {
+            //标记前面的查违章页面不用跳活动页面 @ViolationListActivity
+            SPUtils.getInstance().put(SPUtils.IS_WZ_ACTIVE, false);
+
             PayRouter.gotoActiveActivity(getContext(), 2);
+        }
     }
 
     @Override

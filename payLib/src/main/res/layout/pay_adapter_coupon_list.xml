@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:maxLength="6"
+            android:maxLength="8"
             android:singleLine="true"
             android:textSize="@dimen/res_fs_22"
             tools:text="10" />

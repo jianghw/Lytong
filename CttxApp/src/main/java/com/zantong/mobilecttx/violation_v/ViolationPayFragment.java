@@ -268,7 +268,7 @@ public class ViolationPayFragment extends RefreshFragment
 
     private void createDialog() {
         if (remark.equals("4|")) {
-            String msg =  "使用畅通卡请预先在卡里充值相应金额、使用工行其他卡支付请先开通E支付";
+            String msg = "使用畅通卡请预先在卡里充值相应金额、使用工行其他卡支付请先开通E支付";
             MessageDialogFragment dialogFragment = MessageDialogFragment.newInstance(msg);
             dialogFragment.setClickListener(new IOnCouponSubmitListener() {
                 @Override
@@ -366,7 +366,7 @@ public class ViolationPayFragment extends RefreshFragment
         int amt = (int) (Float.valueOf(violationamt) * 100);
         String value = String.valueOf(amt);
 
-
+        //"%7C"
         remark = remark.substring(0, remark.length() - 1);
         String payUrl = BuildConfig.bank_app_url
                 + "payment_payForViolation?orderid=" + violationnum

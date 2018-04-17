@@ -176,8 +176,11 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
 
         holder.mTvDriving.setVisibility(itemType == 6 && (orderStatus == 11 || orderStatus == 12)
                 ? View.VISIBLE : View.GONE);
-        holder.mTvCourier.setVisibility(itemType == 6 && (orderStatus == 1 || orderStatus == 3 || orderStatus == 4)
-                ? View.VISIBLE : View.GONE);
+
+//        holder.mTvCourier.setVisibility(itemType == 6 && (orderStatus == 1 || orderStatus == 3 || orderStatus == 4)
+//                ? View.VISIBLE : View.GONE);
+        holder.mTvCourier.setVisibility( View.GONE);
+
         holder.mTvUncourier.setVisibility(itemType == 6 && orderStatus == 13 ? View.VISIBLE : View.GONE);
 
         //自驾办理

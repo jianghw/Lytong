@@ -28,8 +28,7 @@
         android:background="@mipmap/btn_fxfx"
         android:text="去邀请好友"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/fs_18sp"
-        android:visibility="gone" />
+        android:textSize="@dimen/fs_18sp" />
 
     <!--信息显示-->
     <!--<LinearLayout-->

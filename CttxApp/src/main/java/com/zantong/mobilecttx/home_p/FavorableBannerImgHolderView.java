@@ -74,17 +74,14 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
         String url = data.getAdvertisementSkipUrl();
         LoginData.getInstance().mHashMap.put("htmlUrl", url);
 
-        if (url.contains("discount")
-                || url.contains("happysend")) {//保险
-            Act.getInstance().gotoIntent(mAdapterContext, CustomCordovaActivity.class, url);
-        } else if (url.contains("localActivity")) {//百日无违章
+        if ((!TextUtils.isEmpty(url)) && url.contains("localActivity")) {//百日无违章
             if (MainRouter.isUserLogin()) {
                 MobUtils.getInstance().eventIdByUMeng(1);
                 getSignStatus();
             } else {
                 MainRouter.gotoLoginActivity(mAdapterContext);
             }
-        }else {
+        } else {
             if (discountsBanner != null)
                 discountsBanner.gotoByStatistId(url, data.getStatisticsId());
         }

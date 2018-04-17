@@ -168,7 +168,8 @@ public class PaySucceedFragment extends AbstractBaseFragment
                 : getGoodsType().equals("6")
                 ? "http://" + host + ".liyingtong.com/share/nianjian.html?userId=" + PayRouter.getUserID() + "&type=" + 6 + "payStatus=1&source=1"
                 : getGoodsType().equals("15")
-                ? "http://admin.liyingtong.com/wxproxy.php?appid=wx6f090722facc7bf1&redirect_uri=http%3a%2f%2f"+host+".liyingtong.com%2fwechat%2fbuyCard.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+                ? "http://admin.liyingtong.com/wxproxy.php?appid=wx6f090722facc7bf1&redirect_uri=http%3a%2f%2f"+host+".liyingtong.com%2fwechat%2fbuyCard.html?param="
+                +PayRouter.getUserID() +"*"+15+"*1*1&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
                 : "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
 
         Bitmap logio = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_global_app);
