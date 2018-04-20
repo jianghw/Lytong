@@ -22,6 +22,7 @@ import com.tencent.bugly.BuglyStrategy;
 import com.tencent.bugly.beta.Beta;
 import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.RudenessScreenHelper;
 import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.umeng.analytics.MobclickAgent;
@@ -93,6 +94,9 @@ public class MyApplication extends MultiDexApplication {
      * 第三方工具类
      */
     private void initThirdTools() {
+        //设计图标注的宽度 750*1334
+        int designWidth = 750;
+        new RudenessScreenHelper(this, designWidth).activate();
         //工具类
         Utils.init(this);
         String channel = AppUtils.getAppMetaData(getApplicationContext(), "UMENG_CHANNEL");

@@ -142,53 +142,47 @@ android {
         shwzcx {
             dimension "app"
             applicationId "com.abcd.mobileapp.shwzcx"
-            versionCode 1
-            versionName "1.0.1"
+            versionCode 2
+            versionName "1.0.2"
         }
         //上海ems便民通
         shbmt {
             dimension "app"
             applicationId "com.efgh.mobileapp.shbmt"
+            versionCode 1
+            versionName "1.0.1"
         }
         //12123
         number {
             dimension "app"
             applicationId "com.ijkl.mobileapp.number"
+            versionCode 1
+            versionName "1.0.1"
         }
         //车管到家
         cgdj {
             dimension "app"
             applicationId "com.mnop.mobileapp.cgdj"
+            versionCode 1
+            versionName "1.0.1"
         }
         //全国车辆违章
         qgclwz {
             dimension "app"
             applicationId "com.qrst.mobileapp.qgclwz"
+            versionCode 1
+            versionName "1.0.1"
         }
         //工行违章缴费
         ghwzcx {
             dimension "app"
             applicationId "com.uvwx.mobileapp.ghwzcx"
+            versionCode 1
+            versionName "1.0.1"
         }
 
         //应用宝
         yyb {
-            dimension "store"
-        }
-        //华为
-        huawei {
-            dimension "store"
-        }
-        //小米
-        xiaomi {
-            dimension "store"
-        }
-        //百度
-        baidu {
-            dimension "store"
-        }
-        //360
-        sjzs {
             dimension "store"
         }
 

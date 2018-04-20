@@ -15,7 +15,22 @@ import java.lang.reflect.Field;
 import static android.content.Context.WINDOW_SERVICE;
 
 /**
- * Created by Caodongyao on 2017/8/13.
+ * 若存在webview导致适配失效的问题
+ * <p>
+ * 可以先继承WebView并重写setOverScrollMode(int mode)方法，
+ * 在方法中调用super之后调用一遍RudenessScreenHelper.resetDensity(getContext(), designWidth)规避
+ * <p>
+ * 若存在dialog中适配失效的问题
+ * <p>
+ * 可以在dialog的oncreate中调用一遍RudenessScreenHelper.resetDensity(getContext(), designWidth)规避
+ * <p>
+ * 旋转屏幕之后适配失效
+ * <p>
+ * 可以在onConfigurationChanged中调用RudenessScreenHelper.resetDensity(getContext(), designWidth)规避
+ * <p>
+ * 特定国产机型ROM中偶先fragment失效
+ * <p>
+ * 可以在fragment的onCreateView中调用RudenessScreenHelper.resetDensity(getContext(), designWidth)规避
  */
 
 public class RudenessScreenHelper {
@@ -32,21 +47,6 @@ public class RudenessScreenHelper {
         DisplayMetrics metrics = getMetricsOnMiui(context.getResources());
         if (metrics != null)
             metrics.setToDefaults();
-    }
-
-    //解决MIUI更改框架导致的MIUI7+Android5.1.1上出现的失效问题(以及极少数基于这部分miui去掉art然后置入xposed的手机)
-    private static DisplayMetrics getMetricsOnMiui(Resources resources) {
-        if ("MiuiResources".equals(resources.getClass().getSimpleName())
-                || "XResources".equals(resources.getClass().getSimpleName())) {
-            try {
-                Field field = Resources.class.getDeclaredField("mTmpMetrics");
-                field.setAccessible(true);
-                return (DisplayMetrics) field.get(resources);
-            } catch (Exception e) {
-                return null;
-            }
-        }
-        return null;
     }
 
     /**
@@ -71,11 +71,19 @@ public class RudenessScreenHelper {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT, value, context.getResources().getDisplayMetrics());
     }
 
+
     private Application.ActivityLifecycleCallbacks activityLifecycleCallbacks;
+
     private Application mApplication;
+
+    /**
+     * 默认值
+     */
     private float designWidth = 720;
 
     /**
+     * 构造方法
+     *
      * @param application application
      * @param width       设计稿宽度
      */
@@ -106,18 +114,22 @@ public class RudenessScreenHelper {
 
             @Override
             public void onActivityPaused(Activity activity) {
+
             }
 
             @Override
             public void onActivityStopped(Activity activity) {
+
             }
 
             @Override
             public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
             }
 
             @Override
             public void onActivityDestroyed(Activity activity) {
+
             }
         };
     }
@@ -131,27 +143,6 @@ public class RudenessScreenHelper {
     }
 
     /**
-     * 重新计算displayMetrics.xhdpi, 使单位pt重定义为设计稿的相对长度
-     *
-     * @param context
-     * @param designWidth 设计稿的宽度
-     * @see #activate()
-     */
-    public static void resetDensity(Context context, float designWidth) {
-        if (context == null) return;
-
-        Point size = new Point();
-        ((WindowManager) context.getSystemService(WINDOW_SERVICE)).getDefaultDisplay().getSize(size);
-
-        Resources resources = context.getResources();
-
-        resources.getDisplayMetrics().xdpi = size.x / designWidth * 72f;
-
-        DisplayMetrics metrics = getMetricsOnMiui(context.getResources());
-        if (metrics != null) metrics.xdpi = size.x / designWidth * 72f;
-    }
-
-    /**
      * 恢复系统原生方案
      */
     public void inactivate() {
@@ -159,5 +150,79 @@ public class RudenessScreenHelper {
         mApplication.unregisterActivityLifecycleCallbacks(activityLifecycleCallbacks);
     }
 
+    /**
+     * 重新计算displayMetrics.xhdpi, 使单位pt重定义为设计稿的相对长度
+     *
+     * @param context
+     * @param designWidth 设计稿的宽度
+     * @see #activate()
+     */
+    public static void resetDensity(Context context, float designWidth) {
+        if (context == null)
+            return;
+
+        Point size = new Point();
+        ((WindowManager) context.getSystemService(WINDOW_SERVICE)).getDefaultDisplay().getSize(size);
+
+        Resources resources = context.getResources();
+
+        // 手机像素/设计像素×写的像素=显示效果
+        resources.getDisplayMetrics().xdpi = size.x / designWidth * 72f;
+
+        if (designWidth == 750)
+            resources.getDisplayMetrics().ydpi = size.y / 1334 * 72f;
+        //额外处理
+        DisplayMetrics metrics = getMetricsOnMiui(context.getResources());
+        if (metrics != null) {
+            metrics.xdpi = size.x / designWidth * 72f;
+
+            if (designWidth == 750)
+                metrics.ydpi = size.y / 1334 * 72f;
+        }
+    }
+
+    /**
+     * 解决MIUI更改框架导致的MIUI7+Android5.1.1上出现的失效问题
+     * (以及极少数基于这部分miui去掉art然后置入xposed的手机)
+     */
+    private static DisplayMetrics getMetricsOnMiui(Resources resources) {
+        if ("MiuiResources".equals(resources.getClass().getSimpleName())
+                || "XResources".equals(resources.getClass().getSimpleName())) {
+            try {
+                Field field = Resources.class.getDeclaredField("mTmpMetrics");
+                field.setAccessible(true);
+                return (DisplayMetrics) field.get(resources);
+            } catch (Exception e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    public static void resetDensityDp(Context context, float designWidth, float designHeigth) {
+        if (context == null)
+            return;
+
+        Point size = new Point();
+        ((WindowManager) context.getSystemService(WINDOW_SERVICE)).getDefaultDisplay().getSize(size);
+
+        Resources resources = context.getResources();
+        // 手机像素/设计像素×写的像素=显示效果
+        resources.getDisplayMetrics().density = size.x / designWidth * 2f;
+        resources.getDisplayMetrics().density = size.y / designHeigth * 2f;
+    }
+
+    public static void resetDensitySp(Context context, float designWidth, float designHeigth) {
+        if (context == null)
+            return;
+
+        Point size = new Point();
+        ((WindowManager) context.getSystemService(WINDOW_SERVICE)).getDefaultDisplay().getSize(size);
+
+        Resources resources = context.getResources();
+        // 手机像素/设计像素×写的像素=显示效果
+        resources.getDisplayMetrics().scaledDensity = size.x / designWidth * 2f;
+        resources.getDisplayMetrics().scaledDensity = size.y / designHeigth * 2f;
+    }
 
 }
