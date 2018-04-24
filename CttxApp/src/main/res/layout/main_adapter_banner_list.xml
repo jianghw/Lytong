@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/res_x_150"
-    android:layout_height="@dimen/res_y_165">
-
-    <TextView
-        android:id="@+id/tv_title"
-        style="@style/ResTextTheme.14.Subtitle"
-        android:textSize="@dimen/res_fs_13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/res_y_15"
-        android:singleLine="true"
-        tools:text="加油充值" />
+    android:layout_width="@dimen/pt_140"
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/img"
-        android:layout_width="@dimen/res_x_90"
-        android:layout_height="@dimen/res_y_90"
-        android:layout_above="@+id/tv_title"
+        android:layout_marginTop="@dimen/pt_20"
+        android:layout_width="@dimen/pt_80"
+        android:layout_height="@dimen/pt_80"
+        android:src="@mipmap/ic_global_app"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:scaleType="fitXY" />
+        android:textColor="@color/res_color_black_4d"
+        android:layout_marginTop="@dimen/pt_20"
+        android:singleLine="true"
+        android:textSize="@dimen/pt_26"
+        tools:text="加油充值中" />
 </RelativeLayout>

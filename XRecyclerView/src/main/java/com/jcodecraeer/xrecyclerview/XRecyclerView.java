@@ -344,11 +344,6 @@ public class XRecyclerView extends RecyclerView {
             mWrapAdapter.notifyItemRangeChanged(positionStart, itemCount);
         }
 
-        //        @Override
-        //        public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-        //            mWrapAdapter.notifyItemRangeChanged(positionStart, itemCount, payload);
-        //        }
-
         @Override
         public void onItemRangeRemoved(int positionStart, int itemCount) {
             mWrapAdapter.notifyItemRangeRemoved(positionStart, itemCount);
@@ -729,5 +724,4 @@ public class XRecyclerView extends RecyclerView {
         }
         return itemView;
     }
-
 }

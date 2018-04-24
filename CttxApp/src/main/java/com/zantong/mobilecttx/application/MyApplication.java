@@ -22,6 +22,7 @@ import com.tencent.bugly.BuglyStrategy;
 import com.tencent.bugly.beta.Beta;
 import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.RudenessScreenHelper;
 import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.umeng.analytics.MobclickAgent;
@@ -38,29 +39,6 @@ public class MyApplication extends MultiDexApplication {
         super.onCreate();
 
         initThirdTools();
-    }
-
-    /**
-     * 所有Activity的生命周期监听
-     */
-    @Override
-    public void registerActivityLifecycleCallbacks(ActivityLifecycleCallbacks callback) {
-        super.registerActivityLifecycleCallbacks(callback);
-    }
-
-    @Override
-    public void unregisterActivityLifecycleCallbacks(ActivityLifecycleCallbacks callback) {
-        super.unregisterActivityLifecycleCallbacks(callback);
-    }
-
-    @Override
-    public void registerComponentCallbacks(ComponentCallbacks callback) {
-        super.registerComponentCallbacks(callback);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
     }
 
     /**
@@ -82,11 +60,6 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
-    }
-
-    @Override
-    public void unregisterComponentCallbacks(ComponentCallbacks callback) {
-        super.unregisterComponentCallbacks(callback);
     }
 
     /**
@@ -155,6 +128,10 @@ public class MyApplication extends MultiDexApplication {
                 : "62323a33e6", BuildConfig.isDeta, strategy);
         //Log环境初始化
         LogUtils.initLogUtils(BuildConfig.isDeta);
+
+        //设计图标注的宽度 750*1334
+        float designWidth = 750f;
+        new RudenessScreenHelper(this, designWidth).activate();
     }
 
     /**

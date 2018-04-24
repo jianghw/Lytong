@@ -9,6 +9,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.custom.banner.CBViewHolderCreator;
@@ -47,6 +51,7 @@ import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.home.bean.IndexLayerBean;
 import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
+import com.zantong.mobilecttx.home_p.UnimpededBannerAdapter;
 import com.zantong.mobilecttx.home_p.UnimpededFtyPresenter;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.push_v.PushBean;
@@ -116,6 +121,9 @@ public class HomeUnimpededFragment extends RefreshFragment
     private List<View> dotViewList = new ArrayList<>();
     private OrderFragmentAdapter mainBannerAdapter;
 
+    private RecyclerView mRecyclerList;
+    private UnimpededBannerAdapter adapterList;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -173,7 +181,6 @@ public class HomeUnimpededFragment extends RefreshFragment
         EventBus.getDefault().register(this);
 
         initView(fragment);
-        initViewPager();
 
         UnimpededFtyPresenter mPresenter = new UnimpededFtyPresenter(
                 Injection.provideRepository(Utils.getContext()), this);
@@ -235,9 +242,21 @@ public class HomeUnimpededFragment extends RefreshFragment
             }
         });
         mCustomViolation = (HorizontalInfiniteCycleViewPager) view.findViewById(R.id.custom_violation);
+        //违章车辆
+        mCarViolationAdapter = new HorizontalCarViolationAdapter(getActivity(), mUserCarInfoBeanList);
+        mCustomViolation.setAdapter(mCarViolationAdapter);
 
-        mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        mTabLayout = (LinearLayout) view.findViewById(R.id.tabLayout);
+        mRecyclerList = (RecyclerView) view.findViewById(R.id.rv_list);
+        /*GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
+        layoutManager.setOrientation(GridLayoutManager.HORIZONTAL);*/
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecyclerList.setLayoutManager(linearLayoutManager);
+        adapterList = new UnimpededBannerAdapter();
+        mRecyclerList.setAdapter(adapterList);
+
+       /* mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        mTabLayout = (LinearLayout) view.findViewById(R.id.tabLayout);*/
     }
 
     private void initViewPager() {
@@ -367,7 +386,9 @@ public class HomeUnimpededFragment extends RefreshFragment
     @Override
     public void bannerSucceed(UnimpededBannerResponse result) {
         List<UnimpededBannerBean> lis = result.getData();
-        if (lis != null && !lis.isEmpty()) {
+        adapterList.replace(lis);
+
+        /*if (lis != null && !lis.isEmpty()) {
             int pager = lis.size() % 10 != 0 ? lis.size() / 10 + 1 : lis.size() / 10;
 
             if (mPagerList == null) mPagerList = new ArrayList<>();
@@ -381,7 +402,7 @@ public class HomeUnimpededFragment extends RefreshFragment
             }
         }
         mainBannerAdapter.notifyDataSetChanged();
-        initTabLayDots(mPagerList.size());
+        initTabLayDots(mPagerList.size());*/
     }
 
     @Override

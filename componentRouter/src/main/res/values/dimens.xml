@@ -155,4 +155,29 @@
     <dimen name="fs_36sp">36sp</dimen>
     <dimen name="fs_48sp">48sp</dimen>
 
+
+    <!--使用pt单位 原有pt单位失效-->
+    <dimen name="pt_1">1pt</dimen>
+    <dimen name="pt_10">10pt</dimen>
+    <dimen name="pt_16">16pt</dimen>
+    <dimen name="pt_20">20pt</dimen>
+    <dimen name="pt_24">24pt</dimen>
+    <dimen name="pt_26">26pt</dimen>
+    <dimen name="pt_30">30pt</dimen>
+    <dimen name="pt_36">36pt</dimen>
+    <dimen name="pt_40">40pt</dimen>
+    <dimen name="pt_50">50pt</dimen>
+    <dimen name="pt_60">60pt</dimen>
+    <dimen name="pt_80">80pt</dimen>
+    <dimen name="pt_88">88pt</dimen>
+    <dimen name="pt_100">100pt</dimen>
+    <dimen name="pt_120">120pt</dimen>
+    <dimen name="pt_140">140pt</dimen>
+    <dimen name="pt_150">150pt</dimen>
+    <dimen name="pt_160">160pt</dimen>
+    <dimen name="pt_180">180pt</dimen>
+    <dimen name="pt_360">360pt</dimen>
+    <dimen name="pt_430">430pt</dimen>
+    <dimen name="pt_528">528pt</dimen>
+
 </resources>

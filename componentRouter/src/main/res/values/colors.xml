@@ -5,6 +5,8 @@
     <!--字体 用-->
     <color name="res_color_black_4d">#4D4D4D</color>
     <color name="res_color_black_b3">#B3B3B3</color>
+    <color name="res_color_black_4c">#4C4C4C</color>
+    <color name="res_color_black_b2">#B2B2B2</color>
     <!--字体 用-->
     <color name="res_color_red_f3">#F3362B</color>
     <color name="res_color_red_ef">#EF8E3D</color>

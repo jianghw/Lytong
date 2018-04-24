@@ -1,56 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-       xmlns:tools="http://schemas.android.com/tools"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_alignParentTop="true"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/pt_88"
+    android:layout_marginTop="@dimen/pt_60">
     <!--相对布局-->
     <ImageView
         android:id="@+id/img_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/res_x_24"
-        android:layout_marginRight="@dimen/res_x_24"
-        android:layout_marginTop="@dimen/res_y_54"
-        android:src="@mipmap/icon_msg"/>
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/pt_30"
+        android:layout_marginRight="@dimen/pt_30"
+        android:src="@mipmap/icon_msg" />
 
     <TextView
         android:id="@+id/tv_msg_count"
-        android:layout_width="@dimen/ds_48"
-        android:layout_height="@dimen/ds_48"
+        android:layout_width="@dimen/pt_24"
+        android:layout_height="@dimen/pt_24"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/ds_60"
-        android:layout_marginTop="@dimen/res_y_42"
+        android:layout_marginLeft="@dimen/pt_60"
+        android:layout_marginTop="@dimen/pt_20"
         android:background="@drawable/bg_tv_msg_count"
-        android:visibility="invisible"
         android:gravity="center"
         android:textColor="@color/res_color_red_f3"
-        android:textSize="@dimen/fs_10sp"
-        tools:text="5"/>
+        android:textSize="@dimen/pt_20"
+        android:visibility="invisible"
+        tools:text="5" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/res_y_54"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:text="@string/main_app_name"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/fs_18sp"/>
+        android:textColor="@color/res_color_white"
+        android:textSize="@dimen/pt_36" />
 
     <TextView
         android:id="@+id/tv_scan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/res_x_24"
-        android:layout_marginTop="@dimen/res_y_54"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:layout_marginRight="@dimen/pt_10"
         android:drawableLeft="@mipmap/btn_scan"
-        android:drawablePadding="@dimen/res_x_12"
-        android:gravity="center"
+        android:drawablePadding="@dimen/pt_10"
         android:text="扫罚单"
         android:textColor="@drawable/common_text_selecter"
-        android:textSize="@dimen/fs_14sp"/>
-
-</merge>
+        android:textSize="@dimen/pt_24" />
+</RelativeLayout>

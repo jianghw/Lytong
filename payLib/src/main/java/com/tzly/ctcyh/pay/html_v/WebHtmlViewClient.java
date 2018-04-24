@@ -87,10 +87,10 @@ public class WebHtmlViewClient extends WebViewClient {
                 url.equals("https://shyc.icbc.com.cn/SHB2CWeb/servlet/ICBCSZ_TCPayServlet")) {
             //            js = "var bbb=document.getElementsByTagName(\"tr\");";
             //            js += "if(bbb.length > 0){for(var j = 0; j<bbb.length; j++ ){for(var i = 0;i < bbb[j].cells.length;i++){if(bbb[j].cells[0].innerText == \"商品名称 :\"){bbb[j].cells[1].innerHTML = \"<font color='#484848' size='20px'>交通违章缴费</font>\";}}}}";
-//            js = "function changeHtmlCustom(){" +
-//                    "var font=document.getElementsByTagName(\"font\")[8];" +
-//                    "font.textContent=\"交通违章缴费\";}" +
-//                    "changeHtmlCustom();";
+            js = "function changeHtmlCustom(){" +
+                    "var font=document.getElementsByTagName(\"font\")[8];" +
+                    "font.textContent=\"交通违章缴费\";}" +
+                    "changeHtmlCustom();";
         }
         if (viewClientable != null) viewClientable.onPageFinished(view, js);
     }

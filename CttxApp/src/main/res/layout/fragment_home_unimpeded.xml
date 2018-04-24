@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/ry_banner"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/res_y_450">
+        android:layout_height="@dimen/pt_528">
 
         <com.tzly.ctcyh.router.custom.banner.ConvenientBanner
             android:id="@+id/custom_convenientBanner"
@@ -19,24 +19,31 @@
     </RelativeLayout>
 
     <!--导航控件-->
-    <android.support.v4.view.ViewPager
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_list"
+        android:background="@color/res_color_white"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pt_160"/>
+
+    <!--<android.support.v4.view.ViewPager
         android:background="@color/res_color_white"
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/res_y_330" />
+        android:layout_height="@dimen/pt_180" />
 
     <LinearLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal" />
+        android:orientation="horizontal" />-->
 
     <!--小广播-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/res_y_100"
-        android:background="@color/colorWhite">
+        android:layout_height="@dimen/pt_100"
+        android:background="@color/res_color_white">
 
         <ImageView
             android:id="@+id/img_trumpet"
@@ -72,13 +79,10 @@
     <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
         android:id="@+id/custom_violation"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/colorBgGray_f8"
-        android:layout_marginLeft="@dimen/res_x_30"
-        android:layout_marginRight="@dimen/res_x_30"
+        android:layout_height="@dimen/pt_430"
+        android:background="@color/res_color_gray_f8"
         app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
-        app:icvp_max_page_scale="0.9"
+        app:icvp_max_page_scale="0.84"
         app:icvp_medium_scaled="true"
         app:icvp_min_page_scale="0.6"
         app:icvp_center_page_scale_offset="20dp"
