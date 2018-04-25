@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/res_y_88"
-        android:background="@color/colorWhite"
+        android:layout_height="@dimen/pt_88"
+        android:background="@color/res_color_white"
         android:gravity="center"
         android:text="优惠"
-        android:textColor="@color/colorTvRed_f33"
-        android:textSize="@dimen/fs_18sp"/>
+        android:textColor="@color/res_color_red_f3"
+        android:textSize="@dimen/pt_36" />
 
     <com.tzly.ctcyh.router.custom.banner.ConvenientBanner
         android:id="@+id/custom_convenientBanner"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_480"/>
+        android:layout_height="@dimen/pt_300" />
 
 </LinearLayout>

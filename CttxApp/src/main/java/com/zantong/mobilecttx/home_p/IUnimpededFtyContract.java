@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.home_p;
 
+import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
@@ -33,6 +34,9 @@ public interface IUnimpededFtyContract {
 
         void versionInfoError();
 
+        void findByTypeSucceed(NewsInfoResponse result);
+
+        void findByTypeError(String message);
     }
 
     interface IUnimpededFtyPresenter extends IBasePresenter {
@@ -54,6 +58,8 @@ public interface IUnimpededFtyContract {
         void getBanner();
 
         void versionInfo();
+
+        void findByType();
     }
 
 }

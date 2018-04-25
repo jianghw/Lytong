@@ -16,6 +16,7 @@ import com.jianghw.multi.state.layout.MultiState;
 import com.jianghw.multi.state.layout.MultiStateLayout;
 import com.jianghw.multi.state.layout.OnStateViewCreatedListener;
 import com.tzly.ctcyh.router.R;
+import com.tzly.ctcyh.router.util.RudenessScreenHelper;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -53,6 +54,9 @@ public abstract class AbstractBaseFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //特定手机会失效
+        RudenessScreenHelper.resetDensity(getContext(), 750f);
+
         //此处不用container,
         View view = inflater.inflate(R.layout.activity_multistate_content, null);
         multiStateLayout = (MultiStateLayout) view.findViewById(R.id.lay_state);
@@ -277,7 +281,7 @@ public abstract class AbstractBaseFragment extends Fragment {
         }
     }
 
-    protected void responseData(Object response){
+    protected void responseData(Object response) {
 
     }
 

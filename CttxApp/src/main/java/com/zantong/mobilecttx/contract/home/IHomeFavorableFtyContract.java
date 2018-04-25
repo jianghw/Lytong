@@ -12,13 +12,11 @@ import com.zantong.mobilecttx.home.bean.BannerResponse;
 
 public interface IHomeFavorableFtyContract {
 
-    interface IHomeFavorableFtyView extends IMvpView<IHomeFavorableFtyPresenter>,IResponseView {
+    interface IHomeFavorableFtyView extends IMvpView<IHomeFavorableFtyPresenter>, IResponseView {
 
         void getBannerSucceed(BannerBean bannerBean);
 
         void getBannerError(String responseDesc);
-
-        void getRewardSucceed(BannerBean bannerBean);
     }
 
     interface IHomeFavorableFtyPresenter extends IMvpPresenter {

@@ -8,18 +8,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.tzly.ctcyh.router.base.RecyclerListFragment;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
-import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.car.activity.ManageCarActivity;
 import com.zantong.mobilecttx.car.adapter.ManageCarListAdapter;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
 import com.zantong.mobilecttx.contract.IManageCarFtyContract;
 import com.zantong.mobilecttx.global.MainGlobal;
-import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.presenter.car.ManageCarFtyPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
 
@@ -28,14 +27,8 @@ import java.util.List;
 /**
  * 车辆列表
  */
-public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLicenseBean>
+public class ManageCarListFragment extends RecyclerListFragment<VehicleLicenseBean>
         implements IManageCarFtyContract.IManageCarFtyView {
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
 
     private IManageCarFtyContract.IManageCarFtyPresenter mPresenter;
     private ManageCarListAdapter mCarListAdapter;
@@ -43,24 +36,19 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     public static ManageCarListFragment newInstance() {
         return new ManageCarListFragment();
     }
 
-    public static ManageCarListFragment newInstance(String param1, String param2) {
-        ManageCarListFragment fragment = new ManageCarListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    /**
+     * adapter
+     */
+    @Override
+    public BaseAdapter<VehicleLicenseBean> createAdapter() {
+        mCarListAdapter = new ManageCarListAdapter();
+        return mCarListAdapter;
     }
 
     /**
@@ -83,13 +71,21 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
         return textView;
     }
 
-    /**
-     * adapter
-     */
+
     @Override
-    public BaseAdapter<VehicleLicenseBean> createAdapter() {
-        mCarListAdapter = new ManageCarListAdapter();
-        return mCarListAdapter;
+    protected void initPresenter() {
+        ManageCarFtyPresenter mPresenter = new ManageCarFtyPresenter(
+                Injection.provideRepository(Utils.getContext()), this);
+    }
+
+    @Override
+    public void setPresenter(IManageCarFtyContract.IManageCarFtyPresenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    protected void loadingFirstData() {
+        if (mPresenter != null) mPresenter.getAllVehicles();
     }
 
     /**
@@ -108,37 +104,11 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
     }
 
     @Override
-    protected void onRefreshData() {
-        onFirstDataVisible();
-    }
+    public void onDestroy() {
+        super.onDestroy();
 
-    @Override
-    protected void initFragmentView(View view) {
-
-        ManageCarFtyPresenter mPresenter = new ManageCarFtyPresenter(
-                Injection.provideRepository(Utils.getContext()), this);
-    }
-
-    @Override
-    public void setPresenter(IManageCarFtyContract.IManageCarFtyPresenter presenter) {
-        mPresenter = presenter;
-    }
-
-    @Override
-    protected void onFirstDataVisible() {
-        if (mPresenter != null) mPresenter.getAllVehicles();
-    }
-
-    @Override
-    protected void DestroyViewAndThing() {
         if (mPresenter != null) mPresenter.unSubscribe();
     }
-
-    @Override
-    public void textNoticeInfoError(String message) {}
-
-    @Override
-    public void textNoticeInfoSucceed(HomeCarResponse result) {}
 
     /**
      * 操作失败
@@ -171,16 +141,6 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
         if (activity != null) activity.isAddCarTitle(LoginData.getInstance().mCarNum);
     }
 
-    @Override
-    public void showLoadingDialog() {
-        showDialogLoading();
-    }
-
-    @Override
-    public void dismissLoadingDialog() {
-        hideDialogLoading();
-    }
-
     /**
      * 回调
      */
@@ -191,6 +151,7 @@ public class ManageCarListFragment extends BaseRecyclerListJxFragment<VehicleLic
         if (resultCode == MainGlobal.resultCode.violation_query_submit
                 || resultCode == MainGlobal.resultCode.violation_query_del
                 || resultCode == MainGlobal.resultCode.set_pay_car_succeed) {
+
             if (mPresenter != null) mPresenter.getAllVehicles();
         }
     }

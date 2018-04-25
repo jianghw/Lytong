@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -219,6 +220,14 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
     protected void titleMore(String right) {
         mTvRight.setVisibility(View.VISIBLE);
         if (mTvRight != null) mTvRight.setText(right);
+    }
+
+    @SuppressLint("ResourceType")
+    protected void titleMore(@IdRes int res) {
+        if (res == 0) return;
+        if (mTvRight != null) mTvRight.setVisibility(View.GONE);
+        if (mImgHome != null) mImgHome.setVisibility(View.VISIBLE);
+        if (mImgHome != null) mImgHome.setImageResource(res);
     }
 
     /**

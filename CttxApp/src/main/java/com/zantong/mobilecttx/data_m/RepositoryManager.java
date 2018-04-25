@@ -9,6 +9,7 @@ import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
+import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
@@ -686,7 +687,14 @@ public class RepositoryManager {
     /**
      * 广告统计
      */
-    public Observable <BaseResponse> advertCount(String keyId, String channel) {
+    public Observable<BaseResponse> advertCount(String keyId, String channel) {
         return mRemoteData.advertCount(keyId, channel);
+    }
+
+    /**
+     * 资讯列表news/findByType
+     */
+    public Observable<NewsInfoResponse> findByType(int type) {
+        return mRemoteData.findByType(type);
     }
 }

@@ -1,4 +1,4 @@
-package com.zantong.mobilecttx.home.adapter;
+package com.zantong.mobilecttx.home_p;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
@@ -17,11 +17,13 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.ctcyh.router.util.RudenessScreenHelper;
 import com.tzly.ctcyh.router.util.ScreenUtils;
 import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.util.ConvertUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.contract.home.INativeItemListener;
+import com.zantong.mobilecttx.home.adapter.ServiceDiscountsAdapter;
 import com.zantong.mobilecttx.home.bean.ChildrenBean;
 import com.zantong.mobilecttx.home.bean.ModuleBean;
 
@@ -190,15 +192,15 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         //计算行数
         int lineNumber = childrenBeanList.size() % row == 0
                 ? childrenBeanList.size() / row : childrenBeanList.size() / row + 1;
+        int height = row == 2 ? 260 : 300;
+        return RudenessScreenHelper.ptInpx(height) * lineNumber;
 
         //高度的计算需要自己好好理解，否则会产生嵌套recyclerView可以滑动的现象
-        int width = (ScreenUtils.widthPixels(mAdapterContext) -
-                (row == 2 ? ConvertUtils.dp2px(7.33f) * 2 : ConvertUtils.dp2px(10f) * 2)) / row;
+       /* int width = (ScreenUtils.widthPixels(mAdapterContext) -
+                (row == 2 ? RudenessScreenHelper.ptInpx(15f) * 2 : RudenessScreenHelper.ptInpx(20f) * 2)) / row;
 
-//        return (row == 2 ? width / 2 : (int) (width * 1.2)) * lineNumber
-//                + (row == 2 ? ConvertUtils.toPx(7.33f) * 2 : ConvertUtils.toPx(10f) * 2);
-        return (row == 2 ? width  : (int) (width * 1.2)) * lineNumber
-                + (row == 2 ? ConvertUtils.dp2px(7.33f) * 2 : ConvertUtils.dp2px(10f) * 2);
+        return (row == 2 ? width : (int) (width * 1.2)) * lineNumber
+                + (row == 2 ? RudenessScreenHelper.ptInpx(7.33f) * 2 : RudenessScreenHelper.ptInpx(10f) * 2);*/
     }
 
     /**
@@ -208,17 +210,19 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         //计算行数
         int lineNumber = childrenBeanList.size() % row == 0
                 ? childrenBeanList.size() / row : childrenBeanList.size() / row + 1;
-
-        //高度的计算需要自己好好理解，否则会产生嵌套recyclerView可以滑动的现象
-        int width = (ScreenUtils.widthPixels(mAdapterContext) -
-                (row == 2 ? ConvertUtils.dp2px(7.33f) * 2 : ConvertUtils.dp2px(10f) * 2)) / row;
-
         lineNumber = (row == 2)
                 ? childrenBeanList.size() >= 4 ? 2 : lineNumber
                 : childrenBeanList.size() >= 6 ? 2 : lineNumber;
 
-        return (row == 2 ? width: (int) (width * 1.2)) * lineNumber
-                + (row == 2 ? ConvertUtils.dp2px(7.33f) * 2 : ConvertUtils.dp2px(10f) * 2);
+        int height = row == 2 ? 260 : 300;
+        return RudenessScreenHelper.ptInpx(height) * lineNumber;
+
+        //高度的计算需要自己好好理解，否则会产生嵌套recyclerView可以滑动的现象
+        /*int width = (ScreenUtils.widthPixels(mAdapterContext) -
+                (row == 2 ? ConvertUtils.dp2px(7.33f) * 2 : ConvertUtils.dp2px(10f) * 2)) / row;
+
+        return (row == 2 ? width : (int) (width * 1.2)) * lineNumber
+                + (row == 2 ? ConvertUtils.dp2px(7.33f) * 2 : ConvertUtils.dp2px(10f) * 2);*/
     }
 
     /**
@@ -385,7 +389,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         @Bind(R.id.tv_oil_click)
         TextView mTvOilClick;
         @Bind(R.id.lay_locality_1)
-        RelativeLayout mLayLocality1;
+        LinearLayout mLayLocality1;
 
         @Bind(R.id.img_insurance)
         ImageView mImgInsurance;
@@ -394,7 +398,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         @Bind(R.id.tv_insurance_click)
         TextView mTvInsuranceClick;
         @Bind(R.id.lay_locality_2)
-        RelativeLayout mLayLocality2;
+        LinearLayout mLayLocality2;
 
         @Bind(R.id.img_native_1)
         ImageView mImgNative1;
@@ -457,9 +461,8 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
 
             mRvRecycler.setLayoutManager(layoutManager);
             //动态设置其内边距 多种状态布局时
-            float padding = itemType == ITEM_TYPE_TWO_PIC ? 7.33f : 10f;
-            mRvRecycler.setPadding(ConvertUtils.dp2px(padding), ConvertUtils.dp2px(padding),
-                    ConvertUtils.dp2px(padding), ConvertUtils.dp2px(padding));
+            float padding = itemType == ITEM_TYPE_TWO_PIC ? 15f : 20f;
+            // mRvRecycler.setPadding(0, 0, 0, RudenessScreenHelper.ptInpx(30f));
         }
     }
 

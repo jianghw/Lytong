@@ -67,7 +67,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
 
     @Override
     public void unSubscribe() {
-        mAtyView.dismissLoadingDialog();
+        mAtyView.dismissLoading();
         mSubscriptions.clear();
     }
 
@@ -87,16 +87,12 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.textNoticeInfoError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(HomeCarResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.textNoticeInfoSucceed(result);
                         } else {
-                            mAtyView.textNoticeInfoError(result != null
-                                    ? result.getResponseDesc() : "未知错误(NoticeInfo)");
                         }
                     }
                 });
@@ -200,7 +196,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoadingDialog();
+                        mAtyView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -208,7 +204,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                 .subscribe(new BaseSubscriber<List<BindCarDTO>>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoadingDialog();
+                        mAtyView.dismissLoading();
                     }
 
                     @Override
@@ -421,7 +417,7 @@ public class ManageCarFtyPresenter implements IManageCarFtyContract.IManageCarFt
                 .subscribe(new BaseSubscriber<VehicleLicenseResponse>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoadingDialog();
+                        mAtyView.dismissLoading();
                     }
 
                     @Override

@@ -71,10 +71,10 @@ public class ServiceDiscountsAdapter extends BaseAdapter<ChildrenBean> {
     public BaseRecyclerViewHolder createViewHolder(View view, int itemType) {
         switch (itemType) {
             case ITEM_TYPE_TWO_PIC://每行显示2附图片，view内边距22px,recyclerView内边距22px
-                stateImageParams(view, itemType);
+//                stateImageParams(view, itemType);
                 return new ImageViewHolder(view);
             case ITEM_TYPE_THREE_PIC:
-                stateImageParams(view, itemType);
+//                stateImageParams(view, itemType);
                 return new ImageTextViewHolder(view);
             default:
                 return new ImageViewHolder(view);

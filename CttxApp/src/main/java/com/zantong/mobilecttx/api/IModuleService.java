@@ -1,10 +1,12 @@
 package com.zantong.mobilecttx.api;
 
+import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
 import com.zantong.mobilecttx.home.bean.ModuleResponse;
 
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -25,4 +27,11 @@ public interface IModuleService {
      */
     @GET("module/getBanner")
     Observable<UnimpededBannerResponse> getBanner();
+
+    /**
+     * 资讯列表news/findByType
+     * 参数:type(int) 1.推荐 2.新闻 3.加油 4.二手车 5.车险
+     */
+    @GET("news/findByType")
+    Observable<NewsInfoResponse> findByType(@Query("type") int type);
 }

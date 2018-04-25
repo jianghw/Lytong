@@ -1,5 +1,7 @@
 package com.zantong.mobilecttx.contract;
 
+import com.tzly.ctcyh.router.base.IBasePresenter;
+import com.tzly.ctcyh.router.base.IBaseView;
 import com.zantong.mobilecttx.base.interf.IMvpPresenter;
 import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseBean;
@@ -14,33 +16,16 @@ import java.util.List;
 
 public interface IManageCarFtyContract {
 
-    interface IManageCarFtyView extends IMvpView<IManageCarFtyPresenter> {
-
-        /**
-         * 获取车俩
-         */
-        void textNoticeInfoError(String message);
-
-        void textNoticeInfoSucceed(HomeCarResponse result);
+    interface IManageCarFtyView extends IBaseView<IManageCarFtyPresenter> {
 
         void addVehicleLicenseError(String message);
 
         void addVehicleLicenseSucceed(List<VehicleLicenseBean> data);
 
-        /**
-         * 显示loading框
-         */
-        void showLoadingDialog();
-
-        /**
-         * 隐藏loading框
-         */
-        void dismissLoadingDialog();
-
         void allVehiclesError(String message);
     }
 
-    interface IManageCarFtyPresenter extends IMvpPresenter {
+    interface IManageCarFtyPresenter extends IBasePresenter {
         /**
          * 获取所有车辆信息
          */

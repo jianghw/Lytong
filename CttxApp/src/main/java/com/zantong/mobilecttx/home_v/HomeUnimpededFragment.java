@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jianghw.multi.state.layout.MultiState;
+import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.custom.banner.CBViewHolderCreator;
 import com.tzly.ctcyh.router.custom.banner.ConvenientBanner;
@@ -51,6 +52,7 @@ import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.home.bean.IndexLayerBean;
 import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
+import com.zantong.mobilecttx.home_p.ModuleInfoAdapter;
 import com.zantong.mobilecttx.home_p.UnimpededBannerAdapter;
 import com.zantong.mobilecttx.home_p.UnimpededFtyPresenter;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
@@ -120,9 +122,12 @@ public class HomeUnimpededFragment extends RefreshFragment
     // 放圆点的View的list
     private List<View> dotViewList = new ArrayList<>();
     private OrderFragmentAdapter mainBannerAdapter;
-
+    //标签栏
     private RecyclerView mRecyclerList;
     private UnimpededBannerAdapter adapterList;
+    //资讯
+    private RecyclerView mRecyclerInfo;
+    private ModuleInfoAdapter adapterInfo;
 
     @Override
     public void onAttach(Activity activity) {
@@ -241,14 +246,12 @@ public class HomeUnimpededFragment extends RefreshFragment
                 }
             }
         });
-        mCustomViolation = (HorizontalInfiniteCycleViewPager) view.findViewById(R.id.custom_violation);
         //违章车辆
+        mCustomViolation = (HorizontalInfiniteCycleViewPager) view.findViewById(R.id.custom_violation);
         mCarViolationAdapter = new HorizontalCarViolationAdapter(getActivity(), mUserCarInfoBeanList);
         mCustomViolation.setAdapter(mCarViolationAdapter);
 
         mRecyclerList = (RecyclerView) view.findViewById(R.id.rv_list);
-        /*GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
-        layoutManager.setOrientation(GridLayoutManager.HORIZONTAL);*/
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRecyclerList.setLayoutManager(linearLayoutManager);
@@ -257,6 +260,15 @@ public class HomeUnimpededFragment extends RefreshFragment
 
        /* mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
         mTabLayout = (LinearLayout) view.findViewById(R.id.tabLayout);*/
+
+        mRecyclerInfo = (RecyclerView) view.findViewById(R.id.rv_info);
+        //ScrollView 去滑动
+        mRecyclerInfo.setNestedScrollingEnabled(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerInfo.setLayoutManager(layoutManager);
+        adapterInfo = new ModuleInfoAdapter();
+        mRecyclerInfo.setAdapter(adapterInfo);
     }
 
     private void initViewPager() {
@@ -369,6 +381,7 @@ public class HomeUnimpededFragment extends RefreshFragment
     protected void bannerLoadData() {
         if (mPresenter != null) mPresenter.getIndexLayer();
         if (mPresenter != null) mPresenter.getBanner();
+        if (mPresenter != null) mPresenter.findByType();
     }
 
 
@@ -660,5 +673,21 @@ public class HomeUnimpededFragment extends RefreshFragment
     @Override
     public void gotoByStatistId(String url, int statisticsId) {
         RouterUtils.gotoByStatistId(url, String.valueOf(statisticsId), getActivity());
+    }
+
+    /**
+     * 资讯广告
+     */
+    @Override
+    public void findByTypeSucceed(NewsInfoResponse result) {
+        if (adapterInfo != null) {
+        } else {
+            ToastUtils.toastShort("资讯广告加载出错");
+        }
+    }
+
+    @Override
+    public void findByTypeError(String message) {
+
     }
 }

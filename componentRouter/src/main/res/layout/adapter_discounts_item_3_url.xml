@@ -1,45 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/ds_15">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/pt_300">
 
     <ImageView
         android:id="@+id/img_bitmap"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/tv_title"
+        android:layout_width="@dimen/pt_220"
+        android:layout_height="@dimen/pt_160"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
-        android:src="@mipmap/default_220_160"/>
-
-    <TextView
-        android:id="@+id/tv_body"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/ds_15"
-        android:gravity="center"
-        android:singleLine="true"
-        android:textColor="@color/colorTvBlack_b3"
-        android:textSize="14sp"
-        tools:text="dfdfdfdfdf"/>
+        android:src="@mipmap/default_220_160" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tv_body"
+        android:layout_below="@+id/img_bitmap"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/ds_15"
+        android:layout_marginTop="@dimen/pt_20"
         android:gravity="center"
         android:singleLine="true"
-        android:textColor="@color/colorTvBlack_4d"
-        android:textSize="16sp"
-        tools:text="dfdfdfdfdf"/>
+        android:textColor="@color/res_color_black_4d"
+        android:textSize="@dimen/pt_30"
+        tools:text="dfdfdfdfdf" />
 
+    <TextView
+        android:id="@+id/tv_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/pt_20"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/res_color_black_b3"
+        android:textSize="@dimen/pt_24"
+        tools:text="dfdfdfdfdf" />
 
 </RelativeLayout>

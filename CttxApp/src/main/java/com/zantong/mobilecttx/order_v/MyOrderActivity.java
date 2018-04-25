@@ -10,8 +10,10 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.base.JxBaseActivity;
 import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.IOrderParentFtyContract;
@@ -28,7 +30,7 @@ import java.util.List;
 /**
  * 订单列表页面
  */
-public class MyOrderActivity extends JxBaseActivity
+public class MyOrderActivity extends AbstractBaseActivity
         implements IOrderParentFtyContract.IOrderParentFtyView {
 
     private TabLayout mTabLayout;
@@ -41,15 +43,6 @@ public class MyOrderActivity extends JxBaseActivity
     private MyOrderStatusFragment orderUnStatusFragment = null;
     private MyOrderStatusFragment orderCancleStatusFragment = null;
     private MyOrderStatusFragment orderPayStatusFragment = null;
-    /**
-     * 支付类型 判断回调成功页面是哪个
-     */
-
-    private OrderListBean mOrderListBean;
-
-    @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-    }
 
     @Override
     protected int initContentView() {
@@ -57,13 +50,18 @@ public class MyOrderActivity extends JxBaseActivity
     }
 
     @Override
-    protected void bindContentView(View childView) {
+    protected void bundleIntent(Intent intent) {
+
+    }
+
+    @Override
+    protected void bindFragment() {
         titleContent("我的订单");
 
         OrderParentPresenter presenter = new OrderParentPresenter(
-                Injection.provideRepository(getApplicationContext()), this);
+                Injection.provideRepository(Utils.getContext()), this);
 
-        initView(childView);
+        initView();
         if (mFragmentList == null) mFragmentList = new ArrayList<>();
         initFragment();
 
@@ -79,9 +77,9 @@ public class MyOrderActivity extends JxBaseActivity
         if (mPresenter != null) mPresenter.getOrderList(pager);
     }
 
-    public void initView(View view) {
-        mTabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
-        mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
+    public void initView() {
+        mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        mViewPager = (ViewPager) findViewById(R.id.viewPager);
     }
 
     private void initFragment() {
@@ -129,8 +127,6 @@ public class MyOrderActivity extends JxBaseActivity
              */
             @Override
             public void doClickPay(OrderListBean bean) {
-                mOrderListBean = bean;
-
                 payTypeByUser(bean);
             }
 

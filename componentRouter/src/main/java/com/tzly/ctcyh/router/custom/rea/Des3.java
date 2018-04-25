@@ -31,7 +31,6 @@ public class Des3 {
     public static String encode(String plainText) {
         String encodeStr;
         try {
-
             DESedeKeySpec deSedeKeySpec = new DESedeKeySpec(secretKey.getBytes());
             SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("desede");
             SecretKey secretKey = secretKeyFactory.generateSecret(deSedeKeySpec);

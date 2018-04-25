@@ -21,10 +21,10 @@
     <!--导航控件-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_list"
-        android:background="@color/res_color_white"
-        android:scrollbars="none"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/pt_160"/>
+        android:layout_height="@dimen/pt_160"
+        android:background="@color/res_color_white"
+        android:scrollbars="none" />
 
     <!--<android.support.v4.view.ViewPager
         android:background="@color/res_color_white"
@@ -81,11 +81,17 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/pt_430"
         android:background="@color/res_color_gray_f8"
+        app:icvp_center_page_scale_offset="20dp"
         app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
         app:icvp_max_page_scale="0.84"
         app:icvp_medium_scaled="true"
         app:icvp_min_page_scale="0.6"
-        app:icvp_center_page_scale_offset="20dp"
         app:icvp_min_page_scale_offset="3dp"
         app:icvp_scroll_duration="300" />
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/rv_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none" />
 </LinearLayout>

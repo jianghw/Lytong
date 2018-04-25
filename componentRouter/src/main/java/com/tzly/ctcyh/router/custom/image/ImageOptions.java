@@ -96,9 +96,9 @@ public class ImageOptions {
      */
     public static DisplayImageOptions getNativeCircleOptions() {
         return new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.mipmap.icon_oil_favorable)
-                .showImageForEmptyUri(R.mipmap.icon_oil_favorable)
-                .showImageOnFail(R.mipmap.icon_oil_favorable)
+                .showImageOnLoading(R.mipmap.ic_global_app)
+                .showImageForEmptyUri(R.mipmap.ic_global_app)
+                .showImageOnFail(R.mipmap.ic_global_app)
                 .cacheInMemory(false)
                 .cacheOnDisk(true)
                 .bitmapConfig(Bitmap.Config.RGB_565)

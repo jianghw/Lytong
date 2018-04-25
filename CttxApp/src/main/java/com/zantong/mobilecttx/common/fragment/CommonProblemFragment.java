@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
+import com.jianghw.multi.state.layout.MultiState;
+import com.tzly.ctcyh.router.base.RecyclerListFragment;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.fragment.BaseRecyclerListJxFragment;
 import com.zantong.mobilecttx.common.activity.CommonProblemDetailActivity;
 import com.zantong.mobilecttx.common.adapter.CommonProblemAdapter;
 import com.zantong.mobilecttx.common.bean.CommonProblem;
@@ -18,7 +19,7 @@ import java.util.List;
  * Created by zhoujie on 2016/12/23.
  */
 
-public class CommonProblemFragment extends BaseRecyclerListJxFragment<CommonProblem> {
+public class CommonProblemFragment extends RecyclerListFragment<CommonProblem> {
 
     public static CommonProblemFragment newInstance() {
         return new CommonProblemFragment();
@@ -27,6 +28,11 @@ public class CommonProblemFragment extends BaseRecyclerListJxFragment<CommonProb
     @Override
     protected boolean isRefresh() {
         return false;
+    }
+
+    @MultiState
+    protected int initMultiState() {
+        return MultiState.CONTENT;
     }
 
     @Override
@@ -48,12 +54,7 @@ public class CommonProblemFragment extends BaseRecyclerListJxFragment<CommonProb
 
 
     @Override
-    protected void initFragmentView(View view) {
-
-    }
-
-    @Override
-    protected void onFirstDataVisible() {
+    protected void loadingFirstData() {
         String app_name = getResources().getString(R.string.main_app_name);
 
         List<CommonProblem> commonProblemList = new ArrayList<>();
@@ -96,7 +97,7 @@ public class CommonProblemFragment extends BaseRecyclerListJxFragment<CommonProb
                 new CommonProblem(7,
                         "缴费安全",
                         "违章缴费是否安全？与代缴的区别是什么?",
-                        "        " + app_name + "App是由中国工商银行上海市分行打造的违章查扣缴一体化App平台，您的个人敏感信息及畅通卡信息不会保存在银行系统之外。使用"+app_name+"App是用您个人的畅通卡（绑定了驾照）进行违章处理和罚款缴纳，免费且安全。市面常见的各种代缴则需要提供您的个人信息给第三方，由第三方为您代为处理，不安全且要收费。"));
+                        "        " + app_name + "App是由中国工商银行上海市分行打造的违章查扣缴一体化App平台，您的个人敏感信息及畅通卡信息不会保存在银行系统之外。使用" + app_name + "App是用您个人的畅通卡（绑定了驾照）进行违章处理和罚款缴纳，免费且安全。市面常见的各种代缴则需要提供您的个人信息给第三方，由第三方为您代为处理，不安全且要收费。"));
 
         commonProblemList.add(
                 new CommonProblem(8,
@@ -138,10 +139,7 @@ public class CommonProblemFragment extends BaseRecyclerListJxFragment<CommonProb
     }
 
     @Override
-    protected void onRefreshData() {
-    }
+    protected void initPresenter() {
 
-    @Override
-    protected void DestroyViewAndThing() {
     }
 }

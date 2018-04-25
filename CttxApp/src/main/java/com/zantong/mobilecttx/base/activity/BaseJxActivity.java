@@ -209,8 +209,7 @@ public abstract class BaseJxActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             if (mBackgroundLay != null)
                 mBackgroundLay.setBackground(getResources().getDrawable(R.drawable.bg_title_shade));
-            if (mImgBack != null)
-                mImgBack.setImageResource(R.mipmap.back_white);
+            if (mImgBack != null){}
             if (mTvTitle != null)
                 mTvTitle.setTextColor(getResources().getColor(R.color.colorWhite));
             if (mTvRight != null)

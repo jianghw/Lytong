@@ -4,6 +4,7 @@ package com.zantong.mobilecttx.home_p;
 import android.support.annotation.NonNull;
 
 import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
@@ -27,7 +28,6 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
- * Created by jianghw on 16/6/1.
  * Description: 畅通页面 p
  */
 public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFtyPresenter {
@@ -271,6 +271,38 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                         if (result != null && result.getResponseCode()
                                 == MainGlobal.Response.base_succeed) {
                             mContractView.versionInfoSucceed(result);
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 资讯列表news/findByType
+     */
+    @Override
+    public void findByType() {
+        Subscription subscription = mRepository.findByType(1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<NewsInfoResponse>() {
+                    @Override
+                    public void doCompleted() {
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.findByTypeError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(NewsInfoResponse result) {
+                        if (result != null && result.getResponseCode() ==
+                                MainGlobal.Response.base_succeed) {
+                            mContractView.findByTypeSucceed(result);
+                        } else {
+                            mContractView.findByTypeError(result != null
+                                    ? result.getResponseDesc() : "未知错误(findByType)");
                         }
                     }
                 });

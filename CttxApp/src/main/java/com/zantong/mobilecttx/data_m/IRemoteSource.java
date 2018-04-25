@@ -5,6 +5,7 @@ import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
+import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
@@ -433,4 +434,9 @@ public interface IRemoteSource {
      * 广告统计
      */
     Observable<BaseResponse> advertCount(String keyId, String channel);
+
+    /**
+     * 资讯列表news/findByType
+     */
+    Observable<NewsInfoResponse> findByType(int type);
 }

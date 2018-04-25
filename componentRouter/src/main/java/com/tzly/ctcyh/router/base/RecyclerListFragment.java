@@ -318,4 +318,12 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
     protected XRecyclerView getCustomRecycler() {
         return mCustomRecycler;
     }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (mAdapter != null) mAdapter.cleanListData();
+    }
 }

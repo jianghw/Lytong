@@ -1,116 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@color/colorWhite"
-              android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/res_color_white"
+    android:orientation="vertical">
 
     <!-- 优惠页面 导向本地页面-->
 
     <!--加油充值-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_225"
+        android:layout_height="@dimen/pt_180"
         android:orientation="horizontal">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/lay_locality_1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/img_oil"
-                android:layout_width="@dimen/ds_168"
-                android:layout_height="@dimen/ds_168"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/ds_45"
-                android:scaleType="center"
-                android:src="@mipmap/icon_oil_favorable"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_oil"
-                android:layout_width="@dimen/ds_230"
-                android:layout_height="@dimen/ds_78"
-                android:layout_alignTop="@+id/img_oil"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:gravity="center"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"
-                tools:text="加油充值"/>
+                <TextView
+                    android:id="@+id/tv_oil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:textColor="@color/res_color_black_4d"
+                    android:textSize="@dimen/pt_30"
+                    tools:text="加油充值" />
 
-            <TextView
-                android:id="@+id/tv_oil_click"
-                android:layout_width="@dimen/ds_230"
-                android:layout_height="@dimen/ds_78"
-                android:layout_alignBottom="@+id/img_oil"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:background="@drawable/shape_tv_favorable_red"
-                android:gravity="center"
-                android:textColor="@color/colorTvRed_f33"
-                android:textSize="@dimen/fs_14sp"
-                tools:text="9折优惠"/>
+                <TextView
+                    android:id="@+id/tv_oil_click"
+                    android:layout_width="@dimen/pt_160"
+                    android:layout_height="@dimen/pt_40"
+                    android:layout_marginTop="@dimen/pt_30"
+                    android:background="@drawable/shape_tv_favorable_red"
+                    android:gravity="center"
+                    android:textColor="@color/res_color_red_f3"
+                    android:textSize="@dimen/pt_24"
+                    tools:text="9折优惠" />
 
-        </RelativeLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/pt_30"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/img_oil"
+                    android:layout_width="@dimen/pt_130"
+                    android:layout_height="@dimen/pt_130"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/ic_global_app" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="1px"
+            android:layout_width="@dimen/pt_1"
             android:layout_height="match_parent"
-            android:background="@color/colorLineGray_e6"/>
+            android:background="@color/res_color_gray_e6" />
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/lay_locality_2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/img_insurance"
-                android:layout_width="@dimen/ds_168"
-                android:layout_height="@dimen/ds_168"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/ds_45"
-                android:scaleType="center"
-                android:src="@mipmap/icon_oil_favorable"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_insurance"
-                android:layout_width="@dimen/ds_230"
-                android:layout_height="@dimen/ds_78"
-                android:layout_alignTop="@+id/img_insurance"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:gravity="center"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"
-                tools:text="加油充值"/>
+                <TextView
+                    android:id="@+id/tv_insurance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:textColor="@color/res_color_black_4d"
+                    android:textSize="@dimen/pt_30"
+                    tools:text="加油充值" />
 
-            <TextView
-                android:id="@+id/tv_insurance_click"
-                android:layout_width="@dimen/ds_230"
-                android:layout_height="@dimen/ds_78"
-                android:layout_alignBottom="@+id/img_insurance"
-                android:layout_marginLeft="@dimen/ds_45"
-                android:background="@drawable/shape_tv_favorable_red"
-                android:gravity="center"
-                android:textColor="@color/colorTvRed_f33"
-                android:textSize="@dimen/fs_14sp"
-                tools:text="9 折起"/>
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_insurance_click"
+                    android:layout_width="@dimen/pt_160"
+                    android:layout_height="@dimen/pt_40"
+                    android:layout_marginTop="@dimen/pt_30"
+                    android:background="@drawable/shape_tv_favorable_red"
+                    android:gravity="center"
+                    android:textColor="@color/res_color_red_f3"
+                    android:textSize="@dimen/pt_24"
+                    tools:text="9 折起" />
 
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/pt_30"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/img_insurance"
+                    android:layout_width="@dimen/pt_130"
+                    android:layout_height="@dimen/pt_130"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/ic_global_app" />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/colorLineGray_e6"/>
+        android:layout_height="@dimen/pt_1"
+        android:background="@color/res_color_gray_e6" />
     <!--第二列表-->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/pt_200"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -122,30 +148,29 @@
 
             <ImageView
                 android:id="@+id/img_native_1"
-                android:layout_width="@dimen/ds_168"
-                android:layout_height="@dimen/ds_168"
+                android:layout_width="@dimen/pt_130"
+                android:layout_height="@dimen/pt_130"
                 android:layout_gravity="center_horizontal"
-                android:scaleType="center"
-                android:src="@mipmap/icon_oil_favorable"/>
+                android:layout_marginTop="@dimen/pt_10"
+                android:src="@mipmap/ic_global_app" />
 
             <TextView
                 android:id="@+id/tv_native_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/ds_30"
-                android:layout_marginTop="@dimen/ds_30"
+                android:layout_marginTop="@dimen/pt_10"
                 android:gravity="center"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"
-                tools:text="购车贷款"/>
+                android:textColor="@color/res_color_black_4d"
+                android:textSize="@dimen/pt_30"
+                tools:text="购车贷款" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="1px"
+            android:layout_width="@dimen/pt_1"
             android:layout_height="match_parent"
-            android:background="@color/colorLineGray_e6"/>
+            android:background="@color/res_color_gray_e6" />
 
         <LinearLayout
             android:id="@+id/lay_native_2"
@@ -156,30 +181,29 @@
 
             <ImageView
                 android:id="@+id/img_native_2"
-                android:layout_width="@dimen/ds_168"
-                android:layout_height="@dimen/ds_168"
+                android:layout_width="@dimen/pt_130"
+                android:layout_height="@dimen/pt_130"
                 android:layout_gravity="center_horizontal"
-                android:scaleType="center"
-                android:src="@mipmap/icon_oil_favorable"/>
+                android:layout_marginTop="@dimen/pt_10"
+                android:src="@mipmap/ic_global_app" />
 
             <TextView
                 android:id="@+id/tv_native_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/ds_30"
-                android:layout_marginTop="@dimen/ds_30"
+                android:layout_marginTop="@dimen/pt_10"
                 android:gravity="center"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"
-                tools:text="购车贷款"/>
+                android:textColor="@color/res_color_black_4d"
+                android:textSize="@dimen/pt_30"
+                tools:text="购车贷款" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="1px"
+            android:layout_width="@dimen/pt_1"
             android:layout_height="match_parent"
-            android:background="@color/colorLineGray_e6"/>
+            android:background="@color/res_color_gray_e6" />
 
         <LinearLayout
             android:id="@+id/lay_native_3"
@@ -190,30 +214,29 @@
 
             <ImageView
                 android:id="@+id/img_native_3"
-                android:layout_width="@dimen/ds_168"
-                android:layout_height="@dimen/ds_168"
+                android:layout_width="@dimen/pt_130"
+                android:layout_height="@dimen/pt_130"
                 android:layout_gravity="center_horizontal"
-                android:scaleType="center"
-                android:src="@mipmap/icon_oil_favorable"/>
+                android:layout_marginTop="@dimen/pt_10"
+                android:src="@mipmap/ic_global_app" />
 
             <TextView
                 android:id="@+id/tv_native_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/ds_30"
-                android:layout_marginTop="@dimen/ds_30"
+                android:layout_marginTop="@dimen/pt_10"
                 android:gravity="center"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"
-                tools:text="购车贷款"/>
+                android:textColor="@color/res_color_black_4d"
+                android:textSize="@dimen/pt_30"
+                tools:text="购车贷款" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="1px"
+            android:layout_width="@dimen/pt_1"
             android:layout_height="match_parent"
-            android:background="@color/colorLineGray_e6"/>
+            android:background="@color/res_color_gray_e6" />
 
         <LinearLayout
             android:id="@+id/lay_native_4"
@@ -224,23 +247,22 @@
 
             <ImageView
                 android:id="@+id/img_native_4"
-                android:layout_width="@dimen/ds_168"
-                android:layout_height="@dimen/ds_168"
+                android:layout_width="@dimen/pt_130"
+                android:layout_height="@dimen/pt_130"
                 android:layout_gravity="center_horizontal"
-                android:scaleType="center"
-                android:src="@mipmap/icon_oil_favorable"/>
+                android:layout_marginTop="@dimen/pt_10"
+                android:src="@mipmap/ic_global_app" />
 
             <TextView
                 android:id="@+id/tv_native_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/ds_30"
-                android:layout_marginTop="@dimen/ds_30"
+                android:layout_marginTop="@dimen/pt_10"
                 android:gravity="center"
-                android:textColor="@color/colorTvBlack_4d"
-                android:textSize="@dimen/fs_16sp"
-                tools:text="购车贷款"/>
+                android:textColor="@color/res_color_black_4d"
+                android:textSize="@dimen/pt_30"
+                tools:text="购车贷款" />
 
         </LinearLayout>
     </LinearLayout>

@@ -18,7 +18,7 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.contract.home.INativeItemListener;
-import com.zantong.mobilecttx.home.adapter.HomeDiscountsAdapter;
+import com.zantong.mobilecttx.home_p.HomeDiscountsAdapter;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.bean.BannerBean;
 import com.zantong.mobilecttx.home.bean.BannersBean;
@@ -82,19 +82,6 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
 
         mCustomConvenientBanner = (ConvenientBanner) rootView.findViewById(R.id.custom_convenientBanner);
 
-        //广告页本地加载
-        List<Integer> localImages = new ArrayList<>();
-        localImages.add(R.mipmap.default_330_160);
-        mCustomConvenientBanner.setPages(
-                new CBViewHolderCreator<LocalImageHolderView>() {
-                    @Override
-                    public LocalImageHolderView createHolder() {
-                        return new LocalImageHolderView();
-                    }
-                }, localImages)
-                .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
-                .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
-
         return rootView;
     }
 
@@ -155,6 +142,7 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+
         startCampaignCustom(hidden);
     }
 
@@ -199,14 +187,20 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
 
     @Override
     public void getBannerError(String responseDesc) {
-        toastShort(responseDesc);
-    }
+        //广告页本地加载
+        List<Integer> localImages = new ArrayList<>();
+        localImages.add(R.mipmap.default_330_160);
+        mCustomConvenientBanner.setPages(
+                new CBViewHolderCreator<LocalImageHolderView>() {
+                    @Override
+                    public LocalImageHolderView createHolder() {
+                        return new LocalImageHolderView();
+                    }
+                }, localImages)
+                .setPageIndicator(new int[]{R.mipmap.icon_dot_nor, R.mipmap.icon_dot_sel})
+                .setPageTransformer(ConvenientBanner.Transformer.DefaultTransformer);
 
-    /**
-     * 送豪礼
-     */
-    @Override
-    public void getRewardSucceed(BannerBean bannerBean) {
+        toastShort(responseDesc);
     }
 
     /**

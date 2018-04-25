@@ -60,6 +60,11 @@ public class RudenessScreenHelper {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, context.getResources().getDisplayMetrics());
     }
 
+    public static float dp2px(float value) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value,
+                Utils.getContext().getResources().getDisplayMetrics());
+    }
+
     /**
      * 转换pt为px
      *
@@ -69,6 +74,16 @@ public class RudenessScreenHelper {
      */
     public static float pt2px(Context context, float value) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT, value, context.getResources().getDisplayMetrics());
+    }
+
+    public static float pt2px(float value) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT, value,
+                Utils.getContext().getResources().getDisplayMetrics());
+    }
+
+    public static int ptInpx(float value) {
+        return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PT, value,
+                Utils.getContext().getResources().getDisplayMetrics());
     }
 
 
@@ -96,19 +111,19 @@ public class RudenessScreenHelper {
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 //通常情况下application与activity得到的resource虽然不是一个实例，但是displayMetrics是同一个实例，只需调用一次即可
                 //为了面对一些不可预计的情况以及向上兼容，分别调用一次较为保险
-                resetDensity(mApplication,designWidth);
+                resetDensity(mApplication, designWidth);
                 resetDensity(activity, designWidth);
             }
 
             @Override
             public void onActivityStarted(Activity activity) {
-                resetDensity(mApplication,designWidth);
+                resetDensity(mApplication, designWidth);
                 resetDensity(activity, designWidth);
             }
 
             @Override
             public void onActivityResumed(Activity activity) {
-                resetDensity(mApplication,designWidth);
+                resetDensity(mApplication, designWidth);
                 resetDensity(activity, designWidth);
             }
 

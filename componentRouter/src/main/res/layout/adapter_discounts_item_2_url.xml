@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/ds_22">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/pt_260">
+
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/tv_body"
+        android:layout_width="@dimen/pt_330"
+        android:layout_height="@dimen/pt_160"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
-        android:src="@mipmap/default_330_160"/>
+        android:src="@mipmap/default_330_160" />
 
     <TextView
         android:id="@+id/tv_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/ds_15"
+        android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/pt_20"
         android:background="@drawable/bg_tv_white_shade"
         android:gravity="center"
         android:singleLine="true"
-        android:textColor="@color/colorTvBlack_4d"
-        android:textSize="@dimen/fs_16sp"
-        tools:text="窃车玫红"/>
+        android:textColor="@color/res_color_black_4d"
+        android:textSize="@dimen/pt_30"
+        tools:text="窃车玫红" />
 
 </RelativeLayout>

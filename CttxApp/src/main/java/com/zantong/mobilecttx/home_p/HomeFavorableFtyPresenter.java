@@ -59,7 +59,8 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BannerResponse>() {
                     @Override
-                    public void doCompleted() {}
+                    public void doCompleted() {
+                    }
 
                     @Override
                     public void doError(Throwable e) {
@@ -70,7 +71,6 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
                     public void doNext(BannerResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
                             distributeByType(result, "2");
-                            distributeByType(result, "3");
                         } else
                             mAtyView.getBannerError(result != null ? result.getResponseDesc() : "未知错误(N1)");
                     }
@@ -80,19 +80,19 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
 
     @Override
     public void distributeByType(BannerResponse result, final String type) {
-        Subscription subscription = Observable
-                .from(result.getData())
+        Subscription subscription = Observable.from(result.getData())
                 .filter(new Func1<BannerBean, Boolean>() {
                     @Override
                     public Boolean call(BannerBean bannerBean) {
                         return bannerBean.getType().equals(type);
                     }
                 })
-                .subscribeOn(Schedulers.computation())
+                .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BannerBean>() {
                     @Override
-                    public void doCompleted() {}
+                    public void doCompleted() {
+                    }
 
                     @Override
                     public void doError(Throwable e) {
@@ -101,12 +101,12 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
 
                     @Override
                     public void doNext(BannerBean bannerBean) {
-                        if (type.equals("2"))
+                        if (type.equals("2")) {
                             mAtyView.getBannerSucceed(bannerBean);
-                        else if (type.equals("3"))
-                            mAtyView.getRewardSucceed(bannerBean);
-                        else
+                        } else if (type.equals("3")) {
+                        } else {
                             mAtyView.getBannerError("未知错误,图片类型不存在");
+                        }
                     }
                 });
         mSubscriptions.add(subscription);
@@ -122,7 +122,8 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<ModuleResponse>() {
                     @Override
-                    public void doCompleted() {}
+                    public void doCompleted() {
+                    }
 
                     @Override
                     public void doError(Throwable e) {

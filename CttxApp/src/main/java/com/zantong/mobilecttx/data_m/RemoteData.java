@@ -7,6 +7,7 @@ import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
+import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
@@ -777,5 +778,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<BaseResponse> advertCount(String keyId, String channel) {
         return baseRetrofit().create(ITextService.class).advertCount(keyId, channel);
+    }
+
+    /**
+     * 资讯列表news/findByType
+     */
+    @Override
+    public Observable<NewsInfoResponse> findByType(int type) {
+        return baseRetrofit().create(IModuleService.class).findByType(type);
     }
 }

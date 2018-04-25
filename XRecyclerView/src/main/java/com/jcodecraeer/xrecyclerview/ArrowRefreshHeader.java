@@ -68,23 +68,6 @@ public class ArrowRefreshHeader extends LinearLayout implements BaseRefreshHeade
 
         //init the progress view
         mProgressBar = (ImageView) findViewById(R.id.listview_header_progressbar);
-//		mProgressBar = (SimpleViewSwithcer)findViewById(R.id.listview_header_progressbar);
-//        AVLoadingIndicatorView progressView = new  AVLoadingIndicatorView(context);
-//        progressView.setIndicatorColor(0xffB5B5B5);
-//        progressView.setIndicatorId(ProgressStyle.BallSpinFadeLoader);
-//        mProgressBar.setView(progressView);
-
-
-//		mRotateUpAnim = new RotateAnimation(0.0f, -180.0f,
-//				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
-//				0.5f);
-//		mRotateUpAnim.setDuration(ROTATE_ANIM_DURATION);
-//		mRotateUpAnim.setFillAfter(true);
-//		mRotateDownAnim = new RotateAnimation(-180.0f, 0.0f,
-//				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
-//				0.5f);
-//		mRotateDownAnim.setDuration(ROTATE_ANIM_DURATION);
-//		mRotateDownAnim.setFillAfter(true);
 
         mRotateUpAnim = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.anim_rotating);
         LinearInterpolator lir = new LinearInterpolator();
