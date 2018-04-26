@@ -17,10 +17,8 @@ import android.widget.TextView;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
-import com.tzly.ctcyh.router.util.RudenessScreenHelper;
-import com.tzly.ctcyh.router.util.ScreenUtils;
 import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
-import com.tzly.ctcyh.router.util.ConvertUtils;
+import com.tzly.ctcyh.router.util.RudenessScreenHelper;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.contract.home.INativeItemListener;
 import com.zantong.mobilecttx.home.adapter.ServiceDiscountsAdapter;
@@ -192,7 +190,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         //计算行数
         int lineNumber = childrenBeanList.size() % row == 0
                 ? childrenBeanList.size() / row : childrenBeanList.size() / row + 1;
-        int height = row == 2 ? 260 : 300;
+        int height = row == 2 ? 240 : 280;
         return RudenessScreenHelper.ptInpx(height) * lineNumber;
 
         //高度的计算需要自己好好理解，否则会产生嵌套recyclerView可以滑动的现象
@@ -214,7 +212,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
                 ? childrenBeanList.size() >= 4 ? 2 : lineNumber
                 : childrenBeanList.size() >= 6 ? 2 : lineNumber;
 
-        int height = row == 2 ? 260 : 300;
+        int height = row == 2 ? 240 : 280;
         return RudenessScreenHelper.ptInpx(height) * lineNumber;
 
         //高度的计算需要自己好好理解，否则会产生嵌套recyclerView可以滑动的现象
@@ -462,7 +460,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
             mRvRecycler.setLayoutManager(layoutManager);
             //动态设置其内边距 多种状态布局时
             float padding = itemType == ITEM_TYPE_TWO_PIC ? 15f : 20f;
-            // mRvRecycler.setPadding(0, 0, 0, RudenessScreenHelper.ptInpx(30f));
+            mRvRecycler.setPadding(RudenessScreenHelper.ptInpx(30f), 0, RudenessScreenHelper.ptInpx(30f), 0);
         }
     }
 

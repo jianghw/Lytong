@@ -83,7 +83,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="@dimen/res_x_30"
                 android:layout_marginTop="@dimen/res_y_30"
-                android:text="畅通97折油卡" />
+                android:text="畅通9.7折油卡" />
 
             <TextView
                 style="@style/ResTextTheme.16.Subtitle"
@@ -290,10 +290,10 @@
         android:id="@+id/lay_map"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/res_y_20"
         android:layout_marginLeft="@dimen/res_x_30"
         android:layout_marginRight="@dimen/res_x_30"
         android:layout_marginTop="@dimen/res_y_20"
-        android:layout_marginBottom="@dimen/res_y_20"
         android:orientation="vertical">
 
         <ImageView
@@ -346,7 +346,7 @@
                 android:layout_below="@+id/tv_oil_map"
                 android:layout_marginLeft="@dimen/res_x_30"
                 android:gravity="left"
-                android:text="可查询: 97折油卡及爱车卡支持加油站点" />
+                android:text="可查询: 9.7折油卡及爱车卡支持加油站点" />
 
             <TextView
                 style="@style/ResTextTheme.14.Hint"

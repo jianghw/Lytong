@@ -1,8 +1,8 @@
-package com.zantong.mobilecttx.contract.home;
+package com.zantong.mobilecttx.home_p;
 
+import com.tzly.ctcyh.router.base.IBasePresenter;
+import com.tzly.ctcyh.router.base.IBaseView;
 import com.tzly.ctcyh.router.base.IResponseView;
-import com.zantong.mobilecttx.base.interf.IMvpPresenter;
-import com.zantong.mobilecttx.base.interf.IMvpView;
 import com.zantong.mobilecttx.home.bean.BannerBean;
 import com.zantong.mobilecttx.home.bean.BannerResponse;
 
@@ -12,14 +12,14 @@ import com.zantong.mobilecttx.home.bean.BannerResponse;
 
 public interface IHomeFavorableFtyContract {
 
-    interface IHomeFavorableFtyView extends IMvpView<IHomeFavorableFtyPresenter>, IResponseView {
+    interface IHomeFavorableFtyView extends IBaseView<IHomeFavorableFtyPresenter>, IResponseView {
 
         void getBannerSucceed(BannerBean bannerBean);
 
         void getBannerError(String responseDesc);
     }
 
-    interface IHomeFavorableFtyPresenter extends IMvpPresenter {
+    interface IHomeFavorableFtyPresenter extends IBasePresenter {
 
         void getBanner();
 

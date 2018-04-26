@@ -4,7 +4,6 @@ package com.zantong.mobilecttx.home_p;
 import android.support.annotation.NonNull;
 
 import com.tzly.ctcyh.java.response.BaseResponse;
-import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.home.bean.BannerBean;
 import com.zantong.mobilecttx.home.bean.BannerResponse;
 import com.zantong.mobilecttx.home.bean.ModuleResponse;
@@ -25,18 +24,19 @@ import rx.subscriptions.CompositeSubscription;
  * Update by:
  * Update day:
  */
-public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHomeFavorableFtyPresenter {
+public class HomeFavorableFtyPresenter
+        implements IHomeFavorableFtyContract.IHomeFavorableFtyPresenter {
 
     private final RepositoryManager mRepository;
-    private final IHomeFavorableFtyContract.IHomeFavorableFtyView mAtyView;
+    private final IHomeFavorableFtyContract.IHomeFavorableFtyView mContractView;
     private final CompositeSubscription mSubscriptions;
 
     public HomeFavorableFtyPresenter(@NonNull RepositoryManager repositoryManager,
                                      @NonNull IHomeFavorableFtyContract.IHomeFavorableFtyView view) {
         mRepository = repositoryManager;
-        mAtyView = view;
+        mContractView = view;
         mSubscriptions = new CompositeSubscription();
-        mAtyView.setPresenter(this);
+        mContractView.setPresenter(this);
     }
 
     @Override
@@ -46,6 +46,7 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
 
     @Override
     public void unSubscribe() {
+        mContractView.dismissLoading();
         mSubscriptions.clear();
     }
 
@@ -64,7 +65,7 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.getBannerError(e.getMessage());
+                        mContractView.getBannerError(e.getMessage());
                     }
 
                     @Override
@@ -72,7 +73,7 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
                         if (result != null && result.getResponseCode() == 2000) {
                             distributeByType(result, "2");
                         } else
-                            mAtyView.getBannerError(result != null ? result.getResponseDesc() : "未知错误(N1)");
+                            mContractView.getBannerError(result != null ? result.getResponseDesc() : "未知错误(N1)");
                     }
                 });
         mSubscriptions.add(subscription);
@@ -96,16 +97,16 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.getBannerError(e.getMessage());
+                        mContractView.getBannerError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(BannerBean bannerBean) {
                         if (type.equals("2")) {
-                            mAtyView.getBannerSucceed(bannerBean);
+                            mContractView.getBannerSucceed(bannerBean);
                         } else if (type.equals("3")) {
                         } else {
-                            mAtyView.getBannerError("未知错误,图片类型不存在");
+                            mContractView.getBannerError("未知错误,图片类型不存在");
                         }
                     }
                 });
@@ -127,15 +128,15 @@ public class HomeFavorableFtyPresenter implements IHomeFavorableFtyContract.IHom
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.responseError(e.getMessage());
+                        mContractView.responseError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(ModuleResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.responseSucceed(result);
+                            mContractView.responseSucceed(result);
                         } else
-                            mAtyView.responseError(result != null
+                            mContractView.responseError(result != null
                                     ? result.getResponseDesc() : "未知错误(N25)");
                     }
                 });

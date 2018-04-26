@@ -5,23 +5,21 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/iv_left"
-        android:layout_width="@dimen/pt_120"
-        android:layout_height="@dimen/pt_90"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="@dimen/pt_20"
-        android:layout_marginLeft="@dimen/pt_30"
-        android:layout_marginTop="@dimen/pt_20" />
+        android:id="@+id/iv_top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pt_200"
+        android:scaleType="centerCrop"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/pt_20" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/iv_left"
-        android:layout_marginLeft="@dimen/pt_20"
+        android:layout_below="@+id/iv_top"
+        android:layout_marginLeft="@dimen/pt_30"
         android:layout_marginRight="@dimen/pt_30"
-        android:layout_toRightOf="@+id/iv_left"
         android:singleLine="true"
         android:textColor="@color/res_color_black_4d"
         android:textSize="@dimen/pt_28"
@@ -43,8 +41,11 @@
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/iv_left"
-        android:layout_alignLeft="@+id/tv_title"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginBottom="@dimen/pt_20"
+        android:layout_marginLeft="@dimen/pt_30"
+        android:layout_marginRight="@dimen/pt_30"
+        android:layout_marginTop="@dimen/pt_20"
         android:textColor="@color/res_color_black_7f"
         android:textSize="@dimen/pt_24"
         tools:text="2018.0.10 15:24" />

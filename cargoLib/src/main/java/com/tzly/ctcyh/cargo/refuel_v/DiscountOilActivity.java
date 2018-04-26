@@ -12,7 +12,7 @@ import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 
 /**
- * 97折扣 加油充值
+ * 9.7折扣 加油充值
  */
 public class DiscountOilActivity extends AbstractBaseActivity
         implements View.OnClickListener, IRechargeAToF {
@@ -26,7 +26,7 @@ public class DiscountOilActivity extends AbstractBaseActivity
     }
 
     /**
-     * 右击
+     * 客服
      */
     @Override
     protected void rightClickListener() {
@@ -45,8 +45,9 @@ public class DiscountOilActivity extends AbstractBaseActivity
         btnCommit = (Button) findViewById(R.id.btn_commit);
         btnCommit.setOnClickListener(this);
 
-        titleContent("97折油卡充值");
-        titleMore("申购97折油卡");
+        titleContent("9.7折油卡充值");
+
+        titleServer();
     }
 
     /**

@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/res_y_20"
-                android:text="需持有97折油卡" />
+                android:text="需持有9.7折油卡" />
 
             <TextView
                 style="@style/ResTextTheme.14.Red"
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/res_y_20"
-                android:text="97折油卡" />
+                android:text="9.7折油卡" />
 
         </LinearLayout>
 

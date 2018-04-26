@@ -9,7 +9,7 @@ import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 
 /**
- * 97折 加油充值 总页
+ * 9.7折 加油充值 总页
  */
 public class FoldRefuelOilActivity extends AbstractBaseActivity {
 
@@ -29,7 +29,7 @@ public class FoldRefuelOilActivity extends AbstractBaseActivity {
 
     @Override
     protected void bindFragment() {
-        titleContent("97折加油充值");
+        titleContent("9.7折加油充值");
     }
 
     @Override

@@ -16,6 +16,7 @@ import com.tzly.ctcyh.cargo.bean.response.ScoreResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.oil.OilCardsResponse;
 import com.tzly.ctcyh.java.response.oil.OilEnterResponse;
+import com.tzly.ctcyh.java.response.oil.OilModuleResponse;
 import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
 
 import rx.Observable;
@@ -95,4 +96,6 @@ public interface IRemoteSource {
      * 获取办卡人数
      */
     Observable<OilEnterResponse> getCounts();
+
+    Observable<OilModuleResponse> getOilModuleList();
 }

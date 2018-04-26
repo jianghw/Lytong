@@ -1,11 +1,12 @@
 package com.zantong.mobilecttx.api;
 
+import com.tzly.ctcyh.java.response.news.IconsResponse;
+import com.tzly.ctcyh.java.response.news.NavigationsResponse;
 import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
 import com.zantong.mobilecttx.home.bean.ModuleResponse;
 
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -34,4 +35,13 @@ public interface IModuleService {
      */
     @GET("news/findByType")
     Observable<NewsInfoResponse> findByType(@Query("type") int type);
+
+    /**
+     * 资讯Icons
+     */
+    @GET("module/getIcons")
+    Observable<IconsResponse> getIcons();
+
+    @GET("module/getNavigations")
+    Observable<NavigationsResponse> getNavigations();
 }

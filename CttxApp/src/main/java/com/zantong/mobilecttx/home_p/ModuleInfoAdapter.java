@@ -22,7 +22,7 @@ public class ModuleInfoAdapter extends BaseAdapter<UnimpededBannerBean> {
     @Override
     public View createView(ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        return inflater.inflate(R.layout.main_adapter_banner_list, viewGroup, false);
+        return inflater.inflate(R.layout.main_recycler_item_banner_list, viewGroup, false);
     }
 
     @Override

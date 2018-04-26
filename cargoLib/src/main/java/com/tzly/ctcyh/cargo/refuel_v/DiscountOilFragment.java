@@ -10,7 +10,6 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
@@ -26,9 +25,7 @@ import com.tzly.ctcyh.cargo.router.CargoRouter;
 import com.tzly.ctcyh.java.response.oil.NorOilResponse;
 import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
 import com.tzly.ctcyh.java.response.oil.SINOPECBean;
-import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.base.RefreshFragment;
-import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.custom.popup.CustomDialog;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
@@ -42,8 +39,6 @@ public class DiscountOilFragment extends RefreshFragment
         implements IRefuelOilContract.IRefuelOilView, View.OnClickListener {
 
     private IRefuelOilContract.IRefuelOilPresenter mPresenter;
-
-    private ImageView mImgBanner;
 
     /**
      * 请输入19位加油卡号
@@ -65,6 +60,7 @@ public class DiscountOilFragment extends RefreshFragment
      * 通讯接口
      */
     private IRechargeAToF iRechargeAToF;
+    private TextView mTvGou;
 
     public static DiscountOilFragment newInstance() {
         return new DiscountOilFragment();
@@ -112,14 +108,17 @@ public class DiscountOilFragment extends RefreshFragment
 
     public void initView(View view) {
 
-        mImgBanner = (ImageView) view.findViewById(R.id.img_banner);
+        /*mImgBanner = (ImageView) view.findViewById(R.id.img_banner);
         mImgBanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CargoRouter.gotoBidOilActivity(getActivity());
             }
-        });
+        });*/
         mEditOil = (EditText) view.findViewById(R.id.edit_oil);
+
+        mTvGou = (TextView) view.findViewById(R.id.tv_gou_card);
+        mTvGou.setOnClickListener(this);
 
         mXRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_list);
         mTvHint = (TextView) view.findViewById(R.id.tv_hint);
@@ -171,12 +170,12 @@ public class DiscountOilFragment extends RefreshFragment
 
         String app_name = getResources().getString(R.string.main_app_name);
         SpannableString spanableInfo = new SpannableString(
-                "1、畅通97折油卡由中石化官方发行，使用工行卡在" + app_name + "APP线充值享97折，其他渠道不能充值;\n"
+                "1、畅通9.7折油卡由中石化官方发行，使用工行卡在" + app_name + "APP线充值享9.7折，其他渠道不能充值;\n"
                         + "2、非" + app_name + "油卡，不支持此页面充值;\n"
                         + "3、每月15号，30号开放两次充值服务，可提前支付下单，自动于15号，30号当天充值到账;\n"
                         + "4、充值成功后，需加油站圈存后方可使用，详询加油站工作人员;\n"
                         + "5、目前黑吉辽、陕甘宁、新疆、内蒙、西藏、青海省不支持当地圈存，可在外省圈存后在以上城市使用加油;\n"
-                        + "6、本服务为全国加油卡代充，顾不支持开具发票;\n"
+                        + "6、本服务为全国加油卡代充，故不支持开具发票;\n"
                         + "7、本服务由" + app_name + "加油服务商提供"
         );
         //可以为多部分设置超链接
@@ -207,6 +206,8 @@ public class DiscountOilFragment extends RefreshFragment
     public void onClick(View v) {
         if (v.getId() == R.id.tv_agreement) {//加油协议
             CargoRouter.gotoRechargeAgreementActivity(getActivity());
+        } else if (v.getId() == R.id.tv_gou_card) {//购卡
+            CargoRouter.gotoDiscountOilActivity(getActivity());
         }
     }
 
@@ -243,12 +244,12 @@ public class DiscountOilFragment extends RefreshFragment
      * @param bean
      */
     private void dataRendering(NorOilResponse.DataBean bean) {
-        String url = bean.getImg();
+        /*String url = bean.getImg();
 
         if (!url.contains("http")) {
             url = (BuildConfig.isDeta ? BuildConfig.beta_base_url : BuildConfig.release_base_url) + url;
         }
-        ImageLoadUtils.loadTwoRectangle(url, mImgBanner);
+        ImageLoadUtils.loadTwoRectangle(url, mImgBanner);*/
 
         String oilCard = bean.getOilCard();
         if (!TextUtils.isEmpty(oilCard)) setStrEditOil(oilCard);
@@ -302,13 +303,13 @@ public class DiscountOilFragment extends RefreshFragment
     public void createOrderError(String message) {
         toastShort(message);
 
-        if (message.contains("97折")) codeError();
+        if (message.contains("97折")||message.contains("折")) codeError();
     }
 
     public void codeError() {
         CustomDialog.createDialog(getActivity(),
                 "温馨提示",
-                "该卡号不是97折卡号,请前往普通加油充值界面充值如无卡97折加油卡,请去申购页面购买",
+                "该卡号不是9.7折卡号,请前往普通加油充值界面充值如无卡9.7折加油卡,请去申购页面购买",
                 "取消",
                 "前往",
                 new View.OnClickListener() {

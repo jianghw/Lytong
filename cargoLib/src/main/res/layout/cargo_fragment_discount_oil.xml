@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/img_banner"
-        android:scaleType="fitXY"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/res_y_300" />
+    <!-- <ImageView
+         android:id="@+id/img_banner"
+         android:scaleType="fitXY"
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/res_y_300" />-->
 
     <!--提供商-->
     <RelativeLayout
@@ -27,6 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:drawableLeft="@mipmap/ic_oil_zhongshihua"
+            android:drawablePadding="@dimen/pt_20"
             android:text="@string/cargo_tv_97_provider" />
 
     </RelativeLayout>
@@ -51,7 +53,7 @@
             style="@style/ResTextTheme.16.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cargo_tv_oil_card_number" />
+            android:text="@string/cargo_oil_card_97" />
 
         <EditText
             android:id="@+id/edit_oil"
@@ -69,6 +71,29 @@
             android:minWidth="@dimen/res_x_124"
             android:textColorHint="@color/res_color_gray_e6" />
     </LinearLayout>
+
+    <TextView
+        style="@style/cargo_line_gray"
+        android:layout_below="@+id/lay_0" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/res_y_80"
+        android:background="@color/res_color_white"
+        android:paddingLeft="@dimen/res_x_30"
+        android:paddingRight="@dimen/res_x_30">
+
+        <TextView
+            android:id="@+id/tv_gou_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="@string/cargo_oil_97_gou_card"
+            android:textColor="@color/res_color_blue_0b"
+            android:textSize="@dimen/pt_28" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_4"
@@ -120,7 +145,7 @@
             android:layout_height="@dimen/res_y_80"
             android:layout_marginLeft="@dimen/res_x_30"
             android:gravity="center_vertical"
-            android:text="充值说明" />
+            android:text="畅通9.7折联名卡使用说明" />
 
         <TextView
             android:id="@+id/tv_hint"

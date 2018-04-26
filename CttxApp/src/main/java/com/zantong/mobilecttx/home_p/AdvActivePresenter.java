@@ -2,16 +2,11 @@ package com.zantong.mobilecttx.home_p;
 
 import android.support.annotation.NonNull;
 
-import com.tzly.ctcyh.java.response.BaseResponse;
-import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
 import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
-import com.tzly.ctcyh.router.api.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
-import com.zantong.mobilecttx.global.MainGlobal;
 
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 

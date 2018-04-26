@@ -2,7 +2,6 @@ package com.tzly.ctcyh.cargo.refuel_v;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
 import com.tzly.ctcyh.cargo.R;
@@ -15,7 +14,7 @@ import com.tzly.ctcyh.router.util.FragmentUtils;
  */
 public class OilEnterActivity extends AbstractBaseActivity {
 
-    private OilEnterFragment mFragment;
+    private OilEnterListFragment mFragment;
 
     @Override
     protected int initContentView() {
@@ -31,7 +30,7 @@ public class OilEnterActivity extends AbstractBaseActivity {
 
     @Override
     protected void bindFragment() {
-        titleContent("88折加油");
+        titleContent("8.8折加油");
 
         titleServer();
     }
@@ -51,7 +50,7 @@ public class OilEnterActivity extends AbstractBaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         //默认页面显示
         if (mFragment == null) {
-            mFragment = OilEnterFragment.newInstance();
+            mFragment = OilEnterListFragment.newInstance();
         }
         FragmentUtils.add(fragmentManager, mFragment, R.id.lay_base_frame);
     }

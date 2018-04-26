@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.tzly.ctcyh.cargo.data_m.CargoDataManager;
 import com.tzly.ctcyh.cargo.global.CargoGlobal;
 import com.tzly.ctcyh.java.response.oil.OilEnterResponse;
+import com.tzly.ctcyh.java.response.oil.OilModuleResponse;
 import com.tzly.ctcyh.router.api.BaseSubscriber;
 
 import rx.Subscription;
@@ -79,6 +80,47 @@ public class OilEnterPresenter implements IOilEnterContract.IOilEnterPresenter {
                         } else {
                             mContractView.countError(response != null
                                     ? response.getResponseDesc() : "未知错误(办卡数获取失败)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 加油活动页OilModuleResponse
+     */
+    @Override
+    public void getOilModuleList() {
+        Subscription subscription = mRepository.getOilModuleList()
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<OilModuleResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.responseError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(OilModuleResponse response) {
+                        if (response != null && response.getResponseCode()
+                                == CargoGlobal.Response.base_succeed) {
+                            mContractView.responseSucceed(response);
+                        } else {
+                            mContractView.responseError(response != null
+                                    ? response.getResponseDesc() : "未知错误(加油活动)");
                         }
                     }
                 });

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="@dimen/pt_300">
+    android:layout_height="@dimen/pt_280">
 
     <ImageView
         android:id="@+id/img_bitmap"
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/pt_20"
+        android:layout_marginTop="@dimen/pt_10"
         android:gravity="center"
         android:singleLine="true"
         android:textColor="@color/res_color_black_b3"

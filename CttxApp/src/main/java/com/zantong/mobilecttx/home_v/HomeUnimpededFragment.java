@@ -6,10 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -19,32 +16,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.custom.banner.CBViewHolderCreator;
 import com.tzly.ctcyh.router.custom.banner.ConvenientBanner;
-import com.tzly.ctcyh.router.util.MobUtils;
-import com.tzly.ctcyh.router.util.ToastUtils;
-import com.tzly.ctcyh.router.util.Utils;
 import com.tzly.ctcyh.router.custom.primission.PermissionFail;
 import com.tzly.ctcyh.router.custom.primission.PermissionGen;
 import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
 import com.tzly.ctcyh.router.custom.rea.Des3;
+import com.tzly.ctcyh.router.util.MobUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.BaseAutoScrollUpTextView;
-import com.zantong.mobilecttx.base.bean.UnimpededBannerBean;
 import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
-import com.zantong.mobilecttx.home.bean.VersionResponse;
-import com.zantong.mobilecttx.home_p.IUnimpededFtyContract;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
-import com.zantong.mobilecttx.home_p.HorizontalCarViolationAdapter;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
-import com.zantong.mobilecttx.home_p.MainBannerImgHolderView;
 import com.zantong.mobilecttx.home.bean.HomeAdvertisement;
 import com.zantong.mobilecttx.home.bean.HomeBean;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
@@ -52,6 +43,10 @@ import com.zantong.mobilecttx.home.bean.HomeNotice;
 import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.home.bean.IndexLayerBean;
 import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
+import com.zantong.mobilecttx.home.bean.VersionResponse;
+import com.zantong.mobilecttx.home_p.HorizontalCarViolationAdapter;
+import com.zantong.mobilecttx.home_p.IUnimpededFtyContract;
+import com.zantong.mobilecttx.home_p.MainBannerImgHolderView;
 import com.zantong.mobilecttx.home_p.ModuleInfoAdapter;
 import com.zantong.mobilecttx.home_p.UnimpededBannerAdapter;
 import com.zantong.mobilecttx.home_p.UnimpededFtyPresenter;
@@ -250,13 +245,11 @@ public class HomeUnimpededFragment extends RefreshFragment
         mCustomViolation = (HorizontalInfiniteCycleViewPager) view.findViewById(R.id.custom_violation);
         mCarViolationAdapter = new HorizontalCarViolationAdapter(getActivity(), mUserCarInfoBeanList);
         mCustomViolation.setAdapter(mCarViolationAdapter);
-
+        //小控件栏
         mRecyclerList = (RecyclerView) view.findViewById(R.id.rv_list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRecyclerList.setLayoutManager(linearLayoutManager);
-        adapterList = new UnimpededBannerAdapter();
-        mRecyclerList.setAdapter(adapterList);
 
        /* mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
         mTabLayout = (LinearLayout) view.findViewById(R.id.tabLayout);*/
@@ -267,8 +260,6 @@ public class HomeUnimpededFragment extends RefreshFragment
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerInfo.setLayoutManager(layoutManager);
-        adapterInfo = new ModuleInfoAdapter();
-        mRecyclerInfo.setAdapter(adapterInfo);
     }
 
     private void initViewPager() {
@@ -398,8 +389,18 @@ public class HomeUnimpededFragment extends RefreshFragment
      */
     @Override
     public void bannerSucceed(UnimpededBannerResponse result) {
-        List<UnimpededBannerBean> lis = result.getData();
-        adapterList.replace(lis);
+        if (adapterList == null && mRecyclerList != null) {
+            adapterList = new UnimpededBannerAdapter();
+            if (mRecyclerList.getVisibility() != View.VISIBLE) {
+                mRecyclerList.setVisibility(View.VISIBLE);
+            }
+            mRecyclerList.setAdapter(adapterList);
+        }
+        if (adapterList != null) {
+            adapterList.replace(result.getData());
+        } else {
+            ToastUtils.toastShort("控件加载出错");
+        }
 
         /*if (lis != null && !lis.isEmpty()) {
             int pager = lis.size() % 10 != 0 ? lis.size() / 10 + 1 : lis.size() / 10;
@@ -680,7 +681,15 @@ public class HomeUnimpededFragment extends RefreshFragment
      */
     @Override
     public void findByTypeSucceed(NewsInfoResponse result) {
+        if (adapterInfo == null && mRecyclerInfo != null) {
+            adapterInfo = new ModuleInfoAdapter();
+            if (mRecyclerInfo.getVisibility() != View.VISIBLE) {
+                mRecyclerInfo.setVisibility(View.VISIBLE);
+            }
+            mRecyclerInfo.setAdapter(adapterInfo);
+        }
         if (adapterInfo != null) {
+            adapterInfo.replace(null);
         } else {
             ToastUtils.toastShort("资讯广告加载出错");
         }
@@ -688,6 +697,8 @@ public class HomeUnimpededFragment extends RefreshFragment
 
     @Override
     public void findByTypeError(String message) {
-
+        if (mRecyclerInfo != null && mRecyclerInfo.getVisibility() == View.VISIBLE) {
+            mRecyclerInfo.setVisibility(View.GONE);
+        }
     }
 }

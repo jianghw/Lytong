@@ -12,6 +12,7 @@ import com.tzly.ctcyh.cargo.refuel_p.IOilEnterContract;
 import com.tzly.ctcyh.cargo.refuel_p.OilEnterPresenter;
 import com.tzly.ctcyh.cargo.router.CargoRouter;
 import com.tzly.ctcyh.java.response.oil.OilEnterResponse;
+import com.tzly.ctcyh.java.response.oil.OilModuleResponse;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
@@ -32,7 +33,7 @@ public class OilEnterFragment extends RefreshFragment
     private TextView mTv997Chongzhi;
     private LinearLayout mLayOil997;
     /**
-     * 畅通97折油卡
+     * 畅通9.7折油卡
      */
     private TextView mTvOil97;
     private ImageView mImgOil97;
@@ -75,7 +76,7 @@ public class OilEnterFragment extends RefreshFragment
      */
     private TextView mTvMap;
     /**
-     * 可查询: 97折油卡及爱车卡支持加油站点
+     * 可查询: 9.7折油卡及爱车卡支持加油站点
      */
     private TextView mTvMapHint;
     private LinearLayout mLayMap;
@@ -105,6 +106,7 @@ public class OilEnterFragment extends RefreshFragment
     @Override
     protected void loadingFirstData() {
         if (mPresenter != null) mPresenter.getCounts();
+        if (mPresenter != null) mPresenter.getOilModuleList();
     }
 
     public static OilEnterFragment newInstance() {
@@ -157,10 +159,10 @@ public class OilEnterFragment extends RefreshFragment
         int vId = v.getId();
         if (vId == R.id.tv_997_chongzhi || vId == R.id.lay_oil_997) {//9.97
             CargoRouter.gotoCustomerService(
-                    "native_app_recharge", "997加油充值", "147", getActivity());
+                    "native_app_recharge", "9.97加油充值", "147", getActivity());
         } else if (vId == R.id.tv_97_gouka || vId == R.id.lay_oil_97) {//8.8
             CargoRouter.gotoCustomerService(
-                    "native_app_mainRecharge", "97加油充值", "148", getActivity());
+                    "native_app_mainRecharge", "9.7加油充值", "148", getActivity());
         } else if (vId == R.id.tv_bank_gouka || vId == R.id.lay_oil_bank) {//9
             CargoRouter.gotoCustomerService(
                     "http://icbccard.una-campaign.com/?cid=283", "申办S工行卡", "149", getActivity());
@@ -185,6 +187,19 @@ public class OilEnterFragment extends RefreshFragment
         OilEnterResponse.DataBean data = response.getData();
         mTv97Gou.setText(data == null ? "X" : data.getCount1() + "人 " + "已购卡");
         mTvBankGou.setText(data == null ? "X" : data.getCount2() + "人 " + "已购卡");
+    }
+
+    /**
+     * 加油活动资讯
+     */
+    @Override
+    public void OilModuleError(String message) {
+
+    }
+
+    @Override
+    public void OilModuleSucceed(OilModuleResponse response) {
+
     }
 
 }

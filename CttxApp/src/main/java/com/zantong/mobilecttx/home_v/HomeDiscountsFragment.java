@@ -16,7 +16,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Injection;
-import com.zantong.mobilecttx.contract.home.IHomeFavorableFtyContract;
+import com.zantong.mobilecttx.home_p.IHomeFavorableFtyContract;
 import com.zantong.mobilecttx.contract.home.INativeItemListener;
 import com.zantong.mobilecttx.home_p.HomeDiscountsAdapter;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
@@ -219,6 +219,7 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
         if (mPresenter != null) mPresenter.unSubscribe();
     }
 

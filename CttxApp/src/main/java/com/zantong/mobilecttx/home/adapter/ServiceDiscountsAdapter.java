@@ -112,8 +112,8 @@ public class ServiceDiscountsAdapter extends BaseAdapter<ChildrenBean> {
 
     private void imageTransactionProcessing(ImageViewHolder imageViewHolder,
                                             ChildrenBean childrenBean) {
-        ImageLoadUtils.loadTwoRectangle(childrenBean.getImg(), imageViewHolder.mImageView);
         imageViewHolder.mTvBoby.setText(childrenBean.getSubTitle());
+        ImageLoadUtils.loadTwoRectangle(childrenBean.getImg(), imageViewHolder.mImageView);
     }
 
     private void imageTextTransactionProcessing(ImageTextViewHolder imageTextViewHolder,

@@ -326,15 +326,15 @@ public class RefuelOilFragment extends RefreshFragment
     public void createOrderError(String message) {
         toastShort(message);
 
-        if (message.contains("97折")) codeError();
+        if (message.contains("97折")||message.contains("折")) codeError();
     }
 
     public void codeError() {
         CustomDialog.createDialog(getActivity(),
                 "温馨提示",
-                "该卡号是97折卡号,请前往97折加油充值界面充值",
+                "该卡号是9.7折卡号,请前往9.7折加油充值界面充值",
                 "取消",
-                "97充值",
+                "9.7充值",
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

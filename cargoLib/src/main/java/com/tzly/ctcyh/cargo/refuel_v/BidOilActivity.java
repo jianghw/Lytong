@@ -9,7 +9,7 @@ import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 
 /**
- * 加油申办
+ * 9.7加油申办
  */
 public class BidOilActivity extends AbstractBaseActivity {
 
@@ -29,7 +29,7 @@ public class BidOilActivity extends AbstractBaseActivity {
 
     @Override
     protected void bindFragment() {
-        titleContent("申购97折加油卡");
+        titleContent("申购9.7折加油卡");
     }
 
     @Override

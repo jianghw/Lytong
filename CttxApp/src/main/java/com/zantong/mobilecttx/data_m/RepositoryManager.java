@@ -9,6 +9,8 @@ import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
+import com.tzly.ctcyh.java.response.news.IconsResponse;
+import com.tzly.ctcyh.java.response.news.NavigationsResponse;
 import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
@@ -79,7 +81,6 @@ import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
 import java.util.List;
 
 import okhttp3.MultipartBody;
-import rx.Completable;
 import rx.Observable;
 
 /**
@@ -696,5 +697,19 @@ public class RepositoryManager {
      */
     public Observable<NewsInfoResponse> findByType(int type) {
         return mRemoteData.findByType(type);
+    }
+
+    /**
+     * 资讯Icons
+     */
+    public Observable<IconsResponse> getIcons() {
+        return mRemoteData.getIcons();
+    }
+
+    /**
+     * 资讯导航
+     */
+    public Observable<NavigationsResponse> getNavigations() {
+        return mRemoteData.getNavigations();
     }
 }

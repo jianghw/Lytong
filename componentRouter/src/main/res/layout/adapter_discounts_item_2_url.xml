@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="@dimen/pt_260">
+    android:layout_height="@dimen/pt_240">
 
     <ImageView
         android:id="@+id/imageView"
@@ -20,7 +20,6 @@
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/pt_20"
-        android:background="@drawable/bg_tv_white_shade"
         android:gravity="center"
         android:singleLine="true"
         android:textColor="@color/res_color_black_4d"

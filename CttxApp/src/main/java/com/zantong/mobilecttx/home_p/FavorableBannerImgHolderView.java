@@ -15,14 +15,12 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
-import com.zantong.mobilecttx.home.activity.CustomCordovaActivity;
 import com.zantong.mobilecttx.home.bean.BannersBean;
 import com.zantong.mobilecttx.home_v.IDiscountsBanner;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResponse;
 import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.utils.SPUtils;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 
 /**
  * Created by Sai on 15/8/4.

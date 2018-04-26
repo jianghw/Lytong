@@ -10,6 +10,7 @@ import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.oil.OilCardsResponse;
 import com.tzly.ctcyh.java.response.oil.OilEnterResponse;
+import com.tzly.ctcyh.java.response.oil.OilModuleResponse;
 import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
 
 import retrofit2.http.Body;
@@ -118,4 +119,10 @@ public interface IAddOilService {
      */
     @GET("handleOilCard/getCounts")
     Observable<OilEnterResponse> getCounts();
+
+    /**
+     * 加油活动页
+     */
+    @GET("module/getOilModuleList")
+    Observable<OilModuleResponse> getOilModuleList();
 }
