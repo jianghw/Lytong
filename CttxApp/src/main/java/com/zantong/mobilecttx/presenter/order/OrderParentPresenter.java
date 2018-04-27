@@ -24,22 +24,20 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by jianghw on 16/6/1.
  * Description: 订单模块
- * Update by:
- * Update day:
  */
 public class OrderParentPresenter
         implements IOrderParentFtyContract.IOrderParentFtyPresenter {
 
     private final RepositoryManager mRepository;
-    private final IOrderParentFtyContract.IOrderParentFtyView mAtyView;
+    private final IOrderParentFtyContract.IOrderParentFtyView mContractView;
     private final CompositeSubscription mSubscriptions;
 
     public OrderParentPresenter(@NonNull RepositoryManager repositoryManager,
                                 @NonNull IOrderParentFtyContract.IOrderParentFtyView view) {
         mRepository = repositoryManager;
-        mAtyView = view;
+        mContractView = view;
         mSubscriptions = new CompositeSubscription();
-        mAtyView.setPresenter(this);
+        mContractView.setPresenter(this);
     }
 
     @Override
@@ -49,7 +47,7 @@ public class OrderParentPresenter
 
     @Override
     public void unSubscribe() {
-        mAtyView.dismissLoading();
+        mContractView.dismissLoading();
         mSubscriptions.clear();
     }
 
@@ -65,7 +63,7 @@ public class OrderParentPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoading();
+                        mContractView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -73,29 +71,28 @@ public class OrderParentPresenter
                 .subscribe(new BaseSubscriber<OrderListResponse>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoading();
+                        mContractView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.dismissLoading();
-                        mAtyView.getOrderListError(e.getMessage());
+                        mContractView.dismissLoading();
+                        mContractView.getOrderListError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(OrderListResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            if (pager != 1 && result.getData().isEmpty()) {
-                                mAtyView.toastError("无更多数据");
+                            if (pager > 1 && (result.getData() == null || result.getData().isEmpty())) {
+                                mContractView.toastError("无更多数据");
                             } else {
-                                mAtyView.allPaymentData(result.getData(), pager);
-
+                                mContractView.allPaymentData(result.getData(), pager);
                                 dataDistribution(result, 0, pager);
                                 dataDistribution(result, 1, pager);
                                 dataDistribution(result, 2, pager);
                             }
                         } else {
-                            mAtyView.getOrderListError(result != null
+                            mContractView.getOrderListError(result != null
                                     ? result.getResponseDesc() : "未知错误(N8)");
                         }
                     }
@@ -151,23 +148,23 @@ public class OrderParentPresenter
                 .subscribe(new BaseSubscriber<List<OrderListBean>>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoading();
+                        mContractView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.dismissLoading();
-                        mAtyView.dataDistribution(e.getMessage(), orderStatus);
+                        mContractView.dismissLoading();
+                        mContractView.dataDistribution(e.getMessage(), orderStatus);
                     }
 
                     @Override
                     public void doNext(List<OrderListBean> orderList) {
                         if (orderStatus == 0)//待支付
-                            mAtyView.nonPaymentData(orderList, page);
+                            mContractView.nonPaymentData(orderList, page);
                         else if (orderStatus == 2)//取消
-                            mAtyView.cancelPaymentData(orderList, page);
+                            mContractView.cancelPaymentData(orderList, page);
                         else
-                            mAtyView.havePaymentData(orderList, page);
+                            mContractView.havePaymentData(orderList, page);
                     }
                 });
         mSubscriptions.add(subscription);
@@ -188,7 +185,7 @@ public class OrderParentPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoading();
+                        mContractView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -196,22 +193,22 @@ public class OrderParentPresenter
                 .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoading();
+                        mContractView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.dismissLoading();
-                        mAtyView.updateOrderStatusError(e.getMessage());
+                        mContractView.dismissLoading();
+                        mContractView.updateOrderStatusError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(BaseResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.updateOrderStatusSucceed(result);
+                            mContractView.updateOrderStatusSucceed(result);
 
                         } else {
-                            mAtyView.updateOrderStatusError(result != null
+                            mContractView.updateOrderStatusError(result != null
                                     ? result.getResponseDesc() : "未知错误(N10)");
                         }
                     }
@@ -230,7 +227,7 @@ public class OrderParentPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoading();
+                        mContractView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -238,21 +235,21 @@ public class OrderParentPresenter
                 .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoading();
+                        mContractView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.dismissLoading();
-                        mAtyView.updateOrderStatusError(e.getMessage());
+                        mContractView.dismissLoading();
+                        mContractView.updateOrderStatusError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(BaseResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.updateOrderStatusSucceed(result);
+                            mContractView.updateOrderStatusSucceed(result);
                         } else {
-                            mAtyView.updateOrderStatusError(result != null
+                            mContractView.updateOrderStatusError(result != null
                                     ? result.getResponseDesc() : "未知错误(N10)");
                         }
                     }
@@ -270,7 +267,7 @@ public class OrderParentPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoading();
+                        mContractView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -278,21 +275,21 @@ public class OrderParentPresenter
                 .subscribe(new BaseSubscriber<PayOrderResponse>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoading();
+                        mContractView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.dismissLoading();
-                        mAtyView.onPayOrderByCouponError(e.getMessage());
+                        mContractView.dismissLoading();
+                        mContractView.onPayOrderByCouponError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(PayOrderResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.onPayOrderByCouponSucceed(result);
+                            mContractView.onPayOrderByCouponSucceed(result);
                         } else {
-                            mAtyView.onPayOrderByCouponError(result != null
+                            mContractView.onPayOrderByCouponError(result != null
                                     ? result.getResponseDesc() : "未知错误(54)");
                         }
                     }
@@ -311,7 +308,7 @@ public class OrderParentPresenter
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
-                        mAtyView.showLoading();
+                        mContractView.showLoading();
                     }
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -319,21 +316,21 @@ public class OrderParentPresenter
                 .subscribe(new BaseSubscriber<PayOrderResponse>() {
                     @Override
                     public void doCompleted() {
-                        mAtyView.dismissLoading();
+                        mContractView.dismissLoading();
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mAtyView.dismissLoading();
-                        mAtyView.onPayOrderByCouponError(e.getMessage());
+                        mContractView.dismissLoading();
+                        mContractView.onPayOrderByCouponError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(PayOrderResponse result) {
                         if (result != null && result.getResponseCode() == 2000) {
-                            mAtyView.getBankPayHtmlSucceed(result, orderId);
+                            mContractView.getBankPayHtmlSucceed(result, orderId);
                         } else {
-                            mAtyView.onPayOrderByCouponError(result != null
+                            mContractView.onPayOrderByCouponError(result != null
                                     ? result.getResponseDesc() : "未知错误(N5)");
                         }
                     }

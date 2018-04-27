@@ -7,13 +7,14 @@ import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
-import com.tzly.ctcyh.java.response.news.IconsResponse;
 import com.tzly.ctcyh.java.response.news.NavigationsResponse;
 import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
 import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
+import com.tzly.ctcyh.java.response.violation.ViolationNum;
+import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
 import com.zantong.mobilecttx.api.IAddOilService;
 import com.zantong.mobilecttx.api.IBankService;
 import com.zantong.mobilecttx.api.IBannerService;
@@ -32,7 +33,7 @@ import com.zantong.mobilecttx.api.ITextService;
 import com.zantong.mobilecttx.api.IUserService;
 import com.zantong.mobilecttx.api.IViolationService;
 import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
-import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
+import com.zantong.mobilecttx.base.bean.ModuleBannerResponse;
 import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -85,8 +86,6 @@ import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
-import com.tzly.ctcyh.java.response.violation.ViolationNum;
-import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
@@ -666,7 +665,7 @@ public class RemoteData implements IRemoteSource {
      * 模块配置接口
      */
     @Override
-    public Observable<UnimpededBannerResponse> getBanner() {
+    public Observable<ModuleBannerResponse> getBanner() {
         return baseRetrofit().create(IModuleService.class).getBanner();
     }
 
@@ -794,7 +793,7 @@ public class RemoteData implements IRemoteSource {
      * 资讯Icons
      */
     @Override
-    public Observable<IconsResponse> getIcons() {
+    public Observable<ModuleBannerResponse> getIcons() {
         return baseRetrofit().create(IModuleService.class).getIcons();
     }
 
@@ -802,7 +801,7 @@ public class RemoteData implements IRemoteSource {
      * 资讯导航
      */
     @Override
-    public Observable<NavigationsResponse> getNavigations() {
+    public Observable<ModuleBannerResponse> getNavigations() {
         return baseRetrofit().create(IModuleService.class).getNavigations();
     }
 }

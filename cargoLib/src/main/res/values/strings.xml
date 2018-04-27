@@ -52,4 +52,5 @@
         驾驶证查分功能非实时生效,详情以上海市公安交通管理部门发布的消息为准\r\n
         若无法收到验证码,请点击<font color='#33b5e5'>此处</font>进行查询
     </string>
+    <string name="cargo_tv_inquiry">(<i>点击查询</i>)</string>
 </resources>

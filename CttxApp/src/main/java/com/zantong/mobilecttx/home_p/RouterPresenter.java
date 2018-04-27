@@ -75,7 +75,6 @@ public class RouterPresenter implements IRouterContract.IRouterPresenter {
                     @Override
                     public void doError(Throwable e) {
                         mContractView.dismissLoading();
-                        mContractView.configError(e.getMessage());
                     }
 
                     @Override

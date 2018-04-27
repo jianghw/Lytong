@@ -183,6 +183,7 @@ public class RouterFragment extends Fragment implements IRouterContract.IRouterV
      * 点击处理事件
      */
     public void clickItemData(String path, String title) {
+        if (TextUtils.isEmpty(title)) title = "商品推荐";
 
         if (!TextUtils.isEmpty(path)) {
             if (path.contains("http")) {//启动公司自己html
@@ -230,7 +231,7 @@ public class RouterFragment extends Fragment implements IRouterContract.IRouterV
             } else {//其他
                 ToastUtils.toastShort("此版本暂无此状态页面,请更新最新版本");
             }
-        }else{
+        } else {
             ToastUtils.toastShort("敬请期待~");
         }
     }

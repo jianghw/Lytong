@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * 首页返回实体
  */
-public class UnimpededBannerBean implements Parcelable {
+public class ModuleBannerBean implements Parcelable {
 
     /**
      * id : 50
@@ -164,10 +164,10 @@ public class UnimpededBannerBean implements Parcelable {
         dest.writeInt(this.statisticsId);
     }
 
-    public UnimpededBannerBean() {
+    public ModuleBannerBean() {
     }
 
-    protected UnimpededBannerBean(Parcel in) {
+    protected ModuleBannerBean(Parcel in) {
         this.id = in.readInt();
         this.parentId = in.readInt();
         this.title = in.readString();
@@ -183,15 +183,15 @@ public class UnimpededBannerBean implements Parcelable {
         this.statisticsId = in.readInt();
     }
 
-    public static final Parcelable.Creator<UnimpededBannerBean> CREATOR = new Parcelable.Creator<UnimpededBannerBean>() {
+    public static final Parcelable.Creator<ModuleBannerBean> CREATOR = new Parcelable.Creator<ModuleBannerBean>() {
         @Override
-        public UnimpededBannerBean createFromParcel(Parcel source) {
-            return new UnimpededBannerBean(source);
+        public ModuleBannerBean createFromParcel(Parcel source) {
+            return new ModuleBannerBean(source);
         }
 
         @Override
-        public UnimpededBannerBean[] newArray(int size) {
-            return new UnimpededBannerBean[size];
+        public ModuleBannerBean[] newArray(int size) {
+            return new ModuleBannerBean[size];
         }
     };
 }

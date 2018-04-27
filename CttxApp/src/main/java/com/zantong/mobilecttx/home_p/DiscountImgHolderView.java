@@ -16,7 +16,7 @@ import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.home.bean.BannersBean;
-import com.zantong.mobilecttx.home_v.IDiscountsBanner;
+import com.zantong.mobilecttx.home_v.IRouterStatisticsId;
 import com.zantong.mobilecttx.huodong.bean.ActivityCarResponse;
 import com.zantong.mobilecttx.huodong.dto.ActivityCarDTO;
 import com.zantong.mobilecttx.router.MainRouter;
@@ -26,14 +26,14 @@ import com.zantong.mobilecttx.utils.SPUtils;
  * Created by Sai on 15/8/4.
  * 网络图片加载例子
  */
-public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<BannersBean> {
+public class DiscountImgHolderView implements CBPageAdapter.Holder<BannersBean> {
 
-    private final IDiscountsBanner discountsBanner;
+    private final IRouterStatisticsId discountsBanner;
     private ImageView imageView;
     private Context mAdapterContext;
 
-    public FavorableBannerImgHolderView(IDiscountsBanner iDiscountsBanner) {
-        discountsBanner = iDiscountsBanner;
+    public DiscountImgHolderView(IRouterStatisticsId iRouterStatisticsId) {
+        discountsBanner = iRouterStatisticsId;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
         mAdapterContext = context;
         //你可以通过layout文件来创建，也可以像我一样用代码创建，不一定是Image，任何控件都可以进行翻页
         imageView = new ImageView(context);
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         return imageView;
     }
 
@@ -79,9 +79,8 @@ public class FavorableBannerImgHolderView implements CBPageAdapter.Holder<Banner
             } else {
                 MainRouter.gotoLoginActivity(mAdapterContext);
             }
-        } else {
-            if (discountsBanner != null)
-                discountsBanner.gotoByStatistId(url, data.getStatisticsId());
+        } else if (discountsBanner != null) {
+            discountsBanner.gotoByStatistId(url, "商品推荐", data.getStatisticsId());
         }
     }
 

@@ -3,7 +3,7 @@ package com.zantong.mobilecttx.home_p;
 import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
-import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
+import com.zantong.mobilecttx.base.bean.ModuleBannerResponse;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.home.bean.HomeResponse;
 import com.zantong.mobilecttx.home.bean.IndexLayerResponse;
@@ -28,7 +28,7 @@ public interface IUnimpededFtyContract {
 
         void indexLayerSucceed(IndexLayerResponse result);
 
-        void bannerSucceed(UnimpededBannerResponse result);
+        void bannerSucceed(ModuleBannerResponse result);
 
         void versionInfoSucceed(VersionResponse result);
 

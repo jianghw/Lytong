@@ -40,7 +40,7 @@ import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
 import com.zantong.mobilecttx.home_p.HomeMeFtyPresenter;
 import com.zantong.mobilecttx.home_p.IHomeMeFtyContract;
 import com.zantong.mobilecttx.msg_v.MegTypeActivity;
-import com.zantong.mobilecttx.order_v.MyOrderActivity;
+import com.zantong.mobilecttx.order_v.OrderListsActivity;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_v.ShareParentActivity;
 import com.zantong.mobilecttx.user.activity.AboutActivity;
@@ -363,7 +363,7 @@ public class HomeMeFragment extends RefreshFragment
                 break;
             case R.id.lay_order://我的订单
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(30));
-                Act.getInstance().gotoIntentLogin(getActivity(), MyOrderActivity.class);
+                Act.getInstance().gotoIntentLogin(getActivity(), OrderListsActivity.class);
                 break;
             case R.id.lay_driver_order://司机订单
                 MainRouter.gotoWebHtmlActivity(getActivity(),

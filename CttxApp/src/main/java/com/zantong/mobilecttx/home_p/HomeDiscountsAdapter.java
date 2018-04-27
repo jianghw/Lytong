@@ -20,10 +20,10 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.util.RudenessScreenHelper;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.contract.home.INativeItemListener;
 import com.zantong.mobilecttx.home.adapter.ServiceDiscountsAdapter;
 import com.zantong.mobilecttx.home.bean.ChildrenBean;
 import com.zantong.mobilecttx.home.bean.ModuleBean;
+import com.zantong.mobilecttx.home_v.INativeItemListener;
 
 import java.util.List;
 
@@ -41,8 +41,13 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
     private static final int ITEM_TYPE_SHARE = 2;
     private static final int ITEM_TYPE_TWO_PIC = 3;
     private static final int ITEM_TYPE_THREE_PIC = 4;
+
     private Context mAdapterContext;
-    private INativeItemListener mINativeItemListener;
+    private final INativeItemListener nativeItemListener;
+
+    public HomeDiscountsAdapter(INativeItemListener nativeItemListener) {
+        this.nativeItemListener = nativeItemListener;
+    }
 
     /**
      * 自定义类型布局
@@ -151,8 +156,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
             public void onItemClick(View view, Object data) {
                 if (data instanceof ChildrenBean) {
                     ChildrenBean childrenBean = (ChildrenBean) data;
-                    if (mINativeItemListener != null)
-                        mINativeItemListener.onItemClick(childrenBean);
+                    if (nativeItemListener != null) nativeItemListener.onItemClick(childrenBean);
                 }
             }
         });
@@ -288,7 +292,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
             shareViewHolder.mImageShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mINativeItemListener != null) mINativeItemListener.onItemClick(finalBean);
+                    if (nativeItemListener != null) nativeItemListener.onItemClick(finalBean);
                 }
             });
         }
@@ -305,7 +309,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         nativeViewHolder.mLayLocality1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mINativeItemListener != null) mINativeItemListener.onItemClick(bean_0);
+                if (nativeItemListener != null) nativeItemListener.onItemClick(bean_0);
             }
         });
         nativeViewHolder.mTvOil.setText(bean_0.getTitle());
@@ -317,7 +321,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         nativeViewHolder.mLayLocality2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mINativeItemListener != null) mINativeItemListener.onItemClick(bean_1);
+                if (nativeItemListener != null) nativeItemListener.onItemClick(bean_1);
             }
         });
         nativeViewHolder.mTvInsurance.setText(bean_1.getTitle());
@@ -329,7 +333,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         nativeViewHolder.mLayNative1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mINativeItemListener != null) mINativeItemListener.onItemClick(bean_2);
+                if (nativeItemListener != null) nativeItemListener.onItemClick(bean_2);
             }
         });
         nativeViewHolder.mTvNative1.setText(bean_2.getTitle());
@@ -340,7 +344,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         nativeViewHolder.mLayNative2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mINativeItemListener != null) mINativeItemListener.onItemClick(bean_3);
+                if (nativeItemListener != null) nativeItemListener.onItemClick(bean_3);
             }
         });
         nativeViewHolder.mTvNative2.setText(bean_3.getTitle());
@@ -351,7 +355,7 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         nativeViewHolder.mLayNative3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mINativeItemListener != null) mINativeItemListener.onItemClick(bean_4);
+                if (nativeItemListener != null) nativeItemListener.onItemClick(bean_4);
             }
         });
         nativeViewHolder.mTvNative3.setText(bean_4.getTitle());
@@ -362,18 +366,11 @@ public class HomeDiscountsAdapter extends BaseAdapter<ModuleBean> {
         nativeViewHolder.mLayNative4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mINativeItemListener != null) mINativeItemListener.onItemClick(bean_5);
+                if (nativeItemListener != null) nativeItemListener.onItemClick(bean_5);
             }
         });
         nativeViewHolder.mTvNative4.setText(bean_5.getTitle());
         ImageLoadUtils.loadNativeCircle(bean_5.getImg(), nativeViewHolder.mImgNative4);
-    }
-
-    /**
-     * 监听事件
-     */
-    public void setNativeItemListener(INativeItemListener itemListener) {
-        mINativeItemListener = itemListener;
     }
 
     /**

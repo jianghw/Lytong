@@ -330,7 +330,7 @@
         <!-- ===================订单模块========================================= -->
         <!-- 订单模块列表页面 -->
         <activity
-            android:name=".order_v.MyOrderActivity"
+            android:name=".order_v.OrderListsActivity"
             android:screenOrientation="portrait" />
         <!--修改用户信息-->
         <activity

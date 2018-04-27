@@ -7,14 +7,14 @@ import java.util.List;
 /**
  * 首页返回实体
  */
-public class UnimpededBannerResponse extends BaseResponse {
-    private List<UnimpededBannerBean> data;
+public class ModuleBannerResponse extends BaseResponse {
+    private List<ModuleBannerBean> data;
 
-    public List<UnimpededBannerBean> getData() {
+    public List<ModuleBannerBean> getData() {
         return data;
     }
 
-    public void setData(List<UnimpededBannerBean> data) {
+    public void setData(List<ModuleBannerBean> data) {
         this.data = data;
     }
 }

@@ -32,7 +32,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.application.LoginData;
 import com.zantong.mobilecttx.base.BaseAutoScrollUpTextView;
-import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
+import com.zantong.mobilecttx.base.bean.ModuleBannerResponse;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
@@ -73,7 +73,7 @@ import static com.tzly.ctcyh.router.custom.primission.PermissionGen.PER_REQUEST_
  * 畅通主页面
  */
 public class HomeUnimpededFragment extends RefreshFragment
-        implements View.OnClickListener, IUnimpededFtyContract.IUnimpededFtyView, IDiscountsBanner {
+        implements View.OnClickListener, IUnimpededFtyContract.IUnimpededFtyView, IRouterStatisticsId {
 
     /**
      * Hello blank fragment
@@ -205,7 +205,6 @@ public class HomeUnimpededFragment extends RefreshFragment
 
         //版本更新
         versionInfo();
-
     }
 
     @Override
@@ -388,9 +387,9 @@ public class HomeUnimpededFragment extends RefreshFragment
      * 坑位处理
      */
     @Override
-    public void bannerSucceed(UnimpededBannerResponse result) {
+    public void bannerSucceed(ModuleBannerResponse result) {
         if (adapterList == null && mRecyclerList != null) {
-            adapterList = new UnimpededBannerAdapter();
+            adapterList = new UnimpededBannerAdapter(HomeUnimpededFragment.this);
             if (mRecyclerList.getVisibility() != View.VISIBLE) {
                 mRecyclerList.setVisibility(View.VISIBLE);
             }
@@ -671,9 +670,12 @@ public class HomeUnimpededFragment extends RefreshFragment
         RouterUtils.showDialogActive(channel, date, getActivity());
     }
 
+    /**
+     * 点击统计入口
+     */
     @Override
-    public void gotoByStatistId(String url, int statisticsId) {
-        RouterUtils.gotoByStatistId(url, String.valueOf(statisticsId), getActivity());
+    public void gotoByStatistId(String url, String title, int statisticsId) {
+        RouterUtils.gotoByStatistId(url, title, String.valueOf(statisticsId), getActivity());
     }
 
     /**
@@ -689,7 +691,7 @@ public class HomeUnimpededFragment extends RefreshFragment
             mRecyclerInfo.setAdapter(adapterInfo);
         }
         if (adapterInfo != null) {
-            adapterInfo.replace(null);
+            adapterInfo.replace(result.getData().getNews());
         } else {
             ToastUtils.toastShort("资讯广告加载出错");
         }

@@ -3,8 +3,7 @@ package com.zantong.mobilecttx.home_p;
 
 import android.support.annotation.NonNull;
 
-import com.tzly.ctcyh.java.response.news.IconsResponse;
-import com.tzly.ctcyh.java.response.news.NavigationsResponse;
+import com.zantong.mobilecttx.base.bean.ModuleBannerResponse;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.global.MainGlobal;
@@ -52,7 +51,7 @@ public class HomeInfomationPresenter
         Subscription subscription = mRepository.getIcons()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<IconsResponse>() {
+                .subscribe(new BaseSubscriber<ModuleBannerResponse>() {
                     @Override
                     public void doCompleted() {
                     }
@@ -63,7 +62,7 @@ public class HomeInfomationPresenter
                     }
 
                     @Override
-                    public void doNext(IconsResponse result) {
+                    public void doNext(ModuleBannerResponse result) {
                         if (result != null && result.getResponseCode()
                                 == MainGlobal.Response.base_succeed) {
                             mContractView.iconsSucceed(result);
@@ -83,23 +82,23 @@ public class HomeInfomationPresenter
         Subscription subscription = mRepository.getNavigations()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<NavigationsResponse>() {
+                .subscribe(new BaseSubscriber<ModuleBannerResponse>() {
                     @Override
                     public void doCompleted() {
                     }
 
                     @Override
                     public void doError(Throwable e) {
-                        mContractView.responseError(e.getMessage());
+                        mContractView.navigationError(e.getMessage());
                     }
 
                     @Override
-                    public void doNext(NavigationsResponse result) {
+                    public void doNext(ModuleBannerResponse result) {
                         if (result != null && result.getResponseCode()
                                 == MainGlobal.Response.base_succeed) {
-                            mContractView.responseSucceed(result);
+                            mContractView.navigationSucceed(result);
                         } else
-                            mContractView.responseError(result != null
+                            mContractView.navigationError(result != null
                                     ? result.getResponseDesc() : "未知错误(naviations)");
                     }
                 });

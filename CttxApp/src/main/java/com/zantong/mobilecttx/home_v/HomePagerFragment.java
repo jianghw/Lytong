@@ -6,8 +6,7 @@ import android.view.View;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.router.base.RecyclerListFragment;
-import com.zantong.mobilecttx.base.bean.UnimpededBannerBean;
-import com.zantong.mobilecttx.home_p.UnimpededBannerAdapter;
+import com.zantong.mobilecttx.base.bean.ModuleBannerBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +14,14 @@ import java.util.List;
 /**
  * 页面
  */
-public class HomePagerFragment extends RecyclerListFragment<UnimpededBannerBean> {
+public class HomePagerFragment extends RecyclerListFragment<ModuleBannerBean> {
 
     private static final String LIST_DATA = "LIST_DATA";
 
-    public static HomePagerFragment newInstance(List<UnimpededBannerBean> list) {
+    public static HomePagerFragment newInstance(List<ModuleBannerBean> list) {
         HomePagerFragment fragment = new HomePagerFragment();
         Bundle bundle = new Bundle();
-        ArrayList<UnimpededBannerBean> arrayList = new ArrayList<>();
+        ArrayList<ModuleBannerBean> arrayList = new ArrayList<>();
         arrayList.addAll(list);
         bundle.putParcelableArrayList(LIST_DATA, arrayList);
         fragment.setArguments(bundle);
@@ -44,19 +43,19 @@ public class HomePagerFragment extends RecyclerListFragment<UnimpededBannerBean>
 
     @Override
     protected void responseData(Object response) {
-        ArrayList<UnimpededBannerBean> lis = getArguments().getParcelableArrayList(LIST_DATA);
+        ArrayList<ModuleBannerBean> lis = getArguments().getParcelableArrayList(LIST_DATA);
         setSimpleDataResult(lis);
     }
 
     @Override
-    public BaseAdapter<UnimpededBannerBean> createAdapter() {
-        return new UnimpededBannerAdapter();
+    public BaseAdapter<ModuleBannerBean> createAdapter() {
+        return null;
     }
 
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
-        if (!(data instanceof UnimpededBannerBean)) return;
-        UnimpededBannerBean bannerBean = (UnimpededBannerBean) data;
+        if (!(data instanceof ModuleBannerBean)) return;
+        ModuleBannerBean bannerBean = (ModuleBannerBean) data;
 
         RouterUtils.gotoByStatistId(bannerBean.getTargetPath(), bannerBean.getTitle(),
                 String.valueOf(bannerBean.getStatisticsId()), getActivity());

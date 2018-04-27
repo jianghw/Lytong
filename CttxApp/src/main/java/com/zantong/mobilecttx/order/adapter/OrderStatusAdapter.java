@@ -14,6 +14,7 @@ import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.order.bean.OrderListBean;
+import com.zantong.mobilecttx.order_v.IOrderListsItem;
 
 import java.text.DecimalFormat;
 
@@ -31,8 +32,16 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
     private static final int TYPE_COMPLETED_ANNUAL = 6;
     private static final int TYPE_COMPLETED_SUBSCRIBE = 7;
 
+    /**
+     * 接口
+     */
+    private final IOrderListsItem iOrderListsItem;
+
     private Context mAdapterContext;
-    private ItemClickListener mClickListener;
+
+    public OrderStatusAdapter(IOrderListsItem iOrderListsItem) {
+        this.iOrderListsItem = iOrderListsItem;
+    }
 
     /**
      * 自定义类型布局
@@ -137,13 +146,13 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
         holder.mTvCancelOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mClickListener != null) mClickListener.doClickCancel(data);
+                if (iOrderListsItem != null) iOrderListsItem.doClickCancel(data);
             }
         });
         holder.mTvPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mClickListener != null) mClickListener.doClickPay(data);
+                if (iOrderListsItem != null) iOrderListsItem.doClickPay(data);
             }
         });
     }
@@ -179,7 +188,7 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
 
 //        holder.mTvCourier.setVisibility(itemType == 6 && (orderStatus == 1 || orderStatus == 3 || orderStatus == 4)
 //                ? View.VISIBLE : View.GONE);
-        holder.mTvCourier.setVisibility( View.GONE);
+        holder.mTvCourier.setVisibility(View.GONE);
 
         holder.mTvUncourier.setVisibility(itemType == 6 && orderStatus == 13 ? View.VISIBLE : View.GONE);
 
@@ -188,7 +197,7 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
             holder.mTvDriving.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mClickListener != null) mClickListener.doClickDriving(data);
+                    if (iOrderListsItem != null) iOrderListsItem.doClickDriving(data);
                 }
             });
         }
@@ -197,7 +206,7 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
             holder.mTvCourier.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mClickListener != null) mClickListener.doClickCourier(data);
+                    if (iOrderListsItem != null) iOrderListsItem.doClickCourier(data);
                 }
             });
         }
@@ -215,7 +224,7 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
             holder.mTvSubscribe.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mClickListener != null) mClickListener.doClickSubscribe(data);
+                    if (iOrderListsItem != null) iOrderListsItem.doClickSubscribe(data);
                 }
             });
         }
@@ -223,7 +232,7 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
             holder.mTvCancelSubscribe.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mClickListener != null) mClickListener.doClickUnSubscribe(data);
+                    if (iOrderListsItem != null) iOrderListsItem.doClickUnSubscribe(data);
                 }
             });
         }
@@ -271,9 +280,6 @@ public class OrderStatusAdapter extends BaseAdapter<OrderListBean> {
         }
     }
 
-    public void setItemClickListener(ItemClickListener listener) {
-        mClickListener = listener;
-    }
 
     public interface ItemClickListener {
 

@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.router.util.LogUtils;
-import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
+import com.zantong.mobilecttx.base.bean.ModuleBannerResponse;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.global.MainGlobal;
@@ -95,7 +95,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
         Subscription subscription = mRepository.getBanner()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<UnimpededBannerResponse>() {
+                .subscribe(new BaseSubscriber<ModuleBannerResponse>() {
                     @Override
                     public void doCompleted() {
                     }
@@ -106,7 +106,7 @@ public class UnimpededFtyPresenter implements IUnimpededFtyContract.IUnimpededFt
                     }
 
                     @Override
-                    public void doNext(UnimpededBannerResponse result) {
+                    public void doNext(ModuleBannerResponse result) {
                         if (result != null && result.getResponseCode()
                                 == MainGlobal.Response.base_succeed) {
                             mContractView.bannerSucceed(result);

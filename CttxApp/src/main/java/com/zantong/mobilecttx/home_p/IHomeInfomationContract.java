@@ -1,10 +1,9 @@
 package com.zantong.mobilecttx.home_p;
 
 
-import com.tzly.ctcyh.java.response.news.IconsResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
-import com.tzly.ctcyh.router.base.IResponseView;
+import com.zantong.mobilecttx.base.bean.ModuleBannerResponse;
 
 /**
  * Created by jianghw on 2017/10/12.
@@ -15,12 +14,16 @@ import com.tzly.ctcyh.router.base.IResponseView;
 
 public interface IHomeInfomationContract {
 
-    interface IHomeInfomationView extends IBaseView<IHomeInfomationPresenter>, IResponseView {
+    interface IHomeInfomationView extends IBaseView<IHomeInfomationPresenter>{
 
 
         void iconsError(String message);
 
-        void iconsSucceed(IconsResponse result);
+        void iconsSucceed(ModuleBannerResponse result);
+
+        void navigationError(String message);
+
+        void navigationSucceed(ModuleBannerResponse result);
     }
 
     interface IHomeInfomationPresenter extends IBasePresenter {

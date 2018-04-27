@@ -349,13 +349,13 @@ public class PayTypeFragment extends RefreshFragment
                 } else if (bean.getPayId() == 3) {
                     mRbAlipay.setVisibility(View.VISIBLE);
                     if (mCouponType == 13 || mCouponType == 14 || mCouponType == 15) {
-                        mRbAlipay.setText(spannableTitle("支付宝支付\n(加收1%平台手续费)",5));
+                        mRbAlipay.setText(spannableTitle("支付宝支付\n(加收1%平台手续费)", 5));
                     }
                     mLineAlipay.setVisibility(View.VISIBLE);
                 } else if (bean.getPayId() == 4) {
                     mRbWeixinpay.setVisibility(View.VISIBLE);
                     if (mCouponType == 13 || mCouponType == 14 || mCouponType == 15) {
-                        mRbWeixinpay.setText(spannableTitle("微信支付\n(加收1%平台手续费)",4));
+                        mRbWeixinpay.setText(spannableTitle("微信支付\n(加收1%平台手续费)", 4));
                     }
                 }
             }
@@ -363,6 +363,17 @@ public class PayTypeFragment extends RefreshFragment
             //标记是否可点优惠劵
             mLayReCoupon.setEnabled(payTypeBean.getCouponUserId() <= 0);
             if (payTypeBean.getCouponUserId() > 0) mTvCoupon.setText("此订单已用优惠劵,可直接支付");
+
+            //默认支付方式
+            if (payTypeBean.getCouponUserId() <= 0) {
+                if (mRbCarpay != null && mRbCarpay.getVisibility() == View.VISIBLE) {
+                    mRbCarpay.setChecked(true);
+                } else if (mRbWeixinpay != null && mRbWeixinpay.getVisibility() == View.VISIBLE) {
+                    mRbWeixinpay.setChecked(true);
+                } else if (mRbAlipay != null && mRbAlipay.getVisibility() == View.VISIBLE) {
+                    mRbAlipay.setChecked(true);
+                }
+            }
         }
     }
 
@@ -370,7 +381,7 @@ public class PayTypeFragment extends RefreshFragment
         //创建一个 SpannableString对象
         SpannableString ali = new SpannableString(title);
         ali.setSpan(new RelativeSizeSpan(0.6f),
-                start, title.length() , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                start, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ali.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.res_color_red_f3)),
                 start, title.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return ali;

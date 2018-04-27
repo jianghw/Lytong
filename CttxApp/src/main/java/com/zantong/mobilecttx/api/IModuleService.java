@@ -1,9 +1,7 @@
 package com.zantong.mobilecttx.api;
 
-import com.tzly.ctcyh.java.response.news.IconsResponse;
-import com.tzly.ctcyh.java.response.news.NavigationsResponse;
 import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
-import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
+import com.zantong.mobilecttx.base.bean.ModuleBannerResponse;
 import com.zantong.mobilecttx.home.bean.ModuleResponse;
 
 import retrofit2.http.GET;
@@ -27,7 +25,7 @@ public interface IModuleService {
      * 模块配置接口
      */
     @GET("module/getBanner")
-    Observable<UnimpededBannerResponse> getBanner();
+    Observable<ModuleBannerResponse> getBanner();
 
     /**
      * 资讯列表news/findByType
@@ -40,8 +38,8 @@ public interface IModuleService {
      * 资讯Icons
      */
     @GET("module/getIcons")
-    Observable<IconsResponse> getIcons();
+    Observable<ModuleBannerResponse> getIcons();
 
     @GET("module/getNavigations")
-    Observable<NavigationsResponse> getNavigations();
+    Observable<ModuleBannerResponse> getNavigations();
 }

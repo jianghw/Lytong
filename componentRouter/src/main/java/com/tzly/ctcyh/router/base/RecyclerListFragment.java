@@ -38,7 +38,7 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
     /**
      * 默认页数
      */
-    protected int mCurrentPage = 1;
+    protected  int mCurrentPage = 1;
 
     /**
      * 数据源

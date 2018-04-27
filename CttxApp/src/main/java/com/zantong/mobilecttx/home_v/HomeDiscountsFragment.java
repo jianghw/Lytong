@@ -17,7 +17,6 @@ import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.home_p.IHomeFavorableFtyContract;
-import com.zantong.mobilecttx.contract.home.INativeItemListener;
 import com.zantong.mobilecttx.home_p.HomeDiscountsAdapter;
 import com.zantong.mobilecttx.home.adapter.LocalImageHolderView;
 import com.zantong.mobilecttx.home.bean.BannerBean;
@@ -25,7 +24,7 @@ import com.zantong.mobilecttx.home.bean.BannersBean;
 import com.zantong.mobilecttx.home.bean.ChildrenBean;
 import com.zantong.mobilecttx.home.bean.ModuleBean;
 import com.zantong.mobilecttx.home.bean.ModuleResponse;
-import com.zantong.mobilecttx.home_p.FavorableBannerImgHolderView;
+import com.zantong.mobilecttx.home_p.DiscountImgHolderView;
 import com.zantong.mobilecttx.home_p.HomeFavorableFtyPresenter;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ import java.util.List;
  * 优惠页面
  */
 public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
-        implements IHomeFavorableFtyContract.IHomeFavorableFtyView {
+        implements IHomeFavorableFtyContract.IHomeFavorableFtyView, IRouterStatisticsId, INativeItemListener {
 
     private ConvenientBanner mCustomConvenientBanner;
 
@@ -43,7 +42,6 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
      * mPresenter
      */
     private IHomeFavorableFtyContract.IHomeFavorableFtyPresenter mPresenter;
-    private HomeDiscountsAdapter mDiscountsAdapter;
 
     public static HomeDiscountsFragment newInstance() {
         return new HomeDiscountsFragment();
@@ -51,8 +49,7 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
 
     @Override
     public BaseAdapter<ModuleBean> createAdapter() {
-        mDiscountsAdapter = new HomeDiscountsAdapter();
-        return mDiscountsAdapter;
+        return new HomeDiscountsAdapter(HomeDiscountsFragment.this);
     }
 
     /**
@@ -89,14 +86,6 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
     protected void initPresenter() {
         HomeFavorableFtyPresenter presenter = new HomeFavorableFtyPresenter(
                 Injection.provideRepository(Utils.getContext()), this);
-
-        if (mDiscountsAdapter != null)
-            mDiscountsAdapter.setNativeItemListener(new INativeItemListener() {
-                @Override
-                public void onItemClick(ChildrenBean childrenBean) {
-                    gotoPageByTargetPath(childrenBean);
-                }
-            });
     }
 
     /**
@@ -112,6 +101,7 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
                 });
 
         int statisticsId = childrenBean != null ? childrenBean.getStatisticsId() : -1;
+
         RouterUtils.gotoByStatistId(childrenBean.getTargetPath(), childrenBean.getTitle(),
                 String.valueOf(statisticsId), getActivity());
     }
@@ -166,16 +156,10 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
         if (banners == null || banners.size() < 1) return;
         //广告页面
         mCustomConvenientBanner.setPages(
-                new CBViewHolderCreator<FavorableBannerImgHolderView>() {
+                new CBViewHolderCreator<DiscountImgHolderView>() {
                     @Override
-                    public FavorableBannerImgHolderView createHolder() {
-                        return new FavorableBannerImgHolderView(new IDiscountsBanner() {
-                            @Override
-                            public void gotoByStatistId(String url, int statisticsId) {
-                                RouterUtils.gotoByStatistId(url,
-                                        String.valueOf(statisticsId), getActivity());
-                            }
-                        });
+                    public DiscountImgHolderView createHolder() {
+                        return new DiscountImgHolderView(HomeDiscountsFragment.this);
                     }
                 },
                 banners)
@@ -223,4 +207,16 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
         if (mPresenter != null) mPresenter.unSubscribe();
     }
 
+    /**
+     * 点击统计
+     */
+    @Override
+    public void gotoByStatistId(String url, String title, int statisticsId) {
+        RouterUtils.gotoByStatistId(url, title, String.valueOf(statisticsId), getActivity());
+    }
+
+    @Override
+    public void onItemClick(ChildrenBean childrenBean) {
+        gotoPageByTargetPath(childrenBean);
+    }
 }

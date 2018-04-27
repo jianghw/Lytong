@@ -51,6 +51,7 @@ public class HomeMainActivity extends AbstractBaseActivity
     HomeUnimpededFragment mHomeUnimpededFragment;
     HomeDiscountsFragment mHomeDiscountsFragment;
     HomeMeFragment mHomeMeFragment;
+    HomeInformationFragment informationFragment;
     /**
      * 广播
      */
@@ -130,6 +131,7 @@ public class HomeMainActivity extends AbstractBaseActivity
 
         if (mCustomBottom != null)
             mCustomBottom.setTipOfNumber(position, number);
+
         if (mHomeUnimpededFragment != null)
             mHomeUnimpededFragment.unMessageCount(position, number);
         if (mHomeMeFragment != null)
@@ -258,7 +260,8 @@ public class HomeMainActivity extends AbstractBaseActivity
         ArrayMap<Integer, Integer[]> hashMap = new ArrayMap<>();
         hashMap.put(0, new Integer[]{R.mipmap.tab_homepage_s, R.mipmap.tab_homepage});
         hashMap.put(1, new Integer[]{R.mipmap.tab_discount_s, R.mipmap.tab_discount});
-        hashMap.put(2, new Integer[]{R.mipmap.tab_person_s, R.mipmap.tab_person});
+        hashMap.put(2, new Integer[]{R.mipmap.tab_discover_s, R.mipmap.tab_discover});
+        hashMap.put(3, new Integer[]{R.mipmap.tab_person_s, R.mipmap.tab_person});
 
         mCustomBottom.setUiViewPager(new UiTableBottom.OnUITabChangListener() {
             @Override
@@ -277,7 +280,7 @@ public class HomeMainActivity extends AbstractBaseActivity
                     mHomeUnimpededFragment = HomeUnimpededFragment.newInstance();
                     FragmentUtils.add(fragmentManager, mHomeUnimpededFragment, R.id.content);
                 }
-                FragmentUtils.showHideNull(mHomeUnimpededFragment, mHomeDiscountsFragment, mHomeMeFragment);
+                FragmentUtils.showHideNull(mHomeUnimpededFragment, mHomeDiscountsFragment, informationFragment,mHomeMeFragment);
                 MobUtils.getInstance().eventIdByUMeng(18);
                 break;
             case 1:
@@ -285,15 +288,21 @@ public class HomeMainActivity extends AbstractBaseActivity
                     mHomeDiscountsFragment = HomeDiscountsFragment.newInstance();
                     FragmentUtils.add(fragmentManager, mHomeDiscountsFragment, R.id.content);
                 }
-                FragmentUtils.showHideNull(mHomeDiscountsFragment, mHomeUnimpededFragment, mHomeMeFragment);
+                FragmentUtils.showHideNull(mHomeDiscountsFragment, mHomeUnimpededFragment, informationFragment,mHomeMeFragment);
                 MobUtils.getInstance().eventIdByUMeng(19);
                 break;
             case 2:
+                if (informationFragment == null) {
+                    informationFragment = HomeInformationFragment.newInstance();
+                    FragmentUtils.add(fragmentManager, informationFragment, R.id.content);
+                }
+                FragmentUtils.showHideNull(informationFragment, mHomeUnimpededFragment, mHomeDiscountsFragment,mHomeMeFragment);
+            case 3:
                 if (mHomeMeFragment == null) {
                     mHomeMeFragment = HomeMeFragment.newInstance();
                     FragmentUtils.add(fragmentManager, mHomeMeFragment, R.id.content);
                 }
-                FragmentUtils.showHideNull(mHomeMeFragment, mHomeUnimpededFragment, mHomeDiscountsFragment);
+                FragmentUtils.showHideNull(mHomeMeFragment, mHomeUnimpededFragment, mHomeDiscountsFragment,informationFragment);
                 break;
             default:
                 break;

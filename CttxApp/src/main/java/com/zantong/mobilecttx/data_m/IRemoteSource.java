@@ -5,15 +5,15 @@ import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
-import com.tzly.ctcyh.java.response.news.IconsResponse;
-import com.tzly.ctcyh.java.response.news.NavigationsResponse;
 import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
 import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
+import com.tzly.ctcyh.java.response.violation.ViolationNum;
+import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
+import com.zantong.mobilecttx.base.bean.ModuleBannerResponse;
 import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
-import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
 import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -65,8 +65,6 @@ import com.zantong.mobilecttx.user.dto.MessageDetailDTO;
 import com.zantong.mobilecttx.weizhang.bean.LicenseResponseBean;
 import com.zantong.mobilecttx.weizhang.bean.PayOrderResponse;
 import com.zantong.mobilecttx.weizhang.bean.ViolationDetailsBean;
-import com.tzly.ctcyh.java.response.violation.ViolationNum;
-import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationPayDTO;
@@ -390,7 +388,7 @@ public interface IRemoteSource {
     /**
      * 模块配置接口
      */
-    Observable<UnimpededBannerResponse> getBanner();
+    Observable<ModuleBannerResponse> getBanner();
 
     /**
      * 分享统计数据
@@ -442,10 +440,10 @@ public interface IRemoteSource {
      */
     Observable<NewsInfoResponse> findByType(int type);
 
-    Observable<IconsResponse> getIcons();
+    Observable<ModuleBannerResponse> getIcons();
 
     /**
      * 资讯导航
      */
-    Observable<NavigationsResponse> getNavigations();
+    Observable<ModuleBannerResponse> getNavigations();
 }

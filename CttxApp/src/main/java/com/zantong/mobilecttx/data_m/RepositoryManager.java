@@ -9,7 +9,6 @@ import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
-import com.tzly.ctcyh.java.response.news.IconsResponse;
 import com.tzly.ctcyh.java.response.news.NavigationsResponse;
 import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
@@ -19,7 +18,7 @@ import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.tzly.ctcyh.java.response.violation.ViolationNum;
 import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
 import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
-import com.zantong.mobilecttx.base.bean.UnimpededBannerResponse;
+import com.zantong.mobilecttx.base.bean.ModuleBannerResponse;
 import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -624,7 +623,7 @@ public class RepositoryManager {
     /**
      * 模块配置接口
      */
-    public Observable<UnimpededBannerResponse> getBanner() {
+    public Observable<ModuleBannerResponse> getBanner() {
         return mRemoteData.getBanner();
     }
 
@@ -702,14 +701,14 @@ public class RepositoryManager {
     /**
      * 资讯Icons
      */
-    public Observable<IconsResponse> getIcons() {
+    public Observable<ModuleBannerResponse> getIcons() {
         return mRemoteData.getIcons();
     }
 
     /**
      * 资讯导航
      */
-    public Observable<NavigationsResponse> getNavigations() {
+    public Observable<ModuleBannerResponse> getNavigations() {
         return mRemoteData.getNavigations();
     }
 }

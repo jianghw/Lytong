@@ -5,8 +5,10 @@ import android.view.View;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.tzly.ctcyh.cargo.data_m.InjectionRepository;
 import com.tzly.ctcyh.cargo.refuel_p.IOilEnterContract;
+import com.tzly.ctcyh.cargo.refuel_p.IRouterStatisticsId;
 import com.tzly.ctcyh.cargo.refuel_p.OilEnterListAdapter;
 import com.tzly.ctcyh.cargo.refuel_p.OilEnterPresenter;
+import com.tzly.ctcyh.cargo.router.CargoRouter;
 import com.tzly.ctcyh.java.response.oil.OilEnterResponse;
 import com.tzly.ctcyh.java.response.oil.OilModuleResponse;
 import com.tzly.ctcyh.router.base.RecyclerListFragment;
@@ -18,7 +20,7 @@ import java.util.List;
  * 加油新列表
  */
 public class OilEnterListFragment extends RecyclerListFragment<OilModuleResponse.DataBean>
-        implements View.OnClickListener, IOilEnterContract.IOilEnterView {
+        implements View.OnClickListener, IOilEnterContract.IOilEnterView, IRouterStatisticsId {
 
 
     private IOilEnterContract.IOilEnterPresenter mPresenter;
@@ -59,12 +61,20 @@ public class OilEnterListFragment extends RecyclerListFragment<OilModuleResponse
 
     @Override
     public BaseAdapter<OilModuleResponse.DataBean> createAdapter() {
-        return new OilEnterListAdapter();
+        return new OilEnterListAdapter(OilEnterListFragment.this);
     }
 
+    /**
+     * 点击
+     */
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
+        if (data != null && data instanceof OilModuleResponse.DataBean) {
+            OilModuleResponse.DataBean dataBean = (OilModuleResponse.DataBean) data;
 
+            gotoByStatistId(dataBean.getTargetPath(), dataBean.getTitle(),
+                    dataBean.getStatisticsId());
+        }
     }
 
     @Override
@@ -96,5 +106,12 @@ public class OilEnterListFragment extends RecyclerListFragment<OilModuleResponse
             setSimpleDataResult(beanList);
         } else
             responseError();
+    }
+
+    @Override
+    public void gotoByStatistId(String url, String title, int statisticsId) {
+        CargoRouter.gotoCustomerService(
+                url, title, String.valueOf(statisticsId),
+                getActivity());
     }
 }
