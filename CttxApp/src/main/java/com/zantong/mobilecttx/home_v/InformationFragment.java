@@ -23,6 +23,10 @@ public class InformationFragment extends RecyclerListFragment<NewsInfoResponse.D
     private static final String TYPE_ITEM = "type_item";
     private InformationContract.InformationPresenter mPresenter;
 
+    protected boolean isRefresh() {
+        return false;
+    }
+
     @Override
     public BaseAdapter<NewsInfoResponse.DataBean.NewsBean> createAdapter() {
         return new ModuleInfoAdapter();
@@ -30,7 +34,13 @@ public class InformationFragment extends RecyclerListFragment<NewsInfoResponse.D
 
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
-
+      /*  if (data != null && data instanceof NewsInfoResponse.DataBean.NewsBean) {
+            NewsInfoResponse.DataBean.NewsBean newsBean = (NewsInfoResponse.DataBean.NewsBean) data;
+            String url = BuildConfig.isDeta
+                    ? "http://h5dev.liyingtong.com/news/index.html?id=" + newsBean.getId()
+                    : "http://h5.liyingtong.com/news/index.html?id=" + newsBean.getId();
+            MainRouter.gotoWebHtmlActivity(getActivity(), newsBean.getTitle(), url);
+        }*/
     }
 
     @Override
@@ -58,13 +68,12 @@ public class InformationFragment extends RecyclerListFragment<NewsInfoResponse.D
     }
 
     @Override
-    public void findByTypeSucceed(NewsInfoResponse result) {
-        setSimpleDataResult(result.getData().getNews());
-    }
-
-    @Override
-    public void findByTypeError(String message) {
-
+    public void responseData(Object response) {
+        if (response instanceof NewsInfoResponse) {
+            NewsInfoResponse data = (NewsInfoResponse) response;
+            setSimpleDataResult(data.getData().getNews());
+        } else
+            responseError();
     }
 
     @Override

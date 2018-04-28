@@ -58,4 +58,6 @@ public interface IMainService {
      * 点击 统计
      */
     void gotoCustomerService(String url, String title, String keyId, FragmentActivity activity);
+
+    void gotoByTargetPath(String url, FragmentActivity activity);
 }

@@ -325,11 +325,27 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
         }
     }
 
+    /**
+     * 客服title
+     */
     @Override
     public void customerServiceMain(String url) {
         if (mFmentToAtyable != null) {
             mFmentToAtyable.customerService(url);
         }
+    }
+
+    /**
+     * 分享title
+     */
+    @Override
+    public void titleShare() {
+        if (mFmentToAtyable != null) mFmentToAtyable.openTitleShare();
+    }
+
+    @Override
+    public void gotoTargetPath(String url) {
+        PayRouter.gotoByTargetPath(url, getActivity());
     }
 
     /**
@@ -608,7 +624,7 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     //打开客服
     @JavascriptInterface
     public void customerService(String url) {
-        if (mPresenter != null) mPresenter.customerService(url);
+        if (mPresenter != null) mPresenter.customerService(url, 1);
     }
 
     /**
@@ -627,5 +643,19 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
             // TODO: handle exception
             ToastUtils.toastShort("检查到您手机没有安装微信，请安装后使用该功能");
         }
+    }
+
+    //打开本地路由规则
+    @JavascriptInterface
+    public void gotoByTargetPath(String url) {
+        if (mPresenter != null) mPresenter.customerService(url,2);
+    }
+
+    /**
+     * 分享
+     */
+    @JavascriptInterface
+    public void openTitleShare() {
+        if (mPresenter != null) mPresenter.customerService("share",3);
     }
 }

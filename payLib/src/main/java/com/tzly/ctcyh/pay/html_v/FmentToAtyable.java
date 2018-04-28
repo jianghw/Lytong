@@ -19,4 +19,6 @@ public interface FmentToAtyable {
     void backApp();
 
     void customerService(String url);
+
+    void openTitleShare();
 }

@@ -1,5 +1,6 @@
 package com.tzly.ctcyh.cargo.refuel_p;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,8 @@ public class OilEnterListAdapter extends BaseAdapter<OilModuleResponse.DataBean>
         if (list != null && list.size() > 0) {
             final OilModuleResponse.DataBean.ChildrenBean childrenBean = list.get(0);
             holder.tv_line_item.setVisibility(View.VISIBLE);
+            holder.tv_line_item.setText(childrenBean.getTitle());
+
             holder.tv_line_item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -64,6 +67,9 @@ public class OilEnterListAdapter extends BaseAdapter<OilModuleResponse.DataBean>
         } else {
             holder.tv_line_item.setVisibility(View.GONE);
         }
+
+        holder.iv_oil_count.setText(dataBean.getSubTitle());
+        holder.iv_oil_count.setVisibility(TextUtils.isEmpty(dataBean.getSubTitle()) ? View.GONE : View.VISIBLE);
     }
 
     /**
@@ -72,11 +78,13 @@ public class OilEnterListAdapter extends BaseAdapter<OilModuleResponse.DataBean>
     public static class ViewHolder extends BaseRecyclerViewHolder {
         ImageView iv_oil_item;
         TextView tv_line_item;
+        TextView iv_oil_count;
 
         ViewHolder(View view) {
             super(view);
             this.tv_line_item = (TextView) view.findViewById(R.id.tv_line);
             this.iv_oil_item = (ImageView) view.findViewById(R.id.iv_oil_item);
+            this.iv_oil_count = (TextView) view.findViewById(R.id.tv_count);
         }
     }
 }

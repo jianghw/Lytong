@@ -17,7 +17,7 @@ import com.zantong.mobilecttx.base.bean.ModuleBannerBean;
 import com.zantong.mobilecttx.base.bean.ModuleBannerResponse;
 import com.zantong.mobilecttx.home_p.HomeInfomationPresenter;
 import com.zantong.mobilecttx.home_p.IHomeInfomationContract;
-import com.zantong.mobilecttx.home_p.UnimpededBannerAdapter;
+import com.zantong.mobilecttx.home_p.ModuleBannerAdapter;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class HomeInformationFragment extends RefreshFragment
     private ViewPager mViewPager;
 
     private RecyclerView mRecyclerList;
-    private UnimpededBannerAdapter adapterList;
+    private ModuleBannerAdapter adapterList;
 
     List<Fragment> mFragmentList;
 
@@ -59,6 +59,8 @@ public class HomeInformationFragment extends RefreshFragment
 
     @Override
     protected void bindFragment(View fragment) {
+        initView(fragment);
+
         HomeInfomationPresenter presenter = new HomeInfomationPresenter(
                 Injection.provideRepository(Utils.getContext()), this);
     }
@@ -92,7 +94,7 @@ public class HomeInformationFragment extends RefreshFragment
     @Override
     public void iconsSucceed(ModuleBannerResponse result) {
         if (adapterList == null && mRecyclerList != null) {
-            adapterList = new UnimpededBannerAdapter(HomeInformationFragment.this);
+            adapterList = new ModuleBannerAdapter(HomeInformationFragment.this, 5);
             if (mRecyclerList.getVisibility() != View.VISIBLE) {
                 mRecyclerList.setVisibility(View.VISIBLE);
             }
@@ -137,6 +139,7 @@ public class HomeInformationFragment extends RefreshFragment
         OrderFragmentAdapter fragmentAdapter = new OrderFragmentAdapter(
                 getChildFragmentManager(), mFragmentList, title);
         mViewPager.setAdapter(fragmentAdapter);
+        mViewPager.setOffscreenPageLimit(mFragmentList.size() - 1);//设置预加载
         mTabLayout.setupWithViewPager(mViewPager);
     }
 }

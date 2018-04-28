@@ -187,11 +187,16 @@
     <dimen name="pt_240">240pt</dimen>
     <dimen name="pt_260">260pt</dimen>
     <dimen name="pt_280">280pt</dimen>
+    <dimen name="pt_294">294pt</dimen>
     <dimen name="pt_300">300pt</dimen>
     <dimen name="pt_330">330pt</dimen>
+    <dimen name="pt_343">343pt</dimen>
     <dimen name="pt_360">360pt</dimen>
+    <dimen name="pt_370">370pt</dimen>
+    <dimen name="pt_400">400pt</dimen>
     <dimen name="pt_430">430pt</dimen>
     <dimen name="pt_528">528pt</dimen>
     <dimen name="pt_710">710pt</dimen>
+    <dimen name="pt_724">724pt</dimen>
 
 </resources>

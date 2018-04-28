@@ -52,6 +52,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
      * 提示框
      */
     private Dialog mLoadingDialog;
+    private TextView mTvServer;
 
     /**
      * 1、当root不为null，attachToRoot为true时，
@@ -197,6 +198,13 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
                 rightClickListener();
             }
         });
+        mTvServer = (TextView) view.findViewById(R.id.tv_server);
+        mTvServer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageClickListener();
+            }
+        });
         mTvLine = (TextView) view.findViewById(R.id.tv_line);
     }
 
@@ -220,6 +228,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
     protected void titleMore(String right) {
         mTvRight.setVisibility(View.VISIBLE);
         if (mTvRight != null) mTvRight.setText(right);
+        if (mImgHome != null) mImgHome.setVisibility(View.GONE);
     }
 
     @SuppressLint("ResourceType")
@@ -235,7 +244,8 @@ public abstract class AbstractBaseActivity extends AppCompatActivity {
      */
     protected void titleServer() {
         if (mTvRight != null) mTvRight.setVisibility(View.GONE);
-        if (mImgHome != null) mImgHome.setVisibility(View.VISIBLE);
+        if (mImgHome != null) mImgHome.setVisibility(View.GONE);
+        if (mTvServer != null) mTvServer.setVisibility(View.VISIBLE);
     }
 
     /**

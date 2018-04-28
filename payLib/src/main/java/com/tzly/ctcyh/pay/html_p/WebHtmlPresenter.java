@@ -333,14 +333,20 @@ public class WebHtmlPresenter implements IWebHtmlContract.IWebHtmlPresenter {
     }
 
     @Override
-    public void customerService(String url) {
+    public void customerService(String url, final int position) {
         Subscription subscription = Observable.just(url)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
                     @Override
                     public void call(String url) {
-                        mContractView.customerServiceMain(url);
+                        if (position == 3) {
+                            mContractView.titleShare();
+                        } else if (position == 1) {
+                            mContractView.customerServiceMain(url);
+                        } else if (position == 2) {
+                            mContractView.gotoTargetPath(url);
+                        }
                     }
                 });
         mSubscriptions.add(subscription);

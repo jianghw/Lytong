@@ -80,20 +80,27 @@
     <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
         android:id="@+id/custom_violation"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/pt_430"
+        android:layout_height="@dimen/pt_400"
         android:background="@color/res_color_gray_f8"
         app:icvp_center_page_scale_offset="20dp"
         app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"
-        app:icvp_max_page_scale="0.84"
+        app:icvp_max_page_scale="0.9"
         app:icvp_medium_scaled="true"
-        app:icvp_min_page_scale="0.6"
+        app:icvp_min_page_scale="0.68"
         app:icvp_min_page_scale_offset="3dp"
         app:icvp_scroll_duration="300" />
 
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/rv_info"
+    <RelativeLayout
+        android:id="@+id/rl_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:visibility="gone" />
+        android:visibility="gone">
+
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/rv_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:scrollbars="none" />
+    </RelativeLayout>
 </LinearLayout>

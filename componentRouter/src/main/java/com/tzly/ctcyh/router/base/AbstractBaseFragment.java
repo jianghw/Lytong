@@ -2,7 +2,6 @@ package com.tzly.ctcyh.router.base;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,6 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.jianghw.multi.state.layout.MultiState;
 import com.jianghw.multi.state.layout.MultiStateLayout;
@@ -157,12 +155,6 @@ public abstract class AbstractBaseFragment extends Fragment {
         doClickRefreshView(view, state);
     }
 
-    /**
-     * 自定义页面显示
-     */
-    protected void statusViewSelf(View view, int state) {
-    }
-
     private void enhanceErrorView(View view, int state) {
         doClickRefreshView(view, state);
     }
@@ -176,6 +168,12 @@ public abstract class AbstractBaseFragment extends Fragment {
     }
 
     private void enhanceContentView(View view, int state) {
+    }
+
+    /**
+     * 自定义页面显示
+     */
+    protected void statusViewSelf(View view, int state) {
     }
 
     private void doClickRefreshView(View view, int state) {

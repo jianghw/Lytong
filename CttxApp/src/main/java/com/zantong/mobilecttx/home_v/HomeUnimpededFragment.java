@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager;
@@ -48,7 +49,7 @@ import com.zantong.mobilecttx.home_p.HorizontalCarViolationAdapter;
 import com.zantong.mobilecttx.home_p.IUnimpededFtyContract;
 import com.zantong.mobilecttx.home_p.MainBannerImgHolderView;
 import com.zantong.mobilecttx.home_p.ModuleInfoAdapter;
-import com.zantong.mobilecttx.home_p.UnimpededBannerAdapter;
+import com.zantong.mobilecttx.home_p.ModuleBannerAdapter;
 import com.zantong.mobilecttx.home_p.UnimpededFtyPresenter;
 import com.zantong.mobilecttx.order.adapter.OrderFragmentAdapter;
 import com.zantong.mobilecttx.push_v.PushBean;
@@ -119,10 +120,11 @@ public class HomeUnimpededFragment extends RefreshFragment
     private OrderFragmentAdapter mainBannerAdapter;
     //标签栏
     private RecyclerView mRecyclerList;
-    private UnimpededBannerAdapter adapterList;
+    private ModuleBannerAdapter adapterList;
     //资讯
     private RecyclerView mRecyclerInfo;
     private ModuleInfoAdapter adapterInfo;
+    private RelativeLayout mRlrecycler;
 
     @Override
     public void onAttach(Activity activity) {
@@ -253,9 +255,10 @@ public class HomeUnimpededFragment extends RefreshFragment
        /* mViewPager = (ViewPager) view.findViewById(R.id.viewPager);
         mTabLayout = (LinearLayout) view.findViewById(R.id.tabLayout);*/
 
+        mRlrecycler = (RelativeLayout) view.findViewById(R.id.rl_recycler);
         mRecyclerInfo = (RecyclerView) view.findViewById(R.id.rv_info);
-        //ScrollView 去滑动
-        mRecyclerInfo.setNestedScrollingEnabled(true);
+        //ScrollView 去滑动 限制了RecyclerView自身的滑动
+        mRecyclerInfo.setNestedScrollingEnabled(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerInfo.setLayoutManager(layoutManager);
@@ -389,7 +392,7 @@ public class HomeUnimpededFragment extends RefreshFragment
     @Override
     public void bannerSucceed(ModuleBannerResponse result) {
         if (adapterList == null && mRecyclerList != null) {
-            adapterList = new UnimpededBannerAdapter(HomeUnimpededFragment.this);
+            adapterList = new ModuleBannerAdapter(HomeUnimpededFragment.this,6);
             if (mRecyclerList.getVisibility() != View.VISIBLE) {
                 mRecyclerList.setVisibility(View.VISIBLE);
             }
@@ -683,13 +686,16 @@ public class HomeUnimpededFragment extends RefreshFragment
      */
     @Override
     public void findByTypeSucceed(NewsInfoResponse result) {
-        if (adapterInfo == null && mRecyclerInfo != null) {
+        if (adapterInfo == null) {
             adapterInfo = new ModuleInfoAdapter();
-            if (mRecyclerInfo.getVisibility() != View.VISIBLE) {
-                mRecyclerInfo.setVisibility(View.VISIBLE);
-            }
+        }
+        if (mRlrecycler != null && mRlrecycler.getVisibility() != View.VISIBLE) {
+            mRlrecycler.setVisibility(View.VISIBLE);
+        }
+        if (mRecyclerInfo != null) {
             mRecyclerInfo.setAdapter(adapterInfo);
         }
+
         if (adapterInfo != null) {
             adapterInfo.replace(result.getData().getNews());
         } else {
@@ -699,8 +705,9 @@ public class HomeUnimpededFragment extends RefreshFragment
 
     @Override
     public void findByTypeError(String message) {
-        if (mRecyclerInfo != null && mRecyclerInfo.getVisibility() == View.VISIBLE) {
-            mRecyclerInfo.setVisibility(View.GONE);
-        }
+      /*  if (mRlrecycler != null && mRlrecycler.getVisibility() != View.GONE) {
+            adapterInfo.removeAll();
+            mRlrecycler.setVisibility(View.GONE);
+        }*/
     }
 }

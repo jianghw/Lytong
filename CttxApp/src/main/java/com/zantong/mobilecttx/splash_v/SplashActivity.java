@@ -24,6 +24,7 @@ import com.tzly.ctcyh.router.util.DensityUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.umeng.analytics.MobclickAgent;
+import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.Injection;
@@ -125,9 +126,11 @@ public class SplashActivity extends AbstractBaseActivity
     protected void initContentData() {
         initThirdPartyData();
 
-        int width = DensityUtils.getScreenWidth(this);
-        int height = DensityUtils.getScreenHeight(this);
-        LogUtils.e("===》" + width + "/" + height);
+        if (BuildConfig.isDeta) {
+            int width = DensityUtils.getScreenWidth(this);
+            int height = DensityUtils.getScreenHeight(this);
+            LogUtils.e("===》" + width + "/" + height);
+        }
     }
 
     /**
@@ -270,9 +273,8 @@ public class SplashActivity extends AbstractBaseActivity
             MainRouter.gotoWebHtmlActivity(this, "最新优惠", mCurUrl);
         else if (type.equals("5"))//违章查询
             MainRouter.gotoViolationActivity(this);
-        else//其他
-        {
-
+        else if (type.equals("14") || !TextUtils.isEmpty(mCurUrl)) {
+            MainRouter.gotoByTargetPath(mCurUrl, this);
         }
     }
 

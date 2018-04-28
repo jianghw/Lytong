@@ -56,9 +56,6 @@ public class HomePagerFragment extends RecyclerListFragment<ModuleBannerBean> {
     protected void onRecyclerItemClick(View view, Object data) {
         if (!(data instanceof ModuleBannerBean)) return;
         ModuleBannerBean bannerBean = (ModuleBannerBean) data;
-
-        RouterUtils.gotoByStatistId(bannerBean.getTargetPath(), bannerBean.getTitle(),
-                String.valueOf(bannerBean.getStatisticsId()), getActivity());
     }
 
     @Override

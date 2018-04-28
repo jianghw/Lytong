@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/res_color_white">
 
     <ImageView
         android:id="@+id/iv_top"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pt_200"
-        android:scaleType="centerCrop"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/pt_20" />
+        android:layout_margin="@dimen/pt_20"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -64,5 +66,10 @@
         android:textSize="@dimen/pt_24"
         tools:text="2365" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pt_1"
+        android:layout_below="@+id/tv_time"
+        android:background="@color/res_color_gray_e6" />
 </RelativeLayout>
 

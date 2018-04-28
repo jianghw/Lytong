@@ -851,4 +851,15 @@ public final class MainRouter {
     public static void gotoCustomerService(String url, String title, String keyId, FragmentActivity activity) {
         RouterUtils.gotoByStatistId(url, title, keyId, activity);
     }
+
+    /**
+     * 路由跳转
+     */
+    public static void gotoByTargetPath(String url, FragmentActivity activity) {
+        RouterUtils.gotoByUrl(url, activity);
+    }
+
+    public static void gotoByTargetPath(String url, String title, FragmentActivity activity) {
+        RouterUtils.gotoByUrl(url, title, activity);
+    }
 }

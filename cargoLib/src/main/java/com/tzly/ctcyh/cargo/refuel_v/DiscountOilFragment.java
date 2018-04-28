@@ -207,7 +207,7 @@ public class DiscountOilFragment extends RefreshFragment
         if (v.getId() == R.id.tv_agreement) {//加油协议
             CargoRouter.gotoRechargeAgreementActivity(getActivity());
         } else if (v.getId() == R.id.tv_gou_card) {//购卡
-            CargoRouter.gotoDiscountOilActivity(getActivity());
+            CargoRouter.gotoBidOilActivity(getActivity());
         }
     }
 
@@ -303,13 +303,13 @@ public class DiscountOilFragment extends RefreshFragment
     public void createOrderError(String message) {
         toastShort(message);
 
-        if (message.contains("97折")||message.contains("折")) codeError();
+        if (message.contains("97折") || message.contains("折")) codeError();
     }
 
     public void codeError() {
         CustomDialog.createDialog(getActivity(),
                 "温馨提示",
-                "该卡号不是9.7折卡号,请前往普通加油充值界面充值如无卡9.7折加油卡,请去申购页面购买",
+                "该卡号不是畅通9.7折中石化加油卡，请先购买畅通9.7折中石化加油卡",
                 "取消",
                 "前往",
                 new View.OnClickListener() {
@@ -320,7 +320,7 @@ public class DiscountOilFragment extends RefreshFragment
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CargoRouter.gotoRechargeActivity(getActivity());
+                        CargoRouter.gotoBidOilActivity(getActivity());
                     }
                 });
     }

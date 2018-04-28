@@ -19,18 +19,32 @@ import com.zantong.mobilecttx.home_v.IRouterStatisticsId;
  * 优惠卷
  */
 
-public class UnimpededBannerAdapter extends BaseAdapter<ModuleBannerBean> {
+public class ModuleBannerAdapter extends BaseAdapter<ModuleBannerBean> {
 
     private final IRouterStatisticsId iRouterStatisticsId;
+    private final int item;
 
-    public UnimpededBannerAdapter(IRouterStatisticsId iRouterStatisticsId) {
+    public ModuleBannerAdapter(IRouterStatisticsId iRouterStatisticsId, int item) {
         this.iRouterStatisticsId = iRouterStatisticsId;
+        this.item = item;
     }
 
     @Override
     public View createView(ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        return inflater.inflate(R.layout.main_recycler_item_banner_list, viewGroup, false);
+        int resource;
+        switch (this.item) {
+            case 6:
+                resource = R.layout.main_recycler_item_banner_list_6;
+                break;
+            case 5:
+                resource = R.layout.main_recycler_item_banner_list_5;
+                break;
+            default:
+                resource = R.layout.main_recycler_item_banner_list_6;
+                break;
+        }
+        return inflater.inflate(resource, viewGroup, false);
     }
 
     @Override

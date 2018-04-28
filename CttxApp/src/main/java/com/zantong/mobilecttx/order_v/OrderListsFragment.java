@@ -83,6 +83,12 @@ public class OrderListsFragment extends RecyclerListFragment<OrderListBean> {
         this.mCurrentPage = 1;
     }
 
+    @Override
+    protected void clickRefreshData() {
+        showStateLoading();
+        onRefreshData();
+    }
+
     /**
      * 下拉
      */

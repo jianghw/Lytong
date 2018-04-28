@@ -3,6 +3,7 @@ package com.tzly.ctcyh.pay.router;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 
 import com.tzly.ctcyh.pay.global.PayGlobal;
@@ -519,6 +520,19 @@ public final class PayRouter {
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
             service.gotoNianjianMapActivity(context);
+        } else {//注册机开始工作
+            registerMain();
+        }
+    }
+
+    /**
+     * 路由跳转
+     */
+    public static void gotoByTargetPath(String url, FragmentActivity activity) {
+        Object object = getMainObject();
+        if (object != null && object instanceof IMainService) {
+            IMainService service = (IMainService) object;
+            service.gotoByTargetPath(url, activity);
         } else {//注册机开始工作
             registerMain();
         }

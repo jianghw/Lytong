@@ -173,5 +173,10 @@ public class MainDataService implements IMainService {
         MainRouter.gotoCustomerService(url, title, keyId, activity);
     }
 
+    @Override
+    public void gotoByTargetPath(String url, FragmentActivity activity) {
+        MainRouter.gotoByTargetPath(url, activity);
+    }
+
 
 }

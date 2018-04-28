@@ -1,8 +1,8 @@
 package com.zantong.mobilecttx.home_p;
 
-import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
+import com.tzly.ctcyh.router.base.IResponseView;
 
 /**
  * 畅通页面
@@ -10,11 +10,7 @@ import com.tzly.ctcyh.router.base.IBaseView;
 
 public interface InformationContract {
 
-    interface InformationView extends IBaseView<InformationPresenter> {
-
-        void findByTypeSucceed(NewsInfoResponse result);
-
-        void findByTypeError(String message);
+    interface InformationView extends IBaseView<InformationPresenter>,IResponseView {
 
         int getTypeItem();
     }

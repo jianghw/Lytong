@@ -456,4 +456,10 @@ public class WebHtmlActivity extends AbstractBaseActivity
         titleServer();
     }
 
+    @Override
+    public void openTitleShare() {
+        mRightBtnStatus = 3;
+        titleMore("分享");
+    }
+
 }

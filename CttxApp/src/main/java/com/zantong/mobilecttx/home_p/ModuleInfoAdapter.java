@@ -1,16 +1,20 @@
 package com.zantong.mobilecttx.home_p;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
+import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
+import com.zantong.mobilecttx.router.MainRouter;
 
 
 /**
@@ -20,10 +24,12 @@ import com.zantong.mobilecttx.R;
 public class ModuleInfoAdapter extends BaseAdapter<NewsInfoResponse.DataBean.NewsBean> {
     private static final int ITEM_TYPE_TOP_PIC = 1;
     private static final int ITEM_TYPE_LEFT_PIC = 2;
+    private Context adapterContext;
 
     @Override
     public View createView(ViewGroup viewGroup, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        adapterContext = viewGroup.getContext();
+        LayoutInflater inflater = LayoutInflater.from(adapterContext);
         int resource;
         switch (viewType) {
             case ITEM_TYPE_TOP_PIC:
@@ -55,7 +61,7 @@ public class ModuleInfoAdapter extends BaseAdapter<NewsInfoResponse.DataBean.New
      * 优惠卷 type  优惠券类型：1 无；2 折扣；3 代金券
      */
     @Override
-    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, NewsInfoResponse.DataBean.NewsBean newsBean) {
+    public void bindViewData(BaseRecyclerViewHolder viewHolder, int position, final NewsInfoResponse.DataBean.NewsBean newsBean) {
         if (newsBean == null) return;
 
         switch (viewHolder.getItemViewType()) {
@@ -67,6 +73,12 @@ public class ModuleInfoAdapter extends BaseAdapter<NewsInfoResponse.DataBean.New
                 topViewHolder.mTvTime.setText(newsBean.getCreateTime());
                 topViewHolder.mTvCount.setText(String.valueOf(newsBean.getCount()));
                 topViewHolder.mTvNew.setVisibility(newsBean.isNewItem() ? View.VISIBLE : View.GONE);
+                topViewHolder.mRlayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        itemOnClick(newsBean);
+                    }
+                });
                 break;
             case ITEM_TYPE_LEFT_PIC:
                 LeftViewHolder leftViewHolder = (LeftViewHolder) viewHolder;
@@ -75,10 +87,23 @@ public class ModuleInfoAdapter extends BaseAdapter<NewsInfoResponse.DataBean.New
                 leftViewHolder.mTvTitle.setText(newsBean.getTitle());
                 leftViewHolder.mTvTime.setText(newsBean.getCreateTime());
                 leftViewHolder.mTvCount.setText(String.valueOf(newsBean.getCount()));
+                leftViewHolder.mRlayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        itemOnClick(newsBean);
+                    }
+                });
                 break;
             default:
                 break;
         }
+    }
+
+    private void itemOnClick(NewsInfoResponse.DataBean.NewsBean newsBean) {
+        String url = BuildConfig.isDeta
+                ? "http://h5dev.liyingtong.com/news/index.html?id=" + newsBean.getId()
+                : "http://h5.liyingtong.com/news/index.html?id=" + newsBean.getId();
+        MainRouter.gotoWebHtmlActivity(adapterContext, "资讯详情", url);
     }
 
     /**
@@ -87,7 +112,7 @@ public class ModuleInfoAdapter extends BaseAdapter<NewsInfoResponse.DataBean.New
     @Override
     public int getItemViewType(int position) {
         NewsInfoResponse.DataBean.NewsBean benewsBean = getAll().get(position);
-        switch (benewsBean.getType()) {
+        switch (benewsBean.getStyle()) {
             case 1:
                 return ITEM_TYPE_TOP_PIC;
             case 2:
@@ -98,6 +123,7 @@ public class ModuleInfoAdapter extends BaseAdapter<NewsInfoResponse.DataBean.New
     }
 
     static class TopViewHolder extends BaseRecyclerViewHolder {
+        RelativeLayout mRlayout;
         ImageView mIvTop;
         TextView mTvTitle;
         TextView mTvNew;
@@ -111,10 +137,12 @@ public class ModuleInfoAdapter extends BaseAdapter<NewsInfoResponse.DataBean.New
             this.mTvNew = (TextView) view.findViewById(R.id.tv_new);
             this.mTvTime = (TextView) view.findViewById(R.id.tv_time);
             this.mTvCount = (TextView) view.findViewById(R.id.tv_count);
+            this.mRlayout = (RelativeLayout) view.findViewById(R.id.rl_layout);
         }
     }
 
     static class LeftViewHolder extends BaseRecyclerViewHolder {
+        RelativeLayout mRlayout;
         ImageView mIvLeft;
         TextView mTvTitle;
         TextView mTvNew;
@@ -128,6 +156,7 @@ public class ModuleInfoAdapter extends BaseAdapter<NewsInfoResponse.DataBean.New
             this.mTvNew = (TextView) view.findViewById(R.id.tv_new);
             this.mTvTime = (TextView) view.findViewById(R.id.tv_time);
             this.mTvCount = (TextView) view.findViewById(R.id.tv_count);
+            this.mRlayout = (RelativeLayout) view.findViewById(R.id.rl_layout);
         }
     }
 }

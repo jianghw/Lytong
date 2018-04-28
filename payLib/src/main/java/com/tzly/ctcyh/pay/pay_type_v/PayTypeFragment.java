@@ -572,8 +572,7 @@ public class PayTypeFragment extends RefreshFragment
      */
     @Override
     public void couponByTypeError(String message) {
-        toastShort(message);
-        setCouponText(message);
+        setCouponText(0 + "张可用优惠劵");
     }
 
     /**
@@ -595,6 +594,6 @@ public class PayTypeFragment extends RefreshFragment
                 userCount++;
             }
         }
-        setCouponText("你有" + userCount + "张可使用优惠劵");
+        setCouponText(userCount + "张可用优惠劵");
     }
 }

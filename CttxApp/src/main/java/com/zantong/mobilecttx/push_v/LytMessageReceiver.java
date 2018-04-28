@@ -1,11 +1,13 @@
 package com.zantong.mobilecttx.push_v;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
@@ -13,11 +15,12 @@ import android.widget.RemoteViews;
 import com.alibaba.sdk.android.push.MessageReceiver;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.google.gson.Gson;
+import com.tzly.ctcyh.router.util.ActivityUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.Tools;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.eventbus.AddPushTrumpetEvent;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.tzly.ctcyh.router.util.Tools;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -119,7 +122,13 @@ public class LytMessageReceiver extends MessageReceiver {
             MainRouter.gotoWebHtmlActivity(context, title, pushExtBean.getUrl());
         else if (type.equals("5"))//违章查询
             MainRouter.gotoViolationActivity(context);
-        else
+        else if (type.equals("14") || !TextUtils.isEmpty(pushExtBean.getUrl())) {
+            Activity activity = ActivityUtils.getTopActivity();
+            if (activity instanceof FragmentActivity) {
+                FragmentActivity fragmentActivity = (FragmentActivity) activity;
+                MainRouter.gotoByTargetPath(pushExtBean.getUrl(), fragmentActivity);
+            }
+        } else
             gotoAppLauncher(context);
     }
 

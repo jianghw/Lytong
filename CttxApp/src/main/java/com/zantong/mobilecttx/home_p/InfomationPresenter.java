@@ -57,16 +57,16 @@ public class InfomationPresenter implements InformationContract.InformationPrese
 
                     @Override
                     public void doError(Throwable e) {
-                        mContractView.findByTypeError(e.getMessage());
+                        mContractView.responseError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(NewsInfoResponse result) {
                         if (result != null && result.getResponseCode() ==
                                 MainGlobal.Response.base_succeed) {
-                            mContractView.findByTypeSucceed(result);
+                            mContractView.responseSucceed(result);
                         } else {
-                            mContractView.findByTypeError(result != null
+                            mContractView.responseError(result != null
                                     ? result.getResponseDesc() : "未知错误(findByType)");
                         }
                     }

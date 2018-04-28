@@ -44,6 +44,10 @@ public interface IWebHtmlContract {
         void updateStateSucceed(ViolationNumBean result);
 
         void customerServiceMain(String url);
+
+        void titleShare();
+
+        void gotoTargetPath(String url);
     }
 
     interface IWebHtmlPresenter extends IBasePresenter {
@@ -59,7 +63,7 @@ public interface IWebHtmlContract {
 
         void applyRecord(ApplyCTCardDTO applyCTCardDTO);
 
-        void customerService(String url);
+        void customerService(String url, int i);
     }
 
 }

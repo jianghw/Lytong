@@ -164,7 +164,7 @@ public class PayTypePresenter implements IPayTypeContract.IPayTypePresenter {
                             mContractView.couponByTypeSucceed(response);
                         } else {
                             mContractView.couponByTypeError(response != null
-                                    ? response.getResponseDesc() : "未知错误(57)");
+                                    ? response.getResponseDesc() : "未知错误(CouponByType)");
                         }
                     }
                 });
