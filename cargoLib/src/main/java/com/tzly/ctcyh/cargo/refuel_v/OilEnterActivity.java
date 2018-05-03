@@ -14,7 +14,7 @@ import com.tzly.ctcyh.router.util.FragmentUtils;
  */
 public class OilEnterActivity extends AbstractBaseActivity {
 
-    private OilEnterListFragment mFragment;
+    private OilEnterRefreshFragment mFragment;
 
     @Override
     protected int initContentView() {
@@ -50,7 +50,7 @@ public class OilEnterActivity extends AbstractBaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         //默认页面显示
         if (mFragment == null) {
-            mFragment = OilEnterListFragment.newInstance();
+            mFragment = OilEnterRefreshFragment.newInstance();
         }
         FragmentUtils.add(fragmentManager, mFragment, R.id.lay_base_frame);
     }

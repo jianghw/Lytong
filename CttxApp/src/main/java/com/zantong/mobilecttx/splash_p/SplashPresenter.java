@@ -3,7 +3,9 @@ package com.zantong.mobilecttx.splash_p;
 import android.support.annotation.NonNull;
 
 import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.java.response.module.NewsFlagResponse;
 import com.tzly.ctcyh.router.util.LogUtils;
+import com.tzly.ctcyh.router.util.SPUtils;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.home.bean.StartPicResponse;
 import com.zantong.mobilecttx.router.MainRouter;
@@ -152,5 +154,32 @@ public class SplashPresenter implements ISplashAtyContract.ISplashAtyPresenter {
     @Override
     public void unSubscribe() {
         mSubscriptions.clear();
+    }
+
+    /**
+     * 是否导航
+     */
+    @Override
+    public void newsFlag() {
+        Subscription subscription = mRepository.newsFlag()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<NewsFlagResponse>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        LogUtils.e(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(NewsFlagResponse result) {
+                        boolean resultData = result.isData();
+                        SPUtils.instance().put(SPUtils.IS_HAS_FIND, resultData);
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 }

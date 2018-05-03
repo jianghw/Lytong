@@ -45,6 +45,11 @@ public class HomeInformationFragment extends RefreshFragment
     }
 
     @Override
+    protected boolean isRefresh() {
+        return false;
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         if (mFragmentList != null) mFragmentList.clear();
@@ -128,6 +133,7 @@ public class HomeInformationFragment extends RefreshFragment
     public void navigationSucceed(ModuleBannerResponse result) {
         if (mFragmentList == null) mFragmentList = new ArrayList<>();
         List<ModuleBannerBean> list = result.getData();
+        if (mFragmentList != null && !mFragmentList.isEmpty()) mFragmentList.clear();
 
         int len = list.size();
         String[] title = new String[len];

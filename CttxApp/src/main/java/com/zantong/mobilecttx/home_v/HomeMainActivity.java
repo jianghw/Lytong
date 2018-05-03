@@ -10,7 +10,9 @@ import android.support.v4.util.ArrayMap;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
@@ -20,6 +22,7 @@ import com.tzly.ctcyh.router.custom.tablebottom.UiTableBottom;
 import com.tzly.ctcyh.router.util.AppUtils;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.tzly.ctcyh.router.util.MobUtils;
+import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.StatusBarUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
@@ -120,6 +123,18 @@ public class HomeMainActivity extends AbstractBaseActivity
 
         mFrameLayout = (FrameLayout) findViewById(R.id.content);
         mCustomBottom = (UiTableBottom) findViewById(R.id.custom_bottom);
+    }
+
+    protected void showStatusLy(boolean isShow) {
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ll_status);
+        if (isShow && linearLayout.getVisibility() == View.VISIBLE) return;
+
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        int height = getResources().getDimensionPixelSize(resourceId);
+        ViewGroup.LayoutParams layoutParams = linearLayout.getLayoutParams();
+        layoutParams.height = height;
+        linearLayout.setLayoutParams(layoutParams);
+        linearLayout.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -257,11 +272,18 @@ public class HomeMainActivity extends AbstractBaseActivity
      * 底部数据初始化
      */
     private void initBottomTable() {
+        boolean isFind = SPUtils.instance().getBoolean(SPUtils.IS_HAS_FIND, false);
         ArrayMap<Integer, Integer[]> hashMap = new ArrayMap<>();
-        hashMap.put(0, new Integer[]{R.mipmap.tab_homepage_s, R.mipmap.tab_homepage});
-        hashMap.put(1, new Integer[]{R.mipmap.tab_discount_s, R.mipmap.tab_discount});
-        hashMap.put(2, new Integer[]{R.mipmap.tab_discover_s, R.mipmap.tab_discover});
-        hashMap.put(3, new Integer[]{R.mipmap.tab_person_s, R.mipmap.tab_person});
+        if (isFind) {
+            hashMap.put(0, new Integer[]{R.mipmap.tab_homepage_s, R.mipmap.tab_homepage});
+            hashMap.put(1, new Integer[]{R.mipmap.tab_discount_s, R.mipmap.tab_discount});
+            hashMap.put(2, new Integer[]{R.mipmap.tab_discover_s, R.mipmap.tab_discover});
+            hashMap.put(3, new Integer[]{R.mipmap.tab_person_s, R.mipmap.tab_person});
+        } else {
+            hashMap.put(0, new Integer[]{R.mipmap.tab_homepage_s, R.mipmap.tab_homepage});
+            hashMap.put(1, new Integer[]{R.mipmap.tab_discount_s, R.mipmap.tab_discount});
+            hashMap.put(2, new Integer[]{R.mipmap.tab_person_s, R.mipmap.tab_person});
+        }
 
         mCustomBottom.setUiViewPager(new UiTableBottom.OnUITabChangListener() {
             @Override
@@ -273,40 +295,38 @@ public class HomeMainActivity extends AbstractBaseActivity
     }
 
     private void initFragment() {
+        boolean isFind = SPUtils.instance().getBoolean(SPUtils.IS_HAS_FIND, false);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        switch (mCurBottomPosition) {
-            case 0:
-                if (homeUnimpededFragment == null) {
-                    homeUnimpededFragment = HomeUnimpededFragment.newInstance();
-                    FragmentUtils.add(fragmentManager, homeUnimpededFragment, R.id.content);
-                }
-                FragmentUtils.showHideNull(homeUnimpededFragment, homeDiscountsFragment, informationFragment, homeMeFragment);
-                MobUtils.getInstance().eventIdByUMeng(18);
-                break;
-            case 1:
-                if (homeDiscountsFragment == null) {
-                    homeDiscountsFragment = HomeDiscountsFragment.newInstance();
-                    FragmentUtils.add(fragmentManager, homeDiscountsFragment, R.id.content);
-                }
-                FragmentUtils.showHideNull(homeDiscountsFragment, homeUnimpededFragment, informationFragment, homeMeFragment);
-                MobUtils.getInstance().eventIdByUMeng(19);
-                break;
-            case 2:
-                if (informationFragment == null) {
-                    informationFragment = HomeInformationFragment.newInstance();
-                    FragmentUtils.add(fragmentManager, informationFragment, R.id.content);
-                }
-                FragmentUtils.showHideNull(informationFragment, homeUnimpededFragment, homeDiscountsFragment, homeMeFragment);
-                break;
-            case 3:
-                if (homeMeFragment == null) {
-                    homeMeFragment = HomeMeFragment.newInstance();
-                    FragmentUtils.add(fragmentManager, homeMeFragment, R.id.content);
-                }
-                FragmentUtils.showHideNull(homeMeFragment, homeUnimpededFragment, homeDiscountsFragment,informationFragment);
-                break;
-            default:
-                break;
+        if (mCurBottomPosition == 0) {
+            showStatusLy(false);
+            if (homeUnimpededFragment == null) {
+                homeUnimpededFragment = HomeUnimpededFragment.newInstance();
+                FragmentUtils.add(fragmentManager, homeUnimpededFragment, R.id.content);
+            }
+            FragmentUtils.showHideNull(homeUnimpededFragment, homeDiscountsFragment, informationFragment, homeMeFragment);
+            MobUtils.getInstance().eventIdByUMeng(18);
+        } else if (mCurBottomPosition == 1) {
+            showStatusLy(true);
+            if (homeDiscountsFragment == null) {
+                homeDiscountsFragment = HomeDiscountsFragment.newInstance();
+                FragmentUtils.add(fragmentManager, homeDiscountsFragment, R.id.content);
+            }
+            FragmentUtils.showHideNull(homeDiscountsFragment, homeUnimpededFragment, informationFragment, homeMeFragment);
+            MobUtils.getInstance().eventIdByUMeng(19);
+        } else if (mCurBottomPosition == 2 && isFind) {//发现
+            showStatusLy(true);
+            if (informationFragment == null) {
+                informationFragment = HomeInformationFragment.newInstance();
+                FragmentUtils.add(fragmentManager, informationFragment, R.id.content);
+            }
+            FragmentUtils.showHideNull(informationFragment, homeUnimpededFragment, homeDiscountsFragment, homeMeFragment);
+        } else if (mCurBottomPosition == 2 || mCurBottomPosition == 3 && isFind) {
+            showStatusLy(false);
+            if (homeMeFragment == null) {
+                homeMeFragment = HomeMeFragment.newInstance();
+                FragmentUtils.add(fragmentManager, homeMeFragment, R.id.content);
+            }
+            FragmentUtils.showHideNull(homeMeFragment, homeUnimpededFragment, homeDiscountsFragment, informationFragment);
         }
     }
 

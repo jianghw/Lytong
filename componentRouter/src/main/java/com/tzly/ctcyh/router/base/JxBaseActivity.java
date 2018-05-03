@@ -387,8 +387,7 @@ public abstract class JxBaseActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             if (mBackgroundLay != null)
                 mBackgroundLay.setBackground(getResources().getDrawable(R.drawable.shape_rec_gra_red_false));
-            if (mImgBack != null)
-                mImgBack.setImageResource(R.mipmap.ic_arrow_left);
+            if (mImgBack != null) mImgBack.setImageResource(R.mipmap.ic_arrow_left);
             if (mTvTitle != null)
                 mTvTitle.setTextColor(getResources().getColor(R.color.res_color_white));
             if (mTvRight != null)

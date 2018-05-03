@@ -471,7 +471,6 @@ public class OrderDetailActivity extends AbstractBaseActivity
 
     @Override
     public void UserOrderInfoError(String message) {
-        ToastUtils.toastShort(message);
     }
 
     @Override

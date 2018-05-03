@@ -137,8 +137,9 @@ public class SplashActivity extends AbstractBaseActivity
      * 数据初始
      */
     private void initThirdPartyData() {
-        if (mPresenter != null) mPresenter.startCountDown();
+        if (mPresenter != null) mPresenter.newsFlag();
 
+        if (mPresenter != null) mPresenter.startCountDown();
         if (mPresenter != null) mPresenter.updateToken();
 
         startAnimation();

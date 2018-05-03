@@ -30,6 +30,8 @@ public interface IOilEnterContract {
         void getCounts();
 
         void getOilModuleList();
+
+        void ProcessImageSize(OilModuleResponse response);
     }
 
 }

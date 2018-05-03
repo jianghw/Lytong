@@ -4,6 +4,6 @@
     <string name="pay_apk">APK接入</string>
     <string name="pay_jar">JAR接入</string>
     <string name="pay_succeed_title">您的&#160;&#160;&#160;%1$s&#160;&#160;&#160;订单</string>
-    <string name="string_pay_tv_feiyong"><font color='#59B5E2'><u>申请办理工行畅通卡 ></u></font></string>
+    <string name="string_pay_tv_feiyong"><font color='#59B5E2'><u>申请办理工行卡 ></u></font></string>
     <string name="string_pay_tv_tip">(加收取1%平台手续费)</string>
 </resources>

@@ -133,6 +133,8 @@ public class ManageCarListFragment extends RecyclerListFragment<VehicleLicenseBe
 
     @Override
     public void addVehicleLicenseSucceed(List<VehicleLicenseBean> licenseBeanList) {
+        showStateContent();
+
         mCarListAdapter.setDataList(licenseBeanList);
         setSimpleDataResult(licenseBeanList);
 

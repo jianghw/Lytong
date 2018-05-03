@@ -23,8 +23,9 @@ public class InformationFragment extends RecyclerListFragment<NewsInfoResponse.D
     private static final String TYPE_ITEM = "type_item";
     private InformationContract.InformationPresenter mPresenter;
 
+    @Override
     protected boolean isRefresh() {
-        return false;
+        return true;
     }
 
     @Override
@@ -47,6 +48,8 @@ public class InformationFragment extends RecyclerListFragment<NewsInfoResponse.D
     protected void initPresenter() {
         InfomationPresenter mPresenter = new InfomationPresenter(
                 Injection.provideRepository(Utils.getContext()), this);
+
+        getCustomRecycler().setNestedScrollingEnabled(true);
     }
 
     @Override

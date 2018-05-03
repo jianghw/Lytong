@@ -9,7 +9,7 @@ import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
-import com.tzly.ctcyh.java.response.news.NavigationsResponse;
+import com.tzly.ctcyh.java.response.module.NewsFlagResponse;
 import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
@@ -17,8 +17,8 @@ import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
 import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.tzly.ctcyh.java.response.violation.ViolationNum;
 import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
-import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
 import com.zantong.mobilecttx.base.bean.ModuleBannerResponse;
+import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
 import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -710,5 +710,9 @@ public class RepositoryManager {
      */
     public Observable<ModuleBannerResponse> getNavigations() {
         return mRemoteData.getNavigations();
+    }
+
+    public Observable<NewsFlagResponse> newsFlag() {
+        return mRemoteData.newsFlag();
     }
 }

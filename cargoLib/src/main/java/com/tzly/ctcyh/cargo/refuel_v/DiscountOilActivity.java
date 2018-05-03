@@ -29,8 +29,9 @@ public class DiscountOilActivity extends AbstractBaseActivity
      * 客服
      */
     @Override
-    protected void rightClickListener() {
-        CargoRouter.gotoBidOilActivity(this);
+    protected void imageClickListener() {
+        CargoRouter.gotoHtmlActivity(this, "客服系统",
+                "http://h5.liyingtong.com/mot/faq/recharge.html");
     }
 
     @Override
@@ -82,6 +83,5 @@ public class DiscountOilActivity extends AbstractBaseActivity
     public void setCommitEnable(boolean b) {
         if (btnCommit != null) btnCommit.setEnabled(b);
     }
-
 
 }

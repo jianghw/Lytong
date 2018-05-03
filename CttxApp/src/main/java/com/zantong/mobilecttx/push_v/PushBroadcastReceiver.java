@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.tzly.ctcyh.router.util.SPUtils;
+
 /**
  * Created by jianghw on 2017/11/23.
  * Description:
@@ -19,7 +21,8 @@ public class PushBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(PUSH_TIP_ACTION)) {
             int count = intent.getIntExtra(PUSH_TIP_ACTION, 0);
-            if (mCustomListener != null) mCustomListener.tipByNumber(2, count);
+            boolean isFind = SPUtils.instance().getBoolean(SPUtils.IS_HAS_FIND, false);
+            if (mCustomListener != null) mCustomListener.tipByNumber(isFind ? 3 : 2, count);
         }
     }
 

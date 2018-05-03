@@ -38,6 +38,7 @@ public class AppUtils {
             }
         } catch (Exception e) {
             e.printStackTrace();
+
         }
         if (TextUtils.isEmpty(deviceId)) {
             StringBuffer sb = new StringBuffer();

@@ -83,8 +83,6 @@ public class RouterPresenter implements IRouterContract.IRouterPresenter {
                                 response.getResponseCode() == MainGlobal.Response.base_succeed) {
                             mContractView.configSucceed(response);
                         } else {
-                            mContractView.configError(response != null
-                                    ? response.getResponseDesc() : "未知错误(getConfig)");
                         }
                     }
                 });
@@ -159,7 +157,7 @@ public class RouterPresenter implements IRouterContract.IRouterPresenter {
                     @Override
                     public void doError(Throwable e) {
                         mContractView.dismissLoading();
-                        mContractView.responseError(e.getMessage());
+//                        mContractView.responseError(e.getMessage());
                     }
 
                     @Override

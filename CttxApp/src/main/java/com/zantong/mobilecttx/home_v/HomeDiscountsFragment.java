@@ -86,6 +86,9 @@ public class HomeDiscountsFragment extends RecyclerListFragment<ModuleBean>
     protected void initPresenter() {
         HomeFavorableFtyPresenter presenter = new HomeFavorableFtyPresenter(
                 Injection.provideRepository(Utils.getContext()), this);
+
+        //ScrollView 去滑动
+        if (mCustomRecycler != null) mCustomRecycler.setNestedScrollingEnabled(true);
     }
 
     /**

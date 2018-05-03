@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
+import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.LoginData;
@@ -98,7 +99,8 @@ public class ManageCarActivity extends AbstractBaseActivity {
         if (resultMain == MainGlobal.resultCode.violation_query_del
                 || resultMain == MainGlobal.resultCode.violation_query_submit) {
 
-            MainRouter.gotoMainActivity(this, 2);
+            boolean isFind = SPUtils.instance().getBoolean(SPUtils.IS_HAS_FIND, false);
+            MainRouter.gotoMainActivity(this, isFind ? 3 : 2);
         }
     }
 }

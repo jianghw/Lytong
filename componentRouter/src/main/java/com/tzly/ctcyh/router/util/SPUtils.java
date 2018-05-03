@@ -44,6 +44,8 @@ public final class SPUtils {
 
     public static String IS_WZ_ACTIVE = "is_wz_active";
 
+    public static String IS_HAS_FIND = "is_has_find";
+
     /**
      * desc:获取保存的Object对象 临时解决旧加密
      */

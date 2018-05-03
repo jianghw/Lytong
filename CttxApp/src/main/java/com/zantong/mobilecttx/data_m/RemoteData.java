@@ -7,7 +7,7 @@ import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
-import com.tzly.ctcyh.java.response.news.NavigationsResponse;
+import com.tzly.ctcyh.java.response.module.NewsFlagResponse;
 import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
@@ -32,8 +32,8 @@ import com.zantong.mobilecttx.api.ISplashService;
 import com.zantong.mobilecttx.api.ITextService;
 import com.zantong.mobilecttx.api.IUserService;
 import com.zantong.mobilecttx.api.IViolationService;
-import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
 import com.zantong.mobilecttx.base.bean.ModuleBannerResponse;
+import com.zantong.mobilecttx.base.bean.PayWeixinResponse;
 import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
@@ -803,5 +803,10 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<ModuleBannerResponse> getNavigations() {
         return baseRetrofit().create(IModuleService.class).getNavigations();
+    }
+
+    @Override
+    public Observable<NewsFlagResponse> newsFlag() {
+        return baseRetrofit().create(IModuleService.class).newsFlag();
     }
 }

@@ -7,12 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
+import com.tzly.ctcyh.router.custom.rea.Des3;
 import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.Utils;
-import com.tzly.ctcyh.router.custom.rea.Des3;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.home.activity.Codequery;
@@ -220,8 +219,7 @@ public class ViolationListActivity extends AbstractBaseActivity
         boolean iShow = SPUtils.getInstance().getBoolean(SPUtils.IS_WZ_ACTIVE, true);
 
         if (mViolationDTO != null && iShow)
-            MainRouter.gotoActiveActivity(this,
-                    1, mViolationDTO.getRegisterDate());
+            MainRouter.gotoActiveActivity(this, 1, mViolationDTO.getRegisterDate());
 
         SPUtils.getInstance().put(SPUtils.IS_WZ_ACTIVE, true);
         super.onDestroy();

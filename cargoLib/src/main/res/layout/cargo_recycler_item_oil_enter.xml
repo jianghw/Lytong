@@ -5,20 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
+    <ImageView
+        android:id="@+id/iv_oil_item"
+        android:layout_centerHorizontal="true"
         android:layout_width="@dimen/pt_724"
         android:layout_height="@dimen/pt_300"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        app:cardCornerRadius="@dimen/pt_20">
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_94" />
 
-        <ImageView
-            android:id="@+id/iv_oil_item"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_94" />
-    </android.support.v7.widget.CardView>
 
     <TextView
         android:id="@+id/tv_line"

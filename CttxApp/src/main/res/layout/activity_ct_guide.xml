@@ -12,12 +12,15 @@
 
     <TextView
         android:id="@+id/guide_open"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_480"
+        android:background="@drawable/shape_tv_favorable_red"
+        android:layout_width="@dimen/pt_260"
+        android:layout_height="@dimen/pt_80"
+        android:textColor="@color/res_color_red_f3"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/ds_100"
-        android:gravity="center"
+        android:textSize="@dimen/pt_36"
         android:visibility="gone"
-        tools:text="立即开启"/>
+        android:layout_marginBottom="@dimen/pt_100"
+        android:gravity="center"
+        android:text="立即开启"/>
 </RelativeLayout>

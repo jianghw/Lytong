@@ -85,7 +85,6 @@ public class OilEnterListFragment extends RecyclerListFragment<OilModuleResponse
 
     @Override
     protected void loadingFirstData() {
-        if (mPresenter != null) mPresenter.getCounts();
         if (mPresenter != null) mPresenter.getOilModuleList();
     }
 

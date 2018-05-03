@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.api;
 
+import com.tzly.ctcyh.java.response.module.NewsFlagResponse;
 import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.zantong.mobilecttx.base.bean.ModuleBannerResponse;
 import com.zantong.mobilecttx.home.bean.ModuleResponse;
@@ -42,4 +43,7 @@ public interface IModuleService {
 
     @GET("module/getNavigations")
     Observable<ModuleBannerResponse> getNavigations();
+
+    @GET("module/newsFlag")
+    Observable<NewsFlagResponse> newsFlag();
 }

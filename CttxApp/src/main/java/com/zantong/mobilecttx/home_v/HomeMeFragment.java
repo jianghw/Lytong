@@ -367,7 +367,7 @@ public class HomeMeFragment extends RefreshFragment
                 break;
             case R.id.lay_driver_order://司机订单
                 MainRouter.gotoWebHtmlActivity(getActivity(),
-                        "司机订单", BuildConfig.base_url+"h5/driver/index.html"
+                        "司机订单", BuildConfig.base_url + "h5/driver/index.html"
                 );
                 break;
             case R.id.tv_card://我的畅通卡

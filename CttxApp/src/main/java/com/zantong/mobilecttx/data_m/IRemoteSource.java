@@ -5,6 +5,7 @@ import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
+import com.tzly.ctcyh.java.response.module.NewsFlagResponse;
 import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
@@ -446,4 +447,6 @@ public interface IRemoteSource {
      * 资讯导航
      */
     Observable<ModuleBannerResponse> getNavigations();
+
+    Observable<NewsFlagResponse> newsFlag();
 }

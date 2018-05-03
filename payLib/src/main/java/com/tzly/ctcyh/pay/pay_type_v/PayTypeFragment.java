@@ -166,6 +166,8 @@ public class PayTypeFragment extends RefreshFragment
             @Override
             public void onClick(View view) {
                 PayRouter.gotoApplyCardFirstActivity(getActivity());
+                PayRouter.gotoWebHtmlActivity(getActivity(),
+                        "http://icbccard.una-campaign.com/?cid=283", "申办工行卡");
             }
         });
 
