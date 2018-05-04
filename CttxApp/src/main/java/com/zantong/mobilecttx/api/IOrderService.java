@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.api;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
+import com.tzly.ctcyh.java.response.reservation.ReservationResponse;
 import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
 import com.zantong.mobilecttx.order.bean.OrderListResponse;
 import com.zantong.mobilecttx.order.bean.ReceiveInfoResponse;
@@ -88,4 +89,10 @@ public interface IOrderService {
      */
     @GET("order/getUserOrderInfo")
     Observable<OrderInfoResponse> getUserOrderInfo(@Query("orderId") String orderId);
+
+    /**
+     * 预约列表
+     */
+    @GET("bespeak/getBespeakList")
+    Observable<ReservationResponse> getBespeakList(@Query("userId") String rasUserID);
 }

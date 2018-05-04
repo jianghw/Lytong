@@ -27,7 +27,6 @@ import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
 import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
-import com.tzly.ctcyh.router.custom.dialog.DialogUtils;
 import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.custom.popup.CustomDialog;
 import com.tzly.ctcyh.router.imple.IAreaDialogListener;
@@ -184,7 +183,9 @@ public class BidOilFragment extends RefreshFragment
         if (viD == R.id.img_banner) {//图片
 
         } else if (viD == R.id.tv_bid) {//去办畅通卡
-            CargoRouter.gotoApplyCardFirstActivity(getActivity());
+            CargoRouter.gotoHtmlActivity(getActivity(),
+                    "申办工行卡",
+                    "http://icbccard.una-campaign.com/?cid=283");
         } else if (viD == R.id.lay_area) {//城市
             if (mPresenter != null) mPresenter.getAllAreas();
         } else if (viD == R.id.btn_commit) {//提交

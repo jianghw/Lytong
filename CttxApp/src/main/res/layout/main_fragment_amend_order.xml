@@ -59,7 +59,7 @@
                 android:textColorHint="@color/colorLineGray_e6" />
         </LinearLayout>
 
-        <TextView style="@style/line_splite_gray" />
+        <TextView style="@style/line_left_margin_gray" />
 
         <!--手机号-->
         <LinearLayout
@@ -95,7 +95,7 @@
                 android:textColorHint="@color/colorLineGray_e6" />
         </LinearLayout>
 
-        <TextView style="@style/line_splite_gray" />
+        <TextView style="@style/line_left_margin_gray" />
 
         <!--所在地区-->
         <RelativeLayout
@@ -137,7 +137,7 @@
 
         </RelativeLayout>
 
-        <TextView style="@style/line_splite_gray" />
+        <TextView style="@style/line_left_margin_gray" />
 
         <EditText
             android:id="@+id/edit_detailed_address"
@@ -194,7 +194,7 @@
                 android:textColorHint="@color/colorLineGray_e6" />
         </RelativeLayout>
 
-        <TextView style="@style/line_splite_gray" />
+        <TextView style="@style/line_left_margin_gray" />
 
         <!--备注-->
         <LinearLayout

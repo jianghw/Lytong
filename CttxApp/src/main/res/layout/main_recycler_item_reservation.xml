@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/pt_20"
+    android:layout_marginRight="@dimen/pt_20"
+    android:layout_marginTop="@dimen/pt_20"
+    android:background="@drawable/bg_shape_popup_white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/pt_30"
+    android:paddingRight="@dimen/pt_30"
+    android:paddingTop="@dimen/pt_30">
+
+
+    <ImageView
+        android:id="@+id/img_brand"
+        android:layout_width="@dimen/pt_80"
+        android:layout_height="@dimen/pt_80"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_global_app" />
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/pt_30"
+        android:layout_toRightOf="@+id/img_brand"
+        android:minHeight="@dimen/pt_100"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/rl_business"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/pt_20"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/pt_130"
+                android:layout_height="wrap_content"
+                android:text="预约业务:"
+                android:textColor="@color/res_color_black_4d"
+                android:textSize="@dimen/pt_28" />
+
+            <TextView
+                android:id="@+id/tv_business"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pt_20"
+                android:layout_toRightOf="@+id/tv_business_title"
+                android:layout_weight="1"
+                android:textColor="@color/res_color_black_4d"
+                android:textSize="@dimen/pt_28"
+                tools:text="预约业务:" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rl_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/pt_20"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/pt_130"
+                android:layout_height="wrap_content"
+                android:text="预约时间:"
+                android:textColor="@color/res_color_black_4d"
+                android:textSize="@dimen/pt_28" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pt_20"
+                android:layout_weight="1"
+                android:textColor="@color/res_color_red_f3"
+                android:textSize="@dimen/pt_28"
+                tools:text="预约业务:" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rl_package"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/pt_20"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/pt_130"
+                android:layout_height="wrap_content"
+                android:text="预约套餐:"
+                android:textColor="@color/res_color_black_4d"
+                android:textSize="@dimen/pt_28" />
+
+            <TextView
+                android:id="@+id/tv_package"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pt_20"
+                android:layout_weight="1"
+                android:textColor="@color/res_color_black_4d"
+                android:textSize="@dimen/pt_28"
+                tools:text="预约业务:姐粉丝哦的积分iOS的缴费积分是的哦覅技术覅偶见附件是丹佛死角发生的回复说对话" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/rl_remark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/pt_20"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/pt_130"
+                android:layout_height="wrap_content"
+                android:text="备注 :"
+                android:textColor="@color/res_color_black_4d"
+                android:textSize="@dimen/pt_28" />
+
+            <TextView
+                android:id="@+id/tv_remark"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pt_20"
+                android:layout_weight="1"
+                android:textColor="@color/res_color_black_4d"
+                android:textSize="@dimen/pt_28"
+                tools:text="预约业务:" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pt_1"
+        android:layout_below="@+id/ll_content"
+        android:background="@color/res_color_gray_e6" />
+
+    <RelativeLayout
+        android:id="@+id/rl_server"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pt_80"
+        android:layout_below="@+id/tv_line">
+
+        <TextView
+            android:id="@+id/tv_server"
+            android:layout_width="@dimen/pt_150"
+            android:layout_height="@dimen/pt_50"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/shape_tv_favorable_red"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="联系客服"
+            android:textColor="@color/res_color_red_f3"
+            android:textSize="@dimen/pt_24" />
+    </RelativeLayout>
+
+</RelativeLayout>

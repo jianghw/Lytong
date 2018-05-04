@@ -57,7 +57,7 @@
 
     </RelativeLayout>
 
-    <TextView style="@style/line_splite_gray"/>
+    <TextView style="@style/line_left_margin_gray"/>
 
     <!--phone-->
     <RelativeLayout
@@ -91,7 +91,7 @@
 
     </RelativeLayout>
 
-    <TextView style="@style/line_splite_gray"/>
+    <TextView style="@style/line_left_margin_gray"/>
 
     <!--address-->
     <RelativeLayout
@@ -179,7 +179,7 @@
             android:textSize="@dimen/fs_16sp"/>
     </LinearLayout>
 
-    <TextView style="@style/line_splite_gray"/>
+    <TextView style="@style/line_left_margin_gray"/>
 
     <!--手机号-->
     <LinearLayout
@@ -216,7 +216,7 @@
             android:textSize="@dimen/fs_16sp"/>
     </LinearLayout>
 
-    <TextView style="@style/line_splite_gray"/>
+    <TextView style="@style/line_left_margin_gray"/>
 
     <!--所在地区-->
     <RelativeLayout
@@ -260,7 +260,7 @@
 
     </RelativeLayout>
 
-    <TextView style="@style/line_splite_gray"/>
+    <TextView style="@style/line_left_margin_gray"/>
 
     <EditText
         android:id="@+id/edit_detailed_address"

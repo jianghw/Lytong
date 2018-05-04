@@ -26,6 +26,6 @@
     </RelativeLayout>
 
     <TextView
-       style="@style/line_splite_gray"
+       style="@style/line_left_margin_gray"
         android:layout_below="@id/preferential_activity_content"/>
 </RelativeLayout>

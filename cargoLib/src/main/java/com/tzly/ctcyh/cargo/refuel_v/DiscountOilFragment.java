@@ -207,7 +207,8 @@ public class DiscountOilFragment extends RefreshFragment
         if (v.getId() == R.id.tv_agreement) {//加油协议
             CargoRouter.gotoRechargeAgreementActivity(getActivity());
         } else if (v.getId() == R.id.tv_gou_card) {//购卡
-            CargoRouter.gotoBidOilActivity(getActivity());
+            CargoRouter.gotoCustomerService(
+                    "native_app_97buyCard", "9.7折购卡", "151", getActivity());
         }
     }
 

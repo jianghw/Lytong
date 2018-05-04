@@ -432,6 +432,16 @@ public final class MainRouter {
                 bundle);
     }
 
+    /**
+     * 预约列表
+     */
+    public static void gotoReservationActivity(Context context) {
+        Bundle bundle = new Bundle();
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.reservation_list_host,
+                bundle);
+    }
+
     public static void gotoAnnualDetailActivity(Context context, String orderId) {
         Bundle bundle = new Bundle();
         bundle.putString(MainGlobal.putExtra.web_order_id_extra, orderId);
@@ -605,7 +615,7 @@ public final class MainRouter {
     /**
      * 问题页面
      */
-    public static void gotoProblemFeedbackActivity(Activity activity) {
+    public static void gotoProblemFeedbackActivity(Context activity) {
         Bundle bundle = new Bundle();
         UiRouter.getInstance().openUriBundle(activity,
                 RouterGlobal.Scheme.main_scheme + "://" + RouterGlobal.Host.problem_feed_host,

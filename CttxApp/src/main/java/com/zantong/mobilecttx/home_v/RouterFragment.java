@@ -228,6 +228,8 @@ public class RouterFragment extends Fragment implements IRouterContract.IRouterV
                 MainRouter.gotoOilEnterActivity(getContext());
             } else if (path.equals("native_app_drivingNewScore")) {//驾照查分
                 MainRouter.gotoLicenseCargoActivity(getContext());
+            } else if (path.equals("native_app_reservation")) {//预约列表
+                MainRouter.gotoReservationActivity(getContext());
             } else {//其他
                 ToastUtils.toastShort("此版本暂无此状态页面,请更新最新版本");
             }

@@ -149,6 +149,7 @@ public class HomeMainActivity extends AbstractBaseActivity
 
         if (homeUnimpededFragment != null)
             homeUnimpededFragment.unMessageCount(position, number);
+
         if (homeMeFragment != null)
             homeMeFragment.unMessageCount(position, number);
     }
@@ -320,7 +321,7 @@ public class HomeMainActivity extends AbstractBaseActivity
                 FragmentUtils.add(fragmentManager, informationFragment, R.id.content);
             }
             FragmentUtils.showHideNull(informationFragment, homeUnimpededFragment, homeDiscountsFragment, homeMeFragment);
-        } else if (mCurBottomPosition == 2 || mCurBottomPosition == 3 && isFind) {
+        } else if (mCurBottomPosition == 2 || mCurBottomPosition == 3) {
             showStatusLy(false);
             if (homeMeFragment == null) {
                 homeMeFragment = HomeMeFragment.newInstance();

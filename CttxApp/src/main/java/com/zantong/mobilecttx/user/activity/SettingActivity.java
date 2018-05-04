@@ -640,13 +640,16 @@ public class SettingActivity extends BaseMvpActivity<ILoginView, LogoutPresenter
     }
 
     private void cleanData() {
+        boolean isFind = com.tzly.ctcyh.router.util.SPUtils.instance().getBoolean(com.tzly.ctcyh.router.util.SPUtils.IS_HAS_FIND, false);
+
         LoginData.getInstance().clearData(Utils.getContext());
         SPUtils.getInstance().clear();
         CleanUtils.cleanCustomCache(FileUtils.photoImageDirectory(Utils.getContext()));
-
         mLogout.setVisibility(View.GONE);
-
         MainRouter.cleanUserLogin();
+
+        //解决find模块问题
+        com.tzly.ctcyh.router.util.SPUtils.instance().put(com.tzly.ctcyh.router.util.SPUtils.IS_HAS_FIND, isFind);
         MainRouter.gotoMainActivity(this, 0);
     }
 

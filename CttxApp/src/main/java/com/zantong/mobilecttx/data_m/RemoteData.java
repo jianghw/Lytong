@@ -12,6 +12,7 @@ import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
+import com.tzly.ctcyh.java.response.reservation.ReservationResponse;
 import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.tzly.ctcyh.java.response.violation.ViolationNum;
 import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
@@ -102,6 +103,7 @@ import rx.Observable;
  * Created by jianghw on 2017/4/26.
  * 远程数据处理
  */
+
 
 public class RemoteData implements IRemoteSource {
     /**
@@ -808,5 +810,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<NewsFlagResponse> newsFlag() {
         return baseRetrofit().create(IModuleService.class).newsFlag();
+    }
+
+    /**
+     * 预约列表
+     */
+    @Override
+    public Observable<ReservationResponse> getBespeakList(String rasUserID) {
+        return baseRetrofit().create(IOrderService.class).getBespeakList(rasUserID);
     }
 }

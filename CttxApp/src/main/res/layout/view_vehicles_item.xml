@@ -87,7 +87,7 @@
 
     </RelativeLayout>
 
-    <TextView style="@style/line_splite_gray"
+    <TextView style="@style/line_left_margin_gray"
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

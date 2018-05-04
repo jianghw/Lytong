@@ -8,6 +8,7 @@
     <color name="res_color_black_4c">#4C4C4C</color>
     <color name="res_color_black_b2">#B2B2B2</color>
     <color name="res_color_black_7f">#7F7F7F</color>
+    <color name="res_color_black_cd">#CDCDCD</color>
     <!--字体 用-->
     <color name="res_color_red_f3">#F3362B</color>
     <color name="res_color_red_ef">#EF8E3D</color>
@@ -53,7 +54,6 @@
     <color name="colorTvBlue_59b">#59b5e2</color>
     <color name="colorTvViolet_f33">#db29d4</color>
     <color name="colorTvYellow_f100">#fff100</color>
-
 
     <color name="colorRedStart_ef">#ef8e3d</color>
     <color name="colorRedEnd_f3">#f3362b</color>

@@ -92,7 +92,7 @@
             android:textSize="@dimen/fs_16sp"/>
     </LinearLayout>
 
-    <TextView style="@style/line_splite_gray"/>
+    <TextView style="@style/line_left_margin_gray"/>
     <!--驾驶证档案编号-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -134,7 +134,7 @@
             android:textSize="@dimen/fs_16sp"/>
     </LinearLayout>
 
-    <TextView style="@style/line_splite_gray"/>
+    <TextView style="@style/line_left_margin_gray"/>
     <!--预留手机号-->
     <LinearLayout
         android:layout_width="match_parent"

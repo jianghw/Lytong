@@ -1,20 +1,19 @@
-package com.tzly.ctcyh.cargo.refuel_v;
+package com.zantong.mobilecttx.reservation_v;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
 import com.tzly.ctcyh.cargo.R;
-import com.tzly.ctcyh.cargo.router.CargoRouter;
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 
 /**
  * 加油进入
  */
-public class OilEnterActivity extends AbstractBaseActivity {
+public class ReservationActivity extends AbstractBaseActivity {
 
-    private OilEnterRefreshFragment mFragment;
+    private ReservationFragment mFragment;
 
     @Override
     protected int initContentView() {
@@ -30,15 +29,12 @@ public class OilEnterActivity extends AbstractBaseActivity {
 
     @Override
     protected void bindFragment() {
-        titleContent("优惠加油");
+        titleContent("我的预约");
 
-        titleServer();
     }
 
     @Override
     protected void imageClickListener() {
-        CargoRouter.gotoHtmlActivity(this, "客服系统",
-                "http://h5.liyingtong.com/mot/faq/recharge.html");
     }
 
     @Override
@@ -50,7 +46,7 @@ public class OilEnterActivity extends AbstractBaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         //默认页面显示
         if (mFragment == null) {
-            mFragment = OilEnterRefreshFragment.newInstance();
+            mFragment = ReservationFragment.newInstance();
         }
         FragmentUtils.add(fragmentManager, mFragment, R.id.lay_base_frame);
     }

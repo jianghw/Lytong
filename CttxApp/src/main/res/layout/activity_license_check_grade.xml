@@ -49,7 +49,7 @@
             android:textSize="@dimen/fs_16sp"/>
     </LinearLayout>
 
-    <TextView style="@style/line_splite_gray"/>
+    <TextView style="@style/line_left_margin_gray"/>
 
     <RelativeLayout
         android:id="@+id/lay_date"

@@ -21,7 +21,7 @@ import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.utils.DialogUtils;
 
 /**
- * 问题反馈
+ * 联系客服
  */
 
 public class ProblemFeedbackActivity extends AbstractBaseActivity implements View.OnClickListener, View.OnLongClickListener {
@@ -128,17 +128,17 @@ public class ProblemFeedbackActivity extends AbstractBaseActivity implements Vie
     /**
      * 跳转到微信
      */
-    private void getWechatApi(){
+    private void getWechatApi() {
         try {
             Intent intent = new Intent(Intent.ACTION_MAIN);
-            ComponentName cmp = new ComponentName("com.tencent.mm","com.tencent.mm.ui.LauncherUI");
+            ComponentName cmp = new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI");
             intent.addCategory(Intent.CATEGORY_LAUNCHER);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setComponent(cmp);
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
             // TODO: handle exception
-           ToastUtils.toastShort("检查到您手机没有安装微信，请安装后使用该功能");
+            ToastUtils.toastShort("检查到您手机没有安装微信，请安装后使用该功能");
         }
     }
 }

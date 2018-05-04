@@ -29,8 +29,6 @@ import com.zantong.mobilecttx.order.bean.OrderDetailResponse;
 import com.zantong.mobilecttx.order_p.IOrderDetailContract;
 import com.zantong.mobilecttx.order_p.OrderDetailPresenter;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
-import com.zantong.mobilecttx.utils.jumptools.Act;
 import com.zzhoujay.richtext.ImageHolder;
 import com.zzhoujay.richtext.RichText;
 import com.zzhoujay.richtext.callback.OnUrlClickListener;
@@ -199,7 +197,7 @@ public class OrderDetailActivity extends AbstractBaseActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_query://客服
-                Act.getInstance().gotoIntent(this, ProblemFeedbackActivity.class);
+                MainRouter.gotoProblemFeedbackActivity(this);
                 break;
             case R.id.tv_xiugai://修改
                 MainRouter.gotoAmendOrderActivity(this, mOrderId);

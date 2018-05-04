@@ -385,8 +385,8 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/colorOpenBindCarFont</item>
+        <item name="android:textSize">@dimen/pt_28</item>
+        <item name="android:textColor">@color/res_color_black_4d</item>
     </style>
 
     <style name="setPayCar">
@@ -450,18 +450,18 @@
         <item name="android:textColor">@color/colorTranFontRed</item>
     </style>
 
-    <style name="line_splite_gray">
+    <style name="line_left_margin_gray">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0.5dp</item>
-        <item name="android:background">@color/colorGray</item>
-        <item name="android:layout_marginLeft">15dip</item>
+        <item name="android:layout_height">@dimen/pt_1</item>
+        <item name="android:background">@color/res_color_gray_e6</item>
+        <item name="android:layout_marginLeft">@dimen/pt_30</item>
         <item name="android:layout_alignParentRight">true</item>
     </style>
 
     <style name="line_splite_dashed">
         <item name="android:layerType">software</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dip</item>
+        <item name="android:layout_height">@dimen/pt_1</item>
         <item name="android:background">@drawable/shape_line_stroke_size</item>
         <item name="android:layout_marginRight">16dip</item>
         <item name="android:layout_marginLeft">16dip</item>
@@ -488,11 +488,11 @@
     </style>
 
     <style name="mineItemHead">
-        <item name="android:layout_width">@dimen/ds_60</item>
-        <item name="android:layout_height">@dimen/ds_60</item>
+        <item name="android:layout_width">@dimen/pt_36</item>
+        <item name="android:layout_height">@dimen/pt_36</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_alignParentLeft">true</item>
-        <item name="android:layout_marginLeft">17dip</item>
+        <item name="android:layout_marginLeft">@dimen/pt_30</item>
     </style>
 
     <style name="mineItemArrow">
@@ -500,7 +500,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_alignParentRight">true</item>
-        <item name="android:layout_marginRight">16dip</item>
+        <item name="android:layout_marginRight">@dimen/pt_30</item>
     </style>
 
     <style name="arrowLeftStyle">

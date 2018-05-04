@@ -30,7 +30,7 @@
                 android:id="@+id/engine_number" />
         </RelativeLayout>
         <TextView
-            style="@style/line_splite_gray"/>
+            style="@style/line_left_margin_gray"/>
     </LinearLayout>
 
 </RelativeLayout>

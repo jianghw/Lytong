@@ -10,6 +10,7 @@ import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
+import com.tzly.ctcyh.java.response.reservation.ReservationResponse;
 import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.tzly.ctcyh.java.response.violation.ViolationNum;
 import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
@@ -449,4 +450,9 @@ public interface IRemoteSource {
     Observable<ModuleBannerResponse> getNavigations();
 
     Observable<NewsFlagResponse> newsFlag();
+
+    /**
+     * 预约列表
+     */
+    Observable<ReservationResponse> getBespeakList(String rasUserID);
 }

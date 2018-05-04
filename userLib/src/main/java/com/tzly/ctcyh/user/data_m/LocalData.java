@@ -51,25 +51,25 @@ public class LocalData implements ILocalSource {
     private LocalData(Context context) {
         weakReference = new WeakReference<>(context);
 
-        if (BuildConfig.isDeta) {
-            isLogin = true;
-            mLoginBean = new LoginBean();
-            int positon = new Random().nextInt(4);
-            if (positon == 0) {
-                mLoginBean.setUsrid("00031813622244433");
-                mLoginBean.setPhoenum("13622244433");
-            } else if (positon == 1) {
-                mLoginBean.setUsrid("00033315700010099");
-                mLoginBean.setPhoenum("15700010099");
-            } else if (positon == 2) {
-                mLoginBean.setUsrid("00033217317111560");
-                mLoginBean.setPhoenum("17317111560");
-            } else if (positon == 3) {
-                mLoginBean.setUsrid("00146618811025031");
-                mLoginBean.setPhoenum("18811025031");
-            } else if (positon == 4) {
-            }
-        }
+//        if (BuildConfig.isDeta) {
+//            isLogin = true;
+//            mLoginBean = new LoginBean();
+//            int positon = new Random().nextInt(4);
+//            if (positon == 0) {
+//                mLoginBean.setUsrid("00031813622244433");
+//                mLoginBean.setPhoenum("13622244433");
+//            } else if (positon == 1) {
+//                mLoginBean.setUsrid("00033315700010099");
+//                mLoginBean.setPhoenum("15700010099");
+//            } else if (positon == 2) {
+//                mLoginBean.setUsrid("00033217317111560");
+//                mLoginBean.setPhoenum("17317111560");
+//            } else if (positon == 3) {
+//                mLoginBean.setUsrid("00146618811025031");
+//                mLoginBean.setPhoenum("18811025031");
+//            } else if (positon == 4) {
+//            }
+//        }
     }
 
     @Override

@@ -95,6 +95,9 @@ public class MainDataService implements IMainService {
         MainRouter.gotoMainActivity(activity, position);
     }
 
+    /**
+     * 联系客服
+     */
     @Override
     public void gotoProblemFeedbackActivity(Activity activity) {
         MainRouter.gotoProblemFeedbackActivity(activity);

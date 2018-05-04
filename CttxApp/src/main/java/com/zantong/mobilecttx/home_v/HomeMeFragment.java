@@ -44,7 +44,6 @@ import com.zantong.mobilecttx.order_v.OrderListsActivity;
 import com.zantong.mobilecttx.router.MainRouter;
 import com.zantong.mobilecttx.share_v.ShareParentActivity;
 import com.zantong.mobilecttx.user.activity.AboutActivity;
-import com.zantong.mobilecttx.user.activity.ProblemFeedbackActivity;
 import com.zantong.mobilecttx.user.activity.SettingActivity;
 import com.zantong.mobilecttx.user.activity.UserInfoUpdate;
 import com.zantong.mobilecttx.user.bean.MessageCountBean;
@@ -101,6 +100,7 @@ public class HomeMeFragment extends RefreshFragment
     private ImageView mImgUpdate;
     private RelativeLayout mLayUpdate;
     private RelativeLayout mAboutAdvertising;
+    private RelativeLayout mLayYuyue;
     /**
      * mPresenter
      */
@@ -225,7 +225,7 @@ public class HomeMeFragment extends RefreshFragment
         stringBuffer.append(LoginData.getInstance().mCarNum);
         stringBuffer.append("</font>");
         stringBuffer.append("&#160;");
-        stringBuffer.append("车辆");
+        stringBuffer.append("辆车");
         mTvCar.setText(Html.fromHtml(stringBuffer.toString()));
 
         //优惠劵
@@ -335,6 +335,9 @@ public class HomeMeFragment extends RefreshFragment
         mAboutAdvertising = (RelativeLayout) view.findViewById(R.id.about_advertising);
         mAboutAdvertising.setOnClickListener(this);
 
+        mLayYuyue = (RelativeLayout) view.findViewById(R.id.lay_yuyue);
+        mLayYuyue.setOnClickListener(this);
+
         //动态调整标题透明度
         //        mAppbar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
         //            @Override
@@ -401,7 +404,7 @@ public class HomeMeFragment extends RefreshFragment
                 break;
             case R.id.lay_service://联系客服
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(33));
-                Act.getInstance().gotoIntent(getActivity(), ProblemFeedbackActivity.class);
+                MainRouter.gotoProblemFeedbackActivity(getActivity());
                 break;
             case R.id.about_us://关于我们
                 Act.getInstance().gotoIntent(getActivity(), AboutActivity.class);
@@ -412,6 +415,9 @@ public class HomeMeFragment extends RefreshFragment
             case R.id.about_advertising://隐私说明
                 MainRouter.gotoWebHtmlActivity(getActivity(),
                         "隐私声明", "file:///android_asset/bindcard_agreement.html");
+                break;
+            case R.id.lay_yuyue://预约
+                MainRouter.gotoReservationActivity(getActivity());
                 break;
             default:
                 break;

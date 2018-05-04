@@ -76,6 +76,8 @@ public final class RouterGlobal {
         public static final String oil_enter_host = "oil_enter_host";
         // 查分结果页面
         public static final String license_result_host = "license_result_host";
+        //预约
+        public static final String reservation_list_host = "reservation_list_host";
     }
 
     public static final class putExtra {

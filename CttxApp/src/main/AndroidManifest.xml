@@ -164,6 +164,7 @@
         <activity
             android:name=".common.activity.CommonProblemDetailActivity"
             android:screenOrientation="portrait" />
+        <!--联系客服-->
         <activity
             android:name=".user.activity.ProblemFeedbackActivity"
             android:screenOrientation="portrait" />
@@ -351,6 +352,10 @@
         <!--呼叫快递-->
         <activity
             android:name=".order_v.OrderExpressActivity"
+            android:screenOrientation="portrait" />
+        <!--预约列表-->
+        <activity
+            android:name=".reservation_v.ReservationActivity"
             android:screenOrientation="portrait" />
 
         <!-- ===================优惠模块========================================= -->
