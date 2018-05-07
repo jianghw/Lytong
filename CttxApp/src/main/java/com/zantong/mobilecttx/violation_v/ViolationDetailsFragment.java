@@ -92,6 +92,7 @@ public class ViolationDetailsFragment extends RefreshFragment
     private Button mNextBtn;
 
     private IViolationDetailsContract.IViolationDetailsPresenter mPresenter;
+    private TextView mTvVerNum;
 
     public static ViolationDetailsFragment newInstance(String violationnum) {
         ViolationDetailsFragment detailsFragment = new ViolationDetailsFragment();
@@ -120,6 +121,8 @@ public class ViolationDetailsFragment extends RefreshFragment
     }
 
     public void initView(View fragment) {
+        mTvVerNum = (TextView) fragment.findViewById(R.id.tv_verNum);
+
         mTvCarNumTitle = (TextView) fragment.findViewById(R.id.tv_carNum_title);
         mTvCarNum = (TextView) fragment.findViewById(R.id.tv_carNum);
         mViolationLocationTitle = (TextView) fragment.findViewById(R.id.violation_location_title);
@@ -195,6 +198,8 @@ public class ViolationDetailsFragment extends RefreshFragment
     }
 
     private void setSimpleDataResult(ViolationDetailsBean.RspInfoBean rspInfo) {
+        mTvVerNum.setText(rspInfo.getViolationnum());
+
         String carNum = Des3.decode(rspInfo.getCarnum());
         mTvCarNum.setText(carNum);
 
@@ -212,6 +217,8 @@ public class ViolationDetailsFragment extends RefreshFragment
 
         DateFormat formatDate = new SimpleDateFormat("yyyyMMdd", Locale.SIMPLIFIED_CHINESE);
         DateFormat formatTime = new SimpleDateFormat("HHmm", Locale.SIMPLIFIED_CHINESE);
+        DateFormat formatTimeSecond = new SimpleDateFormat("HHmmss", Locale.SIMPLIFIED_CHINESE);
+
         SimpleDateFormat yearDate = new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
         SimpleDateFormat timeDate = new SimpleDateFormat("HH:mm", Locale.SIMPLIFIED_CHINESE);
 
@@ -237,7 +244,7 @@ public class ViolationDetailsFragment extends RefreshFragment
             mViolationPayRl.setVisibility(View.VISIBLE);
             try {
                 dateDate = formatDate.parse(rspInfo.getPaydate());
-                dateTime = formatTime.parse(rspInfo.getPaytime());
+                dateTime = formatTimeSecond.parse(rspInfo.getPaytime());
                 dateString = yearDate.format(dateDate);
                 timeString = timeDate.format(dateTime);
                 mViolationPayText.setText(dateString + " " + timeString);

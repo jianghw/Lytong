@@ -283,17 +283,17 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
      * 客户办卡记录校验
      */
     private void checkApplyCardRecord() {
-//        Intent intent = new Intent(this, ApplyCardSecondActivity.class);
-//        intent.putExtra("filenum", getDriverFileNum());
-//        intent.putExtra("name", getUserName());
-//        intent.putExtra("idCard", getUserIdCard());
-//        startActivity(intent);
-//
-//        Intent in = new Intent(this, ApplyCardQuickActivity.class);
-//        in.putExtra("filenum", getDriverFileNum());
-//        in.putExtra("name", getUserName());
-//        in.putExtra("idCard", getUserIdCard());
-//        startActivity(in);
+       /* Intent intent = new Intent(this, ApplyCardSecondActivity.class);
+        intent.putExtra("filenum", getDriverFileNum());
+        intent.putExtra("name", getUserName());
+        intent.putExtra("idCard", getUserIdCard());
+        startActivity(intent);
+
+        Intent in = new Intent(this, ApplyCardQuickActivity.class);
+        in.putExtra("filenum", getDriverFileNum());
+        in.putExtra("name", getUserName());
+        in.putExtra("idCard", getUserIdCard());
+        startActivity(in);*/
 
 
         BidCTCardDTO bidCTCardDTO = new BidCTCardDTO();

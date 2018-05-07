@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBgGray_f8">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBgGray_f8">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,13 +17,38 @@
             android:padding="16dip">
 
             <TextView
+                android:id="@+id/tv_verNum_title"
+                style="@style/TextInfoStyleNoVertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="20dip"
+                android:text="罚单编号" />
+
+            <TextView
+                android:id="@+id/tv_verNum"
+                style="@style/TextInfoRightStyleNoVertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_verNum_title"
+                tools:text="不按规定停车" />
+        </RelativeLayout>
+
+        <TextView style="@style/line_splite_dashed" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dip">
+
+            <TextView
                 android:id="@+id/tv_carNum_title"
                 style="@style/TextInfoStyleNoVertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="20dip"
-                android:text="车牌信息"/>
+                android:text="车牌信息" />
 
             <TextView
                 android:id="@+id/tv_carNum"
@@ -31,10 +56,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/tv_carNum_title"
-                tools:text="不按规定停车"/>
+                tools:text="不按规定停车" />
         </RelativeLayout>
 
-        <TextView style="@style/line_splite_dashed"/>
+        <TextView style="@style/line_splite_dashed" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -47,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:text="违章地点"/>
+                android:text="违章地点" />
 
             <TextView
                 android:id="@+id/violation_location_text"
@@ -55,10 +80,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/violation_location_title"
-                tools:text="北京市朝阳区利泽东二路南口至利泽东二路利泽东街口段"/>
+                tools:text="北京市朝阳区利泽东二路南口至利泽东二路利泽东街口段" />
         </RelativeLayout>
 
-        <TextView style="@style/line_splite_dashed"/>
+        <TextView style="@style/line_splite_dashed" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -72,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="20dip"
-                android:text="违章内容"/>
+                android:text="违章内容" />
 
             <TextView
                 android:id="@+id/violation_content_text"
@@ -80,10 +105,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/violation_content_title"
-                tools:text="不按规定停车"/>
+                tools:text="不按规定停车" />
         </RelativeLayout>
 
-        <TextView style="@style/line_splite_dashed"/>
+        <TextView style="@style/line_splite_dashed" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -97,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="20dip"
-                android:text="违章时间"/>
+                android:text="违章时间" />
 
             <TextView
                 android:id="@+id/violation_time_text"
@@ -105,10 +130,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/violation_time_title"
-                tools:text="2016- 02- 01  14 : 30"/>
+                tools:text="2016- 02- 01  14 : 30" />
         </RelativeLayout>
 
-        <TextView style="@style/line_splite_dashed"/>
+        <TextView style="@style/line_splite_dashed" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -122,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="20dip"
-                android:text="当前状态"/>
+                android:text="当前状态" />
 
             <TextView
                 android:id="@+id/violation_state_text"
@@ -131,10 +156,10 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/violation_state_title"
                 android:textColor="@color/sel_tv_color_rg"
-                tools:text="未处理"/>
+                tools:text="未处理" />
         </RelativeLayout>
 
-        <TextView style="@style/line_splite_dashed"/>
+        <TextView style="@style/line_splite_dashed" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -148,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="20dip"
-                android:text="罚款金额"/>
+                android:text="罚款金额" />
 
             <TextView
                 android:id="@+id/violation_money_text"
@@ -156,10 +181,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/violation_money_title"
-                tools:text="200 元"/>
+                tools:text="200 元" />
         </RelativeLayout>
 
-        <TextView style="@style/line_splite_dashed"/>
+        <TextView style="@style/line_splite_dashed" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -174,7 +199,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="20dip"
-                android:text="加处金额"/>
+                android:text="加处金额" />
 
             <ImageView
                 android:id="@+id/detail_zhinajin_img"
@@ -182,7 +207,7 @@
                 android:layout_height="match_parent"
                 android:layout_toRightOf="@+id/violation_money_zhinajin"
                 android:scaleType="center"
-                android:src="@drawable/sel_dm_ic_query_notice"/>
+                android:src="@drawable/sel_dm_ic_query_notice" />
 
             <TextView
                 android:id="@+id/violation_money_zhinajin_text"
@@ -190,12 +215,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/violation_money_zhinajin"
-                android:text="200 元"/>
+                android:text="200 元" />
         </RelativeLayout>
 
         <TextView
             style="@style/line_splite_dashed"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -209,7 +234,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="20dip"
-                android:text="扣分情况"/>
+                android:text="扣分情况" />
 
             <TextView
                 android:id="@+id/violation_points_text"
@@ -217,10 +242,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/violation_points_title"
-                tools:text="没有扣分"/>
+                tools:text="没有扣分" />
         </RelativeLayout>
 
-        <TextView style="@style/line_splite_dashed"/>
+        <TextView style="@style/line_splite_dashed" />
 
         <RelativeLayout
             android:id="@+id/violation_pay_rl"
@@ -235,7 +260,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="20dip"
-                android:text="缴费时间"/>
+                android:text="缴费时间" />
 
             <TextView
                 android:id="@+id/violation_pay_text"
@@ -243,7 +268,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/violation_pay_title"
-                tools:text="fdfdfdfd"/>
+                tools:text="fdfdfdfd" />
         </RelativeLayout>
 
         <TextView
@@ -253,7 +278,7 @@
             android:layout_marginTop="45dip"
             android:gravity="center"
             android:textColor="@color/gray_66"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/next_btn"
@@ -261,7 +286,7 @@
             android:layout_marginBottom="@dimen/ds_60"
             android:layout_marginTop="@dimen/ds_60"
             android:background="@drawable/violation_details_state_back_selector"
-            android:text="违章缴费"/>
+            android:text="违章缴费" />
     </LinearLayout>
 
 </ScrollView>

@@ -144,6 +144,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
         quickApplyCardDTO.setCtfnum(RSAUtils.strByEncryption(getIntent().getStringExtra("idCard"), true));
         quickApplyCardDTO.setFilenum(RSAUtils.strByEncryption(getIntent().getStringExtra("filenum"), true));
         quickApplyCardDTO.setPhoenum(RSAUtils.strByEncryption(MainRouter.getUserPhoenum(), true));
+
         quickApplyCardDTO.setCtfvldprd(getIntent().getStringExtra("date"));
         quickApplyCardDTO.setActnotf("0");//默认不开启自动还款
         quickApplyCardDTO.setElecbillsign("0");
