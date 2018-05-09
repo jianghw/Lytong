@@ -92,13 +92,34 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
     @Override
     public void initData() {
         //测试数据下
+        boolean isDeta = BuildConfig.isDeta;
+        int positon = new Random().nextInt(7);
 
-        boolean positon = new Random().nextBoolean();
-        if (BuildConfig.isDeta && positon) {
+        if (isDeta && positon == 0) {
             mName.setText("遇紫紫");
             mIdCard.setText("301364198811040740");
             mDriverFileNum.setText("310002038631");
-        } else if (BuildConfig.isDeta && !positon) {
+        } else if (isDeta && positon == 1) {
+            mName.setText("各咪移");
+            mIdCard.setText("301244199410277185");
+            mDriverFileNum.setText("310002038633");
+        } else if (isDeta && positon == 2) {
+            mName.setText("惧拳");
+            mIdCard.setText("301244198406277188");
+            mDriverFileNum.setText("310002039423");
+        } else if (isDeta && positon == 3) {
+            mName.setText("扩机恒");
+            mIdCard.setText("367532197205167575");
+            mDriverFileNum.setText("310010203830");
+        } else if (isDeta && positon == 4) {
+            mName.setText("笨委");
+            mIdCard.setText("367632199206157576");
+            mDriverFileNum.setText("310001103007");
+        } else if (isDeta && positon == 5) {
+            mName.setText("朗慎");
+            mIdCard.setText("426816199208163909");
+            mDriverFileNum.setText("310001199745");
+        } else if (isDeta && positon == 6) {
             mName.setText("毛乾帅");
             mIdCard.setText("310109198503162039");
             mDriverFileNum.setText("310010007285");
@@ -283,7 +304,16 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
      * 客户办卡记录校验
      */
     private void checkApplyCardRecord() {
-       /* Intent intent = new Intent(this, ApplyCardSecondActivity.class);
+        BidCTCardDTO bidCTCardDTO = new BidCTCardDTO();
+        bidCTCardDTO.setCtftp("0");
+        bidCTCardDTO.setUsrname(getUserName());
+        bidCTCardDTO.setUsrid(MainRouter.getUserID());
+        bidCTCardDTO.setCtfnum(RSAUtils.strByEncryption(getUserIdCard(), true));
+        bidCTCardDTO.setFilenum(RSAUtils.strByEncryption(getDriverFileNum(), true));
+        bidCTCardDTO.setPhoenum(RSAUtils.strByEncryption(MainRouter.getUserPhoenum(), true));
+        HandleCTCardApiClient.htmlLocal(this, "cip.cfc.u006.01", bidCTCardDTO, this);
+
+      /*  Intent intent = new Intent(this, ApplyCardSecondActivity.class);
         intent.putExtra("filenum", getDriverFileNum());
         intent.putExtra("name", getUserName());
         intent.putExtra("idCard", getUserIdCard());
@@ -294,16 +324,6 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         in.putExtra("name", getUserName());
         in.putExtra("idCard", getUserIdCard());
         startActivity(in);*/
-
-
-        BidCTCardDTO bidCTCardDTO = new BidCTCardDTO();
-        bidCTCardDTO.setCtftp("0");
-        bidCTCardDTO.setUsrname(getUserName());
-        bidCTCardDTO.setUsrid(MainRouter.getUserID());
-        bidCTCardDTO.setCtfnum(RSAUtils.strByEncryption(getUserIdCard(), true));
-        bidCTCardDTO.setFilenum(RSAUtils.strByEncryption(getDriverFileNum(), true));
-        bidCTCardDTO.setPhoenum(RSAUtils.strByEncryption(MainRouter.getUserPhoenum(), true));
-        HandleCTCardApiClient.htmlLocal(this, "cip.cfc.u006.01", bidCTCardDTO, this);
     }
 
     /**
@@ -323,10 +343,12 @@ public class ApplyCardFirstActivity extends BaseMvpActivity<IBaseView, HelpPrese
         CarApiClient.commitDriving(Utils.getContext(), bindDrivingDTO,
                 new CallBack<BaseResponse>() {
                     @Override
-                    public void onSuccess(BaseResponse result) {}
+                    public void onSuccess(BaseResponse result) {
+                    }
                 });
 
-        if (bankResponse.getSYS_HEAD().getReturnCode().equals("1")) {//不可快捷办卡
+        if (bankResponse.getSYS_HEAD().getReturnCode().equals("1")
+                ||bankResponse.getSYS_HEAD().getReturnCode().equals("000000")) {//不可快捷办卡
             Intent intent = new Intent(this, ApplyCardSecondActivity.class);
             intent.putExtra("filenum", getDriverFileNum());
             intent.putExtra("name", getUserName());

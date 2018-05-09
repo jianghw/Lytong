@@ -2,6 +2,7 @@ package com.tzly.ctcyh.cargo.refuel_v;
 
 import android.app.Activity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.bean.response.BidOilBean;
 import com.tzly.ctcyh.cargo.bean.response.BidOilData;
@@ -45,7 +45,7 @@ public class BidOilFragment extends RefreshFragment
 
     private ImageView mImgBanner;
     private TextView mTvNotice;
-    private XRecyclerView mXRecyclerView;
+    private RecyclerView mXRecyclerView;
     /**
      * 购卡金额（包含油费）
      */
@@ -101,11 +101,8 @@ public class BidOilFragment extends RefreshFragment
 
         GridLayoutManager manager = new GridLayoutManager(Utils.getContext(), 2);
         mXRecyclerView.setLayoutManager(manager);
-        mXRecyclerView.setPullRefreshEnabled(false);
-        mXRecyclerView.setLoadingMoreEnabled(false);
-        mXRecyclerView.noMoreLoadings();
-
         mAdapter = new BidOilAdapter();
+
         mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, Object data) {
@@ -247,7 +244,7 @@ public class BidOilFragment extends RefreshFragment
         mImgBanner = (ImageView) view.findViewById(R.id.img_banner);
         mImgBanner.setOnClickListener(this);
         mTvNotice = (TextView) view.findViewById(R.id.tv_notice);
-        mXRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_list);
+        mXRecyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
         mTvBid = (TextView) view.findViewById(R.id.tv_bid);
         mTvBid.setOnClickListener(this);
         mEdtName = (EditText) view.findViewById(R.id.edt_name);

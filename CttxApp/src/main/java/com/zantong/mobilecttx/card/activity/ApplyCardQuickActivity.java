@@ -233,7 +233,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
         for (NetLocationBean.NetLocationElement element : mNetLocationBean.getNetLocationlist()) {
             ArrayList<String> arrayList = new ArrayList<>();
             for (NetLocationBean.NetLocationElement.NetQuBean cityModel : element.getListNet()) {
-                arrayList.add(cityModel.getNetLocationName());
+                arrayList.add(cityModel.getNetLocationName()+ "/" + cityModel.getNetLocationCode());
             }
             secondList.add(arrayList);
         }
@@ -242,7 +242,8 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
                 firstList, secondList, new IBankAreaDialogListener() {
                     @Override
                     public void setCurPosition(String first, String second) {
-                        String address = first + second;
+                        String[] sec = second.split("/");
+                        String address = first + sec[0];
                         wangdianAdress = address;
                         if (address.length() > 20) {
                             address = address.substring(0, 20) + "...";
@@ -250,7 +251,7 @@ public class ApplyCardQuickActivity extends BaseMvpActivity<IBaseView, HelpPrese
                         mLingKaWangDian.setRightText(address);
                         mLingKaWangDian.setRightTextColor(getResources().getColor(R.color.gray_33));
 //领卡网点
-                        quickApplyCardDTO.setGetbrno(first);
+                        quickApplyCardDTO.setGetbrno(sec[1]);
                     }
                 });
     }

@@ -6,9 +6,9 @@
 
     <ImageView
         android:id="@+id/img_banner"
-        android:scaleType="fitXY"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/res_y_220" />
+        android:layout_height="@dimen/res_y_220"
+        android:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/tv_notice"
@@ -35,7 +35,7 @@
             android:gravity="center_vertical"
             android:text="购卡金额（包含邮费）" />
 
-        <com.jcodecraeer.xrecyclerview.XRecyclerView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -208,9 +208,9 @@
     <Button
         android:id="@+id/btn_commit"
         style="@style/ResButtonTheme.Single"
+        android:layout_marginBottom="@dimen/res_y_45"
         android:layout_marginLeft="@dimen/res_x_30"
         android:layout_marginRight="@dimen/res_x_30"
         android:layout_marginTop="@dimen/res_y_60"
-        android:layout_marginBottom="@dimen/res_y_45"
         android:text="申请办卡" />
 </LinearLayout>
