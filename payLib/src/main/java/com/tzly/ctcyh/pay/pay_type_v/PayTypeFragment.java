@@ -104,6 +104,8 @@ public class PayTypeFragment extends RefreshFragment
      * 通讯接口
      */
     private IPayTypeUi iPayTypeUi;
+    private LinearLayout mLayLinearGoodsName;
+    private TextView mTvGoodsName;
 
     public static PayTypeFragment newInstance(String extraOrder) {
         PayTypeFragment f = new PayTypeFragment();
@@ -146,6 +148,8 @@ public class PayTypeFragment extends RefreshFragment
         mCombo = (TextView) view.findViewById(R.id.combo);
         mLayLinearCombo = (LinearLayout) view.findViewById(R.id.lay_linear_combo);
 
+        mLayLinearGoodsName = (LinearLayout) view.findViewById(R.id.lay_linear_goods_name);
+        mTvGoodsName = (TextView) view.findViewById(R.id.tv_goods_name);
         mLayLinearName = (LinearLayout) view.findViewById(R.id.lay_linear_name);
         mTvName = (TextView) view.findViewById(R.id.tv_name);
         mLayLinearPhone = (LinearLayout) view.findViewById(R.id.lay_linear_phone);
@@ -321,6 +325,9 @@ public class PayTypeFragment extends RefreshFragment
             mTvOrder.setText(FormatUtils.textForNull(getExtraOrderId()));
             mCombo.setText(FormatUtils.textForNull(payTypeBean.getDescription()));
 
+            String goodsName = payTypeBean.getGoodsName();
+            mTvGoodsName.setText(goodsName);
+            mLayLinearGoodsName.setVisibility(TextUtils.isEmpty(goodsName) ? View.GONE : View.VISIBLE);
             String name = payTypeBean.getName();
             mTvName.setText(name);
             mLayLinearName.setVisibility(TextUtils.isEmpty(name) ? View.GONE : View.VISIBLE);

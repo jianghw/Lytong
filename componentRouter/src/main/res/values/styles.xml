@@ -153,14 +153,14 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/sel_bg_rec_corners_rg</item>
         <item name="android:textColor">@color/res_color_white</item>
-        <item name="android:textSize">@dimen/res_fs_18</item>
+        <item name="android:textSize">@dimen/pt_36</item>
     </style>
     <!--单行提交控件-->
     <style name="ResButtonTheme.Single">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/res_y_100</item>
-        <item name="android:layout_marginRight">@dimen/res_x_30</item>
-        <item name="android:layout_marginLeft">@dimen/res_x_30</item>
+        <item name="android:layout_height">@dimen/pt_100</item>
+        <item name="android:layout_marginRight">@dimen/pt_30</item>
+        <item name="android:layout_marginLeft">@dimen/pt_30</item>
     </style>
 
 

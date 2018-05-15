@@ -35,6 +35,7 @@ public class PayTypeBean {
     private float price;
     private int goodsId;
     private String name;
+    private String goodsName;
     private String description;
     private int couponUserId;
 
@@ -43,6 +44,14 @@ public class PayTypeBean {
     private String sheng;
     private String shi;
     private String xian;
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
 
     public String getAddressDetail() {
         return addressDetail;
@@ -94,28 +103,52 @@ public class PayTypeBean {
 
     private List<PayTypesBean> payTypes;
 
-    public int getBusiness() { return business;}
+    public int getBusiness() {
+        return business;
+    }
 
-    public void setBusiness(int business) { this.business = business;}
+    public void setBusiness(int business) {
+        this.business = business;
+    }
 
-    public float getPrice() { return price;}
+    public float getPrice() {
+        return price;
+    }
 
-    public void setPrice(float price) { this.price = price;}
+    public void setPrice(float price) {
+        this.price = price;
+    }
 
-    public int getGoodsId() { return goodsId;}
+    public int getGoodsId() {
+        return goodsId;
+    }
 
-    public void setGoodsId(int goodsId) { this.goodsId = goodsId;}
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
+    }
 
-    public String getName() { return name;}
+    public String getName() {
+        return name;
+    }
 
-    public void setName(String name) { this.name = name;}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getDescription() { return description;}
+    public String getDescription() {
+        return description;
+    }
 
-    public void setDescription(String description) { this.description = description;}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public List<PayTypesBean> getPayTypes() { return payTypes;}
+    public List<PayTypesBean> getPayTypes() {
+        return payTypes;
+    }
 
-    public void setPayTypes(List<PayTypesBean> payTypes) { this.payTypes = payTypes;}
+    public void setPayTypes(List<PayTypesBean> payTypes) {
+        this.payTypes = payTypes;
+    }
 
 }

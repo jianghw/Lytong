@@ -7,101 +7,132 @@
     <ImageView
         android:id="@+id/img_banner"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/res_y_220"
-        android:scaleType="fitXY" />
+        android:layout_height="@dimen/pt_220"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/tv_notice"
-        style="@style/ResTextTheme.14.Subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/res_color_white"
         android:gravity="left"
-        android:padding="@dimen/res_x_30"
-        android:text="@string/cargo_bid_oil_tip" />
+        android:padding="@dimen/pt_30"
+        android:text="@string/cargo_bid_oil_tip"
+        android:textColor="@color/res_color_black_4d"
+        android:textSize="@dimen/pt_26" />
 
-    <LinearLayout
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pt_80"
+        android:layout_marginTop="@dimen/pt_20"
+        android:background="@color/res_color_white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/pt_30"
+        android:text="购卡金额（包含邮费）"
+        android:textColor="@color/res_color_black_4d"
+        android:textSize="@dimen/pt_26" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/res_y_30"
         android:background="@color/res_color_white"
-        android:orientation="vertical">
+        android:paddingLeft="@dimen/pt_15"
+        android:paddingRight="@dimen/pt_15" />
 
-        <TextView
-            style="@style/ResTextTheme.16.Subtitle"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/res_y_80"
-            android:layout_marginLeft="@dimen/res_x_30"
-            android:gravity="center_vertical"
-            android:text="购卡金额（包含邮费）" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/res_x_15"
-            android:paddingRight="@dimen/res_x_15" />
-
-        <TextView
-            android:id="@+id/tv_bid"
-            style="@style/ResTextTheme.14.Subtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/res_y_30"
-            android:layout_marginLeft="@dimen/res_x_30"
-            android:gravity="left"
-            android:lineSpacingMultiplier="1.4"
-            android:text="@string/cargo_bid_oil_card" />
-    </LinearLayout>
-
-    <RelativeLayout
+    <TextView
+        android:id="@+id/tv_bid"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/res_y_80"
-        android:layout_marginTop="@dimen/res_y_20"
-        android:background="@color/colorWhite"
-        android:paddingLeft="@dimen/res_x_30"
-        android:paddingRight="@dimen/res_x_30">
+        android:layout_height="wrap_content"
+        android:background="@color/res_color_white"
+        android:gravity="left"
+        android:lineSpacingMultiplier="1.4"
+        android:paddingBottom="@dimen/pt_30"
+        android:paddingLeft="@dimen/pt_30"
+        android:text="@string/cargo_bid_oil_card"
+        android:textColor="@color/res_color_black_4d"
+        android:textSize="@dimen/pt_24" />
 
-        <TextView
-            style="@style/ResTextTheme.16.Red"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="收件人联系方式" />
-    </RelativeLayout>
+    <!-- <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="@dimen/res_y_30"
+         android:background="@color/res_color_white"
+         android:orientation="vertical">
+
+         <TextView
+             style="@style/ResTextTheme.16.Subtitle"
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/res_y_80"
+             android:layout_marginLeft="@dimen/res_x_30"
+             android:gravity="center_vertical"
+             android:text="购卡金额（包含邮费）" />
+
+         <android.support.v7.widget.RecyclerView
+             android:id="@+id/rv_list"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:paddingLeft="@dimen/res_x_15"
+             android:paddingRight="@dimen/res_x_15" />
+
+         <TextView
+             android:id="@+id/tv_bid"
+             style="@style/ResTextTheme.14.Subtitle"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="@dimen/res_y_30"
+             android:layout_marginLeft="@dimen/res_x_30"
+             android:gravity="left"
+             android:lineSpacingMultiplier="1.4"
+             android:text="@string/cargo_bid_oil_card" />
+     </LinearLayout>-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pt_80"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="@dimen/pt_20"
+        android:background="@color/res_color_white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/pt_30"
+        android:text="收件人联系方式"
+        android:textColor="@color/res_color_red_f3"
+        android:textSize="@dimen/pt_26" />
 
     <TextView style="@style/cargo_line_gray_all" />
 
     <!--姓名-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/res_y_80"
-        android:background="@color/colorWhite"
+        android:layout_height="@dimen/pt_80"
+        android:background="@color/res_color_white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/res_x_30"
-        android:paddingRight="@dimen/res_x_30">
+        android:paddingLeft="@dimen/pt_30"
+        android:paddingRight="@dimen/pt_30">
 
         <TextView
-            style="@style/ResTextTheme.16.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="姓名" />
+            android:text="姓名"
+            android:textColor="@color/res_color_black_4d"
+            android:textSize="@dimen/pt_28" />
 
         <EditText
             android:id="@+id/edt_name"
-            style="@style/ResTextTheme.16.Subtitle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/res_x_30"
+            android:layout_marginLeft="@dimen/pt_30"
             android:layout_weight="1"
             android:background="@null"
             android:gravity="right|center_vertical"
             android:hint="请输入姓名"
             android:maxLength="20"
             android:maxLines="1"
-            android:minWidth="@dimen/ds_180"
-            android:textColorHint="@color/colorLineGray_e6" />
+            android:minWidth="@dimen/pt_180"
+            android:textColor="@color/res_color_black_4d"
+            android:textColorHint="@color/res_color_black_e5"
+            android:textSize="@dimen/pt_28" />
     </LinearLayout>
 
     <TextView style="@style/cargo_line_gray" />
@@ -109,25 +140,25 @@
     <!--手机号-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/res_y_80"
-        android:background="@color/colorWhite"
+        android:layout_height="@dimen/pt_80"
+        android:background="@color/res_color_white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/res_x_30"
-        android:paddingRight="@dimen/res_x_30">
+        android:paddingLeft="@dimen/pt_30"
+        android:paddingRight="@dimen/pt_30">
 
         <TextView
-            style="@style/ResTextTheme.16.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="手机号" />
+            android:text="手机号"
+            android:textColor="@color/res_color_black_4d"
+            android:textSize="@dimen/pt_28" />
 
         <EditText
             android:id="@+id/edit_phone"
-            style="@style/ResTextTheme.16.Subtitle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/res_x_30"
+            android:layout_marginLeft="@dimen/pt_30"
             android:layout_weight="1"
             android:background="@null"
             android:gravity="right|center_vertical"
@@ -135,8 +166,10 @@
             android:inputType="phone"
             android:maxLength="16"
             android:maxLines="1"
-            android:minWidth="@dimen/ds_180"
-            android:textColorHint="@color/colorLineGray_e6" />
+            android:minWidth="@dimen/pt_180"
+            android:textColor="@color/res_color_black_4d"
+            android:textColorHint="@color/res_color_black_e5"
+            android:textSize="@dimen/pt_28" />
     </LinearLayout>
 
     <TextView style="@style/cargo_line_gray" />
@@ -145,18 +178,19 @@
     <RelativeLayout
         android:id="@+id/lay_area"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/res_y_80"
+        android:layout_height="@dimen/pt_80"
         android:background="@drawable/sel_item_solid_gray"
-        android:paddingLeft="@dimen/res_x_30"
-        android:paddingRight="@dimen/res_x_30">
+        android:paddingLeft="@dimen/pt_30"
+        android:paddingRight="@dimen/pt_30">
 
         <TextView
-            style="@style/ResTextTheme.16.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:text="所在地区" />
+            android:text="所在地区"
+            android:textColor="@color/res_color_black_4d"
+            android:textSize="@dimen/pt_28" />
 
         <ImageView
             android:id="@+id/img_brand"
@@ -168,16 +202,17 @@
 
         <TextView
             android:id="@+id/tv_area"
-            style="@style/ResTextTheme.16.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/res_x_30"
-            android:layout_marginRight="@dimen/res_x_30"
+            android:layout_marginLeft="@dimen/pt_30"
+            android:layout_marginRight="@dimen/pt_30"
             android:layout_toLeftOf="@+id/img_brand"
             android:hint="请选择地区"
             android:singleLine="true"
-            android:textColorHint="@color/colorLineGray_e6" />
+            android:textColor="@color/res_color_black_4d"
+            android:textColorHint="@color/res_color_black_e5"
+            android:textSize="@dimen/pt_28" />
 
     </RelativeLayout>
 
@@ -185,32 +220,32 @@
 
     <EditText
         android:id="@+id/edit_detailed_address"
-        style="@style/ResTextTheme.16.Subtitle"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_270"
-        android:background="@color/colorWhite"
+        android:layout_height="@dimen/pt_280"
+        android:background="@color/res_color_white"
         android:gravity="top"
         android:hint="请输入详细地址"
         android:maxEms="60"
         android:maxLength="60"
         android:maxLines="3"
-        android:padding="@dimen/res_x_30"
-        android:textColorHint="@color/colorLineGray_e6" />
+        android:padding="@dimen/pt_30"
+        android:textColor="@color/res_color_black_4d"
+        android:textColorHint="@color/res_color_black_e5"
+        android:textSize="@dimen/pt_28" />
 
     <TextView
-        style="@style/ResTextTheme.14.Red"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/res_x_30"
+        android:layout_marginLeft="@dimen/pt_30"
         android:gravity="left|center_vertical"
-        android:text="@string/cargo_tv_97_date" />
+        android:text="@string/cargo_tv_97_date"
+        android:textColor="@color/res_color_red_f3"
+        android:textSize="@dimen/pt_24" />
 
     <Button
         android:id="@+id/btn_commit"
         style="@style/ResButtonTheme.Single"
-        android:layout_marginBottom="@dimen/res_y_45"
-        android:layout_marginLeft="@dimen/res_x_30"
-        android:layout_marginRight="@dimen/res_x_30"
-        android:layout_marginTop="@dimen/res_y_60"
+        android:layout_marginBottom="@dimen/pt_60"
+        android:layout_marginTop="@dimen/pt_40"
         android:text="申请办卡" />
 </LinearLayout>

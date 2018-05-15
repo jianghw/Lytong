@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
 import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.custom.popup.CustomDialog;
 import com.tzly.ctcyh.router.imple.IAreaDialogListener;
+import com.tzly.ctcyh.router.util.RudenessScreenHelper;
 import com.tzly.ctcyh.router.util.Utils;
 
 import java.util.ArrayList;
@@ -100,6 +102,7 @@ public class BidOilFragment extends RefreshFragment
                 InjectionRepository.provideRepository(Utils.getContext()), this);
 
         GridLayoutManager manager = new GridLayoutManager(Utils.getContext(), 2);
+//        manager.setAutoMeasureEnabled(true);
         mXRecyclerView.setLayoutManager(manager);
         mAdapter = new BidOilAdapter();
 
@@ -118,6 +121,7 @@ public class BidOilFragment extends RefreshFragment
             }
         });
         mXRecyclerView.setAdapter(mAdapter);
+        mXRecyclerView.setNestedScrollingEnabled(false);
     }
 
     @Override
@@ -170,6 +174,12 @@ public class BidOilFragment extends RefreshFragment
         if (data == null || data.isEmpty()) {
             showStateEmpty();
         } else {
+            //动态设置高度
+            int line = data.size() % 2 == 0 ? data.size() / 2 : data.size() / 2 + 1;
+            ViewGroup.LayoutParams layoutParams = mXRecyclerView.getLayoutParams();
+            layoutParams.height = RudenessScreenHelper.ptInpx(130) * line;
+            mXRecyclerView.setLayoutParams(layoutParams);
+
             mAdapter.append(data);
         }
     }

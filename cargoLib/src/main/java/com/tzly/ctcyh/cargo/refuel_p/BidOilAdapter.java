@@ -14,15 +14,10 @@ import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.bean.response.BidOilBean;
-import com.tzly.ctcyh.cargo.bean.response.BidOilResponse;
-import com.tzly.ctcyh.cargo.bean.response.RefuelOilBean;
 import com.tzly.ctcyh.router.util.FormatUtils;
 
 /**
  * Created by jianghw on 2017/10/12.
- * Description:
- * Update by:
- * Update day:
  */
 
 public class BidOilAdapter extends BaseAdapter<BidOilBean> {
@@ -32,7 +27,8 @@ public class BidOilAdapter extends BaseAdapter<BidOilBean> {
     public View createView(ViewGroup viewGroup, int i) {
         mAdapterContext = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        return inflater.inflate(R.layout.cargo_adapter_bid_oil, viewGroup, false);
+        View view = inflater.inflate(R.layout.cargo_adapter_bid_oil, viewGroup, false);
+        return view;
     }
 
     @Override
@@ -62,7 +58,7 @@ public class BidOilAdapter extends BaseAdapter<BidOilBean> {
         String discount = FormatUtils.showDiscount(dis);
         holder.mTvDiscount.setText(discount + "折");
         //小于10时为又折扣
-        double d = Double.valueOf(discount) ;
+        double d = Double.valueOf(discount);
         holder.mTvDiscount.setVisibility(d < 10 ? View.VISIBLE : View.INVISIBLE);
     }
 

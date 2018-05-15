@@ -7,41 +7,42 @@
     <RelativeLayout
         android:id="@+id/fay_recharge"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/pt_100"
         android:layout_centerInParent="true"
-        android:layout_margin="@dimen/res_x_15"
+        android:layout_margin="@dimen/pt_15"
         android:background="@drawable/sel_bg_rec_stroke_corners_wr">
 
         <TextView
             android:id="@+id/tv_amount"
-            style="@style/ResTextTheme.16.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/res_y_15"
             android:gravity="center"
-            android:textSize="@dimen/fs_20sp"
+            android:textColor="@color/res_color_black_4d"
+            android:textSize="@dimen/pt_48"
             tools:text="100" />
 
         <TextView
             android:id="@+id/tv_unit"
-            style="@style/ResTextTheme.14.Red"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_amount"
             android:layout_toLeftOf="@+id/tv_amount"
-            android:text="¥" />
+            android:text="¥"
+            android:textColor="@color/res_color_red_f3"
+            android:textSize="@dimen/pt_30" />
 
 
         <TextView
             android:id="@+id/tv_price"
-            style="@style/ResTextTheme.16.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_amount"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/res_y_15"
             android:gravity="center"
+            android:textColor="@color/res_color_black_4d"
+            android:textSize="@dimen/pt_24"
             tools:text="实冲油费：¥500" />
     </RelativeLayout>
 
@@ -54,5 +55,5 @@
         android:background="@drawable/bg_discount_tv_shade"
         android:text="9.93折"
         android:textColor="@color/res_color_white"
-        android:textSize="@dimen/res_fs_10" />
+        android:textSize="@dimen/pt_24" />
 </RelativeLayout>
