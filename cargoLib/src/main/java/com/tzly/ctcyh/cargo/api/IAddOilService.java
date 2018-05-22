@@ -4,14 +4,18 @@ package com.tzly.ctcyh.cargo.api;
 import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
 import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.response.BidOilResponse;
-import com.tzly.ctcyh.java.response.oil.NorOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.java.response.oil.NorOilResponse;
+import com.tzly.ctcyh.java.response.oil.OilAccepterInfoResponse;
 import com.tzly.ctcyh.java.response.oil.OilCardsResponse;
 import com.tzly.ctcyh.java.response.oil.OilEnterResponse;
 import com.tzly.ctcyh.java.response.oil.OilModuleResponse;
 import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareInfoResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareModuleResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareResponse;
 
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -125,4 +129,28 @@ public interface IAddOilService {
      */
     @GET("module/getOilModuleList")
     Observable<OilModuleResponse> getOilModuleList();
+
+    /**
+     * 23.获取分享统计信息(新)
+     */
+    @FormUrlEncoded
+    @POST("shareApi/getShareInfo")
+    Observable<OilShareInfoResponse> getShareInfo(@Field("usernum") String rasUserID);
+
+    /**
+     * 22.分享人操作(新)
+     */
+    @FormUrlEncoded
+    @POST("shareApi/shareInfo")
+    Observable<OilShareResponse> shareInfo(@Field("configId") int configId, @Field("usernum") String rasUserID);
+
+    /**
+     * 被邀请人行为列表
+     */
+    @FormUrlEncoded
+    @POST("shareApi/getAccepterInfoList")
+    Observable<OilAccepterInfoResponse> getAccepterInfoList(@Field("usernum") String rasUserID, @Field("id") int position);
+
+    @GET("module/shareModule")
+    Observable<OilShareModuleResponse> shareModule();
 }

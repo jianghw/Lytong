@@ -86,7 +86,7 @@ public class EncodingUtils {
             return src;
         }
         //logo大小为二维码整体大小的1/5
-        float scaleFactor = srcWidth * 1.0f / 5 / logoWidth;
+        float scaleFactor = srcWidth * 1.0f / 8 / logoWidth;
         Bitmap bitmap = Bitmap.createBitmap(srcWidth, srcHeight, Bitmap.Config.ARGB_8888);
         try {
             Canvas canvas = new Canvas(bitmap);

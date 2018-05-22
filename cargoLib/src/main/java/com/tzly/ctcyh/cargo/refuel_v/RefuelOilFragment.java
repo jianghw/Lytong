@@ -2,6 +2,7 @@ package com.tzly.ctcyh.cargo.refuel_v;
 
 import android.app.Activity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -15,7 +16,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
@@ -50,7 +50,7 @@ public class RefuelOilFragment extends RefreshFragment
      * 请输入19位加油卡号
      */
     private EditText mEditOil;
-    private XRecyclerView mXRecyclerView;
+    private RecyclerView mXRecyclerView;
     private TextView mTvHint;
     /**
      * 我已阅读用户充值协议
@@ -134,16 +134,13 @@ public class RefuelOilFragment extends RefreshFragment
 
         mEditOil = (EditText) view.findViewById(R.id.edit_oil);
 
-        mXRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_list);
+        mXRecyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
         mTvHint = (TextView) view.findViewById(R.id.tv_hint);
         mTvAgreement = (TextView) view.findViewById(R.id.tv_agreement);
         mTvAgreement.setOnClickListener(this);
 
         GridLayoutManager manager = new GridLayoutManager(Utils.getContext(), 3);
         mXRecyclerView.setLayoutManager(manager);
-        mXRecyclerView.setPullRefreshEnabled(false);
-        mXRecyclerView.setLoadingMoreEnabled(false);
-        mXRecyclerView.noMoreLoadings();
 
         mAdapter = new RefuelOilAdapter();
         mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {

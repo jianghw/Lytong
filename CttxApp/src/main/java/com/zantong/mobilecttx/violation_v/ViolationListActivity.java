@@ -73,8 +73,8 @@ public class ViolationListActivity extends AbstractBaseActivity
     @Override
     protected void bindFragment() {
         titleContent(mTitle);
-
         initView();
+
         if (mFragmentList == null) mFragmentList = new ArrayList<>();
         initFragment();
         initViewPager();
@@ -103,25 +103,10 @@ public class ViolationListActivity extends AbstractBaseActivity
 
     private void initViewPager() {
         String[] title = new String[]{"全部", "未处理", "已处理"};
-        OrderFragmentAdapter mainFragmentAdapter =
-                new OrderFragmentAdapter(getSupportFragmentManager(), mFragmentList, title);
+        OrderFragmentAdapter mainFragmentAdapter = new OrderFragmentAdapter(
+                getSupportFragmentManager(), mFragmentList, title);
         mViewPager.setAdapter(mainFragmentAdapter);
         mViewPager.setOffscreenPageLimit(mFragmentList.size() - 1);//设置预加载
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset,
-                                       int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
-
         mTabLayout.setupWithViewPager(mViewPager);
 
         mViewPager.setCurrentItem(1);
@@ -206,25 +191,21 @@ public class ViolationListActivity extends AbstractBaseActivity
         Act.getInstance().gotoIntent(this, Codequery.class);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
     /**
      * 去规则页面
      */
     @Override
     protected void onDestroy() {
         boolean iShow = SPUtils.getInstance().getBoolean(SPUtils.IS_WZ_ACTIVE, true);
-
-        if (mViolationDTO != null && iShow)
+        if (mViolationDTO != null && iShow) {
             MainRouter.gotoActiveActivity(this, 1, mViolationDTO.getRegisterDate());
-
+        }
         SPUtils.getInstance().put(SPUtils.IS_WZ_ACTIVE, true);
+
         super.onDestroy();
 
         if (mPresenter != null) mPresenter.unSubscribe();
+
         orderUnStatusFragment = null;
         orderPayStatusFragment = null;
         orderAllStatusFragment = null;
@@ -243,9 +224,9 @@ public class ViolationListActivity extends AbstractBaseActivity
     public void searchViolationError(String message) {
         toastShort(message);
 
-        if (orderUnStatusFragment != null) orderUnStatusFragment.responseError(message);
-        if (orderPayStatusFragment != null) orderPayStatusFragment.responseError(message);
-        if (orderAllStatusFragment != null) orderAllStatusFragment.responseError(message);
+        if (orderUnStatusFragment != null) orderUnStatusFragment.responseError(null);
+        if (orderPayStatusFragment != null) orderPayStatusFragment.responseError(null);
+        if (orderAllStatusFragment != null) orderAllStatusFragment.responseError(null);
     }
 
     /**

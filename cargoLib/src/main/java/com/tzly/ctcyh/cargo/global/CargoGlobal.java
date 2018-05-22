@@ -11,7 +11,7 @@ public final class CargoGlobal {
 
     public static final class requestCode {
         public static final int coupon_list_choice = 1210;
-        public static final int pay_type_choice=1220;
+        public static final int pay_type_choice = 1220;
         public static final int pay_html_price = 1230;
     }
 
@@ -32,6 +32,7 @@ public final class CargoGlobal {
         public static final String web_orderId_extra = "web_orderId_extra";
         public static final String web_pay_type_extra = "web_pay_type_extra";
         public static final String license_score_extra = "license_score_extra";
+        public static final String oil_share_extra = "oil_share_extra";
     }
 
     public static final class Response {

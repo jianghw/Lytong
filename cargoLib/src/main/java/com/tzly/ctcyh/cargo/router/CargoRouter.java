@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 
 import com.tzly.ctcyh.cargo.global.CargoGlobal;
-import com.tzly.ctcyh.cargo.refuel_v.OilEnterActivity;
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.UiRouter;
 import com.tzly.ctcyh.service.IMainService;
@@ -285,6 +284,17 @@ public final class CargoRouter {
         bundle.putString(CargoGlobal.putExtra.license_score_extra, score);
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.license_result_host,
+                bundle);
+    }
+
+    /**
+     * 加油分享
+     */
+    public static void gotoOilShareActivity(Context context, int score) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(CargoGlobal.putExtra.oil_share_extra, score);
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.oil_share_host,
                 bundle);
     }
 

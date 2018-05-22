@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -163,6 +164,9 @@ public abstract class AbstractBaseFragment extends Fragment {
         doClickRefreshView(view, state);
     }
 
+    /**
+     * 加载中页面时
+     */
     private void enhanceLoadingView(View view, int state) {
         loadingFirstData();
     }
@@ -260,9 +264,9 @@ public abstract class AbstractBaseFragment extends Fragment {
     }
 
     public void responseError(String message) {
-        toastShort(message);
-        showStateError();
+        if (!TextUtils.isEmpty(message)) toastShort(message);
 
+        showStateError();
         errorData(message);
     }
 

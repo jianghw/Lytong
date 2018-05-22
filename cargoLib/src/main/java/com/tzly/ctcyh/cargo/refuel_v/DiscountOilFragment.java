@@ -4,16 +4,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
@@ -44,7 +45,7 @@ public class DiscountOilFragment extends RefreshFragment
      * 请输入19位加油卡号
      */
     private EditText mEditOil;
-    private XRecyclerView mXRecyclerView;
+    private RecyclerView mXRecyclerView;
     private TextView mTvHint;
     /**
      * 我已阅读用户充值协议
@@ -61,6 +62,7 @@ public class DiscountOilFragment extends RefreshFragment
      */
     private IRechargeAToF iRechargeAToF;
     private TextView mTvGou;
+    private ImageView mImgBanner;
 
     public static DiscountOilFragment newInstance() {
         return new DiscountOilFragment();
@@ -108,28 +110,25 @@ public class DiscountOilFragment extends RefreshFragment
 
     public void initView(View view) {
 
-        /*mImgBanner = (ImageView) view.findViewById(R.id.img_banner);
+        mImgBanner = (ImageView) view.findViewById(R.id.img_banner);
         mImgBanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CargoRouter.gotoBidOilActivity(getActivity());
+                CargoRouter.gotoOilShareActivity(getActivity(), 1);
             }
-        });*/
+        });
         mEditOil = (EditText) view.findViewById(R.id.edit_oil);
 
         mTvGou = (TextView) view.findViewById(R.id.tv_gou_card);
         mTvGou.setOnClickListener(this);
 
-        mXRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_list);
+        mXRecyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
         mTvHint = (TextView) view.findViewById(R.id.tv_hint);
         mTvAgreement = (TextView) view.findViewById(R.id.tv_agreement);
         mTvAgreement.setOnClickListener(this);
 
         GridLayoutManager manager = new GridLayoutManager(Utils.getContext(), 3);
         mXRecyclerView.setLayoutManager(manager);
-        mXRecyclerView.setPullRefreshEnabled(false);
-        mXRecyclerView.setLoadingMoreEnabled(false);
-        mXRecyclerView.noMoreLoadings();
 
         mAdapter = new RefuelOilAdapter();
         mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {

@@ -48,6 +48,12 @@
             </intent-filter>
         </activity>
 
+        <!--加油分享入口-->
+        <activity
+            android:name=".refuel_v.OilShareActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".active_v.ActiveActivity"
             android:screenOrientation="portrait"

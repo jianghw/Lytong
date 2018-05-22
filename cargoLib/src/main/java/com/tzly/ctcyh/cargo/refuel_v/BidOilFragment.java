@@ -47,7 +47,7 @@ public class BidOilFragment extends RefreshFragment
 
     private ImageView mImgBanner;
     private TextView mTvNotice;
-    private RecyclerView mXRecyclerView;
+    private RecyclerView recyclerView;
     /**
      * 购卡金额（包含油费）
      */
@@ -103,7 +103,7 @@ public class BidOilFragment extends RefreshFragment
 
         GridLayoutManager manager = new GridLayoutManager(Utils.getContext(), 2);
 //        manager.setAutoMeasureEnabled(true);
-        mXRecyclerView.setLayoutManager(manager);
+        recyclerView.setLayoutManager(manager);
         mAdapter = new BidOilAdapter();
 
         mAdapter.setOnItemClickListener(new BaseAdapter.OnRecyclerViewItemClickListener() {
@@ -120,8 +120,8 @@ public class BidOilFragment extends RefreshFragment
                 mAdapter.notifyDataSetChanged();
             }
         });
-        mXRecyclerView.setAdapter(mAdapter);
-        mXRecyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setNestedScrollingEnabled(false);
     }
 
     @Override
@@ -176,9 +176,9 @@ public class BidOilFragment extends RefreshFragment
         } else {
             //动态设置高度
             int line = data.size() % 2 == 0 ? data.size() / 2 : data.size() / 2 + 1;
-            ViewGroup.LayoutParams layoutParams = mXRecyclerView.getLayoutParams();
+            ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
             layoutParams.height = RudenessScreenHelper.ptInpx(130) * line;
-            mXRecyclerView.setLayoutParams(layoutParams);
+            recyclerView.setLayoutParams(layoutParams);
 
             mAdapter.append(data);
         }
@@ -254,7 +254,7 @@ public class BidOilFragment extends RefreshFragment
         mImgBanner = (ImageView) view.findViewById(R.id.img_banner);
         mImgBanner.setOnClickListener(this);
         mTvNotice = (TextView) view.findViewById(R.id.tv_notice);
-        mXRecyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
         mTvBid = (TextView) view.findViewById(R.id.tv_bid);
         mTvBid.setOnClickListener(this);
         mEdtName = (EditText) view.findViewById(R.id.edt_name);

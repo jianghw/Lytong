@@ -158,6 +158,8 @@
 
     <!--使用pt单位 原有pt单位失效-->
     <dimen name="pt_1">1pt</dimen>
+    <dimen name="pt_2">2pt</dimen>
+    <dimen name="pt_8">8pt</dimen>
     <dimen name="pt_10">10pt</dimen>
     <dimen name="pt_15">15pt</dimen>
     <dimen name="pt_16">16pt</dimen>

@@ -4,9 +4,7 @@ package com.tzly.ctcyh.cargo.data_m;
 import com.tzly.ctcyh.cargo.bean.request.BindCarDTO;
 import com.tzly.ctcyh.cargo.bean.request.BindDrivingDTO;
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
-import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
 import com.tzly.ctcyh.cargo.bean.response.BidOilResponse;
-import com.tzly.ctcyh.java.response.oil.NorOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.OrderExpressResponse;
 import com.tzly.ctcyh.cargo.bean.response.ReceiveCouponResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
@@ -14,10 +12,16 @@ import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.cargo.bean.response.ScoreCaptchaResponse;
 import com.tzly.ctcyh.cargo.bean.response.ScoreResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
+import com.tzly.ctcyh.java.response.oil.NorOilResponse;
+import com.tzly.ctcyh.java.response.oil.OilAccepterInfoResponse;
 import com.tzly.ctcyh.java.response.oil.OilCardsResponse;
 import com.tzly.ctcyh.java.response.oil.OilEnterResponse;
 import com.tzly.ctcyh.java.response.oil.OilModuleResponse;
 import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareInfoResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareModuleResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareResponse;
 
 import rx.Observable;
 
@@ -98,4 +102,21 @@ public interface IRemoteSource {
     Observable<OilEnterResponse> getCounts();
 
     Observable<OilModuleResponse> getOilModuleList();
+
+    /**
+     * 23.获取分享统计信息(新)
+     */
+    Observable<OilShareInfoResponse> getShareInfo(String rasUserID);
+
+    /**
+     * 22.分享人操作(新)
+     */
+    Observable<OilShareResponse> shareInfo(int configId, String rasUserID);
+
+    /**
+     * 被邀请人行为列表
+     */
+    Observable<OilAccepterInfoResponse> getAccepterInfoList(String rasUserID, int position);
+
+    Observable<OilShareModuleResponse> shareModule();
 }

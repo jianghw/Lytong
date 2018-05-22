@@ -78,6 +78,8 @@ public final class RouterGlobal {
         public static final String license_result_host = "license_result_host";
         //预约
         public static final String reservation_list_host = "reservation_list_host";
+        //加油分享
+        public static final String oil_share_host = "oil_share_host";
     }
 
     public static final class putExtra {

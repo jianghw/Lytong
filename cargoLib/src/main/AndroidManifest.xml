@@ -37,6 +37,12 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
+        <!--加油分享入口-->
+        <activity
+            android:name=".refuel_v.OilShareActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
         <!--扫描拍照-->
         <activity
             android:name=".cc.vehicle.activity.VehicleCameraActivity"

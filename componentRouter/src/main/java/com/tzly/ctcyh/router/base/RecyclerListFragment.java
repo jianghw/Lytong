@@ -33,12 +33,13 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
      * 头布局
      */
     private View mHeaderView;
+    private View mFootView;
 
     protected int mOrientation;
     /**
      * 默认页数
      */
-    protected  int mCurrentPage = 1;
+    protected int mCurrentPage = 1;
 
     /**
      * 数据源
@@ -84,6 +85,11 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
         initRecyclerHeader(customViewHeader());
         if (getRecyclerHeader() != null) {
             mCustomRecycler.addHeaderView(getRecyclerHeader());
+        }
+
+        initRecyclerFoot(customVIewFoot());
+        if (getRecyclerFoot() != null) {
+            mCustomRecycler.addFootView(getRecyclerFoot());
         }
 
         mCustomRecycler.setLoadingListener(new XRecyclerView.LoadingListener() {
@@ -151,6 +157,10 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
         return null;
     }
 
+    protected View customVIewFoot() {
+        return null;
+    }
+
     /**
      * 获取RecyclerHeader
      */
@@ -158,8 +168,16 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
         mHeaderView = view;
     }
 
+    protected void initRecyclerFoot(View view) {
+        mFootView = view;
+    }
+
     protected View getRecyclerHeader() {
         return mHeaderView;
+    }
+
+    protected View getRecyclerFoot() {
+        return mFootView;
     }
 
     /**
@@ -325,5 +343,9 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
         super.onDestroyView();
 
         if (mAdapter != null) mAdapter.cleanListData();
+        if (mCustomRecycler != null) mCustomRecycler = null;
+
+        if (mHeaderView != null) mHeaderView = null;
+        if (mFootView != null) mFootView = null;
     }
 }

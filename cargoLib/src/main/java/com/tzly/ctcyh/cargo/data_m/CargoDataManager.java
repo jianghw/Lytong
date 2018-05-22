@@ -16,10 +16,14 @@ import com.tzly.ctcyh.cargo.bean.response.ScoreResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
 import com.tzly.ctcyh.java.response.oil.NorOilResponse;
+import com.tzly.ctcyh.java.response.oil.OilAccepterInfoResponse;
 import com.tzly.ctcyh.java.response.oil.OilCardsResponse;
 import com.tzly.ctcyh.java.response.oil.OilEnterResponse;
 import com.tzly.ctcyh.java.response.oil.OilModuleResponse;
 import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareInfoResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareModuleResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareResponse;
 import com.tzly.ctcyh.router.custom.rea.RSAUtils;
 
 import rx.Observable;
@@ -185,5 +189,33 @@ public class CargoDataManager {
      */
     public Observable<OilModuleResponse> getOilModuleList() {
         return mRemoteData.getOilModuleList();
+    }
+
+    /**
+     * 23.获取分享统计信息(新)
+     */
+    public Observable<OilShareInfoResponse> getShareInfo(String rasUserID) {
+        return mRemoteData.getShareInfo(rasUserID);
+    }
+
+    /**
+     * 22.分享人操作(新)
+     */
+    public Observable<OilShareResponse> shareInfo(int configId, String rasUserID) {
+        return mRemoteData.shareInfo(configId, rasUserID);
+    }
+
+    /**
+     * 被邀请人行为列表
+     */
+    public Observable<OilAccepterInfoResponse> getAccepterInfoList(String rasUserID, int position) {
+        return mRemoteData.getAccepterInfoList(rasUserID, position);
+    }
+
+    /**
+     * 26.分享内容
+     */
+    public Observable<OilShareModuleResponse> shareModule() {
+        return mRemoteData.shareModule();
     }
 }

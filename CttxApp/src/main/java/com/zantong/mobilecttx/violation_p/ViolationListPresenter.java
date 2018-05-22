@@ -4,11 +4,9 @@ package com.zantong.mobilecttx.violation_p;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.request.RequestDTO;
 import com.tzly.ctcyh.java.request.RequestHeadDTO;
-import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
-import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 import com.zantong.mobilecttx.router.MainRouter;
@@ -93,10 +91,11 @@ public class ViolationListPresenter
                     public void doNext(ViolationResultParent result) {
                         if (result != null && "000000".equals(result.getSYS_HEAD().getReturnCode())) {
 
-                            mContractView.allPaymentData(result.getRspInfo());
-                            List<ViolationBean> beanList = result.getRspInfo().getViolationInfo();
+                            ViolationResult resultRspInfo = result.getRspInfo();
+                            List<ViolationBean> beanList = resultRspInfo.getViolationInfo();
                             if (beanList != null && !beanList.isEmpty()) handleViolations(beanList);
 
+                            mContractView.allPaymentData(resultRspInfo);
                             dataDistribution(result, 0);
                             dataDistribution(result, 1);
                         } else {

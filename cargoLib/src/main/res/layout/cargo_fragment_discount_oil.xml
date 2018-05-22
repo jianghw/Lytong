@@ -5,59 +5,59 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- <ImageView
-         android:id="@+id/img_banner"
-         android:scaleType="fitXY"
-         android:layout_width="match_parent"
-         android:layout_height="@dimen/res_y_300" />-->
+    <ImageView
+        android:id="@+id/img_banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pt_80" />
 
     <!--提供商-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/res_y_80"
-        android:layout_marginTop="@dimen/res_y_30"
+        android:layout_height="@dimen/pt_80"
+        android:layout_marginTop="@dimen/pt_20"
         android:background="@drawable/sel_item_solid_gray"
-        android:paddingLeft="@dimen/res_x_30"
-        android:paddingRight="@dimen/res_x_30">
+        android:paddingLeft="@dimen/pt_30"
+        android:paddingRight="@dimen/pt_30">
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/ResTextTheme.16.Red"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:drawableLeft="@mipmap/ic_oil_zhongshihua"
             android:drawablePadding="@dimen/pt_20"
-            android:text="@string/cargo_tv_97_provider" />
+            android:text="@string/cargo_tv_97_provider"
+            android:textColor="@color/res_color_red_f3"
+            android:textSize="@dimen/pt_26" />
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_2"
-        style="@style/cargo_line_gray"
-        android:layout_below="@+id/lay_0" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pt_1"
+        android:layout_marginLeft="@dimen/pt_30"
+        android:background="@color/res_color_gray_e6" />
 
     <LinearLayout
         android:id="@+id/lay_3"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/res_y_80"
-        android:layout_below="@+id/tv_2"
-        android:background="@color/colorWhite"
+        android:layout_height="@dimen/pt_80"
+        android:background="@color/res_color_white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/res_x_30"
-        android:paddingRight="@dimen/res_x_30">
+        android:paddingLeft="@dimen/pt_30"
+        android:paddingRight="@dimen/pt_30">
 
         <TextView
-            style="@style/ResTextTheme.16.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cargo_oil_card_97" />
+            android:text="@string/cargo_oil_card_97"
+            android:textColor="@color/res_color_black_4d"
+            android:textSize="@dimen/pt_28" />
 
         <EditText
             android:id="@+id/edit_oil"
-            style="@style/ResTextTheme.16.Subtitle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -68,20 +68,24 @@
             android:maxEms="19"
             android:maxLength="19"
             android:maxLines="1"
-            android:minWidth="@dimen/res_x_124"
-            android:textColorHint="@color/res_color_gray_e6" />
+            android:minWidth="@dimen/pt_120"
+            android:textColor="@color/res_color_black_4d"
+            android:textColorHint="@color/res_color_gray_e6"
+            android:textSize="@dimen/pt_30" />
     </LinearLayout>
 
-    <TextView
-        style="@style/cargo_line_gray"
-        android:layout_below="@+id/lay_0" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pt_1"
+        android:layout_marginLeft="@dimen/pt_30"
+        android:background="@color/res_color_gray_e6" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/res_y_80"
+        android:layout_height="@dimen/pt_80"
         android:background="@color/res_color_white"
-        android:paddingLeft="@dimen/res_x_30"
-        android:paddingRight="@dimen/res_x_30">
+        android:paddingLeft="@dimen/pt_30"
+        android:paddingRight="@dimen/pt_30">
 
         <TextView
             android:id="@+id/tv_gou_card"
@@ -91,68 +95,71 @@
             android:layout_centerVertical="true"
             android:text="@string/cargo_oil_97_gou_card"
             android:textColor="@color/res_color_blue_0b"
-            android:textSize="@dimen/pt_28" />
+            android:textSize="@dimen/pt_26" />
 
     </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_4"
-        style="@style/ResTextTheme.14.Red"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lay_3"
         android:background="@color/res_color_white"
         android:gravity="left"
-        android:paddingLeft="@dimen/res_x_30"
-        android:paddingRight="@dimen/res_x_30"
-        android:text="@string/cargo_tv_oil_97_tip" />
+        android:paddingLeft="@dimen/pt_30"
+        android:paddingRight="@dimen/pt_30"
+        android:text="@string/cargo_tv_oil_97_tip"
+        android:textColor="@color/res_color_red_f3"
+        android:textSize="@dimen/pt_20" />
 
     <LinearLayout
         android:id="@+id/lay_5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/res_y_30"
+        android:layout_marginTop="@dimen/pt_20"
         android:background="@color/res_color_white"
         android:orientation="vertical">
 
         <TextView
-            style="@style/ResTextTheme.16.Subtitle"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/res_y_80"
-            android:layout_marginLeft="@dimen/res_x_30"
+            android:layout_height="@dimen/pt_80"
+            android:layout_marginLeft="@dimen/pt_30"
             android:gravity="center_vertical"
-            android:text="充值金额" />
+            android:text="充值金额"
+            android:textColor="@color/res_color_black_4d"
+            android:textSize="@dimen/pt_26" />
 
-        <com.jcodecraeer.xrecyclerview.XRecyclerView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/res_x_15"
-            android:paddingRight="@dimen/res_x_15" />
+            android:paddingLeft="@dimen/pt_15"
+            android:paddingRight="@dimen/pt_15" />
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/res_y_120"
+        android:layout_marginBottom="@dimen/pt_120"
         android:background="@color/res_color_white"
         android:orientation="vertical">
 
         <TextView
-            style="@style/ResTextTheme.16.Subtitle"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/res_y_80"
-            android:layout_marginLeft="@dimen/res_x_30"
+            android:layout_height="@dimen/pt_80"
+            android:layout_marginLeft="@dimen/pt_30"
             android:gravity="center_vertical"
-            android:text="畅通9.7折联名卡使用说明" />
+            android:text="畅通9.7折联名卡使用说明"
+            android:textColor="@color/res_color_black_4d"
+            android:textSize="@dimen/pt_26" />
 
         <TextView
             android:id="@+id/tv_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/res_x_30"
-            android:layout_marginRight="@dimen/res_x_30"
+            android:layout_marginLeft="@dimen/pt_30"
+            android:layout_marginRight="@dimen/pt_30"
+            android:textSize="@dimen/pt_24"
             tools:text="jfsfosjffjsfjsijsdjs" />
 
         <TextView
@@ -160,10 +167,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_margin="@dimen/res_x_30"
+            android:layout_margin="@dimen/pt_30"
             android:drawableLeft="@mipmap/btn_tick_on"
             android:text="我已阅读用户充值协议"
             android:textColor="@color/res_color_blue_0b"
-            android:textSize="@dimen/res_fs_14" />
+            android:textSize="@dimen/pt_20" />
     </LinearLayout>
 </LinearLayout>

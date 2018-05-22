@@ -5,16 +5,18 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <TextView
+    <!--分割线-->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ds_1"
-        android:background="@color/colorLineGray_e6"/>
+        android:layout_height="@dimen/pt_2"
+        android:background="@color/res_color_gray_e6" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicatorColor="@color/colorTvRed_f33"
+        android:background="@color/res_color_gray_f8"
+        app:tabIndicatorColor="@color/res_color_red_f3"
         app:tabMode="fixed"/>
 
     <android.support.v4.view.ViewPager

@@ -22,7 +22,7 @@ import com.tzly.ctcyh.router.util.ScreenUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.zantong.mobilecttx.weizhang.adapter.ViolationResultAdapter;
+import com.zantong.mobilecttx.violation_p.ViolationListAdapter;
 import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 
 import java.util.List;
@@ -33,6 +33,7 @@ import java.util.List;
 public class ViolationListFragment extends RecyclerListFragment<ViolationBean> {
 
     private static final String TAG_POSITON = "tag_position";
+
     private IViolationListUi mViolationListUi;
 
     @Override
@@ -53,6 +54,9 @@ public class ViolationListFragment extends RecyclerListFragment<ViolationBean> {
         onRefreshData();
     }
 
+    /**
+     * 下拉刷新
+     */
     @Override
     protected void onRefreshData() {
         if (mViolationListUi != null) mViolationListUi.refreshListData(0);
@@ -87,7 +91,7 @@ public class ViolationListFragment extends RecyclerListFragment<ViolationBean> {
      */
     @Override
     public BaseAdapter<ViolationBean> createAdapter() {
-        return new ViolationResultAdapter(mViolationListUi);
+        return new ViolationListAdapter(mViolationListUi);
     }
 
     /**
@@ -99,6 +103,11 @@ public class ViolationListFragment extends RecyclerListFragment<ViolationBean> {
 
     @Override
     protected void initPresenter() {
+    }
+
+    @Override
+    protected View customVIewFoot() {
+        return super.customVIewFoot();
     }
 
     protected void initScrollChildView(View view) {
@@ -127,7 +136,7 @@ public class ViolationListFragment extends RecyclerListFragment<ViolationBean> {
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) tvEmpty.getLayoutParams();
             layoutParams.removeRule(RelativeLayout.CENTER_IN_PARENT);
             layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, R.id.tv_empty);
-            layoutParams.setMargins(0, ScreenUtils.heightPixels(Utils.getContext()) /5, 0, 0);
+            layoutParams.setMargins(0, ScreenUtils.heightPixels(Utils.getContext()) / 5, 0, 0);
             tvEmpty.setLayoutParams(layoutParams);
 
 

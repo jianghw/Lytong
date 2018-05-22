@@ -7,19 +7,8 @@
     <ImageView
         android:id="@+id/img_banner"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/pt_220"
+        android:layout_height="@dimen/pt_80"
         android:scaleType="centerCrop" />
-
-    <TextView
-        android:id="@+id/tv_notice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/res_color_white"
-        android:gravity="left"
-        android:padding="@dimen/pt_30"
-        android:text="@string/cargo_bid_oil_tip"
-        android:textColor="@color/res_color_black_4d"
-        android:textSize="@dimen/pt_26" />
 
     <TextView
         android:layout_width="match_parent"
@@ -28,7 +17,7 @@
         android:background="@color/res_color_white"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/pt_30"
-        android:text="购卡金额（包含邮费）"
+        android:text="购卡金额（包含邮费和工本费）"
         android:textColor="@color/res_color_black_4d"
         android:textSize="@dimen/pt_26" />
 
@@ -53,40 +42,6 @@
         android:textColor="@color/res_color_black_4d"
         android:textSize="@dimen/pt_24" />
 
-    <!-- <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_marginTop="@dimen/res_y_30"
-         android:background="@color/res_color_white"
-         android:orientation="vertical">
-
-         <TextView
-             style="@style/ResTextTheme.16.Subtitle"
-             android:layout_width="match_parent"
-             android:layout_height="@dimen/res_y_80"
-             android:layout_marginLeft="@dimen/res_x_30"
-             android:gravity="center_vertical"
-             android:text="购卡金额（包含邮费）" />
-
-         <android.support.v7.widget.RecyclerView
-             android:id="@+id/rv_list"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:paddingLeft="@dimen/res_x_15"
-             android:paddingRight="@dimen/res_x_15" />
-
-         <TextView
-             android:id="@+id/tv_bid"
-             style="@style/ResTextTheme.14.Subtitle"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_marginBottom="@dimen/res_y_30"
-             android:layout_marginLeft="@dimen/res_x_30"
-             android:gravity="left"
-             android:lineSpacingMultiplier="1.4"
-             android:text="@string/cargo_bid_oil_card" />
-     </LinearLayout>-->
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/pt_80"
@@ -99,7 +54,10 @@
         android:textColor="@color/res_color_red_f3"
         android:textSize="@dimen/pt_26" />
 
-    <TextView style="@style/cargo_line_gray_all" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pt_1"
+        android:background="@color/res_color_gray_e6" />
 
     <!--姓名-->
     <LinearLayout
@@ -135,7 +93,11 @@
             android:textSize="@dimen/pt_28" />
     </LinearLayout>
 
-    <TextView style="@style/cargo_line_gray" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pt_1"
+        android:layout_marginLeft="@dimen/pt_30"
+        android:background="@color/res_color_gray_e6" />
 
     <!--手机号-->
     <LinearLayout
@@ -172,7 +134,11 @@
             android:textSize="@dimen/pt_28" />
     </LinearLayout>
 
-    <TextView style="@style/cargo_line_gray" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pt_1"
+        android:layout_marginLeft="@dimen/pt_30"
+        android:background="@color/res_color_gray_e6" />
 
     <!--所在地区-->
     <RelativeLayout
@@ -216,7 +182,11 @@
 
     </RelativeLayout>
 
-    <TextView style="@style/cargo_line_gray" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pt_1"
+        android:layout_marginLeft="@dimen/pt_30"
+        android:background="@color/res_color_gray_e6" />
 
     <EditText
         android:id="@+id/edit_detailed_address"
@@ -241,6 +211,18 @@
         android:text="@string/cargo_tv_97_date"
         android:textColor="@color/res_color_red_f3"
         android:textSize="@dimen/pt_24" />
+
+    <TextView
+        android:id="@+id/tv_notice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/pt_20"
+        android:background="@color/res_color_white"
+        android:gravity="left"
+        android:padding="@dimen/pt_20"
+        android:text="@string/cargo_bid_oil_tip"
+        android:textColor="@color/res_color_black_4d"
+        android:textSize="@dimen/pt_26" />
 
     <Button
         android:id="@+id/btn_commit"

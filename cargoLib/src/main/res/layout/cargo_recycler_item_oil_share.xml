@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/pt_140">
+
+    <ImageView
+        android:id="@+id/img_left"
+        android:layout_width="@dimen/pt_80"
+        android:layout_height="@dimen/pt_80"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/pt_30" />
+
+    <TextView
+        android:id="@+id/tv_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/pt_20"
+        android:layout_marginRight="@dimen/pt_20"
+        android:layout_toLeftOf="@+id/tv_status"
+        android:layout_toRightOf="@+id/img_left"
+        android:textColor="@color/res_color_black_4d"
+        android:textSize="@dimen/pt_26"
+        tools:text="用户xxxxx已经下单" />
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="@dimen/pt_140"
+        android:layout_height="@dimen/pt_50"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/pt_30"
+        android:background="@drawable/shape_sol_str_cor_gray"
+        android:gravity="center"
+        android:textColor="@color/res_color_black_b3"
+        android:textSize="@dimen/pt_24"
+        tools:text="已奖励" />
+
+    <!--分割线-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pt_1"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/pt_30"
+        android:layout_marginRight="@dimen/pt_30"
+        android:background="@color/res_color_gray_e6" />
+
+</RelativeLayout>
