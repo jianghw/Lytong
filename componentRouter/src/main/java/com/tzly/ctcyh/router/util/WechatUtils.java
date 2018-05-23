@@ -22,6 +22,7 @@ import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
  */
 
 public final class WechatUtils {
+
     public static final String APP_ID = "wxc3d27f07b30b3b66";// 微信开放平台申请到的app_id
     private static final int THUMB_SIZE = 150;
 
@@ -47,7 +48,6 @@ public final class WechatUtils {
         WXImageObject imgObj = new WXImageObject(bitmap);
         WXMediaMessage msg = new WXMediaMessage();
         msg.mediaObject = imgObj;
-
         //设置缩图
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bitmap, 100, THUMB_SIZE, true);
         bitmap.recycle();

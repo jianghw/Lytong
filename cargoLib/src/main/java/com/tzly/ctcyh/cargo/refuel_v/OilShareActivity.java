@@ -15,7 +15,10 @@ import com.tzly.ctcyh.router.util.FragmentUtils;
 public class OilShareActivity extends AbstractBaseActivity {
 
     private OilShareFragment mFragment;
-    private int configId;
+
+    private String json;
+    private String img;
+    private String banner;
 
     @Override
     protected int initContentView() {
@@ -26,8 +29,14 @@ public class OilShareActivity extends AbstractBaseActivity {
     protected void bundleIntent(Intent intent) {
         if (intent != null) {
             Bundle bundle = intent.getExtras();
-            if (bundle != null && intent.hasExtra(CargoGlobal.putExtra.oil_share_extra)) {
-                configId = bundle.getInt(CargoGlobal.putExtra.oil_share_extra);
+            if (bundle != null && intent.hasExtra(CargoGlobal.putExtra.oil_share_banner_extra)) {
+                banner = bundle.getString(CargoGlobal.putExtra.oil_share_banner_extra);
+            }
+            if (bundle != null && intent.hasExtra(CargoGlobal.putExtra.oil_share_img_extra)) {
+                img = bundle.getString(CargoGlobal.putExtra.oil_share_img_extra);
+            }
+            if (bundle != null && intent.hasExtra(CargoGlobal.putExtra.oil_share_json_extra)) {
+                json = bundle.getString(CargoGlobal.putExtra.oil_share_json_extra);
             }
         }
     }
@@ -46,7 +55,7 @@ public class OilShareActivity extends AbstractBaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         //默认页面显示
         if (mFragment == null) {
-            mFragment = OilShareFragment.newInstance(configId);
+            mFragment = OilShareFragment.newInstance(banner, img, json);
         }
         FragmentUtils.add(fragmentManager, mFragment, R.id.lay_base_frame);
     }

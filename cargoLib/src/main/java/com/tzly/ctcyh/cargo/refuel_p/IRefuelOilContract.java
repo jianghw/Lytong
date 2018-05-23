@@ -1,7 +1,7 @@
 package com.tzly.ctcyh.cargo.refuel_p;
 
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
-import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareModuleResponse;
 import com.tzly.ctcyh.java.response.oil.SINOPECBean;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
@@ -26,9 +26,11 @@ public interface IRefuelOilContract {
 
         void createOrderSucceed(RefuelOrderResponse response);
 
-        void remainderSucceed(OilRemainderResponse response);
+        String getBusinessType();
 
-        void remainderError(String message);
+        void shareModuleInfoError(String message);
+
+        void shareModuleInfoSucceed(OilShareModuleResponse response);
     }
 
     interface IRefuelOilPresenter extends IBasePresenter {
@@ -45,6 +47,8 @@ public interface IRefuelOilContract {
         void findOilCardsAll();
 
         void getRemainder();
+
+        void shareModuleInfo();
 
     }
 

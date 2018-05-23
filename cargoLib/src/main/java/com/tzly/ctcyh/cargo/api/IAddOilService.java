@@ -22,6 +22,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -141,8 +142,8 @@ public interface IAddOilService {
      * 22.分享人操作(新)
      */
     @FormUrlEncoded
-    @POST("shareApi/shareInfo")
-    Observable<OilShareResponse> shareInfo(@Field("configId") int configId, @Field("usernum") String rasUserID);
+    @POST("shareApi/shareInfo/{configId}")
+    Observable<OilShareResponse> shareInfo(@Path("configId") String configId, @Field("usernum") String rasUserID);
 
     /**
      * 被邀请人行为列表
@@ -151,6 +152,10 @@ public interface IAddOilService {
     @POST("shareApi/getAccepterInfoList")
     Observable<OilAccepterInfoResponse> getAccepterInfoList(@Field("usernum") String rasUserID, @Field("id") int position);
 
-    @GET("module/shareModule")
-    Observable<OilShareModuleResponse> shareModule();
+    /**
+     * 1 加油充值，2 代驾，3 学车，4 科目强化，5 陪练 6 年检，7 保养，8 海外驾驶培训，
+     * 9 换电瓶，10 一元购，11 电影券，12 ETC，13 新加油充值，14 菜鸟加油充值，15 菜鸟购卡
+     */
+    @GET("module/shareModuleInfo")
+    Observable<OilShareModuleResponse> shareModule(@Query("businessType") String businessType);
 }

@@ -290,9 +290,11 @@ public final class CargoRouter {
     /**
      * 加油分享
      */
-    public static void gotoOilShareActivity(Context context, int score) {
+    public static void gotoOilShareActivity(Context context, String banner, String img, String json) {
         Bundle bundle = new Bundle();
-        bundle.putInt(CargoGlobal.putExtra.oil_share_extra, score);
+        bundle.putString(CargoGlobal.putExtra.oil_share_banner_extra, banner);
+        bundle.putString(CargoGlobal.putExtra.oil_share_img_extra, img);
+        bundle.putString(CargoGlobal.putExtra.oil_share_json_extra, json);
         UiRouter.getInstance().openUriBundle(context,
                 RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.oil_share_host,
                 bundle);

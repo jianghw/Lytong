@@ -24,9 +24,10 @@ import com.tzly.ctcyh.cargo.refuel_p.RefuelOilAdapter;
 import com.tzly.ctcyh.cargo.refuel_p.RefuelOilPresenter;
 import com.tzly.ctcyh.cargo.router.CargoRouter;
 import com.tzly.ctcyh.java.response.oil.NorOilResponse;
-import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareModuleResponse;
 import com.tzly.ctcyh.java.response.oil.SINOPECBean;
 import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.custom.popup.CustomDialog;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
@@ -38,6 +39,10 @@ import java.util.List;
  */
 public class DiscountOilFragment extends RefreshFragment
         implements IRefuelOilContract.IRefuelOilView, View.OnClickListener {
+
+    private static final String ARGS_BANNER = "args_banner";
+    private static final String ARGS_IMAGE = "args_image";
+    private static final String ARGS_JSON = "args_json";
 
     private IRefuelOilContract.IRefuelOilPresenter mPresenter;
 
@@ -62,7 +67,8 @@ public class DiscountOilFragment extends RefreshFragment
      */
     private IRechargeAToF iRechargeAToF;
     private TextView mTvGou;
-    private ImageView mImgBanner;
+
+    private ImageView topImage;
 
     public static DiscountOilFragment newInstance() {
         return new DiscountOilFragment();
@@ -99,6 +105,7 @@ public class DiscountOilFragment extends RefreshFragment
      */
     @Override
     protected void loadingFirstData() {
+        if (mPresenter != null) mPresenter.shareModuleInfo();
         if (mPresenter != null) mPresenter.findCaiNiaoCard();
     }
 
@@ -110,13 +117,9 @@ public class DiscountOilFragment extends RefreshFragment
 
     public void initView(View view) {
 
-        mImgBanner = (ImageView) view.findViewById(R.id.img_banner);
-        mImgBanner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CargoRouter.gotoOilShareActivity(getActivity(), 1);
-            }
-        });
+        topImage = (ImageView) view.findViewById(R.id.img_banner);
+        topImage.setOnClickListener(this);
+
         mEditOil = (EditText) view.findViewById(R.id.edit_oil);
 
         mTvGou = (TextView) view.findViewById(R.id.tv_gou_card);
@@ -208,6 +211,15 @@ public class DiscountOilFragment extends RefreshFragment
         } else if (v.getId() == R.id.tv_gou_card) {//购卡
             CargoRouter.gotoCustomerService(
                     "native_app_97buyCard", "9.7折购卡", "151", getActivity());
+        } else if (v.getId() == R.id.img_banner) {//分享
+            String banner = getArguments().getString(ARGS_BANNER);
+            String imgUrl = getArguments().getString(ARGS_IMAGE);
+            String json = getArguments().getString(ARGS_JSON);
+
+            if (TextUtils.isEmpty(banner) || TextUtils.isEmpty(imgUrl)
+                    || TextUtils.isEmpty(json)) return;
+
+            CargoRouter.gotoOilShareActivity(getActivity(), banner, imgUrl, json);
         }
     }
 
@@ -337,11 +349,31 @@ public class DiscountOilFragment extends RefreshFragment
     }
 
     @Override
-    public void remainderSucceed(OilRemainderResponse response) {
+    public String getBusinessType() {
+        return "13";
     }
 
     @Override
-    public void remainderError(String message) {
+    public void shareModuleInfoError(String message) {
+        toastShort("获取分享图片失败" + message);
+    }
+
+    @Override
+    public void shareModuleInfoSucceed(OilShareModuleResponse response) {
+        OilShareModuleResponse.DataBean data = response.getData();
+        if (data == null) return;
+
+        String topImg = data.getTopImg();
+        String banner = data.getBanner();
+        String imgUrl = data.getImg();
+        String json = data.getExtraParam();
+        if (TextUtils.isEmpty(topImg) || TextUtils.isEmpty(banner)
+                || TextUtils.isEmpty(imgUrl) || TextUtils.isEmpty(json)) return;
+
+        ImageLoadUtils.loadTwoRectangle(topImg, topImage);
+        getArguments().putString(ARGS_BANNER, banner);
+        getArguments().putString(ARGS_IMAGE, imgUrl);
+        getArguments().putString(ARGS_JSON, json);
     }
 
 }

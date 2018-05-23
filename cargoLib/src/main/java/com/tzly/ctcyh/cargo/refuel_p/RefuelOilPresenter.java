@@ -3,13 +3,14 @@ package com.tzly.ctcyh.cargo.refuel_p;
 import android.support.annotation.NonNull;
 
 import com.tzly.ctcyh.cargo.bean.request.RefuelOilDTO;
-import com.tzly.ctcyh.java.response.oil.NorOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOilResponse;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.cargo.data_m.CargoDataManager;
 import com.tzly.ctcyh.cargo.global.CargoGlobal;
+import com.tzly.ctcyh.java.response.oil.NorOilResponse;
 import com.tzly.ctcyh.java.response.oil.OilCardsResponse;
 import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareModuleResponse;
 import com.tzly.ctcyh.router.api.BaseSubscriber;
 
 import rx.Subscription;
@@ -268,13 +269,6 @@ public class RefuelOilPresenter implements IRefuelOilContract.IRefuelOilPresente
         Subscription subscription = mRepository
                 .getRemainder(mContractView.getCardInfo().getId(), mContractView.getStrEditOil())
                 .subscribeOn(Schedulers.io())
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        mContractView.showLoading();
-                    }
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<OilRemainderResponse>() {
                     @Override
@@ -285,17 +279,13 @@ public class RefuelOilPresenter implements IRefuelOilContract.IRefuelOilPresente
                     @Override
                     public void doError(Throwable e) {
                         mContractView.dismissLoading();
-                        mContractView.remainderError(e.getMessage());
                     }
 
                     @Override
                     public void doNext(OilRemainderResponse response) {
                         if (response != null && response.getResponseCode()
                                 == CargoGlobal.Response.base_succeed) {
-                            mContractView.remainderSucceed(response);
                         } else {
-                            mContractView.responseError(response != null
-                                    ? response.getResponseDesc() : "未知错误(判断余额是否充足失败)");
                         }
                     }
                 });
@@ -353,5 +343,46 @@ public class RefuelOilPresenter implements IRefuelOilContract.IRefuelOilPresente
         oilDTO.setPrice(mContractView.getCardInfo().getPrice());
         oilDTO.setType(mContractView.getCardInfo().getType());
         return oilDTO;
+    }
+
+    /**
+     * 分享内容
+     */
+    @Override
+    public void shareModuleInfo() {
+        Subscription subscription = mRepository.shareModuleInfo(mContractView.getBusinessType())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<OilShareModuleResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.shareModuleInfoError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(OilShareModuleResponse response) {
+                        if (response != null && response.getResponseCode()
+                                == CargoGlobal.Response.base_succeed) {
+                            mContractView.shareModuleInfoSucceed(response);
+                        } else {
+                            mContractView.shareModuleInfoError(response != null
+                                    ? response.getResponseDesc() : "未知错误(分享内容)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 }

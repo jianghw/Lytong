@@ -179,6 +179,7 @@ public class BidOilPresenter implements IBidOilContract.IBidOilPresenter {
                     @Override
                     public void doError(Throwable e) {
                         mContractView.dismissLoading();
+                        mContractView.createOrderError(e.getMessage());
                     }
 
                     @Override

@@ -68,6 +68,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         int result;
         LogUtils.e(resp.errCode);
         LogUtils.e(resp.errStr);
+
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK://0
                 result = R.string.errcode_success;

@@ -32,7 +32,9 @@ public final class CargoGlobal {
         public static final String web_orderId_extra = "web_orderId_extra";
         public static final String web_pay_type_extra = "web_pay_type_extra";
         public static final String license_score_extra = "license_score_extra";
-        public static final String oil_share_extra = "oil_share_extra";
+        public static final String oil_share_banner_extra = "oil_share_banner_extra";
+        public static final String oil_share_img_extra = "oil_share_img_extra";
+        public static final String oil_share_json_extra = "oil_share_json_extra";
     }
 
     public static final class Response {

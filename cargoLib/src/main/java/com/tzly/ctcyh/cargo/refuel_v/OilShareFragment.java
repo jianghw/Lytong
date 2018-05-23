@@ -3,12 +3,14 @@ package com.tzly.ctcyh.cargo.refuel_v;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.data_m.InjectionRepository;
@@ -16,11 +18,14 @@ import com.tzly.ctcyh.cargo.global.CargoGlobal;
 import com.tzly.ctcyh.cargo.refuel_p.IOilShareContract;
 import com.tzly.ctcyh.cargo.refuel_p.OilShareAdapter;
 import com.tzly.ctcyh.cargo.refuel_p.OilSharePresenter;
+import com.tzly.ctcyh.java.request.ShareGsonDTO;
 import com.tzly.ctcyh.java.response.oil.OilAccepterInfoResponse;
 import com.tzly.ctcyh.java.response.oil.OilShareInfoResponse;
-import com.tzly.ctcyh.java.response.oil.OilShareModuleResponse;
 import com.tzly.ctcyh.java.response.oil.OilShareResponse;
 import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.custom.dialog.BitmapDialogFragment;
+import com.tzly.ctcyh.router.custom.dialog.DialogUtils;
+import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.util.Utils;
 
 /**
@@ -29,6 +34,7 @@ import com.tzly.ctcyh.router.util.Utils;
 public class OilShareFragment extends RefreshFragment
         implements View.OnClickListener, IOilShareContract.IOilShareView {
 
+    private static final String USER_ID = "user_id";
     private IOilShareContract.IOilSharePresenter mPresenter;
 
     private ImageView mImgTop;
@@ -46,21 +52,23 @@ public class OilShareFragment extends RefreshFragment
     private TextView mTvFace;
     private TextView mTvCountPerson;
     private TextView mTvCountPrice;
-    private RecyclerView mRvList;
+    private XRecyclerView mRvList;
     private TextView mTvContent;
 
     private OilShareAdapter mAdapter;
-    private int mCurPosition = 1;
+    private int mCurPosition = 0;
 
     @MultiState
     protected int initMultiState() {
         return MultiState.CONTENT;
     }
 
-    public static OilShareFragment newInstance(int configId) {
+    public static OilShareFragment newInstance(String banner, String img, String json) {
         OilShareFragment fragment = new OilShareFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(CargoGlobal.putExtra.oil_share_extra, configId);
+        bundle.putString(CargoGlobal.putExtra.oil_share_banner_extra, banner);
+        bundle.putString(CargoGlobal.putExtra.oil_share_img_extra, img);
+        bundle.putString(CargoGlobal.putExtra.oil_share_json_extra, json);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -81,6 +89,9 @@ public class OilShareFragment extends RefreshFragment
 
         OilSharePresenter presenter = new OilSharePresenter(
                 InjectionRepository.provideRepository(Utils.getContext()), this);
+
+        String banner = getArguments().getString(CargoGlobal.putExtra.oil_share_banner_extra);
+        ImageLoadUtils.loadTwoRectangle(banner, mImgTop);
     }
 
     @Override
@@ -93,11 +104,11 @@ public class OilShareFragment extends RefreshFragment
      */
     @Override
     protected void loadingFirstData() {
-        mCurPosition = 1;
+        mCurPosition = 0;
 
+        if (mPresenter != null) mPresenter.shareInfo();
         if (mPresenter != null) mPresenter.getShareInfo();
         if (mPresenter != null) mPresenter.getAccepterInfoList(mCurPosition);
-        if (mPresenter != null) mPresenter.shareModule();
     }
 
     @Override
@@ -106,20 +117,28 @@ public class OilShareFragment extends RefreshFragment
         if (mPresenter != null) mPresenter.unSubscribe();
     }
 
-
     @Override
     public void onClick(View v) {
+        String imgUrl = getArguments().getString(CargoGlobal.putExtra.oil_share_img_extra);
+        String json = getArguments().getString(CargoGlobal.putExtra.oil_share_json_extra);
+        ShareGsonDTO gsonDTO = new Gson().fromJson(json, ShareGsonDTO.class);
+        String codeUrl = gsonDTO.getUrl();
+        int userId = getArguments().getInt(USER_ID);
+        codeUrl = codeUrl + "?shareUserId=" + userId + "&stage=0";
+
         if (v.getId() == R.id.tv_wechat) {//微信
-
+            ShareUtils.showWechat(getActivity(), imgUrl, codeUrl, 0);
         } else if (v.getId() == R.id.tv_friend) {//朋友圈
-
+            ShareUtils.showWechat(getActivity(), imgUrl, codeUrl, 1);
         } else if (v.getId() == R.id.tv_face) {//二维码
-
+            BitmapDialogFragment fragment = BitmapDialogFragment.newInstance(codeUrl);
+            DialogUtils.showDialog(getActivity(), fragment, "code_dialog");
         }
     }
 
     public void initView(View view) {
         mImgTop = (ImageView) view.findViewById(R.id.img_top);
+
         mTvWechat = (TextView) view.findViewById(R.id.tv_wechat);
         mTvWechat.setOnClickListener(this);
         mTvFriend = (TextView) view.findViewById(R.id.tv_friend);
@@ -128,20 +147,28 @@ public class OilShareFragment extends RefreshFragment
         mTvFace.setOnClickListener(this);
         mTvCountPerson = (TextView) view.findViewById(R.id.tv_count_person);
         mTvCountPrice = (TextView) view.findViewById(R.id.tv_count_price);
-        mRvList = (RecyclerView) view.findViewById(R.id.rv_list);
+        mRvList = (XRecyclerView) view.findViewById(R.id.rv_list);
         mTvContent = (TextView) view.findViewById(R.id.tv_content);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(Utils.getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        manager.setAutoMeasureEnabled(true);
         mRvList.setLayoutManager(layoutManager);
+        mRvList.setNestedScrollingEnabled(true);
+
+        mRvList.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
+        mRvList.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
+        mRvList.setArrowImageView(com.tzly.ctcyh.router.R.mipmap.ic_refresh_loading);
+        mRvList.setPullRefreshEnabled(false);
+        mRvList.setLoadingMoreEnabled(true);
+
         mAdapter = new OilShareAdapter();
     }
 
     @Override
-    public int getConfigId() {
-
-        return getArguments().getInt(CargoGlobal.putExtra.oil_share_extra, -1);
+    public String getConfigId() {
+        String json = getArguments().getString(CargoGlobal.putExtra.oil_share_json_extra);
+        ShareGsonDTO gsonDTO = new Gson().fromJson(json, ShareGsonDTO.class);
+        return String.valueOf(gsonDTO.getConfigId());
     }
 
     public void errorToast(String msg) {
@@ -155,7 +182,8 @@ public class OilShareFragment extends RefreshFragment
 
     @Override
     public void shareSucceed(OilShareResponse response) {
-
+        int shareUserId = response.getData();
+        getArguments().putInt(USER_ID, shareUserId);
     }
 
     @Override
@@ -167,9 +195,11 @@ public class OilShareFragment extends RefreshFragment
     public void shareInfoSucceed(OilShareInfoResponse response) {
         OilShareInfoResponse.DataBean data = response.getData();
         if (data != null) {
-            OilShareInfoResponse.DataBean.AcceptersBean accepters = data.getAccepters();
+            int accepters = data.getAccepters();
+            mTvCountPerson.setText(String.valueOf(accepters));
 
-            OilShareInfoResponse.DataBean.CouponsBean coupons = data.getCoupons();
+            int coupons = data.getCoupons();
+            mTvCountPrice.setText(String.valueOf(coupons));
         }
     }
 
@@ -183,13 +213,4 @@ public class OilShareFragment extends RefreshFragment
 
     }
 
-    @Override
-    public void ashareModuleError(String message) {
-        errorToast(message);
-    }
-
-    @Override
-    public void ashareModuleSucceed(OilShareModuleResponse response) {
-
-    }
 }

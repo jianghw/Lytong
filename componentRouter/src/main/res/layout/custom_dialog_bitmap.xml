@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/pt_528"
+    android:layout_width="@dimen/pt_600"
     android:layout_height="wrap_content"
     android:background="@drawable/shape_rec_w_stroke_cor_10"
     android:gravity="center"
     android:orientation="vertical">
 
-    <TextView
+    <ImageView
         android:id="@+id/tv_msg"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingBottom="@dimen/pt_60"
-        android:paddingLeft="@dimen/pt_30"
-        android:paddingRight="@dimen/pt_30"
-        android:paddingTop="@dimen/pt_60"
-        android:textColor="@color/res_color_black_4d"
-        android:textSize="@dimen/pt_28"
-        tools:text="使用畅通卡请预先在卡里充值相应金额、使用工行其他卡支付请先开通E支付使用工行其他卡支付请先开通E支付" />
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/pt_40"
+        android:layout_marginLeft="@dimen/pt_30"
+        android:layout_marginRight="@dimen/pt_30"
+        android:layout_marginTop="@dimen/pt_40" />
 
     <LinearLayout
         android:layout_width="match_parent"

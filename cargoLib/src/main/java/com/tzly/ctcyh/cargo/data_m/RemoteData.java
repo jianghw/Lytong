@@ -231,7 +231,7 @@ public class RemoteData implements IRemoteSource {
      * 22.分享人操作(新)
      */
     @Override
-    public Observable<OilShareResponse> shareInfo(int configId, String rasUserID) {
+    public Observable<OilShareResponse> shareInfo(String configId, String rasUserID) {
         return baseRetrofit().create(IAddOilService.class).shareInfo(configId, rasUserID);
     }
 
@@ -245,10 +245,11 @@ public class RemoteData implements IRemoteSource {
 
     /**
      * 26.分享内容
+     * @param businessType
      */
     @Override
-    public Observable<OilShareModuleResponse> shareModule() {
-        return baseRetrofit().create(IAddOilService.class).shareModule();
+    public Observable<OilShareModuleResponse> shareModule(String businessType) {
+        return baseRetrofit().create(IAddOilService.class).shareModule(businessType);
     }
 
 

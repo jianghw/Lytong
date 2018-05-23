@@ -201,7 +201,7 @@ public class CargoDataManager {
     /**
      * 22.分享人操作(新)
      */
-    public Observable<OilShareResponse> shareInfo(int configId, String rasUserID) {
+    public Observable<OilShareResponse> shareInfo(String configId, String rasUserID) {
         return mRemoteData.shareInfo(configId, rasUserID);
     }
 
@@ -215,7 +215,7 @@ public class CargoDataManager {
     /**
      * 26.分享内容
      */
-    public Observable<OilShareModuleResponse> shareModule() {
-        return mRemoteData.shareModule();
+    public Observable<OilShareModuleResponse> shareModuleInfo(String businessType) {
+        return mRemoteData.shareModule(businessType);
     }
 }

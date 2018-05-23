@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 
+import com.tzly.ctcyh.router.util.RudenessScreenHelper;
+
 import java.io.ByteArrayOutputStream;
 
 /**
@@ -28,7 +30,8 @@ public final class BitmapUtils {
         int s_width = secondBitmap.getWidth();
         int s_height = secondBitmap.getHeight();
 
-        canvas.drawBitmap(secondBitmap, (width-s_width)/2, height-s_height, null);
+        canvas.drawBitmap(secondBitmap, width - RudenessScreenHelper.ptInpx(40) - s_width,
+                height - s_height - RudenessScreenHelper.ptInpx(60), null);
         return bitmap;
     }
 

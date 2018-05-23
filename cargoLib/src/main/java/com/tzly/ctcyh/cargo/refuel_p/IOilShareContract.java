@@ -2,7 +2,6 @@ package com.tzly.ctcyh.cargo.refuel_p;
 
 import com.tzly.ctcyh.java.response.oil.OilAccepterInfoResponse;
 import com.tzly.ctcyh.java.response.oil.OilShareInfoResponse;
-import com.tzly.ctcyh.java.response.oil.OilShareModuleResponse;
 import com.tzly.ctcyh.java.response.oil.OilShareResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
@@ -14,7 +13,7 @@ import com.tzly.ctcyh.router.base.IBaseView;
 public interface IOilShareContract {
 
     interface IOilShareView extends IBaseView<IOilSharePresenter> {
-        int getConfigId();
+        String getConfigId();
 
         void shareError(String message);
 
@@ -27,10 +26,6 @@ public interface IOilShareContract {
         void accepterInfoError(String message);
 
         void accepterInfoSucceed(OilAccepterInfoResponse response);
-
-        void ashareModuleError(String message);
-
-        void ashareModuleSucceed(OilShareModuleResponse response);
     }
 
     interface IOilSharePresenter extends IBasePresenter {
@@ -39,8 +34,6 @@ public interface IOilShareContract {
         void shareInfo();
 
         void getAccepterInfoList(int position);
-
-        void shareModule();
     }
 
 }

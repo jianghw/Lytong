@@ -111,12 +111,12 @@ public interface IRemoteSource {
     /**
      * 22.分享人操作(新)
      */
-    Observable<OilShareResponse> shareInfo(int configId, String rasUserID);
+    Observable<OilShareResponse> shareInfo(String configId, String rasUserID);
 
     /**
      * 被邀请人行为列表
      */
     Observable<OilAccepterInfoResponse> getAccepterInfoList(String rasUserID, int position);
 
-    Observable<OilShareModuleResponse> shareModule();
+    Observable<OilShareModuleResponse> shareModule(String businessType);
 }

@@ -9,4 +9,18 @@ import com.tzly.ctcyh.java.response.BaseResponse;
 
 public class OilShareResponse extends BaseResponse {
 
+    /**
+     * responseCode : 2000
+     * data : 3
+     */
+
+    private int data;
+
+    public int getData() {
+        return data;
+    }
+
+    public void setData(int data) {
+        this.data = data;
+    }
 }

@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/res_color_red_f3"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/img_top"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/pt_300" />
+        android:layout_height="@dimen/pt_300"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -169,7 +170,7 @@
             android:background="@color/res_color_gray_e6" />
 
 
-        <android.support.v7.widget.RecyclerView
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
             android:id="@+id/rv_list"
             android:layout_width="match_parent"
             android:layout_height="@dimen/pt_400" />

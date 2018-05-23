@@ -19,9 +19,9 @@ import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.data_m.InjectionRepository;
 import com.tzly.ctcyh.cargo.refuel_p.IShareWechatContract;
 import com.tzly.ctcyh.cargo.refuel_p.ShareWechatPresenter;
-import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.router.util.WechatUtils;
 
 /**
  * Fragment 微信分享
@@ -30,18 +30,19 @@ public class ShareWechatFragment extends Fragment
         implements IShareWechatContract.IShareWechatView {
 
     private static final String IMAGE_URL = "image_url";
+    private static final String CODE_URL = "code_url";
+    private static final String WE_TYPE = "we_type";
     /**
      * 控制器
      */
     private IShareWechatContract.IShareWechatPresenter mPresenter;
 
-    private String mExtraChannel;
-    private String mExtraRegisterDate;
-
-    public static ShareWechatFragment newInstance(String imgUrl) {
+    public static ShareWechatFragment newInstance(String imgUrl, String codeUrl, int type) {
         ShareWechatFragment f = new ShareWechatFragment();
         Bundle bundle = new Bundle();
         bundle.putString(IMAGE_URL, imgUrl);
+        bundle.putString(CODE_URL, codeUrl);
+        bundle.putInt(WE_TYPE, type);
         f.setArguments(bundle);
         return f;
     }
@@ -165,9 +166,12 @@ public class ShareWechatFragment extends Fragment
     /**
      * 下载分享的图片
      */
-    private void toShareBitmap() {
+    public void toShareBitmap() {
         String imgUrl = getArguments().getString(IMAGE_URL);
-        if (TextUtils.isEmpty(imgUrl)) return;
+        if (TextUtils.isEmpty(imgUrl)) {
+            ToastUtils.toastShort("分享图片地址失效");
+            return;
+        }
 
         ImageLoader.getInstance().loadImage(imgUrl, new ImageLoadingListener() {
             @Override
@@ -193,24 +197,17 @@ public class ShareWechatFragment extends Fragment
     }
 
     private void bitmapFactory(Bitmap bitmap) {
-        String host = BuildConfig.isDeta ? "h5dev" : "h5";
-        //TODO 合成图片
-        String codeUrl = /*getGoodsType().equals("2")
-                ? "http://" + host + ".liyingtong.com/share/weizhang.html?userId=" + PayRouter.getUserID() + "&type=" + 2 + "payStatus=1&source=1"
-                : getGoodsType().equals("6")
-                ? "http://" + host + ".liyingtong.com/share/nianjian.html?userId=" + PayRouter.getUserID() + "&type=" + 6 + "payStatus=1&source=1"
-                : getGoodsType().equals("15")
-                ? "http://admin.liyingtong.com/wxproxy.php?appid=wx6f090722facc7bf1&redirect_uri=http%3a%2f%2f"+host+".liyingtong.com%2fwechat%2fbuyCard.html?param="
-                +PayRouter.getUserID() +"*"+15+"*1*1&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
-                : "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";*/"";
-
-        Bitmap logio = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_global_app);
-
+        String codeUrl = getArguments().getString(CODE_URL);
+        Bitmap logio = BitmapFactory.decodeResource(getContext().getResources(), R.mipmap.ic_global_app);
         if (mPresenter != null) mPresenter.mergeBitmap(bitmap, codeUrl, logio);
     }
 
     @Override
     public void mergeSucceed(Bitmap bitmap) {
+        int flag = getArguments().getInt(WE_TYPE);
 
+//        byte[] image = BitmapUtils.bmpToByteArray(bitmap, true);
+//        Bitmap bit = BitmapFactory.decodeByteArray(image, 0, image.length);
+        WechatUtils.sendReqBitmap(getActivity(), bitmap, flag);
     }
 }

@@ -1,6 +1,7 @@
 package com.tzly.ctcyh.cargo.refuel_v;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
@@ -11,6 +12,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -25,9 +27,10 @@ import com.tzly.ctcyh.cargo.refuel_p.RefuelOilAdapter;
 import com.tzly.ctcyh.cargo.refuel_p.RefuelOilPresenter;
 import com.tzly.ctcyh.cargo.router.CargoRouter;
 import com.tzly.ctcyh.java.response.oil.OilCardsResponse;
-import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareModuleResponse;
 import com.tzly.ctcyh.java.response.oil.SINOPECBean;
 import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.custom.popup.CustomDialog;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
@@ -39,6 +42,10 @@ import java.util.List;
  */
 public class RefuelOilFragment extends RefreshFragment
         implements IRefuelOilContract.IRefuelOilView, View.OnClickListener {
+
+    private static final String ARGS_BANNER = "args_banner";
+    private static final String ARGS_IMAGE = "args_image";
+    private static final String ARGS_JSON = "args_json";
 
     private IRefuelOilContract.IRefuelOilPresenter mPresenter;
 
@@ -70,9 +77,13 @@ public class RefuelOilFragment extends RefreshFragment
      * 当前选择项
      */
     private SINOPECBean selectBean;
+    private ImageView topImage;
 
     public static RefuelOilFragment newInstance() {
-        return new RefuelOilFragment();
+        RefuelOilFragment fragment = new RefuelOilFragment();
+        Bundle bundle = new Bundle();
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
@@ -106,6 +117,7 @@ public class RefuelOilFragment extends RefreshFragment
      */
     @Override
     protected void loadingFirstData() {
+        if (mPresenter != null) mPresenter.shareModuleInfo();
         if (mPresenter != null) mPresenter.findOilCardsAll();
     }
 
@@ -116,6 +128,9 @@ public class RefuelOilFragment extends RefreshFragment
     }
 
     public void initView(View view) {
+        topImage = (ImageView) view.findViewById(R.id.img_top);
+        topImage.setOnClickListener(this);
+
         radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -211,6 +226,15 @@ public class RefuelOilFragment extends RefreshFragment
     public void onClick(View v) {
         if (v.getId() == R.id.tv_agreement) {//加油协议
             CargoRouter.gotoRechargeAgreementActivity(getActivity());
+        } else if (v.getId() == R.id.img_top) {//分享图片
+            String banner = getArguments().getString(ARGS_BANNER);
+            String imgUrl = getArguments().getString(ARGS_IMAGE);
+            String json = getArguments().getString(ARGS_JSON);
+
+            if (TextUtils.isEmpty(banner) || TextUtils.isEmpty(imgUrl)
+                    || TextUtils.isEmpty(json)) return;
+
+            CargoRouter.gotoOilShareActivity(getActivity(), banner, imgUrl, json);
         }
     }
 
@@ -323,7 +347,7 @@ public class RefuelOilFragment extends RefreshFragment
     public void createOrderError(String message) {
         toastShort(message);
 
-        if (message.contains("97折")||message.contains("折")) codeError();
+        if (message.contains("97折") || message.contains("折")) codeError();
     }
 
     public void codeError() {
@@ -357,12 +381,31 @@ public class RefuelOilFragment extends RefreshFragment
     }
 
     @Override
-    public void remainderSucceed(OilRemainderResponse response) {
+    public String getBusinessType() {
+        return "1";
     }
 
     @Override
-    public void remainderError(String message) {
+    public void shareModuleInfoError(String message) {
+        toastShort("获取分享图片失败" + message);
     }
 
+    @Override
+    public void shareModuleInfoSucceed(OilShareModuleResponse response) {
+        OilShareModuleResponse.DataBean data = response.getData();
+        if (data == null) return;
+
+        String topImg = data.getTopImg();
+        String banner = data.getBanner();
+        String imgUrl = data.getImg();
+        String json = data.getExtraParam();
+        if (TextUtils.isEmpty(topImg) || TextUtils.isEmpty(banner)
+                || TextUtils.isEmpty(imgUrl) || TextUtils.isEmpty(json)) return;
+
+        ImageLoadUtils.loadTwoRectangle(topImg, topImage);
+        getArguments().putString(ARGS_BANNER, banner);
+        getArguments().putString(ARGS_IMAGE, imgUrl);
+        getArguments().putString(ARGS_JSON, json);
+    }
 
 }

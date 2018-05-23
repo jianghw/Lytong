@@ -6,7 +6,6 @@ import com.tzly.ctcyh.cargo.data_m.CargoDataManager;
 import com.tzly.ctcyh.cargo.global.CargoGlobal;
 import com.tzly.ctcyh.java.response.oil.OilAccepterInfoResponse;
 import com.tzly.ctcyh.java.response.oil.OilShareInfoResponse;
-import com.tzly.ctcyh.java.response.oil.OilShareModuleResponse;
 import com.tzly.ctcyh.java.response.oil.OilShareResponse;
 import com.tzly.ctcyh.router.api.BaseSubscriber;
 
@@ -52,7 +51,8 @@ public class OilSharePresenter implements IOilShareContract.IOilSharePresenter {
      */
     @Override
     public void shareInfo() {
-        Subscription subscription = mRepository.shareInfo(mContractView.getConfigId(), mRepository.getRASUserID())
+        Subscription subscription = mRepository.shareInfo(
+                mContractView.getConfigId(), mRepository.getRASUserID())
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
@@ -170,44 +170,4 @@ public class OilSharePresenter implements IOilShareContract.IOilSharePresenter {
         mSubscriptions.add(subscription);
     }
 
-    /**
-     * 26.分享内容
-     */
-    @Override
-    public void shareModule() {
-        Subscription subscription = mRepository.shareModule()
-                .subscribeOn(Schedulers.io())
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        mContractView.showLoading();
-                    }
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<OilShareModuleResponse>() {
-                    @Override
-                    public void doCompleted() {
-                        mContractView.dismissLoading();
-                    }
-
-                    @Override
-                    public void doError(Throwable e) {
-                        mContractView.dismissLoading();
-                        mContractView.ashareModuleError(e.getMessage());
-                    }
-
-                    @Override
-                    public void doNext(OilShareModuleResponse response) {
-                        if (response != null && response.getResponseCode()
-                                == CargoGlobal.Response.base_succeed) {
-                            mContractView.ashareModuleSucceed(response);
-                        } else {
-                            mContractView.accepterInfoError(response != null
-                                    ? response.getResponseDesc() : "未知错误(分享内容)");
-                        }
-                    }
-                });
-        mSubscriptions.add(subscription);
-    }
 }

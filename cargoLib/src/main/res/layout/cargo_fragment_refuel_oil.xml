@@ -8,6 +8,7 @@
     <ImageView
         android:id="@+id/img_top"
         android:layout_width="match_parent"
+        android:scaleType="centerCrop"
         android:layout_height="@dimen/pt_80" />
 
     <!--提供商-->
