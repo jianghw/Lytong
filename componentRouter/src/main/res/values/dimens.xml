@@ -159,6 +159,8 @@
     <!--使用pt单位 原有pt单位失效-->
     <dimen name="pt_1">1pt</dimen>
     <dimen name="pt_2">2pt</dimen>
+    <dimen name="pt_5">5pt</dimen>
+    <dimen name="pt_6">6pt</dimen>
     <dimen name="pt_8">8pt</dimen>
     <dimen name="pt_10">10pt</dimen>
     <dimen name="pt_15">15pt</dimen>
@@ -169,11 +171,14 @@
     <dimen name="pt_26">26pt</dimen>
     <dimen name="pt_28">28pt</dimen>
     <dimen name="pt_30">30pt</dimen>
+    <dimen name="pt_32">32pt</dimen>
     <dimen name="pt_36">36pt</dimen>
     <dimen name="pt_40">40pt</dimen>
+    <dimen name="pt_45">45pt</dimen>
     <dimen name="pt_48">48pt</dimen>
     <dimen name="pt_50">50pt</dimen>
     <dimen name="pt_60">60pt</dimen>
+    <dimen name="pt_70">70pt</dimen>
     <dimen name="pt_80">80pt</dimen>
     <dimen name="pt_88">88pt</dimen>
     <dimen name="pt_90">90pt</dimen>
@@ -192,10 +197,13 @@
     <dimen name="pt_280">280pt</dimen>
     <dimen name="pt_294">294pt</dimen>
     <dimen name="pt_300">300pt</dimen>
+    <dimen name="pt_320">320pt</dimen>
     <dimen name="pt_330">330pt</dimen>
+    <dimen name="pt_340">340pt</dimen>
     <dimen name="pt_343">343pt</dimen>
     <dimen name="pt_360">360pt</dimen>
     <dimen name="pt_370">370pt</dimen>
+    <dimen name="pt_380">380pt</dimen>
     <dimen name="pt_400">400pt</dimen>
     <dimen name="pt_430">430pt</dimen>
     <dimen name="pt_528">528pt</dimen>

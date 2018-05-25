@@ -6,7 +6,20 @@ import java.util.List;
 
 /**
  * 我的车辆返回实体
- * Created by zhengyingbing on 16/6/1.
+ * "id": 1255,
+ * "carnum": "V3+HTCMrm6Zv0A73Lk5hlA==",
+ * "carnumtype": "02",
+ * "enginenum": "lGMGIrXCbgg=",
+ * "carframenum": "LJDKAA244C0040712",
+ * "carmodel": "2745",
+ * "buydate": "2017-02-02",
+ * "ispaycar": "0",
+ * "untreatcount": 0,
+ * "untreatcent": 0,
+ * "untreatamt": 0,
+ * "issueDate": "2017-02-02",
+ * "annualInspectionDate": "2019-02-01",
+ * "insuranceDate": "2019-02-01",
  */
 public class UserCarInfoBean {
 
@@ -32,7 +45,24 @@ public class UserCarInfoBean {
     private String untreatcount;//未处理总笔数
     private String untreatcent;//未处理总分值
     private String untreatamt;//未处理总金额
-    private List<ViolationInfoBean> ViolationInfo;//
+
+    private String issueDate;
+    private String annualInspectionDate;
+    private String insuranceDate;
+
+    public String getIssueDate() {
+        return issueDate;
+    }
+
+    public String getAnnualInspectionDate() {
+        return annualInspectionDate;
+    }
+
+    public String getInsuranceDate() {
+        return insuranceDate;
+    }
+
+    private List<ViolationInfoBean> ViolationInfo;
 
     public String getMileage() {
         return mileage;

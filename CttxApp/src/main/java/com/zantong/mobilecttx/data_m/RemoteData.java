@@ -13,6 +13,7 @@ import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
 import com.tzly.ctcyh.java.response.reservation.ReservationResponse;
+import com.tzly.ctcyh.java.response.violation.AdvModuleResponse;
 import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.tzly.ctcyh.java.response.violation.ViolationNum;
 import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
@@ -818,5 +819,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<ReservationResponse> getBespeakList(String rasUserID) {
         return baseRetrofit().create(IOrderService.class).getBespeakList(rasUserID);
+    }
+
+    /**
+     * 广告
+     */
+    @Override
+    public Observable<AdvModuleResponse> moduleList() {
+        return baseRetrofit().create(ITextService.class).moduleList();
     }
 }

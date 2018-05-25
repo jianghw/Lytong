@@ -15,6 +15,7 @@ import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.data_m.InjectionRepository;
 import com.tzly.ctcyh.cargo.global.CargoGlobal;
+import com.tzly.ctcyh.cargo.refuel_p.IAdapterClick;
 import com.tzly.ctcyh.cargo.refuel_p.IOilShareContract;
 import com.tzly.ctcyh.cargo.refuel_p.OilShareAdapter;
 import com.tzly.ctcyh.cargo.refuel_p.OilSharePresenter;
@@ -28,11 +29,13 @@ import com.tzly.ctcyh.router.custom.dialog.DialogUtils;
 import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.util.Utils;
 
+import java.util.List;
+
 /**
  * 加油分享
  */
 public class OilShareFragment extends RefreshFragment
-        implements View.OnClickListener, IOilShareContract.IOilShareView {
+        implements View.OnClickListener, IOilShareContract.IOilShareView, IAdapterClick {
 
     private static final String USER_ID = "user_id";
     private IOilShareContract.IOilSharePresenter mPresenter;
@@ -126,7 +129,7 @@ public class OilShareFragment extends RefreshFragment
         int userId = getArguments().getInt(USER_ID);
         codeUrl = codeUrl + "?shareUserId=" + userId + "&stage=0";
 
-        if (v.getId() == R.id.tv_wechat) {//微信
+        if (v.getId() == R.id.tv_wechat || v.getId() == R.id.tv_status) {//微信
             ShareUtils.showWechat(getActivity(), imgUrl, codeUrl, 0);
         } else if (v.getId() == R.id.tv_friend) {//朋友圈
             ShareUtils.showWechat(getActivity(), imgUrl, codeUrl, 1);
@@ -161,7 +164,26 @@ public class OilShareFragment extends RefreshFragment
         mRvList.setPullRefreshEnabled(false);
         mRvList.setLoadingMoreEnabled(true);
 
-        mAdapter = new OilShareAdapter();
+        mRvList.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+            }
+
+            @Override
+            public void onLoadMore() {
+                mRvList.postDelayed(new Runnable() {
+                    public void run() {
+                        if (mRvList == null) return;
+                        mRvList.loadMoreComplete();
+                        if (mPresenter != null) mPresenter.getAccepterInfoList(mCurPosition);
+                        mRvList.refreshComplete();
+                    }
+                }, 3000);
+            }
+        });
+
+        mAdapter = new OilShareAdapter(this);
+        mRvList.setAdapter(mAdapter);
     }
 
     @Override
@@ -210,7 +232,27 @@ public class OilShareFragment extends RefreshFragment
 
     @Override
     public void accepterInfoSucceed(OilAccepterInfoResponse response) {
-
+        List<OilAccepterInfoResponse.DataBean> data = response.getData();
+        showListViewLayout(data);
     }
 
+    private void showListViewLayout(List<OilAccepterInfoResponse.DataBean> list) {
+        if (list == null || list.isEmpty()) {
+            if (mCurPosition == 0) mAdapter.removeAll();
+        } else {
+            if (mCurPosition == 0) mAdapter.cleanListData();
+
+            mAdapter.append(list);
+            mCurPosition += 1;
+        }
+        if (mRvList != null) mRvList.refreshComplete();
+    }
+
+    /**
+     * 提醒下单
+     */
+    @Override
+    public void clickItem(View view) {
+        onClick(view);
+    }
 }

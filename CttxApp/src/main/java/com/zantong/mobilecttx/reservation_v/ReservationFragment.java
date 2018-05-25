@@ -19,7 +19,6 @@ import java.util.List;
 public class ReservationFragment extends RecyclerListFragment<ReservationResponse.DataBean>
         implements IReservationContract.IReservationView {
 
-
     private IReservationContract.IReservationPresenter mPresenter;
 
     public static ReservationFragment newInstance() {
@@ -48,9 +47,6 @@ public class ReservationFragment extends RecyclerListFragment<ReservationRespons
      */
     @Override
     protected void onRecyclerItemClick(View view, Object data) {
-//        if (data != null && data instanceof ReservationResponse.DataBean) {
-//            ReservationResponse.DataBean dataBean = (ReservationResponse.DataBean) data;
-//        }
     }
 
     @Override

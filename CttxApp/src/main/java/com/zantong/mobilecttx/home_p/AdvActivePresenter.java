@@ -2,7 +2,9 @@ package com.zantong.mobilecttx.home_p;
 
 import android.support.annotation.NonNull;
 
+import com.tzly.ctcyh.java.response.violation.AdvModuleResponse;
 import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
+import com.tzly.ctcyh.router.api.BaseSubscriber;
 import com.zantong.mobilecttx.data_m.RepositoryManager;
 
 import rx.Subscription;
@@ -46,7 +48,7 @@ public class AdvActivePresenter implements IAdvActiveContract.IAdvActivePresente
         Subscription subscription = mRepository.findIsValidAdvert()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new com.zantong.mobilecttx.data_m.BaseSubscriber<ValidAdvResponse>() {
+                .subscribe(new BaseSubscriber<ValidAdvResponse>() {
                     @Override
                     public void doCompleted() {
                     }
@@ -62,6 +64,34 @@ public class AdvActivePresenter implements IAdvActiveContract.IAdvActivePresente
                             mContractView.validAdvertSucceed(result);
                         } else {
                             mContractView.validAdvertError(result != null
+                                    ? result.getResponseDesc() : "未知错误(优惠信息)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    @Override
+    public void moduleList() {
+        Subscription subscription = mRepository.moduleList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<AdvModuleResponse>() {
+                    @Override
+                    public void doCompleted() {
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.moduleListError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(AdvModuleResponse result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mContractView.moduleListSucceed(result);
+                        } else {
+                            mContractView.moduleListError(result != null
                                     ? result.getResponseDesc() : "未知错误(优惠信息)");
                         }
                     }

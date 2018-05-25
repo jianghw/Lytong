@@ -146,16 +146,13 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
             }
         });
         TextView tvPlateNumber = (TextView) view.findViewById(R.id.tv_plate_number);
-        TextView tvType = (TextView) view.findViewById(R.id.tv_motorcycle_type);
-        TextView tvBrand = (TextView) view.findViewById(R.id.tv_motorcycle_brand);
-
         tvPlateNumber.setText(userCarInfoBean.getCarnum());
         //小写转化为大写
         tvPlateNumber.setTransformationMethod(new AllCapTransformationMethod());
 
+        TextView tvType = (TextView) view.findViewById(R.id.tv_motorcycle_type);
         String carType = VehicleTypeTools.switchVehicleType(userCarInfoBean.getCarnumtype());
-        tvType.setText(carType);
-        tvBrand.setText(userCarInfoBean.getEnginenum());
+        tvType.setText(carType + "  " + userCarInfoBean.getEnginenum());
 
         TextView tvTotamt = (TextView) view.findViewById(R.id.tv_totamt);
         TextView tvTotcent = (TextView) view.findViewById(R.id.tv_totcent);
@@ -169,6 +166,13 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
         //未处理总笔数
         tvTotcount.setText(TextUtils.isEmpty(userCarInfoBean.getUntreatcount())
                 ? "0" : userCarInfoBean.getUntreatcount());
+
+        TextView tvIssueDate = (TextView) view.findViewById(R.id.tv_issueDate);
+        tvIssueDate.setText(TextUtils.isEmpty(userCarInfoBean.getIssueDate()) ? "无注册" : userCarInfoBean.getIssueDate() + " 注册");
+        TextView tvInspectionDate = (TextView) view.findViewById(R.id.tv_annualInspectionDate);
+        tvInspectionDate.setText(userCarInfoBean.getAnnualInspectionDate());
+        TextView tvInsuranceDate = (TextView) view.findViewById(R.id.tv_insuranceDate);
+        tvInsuranceDate.setText(userCarInfoBean.getInsuranceDate());
     }
 
     /**

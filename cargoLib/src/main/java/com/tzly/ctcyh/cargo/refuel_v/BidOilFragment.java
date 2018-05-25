@@ -25,6 +25,7 @@ import com.tzly.ctcyh.cargo.refuel_p.BidOilPresenter;
 import com.tzly.ctcyh.cargo.refuel_p.IBidOilContract;
 import com.tzly.ctcyh.cargo.router.CargoRouter;
 import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareModuleResponse;
 import com.tzly.ctcyh.router.BuildConfig;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
@@ -42,6 +43,10 @@ import java.util.List;
  */
 public class BidOilFragment extends RefreshFragment
         implements IBidOilContract.IBidOilView, View.OnClickListener {
+
+    private static final String ARGS_BANNER = "args_banner";
+    private static final String ARGS_IMAGE = "args_image";
+    private static final String ARGS_JSON = "args_json";
 
     private IBidOilContract.IBidOilPresenter mPresenter;
 
@@ -187,9 +192,8 @@ public class BidOilFragment extends RefreshFragment
     @Override
     public void onClick(View view) {
         int viD = view.getId();
-        if (viD == R.id.img_banner) {//图片
 
-        } else if (viD == R.id.tv_bid) {//去办畅通卡
+        if (viD == R.id.tv_bid) {//去办畅通卡
             CargoRouter.gotoHtmlActivity(getActivity(),
                     "申办工行卡",
                     "http://icbccard.una-campaign.com/?cid=283");
@@ -197,6 +201,15 @@ public class BidOilFragment extends RefreshFragment
             if (mPresenter != null) mPresenter.getAllAreas();
         } else if (viD == R.id.btn_commit) {//提交
             verificationSubmitData();
+        } else if (viD == R.id.img_banner) {//分享
+            String banner = getArguments().getString(ARGS_BANNER);
+            String imgUrl = getArguments().getString(ARGS_IMAGE);
+            String json = getArguments().getString(ARGS_JSON);
+
+            if (TextUtils.isEmpty(banner) || TextUtils.isEmpty(imgUrl)
+                    || TextUtils.isEmpty(json)) return;
+
+            CargoRouter.gotoOilShareActivity(getActivity(), banner, imgUrl, json);
         }
     }
 
@@ -362,5 +375,33 @@ public class BidOilFragment extends RefreshFragment
                         if (mPresenter != null) mPresenter.createOrder();
                     }
                 });
+    }
+
+    @Override
+    public String getBusinessType() {
+        return "15";
+    }
+
+    @Override
+    public void shareModuleInfoError(String message) {
+        toastShort("获取分享图片失败" + message);
+    }
+
+    @Override
+    public void shareModuleInfoSucceed(OilShareModuleResponse response) {
+        OilShareModuleResponse.DataBean data = response.getData();
+        if (data == null) return;
+
+        String topImg = data.getTopImg();
+        String banner = data.getBanner();
+        String imgUrl = data.getImg();
+        String json = data.getExtraParam();
+        if (TextUtils.isEmpty(topImg) || TextUtils.isEmpty(banner)
+                || TextUtils.isEmpty(imgUrl) || TextUtils.isEmpty(json)) return;
+
+        ImageLoadUtils.loadTwoRectangle(topImg, mImgBanner);
+        getArguments().putString(ARGS_BANNER, banner);
+        getArguments().putString(ARGS_IMAGE, imgUrl);
+        getArguments().putString(ARGS_JSON, json);
     }
 }

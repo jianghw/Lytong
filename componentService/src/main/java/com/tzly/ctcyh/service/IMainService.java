@@ -52,7 +52,7 @@ public interface IMainService {
 
     void gotoNianjianMapActivity(Context context);
 
-    Fragment getAdvActiveFragment();
+    Fragment getAdvModuleFragment();
 
     /**
      * 点击 统计

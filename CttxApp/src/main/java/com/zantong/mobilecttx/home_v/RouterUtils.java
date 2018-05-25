@@ -1,5 +1,6 @@
 package com.zantong.mobilecttx.home_v;
 
+import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -18,7 +19,7 @@ public class RouterUtils {
      */
     public static void gotoByUrl(String url, FragmentActivity activity) {
 
-        gotoByUrl(url, "商品推荐", activity);
+        gotoByUrl(url, "热门优惠", activity);
     }
 
     public static void gotoByUrl(String url, String title, FragmentActivity activity) {
@@ -74,7 +75,7 @@ public class RouterUtils {
      */
     public static void gotoByStatistId(String url, String keyId, FragmentActivity activity) {
 
-        gotoByStatistId(url, "商品推荐", keyId, activity);
+        gotoByStatistId(url, "热门优惠", keyId, activity);
     }
 
     public static void gotoByStatistId(String url, String title,
@@ -122,6 +123,34 @@ public class RouterUtils {
         } else {
             ToastUtils.toastShort("路由规则遗失,程序员GG会尽快处理");
         }
+    }
+
+    /**
+     * 注意 activity 和 fregment 的区别
+     */
+    public static void gotoAdvModuleFragment(FragmentManager fragmentManager,
+                                             @IdRes int containerViewId) {
+
+        Fragment fragment = fragmentManager.findFragmentById(containerViewId);
+
+        if (fragment == null || !(fragment instanceof AdvModuleFragment)) {
+            //创建fragment但是不绘制UI
+            AdvModuleFragment moduleFragment = AdvModuleFragment.newInstance();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(containerViewId, moduleFragment).commitNow();
+        } else {
+            AdvModuleFragment moduleFragment = (AdvModuleFragment) fragment;
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(containerViewId, moduleFragment).commitNow();
+        }
+      /*  if (fragment == null) {
+            fragment = manager.findFragmentByTag(tag_fgt);
+        }
+        if (fragment instanceof AdvModuleFragment) {
+            AdvModuleFragment moduleFragment = (AdvModuleFragment) fragment;
+        } else {
+            ToastUtils.toastShort("路由规则遗失,程序员GG会尽快处理");
+        }*/
     }
 
 }

@@ -4,10 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
@@ -49,16 +48,26 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
 
     @Override
     protected int contentView() {
-        return R.layout.fragment_jx_base_recycler_list;
+        return needScrollRecycler()
+                ? R.layout.fragment_base_recycler_scroll : R.layout.fragment_base_recycler;
+    }
+
+    /**
+     * 不同布局
+     */
+    protected boolean needScrollRecycler() {
+        return false;
     }
 
     @Override
     protected void bindContent(View contentView) {
-        LinearLayout linearLayout = (LinearLayout) contentView.findViewById(R.id.lay_linear);
-        View view = extraTopView() > 0
-                ? LayoutInflater.from(getContext()).inflate(extraTopView(), linearLayout, true)
-                : new View(getContext());
-        bindExtraTopView(view);
+        if (needScrollRecycler()) {
+            FrameLayout frameTop = (FrameLayout) contentView.findViewById(R.id.lay_linear);
+            bindExtraTopView(frameTop);
+
+            FrameLayout frameBottom = (FrameLayout) contentView.findViewById(R.id.lay_bottom);
+            bindExtraBottomView(frameBottom);
+        }
 
         mCustomRecycler = (XRecyclerView) contentView.findViewById(R.id.rv_base);
 
@@ -79,8 +88,9 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
         mCustomRecycler.setPullRefreshEnabled(isRefresh());
         mCustomRecycler.setLoadingMoreEnabled(isLoadMore());
 
-        if (getCustomDecoration() > 0)
+        if (getCustomDecoration() > 0) {
             mCustomRecycler.addItemDecoration(new SpaceItemDecoration(getCustomDecoration()));
+        }
 
         initRecyclerHeader(customViewHeader());
         if (getRecyclerHeader() != null) {
@@ -143,14 +153,10 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
         return 0;
     }
 
-    /**
-     * 额外的布局
-     */
-    protected int extraTopView() {
-        return 0;
+    protected void bindExtraTopView(View view) {
     }
 
-    protected void bindExtraTopView(View view) {
+    protected void bindExtraBottomView(View view) {
     }
 
     protected View customViewHeader() {
@@ -172,11 +178,11 @@ public abstract class RecyclerListFragment<T> extends AbstractBaseFragment {
         mFootView = view;
     }
 
-    protected View getRecyclerHeader() {
+    private View getRecyclerHeader() {
         return mHeaderView;
     }
 
-    protected View getRecyclerFoot() {
+    private View getRecyclerFoot() {
         return mFootView;
     }
 

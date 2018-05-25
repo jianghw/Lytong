@@ -303,11 +303,11 @@ public final class CargoRouter {
     /**
      * 获取fragment
      */
-    public static Fragment getAdvActiveFragment() {
+    public static Fragment getAdvModuleFragment() {
         Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;
-            return service.getAdvActiveFragment();
+            return service.getAdvModuleFragment();
         } else {//注册机开始工作
             registerMain();
             return new Fragment();

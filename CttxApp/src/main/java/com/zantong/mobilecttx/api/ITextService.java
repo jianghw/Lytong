@@ -2,6 +2,7 @@ package com.zantong.mobilecttx.api;
 
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
+import com.tzly.ctcyh.java.response.violation.AdvModuleResponse;
 import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.zantong.mobilecttx.home.bean.HomeCarResponse;
 import com.zantong.mobilecttx.weizhang.dto.ViolationCarDTO;
@@ -61,4 +62,7 @@ public interface ITextService {
      */
     @GET("text/advertCount")
     Observable<BaseResponse> advertCount(@Query("id") String keyId, @Query("channel") String channel);
+
+    @GET("module/moduleList")
+    Observable<AdvModuleResponse> moduleList();
 }

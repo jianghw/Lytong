@@ -10,26 +10,14 @@
         android:layout_height="@dimen/pt_80"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/pt_30" />
+        android:layout_marginLeft="@dimen/pt_30"
+        android:src="@mipmap/portrait" />
 
     <TextView
         android:id="@+id/tv_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/img_left"
-        android:layout_marginLeft="@dimen/pt_20"
-        android:layout_marginRight="@dimen/pt_20"
-        android:layout_toLeftOf="@+id/tv_status"
-        android:layout_toRightOf="@+id/img_left"
-        android:textColor="@color/res_color_black_4d"
-        android:textSize="@dimen/pt_26"
-        tools:text="用户xxxxx已经下单" />
-
-    <TextView
-        android:id="@+id/tv_coupon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_user"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/pt_20"
         android:layout_marginRight="@dimen/pt_20"
         android:layout_toLeftOf="@+id/tv_status"
@@ -49,7 +37,7 @@
         android:gravity="center"
         android:textColor="@color/res_color_red_f3"
         android:textSize="@dimen/pt_24"
-        tools:text="提醒下单" />
+        android:text="提醒下单" />
 
     <!--分割线-->
     <LinearLayout

@@ -15,6 +15,7 @@ import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderRefundResponse;
 import com.tzly.ctcyh.java.response.order.UpdateOrderResponse;
 import com.tzly.ctcyh.java.response.reservation.ReservationResponse;
+import com.tzly.ctcyh.java.response.violation.AdvModuleResponse;
 import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.tzly.ctcyh.java.response.violation.ViolationNum;
 import com.tzly.ctcyh.java.response.violation.ViolationNumBean;
@@ -722,5 +723,12 @@ public class RepositoryManager {
      */
     public Observable<ReservationResponse> getBespeakList(String rasUserID) {
         return mRemoteData.getBespeakList(rasUserID);
+    }
+
+    /**
+     * 广告
+     */
+    public Observable<AdvModuleResponse> moduleList() {
+        return mRemoteData.moduleList();
     }
 }

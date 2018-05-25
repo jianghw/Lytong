@@ -19,7 +19,7 @@ import com.tzly.ctcyh.service.IUserService;
 import com.tzly.ctcyh.service.RouterGlobal;
 import com.zantong.mobilecttx.global.MainGlobal;
 import com.zantong.mobilecttx.home.bean.StartPicBean;
-import com.zantong.mobilecttx.home_v.AdvActiveFragment;
+import com.zantong.mobilecttx.home_v.AdvModuleFragment;
 import com.zantong.mobilecttx.home_v.RouterUtils;
 import com.zantong.mobilecttx.push_v.AliPushExtBean;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
@@ -851,8 +851,8 @@ public final class MainRouter {
     /**
      * 获取 fragment 页面
      */
-    public static Fragment getAdvActiveFragment() {
-        return AdvActiveFragment.newInstance();
+    public static Fragment initAdvModuleFragment() {
+        return AdvModuleFragment.newInstance();
     }
 
     /**

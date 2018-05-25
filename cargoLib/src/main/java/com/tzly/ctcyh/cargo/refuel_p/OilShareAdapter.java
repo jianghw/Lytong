@@ -1,84 +1,168 @@
 package com.tzly.ctcyh.cargo.refuel_p;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
 import com.tzly.ctcyh.cargo.R;
-import com.tzly.ctcyh.cargo.bean.response.BidOilBean;
-import com.tzly.ctcyh.router.util.FormatUtils;
+import com.tzly.ctcyh.java.response.oil.OilAccepterInfoResponse;
+import com.tzly.ctcyh.router.util.Utils;
+
+import java.util.List;
 
 /**
  * 提醒
  */
-
-public class OilShareAdapter extends BaseAdapter<BidOilBean> {
+public class OilShareAdapter extends BaseAdapter<OilAccepterInfoResponse.DataBean> {
+    private final IAdapterClick itemClick;
     private Context mAdapterContext;
 
+    public OilShareAdapter(IAdapterClick iAdapterClick) {
+        this.itemClick = iAdapterClick;
+    }
+
     @Override
-    public View createView(ViewGroup viewGroup, int i) {
-        mAdapterContext = viewGroup.getContext();
+    public int getItemViewType(int position) {
+        OilAccepterInfoResponse.DataBean bean = getAll().get(position);
+        String stage = bean.getStage();
+        if (TextUtils.isEmpty(stage)) {
+            stage = "0";
+        }
+        return Integer.valueOf(stage);
+    }
+
+    @Override
+    public View createView(ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View view = inflater.inflate(R.layout.cargo_recycler_item_oil_share_remind, viewGroup, false);
-        return view;
+        int resource;
+        if (viewType == 0) {
+            resource = R.layout.cargo_recycler_item_oil_share_remind;
+        } else if (viewType == 1) {
+            resource = R.layout.cargo_recycler_item_oil_share;
+        } else {
+            resource = R.layout.cargo_recycler_item_oil_share;
+        }
+        return inflater.inflate(resource, viewGroup, false);
     }
 
     @Override
     public BaseRecyclerViewHolder createViewHolder(View view, int itemType) {
-        return new ViewHolder(view);
+        if (itemType == 0) {
+            return new RemindViewHolder(view);
+        } else {
+            return new ViewHolder(view);
+        }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    @SuppressLint("SetTextI18n")
     @Override
     public void bindViewData(BaseRecyclerViewHolder viewHolder,
-                             int position, BidOilBean statusBean) {
-        ViewHolder holder = (ViewHolder) viewHolder;
-        if (statusBean == null) return;
-        holder.mFayRecharge.setSelected(statusBean.isSelect());
+                             int position, OilAccepterInfoResponse.DataBean dataBean) {
+        int type = viewHolder.getItemViewType();
+        if (type == 0) {
+            RemindViewHolder holder = (RemindViewHolder) viewHolder;
+            String phone = dataBean.getPhone();
+            try {
+                phone = phone.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.append("用户");
+            sb.append("<font color=\"#f3362b\">");
+            sb.append(phone);
+            sb.append("</font>");
+            sb.append("已注册");
+            holder.mTvUser.setText(Html.fromHtml(sb.toString()));
 
-        holder.mTvAmount.setText(FormatUtils.submitPrice(statusBean.getPrice()));
-        holder.mTvPrice.setText(statusBean.getName());
+            holder.mTvStatus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (itemClick != null) itemClick.clickItem(view);
+                }
+            });
+        } else {
+            ViewHolder holder = (ViewHolder) viewHolder;
+            holder.mLayCoupon.removeAllViews();
 
-        int color = mAdapterContext.getResources().getColor(
-                statusBean.isSelect() ? R.color.res_color_red_f3 : R.color.res_color_black_4d);
-        holder.mTvUnit.setTextColor(color);
-        holder.mTvAmount.setTextColor(color);
-        holder.mTvPrice.setTextColor(color);
+            String phone = dataBean.getPhone();
+            try {
+                phone = phone.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            StringBuilder sb = new StringBuilder();
+            sb.append("用户");
+            sb.append("<font color=\"#f3362b\">");
+            sb.append(phone);
+            sb.append("</font>");
+            sb.append("已下单");
+            holder.mTvUser.setText(Html.fromHtml(sb.toString()));
 
-        String dis = statusBean.getDiscount();
-        String discount = FormatUtils.showDiscount(dis);
-        holder.mTvDiscount.setText(discount + "折");
-        //小于10时为又折扣
-        double d = Double.valueOf(discount);
-        holder.mTvDiscount.setVisibility(d < 10 ? View.VISIBLE : View.INVISIBLE);
+            List<OilAccepterInfoResponse.DataBean.CouponBean> couponBeanList = dataBean.getCoupon();
+            if (couponBeanList != null && !couponBeanList.isEmpty()) {
+                for (OilAccepterInfoResponse.DataBean.CouponBean couponBean : couponBeanList) {
+                    String title = couponBean.getTitle();
+                    int counts = couponBean.getCounts();
+                    makeTextView(holder, title, counts);
+                }
+            }
+        }
+    }
+
+    private void makeTextView(ViewHolder holder, String title, int counts) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(title);
+        sb.append("&#160;");
+        sb.append("<font color=\"#f3362b\">");
+        sb.append(counts);
+        sb.append("&#160;");
+        sb.append("</font>");
+        sb.append("张");
+
+        TextView textView = new TextView(Utils.getContext());
+        textView.setTextColor(Utils.getContext().getResources().getColor(R.color.res_color_black_4d));
+        textView.setText(Html.fromHtml(sb.toString()));
+        textView.setTextSize(12);
+        holder.mLayCoupon.addView(textView, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     /**
      * 自定义的ViewHolder，持有每个Item的的所有界面元素
      */
     public static class ViewHolder extends BaseRecyclerViewHolder {
-        TextView mTvAmount;
-        TextView mTvDiscount;
-        TextView mTvPrice;
-        TextView mTvUnit;
-        RelativeLayout mFayRecharge;
+        ImageView mImgLeft;
+        TextView mTvUser;
+        TextView mTvStatus;
+        LinearLayout mLayCoupon;
 
         ViewHolder(View view) {
             super(view);
-            this.mTvAmount = (TextView) view.findViewById(R.id.tv_amount);
-            this.mTvUnit = (TextView) view.findViewById(R.id.tv_unit);
-            this.mTvPrice = (TextView) view.findViewById(R.id.tv_price);
-            this.mTvDiscount = (TextView) view.findViewById(R.id.tv_discount);
-            this.mFayRecharge = (RelativeLayout) view.findViewById(R.id.fay_recharge);
+            this.mImgLeft = (ImageView) view.findViewById(R.id.img_left);
+            this.mTvUser = (TextView) view.findViewById(R.id.tv_user);
+            this.mTvStatus = (TextView) view.findViewById(R.id.tv_status);
+            this.mLayCoupon = (LinearLayout) view.findViewById(R.id.lay_coupon);
+        }
+    }
+
+    public static class RemindViewHolder extends BaseRecyclerViewHolder {
+        ImageView mImgLeft;
+        TextView mTvUser;
+        TextView mTvStatus;
+
+        RemindViewHolder(View view) {
+            super(view);
+            this.mImgLeft = (ImageView) view.findViewById(R.id.img_left);
+            this.mTvUser = (TextView) view.findViewById(R.id.tv_user);
+            this.mTvStatus = (TextView) view.findViewById(R.id.tv_status);
         }
     }
 }

@@ -106,7 +106,7 @@ public class ViolationListActivity extends AbstractBaseActivity
         OrderFragmentAdapter mainFragmentAdapter = new OrderFragmentAdapter(
                 getSupportFragmentManager(), mFragmentList, title);
         mViewPager.setAdapter(mainFragmentAdapter);
-        mViewPager.setOffscreenPageLimit(mFragmentList.size() - 1);//设置预加载
+        mViewPager.setOffscreenPageLimit(mFragmentList.size());//设置预加载
         mTabLayout.setupWithViewPager(mViewPager);
 
         mViewPager.setCurrentItem(1);

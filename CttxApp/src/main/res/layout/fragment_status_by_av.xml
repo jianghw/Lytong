@@ -6,14 +6,21 @@
     android:orientation="vertical">
 
     <TextView
-        style="@style/ResTextTheme.16.Red"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/res_x_20"
-        android:drawableLeft="@mipmap/ic_adv_hand"
-        android:drawablePadding="@dimen/res_x_20"
-        android:text="上滑,您可以关注以下最新优惠活动哦" />
+        android:layout_margin="@dimen/pt_20"
+        android:drawableLeft="@mipmap/icon_star"
+        android:drawablePadding="@dimen/pt_20"
+        android:text="热门优惠"
+        android:textColor="@color/res_color_red_f3"
+        android:textSize="@dimen/pt_30" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/module_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/res_color_gray_f8" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/adv_rv"

@@ -49,7 +49,7 @@ public abstract class JxBaseRecyclerListFragment<T> extends JxBaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_jx_base_recycler_list, null);
+        View inflate = inflater.inflate(R.layout.fragment_base_recycler, null);
         LinearLayout linearLayout = (LinearLayout) inflate.findViewById(R.id.lay_linear);
 
         View fragmentView = initFragmentView() != 0

@@ -12,6 +12,7 @@ import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.cargo.data_m.CargoDataManager;
 import com.tzly.ctcyh.cargo.global.CargoGlobal;
 import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareModuleResponse;
 import com.tzly.ctcyh.router.api.BaseSubscriber;
 
 import java.util.List;
@@ -438,4 +439,44 @@ public class BidOilPresenter implements IBidOilContract.IBidOilPresenter {
                         });
     }
 
+    /**
+     * 分享内容
+     */
+    @Override
+    public void shareModuleInfo() {
+        Subscription subscription = mRepository.shareModuleInfo(mContractView.getBusinessType())
+                .subscribeOn(Schedulers.io())
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mContractView.showLoading();
+                    }
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<OilShareModuleResponse>() {
+                    @Override
+                    public void doCompleted() {
+                        mContractView.dismissLoading();
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mContractView.dismissLoading();
+                        mContractView.shareModuleInfoError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(OilShareModuleResponse response) {
+                        if (response != null && response.getResponseCode()
+                                == CargoGlobal.Response.base_succeed) {
+                            mContractView.shareModuleInfoSucceed(response);
+                        } else {
+                            mContractView.shareModuleInfoError(response != null
+                                    ? response.getResponseDesc() : "未知错误(分享内容)");
+                        }
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
 }

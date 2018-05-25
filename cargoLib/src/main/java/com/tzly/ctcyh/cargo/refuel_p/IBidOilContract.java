@@ -3,6 +3,7 @@ package com.tzly.ctcyh.cargo.refuel_p;
 import com.tzly.ctcyh.cargo.bean.response.BidOilBean;
 import com.tzly.ctcyh.cargo.bean.response.RefuelOrderResponse;
 import com.tzly.ctcyh.java.response.oil.OilRemainderResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareModuleResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 import com.tzly.ctcyh.router.base.IResponseView;
@@ -37,6 +38,12 @@ public interface IBidOilContract {
         void allAreasSucceed(Object[] objects);
 
         void isNeedCreate(OilRemainderResponse response);
+
+        String getBusinessType();
+
+        void shareModuleInfoError(String message);
+
+        void shareModuleInfoSucceed(OilShareModuleResponse response);
     }
 
     interface IBidOilPresenter extends IBasePresenter {
@@ -47,6 +54,8 @@ public interface IBidOilContract {
         void getRemainder();
 
         void getAllAreas();
+
+        void shareModuleInfo();
     }
 
 }

@@ -174,12 +174,6 @@ public abstract class AbstractBaseFragment extends Fragment {
     private void enhanceContentView(View view, int state) {
     }
 
-    /**
-     * 自定义页面显示
-     */
-    protected void statusViewSelf(View view, int state) {
-    }
-
     private void doClickRefreshView(View view, int state) {
         view.findViewById(R.id.tv_empty).setOnClickListener(
                 new View.OnClickListener() {
@@ -190,6 +184,12 @@ public abstract class AbstractBaseFragment extends Fragment {
                 });
 
         statusViewSelf(view, state);
+    }
+
+    /**
+     * 自定义页面显示
+     */
+    protected void statusViewSelf(View view, int state) {
     }
 
     /**

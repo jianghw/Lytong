@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_empty"
-        style="@style/ResTextTheme.16.Subtitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:drawablePadding="20dp"
-        android:drawableTop="@mipmap/ic_layout_error"
-        android:text="出错啦~,点击'小车'刷新下" />
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/pt_300"
+            android:drawablePadding="20dp"
+            android:drawableTop="@mipmap/ic_layout_error"
+            android:text="出错啦~,点击'小车'刷新下"
+            android:textColor="@color/res_color_black_4d"
+            android:textSize="@dimen/pt_28" />
+
+        <FrameLayout
+            android:id="@+id/fragment_child"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pt_60" />
+
+    </LinearLayout>
+
+</ScrollView>

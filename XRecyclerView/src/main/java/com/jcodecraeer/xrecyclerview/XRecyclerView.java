@@ -110,7 +110,7 @@ public class XRecyclerView extends RecyclerView {
         mHeaderViews.add(view);
     }
 
-    public void addFootView(final View view) {
+    public void addFootView(View view) {
         mFootViews.clear();
         mFootViews.add(view);
     }

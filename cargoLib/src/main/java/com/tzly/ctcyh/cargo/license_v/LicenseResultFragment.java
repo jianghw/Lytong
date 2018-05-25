@@ -65,11 +65,9 @@ public class LicenseResultFragment extends RefreshFragment {
             }
         });
         mTvScore = (TextView) view.findViewById(R.id.tv_score);
-        //        ScrollBottomLayout bottomLayout = (ScrollBottomLayout)
-        //                view.findViewById(R.id.scroll_empty_bottom);
 
         FragmentManager manager = getChildFragmentManager();
-        Fragment fragment = CargoRouter.getAdvActiveFragment();
+        Fragment fragment = CargoRouter.getAdvModuleFragment();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.fragment_child, fragment, "scroll_child_fragment");
         transaction.commit();

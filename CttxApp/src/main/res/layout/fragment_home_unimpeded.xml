@@ -80,7 +80,7 @@
     <com.gigamole.infinitecycleviewpager.HorizontalInfiniteCycleViewPager
         android:id="@+id/custom_violation"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/pt_400"
+        android:layout_height="@dimen/pt_360"
         android:background="@color/res_color_gray_f8"
         app:icvp_center_page_scale_offset="20dp"
         app:icvp_interpolator="@android:anim/accelerate_decelerate_interpolator"

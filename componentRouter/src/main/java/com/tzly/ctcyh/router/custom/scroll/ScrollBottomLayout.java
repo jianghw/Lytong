@@ -18,6 +18,9 @@ import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.ScreenUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 上拉处广告
  */
@@ -44,6 +47,8 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
      * 嵌套子布局
      */
     private RecyclerView child_recyclerView;
+
+    private List<RecyclerView> childRecycler = new ArrayList<>();
 
     public ScrollBottomLayout(Context context) {
         this(context, null);
@@ -117,11 +122,21 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
         }
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        childRecycler.clear();
+    }
+
     /**
      * 获取嵌套布局里的子view-recyclerview
      */
-    protected RecyclerView getChildRecycler() {
-        if (this.child_recyclerView != null) return this.child_recyclerView;
+    protected List<RecyclerView> getChildRecycler() {
+        if (!this.childRecycler.isEmpty() && this.childRecycler.size() == 2)
+            return this.childRecycler;
+        else
+            this.childRecycler.clear();
 
         int countF = getChildCount();
         for (int i = 0; i < countF; i++) {
@@ -137,15 +152,14 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
                         for (int k = 0; k < countR; k++) {
                             View childR = viewGroupL.getChildAt(k);
                             if (childR != null && childR instanceof RecyclerView) {
-                                this.child_recyclerView = (RecyclerView) childR;
-                                break;
+                                this.childRecycler.add((RecyclerView) childR);
                             }
                         }
                     }
                 }
             }
         }
-        return this.child_recyclerView;
+        return this.childRecycler;
     }
 
     @Override
@@ -184,9 +198,9 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent event) {
-        getChildRecycler();
+        List<RecyclerView> recycler = getChildRecycler();
 
-        boolean state = getChildRecycler().canScrollVertically(-1);
+        boolean state = recycler.get(0).canScrollVertically(-1) || recycler.get(1).canScrollVertically(-1);
         switch (event.getAction()) {
             //直接自己消费
             case MotionEvent.ACTION_DOWN:
@@ -224,7 +238,9 @@ public class ScrollBottomLayout extends LinearLayout implements GestureDetector.
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        boolean state = getChildRecycler().canScrollVertically(-1);
+        List<RecyclerView> recycler = getChildRecycler();
+
+        boolean state = recycler.get(0).canScrollVertically(-1) || recycler.get(1).canScrollVertically(-1);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 LogUtils.e("movedMaxDis-->" + movedMaxDis);

@@ -164,8 +164,8 @@ public class MainDataService implements IMainService {
      * 获取fragment 页面
      */
     @Override
-    public Fragment getAdvActiveFragment() {
-        return MainRouter.getAdvActiveFragment();
+    public Fragment getAdvModuleFragment() {
+        return MainRouter.initAdvModuleFragment();
     }
 
     /**
