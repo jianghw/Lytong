@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -12,6 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.router.base.RecyclerListFragment;
+import com.tzly.ctcyh.router.util.RudenessScreenHelper;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.home_v.RouterUtils;
 import com.zantong.mobilecttx.violation_p.ViolationListAdapter;
@@ -134,6 +136,10 @@ public class ViolationListFragment extends RecyclerListFragment<ViolationBean> {
 
             tvEmpty.setText("亲!未查到您的违章");
         }
+
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvEmpty.getLayoutParams();
+        layoutParams.topMargin = RudenessScreenHelper.ptInpx(30);
+        tvEmpty.setLayoutParams(layoutParams);
 
         RouterUtils.gotoAdvModuleFragment(getChildFragmentManager(), R.id.fragment_child);
     }

@@ -37,6 +37,8 @@ public final class SPUtils {
     public static String USER_LOGIN_DIALOG = "user_login_dialog";
     public static String USER_GRADE = "user_grade";
 
+    public static String USER_CARD_BIND = "user_card_bind";
+
     private static String USERPD = "userpd";
     public static String USER_CHANCLE_ID = "USER_CHANCLE_ID";
 

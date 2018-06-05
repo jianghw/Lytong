@@ -267,6 +267,9 @@ public class UserDataManager {
         return mLocalData.getLoginBean().getPhoenum();
     }
 
+    /**
+     * 畅通卡
+     */
     public String getUserFilenum() {
         String filenum = mLocalData.getLoginBean().getFilenum();
         if (!TextUtils.isEmpty(filenum)) return filenum;

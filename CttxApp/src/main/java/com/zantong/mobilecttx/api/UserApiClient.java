@@ -2,11 +2,14 @@ package com.zantong.mobilecttx.api;
 
 import android.content.Context;
 
-import com.tzly.ctcyh.router.custom.rea.RSAUtils;
-import com.zantong.mobilecttx.BuildConfig;
-import com.zantong.mobilecttx.base.MessageFormat;
 import com.tzly.ctcyh.java.request.RequestDTO;
 import com.tzly.ctcyh.java.request.RequestHeadDTO;
+import com.tzly.ctcyh.java.response.BankResponse;
+import com.tzly.ctcyh.java.response.card.CancelCardResponse;
+import com.tzly.ctcyh.router.custom.rea.RSAUtils;
+import com.tzly.ctcyh.router.util.Tools;
+import com.zantong.mobilecttx.BuildConfig;
+import com.zantong.mobilecttx.base.MessageFormat;
 import com.zantong.mobilecttx.car.bean.PayCarResult;
 import com.zantong.mobilecttx.car.dto.CarInfoDTO;
 import com.zantong.mobilecttx.car.dto.UserCarsDTO;
@@ -35,13 +38,10 @@ import com.zantong.mobilecttx.user.dto.UpdateUserHeadImgDTO;
 import com.zantong.mobilecttx.user.dto.VcodeDTO;
 import com.zantong.mobilecttx.utils.DateUtils;
 import com.zantong.mobilecttx.utils.StringUtils;
-import com.tzly.ctcyh.router.util.Tools;
 import com.zantong.mobilecttx.weizhang.bean.PayHistoryResult;
 import com.zantong.mobilecttx.weizhang.bean.ViolationResultParent;
 import com.zantong.mobilecttx.weizhang.dto.PayHistoryDTO;
 import com.zantong.mobilecttx.weizhang.dto.ViolationDTO;
-
-import com.tzly.ctcyh.java.response.BankResponse;
 
 
 /**
@@ -429,4 +429,9 @@ public class UserApiClient extends BaseApiClient {
         post(context, BuildConfig.bank_mc_url, t, asyncCallBack);
     }
 
+    public static void cancelCard(Context context, int status, CallBack<CancelCardResponse> callBack) {
+        AsyncCallBack<CancelCardResponse> asyncCallBack =
+                new AsyncCallBack<CancelCardResponse>(context, callBack, CancelCardResponse.class);
+        post(context, BuildConfig.base_url+"cttx/cancelCard", status, asyncCallBack);
+    }
 }

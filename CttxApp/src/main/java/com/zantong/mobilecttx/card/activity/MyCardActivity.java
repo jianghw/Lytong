@@ -1,39 +1,21 @@
 package com.zantong.mobilecttx.card.activity;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
-import android.view.KeyEvent;
-import android.view.View;
 
+import com.tzly.ctcyh.router.base.AbstractBaseActivity;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.R;
-import com.zantong.mobilecttx.base.activity.BaseJxActivity;
 import com.zantong.mobilecttx.card.fragment.MyCardFragment;
 
 /**
  * 我的畅通卡 已有绑定卡页面
  */
-public class MyCardActivity extends BaseJxActivity {
+public class MyCardActivity extends AbstractBaseActivity {
 
     private int mCurBottomPosition;
     private MyCardFragment mCouponListFragment;
 
-    @Override
-    protected void bundleIntent(Bundle savedInstanceState) {
-        mCurBottomPosition = 1;
-    }
-
-    @Override
-    protected int getContentResId() {
-        return R.layout.activity_base_frame;
-    }
-
-    @Override
-    protected void initFragmentView(View view) {
-        initTitleContent("我的畅通卡");
-
-        initFragment();
-    }
 
     private void initFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -42,8 +24,7 @@ public class MyCardActivity extends BaseJxActivity {
                 if (mCouponListFragment == null) {
                     mCouponListFragment = MyCardFragment.newInstance();
                 }
-                FragmentUtils.add(
-                        fragmentManager, mCouponListFragment, R.id.lay_base_frame, false,true);
+                FragmentUtils.add(fragmentManager, mCouponListFragment, R.id.lay_base_frame);
                 break;
             default:
                 break;
@@ -51,16 +32,29 @@ public class MyCardActivity extends BaseJxActivity {
     }
 
     @Override
-    protected void DestroyViewAndThing() {
-        mCouponListFragment = null;
+    protected int initContentView() {
+        return R.layout.activity_base_frame;
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            closeFragment();
-        }
-        return false;
+    protected void bundleIntent(Intent intent) {
+        mCurBottomPosition = 1;
     }
 
+    @Override
+    protected void bindFragment() {
+        titleContent("我的畅通卡");
+    }
+
+    @Override
+    protected void initContentData() {
+        initFragment();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mCouponListFragment = null;
+    }
 }

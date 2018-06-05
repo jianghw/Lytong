@@ -168,11 +168,13 @@ public class HorizontalCarViolationAdapter extends PagerAdapter {
                 ? "0" : userCarInfoBean.getUntreatcount());
 
         TextView tvIssueDate = (TextView) view.findViewById(R.id.tv_issueDate);
-        tvIssueDate.setText(TextUtils.isEmpty(userCarInfoBean.getIssueDate()) ? "无注册" : userCarInfoBean.getIssueDate() + " 注册");
+        tvIssueDate.setText(TextUtils.isEmpty(userCarInfoBean.getIssueDate()) ? "无注册日期" : userCarInfoBean.getIssueDate() + " 注册");
         TextView tvInspectionDate = (TextView) view.findViewById(R.id.tv_annualInspectionDate);
-        tvInspectionDate.setText(userCarInfoBean.getAnnualInspectionDate());
+        if (!TextUtils.isEmpty(userCarInfoBean.getAnnualInspectionDate()))
+            tvInspectionDate.setText(userCarInfoBean.getAnnualInspectionDate());
         TextView tvInsuranceDate = (TextView) view.findViewById(R.id.tv_insuranceDate);
-        tvInsuranceDate.setText(userCarInfoBean.getInsuranceDate());
+        if (!TextUtils.isEmpty(userCarInfoBean.getInsuranceDate()))
+            tvInsuranceDate.setText(userCarInfoBean.getInsuranceDate());
     }
 
     /**

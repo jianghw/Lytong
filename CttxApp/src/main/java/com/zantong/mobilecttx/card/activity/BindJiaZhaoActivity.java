@@ -14,12 +14,14 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.tzly.ctcyh.java.response.BaseResponse;
-import com.tzly.ctcyh.router.util.ToastUtils;
-import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
 import com.tzly.ctcyh.router.custom.primission.PermissionFail;
 import com.tzly.ctcyh.router.custom.primission.PermissionGen;
 import com.tzly.ctcyh.router.custom.primission.PermissionSuccess;
 import com.tzly.ctcyh.router.custom.rea.RSAUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.Utils;
+import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.CarApiClient;
@@ -32,15 +34,14 @@ import com.zantong.mobilecttx.card.dto.BindDrivingDTO;
 import com.zantong.mobilecttx.common.activity.OcrCameraActivity;
 import com.zantong.mobilecttx.daijia.bean.DriverOcrResult;
 import com.zantong.mobilecttx.router.MainRouter;
-import com.tzly.ctcyh.router.custom.dialog.DialogMgr;
 import com.zantong.mobilecttx.utils.ValidateUtils;
 import com.zantong.mobilecttx.utils.jumptools.Act;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
-import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
 import static com.tzly.ctcyh.router.custom.primission.PermissionGen.PER_REQUEST_CODE;
+import static com.tzly.ctcyh.router.util.ToastUtils.toastShort;
 
 /**
  * 绑定畅通卡
@@ -83,6 +84,15 @@ public class BindJiaZhaoActivity extends BaseJxActivity {
 
     protected boolean isNeedKnife() {
         return true;
+    }
+
+    protected void initViewStatus() {
+        boolean isDeta = BuildConfig.isDeta;
+        if (isDeta) {
+            mLicenseno.setText("310109198503162039");
+            mFileNum.setText("310010007285");
+            mPhone.setText("13816307960");
+        }
     }
 
     @Override

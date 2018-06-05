@@ -7,6 +7,7 @@ import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
+import com.tzly.ctcyh.java.response.card.CancelCardResponse;
 import com.tzly.ctcyh.java.response.module.NewsFlagResponse;
 import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
@@ -827,5 +828,13 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<AdvModuleResponse> moduleList() {
         return baseRetrofit().create(ITextService.class).moduleList();
+    }
+
+    /**
+     * 注销畅通卡
+     */
+    @Override
+    public Observable<CancelCardResponse> cancelCard(String cancelCard, int status) {
+        return baseRetrofit().create(ICttxService.class).cancelCard(cancelCard,status);
     }
 }

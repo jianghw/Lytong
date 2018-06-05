@@ -1,101 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/refresh_view"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/res_color_gray_f8"
+    android:orientation="vertical">
 
-    <com.zantong.mobilecttx.widght.refresh.PullRefreshableScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-        <LinearLayout
+    <!--    <TextView
+            android:id="@+id/refreshing_title_notice"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBgGray_f8"
-            android:orientation="vertical">
+            android:layout_height="@dimen/ds_90"
+            android:layout_below="@+id/title"
+            android:background="@color/noticeBackText"
+            android:gravity="center"
+            android:text="刷新失败，请手动刷新"
+            android:textSize="14sp"
+            android:visibility="visible" />-->
 
-            <TextView
-                android:id="@+id/refreshing_title_notice"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_90"
-                android:layout_below="@+id/title"
-                android:background="@color/noticeBackText"
-                android:gravity="center"
-                android:text="刷新失败，请手动刷新"
-                android:textSize="14sp"
-                android:visibility="visible"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/ds_30"
+        android:layout_marginTop="@dimen/ds_30"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/card" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/ds_30"
-                android:layout_marginTop="@dimen/ds_30"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/card"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/ds_30"
+        android:text="本卡绑定车辆"
+        android:textColor="@color/colorTvRed_f33"
+        android:textSize="@dimen/fs_18sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_120"
-                android:background="@color/colorWhite"
-                android:gravity="center_vertical"
-                android:paddingLeft="@dimen/ds_30"
-                android:text="本卡绑定车辆"
-                android:textColor="@color/colorTvRed_f33"
-                android:textSize="@dimen/fs_18sp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_1"
+        android:background="@color/colorLineGray_e6" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_1"
-                android:background="@color/colorLineGray_e6"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mine_card_car_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-            <com.jcodecraeer.xrecyclerview.XRecyclerView
-                android:id="@+id/mine_card_car_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_1"
+        android:background="@color/colorLineGray_e6" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_1"
-                android:background="@color/colorLineGray_e6"/>
+    <LinearLayout
+        android:id="@+id/card_lose_help"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ds_120"
+        android:layout_marginTop="@dimen/ds_30"
+        android:background="@color/colorWhite"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/ds_30"
+        android:paddingRight="@dimen/ds_30">
 
-            <LinearLayout
-                android:id="@+id/card_lose_help"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ds_120"
-                android:layout_marginTop="@dimen/ds_30"
-                android:background="@color/colorWhite"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/ds_30"
-                android:paddingRight="@dimen/ds_30">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="信用卡挂失"
+            android:textColor="@color/colorTvBlack_4d"
+            android:textSize="@dimen/fs_16sp" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="信用卡挂失"
-                    android:textColor="@color/colorTvBlack_4d"
-                    android:textSize="@dimen/fs_16sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/ds_30"
+            android:text="拨打客服热线"
+            android:textColor="@color/colorTvBlack_b3" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/ds_30"
-                    android:text="拨打客服热线"
-                    android:textColor="@color/colorTvBlack_b3"/>
+        <ImageView
+            android:id="@+id/img_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/btn_rightarrow" />
+    </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/img_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/btn_rightarrow"/>
-            </LinearLayout>
-        </LinearLayout>
-    </com.zantong.mobilecttx.widght.refresh.PullRefreshableScrollView>
-</com.zantong.mobilecttx.widght.refresh.PullToRefreshLayout>
+    <Button
+        android:id="@+id/btn_commit"
+        style="@style/ResButtonTheme.Single"
+        android:layout_marginBottom="@dimen/pt_60"
+        android:layout_marginTop="@dimen/pt_40"
+        android:text="畅通卡解绑" />
+
+</LinearLayout>

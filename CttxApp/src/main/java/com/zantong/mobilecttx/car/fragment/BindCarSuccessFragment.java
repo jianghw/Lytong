@@ -6,7 +6,10 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.tzly.ctcyh.java.response.card.CancelCardResponse;
 import com.tzly.ctcyh.router.custom.rea.Des3;
+import com.tzly.ctcyh.router.util.ToastUtils;
+import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.api.CallBack;
 import com.zantong.mobilecttx.api.UserApiClient;
@@ -52,6 +55,26 @@ public class BindCarSuccessFragment extends BaseExtraFragment {
     @Override
     public void initData() {
         getData();
+
+        bindCard();
+    }
+
+    private void bindCard() {
+        UserApiClient.cancelCard(Utils.getContext(), 1, new CallBack<CancelCardResponse>() {
+            @Override
+            public void onSuccess(CancelCardResponse result) {
+                if (result != null && result.getResponseCode() == 2000) {
+                    ToastUtils.toastShort("绑定成功");
+                } else {
+                    ToastUtils.toastShort(result.getResponseDesc());
+                }
+            }
+
+            @Override
+            public void onError(String errorCode, String msg) {
+                ToastUtils.toastShort(msg);
+            }
+        });
     }
 
     protected void getData() {

@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.jianghw.multi.state.layout.MultiState;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.beta.UpgradeInfo;
+import com.tzly.ctcyh.java.response.card.CancelCardResponse;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
 import com.tzly.ctcyh.router.util.AppUtils;
@@ -105,6 +106,12 @@ public class HomeMeFragment extends RefreshFragment
      * mPresenter
      */
     private IHomeMeFtyContract.IHomeMeFtyPresenter mPresenter;
+    /**
+     * 0-->未知状态
+     * 2-->未绑卡
+     * 1-->已绑卡
+     */
+    private int isBindCard;
 
     @Override
     public void onAttach(Activity activity) {
@@ -206,22 +213,19 @@ public class HomeMeFragment extends RefreshFragment
         }
 
         if (mPresenter != null && MainRouter.isUserLogin()) {
+            //绑卡状态
+            mPresenter.cancelCard();
+
             mPresenter.getValidCount();
         }
 
-        //畅通卡
-        boolean isUnBound = TextUtils.isEmpty(MainRouter.getUserFilenum());
-        mTvCard.setText(isUnBound ? "未绑定畅通卡" : "已绑定畅通卡");
-        mTvCard.setTextColor(isUnBound
-                ? getResources().getColor(R.color.colorTvGray_b2)
-                : getResources().getColor(R.color.colorTvBlack_4d));
-
         //车辆
         StringBuffer stringBuffer = new StringBuffer();
-        if (LoginData.getInstance().mCarNum == 0)
+        if (LoginData.getInstance().mCarNum == 0) {
             stringBuffer.append("<font color=\"#b3b3b3\">");
-        else
+        } else {
             stringBuffer.append("<font color=\"#f3362b\">");
+        }
         stringBuffer.append(LoginData.getInstance().mCarNum);
         stringBuffer.append("</font>");
         stringBuffer.append("&#160;");
@@ -254,6 +258,19 @@ public class HomeMeFragment extends RefreshFragment
         }
 
         unMessageCount(3, LoginData.getInstance().tipCount);
+    }
+
+    /**
+     * 畅通卡
+     */
+    private void cardStatus() {
+        if (TextUtils.isEmpty(MainRouter.getUserFilenum())) {
+            mTvCard.setText("未绑定畅通卡");
+            mTvCar.setTextColor(getResources().getColor(R.color.colorTvGray_b2));
+        } else {
+            mTvCard.setText("已绑定畅通卡");
+            mTvCar.setTextColor(getResources().getColor(R.color.colorTvBlack_4d));
+        }
     }
 
     /**
@@ -374,10 +391,13 @@ public class HomeMeFragment extends RefreshFragment
                 );
                 break;
             case R.id.tv_card://我的畅通卡
-                if (TextUtils.isEmpty(MainRouter.getUserFilenum()))
+                if (isBindCard == 0) {
+                    ToastUtils.toastShort("畅通卡状态获取异常,请下拉刷新");
+                } else if (TextUtils.isEmpty(MainRouter.getUserFilenum())) {
                     Act.getInstance().gotoIntentLogin(getActivity(), UnblockedCardActivity.class);
-                else
+                } else {
                     Act.getInstance().gotoIntentLogin(getActivity(), MyCardActivity.class);
+                }
                 break;
             case R.id.tv_car:
                 MobclickAgent.onEvent(getActivity(), Config.getUMengID(28));
@@ -521,5 +541,26 @@ public class HomeMeFragment extends RefreshFragment
         stringBuffer.append("&#160;");
         stringBuffer.append("张可用券");
         mTvCoupon.setText(Html.fromHtml(stringBuffer.toString()));
+    }
+
+    @Override
+    public void cancelCardSucceed(CancelCardResponse result) {
+        CancelCardResponse.DataBean resultData = result.getData();
+        if (resultData != null) {
+            isBindCard = 2;//有标记
+        } else {
+            isBindCard = 1;
+        }
+
+        SPUtils.instance().put(SPUtils.USER_CARD_BIND, isBindCard);
+        cardStatus();
+    }
+
+    @Override
+    public void cancelCardError(String responseDesc) {
+        isBindCard = 0;
+
+        SPUtils.instance().put(SPUtils.USER_CARD_BIND, isBindCard);
+        cardStatus();
     }
 }

@@ -125,6 +125,16 @@ public class BaseApiClient {
         enqueue(context, request, asyncCallBack);
     }
 
+    public static <T> void post(Context context, String url, int status,
+                                AsyncCallBack<T> asyncCallBack) {
+        FormBody.Builder builder = new FormBody.Builder();
+        builder.add("status", String.valueOf(status));
+        builder.add("userNum", MainRouter.getRASUserID());
+        Request request = new Request.Builder().tag(asyncCallBack.getTag())
+                .url(url).post(builder.build()).build();
+        enqueue(context, request, asyncCallBack);
+    }
+
     public static <T> void htmlpost(Context context, String url, String jsonParams,
                                     AsyncCallBack<T> asyncCallBack) {
         FormBody.Builder builder = new FormBody.Builder();

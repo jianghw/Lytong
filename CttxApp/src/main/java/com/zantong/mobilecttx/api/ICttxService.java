@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.api;
 
 import com.tzly.ctcyh.java.response.BaseResponse;
+import com.tzly.ctcyh.java.response.card.CancelCardResponse;
 import com.zantong.mobilecttx.car.bean.VehicleLicenseResponse;
 import com.zantong.mobilecttx.card.dto.BindCarDTO;
 import com.zantong.mobilecttx.home.bean.HomeResponse;
@@ -109,4 +110,11 @@ public interface ICttxService {
      */
     @POST("download/versionInfo")
     Observable<VersionResponse> versionInfo(@Body VersionDTO versionDTO);
+
+    /**
+     * 状态 1.绑卡  2.注销
+     */
+    @FormUrlEncoded
+    @POST("cttx/cancelCard")
+    Observable<CancelCardResponse> cancelCard(@Field("userNum") String cancelCard, @Field("status") int status);
 }

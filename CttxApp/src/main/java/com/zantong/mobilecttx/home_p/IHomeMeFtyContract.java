@@ -1,11 +1,11 @@
 package com.zantong.mobilecttx.home_p;
 
+import com.tzly.ctcyh.java.response.card.CancelCardResponse;
 import com.tzly.ctcyh.router.base.IBasePresenter;
 import com.tzly.ctcyh.router.base.IBaseView;
 import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.home.bean.DriverCoachResponse;
-import com.zantong.mobilecttx.order.bean.CouponFragmentResponse;
 import com.zantong.mobilecttx.user.bean.MessageCountResponse;
 
 /**
@@ -27,6 +27,10 @@ public interface IHomeMeFtyContract {
         void validCountError(String message);
 
         void validCountSucceed(ValidCountResponse result);
+
+        void cancelCardSucceed(CancelCardResponse result);
+
+        void cancelCardError(String responseDesc);
     }
 
     interface IHomeMeFtyPresenter extends IBasePresenter {
@@ -42,6 +46,8 @@ public interface IHomeMeFtyContract {
         void getDriverCoach();
 
         void getValidCount();
+
+        void cancelCard();
 
     }
 

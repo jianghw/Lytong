@@ -9,6 +9,7 @@ import com.tzly.ctcyh.java.response.BankResponse;
 import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.java.response.SubjectGoodsResponse;
 import com.tzly.ctcyh.java.response.active.ActiveConfigResponse;
+import com.tzly.ctcyh.java.response.card.CancelCardResponse;
 import com.tzly.ctcyh.java.response.module.NewsFlagResponse;
 import com.tzly.ctcyh.java.response.news.NewsInfoResponse;
 import com.tzly.ctcyh.java.response.order.OrderInfoResponse;
@@ -730,5 +731,12 @@ public class RepositoryManager {
      */
     public Observable<AdvModuleResponse> moduleList() {
         return mRemoteData.moduleList();
+    }
+
+    /**
+     * 注销畅通卡
+     */
+    public Observable<CancelCardResponse> cancelCard(String cancelCard, int status) {
+        return mRemoteData.cancelCard(cancelCard,status);
     }
 }

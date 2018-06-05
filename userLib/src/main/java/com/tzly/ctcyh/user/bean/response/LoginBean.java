@@ -1,5 +1,9 @@
 package com.tzly.ctcyh.user.bean.response;
 
+import android.text.TextUtils;
+
+import com.tzly.ctcyh.router.util.SPUtils;
+
 /**
  * Created by jianghw on 2017/10/24.
  * Description:
@@ -126,6 +130,10 @@ public class LoginBean {
     }
 
     public String getFilenum() {
+        if (TextUtils.isEmpty(filenum)) return filenum;
+        int status = SPUtils.instance().getInt(SPUtils.USER_CARD_BIND, 0);
+        if (status == 0 || status == 1) return filenum;
+        if (status == 2) return "";//有标记
         return filenum;
     }
 

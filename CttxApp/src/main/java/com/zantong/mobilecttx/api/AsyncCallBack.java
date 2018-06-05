@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.tzly.ctcyh.java.response.BankResponse;
+import com.tzly.ctcyh.java.response.BaseResponse;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.zantong.mobilecttx.application.Config;
 import com.zantong.mobilecttx.application.LoginData;
@@ -106,11 +107,14 @@ public class AsyncCallBack<T> implements Callback {
                 LogUtils.i("reader===" + reader);
                 if (!TextUtils.isEmpty(reader)) {
                     T t = gson.fromJson(reader, clazz);
-                    BankResponse bankResponse = (BankResponse) t;
+                    if (t instanceof BankResponse) {
+                        BankResponse bankResponse = (BankResponse) t;
+                        if (!"CIE999".equals(bankResponse.getSYS_HEAD().getReturnCode())
+                                && !"cip.cfc.v001.01".equals(bankResponse.getSYS_HEAD().getTransServiceCode())) {
+                            sendErrorMsg(context, tag, bankResponse);
+                        }
+                    }else if(t instanceof BaseResponse){
 
-                    if (!"CIE999".equals(bankResponse.getSYS_HEAD().getReturnCode())
-                            && !"cip.cfc.v001.01".equals(bankResponse.getSYS_HEAD().getTransServiceCode())) {
-                        sendErrorMsg(context, tag, bankResponse);
                     }
                     callback.sendSuccessMessage(t);
                 } else {

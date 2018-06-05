@@ -3,6 +3,7 @@ package com.zantong.mobilecttx.home_p;
 
 import android.support.annotation.NonNull;
 
+import com.tzly.ctcyh.java.response.card.CancelCardResponse;
 import com.zantong.mobilecttx.base.bean.ValidCountResponse;
 import com.zantong.mobilecttx.base.dto.BaseDTO;
 import com.zantong.mobilecttx.data_m.BaseSubscriber;
@@ -167,6 +168,36 @@ public class HomeMeFtyPresenter implements IHomeMeFtyContract.IHomeMeFtyPresente
                         else
                             mAtyView.validCountError(result != null
                                     ? result.getResponseDesc() : "未知错误(validCount)");
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
+
+    /**
+     * 注销畅通卡
+     */
+    @Override
+    public void cancelCard() {
+        Subscription subscription = mRepository.cancelCard(mRepository.getRASUserID(), 0)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<CancelCardResponse>() {
+                    @Override
+                    public void doCompleted() {
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                        mAtyView.cancelCardError(e.getMessage());
+                    }
+
+                    @Override
+                    public void doNext(CancelCardResponse result) {
+                        if (result != null && result.getResponseCode() == 2000) {
+                            mAtyView.cancelCardSucceed(result);
+                        } else {
+                            mAtyView.cancelCardError(result.getResponseDesc());
+                        }
                     }
                 });
         mSubscriptions.add(subscription);
