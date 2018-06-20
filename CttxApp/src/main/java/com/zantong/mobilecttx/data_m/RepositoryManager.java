@@ -668,8 +668,8 @@ public class RepositoryManager {
     /**
      * 查违章小广告
      */
-    public Observable<ValidAdvResponse> findIsValidAdvert() {
-        return mRemoteData.findIsValidAdvert();
+    public Observable<ValidAdvResponse> findIsValidAdvert(String carNum) {
+        return mRemoteData.findIsValidAdvert(carNum);
     }
 
     /**
@@ -737,6 +737,10 @@ public class RepositoryManager {
      * 注销畅通卡
      */
     public Observable<CancelCardResponse> cancelCard(String cancelCard, int status) {
-        return mRemoteData.cancelCard(cancelCard,status);
+        return mRemoteData.cancelCard(cancelCard, status);
+    }
+
+    public Observable<BaseResponse> licensePlate(String carNum, String phone, int type) {
+        return mRemoteData.licensePlate(carNum, phone, type);
     }
 }

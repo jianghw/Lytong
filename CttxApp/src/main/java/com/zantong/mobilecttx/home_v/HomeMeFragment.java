@@ -391,7 +391,9 @@ public class HomeMeFragment extends RefreshFragment
                 );
                 break;
             case R.id.tv_card://我的畅通卡
-                if (isBindCard == 0) {
+                if (!MainRouter.isUserLogin()) {
+                    MainRouter.gotoLoginActivity(getActivity());
+                } else if (isBindCard == 0) {
                     ToastUtils.toastShort("畅通卡状态获取异常,请下拉刷新");
                 } else if (TextUtils.isEmpty(MainRouter.getUserFilenum())) {
                     Act.getInstance().gotoIntentLogin(getActivity(), UnblockedCardActivity.class);

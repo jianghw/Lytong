@@ -30,4 +30,6 @@ public interface ICargoService {
     void gotoLicenseCargoActivity(Context context);
 
     void gotoOilEnterActivity(Context context);
+
+    void gotoOilShareActivity(Context context, String type);
 }

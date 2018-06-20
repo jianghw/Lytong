@@ -34,7 +34,7 @@ public interface ITextService {
     Observable<BaseResponse> HandleViolationDTO(@Body ViolationCarDTO violationResult);
 
     @GET("text/findIsValidAdvert")
-    Observable<ValidAdvResponse> findIsValidAdvert();
+    Observable<ValidAdvResponse> findIsValidAdvert(@Query("carNo") String carNum);
 
     /**
      * 获取配置接口

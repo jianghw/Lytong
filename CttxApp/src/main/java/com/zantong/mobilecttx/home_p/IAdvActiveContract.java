@@ -21,6 +21,8 @@ public interface IAdvActiveContract {
         void moduleListError(String message);
 
         void moduleListSucceed(AdvModuleResponse result);
+
+        String carNum();
     }
 
     interface IAdvActivePresenter extends IBasePresenter {

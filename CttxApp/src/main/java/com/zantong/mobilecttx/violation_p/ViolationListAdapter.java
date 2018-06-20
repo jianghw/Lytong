@@ -1,6 +1,7 @@
 package com.zantong.mobilecttx.violation_p;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.BaseAdapter;
 import com.jcodecraeer.xrecyclerview.BaseRecyclerViewHolder;
-import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.utils.StringUtils;
 import com.zantong.mobilecttx.violation_v.IViolationListUi;
@@ -20,6 +20,7 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
 public class ViolationListAdapter extends BaseAdapter<ViolationBean> {
 
     private final IViolationListUi mViolationListUi;
+    private Context contextAdapter;
 
     public ViolationListAdapter(IViolationListUi violationListUi) {
         mViolationListUi = violationListUi;
@@ -37,7 +38,9 @@ public class ViolationListAdapter extends BaseAdapter<ViolationBean> {
 
     @Override
     public View createView(ViewGroup viewGroup, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        contextAdapter=viewGroup.getContext();
+
+        LayoutInflater inflater = LayoutInflater.from(contextAdapter);
         int resource;
         if (viewType == 0) {
             resource = R.layout.recycler_item_violation_list;
@@ -102,11 +105,11 @@ public class ViolationListAdapter extends BaseAdapter<ViolationBean> {
                 int processte = violationBean.getProcessste();
                 if (processte == 0 || processte == 2) {
                     holder.mTvStatus.setText("未处理");
-                    holder.mTvStatus.setTextColor(Utils.getContext().getColor(R.color.res_color_red_ef));
+                    holder.mTvStatus.setTextColor(contextAdapter.getResources().getColor(R.color.res_color_red_ef));
                     holder.mTvPay.setVisibility(View.VISIBLE);
                 } else {
                     holder.mTvStatus.setText("已处理");
-                    holder.mTvStatus.setTextColor(Utils.getContext().getColor(R.color.colorTvGreen_80));
+                    holder.mTvStatus.setTextColor(contextAdapter.getResources().getColor(R.color.colorTvGreen_80));
                     holder.mTvPay.setVisibility(View.GONE);
                 }
             }

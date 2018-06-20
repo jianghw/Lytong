@@ -1,9 +1,6 @@
 package com.tzly.ctcyh.cargo.license_v;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -66,11 +63,11 @@ public class LicenseResultFragment extends RefreshFragment {
         });
         mTvScore = (TextView) view.findViewById(R.id.tv_score);
 
-        FragmentManager manager = getChildFragmentManager();
+        /*FragmentManager manager = getChildFragmentManager();
         Fragment fragment = CargoRouter.getAdvModuleFragment();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(R.id.fragment_child, fragment, "scroll_child_fragment");
-        transaction.commit();
+        transaction.commit();*/
     }
 
     /**

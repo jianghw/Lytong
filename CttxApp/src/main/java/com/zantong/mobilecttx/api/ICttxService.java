@@ -117,4 +117,8 @@ public interface ICttxService {
     @FormUrlEncoded
     @POST("cttx/cancelCard")
     Observable<CancelCardResponse> cancelCard(@Field("userNum") String cancelCard, @Field("status") int status);
+
+    @FormUrlEncoded
+    @POST("licensePlate/lease")
+    Observable<BaseResponse> licensePlate(@Field("name") String carNum, @Field("phone") String phone, @Field("type") int type);
 }

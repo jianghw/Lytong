@@ -36,6 +36,8 @@ public interface IRouterContract {
         void advertCount(String keyId);
 
         void saveStatisticsCount(String statisticsId);
+
+        void licensePlate(String carNum);
     }
 
 }

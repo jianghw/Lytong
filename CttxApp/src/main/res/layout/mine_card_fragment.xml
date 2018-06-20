@@ -84,11 +84,13 @@
             android:src="@mipmap/btn_rightarrow" />
     </LinearLayout>
 
-    <Button
+
+
+    <!--<Button
         android:id="@+id/btn_commit"
         style="@style/ResButtonTheme.Single"
         android:layout_marginBottom="@dimen/pt_60"
         android:layout_marginTop="@dimen/pt_40"
-        android:text="畅通卡解绑" />
+        android:text="畅通卡解绑" />-->
 
 </LinearLayout>

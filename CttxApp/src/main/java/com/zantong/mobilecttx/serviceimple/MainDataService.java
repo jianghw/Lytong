@@ -76,7 +76,7 @@ public class MainDataService implements IMainService {
      * 去绑定畅通卡页面
      */
     @Override
-    public void loginFilenumDialog(Activity activity) {
+    public void loginFilenumDialog(FragmentActivity activity) {
         MainRouter.loginFilenumDialog(activity);
     }
 

@@ -111,11 +111,10 @@ public class ViolationListFragment extends RecyclerListFragment<ViolationBean> {
     }
 
     /**
-     * 有额外控件的布局
+     * 不同布局
      */
-    @Override
     protected boolean needScrollRecycler() {
-        return true;
+        return getArguments().getString(TAG_POSITON).equals("1");
     }
 
     /**
@@ -123,7 +122,8 @@ public class ViolationListFragment extends RecyclerListFragment<ViolationBean> {
      */
     @Override
     protected void bindExtraBottomView(View view) {
-        RouterUtils.gotoAdvModuleFragment(getChildFragmentManager(), view.getId());
+        RouterUtils.gotoAdvModuleFragment(
+                getChildFragmentManager(), view.getId(), mViolationListUi.titleCar());
     }
 
     protected void statusViewSelf(View view, int state) {
@@ -136,11 +136,23 @@ public class ViolationListFragment extends RecyclerListFragment<ViolationBean> {
 
             tvEmpty.setText("亲!未查到您的违章");
         }
+        String position = getArguments().getString(TAG_POSITON);
 
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvEmpty.getLayoutParams();
-        layoutParams.topMargin = RudenessScreenHelper.ptInpx(30);
-        tvEmpty.setLayoutParams(layoutParams);
+        if (position != null && position.equals("1")) {
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tvEmpty.getLayoutParams();
+            layoutParams.topMargin = RudenessScreenHelper.ptInpx(30);
+            tvEmpty.setLayoutParams(layoutParams);
 
-        RouterUtils.gotoAdvModuleFragment(getChildFragmentManager(), R.id.fragment_child);
+            if (state == MultiState.EMPTY) {
+                RouterUtils.gotoAdvModuleFragment(getChildFragmentManager(),
+                        R.id.empty_child, mViolationListUi.titleCar());
+            } else if (state == MultiState.ERROR) {
+                RouterUtils.gotoAdvModuleFragment(getChildFragmentManager(),
+                        R.id.error_child, mViolationListUi.titleCar());
+            } else if (state == MultiState.NET_ERROR) {
+                RouterUtils.gotoAdvModuleFragment(getChildFragmentManager(),
+                        R.id.net_child, mViolationListUi.titleCar());
+            }
+        }
     }
 }

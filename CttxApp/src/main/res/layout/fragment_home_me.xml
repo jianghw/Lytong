@@ -70,7 +70,7 @@
             android:drawableTop="@mipmap/ic_me_card"
             android:gravity="center"
             android:textColor="@color/res_color_black_4d"
-            tools:text="1张牡丹畅通卡" />
+            android:text="未绑定畅通卡" />
 
         <TextView
             android:id="@+id/tv_car"

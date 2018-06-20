@@ -91,7 +91,7 @@ public class WebHtmlViewClient extends WebViewClient {
                     "var font=document.getElementsByTagName(\"font\")[8];" +
                     "font.textContent=\"交通违章缴费\";}" +
                     "changeHtmlCustom();";
-        }else if(url.equals("http://sh.122.gov.cn/shjjappapi/cgs2.html")){//隐藏
+        } else if (url.equals("http://sh.122.gov.cn/shjjappapi/cgs2.html")) {//隐藏
             js = "function hideHtmlCustom(){" +
                     "var bbb=document.getElementsByTagName(\"div\");" +
                     "if(bbb.length > 0){" +

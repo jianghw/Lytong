@@ -382,7 +382,7 @@ public class RefuelOilFragment extends RefreshFragment
 
     @Override
     public String getBusinessType() {
-        return "1";
+        return selectBean != null ? selectBean.getType() : "13";
     }
 
     @Override

@@ -30,6 +30,7 @@ import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
+import com.tzly.ctcyh.router.util.WechatUtils;
 import com.zantong.mobilecttx.application.Injection;
 import com.zantong.mobilecttx.home.activity.CustomCordovaActivity;
 import com.zantong.mobilecttx.home_p.RouterPresenter;
@@ -167,7 +168,7 @@ public class RouterFragment extends Fragment implements IRouterContract.IRouterV
      * 添加广告统计
      */
     public void advClickItemData(String path, String title, String keyId) {
-        if (mPresenter != null) mPresenter.advertCount(keyId);
+        if (mPresenter != null && !TextUtils.isEmpty(keyId)) mPresenter.advertCount(keyId);
         clickItemData(path, title);
     }
 
@@ -175,7 +176,8 @@ public class RouterFragment extends Fragment implements IRouterContract.IRouterV
      * 小峰统计
      */
     public void statistClickItemData(String path, String title, String statisticsId) {
-        if (mPresenter != null) mPresenter.saveStatisticsCount(statisticsId);
+        if (mPresenter != null && !TextUtils.isEmpty(statisticsId))
+            mPresenter.saveStatisticsCount(statisticsId);
         clickItemData(path, title);
     }
 
@@ -183,13 +185,14 @@ public class RouterFragment extends Fragment implements IRouterContract.IRouterV
      * 点击处理事件
      */
     public void clickItemData(String path, String title) {
-        if (TextUtils.isEmpty(title)) title = "商品推荐";
+        if (TextUtils.isEmpty(title)) title = "热门商品";
 
         if (!TextUtils.isEmpty(path)) {
-            if (path.contains("http")) {//启动公司自己html
+            if (path.startsWith("http")) {//启动公司自己html
                 MainRouter.gotoWebHtmlActivity(getContext(), title, path);
-            } else if (path.contains("discount") || path.contains("happysend")) {//保险模块
-                Act.getInstance().gotoIntent(getActivity(), CustomCordovaActivity.class, path);
+            } else if (path.startsWith("xiaocx://")) {//小程序
+                String url = path.substring(9, path.length());
+                WechatUtils.openReqWXMini(url);
             } else if (path.equals("native_app_recharge")) {//加油充值
                 MainRouter.gotoRechargeActivity(getActivity());
             } else if (path.equals("native_app_loan")) {
@@ -230,12 +233,50 @@ public class RouterFragment extends Fragment implements IRouterContract.IRouterV
                 MainRouter.gotoLicenseCargoActivity(getContext());
             } else if (path.equals("native_app_reservation")) {//预约列表
                 MainRouter.gotoReservationActivity(getContext());
+            } else if (path.equals("native_app_jump")) {//弹框
+                gotoCarNumDialog();
+            } else if (path.contains("discount") || path.contains("happysend")) {//保险模块
+                Act.getInstance().gotoIntent(getActivity(), CustomCordovaActivity.class, path);
             } else {//其他
                 ToastUtils.toastShort("此版本暂无此状态页面,请更新最新版本");
             }
         } else {
             ToastUtils.toastShort("敬请期待~");
         }
+    }
+
+    private void gotoCarNumDialog() {
+        if (MainRouter.isUserLogin()) {
+            String carNum = SPUtils.instance().getString(SPUtils.USER_CARD_Num);
+            if (mPresenter != null && !TextUtils.isEmpty(carNum))
+                mPresenter.licensePlate(carNum);
+            if (!TextUtils.isEmpty(carNum)) {
+                carNumDialog();
+            }
+        } else {
+            SPUtils.instance().put(SPUtils.USER_CARD_LOGIN, false);
+            MainRouter.gotoLoginActivity(getActivity());
+        }
+    }
+
+    private void carNumDialog() {
+        String carNum = SPUtils.instance().getString(SPUtils.USER_CARD_Num);
+        String msg = (carNum.startsWith("沪C") || !carNum.startsWith("沪"))
+                ? "您的咨询请求已提交,请保持电话畅通,会有客服给您来电"
+                : "代拍沪牌,拍中后我司负责后续事宜,保证您净收益2.4/年.请保持电话畅通稍后会有客服联系您";
+        MessageDialogFragment fragment = MessageDialogFragment.newInstance(msg);
+        fragment.setClickListener(new IOnCouponSubmitListener() {
+            @Override
+            public void submit(String couponId) {
+            }
+
+            @Override
+            public void cancel() {
+            }
+        });
+        DialogUtils.showDialog(getActivity(), fragment, "msg_dialog");
+        //显示后移除
+        SPUtils.instance().remove(SPUtils.USER_CARD_Num);
     }
 
     /**
@@ -438,7 +479,6 @@ public class RouterFragment extends Fragment implements IRouterContract.IRouterV
                 public void cancel() {
                 }
             });
-
             DialogUtils.showDialog(getActivity(), fragment, "message_dialog");
         } else if (configType.equals("3")) {//网页
             if (!TextUtils.isEmpty(beanExtra)) gotoHtml(beanExtra);
@@ -456,7 +496,7 @@ public class RouterFragment extends Fragment implements IRouterContract.IRouterV
     }
 
     private void gotoHtml(String url) {
-        clickItemData(url, "商品推荐");
+        clickItemData(url, "优惠商品");
     }
 
     public void activeToShow(String channel, String date) {

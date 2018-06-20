@@ -93,7 +93,7 @@
                     android:layout_marginTop="@dimen/pt_10"
                     android:textColor="@color/res_color_red_f3"
                     android:textSize="@dimen/pt_60"
-                    tools:text="500" />
+                    android:text="0" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -137,7 +137,7 @@
                     android:layout_marginTop="@dimen/pt_10"
                     android:textColor="@color/res_color_red_f3"
                     android:textSize="@dimen/pt_60"
-                    tools:text="500" />
+                    android:text="0" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -194,9 +194,11 @@
         android:layout_marginLeft="@dimen/pt_50"
         android:layout_marginRight="@dimen/pt_50"
         android:layout_marginTop="@dimen/pt_20"
+        android:layout_marginBottom="@dimen/pt_20"
         android:gravity="left"
+        android:text="1.分享优惠链接至好友，您的好友领取红包并成功在14天内完成加油订单，视为成功邀请，届时您将获得奖励红包
+        2.您获得的奖励红包按照每成功邀请1人的3张10加油券，可在畅通车友会APP“个人--优惠券”中查询"
         android:textColor="@color/res_color_black_4d"
-        android:textSize="@dimen/pt_26"
-        tools:text="——  活动规则  ——" />
+        android:textSize="@dimen/pt_26" />
 
 </LinearLayout>

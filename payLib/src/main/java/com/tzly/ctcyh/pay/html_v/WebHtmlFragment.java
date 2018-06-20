@@ -648,7 +648,7 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
     //打开本地路由规则
     @JavascriptInterface
     public void gotoByTargetPath(String url) {
-        if (mPresenter != null) mPresenter.customerService(url,2);
+        if (mPresenter != null) mPresenter.customerService(url, 2);
     }
 
     /**
@@ -656,6 +656,14 @@ public class WebHtmlFragment extends Fragment implements IWebHtmlContract.IWebHt
      */
     @JavascriptInterface
     public void openTitleShare() {
-        if (mPresenter != null) mPresenter.customerService("share",3);
+        if (mPresenter != null) mPresenter.customerService("share", 3);
+    }
+
+    /**
+     * 小程序
+     */
+    @JavascriptInterface
+    public void jumpMiniWeChat(String path) {
+        PayRouter.gotoByTargetPath("xiaocx://" + path, getActivity());
     }
 }

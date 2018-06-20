@@ -22,11 +22,13 @@ import com.tzly.ctcyh.cargo.refuel_p.OilSharePresenter;
 import com.tzly.ctcyh.java.request.ShareGsonDTO;
 import com.tzly.ctcyh.java.response.oil.OilAccepterInfoResponse;
 import com.tzly.ctcyh.java.response.oil.OilShareInfoResponse;
+import com.tzly.ctcyh.java.response.oil.OilShareModuleResponse;
 import com.tzly.ctcyh.java.response.oil.OilShareResponse;
 import com.tzly.ctcyh.router.base.RefreshFragment;
 import com.tzly.ctcyh.router.custom.dialog.BitmapDialogFragment;
 import com.tzly.ctcyh.router.custom.dialog.DialogUtils;
 import com.tzly.ctcyh.router.custom.image.ImageLoadUtils;
+import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Utils;
 
 import java.util.List;
@@ -66,6 +68,17 @@ public class OilShareFragment extends RefreshFragment
         return MultiState.CONTENT;
     }
 
+    /**
+     * 只传type
+     */
+    public static OilShareFragment newInstance(String type) {
+        OilShareFragment fragment = new OilShareFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(CargoGlobal.putExtra.oil_share_type_extra, type);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     public static OilShareFragment newInstance(String banner, String img, String json) {
         OilShareFragment fragment = new OilShareFragment();
         Bundle bundle = new Bundle();
@@ -92,9 +105,6 @@ public class OilShareFragment extends RefreshFragment
 
         OilSharePresenter presenter = new OilSharePresenter(
                 InjectionRepository.provideRepository(Utils.getContext()), this);
-
-        String banner = getArguments().getString(CargoGlobal.putExtra.oil_share_banner_extra);
-        ImageLoadUtils.loadTwoRectangle(banner, mImgTop);
     }
 
     @Override
@@ -109,9 +119,21 @@ public class OilShareFragment extends RefreshFragment
     protected void loadingFirstData() {
         mCurPosition = 0;
 
+        String type = getBusinessType();
+        if (TextUtils.isEmpty(type)) {
+            loadMoreData();
+        } else {
+            if (mPresenter != null) mPresenter.shareModuleInfo();
+        }
+    }
+
+    private void loadMoreData() {
         if (mPresenter != null) mPresenter.shareInfo();
         if (mPresenter != null) mPresenter.getShareInfo();
         if (mPresenter != null) mPresenter.getAccepterInfoList(mCurPosition);
+
+        String banner = getArguments().getString(CargoGlobal.putExtra.oil_share_banner_extra);
+        ImageLoadUtils.loadTwoRectangle(banner, mImgTop);
     }
 
     @Override
@@ -134,8 +156,12 @@ public class OilShareFragment extends RefreshFragment
         } else if (v.getId() == R.id.tv_friend) {//朋友圈
             ShareUtils.showWechat(getActivity(), imgUrl, codeUrl, 1);
         } else if (v.getId() == R.id.tv_face) {//二维码
-            BitmapDialogFragment fragment = BitmapDialogFragment.newInstance(codeUrl);
-            DialogUtils.showDialog(getActivity(), fragment, "code_dialog");
+            if (TextUtils.isEmpty(codeUrl)) {
+                ToastUtils.toastShort("获取数据失败,下拉刷新");
+            } else {
+                BitmapDialogFragment fragment = BitmapDialogFragment.newInstance(codeUrl);
+                DialogUtils.showDialog(getActivity(), fragment, "code_dialog");
+            }
         }
     }
 
@@ -254,5 +280,38 @@ public class OilShareFragment extends RefreshFragment
     @Override
     public void clickItem(View view) {
         onClick(view);
+    }
+
+    /**
+     * 分享
+     */
+    @Override
+    public String getBusinessType() {
+        return getArguments().getString(CargoGlobal.putExtra.oil_share_type_extra);
+    }
+
+    @Override
+    public void shareModuleInfoError(String message) {
+        toastShort("获取分享图片失败" + message);
+    }
+
+    @Override
+    public void shareModuleInfoSucceed(OilShareModuleResponse response) {
+        OilShareModuleResponse.DataBean data = response.getData();
+        if (data == null) return;
+//        String topImg = data.getTopImg();
+        String banner = data.getBanner();
+        String imgUrl = data.getImg();
+        String json = data.getExtraParam();
+
+        if (TextUtils.isEmpty(banner) || TextUtils.isEmpty(imgUrl) || TextUtils.isEmpty(json))
+            return;
+
+//        ImageLoadUtils.loadTwoRectangle(topImg, mImgBanner);
+        getArguments().putString(CargoGlobal.putExtra.oil_share_banner_extra, banner);
+        getArguments().putString(CargoGlobal.putExtra.oil_share_img_extra, imgUrl);
+        getArguments().putString(CargoGlobal.putExtra.oil_share_json_extra, json);
+
+        loadMoreData();
     }
 }

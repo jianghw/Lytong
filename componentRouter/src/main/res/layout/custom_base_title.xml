@@ -63,7 +63,7 @@
         android:paddingLeft="@dimen/res_x_30"
         android:paddingRight="@dimen/res_x_30"
         android:textColor="@color/res_color_red_f3"
-        android:textSize="@dimen/res_fs_16"
+        android:textSize="@dimen/res_fs_14"
         android:visibility="gone"
         tools:text="jfsdjfisosodfjsd" />
 
@@ -82,7 +82,7 @@
         android:paddingRight="@dimen/res_x_30"
         android:text="客服"
         android:textColor="@color/res_color_red_f3"
-        android:textSize="@dimen/res_fs_16" />
+        android:textSize="@dimen/res_fs_14" />
 
     <TextView
         android:id="@+id/tv_line"

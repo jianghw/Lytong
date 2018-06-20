@@ -3,8 +3,6 @@ package com.tzly.ctcyh.router.custom.dialog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,23 +10,22 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
+import com.luozm.captcha.Captcha;
 import com.tzly.ctcyh.router.R;
-import com.tzly.ctcyh.router.custom.image.EncodingUtils;
-import com.tzly.ctcyh.router.util.RudenessScreenHelper;
 
 
 /**
  * Created by jianghw on 2017/12/6.
- * Description: 二维码显示器
+ * Description: 滑动选择区
  * Update by:
  * Update day:
  */
 
-public class BitmapDialogFragment extends DialogFragment {
+public class CaptchaDialogFragment extends DialogFragment {
 
-    private static final String STATUS_CODE = "STATUS_CODE";
+    private static final String STATUS_NAME = "STATUS_NAME";
+    private IOnCouponSubmitListener submitListener;
 
     @Override
     public void onAttach(Context context) {
@@ -50,32 +47,39 @@ public class BitmapDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+      /*  Window window = getDialog().getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams wlp = window.getAttributes();
+            wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            window.setAttributes(wlp);
+        }*/
 
-        View view = inflater.inflate(R.layout.custom_dialog_bitmap, container, true);
+        View view = inflater.inflate(R.layout.custom_dialog_captcha, container, true);
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.tv_msg);
-        String codeUrl = getArguments().getString(STATUS_CODE);
-
-        Bitmap qrCodeBitmap = EncodingUtils.createQRCode(
-                codeUrl, RudenessScreenHelper.ptInpx(520), RudenessScreenHelper.ptInpx(520),
-                BitmapFactory.decodeResource(getResources(), R.mipmap.ic_global_app));
-        imageView.setImageBitmap(qrCodeBitmap);
-
-        view.findViewById(R.id.tv_submit).setOnClickListener(new View.OnClickListener() {
+        Captcha captcha = (Captcha) view.findViewById(R.id.captCha);
+        captcha.setCaptchaListener(new Captcha.CaptchaListener() {
+            @Override
+            public void onAccess(long time) {
+                if (submitListener != null) submitListener.submit(null);
+                dismiss();
+            }
 
             @Override
-            public void onClick(View view) {
-
+            public void onFailed() {
+                if (submitListener != null) submitListener.cancel();
                 dismiss();
             }
         });
+
         return view;
+//        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    public static BitmapDialogFragment newInstance(String couponName) {
-        BitmapDialogFragment fragment = new BitmapDialogFragment();
+    public static CaptchaDialogFragment newInstance() {
+        CaptchaDialogFragment fragment = new CaptchaDialogFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(STATUS_CODE, couponName);
+//        bundle.putString(STATUS_NAME, couponName);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -91,4 +95,7 @@ public class BitmapDialogFragment extends DialogFragment {
         return super.onCreateDialog(savedInstanceState);
     }
 
+    public void setClickListener(IOnCouponSubmitListener iOnDateSetListener) {
+        submitListener = iOnDateSetListener;
+    }
 }

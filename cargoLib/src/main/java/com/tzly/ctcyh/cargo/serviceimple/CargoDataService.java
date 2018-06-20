@@ -77,4 +77,9 @@ public class CargoDataService implements ICargoService {
     public void gotoOilEnterActivity(Context context) {
         CargoRouter.gotoOilEnterActivity(context);
     }
+
+    @Override
+    public void gotoOilShareActivity(Context context, String type) {
+        CargoRouter.gotoOilShareActivity(context, type);
+    }
 }

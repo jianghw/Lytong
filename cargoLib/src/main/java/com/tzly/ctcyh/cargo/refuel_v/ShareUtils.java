@@ -12,7 +12,7 @@ public class ShareUtils {
     /**
      * 微信分享业务
      */
-    public static void showWechat(FragmentActivity activity, String imgUrl, String codeUrl,int type) {
+    public static void showWechat(FragmentActivity activity, String imgUrl, String codeUrl, int type) {
         FragmentManager manager = activity.getSupportFragmentManager();
         Fragment fragment = manager.findFragmentByTag("router_wechat");
 
@@ -21,12 +21,11 @@ public class ShareUtils {
             ShareWechatFragment wechatFragment = ShareWechatFragment.newInstance(imgUrl, codeUrl, type);
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.add(wechatFragment, "router_wechat").commitNow();
-        }
-        if (fragment == null) {
+            wechatFragment.toShareBitmap();
+        } else if (fragment != null && fragment instanceof ShareWechatFragment) {
             fragment = manager.findFragmentByTag("router_wechat");
-        }
-        if (fragment instanceof ShareWechatFragment) {
             ShareWechatFragment wechatFragment = (ShareWechatFragment) fragment;
+            wechatFragment.reloadData(imgUrl, codeUrl, type);
             wechatFragment.toShareBitmap();
         } else {
             ToastUtils.toastShort("路由规则遗失,程序员GG会尽快处理");

@@ -350,7 +350,7 @@ public class DiscountOilFragment extends RefreshFragment
 
     @Override
     public String getBusinessType() {
-        return "13";
+        return infoBean != null ? infoBean.getType() : "14";
     }
 
     @Override

@@ -30,8 +30,8 @@ public final class BitmapUtils {
         int s_width = secondBitmap.getWidth();
         int s_height = secondBitmap.getHeight();
 
-        canvas.drawBitmap(secondBitmap, width - RudenessScreenHelper.ptInpx(40) - s_width,
-                height - s_height - RudenessScreenHelper.ptInpx(60), null);
+        canvas.drawBitmap(secondBitmap, width - RudenessScreenHelper.ptInpx(20) - s_width,
+                height - s_height - RudenessScreenHelper.ptInpx(20), null);
         return bitmap;
     }
 

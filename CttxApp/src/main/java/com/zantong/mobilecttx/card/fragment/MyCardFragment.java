@@ -12,6 +12,9 @@ import android.widget.LinearLayout;
 import com.jianghw.multi.state.layout.MultiState;
 import com.tzly.ctcyh.java.response.card.CancelCardResponse;
 import com.tzly.ctcyh.router.base.RefreshFragment;
+import com.tzly.ctcyh.router.custom.dialog.CaptchaDialogFragment;
+import com.tzly.ctcyh.router.custom.dialog.DialogUtils;
+import com.tzly.ctcyh.router.custom.dialog.IOnCouponSubmitListener;
 import com.tzly.ctcyh.router.custom.rea.Des3;
 import com.tzly.ctcyh.router.util.ToastUtils;
 import com.tzly.ctcyh.router.util.Tools;
@@ -73,8 +76,9 @@ public class MyCardFragment extends RefreshFragment implements View.OnClickListe
 
         mCardLoseHelp = (LinearLayout) view.findViewById(R.id.card_lose_help);
         mCardLoseHelp.setOnClickListener(this);
-        mBtnCommit = (Button) view.findViewById(R.id.btn_commit);
-        mBtnCommit.setOnClickListener(this);
+
+        /*mBtnCommit = (Button) view.findViewById(R.id.btn_commit);
+        mBtnCommit.setOnClickListener(this);*/
     }
 
     @Override
@@ -133,9 +137,6 @@ public class MyCardFragment extends RefreshFragment implements View.OnClickListe
                     startActivity(intent);
                 }
                 break;
-            case R.id.btn_commit:
-                uBindCard();
-                break;
             default:
                 break;
         }
@@ -146,10 +147,10 @@ public class MyCardFragment extends RefreshFragment implements View.OnClickListe
             @Override
             public void onSuccess(CancelCardResponse result) {
                 if (result != null && result.getResponseCode() == 2000) {
-                    ToastUtils.toastShort("注销成功");
+                    ToastUtils.toastShort("解绑成功");
                     getActivity().finish();
                 } else {
-                    ToastUtils.toastShort("注销失败");
+                    ToastUtils.toastShort("解绑失败");
                 }
             }
 
@@ -158,5 +159,21 @@ public class MyCardFragment extends RefreshFragment implements View.OnClickListe
                 ToastUtils.toastShort(msg);
             }
         });
+    }
+
+    public void unBindCard() {
+        CaptchaDialogFragment fragment = CaptchaDialogFragment.newInstance();
+        fragment.setClickListener(new IOnCouponSubmitListener() {
+            @Override
+            public void submit(String couponId) {
+                uBindCard();
+            }
+
+            @Override
+            public void cancel() {
+                ToastUtils.toastShort("验证失败");
+            }
+        });
+        DialogUtils.showDialog(getActivity(), fragment, "captcha_dialog");
     }
 }

@@ -23,7 +23,7 @@
             android:textSize="@dimen/pt_28" />
 
         <FrameLayout
-            android:id="@+id/fragment_child"
+            android:id="@+id/error_child"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/pt_60" />

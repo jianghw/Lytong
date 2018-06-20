@@ -35,9 +35,9 @@ public class EncodingUtils {
             hints.put(com.google.zxing.EncodeHintType.CHARACTER_SET, "utf-8");
             // 容错级别
             hints.put(com.google.zxing.EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+            hints.put(com.google.zxing.EncodeHintType.MARGIN, 2); //default is 4
             // 图像数据转换，使用了矩阵转换
-            BitMatrix bitMatrix = new QRCodeWriter().encode(content, BarcodeFormat.QR_CODE, widthPix,
-                    heightPix, hints);
+            BitMatrix bitMatrix = new QRCodeWriter().encode(content, BarcodeFormat.QR_CODE, widthPix, heightPix, hints);
             int[] pixels = new int[widthPix * heightPix];
             // 下面这里按照二维码的算法，逐个生成二维码的图片，
             // 两个for循环是图片横列扫描的结果
@@ -86,7 +86,8 @@ public class EncodingUtils {
             return src;
         }
         //logo大小为二维码整体大小的1/5
-        float scaleFactor = srcWidth * 1.0f / 8 / logoWidth;
+        float scaleFactor = srcWidth * 1.0f / 7 / logoWidth;
+
         Bitmap bitmap = Bitmap.createBitmap(srcWidth, srcHeight, Bitmap.Config.ARGB_8888);
         try {
             Canvas canvas = new Canvas(bitmap);

@@ -47,6 +47,13 @@ public class ShareWechatFragment extends Fragment
         return f;
     }
 
+    public void reloadData(String imgUrl, String codeUrl, int type) {
+        Bundle bundle = getArguments();
+        bundle.putString(IMAGE_URL, imgUrl);
+        bundle.putString(CODE_URL, codeUrl);
+        bundle.putInt(WE_TYPE, type);
+    }
+
     /**
      * 当该fragment被添加到Activity时回调，该方法只会被调用一次
      */

@@ -421,8 +421,9 @@ public interface IRemoteSource {
 
     /**
      * 查违章小广告
+     * @param carNum
      */
-    Observable<ValidAdvResponse> findIsValidAdvert();
+    Observable<ValidAdvResponse> findIsValidAdvert(String carNum);
 
     /**
      * 获取配置接口
@@ -467,4 +468,6 @@ public interface IRemoteSource {
      * 注销畅通卡
      */
     Observable<CancelCardResponse> cancelCard(String cancelCard, int status);
+
+    Observable<BaseResponse> licensePlate(String carNum, String phone, int type);
 }

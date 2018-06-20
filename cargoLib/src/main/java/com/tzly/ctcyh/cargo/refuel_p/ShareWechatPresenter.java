@@ -9,6 +9,8 @@ import com.tzly.ctcyh.router.custom.image.EncodingUtils;
 import com.tzly.ctcyh.router.util.LogUtils;
 import com.tzly.ctcyh.router.util.RudenessScreenHelper;
 
+import java.util.concurrent.TimeUnit;
+
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -52,12 +54,13 @@ public class ShareWechatPresenter implements IShareWechatContract.IShareWechatPr
     @Override
     public void mergeBitmap(final Bitmap bitmap, final String codeUrl, final Bitmap logio) {
         Subscription subscription = Observable.just(codeUrl)
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
                 .map(new Func1<String, Bitmap>() {
                     @Override
                     public Bitmap call(String s) {
                         return EncodingUtils.createQRCode(codeUrl,
-                                RudenessScreenHelper.ptInpx(150F),
-                                RudenessScreenHelper.ptInpx(150F), logio);
+                                RudenessScreenHelper.ptInpx(120F),
+                                RudenessScreenHelper.ptInpx(120F), logio);
                     }
                 })
                 .map(new Func1<Bitmap, Bitmap>() {

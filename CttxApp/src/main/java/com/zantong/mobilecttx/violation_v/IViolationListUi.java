@@ -10,7 +10,10 @@ import com.zantong.mobilecttx.weizhang.bean.ViolationBean;
  */
 
 public interface IViolationListUi {
+
     void refreshListData(int position);
 
     void doClickPay(ViolationBean bean);
+
+    String titleCar();
 }

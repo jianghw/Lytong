@@ -261,7 +261,7 @@ public final class MainRouter {
     /**
      * 去绑定畅通卡页面
      */
-    public static void loginFilenumDialog(final Activity activity) {
+    public static void loginFilenumDialog(final FragmentActivity activity) {
 
         boolean show = SPUtils.instance().getBoolean(SPUtils.USER_LOGIN_DIALOG, true);
         if (show && TextUtils.isEmpty(getUserFilenum())) {
@@ -278,6 +278,7 @@ public final class MainRouter {
                         @Override
                         public void onClick(View v) {
                             if (activity != null) gotoMainActivity(activity, 0);
+                            RouterUtils.gotoByStatistId("native_app_jump", "热门优惠", null, activity);
                         }
                     },
                     new View.OnClickListener() {
@@ -285,10 +286,12 @@ public final class MainRouter {
                         public void onClick(View v) {
                             SPUtils.instance().put(SPUtils.USER_LOGIN_DIALOG, false);
                             if (activity != null) activity.finish();
+                            if (activity != null) gotoMainActivity(activity, 0);
                         }
                     });
         } else {
             gotoMainActivity(activity, 0);
+            RouterUtils.gotoByStatistId("native_app_jump", "热门优惠", null, activity);
         }
     }
 
@@ -852,13 +855,14 @@ public final class MainRouter {
      * 获取 fragment 页面
      */
     public static Fragment initAdvModuleFragment() {
-        return AdvModuleFragment.newInstance();
+        return AdvModuleFragment.newInstance("沪牌");
     }
 
     /**
      * 点击 统计
      */
-    public static void gotoCustomerService(String url, String title, String keyId, FragmentActivity activity) {
+    public static void gotoCustomerService(String url, String title,
+                                           String keyId, FragmentActivity activity) {
         RouterUtils.gotoByStatistId(url, title, keyId, activity);
     }
 
@@ -871,5 +875,18 @@ public final class MainRouter {
 
     public static void gotoByTargetPath(String url, String title, FragmentActivity activity) {
         RouterUtils.gotoByUrl(url, title, activity);
+    }
+
+    /**
+     * 分享
+     */
+    public static void gotoOilShareActivity(Context context, String type) {
+        Object object = getCargoObject();
+        if (object != null && object instanceof ICargoService) {
+            ICargoService service = (ICargoService) object;
+            service.gotoOilShareActivity(context, type);
+        } else {//注册机开始工作
+            registerCargo();
+        }
     }
 }

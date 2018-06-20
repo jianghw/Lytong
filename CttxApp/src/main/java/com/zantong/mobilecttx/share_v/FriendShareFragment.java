@@ -176,8 +176,19 @@ public class FriendShareFragment extends RefreshFragment
         if (!(result instanceof StatistCountResponse)) return;
 
         StatistCountResponse response = (StatistCountResponse) result;
-        List<StatistCountResponse.DataBean.ListBean> list = response.getData().getList();
+        boolean flag = response.getData().isFlag();
+        if (!flag) {//是地推
+            /*FragmentActivity activity = getActivity();
+            if (activity != null && activity instanceof ShareParentActivity) {
+                ShareParentActivity parentActivity = (ShareParentActivity) activity;
+                parentActivity.closeFragment(0);
+            }*/
 
+            MainRouter.gotoOilShareActivity(getActivity(), "99");
+            getActivity().finish();
+        }
+
+        List<StatistCountResponse.DataBean.ListBean> list = response.getData().getList();
         List<StatistCountResponse.DataBean.ListBean> topList = new ArrayList<>();
         List<StatistCountResponse.DataBean.ListBean> botList = new ArrayList<>();
 
@@ -191,7 +202,6 @@ public class FriendShareFragment extends RefreshFragment
         setTopDataResult(topList);
         setSimpleDataResult(botList);
 
-        boolean flag = response.getData().isFlag();
         //地推人员
         //        mImgScan.setVisibility(flag ? View.VISIBLE : View.GONE);
         //        mBtnPay.setVisibility(flag ? View.VISIBLE : View.GONE);

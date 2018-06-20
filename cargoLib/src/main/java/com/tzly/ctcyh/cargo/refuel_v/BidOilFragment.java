@@ -159,7 +159,7 @@ public class BidOilFragment extends RefreshFragment
             if (!url.contains("http")) {
                 url = (BuildConfig.isDeta ? BuildConfig.beta_base_url : BuildConfig.release_base_url) + url;
             }
-            ImageLoadUtils.loadTwoRectangle(url, mImgBanner);
+//            ImageLoadUtils.loadTwoRectangle(url, mImgBanner);
 
             List<BidOilBean> lis = bidOilData.getGoods();
             //手动标记默认选择项目
@@ -379,7 +379,7 @@ public class BidOilFragment extends RefreshFragment
 
     @Override
     public String getBusinessType() {
-        return "15";
+        return infoBean != null ? infoBean.getType() : "15";
     }
 
     @Override
@@ -400,6 +400,7 @@ public class BidOilFragment extends RefreshFragment
                 || TextUtils.isEmpty(imgUrl) || TextUtils.isEmpty(json)) return;
 
         ImageLoadUtils.loadTwoRectangle(topImg, mImgBanner);
+
         getArguments().putString(ARGS_BANNER, banner);
         getArguments().putString(ARGS_IMAGE, imgUrl);
         getArguments().putString(ARGS_JSON, json);

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.tzly.ctcyh.java.response.violation.AdvModuleResponse;
 import com.tzly.ctcyh.java.response.violation.ValidAdvResponse;
 import com.tzly.ctcyh.router.custom.SpaceItemDecoration;
+import com.tzly.ctcyh.router.util.SPUtils;
 import com.tzly.ctcyh.router.util.Utils;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.application.Injection;
@@ -30,6 +31,7 @@ import java.util.List;
  */
 public class AdvModuleFragment extends Fragment implements IAdvActiveContract.IAdvActiveView {
 
+    private static final String CAR_NUM = "car_num";
     private IAdvActiveContract.IAdvActivePresenter mPresenter;
 
     private RecyclerView recycler;
@@ -37,11 +39,17 @@ public class AdvModuleFragment extends Fragment implements IAdvActiveContract.IA
     private AdvImageAdapter adapterAdv;
     private AdvModuleAdapter adapterModule;
 
-    public static AdvModuleFragment newInstance() {
+    public static AdvModuleFragment newInstance(String carNum) {
         AdvModuleFragment f = new AdvModuleFragment();
         Bundle bundle = new Bundle();
+        bundle.putString(CAR_NUM, carNum);
         f.setArguments(bundle);
         return f;
+    }
+
+    public void relodaData(String carNum) {
+        Bundle bundle = getArguments();
+        bundle.putString(CAR_NUM, carNum);
     }
 
     /**
@@ -93,6 +101,8 @@ public class AdvModuleFragment extends Fragment implements IAdvActiveContract.IA
         adapterModule.setItemClickListener(new AdvModuleAdapter.ClickUrlAdapter() {
             @Override
             public void clickUrl(String url, int id) {
+                //保存车牌
+                SPUtils.instance().put(SPUtils.USER_CARD_Num, getArguments().getString(CAR_NUM));
                 RouterUtils.gotoByStatistId(url, "热门优惠", String.valueOf(id), getActivity());
             }
         });
@@ -109,6 +119,8 @@ public class AdvModuleFragment extends Fragment implements IAdvActiveContract.IA
         adapterAdv.setItemClickListener(new AdvImageAdapter.ClickUrlAdapter() {
             @Override
             public void clickUrl(String url, int id) {
+                //保存车牌
+                SPUtils.instance().put(SPUtils.USER_CARD_Num, getArguments().getString(CAR_NUM));
                 RouterUtils.gotoByAdvId(url, "热门优惠", String.valueOf(id), getActivity());
             }
         });
@@ -220,5 +232,10 @@ public class AdvModuleFragment extends Fragment implements IAdvActiveContract.IA
         list.addAll(beanList);*/
 
         adapterModule.append(beanList);
+    }
+
+    @Override
+    public String carNum() {
+        return getArguments().getString(CAR_NUM);
     }
 }

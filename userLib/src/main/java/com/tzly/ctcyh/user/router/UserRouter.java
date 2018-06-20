@@ -3,6 +3,7 @@ package com.tzly.ctcyh.user.router;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import com.tzly.ctcyh.router.ServiceRouter;
 import com.tzly.ctcyh.router.UiRouter;
@@ -104,7 +105,7 @@ public final class UserRouter {
     /**
      * 去绑定畅通卡页面
      */
-    public static void loginFilenumDialog(Activity activity) {
+    public static void loginFilenumDialog(FragmentActivity activity) {
         Object object = getMainObject();
         if (object != null && object instanceof IMainService) {
             IMainService service = (IMainService) object;

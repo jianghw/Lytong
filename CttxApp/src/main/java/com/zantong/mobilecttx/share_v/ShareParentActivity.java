@@ -1,20 +1,18 @@
 package com.zantong.mobilecttx.share_v;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
-import com.tzly.ctcyh.router.base.JxBaseActivity;
+import com.tzly.ctcyh.router.global.JxGlobal;
 import com.tzly.ctcyh.router.util.FragmentUtils;
 import com.zantong.mobilecttx.BuildConfig;
 import com.zantong.mobilecttx.R;
 import com.zantong.mobilecttx.fahrschule_v.FahrschuleShareFragment;
-
-import com.tzly.ctcyh.router.global.JxGlobal;
+import com.zantong.mobilecttx.router.MainRouter;
 
 /**
  * Created by jianghw on 2017/7/7.
@@ -93,7 +91,8 @@ public class ShareParentActivity extends AbstractBaseActivity implements View.On
      * 覆盖父类实现
      */
     protected void backClickListener() {
-        closeFragment(0);
+//        closeFragment(0);
+        finish();
     }
 
     @Override
@@ -135,7 +134,7 @@ public class ShareParentActivity extends AbstractBaseActivity implements View.On
                     }
                 });
                 break;
-            case 3:
+            case 3://分享返现
                 if (mFriendShareFragment == null) {
                     mFriendShareFragment = FriendShareFragment.newInstance();
                 }
@@ -202,8 +201,9 @@ public class ShareParentActivity extends AbstractBaseActivity implements View.On
                 initFragment();
                 break;
             case R.id.img_share:
-                mCurPosition = 3;
-                initFragment();
+               /* mCurPosition = 3;
+                initFragment();*/
+                MainRouter.gotoOilShareActivity(this, "99");
                 break;
             case R.id.img_sparring:
                 mCurPosition = 4;

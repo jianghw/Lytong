@@ -44,7 +44,15 @@ public class MyCardActivity extends AbstractBaseActivity {
     @Override
     protected void bindFragment() {
         titleContent("我的畅通卡");
+
+        titleMore("解绑");
     }
+
+    @Override
+    protected void rightClickListener() {
+        if(mCouponListFragment!=null) mCouponListFragment.unBindCard();
+    }
+
 
     @Override
     protected void initContentData() {

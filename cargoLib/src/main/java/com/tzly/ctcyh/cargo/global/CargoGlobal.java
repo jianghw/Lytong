@@ -35,6 +35,7 @@ public final class CargoGlobal {
         public static final String oil_share_banner_extra = "oil_share_banner_extra";
         public static final String oil_share_img_extra = "oil_share_img_extra";
         public static final String oil_share_json_extra = "oil_share_json_extra";
+        public static final String oil_share_type_extra = "oil_share_type_extra";
     }
 
     public static final class Response {

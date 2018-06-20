@@ -2,7 +2,6 @@ package com.tzly.ctcyh.cargo.refuel_p;
 
 import android.content.Context;
 import android.text.Html;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +32,12 @@ public class OilShareAdapter extends BaseAdapter<OilAccepterInfoResponse.DataBea
     public int getItemViewType(int position) {
         OilAccepterInfoResponse.DataBean bean = getAll().get(position);
         String stage = bean.getStage();
-        if (TextUtils.isEmpty(stage)) {
+        List<OilAccepterInfoResponse.DataBean.CouponBean> coupon = bean.getCoupon();
+        if (coupon == null || coupon.isEmpty()) {
             stage = "0";
         }
-        return Integer.valueOf(stage);
+//        return Integer.valueOf(stage);
+        return 1;
     }
 
     @Override
@@ -66,6 +67,7 @@ public class OilShareAdapter extends BaseAdapter<OilAccepterInfoResponse.DataBea
     public void bindViewData(BaseRecyclerViewHolder viewHolder,
                              int position, OilAccepterInfoResponse.DataBean dataBean) {
         int type = viewHolder.getItemViewType();
+        String stage = handlerStage(dataBean.getStage());
         if (type == 0) {
             RemindViewHolder holder = (RemindViewHolder) viewHolder;
             String phone = dataBean.getPhone();
@@ -74,12 +76,14 @@ public class OilShareAdapter extends BaseAdapter<OilAccepterInfoResponse.DataBea
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+
             StringBuilder sb = new StringBuilder();
             sb.append("用户");
             sb.append("<font color=\"#f3362b\">");
             sb.append(phone);
             sb.append("</font>");
-            sb.append("已注册");
+            sb.append(stage);
             holder.mTvUser.setText(Html.fromHtml(sb.toString()));
 
             holder.mTvStatus.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +107,7 @@ public class OilShareAdapter extends BaseAdapter<OilAccepterInfoResponse.DataBea
             sb.append("<font color=\"#f3362b\">");
             sb.append(phone);
             sb.append("</font>");
-            sb.append("已下单");
+            sb.append(stage);
             holder.mTvUser.setText(Html.fromHtml(sb.toString()));
 
             List<OilAccepterInfoResponse.DataBean.CouponBean> couponBeanList = dataBean.getCoupon();
@@ -115,6 +119,19 @@ public class OilShareAdapter extends BaseAdapter<OilAccepterInfoResponse.DataBea
                 }
             }
         }
+    }
+
+    private String handlerStage(String stage) {
+        if (stage.equals("0")) {
+            return "已接受";
+        } else if (stage.equals("1")) {
+            return "已注册";
+        } else if (stage.equals("2")) {
+            return "已下单";
+        } else if (stage.equals("3")) {
+            return "已支付";
+        }
+        return "未知状态";
     }
 
     private void makeTextView(ViewHolder holder, String title, int counts) {

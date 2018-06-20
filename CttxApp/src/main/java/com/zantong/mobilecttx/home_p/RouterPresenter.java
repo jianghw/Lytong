@@ -199,4 +199,29 @@ public class RouterPresenter implements IRouterContract.IRouterPresenter {
                 });
         mSubscriptions.add(subscription);
     }
+
+    /**
+     * 出租
+     */
+    @Override
+    public void licensePlate(String carNum) {
+        Subscription subscription = mRepository
+                .licensePlate(carNum, mRepository.getDefaultUserPhone(), 4)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void doCompleted() {
+                    }
+
+                    @Override
+                    public void doError(Throwable e) {
+                    }
+
+                    @Override
+                    public void doNext(BaseResponse result) {
+                    }
+                });
+        mSubscriptions.add(subscription);
+    }
 }

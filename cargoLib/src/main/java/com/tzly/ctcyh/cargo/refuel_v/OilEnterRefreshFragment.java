@@ -132,7 +132,7 @@ public class OilEnterRefreshFragment extends RefreshFragment
                 TextView title = new TextView(getActivity());
                 int padding = RudenessScreenHelper.ptInpx(10);
                 title.setPadding(padding, padding, padding, padding);
-                title.setTextColor(getContext().getColor(R.color.res_color_blue_0b));
+                title.setTextColor(getContext().getResources().getColor(R.color.res_color_blue_0b));
                 title.setText(childBean.getTitle());
                 title.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -153,7 +153,7 @@ public class OilEnterRefreshFragment extends RefreshFragment
 
             if (!TextUtils.isEmpty(dataBean.getSubTitle())) {
                 TextView subTitle = new TextView(getActivity());
-                subTitle.setTextColor(getContext().getColor(R.color.res_color_black_b3));
+                subTitle.setTextColor(getContext().getResources().getColor(R.color.res_color_black_b3));
                 subTitle.setText(dataBean.getSubTitle());
                 int padding = RudenessScreenHelper.ptInpx(10);
                 subTitle.setPadding(padding, padding, padding, padding);

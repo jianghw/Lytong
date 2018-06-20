@@ -26,7 +26,7 @@ public interface IMainService {
 
     void gotoOcrCameraActivity(Activity context);
 
-    void loginFilenumDialog(Activity activity);
+    void loginFilenumDialog(FragmentActivity activity);
 
     String getPushId();
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.tzly.ctcyh.router.base.AbstractBaseActivity;
@@ -141,6 +142,11 @@ public class ViolationListActivity extends AbstractBaseActivity
         }
     }
 
+    @Override
+    public String titleCar() {
+        return TextUtils.isEmpty(mTitle) ? mViolationDTO.getCarnum() : mTitle;
+    }
+
     /**
      * 付款fragment
      */
@@ -197,7 +203,8 @@ public class ViolationListActivity extends AbstractBaseActivity
     @Override
     protected void onDestroy() {
         boolean iShow = SPUtils.getInstance().getBoolean(SPUtils.IS_WZ_ACTIVE, true);
-        if (mViolationDTO != null && iShow) {
+        boolean carNum = SPUtils.instance().getBoolean(SPUtils.USER_CARD_LOGIN, true);
+        if (mViolationDTO != null && iShow && carNum) {
             MainRouter.gotoActiveActivity(this, 1, mViolationDTO.getRegisterDate());
         }
         SPUtils.getInstance().put(SPUtils.IS_WZ_ACTIVE, true);

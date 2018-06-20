@@ -3,6 +3,7 @@ package com.tzly.ctcyh.cargo.refuel_v;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 
 import com.tzly.ctcyh.cargo.R;
 import com.tzly.ctcyh.cargo.global.CargoGlobal;
@@ -19,6 +20,7 @@ public class OilShareActivity extends AbstractBaseActivity {
     private String json;
     private String img;
     private String banner;
+    private String type = null;
 
     @Override
     protected int initContentView() {
@@ -38,12 +40,15 @@ public class OilShareActivity extends AbstractBaseActivity {
             if (bundle != null && intent.hasExtra(CargoGlobal.putExtra.oil_share_json_extra)) {
                 json = bundle.getString(CargoGlobal.putExtra.oil_share_json_extra);
             }
+            if (bundle != null && intent.hasExtra(CargoGlobal.putExtra.oil_share_type_extra)) {
+                type = bundle.getString(CargoGlobal.putExtra.oil_share_type_extra);
+            }
         }
     }
 
     @Override
     protected void bindFragment() {
-        titleContent("加油分享");
+        titleContent("分享");
     }
 
     @Override
@@ -55,7 +60,11 @@ public class OilShareActivity extends AbstractBaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         //默认页面显示
         if (mFragment == null) {
-            mFragment = OilShareFragment.newInstance(banner, img, json);
+            if (TextUtils.isEmpty(type)) {
+                mFragment = OilShareFragment.newInstance(banner, img, json);
+            } else {
+                mFragment = OilShareFragment.newInstance(type);
+            }
         }
         FragmentUtils.add(fragmentManager, mFragment, R.id.lay_base_frame);
     }

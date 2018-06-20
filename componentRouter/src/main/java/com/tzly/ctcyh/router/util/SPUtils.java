@@ -38,6 +38,8 @@ public final class SPUtils {
     public static String USER_GRADE = "user_grade";
 
     public static String USER_CARD_BIND = "user_card_bind";
+    public static String USER_CARD_Num = "user_card_num";
+    public static String USER_CARD_LOGIN = "user_card_login";
 
     private static String USERPD = "userpd";
     public static String USER_CHANCLE_ID = "USER_CHANCLE_ID";
@@ -476,6 +478,7 @@ public final class SPUtils {
      */
     public void clear() {
         clear(false);
+
     }
 
     /**

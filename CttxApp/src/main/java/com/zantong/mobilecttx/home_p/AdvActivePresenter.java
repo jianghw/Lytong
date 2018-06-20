@@ -45,7 +45,7 @@ public class AdvActivePresenter implements IAdvActiveContract.IAdvActivePresente
      */
     @Override
     public void findIsValidAdvert() {
-        Subscription subscription = mRepository.findIsValidAdvert()
+        Subscription subscription = mRepository.findIsValidAdvert(mContractView.carNum())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<ValidAdvResponse>() {

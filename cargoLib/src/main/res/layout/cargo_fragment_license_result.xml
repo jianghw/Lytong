@@ -82,7 +82,7 @@
 
     </RelativeLayout>
 
-    <com.tzly.ctcyh.router.custom.scroll.ScrollBottomLayout
+    <!--<com.tzly.ctcyh.router.custom.scroll.ScrollBottomLayout
         android:id="@+id/scroll_empty_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -93,6 +93,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    </com.tzly.ctcyh.router.custom.scroll.ScrollBottomLayout>
+    </com.tzly.ctcyh.router.custom.scroll.ScrollBottomLayout>-->
 
 </RelativeLayout>

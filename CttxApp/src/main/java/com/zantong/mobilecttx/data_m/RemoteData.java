@@ -754,10 +754,11 @@ public class RemoteData implements IRemoteSource {
 
     /**
      * 查违章小广告
+     * @param carNum
      */
     @Override
-    public Observable<ValidAdvResponse> findIsValidAdvert() {
-        return baseRetrofit().create(ITextService.class).findIsValidAdvert();
+    public Observable<ValidAdvResponse> findIsValidAdvert(String carNum) {
+        return baseRetrofit().create(ITextService.class).findIsValidAdvert(carNum);
     }
 
     /**
@@ -836,5 +837,10 @@ public class RemoteData implements IRemoteSource {
     @Override
     public Observable<CancelCardResponse> cancelCard(String cancelCard, int status) {
         return baseRetrofit().create(ICttxService.class).cancelCard(cancelCard,status);
+    }
+
+    @Override
+    public Observable<BaseResponse> licensePlate(String carNum, String phone, int type) {
+        return baseRetrofit().create(ICttxService.class).licensePlate(carNum,phone,type);
     }
 }

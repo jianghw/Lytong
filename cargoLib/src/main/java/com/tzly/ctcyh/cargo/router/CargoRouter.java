@@ -301,6 +301,17 @@ public final class CargoRouter {
     }
 
     /**
+     * 分享
+     */
+    public static void gotoOilShareActivity(Context context, String type) {
+        Bundle bundle = new Bundle();
+        bundle.putString(CargoGlobal.putExtra.oil_share_type_extra, type);
+        UiRouter.getInstance().openUriBundle(context,
+                RouterGlobal.Scheme.cargo_scheme + "://" + RouterGlobal.Host.oil_share_host,
+                bundle);
+    }
+
+    /**
      * 获取fragment
      */
     public static Fragment getAdvModuleFragment() {

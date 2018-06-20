@@ -5,13 +5,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
-import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
-import com.tencent.mm.sdk.modelmsg.WXImageObject;
-import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
-import com.tencent.mm.sdk.modelmsg.WXTextObject;
-import com.tencent.mm.sdk.modelmsg.WXWebpageObject;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXImageObject;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXMiniProgramObject;
+import com.tencent.mm.opensdk.modelmsg.WXTextObject;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tzly.ctcyh.router.R;
 import com.tzly.ctcyh.router.custom.image.BitmapUtils;
 
@@ -123,6 +125,58 @@ public final class WechatUtils {
         req.transaction = buildTransaction("webpage");
         req.message = msg;
         req.scene = flag == 0 ? SendMessageToWX.Req.WXSceneSession : SendMessageToWX.Req.WXSceneTimeline;
+        api.sendReq(req);
+    }
+
+    public static void sendReqWXMini(boolean isLogin, String url, String title, String path) {
+        IWXAPI api = WXAPIFactory.createWXAPI(Utils.getContext(), APP_ID, true);
+        api.registerApp(APP_ID);
+
+        if (!api.isWXAppInstalled()) {
+            toastShort("您还未安装微信客户端");
+            return;
+        }
+
+        WXMiniProgramObject miniProgram = new WXMiniProgramObject();
+        if (isLogin) {
+            miniProgram.webpageUrl = url;
+        } else {
+            miniProgram.webpageUrl = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zantong.mobilecttx";
+        }
+
+        miniProgram.userName = "gh_d43f693ca31f";
+        miniProgram.path = "pages/play/index?cid=fvue88y1fsnk4w2&ptag=vicyao&seek=3219";
+        WXMediaMessage msg = new WXMediaMessage(miniProgram);
+        msg.title = "分享小程序";
+        msg.description = "分享小程序描述信息";
+        Bitmap bmp = BitmapFactory.decodeResource(Utils.getContext().getResources(), R.mipmap.ic_global_app);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, THUMB_SIZE, THUMB_SIZE, true);
+        bmp.recycle();
+        msg.thumbData = BitmapUtils.bmpToByteArray(thumbBmp, true);
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("webpage");
+        req.message = msg;
+        req.scene = SendMessageToWX.Req.WXSceneTimeline;
+        api.sendReq(req);
+    }
+
+    public static void openReqWXMini(String path) {
+        openReqWXMini("gh_fda8632c1b1b", path);
+    }
+
+    public static void openReqWXMini(String userName, String path) {
+        IWXAPI api = WXAPIFactory.createWXAPI(Utils.getContext(), APP_ID, true);
+        api.registerApp(APP_ID);
+        if (!api.isWXAppInstalled()) {
+            toastShort("您还未安装微信客户端");
+            return;
+        }
+
+        WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
+        req.userName = userName; // 填小程序原始id
+        req.path = path;                  //拉起小程序页面的可带参路径，不填默认拉起小程序首页
+        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;// 可选打开 开发版，体验版和正式版
         api.sendReq(req);
     }
 }

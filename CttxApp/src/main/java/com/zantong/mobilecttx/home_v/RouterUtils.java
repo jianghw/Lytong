@@ -129,20 +129,25 @@ public class RouterUtils {
      * 注意 activity 和 fregment 的区别
      */
     public static void gotoAdvModuleFragment(FragmentManager fragmentManager,
-                                             @IdRes int containerViewId) {
+                                             @IdRes int containerViewId, String carNum) {
 
         Fragment fragment = fragmentManager.findFragmentById(containerViewId);
-
-        if (fragment == null || !(fragment instanceof AdvModuleFragment)) {
-            //创建fragment但是不绘制UI
-            AdvModuleFragment moduleFragment = AdvModuleFragment.newInstance();
+        if (fragment == null) {
+            AdvModuleFragment moduleFragment = AdvModuleFragment.newInstance(carNum);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(containerViewId, moduleFragment).commitNow();
+        } else if (!(fragment instanceof AdvModuleFragment)) {
+            AdvModuleFragment moduleFragment = AdvModuleFragment.newInstance(carNum);
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(containerViewId, moduleFragment).commitNow();
             transaction.add(containerViewId, moduleFragment).commitNow();
         } else {
             AdvModuleFragment moduleFragment = (AdvModuleFragment) fragment;
+            moduleFragment.relodaData(carNum);
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(containerViewId, moduleFragment).commitNow();
         }
+
       /*  if (fragment == null) {
             fragment = manager.findFragmentByTag(tag_fgt);
         }

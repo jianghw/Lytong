@@ -146,7 +146,6 @@ public class ActiveActivity extends AbstractBaseActivity implements IActiveContr
                 public void cancel() {
                 }
             });
-
             DialogUtils.showDialog(this, fragment, "message_dialog");
         } else if (configType.equals("3")) {//网页
             if (!TextUtils.isEmpty(beanExtra)) gotoHtml(beanExtra);
